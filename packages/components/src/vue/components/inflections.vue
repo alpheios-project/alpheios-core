@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-    <div class="alpheios-inflections__content" v-else-if="inflectionsEnabled && hasMatchingViews">
+    <div class="alpheios-inflections__content" v-else-if="inflectionsEnabled && $store.state.app.hasInflData">
       <div v-show="partsOfSpeech.length > 1">
         <label class="uk-form-label">{{ l10n.getMsg('LABEL_INFLECT_SELECT_POFS') }}</label>
         <select class="uk-select alpheios-inflections__view-selector alpheios-text__smallest"
@@ -35,8 +35,7 @@
       </div>
 
       <div class="alpheios-inflections__paradigms-expl"
-           v-html="l10n.getMsg('INFLECTIONS_PARADIGMS_EXPLANATORY_HINT', { word: this.$store.state.app.inflectionsViewSet.targetWord })"
-           v-if="$store.getters[`app/hasInflData`]"
+           v-html="l10n.getMsg('INFLECTIONS_PARADIGMS_EXPLANATORY_HINT', { word: this.$store.state.app.targetWord })"
            v-show="showExplanatoryHint">
       </div>
 
@@ -95,8 +94,8 @@ import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'Inflections',
-  inject: ['l10n'],
-  storeModules: ['app'], // Store modules that are required by this component
+  inject: ['app', 'l10n'],
+  storeModules: ['app', 'ui'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
     prerenderedTableWide: WidePrerenderedTable,
@@ -106,6 +105,7 @@ export default {
     wordForms: WordForms
   },
   visibilityUnwatch: null, // Will hold a function for removal of visibility watcher
+  hasInflDataUnwatch: null,
 
   data: function () {
     return {
@@ -121,26 +121,16 @@ export default {
         panelInner: 'alpheios-panel-inner',
         footnotes: 'alph-inflection-footnotes'
       },
-      htmlElements: {
-        content: undefined
-      },
       canCollapse: false // Whether a selected view can be expanded or collapsed (it can't if has no suffix matches)
     }
   },
 
   computed: {
-    isEnabled: function () {
-      return this.$store.state.app.inflectionsViewSet && this.$store.state.app.inflectionsViewSet.enabled
-    },
-    hasMatchingViews: function () {
-      return this.$store.state.app.inflectionsViewSet && this.$store.state.app.inflectionsViewSet.enabled && this.$store.state.app.inflectionsViewSet.hasMatchingViews
-    },
-    inflectionViewSet: function () {
-      return this.$store.state.app.inflectionsViewSet
-    },
     inflectionsEnabled: function () {
       // TODO: This is a temporary solution. This should be handled in accord with our overall state handling policy
-      return ViewSetFactory.hasInflectionsEnabled(this.$store.state.app.currentLanguageID)
+      return this.$store.state.app.currentLanguageID
+        ? ViewSetFactory.hasInflectionsEnabled(this.$store.state.app.currentLanguageID)
+        : false
     },
     partOfSpeechSelector: {
       get: function () {
@@ -148,8 +138,10 @@ export default {
       },
       set: function (newValue) {
         this.selectedPartOfSpeech = newValue
-        this.views = this.$store.state.app.inflectionsViewSet.getViews(this.selectedPartOfSpeech)
-        this.selectedView = this.views[0].render()
+        this.views = this.app.getInflectionViews(this.selectedPartOfSpeech)
+        if (this.views.length > 0) {
+          this.selectedView = this.views[0].render()
+        }
       }
     },
     viewSelector: {
@@ -182,52 +174,48 @@ export default {
     }
   },
 
-  watch: {
-    inflectionViewSet: function () {
-      // This watcher is called when a new inflection set becomes available
-      this.initViewSet()
-    }
-  },
-
   methods: {
     initViewSet () {
       this.hasInflectionData = false
-      if (this.$store.state.app.inflectionsViewSet) {
-        this.languageID = this.$store.state.app.inflectionsViewSet.languageID
-      }
-      if (this.$store.state.app.inflectionsViewSet && this.$store.state.app.inflectionsViewSet.hasMatchingViews) {
-        this.partsOfSpeech = this.$store.state.app.inflectionsViewSet.partsOfSpeech
-        if (this.partsOfSpeech.length > 0) {
-          this.selectedPartOfSpeech = this.partsOfSpeech[0]
-          this.views = this.$store.state.app.inflectionsViewSet.getViews(this.selectedPartOfSpeech)
-        } else {
-          this.selectedPartOfSpeech = []
-          this.views = []
-        }
+      if (this.$store.state.app.hasInflData) {
+        const inflectionsViewSet = this.app.getInflectionsViewSet()
+        this.languageID = inflectionsViewSet.languageID
+        if (inflectionsViewSet.hasMatchingViews) {
+          this.partsOfSpeech = inflectionsViewSet.partsOfSpeech
+          if (this.partsOfSpeech.length > 0) {
+            this.selectedPartOfSpeech = this.partsOfSpeech[0]
+            this.views = inflectionsViewSet.getViews(this.selectedPartOfSpeech)
+          } else {
+            this.selectedPartOfSpeech = []
+            this.views = []
+          }
 
-        if (this.views.length > 0) {
-          this.hasInflectionData = true
-          this.selectedView = this.views[0].render()
-        } else {
-          this.selectedView = ''
+          if (this.views.length > 0) {
+            this.hasInflectionData = true
+            this.selectedView = this.views[0].render()
+          } else {
+            this.selectedView = ''
+          }
         }
       }
     },
 
     updateWidth: function () {
-      /*
-      An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
-      use this information to adjust a width of a container that displays an inflection component.
+      if (typeof this.$el.querySelector === 'function') {
+        /*
+        An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
+        use this information to adjust a width of a container that displays an inflection component.
        */
-      Vue.nextTick(() => {
-        this.$emit('contentwidth', { width: this.htmlElements.content.offsetWidth + 1, component: 'inflections' })
-      })
+        Vue.nextTick(() => {
+          this.$emit('contentwidth', { width: this.$el.offsetWidth + 1, component: 'inflections' })
+        })
+      }
     },
 
     navigate (reflink) {
       let panel = document.querySelector(`#${this.elementIDs.panelInner}`)
       if (!panel) {
-        console.warn(`Cannot find panel's inner element #${this.elementIDs.panelInner}. Scroll cancelled`)
+        console.warn(`Cannot find panel's inner element #${this.elementIDs.panelInner}. Scroll is cancelled`)
       }
       if (reflink === 'top') {
         // Navigate to the top of the page
@@ -240,29 +228,34 @@ export default {
           const offset = Math.round(el.offsetTop)
           panel.scrollTop = offset - paddingTop
         } else {
-          console.warn(`Cannot find #${reflink} element. Navigation cancelled`)
+          console.warn(`Cannot find #${reflink} element. Navigation is cancelled`)
         }
       }
     }
   },
 
   mounted: function () {
-    if (typeof this.$el.querySelector === 'function') {
-      this.htmlElements.content = this.$el
-    }
     this.initViewSet()
 
-    this.$options.visibilityUnwatch = this.$store.watch((state, getters) => state.ui.activeTab, (tabName) => {
+    this.$options.visibilityUnwatch = this.$store.watch((state) => state.ui.activeTab, (tabName) => {
       if (tabName === 'inflections') {
         this.updateWidth()
         // Scroll to top if panel is reopened
         this.navigate('top')
       }
     })
+
+    this.$options.hasInflDataUnwatch = this.$store.watch((state) => state.app.hasInflData, (value) => {
+      if (value) {
+        // Inflections data has become available
+        this.initViewSet()
+      }
+    })
   },
 
   beforeDestroy: function () {
     this.$options.visibilityUnwatch()
+    this.$options.hasInflDataUnwatch()
   }
 }
 </script>

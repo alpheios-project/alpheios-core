@@ -27,7 +27,7 @@
         </alph-tooltip>
 
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_INFLECTIONS')" tooltipDirection="bottom-wide"
-                      v-show="$store.getters[`app/hasInflData`]">
+                      v-show="$store.state.app.hasInflData">
           <button @click="ui.showPanelTab('inflections')"
                   class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections">
             {{ l10n.getText('LABEL_POPUP_INFLECT') }}
@@ -70,11 +70,11 @@
       {{ l10n.getText('PLACEHOLDER_NO_LANGUAGE_POPUP_DATA') }}
     </div>
     <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
-         v-show="!$store.getters['app/hasMorphData'] && $store.state.app.morphDataReady && !noLanguage">
+         v-show="$store.state.app.morphDataReady && !app.hasMorphData() && !noLanguage">
       {{ l10n.getText('PLACEHOLDER_NO_DATA_POPUP_DATA') }}
     </div>
     <div :id="lexicalDataContainerID" class="alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready"
-         v-show="$store.state.app.morphDataReady && $store.getters['app/hasMorphData']">
+         v-show="$store.state.app.morphDataReady && app.hasMorphData()">
       <morph
           :id="morphComponentID"
       />
@@ -103,7 +103,7 @@
                :show-title="false" @change="contentOptionChanged"
                v-show="$store.state.ui.notification.showLanguageSwitcher"></setting>
     </div>
-    <lookup :clearLookupText="$store.getters['app/hasMorphData'] && $store.state.app.morphDataReady" :parentLanguage="$store.state.app.currentLanguageName"></lookup>
+    <lookup :clearLookupText="$store.state.app.morphDataReady && app.hasMorphData()" :parentLanguage="$store.state.app.currentLanguageName"></lookup>
   </div>
 </template>
 <script>
@@ -218,7 +218,7 @@ export default {
       }
 
       let left = this.positionLeftValue
-      let placementTargetX = this.$store.state.api.htmlSelector ? this.$store.state.api.htmlSelector.targetRect.left : 0
+      let placementTargetX = this.$store.state.api.selectionTarget.x
       let viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
       let verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth
       let leftSide = placementTargetX - this.exactWidth / 2
@@ -254,7 +254,7 @@ export default {
       let time = Date.now()
       this.logger.log(`${time}: position top calculation, offsetHeight is ${this.exactHeight}`)
       let top = this.positionTopValue
-      let placementTargetY = this.$store.state.api.htmlSelector ? this.$store.state.api.htmlSelector.targetRect.top : 0
+      let placementTargetY = this.$store.state.api.selectionTarget.y
       let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
       let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
       if (this.heightDm !== 'auto') {

@@ -102,8 +102,6 @@ export default class UIController {
     this.evc = null
 
     this.wordlistC = {} // This is a word list controller
-
-    this.inflectionsViewSet = null // Holds inflection tables ViewSet
   }
 
   /**
@@ -351,6 +349,8 @@ export default class UIController {
       mode: this.options.mode, // Mode of an application: `production` or `development`
       defaultTab: this.defaultTab, // A name of a default tab (a string)
       state: this.state, // An app-level state
+      homonym: null,
+      inflectionsViewSet: null,
       wordlistC: this.wordlistC, // A word list controller
 
       isDevMode: () => {
@@ -362,7 +362,23 @@ export default class UIController {
       updateLanguage: this.updateLanguage.bind(this),
       getLanguageName: UIController.getLanguageName,
       startResourceQuery: this.startResourceQuery.bind(this),
-      sendFeature: this.sendFeature.bind(this)
+      sendFeature: this.sendFeature.bind(this),
+      getHomonymLexemes: () => this.api.app.homonym ? this.api.app.homonym.lexemes : [],
+      getInflectionsViewSet: () => this.api.app.inflectionsViewSet,
+      getInflectionViews: (partOfSpeech) => this.api.app.inflectionsViewSet ? this.api.app.inflectionsViewSet.getViews(partOfSpeech) : [],
+      hasMorphData: () => {
+        const lexemes = this.api.app.getHomonymLexemes()
+        if (!this.store.state.app.homonymDataReady || lexemes.length === 0) {
+          return false
+        }
+        if (Array.isArray(lexemes) && lexemes.length > 0 &&
+          (lexemes[0].lemma.principalParts.length > 0 || lexemes[0].inflections.length > 0 || lexemes[0].inflections.length > 0 ||
+            lexemes[0].meaning.fullDefs.length > 0 || lexemes[0].meaning.shortDefs.length > 0)
+        ) {
+          return true
+        }
+        return false
+      }
     }
 
     this.store.registerModule('app', {
@@ -377,8 +393,13 @@ export default class UIController {
           languageName: '',
           languageCode: ''
         },
-        htmlSelector: null, // An HTMLSelector object, reflects the latest text selection
-        homonym: null,
+        targetWord: '',
+        // An object with x and y props that reflects integer coordinates of a selection target
+        selectionTarget: {
+          x: 0,
+          y: 0
+        },
+        homonymDataReady: false,
         linkedFeatures: [], // An array of linked features, updated with every new homonym value is written to the store
         defDataReady: false,
         lexicalRequest: {
@@ -387,7 +408,7 @@ export default class UIController {
           outcome: null // A result of the completed lexical request
         },
         inflectionsWaitState: false, // Whether there is a lexical query in progress
-        inflectionsViewSet: null,
+        hasInflData: false, // Whether we have any inflection data available
         morphDataReady: false,
         translationsDataReady: false,
         grammarRes: null,
@@ -396,30 +417,12 @@ export default class UIController {
           page: {}
         },
         wordUsageExamplesData: null,
-        wordLists: null,
+        hasWordListsData: false,
         wordListUpdated: 0, // To notify word list panel about data update. TODO: Can we monitor data instead?
         providers: [] // A list of resource providers
       },
 
       getters: {
-        hasInflData (state) {
-          return Boolean(state.inflectionsViewSet && state.inflectionsViewSet.hasMatchingViews)
-        },
-
-        hasMorphData (state) {
-          if (!state.homonym || !state.homonym.lexemes) {
-            return false
-          }
-          const lexemes = state.homonym.lexemes
-          if (Array.isArray(lexemes) && lexemes.length > 0 &&
-            (lexemes[0].lemma.principalParts.length > 0 || lexemes[0].inflections.length > 0 || lexemes[0].inflections.length > 0 ||
-              lexemes[0].meaning.fullDefs.length > 0 || lexemes[0].meaning.shortDefs.length > 0)
-          ) {
-            return true
-          }
-          return false
-        },
-
         /**
          * Identifies wither grammar resource(s) are available for the current state.
          * @param state - A local state.
@@ -462,15 +465,22 @@ export default class UIController {
           state.status.selectedText = ''
         },
 
-        lexicalRequestStarted (state) {
-          state.htmlSelector = null
+        lexicalRequestStarted (state, targetWord) {
+          state.targetWord = targetWord
+          state.selectionTarget = {
+            x: 0,
+            y: 0
+          }
           state.inflectionsWaitState = true
           state.wordUsageExamplesData = null
           state.linkedFeatures = []
+          state.homonymDataReady = false
           state.defDataReady = false
           state.morphDataReady = false
           state.translationsDataReady = false
           state.providers = []
+          state.hasWordListsData = false
+          state.wordListUpdated = 0
           state.lexicalRequest.startTime = Date.now()
         },
 
@@ -481,23 +491,25 @@ export default class UIController {
         },
 
         setHtmlSelector (state, htmlSelector) {
-          state.htmlSelector = htmlSelector
+          if (htmlSelector.targetRect) {
+            state.selectionTarget.x = Math.round(htmlSelector.targetRect.left)
+            state.selectionTarget.y = Math.round(htmlSelector.targetRect.top)
+          }
         },
 
         setHomonym (state, homonym) {
-          state.homonym = homonym
+          state.homonymDataReady = true
           state.linkedFeatures = LanguageModelFactory.getLanguageModel(homonym.languageID).grammarFeatures()
         },
 
-        setInflData (state, inflectionsViewSet = null) {
+        setInflData (state, hasInflData = true) {
           state.inflectionsWaitState = false
-          state.inflectionsViewSet = (inflectionsViewSet && inflectionsViewSet.hasMatchingViews) ? inflectionsViewSet : false
+          state.hasInflData = hasInflData
         },
 
         resetInflData (state) {
           state.inflectionsWaitState = false
-          state.inflDataReady = false
-          state.inflectionsViewSet = false
+          state.hasInflData = false
         },
 
         setGrammarRes (state, grammarRes) {
@@ -526,7 +538,7 @@ export default class UIController {
         },
 
         setWordLists (state, wordLists) {
-          state.wordLists = wordLists
+          state.hasWordListsData = (wordLists.length > 0)
           state.wordListUpdated++
         },
 
@@ -818,7 +830,7 @@ export default class UIController {
     // If tab is disabled, switch to a default one
     if (
       /* (!this.store.state.app.tabState.hasOwnProperty(tabName)) || */
-      (!this.store.getters[`app/hasInflData`] && name === 'inflections') ||
+      (!this.store.state.app.hasInflData && name === 'inflections') ||
       (!this.store.getters['app/hasGrammarRes'] && name === 'grammar') ||
       (!this.store.getters['app/hasTreebankData'] && name === 'treebank') ||
       (!statusAvailable && name === 'status')
@@ -866,18 +878,18 @@ export default class UIController {
     this.showStatusInfo(targetWord, languageID)
     this.updateLanguage(languageID)
     this.updateWordAnnotationData()
-    this.store.commit('app/lexicalRequestStarted')
+    this.api.app.homonym = null
+    this.api.app.inflectionsViewSet = null
+    this.store.commit('app/lexicalRequestStarted', targetWord)
     this.store.commit('app/resetGrammarRes')
-    this.store.commit('app/resetInflData')
+    this.resetInflData()
     this.clear().open()
     return this
   }
 
-  updateMorphology (homonym) {
-    homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
-    this.updateProviders(homonym)
-    this.store.commit(`app/setHomonym`, homonym)
-    this.store.commit('app/setMorphDataReady')
+  resetInflData () {
+    this.api.app.inflectionsViewSet = null
+    this.store.commit('app/resetInflData')
   }
 
   updateProviders (homonym) {
@@ -946,7 +958,7 @@ export default class UIController {
     this.state.setItem('currentLanguage', LanguageModelFactory.getLanguageCodeFromId(currentLanguageID))
     this.startResourceQuery({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
 
-    this.store.commit('app/resetInflData')
+    this.resetInflData()
   }
 
   updateLemmaTranslations () {
@@ -965,7 +977,7 @@ export default class UIController {
   clear () {
     this.store.commit(`app/resetStatusData`)
     this.store.commit(`app/resetDefDataReady`)
-    this.store.commit(`app/resetInflData`)
+    this.resetInflData()
     this.store.commit(`app/resetTreebankData`)
     this.store.commit(`ui/resetNotification`)
     this.store.commit(`ui/resetMessages`)
@@ -1173,17 +1185,24 @@ export default class UIController {
   }
 
   onHomonymReady (homonym) {
-    this.updateMorphology(homonym)
+    homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
+    this.updateProviders(homonym)
+
     this.updateDefinitions(homonym)
     // Update status info with data from a morphological analyzer
     this.showStatusInfo(homonym.targetWord, homonym.languageID)
 
     // Update inflections data
-    this.inflectionsViewSet = ViewSetFactory.create(homonym, this.contentOptions.items.locale.currentValue)
-    if (this.inflectionsViewSet.hasMatchingViews) {
+    let inflectionsViewSet = ViewSetFactory.create(homonym, this.contentOptions.items.locale.currentValue)
+    if (inflectionsViewSet.hasMatchingViews) {
       this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
     }
-    this.store.commit('app/setInflData', this.inflectionsViewSet)
+    this.api.app.homonym = homonym
+    this.store.commit(`app/setHomonym`, homonym)
+    this.store.commit('app/setMorphDataReady')
+    const inflDataReady = Boolean(inflectionsViewSet && inflectionsViewSet.hasMatchingViews)
+    this.api.app.inflectionsViewSet = inflectionsViewSet
+    this.store.commit('app/setInflData', inflDataReady)
   }
 
   onWordListUpdated (wordLists) {

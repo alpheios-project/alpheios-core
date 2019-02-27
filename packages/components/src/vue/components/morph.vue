@@ -9,8 +9,8 @@
         <div class="alpheios-morph__features">
 
           <p class="principal_parts" v-for="(lemma,lemmaIndex) in allLemmas(lex)">
-            <span class="lemma_index" v-if="lemmaIndex === 0 && count > 1">{{ index + 1 }}</span>
-            <span class="lemma_index_spacer" v-else-if="lemmaIndex > 0 && count > 1"> </span>
+            <span class="lemma_index" v-if="lemmaIndex === 0 && lexemes.length > 1">{{ index + 1 }}</span>
+            <span class="lemma_index_spacer" v-else-if="lemmaIndex > 0 && lexemes.length > 1"> </span>
 
             <span :lang="languageCode(lemma.languageID)"
                   class="alpheios-morph__hdwd alpheios-morph__formtext alpheios-morph__groupitem"
@@ -247,6 +247,7 @@ export default {
     inflectionattribute: InflectionAttribute,
     lemmatranslation: LemmaTranslation
   },
+  inject: ['app'],
   storeModules: ['app'],
   mixins: [DependencyCheck],
   data: function () {
@@ -256,17 +257,17 @@ export default {
   },
   computed: {
     lexemes () {
-      return (this.$store.state.app.homonym && this.$store.state.app.homonym.lexemes) ? this.$store.state.app.homonym.lexemes : []
-    },
-
-    count () {
-      return (this.$store.state.app.homonym && this.$store.state.app.homonym.lexemes) ? this.$store.state.app.homonym.lexemes.length : 0
+      // A reference to the store prop is required to keep this computed prop from being cached
+      if (!this.$store.state.app.homonymDataReady) {
+        return []
+      }
+      return this.app.getHomonymLexemes()
     },
 
     translations () {
       let translations = {}
       if (this.$store.state.app.translationsDataReady) {
-        for (let lexeme of this.$store.state.app.homonym.lexemes) {
+        for (let lexeme of this.app.getHomonymLexemes()) {
           if (lexeme.lemma.translation !== undefined) {
             translations[lexeme.lemma.ID] = lexeme.lemma.translation
           }
@@ -343,7 +344,7 @@ export default {
 
     inflections (lex) {
       return (
-        this.$store.state.app.morphDataReady && this.$store.getters['app/hasMorphData'] && lex.getGroupedInflections)
+        this.$store.state.app.morphDataReady && this.app.hasMorphData() && lex.getGroupedInflections)
         ? lex.getGroupedInflections()
         : []
     },

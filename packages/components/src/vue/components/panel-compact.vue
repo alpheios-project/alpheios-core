@@ -31,7 +31,7 @@
           v-show="$store.getters['ui/isActiveTab']('morphology')">
 
         <div :id="'alpheios-panel-lexical-data-container'" class="alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready"
-             v-show="$store.state.app.morphDataReady && $store.getters['app/hasMorphData']">
+             v-show="$store.state.app.morphDataReady && app.hasMorphData()">
           <morph :id="'alpheios-panel-morph-component'"></morph>
 
           <!--<div class="alpheios-popup__morph-cont-providers" v-if="showProviders">
@@ -61,7 +61,7 @@
         </div>
       </div>
       <div :id="inflectionsPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflections"
-           v-if="$store.getters[`app/hasInflData`]" v-show="$store.getters['ui/isActiveTab']('inflections') && $store.state.app.inflectionsViewSet">
+           v-show="$store.getters['ui/isActiveTab']('inflections')">
         <inflections @contentwidth="setContentWidth" class="alpheios-panel-inflections"></inflections>
       </div>
       <div :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser"
@@ -302,12 +302,6 @@ export default {
       return this.panelPosition === 'left'
     },
 
-    // Need this to watch when inflections tab becomes active and adjust panel width to fully fit an inflection table in
-    /* inflectionsTabVisible: function () {
-      return Boolean($store.getters.isActiveTab('inflections') && this.$store.state.app.inflectionsViewSet)
-      // return Boolean(this.$store.state.app.tabState.inflections && this.$store.state.app.inflectionsViewSet)
-    }, */
-
     additionalStylesTootipCloseIcon: function () {
       return {
         top: '2px',
@@ -319,14 +313,10 @@ export default {
       return this.settings.contentOptions.items.verboseMode.currentValue === `verbose`
     },
 
-    showWordList () {
-      return this.$store.state.app.wordListUpdated && this.app.wordlistC && Object.keys(this.app.wordlistC.wordLists) && Object.keys(this.app.wordlistC.wordLists).length > 0
-    },
-
     formattedShortDefinitions () {
       let definitions = []
-      if (this.$store.state.app.defDataReady && this.$store.state.app.homonym) {
-        for (const lexeme of this.$store.state.app.homonym.lexemes) {
+      if (this.$store.state.app.defDataReady && this.$store.state.app.homonymDataReady) {
+        for (const lexeme of this.app.getHomonymLexemes()) {
           if (lexeme.meaning.shortDefs.length > 0) {
             definitions.push(...lexeme.meaning.shortDefs)
           } else if (Object.entries(lexeme.lemma.features).length > 0) {
@@ -339,8 +329,8 @@ export default {
 
     formattedFullDefinitions () {
       let content = ''
-      if (this.$store.state.app.defDataReady && this.$store.state.app.homonym) {
-        for (const lexeme of this.$store.state.app.homonym.lexemes) {
+      if (this.$store.state.app.defDataReady && this.$store.state.app.homonymDataReady) {
+        for (const lexeme of this.app.getHomonymLexemes()) {
           content += `<h3>${lexeme.lemma.word}</h3>\n`
           for (const fullDef of lexeme.meaning.fullDefs) {
             content += `${fullDef.text}<br>\n`

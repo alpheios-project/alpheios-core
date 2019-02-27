@@ -10,8 +10,26 @@ import ShortDef from '@/vue/components/shortdef.vue'
 describe('morph.test.js', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
-  let store
+  const store = new Vuex.Store({
+    modules: {
+      app: {
+        namespaced: true,
+        state: {
+          homonymDataReady: true,
+          linkedFeatures: [],
+          morphDataReady: true,
+          translationsDataReady: false
+        },
+        getters: {
+          hasMorphData () {
+            return true
+          }
+        }
+      }
+    }
+  })
   let api = {}
+  let homonym
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
@@ -55,8 +73,12 @@ describe('morph.test.js', () => {
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
 
+    homonym = null
     api = {
-      app: {},
+      app: {
+        getHomonymLexemes: () => homonym ? homonym.lexemes : [],
+        hasMorphData: () => true
+      },
       l10n: {
         hasMsg () {
           return false
@@ -72,23 +94,6 @@ describe('morph.test.js', () => {
   })
 
   it('1 Morph - renders a vue instance (min requirements)', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            morphDataReady: true,
-            translationsDataReady: false
-          },
-          getters: {
-            hasMorphData () {
-              return true
-            }
-          }
-        }
-      }
-    })
-
     let cmp = shallowMount(Morph, {
       propsData: {
         lexemes: []
@@ -101,23 +106,6 @@ describe('morph.test.js', () => {
   })
 
   it('2 Morph - showLexeme', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            morphDataReady: true,
-            translationsDataReady: false
-          },
-          getters: {
-            hasMorphData () {
-              return true
-            }
-          }
-        }
-      }
-    })
-
     let cmp = mount(Morph, {
       propsData: {
         lexemes: [],
@@ -141,40 +129,25 @@ describe('morph.test.js', () => {
   })
 
   it('3 Morph - render with children components (min requirements without InflectionAttribute)', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            homonym: {
-              lexemes: [
-                {
-                  inflections: [],
-                  lemma: {
-                    ID: '1',
-                    features: {},
-                    languageCode: 'lat',
-                    languageID: LMF.getLanguageIdFromCode('lat'),
-                    word: 'foo-word',
-                    principalParts: [ 'part1', 'part2' ]
-                  },
-                  meaning: {},
-                  isPopulated: () => { return true },
-                  getGroupedInflections: () => { return [] }
-                }
-              ]
-            },
-            morphDataReady: true,
-            translationsDataReady: false
+    homonym = {
+      lexemes: [
+        {
+          inflections: [],
+          lemma: {
+            ID: '1',
+            features: {},
+            languageCode: 'lat',
+            languageID: LMF.getLanguageIdFromCode('lat'),
+            word: 'foo-word',
+            principalParts: [ 'part1', 'part2' ]
           },
-          getters: {
-            hasMorphData () {
-              return true
-            }
-          }
+          meaning: {},
+          isPopulated: () => { return true },
+          getGroupedInflections: () => { return [] }
         }
-      }
-    })
+      ]
+    }
+    api.app.homonym = homonym
 
     let cmp = mount(Morph, {
       stubs: [ 'inflectionattribute' ],
@@ -190,40 +163,25 @@ describe('morph.test.js', () => {
   })
 
   it('4 Morph - render principal parts (min requirements without InflectionAttribute)', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            homonym: {
-              lexemes: [
-                {
-                  inflections: [],
-                  lemma: {
-                    ID: '1',
-                    features: {},
-                    languageCode: 'lat',
-                    languageID: LMF.getLanguageIdFromCode('lat'),
-                    word: 'foo-word',
-                    principalParts: [ 'part1', 'part2' ]
-                  },
-                  meaning: {},
-                  isPopulated: () => { return true },
-                  getGroupedInflections: () => { return [] }
-                }
-              ]
-            },
-            morphDataReady: true,
-            translationsDataReady: false
+    homonym = {
+      lexemes: [
+        {
+          inflections: [],
+          lemma: {
+            ID: '1',
+            features: {},
+            languageCode: 'lat',
+            languageID: LMF.getLanguageIdFromCode('lat'),
+            word: 'foo-word',
+            principalParts: [ 'part1', 'part2' ]
           },
-          getters: {
-            hasMorphData () {
-              return true
-            }
-          }
+          meaning: {},
+          isPopulated: () => { return true },
+          getGroupedInflections: () => { return [] }
         }
-      }
-    })
+      ]
+    }
+    api.app.homonym = homonym
 
     let cmp = mount(Morph, {
       stubs: { 'inflectionattribute': '<div class="inflectionattribute"></div>' },
@@ -252,45 +210,29 @@ describe('morph.test.js', () => {
   })
 
   it('5 Morph - render principal parts (min requirements with InflectionAttribute)', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            homonym: {
-              lexemes: [
-                {
-                  inflections: [],
-                  lemma: {
-                    ID: '1',
-                    features: {
-                      frequency: mockFeature('fooFrequency', 'frequency', 'lat'),
-                      age: mockFeature('fooAge', 'age', 'lat'),
-                      pronunciation: mockFeature('fooPronunciation', 'pronunciation', 'lat')
-                    },
-                    languageCode: 'lat',
-                    languageID: LMF.getLanguageIdFromCode('lat'),
-                    word: 'foo-word',
-                    principalParts: [ 'part1', 'part2' ]
-                  },
-                  meaning: {},
-                  isPopulated: () => { return true },
-                  getGroupedInflections: () => { return [] }
-                }
-              ]
+    homonym = {
+      lexemes: [
+        {
+          inflections: [],
+          lemma: {
+            ID: '1',
+            features: {
+              frequency: mockFeature('fooFrequency', 'frequency', 'lat'),
+              age: mockFeature('fooAge', 'age', 'lat'),
+              pronunciation: mockFeature('fooPronunciation', 'pronunciation', 'lat')
             },
-            linkedFeatures: [],
-            morphDataReady: true,
-            translationsDataReady: false
+            languageCode: 'lat',
+            languageID: LMF.getLanguageIdFromCode('lat'),
+            word: 'foo-word',
+            principalParts: [ 'part1', 'part2' ]
           },
-          getters: {
-            hasMorphData () {
-              return true
-            }
-          }
+          meaning: {},
+          isPopulated: () => { return true },
+          getGroupedInflections: () => { return [] }
         }
-      }
-    })
+      ]
+    }
+    api.app.homonym = homonym
 
     let cmp = mount(Morph, {
       store,
@@ -325,50 +267,34 @@ describe('morph.test.js', () => {
   })
 
   it('6 Morph - render alpheios-morph__morphdata and feature_source (min requirements with InflectionAttribute)', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            homonym: {
-              lexemes: [
-                {
-                  inflections: [],
-                  lemma: {
-                    ID: '1',
-                    features: {
-                      case: mockFeature('fooGrmCase', 'case', 'lat'),
-                      gender: mockFeature('fooGender', 'gender', 'lat'),
-                      'part of speach': mockFeature('fooPart', 'part of speech', 'lat'),
-                      kind: mockFeature('fooKind', 'kind', 'lat'),
-                      declension: mockFeature('fooDeclension', 'declension', 'lat'),
-                      conjugation: mockFeature('fooConjugation', 'conjugation', 'lat'),
-                      note: mockFeature('fooNote', 'note', 'lat'),
-                      source: mockFeature('fooSource', 'source', 'lat')
-                    },
-                    languageCode: 'lat',
-                    languageID: LMF.getLanguageIdFromCode('lat'),
-                    word: 'foo-word',
-                    principalParts: [ 'part1', 'part2' ]
-                  },
-                  meaning: {},
-                  isPopulated: () => { return true },
-                  getGroupedInflections: () => { return [] }
-                }
-              ]
+    homonym = {
+      lexemes: [
+        {
+          inflections: [],
+          lemma: {
+            ID: '1',
+            features: {
+              case: mockFeature('fooGrmCase', 'case', 'lat'),
+              gender: mockFeature('fooGender', 'gender', 'lat'),
+              'part of speach': mockFeature('fooPart', 'part of speech', 'lat'),
+              kind: mockFeature('fooKind', 'kind', 'lat'),
+              declension: mockFeature('fooDeclension', 'declension', 'lat'),
+              conjugation: mockFeature('fooConjugation', 'conjugation', 'lat'),
+              note: mockFeature('fooNote', 'note', 'lat'),
+              source: mockFeature('fooSource', 'source', 'lat')
             },
-            linkedFeatures: [],
-            morphDataReady: true,
-            translationsDataReady: false
+            languageCode: 'lat',
+            languageID: LMF.getLanguageIdFromCode('lat'),
+            word: 'foo-word',
+            principalParts: [ 'part1', 'part2' ]
           },
-          getters: {
-            hasMorphData () {
-              return true
-            }
-          }
+          meaning: {},
+          isPopulated: () => { return true },
+          getGroupedInflections: () => { return [] }
         }
-      }
-    })
+      ]
+    }
+    api.app.homonym = homonym
 
     let cmp = mount(Morph, {
       store,
@@ -384,7 +310,7 @@ describe('morph.test.js', () => {
 
     expect(allInflectionAttributesMD.length).toEqual(7)
 
-    let keysFeatures = Object.keys(store.state.app.homonym.lexemes[0].lemma.features)
+    let keysFeatures = Object.keys(api.app.homonym.lexemes[0].lemma.features)
 
     for (let i = 0; i < allInflectionAttributesMD.length; i++) {
       let checkKey = keysFeatures.indexOf(allInflectionAttributesMD.at(i).vm.type)
@@ -393,7 +319,7 @@ describe('morph.test.js', () => {
       if (checkKey > -1) {
         checksPassed++
         expect(allInflectionAttributesMD.at(i).find('span').exists()).toBeTruthy()
-        expect(allInflectionAttributesMD.at(i).find('span').text().indexOf(store.state.app.homonym.lexemes[0].lemma.features[key].value)).toBeGreaterThan(-1)
+        expect(allInflectionAttributesMD.at(i).find('span').text().indexOf(api.app.homonym.lexemes[0].lemma.features[key].value)).toBeGreaterThan(-1)
       }
       if (allInflectionAttributesMD.at(i).vm.decorators.length > 0 && allInflectionAttributesMD.at(i).vm.decorators.indexOf('brackets') > -1 && allInflectionAttributesMD.at(i).find('span').exists()) {
         expect(allInflectionAttributesMD.at(i).find('span').text().indexOf('[')).toBeGreaterThan(-1)
@@ -419,41 +345,25 @@ describe('morph.test.js', () => {
   })
 
   it('7 Morph - render definitions', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            homonym: {
-              lexemes: [
-                {
-                  inflections: [],
-                  lemma: {
-                    ID: 'l1',
-                    features: {},
-                    languageCode: 'lat',
-                    languageID: LMF.getLanguageIdFromCode('lat'),
-                    word: 'foo-word',
-                    principalParts: [ 'part1', 'part2' ]
-                  },
-                  meaning: {},
-                  isPopulated: () => { return true },
-                  getGroupedInflections: () => { return [] }
-                }
-              ]
-            },
-            linkedFeatures: [],
-            morphDataReady: true,
-            translationsDataReady: false
+    homonym = {
+      lexemes: [
+        {
+          inflections: [],
+          lemma: {
+            ID: 'l1',
+            features: {},
+            languageCode: 'lat',
+            languageID: LMF.getLanguageIdFromCode('lat'),
+            word: 'foo-word',
+            principalParts: [ 'part1', 'part2' ]
           },
-          getters: {
-            hasMorphData () {
-              return true
-            }
-          }
+          meaning: {},
+          isPopulated: () => { return true },
+          getGroupedInflections: () => { return [] }
         }
-      }
-    })
+      ]
+    }
+    api.app.homonym = homonym
 
     let cmp = mount(Morph, {
       methods: {
@@ -495,41 +405,25 @@ describe('morph.test.js', () => {
   })
 
   it('8 Morph - render translations', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            homonym: {
-              lexemes: [
-                {
-                  inflections: [],
-                  lemma: {
-                    ID: 'l1',
-                    features: {},
-                    languageCode: 'lat',
-                    languageID: LMF.getLanguageIdFromCode('lat'),
-                    word: 'foo-word',
-                    principalParts: [ 'part1', 'part2' ]
-                  },
-                  meaning: {},
-                  isPopulated: () => { return true },
-                  getGroupedInflections: () => { return [] }
-                }
-              ]
-            },
-            linkedFeatures: [],
-            morphDataReady: true,
-            translationsDataReady: false
+    homonym = {
+      lexemes: [
+        {
+          inflections: [],
+          lemma: {
+            ID: 'l1',
+            features: {},
+            languageCode: 'lat',
+            languageID: LMF.getLanguageIdFromCode('lat'),
+            word: 'foo-word',
+            principalParts: [ 'part1', 'part2' ]
           },
-          getters: {
-            hasMorphData () {
-              return true
-            }
-          }
+          meaning: {},
+          isPopulated: () => { return true },
+          getGroupedInflections: () => { return [] }
         }
-      }
-    })
+      ]
+    }
+    api.app.homonym = homonym
 
     let cmp = mount(Morph, {
       computed: {
@@ -563,74 +457,65 @@ describe('morph.test.js', () => {
     let fullform = mockFeature('foo-word', 'full form', 'lat')
     let word = mockFeature('capio', 'word', 'lat')
 
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            homonym: {
-              lexemes: [
-                {
-                  inflections: [],
-                  lemma: {
-                    ID: 'l1',
-                    features: {},
-                    languageCode: 'lat',
-                    languageID: LMF.getLanguageIdFromCode('lat'),
-                    word: 'foo-word',
-                    principalParts: [ 'part1', 'part2' ]
-                  },
-                  meaning: {},
-                  isPopulated: () => { return true },
-                  getGroupedInflections: () => {
-                    return [
+    homonym = {
+      lexemes: [
+        {
+          inflections: [],
+          lemma: {
+            ID: 'l1',
+            features: {},
+            languageCode: 'lat',
+            languageID: LMF.getLanguageIdFromCode('lat'),
+            word: 'foo-word',
+            principalParts: [ 'part1', 'part2' ]
+          },
+          meaning: {},
+          isPopulated: () => { return true },
+          getGroupedInflections: () => {
+            return [
+              {
+                groupingKey: {
+                  stem: 'foostem',
+                  suffix: 'foosuffix',
+                  'part of speach': partOfSpeach
+                },
+                inflections: [
+                  {
+                    groupingKey: {
+                      isCaseInflectionSet: false,
+                      tense: tense
+                    },
+
+                    inflections: [
                       {
                         groupingKey: {
-                          stem: 'foostem',
-                          suffix: 'foosuffix',
-                          'part of speach': partOfSpeach
+                          tense: tense,
+                          voice: voice
                         },
+
                         inflections: [
                           {
                             groupingKey: {
-                              isCaseInflectionSet: false,
-                              tense: tense
+                              mood: mood,
+                              number: number,
+                              person: person,
+                              tense: tense,
+                              voice: voice
                             },
-
                             inflections: [
                               {
-                                groupingKey: {
-                                  tense: tense,
-                                  voice: voice
-                                },
-
-                                inflections: [
-                                  {
-                                    groupingKey: {
-                                      mood: mood,
-                                      number: number,
-                                      person: person,
-                                      tense: tense,
-                                      voice: voice
-                                    },
-                                    inflections: [
-                                      {
-                                        conjugation: conjugation,
-                                        constraints: {},
-                                        'full form': fullform,
-                                        mood: mood,
-                                        number: number,
-                                        'part of speach': partOfSpeach,
-                                        person: person,
-                                        stem: 'foostem',
-                                        suffix: 'foosuffix',
-                                        tense: tense,
-                                        voice: voice,
-                                        word: word
-                                      }
-                                    ]
-                                  }
-                                ]
+                                conjugation: conjugation,
+                                constraints: {},
+                                'full form': fullform,
+                                mood: mood,
+                                number: number,
+                                'part of speach': partOfSpeach,
+                                person: person,
+                                stem: 'foostem',
+                                suffix: 'foosuffix',
+                                tense: tense,
+                                voice: voice,
+                                word: word
                               }
                             ]
                           }
@@ -638,21 +523,14 @@ describe('morph.test.js', () => {
                       }
                     ]
                   }
-                }
-              ]
-            },
-            linkedFeatures: [],
-            morphDataReady: true,
-            translationsDataReady: false
-          },
-          getters: {
-            hasMorphData () {
-              return true
-            }
+                ]
+              }
+            ]
           }
         }
-      }
-    })
+      ]
+    }
+    api.app.homonym = homonym
 
     let cmp = mount(Morph, {
       store,
@@ -693,42 +571,26 @@ describe('morph.test.js', () => {
   })
 
   it('10 Morph - renders with disambiguated class', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            homonym: {
-              lexemes: [
-                {
-                  inflections: [],
-                  lemma: {
-                    ID: '1',
-                    features: {},
-                    languageCode: 'lat',
-                    languageID: LMF.getLanguageIdFromCode('lat'),
-                    word: 'foo-word',
-                    principalParts: [ 'part1', 'part2' ]
-                  },
-                  meaning: {},
-                  isPopulated: () => { return true },
-                  getGroupedInflections: () => { return [] },
-                  disambiguated: true
-                }
-              ]
-            },
-            linkedFeatures: [],
-            morphDataReady: true,
-            translationsDataReady: false
+    homonym = {
+      lexemes: [
+        {
+          inflections: [],
+          lemma: {
+            ID: '1',
+            features: {},
+            languageCode: 'lat',
+            languageID: LMF.getLanguageIdFromCode('lat'),
+            word: 'foo-word',
+            principalParts: [ 'part1', 'part2' ]
           },
-          getters: {
-            hasMorphData () {
-              return true
-            }
-          }
+          meaning: {},
+          isPopulated: () => { return true },
+          getGroupedInflections: () => { return [] },
+          disambiguated: true
         }
-      }
-    })
+      ]
+    }
+    api.app.homonym = homonym
 
     let cmp = mount(Morph, {
       stubs: [ 'inflectionattribute' ],
@@ -740,51 +602,35 @@ describe('morph.test.js', () => {
   })
 
   it('11 Morph - renders multiple lemmas per lexeme', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            homonym: {
-              lexemes: [
-                {
-                  inflections: [],
-                  lemma: {
-                    ID: '1',
-                    features: { 'frequency': { compareTo: () => { return 1 } } },
-                    languageCode: 'lat',
-                    languageID: LMF.getLanguageIdFromCode('lat'),
-                    word: 'foo-word',
-                    principalParts: [ 'part1', 'part2' ]
-                  },
-                  altLemmas: [
-                    {
-                      ID: '2',
-                      features: { 'frequency': { compareTo: () => { return -1 } } },
-                      languageCode: 'lat',
-                      languageID: LMF.getLanguageIdFromCode('lat'),
-                      word: 'foo-word',
-                      principalParts: [ 'part1a', 'part2a' ]
-                    }
-                  ],
-                  meaning: {},
-                  isPopulated: () => { return true },
-                  getGroupedInflections: () => { return [] }
-                }
-              ]
-            },
-            linkedFeatures: [],
-            morphDataReady: true,
-            translationsDataReady: false
+    homonym = {
+      lexemes: [
+        {
+          inflections: [],
+          lemma: {
+            ID: '1',
+            features: { 'frequency': { compareTo: () => { return 1 } } },
+            languageCode: 'lat',
+            languageID: LMF.getLanguageIdFromCode('lat'),
+            word: 'foo-word',
+            principalParts: [ 'part1', 'part2' ]
           },
-          getters: {
-            hasMorphData () {
-              return true
+          altLemmas: [
+            {
+              ID: '2',
+              features: { 'frequency': { compareTo: () => { return -1 } } },
+              languageCode: 'lat',
+              languageID: LMF.getLanguageIdFromCode('lat'),
+              word: 'foo-word',
+              principalParts: [ 'part1a', 'part2a' ]
             }
-          }
+          ],
+          meaning: {},
+          isPopulated: () => { return true },
+          getGroupedInflections: () => { return [] }
         }
-      }
-    })
+      ]
+    }
+    api.app.homonym = homonym
 
     let cmp = mount(Morph, {
       stubs: { 'inflectionattribute': '<div class="inflectionattribute"></div>' },

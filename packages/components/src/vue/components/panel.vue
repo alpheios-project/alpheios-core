@@ -63,7 +63,7 @@
         </div>
       </div>
       <div :id="inflectionsPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflections"
-           v-if="$store.getters[`app/hasInflData`]" v-show="$store.getters['ui/isActiveTab']('inflections') && $store.state.app.inflectionsViewSet">
+           v-if="$store.state.app.hasInflData" v-show="$store.getters['ui/isActiveTab']('inflections')">
         <inflections @contentwidth="setContentWidth" class="alpheios-panel-inflections"></inflections>
       </div>
       <div :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser"

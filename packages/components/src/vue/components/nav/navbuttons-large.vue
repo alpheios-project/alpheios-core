@@ -15,7 +15,7 @@
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT')" tooltipDirection="bottom-narrow"
-                v-show="$store.getters[`app/hasInflData`]">
+                v-show="$store.state.app.hasInflData">
       <span @click="ui.changeTab('inflections')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('inflections') }">
         <inflections-icon></inflections-icon>
