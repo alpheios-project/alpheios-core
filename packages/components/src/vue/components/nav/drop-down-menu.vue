@@ -17,7 +17,7 @@
     </div>
 
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('definitions') }"
-         @click="changeTab('definitions')" v-show="$store.state.app.defDataReady">
+         @click="changeTab('definitions')" v-show="$store.getters['app/defDataReady']">
       <div class="alpheios-navbuttons__icon-cont">
         <definitions-icon class="alpheios-navbuttons__icon"></definitions-icon>
       </div>
@@ -73,7 +73,7 @@
     </div>
 
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('wordUsage') }"
-         v-show="$store.getters['app/hasWordUsageExamplesData']" @click="changeTab('wordUsage')">
+         v-show="$store.state.app.wordUsageExamplesReady" @click="changeTab('wordUsage')">
       <div class="alpheios-navbuttons__icon-cont">
         <word-usage-icon class="alpheios-navbuttons__icon"></word-usage-icon>
       </div>
@@ -81,7 +81,7 @@
     </div>
 
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('wordlist') }"
-         v-show="this.$store.state.app.wordListUpdated && this.app.wordlistC && Object.keys(this.app.wordlistC.wordLists).length > 0"
+         v-show="this.$store.state.app.wordListUpdateTime && this.app.wordlistC && Object.keys(this.app.wordlistC.wordLists).length > 0"
          @click="changeTab('wordlist')">
       <div  class="alpheios-navbuttons__icon-cont">
         <wordlist-icon class="alpheios-navbuttons__icon"></wordlist-icon>

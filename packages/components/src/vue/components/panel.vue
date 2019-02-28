@@ -50,7 +50,7 @@
         <div class="alpheios-lookup__panel">
           <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"></lookup>
         </div>
-        <div v-if="$store.state.app.defDataReady">
+        <div v-if="$store.getters['app/defDataReady']">
           <div class="alpheios-panel__contentitem"
                v-for="definition in formattedShortDefinitions" :key="definition.ID">
             <shortdef :definition="definition" :languageCode="$store.state.app.status.languageCode"></shortdef>
@@ -92,12 +92,12 @@
         <user-auth></user-auth>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__word-usage"
-           v-if="$store.getters['app/hasWordUsageExamplesData']" v-show="$store.getters['ui/isActiveTab']('wordUsage')">
+           v-if="$store.state.app.wordUsageExamplesReady" v-show="$store.getters['ui/isActiveTab']('wordUsage')">
         <word-usage-examples-block
-            :wordUsageList="$store.state.app.wordUsageExamplesData.wordUsageExamples"
-            :targetWord="$store.state.app.wordUsageExamplesData.targetWord"
-            :language="$store.state.app.wordUsageExamplesData.language"
-            :provider="$store.state.app.wordUsageExamplesData.provider">
+            :wordUsageList="app.wordUsageExamples.wordUsageExamples"
+            :targetWord="app.wordUsageExamples.targetWord"
+            :language="app.wordUsageExamples.language"
+            :provider="app.wordUsageExamples.provider">
         </word-usage-examples-block>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__options" v-show="$store.getters['ui/isActiveTab']('options')">
@@ -162,7 +162,7 @@
         <info></info>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist" v-show="$store.getters['ui/isActiveTab']('wordlist')">
-        <word-list-panel :updated="$store.state.app.wordListUpdated" :wordlistC="app.wordlistC"></word-list-panel>
+        <word-list-panel :updated="$store.state.app.wordListUpdateTime" :wordlistC="app.wordlistC"></word-list-panel>
       </div>
     </div>
     <div class="alpheios-panel__notifications uk-text-small"

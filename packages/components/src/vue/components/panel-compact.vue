@@ -1,9 +1,13 @@
 <template>
-  <div :class="rootClasses" :data-notification-visible="$store.state.ui.notification.visible && $store.state.ui.notification.important"
-       :style="mainstyles" class="alpheios-panel alpheios-panel--compact auk"
+  <div :class="rootClasses"
+       :data-notification-visible="$store.state.ui.notification.visible && $store.state.ui.notification.important"
+       :style="mainstyles"
+       class="alpheios-panel alpheios-panel--compact auk"
        data-component="alpheios-panel"
-       data-resizable="true" id="alpheios-panel-inner" v-on-clickaway="attachTrackingClick"
-       v-show="$store.state.panel.visible">
+       data-resizable="true"
+       id="alpheios-panel-inner"
+       v-show="$store.state.panel.visible"
+  >
 
     <div class="alpheios-panel__header" >
       <div class="alpheios-panel__menu-btn" @click="menuItemClicked">
@@ -48,7 +52,7 @@
         <div class="alpheios-lookup__panel">
           <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"></lookup>
         </div>
-        <div v-if="$store.state.app.defDataReady">
+        <div v-if="$store.getters['app/defDataReady']">
           <div class="alpheios-panel__contentitem"
                v-for="definition in formattedShortDefinitions" :key="definition.ID">
             <shortdef :definition="definition" :languageCode="$store.state.app.status.languageCode"></shortdef>
@@ -90,12 +94,12 @@
         <user-auth></user-auth>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__word-usage"
-           v-if="$store.getters['app/hasWordUsageExamplesData']" v-show="$store.getters['ui/isActiveTab']('wordUsage')">
+           v-if="$store.state.app.wordUsageExamplesReady" v-show="$store.getters['ui/isActiveTab']('wordUsage')">
         <word-usage-examples-block
-            :language="$store.state.app.wordUsageExamplesData.language"
-            :provider="$store.state.app.wordUsageExamplesData.provider"
-            :targetWord="$store.state.app.wordUsageExamplesData.targetWord"
-            :wordUsageList="$store.state.app.wordUsageExamplesData.wordUsageExamples">
+            :language="app.wordUsageExamples.language"
+            :provider="app.wordUsageExamples.provider"
+            :targetWord="app.wordUsageExamples.targetWord"
+            :wordUsageList="app.wordUsageExamples.wordUsageExamples">
         </word-usage-examples-block>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__options" v-show="$store.getters['ui/isActiveTab']('options')">
@@ -160,7 +164,7 @@
         <info></info>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist" v-show="$store.getters['ui/isActiveTab']('wordlist')">
-        <word-list-panel :updated="$store.state.app.wordListUpdated" :wordlistC="app.wordlistC"></word-list-panel>
+        <word-list-panel :updated="$store.state.app.wordListUpdateTime" :wordlistC="app.wordlistC"></word-list-panel>
       </div>
     </div>
     <div class="alpheios-panel__notifications uk-text-small"
@@ -315,7 +319,7 @@ export default {
 
     formattedShortDefinitions () {
       let definitions = []
-      if (this.$store.state.app.defDataReady && this.$store.state.app.homonymDataReady) {
+      if (this.$store.getters['app/defDataReady'] && this.$store.state.app.homonymDataReady) {
         for (const lexeme of this.app.getHomonymLexemes()) {
           if (lexeme.meaning.shortDefs.length > 0) {
             definitions.push(...lexeme.meaning.shortDefs)
@@ -329,7 +333,7 @@ export default {
 
     formattedFullDefinitions () {
       let content = ''
-      if (this.$store.state.app.defDataReady && this.$store.state.app.homonymDataReady) {
+      if (this.$store.getters['app/defDataReady'] && this.$store.state.app.homonymDataReady) {
         for (const lexeme of this.app.getHomonymLexemes()) {
           content += `<h3>${lexeme.lemma.word}</h3>\n`
           for (const fullDef of lexeme.meaning.fullDefs) {

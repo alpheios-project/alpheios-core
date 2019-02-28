@@ -11844,6 +11844,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /*
   This is a mobile version of a panel
@@ -11981,7 +11985,7 @@ __webpack_require__.r(__webpack_exports__);
 
     formattedShortDefinitions () {
       let definitions = []
-      if (this.$store.state.app.defDataReady && this.$store.state.app.homonymDataReady) {
+      if (this.$store.getters['app/defDataReady'] && this.$store.state.app.homonymDataReady) {
         for (const lexeme of this.app.getHomonymLexemes()) {
           if (lexeme.meaning.shortDefs.length > 0) {
             definitions.push(...lexeme.meaning.shortDefs)
@@ -11995,7 +11999,7 @@ __webpack_require__.r(__webpack_exports__);
 
     formattedFullDefinitions () {
       let content = ''
-      if (this.$store.state.app.defDataReady && this.$store.state.app.homonymDataReady) {
+      if (this.$store.getters['app/defDataReady'] && this.$store.state.app.homonymDataReady) {
         for (const lexeme of this.app.getHomonymLexemes()) {
           content += `<h3>${lexeme.lemma.word}</h3>\n`
           for (const fullDef of lexeme.meaning.fullDefs) {
@@ -17568,8 +17572,8 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm.$store.state.app.defDataReady,
-              expression: "$store.state.app.defDataReady"
+              value: _vm.$store.getters["app/defDataReady"],
+              expression: "$store.getters['app/defDataReady']"
             }
           ],
           staticClass: "alpheios-navmenu__item",
@@ -17795,8 +17799,8 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm.$store.getters["app/hasWordUsageExamplesData"],
-              expression: "$store.getters['app/hasWordUsageExamplesData']"
+              value: _vm.$store.state.app.wordUsageExamplesReady,
+              expression: "$store.state.app.wordUsageExamplesReady"
             }
           ],
           staticClass: "alpheios-navmenu__item",
@@ -17833,11 +17837,11 @@ var render = function() {
               name: "show",
               rawName: "v-show",
               value:
-                this.$store.state.app.wordListUpdated &&
+                this.$store.state.app.wordListUpdateTime &&
                 this.app.wordlistC &&
                 Object.keys(this.app.wordlistC.wordLists).length > 0,
               expression:
-                "this.$store.state.app.wordListUpdated && this.app.wordlistC && Object.keys(this.app.wordlistC.wordLists).length > 0"
+                "this.$store.state.app.wordListUpdateTime && this.app.wordlistC && Object.keys(this.app.wordlistC.wordLists).length > 0"
             }
           ],
           staticClass: "alpheios-navmenu__item",
@@ -17961,8 +17965,8 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm.$store.state.app.defDataReady,
-              expression: "$store.state.app.defDataReady"
+              value: _vm.$store.getters["app/defDataReady"],
+              expression: "$store.getters['app/defDataReady']"
             }
           ],
           attrs: {
@@ -18088,8 +18092,8 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm.$store.state.app.defDataReady,
-              expression: "$store.state.app.defDataReady"
+              value: _vm.$store.getters["app/defDataReady"],
+              expression: "$store.getters['app/defDataReady']"
             }
           ],
           attrs: {
@@ -18320,8 +18324,8 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm.$store.getters["app/hasWordUsageExamplesData"],
-              expression: "$store.getters['app/hasWordUsageExamplesData']"
+              value: _vm.$store.state.app.wordUsageExamplesReady,
+              expression: "$store.state.app.wordUsageExamplesReady"
             }
           ],
           attrs: {
@@ -18366,11 +18370,11 @@ var render = function() {
                   name: "show",
                   rawName: "v-show",
                   value:
-                    this.$store.state.app.wordListUpdated &&
+                    this.$store.state.app.wordListUpdateTime &&
                     this.app.wordlistC &&
                     Object.keys(this.app.wordlistC.wordLists).length > 0,
                   expression:
-                    "this.$store.state.app.wordListUpdated && this.app.wordlistC && Object.keys(this.app.wordlistC.wordLists).length > 0"
+                    "this.$store.state.app.wordListUpdateTime && this.app.wordlistC && Object.keys(this.app.wordlistC.wordLists).length > 0"
                 }
               ],
               staticClass: "alpheios-navbuttons__btn",
@@ -18523,8 +18527,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.$store.state.app.defDataReady,
-                  expression: "$store.state.app.defDataReady"
+                  value: _vm.$store.getters["app/defDataReady"],
+                  expression: "$store.getters['app/defDataReady']"
                 }
               ],
               attrs: {
@@ -18755,8 +18759,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.$store.getters["app/hasWordUsageExamplesData"],
-                  expression: "$store.getters['app/hasWordUsageExamplesData']"
+                  value: _vm.$store.state.app.wordUsageExamplesReady,
+                  expression: "$store.state.app.wordUsageExamplesReady"
                 }
               ],
               attrs: {
@@ -18801,11 +18805,11 @@ var render = function() {
                       name: "show",
                       rawName: "v-show",
                       value:
-                        this.$store.state.app.wordListUpdated &&
+                        this.$store.state.app.wordListUpdateTime &&
                         this.app.wordlistC &&
                         Object.keys(this.app.wordlistC.wordLists).length > 0,
                       expression:
-                        "this.$store.state.app.wordListUpdated && this.app.wordlistC && Object.keys(this.app.wordlistC.wordLists).length > 0"
+                        "this.$store.state.app.wordListUpdateTime && this.app.wordlistC && Object.keys(this.app.wordlistC.wordLists).length > 0"
                     }
                   ],
                   staticClass: "alpheios-navbuttons__btn",
@@ -18913,12 +18917,6 @@ var render = function() {
     "div",
     {
       directives: [
-        {
-          name: "on-clickaway",
-          rawName: "v-on-clickaway",
-          value: _vm.attachTrackingClick,
-          expression: "attachTrackingClick"
-        },
         {
           name: "show",
           rawName: "v-show",
@@ -19065,7 +19063,7 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _vm.$store.state.app.defDataReady
+              _vm.$store.getters["app/defDataReady"]
                 ? _c(
                     "div",
                     [
@@ -19245,7 +19243,7 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _vm.$store.getters["app/hasWordUsageExamplesData"]
+          _vm.$store.state.app.wordUsageExamplesReady
             ? _c(
                 "div",
                 {
@@ -19264,15 +19262,10 @@ var render = function() {
                 [
                   _c("word-usage-examples-block", {
                     attrs: {
-                      language:
-                        _vm.$store.state.app.wordUsageExamplesData.language,
-                      provider:
-                        _vm.$store.state.app.wordUsageExamplesData.provider,
-                      targetWord:
-                        _vm.$store.state.app.wordUsageExamplesData.targetWord,
-                      wordUsageList:
-                        _vm.$store.state.app.wordUsageExamplesData
-                          .wordUsageExamples
+                      language: _vm.app.wordUsageExamples.language,
+                      provider: _vm.app.wordUsageExamples.provider,
+                      targetWord: _vm.app.wordUsageExamples.targetWord,
+                      wordUsageList: _vm.app.wordUsageExamples.wordUsageExamples
                     }
                   })
                 ],
@@ -19512,7 +19505,7 @@ var render = function() {
             [
               _c("word-list-panel", {
                 attrs: {
-                  updated: _vm.$store.state.app.wordListUpdated,
+                  updated: _vm.$store.state.app.wordListUpdateTime,
                   wordlistC: _vm.app.wordlistC
                 }
               })
@@ -19789,7 +19782,7 @@ var render = function() {
                   1
                 ),
                 _vm._v(" "),
-                _vm.$store.state.app.defDataReady
+                _vm.$store.getters["app/defDataReady"]
                   ? _c(
                       "div",
                       [
@@ -19971,7 +19964,7 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _vm.$store.getters["app/hasWordUsageExamplesData"]
+        _vm.$store.state.app.wordUsageExamplesReady
           ? _c(
               "div",
               {
@@ -19989,15 +19982,10 @@ var render = function() {
               [
                 _c("word-usage-examples-block", {
                   attrs: {
-                    wordUsageList:
-                      _vm.$store.state.app.wordUsageExamplesData
-                        .wordUsageExamples,
-                    targetWord:
-                      _vm.$store.state.app.wordUsageExamplesData.targetWord,
-                    language:
-                      _vm.$store.state.app.wordUsageExamplesData.language,
-                    provider:
-                      _vm.$store.state.app.wordUsageExamplesData.provider
+                    wordUsageList: _vm.app.wordUsageExamples.wordUsageExamples,
+                    targetWord: _vm.app.wordUsageExamples.targetWord,
+                    language: _vm.app.wordUsageExamples.language,
+                    provider: _vm.app.wordUsageExamples.provider
                   }
                 })
               ],
@@ -20234,7 +20222,7 @@ var render = function() {
           [
             _c("word-list-panel", {
               attrs: {
-                updated: _vm.$store.state.app.wordListUpdated,
+                updated: _vm.$store.state.app.wordListUpdateTime,
                 wordlistC: _vm.app.wordlistC
               }
             })
@@ -20787,8 +20775,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.$store.state.app.defDataReady,
-                        expression: "$store.state.app.defDataReady"
+                        value: _vm.$store.getters["app/defDataReady"],
+                        expression: "$store.getters['app/defDataReady']"
                       }
                     ],
                     attrs: {
@@ -20865,10 +20853,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value:
-                          _vm.$store.getters["app/hasWordUsageExamplesData"],
-                        expression:
-                          "$store.getters['app/hasWordUsageExamplesData']"
+                        value: _vm.$store.state.app.wordUsageExamplesReady,
+                        expression: "$store.state.app.wordUsageExamplesReady"
                       }
                     ],
                     attrs: {
@@ -35794,6 +35780,7 @@ class UIController {
       homonym: null,
       inflectionsViewSet: null,
       wordlistC: this.wordlistC, // A word list controller
+      wordUsageExamples: null,
 
       isDevMode: () => {
         return this.options.mode === 'development'
@@ -35843,7 +35830,7 @@ class UIController {
         },
         homonymDataReady: false,
         linkedFeatures: [], // An array of linked features, updated with every new homonym value is written to the store
-        defDataReady: false,
+        defUpdateTime: 0, // A time of the last update of defintions, in ms. Needed to track changes in definitions.
         lexicalRequest: {
           startTime: 0, // A time when the last lexical request is started, in ms
           endTime: 0, // A time when the last lexical request is started, in ms
@@ -35858,13 +35845,17 @@ class UIController {
           word: {},
           page: {}
         },
-        wordUsageExamplesData: null,
+        wordUsageExamplesReady: false, // Whether word usage examples data is available
         hasWordListsData: false,
-        wordListUpdated: 0, // To notify word list panel about data update. TODO: Can we monitor data instead?
+        wordListUpdateTime: 0, // To notify word list panel about data update
         providers: [] // A list of resource providers
       },
 
       getters: {
+        defDataReady (state) {
+          return state.defUpdateTime > 0
+        },
+
         /**
          * Identifies wither grammar resource(s) are available for the current state.
          * @param state - A local state.
@@ -35878,10 +35869,6 @@ class UIController {
           // Treebank data is available if we have it for the word or the page
           return Boolean((state.treebankData.page && state.treebankData.page.src) ||
             (state.treebankData.word && state.treebankData.word.src))
-        },
-
-        hasWordUsageExamplesData (state) {
-          return Boolean(state.wordUsageExamplesData)
         }
       },
 
@@ -35901,29 +35888,31 @@ class UIController {
           state.status.selectedText = data.text
         },
 
-        resetStatusData: function (state) {
+        lexicalRequestStarted (state, targetWord) {
+          state.targetWord = targetWord
+          state.lexicalRequest.startTime = Date.now()
+        },
+
+        resetWordData (state) {
           state.status.languageName = ''
           state.status.languageCode = ''
           state.status.selectedText = ''
-        },
-
-        lexicalRequestStarted (state, targetWord) {
-          state.targetWord = targetWord
           state.selectionTarget = {
             x: 0,
             y: 0
           }
           state.inflectionsWaitState = true
-          state.wordUsageExamplesData = null
+          state.wordUsageExamplesReady = false
           state.linkedFeatures = []
           state.homonymDataReady = false
-          state.defDataReady = false
+          state.grammarRes = null
+          state.defUpdateTime = 0
           state.morphDataReady = false
           state.translationsDataReady = false
           state.providers = []
           state.hasWordListsData = false
-          state.wordListUpdated = 0
-          state.lexicalRequest.startTime = Date.now()
+          state.treebankData.page = {}
+          state.treebankData.word = {}
         },
 
         lexicalRequestFinished (state) {
@@ -35975,13 +35964,13 @@ class UIController {
           state.treebankData.word = {}
         },
 
-        setWordUsageExamplesData (state, data) {
-          state.wordUsageExamplesData = data
+        setWordUsageExamplesReady (state) {
+          state.wordUsageExamplesReady = true
         },
 
         setWordLists (state, wordLists) {
           state.hasWordListsData = (wordLists.length > 0)
-          state.wordListUpdated++
+          state.wordListUpdateTime = Date.now()
         },
 
         /**
@@ -35992,12 +35981,8 @@ class UIController {
           state.providers = providers
         },
 
-        setDefDataReady (state, value = true) {
-          state.defDataReady = value
-        },
-
-        resetDefDataReady (state) {
-          state.defDataReady = false
+        defsUpdated (state) {
+          state.defUpdateTime = Date.now()
         },
 
         setMorphDataReady (state, value = true) {
@@ -36315,11 +36300,12 @@ class UIController {
     this.updateLanguage(languageID)
     this.updateWordAnnotationData()
     this.api.app.homonym = null
-    this.api.app.inflectionsViewSet = null
-    this.store.commit('app/lexicalRequestStarted', targetWord)
-    this.store.commit('app/resetGrammarRes')
+    this.store.commit('app/resetWordData')
     this.resetInflData()
-    this.clear().open()
+    this.store.commit('ui/resetNotification')
+    this.store.commit('ui/resetMessages')
+    this.store.commit('app/lexicalRequestStarted', targetWord)
+    this.open()
     return this
   }
 
@@ -36363,7 +36349,7 @@ class UIController {
 
   updateDefinitions (homonym) {
     this.updateProviders(homonym)
-    this.store.commit('app/setDefDataReady')
+    this.store.commit('app/defsUpdated')
   }
 
   updateTranslations (homonym) {
@@ -36407,21 +36393,12 @@ class UIController {
 
   updateWordUsageExamples (wordUsageExamplesData) {
     this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_WORDUSAGE_READY'))
-    this.store.commit('app/setWordUsageExamplesData', wordUsageExamplesData)
-  }
-
-  clear () {
-    this.store.commit(`app/resetStatusData`)
-    this.store.commit(`app/resetDefDataReady`)
-    this.resetInflData()
-    this.store.commit(`app/resetTreebankData`)
-    this.store.commit(`ui/resetNotification`)
-    this.store.commit(`ui/resetMessages`)
-    return this
+    this.api.app.wordUsageExamples = wordUsageExamplesData
+    this.store.commit('app/setWordUsageExamplesReady')
   }
 
   open () {
-    if (this.api.ui.hasModule('panel') && this.api.ui.getModule('panel').config.panelComponent === 'compactPanel') {
+    if (this.api.ui.hasModule('panel') && this.platform === _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_17__["default"].platforms.MOBILE) {
       // This is a compact version of a UI
       this.api.ui.openPanel()
       this.changeTab('morphology')
@@ -36623,7 +36600,6 @@ class UIController {
   onHomonymReady (homonym) {
     homonym.lexemes.sort(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lexeme"].getSortByTwoLemmaFeatures(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.frequency, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part))
     this.updateProviders(homonym)
-
     this.updateDefinitions(homonym)
     // Update status info with data from a morphological analyzer
     this.showStatusInfo(homonym.targetWord, homonym.languageID)

@@ -8,7 +8,7 @@
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')" tooltipDirection="top"
-                  v-show="$store.state.app.defDataReady">
+                  v-show="$store.getters['app/defDataReady']">
       <span :class="{ active: $store.getters['ui/isActiveTab']('definitions') }" @click="ui.changeTab('definitions')"
             class="alpheios-navbuttons__btn">
         <definitions-icon></definitions-icon>

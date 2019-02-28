@@ -30,7 +30,7 @@
         </span>
       </alph-tooltip>
 
-      <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')" tooltipDirection="left" v-show="$store.state.app.defDataReady">
+      <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')" tooltipDirection="left" v-show="$store.getters['app/defDataReady']">
         <span :class="{ active: $store.getters['ui/isActiveTab']('definitions') }" @click="ui.togglePanelTab('definitions')"
               class="alpheios-navbuttons__btn">
           <definitions-icon></definitions-icon>
@@ -84,7 +84,7 @@
       </alph-tooltip>
 
       <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORD_USAGE')" tooltipDirection="left"
-                  v-show="$store.getters['app/hasWordUsageExamplesData']">
+                  v-show="$store.state.app.wordUsageExamplesReady">
         <span @click="ui.togglePanelTab('wordUsage')" class="alpheios-navbuttons__btn"
               v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordUsage') }">
           <word-usage-icon></word-usage-icon>
@@ -94,7 +94,7 @@
       <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORDLIST')" tooltipDirection="left">
         <span @click="ui.togglePanelTab('wordlist')" class="alpheios-navbuttons__btn"
               v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordlist') }"
-              v-show="this.$store.state.app.wordListUpdated && this.app.wordlistC && Object.keys(this.app.wordlistC.wordLists).length > 0">
+              v-show="this.$store.state.app.wordListUpdateTime && this.app.wordlistC && Object.keys(this.app.wordlistC.wordLists).length > 0">
           <wordlist-icon></wordlist-icon>
         </span>
       </alph-tooltip>

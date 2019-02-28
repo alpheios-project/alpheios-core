@@ -352,6 +352,7 @@ export default class UIController {
       homonym: null,
       inflectionsViewSet: null,
       wordlistC: this.wordlistC, // A word list controller
+      wordUsageExamples: null,
 
       isDevMode: () => {
         return this.options.mode === 'development'
@@ -401,7 +402,7 @@ export default class UIController {
         },
         homonymDataReady: false,
         linkedFeatures: [], // An array of linked features, updated with every new homonym value is written to the store
-        defDataReady: false,
+        defUpdateTime: 0, // A time of the last update of defintions, in ms. Needed to track changes in definitions.
         lexicalRequest: {
           startTime: 0, // A time when the last lexical request is started, in ms
           endTime: 0, // A time when the last lexical request is started, in ms
@@ -416,13 +417,17 @@ export default class UIController {
           word: {},
           page: {}
         },
-        wordUsageExamplesData: null,
+        wordUsageExamplesReady: false, // Whether word usage examples data is available
         hasWordListsData: false,
-        wordListUpdated: 0, // To notify word list panel about data update. TODO: Can we monitor data instead?
+        wordListUpdateTime: 0, // To notify word list panel about data update
         providers: [] // A list of resource providers
       },
 
       getters: {
+        defDataReady (state) {
+          return state.defUpdateTime > 0
+        },
+
         /**
          * Identifies wither grammar resource(s) are available for the current state.
          * @param state - A local state.
@@ -436,10 +441,6 @@ export default class UIController {
           // Treebank data is available if we have it for the word or the page
           return Boolean((state.treebankData.page && state.treebankData.page.src) ||
             (state.treebankData.word && state.treebankData.word.src))
-        },
-
-        hasWordUsageExamplesData (state) {
-          return Boolean(state.wordUsageExamplesData)
         }
       },
 
@@ -459,29 +460,31 @@ export default class UIController {
           state.status.selectedText = data.text
         },
 
-        resetStatusData: function (state) {
+        lexicalRequestStarted (state, targetWord) {
+          state.targetWord = targetWord
+          state.lexicalRequest.startTime = Date.now()
+        },
+
+        resetWordData (state) {
           state.status.languageName = ''
           state.status.languageCode = ''
           state.status.selectedText = ''
-        },
-
-        lexicalRequestStarted (state, targetWord) {
-          state.targetWord = targetWord
           state.selectionTarget = {
             x: 0,
             y: 0
           }
           state.inflectionsWaitState = true
-          state.wordUsageExamplesData = null
+          state.wordUsageExamplesReady = false
           state.linkedFeatures = []
           state.homonymDataReady = false
-          state.defDataReady = false
+          state.grammarRes = null
+          state.defUpdateTime = 0
           state.morphDataReady = false
           state.translationsDataReady = false
           state.providers = []
           state.hasWordListsData = false
-          state.wordListUpdated = 0
-          state.lexicalRequest.startTime = Date.now()
+          state.treebankData.page = {}
+          state.treebankData.word = {}
         },
 
         lexicalRequestFinished (state) {
@@ -533,13 +536,13 @@ export default class UIController {
           state.treebankData.word = {}
         },
 
-        setWordUsageExamplesData (state, data) {
-          state.wordUsageExamplesData = data
+        setWordUsageExamplesReady (state) {
+          state.wordUsageExamplesReady = true
         },
 
         setWordLists (state, wordLists) {
           state.hasWordListsData = (wordLists.length > 0)
-          state.wordListUpdated++
+          state.wordListUpdateTime = Date.now()
         },
 
         /**
@@ -550,12 +553,8 @@ export default class UIController {
           state.providers = providers
         },
 
-        setDefDataReady (state, value = true) {
-          state.defDataReady = value
-        },
-
-        resetDefDataReady (state) {
-          state.defDataReady = false
+        defsUpdated (state) {
+          state.defUpdateTime = Date.now()
         },
 
         setMorphDataReady (state, value = true) {
@@ -873,11 +872,12 @@ export default class UIController {
     this.updateLanguage(languageID)
     this.updateWordAnnotationData()
     this.api.app.homonym = null
-    this.api.app.inflectionsViewSet = null
-    this.store.commit('app/lexicalRequestStarted', targetWord)
-    this.store.commit('app/resetGrammarRes')
+    this.store.commit('app/resetWordData')
     this.resetInflData()
-    this.clear().open()
+    this.store.commit('ui/resetNotification')
+    this.store.commit('ui/resetMessages')
+    this.store.commit('app/lexicalRequestStarted', targetWord)
+    this.open()
     return this
   }
 
@@ -921,7 +921,7 @@ export default class UIController {
 
   updateDefinitions (homonym) {
     this.updateProviders(homonym)
-    this.store.commit('app/setDefDataReady')
+    this.store.commit('app/defsUpdated')
   }
 
   updateTranslations (homonym) {
@@ -965,21 +965,12 @@ export default class UIController {
 
   updateWordUsageExamples (wordUsageExamplesData) {
     this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_WORDUSAGE_READY'))
-    this.store.commit('app/setWordUsageExamplesData', wordUsageExamplesData)
-  }
-
-  clear () {
-    this.store.commit(`app/resetStatusData`)
-    this.store.commit(`app/resetDefDataReady`)
-    this.resetInflData()
-    this.store.commit(`app/resetTreebankData`)
-    this.store.commit(`ui/resetNotification`)
-    this.store.commit(`ui/resetMessages`)
-    return this
+    this.api.app.wordUsageExamples = wordUsageExamplesData
+    this.store.commit('app/setWordUsageExamplesReady')
   }
 
   open () {
-    if (this.api.ui.hasModule('panel') && this.api.ui.getModule('panel').config.panelComponent === 'compactPanel') {
+    if (this.api.ui.hasModule('panel') && this.platform === HTMLPage.platforms.MOBILE) {
       // This is a compact version of a UI
       this.api.ui.openPanel()
       this.changeTab('morphology')
@@ -1181,7 +1172,6 @@ export default class UIController {
   onHomonymReady (homonym) {
     homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
     this.updateProviders(homonym)
-
     this.updateDefinitions(homonym)
     // Update status info with data from a morphological analyzer
     this.showStatusInfo(homonym.targetWord, homonym.languageID)

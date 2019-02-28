@@ -20,7 +20,7 @@
 
       <div class="alpheios-popup__button-area" v-if="data">
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
-                      v-show="$store.state.app.defDataReady">
+                      v-show="$store.getters['app/defDataReady']">
           <button @click="ui.showPanelTab('definitions')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-definitions">
             {{ l10n.getText('LABEL_POPUP_DEFINE') }}
           </button>
@@ -35,7 +35,7 @@
         </alph-tooltip>
 
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_USAGEEXAMPLES')" tooltipDirection="bottom-wide"
-                      v-show="$store.getters['app/hasWordUsageExamplesData']">
+                      v-show="$store.state.app.wordUsageExamplesReady">
           <button class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections"
                   @click="ui.showPanelTab('wordUsage')">
             {{ l10n.getText('LABEL_POPUP_USAGEEXAMPLES') }}
