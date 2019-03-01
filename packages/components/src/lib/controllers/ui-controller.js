@@ -89,6 +89,7 @@ export default class UIController {
 
     // Vuex store. A public API for data and UI module interactions.
     this.store = new Vuex.Store({
+      // TODO: Remove this for production as it slows things down
       strict: true
     })
     this.api = {} // An API object for functions of registered modules and UI controller.
