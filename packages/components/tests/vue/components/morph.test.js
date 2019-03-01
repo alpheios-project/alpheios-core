@@ -21,13 +21,15 @@ describe('morph.test.js', () => {
       app: {
         namespaced: true,
         state: {
-          homonymDataReady: true,
           linkedFeatures: [],
           morphDataReady: true,
           translationsDataReady: false
         },
         getters: {
           hasMorphData () {
+            return true
+          },
+          defDataReady () {
             return true
           }
         }

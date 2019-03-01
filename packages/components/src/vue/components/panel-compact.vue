@@ -55,7 +55,7 @@
         <div v-if="$store.getters['app/defDataReady']">
           <div class="alpheios-panel__contentitem"
                v-for="definition in formattedShortDefinitions" :key="definition.ID">
-            <shortdef :definition="definition" :languageCode="$store.state.app.status.languageCode"></shortdef>
+            <shortdef :definition="definition" :languageCode="$store.state.app.languageCode"></shortdef>
           </div>
           <div class="alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions"
                v-html="formattedFullDefinitions"></div>
@@ -275,8 +275,8 @@ export default {
       return true
     },
     lookupParentLanguage: function () {
-      if (this.$store.state.app.currentLanguageName) {
-        return this.$store.state.app.currentLanguageName
+      if (this.$store.state.app.preferredLanguageName) {
+        return this.$store.state.app.preferredLanguageName
       } else {
         return this.settings.contentOptions.items.preferredLanguage.currentTextValue()
       }

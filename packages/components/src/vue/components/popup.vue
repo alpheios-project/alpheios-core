@@ -12,10 +12,25 @@
           </span>
     </alph-tooltip>
     <div class="alpheios-popup__header">
-      <div :lang="$store.state.app.status.languageCode" class="alpheios-popup__header-text" v-if="$store.state.app.status">
-        <span :lang="$store.state.app.status.languageCode" class="alpheios-popup__header-selection"
-              v-show="$store.state.app.status.selectedText">{{$store.state.app.status.selectedText}}</span>
-        <span class="alpheios-popup__header-word" lang="en" v-show="$store.state.app.status.languageName && verboseMode">({{$store.state.app.status.languageName}})</span>
+
+      <div
+          :lang="$store.state.app.languageCode"
+          class="alpheios-popup__header-text"
+      >
+        <span
+            :lang="$store.state.app.languageCode"
+            class="alpheios-popup__header-selection"
+            v-show="$store.state.app.selectedText"
+        >
+          {{$store.state.app.selectedText}}
+        </span>
+        <span
+            class="alpheios-popup__header-word"
+            lang="en"
+            v-show="$store.state.app.languageName && verboseMode"
+        >
+          ({{$store.state.app.languageName}})
+        </span>
       </div>
 
       <div class="alpheios-popup__button-area" v-if="data">
@@ -103,7 +118,7 @@
                :show-title="false" @change="contentOptionChanged"
                v-show="$store.state.ui.notification.showLanguageSwitcher"></setting>
     </div>
-    <lookup :clearLookupText="$store.state.app.morphDataReady && app.hasMorphData()" :parentLanguage="$store.state.app.currentLanguageName"></lookup>
+    <lookup :clearLookupText="$store.state.app.morphDataReady && app.hasMorphData()" :parentLanguage="$store.state.app.preferredLanguageName"></lookup>
   </div>
 </template>
 <script>
@@ -201,7 +216,7 @@ export default {
       return Logger.getLogger(this.verboseMode)
     },
     noLanguage: function () {
-      return Boolean(!this.$store.state.app.currentLanguageName)
+      return Boolean(!this.$store.state.app.preferredLanguageName)
     },
     providersLinkText: function () {
       return this.showProviders ? this.l10n.getText('LABEL_POPUP_HIDECREDITS') : this.l10n.getText('LABEL_POPUP_SHOWCREDITS')

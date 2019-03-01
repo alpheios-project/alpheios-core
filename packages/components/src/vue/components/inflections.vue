@@ -128,8 +128,8 @@ export default {
   computed: {
     inflectionsEnabled: function () {
       // TODO: This is a temporary solution. This should be handled in accord with our overall state handling policy
-      return this.$store.state.app.currentLanguageID
-        ? ViewSetFactory.hasInflectionsEnabled(this.$store.state.app.currentLanguageID)
+      return this.$store.state.app.preferredLanguageID
+        ? ViewSetFactory.hasInflectionsEnabled(this.$store.state.app.preferredLanguageID)
         : false
     },
     partOfSpeechSelector: {

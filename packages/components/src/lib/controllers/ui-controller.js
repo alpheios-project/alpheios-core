@@ -388,13 +388,11 @@ export default class UIController {
       namespaced: true,
 
       state: {
-        currentLanguageID: undefined,
-        currentLanguageName: undefined,
-        status: {
-          selectedText: '',
-          languageName: '',
-          languageCode: ''
-        },
+        preferredLanguageID: undefined,
+        preferredLanguageName: undefined,
+        selectedText: '',
+        languageName: '',
+        languageCode: '',
         targetWord: '',
         // An object with x and y props that reflects integer coordinates of a selection target
         selectionTarget: {
@@ -425,6 +423,10 @@ export default class UIController {
       },
 
       getters: {
+        /*
+        This getter can serve as an indicator of a new definition data arrival.
+        If used within a computed prop, it will force the prop to recalculate every time definitions are updated.
+         */
         defDataReady (state) {
           return state.defUpdateTime > 0
         },
@@ -450,15 +452,15 @@ export default class UIController {
           let name
           let id
           ({ id, name } = UIController.getLanguageName(languageCodeOrID))
-          state.currentLanguageID = id
-          state.currentLanguageName = name
+          state.preferredLanguageID = id
+          state.preferredLanguageName = name
         },
 
-        setStatusData (state, data) {
+        setTextData (state, data) {
           let langDetails = UIController.getLanguageName(data.languageID)
-          state.status.languageName = langDetails.name
-          state.status.languageCode = langDetails.code
-          state.status.selectedText = data.text
+          state.languageName = langDetails.name
+          state.languageCode = langDetails.code
+          state.selectedText = data.text
         },
 
         lexicalRequestStarted (state, targetWord) {
@@ -467,9 +469,9 @@ export default class UIController {
         },
 
         resetWordData (state) {
-          state.status.languageName = ''
-          state.status.languageCode = ''
-          state.status.selectedText = ''
+          state.languageName = ''
+          state.languageCode = ''
+          state.selectedText = ''
           state.selectionTarget = {
             x: 0,
             y: 0
@@ -657,9 +659,9 @@ export default class UIController {
     // Set initial values of components
     this.setRootComponentClasses()
 
-    const currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(this.contentOptions.items.preferredLanguage.currentValue)
+    const preferredLanguageID = LanguageModelFactory.getLanguageIdFromCode(this.contentOptions.items.preferredLanguage.currentValue)
     this.contentOptions.items.lookupLangOverride.setValue(false)
-    this.updateLanguage(currentLanguageID)
+    this.updateLanguage(preferredLanguageID)
     this.updateLemmaTranslations()
 
     if (this.wordlistC) {
@@ -795,18 +797,14 @@ export default class UIController {
       let languageName
       if (homonym) {
         languageName = this.api.app.getLanguageName(homonym.languageID).name
-      } else if (this.store.state.app.currentLanguageName) {
-        languageName = this.store.state.app.currentLanguageName
+      } else if (this.store.state.app.preferredLanguageName) {
+        languageName = this.store.state.app.preferredLanguageName
       } else {
         languageName = this.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN')
       }
       const message = this.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE', { languageName: languageName })
       this.store.commit(`ui/setNotification`, { text: message, important: true, showLanguageSwitcher: true })
     }
-  }
-
-  showStatusInfo (selectionText, languageID) {
-    this.store.commit(`app/setStatusData`, { text: selectionText, languageID: languageID })
   }
 
   // TODO: Do we need this function
@@ -868,15 +866,18 @@ export default class UIController {
   }
 
   newLexicalRequest (targetWord, languageID) {
-    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
-    this.showStatusInfo(targetWord, languageID)
-    this.updateLanguage(languageID)
-    this.updateWordAnnotationData()
+    // Reset old word-related data
     this.api.app.homonym = null
     this.store.commit('app/resetWordData')
     this.resetInflData()
     this.store.commit('ui/resetNotification')
     this.store.commit('ui/resetMessages')
+
+    // Set new data values
+    this.store.commit(`app/setTextData`, { text: targetWord, languageID: languageID })
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
+    this.updateLanguage(languageID)
+    this.updateWordAnnotationData()
     this.store.commit('app/lexicalRequestStarted', targetWord)
     this.open()
     return this
@@ -942,16 +943,16 @@ export default class UIController {
     }
   }
 
-  updateLanguage (currentLanguageID) {
+  updateLanguage (preferredLanguageID) {
     // the code which follows assumes we have been passed a languageID symbol
     // we can try to recover gracefully if we accidentally get passed a string value
-    if (typeof currentLanguageID !== 'symbol') {
+    if (typeof preferredLanguageID !== 'symbol') {
       console.warn('updateLanguage was called with a string value')
-      currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(currentLanguageID)
+      preferredLanguageID = LanguageModelFactory.getLanguageIdFromCode(preferredLanguageID)
     }
-    this.store.commit('app/setLanguage', currentLanguageID)
-    this.state.setItem('currentLanguage', LanguageModelFactory.getLanguageCodeFromId(currentLanguageID))
-    this.startResourceQuery({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
+    this.store.commit('app/setLanguage', preferredLanguageID)
+    this.state.setItem('currentLanguage', LanguageModelFactory.getLanguageCodeFromId(preferredLanguageID))
+    this.startResourceQuery({ type: 'table-of-contents', value: '', languageID: preferredLanguageID })
 
     this.resetInflData()
   }
@@ -1168,9 +1169,6 @@ export default class UIController {
 
   onMorphDataNotFound () {
     this.store.commit(`ui/setNotification`, { text: this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_NOTFOUND'), important: true })
-    // Need to notify a UI controller that there is no morph data on this word in an analyzer
-    // However, controller may not have `morphologyDataNotFound()` implemented, so need to check first
-    if (this.morphologyDataNotFound) { this.morphologyDataNotFound(true) }
   }
 
   onHomonymReady (homonym) {
@@ -1178,7 +1176,7 @@ export default class UIController {
     this.updateProviders(homonym)
     this.updateDefinitions(homonym)
     // Update status info with data from a morphological analyzer
-    this.showStatusInfo(homonym.targetWord, homonym.languageID)
+    this.store.commit(`app/setTextData`, { text: homonym.targetWord, languageID: homonym.languageID })
 
     // Update inflections data
     let inflectionsViewSet = ViewSetFactory.create(homonym, this.contentOptions.items.locale.currentValue)

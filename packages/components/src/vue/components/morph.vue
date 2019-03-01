@@ -257,11 +257,8 @@ export default {
   },
   computed: {
     lexemes () {
-      // A reference to the store prop is required to keep this computed prop from being cached
-      if (!this.$store.state.app.homonymDataReady) {
-        return []
-      }
-      return this.app.getHomonymLexemes()
+      // A call to `defDataReady` will force this computed prop to recalculate every time definitions data is updated
+      return this.$store.getters['app/defDataReady'] ? this.app.getHomonymLexemes() : []
     },
 
     translations () {

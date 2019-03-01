@@ -3,7 +3,7 @@
     <div class="alpheios-info__versiontext alpheios-text__smallest">{{ app.name }} {{ app.version }}
     </div>
     <div class="alpheios-info__currentlanguage alpheios-text__smallest">{{ l10n.getMsg('LABEL_INFO_CURRENTLANGUAGE') }}
-      {{ $store.state.app.currentLanguageName }}
+      {{ $store.state.app.preferredLanguageName }}
     </div>
     <div class="alpheios-info__helptext">
       <h3>{{ l10n.getMsg('TEXT_INFO_GETTINGSTARTED') }}</h3>
