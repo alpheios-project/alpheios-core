@@ -10,7 +10,7 @@ import wordUsageExampleItem from '@/vue/components/word-usage-example-item.vue'
 
 describe('word-usage-example-item.test.js', () => {
   console.error = function () {}
-  console.log = function () {}
+  //console.log = function () {}
   console.warn = function () {}
 
   let testWordUsageList, testWord1
@@ -59,7 +59,7 @@ describe('word-usage-example-item.test.js', () => {
   afterAll(() => {
     jest.clearAllMocks()
   })
-  
+
   it('1 wordUsageExampleItem - checks if component mounts properly', () => {
     let cmp = mount(wordUsageExampleItem, {
       propsData: {
@@ -80,9 +80,9 @@ describe('word-usage-example-item.test.js', () => {
 
     let textContent = cmp.element.textContent
     expect(textContent.includes(testWordUsageItem.fullCit())).toBeTruthy()
-    expect(textContent.includes(testWordUsageItem.source)).toBeTruthy()
     expect(textContent.includes(testWordUsageItem.prefix)).toBeTruthy()
-    expect(textContent.includes(testWordUsageItem.suffix)).toBeTruthy()
+    expect(textContent.includes(testWordUsageItem.suffix.replace(/^\s/,String.fromCharCode(160)))).toBeTruthy()
     expect(textContent.includes(testWord1)).toBeTruthy()
   })
+
 })

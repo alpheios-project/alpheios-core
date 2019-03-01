@@ -3,7 +3,7 @@
     <div class="alpheios_word_usage_list_title">{{ targetWord }} ({{ language }})</div>
     <div class="alpheios_word_usage_list_mainblock" v-if="showWordUsageExampleItems">
       <word-usage-example-item
-          v-for="wordUsageItem in wordUsageList"
+          v-for="wordUsageItem in wordUsageListSorted"
           v-bind:key="wordUsageItem.ID"
           :wordUsageItem="wordUsageItem"
       ></word-usage-example-item>
@@ -40,6 +40,26 @@ export default {
     }
   },
   computed: {
+    wordUsageListSorted() {
+      // TODO support user-selected sort key and order
+      // eventually sorting should also take language into account but
+      // for now we will probably only show Latin author and work names anyway
+      if (this.wordUsageList) {
+        return this.wordUsageList.sort((a,b) => {
+          let aU = a.fullCit().toUpperCase()
+          let bU = b.fullCit().toUpperCase()
+          if (aU < bU) {
+            return -1
+          }
+          if (aU > bU) {
+            return 1
+          }
+          return 0
+        })
+      }
+
+    },
+
     showWordUsageExampleItems () {
       return this.wordUsageList && this.wordUsageList.length > 0
     },

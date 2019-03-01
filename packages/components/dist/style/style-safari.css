@@ -10257,6 +10257,9 @@ ul.alpheios-skin_properties {
 /********** Dark Schema ***********************/
 .alpheios_word_usage_list_item {
   margin-bottom: 15px !important;
+  display: grid;
+  grid-gap: 10px !important;
+  grid-template-columns: minmax(50px, 1fr) minmax(600px, 4fr);
 }
 .alpheios_word_usage_list_item__source {
   font-weight: bold !important;
@@ -10271,8 +10274,12 @@ ul.alpheios-skin_properties {
 }
 .alpheios_word_usage_list_item__text {
   margin-top: 3px !important;
+  display: flex;
+  flex-flow: row-wrap !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
-.alpheios_word_usage_list_item__text span.alpheios_word_usage_list_item__text_targetword {
+.alpheios_word_usage_list_item__text .alpheios_word_usage_list_item__text_targetword {
     color: #E49A0D !important;
     font-weight: bold !important;
 }

@@ -114,4 +114,33 @@ describe('word-usage-examples-block.test.js', () => {
     expect(cmp.find('.alpheios-word_usage_list__provider')).toBeTruthy()
     expect(cmp.find('.alpheios-word_usage_list__provider').text()).toEqual(resourceProviderName)
   })
+
+  it('4 WordUsageExamplesBlock - sorts lists', async () => {
+    let mockExA = { fullCit: () => {return 'abc.def.123'} }
+    let mockExB = { fullCit: () => {return 'abc.def.123'} }
+    let mockExC = { fullCit: () => {return 'abc.ghi.123'} }
+    let mockExD = { fullCit: () => {return 'def.ghi.123'} }
+    let mockExE = { fullCit: () => {return 'ghi.jkl.123'} }
+    let cmp = mount(WordUsageExamplesBlock, {
+      propsData: {
+        wordUsageList: [
+          mockExE,
+          mockExD,
+          mockExC,
+          mockExA,
+          mockExB
+        ],
+        targetWord: testWord1,
+        language: 'lat',
+        provider: 'fooProvider'
+      }
+    })
+    expect(cmp.vm.wordUsageListSorted).toEqual([
+      mockExA,
+      mockExB,
+      mockExC,
+      mockExD,
+      mockExE
+    ])
+  })
 })

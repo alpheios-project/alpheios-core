@@ -65,13 +65,18 @@
         }
       ]
     },
-    "wordUsageExamplesMax": {
-      "defaultValue": 50,
-      "labelText": "Word Usage Examples - max results",
+    "wordUsageExamplesAuthMax": {
+      "defaultValue": 3,
+      "labelText": "Word Usage Examples - max results per author",
       "number": true,
       "values": []
     },
-
+    "wordUsageExamplesMax": {
+      "defaultValue": 500,
+      "labelText": "Word Usage Examples - max results for single author request",
+      "number": true,
+      "values": []
+    },
     "panelPosition": {
       "defaultValue": "left",
       "labelText": "Panel position:",
