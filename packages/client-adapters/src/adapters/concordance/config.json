@@ -1,5 +1,6 @@
 {
 	"url": "https://latin.packhum.org/rst/concordance/",
 	"sourceTextUrl": "https://latin.packhum.org",
-	"rights": "Word usage examples are provided by The Packard Humanities Institute (https://packhum.org/). They are to be used only for personal study and are subject to the “Fair Use” principles of U.S. Copyright law."
+	"rights": "Word usage examples are provided by The Packard Humanities Institute (https://packhum.org/). They are to be used only for personal study and are subject to the “Fair Use” principles of U.S. Copyright law.",
+  "maxResultsOverride": 10000000
 }

@@ -151,8 +151,8 @@ describe('concordance.test.js', () => {
 
     jest.spyOn(adapter, 'uploadConfig')
 
-    let res1 = await adapter.getAuthorsWorks()  
-    let res2 = await adapter.getAuthorsWorks() 
+    let res1 = await adapter.getAuthorsWorks()
+    let res2 = await adapter.getAuthorsWorks()
 
     expect(adapter.uploadConfig).toHaveBeenCalledTimes(1)
   })
@@ -166,8 +166,8 @@ describe('concordance.test.js', () => {
 
     jest.spyOn(adapter, 'uploadConfig')
 
-    let res1 = await adapter.getAuthorsWorks()  
-    let res2 = await adapter.getAuthorsWorks(true) 
+    let res1 = await adapter.getAuthorsWorks()
+    let res2 = await adapter.getAuthorsWorks(true)
 
     expect(adapter.uploadConfig).toHaveBeenCalledTimes(2)
   })
@@ -189,8 +189,13 @@ describe('concordance.test.js', () => {
       value: 5
     }
 
+    let authPaginationOptions =  {
+      property: 'authmax',
+      value: 5
+    }
+
     // single item result
-    let res1 = await adapter.getWordUsageExamples(testHomonym1, filterOptions, paginationOptions) 
+    let res1 = await adapter.getWordUsageExamples(testHomonym1, filterOptions, paginationOptions)
 
     expect(Array.isArray(res1.wordUsageExamples)).toBeTruthy()
     expect(res1.wordUsageExamples.length).toEqual(1)
@@ -209,7 +214,7 @@ describe('concordance.test.js', () => {
     expect(res2.provider).toBeDefined()
 
     // multiple usage in different texts of the same author - 1 case - filter by author and text, no pagination
-    let res3 = await adapter.getWordUsageExamples(testHomonym3, filterOptions) 
+    let res3 = await adapter.getWordUsageExamples(testHomonym3, filterOptions)
 
     // console.info('*******************res3', res3.length, res3[0])
     expect(Array.isArray(res3.wordUsageExamples)).toBeTruthy()
@@ -284,7 +289,7 @@ describe('concordance.test.js', () => {
     jest.spyOn(adapter, 'formatPagination')
 
     let resURL = adapter.createFetchURL(testHomonym1, filterOptions, paginationOptions)
-    
+
     expect(adapter.formatFilter).toHaveBeenCalled()
     expect(adapter.formatPagination).toHaveBeenCalled()
     expect(resURL).toEqual('https://latin.packhum.org/rst/concordance/submersasque[690:3]?max=5')
@@ -345,7 +350,7 @@ describe('concordance.test.js', () => {
 
     jest.spyOn(adapter, 'createWordUsageExample')
     let res = await adapter.parseWordUsageResult(testJsonObj, testHomonym, testAuthor, testTextWork)
-    
+
     expect(adapter.createWordUsageExample).toHaveBeenCalled()
     expect(Array.isArray(res)).toBeTruthy()
     expect(res[0]).toBeInstanceOf(WordUsageExample)
@@ -384,7 +389,7 @@ describe('concordance.test.js', () => {
     expect(methodTextWork).toEqual(textWork)
   })
 
-  
+
   it('11 AlpheiosConcordanceAdapter - createAuthor method returns Author object from jsonObj', () => {
     let adapter = new AlpheiosConcordanceAdapter({
       category: 'wordUsage',
@@ -502,7 +507,7 @@ describe('concordance.test.js', () => {
     expect(adapter.defaultIDPrefix).toBeDefined()
   })
 
-  
+
   it('16 WordUsageExample - readObject creates WordUsageExample from jsonObj, homonym, author, textWork and sourceLink', () => {
     let adapter = new AlpheiosConcordanceAdapter({
       category: 'wordUsage',
@@ -532,7 +537,18 @@ describe('concordance.test.js', () => {
     expect(wordUsageExample.cit).toEqual(testJsonObj.cit)
     expect(wordUsageExample.author).toEqual(testAuthor)
     expect(wordUsageExample.textWork).toEqual(testTextWork)
-    
+
     expect(wordUsageExample.provider).toBeDefined()
+  })
+
+  it('17 AlpheiosConcordanceAdapter - formatPagination method overrides max for authmax', async () => {
+    let adapter = new AlpheiosConcordanceAdapter({
+      category: 'wordUsage',
+      adapterName: 'concordance',
+      method: 'getAuthorsWorks'
+    })
+
+    let res3 = adapter.formatPagination({ property: 'authmax', value: 10 })
+    expect(res3).toEqual(`?authmax=10&max=${adapter.config.maxResultsOverride}`)
   })
 })

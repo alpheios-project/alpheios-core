@@ -1,0 +1,51 @@
+{ "authors": [
+    { "urn": "urn:cts:latinLit:phi0959",
+      "title": [
+          { "@lang": "eng",
+            "@value": "Ovid"
+          }
+      ],
+      "works": [
+        { "urn": "urn:cts:latinLit:phi0959.phi001",
+          "title": [
+            { "@lang":"lat",
+              "@value": "Amores"
+            },
+            { "@lang":"eng",
+              "@value": "The Art of Love"
+            }
+          ]
+        },
+        { "urn": "urn:cts:latinLit:phi0959.phi006",
+          "title": [
+            { "@lang":"lat",
+              "@value": "Metamorphoses"
+            },
+            { "@lang":"eng",
+              "@value": "Metamorphoses"
+            },
+          ]
+        }
+      ]
+    },
+    { "urn": "urn:cts:latinLit:phi0690",
+      "title": [
+          { "@lang": "eng",
+            "@value": "Virgil"
+          }
+      ],
+      "works": [
+        { "urn": "urn:cts:latinLit:phi0690.phi003",
+          "title": [
+            { "@lang":"lat",
+              "@value": "Aeneid"
+            },
+            { "@lang":"eng",
+              "@value": "Aeneid"
+            }
+          ]
+        },
+      ]
+    }
+  ]
+}

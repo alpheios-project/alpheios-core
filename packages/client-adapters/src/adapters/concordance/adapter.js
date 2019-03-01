@@ -108,7 +108,16 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
   * @return {String}
   */
   formatPagination (pagination) {
-    if (pagination && pagination.property && (pagination.property === 'max') && pagination.value) {
+    // the PHI service supports two pagination parameters: authmax and max
+    // authmax sets the max hits to return per author and max sets the max hits to return over alpheios-data-models
+    // max trumps authmax - i.e. only the max number of hits will be returned, and authmax applies after that
+    // given that there a finite number of authors, we want to set the values for these differently depending upon whether
+    // the request is filtered by author or not - and allowing user specification of the max across all authors probably
+    // isn't a good idea, because what we really want in this case is no overall max applied, but that option is not
+    // avaliable from the service at the moment
+    if (pagination && pagination.property && (pagination.property === 'authmax') && pagination.value) {
+      return `?${pagination.property}=${parseInt(pagination.value)}&max=${this.config.maxResultsOverride}`
+    } else if (pagination && pagination.property && (pagination.property === 'max') && pagination.value) {
       return `?${pagination.property}=${parseInt(pagination.value)}`
     }
     return ''
