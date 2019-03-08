@@ -10622,7 +10622,6 @@ ul.alpheios-skin_properties {
 /********** Dark Schema ***********************/
 .alpheios-overlay-nav {
   background: transparent;
-  width: 30px;
   position: fixed;
   top: 10px;
   right: 15px;
@@ -10643,49 +10642,64 @@ ul.alpheios-skin_properties {
     padding: 0;
 }
 .alpheios-overlay-nav .alpheios-navbuttons__btn svg {
-    width: 20px;
-    height: 20px;
-    top: 9px;
-    left: 0;
-    position: relative;
-    box-sizing: border-box;
+      width: 20px;
+      height: 20px;
+      top: 9px;
+      left: 0;
+      position: relative;
+      box-sizing: border-box;
 }
 .alpheios-overlay-nav .alph_tooltip {
     position: relative;
 }
 .alpheios-overlay-nav .alph_tooltip .tooltiptext {
-    visibility: hidden;
-    position: absolute;
-    width: 120px;
-    text-align: center;
-    z-index: 1;
-    opacity: 0;
-    font-size: 12px;
-    display: none;
-    padding: 5px 0;
-    border-radius: 6px;
-    transition: opacity 0.6s ease 0s;
-    background-color: #fcfcfa;
-    color: #4e6476;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #4e6476;
-    border-image: initial;
+      visibility: hidden;
+      position: absolute;
+      width: 120px;
+      text-align: center;
+      z-index: 1;
+      opacity: 0;
+      font-size: 12px;
+      display: none;
+      padding: 5px 0;
+      border-radius: 6px;
+      transition: opacity 0.6s ease 0s;
+      background-color: #fcfcfa;
+      color: #4e6476;
+      border-width: 1px;
+      border-style: solid;
+      border-color: #4e6476;
+      border-image: initial;
 }
-.alpheios-overlay-nav .alph_tooltip-left {
+.alpheios-overlay-nav .alph_tooltip .alph_tooltip-left {
+      top: 0;
+      bottom: auto;
+      right: 128%;
+}
+.alpheios-overlay-nav .alph_tooltip .alph_tooltip-left::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      margin-top: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent transparent #555;
+}
+.alpheios-overlay-nav .lph_tooltip-left {
     top: 5px;
     bottom: auto;
     right: 128%;
 }
-.alpheios-overlay-nav .alph_tooltip-left::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 100%;
-    margin-top: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent transparent #555;
+.alpheios-overlay-nav .lph_tooltip-left::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      margin-top: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent transparent #555;
 }
 .alpheios-overlay-nav .alph_tooltip:hover .tooltiptext {
     visibility: visible;
@@ -10728,6 +10742,63 @@ ul.alpheios-skin_properties {
     position: relative;
     top: 3px;
     left: 4px;
+}
+.alpheios-overlay-nav .alpheios-overlay-nav__lookup-control {
+    cursor: pointer;
+    background: #FFF;
+}
+.alpheios-overlay-nav .alpheios-overlay-nav__lookup-control .alpheios-navbuttons__btn {
+      height: 30px;
+      margin: 0;
+      border-bottom: none;
+}
+.alpheios-overlay-nav .alpheios-overlay-nav__lookup-control .alpheios-navbuttons__btn svg {
+        top: 4px;
+}
+.alpheios-overlay-nav .alpheios-overlay-nav__lookup {
+    display: flex;
+    position: absolute;
+    width: 400px;
+    height: 80px;
+    background: #FFF;
+    left: -400px;
+    top: 0;
+    border: 1px solid #B8B7B5;
+    border-right: none;
+    box-sizing: border-box;
+}
+.alpheios-overlay-nav .alpheios-overlay-nav__lookup .alpheios-lookup__form {
+      margin-top: 30px;
+}
+.alpheios-overlay-nav .alpheios-overlay-nav__lookup input {
+      width: 300px;
+      box-sizing: border-box;
+      line-height: 28px;
+      box-shadow: none;
+      padding: 0 10px;
+      font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+      font-size: 14px;
+      height: 30px;
+      border: 1px solid #666666;
+}
+.alpheios-overlay-nav .alpheios-overlay-nav__lookup input:focus {
+        border-color: #5BC8DC;
+        outline: transparent;
+}
+.alpheios-overlay-nav .alpheios-overlay-nav__lookup .alph_tooltip {
+      display: inline-block;
+}
+.alpheios-overlay-nav .alpheios-overlay-nav__lookup button {
+      font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+      font-size: 12px;
+      line-height: 30px;
+      background-color: #4E6476;
+      color: #FFF;
+      text-transform: uppercase;
+      border-radius: 0;
+      border: none;
+      height: 30px;
+      cursor: pointer;
 }
 
 

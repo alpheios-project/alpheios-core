@@ -50,7 +50,9 @@
           class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions"
           v-show="$store.getters['ui/isActiveTab']('definitions')">
         <div class="alpheios-lookup__panel">
-          <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"></lookup>
+          <lookup
+              :clearLookupText="true"
+          />
         </div>
         <div v-if="$store.getters['app/defDataReady']">
           <div class="alpheios-panel__contentitem"
@@ -159,7 +161,9 @@
       <div class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info"
            v-show="$store.getters['ui/isActiveTab']('info')">
         <div class="alpheios-lookup__panel">
-          <lookup :clearLookupText="clearLookupText" :parentLanguage="lookupParentLanguage"></lookup>
+          <lookup
+              :clearLookupText="true"
+          />
         </div>
         <info></info>
       </div>
@@ -269,17 +273,6 @@ export default {
   computed: {
     rootClasses () {
       return this.$store.state.ui.rootClasses
-    },
-    clearLookupText: function () {
-      // always true to clear panels lookup
-      return true
-    },
-    lookupParentLanguage: function () {
-      if (this.$store.state.app.preferredLanguageName) {
-        return this.$store.state.app.preferredLanguageName
-      } else {
-        return this.settings.contentOptions.items.preferredLanguage.currentTextValue()
-      }
     },
     mainstyles: function () {
       this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth

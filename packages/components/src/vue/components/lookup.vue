@@ -14,20 +14,24 @@
       </span>
     </alph-tooltip>
 
-    <div class="alpheios-override-lang alpheios-checkbox-block alpheios-checkbox-small">
-      <input id="alpheios-checkbox-input" type="checkbox" v-model="overrideLanguage">
-      <label @click="checkboxClick" class="alpheios-override-lang__label" for="checkbox">{{ overrideLanguageLabel
-        }}</label>
-    </div>
-
-    <div class="alpheios-lookup__settings">
-      <div class="alpheios-lookup__settings-items" v-show="showLanguageSettings">
-        <alph-setting :classes="['alpheios-panel__options-item']" :data="lookupLanguage"
-                      @change="settingChange"></alph-setting>
-        <alph-setting :classes="['alpheios-panel__options-item']" :data="lexicon" :key="lexicon.name"
-                      @change="resourceSettingChange" v-for="lexicon in lexiconsFiltered"></alph-setting>
+    <template
+        v-if="showLanguageSettingsGroup"
+    >
+      <div class="alpheios-override-lang alpheios-checkbox-block alpheios-checkbox-small">
+        <input id="alpheios-checkbox-input" type="checkbox" v-model="overrideLanguage">
+        <label @click="checkboxClick" class="alpheios-override-lang__label" for="checkbox">{{ overrideLanguageLabel
+          }}</label>
       </div>
-    </div>
+
+      <div class="alpheios-lookup__settings">
+        <div class="alpheios-lookup__settings-items" v-show="showLanguageSettings">
+          <alph-setting :classes="['alpheios-panel__options-item']" :data="lookupLanguage"
+                        @change="settingChange"></alph-setting>
+          <alph-setting :classes="['alpheios-panel__options-item']" :data="lexicon" :key="lexicon.name"
+                        @change="resourceSettingChange" v-for="lexicon in lexiconsFiltered"></alph-setting>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 <script>
@@ -39,9 +43,14 @@ import TempStorageArea from '@/lib/options/temp-storage-area'
 import Tooltip from './tooltip.vue'
 import Setting from './setting.vue'
 
+// Modules support
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+
 export default {
   name: 'Lookup',
   inject: ['app', 'ui', 'l10n', 'settings'],
+  storeModules: ['app'], // Store modules that are required by this component
+  mixins: [DependencyCheck],
   components: {
     alphTooltip: Tooltip,
     alphSetting: Setting
@@ -60,14 +69,21 @@ export default {
     }
   },
   props: {
+    // A name of the language. Used in setting initial and current lookup languages
     parentLanguage: {
       type: String,
       required: false
     },
+    // When becomes `true`, forces a lookup text to be cleared
     clearLookupText: {
       type: Boolean,
       required: false,
       default: false
+    },
+    showLanguageSettingsGroup: {
+      type: Boolean,
+      required: false,
+      default: true
     }
   },
   created: function () {
@@ -77,7 +93,7 @@ export default {
       this.initLanguage = this.parentLanguage
       this.currentLanguage = this.parentLanguage
     } else {
-      this.currentLanguage = this.instanceContentOptions.items.preferredLanguage.currentTextValue()
+      this.currentLanguage = this.$store.state.app.preferredLanguageName || this.instanceContentOptions.items.preferredLanguage.currentTextValue()
     }
     this.instanceContentOptions.items.lookupLanguage.setTextValue(this.currentLanguage)
     console.log(`at creation current language is ${this.currentLanguage}`)

@@ -10,16 +10,36 @@
       <img class="alpheios-overlay-nav__logo-icon" src="../../../images/icon.png">
     </div>
     <div
+        class="alpheios-overlay-nav__lookup-control"
+        @click="lookupVisible = !lookupVisible"
+    >
+      <alph-tooltip :tooltipText="l10n.getText('LABEL_LOOKUP_CONTROL')" tooltipDirection="left">
+        <span class="alpheios-navbuttons__btn"
+              :class="{ active: lookupVisible }">
+          <lookup-icon></lookup-icon>
+        </span>
+      </alph-tooltip>
+    </div>
+    <div
         class="alpheios-overlay-nav__header"
         :class="{ expanded: contentVisible }"
         @click="contentVisible = !contentVisible"
     >
       <template v-if="!contentVisible">
-        <collapsed-icon></collapsed-icon>
+        <collapsed-icon/>
       </template>
       <template v-else>
-        <expanded-icon></expanded-icon>
+        <expanded-icon/>
       </template>
+    </div>
+
+    <div
+        class="alpheios-overlay-nav__lookup"
+        v-show="lookupVisible"
+    >
+      <lookup
+        :showLanguageSettingsGroup="false"
+      />
     </div>
 
     <div v-show="contentVisible">
@@ -127,6 +147,9 @@ import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
 import WordUsageIcon from '@/images/inline-icons/books-stack.svg'
 import CollapsedIcon from '@/images/inline-icons/collapsed.svg'
 import ExpandedIcon from '@/images/inline-icons/expanded.svg'
+import LookupIcon from '@/images/inline-icons/lookup.svg'
+// Vue components
+import Lookup from '@/vue/components/lookup.vue'
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
@@ -143,6 +166,7 @@ export default {
   storeModules: ['app', 'ui'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
+    lookup: Lookup,
     alphTooltip: Tooltip,
     definitionsIcon: DefinitionsIcon,
     inflectionsIcon: InflectionsIcon,
@@ -156,7 +180,8 @@ export default {
     wordUsageIcon: WordUsageIcon,
     wordlistIcon: WordlistIcon,
     collapsedIcon: CollapsedIcon,
-    expandedIcon: ExpandedIcon
+    expandedIcon: ExpandedIcon,
+    lookupIcon: LookupIcon
   },
   interactInstance: null,
   dragTreshold: 100, // Drag distance values above this will be considered abnormal
@@ -166,6 +191,7 @@ export default {
 
   data: function () {
     return {
+      lookupVisible: false,
       contentVisible: false
     }
   },
@@ -223,79 +249,95 @@ export default {
 
   .alpheios-overlay-nav {
     background: transparent;
-    width: 30px;
     position: fixed;
     top: 10px;
     right: 15px;
     z-index: 10000;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 
-    & .alpheios-navbuttons__btn {
+    .alpheios-navbuttons__btn {
       background: #FFF;
       border: 1px solid $alpheios-sidebar-header-border-color;
       padding: 5px;
     }
 
-    & .alpheios-navbuttons__btn {
+    .alpheios-navbuttons__btn {
       width: 40px;
       height: 40px;
       margin: 10px 0;
       box-sizing: border-box;
       position: relative;
       padding: 0;
+
+      svg {
+        width: 20px;
+        height: 20px;
+        top: 9px;
+        left: 0;
+        position: relative;
+        box-sizing: border-box;
+      }
     }
 
-    & .alpheios-navbuttons__btn svg {
-      width: 20px;
-      height: 20px;
-      top: 9px;
-      left: 0;
+    .alph_tooltip {
       position: relative;
-      box-sizing: border-box;
+
+      .tooltiptext {
+        visibility: hidden;
+        position: absolute;
+        width: 120px;
+        text-align: center;
+        z-index: 1;
+        opacity: 0;
+        font-size: 12px;
+        display: none;
+        padding: 5px 0;
+        border-radius: 6px;
+        transition: opacity 0.6s ease 0s;
+        background-color: rgb(252, 252, 250);
+        color: rgb(78, 100, 118);
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgb(78, 100, 118);
+        border-image: initial;
+      }
+
+      .alph_tooltip-left {
+        top: 0;
+        bottom: auto;
+        right: 128%;
+      }
+
+      .alph_tooltip-left::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent transparent #555;
+      }
     }
 
-    & .alph_tooltip {
-      position: relative;
-    }
-
-    & .alph_tooltip .tooltiptext {
-      visibility: hidden;
-      position: absolute;
-      width: 120px;
-      text-align: center;
-      z-index: 1;
-      opacity: 0;
-      font-size: 12px;
-      display: none;
-      padding: 5px 0;
-      border-radius: 6px;
-      transition: opacity 0.6s ease 0s;
-      background-color: rgb(252, 252, 250);
-      color: rgb(78, 100, 118);
-      border-width: 1px;
-      border-style: solid;
-      border-color: rgb(78, 100, 118);
-      border-image: initial;
-    }
-
-    & .alph_tooltip-left {
+    .lph_tooltip-left {
       top: 5px;
       bottom: auto;
       right: 128%;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent transparent #555;
+      }
     }
 
-    & .alph_tooltip-left::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 100%;
-      margin-top: -5px;
-      border-width: 5px;
-      border-style: solid;
-      border-color: transparent transparent transparent #555;
-    }
-
-    & .alph_tooltip:hover .tooltiptext {
+    .alph_tooltip:hover .tooltiptext {
       visibility: visible;
       opacity: 1;
       display: inline;
@@ -309,7 +351,7 @@ export default {
       cursor: pointer;
       background: #FFF;
 
-      & svg {
+      svg {
         width: 20px;
         height: auto;
         position: relative;
@@ -342,6 +384,72 @@ export default {
       position: relative;
       top: 3px;
       left: 4px;
+    }
+
+    .alpheios-overlay-nav__lookup-control {
+      cursor: pointer;
+      background: #FFF;
+
+      .alpheios-navbuttons__btn {
+        height: 30px;
+        margin: 0;
+        border-bottom: none;
+
+        svg {
+          top: 4px;
+        }
+      }
+    }
+
+    .alpheios-overlay-nav__lookup {
+      display: flex;
+      position: absolute;
+      width: 400px;
+      height: 80px;
+      background: #FFF;
+      left: -400px;
+      top: 0;
+      border: 1px solid $alpheios-sidebar-header-border-color;
+      border-right: none;
+      box-sizing: border-box;
+
+      .alpheios-lookup__form {
+        margin-top: 30px;
+      }
+
+      input {
+        width: 300px;
+        box-sizing: border-box;
+        line-height: 28px;
+        box-shadow: none;
+        padding: 0 10px;
+        font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+        font-size: 14px;
+        height: 30px;
+        border: 1px solid $alpheios-copy-color;
+
+        &:focus {
+          border-color: $alpheios-link-hover-color;
+          outline: transparent;
+        }
+      }
+
+      .alph_tooltip {
+        display: inline-block;
+      }
+
+      button {
+        font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+        font-size: 12px;
+        line-height: 30px;
+        background-color: $alpheios-toolbar-color;
+        color: #FFF;
+        text-transform: uppercase;
+        border-radius: 0;
+        border: none;
+        height: 30px;
+        cursor: pointer;
+      }
     }
   }
 </style>

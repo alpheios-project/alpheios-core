@@ -398,6 +398,11 @@
     "description": "send exp data context menu label",
     "component": "UI"
   },
+  "LABEL_LOOKUP_CONTROL": {
+    "message": "Show/Hide lookup",
+    "description": "A tooltip for the button that turns the lookup panel on and off",
+    "component": "Toolbar"
+  },
   "LABEL_LOOKUP_BUTTON": {
     "message": "Lookup",
     "description": "lookup button in lookup.vue",

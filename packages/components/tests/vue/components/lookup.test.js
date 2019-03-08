@@ -38,7 +38,11 @@ describe('lookup.test.js', () => {
     jest.spyOn(console, 'warn')
 
     store = new Vuex.Store({
-      modules: {}
+      modules: {
+        app: {
+          state: {}
+        }
+      }
     })
 
     contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
@@ -70,6 +74,8 @@ describe('lookup.test.js', () => {
 
   it('1 Lookup - renders a vue instance (min requirements)', () => {
     let cmp = mount(Lookup, {
+      store,
+      localVue,
       mocks: api
     })
     expect(cmp.isVueInstance()).toBeTruthy()
@@ -84,6 +90,8 @@ describe('lookup.test.js', () => {
     }
 
     let cmp = mount(Lookup, {
+      store,
+      localVue,
       mocks: api
     })
 
@@ -119,6 +127,8 @@ describe('lookup.test.js', () => {
       propsData: {
         parentLanguage: 'Latin'
       },
+      store,
+      localVue,
       mocks: api
     })
 
@@ -133,6 +143,8 @@ describe('lookup.test.js', () => {
 
   it('4 Lookup - settings block', () => {
     let cmp = mount(Lookup, {
+      store,
+      localVue,
       mocks: api
     })
     expect(cmp.vm.showLanguageSettings).toBeFalsy()
@@ -155,6 +167,8 @@ describe('lookup.test.js', () => {
 
   it('5 Lookup - settings block events', () => {
     let cmp = mount(Lookup, {
+      store,
+      localVue,
       mocks: api
     })
 
@@ -170,6 +184,8 @@ describe('lookup.test.js', () => {
 
   it('6 Lookup - override language check - not checked by default', () => {
     let cmp = mount(Lookup, {
+      store,
+      localVue,
       mocks: api
     })
 
@@ -180,6 +196,8 @@ describe('lookup.test.js', () => {
 
   it('7 Lookup - override language check - checkboxClick method changes options (true)', () => {
     let cmp = mount(Lookup, {
+      store,
+      localVue,
       mocks: api
     })
 
@@ -197,6 +215,8 @@ describe('lookup.test.js', () => {
 
   it('8 Lookup - override language check - checkboxClick method changes options (false)', () => {
     let cmp = mount(Lookup, {
+      store,
+      localVue,
       mocks: api
     })
 
@@ -211,6 +231,8 @@ describe('lookup.test.js', () => {
 
   it('9 Lookup - watch clearLookupText - clears lookuptext and restore show language data from override language check', () => {
     let cmp = mount(Lookup, {
+      store,
+      localVue,
       mocks: api
     })
 
@@ -227,6 +249,8 @@ describe('lookup.test.js', () => {
 
   it('10 Lookup - watch uiController.contentOptions.items.lookupLangOverride.currentValue - syncing overrideLanguage', async () => {
     let cmp = mount(Lookup, {
+      store,
+      localVue,
       mocks: api
     })
     jest.spyOn(cmp.vm, 'updateUIbyOverrideLanguage')
