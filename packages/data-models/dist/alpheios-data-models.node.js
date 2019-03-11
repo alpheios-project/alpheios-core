@@ -5164,13 +5164,13 @@ class TextQuoteSelector {
     let checkPrefix = this.prefix.replace(this.text, templateWord)
     let checkSuffix = this.suffix.replace(this.text, templateWord)
 
-    let fullText = `${checkPrefix}<span class="alpheios_worditem_incontext">${this.text}</span>${checkSuffix}`
+    let fullText = `${checkPrefix} <span class="alpheios_worditem_incontext">${this.text}</span> ${checkSuffix}`
     return fullText
   }
 
   createContext (selection, textSelector) {
-    this.prefix = selection.anchorNode.data.substr(0, textSelector.start)
-    this.suffix = selection.anchorNode.data.substr(textSelector.end)
+    this.prefix = selection.anchorNode.data.substr(0, textSelector.start).trim().replace(/\n/g, '')
+    this.suffix = selection.anchorNode.data.substr(textSelector.end).trim().replace(/\n/g, '')
     this.text = textSelector.text
     this.source = window.location.href
     this.languageCode = textSelector.languageCode
@@ -5187,8 +5187,18 @@ class TextQuoteSelector {
 
   isEqual (otherTqs) {
     let checkContextThis = `${this.prefix}${this.text}${this.suffix}`
-    let checkContextOther = `${otherTqs.prefix}${otherTqs.text}${otherTqs.suffix}`
+    checkContextThis = checkContextThis.trim()
 
+    let checkContextOther = `${otherTqs.prefix}${otherTqs.text}${otherTqs.suffix}`
+    checkContextOther = checkContextOther.trim()
+    /*
+    console.info('****************isEqual1', this.text === otherTqs.text)
+    console.info('****************isEqual2', this.source === otherTqs.source)
+    console.info('****************isEqual3', this.languageCode === otherTqs.languageCode)
+    console.info('****************isEqual4', checkContextThis === checkContextOther)
+    console.info('****************isEqual4 checkContextThis "' + checkContextThis + '"')
+    console.info('****************isEqual4 checkContextOther "' + checkContextOther + '"')
+    */
     return this.text === otherTqs.text &&
       this.source === otherTqs.source &&
       this.languageCode === otherTqs.languageCode &&

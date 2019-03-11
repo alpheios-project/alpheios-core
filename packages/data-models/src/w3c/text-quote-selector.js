@@ -17,13 +17,13 @@ export default class TextQuoteSelector {
     let checkPrefix = this.prefix.replace(this.text, templateWord)
     let checkSuffix = this.suffix.replace(this.text, templateWord)
 
-    let fullText = `${checkPrefix}<span class="alpheios_worditem_incontext">${this.text}</span>${checkSuffix}`
+    let fullText = `${checkPrefix} <span class="alpheios_worditem_incontext">${this.text}</span> ${checkSuffix}`
     return fullText
   }
 
   createContext (selection, textSelector) {
-    this.prefix = selection.anchorNode.data.substr(0, textSelector.start)
-    this.suffix = selection.anchorNode.data.substr(textSelector.end)
+    this.prefix = selection.anchorNode.data.substr(0, textSelector.start).trim().replace(/\n/g, '')
+    this.suffix = selection.anchorNode.data.substr(textSelector.end).trim().replace(/\n/g, '')
     this.text = textSelector.text
     this.source = window.location.href
     this.languageCode = textSelector.languageCode
@@ -40,7 +40,10 @@ export default class TextQuoteSelector {
 
   isEqual (otherTqs) {
     let checkContextThis = `${this.prefix}${this.text}${this.suffix}`
+    checkContextThis = checkContextThis.trim()
+
     let checkContextOther = `${otherTqs.prefix}${otherTqs.text}${otherTqs.suffix}`
+    checkContextOther = checkContextOther.trim()
 
     return this.text === otherTqs.text &&
       this.source === otherTqs.source &&
