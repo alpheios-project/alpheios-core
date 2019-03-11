@@ -1,4 +1,7 @@
-import { Homonym, WordItem } from 'alpheios-data-models'
+import { Homonym, WordItem, TextQuoteSelector, LanguageModelFactory as LMF } from 'alpheios-data-models'
+
+import IndexedDBObjectStoresStructure from '@/storage/indexeddbDriver/indexed-db-object-stores-structure'
+import IndexedDBLoadProcess from '@/storage/indexeddbDriver/indexed-db-load-process'
 
 export default class WordItemIndexedDbDriver {
 
@@ -9,34 +12,60 @@ export default class WordItemIndexedDbDriver {
   constructor(userId) {
     this.userId = userId
     this.storageMap = {
+      _loadFirst: 'common',
       common: {
-        objectStoreName: 'WordListsCommon',
+        type: 'segment',
+        sync: true,
+        objectStoreData: {
+          name: 'WordListsCommon',
+          structure: IndexedDBObjectStoresStructure.WordListsCommon
+        },
+        load: IndexedDBLoadProcess.loadBaseObject,
         serialize: this._serializeCommon.bind(this),
-        delete: this._segmentDeleteQueryByID.bind(this)
+        delete: this._segmentSelectQueryByID.bind(this),
+        select: this._segmentSelectQueryByID.bind(this)
       },
       context: {
-        objectStoreName: 'WordListsContext',
+        type: 'segment',
+        sync: true,
+        objectStoreData: {
+          name: 'WordListsContext',
+          structure: IndexedDBObjectStoresStructure.WordListsContext
+        },
         serialize: this._serializeContext.bind(this),
-        load: this._loadContext,
-        delete: this._segmentDeleteQueryByWordItemID.bind(this)
+        load: IndexedDBLoadProcess.loadContext,
+        delete: this._segmentSelectQueryByWordItemID.bind(this),
+        select: this._segmentSelectQueryByWordItemID.bind(this)
       },
       shortHomonym: {
-        objectStoreName: 'WordListsHomonym',
+        type: 'segment',
+        sync: true,
+        objectStoreData: {
+          name: 'WordListsHomonym',
+          structure: IndexedDBObjectStoresStructure.WordListsHomonym
+        },
         serialize: this._serializeHomonym.bind(this),
-        load: this._loadHomonym,
-        delete: this._segmentDeleteQueryByID.bind(this)
+        load: IndexedDBLoadProcess.loadHomonym,
+        delete: this._segmentSelectQueryByID.bind(this),
+        select: this._segmentSelectQueryByID.bind(this)
       },
       fullHomonym: {
-        objectStoreName: 'WordListsFullHomonym',
+        type: 'segment',
+        objectStoreData: {
+          name: 'WordListsFullHomonym',
+          structure: IndexedDBObjectStoresStructure.WordListsFullHomonym
+        },
         serialize: this._serializeHomonymWithFullDefs.bind(this),
-        load: this._loadHomonym,
-        delete: this._segmentDeleteQueryByID.bind(this)
+        load: IndexedDBLoadProcess.loadHomonym,
+        delete: this._segmentSelectQueryByID.bind(this),
+        select: this._segmentSelectQueryByID.bind(this)
       }
     }
   }
 
   /**
   * dbName getter
+  * @return {String}
   */
   get dbName () {
     return 'AlpheiosWordLists'
@@ -44,179 +73,236 @@ export default class WordItemIndexedDbDriver {
 
   /**
    * dbVersion getter
+   * @return {Number}
    */
   get dbVersion () {
     return 3
   }
 
   /**
+   * db segments that we are updating from remote data
+   * @return {String[]} - array with segments name
+   */
+  get segmentsSync() {
+    return Object.keys(this.storageMap).filter(key => this.storageMap[key].type === 'segment' && this.storageMap[key].sync)
+  }
+
+  /**
    * db segments getter
+   * @return {String[]} - array with segments name
    */
   get segments() {
-    return Object.keys(this.storageMap)
+    return Object.keys(this.storageMap).filter(key => this.storageMap[key].type === 'segment')
   }
 
   /**
-   * objectStores getter
-   * @return {Object} the IndexedDb objectStores for the WordItems
+   * db segments getter - segments that needs already created wordItem
+   * @return {String[]} - array with segment's names
+   */
+  get segmentsNotFirst () {
+    return this.segments.filter(segment => segment !== this.storageMap._loadFirst)
+  }
+
+  /**
+   * objectStore's names getter
+   * @return {String[]} - array with objectStore's names
    */
   get objectStores () {
-    return Object.keys(this.storageMap).map(k => this.storageMap[k].objectStoreName)
+    return this.allObjectStoreData.map(objectStoreData => objectStoreData.name)
   }
 
   /**
-   * getter for the Common segment store
+   * objectStore's full data getter
+   * @return {String[]} - array with objectStore's data { name, structure }
    */
-  get WordListsCommon () {
-    return this._objectStoreTemplate()
+  get allObjectStoreData () {
+    return this.segments.map(segment => this.storageMap[segment].objectStoreData)
   }
 
   /**
-   * getter for the Context segment store
+   * objectStore's data by segment name
+   * @param {String} segment - segment name
+   * @return {Object} - { name, structure }
    */
-  get WordListsContext () {
-    let structure = this._objectStoreTemplate()
-    structure.indexes.push(
-      { indexName: 'wordItemID', keyPath: 'wordItemID', unique: false}
-    )
-    return structure
+  _objectStoreData (segment) {
+    return this.storageMap[segment].objectStoreData
+  }
+  
+  /**
+   * Prepares query data for creating IndexedDB Request
+   * @param {String} segment 
+   * @param {Object} indexData - index data for condition 
+   * @param {String} indexData.name - index name
+   * @param {String} indexData.value - index value
+   * @param {String} indexData.type - index type (in our queries it is ussually only)
+   * @return {Object} - { objectStoreName, condition }
+   */
+  _formatQuery (segment, indexData) {
+    return {
+      objectStoreName: this._objectStoreData(segment).name,
+      condition: indexData
+    }
   }
 
   /**
-   * getter for the Homonym segment store
+   * Prepares indexData for formatQuery when we select by ID from objectStore
+   * @param {WordItem} wordItem 
+   * @param {String} [type=only] - type of index
+   * @return {Object} - { indexName, value , type}
    */
-  get WordListsHomonym () {
-    return this._objectStoreTemplate()
+  _selectByID(wordItem, type = 'only') {
+    return {
+      indexName: 'ID',
+      value: this._makeStorageID(wordItem),
+      type: type
+    }
   }
 
   /**
-   * getter for the Full Homonym segment store
+   * Prepares indexData for formatQuery when we select by wordItemID from objectStore (for example context)
+   * @param {WordItem} wordItem 
+   * @param {String} [type=only] - type of index
+   * @return {Object} - { indexName, value , type}
    */
-  get WordListsFullHomonym () {
-    return this._objectStoreTemplate()
-  }
-
-
-  /**
-   * load a data model object from the database
-   */
-  load(data) {
-    // make sure when we create from the database
-    // that the currentSession flag is set to false
-    data.currentSession = false
-    return new WordItem(data)
+  _selectByWordItemID(wordItem, type = 'only') {
+    return {
+      indexName: 'wordItemID',
+      value: this._makeStorageID(wordItem),
+      type: type
+    }
   }
 
   /**
-   * load a segment of a data model object from the database
+   * Prepares indexData for formatQuery when we select by listID from objectStore (for example all values for languageCode)
+   * @param {String} languageCode 
+   * @param {String} [type=only] - type of index
+   * @return {Object} - { indexName, value , type}
    */
-  loadSegment(segment,dataObj,data) {
+  _selectByListID(languageCode, type = 'only') {
+    return {
+      indexName: 'listID',
+      value: this._makeStorageListID(languageCode),
+      type: type
+    }
+  }
+
+  /**
+   * Loads a segment that is defined as first
+   * @param {Object} jsonObj 
+   * @return {WordItem}
+   */
+  loadFirst (jsonObj) {
+    return this.loadSegment(this.storageMap._loadFirst, jsonObj)
+  }
+
+  /**
+   * Loads a segment of a data model object from the database
+   * @param {String} segment - segment name
+   * @param {Object} jsonObj - json data to load to worditem
+   * @param {WordItem} worditem - worditem
+   * @return {WordItem}
+   */
+  loadSegment(segment, jsonObj, worditem) {
     if (this.storageMap[segment].load) {
-      this.storageMap[segment].load(dataObj,data)
+      return this.storageMap[segment].load(jsonObj, worditem)
     }
   }
 
   /**
-   * get a query object which retrieves a segment of an item
-   * @param {String} segment segment name
-   * @param {WordItem} worditem the worditem object
-   * @return {Object} IndexedDBQuery object
+   * Creates query for getting list of wordItems or one wordItem
+   * @param {Object} params - stores one of the following properties:
+   * @param {String} [params.languageCode] - for selecting all wordItems for the current langugeCode
+   * @param {WordItem} [params.worditem] - for selecting one wordItem
+   * @return {WordItem}
    */
-  segmentQuery(segment,worditem) {
-    let id = this._makeStorageID(worditem)
-    let index = segment === 'context' ? 'wordItemID' : 'ID'
-    return {
-      objectStoreName: this.storageMap[segment].objectStoreName,
-      condition: {indexName: index, value: id, type: 'only' }
+  listItemsQuery(params) {
+    if (params.languageCode) {
+      return this._formatQuery('common', this._selectByListID(params.languageCode))
+    } else if (params.wordItem) {
+      return this._formatQuery('common', this._selectByID(params.wordItem))
+    } else {
+      throw new Error("Invalid query parameters - missing languageCode")
     }
   }
 
-  segmentDeleteQuery (segment,worditem) {
-    return this.storageMap[segment].delete(segment,worditem)
-  }
-
-  _segmentDeleteQueryByID(segment,worditem) {
-    let ID = this._makeStorageID(worditem)
-    return {
-      objectStoreName: this.storageMap[segment].objectStoreName,
-      condition: { indexName: 'ID', value: ID, type: 'only' }
+  /**
+   * Creates query for selecting data from the segment
+   * @param {String} segment - segment name
+   * @param {WordItem} worditem - the worditem object
+   * @return {Object} - data for creating IndexedDB Request
+   */
+  segmentSelectQuery(segment, worditem) {
+    if (this.storageMap[segment].select) {
+      return this.storageMap[segment].select(segment, worditem)
     }
   }
 
-  _segmentDeleteQueryByWordItemID(segment, worditem) {
-    let ID = this._makeStorageID(worditem)
-    return {
-      objectStoreName: this.storageMap[segment].objectStoreName,
-      condition: { indexName: 'wordItemID', value: ID, type: 'only' }
+  /**
+   * Creates query for selecting data from the segment by wordItem
+   * @param {String} segment - segment name
+   * @param {WordItem} worditem - the worditem object
+   * @return {Object} - data for creating IndexedDB Request
+   */
+  _segmentSelectQueryByWordItemID (segment, worditem) {
+    return this._formatQuery(segment, this._selectByWordItemID(worditem))
+  }
+
+  /**
+   * Creates query for selecting data from the segment by ID
+   * @param {String} segment - segment name
+   * @param {WordItem} worditem - the worditem object
+   * @return {Object} - data for creating IndexedDB Request
+   */
+  _segmentSelectQueryByID (segment, worditem) {
+    return this._formatQuery(segment, this._selectByID(worditem))
+  }
+
+  /**
+   * Creates query for deleting one item from the segment
+   * @param {String} segment - segment name
+   * @param {WordItem} worditem - the worditem object
+   * @return {Object} - data for creating IndexedDB Request
+   */
+  segmentDeleteQuery (segment, worditem) {
+    if (this.storageMap[segment].delete) {
+      return this.storageMap[segment].delete(segment, worditem)
     }
   }
 
-
+  /**
+   * Creates query for deleting all list items from the segment
+   * @param {String} segment - segment name
+   * @param {WordItem} worditem - the worditem object
+   * @return {Object} - data for creating IndexedDB Request
+   */
   segmentDeleteManyQuery(segment, params) {
     if (params.languageCode) {
-      let listID = this.userId + '-' + params.languageCode
-      return  {
-        objectStoreName: this.storageMap[segment].objectStoreName,
-        condition: { indexName: 'listID', value: listID, type: 'only' }
-      }
+      return this._formatQuery(segment, this._selectByListID(params.languageCode))
     } else {
       throw new Error("Invalid query parameters - missing languageCode")
     }
   }
 
-  updateSegmentQuery(segment,data) {
-    let dataItems = []
-    let resDataItem = this.storageMap[segment].serialize(data)
-    if (!Array.isArray(resDataItem)) {
-      dataItems.push(resDataItem)
-    } else {
-      dataItems = dataItems.concat(resDataItem)
-    }
+  /**
+   * Creates data for updating items in a segment
+   * @param {String} segment - segment name
+   * @param {Object} data - the worditem object
+   * @return {Object} data for creating IndexedDB Request
+   */
+  updateSegmentQuery(segment, data) {
     return {
-      objectStoreName: this.storageMap[segment].objectStoreName,
-      dataItems: dataItems
+      objectStoreName: this._objectStoreData(segment).name,
+      dataItems: this.storageMap[segment].serialize(data)
     }
   }
 
   /**
-   * get a query object which retrieves a list of WordItems
-   * @param {Object} params query parameters
-   * @return {Object} IndexedDBQuery object
-   */
-  listQuery(params) {
-    if (params.languageCode) {
-      let listID = this.userId + '-' + params.languageCode
-      return {
-        objectStoreName: this.storageMap.common.objectStoreName,
-        condition: {indexName: 'listID', value: listID, type: 'only' }
-      }
-    } else {
-      throw new Error("Invalid query parameters - missing languageCode")
-    }
-  }
-
-  /**
-   * private method to load the Homonym property of a WordItem
-   */
-  _loadHomonym (worditem,jsonObj) {
-    worditem.homonym = WordItem.readHomonym(jsonObj[0])
-  }
-
-  /**
-   * private method to load the Context property of a WordItem
-   */
-  _loadContext (worditem, jsonObjs) {
-    if (! Array.isArray(jsonObjs)) {
-      jsonObjs = [jsonObjs]  
-    }
-    worditem.context = WordItem.readContext(jsonObjs)
-  }
-
-  /**
-   * private method to convert the common segment to storage
+   * Creates jsonObj for saving to IndexedDB for common segment
+   * @param {WordItem} worditem - the worditem object
+   * @return {Object[]}
    */
   _serializeCommon (worditem) {
-    return {
+    return [{
       ID: this._makeStorageID(worditem),
       listID: this.userId + '-' + worditem.languageCode,
       userID: this.userId,
@@ -224,11 +310,13 @@ export default class WordItemIndexedDbDriver {
       targetWord: worditem.targetWord,
       important: worditem.important,
       createdDT: WordItemIndexedDbDriver.currentDate
-    }
+    }]
   }
 
   /**
-   * private method to convert the context segment to storage
+   * Creates jsonObj for saving to IndexedDB for context segment
+   * @param {WordItem} worditem - the worditem object
+   * @return {Object[]}
    */
   _serializeContext (worditem) {
     let result = []
@@ -248,8 +336,8 @@ export default class WordItemIndexedDbDriver {
           selector: {
             type: 'TextQuoteSelector',
             exact: tq.text,
-            prefix: tq.prefix,
-            suffix: tq.suffix,
+            prefix: tq.prefix && tq.prefix.length > 0 ? tq.prefix : ' ',
+            suffix: tq.suffix && tq.suffix.length > 0 ? tq.suffix : ' ',
             contextHTML: tq.contextHTML,
             languageCode: tq.languageCode
           }
@@ -262,61 +350,103 @@ export default class WordItemIndexedDbDriver {
   }
 
   /**
-   * private method to convert the homonym segment to storage
-   * @param {WordItem}
+   * Creates jsonObj for saving to IndexedDB for homonyms segment
+   * @param {WordItem} worditem - the worditem object
+   * @param {Boolean} [addMeaning = false] - if true it adds definitions
+   * @return {Object[]}
    */
-  _serializeHomonym (worditem,addMeaning = false) {
-    let resultHomonym = worditem.homonym && (worditem.homonym instanceof Homonym) ? worditem.homonym.convertToJSONObject(addMeaning) : {}
-    return {
-      ID: this._makeStorageID(worditem),
-      listID: this.userId + '-' + worditem.languageCode,
-      userID: this.userId,
-      languageCode: worditem.languageCode,
-      targetWord: worditem.targetWord,
-      homonym: resultHomonym
+  _serializeHomonym (worditem, addMeaning = false) {
+    let resultHomonym = worditem.homonym && (worditem.homonym instanceof Homonym) ? worditem.homonym.convertToJSONObject(addMeaning) : null
+    if (resultHomonym) {
+      return [{
+        ID: this._makeStorageID(worditem),
+        listID: this.userId + '-' + worditem.languageCode,
+        userID: this.userId,
+        languageCode: worditem.languageCode,
+        targetWord: worditem.targetWord,
+        homonym: resultHomonym
+      }]
     }
+    return []
   }
 
+
+/**
+ * Creates jsonObj for saving to IndexedDB for full homonym segment
+ * @param {WordItem} worditem - the worditem object
+ * @return {Object[]}
+ */
+_serializeHomonymWithFullDefs (worditem) {
+  return this._serializeHomonym(worditem, true)
+}
+
+/**
+ * Returns formatted date/time for saving to IndexedDB
+ * @return {String}
+ */
+static get currentDate () {
+  let dt = new Date()
+  return dt.getFullYear() + '/'
+      + ((dt.getMonth()+1) < 10 ? '0' : '') + (dt.getMonth()+1)  + '/'
+      + ((dt.getDate() < 10) ? '0' : '') + dt.getDate() + ' @ '
+              + ((dt.getHours() < 10) ? '0' : '') + dt.getHours() + ":"
+              + ((dt.getMinutes() < 10) ? '0' : '') + dt.getMinutes() + ":"
+              + ((dt.getSeconds() < 10) ? '0' : '') + dt.getSeconds()
+
+}
+
   /**
-   * private method to serialize homonymns with full defs
-   * @param {WordItem}
+   * Creates ID for wordItem for saving to IndexedDB
+   * @param {WordItem} worditem - the worditem object
+   * @return {String}
    */
-  _serializeHomonymWithFullDefs (worditem) {
-    return this._serializeHomonym(worditem,true)
+  _makeStorageID(worditem) {
+    return this.userId + '-' + worditem.languageCode + '-' + worditem.targetWord
   }
 
   /**
-  * private method to create the storage ID for a WordItem
-  */
-  _makeStorageID(item) {
-    return this.userId + '-' + item.languageCode + '-' + item.targetWord
-  }
-
-  /**
-   * private method - creates a template for a new Object Store
+   * Creates ID for wordList for saving to IndexedDB
+   * @param {String} languageCode - languageCode of the wordList
+   * @return {String}
    */
-  _objectStoreTemplate () {
-    return {
-      keyPath: 'ID',
-      indexes: [
-        { indexName: 'ID', keyPath: 'ID', unique: true},
-        { indexName: 'listID', keyPath: 'listID', unique: false},
-        { indexName: 'userID', keyPath: 'userID', unique: false},
-        { indexName: 'languageCode', keyPath: 'languageCode', unique: false},
-        { indexName: 'targetWord', keyPath: 'targetWord', unique: false}
-      ]
+  _makeStorageListID(languageCode) {
+    return this.userId + '-' + languageCode
+  }
+
+  /**
+   * Creates ID for wordItem similiar to remote format (without userID)
+   * @param {String} languageCode - languageCode of the wordList
+   * @return {String}
+   */
+  makeIDCompareWithRemote (worditem) {
+    return worditem.languageCode + '-' + worditem.targetWord
+  }
+
+  /**
+   * Creates array of IDs for comparing with remote items
+   * @param {WordItem[]} wordItems - languageCode of the wordList
+   * @return {String[]}
+   */
+  getCheckArray (wordItems) {
+    return wordItems.map(wordItem => this.makeIDCompareWithRemote(wordItem))
+  }
+
+  /**
+   * Creates wordItem from remote data
+   * @param {Object} remoteDataItem - wordItem from remote source in json format
+   * @return {WordItem}
+   */
+  createFromRemoteData (remoteDataItem) {
+    let wordItem = this.loadFirst(remoteDataItem)
+    
+    if (remoteDataItem.context) {
+      this.loadSegment('context', remoteDataItem.context, wordItem)
     }
-  }
 
-  static get currentDate () {
-    let dt = new Date()
-    return dt.getFullYear() + '/'
-        + ((dt.getMonth()+1) < 10 ? '0' : '') + (dt.getMonth()+1)  + '/'
-        + ((dt.getDate() < 10) ? '0' : '') + dt.getDate() + ' @ '
-                + ((dt.getHours() < 10) ? '0' : '') + dt.getHours() + ":"
-                + ((dt.getMinutes() < 10) ? '0' : '') + dt.getMinutes() + ":"
-                + ((dt.getSeconds() < 10) ? '0' : '') + dt.getSeconds()
-
+    if (remoteDataItem.homonym) {
+      this.loadSegment('shortHomonym', [ remoteDataItem ], wordItem)
+    }
+    return wordItem
   }
 
 }

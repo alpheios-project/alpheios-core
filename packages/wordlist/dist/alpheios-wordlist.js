@@ -96,6 +96,1706 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
+/***/ "../node_modules/axios/index.js":
+/*!**************************************!*\
+  !*** ../node_modules/axios/index.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! ./lib/axios */ "../node_modules/axios/lib/axios.js");
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/adapters/xhr.js":
+/*!*************************************************!*\
+  !*** ../node_modules/axios/lib/adapters/xhr.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+var settle = __webpack_require__(/*! ./../core/settle */ "../node_modules/axios/lib/core/settle.js");
+var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "../node_modules/axios/lib/helpers/buildURL.js");
+var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "../node_modules/axios/lib/helpers/parseHeaders.js");
+var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "../node_modules/axios/lib/helpers/isURLSameOrigin.js");
+var createError = __webpack_require__(/*! ../core/createError */ "../node_modules/axios/lib/core/createError.js");
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ "../node_modules/axios/lib/helpers/btoa.js");
+
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
+
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
+    var request = new XMLHttpRequest();
+    var loadEvent = 'onreadystatechange';
+    var xDomain = false;
+
+    // For IE 8/9 CORS support
+    // Only supports POST and GET calls and doesn't returns the response headers.
+    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+    if ( true &&
+        typeof window !== 'undefined' &&
+        window.XDomainRequest && !('withCredentials' in request) &&
+        !isURLSameOrigin(config.url)) {
+      request = new window.XDomainRequest();
+      loadEvent = 'onload';
+      xDomain = true;
+      request.onprogress = function handleProgress() {};
+      request.ontimeout = function handleTimeout() {};
+    }
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password || '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    // Listen for ready state
+    request[loadEvent] = function handleLoad() {
+      if (!request || (request.readyState !== 4 && !xDomain)) {
+        return;
+      }
+
+      // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      }
+
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
+        status: request.status === 1223 ? 204 : request.status,
+        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config, null, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
+        request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      var cookies = __webpack_require__(/*! ./../helpers/cookies */ "../node_modules/axios/lib/helpers/cookies.js");
+
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+          cookies.read(config.xsrfCookieName) :
+          undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
+        }
+      });
+    }
+
+    // Add withCredentials to request if needed
+    if (config.withCredentials) {
+      request.withCredentials = true;
+    }
+
+    // Add responseType to request if needed
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+        if (config.responseType !== 'json') {
+          throw e;
+        }
+      }
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
+
+    if (requestData === undefined) {
+      requestData = null;
+    }
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/axios.js":
+/*!******************************************!*\
+  !*** ../node_modules/axios/lib/axios.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./utils */ "../node_modules/axios/lib/utils.js");
+var bind = __webpack_require__(/*! ./helpers/bind */ "../node_modules/axios/lib/helpers/bind.js");
+var Axios = __webpack_require__(/*! ./core/Axios */ "../node_modules/axios/lib/core/Axios.js");
+var defaults = __webpack_require__(/*! ./defaults */ "../node_modules/axios/lib/defaults.js");
+
+/**
+ * Create an instance of Axios
+ *
+ * @param {Object} defaultConfig The default config for the instance
+ * @return {Axios} A new instance of Axios
+ */
+function createInstance(defaultConfig) {
+  var context = new Axios(defaultConfig);
+  var instance = bind(Axios.prototype.request, context);
+
+  // Copy axios.prototype to instance
+  utils.extend(instance, Axios.prototype, context);
+
+  // Copy context to instance
+  utils.extend(instance, context);
+
+  return instance;
+}
+
+// Create the default instance to be exported
+var axios = createInstance(defaults);
+
+// Expose Axios class to allow class inheritance
+axios.Axios = Axios;
+
+// Factory for creating new instances
+axios.create = function create(instanceConfig) {
+  return createInstance(utils.merge(defaults, instanceConfig));
+};
+
+// Expose Cancel & CancelToken
+axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ "../node_modules/axios/lib/cancel/Cancel.js");
+axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ "../node_modules/axios/lib/cancel/CancelToken.js");
+axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ "../node_modules/axios/lib/cancel/isCancel.js");
+
+// Expose all/spread
+axios.all = function all(promises) {
+  return Promise.all(promises);
+};
+axios.spread = __webpack_require__(/*! ./helpers/spread */ "../node_modules/axios/lib/helpers/spread.js");
+
+module.exports = axios;
+
+// Allow use of default import syntax in TypeScript
+module.exports.default = axios;
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/cancel/Cancel.js":
+/*!**************************************************!*\
+  !*** ../node_modules/axios/lib/cancel/Cancel.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+function Cancel(message) {
+  this.message = message;
+}
+
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
+
+Cancel.prototype.__CANCEL__ = true;
+
+module.exports = Cancel;
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/cancel/CancelToken.js":
+/*!*******************************************************!*\
+  !*** ../node_modules/axios/lib/cancel/CancelToken.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Cancel = __webpack_require__(/*! ./Cancel */ "../node_modules/axios/lib/cancel/Cancel.js");
+
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */
+function CancelToken(executor) {
+  if (typeof executor !== 'function') {
+    throw new TypeError('executor must be a function.');
+  }
+
+  var resolvePromise;
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+
+  var token = this;
+  executor(function cancel(message) {
+    if (token.reason) {
+      // Cancellation has already been requested
+      return;
+    }
+
+    token.reason = new Cancel(message);
+    resolvePromise(token.reason);
+  });
+}
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) {
+    throw this.reason;
+  }
+};
+
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */
+CancelToken.source = function source() {
+  var cancel;
+  var token = new CancelToken(function executor(c) {
+    cancel = c;
+  });
+  return {
+    token: token,
+    cancel: cancel
+  };
+};
+
+module.exports = CancelToken;
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/cancel/isCancel.js":
+/*!****************************************************!*\
+  !*** ../node_modules/axios/lib/cancel/isCancel.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/core/Axios.js":
+/*!***********************************************!*\
+  !*** ../node_modules/axios/lib/core/Axios.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var defaults = __webpack_require__(/*! ./../defaults */ "../node_modules/axios/lib/defaults.js");
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ "../node_modules/axios/lib/core/InterceptorManager.js");
+var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ "../node_modules/axios/lib/core/dispatchRequest.js");
+
+/**
+ * Create a new instance of Axios
+ *
+ * @param {Object} instanceConfig The default config for the instance
+ */
+function Axios(instanceConfig) {
+  this.defaults = instanceConfig;
+  this.interceptors = {
+    request: new InterceptorManager(),
+    response: new InterceptorManager()
+  };
+}
+
+/**
+ * Dispatch a request
+ *
+ * @param {Object} config The config specific for this request (merged with this.defaults)
+ */
+Axios.prototype.request = function request(config) {
+  /*eslint no-param-reassign:0*/
+  // Allow for axios('example/url'[, config]) a la fetch API
+  if (typeof config === 'string') {
+    config = utils.merge({
+      url: arguments[0]
+    }, arguments[1]);
+  }
+
+  config = utils.merge(defaults, {method: 'get'}, this.defaults, config);
+  config.method = config.method.toLowerCase();
+
+  // Hook up interceptors middleware
+  var chain = [dispatchRequest, undefined];
+  var promise = Promise.resolve(config);
+
+  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+    chain.unshift(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+    chain.push(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  while (chain.length) {
+    promise = promise.then(chain.shift(), chain.shift());
+  }
+
+  return promise;
+};
+
+// Provide aliases for supported request methods
+utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function(url, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url
+    }));
+  };
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function(url, data, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url,
+      data: data
+    }));
+  };
+});
+
+module.exports = Axios;
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/core/InterceptorManager.js":
+/*!************************************************************!*\
+  !*** ../node_modules/axios/lib/core/InterceptorManager.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+
+function InterceptorManager() {
+  this.handlers = [];
+}
+
+/**
+ * Add a new interceptor to the stack
+ *
+ * @param {Function} fulfilled The function to handle `then` for a `Promise`
+ * @param {Function} rejected The function to handle `reject` for a `Promise`
+ *
+ * @return {Number} An ID used to remove interceptor later
+ */
+InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+  this.handlers.push({
+    fulfilled: fulfilled,
+    rejected: rejected
+  });
+  return this.handlers.length - 1;
+};
+
+/**
+ * Remove an interceptor from the stack
+ *
+ * @param {Number} id The ID that was returned by `use`
+ */
+InterceptorManager.prototype.eject = function eject(id) {
+  if (this.handlers[id]) {
+    this.handlers[id] = null;
+  }
+};
+
+/**
+ * Iterate over all the registered interceptors
+ *
+ * This method is particularly useful for skipping over any
+ * interceptors that may have become `null` calling `eject`.
+ *
+ * @param {Function} fn The function to call for each interceptor
+ */
+InterceptorManager.prototype.forEach = function forEach(fn) {
+  utils.forEach(this.handlers, function forEachHandler(h) {
+    if (h !== null) {
+      fn(h);
+    }
+  });
+};
+
+module.exports = InterceptorManager;
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/core/createError.js":
+/*!*****************************************************!*\
+  !*** ../node_modules/axios/lib/core/createError.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var enhanceError = __webpack_require__(/*! ./enhanceError */ "../node_modules/axios/lib/core/enhanceError.js");
+
+/**
+ * Create an Error with the specified message, config, error code, request and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+module.exports = function createError(message, config, code, request, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, request, response);
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/core/dispatchRequest.js":
+/*!*********************************************************!*\
+  !*** ../node_modules/axios/lib/core/dispatchRequest.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+var transformData = __webpack_require__(/*! ./transformData */ "../node_modules/axios/lib/core/transformData.js");
+var isCancel = __webpack_require__(/*! ../cancel/isCancel */ "../node_modules/axios/lib/cancel/isCancel.js");
+var defaults = __webpack_require__(/*! ../defaults */ "../node_modules/axios/lib/defaults.js");
+var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ "../node_modules/axios/lib/helpers/isAbsoluteURL.js");
+var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ "../node_modules/axios/lib/helpers/combineURLs.js");
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+function throwIfCancellationRequested(config) {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested();
+  }
+}
+
+/**
+ * Dispatch a request to the server using the configured adapter.
+ *
+ * @param {object} config The config that is to be used for the request
+ * @returns {Promise} The Promise to be fulfilled
+ */
+module.exports = function dispatchRequest(config) {
+  throwIfCancellationRequested(config);
+
+  // Support baseURL config
+  if (config.baseURL && !isAbsoluteURL(config.url)) {
+    config.url = combineURLs(config.baseURL, config.url);
+  }
+
+  // Ensure headers exist
+  config.headers = config.headers || {};
+
+  // Transform request data
+  config.data = transformData(
+    config.data,
+    config.headers,
+    config.transformRequest
+  );
+
+  // Flatten headers
+  config.headers = utils.merge(
+    config.headers.common || {},
+    config.headers[config.method] || {},
+    config.headers || {}
+  );
+
+  utils.forEach(
+    ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],
+    function cleanHeaderConfig(method) {
+      delete config.headers[method];
+    }
+  );
+
+  var adapter = config.adapter || defaults.adapter;
+
+  return adapter(config).then(function onAdapterResolution(response) {
+    throwIfCancellationRequested(config);
+
+    // Transform response data
+    response.data = transformData(
+      response.data,
+      response.headers,
+      config.transformResponse
+    );
+
+    return response;
+  }, function onAdapterRejection(reason) {
+    if (!isCancel(reason)) {
+      throwIfCancellationRequested(config);
+
+      // Transform response data
+      if (reason && reason.response) {
+        reason.response.data = transformData(
+          reason.response.data,
+          reason.response.headers,
+          config.transformResponse
+        );
+      }
+    }
+
+    return Promise.reject(reason);
+  });
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/core/enhanceError.js":
+/*!******************************************************!*\
+  !*** ../node_modules/axios/lib/core/enhanceError.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Update an Error with the specified config, error code, and response.
+ *
+ * @param {Error} error The error to update.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The error.
+ */
+module.exports = function enhanceError(error, config, code, request, response) {
+  error.config = config;
+  if (code) {
+    error.code = code;
+  }
+  error.request = request;
+  error.response = response;
+  return error;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/core/settle.js":
+/*!************************************************!*\
+  !*** ../node_modules/axios/lib/core/settle.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var createError = __webpack_require__(/*! ./createError */ "../node_modules/axios/lib/core/createError.js");
+
+/**
+ * Resolve or reject a Promise based on response status.
+ *
+ * @param {Function} resolve A function that resolves the promise.
+ * @param {Function} reject A function that rejects the promise.
+ * @param {object} response The response.
+ */
+module.exports = function settle(resolve, reject, response) {
+  var validateStatus = response.config.validateStatus;
+  // Note: status is not exposed by XDomainRequest
+  if (!response.status || !validateStatus || validateStatus(response.status)) {
+    resolve(response);
+  } else {
+    reject(createError(
+      'Request failed with status code ' + response.status,
+      response.config,
+      null,
+      response.request,
+      response
+    ));
+  }
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/core/transformData.js":
+/*!*******************************************************!*\
+  !*** ../node_modules/axios/lib/core/transformData.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+
+/**
+ * Transform the data for a request or a response
+ *
+ * @param {Object|String} data The data to be transformed
+ * @param {Array} headers The headers for the request or response
+ * @param {Array|Function} fns A single function or Array of functions
+ * @returns {*} The resulting transformed data
+ */
+module.exports = function transformData(data, headers, fns) {
+  /*eslint no-param-reassign:0*/
+  utils.forEach(fns, function transform(fn) {
+    data = fn(data, headers);
+  });
+
+  return data;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/defaults.js":
+/*!*********************************************!*\
+  !*** ../node_modules/axios/lib/defaults.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(/*! ./utils */ "../node_modules/axios/lib/utils.js");
+var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ "../node_modules/axios/lib/helpers/normalizeHeaderName.js");
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(/*! ./adapters/xhr */ "../node_modules/axios/lib/adapters/xhr.js");
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(/*! ./adapters/http */ "../node_modules/axios/lib/adapters/xhr.js");
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "../node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/bind.js":
+/*!*************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/bind.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/btoa.js":
+/*!*************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/btoa.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
+
+var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+
+function E() {
+  this.message = 'String contains an invalid character';
+}
+E.prototype = new Error;
+E.prototype.code = 5;
+E.prototype.name = 'InvalidCharacterError';
+
+function btoa(input) {
+  var str = String(input);
+  var output = '';
+  for (
+    // initialize result and counter
+    var block, charCode, idx = 0, map = chars;
+    // if the next str index does not exist:
+    //   change the mapping table to "="
+    //   check if d has no fractional digits
+    str.charAt(idx | 0) || (map = '=', idx % 1);
+    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
+    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
+  ) {
+    charCode = str.charCodeAt(idx += 3 / 4);
+    if (charCode > 0xFF) {
+      throw new E();
+    }
+    block = block << 8 | charCode;
+  }
+  return output;
+}
+
+module.exports = btoa;
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/buildURL.js":
+/*!*****************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/buildURL.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+
+function encode(val) {
+  return encodeURIComponent(val).
+    replace(/%40/gi, '@').
+    replace(/%3A/gi, ':').
+    replace(/%24/g, '$').
+    replace(/%2C/gi, ',').
+    replace(/%20/g, '+').
+    replace(/%5B/gi, '[').
+    replace(/%5D/gi, ']');
+}
+
+/**
+ * Build a URL by appending params to the end
+ *
+ * @param {string} url The base of the url (e.g., http://www.google.com)
+ * @param {object} [params] The params to be appended
+ * @returns {string} The formatted url
+ */
+module.exports = function buildURL(url, params, paramsSerializer) {
+  /*eslint no-param-reassign:0*/
+  if (!params) {
+    return url;
+  }
+
+  var serializedParams;
+  if (paramsSerializer) {
+    serializedParams = paramsSerializer(params);
+  } else if (utils.isURLSearchParams(params)) {
+    serializedParams = params.toString();
+  } else {
+    var parts = [];
+
+    utils.forEach(params, function serialize(val, key) {
+      if (val === null || typeof val === 'undefined') {
+        return;
+      }
+
+      if (utils.isArray(val)) {
+        key = key + '[]';
+      } else {
+        val = [val];
+      }
+
+      utils.forEach(val, function parseValue(v) {
+        if (utils.isDate(v)) {
+          v = v.toISOString();
+        } else if (utils.isObject(v)) {
+          v = JSON.stringify(v);
+        }
+        parts.push(encode(key) + '=' + encode(v));
+      });
+    });
+
+    serializedParams = parts.join('&');
+  }
+
+  if (serializedParams) {
+    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
+  }
+
+  return url;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/combineURLs.js":
+/*!********************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/combineURLs.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL
+    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+    : baseURL;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/cookies.js":
+/*!****************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/cookies.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+
+module.exports = (
+  utils.isStandardBrowserEnv() ?
+
+  // Standard browser envs support document.cookie
+  (function standardBrowserEnv() {
+    return {
+      write: function write(name, value, expires, path, domain, secure) {
+        var cookie = [];
+        cookie.push(name + '=' + encodeURIComponent(value));
+
+        if (utils.isNumber(expires)) {
+          cookie.push('expires=' + new Date(expires).toGMTString());
+        }
+
+        if (utils.isString(path)) {
+          cookie.push('path=' + path);
+        }
+
+        if (utils.isString(domain)) {
+          cookie.push('domain=' + domain);
+        }
+
+        if (secure === true) {
+          cookie.push('secure');
+        }
+
+        document.cookie = cookie.join('; ');
+      },
+
+      read: function read(name) {
+        var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+        return (match ? decodeURIComponent(match[3]) : null);
+      },
+
+      remove: function remove(name) {
+        this.write(name, '', Date.now() - 86400000);
+      }
+    };
+  })() :
+
+  // Non standard browser env (web workers, react-native) lack needed support.
+  (function nonStandardBrowserEnv() {
+    return {
+      write: function write() {},
+      read: function read() { return null; },
+      remove: function remove() {}
+    };
+  })()
+);
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/isAbsoluteURL.js":
+/*!**********************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Determines whether the specified URL is absolute
+ *
+ * @param {string} url The URL to test
+ * @returns {boolean} True if the specified URL is absolute, otherwise false
+ */
+module.exports = function isAbsoluteURL(url) {
+  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+  // by any combination of letters, digits, plus, period, or hyphen.
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/isURLSameOrigin.js":
+/*!************************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+
+module.exports = (
+  utils.isStandardBrowserEnv() ?
+
+  // Standard browser envs have full support of the APIs needed to test
+  // whether the request URL is of the same origin as current location.
+  (function standardBrowserEnv() {
+    var msie = /(msie|trident)/i.test(navigator.userAgent);
+    var urlParsingNode = document.createElement('a');
+    var originURL;
+
+    /**
+    * Parse a URL to discover it's components
+    *
+    * @param {String} url The URL to be parsed
+    * @returns {Object}
+    */
+    function resolveURL(url) {
+      var href = url;
+
+      if (msie) {
+        // IE needs attribute set twice to normalize properties
+        urlParsingNode.setAttribute('href', href);
+        href = urlParsingNode.href;
+      }
+
+      urlParsingNode.setAttribute('href', href);
+
+      // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
+      return {
+        href: urlParsingNode.href,
+        protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+        host: urlParsingNode.host,
+        search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+        hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+        hostname: urlParsingNode.hostname,
+        port: urlParsingNode.port,
+        pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
+                  urlParsingNode.pathname :
+                  '/' + urlParsingNode.pathname
+      };
+    }
+
+    originURL = resolveURL(window.location.href);
+
+    /**
+    * Determine if a URL shares the same origin as the current location
+    *
+    * @param {String} requestURL The URL to test
+    * @returns {boolean} True if URL shares the same origin, otherwise false
+    */
+    return function isURLSameOrigin(requestURL) {
+      var parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
+      return (parsed.protocol === originURL.protocol &&
+            parsed.host === originURL.host);
+    };
+  })() :
+
+  // Non standard browser envs (web workers, react-native) lack needed support.
+  (function nonStandardBrowserEnv() {
+    return function isURLSameOrigin() {
+      return true;
+    };
+  })()
+);
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/normalizeHeaderName.js":
+/*!****************************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ../utils */ "../node_modules/axios/lib/utils.js");
+
+module.exports = function normalizeHeaderName(headers, normalizedName) {
+  utils.forEach(headers, function processHeader(value, name) {
+    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
+      headers[normalizedName] = value;
+      delete headers[name];
+    }
+  });
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/parseHeaders.js":
+/*!*********************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/parseHeaders.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+
+// Headers whose duplicates are ignored by node
+// c.f. https://nodejs.org/api/http.html#http_message_headers
+var ignoreDuplicateOf = [
+  'age', 'authorization', 'content-length', 'content-type', 'etag',
+  'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since',
+  'last-modified', 'location', 'max-forwards', 'proxy-authorization',
+  'referer', 'retry-after', 'user-agent'
+];
+
+/**
+ * Parse headers into an object
+ *
+ * ```
+ * Date: Wed, 27 Aug 2014 08:58:49 GMT
+ * Content-Type: application/json
+ * Connection: keep-alive
+ * Transfer-Encoding: chunked
+ * ```
+ *
+ * @param {String} headers Headers needing to be parsed
+ * @returns {Object} Headers parsed into an object
+ */
+module.exports = function parseHeaders(headers) {
+  var parsed = {};
+  var key;
+  var val;
+  var i;
+
+  if (!headers) { return parsed; }
+
+  utils.forEach(headers.split('\n'), function parser(line) {
+    i = line.indexOf(':');
+    key = utils.trim(line.substr(0, i)).toLowerCase();
+    val = utils.trim(line.substr(i + 1));
+
+    if (key) {
+      if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
+        return;
+      }
+      if (key === 'set-cookie') {
+        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
+      } else {
+        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+      }
+    }
+  });
+
+  return parsed;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/spread.js":
+/*!***************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/spread.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Syntactic sugar for invoking a function and expanding an array for arguments.
+ *
+ * Common use case would be to use `Function.prototype.apply`.
+ *
+ *  ```js
+ *  function f(x, y, z) {}
+ *  var args = [1, 2, 3];
+ *  f.apply(null, args);
+ *  ```
+ *
+ * With `spread` this example can be re-written.
+ *
+ *  ```js
+ *  spread(function(x, y, z) {})([1, 2, 3]);
+ *  ```
+ *
+ * @param {Function} callback
+ * @returns {Function}
+ */
+module.exports = function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr);
+  };
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/utils.js":
+/*!******************************************!*\
+  !*** ../node_modules/axios/lib/utils.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var bind = __webpack_require__(/*! ./helpers/bind */ "../node_modules/axios/lib/helpers/bind.js");
+var isBuffer = __webpack_require__(/*! is-buffer */ "../node_modules/is-buffer/index.js");
+
+/*global toString:true*/
+
+// utils is a library of generic helper functions non-specific to axios
+
+var toString = Object.prototype.toString;
+
+/**
+ * Determine if a value is an Array
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Array, otherwise false
+ */
+function isArray(val) {
+  return toString.call(val) === '[object Array]';
+}
+
+/**
+ * Determine if a value is an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+ */
+function isArrayBuffer(val) {
+  return toString.call(val) === '[object ArrayBuffer]';
+}
+
+/**
+ * Determine if a value is a FormData
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an FormData, otherwise false
+ */
+function isFormData(val) {
+  return (typeof FormData !== 'undefined') && (val instanceof FormData);
+}
+
+/**
+ * Determine if a value is a view on an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+ */
+function isArrayBufferView(val) {
+  var result;
+  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
+    result = ArrayBuffer.isView(val);
+  } else {
+    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
+  }
+  return result;
+}
+
+/**
+ * Determine if a value is a String
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a String, otherwise false
+ */
+function isString(val) {
+  return typeof val === 'string';
+}
+
+/**
+ * Determine if a value is a Number
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Number, otherwise false
+ */
+function isNumber(val) {
+  return typeof val === 'number';
+}
+
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/**
+ * Determine if a value is an Object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Object, otherwise false
+ */
+function isObject(val) {
+  return val !== null && typeof val === 'object';
+}
+
+/**
+ * Determine if a value is a Date
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Date, otherwise false
+ */
+function isDate(val) {
+  return toString.call(val) === '[object Date]';
+}
+
+/**
+ * Determine if a value is a File
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */
+function isFile(val) {
+  return toString.call(val) === '[object File]';
+}
+
+/**
+ * Determine if a value is a Blob
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Blob, otherwise false
+ */
+function isBlob(val) {
+  return toString.call(val) === '[object Blob]';
+}
+
+/**
+ * Determine if a value is a Function
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Function, otherwise false
+ */
+function isFunction(val) {
+  return toString.call(val) === '[object Function]';
+}
+
+/**
+ * Determine if a value is a Stream
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Stream, otherwise false
+ */
+function isStream(val) {
+  return isObject(val) && isFunction(val.pipe);
+}
+
+/**
+ * Determine if a value is a URLSearchParams object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+ */
+function isURLSearchParams(val) {
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+}
+
+/**
+ * Trim excess whitespace off the beginning and end of a string
+ *
+ * @param {String} str The String to trim
+ * @returns {String} The String freed of excess whitespace
+ */
+function trim(str) {
+  return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+
+/**
+ * Determine if we're running in a standard browser environment
+ *
+ * This allows axios to run in a web worker, and react-native.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
+ *
+ * web workers:
+ *  typeof window -> undefined
+ *  typeof document -> undefined
+ *
+ * react-native:
+ *  navigator.product -> 'ReactNative'
+ */
+function isStandardBrowserEnv() {
+  if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
+    return false;
+  }
+  return (
+    typeof window !== 'undefined' &&
+    typeof document !== 'undefined'
+  );
+}
+
+/**
+ * Iterate over an Array or an Object invoking a function for each item.
+ *
+ * If `obj` is an Array callback will be called passing
+ * the value, index, and complete array for each item.
+ *
+ * If 'obj' is an Object callback will be called passing
+ * the value, key, and complete object for each property.
+ *
+ * @param {Object|Array} obj The object to iterate
+ * @param {Function} fn The callback to invoke for each item
+ */
+function forEach(obj, fn) {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined') {
+    return;
+  }
+
+  // Force an array if not already something iterable
+  if (typeof obj !== 'object') {
+    /*eslint no-param-reassign:0*/
+    obj = [obj];
+  }
+
+  if (isArray(obj)) {
+    // Iterate over array values
+    for (var i = 0, l = obj.length; i < l; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    // Iterate over object keys
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        fn.call(null, obj[key], key, obj);
+      }
+    }
+  }
+}
+
+/**
+ * Accepts varargs expecting each argument to be an object, then
+ * immutably merges the properties of each object and returns result.
+ *
+ * When multiple objects contain the same key the later object in
+ * the arguments list will take precedence.
+ *
+ * Example:
+ *
+ * ```js
+ * var result = merge({foo: 123}, {foo: 456});
+ * console.log(result.foo); // outputs 456
+ * ```
+ *
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+function merge(/* obj1, obj2, obj3, ... */) {
+  var result = {};
+  function assignValue(val, key) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
+      result[key] = merge(result[key], val);
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+/**
+ * Extends object a by mutably adding to it the properties of object b.
+ *
+ * @param {Object} a The object to be extended
+ * @param {Object} b The object to copy properties from
+ * @param {Object} thisArg The object to bind function to
+ * @return {Object} The resulting value of object a
+ */
+function extend(a, b, thisArg) {
+  forEach(b, function assignValue(val, key) {
+    if (thisArg && typeof val === 'function') {
+      a[key] = bind(val, thisArg);
+    } else {
+      a[key] = val;
+    }
+  });
+  return a;
+}
+
+module.exports = {
+  isArray: isArray,
+  isArrayBuffer: isArrayBuffer,
+  isBuffer: isBuffer,
+  isFormData: isFormData,
+  isArrayBufferView: isArrayBufferView,
+  isString: isString,
+  isNumber: isNumber,
+  isObject: isObject,
+  isUndefined: isUndefined,
+  isDate: isDate,
+  isFile: isFile,
+  isBlob: isBlob,
+  isFunction: isFunction,
+  isStream: isStream,
+  isURLSearchParams: isURLSearchParams,
+  isStandardBrowserEnv: isStandardBrowserEnv,
+  forEach: forEach,
+  merge: merge,
+  extend: extend,
+  trim: trim
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/is-buffer/index.js":
+/*!******************************************!*\
+  !*** ../node_modules/is-buffer/index.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+// The _isBuffer check is for Safari 5-7 support, because it's missing
+// Object.prototype.constructor. Remove this eventually
+module.exports = function (obj) {
+  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
+}
+
+function isBuffer (obj) {
+  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+// For Node v0.10 support. Remove this eventually.
+function isSlowBuffer (obj) {
+  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
+}
+
+
+/***/ }),
+
 /***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/index.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue-components/word-context-panel.vue?vue&type=style&index=0&lang=scss&":
 /*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue-components/word-context-panel.vue?vue&type=style&index=0&lang=scss& ***!
@@ -1754,7 +3454,7 @@ function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
- * Vue.js v2.6.2
+ * Vue.js v2.6.7
  * (c) 2014-2019 Evan You
  * Released under the MIT License.
  */
@@ -2292,6 +3992,7 @@ function normalizeComponent (
   var isIOS = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
   var isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
   var isPhantomJS = UA && /phantomjs/.test(UA);
+  var isFF = UA && UA.match(/firefox\/(\d+)/);
 
   // Firefox has a "watch" function on Object.prototype...
   var nativeWatch = ({}).watch;
@@ -3578,23 +5279,30 @@ function normalizeComponent (
   /*  */
 
   function handleError (err, vm, info) {
-    if (vm) {
-      var cur = vm;
-      while ((cur = cur.$parent)) {
-        var hooks = cur.$options.errorCaptured;
-        if (hooks) {
-          for (var i = 0; i < hooks.length; i++) {
-            try {
-              var capture = hooks[i].call(cur, err, vm, info) === false;
-              if (capture) { return }
-            } catch (e) {
-              globalHandleError(e, cur, 'errorCaptured hook');
+    // Deactivate deps tracking while processing error handler to avoid possible infinite rendering.
+    // See: https://github.com/vuejs/vuex/issues/1505
+    pushTarget();
+    try {
+      if (vm) {
+        var cur = vm;
+        while ((cur = cur.$parent)) {
+          var hooks = cur.$options.errorCaptured;
+          if (hooks) {
+            for (var i = 0; i < hooks.length; i++) {
+              try {
+                var capture = hooks[i].call(cur, err, vm, info) === false;
+                if (capture) { return }
+              } catch (e) {
+                globalHandleError(e, cur, 'errorCaptured hook');
+              }
             }
           }
         }
       }
+      globalHandleError(err, vm, info);
+    } finally {
+      popTarget();
     }
-    globalHandleError(err, vm, info);
   }
 
   function invokeWithErrorHandling (
@@ -3608,7 +5316,9 @@ function normalizeComponent (
     try {
       res = args ? handler.apply(context, args) : handler.call(context);
       if (res && !res._isVue && isPromise(res)) {
-        res.catch(function (e) { return handleError(e, vm, info + " (Promise/async)"); });
+        // issue #9511
+        // reassign to res to avoid catch triggering multiple times when nested calls
+        res = res.catch(function (e) { return handleError(e, vm, info + " (Promise/async)"); });
       }
     } catch (e) {
       handleError(e, vm, info);
@@ -3621,7 +5331,11 @@ function normalizeComponent (
       try {
         return config.errorHandler.call(null, err, vm, info)
       } catch (e) {
-        logError(e, null, 'config.errorHandler');
+        // if the user intentionally throws the original error in the handler,
+        // do not log it twice
+        if (e !== err) {
+          logError(e, null, 'config.errorHandler');
+        }
       }
     }
     logError(err, vm, info);
@@ -4162,6 +5876,1161 @@ function normalizeComponent (
 
   /*  */
 
+  function initProvide (vm) {
+    var provide = vm.$options.provide;
+    if (provide) {
+      vm._provided = typeof provide === 'function'
+        ? provide.call(vm)
+        : provide;
+    }
+  }
+
+  function initInjections (vm) {
+    var result = resolveInject(vm.$options.inject, vm);
+    if (result) {
+      toggleObserving(false);
+      Object.keys(result).forEach(function (key) {
+        /* istanbul ignore else */
+        {
+          defineReactive$$1(vm, key, result[key], function () {
+            warn(
+              "Avoid mutating an injected value directly since the changes will be " +
+              "overwritten whenever the provided component re-renders. " +
+              "injection being mutated: \"" + key + "\"",
+              vm
+            );
+          });
+        }
+      });
+      toggleObserving(true);
+    }
+  }
+
+  function resolveInject (inject, vm) {
+    if (inject) {
+      // inject is :any because flow is not smart enough to figure out cached
+      var result = Object.create(null);
+      var keys = hasSymbol
+        ? Reflect.ownKeys(inject)
+        : Object.keys(inject);
+
+      for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        // #6574 in case the inject object is observed...
+        if (key === '__ob__') { continue }
+        var provideKey = inject[key].from;
+        var source = vm;
+        while (source) {
+          if (source._provided && hasOwn(source._provided, provideKey)) {
+            result[key] = source._provided[provideKey];
+            break
+          }
+          source = source.$parent;
+        }
+        if (!source) {
+          if ('default' in inject[key]) {
+            var provideDefault = inject[key].default;
+            result[key] = typeof provideDefault === 'function'
+              ? provideDefault.call(vm)
+              : provideDefault;
+          } else {
+            warn(("Injection \"" + key + "\" not found"), vm);
+          }
+        }
+      }
+      return result
+    }
+  }
+
+  /*  */
+
+
+
+  /**
+   * Runtime helper for resolving raw children VNodes into a slot object.
+   */
+  function resolveSlots (
+    children,
+    context
+  ) {
+    if (!children || !children.length) {
+      return {}
+    }
+    var slots = {};
+    for (var i = 0, l = children.length; i < l; i++) {
+      var child = children[i];
+      var data = child.data;
+      // remove slot attribute if the node is resolved as a Vue slot node
+      if (data && data.attrs && data.attrs.slot) {
+        delete data.attrs.slot;
+      }
+      // named slots should only be respected if the vnode was rendered in the
+      // same context.
+      if ((child.context === context || child.fnContext === context) &&
+        data && data.slot != null
+      ) {
+        var name = data.slot;
+        var slot = (slots[name] || (slots[name] = []));
+        if (child.tag === 'template') {
+          slot.push.apply(slot, child.children || []);
+        } else {
+          slot.push(child);
+        }
+      } else {
+        (slots.default || (slots.default = [])).push(child);
+      }
+    }
+    // ignore slots that contains only whitespace
+    for (var name$1 in slots) {
+      if (slots[name$1].every(isWhitespace)) {
+        delete slots[name$1];
+      }
+    }
+    return slots
+  }
+
+  function isWhitespace (node) {
+    return (node.isComment && !node.asyncFactory) || node.text === ' '
+  }
+
+  /*  */
+
+  function normalizeScopedSlots (
+    slots,
+    normalSlots,
+    prevSlots
+  ) {
+    var res;
+    var isStable = slots ? !!slots.$stable : true;
+    var key = slots && slots.$key;
+    if (!slots) {
+      res = {};
+    } else if (slots._normalized) {
+      // fast path 1: child component re-render only, parent did not change
+      return slots._normalized
+    } else if (
+      isStable &&
+      prevSlots &&
+      prevSlots !== emptyObject &&
+      key === prevSlots.$key &&
+      Object.keys(normalSlots).length === 0
+    ) {
+      // fast path 2: stable scoped slots w/ no normal slots to proxy,
+      // only need to normalize once
+      return prevSlots
+    } else {
+      res = {};
+      for (var key$1 in slots) {
+        if (slots[key$1] && key$1[0] !== '$') {
+          res[key$1] = normalizeScopedSlot(normalSlots, key$1, slots[key$1]);
+        }
+      }
+    }
+    // expose normal slots on scopedSlots
+    for (var key$2 in normalSlots) {
+      if (!(key$2 in res)) {
+        res[key$2] = proxyNormalSlot(normalSlots, key$2);
+      }
+    }
+    // avoriaz seems to mock a non-extensible $scopedSlots object
+    // and when that is passed down this would cause an error
+    if (slots && Object.isExtensible(slots)) {
+      (slots)._normalized = res;
+    }
+    def(res, '$stable', isStable);
+    def(res, '$key', key);
+    return res
+  }
+
+  function normalizeScopedSlot(normalSlots, key, fn) {
+    var normalized = function () {
+      var res = arguments.length ? fn.apply(null, arguments) : fn({});
+      res = res && typeof res === 'object' && !Array.isArray(res)
+        ? [res] // single vnode
+        : normalizeChildren(res);
+      return res && res.length === 0
+        ? undefined
+        : res
+    };
+    // this is a slot using the new v-slot syntax without scope. although it is
+    // compiled as a scoped slot, render fn users would expect it to be present
+    // on this.$slots because the usage is semantically a normal slot.
+    if (fn.proxy) {
+      Object.defineProperty(normalSlots, key, {
+        get: normalized,
+        enumerable: true,
+        configurable: true
+      });
+    }
+    return normalized
+  }
+
+  function proxyNormalSlot(slots, key) {
+    return function () { return slots[key]; }
+  }
+
+  /*  */
+
+  /**
+   * Runtime helper for rendering v-for lists.
+   */
+  function renderList (
+    val,
+    render
+  ) {
+    var ret, i, l, keys, key;
+    if (Array.isArray(val) || typeof val === 'string') {
+      ret = new Array(val.length);
+      for (i = 0, l = val.length; i < l; i++) {
+        ret[i] = render(val[i], i);
+      }
+    } else if (typeof val === 'number') {
+      ret = new Array(val);
+      for (i = 0; i < val; i++) {
+        ret[i] = render(i + 1, i);
+      }
+    } else if (isObject(val)) {
+      if (hasSymbol && val[Symbol.iterator]) {
+        ret = [];
+        var iterator = val[Symbol.iterator]();
+        var result = iterator.next();
+        while (!result.done) {
+          ret.push(render(result.value, ret.length));
+          result = iterator.next();
+        }
+      } else {
+        keys = Object.keys(val);
+        ret = new Array(keys.length);
+        for (i = 0, l = keys.length; i < l; i++) {
+          key = keys[i];
+          ret[i] = render(val[key], key, i);
+        }
+      }
+    }
+    if (!isDef(ret)) {
+      ret = [];
+    }
+    (ret)._isVList = true;
+    return ret
+  }
+
+  /*  */
+
+  /**
+   * Runtime helper for rendering <slot>
+   */
+  function renderSlot (
+    name,
+    fallback,
+    props,
+    bindObject
+  ) {
+    var scopedSlotFn = this.$scopedSlots[name];
+    var nodes;
+    if (scopedSlotFn) { // scoped slot
+      props = props || {};
+      if (bindObject) {
+        if (!isObject(bindObject)) {
+          warn(
+            'slot v-bind without argument expects an Object',
+            this
+          );
+        }
+        props = extend(extend({}, bindObject), props);
+      }
+      nodes = scopedSlotFn(props) || fallback;
+    } else {
+      nodes = this.$slots[name] || fallback;
+    }
+
+    var target = props && props.slot;
+    if (target) {
+      return this.$createElement('template', { slot: target }, nodes)
+    } else {
+      return nodes
+    }
+  }
+
+  /*  */
+
+  /**
+   * Runtime helper for resolving filters
+   */
+  function resolveFilter (id) {
+    return resolveAsset(this.$options, 'filters', id, true) || identity
+  }
+
+  /*  */
+
+  function isKeyNotMatch (expect, actual) {
+    if (Array.isArray(expect)) {
+      return expect.indexOf(actual) === -1
+    } else {
+      return expect !== actual
+    }
+  }
+
+  /**
+   * Runtime helper for checking keyCodes from config.
+   * exposed as Vue.prototype._k
+   * passing in eventKeyName as last argument separately for backwards compat
+   */
+  function checkKeyCodes (
+    eventKeyCode,
+    key,
+    builtInKeyCode,
+    eventKeyName,
+    builtInKeyName
+  ) {
+    var mappedKeyCode = config.keyCodes[key] || builtInKeyCode;
+    if (builtInKeyName && eventKeyName && !config.keyCodes[key]) {
+      return isKeyNotMatch(builtInKeyName, eventKeyName)
+    } else if (mappedKeyCode) {
+      return isKeyNotMatch(mappedKeyCode, eventKeyCode)
+    } else if (eventKeyName) {
+      return hyphenate(eventKeyName) !== key
+    }
+  }
+
+  /*  */
+
+  /**
+   * Runtime helper for merging v-bind="object" into a VNode's data.
+   */
+  function bindObjectProps (
+    data,
+    tag,
+    value,
+    asProp,
+    isSync
+  ) {
+    if (value) {
+      if (!isObject(value)) {
+        warn(
+          'v-bind without argument expects an Object or Array value',
+          this
+        );
+      } else {
+        if (Array.isArray(value)) {
+          value = toObject(value);
+        }
+        var hash;
+        var loop = function ( key ) {
+          if (
+            key === 'class' ||
+            key === 'style' ||
+            isReservedAttribute(key)
+          ) {
+            hash = data;
+          } else {
+            var type = data.attrs && data.attrs.type;
+            hash = asProp || config.mustUseProp(tag, type, key)
+              ? data.domProps || (data.domProps = {})
+              : data.attrs || (data.attrs = {});
+          }
+          var camelizedKey = camelize(key);
+          if (!(key in hash) && !(camelizedKey in hash)) {
+            hash[key] = value[key];
+
+            if (isSync) {
+              var on = data.on || (data.on = {});
+              on[("update:" + camelizedKey)] = function ($event) {
+                value[key] = $event;
+              };
+            }
+          }
+        };
+
+        for (var key in value) loop( key );
+      }
+    }
+    return data
+  }
+
+  /*  */
+
+  /**
+   * Runtime helper for rendering static trees.
+   */
+  function renderStatic (
+    index,
+    isInFor
+  ) {
+    var cached = this._staticTrees || (this._staticTrees = []);
+    var tree = cached[index];
+    // if has already-rendered static tree and not inside v-for,
+    // we can reuse the same tree.
+    if (tree && !isInFor) {
+      return tree
+    }
+    // otherwise, render a fresh tree.
+    tree = cached[index] = this.$options.staticRenderFns[index].call(
+      this._renderProxy,
+      null,
+      this // for render fns generated for functional component templates
+    );
+    markStatic(tree, ("__static__" + index), false);
+    return tree
+  }
+
+  /**
+   * Runtime helper for v-once.
+   * Effectively it means marking the node as static with a unique key.
+   */
+  function markOnce (
+    tree,
+    index,
+    key
+  ) {
+    markStatic(tree, ("__once__" + index + (key ? ("_" + key) : "")), true);
+    return tree
+  }
+
+  function markStatic (
+    tree,
+    key,
+    isOnce
+  ) {
+    if (Array.isArray(tree)) {
+      for (var i = 0; i < tree.length; i++) {
+        if (tree[i] && typeof tree[i] !== 'string') {
+          markStaticNode(tree[i], (key + "_" + i), isOnce);
+        }
+      }
+    } else {
+      markStaticNode(tree, key, isOnce);
+    }
+  }
+
+  function markStaticNode (node, key, isOnce) {
+    node.isStatic = true;
+    node.key = key;
+    node.isOnce = isOnce;
+  }
+
+  /*  */
+
+  function bindObjectListeners (data, value) {
+    if (value) {
+      if (!isPlainObject(value)) {
+        warn(
+          'v-on without argument expects an Object value',
+          this
+        );
+      } else {
+        var on = data.on = data.on ? extend({}, data.on) : {};
+        for (var key in value) {
+          var existing = on[key];
+          var ours = value[key];
+          on[key] = existing ? [].concat(existing, ours) : ours;
+        }
+      }
+    }
+    return data
+  }
+
+  /*  */
+
+  function resolveScopedSlots (
+    fns, // see flow/vnode
+    res,
+    // the following are added in 2.6
+    hasDynamicKeys,
+    contentHashKey
+  ) {
+    res = res || { $stable: !hasDynamicKeys };
+    for (var i = 0; i < fns.length; i++) {
+      var slot = fns[i];
+      if (Array.isArray(slot)) {
+        resolveScopedSlots(slot, res, hasDynamicKeys);
+      } else if (slot) {
+        // marker for reverse proxying v-slot without scope on this.$slots
+        if (slot.proxy) {
+          slot.fn.proxy = true;
+        }
+        res[slot.key] = slot.fn;
+      }
+    }
+    if (contentHashKey) {
+      (res).$key = contentHashKey;
+    }
+    return res
+  }
+
+  /*  */
+
+  function bindDynamicKeys (baseObj, values) {
+    for (var i = 0; i < values.length; i += 2) {
+      var key = values[i];
+      if (typeof key === 'string' && key) {
+        baseObj[values[i]] = values[i + 1];
+      } else if (key !== '' && key !== null) {
+        // null is a speical value for explicitly removing a binding
+        warn(
+          ("Invalid value for dynamic directive argument (expected string or null): " + key),
+          this
+        );
+      }
+    }
+    return baseObj
+  }
+
+  // helper to dynamically append modifier runtime markers to event names.
+  // ensure only append when value is already string, otherwise it will be cast
+  // to string and cause the type check to miss.
+  function prependModifier (value, symbol) {
+    return typeof value === 'string' ? symbol + value : value
+  }
+
+  /*  */
+
+  function installRenderHelpers (target) {
+    target._o = markOnce;
+    target._n = toNumber;
+    target._s = toString;
+    target._l = renderList;
+    target._t = renderSlot;
+    target._q = looseEqual;
+    target._i = looseIndexOf;
+    target._m = renderStatic;
+    target._f = resolveFilter;
+    target._k = checkKeyCodes;
+    target._b = bindObjectProps;
+    target._v = createTextVNode;
+    target._e = createEmptyVNode;
+    target._u = resolveScopedSlots;
+    target._g = bindObjectListeners;
+    target._d = bindDynamicKeys;
+    target._p = prependModifier;
+  }
+
+  /*  */
+
+  function FunctionalRenderContext (
+    data,
+    props,
+    children,
+    parent,
+    Ctor
+  ) {
+    var this$1 = this;
+
+    var options = Ctor.options;
+    // ensure the createElement function in functional components
+    // gets a unique context - this is necessary for correct named slot check
+    var contextVm;
+    if (hasOwn(parent, '_uid')) {
+      contextVm = Object.create(parent);
+      // $flow-disable-line
+      contextVm._original = parent;
+    } else {
+      // the context vm passed in is a functional context as well.
+      // in this case we want to make sure we are able to get a hold to the
+      // real context instance.
+      contextVm = parent;
+      // $flow-disable-line
+      parent = parent._original;
+    }
+    var isCompiled = isTrue(options._compiled);
+    var needNormalization = !isCompiled;
+
+    this.data = data;
+    this.props = props;
+    this.children = children;
+    this.parent = parent;
+    this.listeners = data.on || emptyObject;
+    this.injections = resolveInject(options.inject, parent);
+    this.slots = function () {
+      if (!this$1.$slots) {
+        normalizeScopedSlots(
+          data.scopedSlots,
+          this$1.$slots = resolveSlots(children, parent)
+        );
+      }
+      return this$1.$slots
+    };
+
+    Object.defineProperty(this, 'scopedSlots', ({
+      enumerable: true,
+      get: function get () {
+        return normalizeScopedSlots(data.scopedSlots, this.slots())
+      }
+    }));
+
+    // support for compiled functional template
+    if (isCompiled) {
+      // exposing $options for renderStatic()
+      this.$options = options;
+      // pre-resolve slots for renderSlot()
+      this.$slots = this.slots();
+      this.$scopedSlots = normalizeScopedSlots(data.scopedSlots, this.$slots);
+    }
+
+    if (options._scopeId) {
+      this._c = function (a, b, c, d) {
+        var vnode = createElement(contextVm, a, b, c, d, needNormalization);
+        if (vnode && !Array.isArray(vnode)) {
+          vnode.fnScopeId = options._scopeId;
+          vnode.fnContext = parent;
+        }
+        return vnode
+      };
+    } else {
+      this._c = function (a, b, c, d) { return createElement(contextVm, a, b, c, d, needNormalization); };
+    }
+  }
+
+  installRenderHelpers(FunctionalRenderContext.prototype);
+
+  function createFunctionalComponent (
+    Ctor,
+    propsData,
+    data,
+    contextVm,
+    children
+  ) {
+    var options = Ctor.options;
+    var props = {};
+    var propOptions = options.props;
+    if (isDef(propOptions)) {
+      for (var key in propOptions) {
+        props[key] = validateProp(key, propOptions, propsData || emptyObject);
+      }
+    } else {
+      if (isDef(data.attrs)) { mergeProps(props, data.attrs); }
+      if (isDef(data.props)) { mergeProps(props, data.props); }
+    }
+
+    var renderContext = new FunctionalRenderContext(
+      data,
+      props,
+      children,
+      contextVm,
+      Ctor
+    );
+
+    var vnode = options.render.call(null, renderContext._c, renderContext);
+
+    if (vnode instanceof VNode) {
+      return cloneAndMarkFunctionalResult(vnode, data, renderContext.parent, options, renderContext)
+    } else if (Array.isArray(vnode)) {
+      var vnodes = normalizeChildren(vnode) || [];
+      var res = new Array(vnodes.length);
+      for (var i = 0; i < vnodes.length; i++) {
+        res[i] = cloneAndMarkFunctionalResult(vnodes[i], data, renderContext.parent, options, renderContext);
+      }
+      return res
+    }
+  }
+
+  function cloneAndMarkFunctionalResult (vnode, data, contextVm, options, renderContext) {
+    // #7817 clone node before setting fnContext, otherwise if the node is reused
+    // (e.g. it was from a cached normal slot) the fnContext causes named slots
+    // that should not be matched to match.
+    var clone = cloneVNode(vnode);
+    clone.fnContext = contextVm;
+    clone.fnOptions = options;
+    {
+      (clone.devtoolsMeta = clone.devtoolsMeta || {}).renderContext = renderContext;
+    }
+    if (data.slot) {
+      (clone.data || (clone.data = {})).slot = data.slot;
+    }
+    return clone
+  }
+
+  function mergeProps (to, from) {
+    for (var key in from) {
+      to[camelize(key)] = from[key];
+    }
+  }
+
+  /*  */
+
+  /*  */
+
+  /*  */
+
+  /*  */
+
+  // inline hooks to be invoked on component VNodes during patch
+  var componentVNodeHooks = {
+    init: function init (vnode, hydrating) {
+      if (
+        vnode.componentInstance &&
+        !vnode.componentInstance._isDestroyed &&
+        vnode.data.keepAlive
+      ) {
+        // kept-alive components, treat as a patch
+        var mountedNode = vnode; // work around flow
+        componentVNodeHooks.prepatch(mountedNode, mountedNode);
+      } else {
+        var child = vnode.componentInstance = createComponentInstanceForVnode(
+          vnode,
+          activeInstance
+        );
+        child.$mount(hydrating ? vnode.elm : undefined, hydrating);
+      }
+    },
+
+    prepatch: function prepatch (oldVnode, vnode) {
+      var options = vnode.componentOptions;
+      var child = vnode.componentInstance = oldVnode.componentInstance;
+      updateChildComponent(
+        child,
+        options.propsData, // updated props
+        options.listeners, // updated listeners
+        vnode, // new parent vnode
+        options.children // new children
+      );
+    },
+
+    insert: function insert (vnode) {
+      var context = vnode.context;
+      var componentInstance = vnode.componentInstance;
+      if (!componentInstance._isMounted) {
+        componentInstance._isMounted = true;
+        callHook(componentInstance, 'mounted');
+      }
+      if (vnode.data.keepAlive) {
+        if (context._isMounted) {
+          // vue-router#1212
+          // During updates, a kept-alive component's child components may
+          // change, so directly walking the tree here may call activated hooks
+          // on incorrect children. Instead we push them into a queue which will
+          // be processed after the whole patch process ended.
+          queueActivatedComponent(componentInstance);
+        } else {
+          activateChildComponent(componentInstance, true /* direct */);
+        }
+      }
+    },
+
+    destroy: function destroy (vnode) {
+      var componentInstance = vnode.componentInstance;
+      if (!componentInstance._isDestroyed) {
+        if (!vnode.data.keepAlive) {
+          componentInstance.$destroy();
+        } else {
+          deactivateChildComponent(componentInstance, true /* direct */);
+        }
+      }
+    }
+  };
+
+  var hooksToMerge = Object.keys(componentVNodeHooks);
+
+  function createComponent (
+    Ctor,
+    data,
+    context,
+    children,
+    tag
+  ) {
+    if (isUndef(Ctor)) {
+      return
+    }
+
+    var baseCtor = context.$options._base;
+
+    // plain options object: turn it into a constructor
+    if (isObject(Ctor)) {
+      Ctor = baseCtor.extend(Ctor);
+    }
+
+    // if at this stage it's not a constructor or an async component factory,
+    // reject.
+    if (typeof Ctor !== 'function') {
+      {
+        warn(("Invalid Component definition: " + (String(Ctor))), context);
+      }
+      return
+    }
+
+    // async component
+    var asyncFactory;
+    if (isUndef(Ctor.cid)) {
+      asyncFactory = Ctor;
+      Ctor = resolveAsyncComponent(asyncFactory, baseCtor);
+      if (Ctor === undefined) {
+        // return a placeholder node for async component, which is rendered
+        // as a comment node but preserves all the raw information for the node.
+        // the information will be used for async server-rendering and hydration.
+        return createAsyncPlaceholder(
+          asyncFactory,
+          data,
+          context,
+          children,
+          tag
+        )
+      }
+    }
+
+    data = data || {};
+
+    // resolve constructor options in case global mixins are applied after
+    // component constructor creation
+    resolveConstructorOptions(Ctor);
+
+    // transform component v-model data into props & events
+    if (isDef(data.model)) {
+      transformModel(Ctor.options, data);
+    }
+
+    // extract props
+    var propsData = extractPropsFromVNodeData(data, Ctor, tag);
+
+    // functional component
+    if (isTrue(Ctor.options.functional)) {
+      return createFunctionalComponent(Ctor, propsData, data, context, children)
+    }
+
+    // extract listeners, since these needs to be treated as
+    // child component listeners instead of DOM listeners
+    var listeners = data.on;
+    // replace with listeners with .native modifier
+    // so it gets processed during parent component patch.
+    data.on = data.nativeOn;
+
+    if (isTrue(Ctor.options.abstract)) {
+      // abstract components do not keep anything
+      // other than props & listeners & slot
+
+      // work around flow
+      var slot = data.slot;
+      data = {};
+      if (slot) {
+        data.slot = slot;
+      }
+    }
+
+    // install component management hooks onto the placeholder node
+    installComponentHooks(data);
+
+    // return a placeholder vnode
+    var name = Ctor.options.name || tag;
+    var vnode = new VNode(
+      ("vue-component-" + (Ctor.cid) + (name ? ("-" + name) : '')),
+      data, undefined, undefined, undefined, context,
+      { Ctor: Ctor, propsData: propsData, listeners: listeners, tag: tag, children: children },
+      asyncFactory
+    );
+
+    return vnode
+  }
+
+  function createComponentInstanceForVnode (
+    vnode, // we know it's MountedComponentVNode but flow doesn't
+    parent // activeInstance in lifecycle state
+  ) {
+    var options = {
+      _isComponent: true,
+      _parentVnode: vnode,
+      parent: parent
+    };
+    // check inline-template render functions
+    var inlineTemplate = vnode.data.inlineTemplate;
+    if (isDef(inlineTemplate)) {
+      options.render = inlineTemplate.render;
+      options.staticRenderFns = inlineTemplate.staticRenderFns;
+    }
+    return new vnode.componentOptions.Ctor(options)
+  }
+
+  function installComponentHooks (data) {
+    var hooks = data.hook || (data.hook = {});
+    for (var i = 0; i < hooksToMerge.length; i++) {
+      var key = hooksToMerge[i];
+      var existing = hooks[key];
+      var toMerge = componentVNodeHooks[key];
+      if (existing !== toMerge && !(existing && existing._merged)) {
+        hooks[key] = existing ? mergeHook$1(toMerge, existing) : toMerge;
+      }
+    }
+  }
+
+  function mergeHook$1 (f1, f2) {
+    var merged = function (a, b) {
+      // flow complains about extra args which is why we use any
+      f1(a, b);
+      f2(a, b);
+    };
+    merged._merged = true;
+    return merged
+  }
+
+  // transform component v-model info (value and callback) into
+  // prop and event handler respectively.
+  function transformModel (options, data) {
+    var prop = (options.model && options.model.prop) || 'value';
+    var event = (options.model && options.model.event) || 'input'
+    ;(data.attrs || (data.attrs = {}))[prop] = data.model.value;
+    var on = data.on || (data.on = {});
+    var existing = on[event];
+    var callback = data.model.callback;
+    if (isDef(existing)) {
+      if (
+        Array.isArray(existing)
+          ? existing.indexOf(callback) === -1
+          : existing !== callback
+      ) {
+        on[event] = [callback].concat(existing);
+      }
+    } else {
+      on[event] = callback;
+    }
+  }
+
+  /*  */
+
+  var SIMPLE_NORMALIZE = 1;
+  var ALWAYS_NORMALIZE = 2;
+
+  // wrapper function for providing a more flexible interface
+  // without getting yelled at by flow
+  function createElement (
+    context,
+    tag,
+    data,
+    children,
+    normalizationType,
+    alwaysNormalize
+  ) {
+    if (Array.isArray(data) || isPrimitive(data)) {
+      normalizationType = children;
+      children = data;
+      data = undefined;
+    }
+    if (isTrue(alwaysNormalize)) {
+      normalizationType = ALWAYS_NORMALIZE;
+    }
+    return _createElement(context, tag, data, children, normalizationType)
+  }
+
+  function _createElement (
+    context,
+    tag,
+    data,
+    children,
+    normalizationType
+  ) {
+    if (isDef(data) && isDef((data).__ob__)) {
+      warn(
+        "Avoid using observed data object as vnode data: " + (JSON.stringify(data)) + "\n" +
+        'Always create fresh vnode data objects in each render!',
+        context
+      );
+      return createEmptyVNode()
+    }
+    // object syntax in v-bind
+    if (isDef(data) && isDef(data.is)) {
+      tag = data.is;
+    }
+    if (!tag) {
+      // in case of component :is set to falsy value
+      return createEmptyVNode()
+    }
+    // warn against non-primitive key
+    if (isDef(data) && isDef(data.key) && !isPrimitive(data.key)
+    ) {
+      {
+        warn(
+          'Avoid using non-primitive value as key, ' +
+          'use string/number value instead.',
+          context
+        );
+      }
+    }
+    // support single function children as default scoped slot
+    if (Array.isArray(children) &&
+      typeof children[0] === 'function'
+    ) {
+      data = data || {};
+      data.scopedSlots = { default: children[0] };
+      children.length = 0;
+    }
+    if (normalizationType === ALWAYS_NORMALIZE) {
+      children = normalizeChildren(children);
+    } else if (normalizationType === SIMPLE_NORMALIZE) {
+      children = simpleNormalizeChildren(children);
+    }
+    var vnode, ns;
+    if (typeof tag === 'string') {
+      var Ctor;
+      ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag);
+      if (config.isReservedTag(tag)) {
+        // platform built-in elements
+        vnode = new VNode(
+          config.parsePlatformTagName(tag), data, children,
+          undefined, undefined, context
+        );
+      } else if ((!data || !data.pre) && isDef(Ctor = resolveAsset(context.$options, 'components', tag))) {
+        // component
+        vnode = createComponent(Ctor, data, context, children, tag);
+      } else {
+        // unknown or unlisted namespaced elements
+        // check at runtime because it may get assigned a namespace when its
+        // parent normalizes children
+        vnode = new VNode(
+          tag, data, children,
+          undefined, undefined, context
+        );
+      }
+    } else {
+      // direct component options / constructor
+      vnode = createComponent(tag, data, context, children);
+    }
+    if (Array.isArray(vnode)) {
+      return vnode
+    } else if (isDef(vnode)) {
+      if (isDef(ns)) { applyNS(vnode, ns); }
+      if (isDef(data)) { registerDeepBindings(data); }
+      return vnode
+    } else {
+      return createEmptyVNode()
+    }
+  }
+
+  function applyNS (vnode, ns, force) {
+    vnode.ns = ns;
+    if (vnode.tag === 'foreignObject') {
+      // use default namespace inside foreignObject
+      ns = undefined;
+      force = true;
+    }
+    if (isDef(vnode.children)) {
+      for (var i = 0, l = vnode.children.length; i < l; i++) {
+        var child = vnode.children[i];
+        if (isDef(child.tag) && (
+          isUndef(child.ns) || (isTrue(force) && child.tag !== 'svg'))) {
+          applyNS(child, ns, force);
+        }
+      }
+    }
+  }
+
+  // ref #5318
+  // necessary to ensure parent re-render when deep bindings like :style and
+  // :class are used on slot nodes
+  function registerDeepBindings (data) {
+    if (isObject(data.style)) {
+      traverse(data.style);
+    }
+    if (isObject(data.class)) {
+      traverse(data.class);
+    }
+  }
+
+  /*  */
+
+  function initRender (vm) {
+    vm._vnode = null; // the root of the child tree
+    vm._staticTrees = null; // v-once cached trees
+    var options = vm.$options;
+    var parentVnode = vm.$vnode = options._parentVnode; // the placeholder node in parent tree
+    var renderContext = parentVnode && parentVnode.context;
+    vm.$slots = resolveSlots(options._renderChildren, renderContext);
+    vm.$scopedSlots = emptyObject;
+    // bind the createElement fn to this instance
+    // so that we get proper render context inside it.
+    // args order: tag, data, children, normalizationType, alwaysNormalize
+    // internal version is used by render functions compiled from templates
+    vm._c = function (a, b, c, d) { return createElement(vm, a, b, c, d, false); };
+    // normalization is always applied for the public version, used in
+    // user-written render functions.
+    vm.$createElement = function (a, b, c, d) { return createElement(vm, a, b, c, d, true); };
+
+    // $attrs & $listeners are exposed for easier HOC creation.
+    // they need to be reactive so that HOCs using them are always updated
+    var parentData = parentVnode && parentVnode.data;
+
+    /* istanbul ignore else */
+    {
+      defineReactive$$1(vm, '$attrs', parentData && parentData.attrs || emptyObject, function () {
+        !isUpdatingChildComponent && warn("$attrs is readonly.", vm);
+      }, true);
+      defineReactive$$1(vm, '$listeners', options._parentListeners || emptyObject, function () {
+        !isUpdatingChildComponent && warn("$listeners is readonly.", vm);
+      }, true);
+    }
+  }
+
+  var currentRenderingInstance = null;
+
+  function renderMixin (Vue) {
+    // install runtime convenience helpers
+    installRenderHelpers(Vue.prototype);
+
+    Vue.prototype.$nextTick = function (fn) {
+      return nextTick(fn, this)
+    };
+
+    Vue.prototype._render = function () {
+      var vm = this;
+      var ref = vm.$options;
+      var render = ref.render;
+      var _parentVnode = ref._parentVnode;
+
+      if (_parentVnode) {
+        vm.$scopedSlots = normalizeScopedSlots(
+          _parentVnode.data.scopedSlots,
+          vm.$slots,
+          vm.$scopedSlots
+        );
+      }
+
+      // set parent vnode. this allows render functions to have access
+      // to the data on the placeholder node.
+      vm.$vnode = _parentVnode;
+      // render self
+      var vnode;
+      try {
+        // There's no need to maintain a stack becaues all render fns are called
+        // separately from one another. Nested component's render fns are called
+        // when parent component is patched.
+        currentRenderingInstance = vm;
+        vnode = render.call(vm._renderProxy, vm.$createElement);
+      } catch (e) {
+        handleError(e, vm, "render");
+        // return error render result,
+        // or previous vnode to prevent render error causing blank component
+        /* istanbul ignore else */
+        if (vm.$options.renderError) {
+          try {
+            vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e);
+          } catch (e) {
+            handleError(e, vm, "renderError");
+            vnode = vm._vnode;
+          }
+        } else {
+          vnode = vm._vnode;
+        }
+      } finally {
+        currentRenderingInstance = null;
+      }
+      // if the returned array contains only a single node, allow it
+      if (Array.isArray(vnode) && vnode.length === 1) {
+        vnode = vnode[0];
+      }
+      // return empty vnode in case the render function errored out
+      if (!(vnode instanceof VNode)) {
+        if (Array.isArray(vnode)) {
+          warn(
+            'Multiple root nodes returned from render function. Render function ' +
+            'should return a single root node.',
+            vm
+          );
+        }
+        vnode = createEmptyVNode();
+      }
+      // set parent
+      vnode.parent = _parentVnode;
+      return vnode
+    };
+  }
+
+  /*  */
+
   function ensureCtor (comp, base) {
     if (
       comp.__esModule ||
@@ -4189,8 +7058,7 @@ function normalizeComponent (
 
   function resolveAsyncComponent (
     factory,
-    baseCtor,
-    context
+    baseCtor
   ) {
     if (isTrue(factory.error) && isDef(factory.errorComp)) {
       return factory.errorComp
@@ -4204,20 +7072,21 @@ function normalizeComponent (
       return factory.loadingComp
     }
 
-    if (isDef(factory.contexts)) {
+    var owner = currentRenderingInstance;
+    if (isDef(factory.owners)) {
       // already pending
-      factory.contexts.push(context);
+      factory.owners.push(owner);
     } else {
-      var contexts = factory.contexts = [context];
+      var owners = factory.owners = [owner];
       var sync = true;
 
       var forceRender = function (renderCompleted) {
-        for (var i = 0, l = contexts.length; i < l; i++) {
-          contexts[i].$forceUpdate();
+        for (var i = 0, l = owners.length; i < l; i++) {
+          (owners[i]).$forceUpdate();
         }
 
         if (renderCompleted) {
-          contexts.length = 0;
+          owners.length = 0;
         }
       };
 
@@ -4229,7 +7098,7 @@ function normalizeComponent (
         if (!sync) {
           forceRender(true);
         } else {
-          contexts.length = 0;
+          owners.length = 0;
         }
       });
 
@@ -4451,74 +7320,6 @@ function normalizeComponent (
 
   /*  */
 
-
-
-  /**
-   * Runtime helper for resolving raw children VNodes into a slot object.
-   */
-  function resolveSlots (
-    children,
-    context
-  ) {
-    if (!children || !children.length) {
-      return {}
-    }
-    var slots = {};
-    for (var i = 0, l = children.length; i < l; i++) {
-      var child = children[i];
-      var data = child.data;
-      // remove slot attribute if the node is resolved as a Vue slot node
-      if (data && data.attrs && data.attrs.slot) {
-        delete data.attrs.slot;
-      }
-      // named slots should only be respected if the vnode was rendered in the
-      // same context.
-      if ((child.context === context || child.fnContext === context) &&
-        data && data.slot != null
-      ) {
-        var name = data.slot;
-        var slot = (slots[name] || (slots[name] = []));
-        if (child.tag === 'template') {
-          slot.push.apply(slot, child.children || []);
-        } else {
-          slot.push(child);
-        }
-      } else {
-        (slots.default || (slots.default = [])).push(child);
-      }
-    }
-    // ignore slots that contains only whitespace
-    for (var name$1 in slots) {
-      if (slots[name$1].every(isWhitespace)) {
-        delete slots[name$1];
-      }
-    }
-    return slots
-  }
-
-  function isWhitespace (node) {
-    return (node.isComment && !node.asyncFactory) || node.text === ' '
-  }
-
-  function resolveScopedSlots (
-    fns, // see flow/vnode
-    hasDynamicKeys,
-    res
-  ) {
-    res = res || { $stable: !hasDynamicKeys };
-    for (var i = 0; i < fns.length; i++) {
-      var slot = fns[i];
-      if (Array.isArray(slot)) {
-        resolveScopedSlots(slot, hasDynamicKeys, res);
-      } else if (slot) {
-        res[slot.key] = slot.fn;
-      }
-    }
-    return res
-  }
-
-  /*  */
-
   var activeInstance = null;
   var isUpdatingChildComponent = false;
 
@@ -4730,10 +7531,14 @@ function normalizeComponent (
     // check if there are dynamic scopedSlots (hand-written or compiled but with
     // dynamic slot names). Static scoped slots compiled from template has the
     // "$stable" marker.
+    var newScopedSlots = parentVnode.data.scopedSlots;
+    var oldScopedSlots = vm.$scopedSlots;
     var hasDynamicScopedSlot = !!(
-      (parentVnode.data.scopedSlots && !parentVnode.data.scopedSlots.$stable) ||
-      (vm.$scopedSlots !== emptyObject && !vm.$scopedSlots.$stable)
+      (newScopedSlots && !newScopedSlots.$stable) ||
+      (oldScopedSlots !== emptyObject && !oldScopedSlots.$stable) ||
+      (newScopedSlots && vm.$scopedSlots.$key !== newScopedSlots.$key)
     );
+
     // Any static slot children from the parent may have changed during parent's
     // update. Dynamic scoped slots may also have changed. In such cases, a forced
     // update is necessary to ensure correctness.
@@ -4881,7 +7686,7 @@ function normalizeComponent (
   var getNow = Date.now;
 
   // Determine what event timestamp the browser is using. Annoyingly, the
-  // timestamp can either be hi-res ( relative to poge load) or low-res
+  // timestamp can either be hi-res (relative to page load) or low-res
   // (relative to UNIX epoch), so in order to compare time we have to use the
   // same timestamp type when saving the flush timestamp.
   if (inBrowser && getNow() > document.createEvent('Event').timeStamp) {
@@ -5019,7 +7824,7 @@ function normalizeComponent (
 
 
 
-  var uid$1 = 0;
+  var uid$2 = 0;
 
   /**
    * A watcher parses an expression, collects dependencies,
@@ -5049,7 +7854,7 @@ function normalizeComponent (
       this.deep = this.user = this.lazy = this.sync = false;
     }
     this.cb = cb;
-    this.id = ++uid$1; // uid for batching
+    this.id = ++uid$2; // uid for batching
     this.active = true;
     this.dirty = this.lazy; // for lazy watchers
     this.deps = [];
@@ -5565,1039 +8370,6 @@ function normalizeComponent (
 
   /*  */
 
-  function initProvide (vm) {
-    var provide = vm.$options.provide;
-    if (provide) {
-      vm._provided = typeof provide === 'function'
-        ? provide.call(vm)
-        : provide;
-    }
-  }
-
-  function initInjections (vm) {
-    var result = resolveInject(vm.$options.inject, vm);
-    if (result) {
-      toggleObserving(false);
-      Object.keys(result).forEach(function (key) {
-        /* istanbul ignore else */
-        {
-          defineReactive$$1(vm, key, result[key], function () {
-            warn(
-              "Avoid mutating an injected value directly since the changes will be " +
-              "overwritten whenever the provided component re-renders. " +
-              "injection being mutated: \"" + key + "\"",
-              vm
-            );
-          });
-        }
-      });
-      toggleObserving(true);
-    }
-  }
-
-  function resolveInject (inject, vm) {
-    if (inject) {
-      // inject is :any because flow is not smart enough to figure out cached
-      var result = Object.create(null);
-      var keys = hasSymbol
-        ? Reflect.ownKeys(inject)
-        : Object.keys(inject);
-
-      for (var i = 0; i < keys.length; i++) {
-        var key = keys[i];
-        // #6574 in case the inject object is observed...
-        if (key === '__ob__') { continue }
-        var provideKey = inject[key].from;
-        var source = vm;
-        while (source) {
-          if (source._provided && hasOwn(source._provided, provideKey)) {
-            result[key] = source._provided[provideKey];
-            break
-          }
-          source = source.$parent;
-        }
-        if (!source) {
-          if ('default' in inject[key]) {
-            var provideDefault = inject[key].default;
-            result[key] = typeof provideDefault === 'function'
-              ? provideDefault.call(vm)
-              : provideDefault;
-          } else {
-            warn(("Injection \"" + key + "\" not found"), vm);
-          }
-        }
-      }
-      return result
-    }
-  }
-
-  /*  */
-
-  function normalizeScopedSlots (
-    slots,
-    normalSlots
-  ) {
-    var res;
-    if (!slots) {
-      res = {};
-    } else if (slots._normalized) {
-      return slots
-    } else {
-      res = {};
-      for (var key in slots) {
-        if (slots[key] && key[0] !== '$') {
-          res[key] = normalizeScopedSlot(normalSlots, key, slots[key]);
-        }
-      }
-    }
-    // expose normal slots on scopedSlots
-    for (var key$1 in normalSlots) {
-      if (!(key$1 in res)) {
-        res[key$1] = proxyNormalSlot(normalSlots, key$1);
-      }
-    }
-    res._normalized = true;
-    res.$stable = slots ? slots.$stable : true;
-    return res
-  }
-
-  function normalizeScopedSlot(normalSlots, key, fn) {
-    var normalized = function (scope) {
-      if ( scope === void 0 ) scope = {};
-
-      var res = fn(scope);
-      return res && typeof res === 'object' && !Array.isArray(res)
-        ? [res] // single vnode
-        : normalizeChildren(res)
-    };
-    // proxy scoped slots on normal $slots
-    if (!hasOwn(normalSlots, key)) {
-      Object.defineProperty(normalSlots, key, {
-        get: normalized
-      });
-    }
-    return normalized
-  }
-
-  function proxyNormalSlot(slots, key) {
-    return function () { return slots[key]; }
-  }
-
-  /*  */
-
-  /**
-   * Runtime helper for rendering v-for lists.
-   */
-  function renderList (
-    val,
-    render
-  ) {
-    var ret, i, l, keys, key;
-    if (Array.isArray(val) || typeof val === 'string') {
-      ret = new Array(val.length);
-      for (i = 0, l = val.length; i < l; i++) {
-        ret[i] = render(val[i], i);
-      }
-    } else if (typeof val === 'number') {
-      ret = new Array(val);
-      for (i = 0; i < val; i++) {
-        ret[i] = render(i + 1, i);
-      }
-    } else if (isObject(val)) {
-      if (hasSymbol && val[Symbol.iterator]) {
-        ret = [];
-        var iterator = val[Symbol.iterator]();
-        var result = iterator.next();
-        while (!result.done) {
-          ret.push(render(result.value, ret.length));
-          result = iterator.next();
-        }
-      } else {
-        keys = Object.keys(val);
-        ret = new Array(keys.length);
-        for (i = 0, l = keys.length; i < l; i++) {
-          key = keys[i];
-          ret[i] = render(val[key], key, i);
-        }
-      }
-    }
-    if (!isDef(ret)) {
-      ret = [];
-    }
-    (ret)._isVList = true;
-    return ret
-  }
-
-  /*  */
-
-  /**
-   * Runtime helper for rendering <slot>
-   */
-  function renderSlot (
-    name,
-    fallback,
-    props,
-    bindObject
-  ) {
-    var scopedSlotFn = this.$scopedSlots[name];
-    var nodes;
-    if (scopedSlotFn) { // scoped slot
-      props = props || {};
-      if (bindObject) {
-        if (!isObject(bindObject)) {
-          warn(
-            'slot v-bind without argument expects an Object',
-            this
-          );
-        }
-        props = extend(extend({}, bindObject), props);
-      }
-      nodes = scopedSlotFn(props) || fallback;
-    } else {
-      nodes = this.$slots[name] || fallback;
-    }
-
-    var target = props && props.slot;
-    if (target) {
-      return this.$createElement('template', { slot: target }, nodes)
-    } else {
-      return nodes
-    }
-  }
-
-  /*  */
-
-  /**
-   * Runtime helper for resolving filters
-   */
-  function resolveFilter (id) {
-    return resolveAsset(this.$options, 'filters', id, true) || identity
-  }
-
-  /*  */
-
-  function isKeyNotMatch (expect, actual) {
-    if (Array.isArray(expect)) {
-      return expect.indexOf(actual) === -1
-    } else {
-      return expect !== actual
-    }
-  }
-
-  /**
-   * Runtime helper for checking keyCodes from config.
-   * exposed as Vue.prototype._k
-   * passing in eventKeyName as last argument separately for backwards compat
-   */
-  function checkKeyCodes (
-    eventKeyCode,
-    key,
-    builtInKeyCode,
-    eventKeyName,
-    builtInKeyName
-  ) {
-    var mappedKeyCode = config.keyCodes[key] || builtInKeyCode;
-    if (builtInKeyName && eventKeyName && !config.keyCodes[key]) {
-      return isKeyNotMatch(builtInKeyName, eventKeyName)
-    } else if (mappedKeyCode) {
-      return isKeyNotMatch(mappedKeyCode, eventKeyCode)
-    } else if (eventKeyName) {
-      return hyphenate(eventKeyName) !== key
-    }
-  }
-
-  /*  */
-
-  /**
-   * Runtime helper for merging v-bind="object" into a VNode's data.
-   */
-  function bindObjectProps (
-    data,
-    tag,
-    value,
-    asProp,
-    isSync
-  ) {
-    if (value) {
-      if (!isObject(value)) {
-        warn(
-          'v-bind without argument expects an Object or Array value',
-          this
-        );
-      } else {
-        if (Array.isArray(value)) {
-          value = toObject(value);
-        }
-        var hash;
-        var loop = function ( key ) {
-          if (
-            key === 'class' ||
-            key === 'style' ||
-            isReservedAttribute(key)
-          ) {
-            hash = data;
-          } else {
-            var type = data.attrs && data.attrs.type;
-            hash = asProp || config.mustUseProp(tag, type, key)
-              ? data.domProps || (data.domProps = {})
-              : data.attrs || (data.attrs = {});
-          }
-          var camelizedKey = camelize(key);
-          if (!(key in hash) && !(camelizedKey in hash)) {
-            hash[key] = value[key];
-
-            if (isSync) {
-              var on = data.on || (data.on = {});
-              on[("update:" + camelizedKey)] = function ($event) {
-                value[key] = $event;
-              };
-            }
-          }
-        };
-
-        for (var key in value) loop( key );
-      }
-    }
-    return data
-  }
-
-  /*  */
-
-  /**
-   * Runtime helper for rendering static trees.
-   */
-  function renderStatic (
-    index,
-    isInFor
-  ) {
-    var cached = this._staticTrees || (this._staticTrees = []);
-    var tree = cached[index];
-    // if has already-rendered static tree and not inside v-for,
-    // we can reuse the same tree.
-    if (tree && !isInFor) {
-      return tree
-    }
-    // otherwise, render a fresh tree.
-    tree = cached[index] = this.$options.staticRenderFns[index].call(
-      this._renderProxy,
-      null,
-      this // for render fns generated for functional component templates
-    );
-    markStatic(tree, ("__static__" + index), false);
-    return tree
-  }
-
-  /**
-   * Runtime helper for v-once.
-   * Effectively it means marking the node as static with a unique key.
-   */
-  function markOnce (
-    tree,
-    index,
-    key
-  ) {
-    markStatic(tree, ("__once__" + index + (key ? ("_" + key) : "")), true);
-    return tree
-  }
-
-  function markStatic (
-    tree,
-    key,
-    isOnce
-  ) {
-    if (Array.isArray(tree)) {
-      for (var i = 0; i < tree.length; i++) {
-        if (tree[i] && typeof tree[i] !== 'string') {
-          markStaticNode(tree[i], (key + "_" + i), isOnce);
-        }
-      }
-    } else {
-      markStaticNode(tree, key, isOnce);
-    }
-  }
-
-  function markStaticNode (node, key, isOnce) {
-    node.isStatic = true;
-    node.key = key;
-    node.isOnce = isOnce;
-  }
-
-  /*  */
-
-  function bindObjectListeners (data, value) {
-    if (value) {
-      if (!isPlainObject(value)) {
-        warn(
-          'v-on without argument expects an Object value',
-          this
-        );
-      } else {
-        var on = data.on = data.on ? extend({}, data.on) : {};
-        for (var key in value) {
-          var existing = on[key];
-          var ours = value[key];
-          on[key] = existing ? [].concat(existing, ours) : ours;
-        }
-      }
-    }
-    return data
-  }
-
-  /*  */
-
-  function bindDynamicKeys (baseObj, values) {
-    for (var i = 0; i < values.length; i += 2) {
-      var key = values[i];
-      if (typeof key === 'string' && key) {
-        baseObj[values[i]] = values[i + 1];
-      } else if (key !== '' && key !== null) {
-        // null is a speical value for explicitly removing a binding
-        warn(
-          ("Invalid value for dynamic directive argument (expected string or null): " + key),
-          this
-        );
-      }
-    }
-    return baseObj
-  }
-
-  // helper to dynamically append modifier runtime markers to event names.
-  // ensure only append when value is already string, otherwise it will be cast
-  // to string and cause the type check to miss.
-  function prependModifier (value, symbol) {
-    return typeof value === 'string' ? symbol + value : value
-  }
-
-  /*  */
-
-  function installRenderHelpers (target) {
-    target._o = markOnce;
-    target._n = toNumber;
-    target._s = toString;
-    target._l = renderList;
-    target._t = renderSlot;
-    target._q = looseEqual;
-    target._i = looseIndexOf;
-    target._m = renderStatic;
-    target._f = resolveFilter;
-    target._k = checkKeyCodes;
-    target._b = bindObjectProps;
-    target._v = createTextVNode;
-    target._e = createEmptyVNode;
-    target._u = resolveScopedSlots;
-    target._g = bindObjectListeners;
-    target._d = bindDynamicKeys;
-    target._p = prependModifier;
-  }
-
-  /*  */
-
-  function FunctionalRenderContext (
-    data,
-    props,
-    children,
-    parent,
-    Ctor
-  ) {
-    var options = Ctor.options;
-    // ensure the createElement function in functional components
-    // gets a unique context - this is necessary for correct named slot check
-    var contextVm;
-    if (hasOwn(parent, '_uid')) {
-      contextVm = Object.create(parent);
-      // $flow-disable-line
-      contextVm._original = parent;
-    } else {
-      // the context vm passed in is a functional context as well.
-      // in this case we want to make sure we are able to get a hold to the
-      // real context instance.
-      contextVm = parent;
-      // $flow-disable-line
-      parent = parent._original;
-    }
-    var isCompiled = isTrue(options._compiled);
-    var needNormalization = !isCompiled;
-
-    this.data = data;
-    this.props = props;
-    this.children = children;
-    this.parent = parent;
-    this.listeners = data.on || emptyObject;
-    this.injections = resolveInject(options.inject, parent);
-    this.slots = function () { return resolveSlots(children, parent); };
-
-    Object.defineProperty(this, 'scopedSlots', ({
-      enumerable: true,
-      get: function get () {
-        return normalizeScopedSlots(data.scopedSlots, this.slots())
-      }
-    }));
-
-    // support for compiled functional template
-    if (isCompiled) {
-      // exposing $options for renderStatic()
-      this.$options = options;
-      // pre-resolve slots for renderSlot()
-      this.$slots = this.slots();
-      this.$scopedSlots = normalizeScopedSlots(data.scopedSlots, this.$slots);
-    }
-
-    if (options._scopeId) {
-      this._c = function (a, b, c, d) {
-        var vnode = createElement(contextVm, a, b, c, d, needNormalization);
-        if (vnode && !Array.isArray(vnode)) {
-          vnode.fnScopeId = options._scopeId;
-          vnode.fnContext = parent;
-        }
-        return vnode
-      };
-    } else {
-      this._c = function (a, b, c, d) { return createElement(contextVm, a, b, c, d, needNormalization); };
-    }
-  }
-
-  installRenderHelpers(FunctionalRenderContext.prototype);
-
-  function createFunctionalComponent (
-    Ctor,
-    propsData,
-    data,
-    contextVm,
-    children
-  ) {
-    var options = Ctor.options;
-    var props = {};
-    var propOptions = options.props;
-    if (isDef(propOptions)) {
-      for (var key in propOptions) {
-        props[key] = validateProp(key, propOptions, propsData || emptyObject);
-      }
-    } else {
-      if (isDef(data.attrs)) { mergeProps(props, data.attrs); }
-      if (isDef(data.props)) { mergeProps(props, data.props); }
-    }
-
-    var renderContext = new FunctionalRenderContext(
-      data,
-      props,
-      children,
-      contextVm,
-      Ctor
-    );
-
-    var vnode = options.render.call(null, renderContext._c, renderContext);
-
-    if (vnode instanceof VNode) {
-      return cloneAndMarkFunctionalResult(vnode, data, renderContext.parent, options, renderContext)
-    } else if (Array.isArray(vnode)) {
-      var vnodes = normalizeChildren(vnode) || [];
-      var res = new Array(vnodes.length);
-      for (var i = 0; i < vnodes.length; i++) {
-        res[i] = cloneAndMarkFunctionalResult(vnodes[i], data, renderContext.parent, options, renderContext);
-      }
-      return res
-    }
-  }
-
-  function cloneAndMarkFunctionalResult (vnode, data, contextVm, options, renderContext) {
-    // #7817 clone node before setting fnContext, otherwise if the node is reused
-    // (e.g. it was from a cached normal slot) the fnContext causes named slots
-    // that should not be matched to match.
-    var clone = cloneVNode(vnode);
-    clone.fnContext = contextVm;
-    clone.fnOptions = options;
-    {
-      (clone.devtoolsMeta = clone.devtoolsMeta || {}).renderContext = renderContext;
-    }
-    if (data.slot) {
-      (clone.data || (clone.data = {})).slot = data.slot;
-    }
-    return clone
-  }
-
-  function mergeProps (to, from) {
-    for (var key in from) {
-      to[camelize(key)] = from[key];
-    }
-  }
-
-  /*  */
-
-  /*  */
-
-  /*  */
-
-  /*  */
-
-  // inline hooks to be invoked on component VNodes during patch
-  var componentVNodeHooks = {
-    init: function init (vnode, hydrating) {
-      if (
-        vnode.componentInstance &&
-        !vnode.componentInstance._isDestroyed &&
-        vnode.data.keepAlive
-      ) {
-        // kept-alive components, treat as a patch
-        var mountedNode = vnode; // work around flow
-        componentVNodeHooks.prepatch(mountedNode, mountedNode);
-      } else {
-        var child = vnode.componentInstance = createComponentInstanceForVnode(
-          vnode,
-          activeInstance
-        );
-        child.$mount(hydrating ? vnode.elm : undefined, hydrating);
-      }
-    },
-
-    prepatch: function prepatch (oldVnode, vnode) {
-      var options = vnode.componentOptions;
-      var child = vnode.componentInstance = oldVnode.componentInstance;
-      updateChildComponent(
-        child,
-        options.propsData, // updated props
-        options.listeners, // updated listeners
-        vnode, // new parent vnode
-        options.children // new children
-      );
-    },
-
-    insert: function insert (vnode) {
-      var context = vnode.context;
-      var componentInstance = vnode.componentInstance;
-      if (!componentInstance._isMounted) {
-        componentInstance._isMounted = true;
-        callHook(componentInstance, 'mounted');
-      }
-      if (vnode.data.keepAlive) {
-        if (context._isMounted) {
-          // vue-router#1212
-          // During updates, a kept-alive component's child components may
-          // change, so directly walking the tree here may call activated hooks
-          // on incorrect children. Instead we push them into a queue which will
-          // be processed after the whole patch process ended.
-          queueActivatedComponent(componentInstance);
-        } else {
-          activateChildComponent(componentInstance, true /* direct */);
-        }
-      }
-    },
-
-    destroy: function destroy (vnode) {
-      var componentInstance = vnode.componentInstance;
-      if (!componentInstance._isDestroyed) {
-        if (!vnode.data.keepAlive) {
-          componentInstance.$destroy();
-        } else {
-          deactivateChildComponent(componentInstance, true /* direct */);
-        }
-      }
-    }
-  };
-
-  var hooksToMerge = Object.keys(componentVNodeHooks);
-
-  function createComponent (
-    Ctor,
-    data,
-    context,
-    children,
-    tag
-  ) {
-    if (isUndef(Ctor)) {
-      return
-    }
-
-    var baseCtor = context.$options._base;
-
-    // plain options object: turn it into a constructor
-    if (isObject(Ctor)) {
-      Ctor = baseCtor.extend(Ctor);
-    }
-
-    // if at this stage it's not a constructor or an async component factory,
-    // reject.
-    if (typeof Ctor !== 'function') {
-      {
-        warn(("Invalid Component definition: " + (String(Ctor))), context);
-      }
-      return
-    }
-
-    // async component
-    var asyncFactory;
-    if (isUndef(Ctor.cid)) {
-      asyncFactory = Ctor;
-      Ctor = resolveAsyncComponent(asyncFactory, baseCtor, context);
-      if (Ctor === undefined) {
-        // return a placeholder node for async component, which is rendered
-        // as a comment node but preserves all the raw information for the node.
-        // the information will be used for async server-rendering and hydration.
-        return createAsyncPlaceholder(
-          asyncFactory,
-          data,
-          context,
-          children,
-          tag
-        )
-      }
-    }
-
-    data = data || {};
-
-    // resolve constructor options in case global mixins are applied after
-    // component constructor creation
-    resolveConstructorOptions(Ctor);
-
-    // transform component v-model data into props & events
-    if (isDef(data.model)) {
-      transformModel(Ctor.options, data);
-    }
-
-    // extract props
-    var propsData = extractPropsFromVNodeData(data, Ctor, tag);
-
-    // functional component
-    if (isTrue(Ctor.options.functional)) {
-      return createFunctionalComponent(Ctor, propsData, data, context, children)
-    }
-
-    // extract listeners, since these needs to be treated as
-    // child component listeners instead of DOM listeners
-    var listeners = data.on;
-    // replace with listeners with .native modifier
-    // so it gets processed during parent component patch.
-    data.on = data.nativeOn;
-
-    if (isTrue(Ctor.options.abstract)) {
-      // abstract components do not keep anything
-      // other than props & listeners & slot
-
-      // work around flow
-      var slot = data.slot;
-      data = {};
-      if (slot) {
-        data.slot = slot;
-      }
-    }
-
-    // install component management hooks onto the placeholder node
-    installComponentHooks(data);
-
-    // return a placeholder vnode
-    var name = Ctor.options.name || tag;
-    var vnode = new VNode(
-      ("vue-component-" + (Ctor.cid) + (name ? ("-" + name) : '')),
-      data, undefined, undefined, undefined, context,
-      { Ctor: Ctor, propsData: propsData, listeners: listeners, tag: tag, children: children },
-      asyncFactory
-    );
-
-    return vnode
-  }
-
-  function createComponentInstanceForVnode (
-    vnode, // we know it's MountedComponentVNode but flow doesn't
-    parent // activeInstance in lifecycle state
-  ) {
-    var options = {
-      _isComponent: true,
-      _parentVnode: vnode,
-      parent: parent
-    };
-    // check inline-template render functions
-    var inlineTemplate = vnode.data.inlineTemplate;
-    if (isDef(inlineTemplate)) {
-      options.render = inlineTemplate.render;
-      options.staticRenderFns = inlineTemplate.staticRenderFns;
-    }
-    return new vnode.componentOptions.Ctor(options)
-  }
-
-  function installComponentHooks (data) {
-    var hooks = data.hook || (data.hook = {});
-    for (var i = 0; i < hooksToMerge.length; i++) {
-      var key = hooksToMerge[i];
-      var existing = hooks[key];
-      var toMerge = componentVNodeHooks[key];
-      if (existing !== toMerge && !(existing && existing._merged)) {
-        hooks[key] = existing ? mergeHook$1(toMerge, existing) : toMerge;
-      }
-    }
-  }
-
-  function mergeHook$1 (f1, f2) {
-    var merged = function (a, b) {
-      // flow complains about extra args which is why we use any
-      f1(a, b);
-      f2(a, b);
-    };
-    merged._merged = true;
-    return merged
-  }
-
-  // transform component v-model info (value and callback) into
-  // prop and event handler respectively.
-  function transformModel (options, data) {
-    var prop = (options.model && options.model.prop) || 'value';
-    var event = (options.model && options.model.event) || 'input'
-    ;(data.attrs || (data.attrs = {}))[prop] = data.model.value;
-    var on = data.on || (data.on = {});
-    var existing = on[event];
-    var callback = data.model.callback;
-    if (isDef(existing)) {
-      if (
-        Array.isArray(existing)
-          ? existing.indexOf(callback) === -1
-          : existing !== callback
-      ) {
-        on[event] = [callback].concat(existing);
-      }
-    } else {
-      on[event] = callback;
-    }
-  }
-
-  /*  */
-
-  var SIMPLE_NORMALIZE = 1;
-  var ALWAYS_NORMALIZE = 2;
-
-  // wrapper function for providing a more flexible interface
-  // without getting yelled at by flow
-  function createElement (
-    context,
-    tag,
-    data,
-    children,
-    normalizationType,
-    alwaysNormalize
-  ) {
-    if (Array.isArray(data) || isPrimitive(data)) {
-      normalizationType = children;
-      children = data;
-      data = undefined;
-    }
-    if (isTrue(alwaysNormalize)) {
-      normalizationType = ALWAYS_NORMALIZE;
-    }
-    return _createElement(context, tag, data, children, normalizationType)
-  }
-
-  function _createElement (
-    context,
-    tag,
-    data,
-    children,
-    normalizationType
-  ) {
-    if (isDef(data) && isDef((data).__ob__)) {
-      warn(
-        "Avoid using observed data object as vnode data: " + (JSON.stringify(data)) + "\n" +
-        'Always create fresh vnode data objects in each render!',
-        context
-      );
-      return createEmptyVNode()
-    }
-    // object syntax in v-bind
-    if (isDef(data) && isDef(data.is)) {
-      tag = data.is;
-    }
-    if (!tag) {
-      // in case of component :is set to falsy value
-      return createEmptyVNode()
-    }
-    // warn against non-primitive key
-    if (isDef(data) && isDef(data.key) && !isPrimitive(data.key)
-    ) {
-      {
-        warn(
-          'Avoid using non-primitive value as key, ' +
-          'use string/number value instead.',
-          context
-        );
-      }
-    }
-    // support single function children as default scoped slot
-    if (Array.isArray(children) &&
-      typeof children[0] === 'function'
-    ) {
-      data = data || {};
-      data.scopedSlots = { default: children[0] };
-      children.length = 0;
-    }
-    if (normalizationType === ALWAYS_NORMALIZE) {
-      children = normalizeChildren(children);
-    } else if (normalizationType === SIMPLE_NORMALIZE) {
-      children = simpleNormalizeChildren(children);
-    }
-    var vnode, ns;
-    if (typeof tag === 'string') {
-      var Ctor;
-      ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag);
-      if (config.isReservedTag(tag)) {
-        // platform built-in elements
-        vnode = new VNode(
-          config.parsePlatformTagName(tag), data, children,
-          undefined, undefined, context
-        );
-      } else if ((!data || !data.pre) && isDef(Ctor = resolveAsset(context.$options, 'components', tag))) {
-        // component
-        vnode = createComponent(Ctor, data, context, children, tag);
-      } else {
-        // unknown or unlisted namespaced elements
-        // check at runtime because it may get assigned a namespace when its
-        // parent normalizes children
-        vnode = new VNode(
-          tag, data, children,
-          undefined, undefined, context
-        );
-      }
-    } else {
-      // direct component options / constructor
-      vnode = createComponent(tag, data, context, children);
-    }
-    if (Array.isArray(vnode)) {
-      return vnode
-    } else if (isDef(vnode)) {
-      if (isDef(ns)) { applyNS(vnode, ns); }
-      if (isDef(data)) { registerDeepBindings(data); }
-      return vnode
-    } else {
-      return createEmptyVNode()
-    }
-  }
-
-  function applyNS (vnode, ns, force) {
-    vnode.ns = ns;
-    if (vnode.tag === 'foreignObject') {
-      // use default namespace inside foreignObject
-      ns = undefined;
-      force = true;
-    }
-    if (isDef(vnode.children)) {
-      for (var i = 0, l = vnode.children.length; i < l; i++) {
-        var child = vnode.children[i];
-        if (isDef(child.tag) && (
-          isUndef(child.ns) || (isTrue(force) && child.tag !== 'svg'))) {
-          applyNS(child, ns, force);
-        }
-      }
-    }
-  }
-
-  // ref #5318
-  // necessary to ensure parent re-render when deep bindings like :style and
-  // :class are used on slot nodes
-  function registerDeepBindings (data) {
-    if (isObject(data.style)) {
-      traverse(data.style);
-    }
-    if (isObject(data.class)) {
-      traverse(data.class);
-    }
-  }
-
-  /*  */
-
-  function initRender (vm) {
-    vm._vnode = null; // the root of the child tree
-    vm._staticTrees = null; // v-once cached trees
-    var options = vm.$options;
-    var parentVnode = vm.$vnode = options._parentVnode; // the placeholder node in parent tree
-    var renderContext = parentVnode && parentVnode.context;
-    vm.$slots = resolveSlots(options._renderChildren, renderContext);
-    vm.$scopedSlots = emptyObject;
-    // bind the createElement fn to this instance
-    // so that we get proper render context inside it.
-    // args order: tag, data, children, normalizationType, alwaysNormalize
-    // internal version is used by render functions compiled from templates
-    vm._c = function (a, b, c, d) { return createElement(vm, a, b, c, d, false); };
-    // normalization is always applied for the public version, used in
-    // user-written render functions.
-    vm.$createElement = function (a, b, c, d) { return createElement(vm, a, b, c, d, true); };
-
-    // $attrs & $listeners are exposed for easier HOC creation.
-    // they need to be reactive so that HOCs using them are always updated
-    var parentData = parentVnode && parentVnode.data;
-
-    /* istanbul ignore else */
-    {
-      defineReactive$$1(vm, '$attrs', parentData && parentData.attrs || emptyObject, function () {
-        !isUpdatingChildComponent && warn("$attrs is readonly.", vm);
-      }, true);
-      defineReactive$$1(vm, '$listeners', options._parentListeners || emptyObject, function () {
-        !isUpdatingChildComponent && warn("$listeners is readonly.", vm);
-      }, true);
-    }
-  }
-
-  function renderMixin (Vue) {
-    // install runtime convenience helpers
-    installRenderHelpers(Vue.prototype);
-
-    Vue.prototype.$nextTick = function (fn) {
-      return nextTick(fn, this)
-    };
-
-    Vue.prototype._render = function () {
-      var vm = this;
-      var ref = vm.$options;
-      var render = ref.render;
-      var _parentVnode = ref._parentVnode;
-
-      if (_parentVnode) {
-        vm.$scopedSlots = normalizeScopedSlots(
-          _parentVnode.data.scopedSlots,
-          vm.$slots
-        );
-      }
-
-      // set parent vnode. this allows render functions to have access
-      // to the data on the placeholder node.
-      vm.$vnode = _parentVnode;
-      // render self
-      var vnode;
-      try {
-        vnode = render.call(vm._renderProxy, vm.$createElement);
-      } catch (e) {
-        handleError(e, vm, "render");
-        // return error render result,
-        // or previous vnode to prevent render error causing blank component
-        /* istanbul ignore else */
-        if (vm.$options.renderError) {
-          try {
-            vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e);
-          } catch (e) {
-            handleError(e, vm, "renderError");
-            vnode = vm._vnode;
-          }
-        } else {
-          vnode = vm._vnode;
-        }
-      }
-      // if the returned array contains only a single node, allow it
-      if (Array.isArray(vnode) && vnode.length === 1) {
-        vnode = vnode[0];
-      }
-      // return empty vnode in case the render function errored out
-      if (!(vnode instanceof VNode)) {
-        if (Array.isArray(vnode)) {
-          warn(
-            'Multiple root nodes returned from render function. Render function ' +
-            'should return a single root node.',
-            vm
-          );
-        }
-        vnode = createEmptyVNode();
-      }
-      // set parent
-      vnode.parent = _parentVnode;
-      return vnode
-    };
-  }
-
-  /*  */
-
   var uid$3 = 0;
 
   function initMixin (Vue) {
@@ -7086,7 +8858,7 @@ function normalizeComponent (
     value: FunctionalRenderContext
   });
 
-  Vue.version = '2.6.2';
+  Vue.version = '2.6.7';
 
   /*  */
 
@@ -9150,6 +10922,11 @@ function normalizeComponent (
     }
   }
 
+  // #9446: Firefox <= 53 (in particular, ESR 52) has incorrect Event.timeStamp
+  // implementation and does not fire microtasks in between event propagation, so
+  // safe to exclude.
+  var useMicrotaskFix = isUsingMicroTask && !(isFF && Number(isFF[1]) <= 53);
+
   function add$1 (
     name,
     handler,
@@ -9162,11 +10939,24 @@ function normalizeComponent (
     // the solution is simple: we save the timestamp when a handler is attached,
     // and the handler would only fire if the event passed to it was fired
     // AFTER it was attached.
-    if (isUsingMicroTask) {
+    if (useMicrotaskFix) {
       var attachedTimestamp = currentFlushTimestamp;
       var original = handler;
       handler = original._wrapper = function (e) {
-        if (e.timeStamp >= attachedTimestamp) {
+        if (
+          // no bubbling, should always fire.
+          // this is just a safety net in case event.timeStamp is unreliable in
+          // certain weird environments...
+          e.target === e.currentTarget ||
+          // event is fired after handler attachment
+          e.timeStamp >= attachedTimestamp ||
+          // #9462 bail for iOS 9 bug: event.timeStamp is 0 after history.pushState
+          e.timeStamp === 0 ||
+          // #9448 bail if event is fired in another document in a multi-page
+          // electron/nw.js app, since event.timeStamp will be using a different
+          // starting reference
+          e.target.ownerDocument !== document
+        ) {
           return original.apply(this, arguments)
         }
       };
@@ -9247,15 +11037,7 @@ function normalizeComponent (
         }
       }
 
-      // skip the update if old and new VDOM state is the same.
-      // the only exception is `value` where the DOM value may be temporarily
-      // out of sync with VDOM state due to focus, composition and modifiers.
-      // This also covers #4521 by skipping the unnecesarry `checked` update.
-      if (key !== 'value' && cur === oldProps[key]) {
-        continue
-      }
-
-      if (key === 'value') {
+      if (key === 'value' && elm.tagName !== 'PROGRESS') {
         // store value as _value as well since
         // non-string values will be stringified
         elm._value = cur;
@@ -9275,8 +11057,18 @@ function normalizeComponent (
         while (svg.firstChild) {
           elm.appendChild(svg.firstChild);
         }
-      } else {
-        elm[key] = cur;
+      } else if (
+        // skip the update if old and new VDOM state is the same.
+        // `value` is handled separately because the DOM value may be temporarily
+        // out of sync with VDOM state due to focus, composition and modifiers.
+        // This  #4521 by skipping the unnecesarry `checked` update.
+        cur !== oldProps[key]
+      ) {
+        // some property updates can throw
+        // e.g. `value` on <progress> w/ non-finite value
+        try {
+          elm[key] = cur;
+        } catch (e) {}
       }
     }
   }
@@ -11178,6 +12970,8 @@ function normalizeComponent (
 
   var decodeHTMLCached = cached(he.decode);
 
+  var emptySlotScopeToken = "_empty_";
+
   // configurable state
   var warn$2;
   var delimiters;
@@ -11790,7 +13584,7 @@ function normalizeComponent (
           var dynamic = ref.dynamic;
           el.slotTarget = name;
           el.slotTargetDynamic = dynamic;
-          el.slotScope = slotBinding.value || "_"; // force it into a scoped slot for perf
+          el.slotScope = slotBinding.value || emptySlotScopeToken; // force it into a scoped slot for perf
         }
       } else {
         // v-slot on component, denotes default slot
@@ -11825,8 +13619,13 @@ function normalizeComponent (
           var slotContainer = slots[name$1] = createASTElement('template', [], el);
           slotContainer.slotTarget = name$1;
           slotContainer.slotTargetDynamic = dynamic$1;
-          slotContainer.children = el.children.filter(function (c) { return !(c).slotScope; });
-          slotContainer.slotScope = slotBinding$1.value || "_";
+          slotContainer.children = el.children.filter(function (c) {
+            if (!c.slotScope) {
+              c.parent = slotContainer;
+              return true
+            }
+          });
+          slotContainer.slotScope = slotBinding$1.value || emptySlotScopeToken;
           // remove children as they are returned from scopedSlots now
           el.children = [];
           // mark el non-plain so data gets generated
@@ -12473,7 +14272,13 @@ function normalizeComponent (
   }
 
   function genKeyFilter (keys) {
-    return ("if(('keyCode' in $event)&&" + (keys.map(genFilterCode).join('&&')) + ")return null;")
+    return (
+      // make sure the key filters only apply to KeyboardEvents
+      // #9441: can't use 'keyCode' in $event because Chrome autofill fires fake
+      // key events that do not have keyCode property...
+      "if(!$event.type.indexOf('key')&&" +
+      (keys.map(genFilterCode).join('&&')) + ")return null;"
+    )
   }
 
   function genFilterCode (key) {
@@ -12755,7 +14560,7 @@ function normalizeComponent (
     }
     // scoped slots
     if (el.scopedSlots) {
-      data += (genScopedSlots(el.scopedSlots, state)) + ",";
+      data += (genScopedSlots(el, el.scopedSlots, state)) + ",";
     }
     // component v-model
     if (el.model) {
@@ -12826,16 +14631,76 @@ function normalizeComponent (
   }
 
   function genScopedSlots (
+    el,
     slots,
     state
   ) {
-    var hasDynamicKeys = Object.keys(slots).some(function (key) {
+    // by default scoped slots are considered "stable", this allows child
+    // components with only scoped slots to skip forced updates from parent.
+    // but in some cases we have to bail-out of this optimization
+    // for example if the slot contains dynamic names, has v-if or v-for on them...
+    var needsForceUpdate = Object.keys(slots).some(function (key) {
       var slot = slots[key];
-      return slot.slotTargetDynamic || slot.if || slot.for
+      return (
+        slot.slotTargetDynamic ||
+        slot.if ||
+        slot.for ||
+        containsSlotChild(slot) // is passing down slot from parent which may be dynamic
+      )
     });
-    return ("scopedSlots:_u([" + (Object.keys(slots).map(function (key) {
-        return genScopedSlot(slots[key], state)
-      }).join(',')) + "]" + (hasDynamicKeys ? ",true" : "") + ")")
+
+    // #9534: if a component with scoped slots is inside a conditional branch,
+    // it's possible for the same component to be reused but with different
+    // compiled slot content. To avoid that, we generate a unique key based on
+    // the generated code of all the slot contents.
+    var needsKey = !!el.if;
+
+    // OR when it is inside another scoped slot or v-for (the reactivity may be
+    // disconnected due to the intermediate scope variable)
+    // #9438, #9506
+    // TODO: this can be further optimized by properly analyzing in-scope bindings
+    // and skip force updating ones that do not actually use scope variables.
+    if (!needsForceUpdate) {
+      var parent = el.parent;
+      while (parent) {
+        if (
+          (parent.slotScope && parent.slotScope !== emptySlotScopeToken) ||
+          parent.for
+        ) {
+          needsForceUpdate = true;
+          break
+        }
+        if (parent.if) {
+          needsKey = true;
+        }
+        parent = parent.parent;
+      }
+    }
+
+    var generatedSlots = Object.keys(slots)
+      .map(function (key) { return genScopedSlot(slots[key], state); })
+      .join(',');
+
+    return ("scopedSlots:_u([" + generatedSlots + "]" + (needsForceUpdate ? ",null,true" : "") + (!needsForceUpdate && needsKey ? (",null,false," + (hash(generatedSlots))) : "") + ")")
+  }
+
+  function hash(str) {
+    var hash = 5381;
+    var i = str.length;
+    while(i) {
+      hash = (hash * 33) ^ str.charCodeAt(--i);
+    }
+    return hash >>> 0
+  }
+
+  function containsSlotChild (el) {
+    if (el.type === 1) {
+      if (el.tag === 'slot') {
+        return true
+      }
+      return el.children.some(containsSlotChild)
+    }
+    return false
   }
 
   function genScopedSlot (
@@ -12849,13 +14714,18 @@ function normalizeComponent (
     if (el.for && !el.forProcessed) {
       return genFor(el, state, genScopedSlot)
     }
-    var fn = "function(" + (String(el.slotScope)) + "){" +
+    var slotScope = el.slotScope === emptySlotScopeToken
+      ? ""
+      : String(el.slotScope);
+    var fn = "function(" + slotScope + "){" +
       "return " + (el.tag === 'template'
         ? el.if && isLegacySyntax
           ? ("(" + (el.if) + ")?" + (genChildren(el, state) || 'undefined') + ":undefined")
           : genChildren(el, state) || 'undefined'
         : genElement(el, state)) + "}";
-    return ("{key:" + (el.slotTarget || "\"default\"") + ",fn:" + fn + "}")
+    // reverse proxy v-slot without scope on this.$slots
+    var reverseProxy = slotScope ? "" : ",proxy:true";
+    return ("{key:" + (el.slotTarget || "\"default\"") + ",fn:" + fn + reverseProxy + "}")
   }
 
   function genChildren (
@@ -12942,7 +14812,14 @@ function normalizeComponent (
     var slotName = el.slotName || '"default"';
     var children = genChildren(el, state);
     var res = "_t(" + slotName + (children ? ("," + children) : '');
-    var attrs = el.attrs && ("{" + (el.attrs.map(function (a) { return ((camelize(a.name)) + ":" + (a.value)); }).join(',')) + "}");
+    var attrs = el.attrs || el.dynamicAttrs
+      ? genProps((el.attrs || []).concat(el.dynamicAttrs || []).map(function (attr) { return ({
+          // slot props are camelized
+          name: camelize(attr.name),
+          value: attr.value,
+          dynamic: attr.dynamic
+        }); }))
+      : null;
     var bind$$1 = el.attrsMap['v-bind'];
     if ((attrs || bind$$1) && !children) {
       res += ",null";
@@ -13148,11 +15025,13 @@ function normalizeComponent (
 
   function repeat$1 (str, n) {
     var result = '';
-    while (true) { // eslint-disable-line
-      if (n & 1) { result += str; }
-      n >>>= 1;
-      if (n <= 0) { break }
-      str += str;
+    if (n > 0) {
+      while (true) { // eslint-disable-line
+        if (n & 1) { result += str; }
+        n >>>= 1;
+        if (n <= 0) { break }
+        str += str;
+      }
     }
     return result
   }
@@ -13534,9 +15413,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 class UserDataManager {
 
-  constructor (userID,events) {
+  /**
+   * Creates with userID argument, subscribe to WordItem and WorList events, inits blocked property and request queue
+   * @param {String} userID - userID that would be used for access to remote storage
+   * @param {String} events - events object of the WordlistController, passed in UIController
+   */
+  constructor (userID, events) {
     this.userID = userID
     if (events) {
       events.WORDITEM_UPDATED.sub(this.update.bind(this))
@@ -13547,14 +15432,303 @@ class UserDataManager {
     this.requestsQueue = []
   }
 
+  /**
+   * Initializes IndexedDBAdapter with appropriate local dbDriver (WordItemIndexedDbDriver) 
+   * @param {String} dataType - data type for choosing a proper dbDriver (WordItem)
+   * @return {IndexedDBAdapter}
+   */
   _localStorageAdapter(dataType) {
     let dbDriver = new UserDataManager.LOCAL_DRIVER_CLASSES[dataType](this.userID)
     return new _storage_indexed_db_adapter_js__WEBPACK_IMPORTED_MODULE_2__["default"](dbDriver)
   }
 
+  /**
+   * Initializes RemoteDBAdapter with appropriate remote dbDriver (WordItemRemoteDbDriver) 
+   * @param {String} dataType - data type for choosing a proper dbDriver (WordItem)
+   * @return {RemoteDBAdapter}
+   */
   _remoteStorageAdapter(dataType) {
     let dbDriver = new UserDataManager.REMOTE_DRIVER_CLASSES[dataType](this.userID)
     return new _storage_remote_db_adapter_js__WEBPACK_IMPORTED_MODULE_3__["default"](dbDriver)
+  }
+
+  /**
+   * Checks availability of remote and local adapter according to params.source value
+   * @param {String} dataType - data type for choosing a proper dbDriver (WordItem)
+   * @return {RemoteDBAdapter}
+   */
+  checkAdapters (localAdapter, remoteAdapter, params) {
+    let localCheck = false
+    let remoteCheck = false
+
+    if (params.source === 'remote') {
+      localCheck = true
+      remoteCheck = remoteAdapter.available
+    } else if (params.source === 'local') {
+      localCheck = localAdapter.available
+      remoteCheck = true
+    } else {
+      localCheck = localAdapter.available
+      remoteCheck = remoteAdapter.available
+      if (!localAdapter.available) {
+        this.printErrorAdapterUnvailable(localAdapter)
+      }
+      if (!remoteAdapter.available) {
+        this.printErrorAdapterUnvailable(remoteAdapter)
+      }
+    }
+
+    return localCheck && remoteCheck
+  }
+
+  printErrorAdapterUnvailable(adapter) {
+    console.error(`Adapter is not available - ${adapter.constructor.name}`)
+  }
+
+  /**
+   * Promise-based method - updates object in local/remote storage
+   * uses blocking workflow: 
+   * @param {Object} data
+   * @param {WordItem} data.dataObj - object for saving to local/remote storage
+   * @param {WordItem} data.params - could have segment property to define exact segment for updating
+   * @param {Object} [params={}] - additional parameters for updating, now it is only params.source = [local, remote, both]
+   * @return {Boolean} true if updated successful, false if not
+   */
+  async update(data, params = {}) {
+    if (this.blocked) {
+      this.requestsQueue.push({
+        method: 'update',
+        data, params
+      })
+      return
+    }
+    try {
+      params.source = params.source||'both'
+      let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
+
+      let localAdapter = this._localStorageAdapter(finalConstrName)
+      let remoteAdapter = this._remoteStorageAdapter(finalConstrName)
+      
+      let result = false
+      let segment = data.params && data.params.segment ? data.params.segment : localAdapter.dbDriver.segments
+
+      if (this.checkAdapters(localAdapter, remoteAdapter, params)) {
+        this.blocked = true
+        if (params.source === 'local') {
+          result = await localAdapter.update(data.dataObj, data.params)
+        } else if (params.source === 'remote') {
+          result = await remoteAdapter.update(data.dataObj, data.params)  
+        } else {
+          let currentRemoteItems = await remoteAdapter.checkAndUpdate(data.dataObj, segment)
+          result = await localAdapter.checkAndUpdate(data.dataObj, segment, currentRemoteItems)
+        }
+
+        this.printErrors(remoteAdapter)
+        this.printErrors(localAdapter)
+
+        this.blocked = false
+        this.checkRequestQueue()
+      }
+      return result
+    } catch (error) {
+      console.error('Some errors happen on updating data in IndexedDB or RemoteDBAdapter', error.message)
+    }
+  }
+
+  /**
+   * Promise-based method - deletes single object in local/remote storage
+   * uses blocking workflow: 
+   * @param {Object} data
+   * @param {WordItem} data.dataObj - object for saving to local/remote storage
+   * @param {WordItem} data.params - could have segment property to define exact segment for updating
+   * @param {Object} [params={}] - additional parameters for updating, now it is only params.source = [local, remote, both]
+   * @return {Boolean} true if deleted successful, false if not
+   */
+  async delete(data, params = {}) {
+    if (this.blocked) {
+      this.requestsQueue.push({
+        method: 'delete',
+        data, params
+      })
+      return
+    }
+    try {
+      this.blocked = true
+      let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
+      
+      let localAdapter = this._localStorageAdapter(finalConstrName)
+      let remoteAdapter = this._remoteStorageAdapter(finalConstrName)
+    
+      let remoteResult = false
+      let localResult = false
+      
+      if (this.checkAdapters(localAdapter, remoteAdapter, params)) {
+        this.blocked = true
+
+        remoteResult = true
+        localResult = true
+
+        if (params.source !== 'local') {
+          remoteResult = await remoteAdapter.deleteOne(data.dataObj)
+        }
+        if (params.source !== 'remote') {
+          localResult = await localAdapter.deleteOne(data.dataObj)
+        }
+
+        this.printErrors(remoteAdapter)
+        this.printErrors(localAdapter)
+
+        this.blocked = false
+        this.checkRequestQueue()
+      }
+      return remoteResult && localResult
+    } catch (error) {
+      console.error('Some errors happen on deleting item from IndexedDB or RemoteDBAdapter', error.message)
+    }
+  }
+
+  /**
+   * Promise-based method - deletes all objects from the wordlist by languageCode in local/remote storage
+   * uses blocking workflow: 
+   * @param {Object} data
+   * @param {String} data.languageCode - languageCode of Wordlist to be deleted
+   * @param {WordItem} data.params - could have segment property to define exact segment for updating
+   * @param {Object} [params={ source: both }] - additional parameters for updating, now it is only params.source = [local, remote, both]
+   * @return {Boolean} true if deleted successful, false if not
+   */
+  async deleteMany(data, params = {}) {
+    if (this.blocked) {
+      this.requestsQueue.push({
+        method: 'deleteMany',
+        data, params
+      })
+      return
+    }
+    try {
+      
+      let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
+      let localAdapter = this._localStorageAdapter(data.dataType)
+
+      let deletedLocal = false
+      let deletedRemote = false
+      
+      if (this.checkAdapters(localAdapter, remoteAdapter, params)) {
+        deletedLocal = true
+        deletedRemote = true
+
+        this.blocked = true
+        if (params.source !== 'local') {
+          deletedRemote = await remoteAdapter.deleteMany(data.params)
+        }
+        if (params.source !== 'remote') {
+          deletedLocal = await localAdapter.deleteMany(data.params)
+        }      
+
+        this.printErrors(remoteAdapter)
+        this.printErrors(localAdapter)
+
+        console.warn('Result of deleted many from IndexedDB', deletedLocal)
+
+        this.blocked = false
+        this.checkRequestQueue()
+      }
+
+      return deletedLocal && deletedRemote
+    } catch (error) {
+      console.error('Some errors happen on deleting data from IndexedDB or RemoteDBAdapter', error.message)
+    }
+  }
+
+  /**
+   * Promise-based method - queries all objects from the wordlist by languageCode , only for only one wordItem
+   * or one wordItem from local/remote storage 
+   * @param {Object} data
+   * @param {String} data.languageCode - for quering all wordItems from wordList by languageCode
+   * @param {WordItem} data.wordItem - for quering one wordItem
+   * @param {Object} [params={ source: both, type: short, syncDelete: false }] - additional parameters for updating, now there are the following:
+   *                  params.source = [local, remote, both]
+   *                  params.type = [short, full] - short - short data for homonym, full - homonym with definitions data
+   *                  params.syncDelete = [true, false] - if true (and params.source = both, and languageCode is defined in params), 
+   *                                      than localItems would be compared with remoteItems, items that are existed only in local would be removed
+   * 
+   * @return {WordItem[]} 
+   */
+  async query (data, params = {}) {
+    try {
+      params.type = params.type||'short'
+      params.source = params.source||'both'
+      params.syncDelete = params.syncDelete||false
+
+      let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
+      let localAdapter = this._localStorageAdapter(data.dataType)
+
+      let finalItems = []
+      let remoteItems
+
+      if (params.source === 'local') {
+        finalItems = await localAdapter.query(data.params)
+      } else if (params.source === 'remote') {
+        remoteItems = await remoteAdapter.query(data.params)
+        for(let remoteItem of remoteItems) {
+          finalItems.push(localAdapter.dbDriver.createFromRemoteData(remoteItem))
+        }
+      } else {
+        remoteItems = await remoteAdapter.query(data.params)
+        if (params.type === 'full') {
+          for (let remoteItem of remoteItems) {
+            await localAdapter.checkAndUpdate(remoteItem, data.params.segment, [remoteItem])
+          }
+          let localItems = await localAdapter.query(data.params)
+          finalItems = localItems
+        } else {
+          remoteItems = await remoteAdapter.query(data.params)
+          for(let remoteItem of remoteItems) {
+            let wordItem = localAdapter.dbDriver.createFromRemoteData(remoteItem)
+            finalItems.push(wordItem)
+            localAdapter.checkAndUpdate(wordItem, null, [remoteItem])
+          }
+        }
+        if (params.syncDelete && data.params.languageCode) {
+          this.deleteAbsentInRemote(localAdapter, remoteItems, data.params.languageCode)
+        }
+      }
+
+      this.printErrors(remoteAdapter)
+      this.printErrors(localAdapter)
+      return finalItems
+    } catch (error) {
+      console.error('Some errors happen on quiring data from IndexedDB or RemoteDBAdapter', error.message)
+    }
+  }
+
+  async deleteAbsentInRemote (localAdapter, remoteItems, languageCode) {
+    let localItems = await localAdapter.query({ languageCode })
+    for (let localItem of localItems) {
+      let checkID  = localAdapter.dbDriver.makeIDCompareWithRemote(localItem)
+      if (!remoteItems.find(remoteItem => remoteItem.ID === checkID)) {
+        console.warn('Need to delete from local', checkID)
+        this.delete({ dataObj: localItem})
+      }
+    }
+  }
+
+  /**
+   * Method prints errors from the errors property of the given adapter
+   */
+  printErrors (adapter) {
+    if (adapter.errors && adapter.errors.length > 0) {
+      adapter.errors.forEach(error => console.error(`Print error - ${error}`))
+    }
+  }
+
+  /**
+   * Method checks request queue, and if it is not empty executes the first in the queue
+   */
+  checkRequestQueue () {
+    if (this.requestsQueue.length > 0) {
+      let curRequest = this.requestsQueue.shift()
+      this[curRequest.method](curRequest.data, curRequest.params)
+    }
   }
 
   /**
@@ -13562,7 +15736,6 @@ class UserDataManager {
    * @param {String} sourceConstrName recieved class name
    * @return {String} formatted class name
    */
-
   defineConstructorName (sourceConstrName) {
     let firstLetter = sourceConstrName.substr(0,1)
     let finalConstrName
@@ -13576,180 +15749,6 @@ class UserDataManager {
     }
     return finalConstrName
   }
-
-  /**
-   * Update data in the user data stores
-   * @param {Object} data object adhering to
-   *                      { dataObj: the data model object to be updated}
-   *                        params: datatype specific parameters
-   *                      }
-   * @return {Boolean} true if update succeeded false if not
-   */
-  async update(data) {
-    if (this.blocked) {
-      this.requestsQueue.push({
-        method: 'update',
-        data: data
-      })
-    }
-    try {
-      this.blocked = true
-      let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
-
-      let localAdapter = this._localStorageAdapter(finalConstrName)
-      let remoteAdapter = this._remoteStorageAdapter(finalConstrName)
-
-      let updatedLocal = await localAdapter.update(data.dataObj,data.params)
-      let updatedRemote = await remoteAdapter.update(data.dataObj,data.params)
-      this.printErrors(localAdapter)
-      
-      this.blocked = false
-      this.checkRequestQueue()
-
-      return updatedLocal && updatedRemote
-    } catch (error) {
-      console.error('Some errors happen on updating data in IndexedDB', error.message)
-    }
-  }
-
-  /**
-   * Delete a single data model object from the user data stores
-   * @param {Object} data object adhering to
-   *                      { dataObj: the data model object to be updated} }
-   * @return {Boolean} true if delete succeeded false if not
-   */
-  async delete(data) {
-    if (this.blocked) {
-      this.requestsQueue.push({
-        method: 'delete',
-        data: data
-      })
-    }
-    try {
-      this.blocked = true
-      let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
-
-      let localAdapter = this._localStorageAdapter(finalConstrName)
-      let remoteAdapter = this._remoteStorageAdapter(finalConstrName)
-      let deletedLocal = await localAdapter.deleteOne(data.dataObj)
-      let deletedRemote = await remoteAdapter.deleteOne(data.dataObj)
-      this.printErrors(localAdapter)
-      
-      this.blocked = false
-
-      this.checkRequestQueue()
-      
-      return deletedLocal && deletedRemote
-    } catch (error) {
-      console.error('Some errors happen on deleting data from IndexedDB', error.message)
-    }
-  }
-
-  /**
-   * Delete a set objects from the data store
-   * @param {Object} data object adhering to
-   *                      { dataType: the name of the datatype to delete,
-   *                        params: parameters to identify items to be deleted
-   *                      }
-   */
-  async deleteMany(data) {
-    if (this.blocked) {
-      this.requestsQueue.push({
-        method: 'deleteMany',
-        data: data
-      })
-    }
-    try {
-      this.blocked = true
-
-      let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
-      let localAdapter = this._localStorageAdapter(data.dataType)
-      let deletedLocalResult = localAdapter.deleteMany(data.params)
-      let deletedRemoteResult = remoteAdapter.deleteMany(data.params)
-      const finalResult = [await deletedLocalResult, await deletedRemoteResult]
-      
-      this.printErrors(localAdapter)      
-      this.blocked = false
-      console.info('Result of deleted many from IndexedDB', finalResult)
-
-      this.checkRequestQueue()
-      
-    } catch (error) {
-      console.error('Some errors happen on deleting data from IndexedDB', error.message)
-    }
-  }
-
-  /**
-   * Query the user data stores
-   * @param {Object} data object adhering to
-   *                      { dataType: the name of the datatype to query
-   *                        params: query parameters to
-   *                      }
-   * @return {Object[]} an array of data items
-   */
-  async query(data) {
-    // query queries both the remote and local stores and merges
-    // the results
-    let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
-    let localAdapter = this._localStorageAdapter(data.dataType)
-
-    let remoteDataItems = await remoteAdapter.query(data.params)
-    let localDataItems = await localAdapter.query(data.params)
-
-    this.printErrors(localAdapter)
-
-    // if we have any remoteData items then we are going to
-    // reset the local store from the remoteData, adding back in any
-    // items that appeared only in the local
-    if (remoteDataItems.length > 0) {
-        localAdapter.deleteMany(params)
-    }
-    let addToRemote = []
-    let updateInRemote = []
-    
-    localDataItems.forEach(item => {
-      let inRemote = false
-      for (let i=0; i<remoteDataItems.length; i++ ) {
-        if (remoteDataItems[i].isSameItem(item)) {
-          inRemote = true
-          // if the item exists in the remote db, check to see if they differ
-          // and if so merge and update
-          if (remoteDataItems[i].isNotEqual(item)) {
-            let merged = remoteDataItems[i].merge(item)
-            remoteDataItems[i] = merged
-            updateInRemote.push(remoteDataItems[i].merge(item))
-          }
-        }
-      }
-      if (!inRemote) {
-        addToRemote.push(item)
-      }
-    })
-    addToRemote.forEach(item => {
-      remoteAdapter.create(item)
-    })
-    updateInRemote.forEach(item => {
-      remoteAdapter.update(item)
-    })
-    let mergedList = [...remoteDataItems, ...addToRemote]
-    mergedList.forEach(item=> {
-      localAdapter.create(item)
-    })
-    return [...remoteDataItems,...addToRemote]
-  }
-
-  checkRequestQueue () {
-    if (this.requestsQueue.length > 0) {
-      let curRequest = this.requestsQueue.shift()
-      this[curRequest.method](curRequest.data)
-    }
-  }
-
-  printErrors (localAdapter) {
-    if (localAdapter.errors && localAdapter.errors.length > 0) {
-      localAdapter.errors.forEach(error => console.error(`Print error - ${error.message}`))
-    }
-  }
 }
 
 // Constants (could be done better, dynamically, etc.)
@@ -13759,7 +15758,7 @@ UserDataManager.LOCAL_DRIVER_CLASSES = {
 UserDataManager.REMOTE_DRIVER_CLASSES = {
   WordItem: _storage_worditem_remotedb_driver_js__WEBPACK_IMPORTED_MODULE_1__["default"]
 }
-
+  
 
 /***/ }),
 
@@ -13783,7 +15782,7 @@ class WordlistController {
    * @param {String[]} availableLangs language codes
    * @param {PSEvent[]} events events that the controller can subscribe to
    */
-  constructor (availableLangs,events) {
+  constructor (availableLangs, events) {
     this.wordLists = {}
     this.availableLangs = availableLangs
     events.TEXT_QUOTE_SELECTOR_RECEIVED.sub(this.onTextQuoteSelectorReceived.bind(this))
@@ -13795,18 +15794,16 @@ class WordlistController {
   /**
    * Asynchronously initialize the word lists managed by this controller
    * @param {UserDataManager} dataManager a user data manager to retrieve initial wordlist data from
-   *  // TODO may need a way to process a queue of pending words here e.g. if the wordlist controller isn't
-    * // activated until after number of lookups have already occurred
    * Emits a WORDLIST_UPDATED event when the wordlists are available
    */
   async initLists (dataManager) {
     for (let languageCode of this.availableLangs) {
-      let wordItems = await dataManager.query({dataType: 'WordItem', params: {languageCode: languageCode}})
+      let wordItems = await dataManager.query({dataType: 'WordItem', params: {languageCode: languageCode}}, { syncDelete: true })
       if (wordItems.length > 0) {
         this.wordLists[languageCode] = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordList"](languageCode,wordItems)
+        WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
       }
     }
-    WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
   }
 
   /**
@@ -13831,7 +15828,6 @@ class WordlistController {
    * Emits a WORDLIST_DELETED event
    */
   removeWordList (languageCode) {
-    let toDelete = this.wordLists[languageCode]
     delete this.wordLists[languageCode]
     WordlistController.evt.WORDLIST_DELETED.pub({dataType: 'WordItem', params: {languageCode: languageCode}})
     WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
@@ -13849,10 +15845,13 @@ class WordlistController {
       let deleted = wordList.deleteWordItem(targetWord)
       if (deleted) {
         WordlistController.evt.WORDITEM_DELETED.pub({dataObj: deleted})
+        if (wordList.isEmpty) {
+          this.removeWordList(languageCode)
+        }
+      } else {
+        console.error('Trying to delete an absent element')
       }
     }
-    // TODO error handling if item not found
-    // TODO call removeWordList if the list is empty now
   }
 
   /**
@@ -13864,12 +15863,14 @@ class WordlistController {
    */
   getWordListItem (languageCode, targetWord, create=false) {
     let wordList = this.getWordList(languageCode, create)
-    let worditem
+    let wordItem
     if (wordList) {
-      worditem = wordList.getWordItem(targetWord, create, WordlistController.evt.WORDITEM_UPDATED)
+      wordItem = wordList.getWordItem(targetWord, create, WordlistController.evt.WORDITEM_UPDATED)
     }
-    // TODO error handling for no item?
-    return worditem
+    if (!wordItem) {
+      console.error(`There are no items for these parameters ${languageCode} ${targetWord}`)
+    }
+    return wordItem
   }
 
   /**
@@ -13878,10 +15879,9 @@ class WordlistController {
    * Emits WORDITEM_UPDATED and WORDLIST_UPDATED events
    */
    onHomonymReady (data) {
-    // console.info('********************onHomonymReady1', data)
     // when receiving this event, it's possible this is the first time we are seeing the word so
     // create the item in the word list if it doesn't exist
-    let wordItem = this.getWordListItem(data.language,data.targetWord,true)
+    let wordItem = this.getWordListItem(data.language, data.targetWord, true)
     wordItem.homonym = data
     WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'shortHomonym'}})
     // emit a wordlist updated event too in case the wordlist was updated
@@ -13894,7 +15894,6 @@ class WordlistController {
   * Emits a WORDITEM_UPDATED event
   */
   onDefinitionsReady (data) {
-    // console.info('********************onDefinitionsReady', data.homonym)
     let wordItem = this.getWordListItem(data.homonym.language,data.homonym.targetWord)
     if (wordItem) {
       wordItem.homonym = data.homonym
@@ -13912,7 +15911,6 @@ class WordlistController {
   * Emits a WORDITEM_UPDATED event
   */
   onLemmaTranslationsReady (data) {
-    // console.info('********************onLemmaTranslationsReady', data)
     let wordItem = this.getWordListItem(data.language, data.targetWord)
     if (wordItem) {
       wordItem.homonym = data
@@ -13928,10 +15926,9 @@ class WordlistController {
   * Emits a WORDITEM_UPDATED and WORDLIST_UPDATED events
   */
   onTextQuoteSelectorReceived (data) {
-    // console.info('********************onTextQuoteSelectorReceived', data)
     // when receiving this event, it's possible this is the first time we are seeing the word so
     // create the item in the word list if it doesn't exist
-    let wordItem = this.getWordListItem(data.languageCode, data.normalizedText,true)
+    let wordItem = this.getWordListItem(data.languageCode, data.normalizedText, true)
     if (wordItem) {
       wordItem.addContext([data])
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'context'}})
@@ -13980,11 +15977,9 @@ class WordlistController {
   * @param {String} targetWord the word of the item
   * Emits a WORDITEM_SELECTED event for the selected item
   */
-  selectWordItem (languageCode, targetWord) {
-    let wordItem = this.getWordListItem(languageCode, targetWord,false)
-    // console.info('*********************selectWordItem 1', languageCode, targetWord)
-    // console.info('*********************selectWordItem 2', wordItem)
-    WordlistController.evt.WORDITEM_SELECTED.pub(wordItem.homonym)
+  async selectWordItem (languageCode, targetWord) {
+    let wordItem = this.getWordListItem(languageCode, targetWord, false)
+    WordlistController.evt.WORDITEM_SELECTED.pub(wordItem)
   }
 
   /**
@@ -14157,6 +16152,10 @@ module.exports = {"TOOLTIP_ALL_IMPORTANT":{"message":"Make all important ","desc
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return IndexedDBAdapter; });
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+
+
 /**
  * An interface to IndexedDB Storage
  */
@@ -14170,6 +16169,30 @@ class IndexedDBAdapter {
     this.available = this._initIndexedDBNamespaces()
     this.dbDriver = dbDriver
     this.errors = []
+  }
+
+  async checkAndUpdate (wordItem, segment, currentRemoteItems) {  
+    if (segment === 'context' || !segment)  {
+      if (currentRemoteItems.length > 0) {
+        wordItem.context = []
+        for(let contextItem of currentRemoteItems[0].context) {
+          wordItem.context.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordItem"].readContext([contextItem])[0])
+        }
+      }
+    }
+
+    if (!segment) {
+      segment = this.dbDriver.segmentsSync
+    }
+    
+    let currentLocalItems = await this.query({ wordItem })
+    if (currentLocalItems.length === 0 && segment && segment !== 'common') {
+      await this.update(wordItem, { segment: 'common' })  
+    }
+
+    let result = await this.update(wordItem, { segment })
+
+    return result
   }
 
   /**
@@ -14186,7 +16209,7 @@ class IndexedDBAdapter {
       // TODO we need transaction handling here
       for (let segment of segments) {
         updated = await this.update(data, {segment: segment})
-        if (! updated) {
+        if (!updated) {
           throw new Error(`Unknown problems with updating segment ${segment}`)
         }
       }
@@ -14195,7 +16218,7 @@ class IndexedDBAdapter {
       if (error) {
         this.errors.push(error)
       }
-      return
+      return false
     }
   }
 
@@ -14219,7 +16242,7 @@ class IndexedDBAdapter {
       if (error) {
         this.errors.push(error)
       }
-      return
+      return false
     }
   }
 
@@ -14235,11 +16258,12 @@ class IndexedDBAdapter {
         let q = this.dbDriver.segmentDeleteQuery(segment,data)
         await this._deleteFromStore(q)
       }
+      return true
     } catch (error) {
       if (error) {
         this.errors.push(error)
       }
-      return
+      return false
     }
   }
 
@@ -14252,15 +16276,21 @@ class IndexedDBAdapter {
    */
   async update (data, params) {
     try {
-      let segments = [params.segment]
+      let segments = params && params.segment ? (Array.isArray(params.segment) ? params.segment : [params.segment]) : []
+
       let result
-      // if we weren't asked to update a specific segment, update them all
       if (segments.length === 0)  {
         segments = this.dbDriver.segments
       }
-      for (let s of segments) {
-        let q = this.dbDriver.updateSegmentQuery(s,data)
-        result = await this._set(q)
+
+      for (let segment of segments) {
+        let query = this.dbDriver.updateSegmentQuery(segment, data)
+
+        if (query.dataItems && query.dataItems.length > 0) {
+          result = await this._set(query)
+        } else {
+          result = true
+        }
       }
       return result
     } catch (error) {
@@ -14278,32 +16308,31 @@ class IndexedDBAdapter {
    */
   async query(params) {
     try {
-      let listQuery = this.dbDriver.listQuery(params)
-      let queryResult = await this._getFromStore(listQuery)
+      let listItemsQuery = this.dbDriver.listItemsQuery(params)
+      let listItemsQueryResult = await this._getFromStore(listItemsQuery)
       
       let items = []
-      if (queryResult.length > 0) {
-        for (let item of queryResult) {
-          let modelObj = this.dbDriver.load(item)
-  
-          let segments = this.dbDriver.segments
-          for (let segment of segments) {
-            let query = this.dbDriver.segmentQuery(segment, modelObj)
-  
-            let res = await this._getFromStore(query)
-            if (res.length > 0) {
-              this.dbDriver.loadSegment(segment, modelObj, res)
-            }
+
+      for (let itemQuery of listItemsQueryResult) {
+        let resultObject = this.dbDriver.loadFirst(itemQuery)
+
+        for (let segment of this.dbDriver.segmentsNotFirst) {
+          let query = this.dbDriver.segmentSelectQuery(segment, resultObject)
+          let result = await this._getFromStore(query)
+
+          if (result.length > 0) {           
+            this.dbDriver.loadSegment(segment, result, resultObject)
           }
-          items.push(modelObj)
         }
+        items.push(resultObject)
       }
+
       return items
     } catch (error) {
       if (error) {
         this.errors.push(error)
       }
-      return []
+      return false
     }
   }
 
@@ -14312,33 +16341,47 @@ class IndexedDBAdapter {
    * Used primarily for testing right now
    * TODO needs to be enhanced to support async removal of old database versions
    */
-  clear () {
-    let request = this.indexedDB.open(this.dbDriver.dbName, this.dbDriver.dbVersion)
-    request.onsuccess = (event) => {
-      try {
-        let db = event.target.result
-        let objectStores = this.dbDriver.objectStores
-        for (let store of objectStores) {
-          // open a read/write db transaction, ready for clearing the data
-          let transaction = db.transaction([store], 'readwrite')
-          // create an object store on the transaction
-          let objectStore = transaction.objectStore(store)
-          // Make a request to clear all the data out of the object store
-          let objectStoreRequest = objectStore.clear()
-          objectStoreRequest.onsuccess = function(event) {
-            console.log(`store ${store} cleared`)
+  async clear () {
+    let idba = this
+
+    let promiseDB = await new Promise((resolve, reject) => {
+      let request = idba.indexedDB.open(idba.dbDriver.dbName, idba.dbDriver.dbVersion)
+      request.onsuccess = (event) => {
+        try {
+          let db = event.target.result
+          let objectStores = idba.dbDriver.objectStores
+          let objectStoresRemaining = objectStores.length
+
+          for (let store of objectStores) {
+            // open a read/write db transaction, ready for clearing the data
+            let transaction = db.transaction([store], 'readwrite')
+            // create an object store on the transaction
+            let objectStore = transaction.objectStore(store)
+            // Make a request to clear all the data out of the object store
+            let objectStoreRequest = objectStore.clear()
+            objectStoreRequest.onsuccess = function(event) {
+              console.warn(`store ${store} cleared`)
+              objectStoresRemaining = objectStoresRemaining - 1
+              if (objectStoresRemaining === 0) {
+                resolve(true)
+              }
+            }
+            objectStoreRequest.onerror = function(event) {
+              idba.errors.push(event.target)
+              reject(event.target)
+            }
           }
-          objectStoreRequest.onerror = function(event) {
-            this.errors.push(event.target)
-          }
+        } catch (error) {
+          idba.errors.push(error)
+          reject(error)
         }
-      } catch (error) {
-        this.errors.push(error)
       }
-    }
-    request.onerror = (event) => {
-      this.errors.push(event.target)
-    }
+      request.onerror = (event) => {
+        idba.errors.push(event.target)
+        reject(event.target)
+      }
+    })
+    return promiseDB
   }
 
 
@@ -14367,7 +16410,6 @@ class IndexedDBAdapter {
       const db = event.target.result
       const upgradeTransaction = event.target.transaction
       this._createObjectStores(db, upgradeTransaction)
-      // TODO we should clean up old database versions
     }
     return request
   }
@@ -14377,22 +16419,22 @@ class IndexedDBAdapter {
    */
   _createObjectStores (db, upgradeTransaction) {
     try {
-      let objectStores = this.dbDriver.objectStores
-      objectStores.forEach(objectStoreName => {
-        const objectStoreStructure = this.dbDriver[objectStoreName]
-
+      for (let objectStoreData of this.dbDriver.allObjectStoreData) {
         let objectStore
-        if (!db.objectStoreNames.contains(objectStoreName)) {
-          objectStore = db.createObjectStore(objectStoreName, { keyPath: objectStoreStructure.keyPath })
+
+        if (!db.objectStoreNames.contains(objectStoreData.name)) {
+          objectStore = db.createObjectStore(objectStoreData.name, { keyPath: objectStoreData.structure.keyPath })
         } else {
-          objectStore = upgradeTransaction.objectStore(objectStoreName)
+          objectStore = upgradeTransaction.objectStore(objectStoreData.name)
         }
-        objectStoreStructure.indexes.forEach(index => {
+
+        objectStoreData.structure.indexes.forEach(index => {
           if (!objectStore.indexNames.contains(index.indexName)) {
             objectStore.createIndex(index.indexName, index.keyPath, { unique: index.unique })
           }
         })
-      })
+      }
+    
     } catch (error) {
       this.errors.push(error)
     }
@@ -14455,6 +16497,9 @@ class IndexedDBAdapter {
             idba.errors.push(event.target)
             reject()
           }
+        }
+        if (objectsDone === 0) {
+          resolve(true)
         }
       } catch (error) {
         if (error) {
@@ -14565,6 +16610,152 @@ class IndexedDBAdapter {
 
 /***/ }),
 
+/***/ "./storage/indexeddbDriver/indexed-db-load-process.js":
+/*!************************************************************!*\
+  !*** ./storage/indexeddbDriver/indexed-db-load-process.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return IndexedDBLoadProcess; });
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+
+
+class IndexedDBLoadProcess {
+  /**
+   * Creates WordItem with properties from json and sets currentSession = false
+   * @param {Object} jsonObj - data from common segment
+   * @return {WordItem} 
+   */
+  static loadBaseObject(jsonObj) {
+    // make sure when we create from the database
+    // that the currentSession flag is set to false
+    jsonObj.currentSession = false
+    return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordItem"](jsonObj)
+  }
+
+  /**
+   * Creates TextQuoteSelectors from jsonObjs and loads them to context property of wordItem
+   * @param {Object[]} jsonObjs - data from context segment
+   * @param {WordItem} wordItem
+   * @return {WordItem} 
+   */
+  static loadContext (jsonObjs, wordItem) {
+    if (! Array.isArray(jsonObjs)) {
+      jsonObjs = [jsonObjs]  
+    }
+    wordItem.context = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordItem"].readContext(jsonObjs)
+    return wordItem
+  }
+
+  /**
+   * Creates Homonym from jsonObj and loads it to homonym property of wordItem
+   *   if jsonObjs[0] has homonym property with full data from local DB, then it uses readHomonym method
+   *   if jsonObjs[0] has homonym property with short data from remote DB, 
+   *        it creates empty homonym with data for lexemes from lemmasList
+   *   if jsonObjs[0] has empty homonym property it creates empty homonym with languageCode and targetWord only
+   * @param {Object[]} jsonObjs - data from homonym segment
+   * @param {WordItem} wordItem
+   * @return {WordItem} 
+   */
+  static loadHomonym (jsonObjs, wordItem) {
+    let jsonHomonym = jsonObjs[0].homonym
+
+    if (jsonHomonym.lexemes && Array.isArray(jsonHomonym.lexemes) && jsonHomonym.lexemes.length >0) {
+      wordItem.homonym = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordItem"].readHomonym(jsonObjs[0])
+    } else {
+      let languageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageIdFromCode(jsonObjs[0].languageCode)
+      let lexemes = []
+
+      if (jsonHomonym.lemmasList) {
+        let lexemesForms = jsonHomonym.lemmasList.split(', ')
+        for (let lexForm of lexemesForms) {
+          lexemes.push(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lexeme"](new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"](lexForm, languageID), []))
+        }
+      } else {
+        lexemes = [new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lexeme"](new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"](jsonObjs[0].targetWord, languageID), [])]
+      }
+      wordItem.homonym = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"](lexemes, jsonHomonym.targetWord)
+    }
+    return wordItem
+  }
+}
+
+
+/***/ }),
+
+/***/ "./storage/indexeddbDriver/indexed-db-object-stores-structure.js":
+/*!***********************************************************************!*\
+  !*** ./storage/indexeddbDriver/indexed-db-object-stores-structure.js ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return IndexedDBObjectStoresStructure; });
+class IndexedDBObjectStoresStructure {
+  /**
+   * Defines basic template for creating objectStore
+   * @return {Object} - objectStore structure
+   */
+  static _objectStoreTemplate () {
+    return {
+      keyPath: 'ID',
+      indexes: [
+        { indexName: 'ID', keyPath: 'ID', unique: true},
+        { indexName: 'listID', keyPath: 'listID', unique: false},
+        { indexName: 'userID', keyPath: 'userID', unique: false},
+        { indexName: 'languageCode', keyPath: 'languageCode', unique: false},
+        { indexName: 'targetWord', keyPath: 'targetWord', unique: false}
+      ]
+    }
+  }
+
+  /**
+   * Defines objectStore structure for common segment
+   * @return {Object} - objectStore structure
+   */
+  static get WordListsCommon () {
+    return IndexedDBObjectStoresStructure._objectStoreTemplate()
+  }
+
+  /**
+   * Defines objectStore structure for context segment
+   * adds additional index
+   * @return {Object} - objectStore structure
+   */
+  static get WordListsContext () {
+    let structure = IndexedDBObjectStoresStructure._objectStoreTemplate()
+    structure.indexes.push(
+      { indexName: 'wordItemID', keyPath: 'wordItemID', unique: false}
+    )
+    return structure
+  }
+
+  /**
+   * Defines objectStore structure for short homonym segment
+   * @return {Object} - objectStore structure
+   */
+  static get WordListsHomonym () {
+    return IndexedDBObjectStoresStructure._objectStoreTemplate()
+  }
+
+  /**
+   * Defines objectStore structure for full homonym segment
+   * @return {Object} - objectStore structure
+   */
+  static get WordListsFullHomonym () {
+    return IndexedDBObjectStoresStructure._objectStoreTemplate()
+  }
+
+}
+
+/***/ }),
+
 /***/ "./storage/remote-db-adapter.js":
 /*!**************************************!*\
   !*** ./storage/remote-db-adapter.js ***!
@@ -14575,29 +16766,176 @@ class IndexedDBAdapter {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RemoteDBAdapter; });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+
 class RemoteDBAdapter {
-
-  create() {
-    return true
+  /**
+   * 
+   * @param {WordItemRemoteDbDriver} dbDriver
+   */
+  constructor (dbDriver) {
+    this.dbDriver = dbDriver
+    this.available = this._checkRemoteDBAvailability()
+    this.errors = []
   }
 
-  update() {
-    return true
+  /**
+   * Checks if defined obligatory params - userID and headers for request
+   * @return {Boolean} - true - adapter could be used, false - couldn't
+   */
+  _checkRemoteDBAvailability () {
+    return Boolean(this.dbDriver.userID) && Boolean(this.dbDriver.requestsParams.headers)
   }
 
-  deleteOne() {
-    return true
+  async checkAndUpdate (wordItem, segment) {
+    let currentItems = await this.query({ wordItem })
+    let segmentsForUpdate = this.dbDriver.segmentsForUpdate
+
+    if (currentItems.length === 0) {
+      await this.create(wordItem)
+    } else if (segmentsForUpdate.includes(segment)) {
+      let resultWordItem = this.dbDriver.mergeLocalRemote(currentItems[0], wordItem)
+
+      await this.update(resultWordItem)
+    }
+
+    currentItems = await this.query({ wordItem })
+    return currentItems
   }
 
-  deleteMany() {
-    return true
+  /**
+   * Creates an item in remote storage
+   * @param {WordItem} data
+   * @return {Boolean} - successful/failed result
+   */
+  async create(data) {
+    try {
+      let url = this.dbDriver.storageMap.post.url(data)
+      let content = this.dbDriver.storageMap.post.serialize(data)
+
+      let result = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url, content, this.dbDriver.requestsParams)
+
+      let updated = this.dbDriver.storageMap.post.checkResult(result)
+      
+      return updated
+    } catch (error) {
+      console.error(error)
+      if (error) {
+        this.errors.push(error)
+      }
+      return false
+    }
   }
 
-  query() {
-    return []
+  /**
+   * Updates an item in remote storage
+   * we could receive here data in two formats - wordItem (if updated from selected wordItem) and object (if updated from already serialized when merged)
+   * so if it is already an object - we skip serialization
+   * @param {WordItem/Object} data
+   * @return {Boolean} - successful/failed result
+   */
+  async update(data) {
+    try {
+      let url = this.dbDriver.storageMap.put.url(data)
+      let skipSerialize = !data.constructor.name.match(/WordItem/)
+
+      let content
+      if (skipSerialize) {
+        content = data
+      } else {
+        content = this.dbDriver.storageMap.put.serialize(data)
+      }
+
+      let result = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.put(url, content, this.dbDriver.requestsParams)
+      let updated = this.dbDriver.storageMap.put.checkResult(result)
+      return updated
+    } catch (error) {
+      console.error(error)
+      if (error) {
+        this.errors.push(error)
+      }
+      return false
+    }
+  }
+
+  /**
+   * Deletes a single item in remote storage
+   * @param {WordItem} data
+   * @return {Boolean} - successful/failed result
+   */
+  async deleteOne(data) {
+    try {
+      let url = this.dbDriver.storageMap.deleteOne.url(data)
+      let result = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.delete(url, this.dbDriver.requestsParams)
+      let updated = this.dbDriver.storageMap.deleteOne.checkResult(result)
+      return updated
+    } catch (error) {
+      if (error) {
+        this.errors.push(error)
+      }
+      return false
+    }
+  }
+
+  /**
+   * Deletes all items by languageCode in remote storage
+   * @param {Object} data
+   * @param {String} data.languageCode
+   * @return {Boolean} - successful/failed result
+   */
+  async deleteMany(data) {
+    try {
+      let url = this.dbDriver.storageMap.deleteMany.url(data)
+
+      let result = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.delete(url, this.dbDriver.requestsParams)
+      let updated = this.dbDriver.storageMap.deleteMany.checkResult(result)
+      return updated
+    } catch (error) {
+      if (error) {
+        this.errors.push(error)
+      }
+      return false
+    }
+  }
+
+  /**
+   * Queries data for one wordItem or wordList by languageID
+   * @param {Object} data
+   * @param {WordItem} data.wordItem
+   * @param {String} data.languageCode
+   * @return {WordItem[]}
+   */
+  async query(data) {
+    try {
+      let url = this.dbDriver.storageMap.get.url(data)
+      let result = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url, this.dbDriver.requestsParams)
+      let final = this.dbDriver.storageMap.get.checkResult(result)
+      return final
+    } catch (error) {
+      let errorFinal = this.dbDriver.storageMap.get.checkErrorResult(error)
+      if (!errorFinal && error) {
+        if (error) {
+          this.errors.push(error)
+        }
+      }
+      return errorFinal      
+    }
   }
 }
 
+
+/***/ }),
+
+/***/ "./storage/remote-db-config.json":
+/*!***************************************!*\
+  !*** ./storage/remote-db-config.json ***!
+  \***************************************/
+/*! exports provided: baseUrl, testUserID, default */
+/***/ (function(module) {
+
+module.exports = {"baseUrl":"https://w2tfh159s2.execute-api.us-east-2.amazonaws.com/prod","testUserID":"alpheiosMockUser"};
 
 /***/ }),
 
@@ -14613,6 +16951,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordItemIndexedDbDriver; });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/storage/indexeddbDriver/indexed-db-object-stores-structure */ "./storage/indexeddbDriver/indexed-db-object-stores-structure.js");
+/* harmony import */ var _storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/storage/indexeddbDriver/indexed-db-load-process */ "./storage/indexeddbDriver/indexed-db-load-process.js");
+
+
+
 
 
 class WordItemIndexedDbDriver {
@@ -14624,34 +16967,60 @@ class WordItemIndexedDbDriver {
   constructor(userId) {
     this.userId = userId
     this.storageMap = {
+      _loadFirst: 'common',
       common: {
-        objectStoreName: 'WordListsCommon',
+        type: 'segment',
+        sync: true,
+        objectStoreData: {
+          name: 'WordListsCommon',
+          structure: _storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__["default"].WordListsCommon
+        },
+        load: _storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__["default"].loadBaseObject,
         serialize: this._serializeCommon.bind(this),
-        delete: this._segmentDeleteQueryByID.bind(this)
+        delete: this._segmentSelectQueryByID.bind(this),
+        select: this._segmentSelectQueryByID.bind(this)
       },
       context: {
-        objectStoreName: 'WordListsContext',
+        type: 'segment',
+        sync: true,
+        objectStoreData: {
+          name: 'WordListsContext',
+          structure: _storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__["default"].WordListsContext
+        },
         serialize: this._serializeContext.bind(this),
-        load: this._loadContext,
-        delete: this._segmentDeleteQueryByWordItemID.bind(this)
+        load: _storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__["default"].loadContext,
+        delete: this._segmentSelectQueryByWordItemID.bind(this),
+        select: this._segmentSelectQueryByWordItemID.bind(this)
       },
       shortHomonym: {
-        objectStoreName: 'WordListsHomonym',
+        type: 'segment',
+        sync: true,
+        objectStoreData: {
+          name: 'WordListsHomonym',
+          structure: _storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__["default"].WordListsHomonym
+        },
         serialize: this._serializeHomonym.bind(this),
-        load: this._loadHomonym,
-        delete: this._segmentDeleteQueryByID.bind(this)
+        load: _storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__["default"].loadHomonym,
+        delete: this._segmentSelectQueryByID.bind(this),
+        select: this._segmentSelectQueryByID.bind(this)
       },
       fullHomonym: {
-        objectStoreName: 'WordListsFullHomonym',
+        type: 'segment',
+        objectStoreData: {
+          name: 'WordListsFullHomonym',
+          structure: _storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__["default"].WordListsFullHomonym
+        },
         serialize: this._serializeHomonymWithFullDefs.bind(this),
-        load: this._loadHomonym,
-        delete: this._segmentDeleteQueryByID.bind(this)
+        load: _storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__["default"].loadHomonym,
+        delete: this._segmentSelectQueryByID.bind(this),
+        select: this._segmentSelectQueryByID.bind(this)
       }
     }
   }
 
   /**
   * dbName getter
+  * @return {String}
   */
   get dbName () {
     return 'AlpheiosWordLists'
@@ -14659,179 +17028,236 @@ class WordItemIndexedDbDriver {
 
   /**
    * dbVersion getter
+   * @return {Number}
    */
   get dbVersion () {
     return 3
   }
 
   /**
+   * db segments that we are updating from remote data
+   * @return {String[]} - array with segments name
+   */
+  get segmentsSync() {
+    return Object.keys(this.storageMap).filter(key => this.storageMap[key].type === 'segment' && this.storageMap[key].sync)
+  }
+
+  /**
    * db segments getter
+   * @return {String[]} - array with segments name
    */
   get segments() {
-    return Object.keys(this.storageMap)
+    return Object.keys(this.storageMap).filter(key => this.storageMap[key].type === 'segment')
   }
 
   /**
-   * objectStores getter
-   * @return {Object} the IndexedDb objectStores for the WordItems
+   * db segments getter - segments that needs already created wordItem
+   * @return {String[]} - array with segment's names
+   */
+  get segmentsNotFirst () {
+    return this.segments.filter(segment => segment !== this.storageMap._loadFirst)
+  }
+
+  /**
+   * objectStore's names getter
+   * @return {String[]} - array with objectStore's names
    */
   get objectStores () {
-    return Object.keys(this.storageMap).map(k => this.storageMap[k].objectStoreName)
+    return this.allObjectStoreData.map(objectStoreData => objectStoreData.name)
   }
 
   /**
-   * getter for the Common segment store
+   * objectStore's full data getter
+   * @return {String[]} - array with objectStore's data { name, structure }
    */
-  get WordListsCommon () {
-    return this._objectStoreTemplate()
+  get allObjectStoreData () {
+    return this.segments.map(segment => this.storageMap[segment].objectStoreData)
   }
 
   /**
-   * getter for the Context segment store
+   * objectStore's data by segment name
+   * @param {String} segment - segment name
+   * @return {Object} - { name, structure }
    */
-  get WordListsContext () {
-    let structure = this._objectStoreTemplate()
-    structure.indexes.push(
-      { indexName: 'wordItemID', keyPath: 'wordItemID', unique: false}
-    )
-    return structure
+  _objectStoreData (segment) {
+    return this.storageMap[segment].objectStoreData
+  }
+  
+  /**
+   * Prepares query data for creating IndexedDB Request
+   * @param {String} segment 
+   * @param {Object} indexData - index data for condition 
+   * @param {String} indexData.name - index name
+   * @param {String} indexData.value - index value
+   * @param {String} indexData.type - index type (in our queries it is ussually only)
+   * @return {Object} - { objectStoreName, condition }
+   */
+  _formatQuery (segment, indexData) {
+    return {
+      objectStoreName: this._objectStoreData(segment).name,
+      condition: indexData
+    }
   }
 
   /**
-   * getter for the Homonym segment store
+   * Prepares indexData for formatQuery when we select by ID from objectStore
+   * @param {WordItem} wordItem 
+   * @param {String} [type=only] - type of index
+   * @return {Object} - { indexName, value , type}
    */
-  get WordListsHomonym () {
-    return this._objectStoreTemplate()
+  _selectByID(wordItem, type = 'only') {
+    return {
+      indexName: 'ID',
+      value: this._makeStorageID(wordItem),
+      type: type
+    }
   }
 
   /**
-   * getter for the Full Homonym segment store
+   * Prepares indexData for formatQuery when we select by wordItemID from objectStore (for example context)
+   * @param {WordItem} wordItem 
+   * @param {String} [type=only] - type of index
+   * @return {Object} - { indexName, value , type}
    */
-  get WordListsFullHomonym () {
-    return this._objectStoreTemplate()
-  }
-
-
-  /**
-   * load a data model object from the database
-   */
-  load(data) {
-    // make sure when we create from the database
-    // that the currentSession flag is set to false
-    data.currentSession = false
-    return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordItem"](data)
+  _selectByWordItemID(wordItem, type = 'only') {
+    return {
+      indexName: 'wordItemID',
+      value: this._makeStorageID(wordItem),
+      type: type
+    }
   }
 
   /**
-   * load a segment of a data model object from the database
+   * Prepares indexData for formatQuery when we select by listID from objectStore (for example all values for languageCode)
+   * @param {String} languageCode 
+   * @param {String} [type=only] - type of index
+   * @return {Object} - { indexName, value , type}
    */
-  loadSegment(segment,dataObj,data) {
+  _selectByListID(languageCode, type = 'only') {
+    return {
+      indexName: 'listID',
+      value: this._makeStorageListID(languageCode),
+      type: type
+    }
+  }
+
+  /**
+   * Loads a segment that is defined as first
+   * @param {Object} jsonObj 
+   * @return {WordItem}
+   */
+  loadFirst (jsonObj) {
+    return this.loadSegment(this.storageMap._loadFirst, jsonObj)
+  }
+
+  /**
+   * Loads a segment of a data model object from the database
+   * @param {String} segment - segment name
+   * @param {Object} jsonObj - json data to load to worditem
+   * @param {WordItem} worditem - worditem
+   * @return {WordItem}
+   */
+  loadSegment(segment, jsonObj, worditem) {
     if (this.storageMap[segment].load) {
-      this.storageMap[segment].load(dataObj,data)
+      return this.storageMap[segment].load(jsonObj, worditem)
     }
   }
 
   /**
-   * get a query object which retrieves a segment of an item
-   * @param {String} segment segment name
-   * @param {WordItem} worditem the worditem object
-   * @return {Object} IndexedDBQuery object
+   * Creates query for getting list of wordItems or one wordItem
+   * @param {Object} params - stores one of the following properties:
+   * @param {String} [params.languageCode] - for selecting all wordItems for the current langugeCode
+   * @param {WordItem} [params.worditem] - for selecting one wordItem
+   * @return {WordItem}
    */
-  segmentQuery(segment,worditem) {
-    let id = this._makeStorageID(worditem)
-    let index = segment === 'context' ? 'wordItemID' : 'ID'
-    return {
-      objectStoreName: this.storageMap[segment].objectStoreName,
-      condition: {indexName: index, value: id, type: 'only' }
+  listItemsQuery(params) {
+    if (params.languageCode) {
+      return this._formatQuery('common', this._selectByListID(params.languageCode))
+    } else if (params.wordItem) {
+      return this._formatQuery('common', this._selectByID(params.wordItem))
+    } else {
+      throw new Error("Invalid query parameters - missing languageCode")
     }
   }
 
-  segmentDeleteQuery (segment,worditem) {
-    return this.storageMap[segment].delete(segment,worditem)
-  }
-
-  _segmentDeleteQueryByID(segment,worditem) {
-    let ID = this._makeStorageID(worditem)
-    return {
-      objectStoreName: this.storageMap[segment].objectStoreName,
-      condition: { indexName: 'ID', value: ID, type: 'only' }
+  /**
+   * Creates query for selecting data from the segment
+   * @param {String} segment - segment name
+   * @param {WordItem} worditem - the worditem object
+   * @return {Object} - data for creating IndexedDB Request
+   */
+  segmentSelectQuery(segment, worditem) {
+    if (this.storageMap[segment].select) {
+      return this.storageMap[segment].select(segment, worditem)
     }
   }
 
-  _segmentDeleteQueryByWordItemID(segment, worditem) {
-    let ID = this._makeStorageID(worditem)
-    return {
-      objectStoreName: this.storageMap[segment].objectStoreName,
-      condition: { indexName: 'wordItemID', value: ID, type: 'only' }
+  /**
+   * Creates query for selecting data from the segment by wordItem
+   * @param {String} segment - segment name
+   * @param {WordItem} worditem - the worditem object
+   * @return {Object} - data for creating IndexedDB Request
+   */
+  _segmentSelectQueryByWordItemID (segment, worditem) {
+    return this._formatQuery(segment, this._selectByWordItemID(worditem))
+  }
+
+  /**
+   * Creates query for selecting data from the segment by ID
+   * @param {String} segment - segment name
+   * @param {WordItem} worditem - the worditem object
+   * @return {Object} - data for creating IndexedDB Request
+   */
+  _segmentSelectQueryByID (segment, worditem) {
+    return this._formatQuery(segment, this._selectByID(worditem))
+  }
+
+  /**
+   * Creates query for deleting one item from the segment
+   * @param {String} segment - segment name
+   * @param {WordItem} worditem - the worditem object
+   * @return {Object} - data for creating IndexedDB Request
+   */
+  segmentDeleteQuery (segment, worditem) {
+    if (this.storageMap[segment].delete) {
+      return this.storageMap[segment].delete(segment, worditem)
     }
   }
 
-
+  /**
+   * Creates query for deleting all list items from the segment
+   * @param {String} segment - segment name
+   * @param {WordItem} worditem - the worditem object
+   * @return {Object} - data for creating IndexedDB Request
+   */
   segmentDeleteManyQuery(segment, params) {
     if (params.languageCode) {
-      let listID = this.userId + '-' + params.languageCode
-      return  {
-        objectStoreName: this.storageMap[segment].objectStoreName,
-        condition: { indexName: 'listID', value: listID, type: 'only' }
-      }
+      return this._formatQuery(segment, this._selectByListID(params.languageCode))
     } else {
       throw new Error("Invalid query parameters - missing languageCode")
     }
   }
 
-  updateSegmentQuery(segment,data) {
-    let dataItems = []
-    let resDataItem = this.storageMap[segment].serialize(data)
-    if (!Array.isArray(resDataItem)) {
-      dataItems.push(resDataItem)
-    } else {
-      dataItems = dataItems.concat(resDataItem)
-    }
+  /**
+   * Creates data for updating items in a segment
+   * @param {String} segment - segment name
+   * @param {Object} data - the worditem object
+   * @return {Object} data for creating IndexedDB Request
+   */
+  updateSegmentQuery(segment, data) {
     return {
-      objectStoreName: this.storageMap[segment].objectStoreName,
-      dataItems: dataItems
+      objectStoreName: this._objectStoreData(segment).name,
+      dataItems: this.storageMap[segment].serialize(data)
     }
   }
 
   /**
-   * get a query object which retrieves a list of WordItems
-   * @param {Object} params query parameters
-   * @return {Object} IndexedDBQuery object
-   */
-  listQuery(params) {
-    if (params.languageCode) {
-      let listID = this.userId + '-' + params.languageCode
-      return {
-        objectStoreName: this.storageMap.common.objectStoreName,
-        condition: {indexName: 'listID', value: listID, type: 'only' }
-      }
-    } else {
-      throw new Error("Invalid query parameters - missing languageCode")
-    }
-  }
-
-  /**
-   * private method to load the Homonym property of a WordItem
-   */
-  _loadHomonym (worditem,jsonObj) {
-    worditem.homonym = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordItem"].readHomonym(jsonObj[0])
-  }
-
-  /**
-   * private method to load the Context property of a WordItem
-   */
-  _loadContext (worditem, jsonObjs) {
-    if (! Array.isArray(jsonObjs)) {
-      jsonObjs = [jsonObjs]  
-    }
-    worditem.context = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordItem"].readContext(jsonObjs)
-  }
-
-  /**
-   * private method to convert the common segment to storage
+   * Creates jsonObj for saving to IndexedDB for common segment
+   * @param {WordItem} worditem - the worditem object
+   * @return {Object[]}
    */
   _serializeCommon (worditem) {
-    return {
+    return [{
       ID: this._makeStorageID(worditem),
       listID: this.userId + '-' + worditem.languageCode,
       userID: this.userId,
@@ -14839,11 +17265,13 @@ class WordItemIndexedDbDriver {
       targetWord: worditem.targetWord,
       important: worditem.important,
       createdDT: WordItemIndexedDbDriver.currentDate
-    }
+    }]
   }
 
   /**
-   * private method to convert the context segment to storage
+   * Creates jsonObj for saving to IndexedDB for context segment
+   * @param {WordItem} worditem - the worditem object
+   * @return {Object[]}
    */
   _serializeContext (worditem) {
     let result = []
@@ -14863,8 +17291,8 @@ class WordItemIndexedDbDriver {
           selector: {
             type: 'TextQuoteSelector',
             exact: tq.text,
-            prefix: tq.prefix,
-            suffix: tq.suffix,
+            prefix: tq.prefix && tq.prefix.length > 0 ? tq.prefix : ' ',
+            suffix: tq.suffix && tq.suffix.length > 0 ? tq.suffix : ' ',
             contextHTML: tq.contextHTML,
             languageCode: tq.languageCode
           }
@@ -14877,61 +17305,103 @@ class WordItemIndexedDbDriver {
   }
 
   /**
-   * private method to convert the homonym segment to storage
-   * @param {WordItem}
+   * Creates jsonObj for saving to IndexedDB for homonyms segment
+   * @param {WordItem} worditem - the worditem object
+   * @param {Boolean} [addMeaning = false] - if true it adds definitions
+   * @return {Object[]}
    */
-  _serializeHomonym (worditem,addMeaning = false) {
-    let resultHomonym = worditem.homonym && (worditem.homonym instanceof alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"]) ? worditem.homonym.convertToJSONObject(addMeaning) : {}
-    return {
-      ID: this._makeStorageID(worditem),
-      listID: this.userId + '-' + worditem.languageCode,
-      userID: this.userId,
-      languageCode: worditem.languageCode,
-      targetWord: worditem.targetWord,
-      homonym: resultHomonym
+  _serializeHomonym (worditem, addMeaning = false) {
+    let resultHomonym = worditem.homonym && (worditem.homonym instanceof alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"]) ? worditem.homonym.convertToJSONObject(addMeaning) : null
+    if (resultHomonym) {
+      return [{
+        ID: this._makeStorageID(worditem),
+        listID: this.userId + '-' + worditem.languageCode,
+        userID: this.userId,
+        languageCode: worditem.languageCode,
+        targetWord: worditem.targetWord,
+        homonym: resultHomonym
+      }]
     }
+    return []
   }
 
+
+/**
+ * Creates jsonObj for saving to IndexedDB for full homonym segment
+ * @param {WordItem} worditem - the worditem object
+ * @return {Object[]}
+ */
+_serializeHomonymWithFullDefs (worditem) {
+  return this._serializeHomonym(worditem, true)
+}
+
+/**
+ * Returns formatted date/time for saving to IndexedDB
+ * @return {String}
+ */
+static get currentDate () {
+  let dt = new Date()
+  return dt.getFullYear() + '/'
+      + ((dt.getMonth()+1) < 10 ? '0' : '') + (dt.getMonth()+1)  + '/'
+      + ((dt.getDate() < 10) ? '0' : '') + dt.getDate() + ' @ '
+              + ((dt.getHours() < 10) ? '0' : '') + dt.getHours() + ":"
+              + ((dt.getMinutes() < 10) ? '0' : '') + dt.getMinutes() + ":"
+              + ((dt.getSeconds() < 10) ? '0' : '') + dt.getSeconds()
+
+}
+
   /**
-   * private method to serialize homonymns with full defs
-   * @param {WordItem}
+   * Creates ID for wordItem for saving to IndexedDB
+   * @param {WordItem} worditem - the worditem object
+   * @return {String}
    */
-  _serializeHomonymWithFullDefs (worditem) {
-    return this._serializeHomonym(worditem,true)
+  _makeStorageID(worditem) {
+    return this.userId + '-' + worditem.languageCode + '-' + worditem.targetWord
   }
 
   /**
-  * private method to create the storage ID for a WordItem
-  */
-  _makeStorageID(item) {
-    return this.userId + '-' + item.languageCode + '-' + item.targetWord
-  }
-
-  /**
-   * private method - creates a template for a new Object Store
+   * Creates ID for wordList for saving to IndexedDB
+   * @param {String} languageCode - languageCode of the wordList
+   * @return {String}
    */
-  _objectStoreTemplate () {
-    return {
-      keyPath: 'ID',
-      indexes: [
-        { indexName: 'ID', keyPath: 'ID', unique: true},
-        { indexName: 'listID', keyPath: 'listID', unique: false},
-        { indexName: 'userID', keyPath: 'userID', unique: false},
-        { indexName: 'languageCode', keyPath: 'languageCode', unique: false},
-        { indexName: 'targetWord', keyPath: 'targetWord', unique: false}
-      ]
+  _makeStorageListID(languageCode) {
+    return this.userId + '-' + languageCode
+  }
+
+  /**
+   * Creates ID for wordItem similiar to remote format (without userID)
+   * @param {String} languageCode - languageCode of the wordList
+   * @return {String}
+   */
+  makeIDCompareWithRemote (worditem) {
+    return worditem.languageCode + '-' + worditem.targetWord
+  }
+
+  /**
+   * Creates array of IDs for comparing with remote items
+   * @param {WordItem[]} wordItems - languageCode of the wordList
+   * @return {String[]}
+   */
+  getCheckArray (wordItems) {
+    return wordItems.map(wordItem => this.makeIDCompareWithRemote(wordItem))
+  }
+
+  /**
+   * Creates wordItem from remote data
+   * @param {Object} remoteDataItem - wordItem from remote source in json format
+   * @return {WordItem}
+   */
+  createFromRemoteData (remoteDataItem) {
+    let wordItem = this.loadFirst(remoteDataItem)
+    
+    if (remoteDataItem.context) {
+      this.loadSegment('context', remoteDataItem.context, wordItem)
     }
-  }
 
-  static get currentDate () {
-    let dt = new Date()
-    return dt.getFullYear() + '/'
-        + ((dt.getMonth()+1) < 10 ? '0' : '') + (dt.getMonth()+1)  + '/'
-        + ((dt.getDate() < 10) ? '0' : '') + dt.getDate() + ' @ '
-                + ((dt.getHours() < 10) ? '0' : '') + dt.getHours() + ":"
-                + ((dt.getMinutes() < 10) ? '0' : '') + dt.getMinutes() + ":"
-                + ((dt.getSeconds() < 10) ? '0' : '') + dt.getSeconds()
-
+    if (remoteDataItem.homonym) {
+      this.loadSegment('shortHomonym', [ remoteDataItem ], wordItem)
+    }
+    return wordItem
   }
 
 }
@@ -14949,7 +17419,308 @@ class WordItemIndexedDbDriver {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordItemRemoteDbDriver; });
+/* harmony import */ var _storage_remote_db_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/storage/remote-db-config.json */ "./storage/remote-db-config.json");
+var _storage_remote_db_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/storage/remote-db-config.json */ "./storage/remote-db-config.json", 1);
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
 class WordItemRemoteDbDriver {
+  /**
+   * Defines proper headers and uploads config for access to remote storage, defines storageMap
+   * @param {String} userID
+   */
+  constructor (userID) {
+    this.config = _storage_remote_db_config_json__WEBPACK_IMPORTED_MODULE_0__
+    this.userID = userID || this.config.testUserID
+    
+    let testAuthID = 'alpheiosMockUserIdlP0DWnmNxe'
+
+    this.requestsParams = {
+      baseURL: this.config.baseUrl,
+      headers: {
+        common: {
+          Authorization: 'bearer ' + testAuthID,
+          'Content-Type': 'application/json'
+        }
+      }
+    }
+    
+    this.storageMap = {
+      post: {
+        url: this._constructPostURL.bind(this),
+        serialize: this._serialize.bind(this),
+        checkResult: this._checkPostResult.bind(this)
+      },
+      put: {
+        url: this._constructPostURL.bind(this),
+        serialize: this._serialize.bind(this),
+        checkResult: this._checkPutResult.bind(this)
+      },
+      get: {
+        url: this._constructGetURL.bind(this),
+        checkResult: this._checkGetResult.bind(this),
+        checkErrorResult: this._checkGetErrorResult.bind(this),
+      },
+      deleteOne: {
+        url: this._constructPostURL.bind(this),
+        checkResult: this._checkPutResult.bind(this)
+      },
+      deleteMany: {
+        url: this._constructDeleteManyURL.bind(this),
+        checkResult: this._checkPutResult.bind(this)
+      }
+    }
+  }
+
+  /**
+   * db segments that would be merged
+   * @return {String[]} - array with segments name
+   */
+  get segmentsForUpdate () {
+    return ['common', 'context', 'shortHomonym']
+  }
+
+  /**
+   * merge current item with new item - common, shortHomonym and context parts
+   * @return {WordItem}
+   */
+  mergeLocalRemote (currentItem, newItem) {
+    currentItem = this.mergeCommonPart(currentItem, newItem)
+    currentItem = this.mergeHommonymPart(currentItem, newItem)
+    currentItem = this.mergeContextPart(currentItem, newItem)
+    return currentItem
+  }
+
+  /**
+   * merge common part to current item from new item
+   * @return {WordItem}
+   */
+  mergeCommonPart  (currentItem, newItem) {
+    currentItem.important = currentItem.important || newItem.important
+    return currentItem
+  }
+
+  /**
+   * merge short hommonym part to current item from new item
+   * @return {WordItem}
+   */
+  mergeHommonymPart  (currentItem, newItem) {
+    currentItem.homonym = currentItem.homonym || this._serializeHomonym(newItem)
+    return currentItem
+  }
+
+  /**
+   * merge context part to current item from new item
+   * @return {WordItem}
+   */
+  mergeContextPart  (currentItem, newItem) {
+    let pushContext = currentItem.context
+    for (let contextItem of newItem.context) {
+      let hasCheck = currentItem.context.some(tqCurrent => {
+        return alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["TextQuoteSelector"].readObject(tqCurrent).isEqual(contextItem) 
+      })
+      if (!hasCheck) {
+        pushContext.push(this._serializeContextItem(contextItem, currentItem))
+      }
+    }
+    currentItem.context = pushContext
+    return currentItem
+  }
+
+   /**
+   * Defines url for creating item in remote storage
+   * @param {WordItem} wordItem
+   * @return {String}
+   */
+  _constructPostURL (wordItem) {
+    return `/words/${this._makeStorageID(wordItem)}`
+  }
+
+   /**
+   * Defines url for getting wordItem or wordList from remote storage
+   * @param {WordItem} wordItem
+   * @return {String}
+   */
+  _constructGetURL (data) {
+    if (data.wordItem) {
+      return `/words/${this._makeStorageID(data.wordItem)}`
+    }
+    if (data.languageCode) {
+      return `/words?languageCode=${data.languageCode}`
+    }
+    return
+  }
+
+  /**
+   * Defines url for deleting items from wordList from languageCode in remote storage
+   * @param {WordItem} wordItem
+   * @return {String}
+   */
+  _constructDeleteManyURL (data) {
+    return `/words?languageCode=${data.languageCode}`
+  }
+
+  /**
+   * Defines ID to use in remote storage
+   * @param {WordItem} wordItem
+   * @return {String}
+   */
+  _makeStorageID (wordItem) {
+    return wordItem.languageCode + '-' + wordItem.targetWord
+  }
+
+  /**
+   * Defines json object from wordItem to save to remote storage
+   * @param {WordItem} wordItem
+   * @return {Object}
+   */
+  _serialize (wordItem) {
+    let result = {
+      ID: this._makeStorageID(wordItem),
+      listID: this.userID + '-' + wordItem.languageCode,
+      userID: this.userID,
+      languageCode: wordItem.languageCode,
+      targetWord: wordItem.targetWord,
+      important: wordItem.important,
+      createdDT: WordItemRemoteDbDriver.currentDate
+    }
+
+    let homonym = this._serializeHomonym(wordItem)
+    if (homonym) {
+      result.homonym = homonym
+    }
+    let context = this._serializeContext(wordItem)
+
+    if (context && context.length > 0) {
+      result.context = context
+    }
+    return result
+  }
+
+  /**
+   * Defines json object from homonym to save to remote storage
+   * @param {WordItem} wordItem
+   * @return {Object}
+   */
+  _serializeHomonym (wordItem) {
+    if (wordItem.homonym && wordItem.homonym.targetWord) {
+      return {
+        targetWord: wordItem.homonym.targetWord,
+        lemmasList: wordItem.lemmasList
+      }
+    }
+    return null
+  }
+
+  /**
+   * Defines json object from textQuoteSelectors to save to remote storage
+   * @param {WordItem} wordItem
+   * @return {Object[]}
+   */
+  _serializeContext (wordItem) {
+    let result = []
+    for (let tq of wordItem.context) {
+      result.push(this._serializeContextItem(tq, wordItem))
+    }
+    return result
+  }
+
+  
+  /**
+   * Defines json object from a single textQuoteSelector to save to remote storage
+   * @param {WordItem} wordItem
+   * @return {Object[]}
+   */
+  _serializeContextItem (tq, wordItem) {    
+    return {
+      target: {
+        source: tq.source,
+        selector: {
+          type: 'TextQuoteSelector',
+          exact: tq.text,
+          prefix: tq.prefix && tq.prefix.length > 0 ? tq.prefix : ' ',
+          suffix: tq.suffix && tq.suffix.length > 0 ? tq.suffix : ' ',
+          languageCode: tq.languageCode
+        }
+      },
+      languageCode: wordItem.languageCode,
+      targetWord: wordItem.targetWord,
+      createdDT: WordItemRemoteDbDriver.currentDate
+    }
+  }
+
+  /**
+   * Checks status of response (post) from remote storage 
+   * @param {WordItem} wordItem
+   * @return {Boolean}
+   */
+  _checkPostResult (result) {
+    return result.status === 201
+  }
+
+  /**
+   * Checks status of response (put) from remote storage 
+   * @param {WordItem} wordItem
+   * @return {Boolean}
+   */
+  _checkPutResult (result) {
+    return result.status === 200
+  }
+
+  /**
+   * Checks status of response (get) from remote storage 
+   * @param {WordItem} wordItem
+   * @return {Object/Object[]}
+   */
+  _checkGetResult (result) {
+    if (result.status !== 200) {
+      return []
+    }
+    if (Array.isArray(result.data)) {
+      return result.data.map(item => item.body ? item.body : item)
+    } else {
+      return [ result.data ]
+    }
+  }
+
+  /**
+   * Checks status of response error (get) from remote storage 
+   * If error message consists of 'Item not found.' - it is not an error. Return empty error instead of error.
+   * @param {Error} error
+   * @return {[]/Boolean}
+   */
+  _checkGetErrorResult (error) {
+    if (error.response && error.response.data && (error.response.data.error === 'Item not found.')) {
+      return []
+    } else {
+      return false
+    }
+  }
+
+  /**
+   * Defines date 
+   */
+  static get currentDate () {
+    let dt = new Date()
+    return dt.getFullYear() + '/'
+        + ((dt.getMonth()+1) < 10 ? '0' : '') + (dt.getMonth()+1)  + '/'
+        + ((dt.getDate() < 10) ? '0' : '') + dt.getDate() + ' @ '
+                + ((dt.getHours() < 10) ? '0' : '') + dt.getHours() + ":"
+                + ((dt.getMinutes() < 10) ? '0' : '') + dt.getMinutes() + ":"
+                + ((dt.getSeconds() < 10) ? '0' : '') + dt.getSeconds()
+
+  }
+
+  /**
+   * Creates array is IDs from wordItems for comparing with remote storage data
+   * @param {WordItem[]} wordItems
+   * @return {String[]}
+   */
+  getCheckArray (dataItems) {
+    return dataItems.map(item => this._makeStorageID(item))
+  }
 }
 
 

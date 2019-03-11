@@ -1,3 +1,5 @@
+import { WordItem } from 'alpheios-data-models'
+
 /**
  * An interface to IndexedDB Storage
  */
@@ -11,6 +13,30 @@ export default class IndexedDBAdapter {
     this.available = this._initIndexedDBNamespaces()
     this.dbDriver = dbDriver
     this.errors = []
+  }
+
+  async checkAndUpdate (wordItem, segment, currentRemoteItems) {  
+    if (segment === 'context' || !segment)  {
+      if (currentRemoteItems.length > 0) {
+        wordItem.context = []
+        for(let contextItem of currentRemoteItems[0].context) {
+          wordItem.context.push(WordItem.readContext([contextItem])[0])
+        }
+      }
+    }
+
+    if (!segment) {
+      segment = this.dbDriver.segmentsSync
+    }
+    
+    let currentLocalItems = await this.query({ wordItem })
+    if (currentLocalItems.length === 0 && segment && segment !== 'common') {
+      await this.update(wordItem, { segment: 'common' })  
+    }
+
+    let result = await this.update(wordItem, { segment })
+
+    return result
   }
 
   /**
@@ -27,7 +53,7 @@ export default class IndexedDBAdapter {
       // TODO we need transaction handling here
       for (let segment of segments) {
         updated = await this.update(data, {segment: segment})
-        if (! updated) {
+        if (!updated) {
           throw new Error(`Unknown problems with updating segment ${segment}`)
         }
       }
@@ -36,7 +62,7 @@ export default class IndexedDBAdapter {
       if (error) {
         this.errors.push(error)
       }
-      return
+      return false
     }
   }
 
@@ -60,7 +86,7 @@ export default class IndexedDBAdapter {
       if (error) {
         this.errors.push(error)
       }
-      return
+      return false
     }
   }
 
@@ -76,11 +102,12 @@ export default class IndexedDBAdapter {
         let q = this.dbDriver.segmentDeleteQuery(segment,data)
         await this._deleteFromStore(q)
       }
+      return true
     } catch (error) {
       if (error) {
         this.errors.push(error)
       }
-      return
+      return false
     }
   }
 
@@ -93,15 +120,21 @@ export default class IndexedDBAdapter {
    */
   async update (data, params) {
     try {
-      let segments = [params.segment]
+      let segments = params && params.segment ? (Array.isArray(params.segment) ? params.segment : [params.segment]) : []
+
       let result
-      // if we weren't asked to update a specific segment, update them all
       if (segments.length === 0)  {
         segments = this.dbDriver.segments
       }
-      for (let s of segments) {
-        let q = this.dbDriver.updateSegmentQuery(s,data)
-        result = await this._set(q)
+
+      for (let segment of segments) {
+        let query = this.dbDriver.updateSegmentQuery(segment, data)
+
+        if (query.dataItems && query.dataItems.length > 0) {
+          result = await this._set(query)
+        } else {
+          result = true
+        }
       }
       return result
     } catch (error) {
@@ -119,32 +152,31 @@ export default class IndexedDBAdapter {
    */
   async query(params) {
     try {
-      let listQuery = this.dbDriver.listQuery(params)
-      let queryResult = await this._getFromStore(listQuery)
+      let listItemsQuery = this.dbDriver.listItemsQuery(params)
+      let listItemsQueryResult = await this._getFromStore(listItemsQuery)
       
       let items = []
-      if (queryResult.length > 0) {
-        for (let item of queryResult) {
-          let modelObj = this.dbDriver.load(item)
-  
-          let segments = this.dbDriver.segments
-          for (let segment of segments) {
-            let query = this.dbDriver.segmentQuery(segment, modelObj)
-  
-            let res = await this._getFromStore(query)
-            if (res.length > 0) {
-              this.dbDriver.loadSegment(segment, modelObj, res)
-            }
+
+      for (let itemQuery of listItemsQueryResult) {
+        let resultObject = this.dbDriver.loadFirst(itemQuery)
+
+        for (let segment of this.dbDriver.segmentsNotFirst) {
+          let query = this.dbDriver.segmentSelectQuery(segment, resultObject)
+          let result = await this._getFromStore(query)
+
+          if (result.length > 0) {           
+            this.dbDriver.loadSegment(segment, result, resultObject)
           }
-          items.push(modelObj)
         }
+        items.push(resultObject)
       }
+
       return items
     } catch (error) {
       if (error) {
         this.errors.push(error)
       }
-      return []
+      return false
     }
   }
 
@@ -153,33 +185,47 @@ export default class IndexedDBAdapter {
    * Used primarily for testing right now
    * TODO needs to be enhanced to support async removal of old database versions
    */
-  clear () {
-    let request = this.indexedDB.open(this.dbDriver.dbName, this.dbDriver.dbVersion)
-    request.onsuccess = (event) => {
-      try {
-        let db = event.target.result
-        let objectStores = this.dbDriver.objectStores
-        for (let store of objectStores) {
-          // open a read/write db transaction, ready for clearing the data
-          let transaction = db.transaction([store], 'readwrite')
-          // create an object store on the transaction
-          let objectStore = transaction.objectStore(store)
-          // Make a request to clear all the data out of the object store
-          let objectStoreRequest = objectStore.clear()
-          objectStoreRequest.onsuccess = function(event) {
-            console.log(`store ${store} cleared`)
+  async clear () {
+    let idba = this
+
+    let promiseDB = await new Promise((resolve, reject) => {
+      let request = idba.indexedDB.open(idba.dbDriver.dbName, idba.dbDriver.dbVersion)
+      request.onsuccess = (event) => {
+        try {
+          let db = event.target.result
+          let objectStores = idba.dbDriver.objectStores
+          let objectStoresRemaining = objectStores.length
+
+          for (let store of objectStores) {
+            // open a read/write db transaction, ready for clearing the data
+            let transaction = db.transaction([store], 'readwrite')
+            // create an object store on the transaction
+            let objectStore = transaction.objectStore(store)
+            // Make a request to clear all the data out of the object store
+            let objectStoreRequest = objectStore.clear()
+            objectStoreRequest.onsuccess = function(event) {
+              console.warn(`store ${store} cleared`)
+              objectStoresRemaining = objectStoresRemaining - 1
+              if (objectStoresRemaining === 0) {
+                resolve(true)
+              }
+            }
+            objectStoreRequest.onerror = function(event) {
+              idba.errors.push(event.target)
+              reject(event.target)
+            }
           }
-          objectStoreRequest.onerror = function(event) {
-            this.errors.push(event.target)
-          }
+        } catch (error) {
+          idba.errors.push(error)
+          reject(error)
         }
-      } catch (error) {
-        this.errors.push(error)
       }
-    }
-    request.onerror = (event) => {
-      this.errors.push(event.target)
-    }
+      request.onerror = (event) => {
+        idba.errors.push(event.target)
+        reject(event.target)
+      }
+    })
+    return promiseDB
   }
 
 
@@ -208,7 +254,6 @@ export default class IndexedDBAdapter {
       const db = event.target.result
       const upgradeTransaction = event.target.transaction
       this._createObjectStores(db, upgradeTransaction)
-      // TODO we should clean up old database versions
     }
     return request
   }
@@ -218,22 +263,22 @@ export default class IndexedDBAdapter {
    */
   _createObjectStores (db, upgradeTransaction) {
     try {
-      let objectStores = this.dbDriver.objectStores
-      objectStores.forEach(objectStoreName => {
-        const objectStoreStructure = this.dbDriver[objectStoreName]
-
+      for (let objectStoreData of this.dbDriver.allObjectStoreData) {
         let objectStore
-        if (!db.objectStoreNames.contains(objectStoreName)) {
-          objectStore = db.createObjectStore(objectStoreName, { keyPath: objectStoreStructure.keyPath })
+
+        if (!db.objectStoreNames.contains(objectStoreData.name)) {
+          objectStore = db.createObjectStore(objectStoreData.name, { keyPath: objectStoreData.structure.keyPath })
         } else {
-          objectStore = upgradeTransaction.objectStore(objectStoreName)
+          objectStore = upgradeTransaction.objectStore(objectStoreData.name)
         }
-        objectStoreStructure.indexes.forEach(index => {
+
+        objectStoreData.structure.indexes.forEach(index => {
           if (!objectStore.indexNames.contains(index.indexName)) {
             objectStore.createIndex(index.indexName, index.keyPath, { unique: index.unique })
           }
         })
-      })
+      }
+    
     } catch (error) {
       this.errors.push(error)
     }
@@ -296,6 +341,9 @@ export default class IndexedDBAdapter {
             idba.errors.push(event.target)
             reject()
           }
+        }
+        if (objectsDone === 0) {
+          resolve(true)
         }
       } catch (error) {
         if (error) {
