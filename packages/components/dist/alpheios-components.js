@@ -10360,6 +10360,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -10384,8 +10388,6 @@ __webpack_require__.r(__webpack_exports__);
   data () {
     return {
       lookuptext: '',
-      showLanguageSettings: false,
-      initLanguage: null,
       currentLanguage: null,
       instanceContentOptions: {},
       istanceResourceOptions: {},
@@ -10395,11 +10397,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   props: {
-    // A name of the language. Used in setting initial and current lookup languages
-    parentLanguage: {
-      type: String,
-      required: false
-    },
     // When becomes `true`, forces a lookup text to be cleared
     clearLookupText: {
       type: Boolean,
@@ -10410,20 +10407,19 @@ __webpack_require__.r(__webpack_exports__);
       type: Boolean,
       required: false,
       default: true
+    },
+    nameBase: {
+      type: String,
+      required: true
     }
   },
   created: function () {
     this.instanceContentOptions = this.settings.contentOptions.clone(_lib_options_temp_storage_area__WEBPACK_IMPORTED_MODULE_3__["default"])
     this.instanceResourceOptions = this.settings.resourceOptions.clone(_lib_options_temp_storage_area__WEBPACK_IMPORTED_MODULE_3__["default"])
-    if (this.parentLanguage) {
-      this.initLanguage = this.parentLanguage
-      this.currentLanguage = this.parentLanguage
-    } else {
-      this.currentLanguage = this.$store.state.app.preferredLanguageName || this.instanceContentOptions.items.preferredLanguage.currentTextValue()
-    }
+    this.currentLanguage = this.$store.state.app.preferredLanguageName || this.instanceContentOptions.items.preferredLanguage.currentTextValue()
     this.instanceContentOptions.items.lookupLanguage.setTextValue(this.currentLanguage)
-    console.log(`at creation current language is ${this.currentLanguage}`)
   },
+
   computed: {
     lexiconSettingName: function () {
       let lang = this.instanceContentOptions.items.preferredLanguage.values.filter(v => v.text === this.currentLanguage)
@@ -10435,43 +10431,42 @@ __webpack_require__.r(__webpack_exports__);
     },
     lexiconsFiltered: function () {
       return this.instanceResourceOptions.items.lexiconsShort.filter((item) => item.name === this.lexiconSettingName)
-    },
-    lookupLanguage: function () {
-      // let currentLanguage
-      if (this.overrideLanguage && !this.currentLanguage) {
-        this.initLanguage = this.instanceContentOptions.items.preferredLanguage.currentTextValue()
-        this.currentLanguage = this.initLanguage
-        this.instanceContentOptions.items.lookupLanguage.setTextValue(this.initLanguage)
-      } else if ((this.parentLanguage && this.parentLanguage !== null) && (this.parentLanguage !== this.initLanguage)) {
-        this.initLanguage = this.parentLanguage
-        this.currentLanguage = this.parentLanguage
-        this.instanceContentOptions.items.lookupLanguage.setTextValue(this.parentLanguage)
-      }
-      return this.instanceContentOptions.items.lookupLanguage
     }
   },
+
   watch: {
     clearLookupText: function (value) {
       if (value) {
         this.lookuptext = ''
-        this.showLanguageSettings = this.overrideLanguage
       }
     },
 
     overrideLanguage: function (value) {
       this.overrideLanguage = value
-      this.updateUIbyOverrideLanguage()
+
+      if (value) {
+        // If we start to override language, set an initial lookup language value
+        // to the one selected in the panel options
+        this.instanceContentOptions.items.lookupLanguage.setValue(
+          this.settings.contentOptions.items.preferredLanguage.currentValue
+        )
+      }
     }
   },
+
   methods: {
-    'lookup': function () {
+    lookup: function () {
       if (this.lookuptext.length === 0) {
         return null
       }
 
+      /*
+      If we override the language, then the lookup language must be a current value of our `lookupLanguage` prop,
+      otherwise it must be a value of panel's options `preferredLanguage` options item
+       */
       const languageID = this.overrideLanguage
-        ? alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageIdFromCode(this.lookupLanguage.currentValue)
-        : alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageIdFromCode(this.instanceContentOptions.items.lookupLanguage.currentValue)
+        ? alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageIdFromCode(this.instanceContentOptions.items.lookupLanguage.currentValue)
+        : alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageIdFromCode(this.settings.contentOptions.items.preferredLanguage.currentValue)
 
       let textSelector = _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_0__["default"].createObjectFromText(this.lookuptext, languageID)
 
@@ -10488,13 +10483,6 @@ __webpack_require__.r(__webpack_exports__);
       this.ui.closePanel()
     },
 
-    'switchLookupSettings': function () {
-      this.showLanguageSettings = !this.showLanguageSettings
-      if (this.$parent !== undefined) {
-        this.$parent.$emit('updatePopupDimensions')
-      }
-    },
-
     settingChange: function (name, value) {
       this.instanceContentOptions.items.lookupLanguage.setTextValue(value)
       this.currentLanguage = value
@@ -10503,24 +10491,6 @@ __webpack_require__.r(__webpack_exports__);
     resourceSettingChange: function (name, value) {
       let keyinfo = this.instanceResourceOptions.parseKey(name)
       this.instanceResourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
-    },
-
-    updateUIbyOverrideLanguage: function () {
-      if (this.overrideLanguage !== this.showLanguageSettings) {
-        this.switchLookupSettings()
-      }
-
-      if (!this.overrideLanguage) {
-        this.currentLanguage = this.instanceContentOptions.items.preferredLanguage.currentTextValue()
-        this.instanceContentOptions.items.lookupLanguage.setTextValue(this.currentLanguage)
-      }
-    },
-
-    checkboxClick: function () {
-      this.overrideLanguage = !this.overrideLanguage
-      this.settings.contentOptions.items.lookupLangOverride.setValue(this.overrideLanguage)
-
-      this.updateUIbyOverrideLanguage()
     }
   }
 });
@@ -11553,6 +11523,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -11707,6 +11678,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
 /* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+//
 //
 //
 //
@@ -12384,6 +12356,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /*
   This is a desktop version of a panel
@@ -12542,12 +12516,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _lib_log_logger__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/lib/log/logger */ "./lib/log/logger.js");
 /* harmony import */ var _tooltip_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./tooltip.vue */ "./vue/components/tooltip.vue");
-/* harmony import */ var _lookup_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lookup.vue */ "./vue/components/lookup.vue");
-/* harmony import */ var _progress_bar_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./progress-bar.vue */ "./vue/components/progress-bar.vue");
-/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../images/inline-icons/close.svg */ "./images/inline-icons/close.svg");
-/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+/* harmony import */ var _progress_bar_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./progress-bar.vue */ "./vue/components/progress-bar.vue");
+/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../images/inline-icons/close.svg */ "./images/inline-icons/close.svg");
+/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
 //
@@ -12670,10 +12643,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-
 
 
 
@@ -12694,17 +12663,16 @@ __webpack_require__.r(__webpack_exports__);
   name: 'Popup',
   inject: ['app', 'ui', 'l10n', 'settings'],
   storeModules: ['app', 'ui', 'popup'],
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_9__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_8__["default"]],
   components: {
     morph: _morph_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     setting: _setting_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    closeIcon: _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_7___default.a,
+    closeIcon: _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_6___default.a,
     alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    lookup: _lookup_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    progressBar: _progress_bar_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+    progressBar: _progress_bar_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   directives: {
-    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_8__["directive"]
+    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_7__["directive"]
   },
   // Custom props to store unwatch functions
   visibleUnwatch: null,
@@ -16827,7 +16795,10 @@ var render = function() {
                       expression: "overrideLanguage"
                     }
                   ],
-                  attrs: { id: "alpheios-checkbox-input", type: "checkbox" },
+                  attrs: {
+                    id: "alpheios-" + _vm.nameBase + "-checkbox-input",
+                    type: "checkbox"
+                  },
                   domProps: {
                     checked: Array.isArray(_vm.overrideLanguage)
                       ? _vm._i(_vm.overrideLanguage, null) > -1
@@ -16860,10 +16831,17 @@ var render = function() {
                   "label",
                   {
                     staticClass: "alpheios-override-lang__label",
-                    attrs: { for: "checkbox" },
-                    on: { click: _vm.checkboxClick }
+                    attrs: {
+                      for: "alpheios-" + _vm.nameBase + "-checkbox-input"
+                    }
                   },
-                  [_vm._v(_vm._s(_vm.overrideLanguageLabel))]
+                  [
+                    _vm._v(
+                      "\n        " +
+                        _vm._s(_vm.overrideLanguageLabel) +
+                        "\n      "
+                    )
+                  ]
                 )
               ]
             ),
@@ -16876,8 +16854,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.showLanguageSettings,
-                      expression: "showLanguageSettings"
+                      value: _vm.overrideLanguage,
+                      expression: "overrideLanguage"
                     }
                   ],
                   staticClass: "alpheios-lookup__settings-items"
@@ -16886,7 +16864,7 @@ var render = function() {
                   _c("alph-setting", {
                     attrs: {
                       classes: ["alpheios-panel__options-item"],
-                      data: _vm.lookupLanguage
+                      data: _vm.instanceContentOptions.items.lookupLanguage
                     },
                     on: { change: _vm.settingChange }
                   }),
@@ -18635,7 +18613,14 @@ var render = function() {
           ],
           staticClass: "alpheios-overlay-nav__lookup"
         },
-        [_c("lookup", { attrs: { showLanguageSettingsGroup: false } })],
+        [
+          _c("lookup", {
+            attrs: {
+              "name-base": "toolbar",
+              "show-language-settings-group": false
+            }
+          })
+        ],
         1
       ),
       _vm._v(" "),
@@ -19624,7 +19609,11 @@ var render = function() {
               _c(
                 "div",
                 { staticClass: "alpheios-lookup__panel" },
-                [_c("lookup", { attrs: { clearLookupText: true } })],
+                [
+                  _c("lookup", {
+                    attrs: { "name-base": "panel", "clear-lookup-text": true }
+                  })
+                ],
                 1
               ),
               _vm._v(" "),
@@ -19916,7 +19905,14 @@ var render = function() {
                 _c(
                   "div",
                   { staticClass: "alpheios-lookup__panel" },
-                  [_c("lookup", { attrs: { clearLookupText: true } })],
+                  [
+                    _c("lookup", {
+                      attrs: {
+                        "name-base": "panel-defs",
+                        "clear-lookup-text": true
+                      }
+                    })
+                  ],
                   1
                 ),
                 _vm._v(" "),
@@ -20338,7 +20334,14 @@ var render = function() {
             _c(
               "div",
               { staticClass: "alpheios-lookup__panel" },
-              [_c("lookup", { attrs: { clearLookupText: true } })],
+              [
+                _c("lookup", {
+                  attrs: {
+                    "name-base": "panel-info",
+                    "clear-lookup-text": true
+                  }
+                })
+              ],
               1
             ),
             _vm._v(" "),
@@ -21306,14 +21309,7 @@ var render = function() {
             ],
             1
           )
-        : _vm._e(),
-      _vm._v(" "),
-      _c("lookup", {
-        attrs: {
-          clearLookupText:
-            _vm.$store.state.app.morphDataReady && _vm.app.hasMorphData()
-        }
-      })
+        : _vm._e()
     ],
     1
   )
@@ -36260,7 +36256,6 @@ class UIController {
     this.setRootComponentClasses()
 
     const preferredLanguageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageIdFromCode(this.contentOptions.items.preferredLanguage.currentValue)
-    this.contentOptions.items.lookupLangOverride.setValue(false)
     this.updateLanguage(preferredLanguageID)
     this.updateLemmaTranslations()
 
@@ -41242,7 +41237,7 @@ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_20___namespace =
 /*! exports provided: domain, items, default */
 /***/ (function(module) {
 
-module.exports = {"domain":"alpheios-content-options","items":{"enableLemmaTranslations":{"defaultValue":false,"labelText":"Experimental: Enable Latin Lemma Translations","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"locale":{"defaultValue":"en-US","labelText":"UI Locale:","values":[{"value":"en-US","text":"English (US)"},{"value":"fr","text":"French"},{"value":"de","text":"German"},{"value":"it","text":"Italian"},{"value":"pt","text":"Portuguese"},{"value":"es","text":"Spanish"},{"value":"ca","text":"Catalonian"}]},"enableWordUsageExamples":{"defaultValue":false,"labelText":"Experimental: Enable Latin Word Usage Examples (Concordance)","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"wordUsageExamplesAuthMax":{"defaultValue":3,"labelText":"Word Usage Examples - max results per author","number":true,"values":[]},"wordUsageExamplesMax":{"defaultValue":500,"labelText":"Word Usage Examples - max results for single author request","number":true,"values":[]},"panelPosition":{"defaultValue":"left","labelText":"Panel position:","values":[{"value":"left","text":"Left"},{"value":"right","text":"Right"}]},"popupPosition":{"defaultValue":"fixed","labelText":"Popup position:","values":[{"value":"flexible","text":"Flexible"},{"value":"fixed","text":"Fixed"}]},"uiType":{"defaultValue":"popup","labelText":"UI type:","values":[{"value":"popup","text":"Pop-up"},{"value":"panel","text":"Panel"}]},"preferredLanguage":{"defaultValue":"lat","labelText":"Page language:","values":[{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"verboseMode":{"defaultValue":"normal","labelText":"Log Level","values":[{"value":"verbose","text":"Verbose"},{"value":"normal","text":"Normal"}]},"lookupLanguage":{"defaultValue":"lat","labelText":"Page language:","values":[{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"lookupLangOverride":{"defaultValue":false,"labelText":"Override language at lookup panel","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]}}};
+module.exports = {"domain":"alpheios-content-options","items":{"enableLemmaTranslations":{"defaultValue":false,"labelText":"Experimental: Enable Latin Lemma Translations","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"locale":{"defaultValue":"en-US","labelText":"UI Locale:","values":[{"value":"en-US","text":"English (US)"},{"value":"fr","text":"French"},{"value":"de","text":"German"},{"value":"it","text":"Italian"},{"value":"pt","text":"Portuguese"},{"value":"es","text":"Spanish"},{"value":"ca","text":"Catalonian"}]},"enableWordUsageExamples":{"defaultValue":false,"labelText":"Experimental: Enable Latin Word Usage Examples (Concordance)","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"wordUsageExamplesAuthMax":{"defaultValue":3,"labelText":"Word Usage Examples - max results per author","number":true,"values":[]},"wordUsageExamplesMax":{"defaultValue":500,"labelText":"Word Usage Examples - max results for single author request","number":true,"values":[]},"panelPosition":{"defaultValue":"left","labelText":"Panel position:","values":[{"value":"left","text":"Left"},{"value":"right","text":"Right"}]},"popupPosition":{"defaultValue":"fixed","labelText":"Popup position:","values":[{"value":"flexible","text":"Flexible"},{"value":"fixed","text":"Fixed"}]},"uiType":{"defaultValue":"popup","labelText":"UI type:","values":[{"value":"popup","text":"Pop-up"},{"value":"panel","text":"Panel"}]},"preferredLanguage":{"defaultValue":"lat","labelText":"Page language:","values":[{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"verboseMode":{"defaultValue":"normal","labelText":"Log Level","values":[{"value":"verbose","text":"Verbose"},{"value":"normal","text":"Normal"}]},"lookupLanguage":{"defaultValue":"lat","labelText":"Page language:","values":[{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]}}};
 
 /***/ }),
 

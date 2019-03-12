@@ -38,7 +38,8 @@
         v-show="lookupVisible"
     >
       <lookup
-        :showLanguageSettingsGroup="false"
+          :name-base="`toolbar`"
+          :show-language-settings-group="false"
       />
     </div>
 

@@ -9129,57 +9129,6 @@ fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spi
 /*********** Font styles ***********************/
 /********** Light Schema ***********************/
 /********** Dark Schema ***********************/
-.alpheios-lookup__form {
-  margin: 15px 10px 5px !important;
-  text-align: left !important;
-}
-.uk-input.alpheios-lookup__input {
-  width: 70% !important;
-  margin-bottom: 10px !important;
-  vertical-align: top !important;
-}
-.uk-input.alpheios-lookup__input:focus {
-    border-color: #5BC8DC !important;
-}
-.uk-button.alpheios-lookup__button {
-  vertical-align: top !important;
-  display: block;
-}
-.alpheios-lookup__settings {
-  text-align: left !important;
-}
-a.alpheios-lookup__settings-link {
-  display: block;
-  padding-top: 5px !important;
-}
-.alpheios-lookup__button_with_link {
-  width: 29% !important;
-}
-.alpheios-panel .alpheios-lookup__form {
-  width: 100% !important;
-  margin: 5px 0 !important;
-}
-.alpheios-panel__options-item {
-  max-width: none !important;
-}
-.alpheios-panel__options-item .uk-select:not([multiple]):not([size]),
-.alpheios-panel__options-item .uk-select[multiple],
-.alpheios-panel__options-item .uk-select[size],
-.alpheios-panel__options-item .uk-textarea {
-  max-width: 250px !important;
-}
-.alpheios-override-lang {
-  margin-bottom: 10px !important;
-}
-.alpheios-override-lang__label {
-  padding-bottom: 10px !important;
-}
-
-/************ UIKit vars ************************/
-/************ Multiselect vars ************************/
-/*********** Font styles ***********************/
-/********** Light Schema ***********************/
-/********** Dark Schema ***********************/
 .alpheios-popup-lexdataloading__progress-wrapper {
   margin: 0 1rem 2rem !important;
   box-sizing: border-box !important;
@@ -10169,6 +10118,57 @@ div.alpheios-ib div.alpheios-ib__title .alpheios-ib__title-collapse {
   font-weight: normal !important;
   font-size: 1rem !important;
   margin: 0 0 0.2rem 3rem !important;
+}
+
+/************ UIKit vars ************************/
+/************ Multiselect vars ************************/
+/*********** Font styles ***********************/
+/********** Light Schema ***********************/
+/********** Dark Schema ***********************/
+.alpheios-lookup__form {
+  margin: 15px 10px 5px !important;
+  text-align: left !important;
+}
+.uk-input.alpheios-lookup__input {
+  width: 70% !important;
+  margin-bottom: 10px !important;
+  vertical-align: top !important;
+}
+.uk-input.alpheios-lookup__input:focus {
+    border-color: #5BC8DC !important;
+}
+.uk-button.alpheios-lookup__button {
+  vertical-align: top !important;
+  display: block;
+}
+.alpheios-lookup__settings {
+  text-align: left !important;
+}
+a.alpheios-lookup__settings-link {
+  display: block;
+  padding-top: 5px !important;
+}
+.alpheios-lookup__button_with_link {
+  width: 29% !important;
+}
+.alpheios-panel .alpheios-lookup__form {
+  width: 100% !important;
+  margin: 5px 0 !important;
+}
+.alpheios-panel__options-item {
+  max-width: none !important;
+}
+.alpheios-panel__options-item .uk-select:not([multiple]):not([size]),
+.alpheios-panel__options-item .uk-select[multiple],
+.alpheios-panel__options-item .uk-select[size],
+.alpheios-panel__options-item .uk-textarea {
+  max-width: 250px !important;
+}
+.alpheios-override-lang {
+  margin-bottom: 10px !important;
+}
+.alpheios-override-lang__label {
+  padding-bottom: 10px !important;
 }
 
 /************ UIKit vars ************************/

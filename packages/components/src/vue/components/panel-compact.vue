@@ -162,7 +162,8 @@
            v-show="$store.getters['ui/isActiveTab']('info')">
         <div class="alpheios-lookup__panel">
           <lookup
-              :clearLookupText="true"
+              :name-base="`panel`"
+              :clear-lookup-text="true"
           />
         </div>
         <info></info>

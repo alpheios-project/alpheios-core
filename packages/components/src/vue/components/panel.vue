@@ -49,7 +49,8 @@
           v-if="$store.getters['ui/isActiveTab']('definitions')">
         <div class="alpheios-lookup__panel">
           <lookup
-              :clearLookupText="true"
+              :name-base="`panel-defs`"
+              :clear-lookup-text="true"
           />
         </div>
         <div v-if="$store.getters['app/defDataReady']">
@@ -164,7 +165,8 @@
            v-show="$store.getters['ui/isActiveTab']('info')">
         <div class="alpheios-lookup__panel">
           <lookup
-              :clearLookupText="true"
+              :name-base="`panel-info`"
+              :clear-lookup-text="true"
           />
         </div>
         <info></info>

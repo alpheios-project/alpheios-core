@@ -660,7 +660,6 @@ export default class UIController {
     this.setRootComponentClasses()
 
     const preferredLanguageID = LanguageModelFactory.getLanguageIdFromCode(this.contentOptions.items.preferredLanguage.currentValue)
-    this.contentOptions.items.lookupLangOverride.setValue(false)
     this.updateLanguage(preferredLanguageID)
     this.updateLemmaTranslations()
 

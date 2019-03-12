@@ -18,14 +18,18 @@
         v-if="showLanguageSettingsGroup"
     >
       <div class="alpheios-override-lang alpheios-checkbox-block alpheios-checkbox-small">
-        <input id="alpheios-checkbox-input" type="checkbox" v-model="overrideLanguage">
-        <label @click="checkboxClick" class="alpheios-override-lang__label" for="checkbox">{{ overrideLanguageLabel
-          }}</label>
+        <input :id="`alpheios-${nameBase}-checkbox-input`" type="checkbox" v-model="overrideLanguage">
+        <label
+            class="alpheios-override-lang__label"
+            :for="`alpheios-${nameBase}-checkbox-input`"
+        >
+          {{ overrideLanguageLabel }}
+        </label>
       </div>
 
       <div class="alpheios-lookup__settings">
-        <div class="alpheios-lookup__settings-items" v-show="showLanguageSettings">
-          <alph-setting :classes="['alpheios-panel__options-item']" :data="lookupLanguage"
+        <div class="alpheios-lookup__settings-items" v-show="overrideLanguage">
+          <alph-setting :classes="['alpheios-panel__options-item']" :data="instanceContentOptions.items.lookupLanguage"
                         @change="settingChange"></alph-setting>
           <alph-setting :classes="['alpheios-panel__options-item']" :data="lexicon" :key="lexicon.name"
                         @change="resourceSettingChange" v-for="lexicon in lexiconsFiltered"></alph-setting>
@@ -58,8 +62,6 @@ export default {
   data () {
     return {
       lookuptext: '',
-      showLanguageSettings: false,
-      initLanguage: null,
       currentLanguage: null,
       instanceContentOptions: {},
       istanceResourceOptions: {},
@@ -69,11 +71,6 @@ export default {
     }
   },
   props: {
-    // A name of the language. Used in setting initial and current lookup languages
-    parentLanguage: {
-      type: String,
-      required: false
-    },
     // When becomes `true`, forces a lookup text to be cleared
     clearLookupText: {
       type: Boolean,
@@ -84,20 +81,19 @@ export default {
       type: Boolean,
       required: false,
       default: true
+    },
+    nameBase: {
+      type: String,
+      required: true
     }
   },
   created: function () {
     this.instanceContentOptions = this.settings.contentOptions.clone(TempStorageArea)
     this.instanceResourceOptions = this.settings.resourceOptions.clone(TempStorageArea)
-    if (this.parentLanguage) {
-      this.initLanguage = this.parentLanguage
-      this.currentLanguage = this.parentLanguage
-    } else {
-      this.currentLanguage = this.$store.state.app.preferredLanguageName || this.instanceContentOptions.items.preferredLanguage.currentTextValue()
-    }
+    this.currentLanguage = this.$store.state.app.preferredLanguageName || this.instanceContentOptions.items.preferredLanguage.currentTextValue()
     this.instanceContentOptions.items.lookupLanguage.setTextValue(this.currentLanguage)
-    console.log(`at creation current language is ${this.currentLanguage}`)
   },
+
   computed: {
     lexiconSettingName: function () {
       let lang = this.instanceContentOptions.items.preferredLanguage.values.filter(v => v.text === this.currentLanguage)
@@ -109,43 +105,42 @@ export default {
     },
     lexiconsFiltered: function () {
       return this.instanceResourceOptions.items.lexiconsShort.filter((item) => item.name === this.lexiconSettingName)
-    },
-    lookupLanguage: function () {
-      // let currentLanguage
-      if (this.overrideLanguage && !this.currentLanguage) {
-        this.initLanguage = this.instanceContentOptions.items.preferredLanguage.currentTextValue()
-        this.currentLanguage = this.initLanguage
-        this.instanceContentOptions.items.lookupLanguage.setTextValue(this.initLanguage)
-      } else if ((this.parentLanguage && this.parentLanguage !== null) && (this.parentLanguage !== this.initLanguage)) {
-        this.initLanguage = this.parentLanguage
-        this.currentLanguage = this.parentLanguage
-        this.instanceContentOptions.items.lookupLanguage.setTextValue(this.parentLanguage)
-      }
-      return this.instanceContentOptions.items.lookupLanguage
     }
   },
+
   watch: {
     clearLookupText: function (value) {
       if (value) {
         this.lookuptext = ''
-        this.showLanguageSettings = this.overrideLanguage
       }
     },
 
     overrideLanguage: function (value) {
       this.overrideLanguage = value
-      this.updateUIbyOverrideLanguage()
+
+      if (value) {
+        // If we start to override language, set an initial lookup language value
+        // to the one selected in the panel options
+        this.instanceContentOptions.items.lookupLanguage.setValue(
+          this.settings.contentOptions.items.preferredLanguage.currentValue
+        )
+      }
     }
   },
+
   methods: {
-    'lookup': function () {
+    lookup: function () {
       if (this.lookuptext.length === 0) {
         return null
       }
 
+      /*
+      If we override the language, then the lookup language must be a current value of our `lookupLanguage` prop,
+      otherwise it must be a value of panel's options `preferredLanguage` options item
+       */
       const languageID = this.overrideLanguage
-        ? LanguageModelFactory.getLanguageIdFromCode(this.lookupLanguage.currentValue)
-        : LanguageModelFactory.getLanguageIdFromCode(this.instanceContentOptions.items.lookupLanguage.currentValue)
+        ? LanguageModelFactory.getLanguageIdFromCode(this.instanceContentOptions.items.lookupLanguage.currentValue)
+        : LanguageModelFactory.getLanguageIdFromCode(this.settings.contentOptions.items.preferredLanguage.currentValue)
 
       let textSelector = TextSelector.createObjectFromText(this.lookuptext, languageID)
 
@@ -162,13 +157,6 @@ export default {
       this.ui.closePanel()
     },
 
-    'switchLookupSettings': function () {
-      this.showLanguageSettings = !this.showLanguageSettings
-      if (this.$parent !== undefined) {
-        this.$parent.$emit('updatePopupDimensions')
-      }
-    },
-
     settingChange: function (name, value) {
       this.instanceContentOptions.items.lookupLanguage.setTextValue(value)
       this.currentLanguage = value
@@ -177,24 +165,6 @@ export default {
     resourceSettingChange: function (name, value) {
       let keyinfo = this.instanceResourceOptions.parseKey(name)
       this.instanceResourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
-    },
-
-    updateUIbyOverrideLanguage: function () {
-      if (this.overrideLanguage !== this.showLanguageSettings) {
-        this.switchLookupSettings()
-      }
-
-      if (!this.overrideLanguage) {
-        this.currentLanguage = this.instanceContentOptions.items.preferredLanguage.currentTextValue()
-        this.instanceContentOptions.items.lookupLanguage.setTextValue(this.currentLanguage)
-      }
-    },
-
-    checkboxClick: function () {
-      this.overrideLanguage = !this.overrideLanguage
-      this.settings.contentOptions.items.lookupLangOverride.setValue(this.overrideLanguage)
-
-      this.updateUIbyOverrideLanguage()
     }
   }
 }

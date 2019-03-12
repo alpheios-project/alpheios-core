@@ -9129,57 +9129,6 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
 /*********** Font styles ***********************/
 /********** Light Schema ***********************/
 /********** Dark Schema ***********************/
-.alpheios-lookup__form {
-  margin: 15px 10px 5px;
-  text-align: left;
-}
-.uk-input.alpheios-lookup__input {
-  width: 70%;
-  margin-bottom: 10px;
-  vertical-align: top;
-}
-.uk-input.alpheios-lookup__input:focus {
-    border-color: #5BC8DC;
-}
-.uk-button.alpheios-lookup__button {
-  vertical-align: top;
-  display: block;
-}
-.alpheios-lookup__settings {
-  text-align: left;
-}
-a.alpheios-lookup__settings-link {
-  display: block;
-  padding-top: 5px;
-}
-.alpheios-lookup__button_with_link {
-  width: 29%;
-}
-.alpheios-panel .alpheios-lookup__form {
-  width: 100%;
-  margin: 5px 0;
-}
-.alpheios-panel__options-item {
-  max-width: none;
-}
-.alpheios-panel__options-item .uk-select:not([multiple]):not([size]),
-.alpheios-panel__options-item .uk-select[multiple],
-.alpheios-panel__options-item .uk-select[size],
-.alpheios-panel__options-item .uk-textarea {
-  max-width: 250px;
-}
-.alpheios-override-lang {
-  margin-bottom: 10px;
-}
-.alpheios-override-lang__label {
-  padding-bottom: 10px;
-}
-
-/************ UIKit vars ************************/
-/************ Multiselect vars ************************/
-/*********** Font styles ***********************/
-/********** Light Schema ***********************/
-/********** Dark Schema ***********************/
 .alpheios-popup-lexdataloading__progress-wrapper {
   margin: 0 1rem 2rem;
   box-sizing: border-box;
@@ -10169,6 +10118,57 @@ div.alpheios-ib div.alpheios-ib__title .alpheios-ib__title-collapse {
   font-weight: normal;
   font-size: 1rem;
   margin: 0 0 0.2rem 3rem;
+}
+
+/************ UIKit vars ************************/
+/************ Multiselect vars ************************/
+/*********** Font styles ***********************/
+/********** Light Schema ***********************/
+/********** Dark Schema ***********************/
+.alpheios-lookup__form {
+  margin: 15px 10px 5px;
+  text-align: left;
+}
+.uk-input.alpheios-lookup__input {
+  width: 70%;
+  margin-bottom: 10px;
+  vertical-align: top;
+}
+.uk-input.alpheios-lookup__input:focus {
+    border-color: #5BC8DC;
+}
+.uk-button.alpheios-lookup__button {
+  vertical-align: top;
+  display: block;
+}
+.alpheios-lookup__settings {
+  text-align: left;
+}
+a.alpheios-lookup__settings-link {
+  display: block;
+  padding-top: 5px;
+}
+.alpheios-lookup__button_with_link {
+  width: 29%;
+}
+.alpheios-panel .alpheios-lookup__form {
+  width: 100%;
+  margin: 5px 0;
+}
+.alpheios-panel__options-item {
+  max-width: none;
+}
+.alpheios-panel__options-item .uk-select:not([multiple]):not([size]),
+.alpheios-panel__options-item .uk-select[multiple],
+.alpheios-panel__options-item .uk-select[size],
+.alpheios-panel__options-item .uk-textarea {
+  max-width: 250px;
+}
+.alpheios-override-lang {
+  margin-bottom: 10px;
+}
+.alpheios-override-lang__label {
+  padding-bottom: 10px;
 }
 
 /************ UIKit vars ************************/
