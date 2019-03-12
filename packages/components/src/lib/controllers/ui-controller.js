@@ -669,7 +669,7 @@ export default class UIController {
       // that operates on an in-memory user until such time the user authenticates
       // see issue 317
       this.userDataManager = new UserDataManager('testUserID', WordlistController.evt)
-      await this.wordlistC.initLists(this.userDataManager)
+      this.wordlistC.initLists(this.userDataManager)
     }
 
     this.state.setWatcher('uiActive', this.updateAnnotations.bind(this))
@@ -1226,7 +1226,10 @@ export default class UIController {
     this.updatePageAnnotationData(data.annotations)
   }
 
-  onWordItemSelected (homonym) {
+  async onWordItemSelected (wordItem) {
+    let wordItemFull = await this.userDataManager.query({ dataType: 'WordItem', params: { wordItem } }, { type: 'full' })
+    console.info('****************onWordItemSelected', wordItemFull[0].homonym)
+    let homonym = wordItemFull[0].homonym
     this.newLexicalRequest(homonym.targetWord, homonym.languageID)
 
     this.onHomonymReady(homonym)
