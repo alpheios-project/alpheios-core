@@ -17,7 +17,7 @@ export default class IndexedDBAdapter {
 
   async checkAndUpdate (wordItem, segment, currentRemoteItems) {  
     if (segment === 'context' || !segment)  {
-      if (currentRemoteItems.length > 0) {
+      if (currentRemoteItems.length > 0 && currentRemoteItems[0].context && Array.isArray(currentRemoteItems[0].context)) {
         wordItem.context = []
         for(let contextItem of currentRemoteItems[0].context) {
           wordItem.context.push(WordItem.readContext([contextItem])[0])
