@@ -112,7 +112,7 @@ import GrammarIcon from '@/images/inline-icons/resources.svg'
 import TreebankIcon from '@/images/inline-icons/sitemap.svg'
 import InfoIcon from '@/images/inline-icons/info.svg'
 import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
-import WordUsageIcon from '@/images/inline-icons/books-stack.svg'
+import WordUsageIcon from '@/images/inline-icons/usage-examples-icon1.svg'
 
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
