@@ -175,7 +175,7 @@
         <word-list-panel :updated="$store.state.app.wordListUpdateTime" :wordlistC="app.wordlistC"></word-list-panel>
       </div>
     </div>
-    <div class="alpheios-panel__notifications uk-text-small"
+    <div class="alpheios-panel__notifications alpheios-text-small"
          :class="{ 'alpheios-panel__notifications--important': $store.state.ui.notification.important }"
          v-if="$store.state.ui.notification.visible" v-show="$store.state.ui.notification.important">
             <span @click="$store.commit(`ui/resetNotification`)" class="alpheios-panel__notifications-close-btn">

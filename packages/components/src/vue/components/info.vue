@@ -1,5 +1,5 @@
 <template>
-  <div class="alpheios-info uk-margin">
+  <div class="alpheios-info">
     <div class="alpheios-info__versiontext alpheios-text__smallest">{{ app.name }} {{ app.version }}
     </div>
     <div class="alpheios-info__currentlanguage alpheios-text__smallest">{{ l10n.getMsg('LABEL_INFO_CURRENTLANGUAGE') }}
@@ -34,6 +34,8 @@ export default {
     font-family: $alpheios-font-family;
     font-size: $alpheios-base-font-size;
     color: $alpheios-copy-color;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   .alpheios-info .alpheios-info__helptext p {

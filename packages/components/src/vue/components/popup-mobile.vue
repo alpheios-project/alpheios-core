@@ -13,17 +13,17 @@
               v-show="data.status.selectedText">{{data.status.selectedText}}</span>
         <span class="alpheios-popup__header-word" v-show="data.status.languageName && verboseMode">({{data.status.languageName}})</span>
       </div>
-      <div class="uk-button-group alpheios-popup__button-area">
-        <button @click="showPanelTab('inflections')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn"
+      <div class="alpheios-button-group alpheios-popup__button-area">
+        <button @click="showPanelTab('inflections')" class="alpheios-button alpheios-button-primary alpheios-button-small alpheios-popup__more-btn"
                 v-show="data.inflDataReady">
           {{data.l10n.messages.LABEL_POPUP_INFLECT.get()}}
         </button>
-        <button @click="showPanelTab('definitions')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn"
+        <button @click="showPanelTab('definitions')" class="alpheios-button alpheios-button-primary alpheios-button-small alpheios-popup__more-btn"
                 v-show="data.defDataReady">
           {{data.l10n.messages.LABEL_POPUP_DEFINE.get()}}
         </button>
         <button @click="showPanelTab('options')"
-                class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn">
+                class="alpheios-button alpheios-button-primary alpheios-button-small alpheios-popup__more-btn">
           {{data.l10n.messages.LABEL_POPUP_OPTIONS.get()}}
         </button>
       </div>

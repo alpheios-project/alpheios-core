@@ -14,8 +14,8 @@
     </div>
     <div class="alpheios-inflections__content" v-else-if="inflectionsEnabled && $store.state.app.hasInflData">
       <div v-show="partsOfSpeech.length > 1">
-        <label class="uk-form-label">{{ l10n.getMsg('LABEL_INFLECT_SELECT_POFS') }}</label>
-        <select class="uk-select alpheios-inflections__view-selector alpheios-text__smallest"
+        <label class="alpheios-form-label">{{ l10n.getMsg('LABEL_INFLECT_SELECT_POFS') }}</label>
+        <select class="alpheios-select alpheios-inflections__view-selector alpheios-text__smallest"
                 v-model="partOfSpeechSelector">
           <option v-for="partOfSpeech in partsOfSpeech">{{partOfSpeech}}</option>
         </select>
@@ -28,7 +28,7 @@
             v-if="selectedView && selectedView.homonym">
         </word-forms>
         <div v-show="views.length > 1">
-          <select class="uk-select alpheios-inflections__view-selector alpheios-text__smallest" v-model="viewSelector">
+          <select class="alpheios-select alpheios-inflections__view-selector alpheios-text__smallest" v-model="viewSelector">
             <option :value="view.id" v-for="view in views">{{view.name}}</option>
           </select>
         </div>
@@ -290,7 +290,7 @@ export default {
     margin: 0 0 0.6rem 0;
   }
 
-  .#{$alpheios-uikit-namespace} .uk-select.alpheios-inflections__view-selector {
+  .#{$alpheios-uikit-namespace} .alpheios-select.alpheios-inflections__view-selector {
     height: auto !important;
     max-width: 220px;
     line-height: 1.6;

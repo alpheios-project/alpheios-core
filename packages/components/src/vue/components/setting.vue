@@ -1,6 +1,6 @@
 <template>
   <div :class="classes" v-if="dataModel && Object.keys(dataModel).length > 0">
-    <label class="uk-form-label alpheios-setting__label" v-show="showTitle">{{dataModel.labelText}}</label>
+    <label class="alpheios-form-label alpheios-setting__label" v-show="showTitle">{{dataModel.labelText}}</label>
 
     <multiselect :clear-on-select="false" :close-on-select="true" :hide-selected="true" :multiple="true" :options="values"
                  :preserve-search="true" :searchable="false" placeholder="Pick some" v-if="dataModel.multiValue"
@@ -14,7 +14,7 @@
       <label @click="checkboxClick" for="checkbox">{{ checkboxLabel }}</label>
     </div>
 
-    <select class="uk-select" v-if="!dataModel.multiValue && !dataModel.boolean && !dataModel.number" v-model="selected">
+    <select class="alpheios-select" v-if="!dataModel.multiValue && !dataModel.boolean && !dataModel.number" v-model="selected">
       <option v-for="item in values">{{item}}</option>
     </select>
 
@@ -42,7 +42,7 @@ export default {
       type: Array,
       required: false,
       default: function () {
-        return ['uk-margin']
+        return []
       }
     }
   },
@@ -101,9 +101,6 @@ export default {
 
   .alpheios-setting__label {
     display: block;
-  }
-
-  .alpheios-setting__label {
     vertical-align: middle;
   }
 

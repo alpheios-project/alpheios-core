@@ -34,7 +34,7 @@
           class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw"
           v-show="$store.getters['ui/isActiveTab']('morphology')">
 
-        <div :id="'alpheios-panel-lexical-data-container'" class="alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready"
+        <div :id="'alpheios-panel-lexical-data-container'" class="alpheios-popup__morph-cont alpheios-text-small alpheios-popup__morph-cont-ready"
              v-show="$store.state.app.morphDataReady && app.hasMorphData()">
           <morph :id="'alpheios-panel-morph-component'"></morph>
 
@@ -172,7 +172,7 @@
         <word-list-panel :updated="$store.state.app.wordListUpdateTime" :wordlistC="app.wordlistC"></word-list-panel>
       </div>
     </div>
-    <div class="alpheios-panel__notifications uk-text-small"
+    <div class="alpheios-panel__notifications alpheios-text-small"
          :class="{ 'alpheios-panel__notifications--important': $store.state.ui.notification.important }"
          v-if="$store.state.ui.notification.visible" v-show="$store.state.ui.notification.important">
             <span @click="$store.commit(`ui/resetNotification`)" class="alpheios-panel__notifications-close-btn">
@@ -636,7 +636,7 @@ export default {
     display: inline-block;
   }
 
-  .alpheios-panel__notifications--lang-switcher .uk-select {
+  .alpheios-panel__notifications--lang-switcher .alpheios-select {
     width: 120px;
     height: 25px;
   }
@@ -705,7 +705,7 @@ export default {
     width: 100%;
   }
 
-  .alpheios-panel__options-item .uk-select:not([multiple]):not([size]) {
+  .alpheios-panel__options-item .alpheios-select:not([multiple]):not([size]) {
     max-width: 235px;
     display: inline-block;
     vertical-align: top;

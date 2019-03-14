@@ -22,7 +22,7 @@
                           tooltipDirection="bottom-right">
               <button
                   @click="showNoSuffixGroups"
-                  class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
+                  class="alpheios-button alpheios-button-primary alpheios-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
                 {{l10n.getMsg('LABEL_INFLECT_SHOWFULL')}}
               </button>
             </alph-tooltip>
@@ -34,7 +34,7 @@
                           tooltipDirection="bottom-right">
               <button
                   @click="hideNoSuffixGroups"
-                  class="uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
+                  class="alpheios-button alpheios-button-primary alpheios-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
                 {{l10n.getMsg('LABEL_INFLECT_COLLAPSE')}}
               </button>
             </alph-tooltip>
@@ -284,12 +284,12 @@ export default {
     margin-left: 0.2rem;
   }
 
-  .auk .uk-button-small.alpheios-inflections__control-btn {
+  .auk .alpheios-button-small.alpheios-inflections__control-btn {
     line-height: 1.6;
     white-space: nowrap;
   }
 
-  .auk .uk-button-small.alpheios-inflections__control-btn--right {
+  .auk .alpheios-button-small.alpheios-inflections__control-btn--right {
     margin-left: .5rem;
   }
 

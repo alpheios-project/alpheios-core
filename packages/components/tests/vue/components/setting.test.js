@@ -28,7 +28,7 @@ describe('setting.test.js', () => {
       }
     })
     expect(cmp.isVueInstance()).toBeTruthy()
-    expect(cmp.vm.classes).toEqual(['uk-margin'])
+    expect(cmp.vm.classes).toEqual([])
     expect(cmp.vm.showTitle).toBeTruthy()
   })
 

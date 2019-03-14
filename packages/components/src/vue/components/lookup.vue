@@ -1,12 +1,12 @@
 <template>
   <div class="alpheios-lookup__form">
-    <input :placeholder="l10n.getMsg('LABEL_LOOKUP_BUTTON')" @keyup.enter="lookup" class="uk-input alpheios-lookup__input"
+    <input :placeholder="l10n.getMsg('LABEL_LOOKUP_BUTTON')" @keyup.enter="lookup" class="alpheios-input alpheios-lookup__input"
            type="text"
            v-model="lookuptext"
     >
     <alph-tooltip :tooltipText="l10n.getMsg('LABEL_LOOKUP_BUTTON')" tooltipDirection="top-right">
       <span class="alpheios-lookup__button_with_link">
-      <button @click="lookup" class="uk-button uk-button-primary uk-button-small alpheios-lookup__button" tabindex="-1"
+      <button @click="lookup" class="alpheios-button alpheios-button-primary alpheios-button-small alpheios-lookup__button" tabindex="-1"
               type="button"
       >
         {{ l10n.getMsg('LABEL_LOOKUP_BUTTON') }}
@@ -173,13 +173,11 @@ export default {
   @import "../../styles/alpheios";
 
   .alpheios-lookup__form {
-    margin: 15px 10px 5px;
-
+    margin: 30px 5px 5px;
     text-align: left;
-
   }
 
-  .uk-input.alpheios-lookup__input {
+  .alpheios-input.alpheios-lookup__input {
     width: 70%;
     margin-bottom: 10px;
     vertical-align: top;
@@ -189,7 +187,7 @@ export default {
     }
   }
 
-  .uk-button.alpheios-lookup__button {
+  .alpheios-button.alpheios-lookup__button {
     vertical-align: top;
     display: block;
   }
@@ -219,10 +217,9 @@ export default {
   }
 
   .alpheios-panel__options-item {
-    .uk-select:not([multiple]):not([size]),
-    .uk-select[multiple],
-    .uk-select[size],
-    .uk-textarea {
+    .alpheios-select:not([multiple]):not([size]),
+    .alpheios-select[multiple],
+    .alpheios-select[size] {
       max-width: 250px;
     }
   }

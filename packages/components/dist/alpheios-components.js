@@ -10908,7 +10908,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/images/inline-icons/sitemap.svg */ "./images/inline-icons/sitemap.svg");
 /* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/images/inline-icons/info.svg */ "./images/inline-icons/info.svg");
 /* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
-/* harmony import */ var _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/images/inline-icons/usage-examples-icon1.svg */ "./images/inline-icons/usage-examples-icon1.svg");
+/* harmony import */ var _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/images/inline-icons/books-stack.svg */ "./images/inline-icons/books-stack.svg");
 /* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
@@ -11052,7 +11052,7 @@ __webpack_require__.r(__webpack_exports__);
     infoIcon: _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_9__["default"],
     grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_7__["default"],
     treebankIcon: _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_8__["default"],
-    wordUsageIcon: _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_11__["default"],
+    wordUsageIcon: _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_11__["default"],
     wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_10__["default"]
   },
   tabChangeUnwatch: null, // Will hold a function for removal of a tab change watcher
@@ -13225,7 +13225,7 @@ __webpack_require__.r(__webpack_exports__);
       type: Array,
       required: false,
       default: function () {
-        return ['uk-margin']
+        return []
       }
     }
   },
@@ -15972,7 +15972,7 @@ var render = function() {
                                       "button",
                                       {
                                         staticClass:
-                                          "uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right",
+                                          "alpheios-button alpheios-button-primary alpheios-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right",
                                         on: { click: _vm.showNoSuffixGroups }
                                       },
                                       [
@@ -16026,7 +16026,7 @@ var render = function() {
                                       "button",
                                       {
                                         staticClass:
-                                          "uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right",
+                                          "alpheios-button alpheios-button-primary alpheios-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right",
                                         on: { click: _vm.hideNoSuffixGroups }
                                       },
                                       [
@@ -16255,7 +16255,7 @@ var render = function() {
                 ]
               },
               [
-                _c("label", { staticClass: "uk-form-label" }, [
+                _c("label", { staticClass: "alpheios-form-label" }, [
                   _vm._v(_vm._s(_vm.l10n.getMsg("LABEL_INFLECT_SELECT_POFS")))
                 ]),
                 _vm._v(" "),
@@ -16271,7 +16271,7 @@ var render = function() {
                       }
                     ],
                     staticClass:
-                      "uk-select alpheios-inflections__view-selector alpheios-text__smallest",
+                      "alpheios-select alpheios-inflections__view-selector alpheios-text__smallest",
                     on: {
                       change: function($event) {
                         var $$selectedVal = Array.prototype.filter
@@ -16336,7 +16336,7 @@ var render = function() {
                           }
                         ],
                         staticClass:
-                          "uk-select alpheios-inflections__view-selector alpheios-text__smallest",
+                          "alpheios-select alpheios-inflections__view-selector alpheios-text__smallest",
                         on: {
                           change: function($event) {
                             var $$selectedVal = Array.prototype.filter
@@ -16531,7 +16531,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "alpheios-info uk-margin" }, [
+  return _c("div", { staticClass: "alpheios-info" }, [
     _c(
       "div",
       { staticClass: "alpheios-info__versiontext alpheios-text__smallest" },
@@ -16676,7 +16676,7 @@ var render = function() {
             expression: "lookuptext"
           }
         ],
-        staticClass: "uk-input alpheios-lookup__input",
+        staticClass: "alpheios-input alpheios-lookup__input",
         attrs: {
           placeholder: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
           type: "text"
@@ -16715,7 +16715,7 @@ var render = function() {
               "button",
               {
                 staticClass:
-                  "uk-button uk-button-primary uk-button-small alpheios-lookup__button",
+                  "alpheios-button alpheios-button-primary alpheios-button-small alpheios-lookup__button",
                 attrs: { tabindex: "-1", type: "button" },
                 on: { click: _vm.lookup }
               },
@@ -19120,7 +19120,7 @@ var render = function() {
                     }
                   ],
                   staticClass:
-                    "alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready",
+                    "alpheios-popup__morph-cont alpheios-text-small alpheios-popup__morph-cont-ready",
                   attrs: { id: "alpheios-panel-lexical-data-container" }
                 },
                 [
@@ -19616,7 +19616,7 @@ var render = function() {
                   expression: "$store.state.ui.notification.important"
                 }
               ],
-              staticClass: "alpheios-panel__notifications uk-text-small",
+              staticClass: "alpheios-panel__notifications alpheios-text-small",
               class: {
                 "alpheios-panel__notifications--important":
                   _vm.$store.state.ui.notification.important
@@ -20342,7 +20342,7 @@ var render = function() {
                   expression: "$store.state.ui.notification.important"
                 }
               ],
-              staticClass: "alpheios-panel__notifications uk-text-small",
+              staticClass: "alpheios-panel__notifications alpheios-text-small",
               class: {
                 "alpheios-panel__notifications--important":
                   _vm.$store.state.ui.notification.important
@@ -20503,7 +20503,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "uk-button-group alpheios-popup__button-area" },
+          { staticClass: "alpheios-button-group alpheios-popup__button-area" },
           [
             _c(
               "button",
@@ -20517,7 +20517,7 @@ var render = function() {
                   }
                 ],
                 staticClass:
-                  "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn",
+                  "alpheios-button alpheios-button-primary alpheios-button-small alpheios-popup__more-btn",
                 on: {
                   click: function($event) {
                     return _vm.showPanelTab("inflections")
@@ -20545,7 +20545,7 @@ var render = function() {
                   }
                 ],
                 staticClass:
-                  "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn",
+                  "alpheios-button alpheios-button-primary alpheios-button-small alpheios-popup__more-btn",
                 on: {
                   click: function($event) {
                     return _vm.showPanelTab("definitions")
@@ -20565,7 +20565,7 @@ var render = function() {
               "button",
               {
                 staticClass:
-                  "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn",
+                  "alpheios-button alpheios-button-primary alpheios-button-small alpheios-popup__more-btn",
                 on: {
                   click: function($event) {
                     return _vm.showPanelTab("options")
@@ -20889,7 +20889,7 @@ var render = function() {
                       "button",
                       {
                         staticClass:
-                          "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-definitions",
+                          "alpheios-button alpheios-button-primary alpheios-button-small alpheios-popup__more-btn alpheios-popup__more-btn-definitions",
                         on: {
                           click: function($event) {
                             return _vm.ui.showPanelTab("definitions")
@@ -20928,7 +20928,7 @@ var render = function() {
                       "button",
                       {
                         staticClass:
-                          "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections",
+                          "alpheios-button alpheios-button-primary alpheios-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections",
                         on: {
                           click: function($event) {
                             return _vm.ui.showPanelTab("inflections")
@@ -20969,7 +20969,7 @@ var render = function() {
                       "button",
                       {
                         staticClass:
-                          "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections",
+                          "alpheios-button alpheios-button-primary alpheios-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections",
                         on: {
                           click: function($event) {
                             return _vm.ui.showPanelTab("wordUsage")
@@ -21010,7 +21010,7 @@ var render = function() {
                       "button",
                       {
                         staticClass:
-                          "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-treebank",
+                          "alpheios-button alpheios-button-primary alpheios-button-small alpheios-popup__more-btn alpheios-popup__more-btn-treebank",
                         on: {
                           click: function($event) {
                             return _vm.ui.showPanelTab("treebank")
@@ -21041,7 +21041,7 @@ var render = function() {
                       "button",
                       {
                         staticClass:
-                          "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-options",
+                          "alpheios-button alpheios-button-primary alpheios-button-small alpheios-popup__more-btn alpheios-popup__more-btn-options",
                         on: {
                           click: function($event) {
                             return _vm.ui.showPanelTab("options")
@@ -21076,7 +21076,7 @@ var render = function() {
             }
           ],
           staticClass:
-            "alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
+            "alpheios-popup__morph-cont alpheios-popup__definitions--placeholder alpheios-text-small"
         },
         [
           _c("progress-bar", {
@@ -21098,7 +21098,7 @@ var render = function() {
             }
           ],
           staticClass:
-            "alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
+            "alpheios-popup__morph-cont alpheios-popup__definitions--placeholder alpheios-text-small"
         },
         [
           _vm._v(
@@ -21125,7 +21125,7 @@ var render = function() {
             }
           ],
           staticClass:
-            "alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
+            "alpheios-popup__morph-cont alpheios-popup__definitions--placeholder alpheios-text-small"
         },
         [
           _vm._v(
@@ -21150,7 +21150,7 @@ var render = function() {
             }
           ],
           staticClass:
-            "alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready",
+            "alpheios-popup__morph-cont alpheios-text-small alpheios-popup__morph-cont-ready",
           attrs: { id: _vm.lexicalDataContainerID }
         },
         [
@@ -21196,7 +21196,7 @@ var render = function() {
         _c(
           "a",
           {
-            staticClass: "alpheios-popup__providers-link uk-link",
+            staticClass: "alpheios-popup__providers-link",
             on: { click: _vm.switchProviders }
           },
           [_vm._v(_vm._s(_vm.providersLinkText))]
@@ -21215,7 +21215,7 @@ var render = function() {
                   expression: "$store.state.ui.notification.important"
                 }
               ],
-              staticClass: "alpheios-popup__notifications uk-text-small",
+              staticClass: "alpheios-popup__notifications alpheios-text-small",
               class: {
                 "alpheios-popup__notifications--important": this.$store.state.ui
                   .notification.important
@@ -21354,7 +21354,7 @@ var render = function() {
               expression: "showTitle"
             }
           ],
-          staticClass: "uk-form-label alpheios-setting__label"
+          staticClass: "alpheios-form-label alpheios-setting__label"
         },
         [_vm._v(_vm._s(_vm.l10n.getMsg("LABEL_RESKIN_SETTINGS")) + ":")]
       ),
@@ -21533,7 +21533,7 @@ var render = function() {
                   expression: "showTitle"
                 }
               ],
-              staticClass: "uk-form-label alpheios-setting__label"
+              staticClass: "alpheios-form-label alpheios-setting__label"
             },
             [_vm._v(_vm._s(_vm.dataModel.labelText))]
           ),
@@ -21648,7 +21648,7 @@ var render = function() {
                       expression: "selected"
                     }
                   ],
-                  staticClass: "uk-select",
+                  staticClass: "alpheios-select",
                   on: {
                     change: function($event) {
                       var $$selectedVal = Array.prototype.filter
@@ -21821,7 +21821,7 @@ var render = function() {
             expression: "!isLoggedIn"
           }
         ],
-        staticClass: "uk-button uk-button-primary",
+        staticClass: "alpheios-button alpheios-button-primary",
         on: { click: _vm.logIn }
       },
       [
@@ -21842,7 +21842,7 @@ var render = function() {
             expression: "isLoggedIn"
           }
         ],
-        staticClass: "uk-button uk-button-primary",
+        staticClass: "alpheios-button alpheios-button-primary",
         on: { click: _vm.logOut }
       },
       [
@@ -35367,6 +35367,46 @@ __webpack_require__.r(__webpack_exports__);
               ...rest,
             },
             children.concat([_c('path',{attrs:{"stroke-linejoin":"round","stroke":"#1a1a1a","stroke-linecap":"round","stroke-width":".194","fill":"#fff","d":"M.097.097h49.806v49.806H.097z"}}),_c('g',{attrs:{"fill":"#4e6476"}},[_c('path',{attrs:{"d":"M39.374 16.822c.053-.048.106-.097.158-.148l2.145-2.146c1.27-1.269 1.459-3.138.422-4.174l-3.252-3.252c-1.036-1.036-2.905-.847-4.174.422L32.527 9.67a3.82 3.82 0 0 0-.148.157l6.995 6.996zM13.209 42.91l-4.603 1.144-4.602 1.143 1.144-4.602 1.143-4.603 3.46 3.46zM38.23 17.977l-5.004-5.004L10.548 35.65l-1.001-1 22.679-22.678-1.001-1.001L7.32 34.876l7.005 7.005z"}})]),_c('path',{attrs:{"d":"M45.101 44.818c-3.798-.03-4.271-.944-5.509-4.757-2.283-6.018-12.566 1.574-6.194 4.21s15.502.577 11.703.547z"}}),_c('path',{attrs:{"d":"M32.46 34.475l-3.558-5.055-3.515 3.515 3.823 4.16c1.924 2.388 1.48 2.281 3.322.796 1.843-1.485 1.853-1.028-.071-3.416zM21.366 18.714L12.974 6.79c-1.925-2.388-4.978-3.12-6.82-1.635S4.375 9.78 6.3 12.168L16.65 23.43l4.716-4.716zM11.163 8.47s-.332-1.424-2.99-2.99c0 0 2.8-.427 4.224 1.898-.95.76-1.234 1.092-1.234 1.092z"}})])
+          )
+        }
+      });
+    
+
+/***/ }),
+
+/***/ "./images/inline-icons/books-stack.svg":
+/*!*********************************************!*\
+  !*** ./images/inline-icons/books-stack.svg ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+      /* harmony default export */ __webpack_exports__["default"] = ({
+        functional: true,
+        render(_h, _vm) {
+          const { _c, _v, data, children = [] } = _vm;
+
+          const {
+            class: classNames,
+            staticClass,
+            style,
+            staticStyle,
+            attrs = {},
+            ...rest
+          } = data;
+
+          return _c(
+            'svg',
+            {
+              class: [classNames,staticClass],
+              style: [style,staticStyle],
+              attrs: Object.assign({"viewBox":"0 0 335.08 335.08"}, attrs),
+              ...rest,
+            },
+            children.concat([_c('path',{attrs:{"d":"M311.18 115.78c-1.355-10.186-1.546-27.73 7.915-33.621.169-.108.295-.264.443-.398 7.735-2.474 13.088-5.946 8.886-10.618l-114.1-34.38L29.564 62.45S8.407 65.474 10.297 98.344c1.026 17.89 6.637 26.676 11.544 31L6.68 133.913c-4.208 4.672 1.144 8.145 8.88 10.615.147.138.271.293.443.401 9.455 5.896 9.273 23.438 7.913 33.626-33.967 9.645-21.774 12.788-21.774 12.788l7.451 1.803c-5.241 4.736-10.446 13.717-9.471 30.75 1.891 32.864 19.269 35.132 19.269 35.132l120.9 39.298 182.49-44.202s12.197-3.148-21.779-12.794c-1.366-10.172-1.556-27.712 7.921-33.623.174-.105.301-.264.442-.396 7.736-2.474 13.084-5.943 8.881-10.615l-7.932-2.395c5.29-3.19 13.236-11.527 14.481-33.183.859-14.896-3.027-23.62-7.525-28.756l15.678-3.794c.001.006 12.198-3.142-21.773-12.788zm-152.64-.421l30.688-6.307 103.71-21.312 15.451-3.178c-4.937 9.036-4.73 21.402-3.913 29.35.179 1.798.385 3.44.585 4.688l-16.912 4.205-130.9 32.563 1.29-40.009zM26.72 147.342l15.449 3.178 99.597 20.474 8.701 1.782 26.093 5.363 1.287 40.01-134.53-33.471-13.263-3.296c.195-1.25.401-2.89.588-4.693.812-7.942 1.023-20.311-3.918-29.347zm-6.002-50.58c-.187-8.743 1.371-15.066 4.52-18.28 2.004-2.052 4.369-2.479 5.991-2.479.857 0 1.474.119 1.516.119l79.607 25.953 39.717 12.949-1.303 40.289-111.42-31.238-5.88-1.647a3.56 3.56 0 0 0-.735-.113c-.459-.033-11.475-1.047-12.011-25.553zm119.87 184.11l-117.3-32.886a3.489 3.489 0 0 0-.733-.116c-.467-.031-11.488-1.044-12.021-25.544-.19-8.754 1.376-15.071 4.519-18.288 2.009-2.052 4.375-2.479 5.994-2.479.859 0 1.474.115 1.519.115 0 0 .005 0 0 0l119.32 38.908-1.295 40.29zm153.7-41.407c.185 1.804.391 3.443.591 4.693l-147.81 36.771 1.292-40.01 31.601-6.497 4.667 1.129 17.492-5.685 80.631-16.569 15.457-3.18c-4.942 9.035-4.737 21.406-3.919 29.348zm8.142-54.375a2.84 2.84 0 0 0-.791.122l-11.148 3.121-106.15 29.764-1.298-40.289 34.826-11.359 84.327-27.501c.011-.005 4.436-.988 7.684 2.315 3.144 3.214 4.704 9.537 4.52 18.28-.55 24.498-11.571 25.516-11.972 25.547z"}})])
           )
         }
       });

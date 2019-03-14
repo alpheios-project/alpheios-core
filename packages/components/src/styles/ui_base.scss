@@ -1,27 +1,195 @@
+.alpheios-text-small {
+	font-size: 0.875rem;
+	line-height: 1.5;
+}
+
+.alpheios-form-label {
+	color: #333;
+	font-size: 0.875rem;
+}
+
+.alpheios-button-primary {
+	background-color: #1e87f0;
+	color: #fff;
+
+	&:hover,
+	&:focus {
+		background-color: #0f7ae5;
+		color: #fff;
+	}
+
+	&:active {
+		background-color: #0e6dcd;
+		color: #fff;
+	}
+}
+
+.alpheios-button-small {
+	padding: 0 15px;
+	line-height: 30px;
+	font-size: 0.875rem;
+}
+
+.alpheios-input {
+	box-sizing: border-box;
+	margin: 0;
+	border-radius: 0;
+	font: inherit;
+	max-width: 100%;
+	width: 100%;
+	border: 1px solid #666;
+	padding: 0 10px;
+	background: #FFF;
+	color: #666;
+	height: 40px;
+	vertical-align: middle;
+	display: inline-block;
+	-webkit-appearance: none;
+
+	&[type="search"]::-webkit-search-cancel-button,
+	&[type="search"]::-webkit-search-decoration {
+		-webkit-appearance: none;
+	}
+
+	&[type="number"]::-webkit-inner-spin-button,
+	&[type="number"]::-webkit-outer-spin-button {
+		height: auto;
+	}
+
+	&::-moz-placeholder {
+		opacity: 1;
+	}
+
+	&:not(input) {
+		line-height: 40px;
+	}
+
+	&:focus {
+		outline: none;
+	}
+
+	&:disabled {
+		background-color: #f8f8f8;
+		color: #999;
+	}
+
+	&::placeholder {
+		color: #999;
+	}
+
+	&::-ms-input-placeholder {
+		color: #999 !important;
+	}
+}
+
+.alpheios-select {
+	box-sizing: border-box;
+	margin: 0;
+	border-radius: 0;
+	font: inherit;
+	text-transform: none;
+	max-width: 100%;
+	width: 100%;
+	border: 1px solid #666;
+	padding: 0 10px;
+	background: #FFF;
+	color: #666;
+	-webkit-appearance: none;
+
+	&:not([multiple]):not([size]) {
+		height: 40px;
+		vertical-align: middle;
+		display: inline-block;
+	}
+
+	&:not(select) {
+		line-height: 40px;
+	}
+
+	&[multiple],
+	&[size] {
+		padding-top: 4px;
+		padding-bottom: 4px;
+		vertical-align: top;
+	}
+
+	&:focus {
+		outline: none;
+	}
+
+	&:disabled {
+		background-color: #f8f8f8;
+		color: #999;
+	}
+
+	&:not([multiple]):not([size]) {
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		padding-right: 20px;
+		background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666%22%20points%3D%2212%201%209%206%2015%206%22%20%2F%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666%22%20points%3D%2212%2013%209%208%2015%208%22%20%2F%3E%0A%3C%2Fsvg%3E%0A");
+		background-repeat: no-repeat;
+		background-position: 100% 50%;
+	}
+
+	&:not([multiple]):not([size])::-ms-expand {
+		display: none;
+	}
+
+	&:not([multiple]):not([size]) option {
+		color: #444;
+	}
+
+	&:not([multiple]):not([size]):disabled {
+		background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23999%22%20points%3D%2212%201%209%206%2015%206%22%20%2F%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23999%22%20points%3D%2212%2013%209%208%2015%208%22%20%2F%3E%0A%3C%2Fsvg%3E%0A");
+	}
+}
+
 #{$alpheios-ID-namespace} {
-  .uk-button {
-  	font-family: $alpheios-font-family;
-    font-size: $alpheios-base-font-size * 0.7;
-    line-height: $alpheios-base-font-size * 1.75;
-    background-color: $alpheios-toolbar-color;
+	.alpheios-button {
+		margin: 0;
+		border: none;
+		overflow: visible;
+		font: inherit;
+		display: inline-block;
+		box-sizing: border-box;
+		padding: 0 30px;
+		vertical-align: middle;
+		text-align: center;
+		text-decoration: none;
+		font-family: $alpheios-font-family;
+		font-size: $alpheios-base-font-size * 0.7;
+		line-height: $alpheios-base-font-size * 1.75;
+		background-color: $alpheios-toolbar-color;
 		color: $alpheios-toolbar-text-color;
 		text-transform: uppercase;
 		border-radius: 0;
-  }
 
-  .uk-input {
+		&:not(:disabled) {
+			cursor: pointer;
+		}
+
+		// Remove the inner border and padding in Firefox
+		&::-moz-focus-inner {
+			border: 0;
+			padding: 0;
+		}
+
+		&:hover {
+			text-decoration: none;
+		}
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+  .alpheios-input {
   	font-family: $alpheios-font-family;
     font-size: $alpheios-base-font-size * 0.875;
     height: $alpheios-base-font-size * 2;
   }
 
-  .uk-link {
-  	font-family: $alpheios-font-family;
-  	color: $alpheios-link-color;
-  	font-size: $alpheios-base-font-size * 0.7;
-  }
-
-  .uk-form-label {
+  .alpheios-form-label {
   	font-family: $alpheios-font-family;
   	font-size: $alpheios-base-font-size * 0.85;
   }

@@ -7,7 +7,7 @@
 			color: $alpheios-color_schema_light_text_color;
 		}
 
-		.uk-form-label,
+		.alpheios-form-label,
 		h3,
 		.alpheios-info .alpheios-info__helptext p,
 		.alpheios-info,
@@ -17,14 +17,14 @@
 			color: $alpheios-color_schema_light_text_color;
 		}
 
-		.uk-link,
+		.alpheios-link,
 		.alpheios-lookup__settings-link,
 		.alpheios-popup__providers-link,
 		.alpheios-morph__linkedattr {
 			color: $alpheios-link-color;
 		}
 
-		.uk-button-primary {
+		.alpheios-button-primary{
 			background-color: $alpheios-color_schema_light_tooltip-color;
 			color: $alpheios-color_schema_light_background !important; 
 		}

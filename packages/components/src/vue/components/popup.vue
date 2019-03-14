@@ -36,7 +36,7 @@
       <div class="alpheios-popup__button-area" v-if="data">
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
                       v-show="$store.getters['app/defDataReady']">
-          <button @click="ui.showPanelTab('definitions')" class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-definitions">
+          <button @click="ui.showPanelTab('definitions')" class="alpheios-button alpheios-button-primary alpheios-button-small alpheios-popup__more-btn alpheios-popup__more-btn-definitions">
             {{ l10n.getText('LABEL_POPUP_DEFINE') }}
           </button>
         </alph-tooltip>
@@ -44,14 +44,14 @@
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_INFLECTIONS')" tooltipDirection="bottom-wide"
                       v-show="$store.state.app.hasInflData">
           <button @click="ui.showPanelTab('inflections')"
-                  class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections">
+                  class="alpheios-button alpheios-button-primary alpheios-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections">
             {{ l10n.getText('LABEL_POPUP_INFLECT') }}
           </button>
         </alph-tooltip>
 
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_USAGEEXAMPLES')" tooltipDirection="bottom-wide"
                       v-show="$store.state.app.wordUsageExamplesReady">
-          <button class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections"
+          <button class="alpheios-button alpheios-button-primary alpheios-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections"
                   @click="ui.showPanelTab('wordUsage')">
             {{ l10n.getText('LABEL_POPUP_USAGEEXAMPLES') }}
           </button>
@@ -60,7 +60,7 @@
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
                       v-show="$store.getters['app/hasTreebankData']">
           <button @click="ui.showPanelTab('treebank')"
-                  class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-treebank">
+                  class="alpheios-button alpheios-button-primary alpheios-button-small alpheios-popup__more-btn alpheios-popup__more-btn-treebank">
             {{ l10n.getText('LABEL_POPUP_TREEBANK') }}
           </button>
 
@@ -68,27 +68,27 @@
 
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_OPTIONS')" tooltipDirection="bottom-right">
           <button @click="ui.showPanelTab('options')"
-                  class="uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-options">
+                  class="alpheios-button alpheios-button-primary alpheios-button-small alpheios-popup__more-btn alpheios-popup__more-btn-options">
             {{ l10n.getText('LABEL_POPUP_OPTIONS') }}
           </button>
         </alph-tooltip>
       </div>
     </div>
 
-    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
+    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder alpheios-text-small"
          v-show="!$store.state.app.morphDataReady && !noLanguage">
       <progress-bar :text="l10n.getText('PLACEHOLDER_POPUP_DATA')"></progress-bar>
     </div>
 
-    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
+    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder alpheios-text-small"
          v-show="noLanguage && !$store.state.app.morphDataReady">
       {{ l10n.getText('PLACEHOLDER_NO_LANGUAGE_POPUP_DATA') }}
     </div>
-    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
+    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder alpheios-text-small"
          v-show="$store.state.app.morphDataReady && !app.hasMorphData() && !noLanguage">
       {{ l10n.getText('PLACEHOLDER_NO_DATA_POPUP_DATA') }}
     </div>
-    <div :id="lexicalDataContainerID" class="alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready"
+    <div :id="lexicalDataContainerID" class="alpheios-popup__morph-cont alpheios-text-small alpheios-popup__morph-cont-ready"
          v-show="$store.state.app.morphDataReady && app.hasMorphData()">
       <morph
           :id="morphComponentID"
@@ -103,9 +103,9 @@
     </div>
     <div class="alpheios-popup__providers">
       <img class="alpheios-popup__logo" src="../../images/icon.png">
-      <a class="alpheios-popup__providers-link uk-link" v-on:click="switchProviders">{{providersLinkText}}</a>
+      <a class="alpheios-popup__providers-link" v-on:click="switchProviders">{{providersLinkText}}</a>
     </div>
-    <div class="alpheios-popup__notifications uk-text-small"
+    <div class="alpheios-popup__notifications alpheios-text-small"
          :class="{ 'alpheios-popup__notifications--important': this.$store.state.ui.notification.important }"
          v-if="$store.state.ui.notification.text" v-show="$store.state.ui.notification.important">
 
@@ -686,7 +686,7 @@ export default {
     display: inline-block;
   }
 
-  .alpheios-popup__notifications--lang-switcher .uk-select {
+  .alpheios-popup__notifications--lang-switcher .alpheios-select {
     width: 120px;
     height: 25px;
   }
@@ -743,13 +743,13 @@ export default {
     margin: 0 0 5px 10px;
   }
 
-  /*
-  .alpheios-popup__providers-link {
-    font-size: 0.675*$alpheios-base-font-size;
-  }*/
   .alpheios-popup__providers-link {
     display: inline-block;
     vertical-align: middle;
     padding: 5px 0 0;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 </style>

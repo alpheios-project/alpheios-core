@@ -3,7 +3,7 @@ div.alpheios-color_schema_dark_class {
 	background: $alpheios-color_schema_dark_background;
 	color: $alpheios-color_schema_dark_text_color;
 
-	.uk-form-label,
+	.alpheios-form-label,
 	h3,
 	span,
 	.alpheios-info .alpheios-info__helptext p,
@@ -19,14 +19,14 @@ div.alpheios-color_schema_dark_class {
 	  color: $alpheios-base-font-color;
 	}
 
-	.uk-link,
+	.alpheios-link,
 	.alpheios-lookup__settings-link,
 	.alpheios-popup__providers-link,
 	.alpheios-morph__linkedattr {
 		color: $alpheios-color_schema_dark_link_color;
 	}
 
-	.uk-button-primary {
+	.alpheios-button-primary{
 		background-color: $alpheios-color_schema_dark_text_color;
 		color: $alpheios-color_schema_dark_background;
 	}

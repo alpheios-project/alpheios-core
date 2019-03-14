@@ -5,7 +5,6 @@
   "main": "dist/alpheios-components.min.js",
   "scripts": {
     "test": "eslint --fix src/**/*.js && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-popup": "jest ./tests/vue/components/popup.test.js",
     "test-lib": "eslint --fix src/**/*.js && jest tests/lib --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-components": "eslint --fix src/**/*.js && jest tests/vue --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-c": "eslint --fix src/**/*.js && jest tests/vue-components/word-usage-examples-block.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
@@ -72,7 +71,6 @@
     "sinon": "^7.2.7",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
-    "uikit": "^3.0.3",
     "vue": "^2.6.8",
     "vue-jest": "^3.0.4",
     "vue-multiselect": "^2.1.4",
