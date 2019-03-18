@@ -1,0 +1,53 @@
+%alpheios-button {
+  margin: 0;
+  border: none;
+  overflow: visible;
+  font: inherit;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 0.9em 1.8em;
+  vertical-align: middle;
+  text-align: center;
+  text-decoration: none;
+  font-family: $alpheios-font-family;
+  font-size: calc(var(--alpheios-base-font-size) * 0.7);
+  line-height: 1;
+  text-transform: uppercase;
+  border-radius: 0.9em;
+  cursor: pointer;
+
+  // Remove the inner border and padding in Firefox
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.alpheios-button-small {
+  font-size: calc(var(--alpheios-base-font-size) * 0.5);
+}
+
+.alpheios-button-primary {
+  @extend %alpheios-button;
+  background-color: var(--alpheios-btn-primary-bg-color);
+  color: var(--alpheios-btn-primary-font-color);
+
+  &:hover,
+  &:focus {
+    background-color: var(--alpheios-color-vivid-hover);
+    box-shadow: 0 0.4em 0.4em rgba(0, 0, 0, 0.25);
+  }
+
+  &:active {
+    background-color: var(--alpheios-color-vivid-pressed);
+    box-shadow: 0 0.4em 0.4em rgba(0, 0, 0, 0.25), inset 0 0.4em 0.4em rgba(0, 0, 0, 0.1);
+  }
+}

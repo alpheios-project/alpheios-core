@@ -284,13 +284,35 @@
 
 /*# sourceMappingURL=style.css.map*/
 @charset "UTF-8";
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
 /********** Light Schema ***********************/
 /********** Dark Schema ***********************/
-.alpheios-popup,
-.alpheios-panel {
+.alpheios-content {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 16px;
   color: #333333;
@@ -299,16 +321,7 @@
   box-sizing: border-box;
   margin: 0;
 }
-.alpheios-popup h1, .alpheios-popup h2, .alpheios-popup h3, .alpheios-popup h4, .alpheios-popup h5, .alpheios-popup h6, .alpheios-popup p, .alpheios-popup span, .alpheios-popup a,
-.alpheios-panel h1,
-.alpheios-panel h2,
-.alpheios-panel h3,
-.alpheios-panel h4,
-.alpheios-panel h5,
-.alpheios-panel h6,
-.alpheios-panel p,
-.alpheios-panel span,
-.alpheios-panel a {
+.alpheios-content h1, .alpheios-content h2, .alpheios-content h3, .alpheios-content h4, .alpheios-content h5, .alpheios-content h6, .alpheios-content p, .alpheios-content span, .alpheios-content a {
   font-family: inherit;
   background: transparent;
   color: #333333;
@@ -317,50 +330,27 @@
   padding: 0;
   font-style: normal;
 }
-.alpheios-popup button,
-.alpheios-popup input,
-.alpheios-popup optgroup,
-.alpheios-popup select,
-.alpheios-popup textarea,
-.alpheios-panel button,
-.alpheios-panel input,
-.alpheios-panel optgroup,
-.alpheios-panel select,
-.alpheios-panel textarea {
+.alpheios-content input,
+.alpheios-content optgroup,
+.alpheios-content select,
+.alpheios-content textarea {
   font-family: inherit;
   font-size: 100%;
   line-height: 1.15;
   margin: 0;
 }
-.alpheios-popup button,
-.alpheios-popup select,
-.alpheios-panel button,
-.alpheios-panel select {
+.alpheios-content select {
   text-transform: none;
 }
-.alpheios-popup button,
-.alpheios-popup [type=button],
-.alpheios-popup [type=reset],
-.alpheios-popup [type=submit],
-.alpheios-panel button,
-.alpheios-panel [type=button],
-.alpheios-panel [type=reset],
-.alpheios-panel [type=submit] {
-  -webkit-appearance: button;
-}
-.alpheios-popup textarea,
-.alpheios-panel textarea {
+.alpheios-content textarea {
   overflow: auto;
 }
-.alpheios-popup [type=checkbox],
-.alpheios-popup [type=radio],
-.alpheios-panel [type=checkbox],
-.alpheios-panel [type=radio] {
+.alpheios-content [type=checkbox],
+.alpheios-content [type=radio] {
   box-sizing: border-box;
   padding: 0;
 }
-.alpheios-popup b,
-.alpheios-panel b {
+.alpheios-content b {
   margin: 0;
   padding: 0;
   vertical-align: inherit;
@@ -368,8 +358,7 @@
   color: inherit;
   letter-spacing: inherit;
 }
-.alpheios-popup i,
-.alpheios-panel i {
+.alpheios-content i {
   font-family: inherit;
   font-size: inherit;
   color: inherit;
@@ -378,8 +367,7 @@
   text-align: inherit;
   font-style: inherit;
 }
-.alpheios-popup u,
-.alpheios-panel u {
+.alpheios-content u {
   margin: 0;
   padding: 0;
   vertical-align: inherit;
@@ -397,25 +385,6 @@
 
 .alpheios-form-label {
   color: #333;
-  font-size: 0.875rem;
-}
-
-.alpheios-button-primary {
-  background-color: #1e87f0;
-  color: #fff;
-}
-.alpheios-button-primary:hover, .alpheios-button-primary:focus {
-  background-color: #0f7ae5;
-  color: #fff;
-}
-.alpheios-button-primary:active {
-  background-color: #0e6dcd;
-  color: #fff;
-}
-
-.alpheios-button-small {
-  padding: 0 15px;
-  line-height: 30px;
   font-size: 0.875rem;
 }
 
@@ -513,48 +482,16 @@
   background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23999%22%20points%3D%2212%201%209%206%2015%206%22%20%2F%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23999%22%20points%3D%2212%2013%209%208%2015%208%22%20%2F%3E%0A%3C%2Fsvg%3E%0A");
 }
 
-#alpheios-panel .alpheios-button, #alpheios-popup .alpheios-button {
-  margin: 0;
-  border: none;
-  overflow: visible;
-  font: inherit;
-  display: inline-block;
-  box-sizing: border-box;
-  padding: 0 30px;
-  vertical-align: middle;
-  text-align: center;
-  text-decoration: none;
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  font-size: 11.2px;
-  line-height: 28px;
-  background-color: #4E6476;
-  color: #ffffff;
-  text-transform: uppercase;
-  border-radius: 0;
-}
-#alpheios-panel .alpheios-button:not(:disabled), #alpheios-popup .alpheios-button:not(:disabled) {
-  cursor: pointer;
-}
-#alpheios-panel .alpheios-button::-moz-focus-inner, #alpheios-popup .alpheios-button::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-#alpheios-panel .alpheios-button:hover, #alpheios-popup .alpheios-button:hover {
-  text-decoration: none;
-}
-#alpheios-panel .alpheios-button:focus, #alpheios-popup .alpheios-button:focus {
-  outline: none;
-}
-#alpheios-panel .alpheios-input, #alpheios-popup .alpheios-input {
+.alpheios-content .alpheios-input {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 14px;
   height: 32px;
 }
-#alpheios-panel .alpheios-form-label, #alpheios-popup .alpheios-form-label {
+.alpheios-content .alpheios-form-label {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 13.6px;
 }
-#alpheios-panel .alpheios-skin_properties_item, #alpheios-popup .alpheios-skin_properties_item {
+.alpheios-content .alpheios-skin_properties_item {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   background-color: #4E6476;
   color: #ffffff;
@@ -565,21 +502,21 @@
   height: 28px;
   line-height: 28px;
 }
-#alpheios-panel .alpheios-skin_properties_item__small_font, #alpheios-popup .alpheios-skin_properties_item__small_font {
+.alpheios-content .alpheios-skin_properties_item__small_font {
   font-size: 12.8px;
   width: 22.4px;
   height: 22.4px;
   line-height: 22.4px;
   border-radius: 11.2px;
 }
-#alpheios-panel .alpheios-skin_properties_item__medium_font, #alpheios-popup .alpheios-skin_properties_item__medium_font {
+.alpheios-content .alpheios-skin_properties_item__medium_font {
   font-size: 16px;
   width: 28px;
   height: 28px;
   line-height: 28px;
   border-radius: 14.4px;
 }
-#alpheios-panel .alpheios-skin_properties_item__large_font, #alpheios-popup .alpheios-skin_properties_item__large_font {
+.alpheios-content .alpheios-skin_properties_item__large_font {
   font-size: 19.2px;
   width: 33.6px;
   height: 33.6px;
@@ -785,6 +722,52 @@
   border-width: 5px;
   border-style: solid;
   border-color: transparent transparent transparent #555;
+}
+
+.alpheios-button-primary {
+  margin: 0;
+  border: none;
+  overflow: visible;
+  font: inherit;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 0.9em 1.8em;
+  vertical-align: middle;
+  text-align: center;
+  text-decoration: none;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: calc(var(--alpheios-base-font-size) * 0.7);
+  line-height: 1;
+  text-transform: uppercase;
+  border-radius: 0.9em;
+  cursor: pointer;
+}
+.alpheios-button-primary::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+.alpheios-button-primary:hover {
+  text-decoration: none;
+}
+.alpheios-button-primary:focus {
+  outline: none;
+}
+
+.alpheios-button-small {
+  font-size: calc(var(--alpheios-base-font-size) * 0.5);
+}
+
+.alpheios-button-primary {
+  background-color: var(--alpheios-btn-primary-bg-color);
+  color: var(--alpheios-btn-primary-font-color);
+}
+.alpheios-button-primary:hover, .alpheios-button-primary:focus {
+  background-color: var(--alpheios-color-vivid-hover);
+  box-shadow: 0 0.4em 0.4em rgba(0, 0, 0, 0.25);
+}
+.alpheios-button-primary:active {
+  background-color: var(--alpheios-color-vivid-pressed);
+  box-shadow: 0 0.4em 0.4em rgba(0, 0, 0, 0.25), inset 0 0.4em 0.4em rgba(0, 0, 0, 0.1);
 }
 
 .auk.alpheios-font_large_class .multiselect,
@@ -1091,15 +1074,19 @@ div.alpheios-checkbox-block {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 16px;
   line-height: normal;
+  /*p,span,div,a, input {
+    font-size: $baseFontSize;
+    line-height: normal;
+  }*/
   /** TODO Remove this when we port inflection tables to Vue **/
+  /*.infl-cell, .infl-cell span {
+      font-size: $baseFontSize * 0.75;
+    color: red;
+  }*/
 }
 .auk.alpheios-font_medium_class h3 {
   font-size: 16px;
   line-height: 1.25;
-}
-.auk.alpheios-font_medium_class p, .auk.alpheios-font_medium_class span, .auk.alpheios-font_medium_class div, .auk.alpheios-font_medium_class a, .auk.alpheios-font_medium_class input {
-  font-size: 16px;
-  line-height: normal;
 }
 .auk.alpheios-font_medium_class .alpheios-form-label {
   font-size: 13.6px;
@@ -1157,9 +1144,6 @@ div.alpheios-checkbox-block {
 .auk.alpheios-font_medium_class .alpheios-panel__header-nav-btn svg {
   width: 20px;
   height: 20px;
-}
-.auk.alpheios-font_medium_class .infl-cell, .auk.alpheios-font_medium_class .infl-cell span {
-  font-size: 12px;
 }
 .auk.alpheios-font_medium_class .infl-cell sup {
   font-size: 10.8px;
@@ -1256,15 +1240,19 @@ div.alpheios-checkbox-block {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 12px;
   line-height: normal;
+  /*p,span,div,a, input {
+    font-size: $baseFontSize;
+    line-height: normal;
+  }*/
   /** TODO Remove this when we port inflection tables to Vue **/
+  /*.infl-cell, .infl-cell span {
+      font-size: $baseFontSize * 0.75;
+    color: red;
+  }*/
 }
 .auk.alpheios-font_small_class h3 {
   font-size: 12px;
   line-height: 1.25;
-}
-.auk.alpheios-font_small_class p, .auk.alpheios-font_small_class span, .auk.alpheios-font_small_class div, .auk.alpheios-font_small_class a, .auk.alpheios-font_small_class input {
-  font-size: 12px;
-  line-height: normal;
 }
 .auk.alpheios-font_small_class .alpheios-form-label {
   font-size: 10.2px;
@@ -1322,9 +1310,6 @@ div.alpheios-checkbox-block {
 .auk.alpheios-font_small_class .alpheios-panel__header-nav-btn svg {
   width: 15px;
   height: 15px;
-}
-.auk.alpheios-font_small_class .infl-cell, .auk.alpheios-font_small_class .infl-cell span {
-  font-size: 9px;
 }
 .auk.alpheios-font_small_class .infl-cell sup {
   font-size: 8.1px;
@@ -1421,15 +1406,19 @@ div.alpheios-checkbox-block {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 20px;
   line-height: normal;
+  /*p,span,div,a, input {
+    font-size: $baseFontSize;
+    line-height: normal;
+  }*/
   /** TODO Remove this when we port inflection tables to Vue **/
+  /*.infl-cell, .infl-cell span {
+      font-size: $baseFontSize * 0.75;
+    color: red;
+  }*/
 }
 .auk.alpheios-font_large_class h3 {
   font-size: 20px;
   line-height: 1.25;
-}
-.auk.alpheios-font_large_class p, .auk.alpheios-font_large_class span, .auk.alpheios-font_large_class div, .auk.alpheios-font_large_class a, .auk.alpheios-font_large_class input {
-  font-size: 20px;
-  line-height: normal;
 }
 .auk.alpheios-font_large_class .alpheios-form-label {
   font-size: 17px;
@@ -1487,9 +1476,6 @@ div.alpheios-checkbox-block {
 .auk.alpheios-font_large_class .alpheios-panel__header-nav-btn svg {
   width: 25px;
   height: 25px;
-}
-.auk.alpheios-font_large_class .infl-cell, .auk.alpheios-font_large_class .infl-cell span {
-  font-size: 15px;
 }
 .auk.alpheios-font_large_class .infl-cell sup {
   font-size: 13.5px;
@@ -1623,10 +1609,6 @@ div.alpheios-color_schema_light_class .alpheios-popup__providers-link,
 div.alpheios-color_schema_light_class .alpheios-morph__linkedattr {
   color: #3E8D9C;
 }
-div.alpheios-color_schema_light_class .alpheios-button-primary {
-  background-color: #4E6476;
-  color: #ffffff !important;
-}
 div.alpheios-color_schema_light_class .infl-cell,
 div.alpheios-color_schema_light_class .infl-table {
   border-color: #333333;
@@ -1700,10 +1682,6 @@ div.alpheios-color_schema_dark_class .alpheios-popup__providers-link,
 div.alpheios-color_schema_dark_class .alpheios-morph__linkedattr {
   color: #b1d1d7;
 }
-div.alpheios-color_schema_dark_class .alpheios-button-primary {
-  background-color: #f2f2f2;
-  color: #282828;
-}
 div.alpheios-color_schema_dark_class .infl-cell,
 div.alpheios-color_schema_dark_class .infl-table {
   border-color: #f2f2f2;
@@ -1776,6 +1754,29 @@ body {
   -ms-user-select: auto;
   user-select: auto;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -1785,6 +1786,29 @@ body {
   color: #0E2233;
   font-weight: bold;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -1799,6 +1823,29 @@ body {
 p.alpheios-lemma__translations-value {
   margin-bottom: 5px;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -1977,6 +2024,29 @@ div.alpheios-morph__block {
   display: inline-block;
 }
 fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{position:absolute;right:1px;top:1px;width:48px;height:35px;background:#fff;display:block}.multiselect__spinner:after,.multiselect__spinner:before{position:absolute;content:"";top:50%;left:50%;margin:-8px 0 0 -8px;width:16px;height:16px;border-radius:100%;border:2px solid transparent;border-top-color:#41b883;box-shadow:0 0 0 1px transparent}.multiselect__spinner:before{animation:spinning 2.4s cubic-bezier(.41,.26,.2,.62);animation-iteration-count:infinite}.multiselect__spinner:after{animation:spinning 2.4s cubic-bezier(.51,.09,.21,.8);animation-iteration-count:infinite}.multiselect__loading-enter-active,.multiselect__loading-leave-active{transition:opacity .4s ease-in-out;opacity:1}.multiselect__loading-enter,.multiselect__loading-leave-active{opacity:0}.multiselect,.multiselect__input,.multiselect__single{font-family:inherit;font-size:16px;-ms-touch-action:manipulation;touch-action:manipulation}.multiselect{box-sizing:content-box;display:block;position:relative;width:100%;min-height:40px;text-align:left;color:#35495e}.multiselect *{box-sizing:border-box}.multiselect:focus{outline:none}.multiselect--disabled{background:#ededed;pointer-events:none;opacity:.6}.multiselect--active{z-index:50}.multiselect--active:not(.multiselect--above) .multiselect__current,.multiselect--active:not(.multiselect--above) .multiselect__input,.multiselect--active:not(.multiselect--above) .multiselect__tags{border-bottom-left-radius:0;border-bottom-right-radius:0}.multiselect--active .multiselect__select{transform:rotate(180deg)}.multiselect--above.multiselect--active .multiselect__current,.multiselect--above.multiselect--active .multiselect__input,.multiselect--above.multiselect--active .multiselect__tags{border-top-left-radius:0;border-top-right-radius:0}.multiselect__input,.multiselect__single{position:relative;display:inline-block;min-height:20px;line-height:20px;border:none;border-radius:5px;background:#fff;padding:0 0 0 5px;width:100%;transition:border .1s ease;box-sizing:border-box;margin-bottom:8px;vertical-align:top}.multiselect__input:-ms-input-placeholder{color:#35495e}.multiselect__input::placeholder{color:#35495e}.multiselect__tag~.multiselect__input,.multiselect__tag~.multiselect__single{width:auto}.multiselect__input:hover,.multiselect__single:hover{border-color:#cfcfcf}.multiselect__input:focus,.multiselect__single:focus{border-color:#a8a8a8;outline:none}.multiselect__single{padding-left:5px;margin-bottom:8px}.multiselect__tags-wrap{display:inline}.multiselect__tags{min-height:40px;display:block;padding:8px 40px 0 8px;border-radius:5px;border:1px solid #e8e8e8;background:#fff;font-size:14px}.multiselect__tag{position:relative;display:inline-block;padding:4px 26px 4px 10px;border-radius:5px;margin-right:10px;color:#fff;line-height:1;background:#41b883;margin-bottom:5px;white-space:nowrap;overflow:hidden;max-width:100%;text-overflow:ellipsis}.multiselect__tag-icon{cursor:pointer;margin-left:7px;position:absolute;right:0;top:0;bottom:0;font-weight:700;font-style:normal;width:22px;text-align:center;line-height:22px;transition:all .2s ease;border-radius:5px}.multiselect__tag-icon:after{content:"\D7";color:#266d4d;font-size:14px}.multiselect__tag-icon:focus,.multiselect__tag-icon:hover{background:#369a6e}.multiselect__tag-icon:focus:after,.multiselect__tag-icon:hover:after{color:#fff}.multiselect__current{min-height:40px;overflow:hidden;padding:8px 30px 0 12px;white-space:nowrap;border-radius:5px;border:1px solid #e8e8e8}.multiselect__current,.multiselect__select{line-height:16px;box-sizing:border-box;display:block;margin:0;text-decoration:none;cursor:pointer}.multiselect__select{position:absolute;width:40px;height:38px;right:1px;top:1px;padding:4px 8px;text-align:center;transition:transform .2s ease}.multiselect__select:before{position:relative;right:0;top:65%;color:#999;margin-top:4px;border-color:#999 transparent transparent;border-style:solid;border-width:5px 5px 0;content:""}.multiselect__placeholder{color:#adadad;display:inline-block;margin-bottom:10px;padding-top:2px}.multiselect--active .multiselect__placeholder{display:none}.multiselect__content-wrapper{position:absolute;display:block;background:#fff;width:100%;max-height:240px;overflow:auto;border:1px solid #e8e8e8;border-top:none;border-bottom-left-radius:5px;border-bottom-right-radius:5px;z-index:50;-webkit-overflow-scrolling:touch}.multiselect__content{list-style:none;display:inline-block;padding:0;margin:0;min-width:100%;vertical-align:top}.multiselect--above .multiselect__content-wrapper{bottom:100%;border-bottom-left-radius:0;border-bottom-right-radius:0;border-top-left-radius:5px;border-top-right-radius:5px;border-bottom:none;border-top:1px solid #e8e8e8}.multiselect__content::webkit-scrollbar{display:none}.multiselect__element{display:block}.multiselect__option{display:block;padding:12px;min-height:40px;line-height:16px;text-decoration:none;text-transform:none;vertical-align:middle;position:relative;cursor:pointer;white-space:nowrap}.multiselect__option:after{top:0;right:0;position:absolute;line-height:40px;padding-right:12px;padding-left:20px;font-size:13px}.multiselect__option--highlight{background:#41b883;outline:none;color:#fff}.multiselect__option--highlight:after{content:attr(data-select);background:#41b883;color:#fff}.multiselect__option--selected{background:#f3f3f3;color:#35495e;font-weight:700}.multiselect__option--selected:after{content:attr(data-selected);color:silver}.multiselect__option--selected.multiselect__option--highlight{background:#ff6a6a;color:#fff}.multiselect__option--selected.multiselect__option--highlight:after{background:#ff6a6a;content:attr(data-deselect);color:#fff}.multiselect--disabled .multiselect__current,.multiselect--disabled .multiselect__select{background:#ededed;color:#a6a6a6}.multiselect__option--disabled{background:#ededed!important;color:#a6a6a6!important;cursor:text;pointer-events:none}.multiselect__option--group{background:#ededed;color:#35495e}.multiselect__option--group.multiselect__option--highlight{background:#35495e;color:#fff}.multiselect__option--group.multiselect__option--highlight:after{background:#35495e}.multiselect__option--disabled.multiselect__option--highlight{background:#dedede}.multiselect__option--group-selected.multiselect__option--highlight{background:#ff6a6a;color:#fff}.multiselect__option--group-selected.multiselect__option--highlight:after{background:#ff6a6a;content:attr(data-deselect);color:#fff}.multiselect-enter-active,.multiselect-leave-active{transition:all .15s ease}.multiselect-enter,.multiselect-leave-active{opacity:0}.multiselect__strong{margin-bottom:8px;line-height:20px;display:inline-block;vertical-align:top}[dir=rtl] .multiselect{text-align:right}[dir=rtl] .multiselect__select{right:auto;left:1px}[dir=rtl] .multiselect__tags{padding:8px 8px 0 40px}[dir=rtl] .multiselect__content{text-align:right}[dir=rtl] .multiselect__option:after{right:auto;left:0}[dir=rtl] .multiselect__clear{right:auto;left:12px}[dir=rtl] .multiselect__spinner{right:auto;left:1px}@keyframes spinning{0%{transform:rotate(0)}to{transform:rotate(2turn)}}
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -1986,11 +2056,57 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
   display: block;
   vertical-align: middle;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
 /********** Light Schema ***********************/
 /********** Dark Schema ***********************/
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -2075,6 +2191,29 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
     width: 100%;
 }
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -2239,6 +2378,29 @@ img.alpheios-popup__logo {
 .alpheios-popup.alpheios-popup--mobile {
   padding-top: 25px;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -2281,6 +2443,29 @@ img.alpheios-popup__logo {
   width: 20px;
   height: 20px;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -2335,6 +2520,29 @@ img.alpheios-popup__logo {
   top: 10px;
   position: relative;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -2363,6 +2571,29 @@ img.alpheios-popup__logo {
   background-color: #F6D918;
   font-weight: 700;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -2419,6 +2650,29 @@ img.alpheios-popup__logo {
   fill: #5BC8DC;
   stroke: #5BC8DC;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -2502,7 +2756,7 @@ div.alpheios-inflections__table-ctrl-cont div.alpheios-inflections__table-ctrl-c
   flex-wrap: wrap;
 }
 .infl-cell {
-  font-size: 12px;
+  font-size: calc(var(--alpheios-base-font-size) * 0.75);
   padding: 0 2px 0 5px;
   border-right: 1px solid #111;
   border-top: 1px solid #111;
@@ -2612,6 +2866,7 @@ div.alpheios-inflections__table-ctrl-cont div.alpheios-inflections__table-ctrl-c
   text-transform: none;
 }
 .infl-suff {
+  line-height: 1.25;
   cursor: pointer;
 }
 .row-title-cell {
@@ -2627,6 +2882,29 @@ div.alpheios-inflections__table-ctrl-cont div.alpheios-inflections__table-ctrl-c
   background-color: #F6D918;
   font-weight: 700;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -2675,6 +2953,29 @@ a.infl-supp-tbl__reflink {
 }
 .alpheios-inflections__forms-cont {
   padding-right: 30px;
+}
+
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
 }
 
 /************ UIKit vars ************************/
@@ -2849,6 +3150,29 @@ h3.alpheios-inflections__credits-title {
     left: 100%;
 }
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -2884,6 +3208,29 @@ h3.alpheios-inflections__credits-title {
   padding: 0;
   overflow: scroll;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -2896,6 +3243,29 @@ h3.alpheios-inflections__credits-title {
 .alpheios-treebank__frame {
   flex: 1 1 100vh;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -2924,6 +3294,29 @@ h3.alpheios-inflections__credits-title {
 .alpheios-info__helptext {
   margin-top: 1em;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -2971,6 +3364,29 @@ div.alpheios-ib div.alpheios-ib__title .alpheios-ib__title-collapse {
   font-size: 1rem;
   margin: 0 0 0.2rem 3rem;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -2987,10 +3403,6 @@ div.alpheios-ib div.alpheios-ib__title .alpheios-ib__title-collapse {
 }
 .alpheios-input.alpheios-lookup__input:focus {
   border-color: #5BC8DC;
-}
-.alpheios-button.alpheios-lookup__button {
-  vertical-align: top;
-  display: block;
 }
 .alpheios-lookup__settings {
   text-align: left;
@@ -3020,6 +3432,29 @@ a.alpheios-lookup__settings-link {
 .alpheios-override-lang__label {
   padding-bottom: 10px;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -3066,6 +3501,29 @@ ul.alpheios-skin_properties {
 .alpheios-font_large_class #alpheios-reskin-panel .alpheios-skin_properties_item__large_font {
   background: #7E8897;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -3097,6 +3555,29 @@ ul.alpheios-skin_properties {
   color: #3E8D9C !important;
   text-align: right;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -3130,6 +3611,29 @@ ul.alpheios-skin_properties {
   color: #E49A0D;
   font-weight: bold;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -3159,6 +3663,29 @@ ul.alpheios-skin_properties {
   padding: 10px 0;
   font-size: 80%;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -3415,6 +3942,29 @@ ul.alpheios-skin_properties {
   width: 40px;
   height: 40px;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -3429,6 +3979,29 @@ ul.alpheios-skin_properties {
 .alpheios-panel--large .alpheios-panel__content {
   margin-top: 20px;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -3457,6 +4030,29 @@ ul.alpheios-skin_properties {
   top: 5px;
   right: 5px;
 }
+:root {
+  --alpheios-base-font-size: 16px;
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vibrant);
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+  --alpheios-color-light: #BCE5F0;
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}
+
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/

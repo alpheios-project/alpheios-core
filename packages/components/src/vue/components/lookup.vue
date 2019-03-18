@@ -6,7 +6,7 @@
     >
     <alph-tooltip :tooltipText="l10n.getMsg('LABEL_LOOKUP_BUTTON')" tooltipDirection="top-right">
       <span class="alpheios-lookup__button_with_link">
-      <button @click="lookup" class="alpheios-button alpheios-button-primary alpheios-button-small alpheios-lookup__button" tabindex="-1"
+      <button @click="lookup" class="alpheios-button alpheios-button-primary" tabindex="-1"
               type="button"
       >
         {{ l10n.getMsg('LABEL_LOOKUP_BUTTON') }}
@@ -185,11 +185,6 @@ export default {
     &:focus {
       border-color: $alpheios-link-hover-color;
     }
-  }
-
-  .alpheios-button.alpheios-lookup__button {
-    vertical-align: top;
-    display: block;
   }
 
   .alpheios-lookup__settings {

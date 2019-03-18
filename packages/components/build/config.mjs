@@ -3,25 +3,9 @@ import VueLoaderPlugin from '../node_modules/vue-loader/lib/plugin.js'
 import path from 'path'
 const projectRoot = process.cwd()
 
-const sass = {
-  tasks: [
-    { source: `src/skins/blue/style.scss`,
-      target: `dist/skins/blue/style.css`,
-      style: 'compressed',
-      sourceMap: false
-    },
-    {
-      source: `src/skins/green/style.scss`,
-      target: `dist/skins/green/style.css`,
-      style: 'compressed',
-      sourceMap: false
-    }
-  ]
-}
-
 const imagemin = {
   tasks: [
-    {source: 'src/images', target: 'dist/images', extensions: ['jpg', 'png', 'svg'], excludedDirs: ['inline-icons']}
+    { source: 'src/images', target: 'dist/images', extensions: ['jpg', 'png', 'svg'], excludedDirs: ['inline-icons'] }
   ]
 }
 
@@ -55,13 +39,13 @@ const webpack = {
 
   production: {
     mode: 'production',
-    output: {filename: 'alpheios-components.min.js'}
+    output: { filename: 'alpheios-components.min.js' }
   },
 
   development: {
     mode: 'development',
-    output: {filename: 'alpheios-components.js'}
+    output: { filename: 'alpheios-components.js' }
   }
 }
 
-export { webpack, imagemin, sass }
+export { webpack, imagemin }

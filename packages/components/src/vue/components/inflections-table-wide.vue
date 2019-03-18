@@ -349,7 +349,8 @@ export default {
   }
 
   .infl-cell {
-    font-size: 12px;
+    //font-size: 12px;
+    font-size: calc(var(--alpheios-base-font-size) * 0.75);
     padding: 0 2px 0 5px;
     border-right: 1px solid #111;
     border-top: 1px solid #111;
@@ -404,6 +405,7 @@ export default {
   }
 
   .infl-suff {
+    line-height: 1.25;
     cursor: pointer;
   }
 

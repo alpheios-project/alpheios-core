@@ -8,10 +8,10 @@
       line-height: 1.25;
     }
 
-    p,span,div,a, input {
+    /*p,span,div,a, input {
       font-size: $baseFontSize;
       line-height: normal;
-    }
+    }*/
 
     .alpheios-form-label {
         font-size: $baseFontSize * 0.85;
@@ -82,9 +82,10 @@
     }
 
     /** TODO Remove this when we port inflection tables to Vue **/
-    .infl-cell, .infl-cell span {
+    /*.infl-cell, .infl-cell span {
         font-size: $baseFontSize * 0.75;
-    }
+      color: red;
+    }*/
     .infl-cell sup {
         font-size: $baseFontSize * 0.675;
     }

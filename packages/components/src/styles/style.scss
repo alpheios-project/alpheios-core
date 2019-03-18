@@ -5,17 +5,18 @@
 @import "ui_base";
 
 @import "content";
-@import "_tooltip";
+@import "tooltip";
 
-@import "_multiselect";
-@import "_checkbox";
+@import "form-controls/button";
+@import "multiselect";
+@import "checkbox";
 
 @import "../../node_modules/alpheios-wordlist/dist/style/style.css";
 
-@import "_fontcontent";
+@import "fontcontent";
 
-@import "_colorschema_light";
-@import "_colorschema_dark";
+@import "colorschema_light";
+@import "colorschema_dark";
 
 @import "alignment";
 

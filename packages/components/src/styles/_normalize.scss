@@ -1,5 +1,7 @@
-.alpheios-popup,
-.alpheios-panel {
+
+
+
+#{$alpheios-namespace} {
     font-family: $alpheios-font-family;
     font-size: $alpheios-base-font-size;
     color: $alpheios-base-font-color;
@@ -18,7 +20,6 @@
       font-style: normal;
     }
 
-    button,
     input,
     optgroup,
     select,
@@ -29,16 +30,8 @@
       margin: 0;
     }
 
-    button,
     select {
       text-transform: none;
-    }
-
-    button,
-    [type="button"],
-    [type="reset"],
-    [type="submit"] {
-      -webkit-appearance: button;
     }
 
     textarea {

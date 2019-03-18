@@ -8,28 +8,6 @@
 	font-size: 0.875rem;
 }
 
-.alpheios-button-primary {
-	background-color: #1e87f0;
-	color: #fff;
-
-	&:hover,
-	&:focus {
-		background-color: #0f7ae5;
-		color: #fff;
-	}
-
-	&:active {
-		background-color: #0e6dcd;
-		color: #fff;
-	}
-}
-
-.alpheios-button-small {
-	padding: 0 15px;
-	line-height: 30px;
-	font-size: 0.875rem;
-}
-
 .alpheios-input {
 	box-sizing: border-box;
 	margin: 0;
@@ -144,45 +122,7 @@
 	}
 }
 
-#{$alpheios-ID-namespace} {
-	.alpheios-button {
-		margin: 0;
-		border: none;
-		overflow: visible;
-		font: inherit;
-		display: inline-block;
-		box-sizing: border-box;
-		padding: 0 30px;
-		vertical-align: middle;
-		text-align: center;
-		text-decoration: none;
-		font-family: $alpheios-font-family;
-		font-size: $alpheios-base-font-size * 0.7;
-		line-height: $alpheios-base-font-size * 1.75;
-		background-color: $alpheios-toolbar-color;
-		color: $alpheios-toolbar-text-color;
-		text-transform: uppercase;
-		border-radius: 0;
-
-		&:not(:disabled) {
-			cursor: pointer;
-		}
-
-		// Remove the inner border and padding in Firefox
-		&::-moz-focus-inner {
-			border: 0;
-			padding: 0;
-		}
-
-		&:hover {
-			text-decoration: none;
-		}
-
-		&:focus {
-			outline: none;
-		}
-	}
-
+#{$alpheios-namespace} {
   .alpheios-input {
   	font-family: $alpheios-font-family;
     font-size: $alpheios-base-font-size * 0.875;

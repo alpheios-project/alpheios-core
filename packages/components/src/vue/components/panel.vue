@@ -1,8 +1,12 @@
 <template>
-  <div :class="rootClasses" :data-notification-visible="$store.state.ui.notification.visible && $store.state.ui.notification.important"
-       :style="mainstyles" class="alpheios-panel alpheios-panel--large auk"
+  <div :class="rootClasses"
+       class="alpheios-panel alpheios-panel--large auk alpheios-content"
+       :data-notification-visible="$store.state.ui.notification.visible && $store.state.ui.notification.important"
+       :style="mainstyles"
        data-component="alpheios-panel"
-       data-resizable="true" id="alpheios-panel-inner" v-on-clickaway="attachTrackingClick"
+       data-resizable="true"
+       id="alpheios-panel-inner"
+       v-on-clickaway="attachTrackingClick"
        v-show="$store.state.panel.visible">
 
     <div class="alpheios-panel__header">

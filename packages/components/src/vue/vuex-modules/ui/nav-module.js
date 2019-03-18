@@ -1,6 +1,6 @@
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Module from '@/vue/vuex-modules/module.js'
-import OverlayNav from '@/vue/components/nav/overlay-nav.vue'
+import OverlayNav from '@/vue/components/nav/toolbar.vue'
 import HTMLPage from '@/lib/utility/html-page.js'
 
 // TODO: Add a check for required modules
