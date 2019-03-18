@@ -63,6 +63,11 @@ describe('word-list.test.js', () => {
     }).toThrowError(/mismatch/)
   })
 
+  it('4 WordList - size returns number of items', () => {
+    let wL = new WordList(testLanguageCode, [mockWILatin])
+    expect(wL.size).toEqual(1)
+  })
+
   it.skip('4 WordList - deleteWordItem removes an item from the list', () => {
 
   })

@@ -5151,11 +5151,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class TextQuoteSelector {
-  constructor (languageCode, normalizedText) {
+  constructor (languageCode, normalizedText, prefix = null, suffix = null, source = null) {
     this.languageCode = languageCode
     this.normalizedText = normalizedText
     this.contextForward = 6
     this.contextBackward = 6
+    this.text = this.normalizedText
+    this.prefix = prefix
+    this.suffix = suffix
+    this.source = source
     this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_0___default()()
   }
 
@@ -5191,14 +5195,7 @@ class TextQuoteSelector {
 
     let checkContextOther = `${otherTqs.prefix}${otherTqs.text}${otherTqs.suffix}`
     checkContextOther = checkContextOther.trim()
-    /*
-    console.info('****************isEqual1', this.text === otherTqs.text)
-    console.info('****************isEqual2', this.source === otherTqs.source)
-    console.info('****************isEqual3', this.languageCode === otherTqs.languageCode)
-    console.info('****************isEqual4', checkContextThis === checkContextOther)
-    console.info('****************isEqual4 checkContextThis "' + checkContextThis + '"')
-    console.info('****************isEqual4 checkContextOther "' + checkContextOther + '"')
-    */
+
     return this.text === otherTqs.text &&
       this.source === otherTqs.source &&
       this.languageCode === otherTqs.languageCode &&
@@ -5383,6 +5380,9 @@ class WordList {
     })
   }
 
+  get size () {
+    return Object.keys(this.items).length
+  }
   /**
    * get the items of the list
    */

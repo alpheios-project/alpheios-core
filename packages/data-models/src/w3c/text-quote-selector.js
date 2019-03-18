@@ -4,11 +4,15 @@
 import uuidv4 from 'uuid/v4'
 
 export default class TextQuoteSelector {
-  constructor (languageCode, normalizedText) {
+  constructor (languageCode, normalizedText, prefix = null, suffix = null, source = null) {
     this.languageCode = languageCode
     this.normalizedText = normalizedText
     this.contextForward = 6
     this.contextBackward = 6
+    this.text = this.normalizedText
+    this.prefix = prefix
+    this.suffix = suffix
+    this.source = source
     this.ID = uuidv4()
   }
 

@@ -17,6 +17,9 @@ export default class WordList {
     })
   }
 
+  get size () {
+    return Object.keys(this.items).length
+  }
   /**
    * get the items of the list
    */
