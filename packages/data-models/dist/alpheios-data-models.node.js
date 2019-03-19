@@ -3857,6 +3857,10 @@ class LanguageModelFactory {
    */
   static getLanguageModel (languageID) {
     let languageCode = LanguageModelFactory.getLanguageCodeFromId(languageID)
+    return LanguageModelFactory.getLanguageModelFromCode(languageCode)
+  }
+
+  static getLanguageModelFromCode (languageCode) {
     if (MODELS.has(languageCode)) {
       return MODELS.get(languageCode)
     } else {
@@ -3897,13 +3901,6 @@ class LanguageModelFactory {
    */
   static getLanguageCodeFromId (languageID) {
     for (const languageModel of MODELS.values()) {
-      /*
-      console.info('***************getLanguageCodeFromId step1-1', languageModel.languageID)
-      console.info('***************getLanguageCodeFromId step1-2', languageModel.languageID.toString())
-
-      console.info('***************getLanguageCodeFromId step2-1', languageID)
-      console.info('***************getLanguageCodeFromId step2-2', languageID.toString())
-    */
       if (languageModel.languageID.toString() === languageID.toString()) {
         return languageModel.languageCode
       }
@@ -5017,6 +5014,8 @@ class TextWork {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordUsageExample; });
 /* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
+/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../language_model_factory.js */ "./language_model_factory.js");
+
 
 
 class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
@@ -5063,6 +5062,38 @@ class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MOD
       res = this.cit
     }
     return res
+  }
+
+  authorForSort (lang) {
+    if (this.author) {
+      return this.author.title(lang).toUpperCase()
+    } else {
+      if (this.cit && this.cit.split('.') && this.cit.split('.').length >= 2) {
+        return this.cit.split('.')[0].toUpperCase()
+      }
+    }
+    return this.fullCit(lang).toUpperCase()
+  }
+
+  textWorkForSort (lang) {
+    if (this.textWork) {
+      return this.textWork.title(lang).toUpperCase()
+    } else {
+      if (this.cit && this.cit.split('.') && this.cit.split('.').length >= 2) {
+        return this.cit.split('.')[1].toUpperCase()
+      }
+    }
+    return this.fullCit(lang).toUpperCase()
+  }
+
+  get prefixForSort () {
+    let model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModelFromCode(this.languageCode)
+    return this.prefix.replace(new RegExp('[' + model.getPunctuation() + ' ]', 'g'), '').toUpperCase()
+  }
+
+  get suffixForSort () {
+    let model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModelFromCode(this.languageCode)
+    return this.suffix.replace(new RegExp('[' + model.getPunctuation() + ' ]', 'g'), '').toUpperCase()
   }
 }
 

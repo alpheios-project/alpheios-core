@@ -1,4 +1,5 @@
 import TextQuoteSelector from '../w3c/text-quote-selector.js'
+import LanguageModelFactory from '../language_model_factory.js'
 
 export default class WordUsageExample extends TextQuoteSelector {
   constructor (language, targetWord, prefix, suffix, source, cit) {
@@ -44,5 +45,37 @@ export default class WordUsageExample extends TextQuoteSelector {
       res = this.cit
     }
     return res
+  }
+
+  authorForSort (lang) {
+    if (this.author) {
+      return this.author.title(lang).toUpperCase()
+    } else {
+      if (this.cit && this.cit.split('.') && this.cit.split('.').length >= 2) {
+        return this.cit.split('.')[0].toUpperCase()
+      }
+    }
+    return this.fullCit(lang).toUpperCase()
+  }
+
+  textWorkForSort (lang) {
+    if (this.textWork) {
+      return this.textWork.title(lang).toUpperCase()
+    } else {
+      if (this.cit && this.cit.split('.') && this.cit.split('.').length >= 2) {
+        return this.cit.split('.')[1].toUpperCase()
+      }
+    }
+    return this.fullCit(lang).toUpperCase()
+  }
+
+  get prefixForSort () {
+    let model = LanguageModelFactory.getLanguageModelFromCode(this.languageCode)
+    return this.prefix.replace(new RegExp('[' + model.getPunctuation() + ' ]', 'g'), '').toUpperCase()
+  }
+
+  get suffixForSort () {
+    let model = LanguageModelFactory.getLanguageModelFromCode(this.languageCode)
+    return this.suffix.replace(new RegExp('[' + model.getPunctuation() + ' ]', 'g'), '').toUpperCase()
   }
 }

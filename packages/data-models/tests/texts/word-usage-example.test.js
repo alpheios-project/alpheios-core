@@ -73,4 +73,43 @@ describe('word-usage-example.test.js', () => {
     wordUsageExample.author = undefined
     expect(wordUsageExample.fullCit()).toEqual('Virgil.Aeneid.484')
   })
+
+  it('4 WordUsageExample - authorForSort returns author title in upper case, and the first part of the cit otherwise', () => {
+    let wordUsageExample = new WordUsageExample('usque', 'lat')
+    wordUsageExample.cit = 'Virgil.Aeneid.484'
+
+    expect(wordUsageExample.authorForSort()).toEqual('VIRGIL')
+
+    wordUsageExample.author = new Author('urn:cts:latinLit:phi0690', { eng: 'Virgil' }, { eng: 'Verg.' })
+    expect(wordUsageExample.authorForSort()).toEqual('VIRGIL')
+  })
+
+  it('5 WordUsageExample - textWorkForSort returns textWork in upper case, and the second part of the cit otherwise', () => {
+    let testAuthor = new Author('urn:cts:latinLit:phi0690', { eng: 'Virgil' }, { eng: 'Verg.' })
+    let testTextWork = new TextWork(testAuthor, 'urn:cts:latinLit:phi0690.phi003', { lat: 'LatAeneid', eng: 'EngAeneid' }, { eng: 'A.' })
+
+    let wordUsageExample = new WordUsageExample('usque', 'lat')
+    wordUsageExample.author = testAuthor
+
+    wordUsageExample.cit = 'Virgil.Aeneid.484'
+
+    expect(wordUsageExample.textWorkForSort()).toEqual('AENEID')
+
+    wordUsageExample.textWork = testTextWork
+    expect(wordUsageExample.textWorkForSort()).toEqual('ENGAENEID')
+  })
+
+  it('6 WordUsageExample - prefixForSort returns normalized prefix without punctuation', () => {
+    let wordUsageExample = new WordUsageExample('usque', 'lat')
+    wordUsageExample.prefix = '. fooprefix part2'
+
+    expect(wordUsageExample.prefixForSort).toEqual('FOOPREFIXPART2')
+  })
+
+  it('7 WordUsageExample - suffixForSort returns normalized prefix without punctuation', () => {
+    let wordUsageExample = new WordUsageExample('usque', 'lat')
+    wordUsageExample.suffix = '. foosuffix part2'
+
+    expect(wordUsageExample.suffixForSort).toEqual('FOOSUFFIXPART2')
+  })
 })
