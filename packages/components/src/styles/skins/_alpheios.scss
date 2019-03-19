@@ -1,0 +1,34 @@
+// This is a default Alpheios theme. All CSS custom props in it defined for an `html` element.
+// Custom skins should define their own custom props for a `:root` pseudo-class as it has a higher specificity.
+html {
+  // Recommended file sizes are 12px (small), 16px (medium), and 20px (large)
+  --alpheios-base-font-size: 16px;
+
+  // A skin's color palette
+  --alpheios-color-neutral-dark: #757575;
+  --alpheios-color-neutral-light: #E6E6E6;
+  --alpheios-color-neutral-lightest: #FFF;
+
+  --alpheios-color-dark: #0E2233;
+  --alpheios-color-dark-hover: #1B374F;
+  --alpheios-color-dark-pressed: var(--alpheios-color-dark);
+
+  --alpheios-color-muted: #185F6D;
+  --alpheios-color-muted-hover: #124D59;
+  --alpheios-color-muted-pressed: #093943;
+
+  --alpheios-color-vivid: #C64906;
+  --alpheios-color-vivid-hover: #F27431;
+  --alpheios-color-vivid-pressed: var(--alpheios-color-vivid);
+
+  --alpheios-color-bright: #FFC24F;
+  --alpheios-color-bright-hover: #FFD27D;
+  --alpheios-color-bright-pressed: var(--alpheios-color-bright);
+
+  --alpheios-color-light: #BCE5F0;
+
+  // Colors of buttons
+  --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+}

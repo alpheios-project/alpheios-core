@@ -22,7 +22,7 @@
                           tooltipDirection="bottom-right">
               <button
                   @click="showNoSuffixGroups"
-                  class="alpheios-button alpheios-button-primary alpheios-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
+                  class="alpheios-button alpheios-button--primary alpheios-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
                 {{l10n.getMsg('LABEL_INFLECT_SHOWFULL')}}
               </button>
             </alph-tooltip>
@@ -34,7 +34,7 @@
                           tooltipDirection="bottom-right">
               <button
                   @click="hideNoSuffixGroups"
-                  class="alpheios-button alpheios-button-primary alpheios-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
+                  class="alpheios-button alpheios-button--primary alpheios-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
                 {{l10n.getMsg('LABEL_INFLECT_COLLAPSE')}}
               </button>
             </alph-tooltip>

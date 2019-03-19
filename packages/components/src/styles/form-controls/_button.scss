@@ -35,7 +35,7 @@
   font-size: calc(var(--alpheios-base-font-size) * 0.5);
 }
 
-.alpheios-button-primary {
+.alpheios-button--primary {
   @extend %alpheios-button;
   background-color: var(--alpheios-btn-primary-bg-color);
   color: var(--alpheios-btn-primary-font-color);

@@ -6,7 +6,7 @@
     >
     <alph-tooltip :tooltipText="l10n.getMsg('LABEL_LOOKUP_BUTTON')" tooltipDirection="top-right">
       <span class="alpheios-lookup__button_with_link">
-      <button @click="lookup" class="alpheios-button alpheios-button-primary" tabindex="-1"
+      <button @click="lookup" class="alpheios-button alpheios-button--primary" tabindex="-1"
               type="button"
       >
         {{ l10n.getMsg('LABEL_LOOKUP_BUTTON') }}

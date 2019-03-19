@@ -1280,6 +1280,12 @@ export default class UIController {
    * @param {string | value} value - A new value of an options.
    */
   uiOptionChange (name, value) {
+    const FONT_SIZE_PROP = '--alpheios-base-font-size'
+    const FONT_SIZES = {
+      small: '12px',
+      medium: '16px',
+      large: '20px'
+    }
     // TODO this should really be handled within OptionsItem
     // the difference between value and textValues is a little confusing
     // see issue #73
@@ -1310,6 +1316,12 @@ export default class UIController {
         break
       case 'fontSize':
         this.setRootComponentClasses()
+        let fontSize = FONT_SIZES[value] || FONT_SIZES.medium
+        try {
+          document.documentElement.style.setProperty(FONT_SIZE_PROP, fontSize)
+        } catch (error) {
+          console.error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
+        }
         break
       case 'colorSchema':
         this.setRootComponentClasses()
