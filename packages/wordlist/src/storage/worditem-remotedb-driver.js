@@ -4,24 +4,23 @@ import { TextQuoteSelector } from 'alpheios-data-models'
 export default class WordItemRemoteDbDriver {
   /**
    * Defines proper headers and uploads config for access to remote storage, defines storageMap
-   * @param {String} userID
+   * @param {Object} auth object with accessToken and userId
    */
-  constructor (userID) {
+  constructor (auth) {
     this.config = RemoteConfig
-    this.userID = userID || this.config.testUserID
-    
-    let testAuthID = 'alpheiosMockUserIdlP0DWnmNxe'
+    this.accessToken = auth.accessToken
+    this.userId = auth.userId
 
     this.requestsParams = {
       baseURL: this.config.baseUrl,
       headers: {
         common: {
-          Authorization: 'bearer ' + testAuthID,
+          Authorization: 'bearer ' + this.accessToken,
           'Content-Type': 'application/json'
         }
       }
     }
-    
+
     this.storageMap = {
       post: {
         url: this._constructPostURL.bind(this),
@@ -55,6 +54,13 @@ export default class WordItemRemoteDbDriver {
    */
   get segmentsForUpdate () {
     return ['common', 'context', 'shortHomonym']
+  }
+
+ /**
+   * db segments that require merging upon update
+   */
+  get segmentsForMerge () {
+    return ['context']
   }
 
   /**
@@ -91,10 +97,10 @@ export default class WordItemRemoteDbDriver {
    * @return {WordItem}
    */
   mergeContextPart  (currentItem, newItem) {
-    let pushContext = currentItem.context
+    let pushContext = currentItem.context || []
     for (let contextItem of newItem.context) {
       let hasCheck = currentItem.context.some(tqCurrent => {
-        return TextQuoteSelector.readObject(tqCurrent).isEqual(contextItem) 
+        return TextQuoteSelector.readObject(tqCurrent).isEqual(contextItem)
       })
       if (!hasCheck) {
         pushContext.push(this._serializeContextItem(contextItem, currentItem))
@@ -154,8 +160,8 @@ export default class WordItemRemoteDbDriver {
   _serialize (wordItem) {
     let result = {
       ID: this._makeStorageID(wordItem),
-      listID: this.userID + '-' + wordItem.languageCode,
-      userID: this.userID,
+      listID: this.userId + '-' + wordItem.languageCode,
+      userID: this.userId,
       languageCode: wordItem.languageCode,
       targetWord: wordItem.targetWord,
       important: wordItem.important,
@@ -170,6 +176,8 @@ export default class WordItemRemoteDbDriver {
 
     if (context && context.length > 0) {
       result.context = context
+    } else {
+      result.context = []
     }
     return result
   }
@@ -202,13 +210,13 @@ export default class WordItemRemoteDbDriver {
     return result
   }
 
-  
+
   /**
    * Defines json object from a single textQuoteSelector to save to remote storage
    * @param {WordItem} wordItem
    * @return {Object[]}
    */
-  _serializeContextItem (tq, wordItem) {    
+  _serializeContextItem (tq, wordItem) {
     return {
       target: {
         source: tq.source,
@@ -227,7 +235,7 @@ export default class WordItemRemoteDbDriver {
   }
 
   /**
-   * Checks status of response (post) from remote storage 
+   * Checks status of response (post) from remote storage
    * @param {WordItem} wordItem
    * @return {Boolean}
    */
@@ -236,7 +244,7 @@ export default class WordItemRemoteDbDriver {
   }
 
   /**
-   * Checks status of response (put) from remote storage 
+   * Checks status of response (put) from remote storage
    * @param {WordItem} wordItem
    * @return {Boolean}
    */
@@ -245,7 +253,7 @@ export default class WordItemRemoteDbDriver {
   }
 
   /**
-   * Checks status of response (get) from remote storage 
+   * Checks status of response (get) from remote storage
    * @param {WordItem} wordItem
    * @return {Object/Object[]}
    */
@@ -261,7 +269,7 @@ export default class WordItemRemoteDbDriver {
   }
 
   /**
-   * Checks status of response error (get) from remote storage 
+   * Checks status of response error (get) from remote storage
    * If error message consists of 'Item not found.' - it is not an error. Return empty error instead of error.
    * @param {Error} error
    * @return {[]/Boolean}
@@ -275,7 +283,7 @@ export default class WordItemRemoteDbDriver {
   }
 
   /**
-   * Defines date 
+   * Defines date
    */
   static get currentDate () {
     let dt = new Date()

@@ -127,11 +127,11 @@ export default class WordItemIndexedDbDriver {
   _objectStoreData (segment) {
     return this.storageMap[segment].objectStoreData
   }
-  
+
   /**
    * Prepares query data for creating IndexedDB Request
-   * @param {String} segment 
-   * @param {Object} indexData - index data for condition 
+   * @param {String} segment
+   * @param {Object} indexData - index data for condition
    * @param {String} indexData.name - index name
    * @param {String} indexData.value - index value
    * @param {String} indexData.type - index type (in our queries it is ussually only)
@@ -146,7 +146,7 @@ export default class WordItemIndexedDbDriver {
 
   /**
    * Prepares indexData for formatQuery when we select by ID from objectStore
-   * @param {WordItem} wordItem 
+   * @param {WordItem} wordItem
    * @param {String} [type=only] - type of index
    * @return {Object} - { indexName, value , type}
    */
@@ -160,7 +160,7 @@ export default class WordItemIndexedDbDriver {
 
   /**
    * Prepares indexData for formatQuery when we select by wordItemID from objectStore (for example context)
-   * @param {WordItem} wordItem 
+   * @param {WordItem} wordItem
    * @param {String} [type=only] - type of index
    * @return {Object} - { indexName, value , type}
    */
@@ -174,7 +174,7 @@ export default class WordItemIndexedDbDriver {
 
   /**
    * Prepares indexData for formatQuery when we select by listID from objectStore (for example all values for languageCode)
-   * @param {String} languageCode 
+   * @param {String} languageCode
    * @param {String} [type=only] - type of index
    * @return {Object} - { indexName, value , type}
    */
@@ -188,7 +188,7 @@ export default class WordItemIndexedDbDriver {
 
   /**
    * Loads a segment that is defined as first
-   * @param {Object} jsonObj 
+   * @param {Object} jsonObj
    * @return {WordItem}
    */
   loadFirst (jsonObj) {
@@ -438,7 +438,7 @@ static get currentDate () {
    */
   createFromRemoteData (remoteDataItem) {
     let wordItem = this.loadFirst(remoteDataItem)
-    
+
     if (remoteDataItem.context) {
       this.loadSegment('context', remoteDataItem.context, wordItem)
     }

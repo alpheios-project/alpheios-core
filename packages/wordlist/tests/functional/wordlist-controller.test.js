@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import WordlistController from '@/controllers/wordlist-controller.js'
-import { WordList, WordItem } from 'alpheios-data-models'
+import { WordList, WordItem, TextQuoteSelector } from 'alpheios-data-models'
 
 
 describe('wordlist-controller.test.js', () => {
@@ -215,7 +215,7 @@ describe('wordlist-controller.test.js', () => {
     latList.addWordItem(mockWILatin)
     jest.spyOn(WordlistController.evt.WORDITEM_UPDATED,'pub')
     jest.spyOn(WordlistController.evt.WORDLIST_UPDATED,'pub')
-    wc.onTextQuoteSelectorReceived({languageCode: mockLClat, normalizedText: testTarget})
+    wc.onTextQuoteSelectorReceived(new TextQuoteSelector( mockLClat, testTarget) )
     let item = wc.getWordListItem(mockLClat,testTarget)
     expect(item.context).toBeDefined()
     expect(item.context.length).toEqual(1)
@@ -229,7 +229,7 @@ describe('wordlist-controller.test.js', () => {
     let testTarget = 'mare'
     jest.spyOn(WordlistController.evt.WORDITEM_UPDATED,'pub')
     jest.spyOn(WordlistController.evt.WORDLIST_UPDATED,'pub')
-    wc.onTextQuoteSelectorReceived({languageCode: mockLClat, normalizedText: testTarget})
+    wc.onTextQuoteSelectorReceived(new TextQuoteSelector( mockLClat, testTarget) )
     let item = wc.getWordListItem(mockLClat,testTarget)
     expect(item.context).toBeDefined()
     expect(item.context.length).toEqual(1)
@@ -268,6 +268,48 @@ describe('wordlist-controller.test.js', () => {
     expect(WordlistController.evt.WORDITEM_UPDATED.pub).toHaveBeenCalledWith({dataObj:item,params:{segment:'common'}})
     expect(WordlistController.evt.WORDITEM_UPDATED.pub).toHaveBeenCalledWith({dataObj:item2,params:{segment:'common'}})
     expect(WordlistController.evt.WORDITEM_UPDATED.pub).toHaveBeenCalledTimes(2)
+  })
+  it('21 WordlistController - getWordListItemCount returns number of items in all lists', async () => {
+    jest.spyOn(WordlistController.evt.WORDLIST_UPDATED,'pub')
+    let wc = new WordlistController([mockLClat,mockLCgrc],mockEvents)
+    await wc.initLists(mockDataManager)
+    expect(wc.getWordListItemCount()).toEqual(2)
+    expect(WordlistController.evt.WORDLIST_UPDATED.pub).toHaveBeenCalledTimes(2)
+  })
+  it('22 WordlistController - merges existing items when init list with data manager', async () => {
+    let wc = new WordlistController([mockLClat,mockLCgrc],mockEvents)
+    let selector1 =  new TextQuoteSelector(mockLClat,'mare')
+    let selector2 =  new TextQuoteSelector(mockLClat,'mare','fooPrefix')
+    let selector3 =  new TextQuoteSelector(mockLClat,'veni','fooPrefix')
+    jest.spyOn(WordlistController.evt.WORDLIST_UPDATED,'pub')
+    wc.onTextQuoteSelectorReceived(selector1)
+    wc.onDefinitionsReady({homonym:{language: mockLClat, targetWord: 'mare'}})
+    wc.onDefinitionsReady({homonym:{language: mockLClat, targetWord: 'veni'}})
+    wc.onTextQuoteSelectorReceived(selector2)
+    wc.onTextQuoteSelectorReceived(selector3)
+    expect(wc.getWordListItemCount()).toEqual(2)
+    // we have a word list with two items in it
+    // now init the list with the DataManager
+    let result = await wc.initLists(mockDataManager)
+    // should have 2 latin and 1 greek
+    expect(wc.getWordList(mockLClat).size).toEqual(2)
+    expect(wc.getWordList(mockLCgrc).size).toEqual(1)
+    // latin mare should have 2 contexts
+    expect(wc.getWordListItem(mockLClat,'mare').context.length).toEqual(2)
+    // wordlists were updated a total of 6 times: 3 to the cached latin list,
+    // 2 to init the remote latin and greek lists, and 3 to replay the cached list
+    expect(WordlistController.evt.WORDLIST_UPDATED.pub).toHaveBeenCalledTimes(9)
+    expect(result[mockLClat]).toEqual(wc.getWordList(mockLClat))
+    expect(result[mockLCgrc]).toEqual(wc.getWordList(mockLCgrc))
+
+  })
+  it('23 WordlistController - init list clears existing when no data manager', async () => {
+    let wc = new WordlistController([mockLClat,mockLCgrc],mockEvents)
+    let selector1 =  new TextQuoteSelector(mockLClat,'mare','fooPrefix')
+    wc.onTextQuoteSelectorReceived(selector1)
+    expect(wc.getWordListItemCount()).toEqual(1)
+    let result = await wc.initLists()
+    expect(wc.getWordListItemCount()).toEqual(0)
   })
   it.skip('21 WordlistController - selectWordItem emits event',() => {})
 

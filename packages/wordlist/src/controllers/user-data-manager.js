@@ -6,12 +6,12 @@ import RemoteDBAdapter from '@/storage/remote-db-adapter.js'
 export default class UserDataManager {
 
   /**
-   * Creates with userID argument, subscribe to WordItem and WorList events, inits blocked property and request queue
-   * @param {String} userID - userID that would be used for access to remote storage
+   * Creates with auth argument, subscribe to WordItem and WorList events, inits blocked property and request queue
+   * @param {AuthModule} auth - auth object with userId and accessToken properties
    * @param {String} events - events object of the WordlistController, passed in UIController
    */
-  constructor (userID, events) {
-    this.userID = userID
+  constructor (auth, events) {
+    this.auth = auth
     if (events) {
       events.WORDITEM_UPDATED.sub(this.update.bind(this))
       events.WORDITEM_DELETED.sub(this.delete.bind(this))
@@ -22,22 +22,22 @@ export default class UserDataManager {
   }
 
   /**
-   * Initializes IndexedDBAdapter with appropriate local dbDriver (WordItemIndexedDbDriver) 
+   * Initializes IndexedDBAdapter with appropriate local dbDriver (WordItemIndexedDbDriver)
    * @param {String} dataType - data type for choosing a proper dbDriver (WordItem)
    * @return {IndexedDBAdapter}
    */
   _localStorageAdapter(dataType) {
-    let dbDriver = new UserDataManager.LOCAL_DRIVER_CLASSES[dataType](this.userID)
+    let dbDriver = new UserDataManager.LOCAL_DRIVER_CLASSES[dataType](this.auth.userId)
     return new IndexedDBAdapter(dbDriver)
   }
 
   /**
-   * Initializes RemoteDBAdapter with appropriate remote dbDriver (WordItemRemoteDbDriver) 
+   * Initializes RemoteDBAdapter with appropriate remote dbDriver (WordItemRemoteDbDriver)
    * @param {String} dataType - data type for choosing a proper dbDriver (WordItem)
    * @return {RemoteDBAdapter}
    */
   _remoteStorageAdapter(dataType) {
-    let dbDriver = new UserDataManager.REMOTE_DRIVER_CLASSES[dataType](this.userID)
+    let dbDriver = new UserDataManager.REMOTE_DRIVER_CLASSES[dataType](this.auth)
     return new RemoteDBAdapter(dbDriver)
   }
 
@@ -76,7 +76,7 @@ export default class UserDataManager {
 
   /**
    * Promise-based method - updates object in local/remote storage
-   * uses blocking workflow: 
+   * uses blocking workflow:
    * @param {Object} data
    * @param {WordItem} data.dataObj - object for saving to local/remote storage
    * @param {WordItem} data.params - could have segment property to define exact segment for updating
@@ -97,7 +97,7 @@ export default class UserDataManager {
 
       let localAdapter = this._localStorageAdapter(finalConstrName)
       let remoteAdapter = this._remoteStorageAdapter(finalConstrName)
-      
+
       let result = false
       let segment = data.params && data.params.segment ? data.params.segment : localAdapter.dbDriver.segments
 
@@ -106,7 +106,7 @@ export default class UserDataManager {
         if (params.source === 'local') {
           result = await localAdapter.update(data.dataObj, data.params)
         } else if (params.source === 'remote') {
-          result = await remoteAdapter.update(data.dataObj, data.params)  
+          result = await remoteAdapter.update(data.dataObj, data.params)
         } else {
           let currentRemoteItems = await remoteAdapter.checkAndUpdate(data.dataObj, segment)
           result = await localAdapter.checkAndUpdate(data.dataObj, segment, currentRemoteItems)
@@ -120,13 +120,13 @@ export default class UserDataManager {
       }
       return result
     } catch (error) {
-      console.error('Some errors happen on updating data in IndexedDB or RemoteDBAdapter', error.message)
+      console.error('Some errors happen on updating data in IndexedDB or RemoteDBAdapter', error)
     }
   }
 
   /**
    * Promise-based method - deletes single object in local/remote storage
-   * uses blocking workflow: 
+   * uses blocking workflow:
    * @param {Object} data
    * @param {WordItem} data.dataObj - object for saving to local/remote storage
    * @param {WordItem} data.params - could have segment property to define exact segment for updating
@@ -144,13 +144,13 @@ export default class UserDataManager {
     try {
       this.blocked = true
       let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
-      
+
       let localAdapter = this._localStorageAdapter(finalConstrName)
       let remoteAdapter = this._remoteStorageAdapter(finalConstrName)
-    
+
       let remoteResult = false
       let localResult = false
-      
+
       if (this.checkAdapters(localAdapter, remoteAdapter, params)) {
         this.blocked = true
 
@@ -178,7 +178,7 @@ export default class UserDataManager {
 
   /**
    * Promise-based method - deletes all objects from the wordlist by languageCode in local/remote storage
-   * uses blocking workflow: 
+   * uses blocking workflow:
    * @param {Object} data
    * @param {String} data.languageCode - languageCode of Wordlist to be deleted
    * @param {WordItem} data.params - could have segment property to define exact segment for updating
@@ -194,13 +194,13 @@ export default class UserDataManager {
       return
     }
     try {
-      
+
       let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
       let localAdapter = this._localStorageAdapter(data.dataType)
 
       let deletedLocal = false
       let deletedRemote = false
-      
+
       if (this.checkAdapters(localAdapter, remoteAdapter, params)) {
         deletedLocal = true
         deletedRemote = true
@@ -211,7 +211,7 @@ export default class UserDataManager {
         }
         if (params.source !== 'remote') {
           deletedLocal = await localAdapter.deleteMany(data.params)
-        }      
+        }
 
         this.printErrors(remoteAdapter)
         this.printErrors(localAdapter)
@@ -230,17 +230,17 @@ export default class UserDataManager {
 
   /**
    * Promise-based method - queries all objects from the wordlist by languageCode , only for only one wordItem
-   * or one wordItem from local/remote storage 
+   * or one wordItem from local/remote storage
    * @param {Object} data
-   * @param {String} data.languageCode - for quering all wordItems from wordList by languageCode
-   * @param {WordItem} data.wordItem - for quering one wordItem
+   *                 data.languageCode - for quering all wordItems from wordList by languageCode
+   *                 data.wordItem - for quering one wordItem
+   *                 data.params - type specific query parameters
    * @param {Object} [params={ source: both, type: short, syncDelete: false }] - additional parameters for updating, now there are the following:
    *                  params.source = [local, remote, both]
    *                  params.type = [short, full] - short - short data for homonym, full - homonym with definitions data
-   *                  params.syncDelete = [true, false] - if true (and params.source = both, and languageCode is defined in params), 
+   *                  params.syncDelete = [true, false] - if true (and params.source = both, and languageCode is defined in params),
    *                                      than localItems would be compared with remoteItems, items that are existed only in local would be removed
-   * 
-   * @return {WordItem[]} 
+   * @return {WordItem[]}
    */
   async query (data, params = {}) {
     try {
@@ -347,4 +347,3 @@ UserDataManager.LOCAL_DRIVER_CLASSES = {
 UserDataManager.REMOTE_DRIVER_CLASSES = {
   WordItem: WordItemRemoteDbDriver
 }
-  

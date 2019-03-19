@@ -3454,7 +3454,7 @@ function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
- * Vue.js v2.6.8
+ * Vue.js v2.6.9
  * (c) 2014-2019 Evan You
  * Released under the MIT License.
  */
@@ -5315,10 +5315,11 @@ function normalizeComponent (
     var res;
     try {
       res = args ? handler.apply(context, args) : handler.call(context);
-      if (res && !res._isVue && isPromise(res)) {
+      if (res && !res._isVue && isPromise(res) && !res._handled) {
+        res.catch(function (e) { return handleError(e, vm, info + " (Promise/async)"); });
         // issue #9511
-        // reassign to res to avoid catch triggering multiple times when nested calls
-        res = res.catch(function (e) { return handleError(e, vm, info + " (Promise/async)"); });
+        // avoid catch triggering multiple times when nested calls
+        res._handled = true;
       }
     } catch (e) {
       handleError(e, vm, info);
@@ -6002,6 +6003,7 @@ function normalizeComponent (
   ) {
     var res;
     var isStable = slots ? !!slots.$stable : true;
+    var hasNormalSlots = Object.keys(normalSlots).length > 0;
     var key = slots && slots.$key;
     if (!slots) {
       res = {};
@@ -6013,7 +6015,8 @@ function normalizeComponent (
       prevSlots &&
       prevSlots !== emptyObject &&
       key === prevSlots.$key &&
-      Object.keys(normalSlots).length === 0
+      !hasNormalSlots &&
+      !prevSlots.$hasNormal
     ) {
       // fast path 2: stable scoped slots w/ no normal slots to proxy,
       // only need to normalize once
@@ -6039,6 +6042,7 @@ function normalizeComponent (
     }
     def(res, '$stable', isStable);
     def(res, '$key', key);
+    def(res, '$hasNormal', hasNormalSlots);
     return res
   }
 
@@ -6048,8 +6052,10 @@ function normalizeComponent (
       res = res && typeof res === 'object' && !Array.isArray(res)
         ? [res] // single vnode
         : normalizeChildren(res);
-      return res && res.length === 0
-        ? undefined
+      return res && (
+        res.length === 0 ||
+        (res.length === 1 && res[0].isComment) // #9658
+      ) ? undefined
         : res
     };
     // this is a slot using the new v-slot syntax without scope. although it is
@@ -6229,12 +6235,13 @@ function normalizeComponent (
               : data.attrs || (data.attrs = {});
           }
           var camelizedKey = camelize(key);
-          if (!(key in hash) && !(camelizedKey in hash)) {
+          var hyphenatedKey = hyphenate(key);
+          if (!(camelizedKey in hash) && !(hyphenatedKey in hash)) {
             hash[key] = value[key];
 
             if (isSync) {
               var on = data.on || (data.on = {});
-              on[("update:" + camelizedKey)] = function ($event) {
+              on[("update:" + key)] = function ($event) {
                 value[key] = $event;
               };
             }
@@ -7069,7 +7076,7 @@ function normalizeComponent (
     }
 
     var owner = currentRenderingInstance;
-    if (isDef(factory.owners) && factory.owners.indexOf(owner) === -1) {
+    if (owner && isDef(factory.owners) && factory.owners.indexOf(owner) === -1) {
       // already pending
       factory.owners.push(owner);
     }
@@ -7078,7 +7085,7 @@ function normalizeComponent (
       return factory.loadingComp
     }
 
-    if (!isDef(factory.owners)) {
+    if (owner && !isDef(factory.owners)) {
       var owners = factory.owners = [owner];
       var sync = true
 
@@ -7693,10 +7700,15 @@ function normalizeComponent (
   // timestamp can either be hi-res (relative to page load) or low-res
   // (relative to UNIX epoch), so in order to compare time we have to use the
   // same timestamp type when saving the flush timestamp.
-  if (inBrowser && getNow() > document.createEvent('Event').timeStamp) {
-    // if the low-res timestamp which is bigger than the event timestamp
-    // (which is evaluated AFTER) it means the event is using a hi-res timestamp,
-    // and we need to use the hi-res version for event listeners as well.
+  if (
+    inBrowser &&
+    window.performance &&
+    typeof performance.now === 'function' &&
+    document.createEvent('Event').timeStamp <= performance.now()
+  ) {
+    // if the event timestamp is bigger than the hi-res timestamp
+    // (which is evaluated AFTER) it means the event is using a lo-res timestamp,
+    // and we need to use the lo-res version for event listeners as well.
     getNow = function () { return performance.now(); };
   }
 
@@ -8862,7 +8874,7 @@ function normalizeComponent (
     value: FunctionalRenderContext
   });
 
-  Vue.version = '2.6.8';
+  Vue.version = '2.6.9';
 
   /*  */
 
@@ -10954,8 +10966,10 @@ function normalizeComponent (
           e.target === e.currentTarget ||
           // event is fired after handler attachment
           e.timeStamp >= attachedTimestamp ||
-          // #9462 bail for iOS 9 bug: event.timeStamp is 0 after history.pushState
-          e.timeStamp === 0 ||
+          // bail for environments that have buggy event.timeStamp implementations
+          // #9462 iOS 9 bug: event.timeStamp is 0 after history.pushState
+          // #9681 QtWebEngine event.timeStamp is negative value
+          e.timeStamp <= 0 ||
           // #9448 bail if event is fired in another document in a multi-page
           // electron/nw.js app, since event.timeStamp will be using a different
           // starting reference
@@ -11573,8 +11587,8 @@ function normalizeComponent (
     var context = activeInstance;
     var transitionNode = activeInstance.$vnode;
     while (transitionNode && transitionNode.parent) {
-      transitionNode = transitionNode.parent;
       context = transitionNode.context;
+      transitionNode = transitionNode.parent;
     }
 
     var isAppear = !context._isMounted || !vnode.isRootInsert;
@@ -13281,7 +13295,7 @@ function normalizeComponent (
           text = preserveWhitespace ? ' ' : '';
         }
         if (text) {
-          if (whitespaceOption === 'condense') {
+          if (!inPre && whitespaceOption === 'condense') {
             // condense consecutive whitespaces into single space
             text = text.replace(whitespaceRE$1, ' ');
           }
@@ -15422,12 +15436,12 @@ __webpack_require__.r(__webpack_exports__);
 class UserDataManager {
 
   /**
-   * Creates with userID argument, subscribe to WordItem and WorList events, inits blocked property and request queue
-   * @param {String} userID - userID that would be used for access to remote storage
+   * Creates with auth argument, subscribe to WordItem and WorList events, inits blocked property and request queue
+   * @param {AuthModule} auth - auth object with userId and accessToken properties
    * @param {String} events - events object of the WordlistController, passed in UIController
    */
-  constructor (userID, events) {
-    this.userID = userID
+  constructor (auth, events) {
+    this.auth = auth
     if (events) {
       events.WORDITEM_UPDATED.sub(this.update.bind(this))
       events.WORDITEM_DELETED.sub(this.delete.bind(this))
@@ -15438,22 +15452,22 @@ class UserDataManager {
   }
 
   /**
-   * Initializes IndexedDBAdapter with appropriate local dbDriver (WordItemIndexedDbDriver) 
+   * Initializes IndexedDBAdapter with appropriate local dbDriver (WordItemIndexedDbDriver)
    * @param {String} dataType - data type for choosing a proper dbDriver (WordItem)
    * @return {IndexedDBAdapter}
    */
   _localStorageAdapter(dataType) {
-    let dbDriver = new UserDataManager.LOCAL_DRIVER_CLASSES[dataType](this.userID)
+    let dbDriver = new UserDataManager.LOCAL_DRIVER_CLASSES[dataType](this.auth.userId)
     return new _storage_indexed_db_adapter_js__WEBPACK_IMPORTED_MODULE_2__["default"](dbDriver)
   }
 
   /**
-   * Initializes RemoteDBAdapter with appropriate remote dbDriver (WordItemRemoteDbDriver) 
+   * Initializes RemoteDBAdapter with appropriate remote dbDriver (WordItemRemoteDbDriver)
    * @param {String} dataType - data type for choosing a proper dbDriver (WordItem)
    * @return {RemoteDBAdapter}
    */
   _remoteStorageAdapter(dataType) {
-    let dbDriver = new UserDataManager.REMOTE_DRIVER_CLASSES[dataType](this.userID)
+    let dbDriver = new UserDataManager.REMOTE_DRIVER_CLASSES[dataType](this.auth)
     return new _storage_remote_db_adapter_js__WEBPACK_IMPORTED_MODULE_3__["default"](dbDriver)
   }
 
@@ -15492,7 +15506,7 @@ class UserDataManager {
 
   /**
    * Promise-based method - updates object in local/remote storage
-   * uses blocking workflow: 
+   * uses blocking workflow:
    * @param {Object} data
    * @param {WordItem} data.dataObj - object for saving to local/remote storage
    * @param {WordItem} data.params - could have segment property to define exact segment for updating
@@ -15513,7 +15527,7 @@ class UserDataManager {
 
       let localAdapter = this._localStorageAdapter(finalConstrName)
       let remoteAdapter = this._remoteStorageAdapter(finalConstrName)
-      
+
       let result = false
       let segment = data.params && data.params.segment ? data.params.segment : localAdapter.dbDriver.segments
 
@@ -15522,7 +15536,7 @@ class UserDataManager {
         if (params.source === 'local') {
           result = await localAdapter.update(data.dataObj, data.params)
         } else if (params.source === 'remote') {
-          result = await remoteAdapter.update(data.dataObj, data.params)  
+          result = await remoteAdapter.update(data.dataObj, data.params)
         } else {
           let currentRemoteItems = await remoteAdapter.checkAndUpdate(data.dataObj, segment)
           result = await localAdapter.checkAndUpdate(data.dataObj, segment, currentRemoteItems)
@@ -15536,13 +15550,13 @@ class UserDataManager {
       }
       return result
     } catch (error) {
-      console.error('Some errors happen on updating data in IndexedDB or RemoteDBAdapter', error.message)
+      console.error('Some errors happen on updating data in IndexedDB or RemoteDBAdapter', error)
     }
   }
 
   /**
    * Promise-based method - deletes single object in local/remote storage
-   * uses blocking workflow: 
+   * uses blocking workflow:
    * @param {Object} data
    * @param {WordItem} data.dataObj - object for saving to local/remote storage
    * @param {WordItem} data.params - could have segment property to define exact segment for updating
@@ -15560,13 +15574,13 @@ class UserDataManager {
     try {
       this.blocked = true
       let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
-      
+
       let localAdapter = this._localStorageAdapter(finalConstrName)
       let remoteAdapter = this._remoteStorageAdapter(finalConstrName)
-    
+
       let remoteResult = false
       let localResult = false
-      
+
       if (this.checkAdapters(localAdapter, remoteAdapter, params)) {
         this.blocked = true
 
@@ -15594,7 +15608,7 @@ class UserDataManager {
 
   /**
    * Promise-based method - deletes all objects from the wordlist by languageCode in local/remote storage
-   * uses blocking workflow: 
+   * uses blocking workflow:
    * @param {Object} data
    * @param {String} data.languageCode - languageCode of Wordlist to be deleted
    * @param {WordItem} data.params - could have segment property to define exact segment for updating
@@ -15610,13 +15624,13 @@ class UserDataManager {
       return
     }
     try {
-      
+
       let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
       let localAdapter = this._localStorageAdapter(data.dataType)
 
       let deletedLocal = false
       let deletedRemote = false
-      
+
       if (this.checkAdapters(localAdapter, remoteAdapter, params)) {
         deletedLocal = true
         deletedRemote = true
@@ -15627,7 +15641,7 @@ class UserDataManager {
         }
         if (params.source !== 'remote') {
           deletedLocal = await localAdapter.deleteMany(data.params)
-        }      
+        }
 
         this.printErrors(remoteAdapter)
         this.printErrors(localAdapter)
@@ -15646,17 +15660,17 @@ class UserDataManager {
 
   /**
    * Promise-based method - queries all objects from the wordlist by languageCode , only for only one wordItem
-   * or one wordItem from local/remote storage 
+   * or one wordItem from local/remote storage
    * @param {Object} data
-   * @param {String} data.languageCode - for quering all wordItems from wordList by languageCode
-   * @param {WordItem} data.wordItem - for quering one wordItem
+   *                 data.languageCode - for quering all wordItems from wordList by languageCode
+   *                 data.wordItem - for quering one wordItem
+   *                 data.params - type specific query parameters
    * @param {Object} [params={ source: both, type: short, syncDelete: false }] - additional parameters for updating, now there are the following:
    *                  params.source = [local, remote, both]
    *                  params.type = [short, full] - short - short data for homonym, full - homonym with definitions data
-   *                  params.syncDelete = [true, false] - if true (and params.source = both, and languageCode is defined in params), 
+   *                  params.syncDelete = [true, false] - if true (and params.source = both, and languageCode is defined in params),
    *                                      than localItems would be compared with remoteItems, items that are existed only in local would be removed
-   * 
-   * @return {WordItem[]} 
+   * @return {WordItem[]}
    */
   async query (data, params = {}) {
     try {
@@ -15763,7 +15777,7 @@ UserDataManager.LOCAL_DRIVER_CLASSES = {
 UserDataManager.REMOTE_DRIVER_CLASSES = {
   WordItem: _storage_worditem_remotedb_driver_js__WEBPACK_IMPORTED_MODULE_1__["default"]
 }
-  
+
 
 /***/ }),
 
@@ -15802,13 +15816,47 @@ class WordlistController {
    * Emits a WORDLIST_UPDATED event when the wordlists are available
    */
   async initLists (dataManager) {
-    for (let languageCode of this.availableLangs) {
-      let wordItems = await dataManager.query({dataType: 'WordItem', params: {languageCode: languageCode}}, { syncDelete: true })
-      if (wordItems.length > 0) {
-        this.wordLists[languageCode] = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordList"](languageCode,wordItems)
-        WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
+    if (! dataManager) {
+      // if we don't have a data manager we don't need to preserve any existing data, just clear it out
+      this.wordLists = {} // clear out any existing lists
+    } else {
+      for (let languageCode of this.availableLangs) {
+        let cachedList = this.wordLists[languageCode]
+        delete this.wordLists[languageCode]
+        let wordItems = await dataManager.query({dataType: 'WordItem', params: {languageCode: languageCode}}, { syncDelete: true })
+        if (wordItems.length > 0) {
+          this.wordLists[languageCode] = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordList"](languageCode,wordItems)
+          WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
+        }
+        if (cachedList) {
+          for (let cachedItem of cachedList.values) {
+            try {
+              // replay the word selection events for the cached list
+              let cachedTqs = cachedItem.context.map(c => new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["TextQuoteSelector"](c.languageCode,c.normalizedText,c.prefix,c.suffix,c.source))
+              for (let tq of cachedTqs) {
+                this.onTextQuoteSelectorReceived(tq)
+              }
+              if (cachedItem.homonym) {
+                this.onHomonymReady(cachedItem.homonym)
+              }
+            } catch (e) {
+              console.error("Error replaying cached wordlist item",e)
+            }
+          }
+        }
       }
     }
+    return this.wordLists
+  }
+
+  getWordListItemCount() {
+    let count = 0
+    for (let languageCode of this.availableLangs) {
+      if (this.wordLists[languageCode]) {
+        count = count + this.wordLists[languageCode].size
+      }
+    }
+    return count
   }
 
   /**
@@ -16062,7 +16110,7 @@ WordlistController.evt = {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 459 459"}},[_c('path',{attrs:{"d":"M178.5 140.25v-102L0 216.75l178.5 178.5V290.7c127.5 0 216.75 40.8 280.5 130.05-25.5-127.5-102-255-280.5-280.5z"}})])};var toString = function () {return "C:\\_Alpheios\\wordlist\\src\\icons\\back.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 459 459"}},[_c('path',{attrs:{"d":"M178.5 140.25v-102L0 216.75l178.5 178.5V290.7c127.5 0 216.75 40.8 280.5 130.05-25.5-127.5-102-255-280.5-280.5z"}})])};var toString = function () {return "/home/balmas/workspace/wordlist/src/icons/back.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -16073,7 +16121,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 447.6 757.4"}},[_c('path',{attrs:{"d":"M-128.4 305.8c74.8 53.3 146.8 110.5 215.7 171.3 0 0 348.4-399.4 557.1-477.1l27 53S277.2 418 150.5 757.4l-374.3-378.7 95.4-72.9z"}})])};var toString = function () {return "C:\\_Alpheios\\wordlist\\src\\icons\\check.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 447.6 757.4"}},[_c('path',{attrs:{"d":"M-128.4 305.8c74.8 53.3 146.8 110.5 215.7 171.3 0 0 348.4-399.4 557.1-477.1l27 53S277.2 418 150.5 757.4l-374.3-378.7 95.4-72.9z"}})])};var toString = function () {return "/home/balmas/workspace/wordlist/src/icons/check.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -16084,7 +16132,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 900.5 900.5"}},[_c('path',{attrs:{"d":"M176.42 880.5c0 11.046 8.954 20 20 20h507.67c11.046 0 20-8.954 20-20V232.49H176.42V880.5zm386.33-537.73h75V778.8h-75V342.77zm-150 0h75V778.8h-75V342.77zm-150 0h75V778.8h-75V342.77zM618.82 91.911V20c0-11.046-8.954-20-20-20H301.67c-11.046 0-20 8.954-20 20v96.911h-139.8c-11.046 0-20 8.954-20 20v50.576c0 11.045 8.954 20 20 20h616.75c11.046 0 20-8.955 20-20v-50.576c0-11.046-8.954-20-20-20h-139.8V91.912zm-75 20.889H356.67V75.001h187.15v37.801z"}})])};var toString = function () {return "C:\\_Alpheios\\wordlist\\src\\icons\\delete.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 900.5 900.5"}},[_c('path',{attrs:{"d":"M176.42 880.5c0 11.046 8.954 20 20 20h507.67c11.046 0 20-8.954 20-20V232.49H176.42V880.5zm386.33-537.73h75V778.8h-75V342.77zm-150 0h75V778.8h-75V342.77zm-150 0h75V778.8h-75V342.77zM618.82 91.911V20c0-11.046-8.954-20-20-20H301.67c-11.046 0-20 8.954-20 20v96.911h-139.8c-11.046 0-20 8.954-20 20v50.576c0 11.045 8.954 20 20 20h616.75c11.046 0 20-8.955 20-20v-50.576c0-11.046-8.954-20-20-20h-139.8V91.912zm-75 20.889H356.67V75.001h187.15v37.801z"}})])};var toString = function () {return "/home/balmas/workspace/wordlist/src/icons/delete.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -16095,7 +16143,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 442 442"}},[_c('path',{attrs:{"d":"M171 336H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.523 0 10-4.477 10-10s-4.477-10-10-10zM322 336H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 86H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h252c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 136H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 186H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 236H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 286H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM171 286H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.523 0 10-4.477 10-10s-4.477-10-10-10zM171 136H70c-5.523 0-10 4.477-10 10v101c0 5.523 4.477 10 10 10h101c5.523 0 10-4.477 10-10V146c0-5.523-4.477-10-10-10zm-10 101H80v-81h81v81z"}}),_c('path',{attrs:{"d":"M422 76h-30V46c0-11.028-8.972-20-20-20H20C8.972 26 0 34.972 0 46v320c0 27.57 22.43 50 50 50h342c27.57 0 50-22.43 50-50V96c0-11.028-8.972-20-20-20zm0 290c0 16.542-13.458 30-30 30H50c-16.542 0-30-13.458-30-30V46h352v305c0 13.785 11.215 25 25 25 5.522 0 10-4.477 10-10s-4.478-10-10-10c-2.757 0-5-2.243-5-5V96h30v270z"}})])};var toString = function () {return "C:\\_Alpheios\\wordlist\\src\\icons\\text-quote.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 442 442"}},[_c('path',{attrs:{"d":"M171 336H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.523 0 10-4.477 10-10s-4.477-10-10-10zM322 336H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 86H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h252c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 136H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 186H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 236H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 286H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM171 286H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.523 0 10-4.477 10-10s-4.477-10-10-10zM171 136H70c-5.523 0-10 4.477-10 10v101c0 5.523 4.477 10 10 10h101c5.523 0 10-4.477 10-10V146c0-5.523-4.477-10-10-10zm-10 101H80v-81h81v81z"}}),_c('path',{attrs:{"d":"M422 76h-30V46c0-11.028-8.972-20-20-20H20C8.972 26 0 34.972 0 46v320c0 27.57 22.43 50 50 50h342c27.57 0 50-22.43 50-50V96c0-11.028-8.972-20-20-20zm0 290c0 16.542-13.458 30-30 30H50c-16.542 0-30-13.458-30-30V46h352v305c0 13.785 11.215 25 25 25 5.522 0 10-4.477 10-10s-4.478-10-10-10c-2.757 0-5-2.243-5-5V96h30v270z"}})])};var toString = function () {return "/home/balmas/workspace/wordlist/src/icons/text-quote.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -16777,7 +16825,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class RemoteDBAdapter {
   /**
-   * 
+   *
    * @param {WordItemRemoteDbDriver} dbDriver
    */
   constructor (dbDriver) {
@@ -16791,23 +16839,46 @@ class RemoteDBAdapter {
    * @return {Boolean} - true - adapter could be used, false - couldn't
    */
   _checkRemoteDBAvailability () {
-    return Boolean(this.dbDriver.userID) && Boolean(this.dbDriver.requestsParams.headers)
+    return Boolean(this.dbDriver.accessToken) && Boolean(this.dbDriver.userId) && Boolean(this.dbDriver.requestsParams.headers)
   }
 
-  async checkAndUpdate (wordItem, segment) {
-    let currentItems = await this.query({ wordItem })
+  async checkAndUpdate (wordItem, segments) {
     let segmentsForUpdate = this.dbDriver.segmentsForUpdate
-
-    if (currentItems.length === 0) {
-      await this.create(wordItem)
-    } else if (segmentsForUpdate.includes(segment)) {
-      let resultWordItem = this.dbDriver.mergeLocalRemote(currentItems[0], wordItem)
-
-      await this.update(resultWordItem)
+    let segmentsForMerge = this.dbDriver.segmentsForMerge
+    if (! Array.isArray(segments)) {
+      segments = [segments]
     }
-
-    currentItems = await this.query({ wordItem })
-    return currentItems
+    let update = false
+    let merge = false
+    for (let segment of segments) {
+      if (segmentsForUpdate.includes(segment)) {
+        update = true
+      }
+      if (segmentsForMerge.includes(segment)) {
+        merge = true
+      }
+    }
+    if (update) {
+      let updateWordItem
+      // if we are updating a segment which requires merging, then we
+      // first query the remote item so that we have the values that need to be merged
+      let currentItems = []
+      if (merge) {
+        currentItems = await this.query({ wordItem })
+      }
+      if (! currentItems || currentItems.length === 0) {
+        // if there isn't anything that needs to be merged then
+        // we just replace the old wiht the new
+        updateWordItem = wordItem
+      } else {
+        // otherwise we need to create a merged item for update
+        updateWordItem = this.dbDriver.mergeLocalRemote(currentItems[0], wordItem)
+      }
+      await this.update(updateWordItem)
+      return [updateWordItem]
+    } else {
+      return []
+    }
   }
 
   /**
@@ -16823,7 +16894,7 @@ class RemoteDBAdapter {
       let result = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url, content, this.dbDriver.requestsParams)
 
       let updated = this.dbDriver.storageMap.post.checkResult(result)
-      
+
       return updated
     } catch (error) {
       console.error(error)
@@ -16925,7 +16996,7 @@ class RemoteDBAdapter {
           this.errors.push(error)
         }
       }
-      return errorFinal      
+      return errorFinal
     }
   }
 }
@@ -16937,10 +17008,10 @@ class RemoteDBAdapter {
 /*!***************************************!*\
   !*** ./storage/remote-db-config.json ***!
   \***************************************/
-/*! exports provided: baseUrl, testUserID, default */
+/*! exports provided: baseUrl, default */
 /***/ (function(module) {
 
-module.exports = {"baseUrl":"https://w2tfh159s2.execute-api.us-east-2.amazonaws.com/prod","testUserID":"alpheiosMockUser"};
+module.exports = {"baseUrl":"https://w2tfh159s2.execute-api.us-east-2.amazonaws.com/prod"};
 
 /***/ }),
 
@@ -17087,11 +17158,11 @@ class WordItemIndexedDbDriver {
   _objectStoreData (segment) {
     return this.storageMap[segment].objectStoreData
   }
-  
+
   /**
    * Prepares query data for creating IndexedDB Request
-   * @param {String} segment 
-   * @param {Object} indexData - index data for condition 
+   * @param {String} segment
+   * @param {Object} indexData - index data for condition
    * @param {String} indexData.name - index name
    * @param {String} indexData.value - index value
    * @param {String} indexData.type - index type (in our queries it is ussually only)
@@ -17106,7 +17177,7 @@ class WordItemIndexedDbDriver {
 
   /**
    * Prepares indexData for formatQuery when we select by ID from objectStore
-   * @param {WordItem} wordItem 
+   * @param {WordItem} wordItem
    * @param {String} [type=only] - type of index
    * @return {Object} - { indexName, value , type}
    */
@@ -17120,7 +17191,7 @@ class WordItemIndexedDbDriver {
 
   /**
    * Prepares indexData for formatQuery when we select by wordItemID from objectStore (for example context)
-   * @param {WordItem} wordItem 
+   * @param {WordItem} wordItem
    * @param {String} [type=only] - type of index
    * @return {Object} - { indexName, value , type}
    */
@@ -17134,7 +17205,7 @@ class WordItemIndexedDbDriver {
 
   /**
    * Prepares indexData for formatQuery when we select by listID from objectStore (for example all values for languageCode)
-   * @param {String} languageCode 
+   * @param {String} languageCode
    * @param {String} [type=only] - type of index
    * @return {Object} - { indexName, value , type}
    */
@@ -17148,7 +17219,7 @@ class WordItemIndexedDbDriver {
 
   /**
    * Loads a segment that is defined as first
-   * @param {Object} jsonObj 
+   * @param {Object} jsonObj
    * @return {WordItem}
    */
   loadFirst (jsonObj) {
@@ -17398,7 +17469,7 @@ static get currentDate () {
    */
   createFromRemoteData (remoteDataItem) {
     let wordItem = this.loadFirst(remoteDataItem)
-    
+
     if (remoteDataItem.context) {
       this.loadSegment('context', remoteDataItem.context, wordItem)
     }
@@ -17434,24 +17505,23 @@ var _storage_remote_db_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#_
 class WordItemRemoteDbDriver {
   /**
    * Defines proper headers and uploads config for access to remote storage, defines storageMap
-   * @param {String} userID
+   * @param {Object} auth object with accessToken and userId
    */
-  constructor (userID) {
+  constructor (auth) {
     this.config = _storage_remote_db_config_json__WEBPACK_IMPORTED_MODULE_0__
-    this.userID = userID || this.config.testUserID
-    
-    let testAuthID = 'alpheiosMockUserIdlP0DWnmNxe'
+    this.accessToken = auth.accessToken
+    this.userId = auth.userId
 
     this.requestsParams = {
       baseURL: this.config.baseUrl,
       headers: {
         common: {
-          Authorization: 'bearer ' + testAuthID,
+          Authorization: 'bearer ' + this.accessToken,
           'Content-Type': 'application/json'
         }
       }
     }
-    
+
     this.storageMap = {
       post: {
         url: this._constructPostURL.bind(this),
@@ -17485,6 +17555,13 @@ class WordItemRemoteDbDriver {
    */
   get segmentsForUpdate () {
     return ['common', 'context', 'shortHomonym']
+  }
+
+ /**
+   * db segments that require merging upon update
+   */
+  get segmentsForMerge () {
+    return ['context']
   }
 
   /**
@@ -17521,10 +17598,10 @@ class WordItemRemoteDbDriver {
    * @return {WordItem}
    */
   mergeContextPart  (currentItem, newItem) {
-    let pushContext = currentItem.context
+    let pushContext = currentItem.context || []
     for (let contextItem of newItem.context) {
       let hasCheck = currentItem.context.some(tqCurrent => {
-        return alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["TextQuoteSelector"].readObject(tqCurrent).isEqual(contextItem) 
+        return alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["TextQuoteSelector"].readObject(tqCurrent).isEqual(contextItem)
       })
       if (!hasCheck) {
         pushContext.push(this._serializeContextItem(contextItem, currentItem))
@@ -17584,8 +17661,8 @@ class WordItemRemoteDbDriver {
   _serialize (wordItem) {
     let result = {
       ID: this._makeStorageID(wordItem),
-      listID: this.userID + '-' + wordItem.languageCode,
-      userID: this.userID,
+      listID: this.userId + '-' + wordItem.languageCode,
+      userID: this.userId,
       languageCode: wordItem.languageCode,
       targetWord: wordItem.targetWord,
       important: wordItem.important,
@@ -17600,6 +17677,8 @@ class WordItemRemoteDbDriver {
 
     if (context && context.length > 0) {
       result.context = context
+    } else {
+      result.context = []
     }
     return result
   }
@@ -17632,13 +17711,13 @@ class WordItemRemoteDbDriver {
     return result
   }
 
-  
+
   /**
    * Defines json object from a single textQuoteSelector to save to remote storage
    * @param {WordItem} wordItem
    * @return {Object[]}
    */
-  _serializeContextItem (tq, wordItem) {    
+  _serializeContextItem (tq, wordItem) {
     return {
       target: {
         source: tq.source,
@@ -17657,7 +17736,7 @@ class WordItemRemoteDbDriver {
   }
 
   /**
-   * Checks status of response (post) from remote storage 
+   * Checks status of response (post) from remote storage
    * @param {WordItem} wordItem
    * @return {Boolean}
    */
@@ -17666,7 +17745,7 @@ class WordItemRemoteDbDriver {
   }
 
   /**
-   * Checks status of response (put) from remote storage 
+   * Checks status of response (put) from remote storage
    * @param {WordItem} wordItem
    * @return {Boolean}
    */
@@ -17675,7 +17754,7 @@ class WordItemRemoteDbDriver {
   }
 
   /**
-   * Checks status of response (get) from remote storage 
+   * Checks status of response (get) from remote storage
    * @param {WordItem} wordItem
    * @return {Object/Object[]}
    */
@@ -17691,7 +17770,7 @@ class WordItemRemoteDbDriver {
   }
 
   /**
-   * Checks status of response error (get) from remote storage 
+   * Checks status of response error (get) from remote storage
    * If error message consists of 'Item not found.' - it is not an error. Return empty error instead of error.
    * @param {Error} error
    * @return {[]/Boolean}
@@ -17705,7 +17784,7 @@ class WordItemRemoteDbDriver {
   }
 
   /**
-   * Defines date 
+   * Defines date
    */
   static get currentDate () {
     let dt = new Date()

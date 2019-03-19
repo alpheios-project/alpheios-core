@@ -20,29 +20,33 @@ describe('user-data-manager.test.js', () => {
   console.log = function () {}
   console.warn = function () {}
 
-  let localAdapter, remoteAdapter
+  let localAdapter, remoteAdapter, auth
 
   beforeAll( () => {
     window.indexedDB = IndexedDB
     window.IDBKeyRange = IDBKeyRange
+    auth  = {
+      accessToken: process.env.AUTH_TOKEN,
+      userId: 'alpheiosMockUser'
+    }
 
-    let dbDriverRemote = new WordItemRemoteDbDriver('alpheiosMockUser')
+    let dbDriverRemote = new WordItemRemoteDbDriver(auth)
     remoteAdapter = new RemoteDBAdapter(dbDriverRemote)
 
-    let dbDriverLocal = new WordItemIndexedDbDriver('alpheiosMockUser')
+    let dbDriverLocal = new WordItemIndexedDbDriver(auth.userId)
     localAdapter = new IndexedDBAdapter(dbDriverLocal)
   })
-    
+
   beforeEach(() => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
   })
-    
+
   afterEach(() => {
     jest.resetModules()
   })
-    
+
   afterAll(() => {
     jest.clearAllMocks()
   })
@@ -98,7 +102,7 @@ describe('user-data-manager.test.js', () => {
   }
 
   it('1 UserDataManager - update method adds item both to local and remote with only context', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -112,7 +116,7 @@ describe('user-data-manager.test.js', () => {
     expect(res).toBeTruthy()
 
     let resultRemote = await remoteAdapter.query({ languageCode: 'lat' })
-    
+
     // console.info('*****resultRemote[0].context', resultRemote[0].context)
     // resultRemote[0].context.forEach(contextItem => {
     //  console.info('*****resultRemote[0].context', contextItem)
@@ -121,7 +125,7 @@ describe('user-data-manager.test.js', () => {
     expect(resultRemote.length).toEqual(1)
     expect(resultRemote[0].targetWord).toEqual('beautum')
     expect(resultRemote[0].context.length).toEqual(1)
-    
+
     expect(resultRemote[0].context[0].target.source).toEqual('source1')
     expect(resultRemote[0].context[0].target.selector.suffix).toEqual('suffix1')
     expect(resultRemote[0].context[0].target.selector.prefix).toEqual('prefix1')
@@ -131,7 +135,7 @@ describe('user-data-manager.test.js', () => {
     expect(resultLocal.length).toEqual(1)
     expect(resultLocal[0].targetWord).toEqual('beautum')
     expect(resultLocal[0].context.length).toEqual(1)
-    
+
     expect(resultLocal[0].context[0].source).toEqual('source1')
     expect(resultLocal[0].context[0].suffix).toEqual('suffix1')
     expect(resultLocal[0].context[0].prefix).toEqual('prefix1')
@@ -142,7 +146,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
   it('2 UserDataManager - update method adds item both to local and remote - to remote short data about homonym and to local with full homonym data', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -165,7 +169,7 @@ describe('user-data-manager.test.js', () => {
     expect(resultLocal.length).toEqual(1)
     expect(resultLocal[0].targetWord).toEqual('cepit')
     expect(resultLocal[0].context.length).toEqual(1)
-    
+
     await timeout(5000)
     console.info('****resultLocal[0].homonym.lexemes', resultLocal[0].homonym.lexemes)
     expect(resultLocal[0].homonym.lexemes.length).toEqual(1)
@@ -178,7 +182,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
   it('3 UserDataManager - update method adds item both to local and remote, merge context items', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -187,7 +191,7 @@ describe('user-data-manager.test.js', () => {
       prefix: 'prefix1',
       suffix: 'suffix1'
     })
-    
+
     let res = await udm.update({ dataObj: testWordItem })
     expect(res).toBeTruthy()
 
@@ -196,7 +200,7 @@ describe('user-data-manager.test.js', () => {
       prefix: 'prefix2',
       suffix: 'suffix2'
     })
-    
+
     res = await udm.update({ dataObj: testWordItem2, params: {segment: 'context'} })
     expect(res).toBeTruthy()
 
@@ -205,7 +209,7 @@ describe('user-data-manager.test.js', () => {
     expect(resultRemote.length).toEqual(1)
     expect(resultRemote[0].targetWord).toEqual('cepit')
     expect(resultRemote[0].context.length).toEqual(2)
-    
+
     expect(resultRemote[0].context[0].target.source).toEqual('source1')
     expect(resultRemote[0].context[0].target.selector.suffix).toEqual('suffix1')
     expect(resultRemote[0].context[0].target.selector.prefix).toEqual('prefix1')
@@ -219,7 +223,7 @@ describe('user-data-manager.test.js', () => {
     expect(resultLocal.length).toEqual(1)
     expect(resultLocal[0].targetWord).toEqual('cepit')
     expect(resultLocal[0].context.length).toEqual(2)
-    
+
     expect(resultLocal[0].context[0].source).toEqual('source1')
     expect(resultLocal[0].context[0].suffix).toEqual('suffix1')
     expect(resultLocal[0].context[0].prefix).toEqual('prefix1')
@@ -233,7 +237,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
   it('4 UserDataManager - update method adds item both to local and remote, save full definitions only to local', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -255,7 +259,7 @@ describe('user-data-manager.test.js', () => {
 
     let resultLocal = await localAdapter.query({ languageCode: 'lat' })
     expect(resultLocal.length).toEqual(1)
-    
+
     // console.info('****resultLocal[0].homonym.lexemes', resultLocal[0].homonym.lexemes)
     expect(resultLocal[0].homonym.lexemes.length).toEqual(1)
     expect(resultLocal[0].homonym.lexemes[0].meaning.shortDefs.length).toEqual(1)
@@ -267,7 +271,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
   it('5 UserDataManager - update method updates remote with all data, local - with only a given segment (if there is no common, it also updates common)', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -286,7 +290,7 @@ describe('user-data-manager.test.js', () => {
 
     let resultLocal = await localAdapter.query({ languageCode: 'lat' })
     expect(resultLocal.length).toEqual(1)
-    
+
     expect(resultLocal[0].homonym).toEqual({})
     expect(resultRemote[0].context.length).toEqual(1)
 
@@ -296,7 +300,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
   it('6 UserDataManager - update method skips update for remote if fullHomonym segment is given, but updates local for this segment', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -317,7 +321,7 @@ describe('user-data-manager.test.js', () => {
 
     let resultLocal = await localAdapter.query({ languageCode: 'lat' })
     expect(resultLocal.length).toEqual(1)
-    
+
     expect(resultLocal[0].homonym.lexemes.length).toEqual(1)
     expect(resultLocal[0].homonym.lexemes[0].meaning.shortDefs.length).toEqual(1)
     expect(resultLocal[0].homonym.lexemes[0].meaning.fullDefs.length).toEqual(1)
@@ -328,7 +332,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
   it('7 UserDataManager - delete method deletes worditem both from local and remote', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -381,7 +385,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
   it('8 UserDataManager - deleteMany method deletes all wordItems from the list both from local and remote', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -419,7 +423,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
   it('9 UserDataManager - query gets data from remote with short data about homonym', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -443,7 +447,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
   it('10 UserDataManager - query gets data from remote with full data about homonym, if type = full', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -466,7 +470,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
   it('11 UserDataManager - update method with params.source = local creates item only in local', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -484,7 +488,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
   it('12 UserDataManager - update method with params.source = remote creates item only in remote', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -502,7 +506,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
   it('13 UserDataManager - query method with params.source = local selects data only from local, remote - only from remote', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -520,7 +524,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
   it('14 UserDataManager - query method (source = both or no source, type = full) gets data from remote and merge it to local (if there is no local)', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -543,7 +547,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
   it('15 UserDataManager - query method (source = both or no source, type != full) gets data only from remote', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -566,9 +570,9 @@ describe('user-data-manager.test.js', () => {
 
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
-  
+
   it('16 UserDataManager - delete many and update method, checking blocking', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
 
     // make sure that in remote there are no words
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
@@ -579,7 +583,7 @@ describe('user-data-manager.test.js', () => {
 
     let res1 = udm.update({ dataObj: testWordItem1, params: { segment: 'common' }})
     expect(udm.requestsQueue.length).toEqual(0)
-    
+
     let res2 = udm.update({ dataObj: testWordItem2, params: { segment: 'common' }})
     expect(udm.requestsQueue.length).toBeGreaterThan(0)
 
@@ -593,7 +597,7 @@ describe('user-data-manager.test.js', () => {
     expect(udm.requestsQueue.length).toBeGreaterThan(0)
 
     let final = [await res1, await res2, await res3, await res4, await res5]
-    
+
     expect(udm.requestsQueue.length).toBeGreaterThan(0)
 
     for(let k=0; k<5; k++) {
@@ -606,17 +610,17 @@ describe('user-data-manager.test.js', () => {
 
     await timeout(5000)
     let items = await udm.query({ dataType: 'WordItem', params: { languageCode: 'lat' }})
-    
+
     expect(items.filter(item => item.targetWord === testWordItem1.targetWord).length).toEqual(0)
     expect(items.filter(item => item.targetWord === testWordItem2.targetWord).length).toEqual(0)
     expect(items.filter(item => item.targetWord === testWordItem3.targetWord).length).toEqual(1)
-    
+
     expect(console.error).not.toHaveBeenCalled()
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 550000)
 
   it('16 UserDataManager - delete method (source = local) removes data only from local', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -643,7 +647,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
   it('17 UserDataManager - delete method (source = remote) removes data only from remote', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -670,7 +674,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
   it('18 UserDataManager - deleteMany method (source = local) deletes all wordItems only from local', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -703,7 +707,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
   it('19 UserDataManager - deleteMany method (source = remote) deletes all wordItems only from remote', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -734,10 +738,10 @@ describe('user-data-manager.test.js', () => {
 
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
-  
-  
+
+
   it('20 UserDataManager - query with syncDelete parameter will delete items from local that are absent in remote', async () => {
-    let udm = new UserDataManager('alpheiosMockUser')
+    let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 

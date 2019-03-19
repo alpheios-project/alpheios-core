@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export default class RemoteDBAdapter {
   /**
-   * 
+   *
    * @param {WordItemRemoteDbDriver} dbDriver
    */
   constructor (dbDriver) {
@@ -16,23 +16,46 @@ export default class RemoteDBAdapter {
    * @return {Boolean} - true - adapter could be used, false - couldn't
    */
   _checkRemoteDBAvailability () {
-    return Boolean(this.dbDriver.userID) && Boolean(this.dbDriver.requestsParams.headers)
+    return Boolean(this.dbDriver.accessToken) && Boolean(this.dbDriver.userId) && Boolean(this.dbDriver.requestsParams.headers)
   }
 
-  async checkAndUpdate (wordItem, segment) {
-    let currentItems = await this.query({ wordItem })
+  async checkAndUpdate (wordItem, segments) {
     let segmentsForUpdate = this.dbDriver.segmentsForUpdate
-
-    if (currentItems.length === 0) {
-      await this.create(wordItem)
-    } else if (segmentsForUpdate.includes(segment)) {
-      let resultWordItem = this.dbDriver.mergeLocalRemote(currentItems[0], wordItem)
-
-      await this.update(resultWordItem)
+    let segmentsForMerge = this.dbDriver.segmentsForMerge
+    if (! Array.isArray(segments)) {
+      segments = [segments]
     }
-
-    currentItems = await this.query({ wordItem })
-    return currentItems
+    let update = false
+    let merge = false
+    for (let segment of segments) {
+      if (segmentsForUpdate.includes(segment)) {
+        update = true
+      }
+      if (segmentsForMerge.includes(segment)) {
+        merge = true
+      }
+    }
+    if (update) {
+      let updateWordItem
+      // if we are updating a segment which requires merging, then we
+      // first query the remote item so that we have the values that need to be merged
+      let currentItems = []
+      if (merge) {
+        currentItems = await this.query({ wordItem })
+      }
+      if (! currentItems || currentItems.length === 0) {
+        // if there isn't anything that needs to be merged then
+        // we just replace the old wiht the new
+        updateWordItem = wordItem
+      } else {
+        // otherwise we need to create a merged item for update
+        updateWordItem = this.dbDriver.mergeLocalRemote(currentItems[0], wordItem)
+      }
+      await this.update(updateWordItem)
+      return [updateWordItem]
+    } else {
+      return []
+    }
   }
 
   /**
@@ -48,7 +71,7 @@ export default class RemoteDBAdapter {
       let result = await axios.post(url, content, this.dbDriver.requestsParams)
 
       let updated = this.dbDriver.storageMap.post.checkResult(result)
-      
+
       return updated
     } catch (error) {
       console.error(error)
@@ -150,7 +173,7 @@ export default class RemoteDBAdapter {
           this.errors.push(error)
         }
       }
-      return errorFinal      
+      return errorFinal
     }
   }
 }
