@@ -13443,7 +13443,6 @@ class AlpheiosConcordanceAdapter extends _adapters_base_adapter__WEBPACK_IMPORTE
   createFetchURL (homonym, filters, pagination, sort) {
     let filterFormatted = this.formatFilter(filters)
     let paginationFormatted = this.formatPagination(pagination)
-
     return `${this.config.url}${homonym.targetWord}${filterFormatted}${paginationFormatted}`
   }
 
@@ -13495,22 +13494,26 @@ class AlpheiosConcordanceAdapter extends _adapters_base_adapter__WEBPACK_IMPORTE
   async parseWordUsageResult (jsonObj, homonym) {
     let wordUsageExamples = []
     let author, textWork
+
+    if (this.authors.length === 0) {
+      await this.getAuthorsWorks()
+    }
+
     for (let jsonObjItem of jsonObj) {
       if (!author || !textWork) {
-        author = await this.getAuthorByAbbr(jsonObjItem)
+        author = this.getAuthorByAbbr(jsonObjItem)
         textWork = this.getTextWorkByAbbr(author, jsonObjItem)
       }
-
       let wordUsageExample = this.createWordUsageExample(jsonObjItem, homonym, author, textWork)
       wordUsageExamples.push(wordUsageExample)
     }
     return wordUsageExamples
   }
 
-  async getAuthorByAbbr (jsonObj) {
+  getAuthorByAbbr (jsonObj) {
     if (jsonObj.cit && this.authors.length > 0) {
       let authorAbbr = jsonObj.cit.split('.')[0]
-      return this.authors.find(author => author.abbreviation() === authorAbbr)
+      return this.authors.find(author => Object.values(author.abbreviations).includes(authorAbbr))
     }
     return null
   }
@@ -13518,7 +13521,7 @@ class AlpheiosConcordanceAdapter extends _adapters_base_adapter__WEBPACK_IMPORTE
   getTextWorkByAbbr (author, jsonObj) {
     if (jsonObj.cit && author && author.works.length > 0) {
       let textWorkAbbr = jsonObj.cit.split('.')[1]
-      return author.works.find(textWork => textWork.abbreviation() === textWorkAbbr)
+      return author.works.find(textWork => Object.values(textWork.abbreviations).includes(textWorkAbbr))
     }
     return null
   }
