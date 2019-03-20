@@ -28,7 +28,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/alpheios";
+  @import "../../styles/variables";
 
   .alpheios-embed-lib-warning {
     background: $alpheios-icon-color;

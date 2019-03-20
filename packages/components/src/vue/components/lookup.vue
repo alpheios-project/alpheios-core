@@ -170,7 +170,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/alpheios";
+  @import "../../styles/variables";
 
   .alpheios-lookup__form {
     margin: 30px 5px 5px;

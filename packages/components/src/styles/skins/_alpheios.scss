@@ -1,8 +1,13 @@
 // This is a default Alpheios theme. All CSS custom props in it defined for an `html` element.
 // Custom skins should define their own custom props for a `:root` pseudo-class as it has a higher specificity.
 html {
-  // Recommended file sizes are 12px (small), 16px (medium), and 20px (large)
+  // Font size of elements that are scalable
   --alpheios-base-font-size: 16px;
+  // A base font size for elements that are not scalable
+  font-size: 16px;
+
+  --alpheios-sans-font-face: 'Source Sans Pro', sans-serif;
+  --alpheios-serif-font-face: 'Source Serif Pro', serif;
 
   // A skin's color palette
   --alpheios-color-neutral-dark: #757575;
@@ -31,4 +36,30 @@ html {
   --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
   --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
   --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
+  --alpheios-btn-primary-font-color-hover: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color-hover: var(--alpheios-color-vivid-hover);
+  --alpheios-btn-primary-border-color-hover: var(--alpheios-color-vivid-hover);
+  --alpheios-btn-primary-font-color-pressed: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-primary-bg-color-pressed: var(--alpheios-color-vivid-hover);
+  --alpheios-btn-primary-border-color-pressed: var(--alpheios-color-vivid-hover);
+
+  --alpheios-btn-secondary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-secondary-bg-color: var(--alpheios-color-bright);
+  --alpheios-btn-secondary-border-color: var(--alpheios-color-bright);
+  --alpheios-btn-secondary-font-color-hover: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-secondary-bg-color-hover: var(--alpheios-color-bright-hover);
+  --alpheios-btn-secondary-border-color-hover: var(--alpheios-color-bright-hover);
+  --alpheios-btn-secondary-font-color-pressed: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-secondary-bg-color-pressed: var(--alpheios-color-bright-pressed);
+  --alpheios-btn-secondary-border-color-pressed: var(--alpheios-color-bright-pressed);
+
+  --alpheios-btn-tertiary-font-color: var(--alpheios-color-muted);
+  --alpheios-btn-tertiary-bg-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-tertiary-border-color: var(--alpheios-color-muted);
+  --alpheios-btn-tertiary-font-color-hover: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-tertiary-bg-color-hover: var(--alpheios-color-muted);
+  --alpheios-btn-tertiary-border-color-hover: var(--alpheios-color-muted);
+  --alpheios-btn-tertiary-font-color-pressed: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-tertiary-bg-color-pressed: var(--alpheios-color-muted);
+  --alpheios-btn-tertiary-border-color-pressed: var(--alpheios-color-muted);
 }

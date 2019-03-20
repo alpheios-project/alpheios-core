@@ -97,7 +97,7 @@ export default {
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style lang="scss">
-  @import "../../styles/alpheios";
+  @import "../../styles/variables";
 
   .alpheios-setting__label {
     display: block;

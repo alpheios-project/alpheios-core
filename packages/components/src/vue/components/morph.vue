@@ -372,15 +372,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/alpheios";
-
-  .alpheios-morph__lexemes {
-    color: $alpheios-tools-color;
-  }
-
-  .alpheios-morph__lexemes {
-    color: $alpheios-tools-color;
-  }
+  @import "../../styles/variables";
 
   .alpheios-morph__dictentry {
     margin-bottom: .5em;
@@ -562,10 +554,6 @@ export default {
 
     .alpheios-morph__definition {
       margin-bottom: 5px;
-    }
-
-    .alpheios-definition__text {
-      font-weight: normal;
     }
 
     .alpheios-morph__inflset {

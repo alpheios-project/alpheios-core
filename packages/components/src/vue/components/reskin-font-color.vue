@@ -65,7 +65,44 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/alpheios";
+  @import "../../styles/variables";
+
+  .alpheios-skin_properties_item {
+    font-family: $alpheios-font-family;
+    background-color: $alpheios-toolbar-color;
+    color: $alpheios-toolbar-text-color;
+    list-style-type: none;
+    vertical-align: middle;
+
+    font-size: $alpheios-base-font-size;
+    width: $alpheios-base-font-size * 1.75;
+    height: $alpheios-base-font-size * 1.75;
+    line-height: $alpheios-base-font-size * 1.75;
+  }
+
+  .alpheios-skin_properties_item__small_font {
+    font-size: $alpheios-base-font-size * 0.8;
+    width: $alpheios-base-font-size * 1.4;
+    height: $alpheios-base-font-size * 1.4;
+    line-height: $alpheios-base-font-size * 1.4;
+    border-radius: $alpheios-base-font-size * 0.7;
+  }
+
+  .alpheios-skin_properties_item__medium_font {
+    font-size: $alpheios-base-font-size;
+    width: $alpheios-base-font-size * 1.75;
+    height: $alpheios-base-font-size * 1.75;
+    line-height: $alpheios-base-font-size * 1.75;
+    border-radius: $alpheios-base-font-size * 0.9;
+  }
+
+  .alpheios-skin_properties_item__large_font {
+    font-size: $alpheios-base-font-size * 1.2;
+    width: $alpheios-base-font-size * 2.1;
+    height: $alpheios-base-font-size * 2.1;
+    line-height: $alpheios-base-font-size * 2.1;
+    border-radius: $alpheios-base-font-size * 1.1;
+  }
 
   #alpheios-reskin-panel.alpheios-skin_panel {
     display: inline-block;

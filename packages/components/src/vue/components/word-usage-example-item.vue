@@ -46,7 +46,7 @@
   }
 </script>
 <style lang="scss">
-    @import "../../styles/alpheios";
+    @import "../../styles/variables";
 
     .alpheios_word_usage_list_item {
       margin-bottom: 15px;

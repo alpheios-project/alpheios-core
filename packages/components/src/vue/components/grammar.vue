@@ -20,7 +20,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/alpheios";
+  @import "../../styles/variables";
 
   .alpheios-grammar {
     display: flex;

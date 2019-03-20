@@ -145,7 +145,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "../../styles/alpheios";
+  @import "../../styles/variables";
 
   .infl-suff-footnote-link {
     position: relative;

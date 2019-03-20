@@ -110,7 +110,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/alpheios";
+  @import "../../styles/variables";
 
   .alpheios-user-auth__message-box {
     margin-top: 20px;

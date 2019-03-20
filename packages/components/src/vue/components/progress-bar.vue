@@ -22,7 +22,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/alpheios";
+  @import "../../styles/variables";
 
   .alpheios-popup-lexdataloading__progress-wrapper {
     margin: 0 1rem 2rem;

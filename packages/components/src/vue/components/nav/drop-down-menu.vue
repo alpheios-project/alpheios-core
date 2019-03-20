@@ -186,7 +186,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/alpheios";
+  @import "../../../styles/variables";
 
   .alpheios-navmenu {
     position: absolute;

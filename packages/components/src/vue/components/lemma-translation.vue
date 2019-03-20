@@ -26,7 +26,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/alpheios";
+  @import "../../styles/variables";
 
   .alpheios-lemma__translations {
     padding: 5px 0 0 22px;

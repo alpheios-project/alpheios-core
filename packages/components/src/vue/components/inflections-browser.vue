@@ -565,7 +565,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/alpheios";
+  @import "../../styles/variables";
 
   .alpheios-ib {
     padding: 0.2rem 20px 0.2rem;

@@ -1,31 +1,40 @@
 <template>
   <div :data-notification-visible="$store.state.ui.notification.visible && $store.state.ui.notification.visible"
-       :style="mainstyles" class="alpheios-popup auk alpheios-content" id="alpheios-popup-inner" ref="popup"
-       :class="rootClasses" v-on-clickaway="attachTrackingClick"
+       :style="mainstyles"
+       class="alpheios-popup auk alpheios-content"
+       id="alpheios-popup-inner"
+       ref="popup"
+       :class="rootClasses"
+       v-on-clickaway="attachTrackingClick"
        v-show="this.$store.state.popup.visible">
-    <alph-tooltip
-        :additionalStyles="additionalStylesTootipCloseIcon"
-        :tooltipText="l10n.getText('TOOLTIP_POPUP_CLOSE')"
-        tooltipDirection="left">
-          <span @click="ui.closePopup" class="alpheios-popup__close-btn">
-              <close-icon></close-icon>
-          </span>
-    </alph-tooltip>
     <div class="alpheios-popup__header">
+      <alph-tooltip
+          :additionalStyles="additionalStylesTootipCloseIcon"
+          :tooltipText="l10n.getText('TOOLTIP_POPUP_CLOSE')"
+          tooltipDirection="left"
+          class="alpheios-popup__close-btn-tooltip"
+      >
+          <div @click="ui.closePopup" class="alpheios-popup__close-btn">
+              <close-icon></close-icon>
+          </div>
+      </alph-tooltip>
+    </div>
+
+    <div class="alpheios-popup__toolbar">
 
       <div
           :lang="$store.state.app.languageCode"
-          class="alpheios-popup__header-text"
+          class="alpheios-popup__toolbar-text"
       >
         <span
             :lang="$store.state.app.languageCode"
-            class="alpheios-popup__header-selection"
+            class="alpheios-popup__toolbar-selection"
             v-show="$store.state.app.selectedText"
         >
           {{$store.state.app.selectedText}}
         </span>
         <span
-            class="alpheios-popup__header-word"
+            class="alpheios-popup__toolbar-word"
             lang="en"
             v-show="$store.state.app.languageName && verboseMode"
         >
@@ -60,7 +69,7 @@
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
                       v-show="$store.getters['app/hasTreebankData']">
           <button @click="ui.showPanelTab('treebank')"
-                  class="alpheios-button--primary alpheios-button-small alpheios-popup__toolbar-button">
+                  class="alpheios-button--primary alpheios-popup__toolbar-button">
             {{ l10n.getText('LABEL_POPUP_TREEBANK') }}
           </button>
 
@@ -68,27 +77,27 @@
 
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_OPTIONS')" tooltipDirection="bottom-right">
           <button @click="ui.showPanelTab('options')"
-                  class="alpheios-button--primary alpheios-button-small alpheios-popup__toolbar-button">
+                  class="alpheios-button--primary alpheios-popup__toolbar-button">
             {{ l10n.getText('LABEL_POPUP_OPTIONS') }}
           </button>
         </alph-tooltip>
       </div>
     </div>
 
-    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder alpheios-text-small"
+    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder"
          v-show="!$store.state.app.morphDataReady && !noLanguage">
       <progress-bar :text="l10n.getText('PLACEHOLDER_POPUP_DATA')"></progress-bar>
     </div>
 
-    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder alpheios-text-small"
+    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder"
          v-show="noLanguage && !$store.state.app.morphDataReady">
       {{ l10n.getText('PLACEHOLDER_NO_LANGUAGE_POPUP_DATA') }}
     </div>
-    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder alpheios-text-small"
+    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder"
          v-show="$store.state.app.morphDataReady && !app.hasMorphData() && !noLanguage">
       {{ l10n.getText('PLACEHOLDER_NO_DATA_POPUP_DATA') }}
     </div>
-    <div :id="lexicalDataContainerID" class="alpheios-popup__morph-cont alpheios-text-small alpheios-popup__morph-cont-ready"
+    <div :id="lexicalDataContainerID" class="alpheios-popup__morph-cont alpheios-popup__morph-cont-ready"
          v-show="$store.state.app.morphDataReady && app.hasMorphData()">
       <morph
           :id="morphComponentID"
@@ -105,7 +114,7 @@
       <img class="alpheios-popup__logo" src="../../images/icon.png">
       <a class="alpheios-popup__providers-link" v-on:click="switchProviders">{{providersLinkText}}</a>
     </div>
-    <div class="alpheios-popup__notifications alpheios-text-small"
+    <div class="alpheios-popup__notifications"
          :class="{ 'alpheios-popup__notifications--important': this.$store.state.ui.notification.important }"
          v-if="$store.state.ui.notification.text" v-show="$store.state.ui.notification.important">
 
@@ -573,14 +582,12 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/alpheios";
+  @import "../../styles/variables";
 
   .alpheios-popup {
     display: flex;
     flex-direction: column;
-    background: #FFF;
-    border: 1px solid lightgray;
-    min-width: 210px;
+    min-width: 300px;
     min-height: 150px;
     z-index: 1000;
     position: fixed;
@@ -588,12 +595,40 @@ export default {
     top: 100px;
     box-sizing: border-box; /* Required for Interact.js to take element size with paddings and work correctly */
     overflow: auto;
-    font-family: $alpheios-font-family;
-    font-size: $alpheios-base-font-size;
-    color: $alpheios-copy-color;
   }
 
   .alpheios-popup__header {
+    height: 3.5rem;
+    background: var(--alpheios-color-dark);
+  }
+
+  .alpheios-popup__close-btn-tooltip {
+    position: absolute;
+    right: 1.25rem;
+    top: 0.375rem;
+  }
+
+  .alpheios-popup__close-btn {
+    width: 2.75rem;
+    cursor: pointer;
+    fill: var(--alpheios-color-neutral-lightest);
+    stroke: var(--alpheios-color-neutral-lightest);
+    background: inherit;
+    stroke-width: 2.5;
+
+    &:hover,
+    &:focus {
+      fill: var(--alpheios-color-bright-hover);
+      stroke: var(--alpheios-color-bright-hover);
+    }
+
+    &:active {
+      fill: var(--alpheios-color-bright-pressed);
+      stroke: var(--alpheios-color-bright-pressed);
+    }
+  }
+
+  .alpheios-popup__toolbar {
     position: relative;
     box-sizing: border-box;
     width: 100%;
@@ -605,45 +640,26 @@ export default {
     align-items: flex-start;
   }
 
-  .alpheios-popup__header-text {
+  .alpheios-popup__toolbar-text {
     line-height: 1;
     align-items: flex-start;
     padding: 7px 20px 0 0;
   }
 
-  .alpheios-popup__header-text[lang='ara'] {
+  .alpheios-popup__toolbar-text[lang='ara'] {
     padding: 0px 20px 0px 20px; /* the arabic amiri font does not like the top padding */
   }
 
-  .alpheios-popup__header-selection {
+  .alpheios-popup__toolbar-selection {
     font-size: $alpheios-base-font-size;
     font-weight: 700;
     color: $alpheios-toolbar-color;
   }
 
-  .alpheios-popup__header-word {
+  .alpheios-popup__toolbar-word {
     font-size: 0.75*$alpheios-base-font-size;
     position: relative;
     top: -1px;
-  }
-
-  .alpheios-popup__close-btn {
-    display: block;
-    position: absolute;
-    width: 20px;
-    right: 5px;
-    top: 2px;
-    cursor: pointer;
-    fill: $alpheios-link-color-dark-bg;
-    stroke: $alpheios-link-color-dark-bg;
-    background: inherit;
-    stroke-width: 2.5;
-  }
-
-  .alpheios-popup__close-btn:hover,
-  .alpheios-popup__close-btn:focus {
-    fill: $alpheios-link-hover-color;
-    stroke: $alpheios-link-hover-color;
   }
 
   .alpheios-popup__notifications {

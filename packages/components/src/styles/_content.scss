@@ -1,46 +1,74 @@
-/* panel contents */
+#{$alpheios-namespace} {
+  font-family: var(--alpheios-sans-font-face);
+  font-size: var(--alpheios-base-font-size);
+  font-weight: 400;
+  color: var(--alpheios-color-dark);
+  background: var(--alpheios-color-neutral-lightest);
+  border: 1px solid var(--alpheios-color-neutral-dark);
+  border-radius: 0.6rem;
+  box-sizing: border-box;
+  margin: 0;
 
-.alpheios-lex-lex_sense1, .lex_sense1 {
-  margin-left: .5em;
+  h1, h2, h3, h4, h5, h6, p, span, a {
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    padding: 0;
+    font-style: normal;
+  }
+
+  input,
+  optgroup,
+  select,
+  textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  select {
+    text-transform: none;
+  }
+
+  textarea {
+    overflow: auto;
+  }
+
+  [type="checkbox"],
+  [type="radio"] {
+    box-sizing: border-box;
+    padding: 0;
+  }
+
+  b {
+    margin: 0;
+    padding: 0;
+    vertical-align: inherit;
+    font-size: inherit;
+    letter-spacing: inherit;
+  }
+
+  i {
+    font-family: inherit;
+    font-size: inherit;
+    margin: 0;
+    padding: 0;
+    text-align: inherit;
+    font-style: inherit;
+  }
+
+  u {
+    margin: 0;
+    padding: 0;
+    vertical-align: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    text-decoration: inherit;
+    line-height: inherit;
+  }
 }
 
-.alpheios-lex-lex_sense2, .lex_sense2 {
-  margin-left: 1em;
-}
-
-.alpheios-lex-lex_sense3, .lex_sense3 {
-  margin-left: 1.5em;
-}
-
-.alpheios-lex-lex_sense4, .lex_sense4 {
-  margin-left: 2em;
-}
-
-.alpheios-lex-lex_sense5, .lex_sense5 {
-  margin-left: 2.5em;
-}
-
-.alpheios-lex-lex_sense6, .lex_sense6 {
-  margin-left: 3em;
-}
-
-.alpheios-meaning .alpheios-provider {
-  font-style: italic;
-  font-size: smaller;
-}
-
-.alpheios-lex-sense-separator, .sense-separator {
-  line-height: 1em;
-}
-
-.alpheios-lex-sense-spacer1, .sense-spacer1 {
-  padding-left: 1em;
-}
-
-.alpheios-lex-sense-spacer2, .sense-spacer2 {
-  padding-left: 3em;
-}
-
-.alpheios-lex-alph-source, .alph-source {
-  margin-top: 1em;
+.alpheios-text-small {
+  font-size: calc(var(--alpheios-base-font-size) * 0.875);
+  line-height: 1.5;
 }

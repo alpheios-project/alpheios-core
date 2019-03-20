@@ -248,7 +248,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/alpheios";
+  @import "../../styles/variables";
 
   .alpheios-table-sf__title {
     margin-bottom: 5px;

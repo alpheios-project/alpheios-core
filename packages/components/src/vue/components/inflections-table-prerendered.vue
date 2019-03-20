@@ -117,7 +117,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/alpheios";
+  @import "../../styles/variables";
 
   .infl-prdgm-tbl {
     display: table;
