@@ -13500,10 +13500,9 @@ class AlpheiosConcordanceAdapter extends _adapters_base_adapter__WEBPACK_IMPORTE
     }
 
     for (let jsonObjItem of jsonObj) {
-      if (!author || !textWork) {
-        author = this.getAuthorByAbbr(jsonObjItem)
-        textWork = this.getTextWorkByAbbr(author, jsonObjItem)
-      }
+      author = this.getAuthorByAbbr(jsonObjItem)
+      textWork = this.getTextWorkByAbbr(author, jsonObjItem)
+
       let wordUsageExample = this.createWordUsageExample(jsonObjItem, homonym, author, textWork)
       wordUsageExamples.push(wordUsageExample)
     }
