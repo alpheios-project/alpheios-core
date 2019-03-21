@@ -4,16 +4,73 @@
   font-weight: 400;
   color: var(--alpheios-color-dark);
   background: var(--alpheios-color-neutral-lightest);
-  border: 1px solid var(--alpheios-color-neutral-dark);
-  border-radius: 0.6rem;
   box-sizing: border-box;
   margin: 0;
 
   h1, h2, h3, h4, h5, h6, p, span, a {
     line-height: 1.15;
-    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
     padding: 0;
     font-style: normal;
+    // To override default Firefox styles
+    margin-block-start: 0;
+    margin-block-end: 0;
+  }
+
+  a {
+    color: var(--alpheios-color-vivid);
+    cursor: pointer;
+
+    &:hover,
+    &:active {
+      text-decoration: underline;
+    }
+  }
+
+  h1 {
+    font-family: var(--alpheios-serif-font-face);
+    font-size: calc(var(--alpheios-base-font-size) * 1.625);
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: calc(var(--alpheios-base-font-size) * 1.5);
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: calc(var(--alpheios-base-font-size) * 1.125);
+    font-weight: 700;
+  }
+
+  h4 {
+    font-family: var(--alpheios-serif-font-face);
+    font-size: calc(var(--alpheios-base-font-size) * 1.125);
+  }
+
+  h5 {
+    font-size: (--alpheios-base-font-size);
+    font-weight: 700;
+    font-style: italic;
+  }
+
+  #{$alpheios-layout-large} & {
+    h1 {
+      font-family: var(--alpheios-serif-font-face);
+      font-size: calc(var(--alpheios-base-font-size) * 2.25);
+      font-weight: 700;
+    }
+
+    h2 {
+      font-family: var(--alpheios-serif-font-face);
+      font-size: calc(var(--alpheios-base-font-size) * 1.75);
+      font-weight: 600;
+    }
+
+    h3 {
+      font-size: calc(var(--alpheios-base-font-size) * 1.375);
+      font-weight: 700;
+    }
   }
 
   input,

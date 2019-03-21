@@ -266,12 +266,12 @@
     "component": "Popup"
   },
   "LABEL_POPUP_SHOWCREDITS": {
-    "message": "Credits",
+    "message": "Show",
     "description": "label for show credits link on popup",
     "component": "Popup"
   },
   "LABEL_POPUP_HIDECREDITS": {
-    "message": "Hide Credits",
+    "message": "Hide",
     "description": "label for hide credits link on popup",
     "component": "Popup"
   },

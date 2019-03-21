@@ -51,6 +51,7 @@
           v-show="$store.getters['ui/isActiveTab']('definitions')">
         <div class="alpheios-lookup__panel">
           <lookup
+              :name-base="`panel-defs`"
               :clearLookupText="true"
           />
         </div>
@@ -162,7 +163,7 @@
            v-show="$store.getters['ui/isActiveTab']('info')">
         <div class="alpheios-lookup__panel">
           <lookup
-              :name-base="`panel`"
+              :name-base="`panel-info`"
               :clear-lookup-text="true"
           />
         </div>

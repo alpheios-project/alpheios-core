@@ -36,6 +36,11 @@ const languageNames = new Map([
   [Constants.LANG_GEEZ, 'Ancient Ethiopic (Ge\'ez)']
 ])
 
+const layoutClasses = {
+  COMPACT: 'alpheios-layout-compact',
+  LARGE: 'alpheios-layout-large'
+}
+
 // Enable Vuex
 Vue.use(Vuex)
 
@@ -86,6 +91,11 @@ export default class UIController {
      * @type {string} - A platform name from {HTMLPage.platforms}
      */
     this.platform = HTMLPage.getPlatform()
+    // Assign a class that will specify what type of layout will be used
+    const layoutClassName = (this.platform === HTMLPage.platforms.MOBILE)
+      ? layoutClasses.COMPACT
+      : layoutClasses.LARGE
+    document.body.classList.add(layoutClassName)
 
     // Vuex store. A public API for data and UI module interactions.
     this.store = new Vuex.Store({
@@ -1228,7 +1238,6 @@ export default class UIController {
 
   async onWordItemSelected (wordItem) {
     let wordItemFull = await this.userDataManager.query({ dataType: 'WordItem', params: { wordItem } }, { type: 'full' })
-    console.info('****************onWordItemSelected', wordItemFull[0].homonym)
     let homonym = wordItemFull[0].homonym
     this.newLexicalRequest(homonym.targetWord, homonym.languageID)
 

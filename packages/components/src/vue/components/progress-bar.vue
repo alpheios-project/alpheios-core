@@ -25,12 +25,12 @@ export default {
   @import "../../styles/variables";
 
   .alpheios-popup-lexdataloading__progress-wrapper {
-    margin: 0 1rem 2rem;
     box-sizing: border-box;
   }
 
   .alpheios-popup-lexdataloading__progress-inner {
     border: 2px solid $alpheios-icon-color;
+    border-radius: px2rem(10px);
     text-align: center;
     box-sizing: border-box;
     position: relative;
@@ -44,6 +44,7 @@ export default {
     top: 0;
     height: 100%;
     width: 100%;
+    border-radius: px2rem(10px);
   }
 
   .alpheios-popup-lexdataloading__progress-text {
@@ -54,6 +55,7 @@ export default {
     position: relative;
     z-index: 10;
     border: 2px solid #fff;
+    border-radius: px2rem(10px);
     font-size: 85%;
   }
 

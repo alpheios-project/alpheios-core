@@ -1,121 +1,133 @@
 <template>
-  <div :data-notification-visible="$store.state.ui.notification.visible && $store.state.ui.notification.visible"
+  <div :class="rootClasses"
+       :data-notification-visible="$store.state.ui.notification.visible && $store.state.ui.notification.visible"
        :style="mainstyles"
        class="alpheios-popup auk alpheios-content"
        id="alpheios-popup-inner"
        ref="popup"
-       :class="rootClasses"
        v-on-clickaway="attachTrackingClick"
        v-show="this.$store.state.popup.visible">
     <div class="alpheios-popup__header">
+      <img class="alpheios-popup__logo" src="../../images/icon.png">
       <alph-tooltip
           :additionalStyles="additionalStylesTootipCloseIcon"
           :tooltipText="l10n.getText('TOOLTIP_POPUP_CLOSE')"
           tooltipDirection="left"
-          class="alpheios-popup__close-btn-tooltip"
       >
-          <div @click="ui.closePopup" class="alpheios-popup__close-btn">
-              <close-icon></close-icon>
-          </div>
+        <div @click="ui.closePopup" class="alpheios-popup__close-btn">
+          <close-icon></close-icon>
+        </div>
       </alph-tooltip>
     </div>
 
-    <div class="alpheios-popup__toolbar">
-
-      <div
-          :lang="$store.state.app.languageCode"
-          class="alpheios-popup__toolbar-text"
-      >
-        <span
+    <div class="alpheios-popup__body">
+      <div class="alpheios-popup__toolbar">
+        <div
             :lang="$store.state.app.languageCode"
-            class="alpheios-popup__toolbar-selection"
-            v-show="$store.state.app.selectedText"
+            class="alpheios-popup__toolbar-text"
         >
-          {{$store.state.app.selectedText}}
-        </span>
-        <span
-            class="alpheios-popup__toolbar-word"
-            lang="en"
-            v-show="$store.state.app.languageName && verboseMode"
-        >
-          ({{$store.state.app.languageName}})
-        </span>
-      </div>
+          <h3
+              :lang="$store.state.app.languageCode"
+              class="alpheios-popup__toolbar-selection"
+              v-show="$store.state.app.selectedText"
+          >
+            {{$store.state.app.selectedText}}
+          </h3>
+          <span
+              class="alpheios-popup__toolbar-word"
+              lang="en"
+              v-show="$store.state.app.languageName && verboseMode"
+          >
+            ({{$store.state.app.languageName}})
+          </span>
+        </div>
 
-      <div class="alpheios-popup__button-area" v-if="data">
-        <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
-                      v-show="$store.getters['app/defDataReady']">
-          <button @click="ui.showPanelTab('definitions')" class="alpheios-button--primary alpheios-popup__toolbar-button">
-            {{ l10n.getText('LABEL_POPUP_DEFINE') }}
-          </button>
-        </alph-tooltip>
+        <div class="alpheios-popup__toolbar-buttons" v-if="data">
+          <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
+                        v-show="$store.getters['app/defDataReady']">
+            <button @click="ui.showPanelTab('definitions')"
+                    class="alpheios-button--primary alpheios-popup__toolbar-button">
+              {{ l10n.getText('LABEL_POPUP_DEFINE') }}
+            </button>
+          </alph-tooltip>
 
-        <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_INFLECTIONS')" tooltipDirection="bottom-wide"
-                      v-show="$store.state.app.hasInflData">
-          <button @click="ui.showPanelTab('inflections')"
-                  class="alpheios-button--primary alpheios-popup__toolbar-button">
-            {{ l10n.getText('LABEL_POPUP_INFLECT') }}
-          </button>
-        </alph-tooltip>
+          <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_INFLECTIONS')" tooltipDirection="bottom-wide"
+                        v-show="$store.state.app.hasInflData">
+            <button @click="ui.showPanelTab('inflections')"
+                    class="alpheios-button--primary alpheios-popup__toolbar-button">
+              {{ l10n.getText('LABEL_POPUP_INFLECT') }}
+            </button>
+          </alph-tooltip>
 
-        <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_USAGEEXAMPLES')" tooltipDirection="bottom-wide"
-                      v-show="$store.state.app.wordUsageExamplesReady">
-          <button class="alpheios-button--primary alpheios-popup__toolbar-button"
-                  @click="ui.showPanelTab('wordUsage')">
-            {{ l10n.getText('LABEL_POPUP_USAGEEXAMPLES') }}
-          </button>
-        </alph-tooltip>
+          <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_USAGEEXAMPLES')" tooltipDirection="bottom-wide"
+                        v-show="$store.state.app.wordUsageExamplesReady">
+            <button @click="ui.showPanelTab('wordUsage')"
+                    class="alpheios-button--primary alpheios-popup__toolbar-button">
+              {{ l10n.getText('LABEL_POPUP_USAGEEXAMPLES') }}
+            </button>
+          </alph-tooltip>
 
-        <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
-                      v-show="$store.getters['app/hasTreebankData']">
-          <button @click="ui.showPanelTab('treebank')"
-                  class="alpheios-button--primary alpheios-popup__toolbar-button">
-            {{ l10n.getText('LABEL_POPUP_TREEBANK') }}
-          </button>
+          <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
+                        v-show="$store.getters['app/hasTreebankData']">
+            <button @click="ui.showPanelTab('treebank')"
+                    class="alpheios-button--primary alpheios-popup__toolbar-button">
+              {{ l10n.getText('LABEL_POPUP_TREEBANK') }}
+            </button>
 
-        </alph-tooltip>
+          </alph-tooltip>
 
-        <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_OPTIONS')" tooltipDirection="bottom-right">
-          <button @click="ui.showPanelTab('options')"
-                  class="alpheios-button--primary alpheios-popup__toolbar-button">
-            {{ l10n.getText('LABEL_POPUP_OPTIONS') }}
-          </button>
-        </alph-tooltip>
-      </div>
-    </div>
-
-    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder"
-         v-show="!$store.state.app.morphDataReady && !noLanguage">
-      <progress-bar :text="l10n.getText('PLACEHOLDER_POPUP_DATA')"></progress-bar>
-    </div>
-
-    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder"
-         v-show="noLanguage && !$store.state.app.morphDataReady">
-      {{ l10n.getText('PLACEHOLDER_NO_LANGUAGE_POPUP_DATA') }}
-    </div>
-    <div class="alpheios-popup__morph-cont alpheios-popup__definitions--placeholder"
-         v-show="$store.state.app.morphDataReady && !app.hasMorphData() && !noLanguage">
-      {{ l10n.getText('PLACEHOLDER_NO_DATA_POPUP_DATA') }}
-    </div>
-    <div :id="lexicalDataContainerID" class="alpheios-popup__morph-cont alpheios-popup__morph-cont-ready"
-         v-show="$store.state.app.morphDataReady && app.hasMorphData()">
-      <morph
-          :id="morphComponentID"
-      />
-
-      <div class="alpheios-popup__morph-cont-providers" v-if="showProviders">
-        <div class="alpheios-popup__morph-cont-providers-header">{{ l10n.getText('LABEL_POPUP_CREDITS') }}</div>
-        <div class="alpheios-popup__morph-cont-providers-source" v-for="p in $store.state.app.providers">
-          {{ p.toString() }}
+          <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_OPTIONS')" tooltipDirection="bottom-right">
+            <button @click="ui.showPanelTab('options')"
+                    class="alpheios-button--primary alpheios-popup__toolbar-button">
+              {{ l10n.getText('LABEL_POPUP_OPTIONS') }}
+            </button>
+          </alph-tooltip>
         </div>
       </div>
+
+      <div class="alpheios-popup__content">
+        <div class="alpheios-popup__definitions--placeholder"
+             v-show="!$store.state.app.morphDataReady && !noLanguage">
+          <progress-bar :text="l10n.getText('PLACEHOLDER_POPUP_DATA')"></progress-bar>
+        </div>
+
+        <div class="alpheios-popup__definitions--placeholder"
+             v-show="noLanguage && !$store.state.app.morphDataReady">
+          {{ l10n.getText('PLACEHOLDER_NO_LANGUAGE_POPUP_DATA') }}
+        </div>
+        <div class="alpheios-popup__definitions--placeholder"
+             v-show="$store.state.app.morphDataReady && !app.hasMorphData() && !noLanguage">
+          {{ l10n.getText('PLACEHOLDER_NO_DATA_POPUP_DATA') }}
+        </div>
+        <div :id="lexicalDataContainerID"
+             v-show="$store.state.app.morphDataReady && app.hasMorphData()"
+        >
+          <morph
+              :id="morphComponentID"
+          />
+        </div>
+
+        <div
+            class="alpheios-popup__providers"
+            v-show="$store.state.app.morphDataReady && app.hasMorphData()"
+        >
+          <div class="alpheios-popup__providers-title">{{ l10n.getText('LABEL_POPUP_CREDITS') }}</div>
+          <a class="alpheios-popup__providers-link" v-on:click="switchProviders">{{ providersLinkText }}</a>
+          <div v-if="showProviders">
+            <div
+                class="alpheios-popup__providers-item"
+                v-for="p in $store.state.app.providers"
+            >
+              {{ p.toString() }}
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <div class="alpheios-popup__providers">
-      <img class="alpheios-popup__logo" src="../../images/icon.png">
-      <a class="alpheios-popup__providers-link" v-on:click="switchProviders">{{providersLinkText}}</a>
-    </div>
-    <div class="alpheios-popup__notifications"
-         :class="{ 'alpheios-popup__notifications--important': this.$store.state.ui.notification.important }"
+
+    <div :class="{ 'alpheios-popup__notifications--important': this.$store.state.ui.notification.important }"
+         class="alpheios-popup__notifications"
          v-if="$store.state.ui.notification.text" v-show="$store.state.ui.notification.important">
 
               <span @click="$store.commit(`ui/resetNotification`)" class="alpheios-popup__notifications-close-btn">
@@ -123,7 +135,8 @@
               </span>
 
       <span v-html="$store.state.ui.notification.text"></span>
-      <setting :classes="['alpheios-popup__notifications--lang-switcher']" :data="settings.contentOptions.items.preferredLanguage"
+      <setting :classes="['alpheios-popup__notifications--lang-switcher']"
+               :data="settings.contentOptions.items.preferredLanguage"
                :show-title="false" @change="contentOptionChanged"
                v-show="$store.state.ui.notification.showLanguageSwitcher"></setting>
     </div>
@@ -141,7 +154,6 @@ import ProgressBar from './progress-bar.vue'
 import CloseIcon from '../../images/inline-icons/close.svg'
 
 import { directive as onClickaway } from '../directives/clickaway.js'
-
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
@@ -331,10 +343,10 @@ export default {
         let time = Date.now()
         this.logger.log(`${time}: height setter, offsetHeight is ${newHeight}`)
         /*
-            let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-            let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
-            let maxHeight = viewportHeight - 2*this.data.viewportMargin - horizontalScrollbarWidth
-            */
+              let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+              let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
+              let maxHeight = viewportHeight - 2*this.data.viewportMargin - horizontalScrollbarWidth
+              */
         if (newHeight >= this.maxHeight) {
           this.logger.log(`Popup is too tall, limiting its height to ${this.maxHeight}px`)
           this.heightValue = this.maxHeight
@@ -437,12 +449,12 @@ export default {
         let dy = event.dy
 
         /*
-            On some websites Interact.js is unable to determine correct clientX or clientY coordinates.
-            This will result in a popup moving abruptly beyond screen limits.
-            To fix this, we will filter out erroneous coordinates and chancel a move in the corresponding
-            direction as incorrect. This will allow us to keep the popup on screen by sacrificing its movement
-            in (usually) one direction. This is probably the best we can do with all the information we have.
-             */
+              On some websites Interact.js is unable to determine correct clientX or clientY coordinates.
+              This will result in a popup moving abruptly beyond screen limits.
+              To fix this, we will filter out erroneous coordinates and chancel a move in the corresponding
+              direction as incorrect. This will allow us to keep the popup on screen by sacrificing its movement
+              in (usually) one direction. This is probably the best we can do with all the information we have.
+               */
         const dragTreshold = 100 // Drag distance values above this will be considered abnormal
         if (Math.abs(dx) > dragTreshold) {
           if (!this.dragErrorX) {
@@ -593,73 +605,116 @@ export default {
     position: fixed;
     left: 200px;
     top: 100px;
-    box-sizing: border-box; /* Required for Interact.js to take element size with paddings and work correctly */
+    // Required for Interact.js to take element size with paddings and work correctly
+    box-sizing: border-box;
     overflow: auto;
+    @include alpheios-border;
   }
 
   .alpheios-popup__header {
-    height: 3.5rem;
-    background: var(--alpheios-color-dark);
+    display: flex;
+    justify-content: space-between;
+    height: px2rem(56px);
+    background: var(--alpheios-color-muted);
   }
 
-  .alpheios-popup__close-btn-tooltip {
-    position: absolute;
-    right: 1.25rem;
-    top: 0.375rem;
+  .alpheios-popup__logo {
+    height: px2rem(28px);
+    width: auto;
+    margin: px2rem(14px) 0 0 px2rem(14px);
   }
 
   .alpheios-popup__close-btn {
-    width: 2.75rem;
+    width: px2rem(80px);
+    height: 100%;
     cursor: pointer;
     fill: var(--alpheios-color-neutral-lightest);
     stroke: var(--alpheios-color-neutral-lightest);
-    background: inherit;
     stroke-width: 2.5;
+
+    svg {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      left: px2rem(16px);
+      width: px2rem(44px);
+      height: auto;
+    }
 
     &:hover,
     &:focus {
       fill: var(--alpheios-color-bright-hover);
       stroke: var(--alpheios-color-bright-hover);
+      background: var(--alpheios-color-muted-hover);
     }
 
     &:active {
       fill: var(--alpheios-color-bright-pressed);
       stroke: var(--alpheios-color-bright-pressed);
+      background: var(--alpheios-color-muted-pressed);
     }
+  }
+
+  .alpheios-popup__body {
+    display: flex;
+    flex-direction: column;
+    padding: px2rem(20px);
   }
 
   .alpheios-popup__toolbar {
     position: relative;
-    box-sizing: border-box;
-    width: 100%;
-    flex: 0 0 45px;
-    padding: 10px 10px 0;
-    margin-top: 20px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
+    margin-bottom: px2rem(10px);
   }
 
   .alpheios-popup__toolbar-text {
-    line-height: 1;
-    align-items: flex-start;
-    padding: 7px 20px 0 0;
+    padding-right: px2rem(20px);
   }
 
   .alpheios-popup__toolbar-text[lang='ara'] {
     padding: 0px 20px 0px 20px; /* the arabic amiri font does not like the top padding */
   }
 
-  .alpheios-popup__toolbar-selection {
-    font-size: $alpheios-base-font-size;
-    font-weight: 700;
-    color: $alpheios-toolbar-color;
+  h3.alpheios-popup__toolbar-selection {
+    display: inline-block;
   }
 
-  .alpheios-popup__toolbar-word {
-    font-size: 0.75*$alpheios-base-font-size;
-    position: relative;
-    top: -1px;
+  .alpheios-popup__toolbar-buttons {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .alpheios-popup__toolbar-button {
+    margin: 0 0 px2rem(10px) px2rem(10px);
+  }
+
+  .alpheios-popup__content {
+    padding: px2rem(20px);
+    @include alpheios-border;
+  }
+
+  .alpheios-popup__providers {
+    margin-left: px2rem(20px);
+  }
+
+  .alpheios-popup__providers-title {
+    font-weight: 700;
+    color: var(--alpheios-color-neutral-dark);
+  }
+
+  .alpheios-popup__providers-link {
+    font-weight: 700;
+  }
+
+  .alpheios-popup__definitions--placeholder {
+    padding: px2rem(10px) 0;
+  }
+
+  .alpheios-popup__providers-item {
+    color: var(--alpheios-color-neutral-dark);
   }
 
   .alpheios-popup__notifications {
@@ -668,7 +723,6 @@ export default {
     padding: 10px 20px;
     background: $alpheios-logo-color;
     flex: 0 0 60px;
-    box-sizing: border-box;
     overflow: hidden;
   }
 
@@ -709,63 +763,5 @@ export default {
 
   .alpheios-popup__notifications--important {
     background: $alpheios-icon-color;
-  }
-
-  .alpheios-popup__morph-cont {
-    flex: 1 1;
-    box-sizing: border-box;
-    margin: 5px 10px 0;
-    overflow: auto;
-    padding: 10px;
-    border: 1px solid $alpheios-sidebar-header-border-color;
-  }
-
-  .alpheios-popup__morph-cont-providers-header {
-    display: inline-block;
-    /* color: $alpheios-link-color;
-    font-size: 0.75*$alpheios-base-font-size; */
-    font-weight: 700;
-    margin-top: 2px;
-  }
-
-  .alpheios-popup__definitions--placeholder {
-    border: 0 none;
-    padding: 10px 0;
-  }
-
-  img.alpheios-popup__logo {
-    height: 16px;
-    width: auto;
-    vertical-align: middle;
-  }
-
-  .alpheios-popup__toolbar-button {
-    float: right;
-    margin-bottom: 10px;
-    /* font-size: 0.675 * $alpheios-base-font-size; */
-  }
-
-  .alpheios-popup__morph-cont-providers-source {
-    font-size: smaller;
-    font-weight: normal;
-    /* color: $alpheios-toolbar-color; */
-    font-style: italic;
-    margin-left: .5em;
-    margin-top: .5em;
-    max-width: 700px;
-  }
-
-  .alpheios-popup__providers {
-    margin: 0 0 5px 10px;
-  }
-
-  .alpheios-popup__providers-link {
-    display: inline-block;
-    vertical-align: middle;
-    padding: 5px 0 0;
-
-    &:hover {
-      text-decoration: underline;
-    }
   }
 </style>

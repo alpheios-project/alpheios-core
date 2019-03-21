@@ -1,6 +1,8 @@
 $alpheios-uikit-namespace: 'auk';
 $alpheios-irregular-base-font-class: 'alpheios-irregular-base-font-size';
 $alpheios-namespace: '.alpheios-content';
+$alpheios-layout-compact: '.alpheios-layout-compact';
+$alpheios-layout-large: '.alpheios-layout-large';
 
 $alpheios-font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 $alpheios-font-family-arabic: Amiri, serif;
@@ -44,16 +46,16 @@ $alpheios-base-font-size: 16px;
 $alpheios-large-font-size: 20px;
 
 /********** Light Schema ***********************/
-$alpheios-color_schema_light_background: $alpheios-base-background-color;
+/*$alpheios-color_schema_light_background: $alpheios-base-background-color;
 $alpheios-color_schema_light_text_color: $alpheios-base-font-color;
 $alpheios-color_schema_light_background_hover: $alpheios-base-border-color;
 
 $alpheios-color_schema_light_tooltip-bg: #fcfcfa;
 $alpheios-color_schema_light_tooltip-color: $alpheios-toolbar-color;
-$alpheios-color_schema_light_tooltip-border: $alpheios-toolbar-color;
+$alpheios-color_schema_light_tooltip-border: $alpheios-toolbar-color;*/
 
 /********** Dark Schema ***********************/
-$alpheios-color_schema_dark_background: #282828;
+/*$alpheios-color_schema_dark_background: #282828;
 $alpheios-color_schema_dark_text_color: #f2f2f2;
 $alpheios-color_schema_dark_link_color: #b1d1d7;
 
@@ -61,4 +63,16 @@ $alpheios-color_schema_dark_tooltip-bg: #fcfcfa;
 $alpheios-color_schema_dark_tooltip-color: $alpheios-toolbar-color;
 
 $alpheios-color_schema_dark_table_border: #f2f2f2;
-$alpheios-color_schema_dark_background_hover: #686868;
+$alpheios-color_schema_dark_background_hover: #686868;*/
+
+$base-size: 16px;
+
+// Converts dimensions in pixels into rems, based on $base-size
+@function px2rem ($target, $context: $base-size) {
+  @return ($target / $context) * 1rem;
+}
+
+@mixin alpheios-border {
+  border: 1px solid var(--alpheios-color-neutral-dark);
+  border-radius: px2rem(10px);
+}
