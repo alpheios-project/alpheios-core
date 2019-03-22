@@ -1352,19 +1352,8 @@ $alpheios-color_schema_dark_tooltip-color: $alpheios-toolbar-color;
 
 $alpheios-color_schema_dark_table_border: #f2f2f2;
 $alpheios-color_schema_dark_background_hover: #686868;*/
-.alpheios-morph__dictentry {
-  margin-bottom: 0.5em;
-  padding-bottom: 5px;
-  clear: both;
-}
 .alpheios-morph__formtext {
-  font-weight: bold;
-}
-.alpheios-morph__dictentry .alpheios-morph__formtext {
-  font-size: larger;
-}
-.alpheios-morph__dictentry .alpheios-morph__forms .alpheios-morph__formtext {
-  font-size: inherit;
+  font-weight: 700;
 }
 .alpheios-morph__source {
   font-size: smaller;
@@ -1379,13 +1368,12 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   padding-right: 0.25em;
 }
 .alpheios-morph__linkedattr {
-  color: #3E8D9C;
-  font-weight: bold;
+  color: var(--alpheios-color-vivid);
   cursor: pointer;
-  padding-right: 0.25em;
+  font-weight: 700;
 }
-.alpheios-morph__linkedattr:hover {
-  color: #5BC8DC !important;
+.alpheios-morph__linkedattr:hover, .alpheios-morph__linkedattr:active {
+  text-decoration: underline;
 }
 .alpheios-morph__pofs span:last-child:after {
   content: ";";
@@ -1440,19 +1428,23 @@ div.alpheios-morph__block {
 .alpheios-morph__inflfeatures span:last-child:after {
   content: ")";
 }
+h4.alpheios-morph__groupitem {
+  display: inline;
+  font-weight: 700;
+}
 .alpheios-morph__groupitem:last-child:after {
   content: ":";
 }
 .alpheios-morph__dictentry {
-  margin-bottom: 15px;
+  clear: both;
+  margin-bottom: 1.25rem;
 }
-.alpheios-morph__dictentry .lemma_index, .alpheios-morph__dictentry .lemma_index_spacer {
+.alpheios-morph__dictentry .lemma_index,
+.alpheios-morph__dictentry .lemma_index_spacer {
   display: inline-block;
   text-align: center;
-  font-weight: bold;
-  margin-right: 10px;
-  vertical-align: top;
-  margin-top: 3px;
+  font-weight: 700;
+  margin-right: 0.3125rem;
 }
 .alpheios-morph__dictentry .alpheios-morph__features:before, .alpheios-morph__dictentry .alpheios-morph__features:after {
   content: "";
@@ -1751,18 +1743,19 @@ h3.alpheios-popup__toolbar-selection {
   border-radius: 0.625rem;
 }
 .alpheios-popup__providers {
-  margin-left: 1.25rem;
+  margin-left: 2.5rem;
 }
 .alpheios-popup__providers-title {
   font-weight: 700;
   color: var(--alpheios-color-neutral-dark);
 }
-.alpheios-popup__providers-link {
+a.alpheios-popup__providers-link {
+  display: inline-block;
+  margin-bottom: 0.375rem;
   font-weight: 700;
 }
 .alpheios-popup__definitions--placeholder {
-  border: 0 none;
-  padding: 10px 0;
+  padding: 0.625rem 0;
 }
 .alpheios-popup__providers-item {
   color: var(--alpheios-color-neutral-dark);
@@ -1770,18 +1763,18 @@ h3.alpheios-popup__toolbar-selection {
 .alpheios-popup__notifications {
   display: none;
   position: relative;
-  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
   background: #BCE5F0;
-  flex: 0 0 60px;
+  flex: 0 0 3.75rem;
   overflow: hidden;
 }
 .alpheios-popup__notifications-close-btn {
   position: absolute;
-  right: 5px;
-  top: 5px;
+  right: 0.3125rem;
+  top: 0.3125rem;
   display: block;
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
   margin: 0;
   cursor: pointer;
   fill: #D1D1D0;
@@ -1798,12 +1791,12 @@ h3.alpheios-popup__toolbar-selection {
 .alpheios-popup__notifications--lang-switcher {
   font-size: 12px;
   float: right;
-  margin: -20px 10px 0 0;
+  margin: -1.25rem 0.625rem 0 0;
   display: inline-block;
 }
 .alpheios-popup__notifications--lang-switcher .alpheios-select {
-  width: 120px;
-  height: 25px;
+  width: 7.5rem;
+  height: 1.5625rem;
 }
 .alpheios-popup__notifications--important {
   background: #73CDDE;

@@ -697,7 +697,7 @@ export default {
   }
 
   .alpheios-popup__providers {
-    margin-left: px2rem(20px);
+    margin-left: px2rem(40px);
   }
 
   .alpheios-popup__providers-title {
@@ -705,7 +705,9 @@ export default {
     color: var(--alpheios-color-neutral-dark);
   }
 
-  .alpheios-popup__providers-link {
+  a.alpheios-popup__providers-link {
+    display: inline-block;
+    margin-bottom: px2rem(6px);
     font-weight: 700;
   }
 
@@ -720,19 +722,19 @@ export default {
   .alpheios-popup__notifications {
     display: none;
     position: relative;
-    padding: 10px 20px;
+    padding: px2rem(10px) px2rem(20px);
     background: $alpheios-logo-color;
-    flex: 0 0 60px;
+    flex: 0 0 px2rem(60px);
     overflow: hidden;
   }
 
   .alpheios-popup__notifications-close-btn {
     position: absolute;
-    right: 5px;
-    top: 5px;
+    right: px2rem(5px);
+    top: px2rem(5px);
     display: block;
-    width: 20px;
-    height: 20px;
+    width: px2rem(20px);
+    height: px2rem(20px);
     margin: 0;
     cursor: pointer;
     fill: $alpheios-link-color-dark-bg;
@@ -752,13 +754,13 @@ export default {
   .alpheios-popup__notifications--lang-switcher {
     font-size: 0.75*$alpheios-base-font-size;
     float: right;
-    margin: -20px 10px 0 0;
+    margin: px2rem(-20px) px2rem(10px) 0 0;
     display: inline-block;
   }
 
   .alpheios-popup__notifications--lang-switcher .alpheios-select {
-    width: 120px;
-    height: 25px;
+    width: px2rem(120px);
+    height: px2rem(25px);
   }
 
   .alpheios-popup__notifications--important {

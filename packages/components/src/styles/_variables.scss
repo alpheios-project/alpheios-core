@@ -76,3 +76,13 @@ $base-size: 16px;
   border: 1px solid var(--alpheios-color-neutral-dark);
   border-radius: px2rem(10px);
 }
+
+@mixin alpheios-interactive {
+  color: var(--alpheios-color-vivid);
+  cursor: pointer;
+
+  &:hover,
+  &:active {
+    text-decoration: underline;
+  }
+}

@@ -18,13 +18,7 @@
   }
 
   a {
-    color: var(--alpheios-color-vivid);
-    cursor: pointer;
-
-    &:hover,
-    &:active {
-      text-decoration: underline;
-    }
+    @include alpheios-interactive;
   }
 
   h1 {

@@ -1,5 +1,5 @@
 <template>
-  <div class="alpheios-morph__lexemes morph-inner-v1">
+  <div class="alpheios-morph">
     <div
         :key="lex.lemma.ID"
         v-for="(lex,index) in lexemes"
@@ -8,18 +8,29 @@
       <div :class="morphClass(lex)" v-if="lex">
         <div class="alpheios-morph__features">
 
-          <p class="principal_parts" v-for="(lemma,lemmaIndex) in allLemmas(lex)">
+          <div class="principal_parts" v-for="(lemma,lemmaIndex) in allLemmas(lex)">
             <span class="lemma_index" v-if="lemmaIndex === 0 && lexemes.length > 1">{{ index + 1 }}</span>
             <span class="lemma_index_spacer" v-else-if="lemmaIndex > 0 && lexemes.length > 1"> </span>
 
-            <span :lang="languageCode(lemma.languageID)"
-                  class="alpheios-morph__hdwd alpheios-morph__formtext alpheios-morph__groupitem"
-                  v-if="! lemma.principalParts.includes(lemma.word)">{{ lemma.word }}</span>
+            <h4
+                class="alpheios-morph__groupitem"
+                :lang="languageCode(lemma.languageID)"
+                v-if="! lemma.principalParts.includes(lemma.word)"
+            >
+              {{ lemma.word }}
+            </h4>
 
-            <span class="alpheios-morph__hdwd alpheios-morph__formtext alpheios-morph__groupitem">
-          <span :lang="languageCode(lemma.languageID)"
-                class="alpheios-morph__listitem" v-for="part in lemma.principalParts">{{ part }}</span>
-        </span>
+            <h4
+                class="alpheios-morph__groupitem"
+            >
+              <span
+                  :lang="languageCode(lemma.languageID)"
+                  class="alpheios-morph__listitem"
+                  v-for="part in lemma.principalParts"
+              >
+                {{ part }}
+              </span>
+            </h4>
             <inflectionattribute
                 :data="lemma.features"
                 :decorators="['brackets']"
@@ -29,19 +40,20 @@
             <span
                 class="feature_extras"
                 v-if="lemma.features && (getFeature(lemma,'frequency') || getFeature(lemma,'age') || getFeature(lemma,'area') || getFeature(lemma,'geo'))">
-          <inflectionattribute
-              :data="featureList(lemma,['age','area','geo','frequency'],'extras')"
-              :type="'extras'"
-          />
-      </span>
+              <inflectionattribute
+                  :data="featureList(lemma,['age','area','geo','frequency'],'extras')"
+                  :type="'extras'"
+              />
+            </span>
+
             <span class="feature_source" v-if="lemma.features && getFeature(lemma,'source')">
-        <inflectionattribute
-            :data="lemma.features"
-            :decorators="['link','brackets']"
-            :type="types.source"
-        />
-      </span>
-          </p><!-- principal_parts -->
+              <inflectionattribute
+                  :data="lemma.features"
+                  :decorators="['link','brackets']"
+                  :type="types.source"
+              />
+            </span>
+          </div>
 
           <div class="alpheios-morph__morphdata" v-if="lex.lemma.features">
         <span class="alpheios-morph__pofs">
@@ -227,7 +239,7 @@
           </div>
         </div><!-- end alpheios-morph__inflections -->
 
-      </div><!--alpheios-morph__dictentry-->
+      </div>
 
     </div>
   </div><!--alpheios-morph__lexemes-->
@@ -374,22 +386,8 @@ export default {
 <style lang="scss">
   @import "../../styles/variables";
 
-  .alpheios-morph__dictentry {
-    margin-bottom: .5em;
-    padding-bottom: 5px;
-    clear: both;
-  }
-
   .alpheios-morph__formtext {
-    font-weight: bold;
-  }
-
-  .alpheios-morph__dictentry .alpheios-morph__formtext {
-    font-size: larger;
-  }
-
-  .alpheios-morph__dictentry .alpheios-morph__forms .alpheios-morph__formtext {
-    font-size: inherit;
+    font-weight: 700;
   }
 
   .alpheios-morph__source {
@@ -408,14 +406,8 @@ export default {
   }
 
   .alpheios-morph__linkedattr {
-    color: $alpheios-link-color;
-    font-weight: bold;
-    cursor: pointer;
-    padding-right: .25em;
-  }
-
-  .alpheios-morph__linkedattr:hover {
-    color: $alpheios-link-hover-color !important;
+    @include alpheios-interactive;
+    font-weight: 700;
   }
 
   .alpheios-morph__pofs span:last-child:after {
@@ -487,6 +479,11 @@ export default {
     content: ')';
   }
 
+  h4.alpheios-morph__groupitem {
+    display: inline;
+    font-weight: 700;
+  }
+
   .alpheios-morph__groupitem:last-child:after {
     content: ':';
   }
@@ -494,15 +491,15 @@ export default {
   $lemma_index_size: 20px;
 
   .alpheios-morph__dictentry {
-    margin-bottom: 15px;
+    clear: both;
+    margin-bottom: px2rem(20px);
 
-    .lemma_index, .lemma_index_spacer {
+    .lemma_index,
+    .lemma_index_spacer {
       display: inline-block;
       text-align: center;
-      font-weight: bold;
-      margin-right: 10px;
-      vertical-align: top;
-      margin-top: 3px;
+      font-weight: 700;
+      margin-right: px2rem(5px);
     }
 
     .alpheios-morph__features {
