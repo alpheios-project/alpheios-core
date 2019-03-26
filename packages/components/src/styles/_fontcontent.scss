@@ -56,9 +56,6 @@
         font-size: $baseFontSize * 1.25;
     }
 
-    .alpheios-panel__header-action-btn,
-    .alpheios-panel__header-action-btn.active:hover,
-    .alpheios-panel__header-action-btn.active:focus,
     .alpheios-panel__header-nav-btn {
         width: $baseFontSize * 1.25;
         height: $baseFontSize * 1.25;
@@ -201,14 +198,6 @@
 
 .#{$alpheios-uikit-namespace}.alpheios-font_large_class {
     @include font-class($alpheios-large-font-size);
-
-    .alpheios-panel__header-action-btn,
-    .alpheios-panel__header-action-btn.active:hover,
-    .alpheios-panel__header-action-btn.active:focus,
-    .alpheios-panel__header-nav-btn {
-        margin-right: 10px;
-        margin-left: 10px;
-    }
 }*/
 
 .#{$alpheios-uikit-namespace}.alpheios-font_medium_class *[lang='ara']{

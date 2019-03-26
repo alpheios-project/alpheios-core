@@ -13,16 +13,16 @@
       <div class="alpheios-panel__menu-btn" @click="menuItemClicked">
         <menu-icon class="alpheios-panel__menu-icon"></menu-icon>
       </div>
-      <span class="alpheios-panel__header-btn-group--center">
+      <div class="alpheios-panel__header-btn-group--center">
         <navbuttons-compact></navbuttons-compact>
-      </span>
+      </div>
       <span class="alpheios-panel__header-btn-group--end">
         <alph-tooltip
             :tooltipText="l10n.getText('TOOLTIP_CLOSE_PANEL')"
             tooltipDirection="top">
-          <span @click="ui.closePanel" class="alpheios-panel__header-action-btn alpheios_close">
+          <div @click="ui.closePanel" class="alpheios-panel__close-btn">
               <close-icon></close-icon>
-          </span>
+          </div>
         </alph-tooltip>
       </span>
     </div>
@@ -475,60 +475,29 @@ export default {
   .alpheios-panel {
     z-index: 2000;
     position: fixed;
-    background: #FFF;
     resize: both;
     opacity: 0.95;
     direction: ltr;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: 60px auto 60px;
-    grid-template-areas: "header" "content" "content"
+    grid-template-rows: px2rem(56px) auto px2rem(56px);
+    grid-template-areas: "header" "content" "content";
   }
 
   .alpheios-panel[data-notification-visible="true"] {
     grid-template-areas: "header" "content" "notifications"
   }
 
-  .alpheios-panel.alpheios-panel-left {
-    left: 0;
-    border-right: 1px solid $alpheios-link-color-dark-bg;
-  }
-
-  .alpheios-panel.alpheios-panel-right {
-    right: 0;
-    border-left: 1px solid $alpheios-link-color-dark-bg;
-    grid-template-columns: auto;
-    grid-template-areas: "header" "content" "content"
-
-  }
-
-  .alpheios-panel.alpheios-panel-right[data-notification-visible="true"] {
-    grid-template-areas: "header" "content" "notifications"
-
-  }
-
   .alpheios-panel__header {
     position: relative;
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     flex-wrap: nowrap;
     box-sizing: border-box;
     grid-area: header;
-    flex-direction: row;
-    justify-content: space-between;
-    border-bottom: 1px solid $alpheios-link-color-dark-bg;
-  }
-
-  .alpheios-panel-left .alpheios-panel__header {
-    direction: ltr;
-  }
-
-  .alpheios-panel-right .alpheios-panel__header {
-    direction: rtl;
-  }
-
-  .alpheios-panel__header-logo {
-    flex-grow: 0;
-    justify-content: flex-start;
+    background: var(--alpheios-color-muted);
   }
 
   .alpheios-panel__header-selection {
@@ -543,57 +512,48 @@ export default {
     top: -1px;
   }
 
-  .#{$alpheios-uikit-namespace} .alpheios-panel__header-logo-img {
-    width: auto;
-    height: 30px;
-    padding-top: 5px;
-  }
-
-  .alpheios-panel__header-action-btn,
-  .alpheios-panel__header-action-btn.active:hover,
-  .alpheios-panel__header-action-btn.active:focus {
-    display: block;
-    width: 20px;
-    height: 20px;
-    text-align: center;
+  .alpheios-panel__close-btn {
+    width: px2rem(60px);
+    height: 100%;
     cursor: pointer;
-    fill: $alpheios-link-color-dark-bg;
-    stroke: $alpheios-link-color-dark-bg;
-    margin: 10px 9px;
+    fill: var(--alpheios-color-neutral-lightest);
+    stroke: var(--alpheios-color-neutral-lightest);
+    stroke-width: 2.5;
 
     svg {
-      width: 20px;
-      height: 20px;
-      display: inline-block;
-      vertical-align: top;
+      position: relative;
+      left: px2rem(8px);
+      width: px2rem(44px);
+      height: auto;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    &:hover,
+    &:focus {
+      fill: var(--alpheios-color-bright-hover);
+      stroke: var(--alpheios-color-bright-hover);
+      background: var(--alpheios-color-muted-hover);
+    }
+
+    &:active {
+      fill: var(--alpheios-color-bright-pressed);
+      stroke: var(--alpheios-color-bright-pressed);
+      background: var(--alpheios-color-muted-pressed);
     }
   }
 
-  // Make close icons more noticeable
-  .alpheios-panel__header-action-btn.alpheios_close {
-    stroke-width: 2.5;
-  }
-
-  .alpheios-panel__header-action-btn.alpheios_left,
-  .alpheios-panel__header-action-btn.alpheios_right {
-    stroke-width: 2;
-  }
-
-  .alpheios-panel__header-action-btn:hover,
-  .alpheios-panel__header-action-btn:focus,
-  .alpheios-panel__header-action-btn.active {
-    fill: $alpheios-link-hover-color;
-    stroke: $alpheios-link-hover-color;
-  }
-
   .alpheios-panel__content {
-    overflow: visible;
+    overflow: auto;
     grid-area: content;
     direction: ltr;
     box-sizing: border-box;
     display: flex;
     flex-flow: wrap;
-    position: relative; // Need to set element as an offset parent for panel content items
+    // Need to set element as an offset parent for panel content items
+    position: relative;
+    background: var(--alpheios-color-neutral-lightest);
+    padding-top: px2rem(20px);
   }
 
   .alpheios-lookup__panel {
@@ -687,6 +647,7 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     box-sizing: border-box;
+    height: 100%;
   }
 
   .alpheios-panel__header-btn-group--end {
@@ -694,6 +655,7 @@ export default {
     flex-wrap: nowrap;
     justify-content: flex-end;
     box-sizing: border-box;
+    height: 100%;
   }
 
   .alpheios-panel__tab__options {
@@ -757,22 +719,6 @@ export default {
 
     & .alpheios-panel__content {
       overflow: auto;
-    }
-
-    // To override skin styles
-    &.auk .alpheios-panel__header-action-btn {
-      width: 40px;
-      height: 40px;
-    }
-
-    &.auk .alpheios-panel__header-action-btn {
-      width: 40px;
-      height: 40px;
-
-      svg {
-        width: 40px;
-        height: 40px;
-      }
     }
   }
 </style>

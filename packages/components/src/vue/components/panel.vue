@@ -1,8 +1,8 @@
 <template>
   <div :class="rootClasses"
-       class="alpheios-panel alpheios-panel--large auk alpheios-content"
        :data-notification-visible="$store.state.ui.notification.visible && $store.state.ui.notification.important"
        :style="mainstyles"
+       class="alpheios-panel alpheios-panel--large auk alpheios-content"
        data-component="alpheios-panel"
        data-resizable="true"
        id="alpheios-panel-inner"
@@ -10,56 +10,54 @@
        v-show="$store.state.panel.visible">
 
     <div class="alpheios-panel__header">
-      <div class="alpheios-panel__header-logo">
-        <img class="alpheios-panel__header-logo-img" src="../../images/icon.png">
-      </div>
-      <span class="alpheios-panel__header-btn-group--center">
-        <navbuttons-large></navbuttons-large>
-      </span>
-      <span class="alpheios-panel__header-btn-group--end">
+      <img class="alpheios-panel__header-logo" src="../../images/icon.png">
 
-              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MOVE_PANEL_LEFT')" tooltipDirection="bottom-narrow"
-                            v-show="attachToLeftVisible">
-                <span @click="setPosition('left')"
-                      class="alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_left"
+      <div class="alpheios-panel__header-btn-group--center">
+        <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MOVE_PANEL_LEFT')" tooltipDirection="bottom-narrow"
                       v-show="attachToLeftVisible">
-                    <attach-left-icon></attach-left-icon>
-                </span>
-              </alph-tooltip>
+          <span @click="setPosition('left')"
+                class="alpheios-navbuttons__btn alpheios-navbuttons__btn--attach"
+                v-show="attachToLeftVisible">
+              <attach-left-icon></attach-left-icon>
+          </span>
+        </alph-tooltip>
 
-              <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MOVE_PANEL_RIGHT')" tooltipDirection="bottom-narrow"
-                            v-show="attachToRightVisible">
-                <span @click="setPosition('right')"
-                      class="alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_right"
+        <navbuttons-large></navbuttons-large>
+
+        <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MOVE_PANEL_RIGHT')" tooltipDirection="bottom-narrow"
                       v-show="attachToRightVisible">
-                    <attach-right-icon></attach-right-icon>
-                </span>
-              </alph-tooltip>
+          <span @click="setPosition('right')"
+                class="alpheios-navbuttons__btn alpheios-navbuttons__btn--attach"
+                v-show="attachToRightVisible">
+              <attach-right-icon></attach-right-icon>
+          </span>
+        </alph-tooltip>
+      </div>
 
-              <alph-tooltip
-                  :tooltipText="l10n.getText('TOOLTIP_CLOSE_PANEL')"
-                  tooltipDirection="bottom-right">
-                <span @click="ui.closePanel" class="alpheios-panel__header-action-btn alpheios_close">
-                    <close-icon></close-icon>
-                </span>
-              </alph-tooltip>
-            </span>
+      <span class="alpheios-panel__header-btn-group--end">
+        <alph-tooltip
+            :tooltipText="l10n.getText('TOOLTIP_CLOSE_PANEL')"
+            tooltipDirection="bottom-right">
+          <div @click="ui.closePanel" class="alpheios-panel__close-btn">
+              <close-icon></close-icon>
+          </div>
+        </alph-tooltip>
+      </span>
     </div>
 
     <div class="alpheios-panel__content">
-
       <div
           class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions"
           v-if="$store.getters['ui/isActiveTab']('definitions')">
         <div class="alpheios-lookup__panel">
           <lookup
-              :name-base="`panel-defs`"
               :clear-lookup-text="true"
+              :name-base="`panel-defs`"
           />
         </div>
         <div v-if="$store.getters['app/defDataReady']">
-          <div class="alpheios-panel__contentitem"
-               v-for="definition in formattedShortDefinitions" :key="definition.ID">
+          <div :key="definition.ID"
+               class="alpheios-panel__contentitem" v-for="definition in formattedShortDefinitions">
             <shortdef :definition="definition" :languageCode="$store.state.app.languageCode"></shortdef>
           </div>
           <div class="alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions"
@@ -89,25 +87,28 @@
         <!-- TODO: Instead of this we need to create a universal mechanism for handling panel resizing for every tab's content change -->
         <treebank @treebankcontentwidth="setTreebankContentWidth"></treebank>
       </div>
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__status" v-show="$store.getters['ui/isActiveTab']('status')">
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__status"
+           v-show="$store.getters['ui/isActiveTab']('status')">
         <!-- Messages to be displayed in a status panel -->
         <div v-for="message in $store.state.ui.messages">
           <div class="alpheios-panel__message">{{message}}</div>
         </div>
       </div>
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__status" v-show="$store.getters['ui/isActiveTab']('user')">
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__status"
+           v-show="$store.getters['ui/isActiveTab']('user')">
         <user-auth></user-auth>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__word-usage"
            v-if="$store.state.app.wordUsageExamplesReady" v-show="$store.getters['ui/isActiveTab']('wordUsage')">
         <word-usage-examples-block
-            :wordUsageList="app.wordUsageExamples.wordUsageExamples"
-            :targetWord="app.wordUsageExamples.targetWord"
             :language="app.wordUsageExamples.language"
-            :provider="app.wordUsageExamples.provider">
+            :provider="app.wordUsageExamples.provider"
+            :targetWord="app.wordUsageExamples.targetWord"
+            :wordUsageList="app.wordUsageExamples.wordUsageExamples">
         </word-usage-examples-block>
       </div>
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__options" v-show="$store.getters['ui/isActiveTab']('options')">
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__options"
+           v-show="$store.getters['ui/isActiveTab']('options')">
         <reskin-font-color></reskin-font-color>
         <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.preferredLanguage"
                  @change="contentOptionChanged"
@@ -149,7 +150,8 @@
                  :data="settings.contentOptions.items.enableWordUsageExamples" @change="contentOptionChanged"
                  v-if="settings.contentOptions.items"></setting>
 
-        <setting :classes="['alpheios-panel__options-item']" :data="settings.contentOptions.items.wordUsageExamplesAuthMax"
+        <setting :classes="['alpheios-panel__options-item']"
+                 :data="settings.contentOptions.items.wordUsageExamplesAuthMax"
                  @change="contentOptionChanged"
                  v-if="settings.contentOptions.items"></setting>
 
@@ -169,18 +171,19 @@
            v-show="$store.getters['ui/isActiveTab']('info')">
         <div class="alpheios-lookup__panel">
           <lookup
-              :name-base="`panel-info`"
               :clear-lookup-text="true"
+              :name-base="`panel-info`"
           />
         </div>
         <info></info>
       </div>
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist" v-show="$store.getters['ui/isActiveTab']('wordlist')">
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist"
+           v-show="$store.getters['ui/isActiveTab']('wordlist')">
         <word-list-panel :updated="$store.state.app.wordListUpdateTime" :wordlistC="app.wordlistC"></word-list-panel>
       </div>
     </div>
-    <div class="alpheios-panel__notifications alpheios-text-small"
-         :class="{ 'alpheios-panel__notifications--important': $store.state.ui.notification.important }"
+    <div :class="{ 'alpheios-panel__notifications--important': $store.state.ui.notification.important }"
+         class="alpheios-panel__notifications alpheios-text-small"
          v-if="$store.state.ui.notification.visible" v-show="$store.state.ui.notification.important">
             <span @click="$store.commit(`ui/resetNotification`)" class="alpheios-panel__notifications-close-btn">
                 <close-icon></close-icon>
@@ -196,14 +199,13 @@
 </template>
 <script>
 /*
-  This is a desktop version of a panel
-   */
+    This is a desktop version of a panel
+     */
 // UI components
 import NavbuttonsLarge from '@/vue/components/nav/navbuttons-large.vue'
 // SVG icons
 import AttachLeftIcon from '../../images/inline-icons/attach-left.svg'
 import AttachRightIcon from '../../images/inline-icons/attach-right.svg'
-
 // Vue components
 import CompactPanel from '@/vue/components/panel-compact.vue'
 
@@ -252,11 +254,75 @@ export default {
   .alpheios-panel--large {
     height: 100vh;
     top: 0;
-    overflow: auto;
-    grid-template-rows: 40px auto 60px;
+  }
 
-    & .alpheios-panel__content {
-      margin-top: 20px;
+  .alpheios-panel__header-logo {
+    width: 44px;
+    height: auto;
+    // To compensate for an extra white space at the top of the logo image
+    top: -1px;
+  }
+
+  .alpheios-panel--large {
+    .alpheios-navbuttons__btn {
+      svg {
+        width: 28px;
+      }
+    }
+  }
+
+  .alpheios-navbuttons__btn--attach {
+    stroke-width: 2.5;
+  }
+
+  .alpheios-panel-left {
+    &.alpheios-panel {
+      left: 0;
+    }
+
+    .alpheios-panel__header {
+      direction: ltr;
+      border-top-right-radius: px2rem(10px);
+      padding-left: px2rem(14px);
+    }
+
+    .alpheios-panel__content {
+      border-right: 1px solid var(--alpheios-border-color);
+    }
+
+    .alpheios-panel__close-btn {
+      width: px2rem(80px);
+      border-top-right-radius: px2rem(10px);
+
+      svg {
+        left: px2rem(16px);
+      }
+    }
+  }
+
+  .alpheios-panel-right {
+    &.alpheios-panel {
+      right: 0;
+    }
+
+    .alpheios-panel__header {
+      direction: rtl;
+      border-top-left-radius: px2rem(10px);
+      padding-right: px2rem(14px);
+    }
+
+    .alpheios-panel__content {
+      border-left: 1px solid var(--alpheios-border-color);
+    }
+
+    .alpheios-panel__close-btn {
+      width: px2rem(80px);
+      border-top-left-radius: px2rem(10px);
+
+      svg {
+        right: px2rem(16px);
+        left: auto;
+      }
     }
   }
 </style>

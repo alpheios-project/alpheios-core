@@ -7694,17 +7694,6 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/src/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/navbuttons-large.vue?vue&type=style&index=0&lang=scss&":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/src!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/nav/navbuttons-large.vue?vue&type=style&index=0&lang=scss& ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/src/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/toolbar.vue?vue&type=style&index=0&lang=scss&":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/src!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/nav/toolbar.vue?vue&type=style&index=0&lang=scss& ***!
@@ -12321,14 +12310,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /*
-  This is a desktop version of a panel
-   */
+    This is a desktop version of a panel
+     */
 // UI components
 
 // SVG icons
-
 
 
 // Vue components
@@ -18012,7 +18003,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18048,7 +18039,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18084,7 +18075,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18141,7 +18132,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: { active: _vm.$store.getters["ui/isActiveTab"]("info") },
@@ -18175,7 +18166,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18211,7 +18202,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18239,7 +18230,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18277,7 +18268,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18313,7 +18304,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18341,7 +18332,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18370,7 +18361,7 @@ var render = function() {
             },
             [
               _c(
-                "span",
+                "div",
                 {
                   staticClass: "alpheios-navbuttons__btn",
                   class: {
@@ -18407,7 +18398,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18435,7 +18426,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               directives: [
                 {
@@ -18475,7 +18466,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               directives: [
                 {
@@ -19081,7 +19072,7 @@ var render = function() {
         ),
         _vm._v(" "),
         _c(
-          "span",
+          "div",
           { staticClass: "alpheios-panel__header-btn-group--center" },
           [_c("navbuttons-compact")],
           1
@@ -19101,10 +19092,9 @@ var render = function() {
               },
               [
                 _c(
-                  "span",
+                  "div",
                   {
-                    staticClass:
-                      "alpheios-panel__header-action-btn alpheios_close",
+                    staticClass: "alpheios-panel__close-btn",
                     on: { click: _vm.ui.closePanel }
                   },
                   [_c("close-icon")],
@@ -19764,18 +19754,14 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "alpheios-panel__header" }, [
-        _vm._m(0),
+        _c("img", {
+          staticClass: "alpheios-panel__header-logo",
+          attrs: { src: __webpack_require__(/*! ../../images/icon.png */ "./images/icon.png") }
+        }),
         _vm._v(" "),
         _c(
-          "span",
+          "div",
           { staticClass: "alpheios-panel__header-btn-group--center" },
-          [_c("navbuttons-large")],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          { staticClass: "alpheios-panel__header-btn-group--end" },
           [
             _c(
               "alph-tooltip",
@@ -19806,7 +19792,7 @@ var render = function() {
                       }
                     ],
                     staticClass:
-                      "alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_left",
+                      "alpheios-navbuttons__btn alpheios-navbuttons__btn--attach",
                     on: {
                       click: function($event) {
                         return _vm.setPosition("left")
@@ -19818,6 +19804,8 @@ var render = function() {
                 )
               ]
             ),
+            _vm._v(" "),
+            _c("navbuttons-large"),
             _vm._v(" "),
             _c(
               "alph-tooltip",
@@ -19848,7 +19836,7 @@ var render = function() {
                       }
                     ],
                     staticClass:
-                      "alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_right",
+                      "alpheios-navbuttons__btn alpheios-navbuttons__btn--attach",
                     on: {
                       click: function($event) {
                         return _vm.setPosition("right")
@@ -19859,8 +19847,15 @@ var render = function() {
                   1
                 )
               ]
-            ),
-            _vm._v(" "),
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "span",
+          { staticClass: "alpheios-panel__header-btn-group--end" },
+          [
             _c(
               "alph-tooltip",
               {
@@ -19871,10 +19866,9 @@ var render = function() {
               },
               [
                 _c(
-                  "span",
+                  "div",
                   {
-                    staticClass:
-                      "alpheios-panel__header-action-btn alpheios_close",
+                    staticClass: "alpheios-panel__close-btn",
                     on: { click: _vm.ui.closePanel }
                   },
                   [_c("close-icon")],
@@ -19902,8 +19896,8 @@ var render = function() {
                   [
                     _c("lookup", {
                       attrs: {
-                        "name-base": "panel-defs",
-                        "clear-lookup-text": true
+                        "clear-lookup-text": true,
+                        "name-base": "panel-defs"
                       }
                     })
                   ],
@@ -20110,10 +20104,10 @@ var render = function() {
               [
                 _c("word-usage-examples-block", {
                   attrs: {
-                    wordUsageList: _vm.app.wordUsageExamples.wordUsageExamples,
-                    targetWord: _vm.app.wordUsageExamples.targetWord,
                     language: _vm.app.wordUsageExamples.language,
-                    provider: _vm.app.wordUsageExamples.provider
+                    provider: _vm.app.wordUsageExamples.provider,
+                    targetWord: _vm.app.wordUsageExamples.targetWord,
+                    wordUsageList: _vm.app.wordUsageExamples.wordUsageExamples
                   }
                 })
               ],
@@ -20331,8 +20325,8 @@ var render = function() {
               [
                 _c("lookup", {
                   attrs: {
-                    "name-base": "panel-info",
-                    "clear-lookup-text": true
+                    "clear-lookup-text": true,
+                    "name-base": "panel-info"
                   }
                 })
               ],
@@ -20437,19 +20431,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "alpheios-panel__header-logo" }, [
-      _c("img", {
-        staticClass: "alpheios-panel__header-logo-img",
-        attrs: { src: __webpack_require__(/*! ../../images/icon.png */ "./images/icon.png") }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -43417,9 +43399,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _navbuttons_large_vue_vue_type_template_id_767c43ca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./navbuttons-large.vue?vue&type=template&id=767c43ca& */ "./vue/components/nav/navbuttons-large.vue?vue&type=template&id=767c43ca&");
 /* harmony import */ var _navbuttons_large_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./navbuttons-large.vue?vue&type=script&lang=js& */ "./vue/components/nav/navbuttons-large.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _navbuttons_large_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./navbuttons-large.vue?vue&type=style&index=0&lang=scss& */ "./vue/components/nav/navbuttons-large.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -43427,7 +43407,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _navbuttons_large_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _navbuttons_large_vue_vue_type_template_id_767c43ca___WEBPACK_IMPORTED_MODULE_0__["render"],
   _navbuttons_large_vue_vue_type_template_id_767c43ca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -43456,22 +43436,6 @@ component.options.__file = "vue/components/nav/navbuttons-large.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_navbuttons_large_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib??vue-loader-options!../../../../node_modules/source-map-loader!./navbuttons-large.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/nav/navbuttons-large.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_navbuttons_large_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./vue/components/nav/navbuttons-large.vue?vue&type=style&index=0&lang=scss&":
-/*!***********************************************************************************!*\
-  !*** ./vue/components/nav/navbuttons-large.vue?vue&type=style&index=0&lang=scss& ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_large_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src!../../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../../node_modules/vue-loader/lib??vue-loader-options!./navbuttons-large.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/src/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/navbuttons-large.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_large_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_large_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_large_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_large_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_large_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 

@@ -1,87 +1,87 @@
 <template>
   <div class="alpheios-navbuttons alpheios-navbuttons--large">
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_HELP')" tooltipDirection="bottom-narrow">
-      <span @click="ui.changeTab('info')" class="alpheios-navbuttons__btn"
+      <div @click="ui.changeTab('info')" class="alpheios-navbuttons__btn"
             :class="{ active: $store.getters['ui/isActiveTab']('info') }">
         <info-icon></info-icon>
-      </span>
+      </div>
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')" tooltipDirection="bottom-narrow" v-show="$store.getters['app/defDataReady']">
-      <span :class="{ active: $store.getters['ui/isActiveTab']('definitions') }" @click="ui.changeTab('definitions')"
+      <div :class="{ active: $store.getters['ui/isActiveTab']('definitions') }" @click="ui.changeTab('definitions')"
             class="alpheios-navbuttons__btn">
         <definitions-icon></definitions-icon>
-      </span>
+      </div>
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT')" tooltipDirection="bottom-narrow"
                 v-show="$store.state.app.hasInflData">
-      <span @click="ui.changeTab('inflections')" class="alpheios-navbuttons__btn"
+      <div @click="ui.changeTab('inflections')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('inflections') }">
         <inflections-icon></inflections-icon>
-      </span>
+      </div>
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT_BROWSER')" tooltipDirection="bottom-narrow">
-      <span @click="ui.changeTab('inflectionsbrowser')" class="alpheios-navbuttons__btn"
+      <div @click="ui.changeTab('inflectionsbrowser')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('inflectionsbrowser') }">
         <inflections-browser-icon></inflections-browser-icon>
-      </span>
+      </div>
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_GRAMMAR')" tooltipDirection="bottom-narrow"
                 v-show="$store.getters[`app/hasGrammarRes`]">
-      <span @click="ui.changeTab('grammar')" class="alpheios-navbuttons__btn"
+      <div @click="ui.changeTab('grammar')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('grammar') }">
         <grammar-icon></grammar-icon>
-      </span>
+      </div>
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-narrow"
                 v-show="$store.getters['app/hasTreebankData']">
-      <span @click="ui.changeTab('treebank')" class="alpheios-navbuttons__btn"
+      <div @click="ui.changeTab('treebank')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('treebank') }">
         <treebank-icon></treebank-icon>
-      </span>
+      </div>
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_OPTIONS')" tooltipDirection="bottom-narrow">
-      <span @click="ui.changeTab('options')" class="alpheios-navbuttons__btn"
+      <div @click="ui.changeTab('options')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('options') }">
         <options-icon></options-icon>
-      </span>
+      </div>
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_USER')" tooltipDirection="bottom-narrow"
                 v-if="Boolean(auth)">
-      <span @click="ui.changeTab('user')" class="alpheios-navbuttons__btn"
+      <div @click="ui.changeTab('user')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('user') }">
         <user-icon></user-icon>
-      </span>
+      </div>
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORD_USAGE')" tooltipDirection="bottom-narrow"
                 v-show="$store.state.app.wordUsageExamplesReady">
-      <span @click="ui.changeTab('wordUsage')" class="alpheios-navbuttons__btn"
+      <div @click="ui.changeTab('wordUsage')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordUsage') }">
         <word-usage-icon></word-usage-icon>
-      </span>
+      </div>
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORDLIST')" tooltipDirection="bottom-narrow">
-      <span @click="ui.changeTab('wordlist')" class="alpheios-navbuttons__btn"
+      <div @click="ui.changeTab('wordlist')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordlist') }"
             v-show="this.$store.state.app.wordListUpdateTime && this.app.wordlistC && Object.keys(this.app.wordlistC.wordLists).length > 0">
         <wordlist-icon></wordlist-icon>
-      </span>
+      </div>
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_STATUS')" tooltipDirection="bottom-narrow">
-      <span @click="ui.changeTab('status')" class="alpheios-navbuttons__btn"
+      <div @click="ui.changeTab('status')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('status') }"
             v-show="this.settings.contentOptions.items.verboseMode.currentValue === `verbose`">
         <status-icon></status-icon>
-      </span>
+      </div>
     </alph-tooltip>
   </div>
 </template>
@@ -128,17 +128,4 @@ export default {
 }
 </script>
 <style lang="scss">
-
-  .alpheios-navbuttons--large {
-    & .alpheios-navbuttons__btn {
-      width: 20px;
-      height: 20px;
-      margin: 10px 5px;
-    }
-
-    & .alpheios-navbuttons__btn svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
 </style>

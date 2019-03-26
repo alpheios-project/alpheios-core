@@ -73,7 +73,7 @@ $base-size: 16px;
 }
 
 @mixin alpheios-border {
-  border: 1px solid var(--alpheios-color-neutral-dark);
+  border: 1px solid var(--alpheios-border-color);
   border-radius: px2rem(10px);
 }
 

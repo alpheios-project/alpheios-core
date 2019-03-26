@@ -659,6 +659,7 @@ export default {
     display: flex;
     flex-direction: column;
     padding: px2rem(20px);
+    background: var(--alpheios-color-neutral-lightest);
   }
 
   .alpheios-popup__toolbar {

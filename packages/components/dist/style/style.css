@@ -305,6 +305,13 @@ html {
   --alpheios-color-bright-hover: #FFD27D;
   --alpheios-color-bright-pressed: var(--alpheios-color-bright);
   --alpheios-color-light: #BCE5F0;
+  --alpheios-border-color: var(--alpheios-color-neutral-dark);
+  --alpheios-icon-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-icon-bg-color: transparent;
+  --alpheios-icon-color-active: var(--alpheios-color-light);
+  --alpheios-icon-bg-color-active: transparent;
+  --alpheios-icon-color-hover: var(--alpheios-color-bright-hover);
+  --alpheios-icon-bg-color-hover: var(--alpheios-color-muted-hover);
   --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);
   --alpheios-btn-primary-bg-color: var(--alpheios-color-vivid);
   --alpheios-btn-primary-border-color: var(--alpheios-color-vivid);
@@ -360,7 +367,6 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   font-size: var(--alpheios-base-font-size);
   font-weight: 400;
   color: var(--alpheios-color-dark);
-  background: var(--alpheios-color-neutral-lightest);
   box-sizing: border-box;
   margin: 0;
 }
@@ -371,6 +377,9 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   font-style: normal;
   margin-block-start: 0;
   margin-block-end: 0;
+}
+.alpheios-content p {
+  margin-bottom: 0.5rem;
 }
 .alpheios-content a {
   color: var(--alpheios-color-vivid);
@@ -383,23 +392,28 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   font-family: var(--alpheios-serif-font-face);
   font-size: calc(var(--alpheios-base-font-size) * 1.625);
   font-weight: 700;
+  margin-bottom: 0.625rem;
 }
 .alpheios-content h2 {
   font-size: calc(var(--alpheios-base-font-size) * 1.5);
   font-weight: 700;
+  margin-bottom: 0.625rem;
 }
 .alpheios-content h3 {
   font-size: calc(var(--alpheios-base-font-size) * 1.125);
   font-weight: 700;
+  margin-bottom: 0.625rem;
 }
 .alpheios-content h4 {
   font-family: var(--alpheios-serif-font-face);
   font-size: calc(var(--alpheios-base-font-size) * 1.125);
+  margin-bottom: 0.625rem;
 }
 .alpheios-content h5 {
   font-size: --alpheios-base-font-size;
   font-weight: 700;
   font-style: italic;
+  margin-bottom: 0.625rem;
 }
 .alpheios-layout-large .alpheios-content h1 {
   font-family: var(--alpheios-serif-font-face);
@@ -1190,14 +1204,6 @@ div.alpheios-checkbox-block {
 
 .auk.alpheios-font_large_class {
     @include font-class($alpheios-large-font-size);
-
-    .alpheios-panel__header-action-btn,
-    .alpheios-panel__header-action-btn.active:hover,
-    .alpheios-panel__header-action-btn.active:focus,
-    .alpheios-panel__header-nav-btn {
-        margin-right: 10px;
-        margin-left: 10px;
-    }
 }*/
 .auk.alpheios-font_medium_class *[lang=ara] {
   font-family: Amiri, serif;
@@ -1667,7 +1673,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   top: 100px;
   box-sizing: border-box;
   overflow: auto;
-  border: 1px solid var(--alpheios-color-neutral-dark);
+  border: 1px solid var(--alpheios-border-color);
   border-radius: 0.625rem;
 }
 .alpheios-popup__header {
@@ -1711,6 +1717,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   display: flex;
   flex-direction: column;
   padding: 1.25rem;
+  background: var(--alpheios-color-neutral-lightest);
 }
 .alpheios-popup__toolbar {
   position: relative;
@@ -1739,7 +1746,7 @@ h3.alpheios-popup__toolbar-selection {
 }
 .alpheios-popup__content {
   padding: 1.25rem;
-  border: 1px solid var(--alpheios-color-neutral-dark);
+  border: 1px solid var(--alpheios-border-color);
   border-radius: 0.625rem;
 }
 .alpheios-popup__providers {
@@ -1825,42 +1832,36 @@ $alpheios-color_schema_dark_tooltip-color: $alpheios-toolbar-color;
 
 $alpheios-color_schema_dark_table_border: #f2f2f2;
 $alpheios-color_schema_dark_background_hover: #686868;*/
+.alpheios-navbuttons {
+  display: flex;
+  align-items: center;
+}
 .alpheios-navbuttons__btn {
   display: block;
-  width: 40px;
-  height: 40px;
+  width: 56px;
+  height: 56px;
   text-align: center;
   cursor: pointer;
-  background: transparent no-repeat center center;
-  background-size: contain;
-  margin: 10px;
+  fill: var(--alpheios-icon-color);
+  stroke: var(--alpheios-icon-color);
+  background-color: var(--alpheios-icon-bg-color);
 }
 .alpheios-navbuttons__btn svg {
-  width: 40px;
-  height: 40px;
-  display: inline-block;
-  vertical-align: top;
+  width: 32px;
+  height: auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
-.alpheios-navbuttons__btn,
-.alpheios-navbuttons__btn.active:hover,
-.alpheios-navbuttons__btn.active:focus {
-  fill: #D1D1D0;
-  stroke: #D1D1D0;
+.alpheios-navbuttons__btn:hover, .alpheios-navbuttons__btn:focus {
+  fill: var(--alpheios-icon-color-hover);
+  stroke: var(--alpheios-icon-color-hover);
+  background-color: var(--alpheios-icon-bg-color-hover);
 }
-.alpheios-navbuttons__btn:hover,
-.alpheios-navbuttons__btn:focus,
 .alpheios-navbuttons__btn.active {
-  fill: #5BC8DC;
-  stroke: #5BC8DC;
-}
-.alpheios-navbuttons--large .alpheios-navbuttons__btn {
-  width: 20px;
-  height: 20px;
-  margin: 10px 5px;
-}
-.alpheios-navbuttons--large .alpheios-navbuttons__btn svg {
-  width: 20px;
-  height: 20px;
+  fill: var(--alpheios-icon-color-active);
+  stroke: var(--alpheios-icon-color-active);
+  background-color: var(--alpheios-icon-bg-color-active);
 }
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
@@ -3033,50 +3034,27 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .alpheios-panel {
   z-index: 2000;
   position: fixed;
-  background: #FFF;
   resize: both;
   opacity: 0.95;
   direction: ltr;
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: 60px auto 60px;
+  grid-template-rows: 3.5rem auto 3.5rem;
   grid-template-areas: "header" "content" "content";
 }
 .alpheios-panel[data-notification-visible=true] {
   grid-template-areas: "header" "content" "notifications";
 }
-.alpheios-panel.alpheios-panel-left {
-  left: 0;
-  border-right: 1px solid #D1D1D0;
-}
-.alpheios-panel.alpheios-panel-right {
-  right: 0;
-  border-left: 1px solid #D1D1D0;
-  grid-template-columns: auto;
-  grid-template-areas: "header" "content" "content";
-}
-.alpheios-panel.alpheios-panel-right[data-notification-visible=true] {
-  grid-template-areas: "header" "content" "notifications";
-}
 .alpheios-panel__header {
   position: relative;
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   flex-wrap: nowrap;
   box-sizing: border-box;
   grid-area: header;
-  flex-direction: row;
-  justify-content: space-between;
-  border-bottom: 1px solid #D1D1D0;
-}
-.alpheios-panel-left .alpheios-panel__header {
-  direction: ltr;
-}
-.alpheios-panel-right .alpheios-panel__header {
-  direction: rtl;
-}
-.alpheios-panel__header-logo {
-  flex-grow: 0;
-  justify-content: flex-start;
+  background: var(--alpheios-color-muted);
 }
 .alpheios-panel__header-selection {
   font-size: 16px;
@@ -3088,52 +3066,42 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   position: relative;
   top: -1px;
 }
-.auk .alpheios-panel__header-logo-img {
-  width: auto;
-  height: 30px;
-  padding-top: 5px;
-}
-.alpheios-panel__header-action-btn,
-.alpheios-panel__header-action-btn.active:hover,
-.alpheios-panel__header-action-btn.active:focus {
-  display: block;
-  width: 20px;
-  height: 20px;
-  text-align: center;
+.alpheios-panel__close-btn {
+  width: 3.75rem;
+  height: 100%;
   cursor: pointer;
-  fill: #D1D1D0;
-  stroke: #D1D1D0;
-  margin: 10px 9px;
-}
-.alpheios-panel__header-action-btn svg,
-.alpheios-panel__header-action-btn.active:hover svg,
-.alpheios-panel__header-action-btn.active:focus svg {
-  width: 20px;
-  height: 20px;
-  display: inline-block;
-  vertical-align: top;
-}
-.alpheios-panel__header-action-btn.alpheios_close {
+  fill: var(--alpheios-color-neutral-lightest);
+  stroke: var(--alpheios-color-neutral-lightest);
   stroke-width: 2.5;
 }
-.alpheios-panel__header-action-btn.alpheios_left,
-.alpheios-panel__header-action-btn.alpheios_right {
-  stroke-width: 2;
+.alpheios-panel__close-btn svg {
+  position: relative;
+  left: 0.5rem;
+  width: 2.75rem;
+  height: auto;
+  top: 50%;
+  transform: translateY(-50%);
 }
-.alpheios-panel__header-action-btn:hover,
-.alpheios-panel__header-action-btn:focus,
-.alpheios-panel__header-action-btn.active {
-  fill: #5BC8DC;
-  stroke: #5BC8DC;
+.alpheios-panel__close-btn:hover, .alpheios-panel__close-btn:focus {
+  fill: var(--alpheios-color-bright-hover);
+  stroke: var(--alpheios-color-bright-hover);
+  background: var(--alpheios-color-muted-hover);
+}
+.alpheios-panel__close-btn:active {
+  fill: var(--alpheios-color-bright-pressed);
+  stroke: var(--alpheios-color-bright-pressed);
+  background: var(--alpheios-color-muted-pressed);
 }
 .alpheios-panel__content {
-  overflow: visible;
+  overflow: auto;
   grid-area: content;
   direction: ltr;
   box-sizing: border-box;
   display: flex;
   flex-flow: wrap;
   position: relative;
+  background: var(--alpheios-color-neutral-lightest);
+  padding-top: 1.25rem;
 }
 .alpheios-lookup__panel {
   display: block;
@@ -3211,12 +3179,14 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   display: flex;
   flex-wrap: nowrap;
   box-sizing: border-box;
+  height: 100%;
 }
 .alpheios-panel__header-btn-group--end {
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-end;
   box-sizing: border-box;
+  height: 100%;
 }
 .alpheios-panel__tab__options {
   width: 100%;
@@ -3269,18 +3239,6 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .alpheios-panel--compact .alpheios-panel__content {
   overflow: auto;
 }
-.alpheios-panel--compact.auk .alpheios-panel__header-action-btn {
-  width: 40px;
-  height: 40px;
-}
-.alpheios-panel--compact.auk .alpheios-panel__header-action-btn {
-  width: 40px;
-  height: 40px;
-}
-.alpheios-panel--compact.auk .alpheios-panel__header-action-btn svg {
-  width: 40px;
-  height: 40px;
-}
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
 /*********** Font styles ***********************/
@@ -3305,11 +3263,54 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .alpheios-panel--large {
   height: 100vh;
   top: 0;
-  overflow: auto;
-  grid-template-rows: 40px auto 60px;
 }
-.alpheios-panel--large .alpheios-panel__content {
-  margin-top: 20px;
+.alpheios-panel__header-logo {
+  width: 44px;
+  height: auto;
+  top: -1px;
+}
+.alpheios-panel--large .alpheios-navbuttons__btn svg {
+  width: 28px;
+}
+.alpheios-navbuttons__btn--attach {
+  stroke-width: 2.5;
+}
+.alpheios-panel-left.alpheios-panel {
+  left: 0;
+}
+.alpheios-panel-left .alpheios-panel__header {
+  direction: ltr;
+  border-top-right-radius: 0.625rem;
+  padding-left: 0.875rem;
+}
+.alpheios-panel-left .alpheios-panel__content {
+  border-right: 1px solid var(--alpheios-border-color);
+}
+.alpheios-panel-left .alpheios-panel__close-btn {
+  width: 5rem;
+  border-top-right-radius: 0.625rem;
+}
+.alpheios-panel-left .alpheios-panel__close-btn svg {
+  left: 1rem;
+}
+.alpheios-panel-right.alpheios-panel {
+  right: 0;
+}
+.alpheios-panel-right .alpheios-panel__header {
+  direction: rtl;
+  border-top-left-radius: 0.625rem;
+  padding-right: 0.875rem;
+}
+.alpheios-panel-right .alpheios-panel__content {
+  border-left: 1px solid var(--alpheios-border-color);
+}
+.alpheios-panel-right .alpheios-panel__close-btn {
+  width: 5rem;
+  border-top-left-radius: 0.625rem;
+}
+.alpheios-panel-right .alpheios-panel__close-btn svg {
+  right: 1rem;
+  left: auto;
 }
 /************ UIKit vars ************************/
 /************ Multiselect vars ************************/
