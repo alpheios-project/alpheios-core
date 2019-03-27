@@ -7,7 +7,9 @@
         id="alpheios-overlay-nav-drag-handle"
         class="alpheios-overlay-nav__drag-handle"
     >
-      <img class="alpheios-overlay-nav__logo-icon" src="../../../images/icon.png">
+      <div class="alpheios-overlay-nav__logo-icon">
+        <logo-icon></logo-icon>
+      </div>
     </div>
     <div
         class="alpheios-overlay-nav__lookup-control"
@@ -135,6 +137,7 @@ import interact from 'interactjs'
 
 import Tooltip from '@/vue/components/tooltip.vue'
 // Embeddable SVG icons
+import LogoIcon from '@/images/alpheios/logo.svg'
 import DefinitionsIcon from '@/images/inline-icons/definitions.svg'
 import InflectionsIcon from '@/images/inline-icons/inflections.svg'
 import InflectionsBrowserIcon from '@/images/inline-icons/inflections-browser.svg'
@@ -169,6 +172,7 @@ export default {
   components: {
     lookup: Lookup,
     alphTooltip: Tooltip,
+    logoIcon: LogoIcon,
     definitionsIcon: DefinitionsIcon,
     inflectionsIcon: InflectionsIcon,
     inflectionsBrowserIcon: InflectionsBrowserIcon,

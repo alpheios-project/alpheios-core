@@ -3,7 +3,6 @@
 import Style from './styles/style.scss'
 
 import Popup from './vue/components/popup.vue'
-import PopupMobile from './vue/components/popup-mobile.vue'
 import Panel from './vue/components/panel.vue'
 import L10n from './lib/l10n/l10n'
 import Locales from './locales/locales'
@@ -40,7 +39,7 @@ import PanelModule from '@/vue/vuex-modules/ui/panel-module.js'
 import PopupModule from '@/vue/vuex-modules/ui/popup-module.js'
 import NavModule from '@/vue/vuex-modules/ui/nav-module.js'
 
-export { Popup, PopupMobile, Panel, L10n, Locales, enUS, enGB, UIController, UIEventController,
+export { Popup, Panel, L10n, Locales, enUS, enGB, UIController, UIEventController,
   Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery,
   LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults,
   DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector,

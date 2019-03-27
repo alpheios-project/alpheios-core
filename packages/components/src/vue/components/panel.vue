@@ -10,7 +10,9 @@
        v-show="$store.state.panel.visible">
 
     <div class="alpheios-panel__header">
-      <img class="alpheios-panel__header-logo" src="../../images/icon.png">
+      <div class="alpheios-panel__header-logo">
+        <logo-icon></logo-icon>
+      </div>
 
       <div class="alpheios-panel__header-btn-group--center">
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MOVE_PANEL_LEFT')" tooltipDirection="bottom-narrow"
@@ -204,8 +206,9 @@
 // UI components
 import NavbuttonsLarge from '@/vue/components/nav/navbuttons-large.vue'
 // SVG icons
-import AttachLeftIcon from '../../images/inline-icons/attach-left.svg'
-import AttachRightIcon from '../../images/inline-icons/attach-right.svg'
+import LogoIcon from '@/images/alpheios/logo.svg'
+import AttachLeftIcon from '@/images/inline-icons/attach-left.svg'
+import AttachRightIcon from '@/images/inline-icons/attach-right.svg'
 // Vue components
 import CompactPanel from '@/vue/components/panel-compact.vue'
 
@@ -214,6 +217,7 @@ export default {
   extends: CompactPanel,
   components: {
     navbuttonsLarge: NavbuttonsLarge,
+    logoIcon: LogoIcon,
     attachLeftIcon: AttachLeftIcon,
     attachRightIcon: AttachRightIcon
   },

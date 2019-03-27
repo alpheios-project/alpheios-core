@@ -8,7 +8,9 @@
        v-on-clickaway="attachTrackingClick"
        v-show="this.$store.state.popup.visible">
     <div class="alpheios-popup__header">
-      <img class="alpheios-popup__logo" src="../../images/icon.png">
+      <div class="alpheios-popup__logo">
+        <logo-icon></logo-icon>
+      </div>
       <alph-tooltip
           :additionalStyles="additionalStylesTootipCloseIcon"
           :tooltipText="l10n.getText('TOOLTIP_POPUP_CLOSE')"
@@ -151,6 +153,7 @@ import Logger from '@/lib/log/logger'
 import Tooltip from './tooltip.vue'
 import ProgressBar from './progress-bar.vue'
 // Embeddable SVG icons
+import LogoIcon from '@/images/alpheios/logo.svg'
 import CloseIcon from '../../images/inline-icons/close.svg'
 
 import { directive as onClickaway } from '../directives/clickaway.js'
@@ -165,6 +168,7 @@ export default {
   components: {
     morph: Morph,
     setting: Setting,
+    logoIcon: LogoIcon,
     closeIcon: CloseIcon,
     alphTooltip: Tooltip,
     progressBar: ProgressBar
@@ -619,9 +623,14 @@ export default {
   }
 
   .alpheios-popup__logo {
-    height: px2rem(28px);
-    width: auto;
-    margin: px2rem(14px) 0 0 px2rem(14px);
+    position: relative;
+    left: px2rem(16px);
+    top: px2rem(18px);
+
+    svg {
+      width: px2rem(28px);
+      height: auto;
+    }
   }
 
   .alpheios-popup__close-btn {

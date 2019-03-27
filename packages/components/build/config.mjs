@@ -5,7 +5,7 @@ const projectRoot = process.cwd()
 
 const imagemin = {
   tasks: [
-    { source: 'src/images', target: 'dist/images', extensions: ['jpg', 'png', 'svg'], excludedDirs: ['inline-icons'] }
+    { source: 'src/images', target: 'dist/images', extensions: ['jpg', 'png', 'svg'], excludedDirs: ['inline-icons', 'alpheios'] }
   ]
 }
 
