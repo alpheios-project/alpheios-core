@@ -154,7 +154,7 @@ export default class UIController {
 
     // Creates on configures an event listener
     uiController.evc = new UIEventController()
-    uiController.registerGetSelectedText('GetSelectedText',uiController.options.textQuerySelector)
+    uiController.registerGetSelectedText('GetSelectedText', uiController.options.textQuerySelector)
     uiController.evc.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), GenericEvt, 'keydown')
     uiController.evc.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), GenericEvt, 'Alpheios_Page_Load')
 
@@ -1341,7 +1341,7 @@ export default class UIController {
     this.api.settings.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
   }
 
-  registerGetSelectedText(listenerName,selector) {
+  registerGetSelectedText (listenerName, selector) {
     let ev
     if (this.platform === HTMLPage.platforms.MOBILE) {
       ev = LongTap
@@ -1368,8 +1368,8 @@ export default class UIController {
     }
   }
 
-  registerAndActivateGetSelectedText(listenerName,selector) {
-    this.registerGetSelectedText(listenerName,selector)
+  registerAndActivateGetSelectedText (listenerName, selector) {
+    this.registerGetSelectedText(listenerName, selector)
     this.evc.activateListener(listenerName)
   }
 }

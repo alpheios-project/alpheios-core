@@ -7694,21 +7694,10 @@ var singleton = jumper();
 
 /***/ }),
 
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/navbuttons-large.vue?vue&type=style&index=0&lang=scss&":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/nav/navbuttons-large.vue?vue&type=style&index=0&lang=scss& ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/overlay-nav.vue?vue&type=style&index=0&lang=scss&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/nav/overlay-nav.vue?vue&type=style&index=0&lang=scss& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/toolbar.vue?vue&type=style&index=0&lang=scss&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/nav/toolbar.vue?vue&type=style&index=0&lang=scss& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7731,17 +7720,6 @@ var singleton = jumper();
 /*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/panel.vue?vue&type=style&index=0&lang=scss& ***!
   \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/popup-mobile.vue?vue&type=style&index=0&lang=scss&":
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/popup-mobile.vue?vue&type=style&index=0&lang=scss& ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7797,17 +7775,6 @@ var singleton = jumper();
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/shortdef.vue?vue&type=style&index=0&lang=scss& ***!
   \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/tooltip.vue?vue&type=style&index=0&lang=scss&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/tooltip.vue?vue&type=style&index=0&lang=scss& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10793,6 +10760,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -11396,10 +11375,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/nav/overlay-nav.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************************************************************************!*\
-  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/nav/overlay-nav.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************************************************************/
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/nav/toolbar.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/nav/toolbar.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -11408,36 +11387,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
 /* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
-/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/images/inline-icons/definitions.svg */ "./images/inline-icons/definitions.svg");
-/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/images/inline-icons/inflections.svg */ "./images/inline-icons/inflections.svg");
-/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
-/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/images/inline-icons/status.svg */ "./images/inline-icons/status.svg");
-/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
-/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
-/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
-/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/images/inline-icons/sitemap.svg */ "./images/inline-icons/sitemap.svg");
-/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/images/inline-icons/info.svg */ "./images/inline-icons/info.svg");
-/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
-/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/images/inline-icons/books-stack.svg */ "./images/inline-icons/books-stack.svg");
-/* harmony import */ var _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/images/inline-icons/collapsed.svg */ "./images/inline-icons/collapsed.svg");
-/* harmony import */ var _images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/images/inline-icons/expanded.svg */ "./images/inline-icons/expanded.svg");
-/* harmony import */ var _images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/images/inline-icons/lookup.svg */ "./images/inline-icons/lookup.svg");
-/* harmony import */ var _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/vue/components/lookup.vue */ "./vue/components/lookup.vue");
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+/* harmony import */ var _images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/images/alpheios/logo.svg */ "./images/alpheios/logo.svg");
+/* harmony import */ var _images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/images/inline-icons/definitions.svg */ "./images/inline-icons/definitions.svg");
+/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/images/inline-icons/inflections.svg */ "./images/inline-icons/inflections.svg");
+/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
+/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/images/inline-icons/status.svg */ "./images/inline-icons/status.svg");
+/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
+/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
+/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
+/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/images/inline-icons/sitemap.svg */ "./images/inline-icons/sitemap.svg");
+/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/images/inline-icons/info.svg */ "./images/inline-icons/info.svg");
+/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
+/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/images/inline-icons/usage-examples-icon1.svg */ "./images/inline-icons/usage-examples-icon1.svg");
+/* harmony import */ var _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/images/inline-icons/collapsed.svg */ "./images/inline-icons/collapsed.svg");
+/* harmony import */ var _images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/images/inline-icons/expanded.svg */ "./images/inline-icons/expanded.svg");
+/* harmony import */ var _images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/images/inline-icons/lookup.svg */ "./images/inline-icons/lookup.svg");
+/* harmony import */ var _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/vue/components/lookup.vue */ "./vue/components/lookup.vue");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+//
+//
 //
 //
 //
@@ -11589,6 +11572,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 // Vue components
 
 // Modules support
@@ -11605,24 +11589,25 @@ __webpack_require__.r(__webpack_exports__);
     auth: { from: 'auth', default: null } // This module is options
   },
   storeModules: ['app', 'ui'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_17__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_18__["default"]],
   components: {
-    lookup: _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+    lookup: _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
     alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    definitionsIcon: _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_2___default.a,
-    inflectionsIcon: _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_3___default.a,
-    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_4___default.a,
-    statusIcon: _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_5___default.a,
-    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_6___default.a,
-    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_7___default.a,
-    infoIcon: _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_10___default.a,
-    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_8___default.a,
-    treebankIcon: _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_9___default.a,
-    wordUsageIcon: _images_inline_icons_books_stack_svg__WEBPACK_IMPORTED_MODULE_12___default.a,
-    wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_11___default.a,
-    collapsedIcon: _images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_13___default.a,
-    expandedIcon: _images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_14___default.a,
-    lookupIcon: _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_15___default.a
+    logoIcon: _images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_2___default.a,
+    definitionsIcon: _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_3___default.a,
+    inflectionsIcon: _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_4___default.a,
+    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_5___default.a,
+    statusIcon: _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_6___default.a,
+    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_7___default.a,
+    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_8___default.a,
+    infoIcon: _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_11___default.a,
+    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_9___default.a,
+    treebankIcon: _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_10___default.a,
+    wordUsageIcon: _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_13___default.a,
+    wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_12___default.a,
+    collapsedIcon: _images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_14___default.a,
+    expandedIcon: _images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_15___default.a,
+    lookupIcon: _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_16___default.a
   },
   interactInstance: null,
   dragTreshold: 100, // Drag distance values above this will be considered abnormal
@@ -12221,11 +12206,22 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_components_nav_navbuttons_large_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/components/nav/navbuttons-large.vue */ "./vue/components/nav/navbuttons-large.vue");
-/* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../images/inline-icons/attach-left.svg */ "./images/inline-icons/attach-left.svg");
-/* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../images/inline-icons/attach-right.svg */ "./images/inline-icons/attach-right.svg");
-/* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/vue/components/panel-compact.vue */ "./vue/components/panel-compact.vue");
+/* harmony import */ var _images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/images/alpheios/logo.svg */ "./images/alpheios/logo.svg");
+/* harmony import */ var _images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/images/inline-icons/attach-left.svg */ "./images/inline-icons/attach-left.svg");
+/* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/images/inline-icons/attach-right.svg */ "./images/inline-icons/attach-right.svg");
+/* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/vue/components/panel-compact.vue */ "./vue/components/panel-compact.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -12435,8 +12431,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /*
-  This is a desktop version of a panel
-   */
+    This is a desktop version of a panel
+     */
 // UI components
 
 // SVG icons
@@ -12448,11 +12444,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Panel',
-  extends: _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+  extends: _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
   components: {
     navbuttonsLarge: _vue_components_nav_navbuttons_large_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    attachLeftIcon: _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_1___default.a,
-    attachRightIcon: _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_2___default.a
+    logoIcon: _images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_1___default.a,
+    attachLeftIcon: _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_2___default.a,
+    attachRightIcon: _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_3___default.a
   },
   tabChangeUnwatch: null, // Will hold a function for removal of a tab change watcher
   // `positionClassVariants` is a custom property. This is to prent Vue from attaching reactivity to it.
@@ -12488,94 +12485,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/popup-mobile.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************************************************************************!*\
-  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/popup-mobile.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _popup_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./popup.vue */ "./vue/components/popup.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/*
-  This is an example of a modified popup component that changes a popup template
-  */
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  extends: _popup_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-  mounted () {
-    console.log('Mounted in a Popup Mobile')
-  }
-});
-
-
-/***/ }),
-
 /***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/popup.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************!*\
   !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/popup.vue?vue&type=script&lang=js& ***!
@@ -12593,10 +12502,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_log_logger__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/lib/log/logger */ "./lib/log/logger.js");
 /* harmony import */ var _tooltip_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./tooltip.vue */ "./vue/components/tooltip.vue");
 /* harmony import */ var _progress_bar_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./progress-bar.vue */ "./vue/components/progress-bar.vue");
-/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../images/inline-icons/close.svg */ "./images/inline-icons/close.svg");
-/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+/* harmony import */ var _images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/images/alpheios/logo.svg */ "./images/alpheios/logo.svg");
+/* harmony import */ var _images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../images/inline-icons/close.svg */ "./images/inline-icons/close.svg");
+/* harmony import */ var _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -12750,17 +12685,18 @@ __webpack_require__.r(__webpack_exports__);
   name: 'Popup',
   inject: ['app', 'ui', 'l10n', 'settings', 'auth'],
   storeModules: ['app', 'ui', 'popup', 'auth'],
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_9__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_10__["default"]],
   components: {
     morph: _morph_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     setting: _setting_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     login: _login_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    closeIcon: _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_7___default.a,
+    logoIcon: _images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_7___default.a,
+    closeIcon: _images_inline_icons_close_svg__WEBPACK_IMPORTED_MODULE_8___default.a,
     alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
     progressBar: _progress_bar_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   directives: {
-    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_8__["directive"]
+    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_9__["directive"]
   },
   // Custom props to store unwatch functions
   visibleUnwatch: null,
@@ -12933,10 +12869,10 @@ __webpack_require__.r(__webpack_exports__);
         let time = Date.now()
         this.logger.log(`${time}: height setter, offsetHeight is ${newHeight}`)
         /*
-            let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-            let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
-            let maxHeight = viewportHeight - 2*this.data.viewportMargin - horizontalScrollbarWidth
-            */
+              let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+              let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
+              let maxHeight = viewportHeight - 2*this.data.viewportMargin - horizontalScrollbarWidth
+              */
         if (newHeight >= this.maxHeight) {
           this.logger.log(`Popup is too tall, limiting its height to ${this.maxHeight}px`)
           this.heightValue = this.maxHeight
@@ -13039,12 +12975,12 @@ __webpack_require__.r(__webpack_exports__);
         let dy = event.dy
 
         /*
-            On some websites Interact.js is unable to determine correct clientX or clientY coordinates.
-            This will result in a popup moving abruptly beyond screen limits.
-            To fix this, we will filter out erroneous coordinates and chancel a move in the corresponding
-            direction as incorrect. This will allow us to keep the popup on screen by sacrificing its movement
-            in (usually) one direction. This is probably the best we can do with all the information we have.
-             */
+              On some websites Interact.js is unable to determine correct clientX or clientY coordinates.
+              This will result in a popup moving abruptly beyond screen limits.
+              To fix this, we will filter out erroneous coordinates and chancel a move in the corresponding
+              direction as incorrect. This will allow us to keep the popup on screen by sacrificing its movement
+              in (usually) one direction. This is probably the best we can do with all the information we have.
+               */
         const dragTreshold = 100 // Drag distance values above this will be considered abnormal
         if (Math.abs(dx) > dragTreshold) {
           if (!this.dragErrorX) {
@@ -13359,7 +13295,7 @@ __webpack_require__.r(__webpack_exports__);
       type: Array,
       required: false,
       default: function () {
-        return ['uk-margin']
+        return []
       }
     }
   },
@@ -14002,9 +13938,7 @@ var render = function() {
         domProps: { innerHTML: _vm._s(_vm.decorate(_vm.data, _vm.type)) },
         on: {
           click: function($event) {
-            return _vm.sendFeature(_vm.data[_vm.type], [
-              "alpheios-text__medium"
-            ])
+            return _vm.sendFeature(_vm.data[_vm.type])
           }
         }
       })
@@ -16062,7 +15996,7 @@ var render = function() {
                                       "button",
                                       {
                                         staticClass:
-                                          "uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right",
+                                          "alpheios-button alpheios-button--primary alpheios-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right",
                                         on: { click: _vm.showNoSuffixGroups }
                                       },
                                       [
@@ -16116,7 +16050,7 @@ var render = function() {
                                       "button",
                                       {
                                         staticClass:
-                                          "uk-button uk-button-primary uk-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right",
+                                          "alpheios-button alpheios-button--primary alpheios-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right",
                                         on: { click: _vm.hideNoSuffixGroups }
                                       },
                                       [
@@ -16345,7 +16279,7 @@ var render = function() {
                 ]
               },
               [
-                _c("label", { staticClass: "uk-form-label" }, [
+                _c("label", { staticClass: "alpheios-form-label" }, [
                   _vm._v(_vm._s(_vm.l10n.getMsg("LABEL_INFLECT_SELECT_POFS")))
                 ]),
                 _vm._v(" "),
@@ -16361,7 +16295,7 @@ var render = function() {
                       }
                     ],
                     staticClass:
-                      "uk-select alpheios-inflections__view-selector alpheios-text__smallest",
+                      "alpheios-select alpheios-inflections__view-selector alpheios-text__smallest",
                     on: {
                       change: function($event) {
                         var $$selectedVal = Array.prototype.filter
@@ -16426,7 +16360,7 @@ var render = function() {
                           }
                         ],
                         staticClass:
-                          "uk-select alpheios-inflections__view-selector alpheios-text__smallest",
+                          "alpheios-select alpheios-inflections__view-selector alpheios-text__smallest",
                         on: {
                           change: function($event) {
                             var $$selectedVal = Array.prototype.filter
@@ -16621,7 +16555,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "alpheios-info uk-margin" }, [
+  return _c("div", { staticClass: "alpheios-info" }, [
     _c(
       "div",
       { staticClass: "alpheios-info__versiontext alpheios-text__smallest" },
@@ -16832,7 +16766,7 @@ var render = function() {
             expression: "lookuptext"
           }
         ],
-        staticClass: "uk-input alpheios-lookup__input",
+        staticClass: "alpheios-input alpheios-lookup__input",
         attrs: {
           placeholder: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
           type: "text"
@@ -16870,8 +16804,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass:
-                  "uk-button uk-button-primary uk-button-small alpheios-lookup__button",
+                staticClass: "alpheios-button alpheios-button--primary",
                 attrs: { tabindex: "-1", type: "button" },
                 on: { click: _vm.lookup }
               },
@@ -17023,7 +16956,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "alpheios-morph__lexemes morph-inner-v1" },
+    { staticClass: "alpheios-morph" },
     _vm._l(_vm.lexemes, function(lex, index) {
       return _c(
         "div",
@@ -17047,7 +16980,7 @@ var render = function() {
                   [
                     _vm._l(_vm.allLemmas(lex), function(lemma, lemmaIndex) {
                       return _c(
-                        "p",
+                        "div",
                         { staticClass: "principal_parts" },
                         [
                           lemmaIndex === 0 && _vm.lexemes.length > 1
@@ -17060,24 +16993,26 @@ var render = function() {
                           _vm._v(" "),
                           !lemma.principalParts.includes(lemma.word)
                             ? _c(
-                                "span",
+                                "h4",
                                 {
-                                  staticClass:
-                                    "alpheios-morph__hdwd alpheios-morph__formtext alpheios-morph__groupitem",
+                                  staticClass: "alpheios-morph__groupitem",
                                   attrs: {
                                     lang: _vm.languageCode(lemma.languageID)
                                   }
                                 },
-                                [_vm._v(_vm._s(lemma.word))]
+                                [
+                                  _vm._v(
+                                    "\n            " +
+                                      _vm._s(lemma.word) +
+                                      "\n          "
+                                  )
+                                ]
                               )
                             : _vm._e(),
                           _vm._v(" "),
                           _c(
-                            "span",
-                            {
-                              staticClass:
-                                "alpheios-morph__hdwd alpheios-morph__formtext alpheios-morph__groupitem"
-                            },
+                            "h4",
+                            { staticClass: "alpheios-morph__groupitem" },
                             _vm._l(lemma.principalParts, function(part) {
                               return _c(
                                 "span",
@@ -17087,7 +17022,13 @@ var render = function() {
                                     lang: _vm.languageCode(lemma.languageID)
                                   }
                                 },
-                                [_vm._v(_vm._s(part))]
+                                [
+                                  _vm._v(
+                                    "\n              " +
+                                      _vm._s(part) +
+                                      "\n            "
+                                  )
+                                ]
                               )
                             }),
                             0
@@ -18136,7 +18077,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18172,7 +18113,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18208,7 +18149,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18265,7 +18206,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: { active: _vm.$store.getters["ui/isActiveTab"]("info") },
@@ -18299,7 +18240,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18335,7 +18276,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18363,7 +18304,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18401,7 +18342,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18437,7 +18378,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18465,7 +18406,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18494,7 +18435,7 @@ var render = function() {
             },
             [
               _c(
-                "span",
+                "div",
                 {
                   staticClass: "alpheios-navbuttons__btn",
                   class: {
@@ -18531,7 +18472,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               staticClass: "alpheios-navbuttons__btn",
               class: {
@@ -18559,7 +18500,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               directives: [
                 {
@@ -18599,7 +18540,7 @@ var render = function() {
         },
         [
           _c(
-            "span",
+            "div",
             {
               directives: [
                 {
@@ -18636,10 +18577,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/overlay-nav.vue?vue&type=template&id=17617878&":
-/*!***********************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/nav/overlay-nav.vue?vue&type=template&id=17617878& ***!
-  \***********************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/toolbar.vue?vue&type=template&id=f659f766&":
+/*!*******************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/nav/toolbar.vue?vue&type=template&id=f659f766& ***!
+  \*******************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -18658,7 +18599,21 @@ var render = function() {
       attrs: { id: "alpheios-overlay-nav-inner" }
     },
     [
-      _vm._m(0),
+      _c(
+        "div",
+        {
+          staticClass: "alpheios-overlay-nav__drag-handle",
+          attrs: { id: "alpheios-overlay-nav-drag-handle" }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "alpheios-overlay-nav__logo-icon" },
+            [_c("logo-icon")],
+            1
+          )
+        ]
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -19127,26 +19082,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "alpheios-overlay-nav__drag-handle",
-        attrs: { id: "alpheios-overlay-nav-drag-handle" }
-      },
-      [
-        _c("img", {
-          staticClass: "alpheios-overlay-nav__logo-icon",
-          attrs: { src: __webpack_require__(/*! ../../../images/icon.png */ "./images/icon.png") }
-        })
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -19179,7 +19115,8 @@ var render = function() {
           expression: "$store.state.panel.visible"
         }
       ],
-      staticClass: "alpheios-panel alpheios-panel--compact auk",
+      staticClass:
+        "alpheios-panel alpheios-panel--compact auk alpheios-content",
       class: _vm.rootClasses,
       style: _vm.mainstyles,
       attrs: {
@@ -19206,7 +19143,7 @@ var render = function() {
         ),
         _vm._v(" "),
         _c(
-          "span",
+          "div",
           { staticClass: "alpheios-panel__header-btn-group--center" },
           [_c("navbuttons-compact")],
           1
@@ -19226,10 +19163,9 @@ var render = function() {
               },
               [
                 _c(
-                  "span",
+                  "div",
                   {
-                    staticClass:
-                      "alpheios-panel__header-action-btn alpheios_close",
+                    staticClass: "alpheios-panel__close-btn",
                     on: { click: _vm.ui.closePanel }
                   },
                   [_c("close-icon")],
@@ -19278,7 +19214,7 @@ var render = function() {
                     }
                   ],
                   staticClass:
-                    "alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready",
+                    "alpheios-popup__morph-cont alpheios-text-small alpheios-popup__morph-cont-ready",
                   attrs: { id: "alpheios-panel-lexical-data-container" }
                 },
                 [
@@ -19311,7 +19247,7 @@ var render = function() {
                 { staticClass: "alpheios-lookup__panel" },
                 [
                   _c("lookup", {
-                    attrs: { "name-base": "panel", clearLookupText: true }
+                    attrs: { "name-base": "panel-defs", clearLookupText: true }
                   })
                 ],
                 1
@@ -19729,7 +19665,10 @@ var render = function() {
                 { staticClass: "alpheios-lookup__panel" },
                 [
                   _c("lookup", {
-                    attrs: { "name-base": "panel", "clear-lookup-text": true }
+                    attrs: {
+                      "name-base": "panel-info",
+                      "clear-lookup-text": true
+                    }
                   })
                 ],
                 1
@@ -19780,7 +19719,7 @@ var render = function() {
                   expression: "$store.state.ui.notification.important"
                 }
               ],
-              staticClass: "alpheios-panel__notifications uk-text-small",
+              staticClass: "alpheios-panel__notifications alpheios-text-small",
               class: {
                 "alpheios-panel__notifications--important":
                   _vm.$store.state.ui.notification.important
@@ -19931,7 +19870,7 @@ var render = function() {
           expression: "$store.state.panel.visible"
         }
       ],
-      staticClass: "alpheios-panel alpheios-panel--large auk",
+      staticClass: "alpheios-panel alpheios-panel--large auk alpheios-content",
       class: _vm.rootClasses,
       style: _vm.mainstyles,
       attrs: {
@@ -19945,18 +19884,16 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "alpheios-panel__header" }, [
-        _vm._m(0),
-        _vm._v(" "),
         _c(
-          "span",
-          { staticClass: "alpheios-panel__header-btn-group--center" },
-          [_c("navbuttons-large")],
+          "div",
+          { staticClass: "alpheios-panel__header-logo" },
+          [_c("logo-icon")],
           1
         ),
         _vm._v(" "),
         _c(
-          "span",
-          { staticClass: "alpheios-panel__header-btn-group--end" },
+          "div",
+          { staticClass: "alpheios-panel__header-btn-group--center" },
           [
             _c(
               "alph-tooltip",
@@ -19987,7 +19924,7 @@ var render = function() {
                       }
                     ],
                     staticClass:
-                      "alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_left",
+                      "alpheios-navbuttons__btn alpheios-navbuttons__btn--attach",
                     on: {
                       click: function($event) {
                         return _vm.setPosition("left")
@@ -19999,6 +19936,8 @@ var render = function() {
                 )
               ]
             ),
+            _vm._v(" "),
+            _c("navbuttons-large"),
             _vm._v(" "),
             _c(
               "alph-tooltip",
@@ -20029,7 +19968,7 @@ var render = function() {
                       }
                     ],
                     staticClass:
-                      "alpheios-panel__header-action-btn alpheios-panel__header-action-btn--narrow alpheios_right",
+                      "alpheios-navbuttons__btn alpheios-navbuttons__btn--attach",
                     on: {
                       click: function($event) {
                         return _vm.setPosition("right")
@@ -20040,8 +19979,15 @@ var render = function() {
                   1
                 )
               ]
-            ),
-            _vm._v(" "),
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "span",
+          { staticClass: "alpheios-panel__header-btn-group--end" },
+          [
             _c(
               "alph-tooltip",
               {
@@ -20052,10 +19998,9 @@ var render = function() {
               },
               [
                 _c(
-                  "span",
+                  "div",
                   {
-                    staticClass:
-                      "alpheios-panel__header-action-btn alpheios_close",
+                    staticClass: "alpheios-panel__close-btn",
                     on: { click: _vm.ui.closePanel }
                   },
                   [_c("close-icon")],
@@ -20084,8 +20029,8 @@ var render = function() {
                   [
                     _c("lookup", {
                       attrs: {
-                        "name-base": "panel-defs",
-                        "clear-lookup-text": true
+                        "clear-lookup-text": true,
+                        "name-base": "panel-defs"
                       }
                     })
                   ],
@@ -20306,10 +20251,10 @@ var render = function() {
               [
                 _c("word-usage-examples-block", {
                   attrs: {
-                    wordUsageList: _vm.app.wordUsageExamples.wordUsageExamples,
-                    targetWord: _vm.app.wordUsageExamples.targetWord,
                     language: _vm.app.wordUsageExamples.language,
-                    provider: _vm.app.wordUsageExamples.provider
+                    provider: _vm.app.wordUsageExamples.provider,
+                    targetWord: _vm.app.wordUsageExamples.targetWord,
+                    wordUsageList: _vm.app.wordUsageExamples.wordUsageExamples
                   }
                 })
               ],
@@ -20529,8 +20474,8 @@ var render = function() {
               [
                 _c("lookup", {
                   attrs: {
-                    "name-base": "panel-info",
-                    "clear-lookup-text": true
+                    "clear-lookup-text": true,
+                    "name-base": "panel-info"
                   }
                 })
               ],
@@ -20581,7 +20526,7 @@ var render = function() {
                   expression: "$store.state.ui.notification.important"
                 }
               ],
-              staticClass: "alpheios-panel__notifications uk-text-small",
+              staticClass: "alpheios-panel__notifications alpheios-text-small",
               class: {
                 "alpheios-panel__notifications--important":
                   _vm.$store.state.ui.notification.important
@@ -20636,343 +20581,6 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "alpheios-panel__header-logo" }, [
-      _c("img", {
-        staticClass: "alpheios-panel__header-logo-img",
-        attrs: { src: __webpack_require__(/*! ../../images/icon.png */ "./images/icon.png") }
-      })
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/popup-mobile.vue?vue&type=template&id=bcaa07d6&":
-/*!********************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/popup-mobile.vue?vue&type=template&id=bcaa07d6& ***!
-  \********************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      directives: [
-        {
-          name: "show",
-          rawName: "v-show",
-          value: _vm.visible,
-          expression: "visible"
-        }
-      ],
-      ref: "popup",
-      staticClass: "auk alpheios-popup alpheios-popup--mobile",
-      class: _vm.data.classes,
-      style: {
-        left: _vm.positionLeftDm,
-        top: _vm.positionTopDm,
-        width: _vm.widthDm,
-        height: _vm.heightDm
-      },
-      attrs: { "data-notification-visible": _vm.data.notification.visible }
-    },
-    [
-      _c(
-        "span",
-        {
-          staticClass: "alpheios-popup__close-btn",
-          attrs: { title: _vm.data.l10n.messages.TOOLTIP_POPUP_CLOSE.get() },
-          on: { click: _vm.closePopup }
-        },
-        [_c("close-icon")],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "alpheios-popup__header" }, [
-        _c("div", { staticClass: "alpheios-popup__header-text" }, [
-          _vm._v("\n      Mobile\n      "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.data.status.selectedText,
-                  expression: "data.status.selectedText"
-                }
-              ],
-              staticClass: "alpheios-popup__header-selection"
-            },
-            [_vm._v(_vm._s(_vm.data.status.selectedText))]
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.data.status.languageName && _vm.verboseMode,
-                  expression: "data.status.languageName && verboseMode"
-                }
-              ],
-              staticClass: "alpheios-popup__header-word"
-            },
-            [_vm._v("(" + _vm._s(_vm.data.status.languageName) + ")")]
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "uk-button-group alpheios-popup__button-area" },
-          [
-            _c(
-              "button",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.data.inflDataReady,
-                    expression: "data.inflDataReady"
-                  }
-                ],
-                staticClass:
-                  "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn",
-                on: {
-                  click: function($event) {
-                    return _vm.showPanelTab("inflections")
-                  }
-                }
-              },
-              [
-                _vm._v(
-                  "\n        " +
-                    _vm._s(_vm.data.l10n.messages.LABEL_POPUP_INFLECT.get()) +
-                    "\n      "
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.data.defDataReady,
-                    expression: "data.defDataReady"
-                  }
-                ],
-                staticClass:
-                  "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn",
-                on: {
-                  click: function($event) {
-                    return _vm.showPanelTab("definitions")
-                  }
-                }
-              },
-              [
-                _vm._v(
-                  "\n        " +
-                    _vm._s(_vm.data.l10n.messages.LABEL_POPUP_DEFINE.get()) +
-                    "\n      "
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass:
-                  "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn",
-                on: {
-                  click: function($event) {
-                    return _vm.showPanelTab("options")
-                  }
-                }
-              },
-              [
-                _vm._v(
-                  "\n        " +
-                    _vm._s(_vm.data.l10n.messages.LABEL_POPUP_OPTIONS.get()) +
-                    "\n      "
-                )
-              ]
-            )
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: !_vm.morphDataReady,
-              expression: "!morphDataReady"
-            }
-          ],
-          staticClass:
-            "alpheios-popup__morph-cont alpheios-popup__definitions--placeholder alpheios--text-small"
-        },
-        [
-          _vm._v(
-            "\n    " +
-              _vm._s(_vm.data.l10n.messages.PLACEHOLDER_POPUP_DATA.get()) +
-              "\n  "
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.morphDataReady,
-              expression: "morphDataReady"
-            }
-          ],
-          staticClass: "alpheios-popup__morph-cont alpheios-text-small",
-          attrs: { id: _vm.lexicalDataContainerID }
-        },
-        [
-          _c("morph", {
-            attrs: {
-              definitions: _vm.definitions,
-              id: _vm.morphComponentID,
-              lexemes: _vm.lexemes,
-              linkedfeatures: _vm.linkedfeatures
-            },
-            on: { sendfeature: _vm.sendFeature }
-          }),
-          _vm._v(" "),
-          _vm.showProviders
-            ? _c(
-                "div",
-                { staticClass: "alpheios-popup__morph-cont-providers" },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "alpheios-popup__morph-cont-providers-header"
-                    },
-                    [
-                      _vm._v(
-                        _vm._s(_vm.data.l10n.messages.LABEL_POPUP_CREDITS.get())
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _vm._l(_vm.data.providers, function(p) {
-                    return _c(
-                      "div",
-                      {
-                        staticClass:
-                          "alpheios-popup__morph-cont-providers-source"
-                      },
-                      [_vm._v("\n        " + _vm._s(p.toString()) + "\n      ")]
-                    )
-                  })
-                ],
-                2
-              )
-            : _vm._e()
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "alpheios-popup__providers" }, [
-        _c("img", {
-          staticClass: "alpheios-popup__logo",
-          attrs: { src: __webpack_require__(/*! ../../images/icon.png */ "./images/icon.png") }
-        }),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "alpheios-popup__providers-link",
-            on: { click: _vm.switchProviders }
-          },
-          [_vm._v(_vm._s(_vm.providersLinkText))]
-        )
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.data.notification.important,
-              expression: "data.notification.important"
-            }
-          ],
-          staticClass: "alpheios-popup__notifications alpheios-text-small",
-          class: _vm.notificationClasses
-        },
-        [
-          _c(
-            "span",
-            {
-              staticClass: "alpheios-popup__notifications-close-btn",
-              on: { click: _vm.closeNotifications }
-            },
-            [_c("close-icon")],
-            1
-          ),
-          _vm._v(" "),
-          _c("span", {
-            domProps: { innerHTML: _vm._s(_vm.data.notification.text) }
-          }),
-          _vm._v(" "),
-          _c("setting", {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.data.notification.showLanguageSwitcher,
-                expression: "data.notification.showLanguageSwitcher"
-              }
-            ],
-            attrs: {
-              classes: ["alpheios-popup__notifications--lang-switcher"],
-              data: _vm.data.settings.preferredLanguage,
-              "show-title": false
-            },
-            on: { change: _vm.settingChanged }
-          })
-        ],
-        1
-      )
-    ]
-  )
-}
 var staticRenderFns = []
 render._withStripped = true
 
@@ -21013,7 +20621,7 @@ var render = function() {
         }
       ],
       ref: "popup",
-      staticClass: "alpheios-popup auk",
+      staticClass: "alpheios-popup auk alpheios-content",
       class: _vm.rootClasses,
       style: _vm.mainstyles,
       attrs: {
@@ -21025,421 +20633,449 @@ var render = function() {
     },
     [
       _c(
-        "alph-tooltip",
-        {
-          attrs: {
-            additionalStyles: _vm.additionalStylesTootipCloseIcon,
-            tooltipText: _vm.l10n.getText("TOOLTIP_POPUP_CLOSE"),
-            tooltipDirection: "left"
-          }
-        },
+        "div",
+        { staticClass: "alpheios-popup__header" },
         [
           _c(
-            "span",
-            {
-              staticClass: "alpheios-popup__close-btn",
-              on: { click: _vm.ui.closePopup }
-            },
-            [_c("close-icon")],
+            "div",
+            { staticClass: "alpheios-popup__logo" },
+            [_c("logo-icon")],
             1
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "alpheios-popup__header" }, [
-        _c(
-          "div",
-          {
-            staticClass: "alpheios-popup__header-text",
-            attrs: { lang: _vm.$store.state.app.languageCode }
-          },
-          [
-            _c(
-              "span",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.$store.state.app.selectedText,
-                    expression: "$store.state.app.selectedText"
-                  }
-                ],
-                staticClass: "alpheios-popup__header-selection",
-                attrs: { lang: _vm.$store.state.app.languageCode }
-              },
-              [
-                _vm._v(
-                  "\n        " +
-                    _vm._s(_vm.$store.state.app.selectedText) +
-                    "\n      "
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.$store.state.app.languageName && _vm.verboseMode,
-                    expression: "$store.state.app.languageName && verboseMode"
-                  }
-                ],
-                staticClass: "alpheios-popup__header-word",
-                attrs: { lang: "en" }
-              },
-              [
-                _vm._v(
-                  "\n        (" +
-                    _vm._s(_vm.$store.state.app.languageName) +
-                    ")\n      "
-                )
-              ]
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _vm.data
-          ? _c(
-              "div",
-              { staticClass: "alpheios-popup__button-area" },
-              [
-                _c(
-                  "alph-tooltip",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.$store.getters["app/defDataReady"],
-                        expression: "$store.getters['app/defDataReady']"
-                      }
-                    ],
-                    attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_SHOW_DEFINITIONS"),
-                      tooltipDirection: "bottom-wide"
-                    }
-                  },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-definitions",
-                        on: {
-                          click: function($event) {
-                            return _vm.ui.showPanelTab("definitions")
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n          " +
-                            _vm._s(_vm.l10n.getText("LABEL_POPUP_DEFINE")) +
-                            "\n        "
-                        )
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "alph-tooltip",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.$store.state.app.hasInflData,
-                        expression: "$store.state.app.hasInflData"
-                      }
-                    ],
-                    attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_SHOW_INFLECTIONS"),
-                      tooltipDirection: "bottom-wide"
-                    }
-                  },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections",
-                        on: {
-                          click: function($event) {
-                            return _vm.ui.showPanelTab("inflections")
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n          " +
-                            _vm._s(_vm.l10n.getText("LABEL_POPUP_INFLECT")) +
-                            "\n        "
-                        )
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "alph-tooltip",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.$store.state.app.wordUsageExamplesReady,
-                        expression: "$store.state.app.wordUsageExamplesReady"
-                      }
-                    ],
-                    attrs: {
-                      tooltipText: _vm.l10n.getText(
-                        "TOOLTIP_SHOW_USAGEEXAMPLES"
-                      ),
-                      tooltipDirection: "bottom-wide"
-                    }
-                  },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-inflections",
-                        on: {
-                          click: function($event) {
-                            return _vm.ui.showPanelTab("wordUsage")
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n          " +
-                            _vm._s(
-                              _vm.l10n.getText("LABEL_POPUP_USAGEEXAMPLES")
-                            ) +
-                            "\n        "
-                        )
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "alph-tooltip",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.$store.getters["app/hasTreebankData"],
-                        expression: "$store.getters['app/hasTreebankData']"
-                      }
-                    ],
-                    attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_TREEBANK"),
-                      tooltipDirection: "bottom-wide"
-                    }
-                  },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-treebank",
-                        on: {
-                          click: function($event) {
-                            return _vm.ui.showPanelTab("treebank")
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n          " +
-                            _vm._s(_vm.l10n.getText("LABEL_POPUP_TREEBANK")) +
-                            "\n        "
-                        )
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "alph-tooltip",
-                  {
-                    attrs: {
-                      tooltipText: _vm.l10n.getText("TOOLTIP_SHOW_OPTIONS"),
-                      tooltipDirection: "bottom-right"
-                    }
-                  },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "uk-button uk-button-primary uk-button-small alpheios-popup__more-btn alpheios-popup__more-btn-options",
-                        on: {
-                          click: function($event) {
-                            return _vm.ui.showPanelTab("options")
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n          " +
-                            _vm._s(_vm.l10n.getText("LABEL_POPUP_OPTIONS")) +
-                            "\n        "
-                        )
-                      ]
-                    )
-                  ]
-                )
-              ],
-              1
-            )
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
+          ),
+          _vm._v(" "),
+          _c(
+            "alph-tooltip",
             {
-              name: "show",
-              rawName: "v-show",
-              value: !_vm.$store.state.app.morphDataReady && !_vm.noLanguage,
-              expression: "!$store.state.app.morphDataReady && !noLanguage"
-            }
-          ],
-          staticClass:
-            "alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
-        },
-        [
-          _c("progress-bar", {
-            attrs: { text: _vm.l10n.getText("PLACEHOLDER_POPUP_DATA") }
-          })
+              attrs: {
+                additionalStyles: _vm.additionalStylesTootipCloseIcon,
+                tooltipText: _vm.l10n.getText("TOOLTIP_POPUP_CLOSE"),
+                tooltipDirection: "left"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-popup__close-btn",
+                  on: { click: _vm.ui.closePopup }
+                },
+                [_c("close-icon")],
+                1
+              )
+            ]
+          )
         ],
         1
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
+      _c("div", { staticClass: "alpheios-popup__body" }, [
+        _c("div", { staticClass: "alpheios-popup__toolbar" }, [
+          _c(
+            "div",
             {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.noLanguage && !_vm.$store.state.app.morphDataReady,
-              expression: "noLanguage && !$store.state.app.morphDataReady"
-            }
-          ],
-          staticClass:
-            "alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
-        },
-        [
-          _vm._v(
-            "\n    " +
-              _vm._s(_vm.l10n.getText("PLACEHOLDER_NO_LANGUAGE_POPUP_DATA")) +
-              "\n  "
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value:
-                _vm.$store.state.app.morphDataReady &&
-                !_vm.app.hasMorphData() &&
-                !_vm.noLanguage,
-              expression:
-                "$store.state.app.morphDataReady && !app.hasMorphData() && !noLanguage"
-            }
-          ],
-          staticClass:
-            "alpheios-popup__morph-cont alpheios-popup__definitions--placeholder uk-text-small"
-        },
-        [
-          _vm._v(
-            "\n    " +
-              _vm._s(_vm.l10n.getText("PLACEHOLDER_NO_DATA_POPUP_DATA")) +
-              "\n  "
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value:
-                _vm.$store.state.app.morphDataReady && _vm.app.hasMorphData(),
-              expression:
-                "$store.state.app.morphDataReady && app.hasMorphData()"
-            }
-          ],
-          staticClass:
-            "alpheios-popup__morph-cont uk-text-small alpheios-popup__morph-cont-ready",
-          attrs: { id: _vm.lexicalDataContainerID }
-        },
-        [
-          _c("morph", { attrs: { id: _vm.morphComponentID } }),
+              staticClass: "alpheios-popup__toolbar-text",
+              attrs: { lang: _vm.$store.state.app.languageCode }
+            },
+            [
+              _c(
+                "h3",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.$store.state.app.selectedText,
+                      expression: "$store.state.app.selectedText"
+                    }
+                  ],
+                  staticClass: "alpheios-popup__toolbar-selection",
+                  attrs: { lang: _vm.$store.state.app.languageCode }
+                },
+                [
+                  _vm._v(
+                    "\n          " +
+                      _vm._s(_vm.$store.state.app.selectedText) +
+                      "\n        "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.$store.state.app.languageName && _vm.verboseMode,
+                      expression: "$store.state.app.languageName && verboseMode"
+                    }
+                  ],
+                  staticClass: "alpheios-popup__toolbar-word",
+                  attrs: { lang: "en" }
+                },
+                [
+                  _vm._v(
+                    "\n          (" +
+                      _vm._s(_vm.$store.state.app.languageName) +
+                      ")\n        "
+                  )
+                ]
+              )
+            ]
+          ),
           _vm._v(" "),
-          _vm.showProviders
+          _vm.data
             ? _c(
                 "div",
-                { staticClass: "alpheios-popup__morph-cont-providers" },
+                { staticClass: "alpheios-popup__toolbar-buttons" },
                 [
                   _c(
-                    "div",
+                    "alph-tooltip",
                     {
-                      staticClass: "alpheios-popup__morph-cont-providers-header"
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.$store.getters["app/defDataReady"],
+                          expression: "$store.getters['app/defDataReady']"
+                        }
+                      ],
+                      attrs: {
+                        tooltipText: _vm.l10n.getText(
+                          "TOOLTIP_SHOW_DEFINITIONS"
+                        ),
+                        tooltipDirection: "bottom-wide"
+                      }
                     },
-                    [_vm._v(_vm._s(_vm.l10n.getText("LABEL_POPUP_CREDITS")))]
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "alpheios-button--primary alpheios-popup__toolbar-button",
+                          on: {
+                            click: function($event) {
+                              return _vm.ui.showPanelTab("definitions")
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.l10n.getText("LABEL_POPUP_DEFINE")) +
+                              "\n          "
+                          )
+                        ]
+                      )
+                    ]
                   ),
                   _vm._v(" "),
-                  _vm._l(_vm.$store.state.app.providers, function(p) {
-                    return _c(
-                      "div",
-                      {
-                        staticClass:
-                          "alpheios-popup__morph-cont-providers-source"
-                      },
-                      [_vm._v("\n        " + _vm._s(p.toString()) + "\n      ")]
-                    )
-                  })
+                  _c(
+                    "alph-tooltip",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.$store.state.app.hasInflData,
+                          expression: "$store.state.app.hasInflData"
+                        }
+                      ],
+                      attrs: {
+                        tooltipText: _vm.l10n.getText(
+                          "TOOLTIP_SHOW_INFLECTIONS"
+                        ),
+                        tooltipDirection: "bottom-wide"
+                      }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "alpheios-button--primary alpheios-popup__toolbar-button",
+                          on: {
+                            click: function($event) {
+                              return _vm.ui.showPanelTab("inflections")
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.l10n.getText("LABEL_POPUP_INFLECT")) +
+                              "\n          "
+                          )
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "alph-tooltip",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.$store.state.app.wordUsageExamplesReady,
+                          expression: "$store.state.app.wordUsageExamplesReady"
+                        }
+                      ],
+                      attrs: {
+                        tooltipText: _vm.l10n.getText(
+                          "TOOLTIP_SHOW_USAGEEXAMPLES"
+                        ),
+                        tooltipDirection: "bottom-wide"
+                      }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "alpheios-button--primary alpheios-popup__toolbar-button",
+                          on: {
+                            click: function($event) {
+                              return _vm.ui.showPanelTab("wordUsage")
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(
+                                _vm.l10n.getText("LABEL_POPUP_USAGEEXAMPLES")
+                              ) +
+                              "\n          "
+                          )
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "alph-tooltip",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.$store.getters["app/hasTreebankData"],
+                          expression: "$store.getters['app/hasTreebankData']"
+                        }
+                      ],
+                      attrs: {
+                        tooltipText: _vm.l10n.getText("TOOLTIP_TREEBANK"),
+                        tooltipDirection: "bottom-wide"
+                      }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "alpheios-button--primary alpheios-popup__toolbar-button",
+                          on: {
+                            click: function($event) {
+                              return _vm.ui.showPanelTab("treebank")
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.l10n.getText("LABEL_POPUP_TREEBANK")) +
+                              "\n          "
+                          )
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "alph-tooltip",
+                    {
+                      attrs: {
+                        tooltipText: _vm.l10n.getText("TOOLTIP_SHOW_OPTIONS"),
+                        tooltipDirection: "bottom-right"
+                      }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "alpheios-button--primary alpheios-popup__toolbar-button",
+                          on: {
+                            click: function($event) {
+                              return _vm.ui.showPanelTab("options")
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.l10n.getText("LABEL_POPUP_OPTIONS")) +
+                              "\n          "
+                          )
+                        ]
+                      )
+                    ]
+                  )
                 ],
-                2
+                1
               )
             : _vm._e()
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "alpheios-popup__providers" }, [
-        _c("img", {
-          staticClass: "alpheios-popup__logo",
-          attrs: { src: __webpack_require__(/*! ../../images/icon.png */ "./images/icon.png") }
-        }),
+        ]),
         _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "alpheios-popup__providers-link uk-link",
-            on: { click: _vm.switchProviders }
-          },
-          [_vm._v(_vm._s(_vm.providersLinkText))]
-        )
+        _c("div", { staticClass: "alpheios-popup__content" }, [
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    !_vm.$store.state.app.morphDataReady && !_vm.noLanguage,
+                  expression: "!$store.state.app.morphDataReady && !noLanguage"
+                }
+              ],
+              staticClass: "alpheios-popup__definitions--placeholder"
+            },
+            [
+              _c("progress-bar", {
+                attrs: { text: _vm.l10n.getText("PLACEHOLDER_POPUP_DATA") }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.noLanguage && !_vm.$store.state.app.morphDataReady,
+                  expression: "noLanguage && !$store.state.app.morphDataReady"
+                }
+              ],
+              staticClass: "alpheios-popup__definitions--placeholder"
+            },
+            [
+              _vm._v(
+                "\n        " +
+                  _vm._s(
+                    _vm.l10n.getText("PLACEHOLDER_NO_LANGUAGE_POPUP_DATA")
+                  ) +
+                  "\n      "
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    _vm.$store.state.app.morphDataReady &&
+                    !_vm.app.hasMorphData() &&
+                    !_vm.noLanguage,
+                  expression:
+                    "$store.state.app.morphDataReady && !app.hasMorphData() && !noLanguage"
+                }
+              ],
+              staticClass: "alpheios-popup__definitions--placeholder"
+            },
+            [
+              _vm._v(
+                "\n        " +
+                  _vm._s(_vm.l10n.getText("PLACEHOLDER_NO_DATA_POPUP_DATA")) +
+                  "\n      "
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    _vm.$store.state.app.morphDataReady &&
+                    _vm.app.hasMorphData(),
+                  expression:
+                    "$store.state.app.morphDataReady && app.hasMorphData()"
+                }
+              ],
+              attrs: { id: _vm.lexicalDataContainerID }
+            },
+            [_c("morph", { attrs: { id: _vm.morphComponentID } })],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    _vm.$store.state.app.morphDataReady &&
+                    _vm.app.hasMorphData(),
+                  expression:
+                    "$store.state.app.morphDataReady && app.hasMorphData()"
+                }
+              ],
+              staticClass: "alpheios-popup__providers"
+            },
+            [
+              _c("div", { staticClass: "alpheios-popup__providers-title" }, [
+                _vm._v(_vm._s(_vm.l10n.getText("LABEL_POPUP_CREDITS")))
+              ]),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "alpheios-popup__providers-link",
+                  on: { click: _vm.switchProviders }
+                },
+                [_vm._v(_vm._s(_vm.providersLinkText))]
+              ),
+              _vm._v(" "),
+              _vm.showProviders
+                ? _c(
+                    "div",
+                    _vm._l(_vm.$store.state.app.providers, function(p) {
+                      return _c(
+                        "div",
+                        { staticClass: "alpheios-popup__providers-item" },
+                        [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(p.toString()) +
+                              "\n          "
+                          )
+                        ]
+                      )
+                    }),
+                    0
+                  )
+                : _vm._e()
+            ]
+          )
+        ])
       ]),
       _vm._v(" "),
       _vm.$store.state.ui.notification.text
@@ -21454,7 +21090,7 @@ var render = function() {
                   expression: "$store.state.ui.notification.important"
                 }
               ],
-              staticClass: "alpheios-popup__notifications uk-text-small",
+              staticClass: "alpheios-popup__notifications",
               class: {
                 "alpheios-popup__notifications--important": this.$store.state.ui
                   .notification.important
@@ -21560,8 +21196,7 @@ var render = function() {
             1
           )
         : _vm._e()
-    ],
-    1
+    ]
   )
 }
 var staticRenderFns = []
@@ -21650,7 +21285,7 @@ var render = function() {
               expression: "showTitle"
             }
           ],
-          staticClass: "uk-form-label alpheios-setting__label"
+          staticClass: "alpheios-form-label alpheios-setting__label"
         },
         [_vm._v(_vm._s(_vm.l10n.getMsg("LABEL_RESKIN_SETTINGS")) + ":")]
       ),
@@ -21829,7 +21464,7 @@ var render = function() {
                   expression: "showTitle"
                 }
               ],
-              staticClass: "uk-form-label alpheios-setting__label"
+              staticClass: "alpheios-form-label alpheios-setting__label"
             },
             [_vm._v(_vm._s(_vm.dataModel.labelText))]
           ),
@@ -21944,7 +21579,7 @@ var render = function() {
                       expression: "selected"
                     }
                   ],
-                  staticClass: "uk-select",
+                  staticClass: "alpheios-select",
                   on: {
                     change: function($event) {
                       var $$selectedVal = Array.prototype.filter
@@ -21998,17 +21633,15 @@ var render = function() {
     _c(
       "span",
       {
-        staticClass: "alpheios-definition__lemma alpheios-text__medium",
+        staticClass: "alpheios-definition__lemma",
         attrs: { lang: _vm.languageCode }
       },
       [_vm._v(_vm._s(_vm.definition.lemmaText) + ":")]
     ),
     _vm._v(" "),
-    _c(
-      "span",
-      { staticClass: "alpheios-definition__text alpheios-text__medium" },
-      [_vm._v(_vm._s(_vm.definition.text))]
-    )
+    _c("span", { staticClass: "alpheios-definition__text" }, [
+      _vm._v(_vm._s(_vm.definition.text))
+    ])
   ])
 }
 var staticRenderFns = []
@@ -22536,7 +22169,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
- * Vue.js v2.6.7
+ * Vue.js v2.6.10
  * (c) 2014-2019 Evan You
  * Released under the MIT License.
  */
@@ -23017,7 +22650,7 @@ __webpack_require__.r(__webpack_exports__);
    * using https://www.w3.org/TR/html53/semantics-scripting.html#potentialcustomelementname
    * skipping \u10000-\uEFFFF due to it freezing up PhantomJS
    */
-  var unicodeLetters = 'a-zA-Z\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD';
+  var unicodeRegExp = /a-zA-Z\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD/;
 
   /**
    * Check if a string starts with $ or _
@@ -23042,7 +22675,7 @@ __webpack_require__.r(__webpack_exports__);
   /**
    * Parse simple path.
    */
-  var bailRE = new RegExp(("[^" + unicodeLetters + ".$_\\d]"));
+  var bailRE = new RegExp(("[^" + (unicodeRegExp.source) + ".$_\\d]"));
   function parsePath (path) {
     if (bailRE.test(path)) {
       return
@@ -23946,7 +23579,7 @@ __webpack_require__.r(__webpack_exports__);
   }
 
   function validateComponentName (name) {
-    if (!new RegExp(("^[a-zA-Z][\\-\\.0-9_" + unicodeLetters + "]*$")).test(name)) {
+    if (!new RegExp(("^[a-zA-Z][\\-\\.0-9_" + (unicodeRegExp.source) + "]*$")).test(name)) {
       warn(
         'Invalid component name: "' + name + '". Component names ' +
         'should conform to valid custom element name in html5 specification.'
@@ -24397,10 +24030,11 @@ __webpack_require__.r(__webpack_exports__);
     var res;
     try {
       res = args ? handler.apply(context, args) : handler.call(context);
-      if (res && !res._isVue && isPromise(res)) {
+      if (res && !res._isVue && isPromise(res) && !res._handled) {
+        res.catch(function (e) { return handleError(e, vm, info + " (Promise/async)"); });
         // issue #9511
-        // reassign to res to avoid catch triggering multiple times when nested calls
-        res = res.catch(function (e) { return handleError(e, vm, info + " (Promise/async)"); });
+        // avoid catch triggering multiple times when nested calls
+        res._handled = true;
       }
     } catch (e) {
       handleError(e, vm, info);
@@ -25083,7 +24717,8 @@ __webpack_require__.r(__webpack_exports__);
     prevSlots
   ) {
     var res;
-    var isStable = slots ? !!slots.$stable : true;
+    var hasNormalSlots = Object.keys(normalSlots).length > 0;
+    var isStable = slots ? !!slots.$stable : !hasNormalSlots;
     var key = slots && slots.$key;
     if (!slots) {
       res = {};
@@ -25095,7 +24730,8 @@ __webpack_require__.r(__webpack_exports__);
       prevSlots &&
       prevSlots !== emptyObject &&
       key === prevSlots.$key &&
-      Object.keys(normalSlots).length === 0
+      !hasNormalSlots &&
+      !prevSlots.$hasNormal
     ) {
       // fast path 2: stable scoped slots w/ no normal slots to proxy,
       // only need to normalize once
@@ -25121,6 +24757,7 @@ __webpack_require__.r(__webpack_exports__);
     }
     def(res, '$stable', isStable);
     def(res, '$key', key);
+    def(res, '$hasNormal', hasNormalSlots);
     return res
   }
 
@@ -25130,8 +24767,10 @@ __webpack_require__.r(__webpack_exports__);
       res = res && typeof res === 'object' && !Array.isArray(res)
         ? [res] // single vnode
         : normalizeChildren(res);
-      return res && res.length === 0
-        ? undefined
+      return res && (
+        res.length === 0 ||
+        (res.length === 1 && res[0].isComment) // #9658
+      ) ? undefined
         : res
     };
     // this is a slot using the new v-slot syntax without scope. although it is
@@ -25311,12 +24950,13 @@ __webpack_require__.r(__webpack_exports__);
               : data.attrs || (data.attrs = {});
           }
           var camelizedKey = camelize(key);
-          if (!(key in hash) && !(camelizedKey in hash)) {
+          var hyphenatedKey = hyphenate(key);
+          if (!(camelizedKey in hash) && !(hyphenatedKey in hash)) {
             hash[key] = value[key];
 
             if (isSync) {
               var on = data.on || (data.on = {});
-              on[("update:" + camelizedKey)] = function ($event) {
+              on[("update:" + key)] = function ($event) {
                 value[key] = $event;
               };
             }
@@ -26150,17 +25790,23 @@ __webpack_require__.r(__webpack_exports__);
       return factory.resolved
     }
 
+    var owner = currentRenderingInstance;
+    if (owner && isDef(factory.owners) && factory.owners.indexOf(owner) === -1) {
+      // already pending
+      factory.owners.push(owner);
+    }
+
     if (isTrue(factory.loading) && isDef(factory.loadingComp)) {
       return factory.loadingComp
     }
 
-    var owner = currentRenderingInstance;
-    if (isDef(factory.owners)) {
-      // already pending
-      factory.owners.push(owner);
-    } else {
+    if (owner && !isDef(factory.owners)) {
       var owners = factory.owners = [owner];
       var sync = true;
+      var timerLoading = null;
+      var timerTimeout = null
+
+      ;(owner).$on('hook:destroyed', function () { return remove(owners, owner); });
 
       var forceRender = function (renderCompleted) {
         for (var i = 0, l = owners.length; i < l; i++) {
@@ -26169,6 +25815,14 @@ __webpack_require__.r(__webpack_exports__);
 
         if (renderCompleted) {
           owners.length = 0;
+          if (timerLoading !== null) {
+            clearTimeout(timerLoading);
+            timerLoading = null;
+          }
+          if (timerTimeout !== null) {
+            clearTimeout(timerTimeout);
+            timerTimeout = null;
+          }
         }
       };
 
@@ -26215,7 +25869,8 @@ __webpack_require__.r(__webpack_exports__);
             if (res.delay === 0) {
               factory.loading = true;
             } else {
-              setTimeout(function () {
+              timerLoading = setTimeout(function () {
+                timerLoading = null;
                 if (isUndef(factory.resolved) && isUndef(factory.error)) {
                   factory.loading = true;
                   forceRender(false);
@@ -26225,7 +25880,8 @@ __webpack_require__.r(__webpack_exports__);
           }
 
           if (isDef(res.timeout)) {
-            setTimeout(function () {
+            timerTimeout = setTimeout(function () {
+              timerTimeout = null;
               if (isUndef(factory.resolved)) {
                 reject(
                   "timeout (" + (res.timeout) + "ms)"
@@ -26771,11 +26427,21 @@ __webpack_require__.r(__webpack_exports__);
   // timestamp can either be hi-res (relative to page load) or low-res
   // (relative to UNIX epoch), so in order to compare time we have to use the
   // same timestamp type when saving the flush timestamp.
-  if (inBrowser && getNow() > document.createEvent('Event').timeStamp) {
-    // if the low-res timestamp which is bigger than the event timestamp
-    // (which is evaluated AFTER) it means the event is using a hi-res timestamp,
-    // and we need to use the hi-res version for event listeners as well.
-    getNow = function () { return performance.now(); };
+  // All IE versions use low-res event timestamps, and have problematic clock
+  // implementations (#9632)
+  if (inBrowser && !isIE) {
+    var performance = window.performance;
+    if (
+      performance &&
+      typeof performance.now === 'function' &&
+      getNow() > document.createEvent('Event').timeStamp
+    ) {
+      // if the event timestamp, although evaluated AFTER the Date.now(), is
+      // smaller than it, it means the event is using a hi-res timestamp,
+      // and we need to use the hi-res version for event listener timestamps as
+      // well.
+      getNow = function () { return performance.now(); };
+    }
   }
 
   /**
@@ -27940,7 +27606,7 @@ __webpack_require__.r(__webpack_exports__);
     value: FunctionalRenderContext
   });
 
-  Vue.version = '2.6.7';
+  Vue.version = '2.6.10';
 
   /*  */
 
@@ -30032,8 +29698,10 @@ __webpack_require__.r(__webpack_exports__);
           e.target === e.currentTarget ||
           // event is fired after handler attachment
           e.timeStamp >= attachedTimestamp ||
-          // #9462 bail for iOS 9 bug: event.timeStamp is 0 after history.pushState
-          e.timeStamp === 0 ||
+          // bail for environments that have buggy event.timeStamp implementations
+          // #9462 iOS 9 bug: event.timeStamp is 0 after history.pushState
+          // #9681 QtWebEngine event.timeStamp is negative value
+          e.timeStamp <= 0 ||
           // #9448 bail if event is fired in another document in a multi-page
           // electron/nw.js app, since event.timeStamp will be using a different
           // starting reference
@@ -30100,10 +29768,11 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     for (key in oldProps) {
-      if (isUndef(props[key])) {
+      if (!(key in props)) {
         elm[key] = '';
       }
     }
+
     for (key in props) {
       cur = props[key];
       // ignore children if the node has textContent or innerHTML,
@@ -30651,8 +30320,8 @@ __webpack_require__.r(__webpack_exports__);
     var context = activeInstance;
     var transitionNode = activeInstance.$vnode;
     while (transitionNode && transitionNode.parent) {
-      transitionNode = transitionNode.parent;
       context = transitionNode.context;
+      transitionNode = transitionNode.parent;
     }
 
     var isAppear = !context._isMounted || !vnode.isRootInsert;
@@ -31742,7 +31411,7 @@ __webpack_require__.r(__webpack_exports__);
   // Regular Expressions for parsing tags and attributes
   var attribute = /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
   var dynamicArgAttribute = /^\s*((?:v-[\w-]+:|@|:|#)\[[^=]+\][^\s"'<>\/=]*)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
-  var ncname = "[a-zA-Z_][\\-\\.0-9_a-zA-Z" + unicodeLetters + "]*";
+  var ncname = "[a-zA-Z_][\\-\\.0-9_a-zA-Z" + (unicodeRegExp.source) + "]*";
   var qnameCapture = "((?:" + ncname + "\\:)?" + ncname + ")";
   var startTagOpen = new RegExp(("^<" + qnameCapture));
   var startTagClose = /^\s*(\/?)>/;
@@ -32004,7 +31673,7 @@ __webpack_require__.r(__webpack_exports__);
           ) {
             options.warn(
               ("tag <" + (stack[i].tag) + "> has no matching end tag."),
-              { start: stack[i].start }
+              { start: stack[i].start, end: stack[i].end }
             );
           }
           if (options.end) {
@@ -32041,7 +31710,7 @@ __webpack_require__.r(__webpack_exports__);
 
   var argRE = /:(.*)$/;
   var bindRE = /^:|^\.|^v-bind:/;
-  var modifierRE = /\.[^.]+/g;
+  var modifierRE = /\.[^.\]]+(?=[^\]]*$)/g;
 
   var slotRE = /^v-slot(:|$)|^#/;
 
@@ -32218,7 +31887,7 @@ __webpack_require__.r(__webpack_exports__);
       shouldDecodeNewlinesForHref: options.shouldDecodeNewlinesForHref,
       shouldKeepComment: options.comments,
       outputSourceRange: options.outputSourceRange,
-      start: function start (tag, attrs, unary, start$1) {
+      start: function start (tag, attrs, unary, start$1, end) {
         // check namespace.
         // inherit parent ns if there is one
         var ns = (currentParent && currentParent.ns) || platformGetTagNamespace(tag);
@@ -32237,6 +31906,7 @@ __webpack_require__.r(__webpack_exports__);
         {
           if (options.outputSourceRange) {
             element.start = start$1;
+            element.end = end;
             element.rawAttrsMap = element.attrsList.reduce(function (cumulated, attr) {
               cumulated[attr.name] = attr;
               return cumulated
@@ -32358,7 +32028,7 @@ __webpack_require__.r(__webpack_exports__);
           text = preserveWhitespace ? ' ' : '';
         }
         if (text) {
-          if (whitespaceOption === 'condense') {
+          if (!inPre && whitespaceOption === 'condense') {
             // condense consecutive whitespaces into single space
             text = text.replace(whitespaceRE$1, ' ');
           }
@@ -33219,7 +32889,7 @@ __webpack_require__.r(__webpack_exports__);
 
   /*  */
 
-  var fnExpRE = /^([\w$_]+|\([^)]*?\))\s*=>|^function\s*\(/;
+  var fnExpRE = /^([\w$_]+|\([^)]*?\))\s*=>|^function\s*(?:[\w$]+)?\s*\(/;
   var fnInvokeRE = /\([^)]*?\);*$/;
   var simplePathRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*$/;
 
@@ -33721,7 +33391,7 @@ __webpack_require__.r(__webpack_exports__);
     // components with only scoped slots to skip forced updates from parent.
     // but in some cases we have to bail-out of this optimization
     // for example if the slot contains dynamic names, has v-if or v-for on them...
-    var needsForceUpdate = Object.keys(slots).some(function (key) {
+    var needsForceUpdate = el.for || Object.keys(slots).some(function (key) {
       var slot = slots[key];
       return (
         slot.slotTargetDynamic ||
@@ -35496,14 +35166,14 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./images/icon.png":
-/*!*************************!*\
-  !*** ./images/icon.png ***!
-  \*************************/
+/***/ "./images/alpheios/logo.svg":
+/*!**********************************!*\
+  !*** ./images/alpheios/logo.svg ***!
+  \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD0AAAArCAYAAADL7YBvAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuOWwzfk4AAAXgSURBVGhDxZo/iyRlEMY3Mj4/gLBmlwgbaHKBdyYXiOBiIBooe3CRCrvZCSYLFxhOYKbiRoKYLIIYCet9gLuNL9pE4/MbtPXrq2eupvp9u3umu8eCh+n3fz31r3um56BpmoMl5M9//j0y3Mvw4f9X5iDthM4NV4YbQzOAF4ZLw5nh0LfZn+xK2pTFkxcGCJSIbQOMtb8o2Ja0KXfiSpaUnwr2PfKjlpOxpFHGlSopOzfO/NhlZAxpU2KVlNoHLvz4+aWPtB18y3AdFNk3liFeI20HEs5zFKmpmD/US6TtoMmEV78/afH1j782Dx5/twZt+r//62lxXQXzFrdM2g7YOqQhAKG3P3rYvP7We81rb74zCsy9+/lpa4jSvgHXrt48UiDNQ0Pp4A38/PR58/Gjb5s37nzQIQJ5xqJnha9WP7X9kI1rb9//ZMj7J67idImkbePjdFAHkH3/y282iMpbjJXW9AGirGcfDNZD/MbVnC4ibZsS1r2PkBBT+OIl2r89/7szD/KPf/ljnccReLpEjL1GEJ8ntwNpnoNLB7WQd1EKxfM4ijJHRhkCRsMwcQ/2ZYxQj/0Bq1bZqRJIV72McihT8gJeJYdFhjmEK16NuRxzOqYH13E/hTrrY79jVEGz9YeGW97sCqRtM25RpUPa8JX3MuEY7niHdhzvA8ZiDWsjcfrZE5RSx9XuCCQNJ4Zr9jRc+VBXnHT1MVO5lj2C13zzarhTwYkCyEGCa/ZhLXMgJeLRs1znvoCNb2M278hwwfwAiB/7lK446eoXCYVb9rJuN9m7OdyFfGuTEeVZ+rhWH236496OezaWvQpeGFaG4e/nTrq0eQuUzYcrx7P3MYwIKNxziNInA8iTKmAYS/PYm75Y7DDGu5+dQhSC7bjhyrDdPXyINBtHZYDCL1dfeTgbIyPWCXlXhlBEybB6BkjRA2lCerdfXaaQVm4ChWSeW4NqBXkf2zIY5GlHED0fnp5Dtl6ZTWyc6s08jNM1zFykVdgqxacDeVupE9s5/zk/1JRqgbK5kSxrbwxdA40hjYVjn0JPXgLyNArHuX1Q3vKpKi4Q1uyv8bAuV28VNXJb6yF9bihHxBBp5VLswyv0yUuC5qJkLmACxiGUmZM9qjaENV/9YQ+8yW0KUrF6A9oYoDf8Rbp6y5K1c9GSl2I4QwhD0M8nRoigP0PzVdDU1p5axzmVPSDKrar6XM6Y4dyba9LVhxOFcgqxdTijZLyH4+GSFwEhjBchoHqg54DchmAOeQd5St7i0cHq7fOU4y/nO+nqYyiAGMghq/trJr4NFEklIwF5l08zzCtvDYit4SEm5vmrezmkEVOg+oWjFMp5DEBAYVoCRsOjtVCFuPaLxROjel73frW0daWixvXmukCa1zLrgyJiKJdIUZgY00EoCKmIOB7nQVJj2k9eV1shb+iEs/WRr2eGS58jtEXNp21KIM2PCNUfA/EOm+Xbl4AXCfc+gowRDRgpGk+klCLytvJcaWSgYh/7JySVqwL53lvUWhFpxA6oehuosKBUaXxXiJQKnEhjDAxVKWgA0pDH0+N/VYmkEVOi+kso3pQCfO5avCCGt5XbCucByKvy9m7P3UiBdO9v3hBHUVegvZaHMrjdMUZI95FTOvDJfHme+X4uDyTK2d3JSjJpxA7hzeQG2Qw8NdJDG4A84StD6TaoCNL+Mqxdt6927JoQpm/6T8El0ogdNuqlHQVJoVqCvC5yNeTipfu3oX3Wtk+8TfuyVXCK1Egjdjgv3TsKLgGFNAakrSdBw/pdll1TnesKj5U+0ogpsJfXtHgYQniY9g9PnimH1561ax48xlfpmgyRRkwJcnzxN5iQJJftWnlMxZ7vzYZkDGnEFKGqL/quWsXMj4R0621vzidjSUtMOR5gFvH6nU+/aHPWEIvX9HDOsi1pxBQ8NMxZ5Piyw7cicnZNejHZhbTEFIU8nh/z37ESWLdx312cMDKFdBRTnpznJSDvt/uMwK803BHmD9tRcnDwH43ZW105a0tmAAAAAElFTkSuQmCC"
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"id":"Layer_1","xmlns":"http://www.w3.org/2000/svg","viewBox":"0 0 69.8 50.9"}},[_c('pattern',{attrs:{"x":"-178","y":"792","width":"69","height":"69","patternUnits":"userSpaceOnUse","id":"Polka_Dot_Pattern","viewBox":"2.1 -70.9 69 69","overflow":"visible"}},[_c('path',{attrs:{"fill":"none","d":"M2.1-70.9h69v69h-69z"}}),_c('path',{attrs:{"fill":"#f6bb60","d":"M2.1-70.9h69v69h-69z"}}),_c('path',{staticClass:"st2",attrs:{"d":"M61.8-71.7v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 .1 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 .1 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 .1 0 0m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 .1 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 .1 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 .1 0 0m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 .1 0 0m-7.7 0v.2l-.2.2c-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.2c0 .1 0 .1 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.2.4.6.6.7.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.2c0 .1 0 .1 0 0M69.4-71.7v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 .1 0 0"}}),_c('path',{staticClass:"st2",attrs:{"d":"M.5-71.7v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.2.3.6.6.7.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.2c0 .1 0 .1 0 0M69.4-64v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.2.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4 0 .2.2.4.3.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2.1.3.1.2.1.3-.1 0-.1 0 0 0M.5-64v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1 0 .3.1.4 0 .2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.2M69.4-56.3v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1 0-.1 0-.2.1s-.1.3-.1.4c-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1 0-.2 0-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c-.1 0-.1 0 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3M69.4-48.7v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.2.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.1.2.3.6.5.6s.4-.1.5-.1c.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2.1.3.1.2.1.3-.1 0-.1 0 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.2.3.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3M69.4-41v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1 0-.2 0-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c-.1 0-.1 0 0 0M.5-41v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5h.4c.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.2M69.4-33.4v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.2.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c-.1 0-.1 0 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3M69.4-25.7v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.2 0-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4 0 .1.2.3.3.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2.1.2.1.2.1.3-.1 0-.1 0 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.3.5.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3M69.4-18.1v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 0 0 0m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 0 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 0 0 0m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 0 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 0 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 0 0 0m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 0 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 0 0 0m-7.6 0v.2c-.1.1-.2.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4 0 .2.2.4.3.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2.1.3.1.2.1.3-.1.1-.1 0 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1 0 .3.1.4.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.1c0 .1 0 0 0 0M69.4-10.4v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.4.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.2m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.4.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.2m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.4.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.2m-7.6 0v.2c-.1.1-.2 0-.2.1-.1.1-.1.3-.1.3-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4 0 .2.2.4.3.6.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2.1.2.1.2.1.3-.1 0-.1 0 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1 0 .1-.1.3-.1.3-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.2.3.6.6.7.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.4.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.2"}}),_c('g',[_c('path',{staticClass:"st2",attrs:{"d":"M69.4-2.8v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.2.2.4.6.6.7.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.2c0 .1 0 0 0 0m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4 0 .2.2.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 0 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.2.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2.1.3-.1.4-.3v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.1c0 .1 0 0 0 0m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.1.2.3.6.5.7.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2.1.2.1.1.1.2m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4 0 .2.2.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 0 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.2.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 0 0 0m-7.6 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.3.4.4.5.1.2.3.6.6.7.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.2c0 .1 0 0 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4.1.2.2.4.4.5.2.1.4.6.6.6.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.2 0-.3.1-.4.2-.2.1-.1.2-.3.2-.1 0-.2.1-.2.2v.3c0 .1 0 0 0 0m-7.6 0v.2c-.1.1-.2.1-.2.1-.1.1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4 0 .2.2.4.3.5.2.2.4.6.6.7.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2-.1.3-.3.4-.5v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8 0 .1-.2.2-.3.2-.2.1-.1.2-.3.3-.1 0-.2.1-.2.2v.1c-.1.1-.1 0 0 0m-7.7 0v.2c-.1.1-.1.1-.2.1 0 .1-.1.3-.1.4-.2.1 0 .2 0 .3v.2c0 .1 0 .3.1.4 0 .2.2.4.4.5.2.2.3.6.6.7.2 0 .4-.1.5-.1.2 0 .4 0 .6-.1.2-.1.1-.3.3-.5.1-.1.3 0 .4-.1.2 0 .3-.2.4-.4v-.2c0-.1.1-.2.1-.3 0-.1-.1-.1-.1-.2v-.3c0-.2 0-.4-.1-.5-.4-.7-1.2-.9-2-.8-.1 0-.2.1-.4.1-.1.1-.1.2-.3.3-.1 0-.2.1-.2.2v.1c0 .1 0 0 0 0"}})])]),_c('path',{attrs:{"d":"M42.7 45.5C25.9 60.9-4.1 40.6.5 20 2.9 9.2 12.7 2.3 23.7.5 47.4-3.4 58.8 17.7 48.2 38c-1.5 3.1-3.4 5.6-5.5 7.5z","fill":"#d3ecec"}}),_c('path',{staticClass:"st4",attrs:{"d":"M42.8 48.7c-.5 0-.9-.3-1-.8-.3-1.4-.8-3.4-1.2-5.8-.8-3.9-1.8-9-3-13.2-7.1 2-12.6 2.4-14.8-.6-2-2.7-1.8-5.5.7-7.6 3.2-2.7 9.7-3.3 12.7-.2 1.1 1.1 2 3.2 2.8 5.7 6-1.9 12.5-4.6 16.8-6.3 3.6-1.5 6.4-2.6 7.8-3 .6-.1 1.1.2 1.3.8.1.6-.2 1.1-.8 1.3-1.3.3-4.2 1.5-7.5 2.9-6 2.5-11.8 4.8-16.9 6.4 1.2 4.2 2.2 9.2 3 13.4.5 2.4.9 4.4 1.2 5.7.1.6-.2 1.1-.8 1.3h-.3zM30.4 20.5c-2 0-4.2.7-5.6 1.8-1.6 1.3-1.7 2.9-.4 4.7 1.6 2.1 6.7 1.4 12.5-.2-.7-2.2-1.5-3.9-2.4-4.8-.9-1-2.4-1.5-4.1-1.5z"}}),_c('path',{staticClass:"st4",attrs:{"d":"M47.3 46.4c-.5 0-.9-.3-1-.8-.5-1.6-.9-3.6-1.3-5.7-.5-2.3-1-5-1.7-7.7-1.3.3-2.6.6-3.7.9l-.9.2c-8.4 2.2-18.8 4.8-23-5.7-1.7-4.4-.3-7.4 1.2-9 4.1-4.5 13-5.2 17.6-4 5.4 1.5 8.4 8.1 10.3 15.2.2 0 .4-.1.7-.1 6.9-1.5 14.7-3.1 19.3-6.2.5-.3 1.1-.2 1.5.3.3.5.2 1.1-.3 1.5-5 3.3-13 5-20.1 6.5-.2 0-.4.1-.6.1.7 2.6 1.2 5.3 1.7 7.7.4 2.1.8 4.1 1.2 5.7.1.6-.2 1.1-.8 1.3 0-.2-.1-.2-.1-.2zM29.8 16c-4.9 0-9.5 2-11.2 3.9-1.6 1.8-1.9 4.1-.8 6.9 3.5 8.8 12.1 6.6 20.5 4.5l.9-.2c1.1-.3 2.4-.6 3.7-.9-1.9-6.5-4.5-12.5-8.9-13.7-1.4-.3-2.8-.5-4.2-.5z"}}),_c('path',{staticClass:"st4",attrs:{"d":"M52 42.9c-.4 0-.8-.3-1-.7-.5-1.3-1-3-1.4-4.8-2.4.3-4.5.6-6 .7-1.9.2-4.3.6-6.9 1-6.8 1.2-14.5 2.5-19.1.6-3.6-1.5-6.7-5.2-8.2-9.9-1.5-4.9-1.1-9.9 1-13.2 2-3.1 6.8-5.5 13.2-6.7 5.9-1.1 11.7-.8 15.4.6 7 2.8 9.6 13.9 11.8 22.8.1.5.3 1.1.4 1.6 6.2-1 13.9-2.9 17.1-6.3.4-.4 1.1-.4 1.5 0 .4.4.4 1.1 0 1.5-3.6 3.9-11.5 5.9-18.1 7 .4 1.6.8 3.1 1.3 4.4.2.5-.1 1.1-.6 1.3-.2.1-.3.1-.4.1zM30.7 11.4c-2.1 0-4.5.2-6.7.6-5.7 1-10.2 3.2-11.9 5.7-1.8 2.8-2.1 7.2-.8 11.4s3.9 7.4 7 8.6c4.1 1.6 11.8.3 18-.8 2.6-.5 5.1-.9 7.1-1 1.3-.1 3.3-.3 5.7-.6-.1-.5-.2-.9-.3-1.4-2-8.5-4.6-19-10.5-21.4-2-.7-4.6-1.1-7.6-1.1z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\alpheios\\logo.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35514,7 +35184,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD0AAAArCAYAAADL
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"fill":"none","d":"M13 16l-6-6 6-6"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/attach-left.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"fill":"none","d":"M13 16l-6-6 6-6"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\attach-left.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35525,7 +35195,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"fill":"none","d":"M5.5 1l9 9-9 9"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/attach-right.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"fill":"none","d":"M5.5 1l9 9-9 9"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\attach-right.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35536,7 +35206,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 50 50","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"stroke-linejoin":"round","stroke":"#1a1a1a","stroke-linecap":"round","stroke-width":".194","fill":"#fff","d":"M.097.097h49.806v49.806H.097z"}}),_c('g',{attrs:{"fill":"#4e6476"}},[_c('path',{attrs:{"d":"M39.374 16.822c.053-.048.106-.097.158-.148l2.145-2.146c1.27-1.269 1.459-3.138.422-4.174l-3.252-3.252c-1.036-1.036-2.905-.847-4.174.422L32.527 9.67a3.82 3.82 0 0 0-.148.157l6.995 6.996zM13.209 42.91l-4.603 1.144-4.602 1.143 1.144-4.602 1.143-4.603 3.46 3.46zM38.23 17.977l-5.004-5.004L10.548 35.65l-1.001-1 22.679-22.678-1.001-1.001L7.32 34.876l7.005 7.005z"}})]),_c('path',{attrs:{"d":"M45.101 44.818c-3.798-.03-4.271-.944-5.509-4.757-2.283-6.018-12.566 1.574-6.194 4.21s15.502.577 11.703.547z"}}),_c('path',{attrs:{"d":"M32.46 34.475l-3.558-5.055-3.515 3.515 3.823 4.16c1.924 2.388 1.48 2.281 3.322.796 1.843-1.485 1.853-1.028-.071-3.416zM21.366 18.714L12.974 6.79c-1.925-2.388-4.978-3.12-6.82-1.635S4.375 9.78 6.3 12.168L16.65 23.43l4.716-4.716zM11.163 8.47s-.332-1.424-2.99-2.99c0 0 2.8-.427 4.224 1.898-.95.76-1.234 1.092-1.234 1.092z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/black-brush.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 50 50","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"stroke-linejoin":"round","stroke":"#1a1a1a","stroke-linecap":"round","stroke-width":".194","fill":"#fff","d":"M.097.097h49.806v49.806H.097z"}}),_c('g',{attrs:{"fill":"#4e6476"}},[_c('path',{attrs:{"d":"M39.374 16.822c.053-.048.106-.097.158-.148l2.145-2.146c1.27-1.269 1.459-3.138.422-4.174l-3.252-3.252c-1.036-1.036-2.905-.847-4.174.422L32.527 9.67a3.82 3.82 0 0 0-.148.157l6.995 6.996zM13.209 42.91l-4.603 1.144-4.602 1.143 1.144-4.602 1.143-4.603 3.46 3.46zM38.23 17.977l-5.004-5.004L10.548 35.65l-1.001-1 22.679-22.678-1.001-1.001L7.32 34.876l7.005 7.005z"}})]),_c('path',{attrs:{"d":"M45.101 44.818c-3.798-.03-4.271-.944-5.509-4.757-2.283-6.018-12.566 1.574-6.194 4.21s15.502.577 11.703.547z"}}),_c('path',{attrs:{"d":"M32.46 34.475l-3.558-5.055-3.515 3.515 3.823 4.16c1.924 2.388 1.48 2.281 3.322.796 1.843-1.485 1.853-1.028-.071-3.416zM21.366 18.714L12.974 6.79c-1.925-2.388-4.978-3.12-6.82-1.635S4.375 9.78 6.3 12.168L16.65 23.43l4.716-4.716zM11.163 8.47s-.332-1.424-2.99-2.99c0 0 2.8-.427 4.224 1.898-.95.76-1.234 1.092-1.234 1.092z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\black-brush.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35547,7 +35217,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 335.08 335.08"}},[_c('path',{attrs:{"d":"M311.18 115.78c-1.355-10.186-1.546-27.73 7.915-33.621.169-.108.295-.264.443-.398 7.735-2.474 13.088-5.946 8.886-10.618l-114.1-34.38L29.564 62.45S8.407 65.474 10.297 98.344c1.026 17.89 6.637 26.676 11.544 31L6.68 133.913c-4.208 4.672 1.144 8.145 8.88 10.615.147.138.271.293.443.401 9.455 5.896 9.273 23.438 7.913 33.626-33.967 9.645-21.774 12.788-21.774 12.788l7.451 1.803c-5.241 4.736-10.446 13.717-9.471 30.75 1.891 32.864 19.269 35.132 19.269 35.132l120.9 39.298 182.49-44.202s12.197-3.148-21.779-12.794c-1.366-10.172-1.556-27.712 7.921-33.623.174-.105.301-.264.442-.396 7.736-2.474 13.084-5.943 8.881-10.615l-7.932-2.395c5.29-3.19 13.236-11.527 14.481-33.183.859-14.896-3.027-23.62-7.525-28.756l15.678-3.794c.001.006 12.198-3.142-21.773-12.788zm-152.64-.421l30.688-6.307 103.71-21.312 15.451-3.178c-4.937 9.036-4.73 21.402-3.913 29.35.179 1.798.385 3.44.585 4.688l-16.912 4.205-130.9 32.563 1.29-40.009zM26.72 147.342l15.449 3.178 99.597 20.474 8.701 1.782 26.093 5.363 1.287 40.01-134.53-33.471-13.263-3.296c.195-1.25.401-2.89.588-4.693.812-7.942 1.023-20.311-3.918-29.347zm-6.002-50.58c-.187-8.743 1.371-15.066 4.52-18.28 2.004-2.052 4.369-2.479 5.991-2.479.857 0 1.474.119 1.516.119l79.607 25.953 39.717 12.949-1.303 40.289-111.42-31.238-5.88-1.647a3.56 3.56 0 0 0-.735-.113c-.459-.033-11.475-1.047-12.011-25.553zm119.87 184.11l-117.3-32.886a3.489 3.489 0 0 0-.733-.116c-.467-.031-11.488-1.044-12.021-25.544-.19-8.754 1.376-15.071 4.519-18.288 2.009-2.052 4.375-2.479 5.994-2.479.859 0 1.474.115 1.519.115 0 0 .005 0 0 0l119.32 38.908-1.295 40.29zm153.7-41.407c.185 1.804.391 3.443.591 4.693l-147.81 36.771 1.292-40.01 31.601-6.497 4.667 1.129 17.492-5.685 80.631-16.569 15.457-3.18c-4.942 9.035-4.737 21.406-3.919 29.348zm8.142-54.375a2.84 2.84 0 0 0-.791.122l-11.148 3.121-106.15 29.764-1.298-40.289 34.826-11.359 84.327-27.501c.011-.005 4.436-.988 7.684 2.315 3.144 3.214 4.704 9.537 4.52 18.28-.55 24.498-11.571 25.516-11.972 25.547z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/books-stack.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 335.08 335.08"}},[_c('path',{attrs:{"d":"M311.18 115.78c-1.355-10.186-1.546-27.73 7.915-33.621.169-.108.295-.264.443-.398 7.735-2.474 13.088-5.946 8.886-10.618l-114.1-34.38L29.564 62.45S8.407 65.474 10.297 98.344c1.026 17.89 6.637 26.676 11.544 31L6.68 133.913c-4.208 4.672 1.144 8.145 8.88 10.615.147.138.271.293.443.401 9.455 5.896 9.273 23.438 7.913 33.626-33.967 9.645-21.774 12.788-21.774 12.788l7.451 1.803c-5.241 4.736-10.446 13.717-9.471 30.75 1.891 32.864 19.269 35.132 19.269 35.132l120.9 39.298 182.49-44.202s12.197-3.148-21.779-12.794c-1.366-10.172-1.556-27.712 7.921-33.623.174-.105.301-.264.442-.396 7.736-2.474 13.084-5.943 8.881-10.615l-7.932-2.395c5.29-3.19 13.236-11.527 14.481-33.183.859-14.896-3.027-23.62-7.525-28.756l15.678-3.794c.001.006 12.198-3.142-21.773-12.788zm-152.64-.421l30.688-6.307 103.71-21.312 15.451-3.178c-4.937 9.036-4.73 21.402-3.913 29.35.179 1.798.385 3.44.585 4.688l-16.912 4.205-130.9 32.563 1.29-40.009zM26.72 147.342l15.449 3.178 99.597 20.474 8.701 1.782 26.093 5.363 1.287 40.01-134.53-33.471-13.263-3.296c.195-1.25.401-2.89.588-4.693.812-7.942 1.023-20.311-3.918-29.347zm-6.002-50.58c-.187-8.743 1.371-15.066 4.52-18.28 2.004-2.052 4.369-2.479 5.991-2.479.857 0 1.474.119 1.516.119l79.607 25.953 39.717 12.949-1.303 40.289-111.42-31.238-5.88-1.647a3.56 3.56 0 0 0-.735-.113c-.459-.033-11.475-1.047-12.011-25.553zm119.87 184.11l-117.3-32.886a3.489 3.489 0 0 0-.733-.116c-.467-.031-11.488-1.044-12.021-25.544-.19-8.754 1.376-15.071 4.519-18.288 2.009-2.052 4.375-2.479 5.994-2.479.859 0 1.474.115 1.519.115 0 0 .005 0 0 0l119.32 38.908-1.295 40.29zm153.7-41.407c.185 1.804.391 3.443.591 4.693l-147.81 36.771 1.292-40.01 31.601-6.497 4.667 1.129 17.492-5.685 80.631-16.569 15.457-3.18c-4.942 9.035-4.737 21.406-3.919 29.348zm8.142-54.375a2.84 2.84 0 0 0-.791.122l-11.148 3.121-106.15 29.764-1.298-40.289 34.826-11.359 84.327-27.501c.011-.005 4.436-.988 7.684 2.315 3.144 3.214 4.704 9.537 4.52 18.28-.55 24.498-11.571 25.516-11.972 25.547z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\books-stack.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35558,7 +35228,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M16 16L4 4M16 4L4 16"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/close.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M16 16L4 4M16 4L4 16"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\close.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35569,7 +35239,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1408 1088q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/collapsed.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1408 1088q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\collapsed.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35580,7 +35250,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M6 18.71V14H1V1h18v13h-8.29L6 18.71zM2 13h5v3.29L10.29 13H18V2H2v11z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/definitions.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M6 18.71V14H1V1h18v13h-8.29L6 18.71zM2 13h5v3.29L10.29 13H18V2H2v11z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\definitions.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35591,7 +35261,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1408 704q0 26-19 45t-45 19H448q-26 0-45-19t-19-45 19-45l448-448q19-19 45-19t45 19l448 448q19 19 19 45z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/expanded.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1408 704q0 26-19 45t-45 19H448q-26 0-45-19t-19-45 19-45l448-448q19-19 45-19t45 19l448 448q19 19 19 45z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\expanded.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35602,7 +35272,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20"}},[_c('path',{attrs:{"fill":"none","d":"M-1-1h22v22H-1z"}}),_c('g',[_c('g',{attrs:{"stroke":"null"}},[_c('rect',{attrs:{"fill":"none","stroke-width":".551","x":".322","y":".475","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"fill":"none","stroke-width":".438","d":"M9.14 3.518v8.812M4.733 3.518v8.811M.593 9.58H13.28M.594 6.555H13.28M.594 3.53H13.28"}}),_c('rect',{attrs:{"fill":"#fff","stroke-width":".551","x":"3.103","y":"2.807","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"fill":"none","stroke-width":".438","d":"M11.922 5.85v8.812M7.515 5.85v8.811m-4.14-2.749h12.686M3.374 8.888H16.06M3.374 5.862H16.06"}}),_c('rect',{attrs:{"fill":"#fff","stroke-width":".551","x":"5.481","y":"4.525","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"fill":"none","stroke-width":".438","d":"M14.3 7.568v8.812M9.893 7.568v8.812m-4.14-2.75H18.44M5.753 10.607H18.44M5.752 7.58h12.686"}}),_c('circle',{attrs:{"fill":"#fff","stroke-width":".367","r":"5.711","cy":"12.808","stroke-linecap":"round","cx":"13.667","stroke-linejoin":"round"}}),_c('path',{attrs:{"d":"M13.856 6.175c-.037-.002-.074-.005-.11-.005l-.03.001-.05-.001c-3.322 0-6.025 2.978-6.025 6.637 0 3.66 2.703 6.638 6.026 6.638s6.025-2.978 6.025-6.638c0-3.59-2.601-6.521-5.836-6.632h0zm-.095 12.298h-.032.032zm-.532-.125c-.608-.297-1.143-1.105-1.508-2.205a7.654 7.654 0 0 1 1.508-.245v2.45h0zm0-3.416a8.45 8.45 0 0 0-1.758.288 11.298 11.298 0 0 1-.24-1.93h1.998v1.642h0zm-1.998-2.606c.03-.753.128-1.47.281-2.116.543.146 1.12.238 1.717.273v1.843h-1.998 0zm1.998-2.81c-.5-.033-.986-.11-1.445-.23.362-1.008.87-1.743 1.445-2.024v2.254zm.876.975a8.503 8.503 0 0 0 1.874-.282c.153.647.252 1.363.281 2.117h-2.155V10.49h0zm0-.966V7.197c.64.215 1.21.993 1.604 2.093a7.73 7.73 0 0 1-1.604.235h0zM15.96 7.73a5.2 5.2 0 0 1 1.244.96 5.545 5.545 0 0 1-.652.318 6.858 6.858 0 0 0-.592-1.28v.002zM10.94 9.007a5.566 5.566 0 0 1-.753-.377c.416-.42.895-.766 1.42-1.02-.257.399-.48.869-.667 1.396v.001zm-.27.92a12.08 12.08 0 0 0-.317 2.399H8.538a5.982 5.982 0 0 1 1.044-2.964c.33.218.696.407 1.088.566h0zm-.316 3.364a12.2 12.2 0 0 0 .275 2.215c-.415.171-.798.376-1.14.612a5.998 5.998 0 0 1-.952-2.827h1.817zm.528 3.139c.198.603.445 1.135.73 1.579a5.172 5.172 0 0 1-1.547-1.152c.249-.16.524-.303.817-.427h0zm3.222 1.983V15.89c.58.025 1.142.113 1.665.254-.395 1.194-.992 2.042-1.665 2.27h0zm0-3.49V13.29h2.155c-.027.68-.11 1.329-.238 1.924a8.472 8.472 0 0 0-1.917-.292h0zm3.032-1.632h1.66a6.004 6.004 0 0 1-.903 2.752 6.133 6.133 0 0 0-1.031-.54 12.22 12.22 0 0 0 .274-2.212h0zm0-.965c-.03-.858-.139-1.667-.315-2.399.35-.141.678-.307.98-.496.555.822.912 1.816.994 2.895h-1.659 0zm-1.184 5.564a7.07 7.07 0 0 0 .656-1.46c.255.108.495.23.716.366a5.234 5.234 0 0 1-1.372 1.094h0z","fill":"#5bc8dc"}})])])])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/inflections-browser.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20"}},[_c('path',{attrs:{"fill":"none","d":"M-1-1h22v22H-1z"}}),_c('g',[_c('g',{attrs:{"stroke":"null"}},[_c('rect',{attrs:{"fill":"none","stroke-width":".551","x":".322","y":".475","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"fill":"none","stroke-width":".438","d":"M9.14 3.518v8.812M4.733 3.518v8.811M.593 9.58H13.28M.594 6.555H13.28M.594 3.53H13.28"}}),_c('rect',{attrs:{"fill":"#fff","stroke-width":".551","x":"3.103","y":"2.807","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"fill":"none","stroke-width":".438","d":"M11.922 5.85v8.812M7.515 5.85v8.811m-4.14-2.749h12.686M3.374 8.888H16.06M3.374 5.862H16.06"}}),_c('rect',{attrs:{"fill":"#fff","stroke-width":".551","x":"5.481","y":"4.525","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"fill":"none","stroke-width":".438","d":"M14.3 7.568v8.812M9.893 7.568v8.812m-4.14-2.75H18.44M5.753 10.607H18.44M5.752 7.58h12.686"}}),_c('circle',{attrs:{"fill":"#fff","stroke-width":".367","r":"5.711","cy":"12.808","stroke-linecap":"round","cx":"13.667","stroke-linejoin":"round"}}),_c('path',{attrs:{"d":"M13.856 6.175c-.037-.002-.074-.005-.11-.005l-.03.001-.05-.001c-3.322 0-6.025 2.978-6.025 6.637 0 3.66 2.703 6.638 6.026 6.638s6.025-2.978 6.025-6.638c0-3.59-2.601-6.521-5.836-6.632h0zm-.095 12.298h-.032.032zm-.532-.125c-.608-.297-1.143-1.105-1.508-2.205a7.654 7.654 0 0 1 1.508-.245v2.45h0zm0-3.416a8.45 8.45 0 0 0-1.758.288 11.298 11.298 0 0 1-.24-1.93h1.998v1.642h0zm-1.998-2.606c.03-.753.128-1.47.281-2.116.543.146 1.12.238 1.717.273v1.843h-1.998 0zm1.998-2.81c-.5-.033-.986-.11-1.445-.23.362-1.008.87-1.743 1.445-2.024v2.254zm.876.975a8.503 8.503 0 0 0 1.874-.282c.153.647.252 1.363.281 2.117h-2.155V10.49h0zm0-.966V7.197c.64.215 1.21.993 1.604 2.093a7.73 7.73 0 0 1-1.604.235h0zM15.96 7.73a5.2 5.2 0 0 1 1.244.96 5.545 5.545 0 0 1-.652.318 6.858 6.858 0 0 0-.592-1.28v.002zM10.94 9.007a5.566 5.566 0 0 1-.753-.377c.416-.42.895-.766 1.42-1.02-.257.399-.48.869-.667 1.396v.001zm-.27.92a12.08 12.08 0 0 0-.317 2.399H8.538a5.982 5.982 0 0 1 1.044-2.964c.33.218.696.407 1.088.566h0zm-.316 3.364a12.2 12.2 0 0 0 .275 2.215c-.415.171-.798.376-1.14.612a5.998 5.998 0 0 1-.952-2.827h1.817zm.528 3.139c.198.603.445 1.135.73 1.579a5.172 5.172 0 0 1-1.547-1.152c.249-.16.524-.303.817-.427h0zm3.222 1.983V15.89c.58.025 1.142.113 1.665.254-.395 1.194-.992 2.042-1.665 2.27h0zm0-3.49V13.29h2.155c-.027.68-.11 1.329-.238 1.924a8.472 8.472 0 0 0-1.917-.292h0zm3.032-1.632h1.66a6.004 6.004 0 0 1-.903 2.752 6.133 6.133 0 0 0-1.031-.54 12.22 12.22 0 0 0 .274-2.212h0zm0-.965c-.03-.858-.139-1.667-.315-2.399.35-.141.678-.307.98-.496.555.822.912 1.816.994 2.895h-1.659 0zm-1.184 5.564a7.07 7.07 0 0 0 .656-1.46c.255.108.495.23.716.366a5.234 5.234 0 0 1-1.372 1.094h0z","fill":"#5bc8dc"}})])])])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\inflections-browser.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35613,7 +35283,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 25 21"}},[_c('g',{attrs:{"fill":"none"}},[_c('rect',{attrs:{"ry":"2.901","height":"20","width":"24","y":".5","x":".5"}}),_c('path',{attrs:{"d":"M16.492 5.479v14.505M8.5 5.476v14.505M.993 15.458h23.005M.993 10.478h23.005M.993 5.498h23.005"}})])])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/inflections.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 25 21"}},[_c('g',{attrs:{"fill":"none"}},[_c('rect',{attrs:{"ry":"2.901","height":"20","width":"24","y":".5","x":".5"}}),_c('path',{attrs:{"d":"M16.492 5.479v14.505M8.5 5.476v14.505M.993 15.458h23.005M.993 10.478h23.005M.993 5.498h23.005"}})])])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\inflections.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35624,7 +35294,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M12.13 11.59c-.16 1.25-1.78 2.53-3.03 2.57-2.93.04.79-4.7-.36-5.79.56-.21 1.88-.54 1.88.44 0 .82-.5 1.74-.74 2.51-1.22 3.84 2.25-.17 2.26-.14.02.03.02.17-.01.41-.05.36.03-.24 0 0zm-.57-5.92c0 1-2.2 1.48-2.2.36 0-1.03 2.2-1.49 2.2-.36z"}}),_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/info.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M12.13 11.59c-.16 1.25-1.78 2.53-3.03 2.57-2.93.04.79-4.7-.36-5.79.56-.21 1.88-.54 1.88.44 0 .82-.5 1.74-.74 2.51-1.22 3.84 2.25-.17 2.26-.14.02.03.02.17-.01.41-.05.36.03-.24 0 0zm-.57-5.92c0 1-2.2 1.48-2.2.36 0-1.03 2.2-1.49 2.2-.36z"}}),_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\info.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35635,7 +35305,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"width":"20","height":"20","viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M782 1078q-1 3-12.5-.5T738 1066l-20-9q-44-20-87-49-7-5-41-31.5T552 948q-67 103-134 181-81 95-105 110-4 2-19.5 4t-18.5 0q6-4 82-92 21-24 85.5-115T521 918q17-30 51-98.5t36-77.5q-8-1-110 33-8 2-27.5 7.5T436 792t-17 5q-2 2-2 10.5t-1 9.5q-5 10-31 15-23 7-47 0-18-4-28-21-4-6-5-23 6-2 24.5-5t29.5-6q58-16 105-32 100-35 102-35 10-2 43-19.5t44-21.5q9-3 21.5-8t14.5-5.5 6 .5q2 12-1 33 0 2-12.5 27T655 769.5 638 803q-25 50-77 131l64 28q12 6 74.5 32t67.5 28q4 1 10.5 25.5t4.5 30.5zM577 592q3 15-4 28-12 23-50 38-30 12-60 12-26-3-49-26-14-15-18-41l1-3q3 3 19.5 5t26.5 0 58-16q36-12 55-14 17 0 21 17zm698 129l63 227-139-42zM167 1521l694-232V257L167 490v1031zm1241-317l102 31-181-657-100-31-216 536 102 31 45-110 211 65zM905 242l573 184V46zm311 1323l158 13-54 160-40-66q-130 83-276 108-58 12-91 12h-84q-79 0-199.5-39T446 1668q-8-7-8-16 0-8 5-13.5t13-5.5q4 0 18 7.5t30.5 16.5 20.5 11q73 37 159.5 61.5T842 1754q95 0 167-14.5t157-50.5q15-7 30.5-15.5t34-19 28.5-16.5zm448-1079v1079l-774-246q-14 6-375 127.5T147 1568q-13 0-18-13 0-1-1-3V474q3-9 4-10 5-6 20-11 107-36 149-50V19l558 198q2 0 160.5-55t316-108.5T1497 0q20 0 20 21v418z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/language.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"width":"20","height":"20","viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M782 1078q-1 3-12.5-.5T738 1066l-20-9q-44-20-87-49-7-5-41-31.5T552 948q-67 103-134 181-81 95-105 110-4 2-19.5 4t-18.5 0q6-4 82-92 21-24 85.5-115T521 918q17-30 51-98.5t36-77.5q-8-1-110 33-8 2-27.5 7.5T436 792t-17 5q-2 2-2 10.5t-1 9.5q-5 10-31 15-23 7-47 0-18-4-28-21-4-6-5-23 6-2 24.5-5t29.5-6q58-16 105-32 100-35 102-35 10-2 43-19.5t44-21.5q9-3 21.5-8t14.5-5.5 6 .5q2 12-1 33 0 2-12.5 27T655 769.5 638 803q-25 50-77 131l64 28q12 6 74.5 32t67.5 28q4 1 10.5 25.5t4.5 30.5zM577 592q3 15-4 28-12 23-50 38-30 12-60 12-26-3-49-26-14-15-18-41l1-3q3 3 19.5 5t26.5 0 58-16q36-12 55-14 17 0 21 17zm698 129l63 227-139-42zM167 1521l694-232V257L167 490v1031zm1241-317l102 31-181-657-100-31-216 536 102 31 45-110 211 65zM905 242l573 184V46zm311 1323l158 13-54 160-40-66q-130 83-276 108-58 12-91 12h-84q-79 0-199.5-39T446 1668q-8-7-8-16 0-8 5-13.5t13-5.5q4 0 18 7.5t30.5 16.5 20.5 11q73 37 159.5 61.5T842 1754q95 0 167-14.5t157-50.5q15-7 30.5-15.5t34-19 28.5-16.5zm448-1079v1079l-774-246q-14 6-375 127.5T147 1568q-13 0-18-13 0-1-1-3V474q3-9 4-10 5-6 20-11 107-36 149-50V19l558 198q2 0 160.5-55t316-108.5T1497 0q20 0 20 21v418z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\language.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35646,7 +35316,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1216 832q0-185-131.5-316.5T768 384 451.5 515.5 320 832t131.5 316.5T768 1280t316.5-131.5T1216 832zm512 832q0 52-38 90t-90 38q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225T64 832t55.5-273.5 150-225 225-150T768 128t273.5 55.5 225 150 150 225T1472 832q0 220-124 399l343 343q37 37 37 90z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/lookup.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1216 832q0-185-131.5-316.5T768 384 451.5 515.5 320 832t131.5 316.5T768 1280t316.5-131.5T1216 832zm512 832q0 52-38 90t-90 38q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225T64 832t55.5-273.5 150-225 225-150T768 128t273.5 55.5 225 150 150 225T1472 832q0 220-124 399l343 343q37 37 37 90z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\lookup.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35657,7 +35327,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1 3h18v1H1zM1 7h18v1H1zM1 11h18v1H1zM1 15h18v1H1z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/menu.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1 3h18v1H1zM1 7h18v1H1zM1 11h18v1H1zM1 15h18v1H1z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\menu.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35668,7 +35338,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('circle',{attrs:{"fill":"none","cx":"9.997","cy":"10","r":"3.31"}}),_c('path',{attrs:{"fill":"none","d":"M18.488 12.285l-2.283 3.952c-.883-.741-2.02-.956-2.902-.446-.875.498-1.256 1.582-1.057 2.709H7.735c.203-1.126-.182-2.201-1.051-2.709-.883-.521-2.029-.299-2.911.446L1.5 12.285c1.073-.414 1.817-1.286 1.817-2.294-.012-1.011-.744-1.87-1.817-2.275l2.265-3.932c.88.732 2.029.954 2.922.448.868-.51 1.252-1.595 1.048-2.732h4.528c-.191 1.137.178 2.21 1.051 2.72.892.51 2.029.296 2.911-.426l2.262 3.92c-1.083.403-1.826 1.274-1.817 2.295.002 1.009.745 1.871 1.818 2.276z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/options.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('circle',{attrs:{"fill":"none","cx":"9.997","cy":"10","r":"3.31"}}),_c('path',{attrs:{"fill":"none","d":"M18.488 12.285l-2.283 3.952c-.883-.741-2.02-.956-2.902-.446-.875.498-1.256 1.582-1.057 2.709H7.735c.203-1.126-.182-2.201-1.051-2.709-.883-.521-2.029-.299-2.911.446L1.5 12.285c1.073-.414 1.817-1.286 1.817-2.294-.012-1.011-.744-1.87-1.817-2.275l2.265-3.932c.88.732 2.029.954 2.922.448.868-.51 1.252-1.595 1.048-2.732h4.528c-.191 1.137.178 2.21 1.051 2.72.892.51 2.029.296 2.911-.426l2.262 3.92c-1.083.403-1.826 1.274-1.817 2.295.002 1.009.745 1.871 1.818 2.276z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\options.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35679,7 +35349,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 24 24"}},[_c('ellipse',{attrs:{"rx":"11.405","ry":"11.405","fill":"none","cy":"12","cx":"12"}}),_c('path',{attrs:{"d":"M19.46 10.145q0 2.49-1.178 4.494-1.426 2.356-3.969 2.708V15.18q1.21-.217 1.984-1.246.683-.947.683-1.976-.434.108-.869.108-1.302 0-2.17-.839-.868-.84-.868-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.55 0 2.481 1.11.806.975.806 2.383zm-8.534 0q0 2.49-1.178 4.494-1.426 2.356-3.968 2.708V15.18q1.209-.217 1.984-1.246.682-.947.682-1.976-.434.108-.868.108-1.302 0-2.17-.839-.869-.84-.869-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.551 0 2.481 1.11.807.975.807 2.383z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/resources.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 24 24"}},[_c('ellipse',{attrs:{"rx":"11.405","ry":"11.405","fill":"none","cy":"12","cx":"12"}}),_c('path',{attrs:{"d":"M19.46 10.145q0 2.49-1.178 4.494-1.426 2.356-3.969 2.708V15.18q1.21-.217 1.984-1.246.683-.947.683-1.976-.434.108-.869.108-1.302 0-2.17-.839-.868-.84-.868-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.55 0 2.481 1.11.806.975.806 2.383zm-8.534 0q0 2.49-1.178 4.494-1.426 2.356-3.968 2.708V15.18q1.209-.217 1.984-1.246.682-.947.682-1.976-.434.108-.868.108-1.302 0-2.17-.839-.869-.84-.869-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.551 0 2.481 1.11.807.975.807 2.383z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\resources.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35690,7 +35360,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"width":"20","height":"20","viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1792 1248v320q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960H960v192h96q40 0 68 28t28 68v320q0 40-28 68t-68 28H736q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960H320v192h96q40 0 68 28t28 68v320q0 40-28 68t-68 28H96q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960q0-52 38-90t90-38h512V640h-96q-40 0-68-28t-28-68V224q0-40 28-68t68-28h320q40 0 68 28t28 68v320q0 40-28 68t-68 28h-96v192h512q52 0 90 38t38 90v192h96q40 0 68 28t28 68z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/sitemap.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"width":"20","height":"20","viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1792 1248v320q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960H960v192h96q40 0 68 28t28 68v320q0 40-28 68t-68 28H736q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960H320v192h96q40 0 68 28t28 68v320q0 40-28 68t-68 28H96q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960q0-52 38-90t90-38h512V640h-96q-40 0-68-28t-28-68V224q0-40 28-68t68-28h320q40 0 68 28t28 68v320q0 40-28 68t-68 28h-96v192h512q52 0 90 38t38 90v192h96q40 0 68 28t28 68z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\sitemap.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35701,7 +35371,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 1000 1000","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M500 10C229.4 10 10 229.4 10 500s219.4 490 490 490 490-219.4 490-490S770.6 10 500 10zm-64.7 733.6c-49.3 49.3-129.6 49.3-179 0-49.3-49.3-49.3-129.6 0-178.9l126.8-126.8c49.3-49.3 129.6-49.3 179 0 1.3 1.3 2.6 2.7 3.9 4.1.7.6 1.5 1.3 2.2 2 2 2 3.6 4.2 5 6.5.2.2.3.4.5.6l-.1.1c6.1 11.5 4.3 26-5.4 35.6-9.7 9.7-24.4 11.5-35.9 5.2-.8.8-8.7-7.1-13-11.3-25.8-25.8-67.3-26-93.1-.2l-127 127c-25.8 25.8-25.8 67.5 0 93.3s67.5 25.8 93.3 0l76.4-76.4c26.5 13 57.7 13.4 84.5 1.1L435.3 743.6zm308.3-308.3L616.9 562.1c-49.3 49.3-129.6 49.3-179 0-1.3-1.3-2.6-2.7-3.9-4.1-.7-.6-1.5-1.3-2.1-2-2-2-3.6-4.2-5-6.5-.2-.2-.3-.4-.5-.6l.1-.1c-6.1-11.5-4.3-26 5.4-35.6 9.7-9.7 24.4-11.4 35.9-5.2.8-.8 8.7 7.1 13 11.3 25.8 25.8 67.3 26 93.1.2l127-127c25.8-25.8 25.8-67.5 0-93.3s-67.5-25.8-93.3 0L531 375.6c-26.4-12.9-57.7-13.4-84.5-1.1l118.1-118.1c49.3-49.3 129.6-49.3 179 0s49.4 129.6 0 178.9z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/source.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 1000 1000","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M500 10C229.4 10 10 229.4 10 500s219.4 490 490 490 490-219.4 490-490S770.6 10 500 10zm-64.7 733.6c-49.3 49.3-129.6 49.3-179 0-49.3-49.3-49.3-129.6 0-178.9l126.8-126.8c49.3-49.3 129.6-49.3 179 0 1.3 1.3 2.6 2.7 3.9 4.1.7.6 1.5 1.3 2.2 2 2 2 3.6 4.2 5 6.5.2.2.3.4.5.6l-.1.1c6.1 11.5 4.3 26-5.4 35.6-9.7 9.7-24.4 11.5-35.9 5.2-.8.8-8.7-7.1-13-11.3-25.8-25.8-67.3-26-93.1-.2l-127 127c-25.8 25.8-25.8 67.5 0 93.3s67.5 25.8 93.3 0l76.4-76.4c26.5 13 57.7 13.4 84.5 1.1L435.3 743.6zm308.3-308.3L616.9 562.1c-49.3 49.3-129.6 49.3-179 0-1.3-1.3-2.6-2.7-3.9-4.1-.7-.6-1.5-1.3-2.1-2-2-2-3.6-4.2-5-6.5-.2-.2-.3-.4-.5-.6l.1-.1c-6.1-11.5-4.3-26 5.4-35.6 9.7-9.7 24.4-11.4 35.9-5.2.8-.8 8.7 7.1 13 11.3 25.8 25.8 67.3 26 93.1.2l127-127c25.8-25.8 25.8-67.5 0-93.3s-67.5-25.8-93.3 0L531 375.6c-26.4-12.9-57.7-13.4-84.5-1.1l118.1-118.1c49.3-49.3 129.6-49.3 179 0s49.4 129.6 0 178.9z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\source.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35712,7 +35382,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","d":"M13.018 14.197l-3.573-3.572"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/status.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}},[_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","d":"M13.018 14.197l-3.573-3.572"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\status.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35723,7 +35393,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 760 514","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"fill-rule":"evenodd","clip-rule":"evenodd","d":"M624.288 0H136.257v142.624h488.031V0zM330.909 9.724h-184.92V132.9h184.92V9.724zM760 185.688H0v142.624h760V185.688zm-68.984 8.8h-184.92v123.175h184.92V194.488zM624.016 371.376H135.984V514h488.032V371.376zm-156.851 11.117H279.002v123.175h188.163V382.493z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/usage-examples-icon1.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 760 514","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"fill-rule":"evenodd","clip-rule":"evenodd","d":"M624.288 0H136.257v142.624h488.031V0zM330.909 9.724h-184.92V132.9h184.92V9.724zM760 185.688H0v142.624h760V185.688zm-68.984 8.8h-184.92v123.175h184.92V194.488zM624.016 371.376H135.984V514h488.032V371.376zm-156.851 11.117H279.002v123.175h188.163V382.493z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\usage-examples-icon1.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35734,7 +35404,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1536 1399q0 109-62.5 187t-150.5 78H469q-88 0-150.5-78T256 1399q0-85 8.5-160.5t31.5-152 58.5-131 94-89T583 832q131 128 313 128t313-128q76 0 134.5 34.5t94 89 58.5 131 31.5 152 8.5 160.5zm-256-887q0 159-112.5 271.5T896 896 624.5 783.5 512 512t112.5-271.5T896 128t271.5 112.5T1280 512z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/user.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M1536 1399q0 109-62.5 187t-150.5 78H469q-88 0-150.5-78T256 1399q0-85 8.5-160.5t31.5-152 58.5-131 94-89T583 832q131 128 313 128t313-128q76 0 134.5 34.5t94 89 58.5 131 31.5 152 8.5 160.5zm-256-887q0 159-112.5 271.5T896 896 624.5 783.5 512 512t112.5-271.5T896 128t271.5 112.5T1280 512z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\user.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35745,7 +35415,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 50 50"}},[_c('path',{attrs:{"stroke-linejoin":"round","stroke":"#1a1a1a","stroke-linecap":"round","stroke-width":".194","fill":"#4e6476","d":"M.097.097h49.806v49.806H.097z"}}),_c('g',{attrs:{"fill":"#fff"}},[_c('path',{attrs:{"d":"M39.374 16.822c.053-.048.106-.097.158-.148l2.145-2.146c1.27-1.269 1.459-3.138.422-4.174l-3.252-3.252c-1.036-1.036-2.905-.847-4.174.422L32.527 9.67a3.82 3.82 0 0 0-.148.157l6.995 6.996zM13.209 42.91l-4.603 1.144-4.602 1.143 1.144-4.602 1.143-4.603 3.46 3.46zM38.23 17.977l-5.004-5.004L10.548 35.65l-1.001-1 22.679-22.678-1.001-1.001L7.32 34.876l7.005 7.005zM45.101 44.818c-3.798-.03-4.271-.944-5.509-4.757-2.283-6.018-12.566 1.574-6.194 4.21s15.502.577 11.703.547z"}}),_c('g',[_c('path',{attrs:{"d":"M32.46 34.475l-3.558-5.055-3.515 3.515 3.823 4.16c1.924 2.388 1.48 2.281 3.322.796 1.843-1.485 1.853-1.028-.071-3.416zM21.366 18.714L12.974 6.79c-1.925-2.388-4.978-3.12-6.82-1.635S4.375 9.78 6.3 12.168L16.65 23.43l4.716-4.716zM11.163 8.47s-.332-1.424-2.99-2.99c0 0 2.8-.427 4.224 1.898-.95.76-1.234 1.092-1.234 1.092z"}})])])])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/white-brush.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 50 50"}},[_c('path',{attrs:{"stroke-linejoin":"round","stroke":"#1a1a1a","stroke-linecap":"round","stroke-width":".194","fill":"#4e6476","d":"M.097.097h49.806v49.806H.097z"}}),_c('g',{attrs:{"fill":"#fff"}},[_c('path',{attrs:{"d":"M39.374 16.822c.053-.048.106-.097.158-.148l2.145-2.146c1.27-1.269 1.459-3.138.422-4.174l-3.252-3.252c-1.036-1.036-2.905-.847-4.174.422L32.527 9.67a3.82 3.82 0 0 0-.148.157l6.995 6.996zM13.209 42.91l-4.603 1.144-4.602 1.143 1.144-4.602 1.143-4.603 3.46 3.46zM38.23 17.977l-5.004-5.004L10.548 35.65l-1.001-1 22.679-22.678-1.001-1.001L7.32 34.876l7.005 7.005zM45.101 44.818c-3.798-.03-4.271-.944-5.509-4.757-2.283-6.018-12.566 1.574-6.194 4.21s15.502.577 11.703.547z"}}),_c('g',[_c('path',{attrs:{"d":"M32.46 34.475l-3.558-5.055-3.515 3.515 3.823 4.16c1.924 2.388 1.48 2.281 3.322.796 1.843-1.485 1.853-1.028-.071-3.416zM21.366 18.714L12.974 6.79c-1.925-2.388-4.978-3.12-6.82-1.635S4.375 9.78 6.3 12.168L16.65 23.43l4.716-4.716zM11.163 8.47s-.332-1.424-2.99-2.99c0 0 2.8-.427 4.224 1.898-.95.76-1.234 1.092-1.234 1.092z"}})])])])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\white-brush.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35756,7 +35426,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 156 141","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M8.573 17.146A8.573 8.573 0 1 0 8.573 0a8.573 8.573 0 0 0 0 17.146zM29.148 2.363a6.21 6.21 0 0 0 0 12.42h95.447a6.211 6.211 0 1 0 0-12.42H29.148zM17.146 69.728a8.573 8.573 0 1 1-17.146 0 8.573 8.573 0 0 1 17.146 0zM8.573 140.027a8.573 8.573 0 1 0 0-17.146 8.573 8.573 0 1 0 0 17.146zM17.146 100.591A8.574 8.574 0 1 1 0 100.59a8.574 8.574 0 0 1 17.147.001zM29.148 32.655a6.21 6.21 0 1 0 0 12.42h95.447a6.211 6.211 0 1 0 0-12.42H29.148zM17.146 38.865a8.573 8.573 0 1 1-17.146 0 8.573 8.573 0 0 1 17.146 0zM90 130.823c0-1.885.154-3.752.451-5.58H29.148a6.21 6.21 0 0 0 0 12.421H90v-6.841zM106.79 102.066a26.672 26.672 0 0 1-5.803-7.438l-71.839.752c-3.43.036-6.21 2.846-6.21 6.276 0 3.43 2.78 6.181 6.21 6.145l70.552-.739c2.088-2.027 4.466-3.725 7.09-4.996zM98.834 75.938c1.245-4.797 3.824-9.072 7.327-12.42H29.148a6.21 6.21 0 0 0 0 12.42h69.686z"}}),_c('path',{attrs:{"d":"M135.143 102.561c7.3-3.769 12.29-11.385 12.29-20.166 0-12.527-10.155-22.682-22.682-22.682-12.526 0-22.681 10.155-22.681 22.682 0 8.745 4.949 16.335 12.2 20.12-11.819 4.251-20.27 15.56-20.27 28.842v8.397h61.285v-8.397c0-13.234-8.39-24.509-20.142-28.796z"}})])};var toString = function () {return "/home/balmas/workspace/components/src/images/inline-icons/wordlist-icon.svg"};module.exports = { render: render, toString: toString };
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":"0 0 156 141","xmlns":"http://www.w3.org/2000/svg"}},[_c('path',{attrs:{"d":"M8.573 17.146A8.573 8.573 0 1 0 8.573 0a8.573 8.573 0 0 0 0 17.146zM29.148 2.363a6.21 6.21 0 0 0 0 12.42h95.447a6.211 6.211 0 1 0 0-12.42H29.148zM17.146 69.728a8.573 8.573 0 1 1-17.146 0 8.573 8.573 0 0 1 17.146 0zM8.573 140.027a8.573 8.573 0 1 0 0-17.146 8.573 8.573 0 1 0 0 17.146zM17.146 100.591A8.574 8.574 0 1 1 0 100.59a8.574 8.574 0 0 1 17.147.001zM29.148 32.655a6.21 6.21 0 1 0 0 12.42h95.447a6.211 6.211 0 1 0 0-12.42H29.148zM17.146 38.865a8.573 8.573 0 1 1-17.146 0 8.573 8.573 0 0 1 17.146 0zM90 130.823c0-1.885.154-3.752.451-5.58H29.148a6.21 6.21 0 0 0 0 12.421H90v-6.841zM106.79 102.066a26.672 26.672 0 0 1-5.803-7.438l-71.839.752c-3.43.036-6.21 2.846-6.21 6.276 0 3.43 2.78 6.181 6.21 6.145l70.552-.739c2.088-2.027 4.466-3.725 7.09-4.996zM98.834 75.938c1.245-4.797 3.824-9.072 7.327-12.42H29.148a6.21 6.21 0 0 0 0 12.42h69.686z"}}),_c('path',{attrs:{"d":"M135.143 102.561c7.3-3.769 12.29-11.385 12.29-20.166 0-12.527-10.155-22.682-22.682-22.682-12.526 0-22.681 10.155-22.681 22.682 0 8.745 4.949 16.335 12.2 20.12-11.819 4.251-20.27 15.56-20.27 28.842v8.397h61.285v-8.397c0-13.234-8.39-24.509-20.142-28.796z"}})])};var toString = function () {return "C:\\uds\\projects\\alpheios\\components\\src\\images\\inline-icons\\wordlist-icon.svg"};module.exports = { render: render, toString: toString };
 
 /***/ }),
 
@@ -35907,6 +35577,11 @@ const languageNames = new Map([
   [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GEEZ, 'Ancient Ethiopic (Ge\'ez)']
 ])
 
+const layoutClasses = {
+  COMPACT: 'alpheios-layout-compact',
+  LARGE: 'alpheios-layout-large'
+}
+
 // Enable Vuex
 vue_dist_vue__WEBPACK_IMPORTED_MODULE_4___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_5__["default"])
 
@@ -35958,6 +35633,11 @@ class UIController {
      * @type {string} - A platform name from {HTMLPage.platforms}
      */
     this.platform = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_17__["default"].getPlatform()
+    // Assign a class that will specify what type of layout will be used
+    const layoutClassName = (this.platform === _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_17__["default"].platforms.MOBILE)
+      ? layoutClasses.COMPACT
+      : layoutClasses.LARGE
+    document.body.classList.add(layoutClassName)
 
     // Vuex store. A public API for data and UI module interactions.
     this.store = new vuex__WEBPACK_IMPORTED_MODULE_5__["default"].Store({
@@ -36015,7 +35695,7 @@ class UIController {
 
     // Creates on configures an event listener
     uiController.evc = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_24__["default"]()
-    uiController.registerGetSelectedText('GetSelectedText',uiController.options.textQuerySelector)
+    uiController.registerGetSelectedText('GetSelectedText', uiController.options.textQuerySelector)
     uiController.evc.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_21__["default"], 'keydown')
     uiController.evc.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_21__["default"], 'Alpheios_Page_Load')
 
@@ -37148,6 +36828,12 @@ class UIController {
    * @param {string | value} value - A new value of an options.
    */
   uiOptionChange (name, value) {
+    const FONT_SIZE_PROP = '--alpheios-base-font-size'
+    const FONT_SIZES = {
+      small: '12px',
+      medium: '16px',
+      large: '20px'
+    }
     // TODO this should really be handled within OptionsItem
     // the difference between value and textValues is a little confusing
     // see issue #73
@@ -37178,6 +36864,12 @@ class UIController {
         break
       case 'fontSize':
         this.setRootComponentClasses()
+        let fontSize = FONT_SIZES[value] || FONT_SIZES.medium
+        try {
+          document.documentElement.style.setProperty(FONT_SIZE_PROP, fontSize)
+        } catch (error) {
+          console.error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
+        }
         break
       case 'colorSchema':
         this.setRootComponentClasses()
@@ -37190,7 +36882,7 @@ class UIController {
     this.api.settings.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
   }
 
-  registerGetSelectedText(listenerName,selector) {
+  registerGetSelectedText (listenerName, selector) {
     let ev
     if (this.platform === _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_17__["default"].platforms.MOBILE) {
       ev = _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_20__["default"]
@@ -37217,8 +36909,8 @@ class UIController {
     }
   }
 
-  registerAndActivateGetSelectedText(listenerName,selector) {
-    this.registerGetSelectedText(listenerName,selector)
+  registerAndActivateGetSelectedText (listenerName, selector) {
+    this.registerGetSelectedText(listenerName, selector)
     this.evc.activateListener(listenerName)
   }
 }
@@ -41289,7 +40981,7 @@ module.exports = {"Number":{"message":"Number"},"Case":{"message":"Case"},"Decle
 /*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, TOOLTIP_MOVE_PANEL_LEFT, TOOLTIP_MOVE_PANEL_RIGHT, TOOLTIP_CLOSE_PANEL, TOOLTIP_HELP, TOOLTIP_INFLECT, TOOLTIP_INFLECT_BROWSER, TOOLTIP_DEFINITIONS, TOOLTIP_GRAMMAR, TOOLTIP_TREEBANK, TOOLTIP_OPTIONS, TOOLTIP_STATUS, TOOLTIP_WORDLIST, TOOLTIP_USER, TOOLTIP_SHOW_INFLECTIONS, TOOLTIP_SHOW_DEFINITIONS, TOOLTIP_SHOW_OPTIONS, TOOLTIP_SHOW_USAGEEXAMPLES, TOOLTIP_MORPHOLOGY, PLACEHOLDER_DEFINITIONS, PLACEHOLDER_INFLECT_IN_PROGRESS, PLACEHOLDER_INFLECT_UNAVAILABLE, LABEL_INFLECT_SELECT_POFS, LABEL_INFLECT_SHOWFULL, LABEL_INFLECT_COLLAPSE, TOOLTIP_INFLECT_SHOWFULL, TOOLTIP_INFLECT_COLLAPSE, LABEL_INFLECT_HIDEEMPTY, LABEL_INFLECT_SHOWEMPTY, TOOLTIP_INFLECT_HIDEEMPTY, TOOLTIP_INFLECT_SHOWEMPTY, INFLECT_MSG_TABLE_NOT_IMPLEMENTED, TEXT_INFO_GETTINGSTARTED, TEXT_INFO_ACTIVATE, TEXT_INFO_CLICK, TEXT_INFO_LANGDETECT, LABEL_INFO_CURRENTLANGUAGE, TEXT_INFO_SETTINGS, TEXT_INFO_ARROW, TEXT_INFO_REOPEN, TEXT_INFO_DEACTIVATE, TOOLTIP_POPUP_CLOSE, LABEL_POPUP_TREEBANK, LABEL_POPUP_INFLECT, LABEL_POPUP_OPTIONS, LABEL_POPUP_DEFINE, LABEL_POPUP_USAGEEXAMPLES, PLACEHOLDER_POPUP_DATA, PLACEHOLDER_NO_LANGUAGE_POPUP_DATA, PLACEHOLDER_NO_DATA_POPUP_DATA, LABEL_POPUP_CREDITS, LABEL_POPUP_SHOWCREDITS, LABEL_POPUP_HIDECREDITS, TEXT_NOTICE_SUGGEST_LOGIN, TEXT_NOTICE_CHANGE_LANGUAGE, TEXT_NOTICE_LANGUAGE_UNKNOWN, TEXT_NOTICE_GRAMMAR_NOTFOUND, TEXT_NOTICE_MORPHDATA_READY, TEXT_NOTICE_MORPHDATA_NOTFOUND, TEXT_NOTICE_INFLDATA_READY, TEXT_NOTICE_DEFSDATA_READY, TEXT_NOTICE_DEFSDATA_NOTFOUND, TEXT_NOTICE_NO_DEFS_FOUND, TEXT_NOTICE_LEXQUERY_COMPLETE, TEXT_NOTICE_GRAMMAR_READY, TEXT_NOTICE_GRAMMAR_COMPLETE, TEXT_NOTICE_RESQUERY_COMPLETE, TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS, TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS, LABEL_BROWSERACTION_DEACTIVATE, LABEL_BROWSERACTION_ACTIVATE, LABEL_BROWSERACTION_DISABLED, LABEL_CTXTMENU_DEACTIVATE, LABEL_CTXTMENU_ACTIVATE, LABEL_CTXTMENU_DISABLED, LABEL_CTXTMENU_OPENPANEL, LABEL_CTXTMENU_INFO, LABEL_CTXTMENU_SENDEXP, LABEL_LOOKUP_CONTROL, LABEL_LOOKUP_BUTTON, TOOLTIP_LOOKUP_BUTTON, LABEL_LOOKUP_SETTINGS, LABEL_RESKIN_SETTINGS, TOOLTIP_RESKIN_SMALLFONT, TOOLTIP_RESKIN_MEDIUMFONT, TOOLTIP_RESKIN_LARGEFONT, TOOLTIP_RESKIN_LIGHTBG, TOOLTIP_RESKIN_DARKBG, INFLECTIONS_CREDITS_TITLE, INFLECTIONS_PARADIGMS_EXPLANATORY_HINT, INFLECTIONS_MAIN_TABLE_LINK_TEXT, INFL_ATTRIBUTE_LINK_TEXT_SOURCE, EMBED_LIB_WARNING_TEXT, AUTH_LOGIN_BTN_LABEL, AUTH_LOGOUT_BTN_LABEL, AUTH_LOGIN_PROGRESS_MSG, AUTH_LOGIN_SUCCESS_MSG, AUTH_LOGIN_AUTH_FAILURE_MSG, AUTH_PROFILE_NICKNAME_LABEL, AUTH_PROFILE_NAME_LABEL, AUTH_LOGOUT_SUCCESS_MSG, TEXT_NOTICE_WORDUSAGE_READY, TOOLTIP_WORD_USAGE, default */
 /***/ (function(module) {
 
-module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about a cookie.","description":"A test message that is shown in a panel","component":"Panel"},"NUM_LINES_TEST_MESSAGE":{"message":"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.","description":"A test message that is shown in a panel","component":"Panel","params":["numLines"]},"TOOLTIP_MOVE_PANEL_LEFT":{"message":"Move Panel to Left","description":"tooltip for moving the panel to the left","component":"Panel"},"TOOLTIP_MOVE_PANEL_RIGHT":{"message":"Move Panel to Right","description":"tooltip for moving the panel to the right","component":"Panel"},"TOOLTIP_CLOSE_PANEL":{"message":"Close Panel","description":"tooltip for closing the panel","component":"Panel"},"TOOLTIP_HELP":{"message":"Help","description":"tooltip for help tab","component":"Panel"},"TOOLTIP_INFLECT":{"message":"Inflections","description":"tooltip for inflections tab","component":"Panel"},"TOOLTIP_INFLECT_BROWSER":{"message":"Browse Inflection Tables","description":"tooltip for inflections browser tab","component":"Panel"},"TOOLTIP_DEFINITIONS":{"message":"Definitions","description":"tooltip for definitions tab","component":"Panel"},"TOOLTIP_GRAMMAR":{"message":"Grammar","description":"tooltip for grammar tab","component":"Panel"},"TOOLTIP_TREEBANK":{"message":"Diagram","description":"tooltip for treebank tab","component":"Panel"},"TOOLTIP_OPTIONS":{"message":"Options","description":"tooltip for options tab","component":"Panel"},"TOOLTIP_STATUS":{"message":"Status Messages","description":"tooltip for status tab","component":"Panel"},"TOOLTIP_WORDLIST":{"message":"User word list","description":"tooltip for user word list tab","component":"Panel"},"TOOLTIP_USER":{"message":"User info","description":"tooltip for a user info tab","component":"Panel"},"TOOLTIP_SHOW_INFLECTIONS":{"message":"Show inflections","description":"tooltip for button inflections","component":"Popup"},"TOOLTIP_SHOW_DEFINITIONS":{"message":"Show definitions","description":"tooltip for button definitions","component":"Popup"},"TOOLTIP_SHOW_OPTIONS":{"message":"Show options","description":"tooltip for button options","component":"Popup"},"TOOLTIP_SHOW_USAGEEXAMPLES":{"message":"Show example usages of this word","description":"tooltop for word usage examples button","component":"Popup"},"TOOLTIP_MORPHOLOGY":{"message":"Show morphology","description":"tooltop for a morphology button","component":"Panel"},"PLACEHOLDER_DEFINITIONS":{"message":"Lookup a word to show definitions...","description":"placeholder for definitions panel","component":"Panel"},"PLACEHOLDER_INFLECT_IN_PROGRESS":{"message":"Lookup a word to show inflections...","description":"placeholder for inflections panel","component":"Panel"},"PLACEHOLDER_INFLECT_UNAVAILABLE":{"message":"Inflection data is unavailable","description":"placeholder for inflections panel if unavailable","component":"Panel"},"LABEL_INFLECT_SELECT_POFS":{"message":"Part of speech:","description":"label for part of speech selector on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWFULL":{"message":"Expand","description":"label for expand button on inflections panel","component":"Panel"},"LABEL_INFLECT_COLLAPSE":{"message":"Collapse","description":"label for collapse table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWFULL":{"message":"This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table","description":"tooltip for show full table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_COLLAPSE":{"message":"This table shows all its columns. Click 'Collapse' to show the ones with matching endings only","description":"tooltip for collapse table button on inflections panel","component":"Panel"},"LABEL_INFLECT_HIDEEMPTY":{"message":"Hide empty columns","description":"label for hide empty columns button on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWEMPTY":{"message":"Show empty columns","description":"label for show empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_HIDEEMPTY":{"message":"Show table without empty columns","description":"tooltip for hide empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWEMPTY":{"message":"Show table with empty columns","description":"tooltip for show empty columns button on inflections panel","component":"Panel"},"INFLECT_MSG_TABLE_NOT_IMPLEMENTED":{"message":"This table has not been implemented yet","description":"tooltip to show instead of inflection table if the latter is not implemented","component":"Panel"},"TEXT_INFO_GETTINGSTARTED":{"message":"Getting Started","description":"info text","component":"Panel"},"TEXT_INFO_ACTIVATE":{"message":"Activate on a page with Latin, Ancient Greek, Arabic or Persian text.","description":"info text","component":"Panel"},"TEXT_INFO_CLICK":{"message":"Double-click on a word to retrieve morphology and short definitions.","description":"info text","component":"Panel"},"TEXT_INFO_LANGDETECT":{"message":"Alpheios will try to detect the language of the word from the page markup. If it cannot it will use the default language.","description":"info text","component":"Panel"},"LABEL_INFO_CURRENTLANGUAGE":{"message":"Current language:","description":"label for current language in info text","component":"Panel"},"TEXT_INFO_SETTINGS":{"message":"Click the Options wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').","description":"info text","component":"Panel"},"TEXT_INFO_ARROW":{"message":"Use the arrow at the top of this panel to move it from the right to left of your browser window.","description":"info text","component":"Panel"},"TEXT_INFO_REOPEN":{"message":"You can reopen this panel at any time by selecting 'Info' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TEXT_INFO_DEACTIVATE":{"message":"Deactivate Alpheios by clicking the toolbar icon or choosing 'Deactivate' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TOOLTIP_POPUP_CLOSE":{"message":"Close Popup","description":"tooltip for closing the popup","component":"Popup"},"LABEL_POPUP_TREEBANK":{"message":"Diagram","description":"label for treebank button on popup","component":"Popup"},"LABEL_POPUP_INFLECT":{"message":"Inflect","description":"label for inflect button on popup","component":"Popup"},"LABEL_POPUP_OPTIONS":{"message":"Options","description":"label for options button on popup","component":"Popup"},"LABEL_POPUP_DEFINE":{"message":"Define","description":"label for define button on popup","component":"Popup"},"LABEL_POPUP_USAGEEXAMPLES":{"message":"Examples","description":"label for usage examples button on popup","component":"Popup"},"PLACEHOLDER_POPUP_DATA":{"message":"Lexical data is loading","description":"placeholder text for popup data","component":"Popup"},"PLACEHOLDER_NO_LANGUAGE_POPUP_DATA":{"message":"Lexical data couldn't be populated because page language is not defined","description":"placeholder text for popup data when language is not defined","component":"Popup"},"PLACEHOLDER_NO_DATA_POPUP_DATA":{"message":"Lexical query produced no results","description":"placeholder text for popup data","component":"Popup"},"LABEL_POPUP_CREDITS":{"message":"Credits:","description":"label for credits on popup","component":"Popup"},"LABEL_POPUP_SHOWCREDITS":{"message":"Credits","description":"label for show credits link on popup","component":"Popup"},"LABEL_POPUP_HIDECREDITS":{"message":"Hide Credits","description":"label for hide credits link on popup","component":"Popup"},"TEXT_NOTICE_SUGGEST_LOGIN":{"message":"Login to save your words to your wordlist.","description":"login notification","component":"UI"},"TEXT_NOTICE_CHANGE_LANGUAGE":{"message":"Language: {languageName}<br>Wrong? Change to:","description":"language notification","component":"UI","params":["languageName"]},"TEXT_NOTICE_LANGUAGE_UNKNOWN":{"message":"unknown","description":"unknown language notification","component":"UI"},"TEXT_NOTICE_GRAMMAR_NOTFOUND":{"message":"The requested grammar resource is not currently available","description":"grammar not found notification","component":"UI"},"TEXT_NOTICE_MORPHDATA_READY":{"message":"Morphological analyzer data is ready","description":"morph data ready notice","component":"UI"},"TEXT_NOTICE_MORPHDATA_NOTFOUND":{"message":"Morphological data not found. Definition queries pending.","description":"morph data not found notice","component":"UI"},"TEXT_NOTICE_INFLDATA_READY":{"message":"Inflection data is ready","description":"inflection data ready notice","component":"UI"},"TEXT_NOTICE_DEFSDATA_READY":{"message":"{requestType} request is completed successfully. Lemma: \"{lemma}\"","description":"definition request success notice","component":"UI","params":["requestType","lemma"]},"TEXT_NOTICE_DEFSDATA_NOTFOUND":{"message":"{requestType} request failed. Lemma not found for: \"{word}\"","description":"definition request success notice","component":"UI","params":["requestType","word"]},"TEXT_NOTICE_NO_DEFS_FOUND":{"message":"No definitions found","description":"displayed by the morph compoennt when there are no definition data exist","component":"UI"},"TEXT_NOTICE_LEXQUERY_COMPLETE":{"message":"All lexical queries complete.","description":"lexical queries complete notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_READY":{"message":"Grammar resource retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_COMPLETE":{"message":"All grammar resource data retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_RESQUERY_COMPLETE":{"message":"All resource data retrieved","description":"resource query complete notice","component":"UI"},"TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Data retrieval is in progress","component":"UI"},"TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Resource retrieval is in progress","component":"UI"},"LABEL_BROWSERACTION_DEACTIVATE":{"message":"Deactivate Alpheios","description":"Deactivate browser action title","component":"UI"},"LABEL_BROWSERACTION_ACTIVATE":{"message":"Activate Alpheios","description":"Activate browser action title","component":"UI"},"LABEL_BROWSERACTION_DISABLED":{"message":"(Alpheios Extension Disabled For Page)","description":"Disabled browser action title","component":"UI"},"LABEL_CTXTMENU_DEACTIVATE":{"message":"Deactivate","description":"Deactivate context menu label","component":"UI"},"LABEL_CTXTMENU_ACTIVATE":{"message":"Activate","description":"Activate context menu label","component":"UI"},"LABEL_CTXTMENU_DISABLED":{"message":"(Disabled)","description":"Disabled context menu label","component":"UI"},"LABEL_CTXTMENU_OPENPANEL":{"message":"Open Panel","description":"Open Panel context menu label","component":"UI"},"LABEL_CTXTMENU_INFO":{"message":"Info","description":"Info context menu label","component":"UI"},"LABEL_CTXTMENU_SENDEXP":{"message":"Send Experiences to remote server","description":"send exp data context menu label","component":"UI"},"LABEL_LOOKUP_CONTROL":{"message":"Show/Hide lookup","description":"A tooltip for the button that turns the lookup panel on and off","component":"Toolbar"},"LABEL_LOOKUP_BUTTON":{"message":"Lookup","description":"lookup button in lookup.vue","component":"Popup"},"TOOLTIP_LOOKUP_BUTTON":{"message":"Lookup word","description":"Tooltip for the lookup button in lookup.vue","component":"Lookup"},"LABEL_LOOKUP_SETTINGS":{"message":"Using Language...","description":"Settings link-label in the lookup block in lookup.vue","component":"Lookup"},"LABEL_RESKIN_SETTINGS":{"message":"Reskin options","description":"Label for Reskin component","component":"ReskinFontColor"},"TOOLTIP_RESKIN_SMALLFONT":{"message":"Small font","description":"Tooltip for small font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_MEDIUMFONT":{"message":"Medium font","description":"Tooltip for medium font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LARGEFONT":{"message":"Large font","description":"Tooltip for large font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LIGHTBG":{"message":"Light background","description":"Tooltip for light colors schema icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_DARKBG":{"message":"Dark background","description":"Tooltip for dark colors schema icon","component":"ReskinFontColor"},"INFLECTIONS_CREDITS_TITLE":{"message":"Credits","description":"Title of credits section on inflection tables panel","component":"InflectionTables"},"INFLECTIONS_PARADIGMS_EXPLANATORY_HINT":{"message":"The following table(s) show conjugation patterns for verbs which are similar to those of <span>{word}</span>","description":"A hint that indicates that the current table is representative pattern for verbs similar to the one chosen","component":"InflectionTables","params":["word"]},"INFLECTIONS_MAIN_TABLE_LINK_TEXT":{"message":"Back to main","description":"A link pointing to a main inflection table","component":"InflectionTables"},"INFL_ATTRIBUTE_LINK_TEXT_SOURCE":{"message":"Source","description":"A link pointing to the source of a lemma or inflection","component":"InflAttribute"},"EMBED_LIB_WARNING_TEXT":{"message":"This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.","description":"A message that is shown when an Alpheios extension is disabled due to embedded library presence","component":"EmbedLibWarning"},"AUTH_LOGIN_BTN_LABEL":{"message":"Log In","description":"A message shown on a log in button","component":"UserAuth Vue Component"},"AUTH_LOGOUT_BTN_LABEL":{"message":"Log Out","description":"A message shown on a log out button","component":"UserAuth Vue Component"},"AUTH_LOGIN_PROGRESS_MSG":{"message":"Please be patient while we are logging you in ...","description":"A message shown to the user while he or she is waiting for an authentication to complete","component":"UserAuth Vue Component"},"AUTH_LOGIN_SUCCESS_MSG":{"message":"Congratulations! You are logged in successfully.","description":"A message shown to the user if he or she logged in successfully","component":"UserAuth Vue Component"},"AUTH_LOGIN_AUTH_FAILURE_MSG":{"message":"Authentication failed","description":"A message shown to the user if his or her authentication failed","component":"UserAuth Vue Component"},"AUTH_PROFILE_NICKNAME_LABEL":{"message":"Nickname","description":"A user's profile nickname filed label","component":"UserAuth Vue Component"},"AUTH_PROFILE_NAME_LABEL":{"message":"Name","description":"A user's profile name filed label","component":"UserAuth Vue Component"},"AUTH_LOGOUT_SUCCESS_MSG":{"message":"You have been logged out.","description":"A message shown to the user if he or she logged out successfully","component":"UserAuth Vue Component"},"TEXT_NOTICE_WORDUSAGE_READY":{"message":"Word Usage Examples are recieved","description":"Word Usage Examples recieved flag","component":"UIController onWordUsageExamplesReady"},"TOOLTIP_WORD_USAGE":{"message":"Word Usage Examples","description":"Word Usage Examples tooltip","component":"Panel"}};
+module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about a cookie.","description":"A test message that is shown in a panel","component":"Panel"},"NUM_LINES_TEST_MESSAGE":{"message":"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.","description":"A test message that is shown in a panel","component":"Panel","params":["numLines"]},"TOOLTIP_MOVE_PANEL_LEFT":{"message":"Move Panel to Left","description":"tooltip for moving the panel to the left","component":"Panel"},"TOOLTIP_MOVE_PANEL_RIGHT":{"message":"Move Panel to Right","description":"tooltip for moving the panel to the right","component":"Panel"},"TOOLTIP_CLOSE_PANEL":{"message":"Close Panel","description":"tooltip for closing the panel","component":"Panel"},"TOOLTIP_HELP":{"message":"Help","description":"tooltip for help tab","component":"Panel"},"TOOLTIP_INFLECT":{"message":"Inflections","description":"tooltip for inflections tab","component":"Panel"},"TOOLTIP_INFLECT_BROWSER":{"message":"Browse Inflection Tables","description":"tooltip for inflections browser tab","component":"Panel"},"TOOLTIP_DEFINITIONS":{"message":"Definitions","description":"tooltip for definitions tab","component":"Panel"},"TOOLTIP_GRAMMAR":{"message":"Grammar","description":"tooltip for grammar tab","component":"Panel"},"TOOLTIP_TREEBANK":{"message":"Diagram","description":"tooltip for treebank tab","component":"Panel"},"TOOLTIP_OPTIONS":{"message":"Options","description":"tooltip for options tab","component":"Panel"},"TOOLTIP_STATUS":{"message":"Status Messages","description":"tooltip for status tab","component":"Panel"},"TOOLTIP_WORDLIST":{"message":"User word list","description":"tooltip for user word list tab","component":"Panel"},"TOOLTIP_USER":{"message":"User info","description":"tooltip for a user info tab","component":"Panel"},"TOOLTIP_SHOW_INFLECTIONS":{"message":"Show inflections","description":"tooltip for button inflections","component":"Popup"},"TOOLTIP_SHOW_DEFINITIONS":{"message":"Show definitions","description":"tooltip for button definitions","component":"Popup"},"TOOLTIP_SHOW_OPTIONS":{"message":"Show options","description":"tooltip for button options","component":"Popup"},"TOOLTIP_SHOW_USAGEEXAMPLES":{"message":"Show example usages of this word","description":"tooltop for word usage examples button","component":"Popup"},"TOOLTIP_MORPHOLOGY":{"message":"Show morphology","description":"tooltop for a morphology button","component":"Panel"},"PLACEHOLDER_DEFINITIONS":{"message":"Lookup a word to show definitions...","description":"placeholder for definitions panel","component":"Panel"},"PLACEHOLDER_INFLECT_IN_PROGRESS":{"message":"Lookup a word to show inflections...","description":"placeholder for inflections panel","component":"Panel"},"PLACEHOLDER_INFLECT_UNAVAILABLE":{"message":"Inflection data is unavailable","description":"placeholder for inflections panel if unavailable","component":"Panel"},"LABEL_INFLECT_SELECT_POFS":{"message":"Part of speech:","description":"label for part of speech selector on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWFULL":{"message":"Expand","description":"label for expand button on inflections panel","component":"Panel"},"LABEL_INFLECT_COLLAPSE":{"message":"Collapse","description":"label for collapse table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWFULL":{"message":"This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table","description":"tooltip for show full table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_COLLAPSE":{"message":"This table shows all its columns. Click 'Collapse' to show the ones with matching endings only","description":"tooltip for collapse table button on inflections panel","component":"Panel"},"LABEL_INFLECT_HIDEEMPTY":{"message":"Hide empty columns","description":"label for hide empty columns button on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWEMPTY":{"message":"Show empty columns","description":"label for show empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_HIDEEMPTY":{"message":"Show table without empty columns","description":"tooltip for hide empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWEMPTY":{"message":"Show table with empty columns","description":"tooltip for show empty columns button on inflections panel","component":"Panel"},"INFLECT_MSG_TABLE_NOT_IMPLEMENTED":{"message":"This table has not been implemented yet","description":"tooltip to show instead of inflection table if the latter is not implemented","component":"Panel"},"TEXT_INFO_GETTINGSTARTED":{"message":"Getting Started","description":"info text","component":"Panel"},"TEXT_INFO_ACTIVATE":{"message":"Activate on a page with Latin, Ancient Greek, Arabic or Persian text.","description":"info text","component":"Panel"},"TEXT_INFO_CLICK":{"message":"Double-click on a word to retrieve morphology and short definitions.","description":"info text","component":"Panel"},"TEXT_INFO_LANGDETECT":{"message":"Alpheios will try to detect the language of the word from the page markup. If it cannot it will use the default language.","description":"info text","component":"Panel"},"LABEL_INFO_CURRENTLANGUAGE":{"message":"Current language:","description":"label for current language in info text","component":"Panel"},"TEXT_INFO_SETTINGS":{"message":"Click the Options wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').","description":"info text","component":"Panel"},"TEXT_INFO_ARROW":{"message":"Use the arrow at the top of this panel to move it from the right to left of your browser window.","description":"info text","component":"Panel"},"TEXT_INFO_REOPEN":{"message":"You can reopen this panel at any time by selecting 'Info' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TEXT_INFO_DEACTIVATE":{"message":"Deactivate Alpheios by clicking the toolbar icon or choosing 'Deactivate' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TOOLTIP_POPUP_CLOSE":{"message":"Close Popup","description":"tooltip for closing the popup","component":"Popup"},"LABEL_POPUP_TREEBANK":{"message":"Diagram","description":"label for treebank button on popup","component":"Popup"},"LABEL_POPUP_INFLECT":{"message":"Inflect","description":"label for inflect button on popup","component":"Popup"},"LABEL_POPUP_OPTIONS":{"message":"Options","description":"label for options button on popup","component":"Popup"},"LABEL_POPUP_DEFINE":{"message":"Define","description":"label for define button on popup","component":"Popup"},"LABEL_POPUP_USAGEEXAMPLES":{"message":"Examples","description":"label for usage examples button on popup","component":"Popup"},"PLACEHOLDER_POPUP_DATA":{"message":"Lexical data is loading","description":"placeholder text for popup data","component":"Popup"},"PLACEHOLDER_NO_LANGUAGE_POPUP_DATA":{"message":"Lexical data couldn't be populated because page language is not defined","description":"placeholder text for popup data when language is not defined","component":"Popup"},"PLACEHOLDER_NO_DATA_POPUP_DATA":{"message":"Lexical query produced no results","description":"placeholder text for popup data","component":"Popup"},"LABEL_POPUP_CREDITS":{"message":"Credits:","description":"label for credits on popup","component":"Popup"},"LABEL_POPUP_SHOWCREDITS":{"message":"Show","description":"label for show credits link on popup","component":"Popup"},"LABEL_POPUP_HIDECREDITS":{"message":"Hide","description":"label for hide credits link on popup","component":"Popup"},"TEXT_NOTICE_SUGGEST_LOGIN":{"message":"Login to save your words to your wordlist.","description":"login notification","component":"UI"},"TEXT_NOTICE_CHANGE_LANGUAGE":{"message":"Language: {languageName}<br>Wrong? Change to:","description":"language notification","component":"UI","params":["languageName"]},"TEXT_NOTICE_LANGUAGE_UNKNOWN":{"message":"unknown","description":"unknown language notification","component":"UI"},"TEXT_NOTICE_GRAMMAR_NOTFOUND":{"message":"The requested grammar resource is not currently available","description":"grammar not found notification","component":"UI"},"TEXT_NOTICE_MORPHDATA_READY":{"message":"Morphological analyzer data is ready","description":"morph data ready notice","component":"UI"},"TEXT_NOTICE_MORPHDATA_NOTFOUND":{"message":"Morphological data not found. Definition queries pending.","description":"morph data not found notice","component":"UI"},"TEXT_NOTICE_INFLDATA_READY":{"message":"Inflection data is ready","description":"inflection data ready notice","component":"UI"},"TEXT_NOTICE_DEFSDATA_READY":{"message":"{requestType} request is completed successfully. Lemma: \"{lemma}\"","description":"definition request success notice","component":"UI","params":["requestType","lemma"]},"TEXT_NOTICE_DEFSDATA_NOTFOUND":{"message":"{requestType} request failed. Lemma not found for: \"{word}\"","description":"definition request success notice","component":"UI","params":["requestType","word"]},"TEXT_NOTICE_NO_DEFS_FOUND":{"message":"No definitions found","description":"displayed by the morph compoennt when there are no definition data exist","component":"UI"},"TEXT_NOTICE_LEXQUERY_COMPLETE":{"message":"All lexical queries complete.","description":"lexical queries complete notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_READY":{"message":"Grammar resource retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_COMPLETE":{"message":"All grammar resource data retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_RESQUERY_COMPLETE":{"message":"All resource data retrieved","description":"resource query complete notice","component":"UI"},"TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Data retrieval is in progress","component":"UI"},"TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Resource retrieval is in progress","component":"UI"},"LABEL_BROWSERACTION_DEACTIVATE":{"message":"Deactivate Alpheios","description":"Deactivate browser action title","component":"UI"},"LABEL_BROWSERACTION_ACTIVATE":{"message":"Activate Alpheios","description":"Activate browser action title","component":"UI"},"LABEL_BROWSERACTION_DISABLED":{"message":"(Alpheios Extension Disabled For Page)","description":"Disabled browser action title","component":"UI"},"LABEL_CTXTMENU_DEACTIVATE":{"message":"Deactivate","description":"Deactivate context menu label","component":"UI"},"LABEL_CTXTMENU_ACTIVATE":{"message":"Activate","description":"Activate context menu label","component":"UI"},"LABEL_CTXTMENU_DISABLED":{"message":"(Disabled)","description":"Disabled context menu label","component":"UI"},"LABEL_CTXTMENU_OPENPANEL":{"message":"Open Panel","description":"Open Panel context menu label","component":"UI"},"LABEL_CTXTMENU_INFO":{"message":"Info","description":"Info context menu label","component":"UI"},"LABEL_CTXTMENU_SENDEXP":{"message":"Send Experiences to remote server","description":"send exp data context menu label","component":"UI"},"LABEL_LOOKUP_CONTROL":{"message":"Show/Hide lookup","description":"A tooltip for the button that turns the lookup panel on and off","component":"Toolbar"},"LABEL_LOOKUP_BUTTON":{"message":"Lookup","description":"lookup button in lookup.vue","component":"Popup"},"TOOLTIP_LOOKUP_BUTTON":{"message":"Lookup word","description":"Tooltip for the lookup button in lookup.vue","component":"Lookup"},"LABEL_LOOKUP_SETTINGS":{"message":"Using Language...","description":"Settings link-label in the lookup block in lookup.vue","component":"Lookup"},"LABEL_RESKIN_SETTINGS":{"message":"Reskin options","description":"Label for Reskin component","component":"ReskinFontColor"},"TOOLTIP_RESKIN_SMALLFONT":{"message":"Small font","description":"Tooltip for small font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_MEDIUMFONT":{"message":"Medium font","description":"Tooltip for medium font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LARGEFONT":{"message":"Large font","description":"Tooltip for large font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LIGHTBG":{"message":"Light background","description":"Tooltip for light colors schema icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_DARKBG":{"message":"Dark background","description":"Tooltip for dark colors schema icon","component":"ReskinFontColor"},"INFLECTIONS_CREDITS_TITLE":{"message":"Credits","description":"Title of credits section on inflection tables panel","component":"InflectionTables"},"INFLECTIONS_PARADIGMS_EXPLANATORY_HINT":{"message":"The following table(s) show conjugation patterns for verbs which are similar to those of <span>{word}</span>","description":"A hint that indicates that the current table is representative pattern for verbs similar to the one chosen","component":"InflectionTables","params":["word"]},"INFLECTIONS_MAIN_TABLE_LINK_TEXT":{"message":"Back to main","description":"A link pointing to a main inflection table","component":"InflectionTables"},"INFL_ATTRIBUTE_LINK_TEXT_SOURCE":{"message":"Source","description":"A link pointing to the source of a lemma or inflection","component":"InflAttribute"},"EMBED_LIB_WARNING_TEXT":{"message":"This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.","description":"A message that is shown when an Alpheios extension is disabled due to embedded library presence","component":"EmbedLibWarning"},"AUTH_LOGIN_BTN_LABEL":{"message":"Log In","description":"A message shown on a log in button","component":"UserAuth Vue Component"},"AUTH_LOGOUT_BTN_LABEL":{"message":"Log Out","description":"A message shown on a log out button","component":"UserAuth Vue Component"},"AUTH_LOGIN_PROGRESS_MSG":{"message":"Please be patient while we are logging you in ...","description":"A message shown to the user while he or she is waiting for an authentication to complete","component":"UserAuth Vue Component"},"AUTH_LOGIN_SUCCESS_MSG":{"message":"Congratulations! You are logged in successfully.","description":"A message shown to the user if he or she logged in successfully","component":"UserAuth Vue Component"},"AUTH_LOGIN_AUTH_FAILURE_MSG":{"message":"Authentication failed","description":"A message shown to the user if his or her authentication failed","component":"UserAuth Vue Component"},"AUTH_PROFILE_NICKNAME_LABEL":{"message":"Nickname","description":"A user's profile nickname filed label","component":"UserAuth Vue Component"},"AUTH_PROFILE_NAME_LABEL":{"message":"Name","description":"A user's profile name filed label","component":"UserAuth Vue Component"},"AUTH_LOGOUT_SUCCESS_MSG":{"message":"You have been logged out.","description":"A message shown to the user if he or she logged out successfully","component":"UserAuth Vue Component"},"TEXT_NOTICE_WORDUSAGE_READY":{"message":"Word Usage Examples are recieved","description":"Word Usage Examples recieved flag","component":"UIController onWordUsageExamplesReady"},"TOOLTIP_WORD_USAGE":{"message":"Word Usage Examples","description":"Word Usage Examples tooltip","component":"Panel"}};
 
 /***/ }),
 
@@ -41371,7 +41063,7 @@ const availableMessages = {
 /*!*******************!*\
   !*** ./plugin.js ***!
   \*******************/
-/*! exports provided: Popup, PopupMobile, Panel, L10n, Locales, enUS, enGB, UIController, UIEventController, Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery, LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults, DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector, HTMLPage, Tab, TabScript, L10nModule, AuthModule, PanelModule, PopupModule, NavModule */
+/*! exports provided: Popup, Panel, L10n, Locales, enUS, enGB, UIController, UIEventController, Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery, LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults, DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector, HTMLPage, Tab, TabScript, L10nModule, AuthModule, PanelModule, PopupModule, NavModule */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -41382,117 +41074,113 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vue/components/popup.vue */ "./vue/components/popup.vue");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Popup", function() { return _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _vue_components_popup_mobile_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./vue/components/popup-mobile.vue */ "./vue/components/popup-mobile.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PopupMobile", function() { return _vue_components_popup_mobile_vue__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+/* harmony import */ var _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./vue/components/panel.vue */ "./vue/components/panel.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Panel", function() { return _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
-/* harmony import */ var _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./vue/components/panel.vue */ "./vue/components/panel.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Panel", function() { return _vue_components_panel_vue__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+/* harmony import */ var _lib_l10n_l10n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lib/l10n/l10n */ "./lib/l10n/l10n.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "L10n", function() { return _lib_l10n_l10n__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
-/* harmony import */ var _lib_l10n_l10n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./lib/l10n/l10n */ "./lib/l10n/l10n.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "L10n", function() { return _lib_l10n_l10n__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+/* harmony import */ var _locales_locales__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./locales/locales */ "./locales/locales.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Locales", function() { return _locales_locales__WEBPACK_IMPORTED_MODULE_4__["default"]; });
 
-/* harmony import */ var _locales_locales__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./locales/locales */ "./locales/locales.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Locales", function() { return _locales_locales__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+/* harmony import */ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./locales/en-us/messages.json */ "./locales/en-us/messages.json");
+var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
+/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "enUS", function() { return _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_5__; });
+/* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "enGB", function() { return _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6__; });
+/* harmony import */ var _lib_controllers_ui_controller_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./lib/controllers/ui-controller.js */ "./lib/controllers/ui-controller.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UIController", function() { return _lib_controllers_ui_controller_js__WEBPACK_IMPORTED_MODULE_7__["default"]; });
 
-/* harmony import */ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./locales/en-us/messages.json */ "./locales/en-us/messages.json");
-var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_6___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
-/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "enUS", function() { return _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_6__; });
-/* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
-var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
-/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "enGB", function() { return _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_7__; });
-/* harmony import */ var _lib_controllers_ui_controller_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./lib/controllers/ui-controller.js */ "./lib/controllers/ui-controller.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UIController", function() { return _lib_controllers_ui_controller_js__WEBPACK_IMPORTED_MODULE_8__["default"]; });
+/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UIEventController", function() { return _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_8__["default"]; });
 
-/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UIEventController", function() { return _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_9__["default"]; });
+/* harmony import */ var _lib_state_ui_state_api_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/lib/state/ui-state-api.js */ "./lib/state/ui-state-api.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UIStateAPI", function() { return _lib_state_ui_state_api_js__WEBPACK_IMPORTED_MODULE_9__["default"]; });
 
-/* harmony import */ var _lib_state_ui_state_api_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/lib/state/ui-state-api.js */ "./lib/state/ui-state-api.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UIStateAPI", function() { return _lib_state_ui_state_api_js__WEBPACK_IMPORTED_MODULE_10__["default"]; });
+/* harmony import */ var _lib_controllers_language_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./lib/controllers/language.js */ "./lib/controllers/language.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Language", function() { return _lib_controllers_language_js__WEBPACK_IMPORTED_MODULE_10__["default"]; });
 
-/* harmony import */ var _lib_controllers_language_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./lib/controllers/language.js */ "./lib/controllers/language.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Language", function() { return _lib_controllers_language_js__WEBPACK_IMPORTED_MODULE_11__["default"]; });
+/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTMLSelector", function() { return _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_11__["default"]; });
 
-/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTMLSelector", function() { return _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_12__["default"]; });
+/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AnnotationQuery", function() { return _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_12__["default"]; });
 
-/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AnnotationQuery", function() { return _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_13__["default"]; });
+/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LexicalQuery", function() { return _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_13__["default"]; });
 
-/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LexicalQuery", function() { return _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_14__["default"]; });
+/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ResourceQuery", function() { return _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_14__["default"]; });
 
-/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ResourceQuery", function() { return _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_15__["default"]; });
+/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LocalStorageArea", function() { return _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_15__["default"]; });
 
-/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LocalStorageArea", function() { return _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
+/* harmony import */ var _lib_options_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./lib/options/extension-sync-storage.js */ "./lib/options/extension-sync-storage.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ExtensionSyncStorage", function() { return _lib_options_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
 
-/* harmony import */ var _lib_options_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./lib/options/extension-sync-storage.js */ "./lib/options/extension-sync-storage.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ExtensionSyncStorage", function() { return _lib_options_extension_sync_storage_js__WEBPACK_IMPORTED_MODULE_17__["default"]; });
+/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./settings/content-options-defaults.json */ "./settings/content-options-defaults.json");
+var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_17___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./settings/content-options-defaults.json */ "./settings/content-options-defaults.json", 1);
+/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "ContentOptionDefaults", function() { return _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__; });
+/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
+var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
+/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "LanguageOptionDefaults", function() { return _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__; });
+/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
+var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
+/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "UIOptionDefaults", function() { return _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__; });
+/* harmony import */ var _lib_options_defaults_loader_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./lib/options/defaults-loader.js */ "./lib/options/defaults-loader.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DefaultsLoader", function() { return _lib_options_defaults_loader_js__WEBPACK_IMPORTED_MODULE_20__["default"]; });
 
-/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./settings/content-options-defaults.json */ "./settings/content-options-defaults.json");
-var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_18___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./settings/content-options-defaults.json */ "./settings/content-options-defaults.json", 1);
-/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "ContentOptionDefaults", function() { return _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__; });
-/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
-var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
-/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "LanguageOptionDefaults", function() { return _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__; });
-/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
-var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_20___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
-/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "UIOptionDefaults", function() { return _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_20__; });
-/* harmony import */ var _lib_options_defaults_loader_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./lib/options/defaults-loader.js */ "./lib/options/defaults-loader.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DefaultsLoader", function() { return _lib_options_defaults_loader_js__WEBPACK_IMPORTED_MODULE_21__["default"]; });
+/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./lib/options/options.js */ "./lib/options/options.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Options", function() { return _lib_options_options_js__WEBPACK_IMPORTED_MODULE_21__["default"]; });
 
-/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./lib/options/options.js */ "./lib/options/options.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Options", function() { return _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"]; });
+/* harmony import */ var _lib_log_logger_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./lib/log/logger.js */ "./lib/log/logger.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return _lib_log_logger_js__WEBPACK_IMPORTED_MODULE_22__["default"]; });
 
-/* harmony import */ var _lib_log_logger_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./lib/log/logger.js */ "./lib/log/logger.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return _lib_log_logger_js__WEBPACK_IMPORTED_MODULE_23__["default"]; });
+/* harmony import */ var _lib_log_html_console_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./lib/log/html-console.js */ "./lib/log/html-console.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTMLConsole", function() { return _lib_log_html_console_js__WEBPACK_IMPORTED_MODULE_23__["default"]; });
 
-/* harmony import */ var _lib_log_html_console_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./lib/log/html-console.js */ "./lib/log/html-console.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTMLConsole", function() { return _lib_log_html_console_js__WEBPACK_IMPORTED_MODULE_24__["default"]; });
+/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MouseDblClick", function() { return _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_24__["default"]; });
 
-/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MouseDblClick", function() { return _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_25__["default"]; });
+/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GenericEvt", function() { return _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__["default"]; });
 
-/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GenericEvt", function() { return _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_26__["default"]; });
+/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LongTap", function() { return _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_26__["default"]; });
 
-/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LongTap", function() { return _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_27__["default"]; });
+/* harmony import */ var _lib_custom_pointer_events_swipe_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./lib/custom-pointer-events/swipe.js */ "./lib/custom-pointer-events/swipe.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Swipe", function() { return _lib_custom_pointer_events_swipe_js__WEBPACK_IMPORTED_MODULE_27__["default"]; });
 
-/* harmony import */ var _lib_custom_pointer_events_swipe_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./lib/custom-pointer-events/swipe.js */ "./lib/custom-pointer-events/swipe.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Swipe", function() { return _lib_custom_pointer_events_swipe_js__WEBPACK_IMPORTED_MODULE_28__["default"]; });
+/* harmony import */ var _lib_selection_alignment_alignment_selector_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./lib/selection/alignment/alignment-selector.js */ "./lib/selection/alignment/alignment-selector.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AlignmentSelector", function() { return _lib_selection_alignment_alignment_selector_js__WEBPACK_IMPORTED_MODULE_28__["default"]; });
 
-/* harmony import */ var _lib_selection_alignment_alignment_selector_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./lib/selection/alignment/alignment-selector.js */ "./lib/selection/alignment/alignment-selector.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AlignmentSelector", function() { return _lib_selection_alignment_alignment_selector_js__WEBPACK_IMPORTED_MODULE_29__["default"]; });
+/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./lib/utility/html-page.js */ "./lib/utility/html-page.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTMLPage", function() { return _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_29__["default"]; });
 
-/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./lib/utility/html-page.js */ "./lib/utility/html-page.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTMLPage", function() { return _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_30__["default"]; });
+/* harmony import */ var _lib_state_tab_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @/lib/state/tab.js */ "./lib/state/tab.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Tab", function() { return _lib_state_tab_js__WEBPACK_IMPORTED_MODULE_30__["default"]; });
 
-/* harmony import */ var _lib_state_tab_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @/lib/state/tab.js */ "./lib/state/tab.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Tab", function() { return _lib_state_tab_js__WEBPACK_IMPORTED_MODULE_31__["default"]; });
+/* harmony import */ var _lib_state_tab_script_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @/lib/state/tab-script.js */ "./lib/state/tab-script.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TabScript", function() { return _lib_state_tab_script_js__WEBPACK_IMPORTED_MODULE_31__["default"]; });
 
-/* harmony import */ var _lib_state_tab_script_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! @/lib/state/tab-script.js */ "./lib/state/tab-script.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TabScript", function() { return _lib_state_tab_script_js__WEBPACK_IMPORTED_MODULE_32__["default"]; });
+/* harmony import */ var _vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! @/vue/vuex-modules/data/l10n-module.js */ "./vue/vuex-modules/data/l10n-module.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "L10nModule", function() { return _vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_32__["default"]; });
 
-/* harmony import */ var _vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! @/vue/vuex-modules/data/l10n-module.js */ "./vue/vuex-modules/data/l10n-module.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "L10nModule", function() { return _vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_33__["default"]; });
+/* harmony import */ var _vue_vuex_modules_data_auth_module_js__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! @/vue/vuex-modules/data/auth-module.js */ "./vue/vuex-modules/data/auth-module.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AuthModule", function() { return _vue_vuex_modules_data_auth_module_js__WEBPACK_IMPORTED_MODULE_33__["default"]; });
 
-/* harmony import */ var _vue_vuex_modules_data_auth_module_js__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! @/vue/vuex-modules/data/auth-module.js */ "./vue/vuex-modules/data/auth-module.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AuthModule", function() { return _vue_vuex_modules_data_auth_module_js__WEBPACK_IMPORTED_MODULE_34__["default"]; });
+/* harmony import */ var _vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! @/vue/vuex-modules/ui/panel-module.js */ "./vue/vuex-modules/ui/panel-module.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PanelModule", function() { return _vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_34__["default"]; });
 
-/* harmony import */ var _vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! @/vue/vuex-modules/ui/panel-module.js */ "./vue/vuex-modules/ui/panel-module.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PanelModule", function() { return _vue_vuex_modules_ui_panel_module_js__WEBPACK_IMPORTED_MODULE_35__["default"]; });
+/* harmony import */ var _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! @/vue/vuex-modules/ui/popup-module.js */ "./vue/vuex-modules/ui/popup-module.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PopupModule", function() { return _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_35__["default"]; });
 
-/* harmony import */ var _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! @/vue/vuex-modules/ui/popup-module.js */ "./vue/vuex-modules/ui/popup-module.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PopupModule", function() { return _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_36__["default"]; });
-
-/* harmony import */ var _vue_vuex_modules_ui_nav_module_js__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! @/vue/vuex-modules/ui/nav-module.js */ "./vue/vuex-modules/ui/nav-module.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NavModule", function() { return _vue_vuex_modules_ui_nav_module_js__WEBPACK_IMPORTED_MODULE_37__["default"]; });
+/* harmony import */ var _vue_vuex_modules_ui_nav_module_js__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! @/vue/vuex-modules/ui/nav-module.js */ "./vue/vuex-modules/ui/nav-module.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NavModule", function() { return _vue_vuex_modules_ui_nav_module_js__WEBPACK_IMPORTED_MODULE_36__["default"]; });
 
 // The following import will not probably used by any client directly,
 // but is required to include Scss file specified in there to a MiniCssExtractPlugin bundle
-
 
 
 
@@ -41599,7 +41287,7 @@ module.exports = {"domain":"alpheios-ui-options","items":{"skin":{"defaultValue"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\n    <component v-bind:is=\"componentName\" :data=\"moduleData\"></component>\n</div>\n<div id=\"alpheios-panel\">\n    <component v-bind:is=\"$store.state.panel.layout\"></component>\n</div>\n<div id=\"alpheios-overlay-nav\">\n    <component v-bind:is=\"componentName\"></component>\n</div>\n";
+module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"componentName\" :data=\"moduleData\"></component>\r\n</div>\r\n<div id=\"alpheios-panel\">\r\n    <component v-bind:is=\"$store.state.panel.layout\"></component>\r\n</div>\r\n<div id=\"alpheios-overlay-nav\">\r\n    <component v-bind:is=\"componentName\"></component>\r\n</div>\r\n";
 
 /***/ }),
 
@@ -43057,9 +42745,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _navbuttons_large_vue_vue_type_template_id_767c43ca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./navbuttons-large.vue?vue&type=template&id=767c43ca& */ "./vue/components/nav/navbuttons-large.vue?vue&type=template&id=767c43ca&");
 /* harmony import */ var _navbuttons_large_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./navbuttons-large.vue?vue&type=script&lang=js& */ "./vue/components/nav/navbuttons-large.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _navbuttons_large_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./navbuttons-large.vue?vue&type=style&index=0&lang=scss& */ "./vue/components/nav/navbuttons-large.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -43067,7 +42753,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _navbuttons_large_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _navbuttons_large_vue_vue_type_template_id_767c43ca___WEBPACK_IMPORTED_MODULE_0__["render"],
   _navbuttons_large_vue_vue_type_template_id_767c43ca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -43099,22 +42785,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./vue/components/nav/navbuttons-large.vue?vue&type=style&index=0&lang=scss&":
-/*!***********************************************************************************!*\
-  !*** ./vue/components/nav/navbuttons-large.vue?vue&type=style&index=0&lang=scss& ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_large_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/lib!../../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../../node_modules/vue-loader/lib??vue-loader-options!./navbuttons-large.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/navbuttons-large.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_large_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_large_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_large_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_large_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_navbuttons_large_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
 /***/ "./vue/components/nav/navbuttons-large.vue?vue&type=template&id=767c43ca&":
 /*!********************************************************************************!*\
   !*** ./vue/components/nav/navbuttons-large.vue?vue&type=template&id=767c43ca& ***!
@@ -43133,18 +42803,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./vue/components/nav/overlay-nav.vue":
-/*!********************************************!*\
-  !*** ./vue/components/nav/overlay-nav.vue ***!
-  \********************************************/
+/***/ "./vue/components/nav/toolbar.vue":
+/*!****************************************!*\
+  !*** ./vue/components/nav/toolbar.vue ***!
+  \****************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _overlay_nav_vue_vue_type_template_id_17617878___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./overlay-nav.vue?vue&type=template&id=17617878& */ "./vue/components/nav/overlay-nav.vue?vue&type=template&id=17617878&");
-/* harmony import */ var _overlay_nav_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./overlay-nav.vue?vue&type=script&lang=js& */ "./vue/components/nav/overlay-nav.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _overlay_nav_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./overlay-nav.vue?vue&type=style&index=0&lang=scss& */ "./vue/components/nav/overlay-nav.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _toolbar_vue_vue_type_template_id_f659f766___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./toolbar.vue?vue&type=template&id=f659f766& */ "./vue/components/nav/toolbar.vue?vue&type=template&id=f659f766&");
+/* harmony import */ var _toolbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./toolbar.vue?vue&type=script&lang=js& */ "./vue/components/nav/toolbar.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _toolbar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./toolbar.vue?vue&type=style&index=0&lang=scss& */ "./vue/components/nav/toolbar.vue?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -43155,9 +42825,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _overlay_nav_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _overlay_nav_vue_vue_type_template_id_17617878___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _overlay_nav_vue_vue_type_template_id_17617878___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _toolbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _toolbar_vue_vue_type_template_id_f659f766___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _toolbar_vue_vue_type_template_id_f659f766___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -43167,54 +42837,54 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "vue/components/nav/overlay-nav.vue"
+component.options.__file = "vue/components/nav/toolbar.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./vue/components/nav/overlay-nav.vue?vue&type=script&lang=js&":
-/*!*********************************************************************!*\
-  !*** ./vue/components/nav/overlay-nav.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************/
+/***/ "./vue/components/nav/toolbar.vue?vue&type=script&lang=js&":
+/*!*****************************************************************!*\
+  !*** ./vue/components/nav/toolbar.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_overlay_nav_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib??vue-loader-options!../../../../node_modules/source-map-loader!./overlay-nav.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/nav/overlay-nav.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_overlay_nav_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_toolbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib??vue-loader-options!../../../../node_modules/source-map-loader!./toolbar.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/nav/toolbar.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_toolbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./vue/components/nav/overlay-nav.vue?vue&type=style&index=0&lang=scss&":
-/*!******************************************************************************!*\
-  !*** ./vue/components/nav/overlay-nav.vue?vue&type=style&index=0&lang=scss& ***!
-  \******************************************************************************/
+/***/ "./vue/components/nav/toolbar.vue?vue&type=style&index=0&lang=scss&":
+/*!**************************************************************************!*\
+  !*** ./vue/components/nav/toolbar.vue?vue&type=style&index=0&lang=scss& ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_overlay_nav_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/lib!../../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../../node_modules/vue-loader/lib??vue-loader-options!./overlay-nav.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/overlay-nav.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_overlay_nav_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_overlay_nav_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_overlay_nav_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_overlay_nav_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_overlay_nav_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_toolbar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/lib!../../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../../node_modules/vue-loader/lib??vue-loader-options!./toolbar.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/toolbar.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_toolbar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_toolbar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_toolbar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_toolbar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_toolbar_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ "./vue/components/nav/overlay-nav.vue?vue&type=template&id=17617878&":
-/*!***************************************************************************!*\
-  !*** ./vue/components/nav/overlay-nav.vue?vue&type=template&id=17617878& ***!
-  \***************************************************************************/
+/***/ "./vue/components/nav/toolbar.vue?vue&type=template&id=f659f766&":
+/*!***********************************************************************!*\
+  !*** ./vue/components/nav/toolbar.vue?vue&type=template&id=f659f766& ***!
+  \***********************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_overlay_nav_vue_vue_type_template_id_17617878___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./overlay-nav.vue?vue&type=template&id=17617878& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/overlay-nav.vue?vue&type=template&id=17617878&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_overlay_nav_vue_vue_type_template_id_17617878___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_toolbar_vue_vue_type_template_id_f659f766___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./toolbar.vue?vue&type=template&id=f659f766& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/toolbar.vue?vue&type=template&id=f659f766&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_toolbar_vue_vue_type_template_id_f659f766___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_overlay_nav_vue_vue_type_template_id_17617878___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_toolbar_vue_vue_type_template_id_f659f766___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -43389,93 +43059,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_panel_vue_vue_type_template_id_02c7bc7c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_panel_vue_vue_type_template_id_02c7bc7c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./vue/components/popup-mobile.vue":
-/*!*****************************************!*\
-  !*** ./vue/components/popup-mobile.vue ***!
-  \*****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _popup_mobile_vue_vue_type_template_id_bcaa07d6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./popup-mobile.vue?vue&type=template&id=bcaa07d6& */ "./vue/components/popup-mobile.vue?vue&type=template&id=bcaa07d6&");
-/* harmony import */ var _popup_mobile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./popup-mobile.vue?vue&type=script&lang=js& */ "./vue/components/popup-mobile.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./popup-mobile.vue?vue&type=style&index=0&lang=scss& */ "./vue/components/popup-mobile.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _popup_mobile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _popup_mobile_vue_vue_type_template_id_bcaa07d6___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _popup_mobile_vue_vue_type_template_id_bcaa07d6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "vue/components/popup-mobile.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./vue/components/popup-mobile.vue?vue&type=script&lang=js&":
-/*!******************************************************************!*\
-  !*** ./vue/components/popup-mobile.vue?vue&type=script&lang=js& ***!
-  \******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_popup_mobile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib??vue-loader-options!../../../node_modules/source-map-loader!./popup-mobile.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/popup-mobile.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_popup_mobile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./vue/components/popup-mobile.vue?vue&type=style&index=0&lang=scss&":
-/*!***************************************************************************!*\
-  !*** ./vue/components/popup-mobile.vue?vue&type=style&index=0&lang=scss& ***!
-  \***************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./popup-mobile.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/popup-mobile.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
-/***/ "./vue/components/popup-mobile.vue?vue&type=template&id=bcaa07d6&":
-/*!************************************************************************!*\
-  !*** ./vue/components/popup-mobile.vue?vue&type=template&id=bcaa07d6& ***!
-  \************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_template_id_bcaa07d6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./popup-mobile.vue?vue&type=template&id=bcaa07d6& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/popup-mobile.vue?vue&type=template&id=bcaa07d6&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_template_id_bcaa07d6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_popup_mobile_vue_vue_type_template_id_bcaa07d6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -43929,9 +43512,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tooltip_vue_vue_type_template_id_22ecc27e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tooltip.vue?vue&type=template&id=22ecc27e& */ "./vue/components/tooltip.vue?vue&type=template&id=22ecc27e&");
 /* harmony import */ var _tooltip_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tooltip.vue?vue&type=script&lang=js& */ "./vue/components/tooltip.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tooltip.vue?vue&type=style&index=0&lang=scss& */ "./vue/components/tooltip.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -43939,7 +43520,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _tooltip_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _tooltip_vue_vue_type_template_id_22ecc27e___WEBPACK_IMPORTED_MODULE_0__["render"],
   _tooltip_vue_vue_type_template_id_22ecc27e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -43968,22 +43549,6 @@ component.options.__file = "vue/components/tooltip.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_tooltip_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib??vue-loader-options!../../../node_modules/source-map-loader!./tooltip.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/tooltip.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_tooltip_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./vue/components/tooltip.vue?vue&type=style&index=0&lang=scss&":
-/*!**********************************************************************!*\
-  !*** ./vue/components/tooltip.vue?vue&type=style&index=0&lang=scss& ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/lib!../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../node_modules/vue-loader/lib??vue-loader-options!./tooltip.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/lib/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/tooltip.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_lib_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_tooltip_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -44964,7 +44529,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/vuex-modules/module.js */ "./vue/vuex-modules/module.js");
-/* harmony import */ var _vue_components_nav_overlay_nav_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/components/nav/overlay-nav.vue */ "./vue/components/nav/overlay-nav.vue");
+/* harmony import */ var _vue_components_nav_toolbar_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/components/nav/toolbar.vue */ "./vue/components/nav/toolbar.vue");
 /* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
  // Vue in a runtime + compiler configuration
 
@@ -44988,7 +44553,7 @@ class NavModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1__
        */
       api: api,
       components: {
-        overlayNav: _vue_components_nav_overlay_nav_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+        overlayNav: _vue_components_nav_toolbar_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
       },
       data: {
         componentName: 'overlayNav'
