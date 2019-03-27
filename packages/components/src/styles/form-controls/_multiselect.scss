@@ -1,6 +1,6 @@
   @mixin multiselect-class() {
     .multiselect {
-      max-width: 235px;
+      max-width: uisize(235px);
       display: inline-block;
       vertical-align: middle;
     }
@@ -15,12 +15,12 @@
     }
 
     .multiselect__tags {
-      border-radius: 2px;
-      border: 1px solid $alpheios-multiselect-border;
+      border-radius: uisize(10px);
+      border: 1px solid var(--alpheios-border-color);
     }
 
     .multiselect__tag {
-      background-color: $alpheios-toolbar-color;
+      background-color: var(--alpheios-btn-primary-bg-color);
       
       display: inline-block;
       border-radius: 5px;
@@ -31,7 +31,7 @@
       white-space: nowrap;
 
       span {
-        color: $alpheios-toolbar-text-color;
+        color: var(--alpheios-btn-primary-font-color);
       }
     }
     .multiselect__select {
@@ -67,17 +67,17 @@
     .multiselect__tag,
     .multiselect__tag-icon:focus, 
     .multiselect__tag-icon:hover {
-      background: $alpheios-multiselect-background;
+      background: var(--alpheios-btn-primary-bg-color);
     }
 
     .multiselect__option.multiselect__option--highlight {
-      background-color: $alpheios-toolbar-color;
+      background-color: var(--alpheios-btn-primary-bg-color);
 
       &:after {
         display: none;
       }
       span {
-        color: $alpheios-toolbar-text-color;
+        color: var(--alpheios-btn-primary-font-color);
       }
     }
 
@@ -85,12 +85,12 @@
     .multiselect__tag span,
     .multiselect__tag-icon:focus span, 
     .multiselect__tag-icon:hover span {
-      color: $alpheios-multiselect-color;
+      color: var(--alpheios-btn-primary-font-color);
     }
     
     .multiselect__tag-icon:after {
       content: "\D7";
-      color: $alpheios-multiselect-color;
+      color: var(--alpheios-btn-primary-font-color);
       font-size: 13.4px;
     }
 
@@ -100,17 +100,17 @@
     cursor: pointer;
     font-style: normal;
     font-weight: bold;
-    line-height: $alpheios-base-font-size * 1.4;
+    line-height: calc(var(--alpheios-base-font-size) * 1.4);
     margin-left: 7px;
     position: absolute;
     right: 0;
     text-align: center;
     top: 0;
     transition: all .2s ease;
-    width: $alpheios-base-font-size * 1.4;
-    color: $alpheios-toolbar-text-color;
+    width: calc(var(--alpheios-base-font-size) * 1.4);
+    color: var(--alpheios-btn-primary-font-color);
     &:hover {
-      background-color: $alpheios-toolbar-color;
+      background-color: var(--alpheios-btn-primary-bg-color);
     }
   }
 }

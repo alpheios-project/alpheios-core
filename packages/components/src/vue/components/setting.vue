@@ -7,7 +7,7 @@
                  v-model="selected">
     </multiselect>
 
-    <input type="number" v-if="dataModel.number" v-model="selected" min="0">
+    <input class="alpheios-input" type="number" v-if="dataModel.number" v-model="selected" min="0">
 
     <div class="alpheios-checkbox-block" v-if="dataModel.boolean">
       <input id="alpheios-checkbox-input" type="checkbox" v-model="selected">

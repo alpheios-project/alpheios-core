@@ -493,7 +493,8 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   color: var(--alpheios-text-color);
   vertical-align: middle;
   display: inline-block;
-  -webkit-appearance: none; }
+  -webkit-appearance: none;
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625); }
   .alpheios-input[type="search"]::-webkit-search-cancel-button, .alpheios-input[type="search"]::-webkit-search-decoration {
     -webkit-appearance: none; }
   .alpheios-input[type="number"]::-webkit-inner-spin-button, .alpheios-input[type="number"]::-webkit-outer-spin-button {
@@ -515,15 +516,15 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .alpheios-select {
   box-sizing: border-box;
   margin: 0;
-  border-radius: 0;
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
   font: inherit;
   text-transform: none;
   max-width: 100%;
   width: 100%;
-  border: 1px solid #666;
+  border: 1px solid var(--alpheios-border-color);
   padding: 0 10px;
-  background: #FFF;
-  color: #666;
+  background: var(--alpheios-text-bg-color);
+  color: var(--alpheios-text-color);
   -webkit-appearance: none; }
   .alpheios-select:not([multiple]):not([size]) {
     height: 40px;
@@ -560,7 +561,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .auk.alpheios-color_schema_light_class .multiselect,
 .auk.alpheios-color_schema_dark_class .multiselect,
 .auk.alpheios-panel .multiselect {
-  max-width: 235px;
+  max-width: calc(var(--alpheios-base-ui-size) * 14.6875);
   display: inline-block;
   vertical-align: middle; }
 
@@ -588,8 +589,8 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .auk.alpheios-color_schema_light_class .multiselect__tags,
 .auk.alpheios-color_schema_dark_class .multiselect__tags,
 .auk.alpheios-panel .multiselect__tags {
-  border-radius: 2px;
-  border: 1px solid #666666; }
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
+  border: 1px solid var(--alpheios-border-color); }
 
 .auk.alpheios-font_large_class .multiselect__tag,
 .auk.alpheios-font_medium_class .multiselect__tag,
@@ -597,7 +598,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .auk.alpheios-color_schema_light_class .multiselect__tag,
 .auk.alpheios-color_schema_dark_class .multiselect__tag,
 .auk.alpheios-panel .multiselect__tag {
-  background-color: #4E6476;
+  background-color: var(--alpheios-btn-primary-bg-color);
   display: inline-block;
   border-radius: 5px;
   padding: 4px 26px 4px 10px;
@@ -610,7 +611,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   .auk.alpheios-color_schema_light_class .multiselect__tag span,
   .auk.alpheios-color_schema_dark_class .multiselect__tag span,
   .auk.alpheios-panel .multiselect__tag span {
-    color: #ffffff; }
+    color: var(--alpheios-btn-primary-font-color); }
 
 .auk.alpheios-font_large_class .multiselect__select,
 .auk.alpheios-font_medium_class .multiselect__select,
@@ -689,7 +690,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .auk.alpheios-panel .multiselect__tag,
 .auk.alpheios-panel .multiselect__tag-icon:focus,
 .auk.alpheios-panel .multiselect__tag-icon:hover {
-  background: #4E6476; }
+  background: var(--alpheios-btn-primary-bg-color); }
 
 .auk.alpheios-font_large_class .multiselect__option.multiselect__option--highlight,
 .auk.alpheios-font_medium_class .multiselect__option.multiselect__option--highlight,
@@ -697,7 +698,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .auk.alpheios-color_schema_light_class .multiselect__option.multiselect__option--highlight,
 .auk.alpheios-color_schema_dark_class .multiselect__option.multiselect__option--highlight,
 .auk.alpheios-panel .multiselect__option.multiselect__option--highlight {
-  background-color: #4E6476; }
+  background-color: var(--alpheios-btn-primary-bg-color); }
   .auk.alpheios-font_large_class .multiselect__option.multiselect__option--highlight:after,
   .auk.alpheios-font_medium_class .multiselect__option.multiselect__option--highlight:after,
   .auk.alpheios-font_small_class .multiselect__option.multiselect__option--highlight:after,
@@ -711,7 +712,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   .auk.alpheios-color_schema_light_class .multiselect__option.multiselect__option--highlight span,
   .auk.alpheios-color_schema_dark_class .multiselect__option.multiselect__option--highlight span,
   .auk.alpheios-panel .multiselect__option.multiselect__option--highlight span {
-    color: #ffffff; }
+    color: var(--alpheios-btn-primary-font-color); }
 
 .auk.alpheios-font_large_class .multiselect__option--highlight span,
 .auk.alpheios-font_large_class .multiselect__tag span,
@@ -737,7 +738,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .auk.alpheios-panel .multiselect__tag span,
 .auk.alpheios-panel .multiselect__tag-icon:focus span,
 .auk.alpheios-panel .multiselect__tag-icon:hover span {
-  color: #ffffff; }
+  color: var(--alpheios-btn-primary-font-color); }
 
 .auk.alpheios-font_large_class .multiselect__tag-icon:after,
 .auk.alpheios-font_medium_class .multiselect__tag-icon:after,
@@ -746,7 +747,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .auk.alpheios-color_schema_dark_class .multiselect__tag-icon:after,
 .auk.alpheios-panel .multiselect__tag-icon:after {
   content: "\D7";
-  color: #ffffff;
+  color: var(--alpheios-btn-primary-font-color);
   font-size: 13.4px; }
 
 .auk.alpheios-font_large_class .multiselect__tag-icon,
@@ -760,83 +761,73 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   cursor: pointer;
   font-style: normal;
   font-weight: bold;
-  line-height: 22.4px;
+  line-height: calc(var(--alpheios-base-font-size) * 1.4);
   margin-left: 7px;
   position: absolute;
   right: 0;
   text-align: center;
   top: 0;
   transition: all .2s ease;
-  width: 22.4px;
-  color: #ffffff; }
+  width: calc(var(--alpheios-base-font-size) * 1.4);
+  color: var(--alpheios-btn-primary-font-color); }
   .auk.alpheios-font_large_class .multiselect__tag-icon:hover,
   .auk.alpheios-font_medium_class .multiselect__tag-icon:hover,
   .auk.alpheios-font_small_class .multiselect__tag-icon:hover,
   .auk.alpheios-color_schema_light_class .multiselect__tag-icon:hover,
   .auk.alpheios-color_schema_dark_class .multiselect__tag-icon:hover,
   .auk.alpheios-panel .multiselect__tag-icon:hover {
-    background-color: #4E6476; }
+    background-color: var(--alpheios-btn-primary-bg-color); }
 
 div.alpheios-checkbox-block {
   display: inline-block;
   position: relative;
   overflow: hidden;
-  line-height: 22px;
-  max-width: 235px;
+  line-height: calc(var(--alpheios-base-ui-size) * 1.375);
+  max-width: calc(var(--alpheios-base-ui-size) * 14.6875);
   vertical-align: top; }
 
-.alpheios-checkbox-block {
-  /*Unhide on the checked state*/
-  /*Adding focus styles on the outer-box of the fake checkbox*/ }
-  .alpheios-checkbox-block input[type="checkbox"] {
-    opacity: 0;
+.alpheios-checkbox-block input[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+  left: -999px; }
+
+.alpheios-checkbox-block label {
+  position: relative;
+  display: inline-block;
+  user-select: none;
+  vertical-align: top;
+  /*16px width of fake checkbox + 6px distance between fake checkbox and text*/
+  padding-left: calc(var(--alpheios-base-ui-size) * 1.375);
+  padding-top: calc(var(--alpheios-base-ui-size) * 0.125); }
+  .alpheios-checkbox-block label::before, .alpheios-checkbox-block label::after {
     position: absolute;
-    left: -999px; }
-  .alpheios-checkbox-block label {
-    position: relative;
-    display: inline-block;
-    user-select: none;
-    vertical-align: top;
-    /*16px width of fake checkbox + 6px distance between fake checkbox and text*/
-    padding-left: 22px;
-    padding-top: 2px; }
-    .alpheios-checkbox-block label::before, .alpheios-checkbox-block label::after {
-      position: absolute;
-      content: "";
-      /*Needed for the line-height to take effect*/
-      display: inline-block; }
-    .alpheios-checkbox-block label::before {
-      height: 16px;
-      width: 16px;
-      border: 1px solid;
-      left: 0px;
-      /*(24px line-height - 16px height of fake checkbox) / 2 - 1px for the border
-           *to vertically center it.
-           */
-      top: 3px; }
-    .alpheios-checkbox-block label::after {
-      height: 5px;
-      width: 9px;
-      border-left: 2px solid;
-      border-bottom: 2px solid;
-      transform: rotate(-45deg);
-      left: 4px;
-      top: 7px; }
-  .alpheios-checkbox-block input[type="checkbox"] + label::after {
-    content: none; }
-  .alpheios-checkbox-block input[type="checkbox"]:checked + label::after {
-    content: ""; }
-  .alpheios-checkbox-block input[type="checkbox"]:focus + label::before {
-    outline: #3b99fc auto 5px; }
+    content: "";
+    /*Needed for the line-height to take effect*/
+    display: inline-block; }
+  .alpheios-checkbox-block label::before {
+    height: calc(var(--alpheios-base-ui-size) * 1);
+    width: calc(var(--alpheios-base-ui-size) * 1);
+    border: calc(var(--alpheios-base-ui-size) * 0.0625) solid;
+    border-radius: calc(var(--alpheios-base-ui-size) * 0.25);
+    left: 0;
+    /*(24px line-height - 16px height of fake checkbox) / 2 - 1px for the border
+       *to vertically center it.
+       */
+    top: calc(var(--alpheios-base-ui-size) * 0.1875); }
+  .alpheios-checkbox-block label::after {
+    height: calc(var(--alpheios-base-ui-size) * 0.3125);
+    width: calc(var(--alpheios-base-ui-size) * 0.5625);
+    border-left: calc(var(--alpheios-base-ui-size) * 0.125) solid;
+    border-bottom: calc(var(--alpheios-base-ui-size) * 0.125) solid;
+    transform: rotate(-45deg);
+    left: calc(var(--alpheios-base-ui-size) * 0.1875);
+    top: calc(var(--alpheios-base-ui-size) * 0.375); }
 
-.alpheios-checkbox-small label {
-  font-size: 90%;
-  padding-left: 18px;
-  line-height: 100%; }
+.alpheios-checkbox-block input[type="checkbox"] + label::after {
+  content: none; }
 
-.alpheios-checkbox-small label::before {
-  height: 12px;
-  width: 12px; }
+.alpheios-checkbox-block input[type="checkbox"]:checked + label::after {
+  content: ""; }
 
 .alpheios-button--primary, .alpheios-button--secondary, .alpheios-button--tertiary {
   font-family: var(--alpheios-sans-font-face);
@@ -2801,30 +2792,22 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
 .alpheios-lookup__form {
-  margin: 30px 5px 5px;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
-.alpheios-input.alpheios-lookup__input {
-  width: 70%;
-  margin-bottom: 10px;
-  vertical-align: top;
+.alpheios-lookup__form .alpheios-lookup__form-element {
+    margin-bottom: calc(var(--alpheios-base-ui-size) * 0.625);
 }
-.alpheios-input.alpheios-lookup__input:focus {
-    border-color: #5BC8DC;
+.alpheios-lookup__form .alpheios-lookup__form-element:not(:last-child) {
+    margin-right: calc(var(--alpheios-base-ui-size) * 0.625);
+}
+.alpheios-lookup__form-row {
+  display: flex;
 }
 .alpheios-lookup__settings {
   text-align: left;
-}
-a.alpheios-lookup__settings-link {
-  display: block;
-  padding-top: 5px;
-}
-.alpheios-lookup__button_with_link {
-  width: 29%;
-}
-.alpheios-panel .alpheios-lookup__form {
-  width: 100%;
-  margin: 5px 0;
 }
 .alpheios-panel__options-item {
   max-width: none;
@@ -2833,12 +2816,6 @@ a.alpheios-lookup__settings-link {
 .alpheios-panel__options-item .alpheios-select[multiple],
 .alpheios-panel__options-item .alpheios-select[size] {
   max-width: 250px;
-}
-.alpheios-override-lang {
-  margin-bottom: 10px;
-}
-.alpheios-override-lang__label {
-  padding-bottom: 10px;
 }
 
 /************ UIKit vars ************************/

@@ -1,90 +1,73 @@
 
-  div.alpheios-checkbox-block {
-    display: inline-block;
+div.alpheios-checkbox-block {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  line-height: uisize(22px);
+
+  max-width: uisize(235px);
+  vertical-align: top;
+}
+
+.alpheios-checkbox-block {
+  input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+    left: -999px;
+  }
+
+  label {
     position: relative;
-    overflow: hidden;
-    line-height: 22px;
-
-    max-width: 235px;
+    display: inline-block;
+    user-select: none;
     vertical-align: top;
-  }
 
-  .alpheios-checkbox-block {
-    input[type="checkbox"] {
-      opacity: 0;
+    /*16px width of fake checkbox + 6px distance between fake checkbox and text*/
+    padding-left: uisize(22px);
+    padding-top: uisize(2px);
+
+    &::before,
+    &::after {
       position: absolute;
-      left: -999px;
-    }
+      content: "";
 
-    label {
-      position: relative;
+      /*Needed for the line-height to take effect*/
       display: inline-block;
-      user-select: none;
-      vertical-align: top;
-
-      /*16px width of fake checkbox + 6px distance between fake checkbox and text*/
-      padding-left: 22px;
-      padding-top: 2px;
-
-      &::before,
-      &::after {
-          position: absolute;
-          content: "";
-          
-          /*Needed for the line-height to take effect*/
-          display: inline-block;
-      }
-
-      &::before{
-          height: 16px;
-          width: 16px;
-          
-          border: 1px solid;
-          left: 0px;
-          
-          /*(24px line-height - 16px height of fake checkbox) / 2 - 1px for the border
-           *to vertically center it.
-           */
-          top: 3px;
-      }
-
-      &::after {
-          height: 5px;
-          width: 9px;
-          border-left: 2px solid;
-          border-bottom: 2px solid;
-          
-          transform: rotate(-45deg);
-          
-          left: 4px;
-          top: 7px;
-      }
     }
 
-    input[type="checkbox"] + label::after {
-        content: none;
+    &::before {
+      height: uisize(16px);
+      width: uisize(16px);
+
+      border: uisize(1px) solid;
+      border-radius: uisize(4px);
+      left: 0;
+
+      /*(24px line-height - 16px height of fake checkbox) / 2 - 1px for the border
+       *to vertically center it.
+       */
+      top: uisize(3px);
     }
 
-    /*Unhide on the checked state*/
-    input[type="checkbox"]:checked + label::after {
-        content: "";
-    }
+    &::after {
+      height: uisize(5px);
+      width: uisize(9px);
+      border-left: uisize(2px) solid;
+      border-bottom: uisize(2px) solid;
 
-    /*Adding focus styles on the outer-box of the fake checkbox*/
-    input[type="checkbox"]:focus + label::before {
-        outline: rgb(59, 153, 252) auto 5px;
+      transform: rotate(-45deg);
+
+      left: uisize(3px);
+      top: uisize(6px);
     }
   }
 
-  .alpheios-checkbox-small {
-    label {
-      font-size: 90%;
-      padding-left: 18px;
-      line-height: 100%;
-    }
-
-    label::before{
-          height: 12px;
-          width: 12px;
-    }
+  input[type="checkbox"] + label::after {
+    content: none;
   }
+
+  // Unhide on the checked state
+  input[type="checkbox"]:checked + label::after {
+    content: "";
+  }
+}

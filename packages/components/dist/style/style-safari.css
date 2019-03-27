@@ -493,7 +493,8 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   color: var(--alpheios-text-color) !important;
   vertical-align: middle !important;
   display: inline-block;
-  -webkit-appearance: none !important; }
+  -webkit-appearance: none !important;
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important; }
   .alpheios-input[type="search"]::-webkit-search-cancel-button, .alpheios-input[type="search"]::-webkit-search-decoration {
     -webkit-appearance: none !important; }
   .alpheios-input[type="number"]::-webkit-inner-spin-button, .alpheios-input[type="number"]::-webkit-outer-spin-button {
@@ -515,15 +516,15 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .alpheios-select {
   box-sizing: border-box !important;
   margin: 0 !important;
-  border-radius: 0 !important;
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
   font: inherit !important;
   text-transform: none !important;
   max-width: 100% !important;
   width: 100% !important;
-  border: 1px solid #666 !important;
+  border: 1px solid var(--alpheios-border-color) !important;
   padding: 0 10px !important;
-  background: #FFF !important;
-  color: #666 !important;
+  background: var(--alpheios-text-bg-color) !important;
+  color: var(--alpheios-text-color) !important;
   -webkit-appearance: none !important; }
   .alpheios-select:not([multiple]):not([size]) {
     height: 40px !important;
@@ -560,7 +561,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .auk.alpheios-color_schema_light_class .multiselect,
 .auk.alpheios-color_schema_dark_class .multiselect,
 .auk.alpheios-panel .multiselect {
-  max-width: 235px !important;
+  max-width: calc(var(--alpheios-base-ui-size) * 14.6875) !important;
   display: inline-block;
   vertical-align: middle !important; }
 
@@ -588,8 +589,8 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .auk.alpheios-color_schema_light_class .multiselect__tags,
 .auk.alpheios-color_schema_dark_class .multiselect__tags,
 .auk.alpheios-panel .multiselect__tags {
-  border-radius: 2px !important;
-  border: 1px solid #666666 !important; }
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
+  border: 1px solid var(--alpheios-border-color) !important; }
 
 .auk.alpheios-font_large_class .multiselect__tag,
 .auk.alpheios-font_medium_class .multiselect__tag,
@@ -597,7 +598,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .auk.alpheios-color_schema_light_class .multiselect__tag,
 .auk.alpheios-color_schema_dark_class .multiselect__tag,
 .auk.alpheios-panel .multiselect__tag {
-  background-color: #4E6476 !important;
+  background-color: var(--alpheios-btn-primary-bg-color) !important;
   display: inline-block;
   border-radius: 5px !important;
   padding: 4px 26px 4px 10px !important;
@@ -610,7 +611,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   .auk.alpheios-color_schema_light_class .multiselect__tag span,
   .auk.alpheios-color_schema_dark_class .multiselect__tag span,
   .auk.alpheios-panel .multiselect__tag span {
-    color: #ffffff !important; }
+    color: var(--alpheios-btn-primary-font-color) !important; }
 
 .auk.alpheios-font_large_class .multiselect__select,
 .auk.alpheios-font_medium_class .multiselect__select,
@@ -689,7 +690,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .auk.alpheios-panel .multiselect__tag,
 .auk.alpheios-panel .multiselect__tag-icon:focus,
 .auk.alpheios-panel .multiselect__tag-icon:hover {
-  background: #4E6476 !important; }
+  background: var(--alpheios-btn-primary-bg-color) !important; }
 
 .auk.alpheios-font_large_class .multiselect__option.multiselect__option--highlight,
 .auk.alpheios-font_medium_class .multiselect__option.multiselect__option--highlight,
@@ -697,7 +698,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .auk.alpheios-color_schema_light_class .multiselect__option.multiselect__option--highlight,
 .auk.alpheios-color_schema_dark_class .multiselect__option.multiselect__option--highlight,
 .auk.alpheios-panel .multiselect__option.multiselect__option--highlight {
-  background-color: #4E6476 !important; }
+  background-color: var(--alpheios-btn-primary-bg-color) !important; }
   .auk.alpheios-font_large_class .multiselect__option.multiselect__option--highlight:after,
   .auk.alpheios-font_medium_class .multiselect__option.multiselect__option--highlight:after,
   .auk.alpheios-font_small_class .multiselect__option.multiselect__option--highlight:after,
@@ -711,7 +712,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   .auk.alpheios-color_schema_light_class .multiselect__option.multiselect__option--highlight span,
   .auk.alpheios-color_schema_dark_class .multiselect__option.multiselect__option--highlight span,
   .auk.alpheios-panel .multiselect__option.multiselect__option--highlight span {
-    color: #ffffff !important; }
+    color: var(--alpheios-btn-primary-font-color) !important; }
 
 .auk.alpheios-font_large_class .multiselect__option--highlight span,
 .auk.alpheios-font_large_class .multiselect__tag span,
@@ -737,7 +738,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .auk.alpheios-panel .multiselect__tag span,
 .auk.alpheios-panel .multiselect__tag-icon:focus span,
 .auk.alpheios-panel .multiselect__tag-icon:hover span {
-  color: #ffffff !important; }
+  color: var(--alpheios-btn-primary-font-color) !important; }
 
 .auk.alpheios-font_large_class .multiselect__tag-icon:after,
 .auk.alpheios-font_medium_class .multiselect__tag-icon:after,
@@ -746,7 +747,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .auk.alpheios-color_schema_dark_class .multiselect__tag-icon:after,
 .auk.alpheios-panel .multiselect__tag-icon:after {
   content: "\D7" !important;
-  color: #ffffff !important;
+  color: var(--alpheios-btn-primary-font-color) !important;
   font-size: 13.4px !important; }
 
 .auk.alpheios-font_large_class .multiselect__tag-icon,
@@ -760,83 +761,73 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   cursor: pointer !important;
   font-style: normal !important;
   font-weight: bold !important;
-  line-height: 22.4px !important;
+  line-height: calc(var(--alpheios-base-font-size) * 1.4) !important;
   margin-left: 7px !important;
   position: absolute !important;
   right: 0 !important;
   text-align: center !important;
   top: 0 !important;
   transition: all .2s ease !important;
-  width: 22.4px !important;
-  color: #ffffff !important; }
+  width: calc(var(--alpheios-base-font-size) * 1.4) !important;
+  color: var(--alpheios-btn-primary-font-color) !important; }
   .auk.alpheios-font_large_class .multiselect__tag-icon:hover,
   .auk.alpheios-font_medium_class .multiselect__tag-icon:hover,
   .auk.alpheios-font_small_class .multiselect__tag-icon:hover,
   .auk.alpheios-color_schema_light_class .multiselect__tag-icon:hover,
   .auk.alpheios-color_schema_dark_class .multiselect__tag-icon:hover,
   .auk.alpheios-panel .multiselect__tag-icon:hover {
-    background-color: #4E6476 !important; }
+    background-color: var(--alpheios-btn-primary-bg-color) !important; }
 
 div.alpheios-checkbox-block {
   display: inline-block;
   position: relative !important;
   overflow: hidden !important;
-  line-height: 22px !important;
-  max-width: 235px !important;
+  line-height: calc(var(--alpheios-base-ui-size) * 1.375) !important;
+  max-width: calc(var(--alpheios-base-ui-size) * 14.6875) !important;
   vertical-align: top !important; }
 
-.alpheios-checkbox-block {
-  /*Unhide on the checked state*/
-  /*Adding focus styles on the outer-box of the fake checkbox*/ }
-  .alpheios-checkbox-block input[type="checkbox"] {
-    opacity: 0 !important;
+.alpheios-checkbox-block input[type="checkbox"] {
+  opacity: 0 !important;
+  position: absolute !important;
+  left: -999px !important; }
+
+.alpheios-checkbox-block label {
+  position: relative !important;
+  display: inline-block;
+  user-select: none !important;
+  vertical-align: top !important;
+  /*16px width of fake checkbox + 6px distance between fake checkbox and text*/
+  padding-left: calc(var(--alpheios-base-ui-size) * 1.375) !important;
+  padding-top: calc(var(--alpheios-base-ui-size) * 0.125) !important; }
+  .alpheios-checkbox-block label::before, .alpheios-checkbox-block label::after {
     position: absolute !important;
-    left: -999px !important; }
-  .alpheios-checkbox-block label {
-    position: relative !important;
-    display: inline-block;
-    user-select: none !important;
-    vertical-align: top !important;
-    /*16px width of fake checkbox + 6px distance between fake checkbox and text*/
-    padding-left: 22px !important;
-    padding-top: 2px !important; }
-    .alpheios-checkbox-block label::before, .alpheios-checkbox-block label::after {
-      position: absolute !important;
-      content: "" !important;
-      /*Needed for the line-height to take effect*/
-      display: inline-block; }
-    .alpheios-checkbox-block label::before {
-      height: 16px !important;
-      width: 16px !important;
-      border: 1px solid !important;
-      left: 0px !important;
-      /*(24px line-height - 16px height of fake checkbox) / 2 - 1px for the border
-           *to vertically center it.
-           */
-      top: 3px !important; }
-    .alpheios-checkbox-block label::after {
-      height: 5px !important;
-      width: 9px !important;
-      border-left: 2px solid !important;
-      border-bottom: 2px solid !important;
-      transform: rotate(-45deg) !important;
-      left: 4px !important;
-      top: 7px !important; }
-  .alpheios-checkbox-block input[type="checkbox"] + label::after {
-    content: none !important; }
-  .alpheios-checkbox-block input[type="checkbox"]:checked + label::after {
-    content: "" !important; }
-  .alpheios-checkbox-block input[type="checkbox"]:focus + label::before {
-    outline: #3b99fc auto 5px !important; }
+    content: "" !important;
+    /*Needed for the line-height to take effect*/
+    display: inline-block; }
+  .alpheios-checkbox-block label::before {
+    height: calc(var(--alpheios-base-ui-size) * 1) !important;
+    width: calc(var(--alpheios-base-ui-size) * 1) !important;
+    border: calc(var(--alpheios-base-ui-size) * 0.0625) solid !important;
+    border-radius: calc(var(--alpheios-base-ui-size) * 0.25) !important;
+    left: 0 !important;
+    /*(24px line-height - 16px height of fake checkbox) / 2 - 1px for the border
+       *to vertically center it.
+       */
+    top: calc(var(--alpheios-base-ui-size) * 0.1875) !important; }
+  .alpheios-checkbox-block label::after {
+    height: calc(var(--alpheios-base-ui-size) * 0.3125) !important;
+    width: calc(var(--alpheios-base-ui-size) * 0.5625) !important;
+    border-left: calc(var(--alpheios-base-ui-size) * 0.125) solid !important;
+    border-bottom: calc(var(--alpheios-base-ui-size) * 0.125) solid !important;
+    transform: rotate(-45deg) !important;
+    left: calc(var(--alpheios-base-ui-size) * 0.1875) !important;
+    top: calc(var(--alpheios-base-ui-size) * 0.375) !important; }
 
-.alpheios-checkbox-small label {
-  font-size: 90% !important;
-  padding-left: 18px !important;
-  line-height: 100% !important; }
+.alpheios-checkbox-block input[type="checkbox"] + label::after {
+  content: none !important; }
 
-.alpheios-checkbox-small label::before {
-  height: 12px !important;
-  width: 12px !important; }
+.alpheios-checkbox-block input[type="checkbox"]:checked + label::after {
+  content: "" !important; }
 
 .alpheios-button--primary, .alpheios-button--secondary, .alpheios-button--tertiary {
   font-family: var(--alpheios-sans-font-face) !important;
@@ -2801,30 +2792,22 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
 .alpheios-lookup__form {
-  margin: 30px 5px 5px !important;
   text-align: left !important;
+  display: flex;
+  flex-direction: column !important;
+  width: 100% !important;
 }
-.alpheios-input.alpheios-lookup__input {
-  width: 70% !important;
-  margin-bottom: 10px !important;
-  vertical-align: top !important;
+.alpheios-lookup__form .alpheios-lookup__form-element {
+    margin-bottom: calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
-.alpheios-input.alpheios-lookup__input:focus {
-    border-color: #5BC8DC !important;
+.alpheios-lookup__form .alpheios-lookup__form-element:not(:last-child) {
+    margin-right: calc(var(--alpheios-base-ui-size) * 0.625) !important;
+}
+.alpheios-lookup__form-row {
+  display: flex;
 }
 .alpheios-lookup__settings {
   text-align: left !important;
-}
-a.alpheios-lookup__settings-link {
-  display: block;
-  padding-top: 5px !important;
-}
-.alpheios-lookup__button_with_link {
-  width: 29% !important;
-}
-.alpheios-panel .alpheios-lookup__form {
-  width: 100% !important;
-  margin: 5px 0 !important;
 }
 .alpheios-panel__options-item {
   max-width: none !important;
@@ -2833,12 +2816,6 @@ a.alpheios-lookup__settings-link {
 .alpheios-panel__options-item .alpheios-select[multiple],
 .alpheios-panel__options-item .alpheios-select[size] {
   max-width: 250px !important;
-}
-.alpheios-override-lang {
-  margin-bottom: 10px !important;
-}
-.alpheios-override-lang__label {
-  padding-bottom: 10px !important;
 }
 
 /************ UIKit vars ************************/

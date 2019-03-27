@@ -12,6 +12,7 @@
   vertical-align: middle;
   display: inline-block;
   -webkit-appearance: none;
+  border-radius: uisize(10px);
 
   &[type="search"]::-webkit-search-cancel-button,
   &[type="search"]::-webkit-search-decoration {

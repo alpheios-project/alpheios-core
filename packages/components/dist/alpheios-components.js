@@ -10377,6 +10377,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -16759,67 +16768,73 @@ var render = function() {
     "div",
     { staticClass: "alpheios-lookup__form" },
     [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.lookuptext,
-            expression: "lookuptext"
-          }
-        ],
-        staticClass: "alpheios-input alpheios-lookup__input",
-        attrs: {
-          placeholder: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
-          type: "text"
-        },
-        domProps: { value: _vm.lookuptext },
-        on: {
-          keyup: function($event) {
-            if (
-              !$event.type.indexOf("key") &&
-              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-            ) {
-              return null
-            }
-            return _vm.lookup($event)
-          },
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.lookuptext = $event.target.value
-          }
-        }
-      }),
-      _vm._v(" "),
       _c(
-        "alph-tooltip",
-        {
-          attrs: {
-            tooltipText: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
-            tooltipDirection: "top-right"
-          }
-        },
+        "div",
+        { staticClass: "alpheios-lookup__form-row" },
         [
-          _c("span", { staticClass: "alpheios-lookup__button_with_link" }, [
-            _c(
-              "button",
+          _c("input", {
+            directives: [
               {
-                staticClass: "alpheios-button alpheios-button--primary",
-                attrs: { tabindex: "-1", type: "button" },
-                on: { click: _vm.lookup }
+                name: "model",
+                rawName: "v-model",
+                value: _vm.lookuptext,
+                expression: "lookuptext"
+              }
+            ],
+            staticClass: "alpheios-input alpheios-lookup__form-element",
+            attrs: {
+              placeholder: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
+              type: "text"
+            },
+            domProps: { value: _vm.lookuptext },
+            on: {
+              keyup: function($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                return _vm.lookup($event)
               },
-              [
-                _vm._v(
-                  "\n      " +
-                    _vm._s(_vm.l10n.getMsg("LABEL_LOOKUP_BUTTON")) +
-                    "\n    "
-                )
-              ]
-            )
-          ])
-        ]
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.lookuptext = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "alph-tooltip",
+            {
+              staticClass: "alpheios-lookup__form-element",
+              attrs: {
+                tooltipText: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
+                tooltipDirection: "top-right"
+              }
+            },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "alpheios-button alpheios-button--primary",
+                  attrs: { tabindex: "-1", type: "button" },
+                  on: { click: _vm.lookup }
+                },
+                [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.l10n.getMsg("LABEL_LOOKUP_BUTTON")) +
+                      "\n      "
+                  )
+                ]
+              )
+            ]
+          )
+        ],
+        1
       ),
       _vm._v(" "),
       _vm.showLanguageSettingsGroup
@@ -16827,8 +16842,7 @@ var render = function() {
             _c(
               "div",
               {
-                staticClass:
-                  "alpheios-override-lang alpheios-checkbox-block alpheios-checkbox-small"
+                staticClass: "alpheios-lookup__form-row alpheios-checkbox-block"
               },
               [
                 _c("input", {
@@ -16875,7 +16889,6 @@ var render = function() {
                 _c(
                   "label",
                   {
-                    staticClass: "alpheios-override-lang__label",
                     attrs: {
                       for: "alpheios-" + _vm.nameBase + "-checkbox-input"
                     }
@@ -16891,43 +16904,50 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "alpheios-lookup__settings" }, [
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.overrideLanguage,
-                      expression: "overrideLanguage"
-                    }
-                  ],
-                  staticClass: "alpheios-lookup__settings-items"
-                },
-                [
-                  _c("alph-setting", {
-                    attrs: {
-                      classes: ["alpheios-panel__options-item"],
-                      data: _vm.instanceContentOptions.items.lookupLanguage
-                    },
-                    on: { change: _vm.settingChange }
-                  }),
-                  _vm._v(" "),
-                  _vm._l(_vm.lexiconsFiltered, function(lexicon) {
-                    return _c("alph-setting", {
-                      key: lexicon.name,
+            _c(
+              "div",
+              {
+                staticClass:
+                  "alpheios-lookup__settings alpheios-lookup__form-row"
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.overrideLanguage,
+                        expression: "overrideLanguage"
+                      }
+                    ],
+                    staticClass: "alpheios-lookup__settings-items"
+                  },
+                  [
+                    _c("alph-setting", {
                       attrs: {
                         classes: ["alpheios-panel__options-item"],
-                        data: lexicon
+                        data: _vm.instanceContentOptions.items.lookupLanguage
                       },
-                      on: { change: _vm.resourceSettingChange }
+                      on: { change: _vm.settingChange }
+                    }),
+                    _vm._v(" "),
+                    _vm._l(_vm.lexiconsFiltered, function(lexicon) {
+                      return _c("alph-setting", {
+                        key: lexicon.name,
+                        attrs: {
+                          classes: ["alpheios-panel__options-item"],
+                          data: lexicon
+                        },
+                        on: { change: _vm.resourceSettingChange }
+                      })
                     })
-                  })
-                ],
-                2
-              )
-            ])
+                  ],
+                  2
+                )
+              ]
+            )
           ]
         : _vm._e()
     ],
@@ -21504,6 +21524,7 @@ var render = function() {
                     expression: "selected"
                   }
                 ],
+                staticClass: "alpheios-input",
                 attrs: { type: "number", min: "0" },
                 domProps: { value: _vm.selected },
                 on: {

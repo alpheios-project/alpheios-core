@@ -1,33 +1,42 @@
 <template>
   <div class="alpheios-lookup__form">
-    <input :placeholder="l10n.getMsg('LABEL_LOOKUP_BUTTON')" @keyup.enter="lookup" class="alpheios-input alpheios-lookup__input"
-           type="text"
-           v-model="lookuptext"
-    >
-    <alph-tooltip :tooltipText="l10n.getMsg('LABEL_LOOKUP_BUTTON')" tooltipDirection="top-right">
-      <span class="alpheios-lookup__button_with_link">
-      <button @click="lookup" class="alpheios-button alpheios-button--primary" tabindex="-1"
-              type="button"
+    <div class="alpheios-lookup__form-row">
+      <input
+          :placeholder="l10n.getMsg('LABEL_LOOKUP_BUTTON')"
+          @keyup.enter="lookup"
+          class="alpheios-input alpheios-lookup__form-element"
+          type="text"
+          v-model="lookuptext"
       >
-        {{ l10n.getMsg('LABEL_LOOKUP_BUTTON') }}
-      </button>
-      </span>
-    </alph-tooltip>
+      <alph-tooltip
+          :tooltipText="l10n.getMsg('LABEL_LOOKUP_BUTTON')"
+          tooltipDirection="top-right"
+          class="alpheios-lookup__form-element"
+      >
+        <button
+            @click="lookup"
+            class="alpheios-button alpheios-button--primary"
+            tabindex="-1"
+            type="button"
+        >
+          {{ l10n.getMsg('LABEL_LOOKUP_BUTTON') }}
+        </button>
+      </alph-tooltip>
+    </div>
 
     <template
         v-if="showLanguageSettingsGroup"
     >
-      <div class="alpheios-override-lang alpheios-checkbox-block alpheios-checkbox-small">
+      <div class="alpheios-lookup__form-row alpheios-checkbox-block">
         <input :id="`alpheios-${nameBase}-checkbox-input`" type="checkbox" v-model="overrideLanguage">
         <label
-            class="alpheios-override-lang__label"
             :for="`alpheios-${nameBase}-checkbox-input`"
         >
           {{ overrideLanguageLabel }}
         </label>
       </div>
 
-      <div class="alpheios-lookup__settings">
+      <div class="alpheios-lookup__settings alpheios-lookup__form-row">
         <div class="alpheios-lookup__settings-items" v-show="overrideLanguage">
           <alph-setting :classes="['alpheios-panel__options-item']" :data="instanceContentOptions.items.lookupLanguage"
                         @change="settingChange"></alph-setting>
@@ -173,38 +182,27 @@ export default {
   @import "../../styles/variables";
 
   .alpheios-lookup__form {
-    margin: 30px 5px 5px;
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    // Placed here to have a double selector to override .alpheios-content input margin
+    .alpheios-lookup__form-element {
+      margin-bottom: uisize(10px);
+    }
+
+    .alpheios-lookup__form-element:not(:last-child) {
+      margin-right: uisize(10px);
+    }
   }
 
-  .alpheios-input.alpheios-lookup__input {
-    width: 70%;
-    margin-bottom: 10px;
-    vertical-align: top;
-
-    &:focus {
-      border-color: $alpheios-link-hover-color;
-    }
+  .alpheios-lookup__form-row {
+    display: flex;
   }
 
   .alpheios-lookup__settings {
     text-align: left;
-  }
-
-  a.alpheios-lookup__settings-link {
-    display: block;
-    padding-top: 5px;
-  }
-
-  .alpheios-lookup__button_with_link {
-    width: 29%;
-  }
-
-  .alpheios-panel {
-    .alpheios-lookup__form {
-      width: 100%;
-      margin: 5px 0;
-    }
   }
 
   .alpheios-panel__options-item {
@@ -218,13 +216,4 @@ export default {
       max-width: 250px;
     }
   }
-
-  .alpheios-override-lang {
-    margin-bottom: 10px;
-  }
-
-  .alpheios-override-lang__label {
-    padding-bottom: 10px;
-  }
-
 </style>
