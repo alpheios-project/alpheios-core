@@ -64,20 +64,20 @@ export default {
 
   .alpheios-navbuttons__btn {
     display: block;
-    width: 56px;
-    height: 56px;
-    text-align: center;
+    width: uisize(56px);
+    height: uisize(56px);
     cursor: pointer;
     fill: var(--alpheios-icon-color);
     stroke: var(--alpheios-icon-color);
     background-color: var(--alpheios-icon-bg-color);
 
     svg {
-      width: 32px;
+      width: 60%;
       height: auto;
       position: relative;
       top: 50%;
-      transform: translateY(-50%);
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
 
     &:hover,

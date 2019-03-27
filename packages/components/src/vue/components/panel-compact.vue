@@ -492,7 +492,7 @@ export default {
     direction: ltr;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: px2rem(56px) auto px2rem(56px);
+    grid-template-rows: textsize(56px) auto textsize(56px);
     grid-template-areas: "header" "content" "content";
   }
 
@@ -509,7 +509,7 @@ export default {
     flex-wrap: nowrap;
     box-sizing: border-box;
     grid-area: header;
-    background: var(--alpheios-color-muted);
+    background: var(--alpheios-toolbar-bg-color);
   }
 
   .alpheios-panel__header-selection {
@@ -525,17 +525,17 @@ export default {
   }
 
   .alpheios-panel__close-btn {
-    width: px2rem(60px);
+    width: textsize(60px);
     height: 100%;
     cursor: pointer;
-    fill: var(--alpheios-color-neutral-lightest);
-    stroke: var(--alpheios-color-neutral-lightest);
+    fill: var(--alpheios-icon-color);
+    stroke: var(--alpheios-icon-color);
     stroke-width: 2.5;
 
     svg {
       position: relative;
-      left: px2rem(8px);
-      width: px2rem(44px);
+      left: textsize(8px);
+      width: textsize(44px);
       height: auto;
       top: 50%;
       transform: translateY(-50%);
@@ -543,15 +543,15 @@ export default {
 
     &:hover,
     &:focus {
-      fill: var(--alpheios-color-bright-hover);
-      stroke: var(--alpheios-color-bright-hover);
-      background: var(--alpheios-color-muted-hover);
+      fill: var(--alpheios-icon-color-hover);
+      stroke: var(--alpheios-icon-color-hover);
+      background: var(--alpheios-icon-bg-color-hover);
     }
 
     &:active {
-      fill: var(--alpheios-color-bright-pressed);
-      stroke: var(--alpheios-color-bright-pressed);
-      background: var(--alpheios-color-muted-pressed);
+      fill: var(--alpheios-icon-color-pressed);
+      stroke: var(--alpheios-icon-color-pressed);
+      background: var(--alpheios-icon-bg-color-pressed);
     }
   }
 
@@ -565,7 +565,7 @@ export default {
     // Need to set element as an offset parent for panel content items
     position: relative;
     background: var(--alpheios-color-neutral-lightest);
-    padding-top: px2rem(20px);
+    padding-top: textsize(20px);
   }
 
   .alpheios-lookup__panel {

@@ -11553,6 +11553,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -11579,7 +11581,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'OverlayNav',
+  name: 'Toolbar',
   // API modules that are required for this component
   inject: {
     app: 'app',
@@ -11656,7 +11658,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function () {
-    this.$options.interactInstance = interactjs__WEBPACK_IMPORTED_MODULE_0___default()(this.$el.querySelector('#alpheios-overlay-nav-drag-handle'))
+    this.$options.interactInstance = interactjs__WEBPACK_IMPORTED_MODULE_0___default()(this.$el.querySelector('#alpheios-toolbar-drag-handle'))
       .draggable({
         inertia: true,
         autoScroll: false,
@@ -18595,20 +18597,20 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "alpheios-overlay-nav",
-      attrs: { id: "alpheios-overlay-nav-inner" }
+      staticClass: "alpheios-toolbar",
+      attrs: { id: "alpheios-toolbar-inner" }
     },
     [
       _c(
         "div",
         {
-          staticClass: "alpheios-overlay-nav__drag-handle",
-          attrs: { id: "alpheios-overlay-nav-drag-handle" }
+          staticClass: "alpheios-toolbar__drag-handle",
+          attrs: { id: "alpheios-toolbar-drag-handle" }
         },
         [
           _c(
             "div",
-            { staticClass: "alpheios-overlay-nav__logo-icon" },
+            { staticClass: "alpheios-toolbar__logo-icon" },
             [_c("logo-icon")],
             1
           )
@@ -18618,7 +18620,7 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "alpheios-overlay-nav__lookup-control",
+          staticClass: "alpheios-toolbar__lookup-control",
           on: {
             click: function($event) {
               _vm.lookupVisible = !_vm.lookupVisible
@@ -18653,7 +18655,7 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "alpheios-overlay-nav__header",
+          staticClass: "alpheios-toolbar__header",
           class: { expanded: _vm.contentVisible },
           on: {
             click: function($event) {
@@ -18676,7 +18678,7 @@ var render = function() {
               expression: "lookupVisible"
             }
           ],
-          staticClass: "alpheios-overlay-nav__lookup"
+          staticClass: "alpheios-toolbar__lookup"
         },
         [
           _c("lookup", {
@@ -18699,7 +18701,8 @@ var render = function() {
               value: _vm.contentVisible,
               expression: "contentVisible"
             }
-          ]
+          ],
+          staticClass: "alpheios-toolbar__buttons"
         },
         [
           _c(
@@ -36828,7 +36831,7 @@ class UIController {
    * @param {string | value} value - A new value of an options.
    */
   uiOptionChange (name, value) {
-    const FONT_SIZE_PROP = '--alpheios-base-font-size'
+    const FONT_SIZE_PROP = '--alpheios-base-text-size'
     const FONT_SIZES = {
       small: '12px',
       medium: '16px',
@@ -41063,7 +41066,7 @@ const availableMessages = {
 /*!*******************!*\
   !*** ./plugin.js ***!
   \*******************/
-/*! exports provided: Popup, Panel, L10n, Locales, enUS, enGB, UIController, UIEventController, Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery, LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults, DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector, HTMLPage, Tab, TabScript, L10nModule, AuthModule, PanelModule, PopupModule, NavModule */
+/*! exports provided: Popup, Panel, L10n, Locales, enUS, enGB, UIController, UIEventController, Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery, LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults, DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector, HTMLPage, Tab, TabScript, L10nModule, AuthModule, PanelModule, PopupModule, ToolbarModule */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -41176,8 +41179,8 @@ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___namespace =
 /* harmony import */ var _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! @/vue/vuex-modules/ui/popup-module.js */ "./vue/vuex-modules/ui/popup-module.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PopupModule", function() { return _vue_vuex_modules_ui_popup_module_js__WEBPACK_IMPORTED_MODULE_35__["default"]; });
 
-/* harmony import */ var _vue_vuex_modules_ui_nav_module_js__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! @/vue/vuex-modules/ui/nav-module.js */ "./vue/vuex-modules/ui/nav-module.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NavModule", function() { return _vue_vuex_modules_ui_nav_module_js__WEBPACK_IMPORTED_MODULE_36__["default"]; });
+/* harmony import */ var _vue_vuex_modules_ui_toolbar_module_js__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! @/vue/vuex-modules/ui/toolbar-module.js */ "./vue/vuex-modules/ui/toolbar-module.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ToolbarModule", function() { return _vue_vuex_modules_ui_toolbar_module_js__WEBPACK_IMPORTED_MODULE_36__["default"]; });
 
 // The following import will not probably used by any client directly,
 // but is required to include Scss file specified in there to a MiniCssExtractPlugin bundle
@@ -41287,7 +41290,7 @@ module.exports = {"domain":"alpheios-ui-options","items":{"skin":{"defaultValue"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"componentName\" :data=\"moduleData\"></component>\r\n</div>\r\n<div id=\"alpheios-panel\">\r\n    <component v-bind:is=\"$store.state.panel.layout\"></component>\r\n</div>\r\n<div id=\"alpheios-overlay-nav\">\r\n    <component v-bind:is=\"componentName\"></component>\r\n</div>\r\n";
+module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n    <component v-bind:is=\"componentName\" :data=\"moduleData\"></component>\r\n</div>\r\n<div id=\"alpheios-panel\">\r\n    <component v-bind:is=\"$store.state.panel.layout\"></component>\r\n</div>\r\n<div id=\"alpheios-toolbar\">\r\n    <component v-bind:is=\"componentName\"></component>\r\n</div>\r\n";
 
 /***/ }),
 
@@ -44075,7 +44078,7 @@ function bind (el, binding, vnode) {
     // @NOTE: `.path` is non-standard, the standard way is `.composedPath()`
     let panel = document.getElementById('alpheios-panel-inner') ? document.getElementById('alpheios-panel-inner') : null
     let popup = document.getElementById('alpheios-popup-inner') ? document.getElementById('alpheios-popup-inner') : null
-    let overlayNav = document.getElementById('alpheios-overlay-nav-inner') ? document.getElementById('alpheios-overlay-nav-inner') : null
+    let overlayNav = document.getElementById('alpheios-toolbar-inner') ? document.getElementById('alpheios-toolbar-inner') : null
 
     let visible = function (elem) {
       return !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length)
@@ -44516,97 +44519,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./vue/vuex-modules/ui/nav-module.js":
-/*!*******************************************!*\
-  !*** ./vue/vuex-modules/ui/nav-module.js ***!
-  \*******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return NavModule; });
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/vuex-modules/module.js */ "./vue/vuex-modules/module.js");
-/* harmony import */ var _vue_components_nav_toolbar_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/components/nav/toolbar.vue */ "./vue/components/nav/toolbar.vue");
-/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
- // Vue in a runtime + compiler configuration
-
-
-
-
-// TODO: Add a check for required modules
-class NavModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
-  constructor (store, api, config) {
-    super(store, api, config)
-
-    store.registerModule(this.constructor.moduleName, this.constructor.store())
-
-    this._vi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-      el: this.config.mountPoint,
-      store: store, // Install store into the panel
-      provide: api, // Public API of the modules for child components
-      /*
-      Since this is a root component and we cannot claim APIs with `inject`
-      let's assign APIs to a custom prop to have access to it
-       */
-      api: api,
-      components: {
-        overlayNav: _vue_components_nav_toolbar_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
-      },
-      data: {
-        componentName: 'overlayNav'
-      }
-    })
-  }
-}
-
-NavModule.store = () => {
-  return {
-    // All stores of modules are namespaced
-    namespaced: true,
-
-    state: {
-      // Whether a panel is shown or hidden
-      visible: false
-    },
-    mutations: {
-      /**
-       * Opens a panel
-       * @param state
-       */
-      open (state) {
-        state.visible = true
-      },
-
-      /**
-       * Closes a panel
-       * @param state
-       */
-      close (state) {
-        state.visible = false
-      },
-
-      setPanelLayout (state, layout) {
-        state.layout = layout
-      }
-    }
-  }
-}
-
-NavModule._configDefaults = {
-  _moduleName: 'navModule',
-  _moduleType: _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.UI,
-  _supportedPlatforms: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_3__["default"].platforms.DESKTOP],
-  // A selector that specifies to what DOM element a nav will be mounted.
-  // This element will be replaced with the root element of the panel component.
-  mountPoint: '#alpheios-overlay-nav'
-}
-
-
-/***/ }),
-
 /***/ "./vue/vuex-modules/ui/panel-module.js":
 /*!*********************************************!*\
   !*** ./vue/vuex-modules/ui/panel-module.js ***!
@@ -44815,6 +44727,97 @@ PopupModule._configDefaults = {
   // Whether a popup can be dragged and resized
   draggable: true,
   resizable: true
+}
+
+
+/***/ }),
+
+/***/ "./vue/vuex-modules/ui/toolbar-module.js":
+/*!***********************************************!*\
+  !*** ./vue/vuex-modules/ui/toolbar-module.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ToolbarModule; });
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/vuex-modules/module.js */ "./vue/vuex-modules/module.js");
+/* harmony import */ var _vue_components_nav_toolbar_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/components/nav/toolbar.vue */ "./vue/components/nav/toolbar.vue");
+/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
+ // Vue in a runtime + compiler configuration
+
+
+
+
+// TODO: Add a check for required modules
+class ToolbarModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
+  constructor (store, api, config) {
+    super(store, api, config)
+
+    store.registerModule(this.constructor.moduleName, this.constructor.store())
+
+    this._vi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+      el: this.config.mountPoint,
+      store: store, // Install store into the panel
+      provide: api, // Public API of the modules for child components
+      /*
+      Since this is a root component and we cannot claim APIs with `inject`
+      let's assign APIs to a custom prop to have access to it
+       */
+      api: api,
+      components: {
+        toolbar: _vue_components_nav_toolbar_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+      },
+      data: {
+        componentName: 'toolbar'
+      }
+    })
+  }
+}
+
+ToolbarModule.store = () => {
+  return {
+    // All stores of modules are namespaced
+    namespaced: true,
+
+    state: {
+      // Whether a panel is shown or hidden
+      visible: false
+    },
+    mutations: {
+      /**
+       * Opens a panel
+       * @param state
+       */
+      open (state) {
+        state.visible = true
+      },
+
+      /**
+       * Closes a panel
+       * @param state
+       */
+      close (state) {
+        state.visible = false
+      },
+
+      setPanelLayout (state, layout) {
+        state.layout = layout
+      }
+    }
+  }
+}
+
+ToolbarModule._configDefaults = {
+  _moduleName: 'toolbarModule',
+  _moduleType: _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.UI,
+  _supportedPlatforms: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_3__["default"].platforms.DESKTOP],
+  // A selector that specifies to what DOM element a nav will be mounted.
+  // This element will be replaced with the root element of the panel component.
+  mountPoint: '#alpheios-toolbar'
 }
 
 

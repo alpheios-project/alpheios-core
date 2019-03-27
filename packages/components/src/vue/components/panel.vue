@@ -301,8 +301,8 @@ export default {
 
     .alpheios-panel__header {
       direction: ltr;
-      border-top-right-radius: px2rem(10px);
-      padding-left: px2rem(14px);
+      border-top-right-radius: textsize(10px);
+      padding-left: textsize(14px);
     }
 
     .alpheios-panel__content {
@@ -310,11 +310,11 @@ export default {
     }
 
     .alpheios-panel__close-btn {
-      width: px2rem(80px);
-      border-top-right-radius: px2rem(10px);
+      width: textsize(80px);
+      border-top-right-radius: textsize(10px);
 
       svg {
-        left: px2rem(16px);
+        left: textsize(16px);
       }
     }
   }
@@ -326,8 +326,8 @@ export default {
 
     .alpheios-panel__header {
       direction: rtl;
-      border-top-left-radius: px2rem(10px);
-      padding-right: px2rem(14px);
+      border-top-left-radius: textsize(10px);
+      padding-right: textsize(14px);
     }
 
     .alpheios-panel__content {
@@ -335,11 +335,11 @@ export default {
     }
 
     .alpheios-panel__close-btn {
-      width: px2rem(80px);
-      border-top-left-radius: px2rem(10px);
+      width: textsize(80px);
+      border-top-left-radius: textsize(10px);
 
       svg {
-        right: px2rem(16px);
+        right: textsize(16px);
         left: auto;
       }
     }

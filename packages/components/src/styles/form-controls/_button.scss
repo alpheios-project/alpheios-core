@@ -1,6 +1,6 @@
 %alpheios-button {
   font-family: var(--alpheios-sans-font-face);
-  font-size: var(--alpheios-base-font-size);
+  font-size: var(--alpheios-base-text-size);
   font-weight: 700;
   margin: 0;
   border: 1px solid transparent;
@@ -31,7 +31,7 @@
 }
 
 .alpheios-button-small {
-  font-size: calc(var(--alpheios-base-font-size) * 0.5);
+  font-size: calc(var(--alpheios-base-text-size) * 0.5);
 }
 
 .alpheios-button--primary {

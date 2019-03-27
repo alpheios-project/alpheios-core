@@ -1,18 +1,18 @@
 <template>
   <div
-      id="alpheios-overlay-nav-inner"
-      class="alpheios-overlay-nav"
+      id="alpheios-toolbar-inner"
+      class="alpheios-toolbar"
   >
     <div
-        id="alpheios-overlay-nav-drag-handle"
-        class="alpheios-overlay-nav__drag-handle"
+        id="alpheios-toolbar-drag-handle"
+        class="alpheios-toolbar__drag-handle"
     >
-      <div class="alpheios-overlay-nav__logo-icon">
+      <div class="alpheios-toolbar__logo-icon">
         <logo-icon></logo-icon>
       </div>
     </div>
     <div
-        class="alpheios-overlay-nav__lookup-control"
+        class="alpheios-toolbar__lookup-control"
         @click="lookupVisible = !lookupVisible"
     >
       <alph-tooltip :tooltipText="l10n.getText('LABEL_LOOKUP_CONTROL')" tooltipDirection="left">
@@ -23,7 +23,7 @@
       </alph-tooltip>
     </div>
     <div
-        class="alpheios-overlay-nav__header"
+        class="alpheios-toolbar__header"
         :class="{ expanded: contentVisible }"
         @click="contentVisible = !contentVisible"
     >
@@ -36,7 +36,7 @@
     </div>
 
     <div
-        class="alpheios-overlay-nav__lookup"
+        class="alpheios-toolbar__lookup"
         v-show="lookupVisible"
     >
       <lookup
@@ -45,7 +45,9 @@
       />
     </div>
 
-    <div v-show="contentVisible">
+    <div
+        class="alpheios-toolbar__buttons"
+        v-show="contentVisible">
       <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_HELP')" tooltipDirection="left">
         <span @click="ui.togglePanelTab('info')" class="alpheios-navbuttons__btn"
               :class="{ active: $store.getters['ui/isActiveTab']('info') }">
@@ -158,7 +160,7 @@ import Lookup from '@/vue/components/lookup.vue'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
-  name: 'OverlayNav',
+  name: 'Toolbar',
   // API modules that are required for this component
   inject: {
     app: 'app',
@@ -235,7 +237,7 @@ export default {
     }
   },
   mounted: function () {
-    this.$options.interactInstance = interact(this.$el.querySelector('#alpheios-overlay-nav-drag-handle'))
+    this.$options.interactInstance = interact(this.$el.querySelector('#alpheios-toolbar-drag-handle'))
       .draggable({
         inertia: true,
         autoScroll: false,
@@ -252,36 +254,22 @@ export default {
 <style lang="scss">
   @import "../../../styles/variables";
 
-  .alpheios-overlay-nav {
+  .alpheios-toolbar {
     background: transparent;
     position: fixed;
     top: 10px;
     right: 15px;
     z-index: 10000;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 
     .alpheios-navbuttons__btn {
-      background: #FFF;
-      border: 1px solid $alpheios-sidebar-header-border-color;
-      padding: 5px;
-    }
-
-    .alpheios-navbuttons__btn {
-      width: 40px;
-      height: 40px;
-      margin: 10px 0;
+      width: uisize(44px);
+      height: uisize(44px);
+      margin: uisize(8px) 0;
       box-sizing: border-box;
       position: relative;
-      padding: 0;
-
-      svg {
-        width: 20px;
-        height: 20px;
-        top: 9px;
-        left: 0;
-        position: relative;
-        box-sizing: border-box;
-      }
+      background-color: var(--alpheios-toolbar-bg-color);
+      border: uisize(1px) solid var(--alpheios-border-color);
+      border-radius: uisize(10px);
     }
 
     .alph_tooltip {
@@ -325,7 +313,7 @@ export default {
       }
     }
 
-    .lph_tooltip-left {
+    .alph_tooltip-left {
       top: 5px;
       bottom: auto;
       right: 128%;
@@ -347,114 +335,119 @@ export default {
       opacity: 1;
       display: inline;
     }
+  }
 
-    .alpheios-overlay-nav__header {
-      height: 20px;
-      width: 40px;
-      box-sizing: border-box;
-      border: 1px solid $alpheios-sidebar-header-border-color;
-      cursor: pointer;
-      background: #FFF;
+  .alpheios-toolbar__header {
+    height: 20px;
+    width: 40px;
+    box-sizing: border-box;
+    border: 1px solid $alpheios-sidebar-header-border-color;
+    cursor: pointer;
+    background: #FFF;
 
-      svg {
-        width: 20px;
-        height: auto;
-        position: relative;
-        left: 9px;
-        top: -5px;
-        fill: $alpheios-sidebar-header-border-color;
-      }
-
-      &.expanded svg {
-        top: 5px;
-      }
-
-      &:hover svg {
-        fill: $alpheios-link-hover-color;
-      }
-    }
-
-    .alpheios-overlay-nav__drag-handle {
-      width: 40px;
-      height: 30px;
-      border: 1px solid $alpheios-sidebar-header-border-color;
-      border-bottom: none;
-      background: #FFF;
-      box-sizing: border-box;
-    }
-
-    .alpheios-overlay-nav__logo-icon {
-      width: 30px;
+    svg {
+      width: 20px;
       height: auto;
       position: relative;
-      top: 3px;
-      left: 4px;
+      left: 9px;
+      top: -5px;
+      fill: $alpheios-sidebar-header-border-color;
     }
 
-    .alpheios-overlay-nav__lookup-control {
-      cursor: pointer;
-      background: #FFF;
+    &.expanded svg {
+      top: 5px;
+    }
 
-      .alpheios-navbuttons__btn {
-        height: 30px;
-        margin: 0;
-        border-bottom: none;
+    &:hover svg {
+      fill: $alpheios-link-hover-color;
+    }
+  }
 
-        svg {
-          top: 4px;
-        }
+  .alpheios-toolbar__drag-handle {
+    width: 40px;
+    height: 30px;
+    border: 1px solid $alpheios-sidebar-header-border-color;
+    border-bottom: none;
+    background: #FFF;
+    box-sizing: border-box;
+  }
+
+  .alpheios-toolbar__logo-icon {
+    width: 30px;
+    height: auto;
+    position: relative;
+    top: 3px;
+    left: 4px;
+  }
+
+  .alpheios-toolbar__lookup-control {
+    cursor: pointer;
+    background: #FFF;
+
+    .alpheios-navbuttons__btn {
+      height: 30px;
+      margin: 0;
+      border-bottom: none;
+
+      svg {
+        top: 4px;
       }
     }
+  }
 
-    .alpheios-overlay-nav__lookup {
-      display: flex;
-      position: absolute;
-      width: 400px;
-      height: 80px;
-      background: #FFF;
-      left: -400px;
-      top: 0;
-      border: 1px solid $alpheios-sidebar-header-border-color;
-      border-right: none;
+  .alpheios-toolbar__lookup {
+    display: flex;
+    position: absolute;
+    width: 400px;
+    height: 80px;
+    background: #FFF;
+    left: -400px;
+    top: 0;
+    border: 1px solid $alpheios-sidebar-header-border-color;
+    border-right: none;
+    box-sizing: border-box;
+
+    .alpheios-lookup__form {
+      margin-top: 30px;
+    }
+
+    input {
+      width: 300px;
       box-sizing: border-box;
+      line-height: 28px;
+      box-shadow: none;
+      padding: 0 10px;
+      font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+      font-size: 14px;
+      height: 30px;
+      border: 1px solid $alpheios-copy-color;
 
-      .alpheios-lookup__form {
-        margin-top: 30px;
-      }
-
-      input {
-        width: 300px;
-        box-sizing: border-box;
-        line-height: 28px;
-        box-shadow: none;
-        padding: 0 10px;
-        font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-        font-size: 14px;
-        height: 30px;
-        border: 1px solid $alpheios-copy-color;
-
-        &:focus {
-          border-color: $alpheios-link-hover-color;
-          outline: transparent;
-        }
-      }
-
-      .alph_tooltip {
-        display: inline-block;
-      }
-
-      button {
-        font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-        font-size: 12px;
-        line-height: 30px;
-        background-color: $alpheios-toolbar-color;
-        color: #FFF;
-        text-transform: uppercase;
-        border-radius: 0;
-        border: none;
-        height: 30px;
-        cursor: pointer;
+      &:focus {
+        border-color: $alpheios-link-hover-color;
+        outline: transparent;
       }
     }
+
+    .alph_tooltip {
+      display: inline-block;
+    }
+
+    button {
+      font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+      font-size: 12px;
+      line-height: 30px;
+      background-color: $alpheios-toolbar-color;
+      color: #FFF;
+      text-transform: uppercase;
+      border-radius: 0;
+      border: none;
+      height: 30px;
+      cursor: pointer;
+    }
+  }
+
+  .alpheios-toolbar__buttons {
+    display: flex;
+    flex-direction: column;
   }
 </style>

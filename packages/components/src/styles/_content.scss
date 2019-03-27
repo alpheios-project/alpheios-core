@@ -1,6 +1,6 @@
 #{$alpheios-namespace} {
   font-family: var(--alpheios-sans-font-face);
-  font-size: var(--alpheios-base-font-size);
+  font-size: var(--alpheios-base-text-size);
   font-weight: 400;
   color: var(--alpheios-color-dark);
   box-sizing: border-box;
@@ -26,31 +26,31 @@
 
   h1 {
     font-family: var(--alpheios-serif-font-face);
-    font-size: calc(var(--alpheios-base-font-size) * 1.625);
+    font-size: calc(var(--alpheios-base-text-size) * 1.625);
     font-weight: 700;
     margin-bottom: px2rem(10px);
   }
 
   h2 {
-    font-size: calc(var(--alpheios-base-font-size) * 1.5);
+    font-size: calc(var(--alpheios-base-text-size) * 1.5);
     font-weight: 700;
     margin-bottom: px2rem(10px);
   }
 
   h3 {
-    font-size: calc(var(--alpheios-base-font-size) * 1.125);
+    font-size: calc(var(--alpheios-base-text-size) * 1.125);
     font-weight: 700;
     margin-bottom: px2rem(10px);
   }
 
   h4 {
     font-family: var(--alpheios-serif-font-face);
-    font-size: calc(var(--alpheios-base-font-size) * 1.125);
+    font-size: calc(var(--alpheios-base-text-size) * 1.125);
     margin-bottom: px2rem(10px);
   }
 
   h5 {
-    font-size: (--alpheios-base-font-size);
+    font-size: (--alpheios-base-text-size);
     font-weight: 700;
     font-style: italic;
     margin-bottom: px2rem(10px);
@@ -59,18 +59,18 @@
   #{$alpheios-layout-large} & {
     h1 {
       font-family: var(--alpheios-serif-font-face);
-      font-size: calc(var(--alpheios-base-font-size) * 2.25);
+      font-size: calc(var(--alpheios-base-text-size) * 2.25);
       font-weight: 700;
     }
 
     h2 {
       font-family: var(--alpheios-serif-font-face);
-      font-size: calc(var(--alpheios-base-font-size) * 1.75);
+      font-size: calc(var(--alpheios-base-text-size) * 1.75);
       font-weight: 600;
     }
 
     h3 {
-      font-size: calc(var(--alpheios-base-font-size) * 1.375);
+      font-size: calc(var(--alpheios-base-text-size) * 1.375);
       font-weight: 700;
     }
   }
@@ -128,6 +128,6 @@
 }
 
 .alpheios-text-small {
-  font-size: calc(var(--alpheios-base-font-size) * 0.875);
+  font-size: calc(var(--alpheios-base-text-size) * 0.875);
   line-height: 1.5;
 }

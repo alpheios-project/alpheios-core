@@ -1287,7 +1287,7 @@ export default class UIController {
    * @param {string | value} value - A new value of an options.
    */
   uiOptionChange (name, value) {
-    const FONT_SIZE_PROP = '--alpheios-base-font-size'
+    const FONT_SIZE_PROP = '--alpheios-base-text-size'
     const FONT_SIZES = {
       small: '12px',
       medium: '16px',

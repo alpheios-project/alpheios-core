@@ -1,8 +1,10 @@
 // This is a default Alpheios theme. All CSS custom props in it defined for an `html` element.
 // Custom skins should define their own custom props for a `:root` pseudo-class as it has a higher specificity.
 html {
-  // Font size of elements that are scalable
-  --alpheios-base-font-size: 16px;
+  // Base font size of text elements that are scalable
+  --alpheios-base-text-size: 16px;
+  // Base size of UI elements that are scalable
+  --alpheios-base-ui-size: 16px;
   // A base font size for elements that are not scalable
   font-size: 16px;
 
@@ -32,6 +34,9 @@ html {
 
   --alpheios-color-light: #BCE5F0;
 
+  --alpheios-text-color: var(--alpheios-color-neutral-dark);
+  --alpheios-text-bg-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-toolbar-bg-color: var(--alpheios-color-muted);
   --alpheios-border-color: var(--alpheios-color-neutral-dark);
   --alpheios-icon-color: var(--alpheios-color-neutral-lightest);
   --alpheios-icon-bg-color: transparent;
@@ -39,6 +44,8 @@ html {
   --alpheios-icon-bg-color-active: transparent;
   --alpheios-icon-color-hover: var(--alpheios-color-bright-hover);
   --alpheios-icon-bg-color-hover: var(--alpheios-color-muted-hover);
+  --alpheios-icon-color-pressed: var(--alpheios-color-bright-pressed);
+  --alpheios-icon-bg-color-pressed: var(--alpheios-color-muted-pressed);
 
   // Colors of buttons
   --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);

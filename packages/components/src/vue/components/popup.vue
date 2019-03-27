@@ -630,57 +630,57 @@ export default {
   .alpheios-popup__header {
     display: flex;
     justify-content: space-between;
-    height: px2rem(56px);
-    background: var(--alpheios-color-muted);
+    height: textsize(56px);
+    background: var(--alpheios-toolbar-bg-color);
   }
 
   .alpheios-popup__logo {
     position: relative;
-    left: px2rem(16px);
-    top: px2rem(18px);
+    left: textsize(16px);
+    top: textsize(18px);
 
     svg {
-      width: px2rem(28px);
+      width: textsize(28px);
       height: auto;
     }
   }
 
   .alpheios-popup__close-btn {
-    width: px2rem(80px);
+    width: textsize(80px);
     height: 100%;
     cursor: pointer;
-    fill: var(--alpheios-color-neutral-lightest);
-    stroke: var(--alpheios-color-neutral-lightest);
+    fill: var(--alpheios-icon-color);
+    stroke: var(--alpheios-icon-color);
     stroke-width: 2.5;
 
     svg {
       position: relative;
       top: 50%;
       transform: translateY(-50%);
-      left: px2rem(16px);
-      width: px2rem(44px);
+      left: textsize(16px);
+      width: textsize(44px);
       height: auto;
     }
 
     &:hover,
     &:focus {
-      fill: var(--alpheios-color-bright-hover);
-      stroke: var(--alpheios-color-bright-hover);
-      background: var(--alpheios-color-muted-hover);
+      fill: var(--alpheios-icon-color-hover);
+      stroke: var(--alpheios-icon-color-hover);
+      background: var(--alpheios-icon-bg-color-hover);
     }
 
     &:active {
-      fill: var(--alpheios-color-bright-pressed);
-      stroke: var(--alpheios-color-bright-pressed);
-      background: var(--alpheios-color-muted-pressed);
+      fill: var(--alpheios-icon-color-active);
+      stroke: var(--alpheios-icon-color-active);
+      background: var(--alpheios-icon-bg-color-active);
     }
   }
 
   .alpheios-popup__body {
     display: flex;
     flex-direction: column;
-    padding: px2rem(20px);
-    background: var(--alpheios-color-neutral-lightest);
+    padding: textsize(20px);
+    background: var(--alpheios-text-bg-color);
   }
 
   .alpheios-popup__toolbar {
@@ -688,11 +688,11 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: px2rem(10px);
+    margin-bottom: textsize(10px);
   }
 
   .alpheios-popup__toolbar-text {
-    padding-right: px2rem(20px);
+    padding-right: textsize(20px);
   }
 
   .alpheios-popup__toolbar-text[lang='ara'] {
@@ -710,16 +710,16 @@ export default {
   }
 
   .alpheios-popup__toolbar-button {
-    margin: 0 0 px2rem(10px) px2rem(10px);
+    margin: 0 0 textsize(10px) textsize(10px);
   }
 
   .alpheios-popup__content {
-    padding: px2rem(20px);
+    padding: textsize(20px);
     @include alpheios-border;
   }
 
   .alpheios-popup__providers {
-    margin-left: px2rem(40px);
+    margin-left: textsize(40px);
   }
 
   .alpheios-popup__providers-title {
@@ -729,12 +729,12 @@ export default {
 
   a.alpheios-popup__providers-link {
     display: inline-block;
-    margin-bottom: px2rem(6px);
+    margin-bottom: textsize(6px);
     font-weight: 700;
   }
 
   .alpheios-popup__definitions--placeholder {
-    padding: px2rem(10px) 0;
+    padding: textsize(10px) 0;
   }
 
   .alpheios-popup__providers-item {
@@ -745,19 +745,19 @@ export default {
   .alpheios-popup__notifications-auth {
     display: none;
     position: relative;
-    padding: px2rem(10px) px2rem(20px);
+    padding: textsize(10px) textsize(20px);
     background: $alpheios-logo-color;
-    flex: 0 0 px2rem(60px);
+    flex: 0 0 textsize(60px);
     overflow: hidden;
   }
 
   .alpheios-popup__notifications-close-btn {
     position: absolute;
-    right: px2rem(5px);
-    top: px2rem(5px);
+    right: textsize(5px);
+    top: textsize(5px);
     display: block;
-    width: px2rem(20px);
-    height: px2rem(20px);
+    width: textsize(20px);
+    height: textsize(20px);
     margin: 0;
     cursor: pointer;
     fill: $alpheios-link-color-dark-bg;
@@ -781,13 +781,13 @@ export default {
   .alpheios-popup__notifications--lang-switcher {
     font-size: 0.75*$alpheios-base-font-size;
     float: right;
-    margin: px2rem(-20px) px2rem(10px) 0 0;
+    margin: textsize(-20px) textsize(10px) 0 0;
     display: inline-block;
   }
 
   .alpheios-popup__notifications--lang-switcher .alpheios-select {
-    width: px2rem(120px);
-    height: px2rem(25px);
+    width: textsize(120px);
+    height: textsize(25px);
   }
 
   .alpheios-popup__notifications--important {

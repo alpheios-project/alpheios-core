@@ -65,16 +65,25 @@ $alpheios-color_schema_dark_tooltip-color: $alpheios-toolbar-color;
 $alpheios-color_schema_dark_table_border: #f2f2f2;
 $alpheios-color_schema_dark_background_hover: #686868;*/
 
-$base-size: 16px;
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+@function textsize ($px-size, $base-size: 16px) {
+  @return calc(var(--alpheios-base-text-size) * #{$px-size / $base-size})
+}
 
-// Converts dimensions in pixels into rems, based on $base-size
-@function px2rem ($target, $context: $base-size) {
-  @return ($target / $context) * 1rem;
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
+@function uisize ($px-size, $base-size: 16px) {
+  @return calc(var(--alpheios-base-ui-size) * #{$px-size / $base-size})
 }
 
 @mixin alpheios-border {
   border: 1px solid var(--alpheios-border-color);
-  border-radius: px2rem(10px);
+  border-radius: uisize(10px);
 }
 
 @mixin alpheios-interactive {

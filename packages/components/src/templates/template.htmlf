@@ -4,6 +4,6 @@
 <div id="alpheios-panel">
     <component v-bind:is="$store.state.panel.layout"></component>
 </div>
-<div id="alpheios-overlay-nav">
+<div id="alpheios-toolbar">
     <component v-bind:is="componentName"></component>
 </div>

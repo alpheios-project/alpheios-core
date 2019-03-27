@@ -37,10 +37,10 @@ import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
 import AuthModule from '@/vue/vuex-modules/data/auth-module.js'
 import PanelModule from '@/vue/vuex-modules/ui/panel-module.js'
 import PopupModule from '@/vue/vuex-modules/ui/popup-module.js'
-import NavModule from '@/vue/vuex-modules/ui/nav-module.js'
+import ToolbarModule from '@/vue/vuex-modules/ui/toolbar-module.js'
 
 export { Popup, Panel, L10n, Locales, enUS, enGB, UIController, UIEventController,
   Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery,
   LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults,
   DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector,
-  HTMLPage, Tab, TabScript, L10nModule, AuthModule, PanelModule, PopupModule, NavModule }
+  HTMLPage, Tab, TabScript, L10nModule, AuthModule, PanelModule, PopupModule, ToolbarModule }

@@ -1,10 +1,10 @@
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Module from '@/vue/vuex-modules/module.js'
-import OverlayNav from '@/vue/components/nav/toolbar.vue'
+import Toolbar from '@/vue/components/nav/toolbar.vue'
 import HTMLPage from '@/lib/utility/html-page.js'
 
 // TODO: Add a check for required modules
-export default class NavModule extends Module {
+export default class ToolbarModule extends Module {
   constructor (store, api, config) {
     super(store, api, config)
 
@@ -20,16 +20,16 @@ export default class NavModule extends Module {
        */
       api: api,
       components: {
-        overlayNav: OverlayNav
+        toolbar: Toolbar
       },
       data: {
-        componentName: 'overlayNav'
+        componentName: 'toolbar'
       }
     })
   }
 }
 
-NavModule.store = () => {
+ToolbarModule.store = () => {
   return {
     // All stores of modules are namespaced
     namespaced: true,
@@ -62,11 +62,11 @@ NavModule.store = () => {
   }
 }
 
-NavModule._configDefaults = {
-  _moduleName: 'navModule',
+ToolbarModule._configDefaults = {
+  _moduleName: 'toolbarModule',
   _moduleType: Module.types.UI,
   _supportedPlatforms: [HTMLPage.platforms.DESKTOP],
   // A selector that specifies to what DOM element a nav will be mounted.
   // This element will be replaced with the root element of the panel component.
-  mountPoint: '#alpheios-overlay-nav'
+  mountPoint: '#alpheios-toolbar'
 }

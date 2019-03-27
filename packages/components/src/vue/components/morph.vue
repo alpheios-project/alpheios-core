@@ -492,14 +492,14 @@ export default {
 
   .alpheios-morph__dictentry {
     clear: both;
-    margin-bottom: px2rem(20px);
+    margin-bottom: textsize(20px);
 
     .lemma_index,
     .lemma_index_spacer {
       display: inline-block;
       text-align: center;
       font-weight: 700;
-      margin-right: px2rem(5px);
+      margin-right: textsize(5px);
     }
 
     .alpheios-morph__features {
