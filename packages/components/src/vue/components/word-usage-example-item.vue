@@ -1,46 +1,61 @@
 <template>
   <div class="alpheios_word_usage_list_item">
-      <div class="alpheios_word_usage_list_item__source">
-          <a
+    <div class="alpheios_word_usage_list_item__source-data-title">
+      <a
+          :href="wordUsageItem.source"
+          target="_blank"
+          class = "alpheios_word_usage_list_item__source_link"
+          >{{ wordUsageItem.fullCit() }}</a>
+    </div>
+      <div class="alpheios_word_usage_list_item__text">
+        <div class="alpheios_word_usage_list_item__source">
+          <span class="alpheios_word_usage_list_item__source-link" @click="changeShowDataSource()">
+            <source-icon class="alpheios_word_usage_list_item__source-link-svg"></source-icon>
+          </span>
+        </div>
+        <div class="alpheios_word_usage_list_item__text_prefix">{{ prefix }}</div>
+        <div class="alpheios_word_usage_list_item__text_targetword" v-html="wordUsageItem.normalizedText"></div>
+        <div class="alpheios_word_usage_list_item__text_suffix">{{ suffix }}</div>
+      </div>
+      <div class="alpheios_word_usage_list_item__source-data" v-show="showDataSource">
+        <a
             :href="wordUsageItem.source"
             target="_blank"
             class = "alpheios_word_usage_list_item__source_link"
             >{{ wordUsageItem.fullCit() }}</a>
-        </div>
-      <div class="alpheios_word_usage_list_item__text">
-        <div class="alpheios_word_usage_list_item__text_prefix" v-html="prefixHtml"></div>
-        <div class="alpheios_word_usage_list_item__text_targetword" v-html="wordUsageItem.normalizedText"></div>
-        <div class="alpheios_word_usage_list_item__text_suffix" v-html="suffixHtml"></div>
       </div>
   </div>
 </template>
 <script>
+  import SourceIcon from '@/images/inline-icons/source.svg'
+
   export default {
     name: 'WordUsageExampleItem',
+    components: {
+      sourceIcon: SourceIcon
+    },
     props: {
       wordUsageItem: {
         type: Object,
         required: true
       }
     },
+    data () {
+      return {
+        showDataSource: false
+      }
+    },
     computed: {
-      prefixHtml: function() {
-        if (this.wordUsageItem.prefix) {
-          // If the character before the exact word is a space, we need to preserve that as-is for HTML display
-          // so make sure it's an &nbsp;
-          return this.wordUsageItem.prefix.replace(/\s$/, String.fromCharCode(160))
-        } else {
-          return this.wordUsageItem.prefix
-        }
+      prefix: function() {
+        return this.wordUsageItem.prefix
       },
-      suffixHtml: function() {
-        if (this.wordUsageItem.suffix) {
-          // If the character after the exact word is a space, we need to preserve that as-is for HTML display
-          // so make sure it's an &nbsp;
-          return this.wordUsageItem.suffix.replace(/^\s/,String.fromCharCode(160))
-        } else {
-          return this.wordUsageItem.suffix
-        }
+      suffix: function() {
+        return this.wordUsageItem.suffix
+      }
+    },
+    methods: {
+      changeShowDataSource () {
+        this.showDataSource = !this.showDataSource
       }
     }
   }
@@ -49,36 +64,89 @@
     @import "../../styles/variables";
 
     .alpheios_word_usage_list_item {
-      margin-bottom: 15px;
-      display: grid;
-      grid-gap: 10px;
-      grid-template-columns: minmax(50px,1fr) minmax(600px, 4fr);
-
-    }
-
-    .alpheios_word_usage_list_item__source {
-      font-weight: bold;
-    }
-    .alpheios_word_usage_list_item__source a.alpheios_word_usage_list_item__source_link {
-      color: #3E8D9C;
-      font-size: 90%;
-      display: block;
-    }
-
-    .alpheios_word_usage_list_item__source p.alpheios_word_usage_list_item__source_cit {
-      margin: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 10px 0;
+        border-bottom: 1px solid $alpheios-base-border-color;
     }
 
     .alpheios_word_usage_list_item__text {
-      margin-top: 3px;
-      display: flex;
-      flex-flow: row-wrap;
-      justify-content: center;
-      align-items: center;
+        display: flex;
+        flex-direction: row;
+        line-height: normal;
+        justify-content: center;
+        align-items: center;
+    }
 
-      .alpheios_word_usage_list_item__text_targetword {
+    .alpheios_word_usage_list_item
+    .alpheios_word_usage_list_item__text
+    .alpheios_word_usage_list_item__text_targetword {
         color: $alpheios-highlight-dark-color;
-        font-weight:bold;
+    }
+
+    .alpheios_word_usage_list_item__text_targetword {
+        padding: 0 10px;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .alpheios_word_usage_list_item__text_prefix {
+        text-align: center;
+        padding-left: 4px;
+    }
+
+    .alpheios_word_usage_list_item__text_suffix {
+        text-align: center;
+    }
+
+    .alpheios_word_usage_list_item
+    .alpheios_word_usage_list_item__text  {
+      .alpheios_word_usage_list_item__text_prefix,
+      .alpheios_word_usage_list_item__text_suffix {
+        font-size: 85%;
+        width: 40%;
+      }
+    }
+
+    .alpheios_word_usage_list_item__source-data  {
+      width: 100%;
+      padding-top: 10px;
+    }
+
+    .alpheios_word_usage_list_item
+    a.alpheios_word_usage_list_item__source_link {
+      color: $alpheios-link-color;
+      font-size: 95%;
+      display: block;
+    }
+
+    .alpheios_word_usage_list_item__source-link {
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .alpheios_word_usage_list_item {
+      .alpheios_word_usage_list_item__source-data-title {
+        display: block;
+        width: 100%;
+        padding-bottom: 5px;
+      }
+      .alpheios_word_usage_list_item__text
+      .alpheios_word_usage_list_item__source
+      {
+        display: none;
+      }
+    }
+
+    .alpheios-panel--compact
+    .alpheios_word_usage_list_item {
+      .alpheios_word_usage_list_item__source-data-title {
+        display: none;
+      }
+      .alpheios_word_usage_list_item__text
+      .alpheios_word_usage_list_item__source
+      {
+        display: inline-block;
       }
     }
 </style>

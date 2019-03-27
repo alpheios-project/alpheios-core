@@ -1,122 +1,42 @@
 <template>
-  <div>
-    <button @click="logIn" class="alpheios-button alpheios-button--primary" v-show="!isLoggedIn">
-      {{ l10n.getMsg(`AUTH_LOG_IN_BTN_LABEL`) }}
-    </button>
-    <button @click="logOut" class="alpheios-button alpheios-button--primary" v-show="isLoggedIn">
-      {{ l10n.getMsg(`AUTH_LOG_OUT_BTN_LABEL`) }}
-    </button>
-    <div class="alpheios-user-auth__message-box" v-show="logInProgress">
-      {{ l10n.getMsg(`AUTH_LOG_IN_PROGRESS_MSG`) }}
+  <div :data-notification-visible="$store.state.auth.notification.visible">
+    <login/>
+    <div class="alpheios-user-auth__notifications uk-text-small"
+      v-if="$store.state.auth.notification.text">
+      <span @click="$store.commit(`auth/resetNotification`)" class="alpheios-popup__notifications-close-btn">
+        <close-icon></close-icon>
+      </span>
+      <span v-html="l10n.getMsg($store.state.auth.notification.text)"></span>
     </div>
-    <div class="alpheios-user-auth__message-box" v-show="isLoggedIn">
-      {{ l10n.getMsg(`AUTH_LOG_IN_SUCCESS_MSG`) }}
-    </div>
-    <div class="alpheios-user-auth__message-box" v-show="authenticationFailed">
-      {{ l10n.getMsg(`AUTH_LOG_IN_AUTH_FAILURE_MSG`) }}
-    </div>
-    <div class="alpheios-user-auth__user-info-box" v-if="isLoggedIn && hasUserInfo">
+    <div class="alpheios-user-auth__user-info-box" v-if="this.$store.state.auth.isAuthenticated">
       <div class="alpheios-user-auth__user-info-item-box">
         <div class="alpheios-user-auth__user-info-item-name">
           {{ l10n.getMsg(`AUTH_PROFILE_NICKNAME_LABEL`) }}:
         </div>
         <div class="alpheios-user-auth__user-info-item-value">
-          {{ userInfo.nickname ? userInfo.nickname: `&mdash;` }}
-        </div>
-      </div>
-      <div class="alpheios-user-auth__user-info-item-box">
-        <div class="alpheios-user-auth__user-info-item-name">
-          {{ l10n.getMsg(`AUTH_PROFILE_NAME_LABEL`) }}:
-        </div>
-        <div class="alpheios-user-auth__user-info-item-value">
-          {{ userInfo.name ? userInfo.name: `&mdash;` }}
+          {{ this.$store.state.auth.userNickName ? this.$store.state.auth.userNickName: `&mdash;` }}
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-
+import Login from './login.vue'
+import CloseIcon from '../../images/inline-icons/close.svg'
 export default {
   name: 'UserAuth',
   inject: {
     l10n: 'l10n',
     auth: { from: 'auth', default: null } // This module is options
   },
-  // inject: ['auth', 'l10n'], // Specify what API modules are we going to use
-  data: function () {
-    return {
-      isLoggedIn: false,
-      authenticationFailed: false,
-      logInProgress: false,
-      hasUserInfo: false, // Whether user info data is available
-      userInfo: null // Will hold a user info object when user data is retrieved
-    }
-  },
-
-  methods: {
-    logIn: function () {
-      this.logInProgress = true
-      if (this.auth) {
-        this.auth.authenticate()
-          .then(result => {
-            console.log(`Authenticated successfully`)
-            this.logInProgress = false
-            this.isLoggedIn = true
-            this.authenticationFailed = false
-
-            this.getUserInfo()
-          })
-          .catch(error => {
-            console.error(`Authenticated failed:`, error)
-            this.logInProgress = false
-            this.isLoggedIn = false
-            this.authenticationFailed = true
-          })
-      }
-    },
-
-    logOut: function () {
-      console.log('Logging out')
-      this.isLoggedIn = false
-      this.authenticationFailed = false
-      this.auth.logout()
-    },
-
-    getUserInfo: function () {
-      if (this.auth) {
-      // Retrieve user profile data
-        this.auth.getProfileData()
-          .then(profileData => {
-            console.log(`User info retrieved:`, profileData)
-            this.hasUserInfo = true
-            this.userInfo = profileData
-          })
-          .catch(error => {
-            console.error(`Unable to retrieve user information from Auth0: ${error.message}`)
-          })
-
-        // Retrieve user data from Alpheios servers
-        this.auth.getUserData()
-          .then(userData => {
-            console.log(`User data retrieved:`, userData)
-          })
-          .catch(error => {
-            console.error(`Unable to retrieve user information from Auth0: ${error.message}`)
-          })
-      }
-    }
+  components: {
+    login: Login,
+    closeIcon: CloseIcon
   }
 }
 </script>
 <style lang="scss">
   @import "../../styles/variables";
-
-  .alpheios-user-auth__message-box {
-    margin-top: 20px;
-    padding: 10px;
-    background: $alpheios-logo-color;
-  }
 
   .alpheios-user-auth__user-info-box {
     margin-top: 20px;
@@ -142,4 +62,38 @@ export default {
     color: $alpheios-link-color !important;
     text-align: right;
   }
+
+  .alpheios-user-auth__notifications {
+    display: none;
+    position: relative;
+    padding: 10px 20px;
+    background: $alpheios-icon-color;
+    flex: 0 0 60px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .alpheios-user-auth__notifications-close-btn {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    cursor: pointer;
+    fill: $alpheios-link-color-dark-bg;
+    stroke: $alpheios-link-color-dark-bg;
+  }
+
+  .alpheios-user-auth__notifications-close-btn:hover,
+  .alpheios-user-auth__notifications-close-btn:focus {
+    fill: $alpheios-link-hover-color;
+    stroke: $alpheios-link-hover-color;
+  }
+
+  [data-notification-visible="true"] .alpheios-user-auth__notifications {
+    display: block;
+  }
+
 </style>

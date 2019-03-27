@@ -12,6 +12,7 @@ import Setting from '@/vue/components/setting.vue'
 import Treebank from '@/vue/components/treebank.vue'
 import Grammar from '@/vue/components/grammar.vue'
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
+import AuthModule from '@/vue/vuex-modules/data/auth-module.js'
 import Locales from '@/locales/locales.js'
 import enUS from '@/locales/en-us/messages.json'
 import enUSData from '@/locales/en-us/messages-data.json'
@@ -36,8 +37,12 @@ describe('panel.test.js', () => {
   let contentOptions
   let resourceOptions
   let l10nModule
+  let authModule
   const uiAPI = {
     closePanel: () => {}
+  }
+  const authAPI = {
+    isEnabled: () => {return false}
   }
 
   console.error = function () {}
@@ -107,11 +112,13 @@ describe('panel.test.js', () => {
       }
     })
 
+    authModule  = new AuthModule(store,api,{auth:null})
     api = {
       app: {
         wordlistC: {}
       },
       ui: uiAPI,
+      auth:authAPI,
       settings: {
         contentOptions,
         resourceOptions

@@ -16,8 +16,12 @@
 <script>
 // TODO: Update to retrieve usage examples data directly from the Vue store, not from a parent component
 import WordUsageExampleItem from '@/vue/components/word-usage-example-item.vue'
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 export default {
   name: 'WordUsageExamplesBlock',
+  inject: ['ui'],
+  storeModules: ['ui'],
+  mixins: [DependencyCheck],
   components: {
     wordUsageExampleItem: WordUsageExampleItem
   },
@@ -69,6 +73,11 @@ export default {
         ? Array.from(this.provider.rights.entries()).map(([key, value]) => { return { key, value } })
         : []
     }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      this.ui.registerAndActivateGetSelectedText('getSelectedText-usageExamples','.alpheios-word-usage')
+    })
   }
 }
 </script>

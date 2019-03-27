@@ -1,7 +1,7 @@
 <div id="alpheios-popup" data-alpheios-ignore="all">
     <component v-bind:is="componentName" :data="moduleData"></component>
 </div>
-<div id="alpheios-panel" data-alpheios-ignore="all">
+<div id="alpheios-panel">
     <component v-bind:is="$store.state.panel.layout"></component>
 </div>
 <div id="alpheios-overlay-nav">

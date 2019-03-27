@@ -1,7 +1,7 @@
-/* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
-import { mount } from '@vue/test-utils'
+import Vuex from 'vuex'
+import { mount, createLocalVue } from '@vue/test-utils'
 
 import { Constants, Author, TextWork, ResourceProvider } from 'alpheios-data-models'
 import { ClientAdapters } from 'alpheios-client-adapters'
@@ -10,11 +10,13 @@ import WordUsageExamplesBlock from '@/vue/components/word-usage-examples-block.v
 import wordUsageExampleItem from '@/vue/components/word-usage-example-item.vue'
 
 describe('word-usage-examples-block.test.js', () => {
+  const localVue = createLocalVue()
+  localVue.use(Vuex)
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
 
-  let testWordUsageList, testWord1, mockProvider
+  let testWordUsageList, testWord1, mockProvider, store
 
   beforeAll(async () => {
     let testAuthor = new Author('urn:cts:latinLit:phi0690', { "eng": "Virgil" })
@@ -54,6 +56,14 @@ describe('word-usage-examples-block.test.js', () => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
+    store = new Vuex.Store({
+      modules: {
+        ui: {
+          namespaced: true,
+          state: {}
+        }
+      }
+    })
   })
   afterEach(() => {
     jest.resetModules()
@@ -69,7 +79,9 @@ describe('word-usage-examples-block.test.js', () => {
         targetWord: testWord1,
         language: 'lat',
         provider: mockProvider
-      }
+      },
+      store,
+      localVue
     })
     expect(cmp.isVueInstance()).toBeTruthy()
   })
@@ -81,7 +93,9 @@ describe('word-usage-examples-block.test.js', () => {
         targetWord: testWord1,
         language: 'lat',
         provider: mockProvider
-      }
+      },
+      store,
+      localVue
     })
     expect(cmp.vm.showWordUsageExampleItems).toBeFalsy()
     expect(cmp.findAll(wordUsageExampleItem).length).toEqual(0)
@@ -94,7 +108,9 @@ describe('word-usage-examples-block.test.js', () => {
         targetWord: testWord1,
         language: 'lat',
         provider: mockProvider
-      }
+      },
+      store,
+      localVue
     })
     expect(cmp.vm.showWordUsageExampleItems).toBeTruthy()
     expect(cmp.findAll(wordUsageExampleItem).length).toEqual(testWordUsageList.wordUsageExamples.length)
@@ -108,7 +124,9 @@ describe('word-usage-examples-block.test.js', () => {
         targetWord: testWord1,
         language: 'lat',
         provider: new ResourceProvider('https://test.com', resourceProviderName)
-      }
+      },
+      store,
+      localVue
     })
     expect(cmp.vm.showWordUsageExampleItems).toBeTruthy()
     expect(cmp.find('.alpheios-word_usage_list__provider')).toBeTruthy()
@@ -133,7 +151,9 @@ describe('word-usage-examples-block.test.js', () => {
         targetWord: testWord1,
         language: 'lat',
         provider: 'fooProvider'
-      }
+      },
+      store,
+      localVue
     })
     expect(cmp.vm.wordUsageListSorted).toEqual([
       mockExA,

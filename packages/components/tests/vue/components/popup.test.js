@@ -10,6 +10,7 @@ import Vue from 'vue/dist/vue'
 import Vuex from 'vuex'
 
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
+import AuthModule from '@/vue/vuex-modules/data/auth-module.js'
 import Locales from '@/locales/locales.js'
 import enUS from '@/locales/en-us/messages.json'
 import enUSData from '@/locales/en-us/messages-data.json'
@@ -30,6 +31,7 @@ describe('popup.test.js', () => {
   let contentOptions
   let resourceOptions
   let l10nModule
+  let authModule
   const uiAPI = {
     closePopup: () => {}
   }
@@ -79,8 +81,10 @@ describe('popup.test.js', () => {
       }
     })
 
+    authModule  = new AuthModule(store,api,{auth:null})
     api = {
       ui: uiAPI,
+      auth:authModule,
       settings: {
         contentOptions,
         resourceOptions

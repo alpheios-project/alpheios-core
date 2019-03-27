@@ -7,7 +7,7 @@
     "test": "eslint --fix src/**/*.js && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-lib": "eslint --fix src/**/*.js && jest tests/lib --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-components": "eslint --fix src/**/*.js && jest tests/vue --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-c": "eslint --fix src/**/*.js && jest tests/vue-components/word-usage-examples-block.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "test-c": "eslint --fix src/**/*.js && jest tests/vue/components/word-usage-example-item.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test-a": "eslint --fix src/**/*.js && jest tests/lib/l10n/message.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "build": "npm run build-regular && npm run build-safari",
     "build-regular": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue",
@@ -48,7 +48,7 @@
     "css-loader": "^2.1.1",
     "dom-anchor-text-quote": "*",
     "element-closest": "^3.0.1",
-    "eslint": "^5.15.1",
+    "eslint": "^5.15.3",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-node": "^8.0.1",
@@ -135,5 +135,9 @@
   "eslintIgnore": [
     "**/dist",
     "**/support"
-  ]
+  ],
+  "dependencies": {
+    "vue-multiselect": "2.1.0",
+    "vuex": "^3.1.0"
+  }
 }
