@@ -378,7 +378,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   font-family: var(--alpheios-sans-font-face);
   font-size: var(--alpheios-base-text-size);
   font-weight: 400;
-  color: var(--alpheios-color-dark);
+  color: var(--alpheios-text-color);
   box-sizing: border-box;
   margin: 0; }
   .alpheios-content h1, .alpheios-content h2, .alpheios-content h3, .alpheios-content h4, .alpheios-content h5, .alpheios-content h6, .alpheios-content p, .alpheios-content span, .alpheios-content a {
@@ -389,7 +389,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
     margin-block-start: 0;
     margin-block-end: 0; }
   .alpheios-content p {
-    margin-bottom: px2rem(8px); }
+    margin-bottom: calc(var(--alpheios-base-text-size) * 0.5); }
   .alpheios-content a {
     color: var(--alpheios-color-vivid);
     cursor: pointer; }
@@ -399,24 +399,24 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
     font-family: var(--alpheios-serif-font-face);
     font-size: calc(var(--alpheios-base-text-size) * 1.625);
     font-weight: 700;
-    margin-bottom: px2rem(10px); }
+    margin-bottom: calc(var(--alpheios-base-text-size) * 0.625); }
   .alpheios-content h2 {
     font-size: calc(var(--alpheios-base-text-size) * 1.5);
     font-weight: 700;
-    margin-bottom: px2rem(10px); }
+    margin-bottom: calc(var(--alpheios-base-text-size) * 0.625); }
   .alpheios-content h3 {
     font-size: calc(var(--alpheios-base-text-size) * 1.125);
     font-weight: 700;
-    margin-bottom: px2rem(10px); }
+    margin-bottom: calc(var(--alpheios-base-text-size) * 0.625); }
   .alpheios-content h4 {
     font-family: var(--alpheios-serif-font-face);
     font-size: calc(var(--alpheios-base-text-size) * 1.125);
-    margin-bottom: px2rem(10px); }
+    margin-bottom: calc(var(--alpheios-base-text-size) * 0.625); }
   .alpheios-content h5 {
     font-size: --alpheios-base-text-size;
     font-weight: 700;
     font-style: italic;
-    margin-bottom: px2rem(10px); }
+    margin-bottom: calc(var(--alpheios-base-text-size) * 0.625); }
   .alpheios-layout-large .alpheios-content h1 {
     font-family: var(--alpheios-serif-font-face);
     font-size: calc(var(--alpheios-base-text-size) * 2.25);
@@ -470,15 +470,6 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   font-size: calc(var(--alpheios-base-text-size) * 0.875);
   line-height: 1.5; }
 
-.alpheios-form-label {
-  color: #333;
-  font-size: 0.875rem; }
-
-/*
-.alpheios-form-label {
-  font-family: $alpheios-font-family;
-  font-size: $alpheios-base-font-size * 0.85;
-}*/
 .alpheios-input {
   box-sizing: border-box;
   margin: 0;
@@ -561,7 +552,6 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .auk.alpheios-color_schema_light_class .multiselect,
 .auk.alpheios-color_schema_dark_class .multiselect,
 .auk.alpheios-panel .multiselect {
-  max-width: calc(var(--alpheios-base-ui-size) * 14.6875);
   display: inline-block;
   vertical-align: middle; }
 
@@ -748,7 +738,7 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .auk.alpheios-panel .multiselect__tag-icon:after {
   content: "\D7";
   color: var(--alpheios-btn-primary-font-color);
-  font-size: 13.4px; }
+  font-size: calc(var(--alpheios-base-ui-size) * 1.5); }
 
 .auk.alpheios-font_large_class .multiselect__tag-icon,
 .auk.alpheios-font_medium_class .multiselect__tag-icon,
@@ -761,14 +751,14 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
   cursor: pointer;
   font-style: normal;
   font-weight: bold;
-  line-height: calc(var(--alpheios-base-font-size) * 1.4);
+  line-height: 1;
   margin-left: 7px;
   position: absolute;
   right: 0;
   text-align: center;
   top: 0;
   transition: all .2s ease;
-  width: calc(var(--alpheios-base-font-size) * 1.4);
+  width: calc(var(--alpheios-base-ui-size) * 1.5);
   color: var(--alpheios-btn-primary-font-color); }
   .auk.alpheios-font_large_class .multiselect__tag-icon:hover,
   .auk.alpheios-font_medium_class .multiselect__tag-icon:hover,
@@ -1460,8 +1450,11 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
 .alpheios-setting__label {
-  display: block;
-  vertical-align: middle;
+  width: 50%;
+  padding-left: calc(var(--alpheios-base-text-size) * 0.625);
+}
+.alpheios-setting__control {
+  width: 50%;
 }
 
 /************ UIKit vars ************************/
@@ -2803,19 +2796,12 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .alpheios-lookup__form .alpheios-lookup__form-element:not(:last-child) {
     margin-right: calc(var(--alpheios-base-ui-size) * 0.625);
 }
+.alpheios-lookup__settings {
+  display: flex;
+  flex-direction: column;
+}
 .alpheios-lookup__form-row {
   display: flex;
-}
-.alpheios-lookup__settings {
-  text-align: left;
-}
-.alpheios-panel__options-item {
-  max-width: none;
-}
-.alpheios-panel__options-item .alpheios-select:not([multiple]):not([size]),
-.alpheios-panel__options-item .alpheios-select[multiple],
-.alpheios-panel__options-item .alpheios-select[size] {
-  max-width: 250px;
 }
 
 /************ UIKit vars ************************/
@@ -3322,10 +3308,6 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 .alpheios-panel__message {
   margin-bottom: 0.5rem;
 }
-.alpheios-panel__options-item {
-  margin-bottom: 0.5rem;
-  max-width: 300px;
-}
 .alpheios-panel__contentitem {
   margin-bottom: 1em;
 }
@@ -3345,24 +3327,28 @@ $alpheios-color_schema_dark_background_hover: #686868;*/
 }
 .alpheios-panel__tab__options {
   width: 100%;
-  max-width: 600px;
+  max-width: calc(var(--alpheios-base-ui-size) * 37.5);
 }
 .alpheios-panel__options-item {
-  max-width: none;
-  width: 100%;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
+  display: flex;
+  align-items: flex-start;
 }
-.alpheios-panel__options-item .alpheios-select:not([multiple]):not([size]) {
+
+/*.alpheios-panel__options-item .alpheios-select:not([multiple]):not([size]) {
   max-width: 235px;
   display: inline-block;
   vertical-align: top;
 }
+
 .alpheios-panel__options-item .alpheios-setting__label {
   width: 100px;
   display: inline-block;
 }
+
 .alpheios-panel__options-item select {
   display: inline-block;
-}
+}*/
 .alpheios-panel__tab__inflections {
   width: 100%;
 }

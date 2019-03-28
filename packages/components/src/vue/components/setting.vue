@@ -1,20 +1,39 @@
 <template>
   <div :class="classes" v-if="dataModel && Object.keys(dataModel).length > 0">
-    <label class="alpheios-form-label alpheios-setting__label" v-show="showTitle">{{dataModel.labelText}}</label>
+    <label class="alpheios-setting__label" v-show="showTitle">{{dataModel.labelText}}</label>
 
-    <multiselect :clear-on-select="false" :close-on-select="true" :hide-selected="true" :multiple="true" :options="values"
-                 :preserve-search="true" :searchable="false" placeholder="Pick some" v-if="dataModel.multiValue"
-                 v-model="selected">
+    <multiselect
+        class="alpheios-setting__control"
+        :clear-on-select="false"
+        :close-on-select="true"
+        :hide-selected="true"
+        :multiple="true"
+        :options="values"
+        :preserve-search="true"
+        :searchable="false"
+        placeholder="Pick some"
+        v-if="dataModel.multiValue"
+        v-model="selected"
+    >
     </multiselect>
 
-    <input class="alpheios-input" type="number" v-if="dataModel.number" v-model="selected" min="0">
+    <input
+        class="alpheios-input alpheios-setting__control"
+        type="number"
+        v-if="dataModel.number"
+        v-model="selected"
+        min="0"
+    >
 
-    <div class="alpheios-checkbox-block" v-if="dataModel.boolean">
+    <div class="alpheios-checkbox-block alpheios-setting__control" v-if="dataModel.boolean">
       <input id="alpheios-checkbox-input" type="checkbox" v-model="selected">
       <label @click="checkboxClick" for="checkbox">{{ checkboxLabel }}</label>
     </div>
 
-    <select class="alpheios-select" v-if="!dataModel.multiValue && !dataModel.boolean && !dataModel.number" v-model="selected">
+    <select
+        class="alpheios-select alpheios-setting__control"
+        v-if="!dataModel.multiValue && !dataModel.boolean && !dataModel.number"
+        v-model="selected">
       <option v-for="item in values">{{item}}</option>
     </select>
 
@@ -78,9 +97,7 @@ export default {
       return this.data && !this.data.number && this.data.textValues ? this.data.textValues() : []
     },
     checkboxLabel: function () {
-      if (this.data && this.data.textValues) {
-        return this.data.textValues()[0].text
-      }
+      return (this.data && this.data.textValues) ? this.data.textValues()[0].text : ''
     }
   },
   methods: {
@@ -100,8 +117,12 @@ export default {
   @import "../../styles/variables";
 
   .alpheios-setting__label {
-    display: block;
-    vertical-align: middle;
+    width: 50%;
+    padding-left: textsize(10px);
+  }
+
+  .alpheios-setting__control {
+    width: 50%;
   }
 
 </style>

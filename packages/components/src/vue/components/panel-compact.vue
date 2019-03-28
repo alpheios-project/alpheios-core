@@ -649,11 +649,6 @@ export default {
     margin-bottom: 0.5rem;
   }
 
-  .alpheios-panel__options-item {
-    margin-bottom: 0.5rem;
-    max-width: 300px;
-  }
-
   .alpheios-panel__contentitem {
     margin-bottom: 1em;
   }
@@ -676,15 +671,16 @@ export default {
 
   .alpheios-panel__tab__options {
     width: 100%;
-    max-width: 600px;
+    max-width: uisize(600px);
   }
 
   .alpheios-panel__options-item {
-    max-width: none;
-    width: 100%;
+    margin-bottom: textsize(10px);
+    display: flex;
+    align-items: flex-start;
   }
 
-  .alpheios-panel__options-item .alpheios-select:not([multiple]):not([size]) {
+  /*.alpheios-panel__options-item .alpheios-select:not([multiple]):not([size]) {
     max-width: 235px;
     display: inline-block;
     vertical-align: top;
@@ -697,7 +693,7 @@ export default {
 
   .alpheios-panel__options-item select {
     display: inline-block;
-  }
+  }*/
 
   .alpheios-panel__tab__inflections {
     width: 100%;

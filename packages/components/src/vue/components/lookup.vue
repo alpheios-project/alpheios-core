@@ -30,19 +30,31 @@
       <div class="alpheios-lookup__form-row alpheios-checkbox-block">
         <input :id="`alpheios-${nameBase}-checkbox-input`" type="checkbox" v-model="overrideLanguage">
         <label
+            class="alpheios-lookup__form-element"
             :for="`alpheios-${nameBase}-checkbox-input`"
         >
           {{ overrideLanguageLabel }}
         </label>
       </div>
 
-      <div class="alpheios-lookup__settings alpheios-lookup__form-row">
-        <div class="alpheios-lookup__settings-items" v-show="overrideLanguage">
-          <alph-setting :classes="['alpheios-panel__options-item']" :data="instanceContentOptions.items.lookupLanguage"
-                        @change="settingChange"></alph-setting>
-          <alph-setting :classes="['alpheios-panel__options-item']" :data="lexicon" :key="lexicon.name"
-                        @change="resourceSettingChange" v-for="lexicon in lexiconsFiltered"></alph-setting>
-        </div>
+      <div
+          class="alpheios-lookup__settings"
+          v-show="overrideLanguage"
+      >
+        <alph-setting
+            :classes="['alpheios-panel__options-item', 'alpheios-lookup__form-row']"
+            :data="instanceContentOptions.items.lookupLanguage"
+            @change="settingChange"
+        >
+        </alph-setting>
+        <alph-setting
+            :classes="['alpheios-panel__options-item', 'alpheios-lookup__form-row']"
+            :data="lexicon"
+            :key="lexicon.name"
+            @change="resourceSettingChange"
+            v-for="lexicon in lexiconsFiltered"
+        >
+        </alph-setting>
       </div>
     </template>
   </div>
@@ -197,23 +209,12 @@ export default {
     }
   }
 
+  .alpheios-lookup__settings {
+    display: flex;
+    flex-direction: column;
+  }
+
   .alpheios-lookup__form-row {
     display: flex;
-  }
-
-  .alpheios-lookup__settings {
-    text-align: left;
-  }
-
-  .alpheios-panel__options-item {
-    max-width: none;
-  }
-
-  .alpheios-panel__options-item {
-    .alpheios-select:not([multiple]):not([size]),
-    .alpheios-select[multiple],
-    .alpheios-select[size] {
-      max-width: 250px;
-    }
   }
 </style>

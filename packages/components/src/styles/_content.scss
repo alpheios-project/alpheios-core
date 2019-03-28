@@ -2,7 +2,7 @@
   font-family: var(--alpheios-sans-font-face);
   font-size: var(--alpheios-base-text-size);
   font-weight: 400;
-  color: var(--alpheios-color-dark);
+  color: var(--alpheios-text-color);
   box-sizing: border-box;
   margin: 0;
 
@@ -17,7 +17,7 @@
   }
 
   p {
-    margin-bottom: px2rem(8px);
+    margin-bottom: textsize(8px);
   }
 
   a {
@@ -28,32 +28,32 @@
     font-family: var(--alpheios-serif-font-face);
     font-size: calc(var(--alpheios-base-text-size) * 1.625);
     font-weight: 700;
-    margin-bottom: px2rem(10px);
+    margin-bottom: textsize(10px);
   }
 
   h2 {
     font-size: calc(var(--alpheios-base-text-size) * 1.5);
     font-weight: 700;
-    margin-bottom: px2rem(10px);
+    margin-bottom: textsize(10px);
   }
 
   h3 {
     font-size: calc(var(--alpheios-base-text-size) * 1.125);
     font-weight: 700;
-    margin-bottom: px2rem(10px);
+    margin-bottom: textsize(10px);
   }
 
   h4 {
     font-family: var(--alpheios-serif-font-face);
     font-size: calc(var(--alpheios-base-text-size) * 1.125);
-    margin-bottom: px2rem(10px);
+    margin-bottom: textsize(10px);
   }
 
   h5 {
     font-size: (--alpheios-base-text-size);
     font-weight: 700;
     font-style: italic;
-    margin-bottom: px2rem(10px);
+    margin-bottom: textsize(10px);
   }
 
   #{$alpheios-layout-large} & {

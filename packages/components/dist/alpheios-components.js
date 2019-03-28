@@ -10386,6 +10386,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13284,6 +13296,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13342,9 +13373,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.data && !this.data.number && this.data.textValues ? this.data.textValues() : []
     },
     checkboxLabel: function () {
-      if (this.data && this.data.textValues) {
-        return this.data.textValues()[0].text
-      }
+      return (this.data && this.data.textValues) ? this.data.textValues()[0].text : ''
     }
   },
   methods: {
@@ -16290,7 +16319,7 @@ var render = function() {
                 ]
               },
               [
-                _c("label", { staticClass: "alpheios-form-label" }, [
+                _c("label", [
                   _vm._v(_vm._s(_vm.l10n.getMsg("LABEL_INFLECT_SELECT_POFS")))
                 ]),
                 _vm._v(" "),
@@ -16889,6 +16918,7 @@ var render = function() {
                 _c(
                   "label",
                   {
+                    staticClass: "alpheios-lookup__form-element",
                     attrs: {
                       for: "alpheios-" + _vm.nameBase + "-checkbox-input"
                     }
@@ -16907,46 +16937,43 @@ var render = function() {
             _c(
               "div",
               {
-                staticClass:
-                  "alpheios-lookup__settings alpheios-lookup__form-row"
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.overrideLanguage,
+                    expression: "overrideLanguage"
+                  }
+                ],
+                staticClass: "alpheios-lookup__settings"
               },
               [
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.overrideLanguage,
-                        expression: "overrideLanguage"
-                      }
+                _c("alph-setting", {
+                  attrs: {
+                    classes: [
+                      "alpheios-panel__options-item",
+                      "alpheios-lookup__form-row"
                     ],
-                    staticClass: "alpheios-lookup__settings-items"
+                    data: _vm.instanceContentOptions.items.lookupLanguage
                   },
-                  [
-                    _c("alph-setting", {
-                      attrs: {
-                        classes: ["alpheios-panel__options-item"],
-                        data: _vm.instanceContentOptions.items.lookupLanguage
-                      },
-                      on: { change: _vm.settingChange }
-                    }),
-                    _vm._v(" "),
-                    _vm._l(_vm.lexiconsFiltered, function(lexicon) {
-                      return _c("alph-setting", {
-                        key: lexicon.name,
-                        attrs: {
-                          classes: ["alpheios-panel__options-item"],
-                          data: lexicon
-                        },
-                        on: { change: _vm.resourceSettingChange }
-                      })
-                    })
-                  ],
-                  2
-                )
-              ]
+                  on: { change: _vm.settingChange }
+                }),
+                _vm._v(" "),
+                _vm._l(_vm.lexiconsFiltered, function(lexicon) {
+                  return _c("alph-setting", {
+                    key: lexicon.name,
+                    attrs: {
+                      classes: [
+                        "alpheios-panel__options-item",
+                        "alpheios-lookup__form-row"
+                      ],
+                      data: lexicon
+                    },
+                    on: { change: _vm.resourceSettingChange }
+                  })
+                })
+              ],
+              2
             )
           ]
         : _vm._e()
@@ -21308,7 +21335,7 @@ var render = function() {
               expression: "showTitle"
             }
           ],
-          staticClass: "alpheios-form-label alpheios-setting__label"
+          staticClass: "alpheios-setting__label"
         },
         [_vm._v(_vm._s(_vm.l10n.getMsg("LABEL_RESKIN_SETTINGS")) + ":")]
       ),
@@ -21487,13 +21514,14 @@ var render = function() {
                   expression: "showTitle"
                 }
               ],
-              staticClass: "alpheios-form-label alpheios-setting__label"
+              staticClass: "alpheios-setting__label"
             },
             [_vm._v(_vm._s(_vm.dataModel.labelText))]
           ),
           _vm._v(" "),
           _vm.dataModel.multiValue
             ? _c("multiselect", {
+                staticClass: "alpheios-setting__control",
                 attrs: {
                   "clear-on-select": false,
                   "close-on-select": true,
@@ -21524,7 +21552,7 @@ var render = function() {
                     expression: "selected"
                   }
                 ],
-                staticClass: "alpheios-input",
+                staticClass: "alpheios-input alpheios-setting__control",
                 attrs: { type: "number", min: "0" },
                 domProps: { value: _vm.selected },
                 on: {
@@ -21539,54 +21567,61 @@ var render = function() {
             : _vm._e(),
           _vm._v(" "),
           _vm.dataModel.boolean
-            ? _c("div", { staticClass: "alpheios-checkbox-block" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.selected,
-                      expression: "selected"
-                    }
-                  ],
-                  attrs: { id: "alpheios-checkbox-input", type: "checkbox" },
-                  domProps: {
-                    checked: Array.isArray(_vm.selected)
-                      ? _vm._i(_vm.selected, null) > -1
-                      : _vm.selected
-                  },
-                  on: {
-                    change: function($event) {
-                      var $$a = _vm.selected,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 && (_vm.selected = $$a.concat([$$v]))
+            ? _c(
+                "div",
+                {
+                  staticClass:
+                    "alpheios-checkbox-block alpheios-setting__control"
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selected,
+                        expression: "selected"
+                      }
+                    ],
+                    attrs: { id: "alpheios-checkbox-input", type: "checkbox" },
+                    domProps: {
+                      checked: Array.isArray(_vm.selected)
+                        ? _vm._i(_vm.selected, null) > -1
+                        : _vm.selected
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.selected,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.selected = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.selected = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
                         } else {
-                          $$i > -1 &&
-                            (_vm.selected = $$a
-                              .slice(0, $$i)
-                              .concat($$a.slice($$i + 1)))
+                          _vm.selected = $$c
                         }
-                      } else {
-                        _vm.selected = $$c
                       }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    attrs: { for: "checkbox" },
-                    on: { click: _vm.checkboxClick }
-                  },
-                  [_vm._v(_vm._s(_vm.checkboxLabel))]
-                )
-              ])
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      attrs: { for: "checkbox" },
+                      on: { click: _vm.checkboxClick }
+                    },
+                    [_vm._v(_vm._s(_vm.checkboxLabel))]
+                  )
+                ]
+              )
             : _vm._e(),
           _vm._v(" "),
           !_vm.dataModel.multiValue &&
@@ -21603,7 +21638,7 @@ var render = function() {
                       expression: "selected"
                     }
                   ],
-                  staticClass: "alpheios-select",
+                  staticClass: "alpheios-select alpheios-setting__control",
                   on: {
                     change: function($event) {
                       var $$selectedVal = Array.prototype.filter

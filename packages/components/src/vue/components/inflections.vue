@@ -14,7 +14,7 @@
     </div>
     <div class="alpheios-inflections__content" v-else-if="inflectionsEnabled && $store.state.app.hasInflData">
       <div v-show="partsOfSpeech.length > 1">
-        <label class="alpheios-form-label">{{ l10n.getMsg('LABEL_INFLECT_SELECT_POFS') }}</label>
+        <label>{{ l10n.getMsg('LABEL_INFLECT_SELECT_POFS') }}</label>
         <select class="alpheios-select alpheios-inflections__view-selector alpheios-text__smallest"
                 v-model="partOfSpeechSelector">
           <option v-for="partOfSpeech in partsOfSpeech">{{partOfSpeech}}</option>
