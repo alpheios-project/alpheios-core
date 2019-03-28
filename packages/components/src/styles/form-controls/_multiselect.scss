@@ -1,97 +1,101 @@
-  @mixin multiselect-class() {
-    .multiselect {
-      display: inline-block;
-      vertical-align: middle;
-    }
+#{$alpheios-namespace} {
+  .multiselect {
+    display: inline-block;
+    vertical-align: middle;
+  }
 
-    .multiselect__content-wrapper {
-      border: 1px solid $alpheios-multiselect-border;
-      border-top: 0;
-    }
-    ul.multiselect__content {
-      padding: 0;
-      margin: 0;
-    }
+  .multiselect__content-wrapper {
+    border: 1px solid var(--alpheios-border-color);
+    border-top: 0;
+  }
 
-    .multiselect__tags {
-      border-radius: uisize(10px);
-      border: 1px solid var(--alpheios-border-color);
-    }
+  ul.multiselect__content {
+    padding: 0;
+    margin: 0;
+  }
 
-    .multiselect__tag {
-      background-color: var(--alpheios-btn-primary-bg-color);
-      
-      display: inline-block;
-      border-radius: 5px;
-      padding: 4px 26px 4px 10px;
+  .multiselect__tags {
+    border-radius: uisize(10px);
+    border: 1px solid var(--alpheios-border-color);
+  }
 
-      position: relative;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+  .multiselect__tag {
+    background-color: var(--alpheios-btn-primary-bg-color);
 
-      span {
-        color: var(--alpheios-btn-primary-font-color);
-      }
-    }
-    .multiselect__select {
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666666%22%20points%3D%2212%201%209%206%2015%206%22%3E%3C%2Fpolygon%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666666%22%20points%3D%2212%2013%209%208%2015%208%22%3E%3C%2Fpolygon%3E%0A%3C%2Fsvg%3E%0A");
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center center;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 4px 26px 4px 10px;
 
-      width: 25px;
-      height: 30px;
-    }
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
-    .multiselect__select::before {
-      display: none;
-    }
-
-    .multiselect__content {
-      padding: 0;
-    }
-
-    .multiselect__single {
-      display: none;
-    }
-
-    .multiselect__option {
-      padding: 12px;
-    }
-    .multiselect__option::after {
-      display: none;
-    }
-
-    .multiselect__option--highlight,
-    .multiselect__tag,
-    .multiselect__tag-icon:focus, 
-    .multiselect__tag-icon:hover {
-      background: var(--alpheios-btn-primary-bg-color);
-    }
-
-    .multiselect__option.multiselect__option--highlight {
-      background-color: var(--alpheios-btn-primary-bg-color);
-
-      &:after {
-        display: none;
-      }
-      span {
-        color: var(--alpheios-btn-primary-font-color);
-      }
-    }
-
-    .multiselect__option--highlight span,
-    .multiselect__tag span,
-    .multiselect__tag-icon:focus span, 
-    .multiselect__tag-icon:hover span {
+    span {
       color: var(--alpheios-btn-primary-font-color);
     }
-    
-    .multiselect__tag-icon:after {
-      content: "\D7";
-      color: var(--alpheios-btn-primary-font-color);
-      font-size: uisize(24px);
+  }
+
+  .multiselect__select {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666666%22%20points%3D%2212%201%209%206%2015%206%22%3E%3C%2Fpolygon%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666666%22%20points%3D%2212%2013%209%208%2015%208%22%3E%3C%2Fpolygon%3E%0A%3C%2Fsvg%3E%0A");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    width: 25px;
+    height: 30px;
+  }
+
+  .multiselect__select::before {
+    display: none;
+  }
+
+  .multiselect__content {
+    padding: 0;
+  }
+
+  .multiselect__single {
+    display: none;
+  }
+
+  .multiselect__option {
+    padding: 12px;
+  }
+
+  .multiselect__option::after {
+    display: none;
+  }
+
+  .multiselect__option--highlight,
+  .multiselect__tag,
+  .multiselect__tag-icon:focus,
+  .multiselect__tag-icon:hover {
+    background: var(--alpheios-btn-primary-bg-color);
+  }
+
+  .multiselect__option.multiselect__option--highlight {
+    background-color: var(--alpheios-btn-primary-bg-color);
+
+    &:after {
+      display: none;
     }
+
+    span {
+      color: var(--alpheios-btn-primary-font-color);
+    }
+  }
+
+  .multiselect__option--highlight span,
+  .multiselect__tag span,
+  .multiselect__tag-icon:focus span,
+  .multiselect__tag-icon:hover span {
+    color: var(--alpheios-btn-primary-font-color);
+  }
+
+  .multiselect__tag-icon:after {
+    content: "\D7";
+    color: var(--alpheios-btn-primary-font-color);
+    font-size: uisize(24px);
+  }
 
   .multiselect__tag-icon {
     border-radius: 5px;
@@ -108,17 +112,9 @@
     transition: all .2s ease;
     width: uisize(24px);
     color: var(--alpheios-btn-primary-font-color);
+
     &:hover {
       background-color: var(--alpheios-btn-primary-bg-color);
     }
   }
-}
-
-.#{$alpheios-uikit-namespace}.alpheios-font_large_class,
-.#{$alpheios-uikit-namespace}.alpheios-font_medium_class, 
-.#{$alpheios-uikit-namespace}.alpheios-font_small_class,
-.#{$alpheios-uikit-namespace}.alpheios-color_schema_light_class,
-.#{$alpheios-uikit-namespace}.alpheios-color_schema_dark_class,
-.#{$alpheios-uikit-namespace}.alpheios-panel {
-  @include multiselect-class();
 }

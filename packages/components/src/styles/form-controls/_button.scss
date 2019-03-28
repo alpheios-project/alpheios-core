@@ -30,11 +30,7 @@
   }
 }
 
-.alpheios-button-small {
-  font-size: calc(var(--alpheios-base-text-size) * 0.5);
-}
-
-.alpheios-button--primary {
+.alpheios-button-primary {
   @extend %alpheios-button;
   color: var(--alpheios-btn-primary-font-color);
   background-color: var(--alpheios-btn-primary-bg-color);
@@ -56,7 +52,7 @@
   }
 }
 
-.alpheios-button--secondary {
+.alpheios-button-secondary {
   @extend %alpheios-button;
   color: var(--alpheios-btn-secondary-font-color);
   background-color: var(--alpheios-btn-secondary-bg-color);
@@ -78,7 +74,7 @@
   }
 }
 
-.alpheios-button--tertiary {
+.alpheios-button-tertiary {
   @extend %alpheios-button;
   color: var(--alpheios-btn-tertiary-font-color);
   background-color: var(--alpheios-btn-tertiary-bg-color);

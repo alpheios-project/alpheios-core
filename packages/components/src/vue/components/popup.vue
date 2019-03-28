@@ -49,7 +49,7 @@
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
                         v-show="$store.getters['app/defDataReady']">
             <button @click="ui.showPanelTab('definitions')"
-                    class="alpheios-button--primary alpheios-popup__toolbar-button">
+                    class="alpheios-button-primary alpheios-popup__toolbar-button">
               {{ l10n.getText('LABEL_POPUP_DEFINE') }}
             </button>
           </alph-tooltip>
@@ -57,7 +57,7 @@
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_INFLECTIONS')" tooltipDirection="bottom-wide"
                         v-show="$store.state.app.hasInflData">
             <button @click="ui.showPanelTab('inflections')"
-                    class="alpheios-button--primary alpheios-popup__toolbar-button">
+                    class="alpheios-button-primary alpheios-popup__toolbar-button">
               {{ l10n.getText('LABEL_POPUP_INFLECT') }}
             </button>
           </alph-tooltip>
@@ -65,7 +65,7 @@
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_USAGEEXAMPLES')" tooltipDirection="bottom-wide"
                         v-show="$store.state.app.wordUsageExamplesReady">
             <button @click="ui.showPanelTab('wordUsage')"
-                    class="alpheios-button--primary alpheios-popup__toolbar-button">
+                    class="alpheios-button-primary alpheios-popup__toolbar-button">
               {{ l10n.getText('LABEL_POPUP_USAGEEXAMPLES') }}
             </button>
           </alph-tooltip>
@@ -73,7 +73,7 @@
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
                         v-show="$store.getters['app/hasTreebankData']">
             <button @click="ui.showPanelTab('treebank')"
-                    class="alpheios-button--primary alpheios-popup__toolbar-button">
+                    class="alpheios-button-primary alpheios-popup__toolbar-button">
               {{ l10n.getText('LABEL_POPUP_TREEBANK') }}
             </button>
 
@@ -81,7 +81,7 @@
 
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_OPTIONS')" tooltipDirection="bottom-right">
             <button @click="ui.showPanelTab('options')"
-                    class="alpheios-button--primary alpheios-popup__toolbar-button">
+                    class="alpheios-button-primary alpheios-popup__toolbar-button">
               {{ l10n.getText('LABEL_POPUP_OPTIONS') }}
             </button>
           </alph-tooltip>

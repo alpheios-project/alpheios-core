@@ -12,9 +12,7 @@ $alpheios-base-background-color: #ffffff;
 $alpheios-base-border-color: #d3d3d3;
 
 /************ UIKit vars ************************/
-$alpheios-tools-color: #0E2233;
 $alpheios-copy-color: #666666;
-$alpheios-tools-color: #0E2233;
 $alpheios-link-color: #3E8D9C;
 $alpheios-toolbar-color: #4E6476;
 $alpheios-toolbar-text-color: #ffffff;
@@ -24,46 +22,12 @@ $alpheios-link-color-dark-bg-disabled: #9E9C9A;
 $alpheios-toolbar-active-color: #7E8897;
 $alpheios-logo-color: #BCE5F0;
 $alpheios-icon-color: #73CDDE;
-
-$alpheios-sidebar-header-gradient: linear-gradient(to bottom, #9E9C9A 0%,#D1D1D0 100%);
 $alpheios-sidebar-header-border-color: #B8B7B5;
 
 $alpheios-highlight-color: #F6D918;
 $alpheios-highlight-dark-color: #E49A0D;
 
 $alpheios-headers-color: #333333;
-
-$alpheios-inflections__suffix_match_background: #bce6f0;
-$alpheios-inflections__suffix_full_match_background: #f6d918;
-/************ Multiselect vars ************************/
-$alpheios-multiselect-background: $alpheios-toolbar-color;
-$alpheios-multiselect-border: $alpheios-copy-color;
-$alpheios-multiselect-color: $alpheios-toolbar-text-color;
-
-/*********** Font styles ***********************/
-$alpheios-small-font-size: 12px;
-$alpheios-base-font-size: 16px;
-$alpheios-large-font-size: 20px;
-
-/********** Light Schema ***********************/
-/*$alpheios-color_schema_light_background: $alpheios-base-background-color;
-$alpheios-color_schema_light_text_color: $alpheios-base-font-color;
-$alpheios-color_schema_light_background_hover: $alpheios-base-border-color;
-
-$alpheios-color_schema_light_tooltip-bg: #fcfcfa;
-$alpheios-color_schema_light_tooltip-color: $alpheios-toolbar-color;
-$alpheios-color_schema_light_tooltip-border: $alpheios-toolbar-color;*/
-
-/********** Dark Schema ***********************/
-/*$alpheios-color_schema_dark_background: #282828;
-$alpheios-color_schema_dark_text_color: #f2f2f2;
-$alpheios-color_schema_dark_link_color: #b1d1d7;
-
-$alpheios-color_schema_dark_tooltip-bg: #fcfcfa;
-$alpheios-color_schema_dark_tooltip-color: $alpheios-toolbar-color;
-
-$alpheios-color_schema_dark_table_border: #f2f2f2;
-$alpheios-color_schema_dark_background_hover: #686868;*/
 
 /*
  Calculates a size of text elements relative to the base size.

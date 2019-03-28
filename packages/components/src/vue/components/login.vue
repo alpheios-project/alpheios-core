@@ -1,9 +1,9 @@
 <template>
   <div>
-    <button @click="logIn" class="uk-button uk-button-primary" v-show="! this.$store.state.auth.isAuthenticated">
+    <button @click="logIn" class="alpheios-button-primary" v-show="! this.$store.state.auth.isAuthenticated">
       {{ l10n.getMsg(`AUTH_LOGIN_BTN_LABEL`) }}
     </button>
-    <button @click="logOut" class="uk-button uk-button-primary" v-show="this.$store.state.auth.isAuthenticated">
+    <button @click="logOut" class="alpheios-button-primary" v-show="this.$store.state.auth.isAuthenticated">
       {{ l10n.getMsg(`AUTH_LOGOUT_BTN_LABEL`) }}
     </button>
   </div>

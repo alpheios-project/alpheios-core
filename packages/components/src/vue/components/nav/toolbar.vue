@@ -254,6 +254,8 @@ export default {
 <style lang="scss">
   @import "../../../styles/variables";
 
+  $alpheios-toolbar-base-width: 44px;
+
   .alpheios-toolbar {
     background: transparent;
     position: fixed;
@@ -262,8 +264,8 @@ export default {
     z-index: 10000;
 
     .alpheios-navbuttons__btn {
-      width: uisize(44px);
-      height: uisize(44px);
+      width: uisize($alpheios-toolbar-base-width);
+      height: uisize($alpheios-toolbar-base-width);
       margin: uisize(8px) 0;
       box-sizing: border-box;
       position: relative;
@@ -338,24 +340,24 @@ export default {
   }
 
   .alpheios-toolbar__header {
-    height: 20px;
-    width: 40px;
     box-sizing: border-box;
-    border: 1px solid $alpheios-sidebar-header-border-color;
+    border: 1px solid var(--alpheios-border-color);
+    border-bottom-left-radius: uisize(10px);
+    border-bottom-right-radius: uisize(10px);
     cursor: pointer;
     background: #FFF;
 
     svg {
-      width: 20px;
+      width: uisize(20px);
       height: auto;
       position: relative;
-      left: 9px;
-      top: -5px;
-      fill: $alpheios-sidebar-header-border-color;
+      left: uisize(11px);
+      top: uisize(-5px);
+      fill: var(--alpheios-border-color);
     }
 
     &.expanded svg {
-      top: 5px;
+      top: uisize(5px);
     }
 
     &:hover svg {
@@ -364,20 +366,22 @@ export default {
   }
 
   .alpheios-toolbar__drag-handle {
-    width: 40px;
-    height: 30px;
-    border: 1px solid $alpheios-sidebar-header-border-color;
+    width: uisize($alpheios-toolbar-base-width);
+    height: uisize($alpheios-toolbar-base-width);
     border-bottom: none;
-    background: #FFF;
+    background: var(--alpheios-toolbar-bg-color);
     box-sizing: border-box;
+    border-top-left-radius: uisize(10px);
+    border-top-right-radius: uisize(10px);
   }
 
   .alpheios-toolbar__logo-icon {
-    width: 30px;
+    width: 60%;
     height: auto;
     position: relative;
-    top: 3px;
-    left: 4px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-45%, -45%);
   }
 
   .alpheios-toolbar__lookup-control {
@@ -385,64 +389,36 @@ export default {
     background: #FFF;
 
     .alpheios-navbuttons__btn {
-      height: 30px;
       margin: 0;
+      border-radius: 0;
       border-bottom: none;
-
-      svg {
-        top: 4px;
-      }
     }
   }
 
   .alpheios-toolbar__lookup {
     display: flex;
     position: absolute;
-    width: 400px;
-    height: 80px;
-    background: #FFF;
-    left: -400px;
+    width: uisize(410px);
+    height: uisize(91px);
+    background: var(--alpheios-text-bg-color);
+    left: uisize(-400px);
     top: 0;
-    border: 1px solid $alpheios-sidebar-header-border-color;
+    border: uisize(1px) solid var(--alpheios-border-color);
+    border-top-left-radius: uisize(10px);
+    border-bottom-left-radius: uisize(10px);
     border-right: none;
     box-sizing: border-box;
+    padding: uisize(10px);
+    padding-right: uisize(20px);
+    // To place it below other toolbar elements so that it will blend smoothly with rounded corners of those
+    z-index: -1;
 
     .alpheios-lookup__form {
-      margin-top: 30px;
-    }
-
-    input {
-      width: 300px;
-      box-sizing: border-box;
-      line-height: 28px;
-      box-shadow: none;
-      padding: 0 10px;
-      font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-      font-size: 14px;
-      height: 30px;
-      border: 1px solid $alpheios-copy-color;
-
-      &:focus {
-        border-color: $alpheios-link-hover-color;
-        outline: transparent;
-      }
+      justify-content: flex-end;
     }
 
     .alph_tooltip {
       display: inline-block;
-    }
-
-    button {
-      font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-      font-size: 12px;
-      line-height: 30px;
-      background-color: $alpheios-toolbar-color;
-      color: #FFF;
-      text-transform: uppercase;
-      border-radius: 0;
-      border: none;
-      height: 30px;
-      cursor: pointer;
     }
   }
 

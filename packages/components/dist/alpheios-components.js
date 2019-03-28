@@ -16036,7 +16036,7 @@ var render = function() {
                                       "button",
                                       {
                                         staticClass:
-                                          "alpheios-button alpheios-button--primary alpheios-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right",
+                                          "alpheios-button-primary alpheios-inflections__control-btn alpheios-inflections__control-btn--right",
                                         on: { click: _vm.showNoSuffixGroups }
                                       },
                                       [
@@ -16090,7 +16090,7 @@ var render = function() {
                                       "button",
                                       {
                                         staticClass:
-                                          "alpheios-button alpheios-button--primary alpheios-button-small alpheios-inflections__control-btn alpheios-inflections__control-btn--right",
+                                          "alpheios-button-primary alpheios-inflections__control-btn alpheios-inflections__control-btn--right",
                                         on: { click: _vm.hideNoSuffixGroups }
                                       },
                                       [
@@ -16739,7 +16739,7 @@ var render = function() {
             expression: "! this.$store.state.auth.isAuthenticated"
           }
         ],
-        staticClass: "uk-button uk-button-primary",
+        staticClass: "alpheios-button-primary",
         on: { click: _vm.logIn }
       },
       [
@@ -16760,7 +16760,7 @@ var render = function() {
             expression: "this.$store.state.auth.isAuthenticated"
           }
         ],
-        staticClass: "uk-button uk-button-primary",
+        staticClass: "alpheios-button-primary",
         on: { click: _vm.logOut }
       },
       [
@@ -16848,7 +16848,7 @@ var render = function() {
               _c(
                 "button",
                 {
-                  staticClass: "alpheios-button alpheios-button--primary",
+                  staticClass: "alpheios-button-primary",
                   attrs: { tabindex: "-1", type: "button" },
                   on: { click: _vm.lookup }
                 },
@@ -20804,7 +20804,7 @@ var render = function() {
                         "button",
                         {
                           staticClass:
-                            "alpheios-button--primary alpheios-popup__toolbar-button",
+                            "alpheios-button-primary alpheios-popup__toolbar-button",
                           on: {
                             click: function($event) {
                               return _vm.ui.showPanelTab("definitions")
@@ -20845,7 +20845,7 @@ var render = function() {
                         "button",
                         {
                           staticClass:
-                            "alpheios-button--primary alpheios-popup__toolbar-button",
+                            "alpheios-button-primary alpheios-popup__toolbar-button",
                           on: {
                             click: function($event) {
                               return _vm.ui.showPanelTab("inflections")
@@ -20886,7 +20886,7 @@ var render = function() {
                         "button",
                         {
                           staticClass:
-                            "alpheios-button--primary alpheios-popup__toolbar-button",
+                            "alpheios-button-primary alpheios-popup__toolbar-button",
                           on: {
                             click: function($event) {
                               return _vm.ui.showPanelTab("wordUsage")
@@ -20927,7 +20927,7 @@ var render = function() {
                         "button",
                         {
                           staticClass:
-                            "alpheios-button--primary alpheios-popup__toolbar-button",
+                            "alpheios-button-primary alpheios-popup__toolbar-button",
                           on: {
                             click: function($event) {
                               return _vm.ui.showPanelTab("treebank")
@@ -20958,7 +20958,7 @@ var render = function() {
                         "button",
                         {
                           staticClass:
-                            "alpheios-button--primary alpheios-popup__toolbar-button",
+                            "alpheios-button-primary alpheios-popup__toolbar-button",
                           on: {
                             click: function($event) {
                               return _vm.ui.showPanelTab("options")

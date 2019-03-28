@@ -1,21 +1,22 @@
+// A skin file
 @import "skins/alpheios";
+// Sass variables and mixins
 @import "variables";
 
+// Base content styles
 @import "content";
 
+// Form elements
 @import "form-controls/input";
 @import "form-controls/select";
 @import "form-controls/multiselect";
 @import "form-controls/checkbox";
 @import "form-controls/button";
 
+// Other styles
 @import "lex";
 @import "tooltip";
-
 @import "../../node_modules/alpheios-wordlist/dist/style/style.css";
-
-@import "fontcontent";
-
 @import "alignment";
 
 // Latin

@@ -15,7 +15,7 @@
       >
         <button
             @click="lookup"
-            class="alpheios-button alpheios-button--primary"
+            class="alpheios-button-primary"
             tabindex="-1"
             type="button"
         >
