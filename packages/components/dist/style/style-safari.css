@@ -283,12 +283,13 @@
 
 
 /*# sourceMappingURL=style.css.map*/
+@charset "UTF-8";
 html {
   --alpheios-base-text-size: 16px !important;
   --alpheios-base-ui-size: 16px !important;
   font-size: 16px !important;
-  --alpheios-sans-font-face: 'Source Sans Pro', sans-serif !important;
-  --alpheios-serif-font-face: 'Source Serif Pro', serif !important;
+  --alpheios-sans-font-face: "Source Sans Pro", sans-serif !important;
+  --alpheios-serif-font-face: "Source Serif Pro", serif !important;
   --alpheios-arabic-font-face: Amiri, serif !important;
   --alpheios-color-neutral-dark: #757575 !important;
   --alpheios-color-neutral-light: #E6E6E6 !important;
@@ -307,6 +308,8 @@ html {
   --alpheios-color-bright-pressed: var(--alpheios-color-bright) !important;
   --alpheios-color-light: #BCE5F0 !important;
   --alpheios-text-color: var(--alpheios-color-neutral-dark) !important;
+  --alpheios-text-color-dark: var(--alpheios-color-dark) !important;
+  --alpheios-text-color-vivid: var(--alpheios-color-vivid) !important;
   --alpheios-text-bg-color: var(--alpheios-color-neutral-lightest) !important;
   --alpheios-toolbar-bg-color: var(--alpheios-color-muted) !important;
   --alpheios-border-color: var(--alpheios-color-neutral-dark) !important;
@@ -327,13 +330,13 @@ html {
   --alpheios-btn-primary-font-color-pressed: var(--alpheios-color-neutral-lightest) !important;
   --alpheios-btn-primary-bg-color-pressed: var(--alpheios-color-vivid-hover) !important;
   --alpheios-btn-primary-border-color-pressed: var(--alpheios-color-vivid-hover) !important;
-  --alpheios-btn-secondary-font-color: var(--alpheios-color-neutral-lightest) !important;
+  --alpheios-btn-secondary-font-color: var(--alpheios-color-dark) !important;
   --alpheios-btn-secondary-bg-color: var(--alpheios-color-bright) !important;
   --alpheios-btn-secondary-border-color: var(--alpheios-color-bright) !important;
-  --alpheios-btn-secondary-font-color-hover: var(--alpheios-color-neutral-lightest) !important;
+  --alpheios-btn-secondary-font-color-hover: var(--alpheios-color-dark) !important;
   --alpheios-btn-secondary-bg-color-hover: var(--alpheios-color-bright-hover) !important;
   --alpheios-btn-secondary-border-color-hover: var(--alpheios-color-bright-hover) !important;
-  --alpheios-btn-secondary-font-color-pressed: var(--alpheios-color-neutral-lightest) !important;
+  --alpheios-btn-secondary-font-color-pressed: var(--alpheios-color-dark) !important;
   --alpheios-btn-secondary-bg-color-pressed: var(--alpheios-color-bright-pressed) !important;
   --alpheios-btn-secondary-border-color-pressed: var(--alpheios-color-bright-pressed) !important;
   --alpheios-btn-tertiary-font-color: var(--alpheios-color-muted) !important;
@@ -344,7 +347,8 @@ html {
   --alpheios-btn-tertiary-border-color-hover: var(--alpheios-color-muted) !important;
   --alpheios-btn-tertiary-font-color-pressed: var(--alpheios-color-neutral-lightest) !important;
   --alpheios-btn-tertiary-bg-color-pressed: var(--alpheios-color-muted) !important;
-  --alpheios-btn-tertiary-border-color-pressed: var(--alpheios-color-muted) !important; }
+  --alpheios-btn-tertiary-border-color-pressed: var(--alpheios-color-muted) !important;
+}
 
 /************ UIKit vars ************************/
 /*
@@ -361,97 +365,124 @@ html {
   font-weight: 400 !important;
   color: var(--alpheios-text-color) !important;
   box-sizing: border-box !important;
-  margin: 0 !important; }
-  .alpheios-content [lang='ara'] {
-    font-family: var(--alpheios-arabic-font-face) !important; }
-  .alpheios-content h1, .alpheios-content h2, .alpheios-content h3, .alpheios-content h4, .alpheios-content h5, .alpheios-content h6, .alpheios-content p, .alpheios-content span, .alpheios-content a {
-    line-height: 1.15 !important;
-    text-size-adjust: 100% !important;
-    padding: 0 !important;
-    font-style: normal !important;
-    margin-block-start: 0 !important;
-    margin-block-end: 0 !important; }
-  .alpheios-content p {
-    margin-bottom: calc(var(--alpheios-base-text-size) * 0.5) !important; }
-  .alpheios-content a {
-    color: var(--alpheios-color-vivid) !important;
-    cursor: pointer !important; }
-    .alpheios-content a:hover, .alpheios-content a:active {
-      text-decoration: underline !important; }
-  .alpheios-content h1 {
-    font-family: var(--alpheios-serif-font-face) !important;
-    font-size: calc(var(--alpheios-base-text-size) * 1.625) !important;
-    font-weight: 700 !important;
-    margin-bottom: calc(var(--alpheios-base-text-size) * 0.625) !important; }
-  .alpheios-content h2 {
-    font-size: calc(var(--alpheios-base-text-size) * 1.5) !important;
-    font-weight: 700 !important;
-    margin-bottom: calc(var(--alpheios-base-text-size) * 0.625) !important; }
-  .alpheios-content h3 {
-    font-size: calc(var(--alpheios-base-text-size) * 1.125) !important;
-    font-weight: 700 !important;
-    margin-bottom: calc(var(--alpheios-base-text-size) * 0.625) !important; }
-  .alpheios-content h4 {
-    font-family: var(--alpheios-serif-font-face) !important;
-    font-size: calc(var(--alpheios-base-text-size) * 1.125) !important;
-    margin-bottom: calc(var(--alpheios-base-text-size) * 0.625) !important; }
-  .alpheios-content h5 {
-    font-size: --alpheios-base-text-size !important;
-    font-weight: 700 !important;
-    font-style: italic !important;
-    margin-bottom: calc(var(--alpheios-base-text-size) * 0.625) !important; }
-  .alpheios-layout-large .alpheios-content h1 {
-    font-family: var(--alpheios-serif-font-face) !important;
-    font-size: calc(var(--alpheios-base-text-size) * 2.25) !important;
-    font-weight: 700 !important; }
-  .alpheios-layout-large .alpheios-content h2 {
-    font-family: var(--alpheios-serif-font-face) !important;
-    font-size: calc(var(--alpheios-base-text-size) * 1.75) !important;
-    font-weight: 600 !important; }
-  .alpheios-layout-large .alpheios-content h3 {
-    font-size: calc(var(--alpheios-base-text-size) * 1.375) !important;
-    font-weight: 700 !important; }
-  .alpheios-content input,
-  .alpheios-content optgroup,
-  .alpheios-content select,
-  .alpheios-content textarea {
-    font-family: inherit !important;
-    font-size: 100% !important;
-    line-height: 1.15 !important;
-    margin: 0 !important; }
-  .alpheios-content select {
-    text-transform: none !important; }
-  .alpheios-content textarea {
-    overflow: auto !important; }
-  .alpheios-content [type="checkbox"],
-  .alpheios-content [type="radio"] {
-    box-sizing: border-box !important;
-    padding: 0 !important; }
-  .alpheios-content b {
-    margin: 0 !important;
-    padding: 0 !important;
-    vertical-align: inherit !important;
-    font-size: inherit !important;
-    letter-spacing: inherit !important; }
-  .alpheios-content i {
-    font-family: inherit !important;
-    font-size: inherit !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    text-align: inherit !important;
-    font-style: inherit !important; }
-  .alpheios-content u {
-    margin: 0 !important;
-    padding: 0 !important;
-    vertical-align: inherit !important;
-    font-size: inherit !important;
-    font-weight: inherit !important;
-    text-decoration: inherit !important;
-    line-height: inherit !important; }
+  margin: 0 !important;
+}
+.alpheios-content [lang=ara] {
+  font-family: var(--alpheios-arabic-font-face) !important;
+}
+.alpheios-content h1, .alpheios-content h2, .alpheios-content h3, .alpheios-content h4, .alpheios-content h5, .alpheios-content h6, .alpheios-content p, .alpheios-content span, .alpheios-content a {
+  line-height: 1.15 !important;
+  text-size-adjust: 100% !important;
+  padding: 0 !important;
+  font-style: normal !important;
+  margin-block-start: 0 !important;
+  margin-block-end: 0 !important;
+}
+.alpheios-content p {
+  margin-bottom: calc(var(--alpheios-base-text-size) * 1) !important;
+}
+.alpheios-content a {
+  color: var(--alpheios-color-vivid) !important;
+  cursor: pointer !important;
+}
+.alpheios-content a:hover, .alpheios-content a:active {
+  text-decoration: underline !important;
+}
+.alpheios-content h1 {
+  font-family: var(--alpheios-serif-font-face) !important;
+  font-size: calc(var(--alpheios-base-text-size) * 1.625) !important;
+  font-weight: 700 !important;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 2) !important;
+  color: var(--alpheios-text-color-dark) !important;
+}
+.alpheios-content h2 {
+  font-size: calc(var(--alpheios-base-text-size) * 1.5) !important;
+  font-weight: 700 !important;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 1.625) !important;
+}
+.alpheios-content h3 {
+  font-size: calc(var(--alpheios-base-text-size) * 1.125) !important;
+  font-weight: 700 !important;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 1.375) !important;
+}
+.alpheios-content h4 {
+  font-family: var(--alpheios-serif-font-face) !important;
+  font-size: calc(var(--alpheios-base-text-size) * 1.125) !important;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 1.125) !important;
+}
+.alpheios-content h5 {
+  font-size: --alpheios-base-text-size !important;
+  font-weight: 700 !important;
+  font-style: italic !important;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 1) !important;
+}
+.alpheios-layout-large .alpheios-content h1 {
+  font-family: var(--alpheios-serif-font-face) !important;
+  font-size: calc(var(--alpheios-base-text-size) * 2.25) !important;
+  font-weight: 700 !important;
+}
+.alpheios-layout-large .alpheios-content h2 {
+  font-family: var(--alpheios-serif-font-face) !important;
+  font-size: calc(var(--alpheios-base-text-size) * 1.75) !important;
+  font-weight: 600 !important;
+}
+.alpheios-layout-large .alpheios-content h3 {
+  font-size: calc(var(--alpheios-base-text-size) * 1.375) !important;
+  font-weight: 700 !important;
+}
+.alpheios-content input,
+.alpheios-content optgroup,
+.alpheios-content select,
+.alpheios-content textarea {
+  font-family: inherit !important;
+  font-size: 100% !important;
+  line-height: 1.15 !important;
+  margin: 0 !important;
+}
+.alpheios-content select {
+  text-transform: none !important;
+}
+.alpheios-content textarea {
+  overflow: auto !important;
+}
+.alpheios-content [type=checkbox],
+.alpheios-content [type=radio] {
+  box-sizing: border-box !important;
+  padding: 0 !important;
+}
+.alpheios-content b {
+  margin: 0 !important;
+  padding: 0 !important;
+  vertical-align: inherit !important;
+  font-size: inherit !important;
+  letter-spacing: inherit !important;
+}
+.alpheios-content i {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: inherit !important;
+  font-style: inherit !important;
+}
+.alpheios-content u {
+  margin: 0 !important;
+  padding: 0 !important;
+  vertical-align: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  text-decoration: inherit !important;
+  line-height: inherit !important;
+}
+
+.alpheios-clickable {
+  cursor: pointer !important;
+}
 
 .alpheios-text-small {
   font-size: calc(var(--alpheios-base-text-size) * 0.875) !important;
-  line-height: 1.5 !important; }
+  line-height: 1.5 !important;
+}
 
 .alpheios-input {
   box-sizing: border-box !important;
@@ -468,24 +499,33 @@ html {
   vertical-align: middle !important;
   display: inline-block;
   -webkit-appearance: none !important;
-  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important; }
-  .alpheios-input[type="search"]::-webkit-search-cancel-button, .alpheios-input[type="search"]::-webkit-search-decoration {
-    -webkit-appearance: none !important; }
-  .alpheios-input[type="number"]::-webkit-inner-spin-button, .alpheios-input[type="number"]::-webkit-outer-spin-button {
-    height: auto !important; }
-  .alpheios-input::-moz-placeholder {
-    opacity: 1 !important; }
-  .alpheios-input:not(input) {
-    line-height: 40px !important; }
-  .alpheios-input:focus {
-    outline: none !important; }
-  .alpheios-input:disabled {
-    background-color: var(--alpheios-color-neutral-dark) !important;
-    color: var(--alpheios-color-neutral-lightest) !important; }
-  .alpheios-input::placeholder {
-    color: var(--alpheios-color-neutral-light) !important; }
-  .alpheios-input::-ms-input-placeholder {
-    color: var(--alpheios-color-neutral-light) !important; }
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
+}
+.alpheios-input[type=search]::-webkit-search-cancel-button, .alpheios-input[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none !important;
+}
+.alpheios-input[type=number]::-webkit-inner-spin-button, .alpheios-input[type=number]::-webkit-outer-spin-button {
+  height: auto !important;
+}
+.alpheios-input::-moz-placeholder {
+  opacity: 1 !important;
+}
+.alpheios-input:not(input) {
+  line-height: 40px !important;
+}
+.alpheios-input:focus {
+  outline: none !important;
+}
+.alpheios-input:disabled {
+  background-color: var(--alpheios-color-neutral-dark) !important;
+  color: var(--alpheios-color-neutral-lightest) !important;
+}
+.alpheios-input::placeholder {
+  color: var(--alpheios-color-neutral-light) !important;
+}
+.alpheios-input::-ms-input-placeholder {
+  color: var(--alpheios-color-neutral-light) !important;
+}
 
 .alpheios-select {
   box-sizing: border-box !important;
@@ -499,52 +539,62 @@ html {
   padding: 0 10px !important;
   background: var(--alpheios-text-bg-color) !important;
   color: var(--alpheios-text-color) !important;
-  -webkit-appearance: none !important; }
-  .alpheios-select:not([multiple]):not([size]) {
-    height: 40px !important;
-    vertical-align: middle !important;
-    display: inline-block; }
-  .alpheios-select:not(select) {
-    line-height: 40px !important; }
-  .alpheios-select[multiple], .alpheios-select[size] {
-    padding-top: 4px !important;
-    padding-bottom: 4px !important;
-    vertical-align: top !important; }
-  .alpheios-select:focus {
-    outline: none !important; }
-  .alpheios-select:disabled {
-    background-color: #f8f8f8 !important;
-    color: #999 !important; }
-  .alpheios-select:not([multiple]):not([size]) {
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
-    padding-right: 20px !important;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666%22%20points%3D%2212%201%209%206%2015%206%22%20%2F%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666%22%20points%3D%2212%2013%209%208%2015%208%22%20%2F%3E%0A%3C%2Fsvg%3E%0A") !important;
-    background-repeat: no-repeat !important;
-    background-position: 100% 50% !important; }
-  .alpheios-select:not([multiple]):not([size])::-ms-expand {
-    display: none; }
-  .alpheios-select:not([multiple]):not([size]) option {
-    color: #444 !important; }
-  .alpheios-select:not([multiple]):not([size]):disabled {
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23999%22%20points%3D%2212%201%209%206%2015%206%22%20%2F%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23999%22%20points%3D%2212%2013%209%208%2015%208%22%20%2F%3E%0A%3C%2Fsvg%3E%0A") !important; }
+  -webkit-appearance: none !important;
+}
+.alpheios-select:not([multiple]):not([size]) {
+  height: 40px !important;
+  vertical-align: middle !important;
+  display: inline-block;
+}
+.alpheios-select:not(select) {
+  line-height: 40px !important;
+}
+.alpheios-select[multiple], .alpheios-select[size] {
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+  vertical-align: top !important;
+}
+.alpheios-select:focus {
+  outline: none !important;
+}
+.alpheios-select:disabled {
+  background-color: #f8f8f8 !important;
+  color: #999 !important;
+}
+.alpheios-select:not([multiple]):not([size]) {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  padding-right: 20px !important;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666%22%20points%3D%2212%201%209%206%2015%206%22%20%2F%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666%22%20points%3D%2212%2013%209%208%2015%208%22%20%2F%3E%0A%3C%2Fsvg%3E%0A") !important;
+  background-repeat: no-repeat !important;
+  background-position: 100% 50% !important;
+}
+.alpheios-select:not([multiple]):not([size])::-ms-expand {
+  display: none;
+}
+.alpheios-select:not([multiple]):not([size]) option {
+  color: #444 !important;
+}
+.alpheios-select:not([multiple]):not([size]):disabled {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23999%22%20points%3D%2212%201%209%206%2015%206%22%20%2F%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23999%22%20points%3D%2212%2013%209%208%2015%208%22%20%2F%3E%0A%3C%2Fsvg%3E%0A") !important;
+}
 
 .alpheios-content .multiselect {
   display: inline-block;
-  vertical-align: middle !important; }
-
+  vertical-align: middle !important;
+}
 .alpheios-content .multiselect__content-wrapper {
   border: 1px solid var(--alpheios-border-color) !important;
-  border-top: 0 !important; }
-
+  border-top: 0 !important;
+}
 .alpheios-content ul.multiselect__content {
   padding: 0 !important;
-  margin: 0 !important; }
-
+  margin: 0 !important;
+}
 .alpheios-content .multiselect__tags {
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
-  border: 1px solid var(--alpheios-border-color) !important; }
-
+  border: 1px solid var(--alpheios-border-color) !important;
+}
 .alpheios-content .multiselect__tag {
   background-color: var(--alpheios-btn-primary-bg-color) !important;
   display: inline-block;
@@ -552,57 +602,60 @@ html {
   padding: 4px 26px 4px 10px !important;
   position: relative !important;
   text-overflow: ellipsis !important;
-  white-space: nowrap !important; }
-  .alpheios-content .multiselect__tag span {
-    color: var(--alpheios-btn-primary-font-color) !important; }
-
+  white-space: nowrap !important;
+}
+.alpheios-content .multiselect__tag span {
+  color: var(--alpheios-btn-primary-font-color) !important;
+}
 .alpheios-content .multiselect__select {
   background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666666%22%20points%3D%2212%201%209%206%2015%206%22%3E%3C%2Fpolygon%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666666%22%20points%3D%2212%2013%209%208%2015%208%22%3E%3C%2Fpolygon%3E%0A%3C%2Fsvg%3E%0A") !important;
   background-size: contain !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
   width: 25px !important;
-  height: 30px !important; }
-
+  height: 30px !important;
+}
 .alpheios-content .multiselect__select::before {
-  display: none; }
-
+  display: none;
+}
 .alpheios-content .multiselect__content {
-  padding: 0 !important; }
-
+  padding: 0 !important;
+}
 .alpheios-content .multiselect__single {
-  display: none; }
-
+  display: none;
+}
 .alpheios-content .multiselect__option {
-  padding: 12px !important; }
-
+  padding: 12px !important;
+}
 .alpheios-content .multiselect__option::after {
-  display: none; }
-
+  display: none;
+}
 .alpheios-content .multiselect__option--highlight,
 .alpheios-content .multiselect__tag,
 .alpheios-content .multiselect__tag-icon:focus,
 .alpheios-content .multiselect__tag-icon:hover {
-  background: var(--alpheios-btn-primary-bg-color) !important; }
-
+  background: var(--alpheios-btn-primary-bg-color) !important;
+}
 .alpheios-content .multiselect__option.multiselect__option--highlight {
-  background-color: var(--alpheios-btn-primary-bg-color) !important; }
-  .alpheios-content .multiselect__option.multiselect__option--highlight:after {
-    display: none; }
-  .alpheios-content .multiselect__option.multiselect__option--highlight span {
-    color: var(--alpheios-btn-primary-font-color) !important; }
-
+  background-color: var(--alpheios-btn-primary-bg-color) !important;
+}
+.alpheios-content .multiselect__option.multiselect__option--highlight:after {
+  display: none;
+}
+.alpheios-content .multiselect__option.multiselect__option--highlight span {
+  color: var(--alpheios-btn-primary-font-color) !important;
+}
 .alpheios-content .multiselect__option--highlight span,
 .alpheios-content .multiselect__tag span,
 .alpheios-content .multiselect__tag-icon:focus span,
 .alpheios-content .multiselect__tag-icon:hover span {
-  color: var(--alpheios-btn-primary-font-color) !important; }
-
-.alpheios-content .multiselect__tag-icon:after {
-  content: "\D7" !important;
   color: var(--alpheios-btn-primary-font-color) !important;
-  font-size: calc(var(--alpheios-base-ui-size) * 1.5) !important; }
-
+}
+.alpheios-content .multiselect__tag-icon:after {
+  content: "×" !important;
+  color: var(--alpheios-btn-primary-font-color) !important;
+  font-size: calc(var(--alpheios-base-ui-size) * 1.5) !important;
+}
 .alpheios-content .multiselect__tag-icon {
   border-radius: 5px !important;
   bottom: 0 !important;
@@ -615,11 +668,13 @@ html {
   right: 0 !important;
   text-align: center !important;
   top: 0 !important;
-  transition: all .2s ease !important;
+  transition: all 0.2s ease !important;
   width: calc(var(--alpheios-base-ui-size) * 1.5) !important;
-  color: var(--alpheios-btn-primary-font-color) !important; }
-  .alpheios-content .multiselect__tag-icon:hover {
-    background-color: var(--alpheios-btn-primary-bg-color) !important; }
+  color: var(--alpheios-btn-primary-font-color) !important;
+}
+.alpheios-content .multiselect__tag-icon:hover {
+  background-color: var(--alpheios-btn-primary-bg-color) !important;
+}
 
 div.alpheios-checkbox-block {
   display: inline-block;
@@ -627,13 +682,14 @@ div.alpheios-checkbox-block {
   overflow: hidden !important;
   line-height: calc(var(--alpheios-base-ui-size) * 1.375) !important;
   max-width: calc(var(--alpheios-base-ui-size) * 14.6875) !important;
-  vertical-align: top !important; }
+  vertical-align: top !important;
+}
 
-.alpheios-checkbox-block input[type="checkbox"] {
+.alpheios-checkbox-block input[type=checkbox] {
   opacity: 0 !important;
   position: absolute !important;
-  left: -999px !important; }
-
+  left: -999px !important;
+}
 .alpheios-checkbox-block label {
   position: relative !important;
   display: inline-block;
@@ -641,38 +697,42 @@ div.alpheios-checkbox-block {
   vertical-align: top !important;
   /*16px width of fake checkbox + 6px distance between fake checkbox and text*/
   padding-left: calc(var(--alpheios-base-ui-size) * 1.375) !important;
-  padding-top: calc(var(--alpheios-base-ui-size) * 0.125) !important; }
-  .alpheios-checkbox-block label::before, .alpheios-checkbox-block label::after {
-    position: absolute !important;
-    content: "" !important;
-    /*Needed for the line-height to take effect*/
-    display: inline-block; }
-  .alpheios-checkbox-block label::before {
-    height: calc(var(--alpheios-base-ui-size) * 1) !important;
-    width: calc(var(--alpheios-base-ui-size) * 1) !important;
-    border: calc(var(--alpheios-base-ui-size) * 0.0625) solid !important;
-    border-radius: calc(var(--alpheios-base-ui-size) * 0.25) !important;
-    left: 0 !important;
-    /*(24px line-height - 16px height of fake checkbox) / 2 - 1px for the border
-       *to vertically center it.
-       */
-    top: calc(var(--alpheios-base-ui-size) * 0.1875) !important; }
-  .alpheios-checkbox-block label::after {
-    height: calc(var(--alpheios-base-ui-size) * 0.3125) !important;
-    width: calc(var(--alpheios-base-ui-size) * 0.5625) !important;
-    border-left: calc(var(--alpheios-base-ui-size) * 0.125) solid !important;
-    border-bottom: calc(var(--alpheios-base-ui-size) * 0.125) solid !important;
-    transform: rotate(-45deg) !important;
-    left: calc(var(--alpheios-base-ui-size) * 0.1875) !important;
-    top: calc(var(--alpheios-base-ui-size) * 0.375) !important; }
+  padding-top: calc(var(--alpheios-base-ui-size) * 0.125) !important;
+}
+.alpheios-checkbox-block label::before, .alpheios-checkbox-block label::after {
+  position: absolute !important;
+  content: "" !important;
+  /*Needed for the line-height to take effect*/
+  display: inline-block;
+}
+.alpheios-checkbox-block label::before {
+  height: calc(var(--alpheios-base-ui-size) * 1) !important;
+  width: calc(var(--alpheios-base-ui-size) * 1) !important;
+  border: calc(var(--alpheios-base-ui-size) * 0.0625) solid !important;
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.25) !important;
+  left: 0 !important;
+  /*(24px line-height - 16px height of fake checkbox) / 2 - 1px for the border
+   *to vertically center it.
+   */
+  top: calc(var(--alpheios-base-ui-size) * 0.1875) !important;
+}
+.alpheios-checkbox-block label::after {
+  height: calc(var(--alpheios-base-ui-size) * 0.3125) !important;
+  width: calc(var(--alpheios-base-ui-size) * 0.5625) !important;
+  border-left: calc(var(--alpheios-base-ui-size) * 0.125) solid !important;
+  border-bottom: calc(var(--alpheios-base-ui-size) * 0.125) solid !important;
+  transform: rotate(-45deg) !important;
+  left: calc(var(--alpheios-base-ui-size) * 0.1875) !important;
+  top: calc(var(--alpheios-base-ui-size) * 0.375) !important;
+}
+.alpheios-checkbox-block input[type=checkbox] + label::after {
+  content: none !important;
+}
+.alpheios-checkbox-block input[type=checkbox]:checked + label::after {
+  content: "" !important;
+}
 
-.alpheios-checkbox-block input[type="checkbox"] + label::after {
-  content: none !important; }
-
-.alpheios-checkbox-block input[type="checkbox"]:checked + label::after {
-  content: "" !important; }
-
-.alpheios-button-primary, .alpheios-button-secondary, .alpheios-button-tertiary {
+.alpheios-button-tertiary, .alpheios-button-secondary, .alpheios-button-primary {
   font-family: var(--alpheios-sans-font-face) !important;
   font-size: var(--alpheios-base-text-size) !important;
   font-weight: 700 !important;
@@ -687,98 +747,123 @@ div.alpheios-checkbox-block {
   text-decoration: none !important;
   line-height: 1 !important;
   border-radius: 0.6em !important;
-  cursor: pointer !important; }
-  .alpheios-button-primary::-moz-focus-inner, .alpheios-button-secondary::-moz-focus-inner, .alpheios-button-tertiary::-moz-focus-inner {
-    border: 0 !important;
-    padding: 0 !important; }
-  .alpheios-button-primary:hover, .alpheios-button-secondary:hover, .alpheios-button-tertiary:hover {
-    text-decoration: none !important; }
-  .alpheios-button-primary:focus, .alpheios-button-secondary:focus, .alpheios-button-tertiary:focus {
-    outline: none !important; }
+  cursor: pointer !important;
+}
+.alpheios-button-tertiary::-moz-focus-inner, .alpheios-button-secondary::-moz-focus-inner, .alpheios-button-primary::-moz-focus-inner {
+  border: 0 !important;
+  padding: 0 !important;
+}
+.alpheios-button-tertiary:hover, .alpheios-button-secondary:hover, .alpheios-button-primary:hover {
+  text-decoration: none !important;
+}
+.alpheios-button-tertiary:focus, .alpheios-button-secondary:focus, .alpheios-button-primary:focus {
+  outline: none !important;
+}
 
 .alpheios-button-primary {
   color: var(--alpheios-btn-primary-font-color) !important;
   background-color: var(--alpheios-btn-primary-bg-color) !important;
-  border-color: var(--alpheios-btn-primary-border-color) !important; }
-  .alpheios-button-primary:hover, .alpheios-button-primary:focus {
-    color: var(--alpheios-btn-primary-font-color-hover) !important;
-    background-color: var(--alpheios-btn-primary-bg-color-hover) !important;
-    border-color: var(--alpheios-btn-primary-border-color-hover) !important;
-    box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25) !important; }
-  .alpheios-button-primary:active {
-    color: var(--alpheios-btn-primary-font-color-pressed) !important;
-    background-color: var(--alpheios-btn-primary-bg-color-pressed) !important;
-    border-color: var(--alpheios-btn-primary-border-color-pressed) !important;
-    box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1) !important; }
+  border-color: var(--alpheios-btn-primary-border-color) !important;
+}
+.alpheios-button-primary:hover, .alpheios-button-primary:focus {
+  color: var(--alpheios-btn-primary-font-color-hover) !important;
+  background-color: var(--alpheios-btn-primary-bg-color-hover) !important;
+  border-color: var(--alpheios-btn-primary-border-color-hover) !important;
+  box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25) !important;
+}
+.alpheios-button-primary:active {
+  color: var(--alpheios-btn-primary-font-color-pressed) !important;
+  background-color: var(--alpheios-btn-primary-bg-color-pressed) !important;
+  border-color: var(--alpheios-btn-primary-border-color-pressed) !important;
+  box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1) !important;
+}
 
 .alpheios-button-secondary {
   color: var(--alpheios-btn-secondary-font-color) !important;
   background-color: var(--alpheios-btn-secondary-bg-color) !important;
-  border-color: var(--alpheios-btn-secondary-border-color) !important; }
-  .alpheios-button-secondary:hover, .alpheios-button-secondary:focus {
-    color: var(--alpheios-btn-secondary-font-color-hover) !important;
-    background-color: var(--alpheios-btn-secondary-bg-color-hover) !important;
-    border-color: var(--alpheios-btn-secondary-border-color-hover) !important;
-    box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25) !important; }
-  .alpheios-button-secondary:active {
-    color: var(--alpheios-btn-secondary-font-color-pressed) !important;
-    background-color: var(--alpheios-btn-secondary-bg-color-pressed) !important;
-    border-color: var(--alpheios-btn-secondary-border-color-pressed) !important;
-    box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1) !important; }
+  border-color: var(--alpheios-btn-secondary-border-color) !important;
+}
+.alpheios-button-secondary:hover, .alpheios-button-secondary:focus {
+  color: var(--alpheios-btn-secondary-font-color-hover) !important;
+  background-color: var(--alpheios-btn-secondary-bg-color-hover) !important;
+  border-color: var(--alpheios-btn-secondary-border-color-hover) !important;
+  box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25) !important;
+}
+.alpheios-button-secondary:active {
+  color: var(--alpheios-btn-secondary-font-color-pressed) !important;
+  background-color: var(--alpheios-btn-secondary-bg-color-pressed) !important;
+  border-color: var(--alpheios-btn-secondary-border-color-pressed) !important;
+  box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1) !important;
+}
 
 .alpheios-button-tertiary {
   color: var(--alpheios-btn-tertiary-font-color) !important;
   background-color: var(--alpheios-btn-tertiary-bg-color) !important;
-  border-color: var(--alpheios-btn-tertiary-border-color) !important; }
-  .alpheios-button-tertiary:hover, .alpheios-button-tertiary:focus {
-    color: var(--alpheios-btn-tertiary-font-color-hover) !important;
-    background-color: var(--alpheios-btn-tertiary-bg-color-hover) !important;
-    border-color: var(--alpheios-btn-tertiary-border-color-hover) !important;
-    box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25) !important; }
-  .alpheios-button-tertiary:active {
-    color: var(--alpheios-btn-tertiary-font-color-pressed) !important;
-    background-color: var(--alpheios-btn-tertiary-bg-color-pressed) !important;
-    border-color: var(--alpheios-btn-tertiary-border-color-pressed) !important;
-    box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1) !important; }
+  border-color: var(--alpheios-btn-tertiary-border-color) !important;
+}
+.alpheios-button-tertiary:hover, .alpheios-button-tertiary:focus {
+  color: var(--alpheios-btn-tertiary-font-color-hover) !important;
+  background-color: var(--alpheios-btn-tertiary-bg-color-hover) !important;
+  border-color: var(--alpheios-btn-tertiary-border-color-hover) !important;
+  box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25) !important;
+}
+.alpheios-button-tertiary:active {
+  color: var(--alpheios-btn-tertiary-font-color-pressed) !important;
+  background-color: var(--alpheios-btn-tertiary-bg-color-pressed) !important;
+  border-color: var(--alpheios-btn-tertiary-border-color-pressed) !important;
+  box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1) !important;
+}
 
 /* panel contents */
 .alpheios-lex-lex_sense1, .lex_sense1 {
-  margin-left: .5em !important; }
+  margin-left: 0.5em !important;
+}
 
 .alpheios-lex-lex_sense2, .lex_sense2 {
-  margin-left: 1em !important; }
+  margin-left: 1em !important;
+}
 
 .alpheios-lex-lex_sense3, .lex_sense3 {
-  margin-left: 1.5em !important; }
+  margin-left: 1.5em !important;
+}
 
 .alpheios-lex-lex_sense4, .lex_sense4 {
-  margin-left: 2em !important; }
+  margin-left: 2em !important;
+}
 
 .alpheios-lex-lex_sense5, .lex_sense5 {
-  margin-left: 2.5em !important; }
+  margin-left: 2.5em !important;
+}
 
 .alpheios-lex-lex_sense6, .lex_sense6 {
-  margin-left: 3em !important; }
+  margin-left: 3em !important;
+}
 
 .alpheios-meaning .alpheios-provider {
   font-style: italic !important;
-  font-size: smaller !important; }
+  font-size: smaller !important;
+}
 
 .alpheios-lex-sense-separator, .sense-separator {
-  line-height: 1em !important; }
+  line-height: 1em !important;
+}
 
 .alpheios-lex-sense-spacer1, .sense-spacer1 {
-  padding-left: 1em !important; }
+  padding-left: 1em !important;
+}
 
 .alpheios-lex-sense-spacer2, .sense-spacer2 {
-  padding-left: 3em !important; }
+  padding-left: 3em !important;
+}
 
 .alpheios-lex-alph-source, .alph-source {
-  margin-top: 1em !important; }
+  margin-top: 1em !important;
+}
 
 .alph_tooltip {
   position: relative !important;
-  display: inline-block; }
+  display: inline-block;
+}
 
 .alph_tooltip .tooltiptext {
   visibility: hidden !important;
@@ -791,19 +876,22 @@ div.alpheios-checkbox-block {
   border-radius: 6px !important;
   z-index: 1 !important;
   opacity: 0 !important;
-  transition: opacity .6s !important;
+  transition: opacity 0.6s !important;
   font-size: 12px !important;
-  display: none; }
+  display: none;
+}
 
 .alph_tooltip:hover .tooltiptext {
   visibility: visible !important;
   opacity: 1 !important;
-  display: inline; }
+  display: inline;
+}
 
 .alph_tooltip-top {
   bottom: 125% !important;
   left: 50% !important;
-  margin-left: -50% !important; }
+  margin-left: -50% !important;
+}
 
 .alph_tooltip-top::after {
   content: "" !important;
@@ -813,12 +901,14 @@ div.alpheios-checkbox-block {
   margin-left: -5px !important;
   border-width: 5px !important;
   border-style: solid !important;
-  border-color: #555 transparent transparent transparent !important; }
+  border-color: #555 transparent transparent transparent !important;
+}
 
 .alph_tooltip-top-right {
   bottom: 125% !important;
   right: 0 !important;
-  margin-left: -50% !important; }
+  margin-left: -50% !important;
+}
 
 .alph_tooltip-top-right::after {
   content: "" !important;
@@ -828,11 +918,13 @@ div.alpheios-checkbox-block {
   margin-left: -5px !important;
   border-width: 5px !important;
   border-style: solid !important;
-  border-color: #555 transparent transparent transparent !important; }
+  border-color: #555 transparent transparent transparent !important;
+}
 
 .alph_tooltip-top-left {
   bottom: 125% !important;
-  left: 0 !important; }
+  left: 0 !important;
+}
 
 .alph_tooltip-top-left::after {
   content: "" !important;
@@ -842,11 +934,13 @@ div.alpheios-checkbox-block {
   margin-left: 5px !important;
   border-width: 5px !important;
   border-style: solid !important;
-  border-color: #555 transparent transparent transparent !important; }
+  border-color: #555 transparent transparent transparent !important;
+}
 
 .alph_tooltip-right {
   top: -5px !important;
-  left: 125% !important; }
+  left: 125% !important;
+}
 
 .alph_tooltip-right::after {
   content: "" !important;
@@ -856,24 +950,29 @@ div.alpheios-checkbox-block {
   margin-top: -5px !important;
   border-width: 5px !important;
   border-style: solid !important;
-  border-color: transparent #555 transparent transparent !important; }
+  border-color: transparent #555 transparent transparent !important;
+}
 
 .alph_tooltip-bottom {
   top: 135% !important;
   left: 50% !important;
-  margin-left: -50% !important; }
+  margin-left: -50% !important;
+}
 
 .alph_tooltip-bottom-wide {
   top: 135% !important;
-  left: -30% !important; }
+  left: -30% !important;
+}
 
 .alph_tooltip-bottom-narrow {
   top: 135% !important;
-  left: -75% !important; }
+  left: -75% !important;
+}
 
 .alph_tooltip-bottom-narrow2 {
   top: 135% !important;
-  left: -165% !important; }
+  left: -165% !important;
+}
 
 .alph_tooltip-bottom::after,
 .alph_tooltip-bottom-wide::after,
@@ -886,12 +985,14 @@ div.alpheios-checkbox-block {
   margin-left: -5px !important;
   border-width: 5px !important;
   border-style: solid !important;
-  border-color: transparent transparent #555 transparent !important; }
+  border-color: transparent transparent #555 transparent !important;
+}
 
 .alph_tooltip-bottom-right {
   top: 135% !important;
   right: 0 !important;
-  margin-left: -50% !important; }
+  margin-left: -50% !important;
+}
 
 .alph_tooltip-bottom-right::after {
   content: "" !important;
@@ -901,23 +1002,26 @@ div.alpheios-checkbox-block {
   margin-left: -5px !important;
   border-width: 5px !important;
   border-style: solid !important;
-  border-color: transparent transparent #555 transparent !important; }
+  border-color: transparent transparent #555 transparent !important;
+}
 
 .alpheios-panel-right .alph_tooltip-bottom-right {
   top: 135% !important;
   right: auto !important;
   margin-left: 0 !important;
-  left: 0 !important; }
-
+  left: 0 !important;
+}
 .alpheios-panel-right .alph_tooltip-bottom-right::after {
   margin-left: 0 !important;
   right: auto !important;
-  left: 15% !important; }
+  left: 15% !important;
+}
 
 .alph_tooltip-left {
   top: -5px !important;
   bottom: auto !important;
-  right: 128% !important; }
+  right: 128% !important;
+}
 
 .alph_tooltip-left::after {
   content: "" !important;
@@ -927,74 +1031,78 @@ div.alpheios-checkbox-block {
   margin-top: -5px !important;
   border-width: 5px !important;
   border-style: solid !important;
-  border-color: transparent transparent transparent #555 !important; }
+  border-color: transparent transparent transparent #555 !important;
+}
 
 .alpheios-word {
-  transition: background-color 1s ease-out !important; }
+  transition: background-color 1s ease-out !important;
+}
 
 .alpheios-alignment__highlight_fix {
-  background-color: #E49A0D !important; }
+  background-color: #E49A0D !important;
+}
 
 .alpheios-alignment__highlight {
-  background-color: #F6D918 !important; }
+  background-color: #F6D918 !important;
+}
 
 @font-face {
-  font-family: 'Source Sans Pro';
+  font-family: "Source Sans Pro";
   font-style: normal;
   font-weight: 400;
   src: local("Source Sans Pro Regular"), local("SourceSansPro-Regular"), url(https://fonts.gstatic.com/s/sourcesanspro/v11/6xK3dSBYKcSV-LCoeQqfX1RYOo3qOK7l.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 @font-face {
-  font-family: 'Source Sans Pro';
+  font-family: "Source Sans Pro";
   font-style: normal;
   font-weight: 700;
   src: local("Source Sans Pro Bold"), local("SourceSansPro-Bold"), url(https://fonts.gstatic.com/s/sourcesanspro/v11/6xKydSBYKcSV-LCoeQqfX1RYOo3ig4vwlxdu.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 @font-face {
-  font-family: 'Source Sans Pro';
+  font-family: "Source Sans Pro";
   font-style: italic;
   font-weight: 700;
   src: local("Source Sans Pro Bold Italic"), local("SourceSansPro-BoldItalic"), url(https://fonts.gstatic.com/s/sourcesanspro/v11/6xKwdSBYKcSV-LCoeQqfX1RYOo3qPZZclSds18Q.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 @font-face {
-  font-family: 'Source Serif Pro';
+  font-family: "Source Serif Pro";
   font-style: normal;
   font-weight: 400;
   src: local("Source Serif Pro"), local("SourceSerifPro-Regular"), url(https://fonts.gstatic.com/s/sourceserifpro/v6/neIQzD-0qpwxpaWvjeD0X88SAOeauXQ-oA.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 @font-face {
-  font-family: 'Source Serif Pro';
+  font-family: "Source Serif Pro";
   font-style: normal;
   font-weight: 600;
   src: local("Source Serif Pro Semibold"), local("SourceSerifPro-Semibold"), url(https://fonts.gstatic.com/s/sourceserifpro/v6/neIXzD-0qpwxpaWvjeD0X88SAOeasasatSyqxA.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 @font-face {
-  font-family: 'Source Serif Pro';
+  font-family: "Source Serif Pro";
   font-style: normal;
   font-weight: 700;
   src: local("Source Serif Pro Bold"), local("SourceSerifPro-Bold"), url(https://fonts.gstatic.com/s/sourceserifpro/v6/neIXzD-0qpwxpaWvjeD0X88SAOeasc8btSyqxA.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 @font-face {
-  font-family: 'Amiri';
+  font-family: "Amiri";
   font-style: normal;
   font-weight: 400;
   src: local("Amiri Regular"), local("Amiri-Regular"), url(https://fonts.gstatic.com/s/amiri/v11/J7aRnpd8CGxBHpUrtLMA7w.woff2) format("woff2");
-  unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC; }
-
+  unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC;
+}
 body {
   -webkit-touch-callout: auto !important;
   -webkit-user-select: auto !important;
   -khtml-user-select: auto !important;
   -moz-user-select: auto !important;
   -ms-user-select: auto !important;
-  user-select: auto !important; }
-
+  user-select: auto !important;
+}
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -1004,7 +1112,6 @@ body {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -1023,7 +1130,6 @@ body {
 p.alpheios-lemma__translations-value {
   margin-bottom: 5px !important;
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -1046,7 +1152,7 @@ p.alpheios-lemma__translations-value {
 }
 .alpheios-morph__attr {
   font-weight: normal !important;
-  padding-right: .25em !important;
+  padding-right: 0.25em !important;
 }
 .alpheios-morph__linkedattr {
   color: var(--alpheios-color-vivid) !important;
@@ -1054,20 +1160,20 @@ p.alpheios-lemma__translations-value {
   font-weight: 700 !important;
 }
 .alpheios-morph__linkedattr:hover, .alpheios-morph__linkedattr:active {
-    text-decoration: underline !important;
+  text-decoration: underline !important;
 }
 .alpheios-morph__pofs span:last-child:after {
   content: ";" !important;
 }
 .alpheios-morph__inflset {
-  margin-left: .5em !important;
-  margin-top: .5em !important;
+  margin-left: 0.5em !important;
+  margin-top: 0.5em !important;
 }
 .alpheios-morph__inflset h5 {
   display: none;
   font-size: 16px !important;
   line-height: 1 !important;
-  margin-bottom: .5em !important;
+  margin-bottom: 0.5em !important;
 }
 .alpheios-morph__inflset:first-child h5 {
   color: #4E6476 !important;
@@ -1077,7 +1183,7 @@ p.alpheios-lemma__translations-value {
   display: inline;
 }
 .alpheios-morph__inflections, .alpheios-morph__definition, .alpheios-morph__forms {
-  margin-left: .5em !important;
+  margin-left: 0.5em !important;
 }
 .alpheios-morph__listitem:after {
   content: ", " !important;
@@ -1101,95 +1207,94 @@ div.alpheios-morph__block {
   display: block;
 }
 .alpheios-panel__tab-panel .alpheios-morph__lexemes {
-  font-size: .75rem !important;
+  font-size: 0.75rem !important;
 }
 .alpheios-morph__inflfeatures span:first-child:before {
-  content: '(' !important;
+  content: "(" !important;
 }
 .alpheios-morph__inflfeatures span:last-child:after {
-  content: ')' !important;
+  content: ")" !important;
 }
 h4.alpheios-morph__groupitem {
   display: inline;
   font-weight: 700 !important;
 }
 .alpheios-morph__groupitem:last-child:after {
-  content: ':' !important;
+  content: ":" !important;
 }
 .alpheios-morph__dictentry {
   clear: both !important;
   margin-bottom: calc(var(--alpheios-base-text-size) * 1.25) !important;
 }
 .alpheios-morph__dictentry .lemma_index,
-  .alpheios-morph__dictentry .lemma_index_spacer {
-    display: inline-block;
-    text-align: center !important;
-    font-weight: 700 !important;
-    margin-right: calc(var(--alpheios-base-text-size) * 0.3125) !important;
+.alpheios-morph__dictentry .lemma_index_spacer {
+  display: inline-block;
+  text-align: center !important;
+  font-weight: 700 !important;
+  margin-right: calc(var(--alpheios-base-text-size) * 0.3125) !important;
 }
 .alpheios-morph__dictentry .alpheios-morph__features:before, .alpheios-morph__dictentry .alpheios-morph__features:after {
-    content: '' !important;
-    display: table;
-    clear: both !important;
+  content: "" !important;
+  display: table;
+  clear: both !important;
 }
 .alpheios-morph__dictentry .alpheios-morph__features p {
-    margin-bottom: 0 !important;
-    margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
 }
 .alpheios-morph__dictentry .alpheios-morph__features p.feature_extras {
-      font-style: italic !important;
+  font-style: italic !important;
 }
 .alpheios-morph__dictentry .alpheios-morph__features span.feature_source .alpheios-morph__attr {
-    font-size: smaller !important;
+  font-size: smaller !important;
 }
 .alpheios-morph__dictentry .alpheios-morph__morphdata,
-  .alpheios-morph__dictentry p.feature_extras,
-  .alpheios-morph__dictentry .alpheios-morph__definition_list,
-  .alpheios-morph__dictentry .alpheios-morph__translation_list,
-  .alpheios-morph__dictentry .alpheios-morph__inflections {
-    margin-left: 34px !important;
+.alpheios-morph__dictentry p.feature_extras,
+.alpheios-morph__dictentry .alpheios-morph__definition_list,
+.alpheios-morph__dictentry .alpheios-morph__translation_list,
+.alpheios-morph__dictentry .alpheios-morph__inflections {
+  margin-left: 34px !important;
 }
 .alpheios-morph__dictentry .alpheios-morph__definition_list,
-  .alpheios-morph__dictentry .alpheios-morph__translation_list,
-  .alpheios-morph__dictentry .alpheios-morph__inflections {
-    /* border-top: 1px solid $alpheios-toolbar-color; */
-    margin-top: 5px !important;
-    padding-left: 5px !important;
+.alpheios-morph__dictentry .alpheios-morph__translation_list,
+.alpheios-morph__dictentry .alpheios-morph__inflections {
+  /* border-top: 1px solid $alpheios-toolbar-color; */
+  margin-top: 5px !important;
+  padding-left: 5px !important;
 }
 .alpheios-morph__dictentry .alpheios-morph__definition_list .block_title,
-    .alpheios-morph__dictentry .alpheios-morph__translation_list .block_title,
-    .alpheios-morph__dictentry .alpheios-morph__inflections .block_title {
-      margin: 0 !important;
-      color: #4E6476 !important;
-      font-size: 10px !important;
-      text-align: right !important;
+.alpheios-morph__dictentry .alpheios-morph__translation_list .block_title,
+.alpheios-morph__dictentry .alpheios-morph__inflections .block_title {
+  margin: 0 !important;
+  color: #4E6476 !important;
+  font-size: 10px !important;
+  text-align: right !important;
 }
 .alpheios-morph__dictentry .alpheios-morph__definition {
-    margin-bottom: 5px !important;
+  margin-bottom: 5px !important;
 }
 .alpheios-morph__dictentry .alpheios-morph__inflset {
-    margin-top: 0 !important;
-    margin-left: 7px !important;
+  margin-top: 0 !important;
+  margin-left: 7px !important;
 }
 .alpheios-morph__dictentry .alpheios-morph__inflset .alpheios-morph__forms {
-      margin-left: 0 !important;
-      display: inline-block;
-      vertical-align: top !important;
+  margin-left: 0 !important;
+  display: inline-block;
+  vertical-align: top !important;
 }
 .alpheios-morph__dictentry .alpheios-morph__inflset .inflset_index {
-      display: inline-block;
-      font-weight: bold !important;
-      vertical-align: top !important;
+  display: inline-block;
+  font-weight: bold !important;
+  vertical-align: top !important;
 }
 .alpheios-morph__dictentry .alpheios-morph__definition_list .definition_index {
-    display: inline-block;
-    font-weight: bold !important;
+  display: inline-block;
+  font-weight: bold !important;
 }
 .alpheios-morph__dictentry .alpheios-morph__definition_list .alpheios-definition__short {
-    display: inline-block;
+  display: inline-block;
 }
-
-fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spinner{position:absolute !important;right:1px !important;top:1px !important;width:48px !important;height:35px !important;background:#fff !important;display:block}.multiselect__spinner:after,.multiselect__spinner:before{position:absolute !important;content:"" !important;top:50% !important;left:50% !important;margin:-8px 0 0 -8px !important;width:16px !important;height:16px !important;border-radius:100% !important;border-color:#41b883 transparent transparent !important;border-style:solid !important;border-width:2px !important;box-shadow:0 0 0 1px transparent !important}.multiselect__spinner:before{animation:a 2.4s cubic-bezier(.41,.26,.2,.62);animation-iteration-count:infinite}.multiselect__spinner:after{animation:a 2.4s cubic-bezier(.51,.09,.21,.8);animation-iteration-count:infinite}.multiselect__loading-enter-active,.multiselect__loading-leave-active{transition:opacity .4s ease-in-out !important;opacity:1 !important}.multiselect__loading-enter,.multiselect__loading-leave-active{opacity:0 !important}.multiselect,.multiselect__input,.multiselect__single{font-family:inherit !important;font-size:16px !important;-ms-touch-action:manipulation !important;touch-action:manipulation !important}.multiselect{box-sizing:content-box !important;display:block;position:relative !important;width:100% !important;min-height:40px !important;text-align:left !important;color:#35495e !important}.multiselect *{box-sizing:border-box !important}.multiselect:focus{outline:none !important}.multiselect--disabled{opacity:.6 !important}.multiselect--active{z-index:1 !important}.multiselect--active:not(.multiselect--above) .multiselect__current,.multiselect--active:not(.multiselect--above) .multiselect__input,.multiselect--active:not(.multiselect--above) .multiselect__tags{border-bottom-left-radius:0 !important;border-bottom-right-radius:0 !important}.multiselect--active .multiselect__select{transform:rotate(180deg) !important}.multiselect--above.multiselect--active .multiselect__current,.multiselect--above.multiselect--active .multiselect__input,.multiselect--above.multiselect--active .multiselect__tags{border-top-left-radius:0 !important;border-top-right-radius:0 !important}.multiselect__input,.multiselect__single{position:relative !important;display:inline-block;min-height:20px !important;line-height:20px !important;border:none !important;border-radius:5px !important;background:#fff !important;padding:0 0 0 5px !important;width:100% !important;transition:border .1s ease !important;box-sizing:border-box !important;margin-bottom:8px !important;vertical-align:top !important}.multiselect__input::-webkit-input-placeholder{color:#35495e !important}.multiselect__input:-ms-input-placeholder{color:#35495e !important}.multiselect__input::placeholder{color:#35495e !important}.multiselect__tag~.multiselect__input,.multiselect__tag~.multiselect__single{width:auto !important}.multiselect__input:hover,.multiselect__single:hover{border-color:#cfcfcf !important}.multiselect__input:focus,.multiselect__single:focus{border-color:#a8a8a8 !important;outline:none !important}.multiselect__single{padding-left:5px !important;margin-bottom:8px !important}.multiselect__tags-wrap{display:inline}.multiselect__tags{min-height:40px !important;display:block;padding:8px 40px 0 8px !important;border-radius:5px !important;border:1px solid #e8e8e8 !important;background:#fff !important;font-size:14px !important}.multiselect__tag{position:relative !important;display:inline-block;padding:4px 26px 4px 10px !important;border-radius:5px !important;margin-right:10px !important;color:#fff !important;line-height:1 !important;background:#41b883 !important;margin-bottom:5px !important;white-space:nowrap !important;overflow:hidden !important;max-width:100% !important;text-overflow:ellipsis !important}.multiselect__tag-icon{cursor:pointer !important;margin-left:7px !important;position:absolute !important;right:0 !important;top:0 !important;bottom:0 !important;font-weight:700 !important;font-style:normal !important;width:22px !important;text-align:center !important;line-height:22px !important;transition:all .2s ease !important;border-radius:5px !important}.multiselect__tag-icon:after{content:"\D7" !important;color:#266d4d !important;font-size:14px !important}.multiselect__tag-icon:focus,.multiselect__tag-icon:hover{background:#369a6e !important}.multiselect__tag-icon:focus:after,.multiselect__tag-icon:hover:after{color:#fff !important}.multiselect__current{min-height:40px !important;overflow:hidden !important;padding:8px 12px 0 !important;padding-right:30px !important;white-space:nowrap !important;border-radius:5px !important;border:1px solid #e8e8e8 !important}.multiselect__current,.multiselect__select{line-height:16px !important;box-sizing:border-box !important;display:block;margin:0 !important;text-decoration:none !important;cursor:pointer !important}.multiselect__select{position:absolute !important;width:40px !important;height:38px !important;right:1px !important;top:1px !important;padding:4px 8px !important;text-align:center !important;transition:transform .2s ease !important}.multiselect__select:before{position:relative !important;right:0 !important;top:65% !important;color:#999 !important;margin-top:4px !important;border-style:solid !important;border-width:5px 5px 0 !important;border-color:#999 transparent transparent !important;content:"" !important}.multiselect__placeholder{color:#adadad !important;display:inline-block;margin-bottom:10px !important;padding-top:2px !important}.multiselect--active .multiselect__placeholder{display:none}.multiselect__content-wrapper{position:absolute !important;display:block;background:#fff !important;width:100% !important;max-height:240px !important;overflow:auto !important;border:1px solid #e8e8e8 !important;border-top:none !important;border-bottom-left-radius:5px !important;border-bottom-right-radius:5px !important;z-index:1 !important;-webkit-overflow-scrolling:touch !important}.multiselect__content{list-style:none !important;display:inline-block;padding:0 !important;margin:0 !important;min-width:100% !important;vertical-align:top !important}.multiselect--above .multiselect__content-wrapper{bottom:100% !important;border-bottom-left-radius:0 !important;border-bottom-right-radius:0 !important;border-top-left-radius:5px !important;border-top-right-radius:5px !important;border-bottom:none !important;border-top:1px solid #e8e8e8 !important}.multiselect__content::webkit-scrollbar{display:none}.multiselect__element{display:block}.multiselect__option{display:block;padding:12px !important;min-height:40px !important;line-height:16px !important;text-decoration:none !important;text-transform:none !important;vertical-align:middle !important;position:relative !important;cursor:pointer !important;white-space:nowrap !important}.multiselect__option:after{top:0 !important;right:0 !important;position:absolute !important;line-height:40px !important;padding-right:12px !important;padding-left:20px !important;font-size:13px !important}.multiselect__option--highlight{background:#41b883 !important;outline:none !important;color:#fff !important}.multiselect__option--highlight:after{content:attr(data-select) !important;background:#41b883 !important;color:#fff !important}.multiselect__option--selected{background:#f3f3f3 !important;color:#35495e !important;font-weight:700 !important}.multiselect__option--selected:after{content:attr(data-selected) !important;color:silver !important}.multiselect__option--selected.multiselect__option--highlight{background:#ff6a6a !important;color:#fff !important}.multiselect__option--selected.multiselect__option--highlight:after{background:#ff6a6a !important;content:attr(data-deselect) !important;color:#fff !important}.multiselect--disabled{background:#ededed !important;pointer-events:none !important}.multiselect--disabled .multiselect__current,.multiselect--disabled .multiselect__select,.multiselect__option--disabled{background:#ededed !important;color:#a6a6a6 !important}.multiselect__option--disabled{cursor:text !important;pointer-events:none !important}.multiselect__option--group{background:#ededed !important;color:#35495e !important}.multiselect__option--group.multiselect__option--highlight{background:#35495e !important;color:#fff !important}.multiselect__option--group.multiselect__option--highlight:after{background:#35495e !important}.multiselect__option--disabled.multiselect__option--highlight{background:#dedede !important}.multiselect__option--group-selected.multiselect__option--highlight{background:#ff6a6a !important;color:#fff !important}.multiselect__option--group-selected.multiselect__option--highlight:after{background:#ff6a6a !important;content:attr(data-deselect) !important;color:#fff !important}.multiselect-enter-active,.multiselect-leave-active{transition:all .15s ease !important}.multiselect-enter,.multiselect-leave-active{opacity:0 !important}.multiselect__strong{margin-bottom:8px !important;line-height:20px !important;display:inline-block;vertical-align:top !important}[dir=rtl] .multiselect{text-align:right !important}[dir=rtl] .multiselect__select{right:auto !important;left:1px !important}[dir=rtl] .multiselect__tags{padding:8px 8px 0 40px !important}[dir=rtl] .multiselect__content{text-align:right !important}[dir=rtl] .multiselect__option:after{right:auto !important;left:0 !important}[dir=rtl] .multiselect__clear{right:auto !important;left:12px !important}[dir=rtl] .multiselect__spinner{right:auto !important;left:1px !important}@keyframes a{0%{transform:rotate(0)}to{transform:rotate(2turn)}}
+fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spinner{position:absolute !important;right:1px !important;top:1px !important;width:48px !important;height:35px !important;background:#fff !important;display:block}.multiselect__spinner:after,.multiselect__spinner:before{position:absolute !important;content:"" !important;top:50% !important;left:50% !important;margin:-8px 0 0 -8px !important;width:16px !important;height:16px !important;border-radius:100% !important;border:2px solid transparent !important;border-top-color:#41b883 !important;box-shadow:0 0 0 1px transparent !important}.multiselect__spinner:before{animation:spinning 2.4s cubic-bezier(.41,.26,.2,.62);animation-iteration-count:infinite}.multiselect__spinner:after{animation:spinning 2.4s cubic-bezier(.51,.09,.21,.8);animation-iteration-count:infinite}.multiselect__loading-enter-active,.multiselect__loading-leave-active{transition:opacity .4s ease-in-out !important;opacity:1 !important}.multiselect__loading-enter,.multiselect__loading-leave-active{opacity:0 !important}.multiselect,.multiselect__input,.multiselect__single{font-family:inherit !important;font-size:16px !important;-ms-touch-action:manipulation !important;touch-action:manipulation !important}.multiselect{box-sizing:content-box !important;display:block;position:relative !important;width:100% !important;min-height:40px !important;text-align:left !important;color:#35495e !important}.multiselect *{box-sizing:border-box !important}.multiselect:focus{outline:none !important}.multiselect--disabled{background:#ededed !important;pointer-events:none !important;opacity:.6 !important}.multiselect--active{z-index:50 !important}.multiselect--active:not(.multiselect--above) .multiselect__current,.multiselect--active:not(.multiselect--above) .multiselect__input,.multiselect--active:not(.multiselect--above) .multiselect__tags{border-bottom-left-radius:0 !important;border-bottom-right-radius:0 !important}.multiselect--active .multiselect__select{transform:rotate(180deg) !important}.multiselect--above.multiselect--active .multiselect__current,.multiselect--above.multiselect--active .multiselect__input,.multiselect--above.multiselect--active .multiselect__tags{border-top-left-radius:0 !important;border-top-right-radius:0 !important}.multiselect__input,.multiselect__single{position:relative !important;display:inline-block;min-height:20px !important;line-height:20px !important;border:none !important;border-radius:5px !important;background:#fff !important;padding:0 0 0 5px !important;width:100% !important;transition:border .1s ease !important;box-sizing:border-box !important;margin-bottom:8px !important;vertical-align:top !important}.multiselect__input:-ms-input-placeholder{color:#35495e !important}.multiselect__input::placeholder{color:#35495e !important}.multiselect__tag~.multiselect__input,.multiselect__tag~.multiselect__single{width:auto !important}.multiselect__input:hover,.multiselect__single:hover{border-color:#cfcfcf !important}.multiselect__input:focus,.multiselect__single:focus{border-color:#a8a8a8 !important;outline:none !important}.multiselect__single{padding-left:5px !important;margin-bottom:8px !important}.multiselect__tags-wrap{display:inline}.multiselect__tags{min-height:40px !important;display:block;padding:8px 40px 0 8px !important;border-radius:5px !important;border:1px solid #e8e8e8 !important;background:#fff !important;font-size:14px !important}.multiselect__tag{position:relative !important;display:inline-block;padding:4px 26px 4px 10px !important;border-radius:5px !important;margin-right:10px !important;color:#fff !important;line-height:1 !important;background:#41b883 !important;margin-bottom:5px !important;white-space:nowrap !important;overflow:hidden !important;max-width:100% !important;text-overflow:ellipsis !important}.multiselect__tag-icon{cursor:pointer !important;margin-left:7px !important;position:absolute !important;right:0 !important;top:0 !important;bottom:0 !important;font-weight:700 !important;font-style:normal !important;width:22px !important;text-align:center !important;line-height:22px !important;transition:all .2s ease !important;border-radius:5px !important}.multiselect__tag-icon:after{content:"\D7" !important;color:#266d4d !important;font-size:14px !important}.multiselect__tag-icon:focus,.multiselect__tag-icon:hover{background:#369a6e !important}.multiselect__tag-icon:focus:after,.multiselect__tag-icon:hover:after{color:#fff !important}.multiselect__current{min-height:40px !important;overflow:hidden !important;padding:8px 30px 0 12px !important;white-space:nowrap !important;border-radius:5px !important;border:1px solid #e8e8e8 !important}.multiselect__current,.multiselect__select{line-height:16px !important;box-sizing:border-box !important;display:block;margin:0 !important;text-decoration:none !important;cursor:pointer !important}.multiselect__select{position:absolute !important;width:40px !important;height:38px !important;right:1px !important;top:1px !important;padding:4px 8px !important;text-align:center !important;transition:transform .2s ease !important}.multiselect__select:before{position:relative !important;right:0 !important;top:65% !important;color:#999 !important;margin-top:4px !important;border-color:#999 transparent transparent !important;border-style:solid !important;border-width:5px 5px 0 !important;content:"" !important}.multiselect__placeholder{color:#adadad !important;display:inline-block;margin-bottom:10px !important;padding-top:2px !important}.multiselect--active .multiselect__placeholder{display:none}.multiselect__content-wrapper{position:absolute !important;display:block;background:#fff !important;width:100% !important;max-height:240px !important;overflow:auto !important;border:1px solid #e8e8e8 !important;border-top:none !important;border-bottom-left-radius:5px !important;border-bottom-right-radius:5px !important;z-index:50 !important;-webkit-overflow-scrolling:touch !important}.multiselect__content{list-style:none !important;display:inline-block;padding:0 !important;margin:0 !important;min-width:100% !important;vertical-align:top !important}.multiselect--above .multiselect__content-wrapper{bottom:100% !important;border-bottom-left-radius:0 !important;border-bottom-right-radius:0 !important;border-top-left-radius:5px !important;border-top-right-radius:5px !important;border-bottom:none !important;border-top:1px solid #e8e8e8 !important}.multiselect__content::webkit-scrollbar{display:none}.multiselect__element{display:block}.multiselect__option{display:block;padding:12px !important;min-height:40px !important;line-height:16px !important;text-decoration:none !important;text-transform:none !important;vertical-align:middle !important;position:relative !important;cursor:pointer !important;white-space:nowrap !important}.multiselect__option:after{top:0 !important;right:0 !important;position:absolute !important;line-height:40px !important;padding-right:12px !important;padding-left:20px !important;font-size:13px !important}.multiselect__option--highlight{background:#41b883 !important;outline:none !important;color:#fff !important}.multiselect__option--highlight:after{content:attr(data-select) !important;background:#41b883 !important;color:#fff !important}.multiselect__option--selected{background:#f3f3f3 !important;color:#35495e !important;font-weight:700 !important}.multiselect__option--selected:after{content:attr(data-selected) !important;color:silver !important}.multiselect__option--selected.multiselect__option--highlight{background:#ff6a6a !important;color:#fff !important}.multiselect__option--selected.multiselect__option--highlight:after{background:#ff6a6a !important;content:attr(data-deselect) !important;color:#fff !important}.multiselect--disabled .multiselect__current,.multiselect--disabled .multiselect__select{background:#ededed !important;color:#a6a6a6 !important}.multiselect__option--disabled{background:#ededed!important;color:#a6a6a6!important;cursor:text !important;pointer-events:none !important}.multiselect__option--group{background:#ededed !important;color:#35495e !important}.multiselect__option--group.multiselect__option--highlight{background:#35495e !important;color:#fff !important}.multiselect__option--group.multiselect__option--highlight:after{background:#35495e !important}.multiselect__option--disabled.multiselect__option--highlight{background:#dedede !important}.multiselect__option--group-selected.multiselect__option--highlight{background:#ff6a6a !important;color:#fff !important}.multiselect__option--group-selected.multiselect__option--highlight:after{background:#ff6a6a !important;content:attr(data-deselect) !important;color:#fff !important}.multiselect-enter-active,.multiselect-leave-active{transition:all .15s ease !important}.multiselect-enter,.multiselect-leave-active{opacity:0 !important}.multiselect__strong{margin-bottom:8px !important;line-height:20px !important;display:inline-block;vertical-align:top !important}[dir=rtl] .multiselect{text-align:right !important}[dir=rtl] .multiselect__select{right:auto !important;left:1px !important}[dir=rtl] .multiselect__tags{padding:8px 8px 0 40px !important}[dir=rtl] .multiselect__content{text-align:right !important}[dir=rtl] .multiselect__option:after{right:auto !important;left:0 !important}[dir=rtl] .multiselect__clear{right:auto !important;left:12px !important}[dir=rtl] .multiselect__spinner{right:auto !important;left:1px !important}@keyframes spinning{0%{transform:rotate(0)}to{transform:rotate(2turn)}}
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -1206,7 +1311,6 @@ fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spi
 .alpheios-setting__control {
   width: 50% !important;
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -1297,7 +1401,6 @@ fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spi
     width: 100%;
 }
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -1333,8 +1436,8 @@ fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spi
   top: calc(var(--alpheios-base-text-size) * 1.125) !important;
 }
 .alpheios-popup__logo svg {
-    width: calc(var(--alpheios-base-text-size) * 1.75) !important;
-    height: auto !important;
+  width: calc(var(--alpheios-base-text-size) * 1.75) !important;
+  height: auto !important;
 }
 .alpheios-popup__close-btn {
   width: calc(var(--alpheios-base-text-size) * 5) !important;
@@ -1345,22 +1448,22 @@ fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spi
   stroke-width: 2.5 !important;
 }
 .alpheios-popup__close-btn svg {
-    position: relative !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    left: calc(var(--alpheios-base-text-size) * 1) !important;
-    width: calc(var(--alpheios-base-text-size) * 2.75) !important;
-    height: auto !important;
+  position: relative !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  left: calc(var(--alpheios-base-text-size) * 1) !important;
+  width: calc(var(--alpheios-base-text-size) * 2.75) !important;
+  height: auto !important;
 }
 .alpheios-popup__close-btn:hover, .alpheios-popup__close-btn:focus {
-    fill: var(--alpheios-icon-color-hover) !important;
-    stroke: var(--alpheios-icon-color-hover) !important;
-    background: var(--alpheios-icon-bg-color-hover) !important;
+  fill: var(--alpheios-icon-color-hover) !important;
+  stroke: var(--alpheios-icon-color-hover) !important;
+  background: var(--alpheios-icon-bg-color-hover) !important;
 }
 .alpheios-popup__close-btn:active {
-    fill: var(--alpheios-icon-color-active) !important;
-    stroke: var(--alpheios-icon-color-active) !important;
-    background: var(--alpheios-icon-bg-color-active) !important;
+  fill: var(--alpheios-icon-color-active) !important;
+  stroke: var(--alpheios-icon-color-active) !important;
+  background: var(--alpheios-icon-bg-color-active) !important;
 }
 .alpheios-popup__body {
   display: flex;
@@ -1378,7 +1481,7 @@ fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spi
 .alpheios-popup__toolbar-text {
   padding-right: calc(var(--alpheios-base-text-size) * 1.25) !important;
 }
-.alpheios-popup__toolbar-text[lang='ara'] {
+.alpheios-popup__toolbar-text[lang=ara] {
   padding: 0px 20px 0px 20px !important;
   /* the arabic amiri font does not like the top padding */
 }
@@ -1442,10 +1545,10 @@ a.alpheios-popup__providers-link {
   fill: #5BC8DC !important;
   stroke: #5BC8DC !important;
 }
-[data-notification-visible="true"] .alpheios-popup__notifications {
+[data-notification-visible=true] .alpheios-popup__notifications {
   display: block;
 }
-[data-notification-auth-visible="true"] .alpheios-popup__notifications-auth {
+[data-notification-auth-visible=true] .alpheios-popup__notifications-auth {
   display: block;
 }
 .alpheios-popup__notifications--lang-switcher {
@@ -1461,7 +1564,6 @@ a.alpheios-popup__providers-link {
 .alpheios-popup__notifications--important {
   background: #73CDDE !important;
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -1485,24 +1587,23 @@ a.alpheios-popup__providers-link {
   background-color: var(--alpheios-icon-bg-color) !important;
 }
 .alpheios-navbuttons__btn svg {
-    width: 60% !important;
-    height: auto !important;
-    position: relative !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
+  width: 60% !important;
+  height: auto !important;
+  position: relative !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
 }
 .alpheios-navbuttons__btn:hover, .alpheios-navbuttons__btn:focus {
-    fill: var(--alpheios-icon-color-hover) !important;
-    stroke: var(--alpheios-icon-color-hover) !important;
-    background-color: var(--alpheios-icon-bg-color-hover) !important;
+  fill: var(--alpheios-icon-color-hover) !important;
+  stroke: var(--alpheios-icon-color-hover) !important;
+  background-color: var(--alpheios-icon-bg-color-hover) !important;
 }
 .alpheios-navbuttons__btn.active {
-    fill: var(--alpheios-icon-color-active) !important;
-    stroke: var(--alpheios-icon-color-active) !important;
-    background-color: var(--alpheios-icon-bg-color-active) !important;
+  fill: var(--alpheios-icon-color-active) !important;
+  stroke: var(--alpheios-icon-color-active) !important;
+  background-color: var(--alpheios-icon-bg-color-active) !important;
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -1561,40 +1662,6 @@ a.alpheios-popup__providers-link {
   top: 10px !important;
   position: relative !important;
 }
-
-/************ UIKit vars ************************/
-/*
- Calculates a size of text elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
- */
-/*
- Calculates a size of UI elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
- */
-.infl-prdgm-tbl {
-  display: table;
-  border-top: 1px solid gray !important;
-  border-left: 1px solid gray !important;
-  margin-bottom: 30px !important;
-}
-.infl-prdgm-tbl__row {
-  display: table-row;
-}
-.infl-prdgm-tbl__cell {
-  display: table-cell;
-  padding: 2px 5px !important;
-  border-right: 1px solid gray !important;
-  border-bottom: 1px solid gray !important;
-  min-width: 20px !important;
-}
-.infl-prdgm-tbl-cell--label {
-  font-weight: 700 !important;
-}
-.infl-prdgm-tbl-cell--full-match {
-  background-color: #F6D918 !important;
-  font-weight: 700 !important;
-}
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -1655,7 +1722,6 @@ a.alpheios-popup__providers-link {
   fill: #5BC8DC !important;
   stroke: #5BC8DC !important;
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -1665,22 +1731,29 @@ a.alpheios-popup__providers-link {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-table-sf__title {
-  margin-bottom: 5px !important;
-  padding-left: 30px !important;
-}
-.alpheios-clickable {
-  cursor: pointer !important;
+.alpheios-inflections__title {
+  color: var(--alpheios-text-color-vivid) !important;
+  font-size: calc(var(--alpheios-base-text-size) * 1.375) !important;
+  font-family: var(--alpheios-serif-font-face) !important;
+  line-height: 1 !important;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625) !important;
+  font-weight: 700 !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 .alpheios-inflections__not-impl-msg {
   padding: 20px !important;
   font-size: 0.875rem !important;
 }
+.alpheios-inflections__wide-view {
+  position: relative !important;
+}
 .alpheios-inflections__table-ctrl-cont {
   display: flex;
   width: 100% !important;
-  margin-bottom: 0.2rem !important;
   justify-content: flex-end !important;
+  position: absolute !important;
+  top: calc(var(--alpheios-base-text-size) * -3.125) !important;
 }
 .alpheios-inflections__table-ctrl-cell {
   flex-grow: 1 !important;
@@ -1710,6 +1783,10 @@ div.alpheios-inflections__table-ctrl-cont div.alpheios-inflections__table-ctrl-c
 .infl-prdgm-tbl-cell--label {
   font-weight: 700 !important;
 }
+.infl-prdgm-tbl-cell--full-match {
+  background-color: #F6D918 !important;
+  font-weight: 700 !important;
+}
 .infl-table {
   display: grid;
   border-left: 1px solid #111 !important;
@@ -1736,7 +1813,7 @@ div.alpheios-inflections__table-ctrl-cont div.alpheios-inflections__table-ctrl-c
   flex-wrap: wrap !important;
 }
 .infl-cell {
-  font-size: calc(var(--alpheios-base-text-size) * 0.75) !important;
+  font-size: var(--alpheios-base-text-size) !important;
   padding: 0 2px 0 5px !important;
   border-right: 1px solid #111 !important;
   border-top: 1px solid #111 !important;
@@ -1753,7 +1830,7 @@ div.alpheios-inflections__table-ctrl-cont div.alpheios-inflections__table-ctrl-c
   text-transform: none !important;
 }
 .infl-cell--fw {
-  grid-column: 1 / -1 !important;
+  grid-column: 1/-1 !important;
   font-style: italic !important;
   text-transform: capitalize !important;
 }
@@ -1862,7 +1939,6 @@ div.alpheios-inflections__table-ctrl-cont div.alpheios-inflections__table-ctrl-c
   background-color: #F6D918 !important;
   font-weight: 700 !important;
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -1890,7 +1966,6 @@ div.alpheios-inflections__table-ctrl-cont div.alpheios-inflections__table-ctrl-c
 .infl-prdgm-tbl__cell--label {
   font-weight: 700 !important;
 }
-
 h3.alpheios-inflections__supp-table-title {
   font-size: 1rem !important;
   line-height: 1 !important;
@@ -1907,18 +1982,6 @@ h3.alpheios-inflections__supp-table-title {
 a.infl-supp-tbl__reflink {
   float: right !important;
 }
-
-
-.alpheios-inflections__form-parts {
-  display: inline-block;
-}
-.alpheios-inflections__forms-targetword {
-  font-weight: bold !important;
-}
-.alpheios-inflections__forms-cont {
-  padding-right: 30px !important;
-}
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -1928,22 +1991,29 @@ a.infl-supp-tbl__reflink {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-panel__tab-panel.alpheios-panel__tab__inflections {
-  padding: 0 0 20px !important;
+.alpheios-inflections__form-parts {
+  display: inline-block;
 }
+.alpheios-inflections__forms-cont {
+  color: var(--alpheios-text-color-dark) !important;
+  font-size: calc(var(--alpheios-base-text-size) * 1.25) !important;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 2.5) !important;
+}
+.alpheios-inflections__forms-targetword {
+  font-weight: 700 !important;
+}
+/************ UIKit vars ************************/
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
 .alpheios-inflections__placeholder {
   padding: 0 20px !important;
   margin-bottom: 1rem !important;
-}
-.alpheios-inflections__content {
-  padding: 0 20px !important;
-  border-bottom: 1px solid #d3d3d3 !important;
-}
-h3.alpheios-inflections__title {
-  line-height: 1 !important;
-  margin: 0 0 0.6rem 0 !important;
-  font-weight: 700 !important;
-  text-align: center !important;
 }
 h4.alpheios-inflections__additional_title {
   line-height: 1.6 !important;
@@ -1980,7 +2050,7 @@ h4.alpheios-inflections__additional_title {
   margin-bottom: 2rem !important;
 }
 .alpheios-inflections__footnotes dt {
-    font-weight: 700 !important;
+  font-weight: 700 !important;
 }
 [data-footnote] {
   position: relative !important;
@@ -2095,7 +2165,6 @@ h3.alpheios-inflections__credits-title {
     left: 100%;
 }
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -2135,7 +2204,6 @@ h3.alpheios-inflections__credits-title {
   padding: 0 !important;
   overflow: scroll !important;
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -2152,7 +2220,6 @@ h3.alpheios-inflections__credits-title {
 .alpheios-treebank__frame {
   flex: 1 1 100vh !important;
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -2185,7 +2252,6 @@ h3.alpheios-inflections__credits-title {
 .alpheios-info__helptext {
   margin-top: 1em !important;
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -2196,48 +2262,39 @@ h3.alpheios-inflections__credits-title {
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
 .alpheios-ib {
-  padding: 0.2rem 20px 0.2rem !important;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 1.25) !important;
 }
-.alpheios-ib__title,
-div.alpheios-ib div.alpheios-ib__title {
-  color: #4E6476 !important;
+.alpheios-ib .alpheios-inflections__title {
+  font-family: var(--alpheios-sans-font-face) !important;
+  font-size: var(--alpheios-base-text-size) !important;
+  margin: 0 0 1.25rem 3rem !important;
+}
+.alpheios-ib__title {
+  color: var(--alpheios-text-color-vivid) !important;
+  font-size: calc(var(--alpheios-base-text-size) * 1.5) !important;
+  font-family: var(--alpheios-serif-font-face) !important;
   font-weight: 700 !important;
-  margin: 1rem 0 0.6rem !important;
-  text-transform: uppercase !important;
-  font-size: 1rem !important;
-  font-style: normal !important;
+  margin-bottom: 1.25rem !important;
+  display: inline-block;
+}
+.alpheios-ib__title.open {
+  border-bottom: calc(var(--alpheios-base-text-size) * 0.125) solid var(--alpheios-text-color-vivid) !important;
 }
 .alpheios-ib__pofs-title {
   font-weight: 700 !important;
+  font-size: calc(var(--alpheios-base-text-size) * 1.375) !important;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625) !important;
 }
 .alpheios-ib__pofs-title-l2 {
   font-weight: 700 !important;
-  margin-top: 0.2rem !important;
   margin-left: 1rem !important;
+  margin-bottom: 1.25rem !important;
 }
 .alpheios-ib__pofs-title-l3 {
   font-weight: 700 !important;
-  margin-top: 0.2rem !important;
   margin-left: 2rem !important;
+  margin-bottom: 1.25rem !important;
 }
-div.alpheios-ib div.alpheios-ib__title .alpheios-ib__title-collapse {
-  font-weight: 400 !important;
-  font-size: 0.875rem !important;
-  position: relative !important;
-  top: -0.1rem !important;
-  left: 0.2rem !important;
-  color: #4E6476 !important;
-}
-.alpheios-clickable {
-  cursor: pointer !important;
-}
-.alpheios-ib .alpheios-inflections__title.alpheios-table-sf__title {
-  text-align: left !important;
-  font-weight: normal !important;
-  font-size: 1rem !important;
-  margin: 0 0 0.2rem 3rem !important;
-}
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -2254,10 +2311,10 @@ div.alpheios-ib div.alpheios-ib__title .alpheios-ib__title-collapse {
   width: 100% !important;
 }
 .alpheios-lookup__form .alpheios-lookup__form-element {
-    margin-bottom: calc(var(--alpheios-base-ui-size) * 0.625) !important;
+  margin-bottom: calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
 .alpheios-lookup__form .alpheios-lookup__form-element:not(:last-child) {
-    margin-right: calc(var(--alpheios-base-ui-size) * 0.625) !important;
+  margin-right: calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
 .alpheios-lookup__settings {
   display: flex;
@@ -2266,7 +2323,6 @@ div.alpheios-ib div.alpheios-ib__title .alpheios-ib__title-collapse {
 .alpheios-lookup__form-row {
   display: flex;
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -2336,9 +2392,9 @@ ul.alpheios-skin_properties {
   background: transparent !important;
 }
 #alpheios-reskin-panel .alpheios-skin_properties_item__light_bg svg,
-  #alpheios-reskin-panel .alpheios-skin_properties_item__dark_bg svg {
-    width: 90% !important;
-    height: 90% !important;
+#alpheios-reskin-panel .alpheios-skin_properties_item__dark_bg svg {
+  width: 90% !important;
+  height: 90% !important;
 }
 .alpheios-font_small_class #alpheios-reskin-panel .alpheios-skin_properties_item__small_font {
   background: #7E8897 !important;
@@ -2349,7 +2405,6 @@ ul.alpheios-skin_properties {
 .alpheios-font_large_class #alpheios-reskin-panel .alpheios-skin_properties_item__large_font {
   background: #7E8897 !important;
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -2406,10 +2461,9 @@ ul.alpheios-skin_properties {
   fill: #5BC8DC !important;
   stroke: #5BC8DC !important;
 }
-[data-notification-visible="true"] .alpheios-user-auth__notifications {
+[data-notification-visible=true] .alpheios-user-auth__notifications {
   display: block;
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -2432,9 +2486,7 @@ ul.alpheios-skin_properties {
   justify-content: center !important;
   align-items: center !important;
 }
-.alpheios_word_usage_list_item
-.alpheios_word_usage_list_item__text
-.alpheios_word_usage_list_item__text_targetword {
+.alpheios_word_usage_list_item .alpheios_word_usage_list_item__text .alpheios_word_usage_list_item__text_targetword {
   color: #E49A0D !important;
 }
 .alpheios_word_usage_list_item__text_targetword {
@@ -2449,10 +2501,8 @@ ul.alpheios-skin_properties {
 .alpheios_word_usage_list_item__text_suffix {
   text-align: center !important;
 }
-.alpheios_word_usage_list_item
-.alpheios_word_usage_list_item__text .alpheios_word_usage_list_item__text_prefix,
-.alpheios_word_usage_list_item
-.alpheios_word_usage_list_item__text .alpheios_word_usage_list_item__text_suffix {
+.alpheios_word_usage_list_item .alpheios_word_usage_list_item__text .alpheios_word_usage_list_item__text_prefix,
+.alpheios_word_usage_list_item .alpheios_word_usage_list_item__text .alpheios_word_usage_list_item__text_suffix {
   font-size: 85% !important;
   width: 40% !important;
 }
@@ -2460,8 +2510,7 @@ ul.alpheios-skin_properties {
   width: 100% !important;
   padding-top: 10px !important;
 }
-.alpheios_word_usage_list_item
-a.alpheios_word_usage_list_item__source_link {
+.alpheios_word_usage_list_item a.alpheios_word_usage_list_item__source_link {
   color: #3E8D9C !important;
   font-size: 95% !important;
   display: block;
@@ -2475,20 +2524,15 @@ a.alpheios_word_usage_list_item__source_link {
   width: 100% !important;
   padding-bottom: 5px !important;
 }
-.alpheios_word_usage_list_item .alpheios_word_usage_list_item__text
-.alpheios_word_usage_list_item__source {
+.alpheios_word_usage_list_item .alpheios_word_usage_list_item__text .alpheios_word_usage_list_item__source {
   display: none;
 }
-.alpheios-panel--compact
-.alpheios_word_usage_list_item .alpheios_word_usage_list_item__source-data-title {
+.alpheios-panel--compact .alpheios_word_usage_list_item .alpheios_word_usage_list_item__source-data-title {
   display: none;
 }
-.alpheios-panel--compact
-.alpheios_word_usage_list_item .alpheios_word_usage_list_item__text
-.alpheios_word_usage_list_item__source {
+.alpheios-panel--compact .alpheios_word_usage_list_item .alpheios_word_usage_list_item__text .alpheios_word_usage_list_item__source {
   display: inline-block;
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -2504,25 +2548,24 @@ a.alpheios_word_usage_list_item__source_link {
   height: 100% !important;
 }
 .alpheios-word-usage div.alpheios_word_usage_list_title {
-    flex: none !important;
-    font-weight: bold !important;
-    padding-bottom: 5px !important;
-    border-bottom: 1px solid #7E8897 !important;
-    margin-bottom: 10px !important;
+  flex: none !important;
+  font-weight: bold !important;
+  padding-bottom: 5px !important;
+  border-bottom: 1px solid #7E8897 !important;
+  margin-bottom: 10px !important;
 }
 .alpheios-word-usage div.alpheios_word_usage_list_mainblock {
-    flex: 1 1 auto !important;
-    position: relative !important;
-    -webkit-overflow-scrolling: touch !important;
-    overflow-y: auto !important;
+  flex: 1 1 auto !important;
+  position: relative !important;
+  -webkit-overflow-scrolling: touch !important;
+  overflow-y: auto !important;
 }
 .alpheios-word-usage div.alpheios-word_usage_list__provider {
-    flex: none !important;
-    font-weight: normal !important;
-    padding: 10px 0 !important;
-    font-size: 80% !important;
+  flex: none !important;
+  font-weight: normal !important;
+  padding: 10px 0 !important;
+  font-size: 80% !important;
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -2543,7 +2586,7 @@ a.alpheios_word_usage_list_item__source_link {
   grid-template-rows: calc(var(--alpheios-base-text-size) * 3.5) auto calc(var(--alpheios-base-text-size) * 3.5) !important;
   grid-template-areas: "header" "content" "content" !important;
 }
-.alpheios-panel[data-notification-visible="true"] {
+.alpheios-panel[data-notification-visible=true] {
   grid-template-areas: "header" "content" "notifications" !important;
 }
 .alpheios-panel__header {
@@ -2576,22 +2619,22 @@ a.alpheios_word_usage_list_item__source_link {
   stroke-width: 2.5 !important;
 }
 .alpheios-panel__close-btn svg {
-    position: relative !important;
-    left: calc(var(--alpheios-base-text-size) * 0.5) !important;
-    width: calc(var(--alpheios-base-text-size) * 2.75) !important;
-    height: auto !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
+  position: relative !important;
+  left: calc(var(--alpheios-base-text-size) * 0.5) !important;
+  width: calc(var(--alpheios-base-text-size) * 2.75) !important;
+  height: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
 }
 .alpheios-panel__close-btn:hover, .alpheios-panel__close-btn:focus {
-    fill: var(--alpheios-icon-color-hover) !important;
-    stroke: var(--alpheios-icon-color-hover) !important;
-    background: var(--alpheios-icon-bg-color-hover) !important;
+  fill: var(--alpheios-icon-color-hover) !important;
+  stroke: var(--alpheios-icon-color-hover) !important;
+  background: var(--alpheios-icon-bg-color-hover) !important;
 }
 .alpheios-panel__close-btn:active {
-    fill: var(--alpheios-icon-color-pressed) !important;
-    stroke: var(--alpheios-icon-color-pressed) !important;
-    background: var(--alpheios-icon-bg-color-pressed) !important;
+  fill: var(--alpheios-icon-color-pressed) !important;
+  stroke: var(--alpheios-icon-color-pressed) !important;
+  background: var(--alpheios-icon-bg-color-pressed) !important;
 }
 .alpheios-panel__content {
   overflow: auto !important;
@@ -2647,10 +2690,10 @@ a.alpheios_word_usage_list_item__source_link {
 .alpheios-panel__notifications--important {
   background: #73CDDE !important;
 }
-[data-notification-visible="true"] .alpheios-panel__notifications {
+[data-notification-visible=true] .alpheios-panel__notifications {
   display: block;
 }
-[data-notification-auth-visible="true"] .alpheios-panel__notifications-auth {
+[data-notification-auth-visible=true] .alpheios-panel__notifications-auth {
   display: block;
 }
 .alpheios-panel__tab-panel {
@@ -2667,6 +2710,9 @@ a.alpheios_word_usage_list_item__source_link {
 }
 .alpheios-panel__content_no_top_padding {
   padding-top: 0 !important;
+}
+.alpheios-panel__tab__inflections h1 {
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.3125) !important;
 }
 .alpheios-panel__message {
   margin-bottom: 0.5rem !important;
@@ -2697,27 +2743,6 @@ a.alpheios_word_usage_list_item__source_link {
   display: flex;
   align-items: flex-start !important;
 }
-
-/*.alpheios-panel__options-item .alpheios-select:not([multiple]):not([size]) {
-  max-width: 235px;
-  display: inline-block;
-  vertical-align: top;
-}
-
-.alpheios-panel__options-item .alpheios-setting__label {
-  width: 100px;
-  display: inline-block;
-}
-
-.alpheios-panel__options-item select {
-  display: inline-block;
-}*/
-.alpheios-panel__tab__inflections {
-  width: 100% !important;
-}
-.alpheios-panel__tab__inflectionsbrowser {
-  width: 100% !important;
-}
 .alpheios-panel__menu-btn {
   width: 40px !important;
   height: 40px !important;
@@ -2741,9 +2766,8 @@ a.alpheios_word_usage_list_item__source_link {
   border-top: 1px solid #D1D1D0 !important;
 }
 .alpheios-panel--compact .alpheios-panel__content {
-    overflow: auto !important;
+  overflow: auto !important;
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -2784,7 +2808,7 @@ a.alpheios_word_usage_list_item__source_link {
   border-top-right-radius: calc(var(--alpheios-base-text-size) * 0.625) !important;
 }
 .alpheios-panel-left .alpheios-panel__close-btn svg {
-    left: calc(var(--alpheios-base-text-size) * 1) !important;
+  left: calc(var(--alpheios-base-text-size) * 1) !important;
 }
 .alpheios-panel-right.alpheios-panel {
   right: 0 !important;
@@ -2802,10 +2826,9 @@ a.alpheios_word_usage_list_item__source_link {
   border-top-left-radius: calc(var(--alpheios-base-text-size) * 0.625) !important;
 }
 .alpheios-panel-right .alpheios-panel__close-btn svg {
-    right: calc(var(--alpheios-base-text-size) * 1) !important;
-    left: auto !important;
+  right: calc(var(--alpheios-base-text-size) * 1) !important;
+  left: auto !important;
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -2838,7 +2861,6 @@ a.alpheios_word_usage_list_item__source_link {
   top: 5px !important;
   right: 5px !important;
 }
-
 /************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
@@ -2856,71 +2878,71 @@ a.alpheios_word_usage_list_item__source_link {
   z-index: 10000 !important;
 }
 .alpheios-toolbar .alpheios-navbuttons__btn {
-    width: calc(var(--alpheios-base-ui-size) * 2.75) !important;
-    height: calc(var(--alpheios-base-ui-size) * 2.75) !important;
-    margin: calc(var(--alpheios-base-ui-size) * 0.5) 0 !important;
-    box-sizing: border-box !important;
-    position: relative !important;
-    background-color: var(--alpheios-toolbar-bg-color) !important;
-    border: calc(var(--alpheios-base-ui-size) * 0.0625) solid var(--alpheios-border-color) !important;
-    border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
+  width: calc(var(--alpheios-base-ui-size) * 2.75) !important;
+  height: calc(var(--alpheios-base-ui-size) * 2.75) !important;
+  margin: calc(var(--alpheios-base-ui-size) * 0.5) 0 !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  background-color: var(--alpheios-toolbar-bg-color) !important;
+  border: calc(var(--alpheios-base-ui-size) * 0.0625) solid var(--alpheios-border-color) !important;
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
 .alpheios-toolbar .alph_tooltip {
-    position: relative !important;
+  position: relative !important;
 }
 .alpheios-toolbar .alph_tooltip .tooltiptext {
-      visibility: hidden !important;
-      position: absolute !important;
-      width: 120px !important;
-      text-align: center !important;
-      z-index: 1 !important;
-      opacity: 0 !important;
-      font-size: 12px !important;
-      display: none;
-      padding: 5px 0 !important;
-      border-radius: 6px !important;
-      transition: opacity 0.6s ease 0s !important;
-      background-color: #fcfcfa !important;
-      color: #4e6476 !important;
-      border-width: 1px !important;
-      border-style: solid !important;
-      border-color: #4e6476 !important;
-      border-image: initial !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  width: 120px !important;
+  text-align: center !important;
+  z-index: 1 !important;
+  opacity: 0 !important;
+  font-size: 12px !important;
+  display: none;
+  padding: 5px 0 !important;
+  border-radius: 6px !important;
+  transition: opacity 0.6s ease 0s !important;
+  background-color: #fcfcfa !important;
+  color: #4e6476 !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: #4e6476 !important;
+  border-image: initial !important;
 }
 .alpheios-toolbar .alph_tooltip .alph_tooltip-left {
-      top: 0 !important;
-      bottom: auto !important;
-      right: 128% !important;
+  top: 0 !important;
+  bottom: auto !important;
+  right: 128% !important;
 }
 .alpheios-toolbar .alph_tooltip .alph_tooltip-left::after {
-      content: "" !important;
-      position: absolute !important;
-      top: 50% !important;
-      left: 100% !important;
-      margin-top: -5px !important;
-      border-width: 5px !important;
-      border-style: solid !important;
-      border-color: transparent transparent transparent #555 !important;
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 100% !important;
+  margin-top: -5px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  border-color: transparent transparent transparent #555 !important;
 }
 .alpheios-toolbar .alph_tooltip-left {
-    top: 5px !important;
-    bottom: auto !important;
-    right: 128% !important;
+  top: 5px !important;
+  bottom: auto !important;
+  right: 128% !important;
 }
 .alpheios-toolbar .alph_tooltip-left::after {
-      content: "" !important;
-      position: absolute !important;
-      top: 50% !important;
-      left: 100% !important;
-      margin-top: -5px !important;
-      border-width: 5px !important;
-      border-style: solid !important;
-      border-color: transparent transparent transparent #555 !important;
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 100% !important;
+  margin-top: -5px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  border-color: transparent transparent transparent #555 !important;
 }
 .alpheios-toolbar .alph_tooltip:hover .tooltiptext {
-    visibility: visible !important;
-    opacity: 1 !important;
-    display: inline;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: inline;
 }
 .alpheios-toolbar__header {
   box-sizing: border-box !important;
@@ -2931,18 +2953,18 @@ a.alpheios_word_usage_list_item__source_link {
   background: #FFF !important;
 }
 .alpheios-toolbar__header svg {
-    width: calc(var(--alpheios-base-ui-size) * 1.25) !important;
-    height: auto !important;
-    position: relative !important;
-    left: calc(var(--alpheios-base-ui-size) * 0.6875) !important;
-    top: calc(var(--alpheios-base-ui-size) * -0.3125) !important;
-    fill: var(--alpheios-border-color) !important;
+  width: calc(var(--alpheios-base-ui-size) * 1.25) !important;
+  height: auto !important;
+  position: relative !important;
+  left: calc(var(--alpheios-base-ui-size) * 0.6875) !important;
+  top: calc(var(--alpheios-base-ui-size) * -0.3125) !important;
+  fill: var(--alpheios-border-color) !important;
 }
 .alpheios-toolbar__header.expanded svg {
-    top: calc(var(--alpheios-base-ui-size) * 0.3125) !important;
+  top: calc(var(--alpheios-base-ui-size) * 0.3125) !important;
 }
 .alpheios-toolbar__header:hover svg {
-    fill: #5BC8DC !important;
+  fill: #5BC8DC !important;
 }
 .alpheios-toolbar__drag-handle {
   width: calc(var(--alpheios-base-ui-size) * 2.75) !important;
@@ -2966,9 +2988,9 @@ a.alpheios_word_usage_list_item__source_link {
   background: #FFF !important;
 }
 .alpheios-toolbar__lookup-control .alpheios-navbuttons__btn {
-    margin: 0 !important;
-    border-radius: 0 !important;
-    border-bottom: none !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  border-bottom: none !important;
 }
 .alpheios-toolbar__lookup {
   display: flex;
@@ -2988,15 +3010,14 @@ a.alpheios_word_usage_list_item__source_link {
   z-index: -1 !important;
 }
 .alpheios-toolbar__lookup .alpheios-lookup__form {
-    justify-content: flex-end !important;
+  justify-content: flex-end !important;
 }
 .alpheios-toolbar__lookup .alph_tooltip {
-    display: inline-block;
+  display: inline-block;
 }
 .alpheios-toolbar__buttons {
   display: flex;
   flex-direction: column !important;
 }
-
 
 /*# sourceMappingURL=style-safari.css.map*/

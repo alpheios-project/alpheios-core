@@ -21,7 +21,7 @@
   }
 
   p {
-    margin-bottom: textsize(8px);
+    margin-bottom: textsize(16px);
   }
 
   a {
@@ -32,32 +32,33 @@
     font-family: var(--alpheios-serif-font-face);
     font-size: calc(var(--alpheios-base-text-size) * 1.625);
     font-weight: 700;
-    margin-bottom: textsize(10px);
+    margin-bottom: textsize(32px);
+    color: var(--alpheios-text-color-dark);
   }
 
   h2 {
     font-size: calc(var(--alpheios-base-text-size) * 1.5);
     font-weight: 700;
-    margin-bottom: textsize(10px);
+    margin-bottom: textsize(26px);
   }
 
   h3 {
     font-size: calc(var(--alpheios-base-text-size) * 1.125);
     font-weight: 700;
-    margin-bottom: textsize(10px);
+    margin-bottom: textsize(22px);
   }
 
   h4 {
     font-family: var(--alpheios-serif-font-face);
     font-size: calc(var(--alpheios-base-text-size) * 1.125);
-    margin-bottom: textsize(10px);
+    margin-bottom: textsize(18px);
   }
 
   h5 {
     font-size: (--alpheios-base-text-size);
     font-weight: 700;
     font-style: italic;
-    margin-bottom: textsize(10px);
+    margin-bottom: textsize(16px);
   }
 
   #{$alpheios-layout-large} & {
@@ -129,6 +130,10 @@
     text-decoration: inherit;
     line-height: inherit;
   }
+}
+
+.alpheios-clickable {
+  cursor: pointer;
 }
 
 .alpheios-text-small {

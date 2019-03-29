@@ -74,11 +74,13 @@
       <div :id="inflectionsPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflections"
            v-if="$store.state.app.hasInflData" v-show="$store.getters['ui/isActiveTab']('inflections')"
            data-alpheios-ignore="all">
+        <h1>Inflection Tables</h1>
         <inflections @contentwidth="setContentWidth" class="alpheios-panel-inflections"></inflections>
       </div>
       <div :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser"
            v-show="$store.getters['ui/isActiveTab']('inflectionsbrowser')"
            data-alpheios-ignore="all">
+        <h1>Browse Inflection Tables</h1>
         <inflection-browser @contentwidth="setContentWidth">
         </inflection-browser>
       </div>

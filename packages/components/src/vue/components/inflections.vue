@@ -13,6 +13,13 @@
       </div>
     </div>
     <div class="alpheios-inflections__content" v-else-if="inflectionsEnabled && $store.state.app.hasInflData">
+      <word-forms
+          :lexemes="selectedView.homonym.lexemes"
+          :partOfSpeech="selectedView.constructor.mainPartOfSpeech"
+          :targetWord="selectedView.homonym.targetWord"
+          v-if="selectedView && selectedView.homonym">
+      </word-forms>
+
       <div v-show="partsOfSpeech.length > 1">
         <label>{{ l10n.getMsg('LABEL_INFLECT_SELECT_POFS') }}</label>
         <select class="alpheios-select alpheios-inflections__view-selector alpheios-text__smallest"
@@ -21,12 +28,6 @@
         </select>
       </div>
       <div class="alpheios-inflections__actions">
-        <word-forms
-            :lexemes="selectedView.homonym.lexemes"
-            :partOfSpeech="selectedView.constructor.mainPartOfSpeech"
-            :targetWord="selectedView.homonym.targetWord"
-            v-if="selectedView && selectedView.homonym">
-        </word-forms>
         <div v-show="views.length > 1">
           <select class="alpheios-select alpheios-inflections__view-selector alpheios-text__smallest" v-model="viewSelector">
             <option :value="view.id" v-for="view in views">{{view.name}}</option>
@@ -262,25 +263,9 @@ export default {
 <style lang="scss">
   @import "../../styles/variables";
 
-  .alpheios-panel__tab-panel.alpheios-panel__tab__inflections {
-    padding: 0 0 20px;
-  }
-
   .alpheios-inflections__placeholder {
     padding: 0 20px;
     margin-bottom: 1rem;
-  }
-
-  .alpheios-inflections__content {
-    padding: 0 20px;
-    border-bottom: 1px solid $alpheios-base-border-color;
-  }
-
-  h3.alpheios-inflections__title {
-    line-height: 1;
-    margin: 0 0 0.6rem 0;
-    font-weight: 700;
-    text-align: center;
   }
 
   h4.alpheios-inflections__additional_title {

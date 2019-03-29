@@ -1,10 +1,10 @@
 <template>
   <div v-if="view.wideTable">
-    <h3 @click="collapse" class="alpheios-inflections__title alpheios-table-sf__title">
+    <div @click="collapse" class="alpheios-inflections__title">
       {{view.title}}
       <span v-show="state.collapsed">[+]</span>
       <span v-show="!state.collapsed">[-]</span>
-    </h3>
+    </div>
 
     <template v-if="!state.collapsed">
       <div class="infl-prdgm-tbl">
@@ -117,33 +117,4 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
-
-  .infl-prdgm-tbl {
-    display: table;
-    border-top: 1px solid gray;
-    border-left: 1px solid gray;
-    margin-bottom: 30px;
-  }
-
-  .infl-prdgm-tbl__row {
-    display: table-row;
-  }
-
-  .infl-prdgm-tbl__cell {
-    display: table-cell;
-    padding: 2px 5px;
-    border-right: 1px solid gray;
-    border-bottom: 1px solid gray;
-    min-width: 20px;
-  }
-
-  .infl-prdgm-tbl-cell--label {
-    font-weight: 700;
-  }
-
-  .infl-prdgm-tbl-cell--full-match {
-    background-color: $alpheios-highlight-color;
-    font-weight: 700;
-  }
 </style>

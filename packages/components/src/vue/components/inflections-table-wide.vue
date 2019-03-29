@@ -1,12 +1,12 @@
 <template>
 
   <div>
-    <h3 @click="collapse"
-        class="alpheios-inflections__title alpheios-table-sf__title alpheios-clickable">
+    <div @click="collapse"
+        class="alpheios-inflections__title alpheios-clickable">
       {{view.title}}
       <span v-show="state.collapsed">[+]</span>
       <span v-show="!state.collapsed">[-]</span>
-    </h3>
+    </div>
 
     <template v-if="!state.collapsed">
       <h4 class="alpheios-inflections__additional_title" v-if="view.additionalTitle">{{view.additionalTitle}}</h4>
@@ -14,7 +14,7 @@
            v-if="!view.isImplemented || (view.wideView && view.wideView.rows.length == 0)">
         {{l10n.getMsg('INFLECT_MSG_TABLE_NOT_IMPLEMENTED')}}
       </div>
-      <div v-else-if="view.wideView">
+      <div class="alpheios-inflections__wide-view" v-else-if="view.wideView">
         <div class="alpheios-inflections__table-ctrl-cont" v-if="!view.hasPrerenderedTables && !inflBrowserTable">
           <div class="alpheios-inflections__table-ctrl-cell--btn"
                v-show="view.canCollapse && state.noSuffixGroupsHidden">
@@ -22,7 +22,7 @@
                           tooltipDirection="bottom-right">
               <button
                   @click="showNoSuffixGroups"
-                  class="alpheios-button-primary alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
+                  class="alpheios-button-secondary alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
                 {{l10n.getMsg('LABEL_INFLECT_SHOWFULL')}}
               </button>
             </alph-tooltip>
@@ -34,7 +34,7 @@
                           tooltipDirection="bottom-right">
               <button
                   @click="hideNoSuffixGroups"
-                  class="alpheios-button-primary alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
+                  class="alpheios-button-secondary alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
                 {{l10n.getMsg('LABEL_INFLECT_COLLAPSE')}}
               </button>
             </alph-tooltip>
@@ -250,13 +250,15 @@ export default {
 <style lang="scss">
   @import "../../styles/variables";
 
-  .alpheios-table-sf__title {
-    margin-bottom: 5px;
-    padding-left: 30px;
-  }
-
-  .alpheios-clickable {
-    cursor: pointer;
+  .alpheios-inflections__title {
+    color: var(--alpheios-text-color-vivid);
+    font-size: textsize(22px);
+    font-family: var(--alpheios-serif-font-face);
+    line-height: 1;
+    margin-bottom: textsize(10px);
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
   }
 
   .alpheios-inflections__not-impl-msg {
@@ -264,11 +266,16 @@ export default {
     font-size: 0.875rem;
   }
 
+  .alpheios-inflections__wide-view {
+    position: relative;
+  }
+
   .alpheios-inflections__table-ctrl-cont {
     display: flex;
     width: 100%;
-    margin-bottom: 0.2rem;
     justify-content: flex-end;
+    position: absolute;
+    top: textsize(-50px);
   }
 
   .alpheios-inflections__table-ctrl-cell {
@@ -308,6 +315,11 @@ export default {
     font-weight: 700;
   }
 
+  .infl-prdgm-tbl-cell--full-match {
+    background-color: $alpheios-highlight-color;
+    font-weight: 700;
+  }
+
   // endregion Paradigm table styles
 
   // region Tables
@@ -340,8 +352,7 @@ export default {
   }
 
   .infl-cell {
-    //font-size: 12px;
-    font-size: calc(var(--alpheios-base-text-size) * 0.75);
+    font-size: var(--alpheios-base-text-size);
     padding: 0 2px 0 5px;
     border-right: 1px solid #111;
     border-top: 1px solid #111;

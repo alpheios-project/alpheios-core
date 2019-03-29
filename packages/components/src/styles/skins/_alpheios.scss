@@ -36,6 +36,8 @@ html {
   --alpheios-color-light: #BCE5F0;
 
   --alpheios-text-color: var(--alpheios-color-neutral-dark);
+  --alpheios-text-color-dark: var(--alpheios-color-dark);
+  --alpheios-text-color-vivid: var(--alpheios-color-vivid);
   --alpheios-text-bg-color: var(--alpheios-color-neutral-lightest);
   --alpheios-toolbar-bg-color: var(--alpheios-color-muted);
   --alpheios-border-color: var(--alpheios-color-neutral-dark);
@@ -59,13 +61,13 @@ html {
   --alpheios-btn-primary-bg-color-pressed: var(--alpheios-color-vivid-hover);
   --alpheios-btn-primary-border-color-pressed: var(--alpheios-color-vivid-hover);
 
-  --alpheios-btn-secondary-font-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-secondary-font-color: var(--alpheios-color-dark);
   --alpheios-btn-secondary-bg-color: var(--alpheios-color-bright);
   --alpheios-btn-secondary-border-color: var(--alpheios-color-bright);
-  --alpheios-btn-secondary-font-color-hover: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-secondary-font-color-hover: var(--alpheios-color-dark);
   --alpheios-btn-secondary-bg-color-hover: var(--alpheios-color-bright-hover);
   --alpheios-btn-secondary-border-color-hover: var(--alpheios-color-bright-hover);
-  --alpheios-btn-secondary-font-color-pressed: var(--alpheios-color-neutral-lightest);
+  --alpheios-btn-secondary-font-color-pressed: var(--alpheios-color-dark);
   --alpheios-btn-secondary-bg-color-pressed: var(--alpheios-color-bright-pressed);
   --alpheios-btn-secondary-border-color-pressed: var(--alpheios-color-bright-pressed);
 

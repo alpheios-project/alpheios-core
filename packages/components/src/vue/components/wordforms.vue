@@ -52,16 +52,20 @@ export default {
 
 }
 </script>
-<style>
+<style lang="scss">
+  @import "../../styles/variables";
+
   .alpheios-inflections__form-parts {
     display: inline-block;
   }
 
-  .alpheios-inflections__forms-targetword {
-    font-weight: bold;
+  .alpheios-inflections__forms-cont {
+    color: var(--alpheios-text-color-dark);
+    font-size: textsize(20px);
+    margin-bottom: textsize(40px)
   }
 
-  .alpheios-inflections__forms-cont {
-    padding-right: 30px;
+  .alpheios-inflections__forms-targetword {
+    font-weight: 700;
   }
 </style>

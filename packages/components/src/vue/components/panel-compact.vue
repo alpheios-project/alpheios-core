@@ -241,9 +241,9 @@ export default {
     language: 'language',
     l10n: 'l10n',
     settings: 'settings',
-    auth: 'auth',
+    auth: 'auth'
   },
-  storeModules: ['app', 'ui', 'panel','auth'], // Store modules that are required by this component
+  storeModules: ['app', 'ui', 'panel', 'auth'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
     menuIcon: MenuIcon,
@@ -645,6 +645,12 @@ export default {
     padding-top: 0;
   }
 
+  .alpheios-panel__tab__inflections {
+    h1 {
+      margin-bottom: textsize(5px);
+    }
+  }
+
   .alpheios-panel__message {
     margin-bottom: 0.5rem;
   }
@@ -678,29 +684,6 @@ export default {
     margin-bottom: textsize(10px);
     display: flex;
     align-items: flex-start;
-  }
-
-  /*.alpheios-panel__options-item .alpheios-select:not([multiple]):not([size]) {
-    max-width: 235px;
-    display: inline-block;
-    vertical-align: top;
-  }
-
-  .alpheios-panel__options-item .alpheios-setting__label {
-    width: 100px;
-    display: inline-block;
-  }
-
-  .alpheios-panel__options-item select {
-    display: inline-block;
-  }*/
-
-  .alpheios-panel__tab__inflections {
-    width: 100%;
-  }
-
-  .alpheios-panel__tab__inflectionsbrowser {
-    width: 100%;
   }
 
   .alpheios-panel__menu-btn {

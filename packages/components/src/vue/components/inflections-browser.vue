@@ -1,10 +1,14 @@
 <template>
   <div class="alpheios-ib">
 
-    <div @click="collapseLanguage(constants.LANG_LATIN)" class="alpheios-ib__title alpheios-clickable">
+    <div
+        @click="collapseLanguage(constants.LANG_LATIN)"
+        class="alpheios-ib__title alpheios-clickable"
+        :class="{open: !collapsed[constants.LANG_LATIN.toString()]}"
+    >
       Latin Inflection Browser
-      <span class='alpheios-ib__title-collapse' v-show="collapsed[constants.LANG_LATIN.toString()]">[+]</span>
-      <span class='alpheios-ib__title-collapse' v-show="!collapsed[constants.LANG_LATIN.toString()]">[-]</span>
+      <span v-show="collapsed[constants.LANG_LATIN.toString()]">[+]</span>
+      <span v-show="!collapsed[constants.LANG_LATIN.toString()]">[-]</span>
     </div>
     <div v-show="!collapsed[constants.LANG_LATIN.toString()]">
       <div class="alpheios-ib__pofs-title">Nouns</div>
@@ -146,10 +150,14 @@
           :view="latinInflView({ viewID: 'latin_verb_irregular_view', form: 'veneo', title: 'Veneo (venire, venivi(ii), venitus)' })" @widthchange="inflTableWidthUpd"></wide-table>
     </div>
 
-    <div @click="collapseLanguage(constants.LANG_GREEK)" class="alpheios-ib__title alpheios-clickable">
+    <div
+        @click="collapseLanguage(constants.LANG_GREEK)"
+        class="alpheios-ib__title alpheios-clickable"
+        :class="{open: !collapsed[constants.LANG_GREEK.toString()]}"
+    >
       Greek Inflection Browser
-      <span class='alpheios-ib__title-collapse' v-show="collapsed[constants.LANG_GREEK.toString()]">[+]</span>
-      <span class='alpheios-ib__title-collapse' v-show="!collapsed[constants.LANG_GREEK.toString()]">[-]</span>
+      <span v-show="collapsed[constants.LANG_GREEK.toString()]">[+]</span>
+      <span v-show="!collapsed[constants.LANG_GREEK.toString()]">[-]</span>
     </div>
     <div v-show="!collapsed[constants.LANG_GREEK.toString()]">
       <div class="alpheios-ib__pofs-title">Nouns</div>
@@ -568,54 +576,45 @@ export default {
   @import "../../styles/variables";
 
   .alpheios-ib {
-    padding: 0.2rem 20px 0.2rem;
+    margin-bottom: textsize(20px);
+
+    .alpheios-inflections__title {
+      font-family: var(--alpheios-sans-font-face);
+      font-size: var(--alpheios-base-text-size);
+      margin: 0 0 1.25rem 3rem;
+    }
   }
 
-  .alpheios-ib__title,
-    // To override color schema's colors
-  div.alpheios-ib div.alpheios-ib__title {
-    color: $alpheios-toolbar-color;
+  .alpheios-ib__title {
+    color: var(--alpheios-text-color-vivid);
+    font-size: textsize(24px);
+    font-family: var(--alpheios-serif-font-face);
     font-weight: 700;
-    margin: 1rem 0 0.6rem;
-    text-transform: uppercase;
-    font-size: 1rem;
-    font-style: normal;
+    margin-bottom: 1.25rem;
+    // To have the border under the text only
+    display: inline-block;
+
+    &.open {
+      border-bottom: textsize(2px) solid var(--alpheios-text-color-vivid);
+    }
   }
 
   .alpheios-ib__pofs-title {
     font-weight: 700;
+    font-size: textsize(22px);
+    margin-bottom: textsize(10px);
   }
 
   .alpheios-ib__pofs-title-l2 {
     font-weight: 700;
-    margin-top: 0.2rem;
     margin-left: 1rem;
+    margin-bottom: 1.25rem;
   }
 
   .alpheios-ib__pofs-title-l3 {
     font-weight: 700;
-    margin-top: 0.2rem;
     margin-left: 2rem;
-  }
-
-  div.alpheios-ib div.alpheios-ib__title .alpheios-ib__title-collapse {
-    font-weight: 400;
-    font-size: 0.875rem;
-    position: relative;
-    top: -0.1rem;
-    left: 0.2rem;
-    color: $alpheios-toolbar-color;
-  }
-
-  .alpheios-clickable {
-    cursor: pointer;
-  }
-
-  .alpheios-ib .alpheios-inflections__title.alpheios-table-sf__title {
-    text-align: left;
-    font-weight: normal;
-    font-size: 1rem;
-    margin: 0 0 0.2rem 3rem;
+    margin-bottom: 1.25rem;
   }
 
 </style>
