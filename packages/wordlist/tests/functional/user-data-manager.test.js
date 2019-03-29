@@ -27,7 +27,10 @@ describe('user-data-manager.test.js', () => {
     window.IDBKeyRange = IDBKeyRange
     auth  = {
       accessToken: process.env.AUTH_TOKEN,
-      userId: 'alpheiosMockUser'
+      userId: 'alpheiosMockUser',
+      endpoints: {
+        wordlist: process.env.ENDPOINT
+      }
     }
 
     let dbDriverRemote = new WordItemRemoteDbDriver(auth)

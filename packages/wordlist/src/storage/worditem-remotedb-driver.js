@@ -1,18 +1,16 @@
-import RemoteConfig from '@/storage/remote-db-config.json'
 import { TextQuoteSelector } from 'alpheios-data-models'
 
 export default class WordItemRemoteDbDriver {
   /**
-   * Defines proper headers and uploads config for access to remote storage, defines storageMap
+   * Defines proper headers for access to remote storage, defines storageMap
    * @param {Object} auth object with accessToken and userId
    */
   constructor (auth) {
-    this.config = RemoteConfig
     this.accessToken = auth.accessToken
     this.userId = auth.userId
 
     this.requestsParams = {
-      baseURL: this.config.baseUrl,
+      baseURL: auth.endpoints.wordlist,
       headers: {
         common: {
           Authorization: 'bearer ' + this.accessToken,
@@ -116,7 +114,7 @@ export default class WordItemRemoteDbDriver {
    * @return {String}
    */
   _constructPostURL (wordItem) {
-    return `/words/${this._makeStorageID(wordItem)}`
+    return `/${this._makeStorageID(wordItem)}`
   }
 
    /**
@@ -126,10 +124,10 @@ export default class WordItemRemoteDbDriver {
    */
   _constructGetURL (data) {
     if (data.wordItem) {
-      return `/words/${this._makeStorageID(data.wordItem)}`
+      return `/${this._makeStorageID(data.wordItem)}`
     }
     if (data.languageCode) {
-      return `/words?languageCode=${data.languageCode}`
+      return `/?languageCode=${data.languageCode}`
     }
     return
   }
@@ -140,7 +138,7 @@ export default class WordItemRemoteDbDriver {
    * @return {String}
    */
   _constructDeleteManyURL (data) {
-    return `/words?languageCode=${data.languageCode}`
+    return `/?languageCode=${data.languageCode}`
   }
 
   /**

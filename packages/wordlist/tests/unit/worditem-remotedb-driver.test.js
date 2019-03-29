@@ -24,8 +24,8 @@ describe('worditem-remotedb-driver.test.js', () => {
     jest.clearAllMocks()
   })
 
-  it('1 WordItemRemoteDbDriver - constructor creates object with the following properties: userId, storageMap, config, requestsParams', () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId'})
+  it('1 WordItemRemoteDbDriver - constructor creates object with the following properties: userId, storageMap, requestsParams', () => {
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId',endpoints:{wordlist: 'http://example.org'}})
 
     expect(dbDriverRemote.userId).toEqual('fooUserId')
     expect(dbDriverRemote.storageMap).toBeDefined()
@@ -33,12 +33,11 @@ describe('worditem-remotedb-driver.test.js', () => {
     let checkStorageMapKeys = ['get', 'post', 'put', 'deleteOne', 'deleteMany'].sort()
     expect(Object.keys(dbDriverRemote.storageMap).sort()).toEqual(checkStorageMapKeys)
 
-    expect(dbDriverRemote.config.baseUrl).toBeDefined()
     expect(dbDriverRemote.requestsParams.headers.common.Authorization).toBeDefined()
   })
 
   it('2 WordItemRemoteDbDriver - _constructPostURL creates url for creating the word', () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId',endpoints:{wordlist: 'http://example.org'}})
     let testData = {
       ID: 'testUserID-lat-beatum',
       createdDT: '2019/02/12 @ 16:09:04',
@@ -51,11 +50,11 @@ describe('worditem-remotedb-driver.test.js', () => {
     let testWordItem = new WordItem(testData)
 
     let resUrl = dbDriverRemote._constructPostURL(testWordItem)
-    expect(resUrl).toEqual('/words/lat-beatum')
+    expect(resUrl).toEqual('/lat-beatum')
   })
 
   it('3 WordItemRemoteDbDriver - _constructGetURL creates url for getting one word', () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId',endpoints:{wordlist: 'http://example.org'}})
     let testData = {
       ID: 'testUserID-lat-beatum',
       createdDT: '2019/02/12 @ 16:09:04',
@@ -68,29 +67,29 @@ describe('worditem-remotedb-driver.test.js', () => {
     let testWordItem = new WordItem(testData)
 
     let resUrl = dbDriverRemote._constructGetURL({ wordItem: testWordItem })
-    expect(resUrl).toEqual('/words/lat-beatum')
+    expect(resUrl).toEqual('/lat-beatum')
   })
 
   it('4 WordItemRemoteDbDriver - _constructGetURL creates url for getting all words from the list by languageCode', () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId',endpoints:{wordlist: 'http://example.org'}})
     let resUrl = dbDriverRemote._constructGetURL({ languageCode: 'lat' })
-    expect(resUrl).toEqual('/words?languageCode=lat')
+    expect(resUrl).toEqual('/?languageCode=lat')
   })
 
   it('5 WordItemRemoteDbDriver - _constructGetURL returns undefined if there are no wordItem or languageCode', () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId',endpoints:{wordlist: 'http://example.org'}})
     let resUrl = dbDriverRemote._constructGetURL({})
     expect(resUrl).not.toBeDefined()
   })
 
   it('6 WordItemRemoteDbDriver - _constructDeleteManyURL creates url for deleting all words from the list by languageCode', () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId',endpoints:{wordlist: 'http://example.org'}})
     let resUrl = dbDriverRemote._constructDeleteManyURL({ languageCode: 'lat' })
-    expect(resUrl).toEqual('/words?languageCode=lat')
+    expect(resUrl).toEqual('/?languageCode=lat')
   })
 
   it('7 WordItemRemoteDbDriver - _makeStorageID creates ID for the remote source format (without userID)', () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId',endpoints:{wordlist: 'http://example.org'}})
     let testData = {
       ID: 'testUserID-lat-beatum',
       createdDT: '2019/02/12 @ 16:09:04',
@@ -108,7 +107,7 @@ describe('worditem-remotedb-driver.test.js', () => {
   })
 
   it('8 WordItemRemoteDbDriver - _serialize creates jsonObj from wordItem, without homonym and context if they are absent in wordItem, executes _serializeHomonym, _serializeContext', () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId',endpoints:{wordlist: 'http://example.org'}})
 
     let testData = {
       ID: 'testUserID-lat-beatum',
@@ -141,7 +140,7 @@ describe('worditem-remotedb-driver.test.js', () => {
   })
 
   it('9 WordItemRemoteDbDriver - _serialize creates jsonObj from WordItem with homonym, if homonym is present in wordItem', async () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId',endpoints:{wordlist: 'http://example.org'}})
 
     let testData = {
       ID: 'testUserID-lat-beatum',
@@ -171,7 +170,7 @@ describe('worditem-remotedb-driver.test.js', () => {
   })
 
   it('10 WordItemRemoteDbDriver - _serialize creates jsonObj from WordItem with context, if context is present in wordItem', async () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId',endpoints:{wordlist: 'http://example.org'}})
 
     let testData = {
       ID: 'testUserID-lat-beatum',
@@ -206,7 +205,7 @@ describe('worditem-remotedb-driver.test.js', () => {
   })
 
   it('11 WordItemRemoteDbDriver - _checkPostResult checks result\'s status', async () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId',endpoints:{wordlist: 'http://example.org'}})
 
     expect(dbDriverRemote._checkPostResult({ status: 201 })).toBeTruthy()
     expect(dbDriverRemote._checkPostResult({ status: 500 })).toBeFalsy()
@@ -215,7 +214,7 @@ describe('worditem-remotedb-driver.test.js', () => {
   })
 
   it('12 WordItemRemoteDbDriver - _checkPutResult checks result\'s status', async () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId',endpoints:{wordlist: 'http://example.org'}})
 
     expect(dbDriverRemote._checkPutResult({ status: 200 })).toBeTruthy()
     expect(dbDriverRemote._checkPutResult({ status: 500 })).toBeFalsy()
@@ -224,7 +223,7 @@ describe('worditem-remotedb-driver.test.js', () => {
   })
 
   it('13 WordItemRemoteDbDriver - _checkGetResult checks result\'s status and return data', async () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId',endpoints:{wordlist: 'http://example.org'}})
 
     expect(dbDriverRemote._checkGetResult({ status: 500 })).toEqual([])
 
@@ -236,7 +235,7 @@ describe('worditem-remotedb-driver.test.js', () => {
   })
 
   it('14 WordItemRemoteDbDriver - getCheckArray prepares array with ID for compare with remote data', async () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId',endpoints:{wordlist: 'http://example.org'}})
 
     let testDataItems = [{targetWord: 'fooWord1', languageCode: 'lat'}, {targetWord: 'fooWord2', languageCode: 'lat'}]
     let result = dbDriverRemote.getCheckArray(testDataItems)

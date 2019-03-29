@@ -17004,17 +17004,6 @@ class RemoteDBAdapter {
 
 /***/ }),
 
-/***/ "./storage/remote-db-config.json":
-/*!***************************************!*\
-  !*** ./storage/remote-db-config.json ***!
-  \***************************************/
-/*! exports provided: baseUrl, default */
-/***/ (function(module) {
-
-module.exports = {"baseUrl":"https://w2tfh159s2.execute-api.us-east-2.amazonaws.com/prod"};
-
-/***/ }),
-
 /***/ "./storage/worditem-indexeddb-driver.js":
 /*!**********************************************!*\
   !*** ./storage/worditem-indexeddb-driver.js ***!
@@ -17495,25 +17484,21 @@ static get currentDate () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordItemRemoteDbDriver; });
-/* harmony import */ var _storage_remote_db_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/storage/remote-db-config.json */ "./storage/remote-db-config.json");
-var _storage_remote_db_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/storage/remote-db-config.json */ "./storage/remote-db-config.json", 1);
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 
 
 class WordItemRemoteDbDriver {
   /**
-   * Defines proper headers and uploads config for access to remote storage, defines storageMap
+   * Defines proper headers for access to remote storage, defines storageMap
    * @param {Object} auth object with accessToken and userId
    */
   constructor (auth) {
-    this.config = _storage_remote_db_config_json__WEBPACK_IMPORTED_MODULE_0__
     this.accessToken = auth.accessToken
     this.userId = auth.userId
 
     this.requestsParams = {
-      baseURL: this.config.baseUrl,
+      baseURL: auth.endpoints.wordlist,
       headers: {
         common: {
           Authorization: 'bearer ' + this.accessToken,
@@ -17601,7 +17586,7 @@ class WordItemRemoteDbDriver {
     let pushContext = currentItem.context || []
     for (let contextItem of newItem.context) {
       let hasCheck = currentItem.context.some(tqCurrent => {
-        return alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["TextQuoteSelector"].readObject(tqCurrent).isEqual(contextItem)
+        return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["TextQuoteSelector"].readObject(tqCurrent).isEqual(contextItem)
       })
       if (!hasCheck) {
         pushContext.push(this._serializeContextItem(contextItem, currentItem))
@@ -17617,7 +17602,7 @@ class WordItemRemoteDbDriver {
    * @return {String}
    */
   _constructPostURL (wordItem) {
-    return `/words/${this._makeStorageID(wordItem)}`
+    return `/${this._makeStorageID(wordItem)}`
   }
 
    /**
@@ -17627,10 +17612,10 @@ class WordItemRemoteDbDriver {
    */
   _constructGetURL (data) {
     if (data.wordItem) {
-      return `/words/${this._makeStorageID(data.wordItem)}`
+      return `/${this._makeStorageID(data.wordItem)}`
     }
     if (data.languageCode) {
-      return `/words?languageCode=${data.languageCode}`
+      return `/?languageCode=${data.languageCode}`
     }
     return
   }
@@ -17641,7 +17626,7 @@ class WordItemRemoteDbDriver {
    * @return {String}
    */
   _constructDeleteManyURL (data) {
-    return `/words?languageCode=${data.languageCode}`
+    return `/?languageCode=${data.languageCode}`
   }
 
   /**

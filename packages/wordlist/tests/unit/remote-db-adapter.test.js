@@ -26,7 +26,7 @@ describe('remote-db-adapter.test.js', () => {
   })
 
   it('1 RemoteDBAdapter - constructor creates object with the following properties: dbDriver, available, errors', () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser', endpoints: { wordlist: 'http://example.org'}})
     let remoteAdapter = new RemoteDBAdapter(dbDriverRemote)
 
     expect(remoteAdapter.dbDriver).toEqual(dbDriverRemote)
@@ -35,14 +35,14 @@ describe('remote-db-adapter.test.js', () => {
   })
 
   it('2 RemoteDBAdapter - _checkRemoteDBAvailability returns true if userID and correct headers are in dbDriver', () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser', endpoints: { wordlist: 'http://example.org'}})
     let remoteAdapter = new RemoteDBAdapter(dbDriverRemote)
 
     expect(remoteAdapter._checkRemoteDBAvailability()).toBeTruthy()
   })
 
   it('3 RemoteDBAdapter - _checkRemoteDBAvailability returns false if userID is not set', () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser', endpoints: { wordlist: 'http://example.org'}})
     let remoteAdapter = new RemoteDBAdapter(dbDriverRemote)
     dbDriverRemote.userId = null
     dbDriverRemote.accessToken = null
@@ -51,7 +51,7 @@ describe('remote-db-adapter.test.js', () => {
   })
 
   it('4 RemoteDBAdapter - create method executes axios.post with proper url, checks result and returns true', async () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser', endpoints: { wordlist: 'http://example.org'}})
     let remoteAdapter = new RemoteDBAdapter(dbDriverRemote)
 
     let testWordItem = new WordItem({
@@ -79,7 +79,7 @@ describe('remote-db-adapter.test.js', () => {
   })
 
   it('5 RemoteDBAdapter - create method catches error and saves it to errors property', async () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser', endpoints: { wordlist: 'http://example.org'}})
     let remoteAdapter = new RemoteDBAdapter(dbDriverRemote)
 
     let testWordItem = new WordItem({
@@ -98,7 +98,7 @@ describe('remote-db-adapter.test.js', () => {
   })
 
   it('6 RemoteDBAdapter - update method executes axios.put with proper url, checks result and returns true', async () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser', endpoints: { wordlist: 'http://example.org'}})
     let remoteAdapter = new RemoteDBAdapter(dbDriverRemote)
 
     let testWordItem = new WordItem({
@@ -126,7 +126,7 @@ describe('remote-db-adapter.test.js', () => {
   })
 
   it('7 RemoteDBAdapter - update method catches error and saves it to errors property', async () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser', endpoints: { wordlist: 'http://example.org'}})
     let remoteAdapter = new RemoteDBAdapter(dbDriverRemote)
 
     let testWordItem = new WordItem({
@@ -145,7 +145,7 @@ describe('remote-db-adapter.test.js', () => {
   })
 
   it('8 RemoteDBAdapter - deleteOne method executes axios.delete with proper url, checks result and returns true', async () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser', endpoints: { wordlist: 'http://example.org'}})
     let remoteAdapter = new RemoteDBAdapter(dbDriverRemote)
 
     let testWordItem = new WordItem({
@@ -170,7 +170,7 @@ describe('remote-db-adapter.test.js', () => {
   })
 
   it('9 RemoteDBAdapter - deleteOne method catches error and saves it to errors property', async () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser', endpoints: { wordlist: 'http://example.org'}})
     let remoteAdapter = new RemoteDBAdapter(dbDriverRemote)
 
     let testWordItem = new WordItem({
@@ -189,7 +189,7 @@ describe('remote-db-adapter.test.js', () => {
   })
 
   it('10 RemoteDBAdapter - deleteMany method executes axios.delete with proper url, checks result and returns true', async () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser', endpoints: { wordlist: 'http://example.org'}})
     let remoteAdapter = new RemoteDBAdapter(dbDriverRemote)
 
     jest.spyOn(dbDriverRemote.storageMap.deleteMany, 'url')
@@ -209,7 +209,7 @@ describe('remote-db-adapter.test.js', () => {
   })
 
   it('11 RemoteDBAdapter - deleteMany method catches error and saves it to errors property', async () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser', endpoints: { wordlist: 'http://example.org'}})
     let remoteAdapter = new RemoteDBAdapter(dbDriverRemote)
 
     axios.delete = jest.fn(() => { throw new Error('Something is wrong') })
@@ -223,7 +223,7 @@ describe('remote-db-adapter.test.js', () => {
   })
 
   it('12 RemoteDBAdapter - query method executes axios.get with proper url, checks result and returns true', async () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser', endpoints: { wordlist: 'http://example.org'}})
     let remoteAdapter = new RemoteDBAdapter(dbDriverRemote)
 
     jest.spyOn(dbDriverRemote.storageMap.get, 'url')
@@ -243,7 +243,7 @@ describe('remote-db-adapter.test.js', () => {
   })
 
   it('13 RemoteDBAdapter - query method catches error and saves it to errors property', async () => {
-    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser'})
+    let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'alpheiosMockUserToken',userId:'alpheiosMockUser', endpoints: { wordlist: 'http://example.org'}})
     let remoteAdapter = new RemoteDBAdapter(dbDriverRemote)
 
     axios.get = jest.fn(() => { throw new Error('Something is wrong') })
