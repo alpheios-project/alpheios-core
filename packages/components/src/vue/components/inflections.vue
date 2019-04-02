@@ -275,7 +275,7 @@ export default {
     margin: 0 0 0.6rem 0;
   }
 
-  .#{$alpheios-uikit-namespace} .alpheios-select.alpheios-inflections__view-selector {
+  .alpheios-select.alpheios-inflections__view-selector {
     height: auto !important;
     max-width: 220px;
     line-height: 1.6;

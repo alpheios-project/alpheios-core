@@ -814,7 +814,11 @@ div.alpheios-checkbox-block {
   box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1) !important;
 }
 
-/* panel contents */
+.alpheios-lex-text_container {
+  font-family: var(--alpheios-sans-font-face) !important;
+  line-height: 1.25 !important;
+}
+
 .alpheios-lex-lex_sense1, .lex_sense1 {
   margin-left: 0.5em !important;
 }
@@ -1306,7 +1310,6 @@ fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spi
  */
 .alpheios-setting__label {
   width: 50% !important;
-  padding-left: calc(var(--alpheios-base-text-size) * 0.625) !important;
 }
 .alpheios-setting__control {
   width: 50% !important;
@@ -1740,6 +1743,7 @@ a.alpheios-popup__providers-link {
   font-weight: 700 !important;
   position: relative !important;
   z-index: 1 !important;
+  display: inline-block;
 }
 .alpheios-inflections__not-impl-msg {
   padding: 20px !important;
@@ -2021,7 +2025,7 @@ h4.alpheios-inflections__additional_title {
   text-align: left !important;
   margin: 0 0 0.6rem 0 !important;
 }
-.auk .alpheios-select.alpheios-inflections__view-selector {
+.alpheios-select.alpheios-inflections__view-selector {
   height: auto !important;
   max-width: 220px !important;
   line-height: 1.6 !important;
@@ -2310,11 +2314,20 @@ h3.alpheios-inflections__credits-title {
   flex-direction: column !important;
   width: 100% !important;
 }
-.alpheios-lookup__form .alpheios-lookup__form-element {
+.alpheios-lookup__form .alpheios-setting__label {
+  display: inline-block;
+  margin-bottom: calc(var(--alpheios-base-ui-size) * 0.375) !important;
+  width: auto !important;
+}
+.alpheios-lookup__form-element {
   margin-bottom: calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
-.alpheios-lookup__form .alpheios-lookup__form-element:not(:last-child) {
-  margin-right: calc(var(--alpheios-base-ui-size) * 0.625) !important;
+.alpheios-lookup__form-element.alpheios-lookup__lang-control {
+  flex-direction: column !important;
+  margin-right: calc(var(--alpheios-base-ui-size) * 3.125) !important;
+}
+.alpheios-lookup__form-element.alpheios-lookup__lang-control .alpheios-setting__control {
+  width: calc(var(--alpheios-base-text-size) * 7.5) !important;
 }
 .alpheios-lookup__settings {
   display: flex;
@@ -2322,6 +2335,27 @@ h3.alpheios-inflections__credits-title {
 }
 .alpheios-lookup__form-row {
   display: flex;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+}
+.alpheios-lookup__search-control {
+  display: flex;
+}
+.alpheios-lookup__search-control input {
+  width: 70% !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+.alpheios-lookup__search-control button {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+.alpheios-lookup__resource-control {
+  display: flex;
+  flex-direction: column !important;
+}
+.alpheios-lookup__resource-control .alpheios-setting__control {
+  width: 100% !important;
 }
 /************ UIKit vars ************************/
 /*
@@ -2646,6 +2680,9 @@ ul.alpheios-skin_properties {
   position: relative !important;
   background: var(--alpheios-color-neutral-lightest) !important;
   padding-top: calc(var(--alpheios-base-text-size) * 1.25) !important;
+}
+.alpheios-panel__title {
+  text-transform: capitalize !important;
 }
 .alpheios-lookup__panel {
   display: block;
@@ -2995,10 +3032,10 @@ ul.alpheios-skin_properties {
 .alpheios-toolbar__lookup {
   display: flex;
   position: absolute !important;
-  width: calc(var(--alpheios-base-ui-size) * 25.625) !important;
-  height: calc(var(--alpheios-base-ui-size) * 5.6875) !important;
+  width: calc(var(--alpheios-base-ui-size) * 20.625) !important;
+  height: calc(var(--alpheios-base-ui-size) * 5.625) !important;
   background: var(--alpheios-text-bg-color) !important;
-  left: calc(var(--alpheios-base-ui-size) * -25) !important;
+  left: calc(var(--alpheios-base-ui-size) * -20) !important;
   top: 0 !important;
   border: calc(var(--alpheios-base-ui-size) * 0.0625) solid var(--alpheios-border-color) !important;
   border-top-left-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;

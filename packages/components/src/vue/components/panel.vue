@@ -2,7 +2,7 @@
   <div :class="rootClasses"
        :data-notification-visible="$store.state.ui.notification.visible && $store.state.ui.notification.important"
        :style="mainstyles"
-       class="alpheios-panel alpheios-panel--large auk alpheios-content"
+       class="alpheios-panel alpheios-panel--large alpheios-content"
        data-component="alpheios-panel"
        data-resizable="true"
        id="alpheios-panel-inner"
@@ -55,7 +55,6 @@
           >
         <div class="alpheios-lookup__panel">
           <lookup
-              :clear-lookup-text="true"
               :name-base="`panel-defs`"
           />
         </div>
@@ -74,13 +73,21 @@
       <div :id="inflectionsPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflections"
            v-if="$store.state.app.hasInflData" v-show="$store.getters['ui/isActiveTab']('inflections')"
            data-alpheios-ignore="all">
-        <h1>Inflection Tables</h1>
+        <h1
+            class="alpheios-panel__title"
+        >
+          {{ l10n.getText('TITLE_INFLECTIONS_PANEL') }}
+        </h1>
         <inflections @contentwidth="setContentWidth" class="alpheios-panel-inflections"></inflections>
       </div>
       <div :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser"
            v-show="$store.getters['ui/isActiveTab']('inflectionsbrowser')"
            data-alpheios-ignore="all">
-        <h1>Browse Inflection Tables</h1>
+        <h1
+            class="alpheios-panel__title"
+        >
+          {{ l10n.getText('TITLE_INFLECTIONS_BROWSER_PANEL') }}
+        </h1>
         <inflection-browser @contentwidth="setContentWidth">
         </inflection-browser>
       </div>
@@ -186,9 +193,13 @@
       <div class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info"
            v-show="$store.getters['ui/isActiveTab']('info')"
            data-alpheios-ignore="all">
+        <h1
+            class="alpheios-panel__title"
+        >
+          {{ l10n.getText('TITLE_HELP_PANEL') }}
+        </h1>
         <div class="alpheios-lookup__panel">
           <lookup
-              :clear-lookup-text="true"
               :name-base="`panel-info`"
           />
         </div>

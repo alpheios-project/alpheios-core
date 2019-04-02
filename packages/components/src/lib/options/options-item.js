@@ -24,18 +24,33 @@ export default class OptionItem {
     return this.values.map(value => value.text)
   }
 
-  currentTextValue () {
-    let currentTextValue = []
+  /**
+   * If `prop` is not specified, returns a value object of a current item.
+   * Otherwise, returns a value of a property specified by `prop`.
+   * @param {string} prop - A name of a property of a current items that must be returned.
+   *        Values currently supported are: `text`, `value`, undefined.
+   * @return {* | Array<*>} - A single item or an array of items. Item type depends
+   * on the value of the `prop` or the lack of it.
+   */
+  currentItem (prop = undefined) {
+    let item = []
     for (let value of this.values) {
       if (this.multiValue) {
-        if (this.currentValue.includes(value.value)) { currentTextValue.push(value.text) }
+        if (this.currentValue.includes(value.value)) {
+          const itemValue = prop ? value[prop] : value
+          item.push(itemValue)
+        }
       } else {
         if (value.value === this.currentValue) {
-          currentTextValue = value.text
+          item = prop ? value[prop] : value
         }
       }
     }
-    return currentTextValue
+    return item
+  }
+
+  currentTextValue () {
+    return this.currentItem('text')
   }
 
   addValue (value, text) {
@@ -93,5 +108,21 @@ export default class OptionItem {
         console.error(`Storage of an option value failed: ${errorMessage}`)
       }
     )
+  }
+
+  /**
+   * Creates a copy of the current OptionItem with a different name, and, possibly,
+   * attached to a different storage adapter.
+   * @param {string} name - A name for the option clone.
+   * @param {string} labelText - A text for the label of the clone. If not specified,
+   * will be set to the same value as the one of the source.
+   * @param {StorageAdapter} storageAdapter - An instance of a storage adapter to attach to.
+   * If not specified, will use the a storage adapter from the source.
+   * @return {OptionItem} - A clone of the current option item.
+   */
+  clone (name, labelText = this.labelText, storageAdapter = this.storageAdapter) {
+    let clone = new OptionItem(JSON.parse(JSON.stringify(this)), name, storageAdapter)
+    clone.labelText = labelText
+    return clone
   }
 }

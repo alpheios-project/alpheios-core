@@ -1,54 +1,44 @@
 <template>
   <div class="alpheios-lookup__form">
     <div class="alpheios-lookup__form-row">
-      <input
-          :placeholder="l10n.getMsg('LABEL_LOOKUP_BUTTON')"
-          @keyup.enter="lookup"
-          class="alpheios-input alpheios-lookup__form-element"
-          type="text"
-          v-model="lookuptext"
+      <alph-setting
+          :classes="['alpheios-panel__options-item', 'alpheios-lookup__form-element', 'alpheios-lookup__lang-control']"
+          :data="this.$options.lookupLanguage"
+          @change="settingChange"
+          v-if="showLanguageSettingsGroup"
       >
-      <alph-tooltip
-          :tooltipText="l10n.getMsg('LABEL_LOOKUP_BUTTON')"
-          tooltipDirection="top-right"
-          class="alpheios-lookup__form-element"
-      >
-        <button
-            @click="lookup"
-            class="alpheios-button-primary"
-            tabindex="-1"
-            type="button"
-        >
-          {{ l10n.getMsg('LABEL_LOOKUP_BUTTON') }}
-        </button>
-      </alph-tooltip>
+      </alph-setting>
+
+      <div class="alpheios-lookup__form-element">
+        <label class="alpheios-setting__label">Word lookup</label>
+        <div class="alpheios-lookup__search-control">
+          <input
+              :placeholder="l10n.getMsg('LABEL_LOOKUP_BUTTON')"
+              @keyup.enter="lookup"
+              class="alpheios-input"
+              type="text"
+              v-model="lookuptext"
+          >
+          <button
+              @click="lookup"
+              class="alpheios-button-primary"
+              tabindex="-1"
+              type="button"
+          >
+            {{ l10n.getMsg('LABEL_LOOKUP_BUTTON') }}
+          </button>
+        </div>
+      </div>
     </div>
 
     <template
         v-if="showLanguageSettingsGroup"
     >
-      <div class="alpheios-lookup__form-row alpheios-checkbox-block">
-        <input :id="`alpheios-${nameBase}-checkbox-input`" type="checkbox" v-model="overrideLanguage">
-        <label
-            class="alpheios-lookup__form-element"
-            :for="`alpheios-${nameBase}-checkbox-input`"
-        >
-          {{ overrideLanguageLabel }}
-        </label>
-      </div>
-
       <div
           class="alpheios-lookup__settings"
-          v-show="overrideLanguage"
       >
         <alph-setting
-            :classes="['alpheios-panel__options-item', 'alpheios-lookup__form-row']"
-            :data="instanceContentOptions.items.lookupLanguage"
-            @change="settingChange"
-        >
-        </alph-setting>
-        <alph-setting
-            :classes="['alpheios-panel__options-item', 'alpheios-lookup__form-row']"
+            :classes="['alpheios-panel__options-item', 'alpheios-lookup__resource-control']"
             :data="lexicon"
             :key="lexicon.name"
             @change="resourceSettingChange"
@@ -63,9 +53,7 @@
 import TextSelector from '@/lib/selection/text-selector'
 import LexicalQueryLookup from '@/lib/queries/lexical-query-lookup'
 import { LanguageModelFactory } from 'alpheios-data-models'
-import TempStorageArea from '@/lib/options/temp-storage-area'
 
-import Tooltip from './tooltip.vue'
 import Setting from './setting.vue'
 
 // Modules support
@@ -77,75 +65,61 @@ export default {
   storeModules: ['app'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
-    alphTooltip: Tooltip,
     alphSetting: Setting
   },
   data () {
     return {
-      lookuptext: '',
-      currentLanguage: null,
-      instanceContentOptions: {},
-      istanceResourceOptions: {},
-
-      overrideLanguage: false,
-      overrideLanguageLabel: 'Change language'
+      lookuptext: ''
     }
   },
   props: {
-    // When becomes `true`, forces a lookup text to be cleared
-    clearLookupText: {
-      type: Boolean,
-      required: false,
-      default: false
+    nameBase: {
+      type: String,
+      required: true
     },
     showLanguageSettingsGroup: {
       type: Boolean,
       required: false,
       default: true
     },
-    nameBase: {
-      type: String,
-      required: true
+    /*
+    If the following prop is set to true, a lookup component will use preferredLanguage and resourceOptions
+    as its data model. Otherwise, a lookup component will use lookupLanguage and lookupResourceOptions instead.
+     */
+    usePageLangPrefs: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   created: function () {
-    this.instanceContentOptions = this.settings.contentOptions.clone(TempStorageArea)
-    this.instanceResourceOptions = this.settings.resourceOptions.clone(TempStorageArea)
-    this.currentLanguage = this.$store.state.app.preferredLanguageName || this.instanceContentOptions.items.preferredLanguage.currentTextValue()
-    this.instanceContentOptions.items.lookupLanguage.setTextValue(this.currentLanguage)
+    if (this.usePageLangPrefs) {
+      // Use language settings of a page
+      this.$options.lookupLanguage = this.settings.contentOptions.items.preferredLanguage
+      this.$options.resourceOptions = this.settings.resourceOptions
+    } else {
+      // Use lookup language settings
+      this.$options.lookupLanguage = this.settings.contentOptions.items.lookupLanguage
+      this.$options.resourceOptions = this.settings.lookupResourceOptions
+    }
   },
 
   computed: {
-    lexiconSettingName: function () {
-      let lang = this.instanceContentOptions.items.preferredLanguage.values.filter(v => v.text === this.currentLanguage)
+    currentLanguage: function () {
+      const selectedValue = this.$options.lookupLanguage.currentTextValue()
+      return (selectedValue === 'Default')
+        ? this.settings.contentOptions.items.preferredLanguage.currentItem()
+        : this.$options.lookupLanguage.currentItem()
+    },
+
+    lexiconsFiltered: function () {
+      let lang = this.$options.lookupLanguage.values.filter(v => v.text === this.currentLanguage.text)
       let settingName
       if (lang.length > 0) {
         settingName = `lexiconsShort-${lang[0].value}`
       }
-      return settingName
-    },
-    lexiconsFiltered: function () {
-      return this.instanceResourceOptions.items.lexiconsShort.filter((item) => item.name === this.lexiconSettingName)
-    }
-  },
 
-  watch: {
-    clearLookupText: function (value) {
-      if (value) {
-        this.lookuptext = ''
-      }
-    },
-
-    overrideLanguage: function (value) {
-      this.overrideLanguage = value
-
-      if (value) {
-        // If we start to override language, set an initial lookup language value
-        // to the one selected in the panel options
-        this.instanceContentOptions.items.lookupLanguage.setValue(
-          this.settings.contentOptions.items.preferredLanguage.currentValue
-        )
-      }
+      return this.$options.resourceOptions.items.lexiconsShort.filter((item) => item.name === settingName)
     }
   },
 
@@ -159,16 +133,13 @@ export default {
       If we override the language, then the lookup language must be a current value of our `lookupLanguage` prop,
       otherwise it must be a value of panel's options `preferredLanguage` options item
        */
-      const languageID = this.overrideLanguage
-        ? LanguageModelFactory.getLanguageIdFromCode(this.instanceContentOptions.items.lookupLanguage.currentValue)
-        : LanguageModelFactory.getLanguageIdFromCode(this.settings.contentOptions.items.preferredLanguage.currentValue)
+      const languageID = LanguageModelFactory.getLanguageIdFromCode(this.currentLanguage.value)
 
       let textSelector = TextSelector.createObjectFromText(this.lookuptext, languageID)
 
-      this.app.updateLanguage(this.instanceContentOptions.items.lookupLanguage.currentValue)
-      this.instanceResourceOptions.items.lexicons = this.settings.resourceOptions.items.lexicons
+      this.app.updateLanguage(this.$options.lookupLanguage.currentValue)
 
-      const resourceOptions = this.instanceResourceOptions || this.settings.resourceOptions
+      const resourceOptions = this.$options.resourceOptions
       const lemmaTranslationLang = this.app.state.lemmaTranslationLang
       LexicalQueryLookup
         .create(textSelector, resourceOptions, lemmaTranslationLang)
@@ -176,16 +147,18 @@ export default {
       // A lookup, when started from a panel, should open a popup with lookup results
       this.ui.openPopup()
       this.ui.closePanel()
+
+      // Clear the lookup text when the lookup started
+      this.lookuptext = ''
     },
 
     settingChange: function (name, value) {
-      this.instanceContentOptions.items.lookupLanguage.setTextValue(value)
-      this.currentLanguage = value
+      this.$options.lookupLanguage.setTextValue(value)
     },
 
     resourceSettingChange: function (name, value) {
-      let keyinfo = this.instanceResourceOptions.parseKey(name)
-      this.instanceResourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
+      let keyinfo = this.settings.lookupResourceOptions.parseKey(name)
+      this.settings.lookupResourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
     }
   }
 }
@@ -199,13 +172,24 @@ export default {
     flex-direction: column;
     width: 100%;
 
-    // Placed here to have a double selector to override .alpheios-content input margin
-    .alpheios-lookup__form-element {
-      margin-bottom: uisize(10px);
+    .alpheios-setting__label {
+      display: inline-block;
+      margin-bottom: uisize(6px);
+      width: auto;
     }
+  }
 
-    .alpheios-lookup__form-element:not(:last-child) {
-      margin-right: uisize(10px);
+  // Placed here to have a double selector to override .alpheios-content input margin
+  .alpheios-lookup__form-element {
+    margin-bottom: uisize(10px);
+
+    &.alpheios-lookup__lang-control {
+      flex-direction: column;
+      margin-right: uisize(50px);
+
+      .alpheios-setting__control {
+        width: textsize(120px);
+      }
     }
   }
 
@@ -216,5 +200,31 @@ export default {
 
   .alpheios-lookup__form-row {
     display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .alpheios-lookup__search-control {
+    display: flex;
+
+    input {
+      width: 70%;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  .alpheios-lookup__resource-control {
+    display: flex;
+    flex-direction: column;
+
+    .alpheios-setting__control {
+      width: 100%;
+    }
   }
 </style>

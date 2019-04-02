@@ -10,6 +10,21 @@
     "component": "Panel",
     "params": ["numLines"]
   },
+  "TITLE_HELP_PANEL": {
+    "message": "Help",
+    "description": "A title of a help panel",
+    "component": "Panel"
+  },
+  "TITLE_INFLECTIONS_PANEL": {
+    "message": "Inflection tables",
+    "description": "A title of an inflections panel",
+    "component": "Panel"
+  },
+  "TITLE_INFLECTIONS_BROWSER_PANEL": {
+    "message": "Browse inflection tables",
+    "description": "A title of an inflections browser panel",
+    "component": "Panel"
+  },
   "TOOLTIP_MOVE_PANEL_LEFT": {
     "message": "Move Panel to Left",
     "description": "tooltip for moving the panel to the left",

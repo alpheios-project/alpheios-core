@@ -309,6 +309,8 @@ export default class UIController {
     // Start loading options as early as possible
     this.contentOptions = new Options(this.contentOptionsDefaults, this.options.storageAdapter)
     this.resourceOptions = new Options(this.resourceOptionsDefaults, this.options.storageAdapter)
+    // Create a copy of resource options for the lookup UI component
+    this.lookupResourceOptions = new Options(this.resourceOptionsDefaults, this.options.storageAdapter)
     this.uiOptions = new Options(this.uiOptionsDefaults, this.options.storageAdapter)
     let optionLoadPromises = [this.contentOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
     // TODO: Site options should probably be initialized the same way as other options objects
@@ -332,6 +334,7 @@ export default class UIController {
     this.api.settings = {
       contentOptions: this.contentOptions,
       resourceOptions: this.resourceOptions,
+      lookupResourceOptions: this.lookupResourceOptions,
       uiOptions: this.uiOptions,
       siteOptions: this.siteOptions
     }
@@ -380,8 +383,8 @@ export default class UIController {
       namespaced: true,
 
       state: {
-        preferredLanguageID: undefined,
-        preferredLanguageName: undefined,
+        currentLanguageID: undefined,
+        currentLanguageName: '',
         selectedText: '',
         languageName: '',
         languageCode: '',
@@ -440,12 +443,12 @@ export default class UIController {
       },
 
       mutations: {
-        setLanguage (state, languageCodeOrID) {
+        setCurrentLanguage (state, languageCodeOrID) {
           let name
           let id
           ({ id, name } = UIController.getLanguageName(languageCodeOrID))
-          state.preferredLanguageID = id
-          state.preferredLanguageName = name
+          state.currentLanguageID = id
+          state.currentLanguageName = name
         },
 
         setTextData (state, data) {
@@ -652,8 +655,8 @@ export default class UIController {
     // Set initial values of components
     this.setRootComponentClasses()
 
-    const preferredLanguageID = LanguageModelFactory.getLanguageIdFromCode(this.contentOptions.items.preferredLanguage.currentValue)
-    this.updateLanguage(preferredLanguageID)
+    const currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(this.contentOptions.items.preferredLanguage.currentValue)
+    this.updateLanguage(currentLanguageID)
     this.updateLemmaTranslations()
 
     this.state.setWatcher('uiActive', this.updateAnnotations.bind(this))
@@ -801,8 +804,8 @@ export default class UIController {
       let languageName
       if (homonym) {
         languageName = this.api.app.getLanguageName(homonym.languageID).name
-      } else if (this.store.state.app.preferredLanguageName) {
-        languageName = this.store.state.app.preferredLanguageName
+      } else if (this.store.state.app.currentLanguageName) {
+        languageName = this.store.state.app.currentLanguageName
       } else {
         languageName = this.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN')
       }
@@ -947,16 +950,16 @@ export default class UIController {
     }
   }
 
-  updateLanguage (preferredLanguageID) {
+  updateLanguage (currentLanguageID) {
     // the code which follows assumes we have been passed a languageID symbol
     // we can try to recover gracefully if we accidentally get passed a string value
-    if (typeof preferredLanguageID !== 'symbol') {
+    if (typeof currentLanguageID !== 'symbol') {
       console.warn('updateLanguage was called with a string value')
-      preferredLanguageID = LanguageModelFactory.getLanguageIdFromCode(preferredLanguageID)
+      currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(currentLanguageID)
     }
-    this.store.commit('app/setLanguage', preferredLanguageID)
-    this.state.setItem('currentLanguage', LanguageModelFactory.getLanguageCodeFromId(preferredLanguageID))
-    this.startResourceQuery({ type: 'table-of-contents', value: '', languageID: preferredLanguageID })
+    this.store.commit('app/setCurrentLanguage', currentLanguageID)
+    this.state.setItem('currentLanguage', LanguageModelFactory.getLanguageCodeFromId(currentLanguageID))
+    this.startResourceQuery({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
 
     this.resetInflData()
   }

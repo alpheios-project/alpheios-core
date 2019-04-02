@@ -118,7 +118,6 @@ export default {
 
   .alpheios-setting__label {
     width: 50%;
-    padding-left: textsize(10px);
   }
 
   .alpheios-setting__control {

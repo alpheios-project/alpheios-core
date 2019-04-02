@@ -259,6 +259,7 @@ export default {
     font-weight: 700;
     position: relative;
     z-index: 1;
+    display: inline-block;
   }
 
   .alpheios-inflections__not-impl-msg {

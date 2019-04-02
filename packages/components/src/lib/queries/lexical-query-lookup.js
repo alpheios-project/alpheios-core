@@ -11,9 +11,9 @@ import HTMLSelector from '../selection/media/html-selector'
 export default class LexicalQueryLookup extends LexicalQuery {
   /**
    * @createForLookup - it is used for rendering popup/panel with data for the current text
-   * @param {TextSelector} textSelector - text selector containg the word for getting data from adapters and showing in the popup/panel
+   * @param {TextSelector} textSelector - text selector containing the word for getting data from adapters and showing in the popup/panel
    * @param resourceOptions
-   * @param lemmaTranslationLang
+   * @param {symbol} lemmaTranslationLang - A language ID, such as Constants.LANG_LATIN.
    */
 
   static create (textSelector, resourceOptions, lemmaTranslationLang) {

@@ -58,10 +58,10 @@ export default class Options {
       if (Array.isArray(this.items[item])) {
         obj.items[item] = []
         for (let option of this.items[item]) {
-          obj.items[item].push(new OptionItem(JSON.parse(JSON.stringify(option)), option.name, obj.storageAdapter))
+          obj.items[item].push(option.clone(option.name, obj.storageAdapter))
         }
       } else {
-        obj.items[item] = new OptionItem(JSON.parse(JSON.stringify(this.items[item])), item, obj.storageAdapter)
+        obj.items[item] = this.items[item].clone(item, obj.storageAdapter)
       }
     }
     return obj

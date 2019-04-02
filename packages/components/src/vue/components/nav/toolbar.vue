@@ -1,7 +1,7 @@
 <template>
   <div
       id="alpheios-toolbar-inner"
-      class="alpheios-toolbar"
+      class="alpheios-content alpheios-toolbar"
   >
     <div
         id="alpheios-toolbar-drag-handle"
@@ -41,6 +41,7 @@
     >
       <lookup
           :name-base="`toolbar`"
+          :use-page-lang-prefs="true"
           :show-language-settings-group="false"
       />
     </div>
@@ -398,10 +399,10 @@ export default {
   .alpheios-toolbar__lookup {
     display: flex;
     position: absolute;
-    width: uisize(410px);
-    height: uisize(91px);
+    width: uisize(330px);
+    height: uisize(90px);
     background: var(--alpheios-text-bg-color);
-    left: uisize(-400px);
+    left: uisize(-320px);
     top: 0;
     border: uisize(1px) solid var(--alpheios-border-color);
     border-top-left-radius: uisize(10px);

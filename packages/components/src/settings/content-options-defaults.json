@@ -146,24 +146,14 @@
         }
       ]
     },
-    "verboseMode": {
-      "defaultValue": "normal",
-      "labelText": "Log Level",
-      "values": [
-        {
-          "value": "verbose",
-          "text": "Verbose"
-        },
-        {
-          "value": "normal",
-          "text": "Normal"
-        }
-      ]
-    },
     "lookupLanguage": {
-      "defaultValue": "lat",
-      "labelText": "Page language:",
+      "defaultValue": "default",
+      "labelText": "Change language:",
       "values": [
+        {
+          "value": "default",
+          "text": "Default"
+        },
         {
           "value": "lat",
           "text": "Latin"
@@ -183,6 +173,21 @@
         {
           "value": "gez",
           "text": "Ancient Ethiopic (Ge'ez - Experimental)"
+
+        }
+      ]
+    },
+    "verboseMode": {
+      "defaultValue": "normal",
+      "labelText": "Log Level",
+      "values": [
+        {
+          "value": "verbose",
+          "text": "Verbose"
+        },
+        {
+          "value": "normal",
+          "text": "Normal"
         }
       ]
     }

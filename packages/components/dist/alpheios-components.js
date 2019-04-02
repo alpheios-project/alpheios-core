@@ -9206,6 +9206,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -10330,10 +10374,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_queries_lexical_query_lookup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/queries/lexical-query-lookup */ "./lib/queries/lexical-query-lookup.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _lib_options_temp_storage_area__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/lib/options/temp-storage-area */ "./lib/options/temp-storage-area.js");
-/* harmony import */ var _tooltip_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./tooltip.vue */ "./vue/components/tooltip.vue");
-/* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+/* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
 //
@@ -10385,18 +10427,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
 
 
 
@@ -10411,77 +10441,63 @@ __webpack_require__.r(__webpack_exports__);
   name: 'Lookup',
   inject: ['app', 'ui', 'l10n', 'settings'],
   storeModules: ['app'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_6__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_4__["default"]],
   components: {
-    alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    alphSetting: _setting_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+    alphSetting: _setting_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data () {
     return {
-      lookuptext: '',
-      currentLanguage: null,
-      instanceContentOptions: {},
-      istanceResourceOptions: {},
-
-      overrideLanguage: false,
-      overrideLanguageLabel: 'Change language'
+      lookuptext: ''
     }
   },
   props: {
-    // When becomes `true`, forces a lookup text to be cleared
-    clearLookupText: {
-      type: Boolean,
-      required: false,
-      default: false
+    nameBase: {
+      type: String,
+      required: true
     },
     showLanguageSettingsGroup: {
       type: Boolean,
       required: false,
       default: true
     },
-    nameBase: {
-      type: String,
-      required: true
+    /*
+    If the following prop is set to true, a lookup component will use preferredLanguage and resourceOptions
+    as its data model. Otherwise, a lookup component will use lookupLanguage and lookupResourceOptions instead.
+     */
+    usePageLangPrefs: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   created: function () {
-    this.instanceContentOptions = this.settings.contentOptions.clone(_lib_options_temp_storage_area__WEBPACK_IMPORTED_MODULE_3__["default"])
-    this.instanceResourceOptions = this.settings.resourceOptions.clone(_lib_options_temp_storage_area__WEBPACK_IMPORTED_MODULE_3__["default"])
-    this.currentLanguage = this.$store.state.app.preferredLanguageName || this.instanceContentOptions.items.preferredLanguage.currentTextValue()
-    this.instanceContentOptions.items.lookupLanguage.setTextValue(this.currentLanguage)
+    if (this.usePageLangPrefs) {
+      // Use language settings of a page
+      this.$options.lookupLanguage = this.settings.contentOptions.items.preferredLanguage
+      this.$options.resourceOptions = this.settings.resourceOptions
+    } else {
+      // Use lookup language settings
+      this.$options.lookupLanguage = this.settings.contentOptions.items.lookupLanguage
+      this.$options.resourceOptions = this.settings.lookupResourceOptions
+    }
   },
 
   computed: {
-    lexiconSettingName: function () {
-      let lang = this.instanceContentOptions.items.preferredLanguage.values.filter(v => v.text === this.currentLanguage)
+    currentLanguage: function () {
+      const selectedValue = this.$options.lookupLanguage.currentTextValue()
+      return (selectedValue === 'Default')
+        ? this.settings.contentOptions.items.preferredLanguage.currentItem()
+        : this.$options.lookupLanguage.currentItem()
+    },
+
+    lexiconsFiltered: function () {
+      let lang = this.$options.lookupLanguage.values.filter(v => v.text === this.currentLanguage.text)
       let settingName
       if (lang.length > 0) {
         settingName = `lexiconsShort-${lang[0].value}`
       }
-      return settingName
-    },
-    lexiconsFiltered: function () {
-      return this.instanceResourceOptions.items.lexiconsShort.filter((item) => item.name === this.lexiconSettingName)
-    }
-  },
 
-  watch: {
-    clearLookupText: function (value) {
-      if (value) {
-        this.lookuptext = ''
-      }
-    },
-
-    overrideLanguage: function (value) {
-      this.overrideLanguage = value
-
-      if (value) {
-        // If we start to override language, set an initial lookup language value
-        // to the one selected in the panel options
-        this.instanceContentOptions.items.lookupLanguage.setValue(
-          this.settings.contentOptions.items.preferredLanguage.currentValue
-        )
-      }
+      return this.$options.resourceOptions.items.lexiconsShort.filter((item) => item.name === settingName)
     }
   },
 
@@ -10495,16 +10511,13 @@ __webpack_require__.r(__webpack_exports__);
       If we override the language, then the lookup language must be a current value of our `lookupLanguage` prop,
       otherwise it must be a value of panel's options `preferredLanguage` options item
        */
-      const languageID = this.overrideLanguage
-        ? alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageIdFromCode(this.instanceContentOptions.items.lookupLanguage.currentValue)
-        : alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageIdFromCode(this.settings.contentOptions.items.preferredLanguage.currentValue)
+      const languageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageIdFromCode(this.currentLanguage.value)
 
       let textSelector = _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_0__["default"].createObjectFromText(this.lookuptext, languageID)
 
-      this.app.updateLanguage(this.instanceContentOptions.items.lookupLanguage.currentValue)
-      this.instanceResourceOptions.items.lexicons = this.settings.resourceOptions.items.lexicons
+      this.app.updateLanguage(this.$options.lookupLanguage.currentValue)
 
-      const resourceOptions = this.instanceResourceOptions || this.settings.resourceOptions
+      const resourceOptions = this.$options.resourceOptions
       const lemmaTranslationLang = this.app.state.lemmaTranslationLang
       _lib_queries_lexical_query_lookup__WEBPACK_IMPORTED_MODULE_1__["default"]
         .create(textSelector, resourceOptions, lemmaTranslationLang)
@@ -10512,16 +10525,18 @@ __webpack_require__.r(__webpack_exports__);
       // A lookup, when started from a panel, should open a popup with lookup results
       this.ui.openPopup()
       this.ui.closePanel()
+
+      // Clear the lookup text when the lookup started
+      this.lookuptext = ''
     },
 
     settingChange: function (name, value) {
-      this.instanceContentOptions.items.lookupLanguage.setTextValue(value)
-      this.currentLanguage = value
+      this.$options.lookupLanguage.setTextValue(value)
     },
 
     resourceSettingChange: function (name, value) {
-      let keyinfo = this.instanceResourceOptions.parseKey(name)
-      this.instanceResourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
+      let keyinfo = this.settings.lookupResourceOptions.parseKey(name)
+      this.settings.lookupResourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
     }
   }
 });
@@ -11534,6 +11549,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -11689,6 +11705,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
 /* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -12407,6 +12460,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /*
     This is a desktop version of a panel
@@ -12736,7 +12800,7 @@ __webpack_require__.r(__webpack_exports__);
       return _lib_log_logger__WEBPACK_IMPORTED_MODULE_4__["default"].getLogger(this.verboseMode)
     },
     noLanguage: function () {
-      return Boolean(!this.$store.state.app.preferredLanguageName)
+      return Boolean(!this.$store.state.app.currentLanguageName)
     },
     providersLinkText: function () {
       return this.showProviders ? this.l10n.getText('LABEL_POPUP_HIDECREDITS') : this.l10n.getText('LABEL_POPUP_SHOWCREDITS')
@@ -14056,1553 +14120,1583 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "alpheios-ib" }, [
-    _c(
-      "div",
-      {
-        staticClass: "alpheios-ib__title alpheios-clickable",
-        class: { open: !_vm.collapsed[_vm.constants.LANG_LATIN.toString()] },
-        on: {
-          click: function($event) {
-            return _vm.collapseLanguage(_vm.constants.LANG_LATIN)
+    _c("div", { staticClass: "alpheios-ib__lang-cont" }, [
+      _c(
+        "div",
+        {
+          staticClass: "alpheios-ib__title alpheios-clickable",
+          class: { open: !_vm.collapsed[_vm.constants.LANG_LATIN.toString()] },
+          on: {
+            click: function($event) {
+              return _vm.collapseLanguage(_vm.constants.LANG_LATIN)
+            }
           }
-        }
-      },
-      [
-        _vm._v("\n    Latin Inflection Browser\n    "),
-        _c(
-          "span",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.collapsed[_vm.constants.LANG_LATIN.toString()],
-                expression: "collapsed[constants.LANG_LATIN.toString()]"
-              }
-            ]
-          },
-          [_vm._v("[+]")]
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: !_vm.collapsed[_vm.constants.LANG_LATIN.toString()],
-                expression: "!collapsed[constants.LANG_LATIN.toString()]"
-              }
-            ]
-          },
-          [_vm._v("[-]")]
-        )
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: !_vm.collapsed[_vm.constants.LANG_LATIN.toString()],
-            expression: "!collapsed[constants.LANG_LATIN.toString()]"
-          }
+        },
+        [
+          _vm._v("\n      Latin Inflection Browser\n      "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.collapsed[_vm.constants.LANG_LATIN.toString()],
+                  expression: "collapsed[constants.LANG_LATIN.toString()]"
+                }
+              ]
+            },
+            [_vm._v("[+]")]
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: !_vm.collapsed[_vm.constants.LANG_LATIN.toString()],
+                  expression: "!collapsed[constants.LANG_LATIN.toString()]"
+                }
+              ]
+            },
+            [_vm._v("[-]")]
+          )
         ]
-      },
-      [
-        _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
-          _vm._v("Nouns")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({ viewID: "latin_noun_view" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
-          _vm._v("Adjectives")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({ viewID: "latin_adjective_view" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
-          _vm._v("Verbs")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title-l2" }, [
-          _vm._v("Regular verbs")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
-          _vm._v("Sorted by...")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_conjugation_mood_voice_view",
-              title: "Conjugation-Mood-Voice"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_conjugation_voice_mood_view",
-              title: "Conjugation-Voice-Mood"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_mood_conjugation_voice_view",
-              title: "Mood-Conjugation-Voice"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_mood_voice_conjugation_view",
-              title: "Mood-Coice-Conjugation"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_voice_conjugation_mood_view",
-              title: "Voice-Conjugation-Mood"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_voice_mood_conjugation_view",
-              title: "Voice-Mood-Conjugation"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
-          _vm._v("Other Forms")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({ viewID: "latin_verb_participle_view" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({ viewID: "latin_infinitive_view" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({ viewID: "latin_imperative_view" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({ viewID: "latin_supine_view" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title-l2" }, [
-          _vm._v("Irregular verbs")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "sum",
-              title: "Sum (esse,fui,futurus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_voice_view",
-              form: "fero",
-              title: "Fero (ferre, tuli, latus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "malo",
-              title: "Malo (malle, malui)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "nolo",
-              title: "Nolo (nolle, nolui)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "volo",
-              title: "Volo (velle, volui)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "eo",
-              title: "Eo (ire, ivi(ii), itus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "absum",
-              title: "Absum (abesse, afui, afuturus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "adsum",
-              title: "Adsum (adesse, adfui, adfuturus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "dēsum",
-              title: "Dēsum (dēesse, dēfui, dēfuturus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "insum",
-              title: "Insum (inesse, infui, infuturus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "intersum",
-              title: "Intersum (interesse, interfui, interfuturus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "obsum",
-              title: "Obsum (obesse, obfui, obfuturus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "possum",
-              title: "Possum (posse, potui)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "prosum",
-              title: "Prosum (prodesse, profui, profuturus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "praesum",
-              title: "Praesum (praeesse, praefui, praefuturus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "subsum",
-              title: "Subsum (subesse, subfui, subfuturus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "supersum",
-              title: "Supersum (superesse, superfui, superfuturus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_voice_view",
-              form: "queo",
-              title: "Queo (quire, quivi(ii), quitus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "nequeo",
-              title: "Nequeo (nequire, nequivi(ii), nequitus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_voice_view",
-              form: "adeo",
-              title: "Adeo (adire, adivi(ii), aditus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_voice_view",
-              form: "ineo",
-              title: "Ineo (inire, inivi(ii), initus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.latinInflView({
-              viewID: "latin_verb_irregular_view",
-              form: "veneo",
-              title: "Veneo (venire, venivi(ii), venitus)"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        })
-      ],
-      1
-    ),
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: !_vm.collapsed[_vm.constants.LANG_LATIN.toString()],
+              expression: "!collapsed[constants.LANG_LATIN.toString()]"
+            }
+          ]
+        },
+        [
+          _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
+            _vm._v("Nouns")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({ viewID: "latin_noun_view" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
+            _vm._v("Adjectives")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({ viewID: "latin_adjective_view" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
+            _vm._v("Verbs")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title-l2" }, [
+            _vm._v("Regular verbs")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
+            _vm._v("Sorted by...")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_conjugation_mood_voice_view",
+                title: "Conjugation-Mood-Voice"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_conjugation_voice_mood_view",
+                title: "Conjugation-Voice-Mood"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_mood_conjugation_voice_view",
+                title: "Mood-Conjugation-Voice"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_mood_voice_conjugation_view",
+                title: "Mood-Coice-Conjugation"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_voice_conjugation_mood_view",
+                title: "Voice-Conjugation-Mood"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_voice_mood_conjugation_view",
+                title: "Voice-Mood-Conjugation"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
+            _vm._v("Other Forms")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({ viewID: "latin_verb_participle_view" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({ viewID: "latin_infinitive_view" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({ viewID: "latin_imperative_view" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({ viewID: "latin_supine_view" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title-l2" }, [
+            _vm._v("Irregular verbs")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "sum",
+                title: "Sum (esse,fui,futurus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_voice_view",
+                form: "fero",
+                title: "Fero (ferre, tuli, latus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "malo",
+                title: "Malo (malle, malui)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "nolo",
+                title: "Nolo (nolle, nolui)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "volo",
+                title: "Volo (velle, volui)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "eo",
+                title: "Eo (ire, ivi(ii), itus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "absum",
+                title: "Absum (abesse, afui, afuturus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "adsum",
+                title: "Adsum (adesse, adfui, adfuturus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "dēsum",
+                title: "Dēsum (dēesse, dēfui, dēfuturus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "insum",
+                title: "Insum (inesse, infui, infuturus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "intersum",
+                title: "Intersum (interesse, interfui, interfuturus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "obsum",
+                title: "Obsum (obesse, obfui, obfuturus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "possum",
+                title: "Possum (posse, potui)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "prosum",
+                title: "Prosum (prodesse, profui, profuturus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "praesum",
+                title: "Praesum (praeesse, praefui, praefuturus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "subsum",
+                title: "Subsum (subesse, subfui, subfuturus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "supersum",
+                title: "Supersum (superesse, superfui, superfuturus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_voice_view",
+                form: "queo",
+                title: "Queo (quire, quivi(ii), quitus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "nequeo",
+                title: "Nequeo (nequire, nequivi(ii), nequitus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_voice_view",
+                form: "adeo",
+                title: "Adeo (adire, adivi(ii), aditus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_voice_view",
+                form: "ineo",
+                title: "Ineo (inire, inivi(ii), initus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.latinInflView({
+                viewID: "latin_verb_irregular_view",
+                form: "veneo",
+                title: "Veneo (venire, venivi(ii), venitus)"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          })
+        ],
+        1
+      )
+    ]),
     _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "alpheios-ib__title alpheios-clickable",
-        class: { open: !_vm.collapsed[_vm.constants.LANG_GREEK.toString()] },
-        on: {
-          click: function($event) {
-            return _vm.collapseLanguage(_vm.constants.LANG_GREEK)
+    _c("div", { staticClass: "alpheios-ib__lang-cont" }, [
+      _c(
+        "div",
+        {
+          staticClass: "alpheios-ib__title alpheios-clickable",
+          class: { open: !_vm.collapsed[_vm.constants.LANG_GREEK.toString()] },
+          on: {
+            click: function($event) {
+              return _vm.collapseLanguage(_vm.constants.LANG_GREEK)
+            }
           }
-        }
-      },
-      [
-        _vm._v("\n    Greek Inflection Browser\n    "),
-        _c(
-          "span",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.collapsed[_vm.constants.LANG_GREEK.toString()],
-                expression: "collapsed[constants.LANG_GREEK.toString()]"
-              }
-            ]
-          },
-          [_vm._v("[+]")]
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: !_vm.collapsed[_vm.constants.LANG_GREEK.toString()],
-                expression: "!collapsed[constants.LANG_GREEK.toString()]"
-              }
-            ]
-          },
-          [_vm._v("[-]")]
-        )
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: !_vm.collapsed[_vm.constants.LANG_GREEK.toString()],
-            expression: "!collapsed[constants.LANG_GREEK.toString()]"
-          }
+        },
+        [
+          _vm._v("\n      Greek Inflection Browser\n      "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.collapsed[_vm.constants.LANG_GREEK.toString()],
+                  expression: "collapsed[constants.LANG_GREEK.toString()]"
+                }
+              ]
+            },
+            [_vm._v("[+]")]
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: !_vm.collapsed[_vm.constants.LANG_GREEK.toString()],
+                  expression: "!collapsed[constants.LANG_GREEK.toString()]"
+                }
+              ]
+            },
+            [_vm._v("[-]")]
+          )
         ]
-      },
-      [
-        _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
-          _vm._v("Nouns")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekInflView({ viewID: "greek_noun_view" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekInflView({ viewID: "greek_noun_simplified_view" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
-          _vm._v("Adjectives")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekInflView({ viewID: "greek_adjective_view" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekInflView({
-              viewID: "greek_adjective_simplified_view"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
-          _vm._v("Pronouns")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekInflView({
-              viewID: "greek_person_pronoun_view",
-              form: "νώ",
-              title: "Personal Pronoun Declension"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekInflView({
-              viewID: "greek_person_gender_pronoun_view",
-              form: "ἡμᾶς",
-              title: "Reflexive Pronoun Declension"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekInflView({
-              viewID: "greek_gender_pronoun_view",
-              form: "ἀλλήλᾱ",
-              title: "Reciprocal Pronoun Declension"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekInflView({
-              viewID: "greek_lemma_gender_pronoun_view",
-              form: "τούτω",
-              title: "Demonstrative Pronoun Declension"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekInflView({
-              viewID: "greek_gender_pronoun_view",
-              form: "οἷς",
-              title: "Relative Pronoun Declension"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekInflView({
-              viewID: "greek_gender_pronoun_view",
-              form: "ὥτινε",
-              title: "General Relative Pronoun Declension"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekInflView({
-              viewID: "greek_gender_pronoun_view",
-              form: "τίνε",
-              title: "Interrogative Pronoun Declension"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekInflView({
-              viewID: "greek_gender_pronoun_view",
-              form: "τινοῖν",
-              title: "Indefinite Pronoun Declension"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekInflView({
-              viewID: "greek_gender_pronoun_view",
-              form: "αὐτά",
-              title: "Intensive Pronoun Declension"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
-          _vm._v("Articles")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekInflView({
-              viewID: "greek_article_view",
-              form: "τοῦ"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
-          _vm._v("Numerals")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekInflView({
-              viewID: "greek_numeral_view",
-              form: "δύο"
-            })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
-          _vm._v("Verb Paradigms")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title-l2" }, [
-          _vm._v("ω Verbs")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
-          _vm._v("Regular ω Verbs")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm1" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm2" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm3" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm4" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm5" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm6" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm7" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm8" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm9" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm10" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm11" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm12" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm13" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm14" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm15" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm16" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
-          _vm._v("Athematic Perfects")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm17" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm17b" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm17c" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
-          _vm._v("Present System of Contract Verbs (-εω, -αω, -οω)")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm18" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm19" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm20" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm21" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm22" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm23" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm24" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm25" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm26" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm27" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title-l2" }, [
-          _vm._v("μι Verbs")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
-          _vm._v("τίθημι")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm28" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm29" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm30" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm31" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
-          _vm._v("ἵημι")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm32" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm33" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm34" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm35" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
-          _vm._v("δίδωμι")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm36" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm37" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm38" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm39" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
-          _vm._v("ἵστημι")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm40" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm41" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm42" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
-          _vm._v("Other")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm43" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm43b" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm44" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm45" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm46" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm47" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm48" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm49" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm50" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm51" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm52" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParadigmView({ paradigmID: "verbpdgm53" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-ib__pofs-title-l2" }, [
-          _vm._v("Participles")
-        ]),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm54" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm55" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm56" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm57" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm58" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm59" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm60" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm61" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm62" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm63" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm64" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm65" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        }),
-        _vm._v(" "),
-        _c("wide-table", {
-          attrs: {
-            collapsed: _vm.inflBrowserTablesCollapsed,
-            "infl-browser-table": true,
-            "no-suffix-matches-hidden": false,
-            view: _vm.greekParticipleParadigmView({ paradigmID: "verbpdgm66" })
-          },
-          on: { widthchange: _vm.inflTableWidthUpd }
-        })
-      ],
-      1
-    )
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: !_vm.collapsed[_vm.constants.LANG_GREEK.toString()],
+              expression: "!collapsed[constants.LANG_GREEK.toString()]"
+            }
+          ]
+        },
+        [
+          _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
+            _vm._v("Nouns")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekInflView({ viewID: "greek_noun_view" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekInflView({ viewID: "greek_noun_simplified_view" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
+            _vm._v("Adjectives")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekInflView({ viewID: "greek_adjective_view" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekInflView({
+                viewID: "greek_adjective_simplified_view"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
+            _vm._v("Pronouns")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekInflView({
+                viewID: "greek_person_pronoun_view",
+                form: "νώ",
+                title: "Personal Pronoun Declension"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekInflView({
+                viewID: "greek_person_gender_pronoun_view",
+                form: "ἡμᾶς",
+                title: "Reflexive Pronoun Declension"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekInflView({
+                viewID: "greek_gender_pronoun_view",
+                form: "ἀλλήλᾱ",
+                title: "Reciprocal Pronoun Declension"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekInflView({
+                viewID: "greek_lemma_gender_pronoun_view",
+                form: "τούτω",
+                title: "Demonstrative Pronoun Declension"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekInflView({
+                viewID: "greek_gender_pronoun_view",
+                form: "οἷς",
+                title: "Relative Pronoun Declension"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekInflView({
+                viewID: "greek_gender_pronoun_view",
+                form: "ὥτινε",
+                title: "General Relative Pronoun Declension"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekInflView({
+                viewID: "greek_gender_pronoun_view",
+                form: "τίνε",
+                title: "Interrogative Pronoun Declension"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekInflView({
+                viewID: "greek_gender_pronoun_view",
+                form: "τινοῖν",
+                title: "Indefinite Pronoun Declension"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekInflView({
+                viewID: "greek_gender_pronoun_view",
+                form: "αὐτά",
+                title: "Intensive Pronoun Declension"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
+            _vm._v("Articles")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekInflView({
+                viewID: "greek_article_view",
+                form: "τοῦ"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
+            _vm._v("Numerals")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekInflView({
+                viewID: "greek_numeral_view",
+                form: "δύο"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title" }, [
+            _vm._v("Verb Paradigms")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title-l2" }, [
+            _vm._v("ω Verbs")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
+            _vm._v("Regular ω Verbs")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm1" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm2" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm3" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm4" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm5" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm6" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm7" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm8" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm9" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm10" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm11" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm12" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm13" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm14" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm15" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm16" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
+            _vm._v("Athematic Perfects")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm17" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm17b" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm17c" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
+            _vm._v("Present System of Contract Verbs (-εω, -αω, -οω)")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm18" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm19" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm20" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm21" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm22" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm23" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm24" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm25" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm26" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm27" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title-l2" }, [
+            _vm._v("μι Verbs")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
+            _vm._v("τίθημι")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm28" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm29" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm30" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm31" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
+            _vm._v("ἵημι")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm32" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm33" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm34" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm35" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
+            _vm._v("δίδωμι")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm36" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm37" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm38" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm39" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
+            _vm._v("ἵστημι")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm40" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm41" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm42" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title-l3" }, [
+            _vm._v("Other")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm43" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm43b" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm44" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm45" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm46" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm47" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm48" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm49" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm50" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm51" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm52" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParadigmView({ paradigmID: "verbpdgm53" })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "alpheios-ib__pofs-title-l2" }, [
+            _vm._v("Participles")
+          ]),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParticipleParadigmView({
+                paradigmID: "verbpdgm54"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParticipleParadigmView({
+                paradigmID: "verbpdgm55"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParticipleParadigmView({
+                paradigmID: "verbpdgm56"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParticipleParadigmView({
+                paradigmID: "verbpdgm57"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParticipleParadigmView({
+                paradigmID: "verbpdgm58"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParticipleParadigmView({
+                paradigmID: "verbpdgm59"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParticipleParadigmView({
+                paradigmID: "verbpdgm60"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParticipleParadigmView({
+                paradigmID: "verbpdgm61"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParticipleParadigmView({
+                paradigmID: "verbpdgm62"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParticipleParadigmView({
+                paradigmID: "verbpdgm63"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParticipleParadigmView({
+                paradigmID: "verbpdgm64"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParticipleParadigmView({
+                paradigmID: "verbpdgm65"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          }),
+          _vm._v(" "),
+          _c("wide-table", {
+            attrs: {
+              collapsed: _vm.inflBrowserTablesCollapsed,
+              "infl-browser-table": true,
+              "no-suffix-matches-hidden": false,
+              view: _vm.greekParticipleParadigmView({
+                paradigmID: "verbpdgm66"
+              })
+            },
+            on: { widthchange: _vm.inflTableWidthUpd }
+          })
+        ],
+        1
+      )
+    ])
   ])
 }
 var staticRenderFns = []
@@ -16549,7 +16643,7 @@ var render = function() {
         _vm._v(
           _vm._s(_vm.l10n.getMsg("LABEL_INFO_CURRENTLANGUAGE")) +
             "\n    " +
-            _vm._s(_vm.$store.state.app.preferredLanguageName) +
+            _vm._s(_vm.$store.state.app.currentLanguageName) +
             "\n  "
         )
       ]
@@ -16741,50 +16835,60 @@ var render = function() {
         "div",
         { staticClass: "alpheios-lookup__form-row" },
         [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.lookuptext,
-                expression: "lookuptext"
-              }
-            ],
-            staticClass: "alpheios-input alpheios-lookup__form-element",
-            attrs: {
-              placeholder: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
-              type: "text"
-            },
-            domProps: { value: _vm.lookuptext },
-            on: {
-              keyup: function($event) {
-                if (
-                  !$event.type.indexOf("key") &&
-                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                ) {
-                  return null
-                }
-                return _vm.lookup($event)
-              },
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.lookuptext = $event.target.value
-              }
-            }
-          }),
+          _vm.showLanguageSettingsGroup
+            ? _c("alph-setting", {
+                attrs: {
+                  classes: [
+                    "alpheios-panel__options-item",
+                    "alpheios-lookup__form-element",
+                    "alpheios-lookup__lang-control"
+                  ],
+                  data: this.$options.lookupLanguage
+                },
+                on: { change: _vm.settingChange }
+              })
+            : _vm._e(),
           _vm._v(" "),
-          _c(
-            "alph-tooltip",
-            {
-              staticClass: "alpheios-lookup__form-element",
-              attrs: {
-                tooltipText: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
-                tooltipDirection: "top-right"
-              }
-            },
-            [
+          _c("div", { staticClass: "alpheios-lookup__form-element" }, [
+            _c("label", { staticClass: "alpheios-setting__label" }, [
+              _vm._v("Word lookup")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "alpheios-lookup__search-control" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.lookuptext,
+                    expression: "lookuptext"
+                  }
+                ],
+                staticClass: "alpheios-input",
+                attrs: {
+                  placeholder: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
+                  type: "text"
+                },
+                domProps: { value: _vm.lookuptext },
+                on: {
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.lookup($event)
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.lookuptext = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
               _c(
                 "button",
                 {
@@ -16794,14 +16898,14 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n        " +
+                    "\n          " +
                       _vm._s(_vm.l10n.getMsg("LABEL_LOOKUP_BUTTON")) +
-                      "\n      "
+                      "\n        "
                   )
                 ]
               )
-            ]
-          )
+            ])
+          ])
         ],
         1
       ),
@@ -16810,110 +16914,21 @@ var render = function() {
         ? [
             _c(
               "div",
-              {
-                staticClass: "alpheios-lookup__form-row alpheios-checkbox-block"
-              },
-              [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.overrideLanguage,
-                      expression: "overrideLanguage"
-                    }
-                  ],
-                  attrs: {
-                    id: "alpheios-" + _vm.nameBase + "-checkbox-input",
-                    type: "checkbox"
-                  },
-                  domProps: {
-                    checked: Array.isArray(_vm.overrideLanguage)
-                      ? _vm._i(_vm.overrideLanguage, null) > -1
-                      : _vm.overrideLanguage
-                  },
-                  on: {
-                    change: function($event) {
-                      var $$a = _vm.overrideLanguage,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 && (_vm.overrideLanguage = $$a.concat([$$v]))
-                        } else {
-                          $$i > -1 &&
-                            (_vm.overrideLanguage = $$a
-                              .slice(0, $$i)
-                              .concat($$a.slice($$i + 1)))
-                        }
-                      } else {
-                        _vm.overrideLanguage = $$c
-                      }
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticClass: "alpheios-lookup__form-element",
-                    attrs: {
-                      for: "alpheios-" + _vm.nameBase + "-checkbox-input"
-                    }
-                  },
-                  [
-                    _vm._v(
-                      "\n        " +
-                        _vm._s(_vm.overrideLanguageLabel) +
-                        "\n      "
-                    )
-                  ]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.overrideLanguage,
-                    expression: "overrideLanguage"
-                  }
-                ],
-                staticClass: "alpheios-lookup__settings"
-              },
-              [
-                _c("alph-setting", {
+              { staticClass: "alpheios-lookup__settings" },
+              _vm._l(_vm.lexiconsFiltered, function(lexicon) {
+                return _c("alph-setting", {
+                  key: lexicon.name,
                   attrs: {
                     classes: [
                       "alpheios-panel__options-item",
-                      "alpheios-lookup__form-row"
+                      "alpheios-lookup__resource-control"
                     ],
-                    data: _vm.instanceContentOptions.items.lookupLanguage
+                    data: lexicon
                   },
-                  on: { change: _vm.settingChange }
-                }),
-                _vm._v(" "),
-                _vm._l(_vm.lexiconsFiltered, function(lexicon) {
-                  return _c("alph-setting", {
-                    key: lexicon.name,
-                    attrs: {
-                      classes: [
-                        "alpheios-panel__options-item",
-                        "alpheios-lookup__form-row"
-                      ],
-                      data: lexicon
-                    },
-                    on: { change: _vm.resourceSettingChange }
-                  })
+                  on: { change: _vm.resourceSettingChange }
                 })
-              ],
-              2
+              }),
+              1
             )
           ]
         : _vm._e()
@@ -18584,7 +18599,7 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "alpheios-toolbar",
+      staticClass: "alpheios-content alpheios-toolbar",
       attrs: { id: "alpheios-toolbar-inner" }
     },
     [
@@ -18671,6 +18686,7 @@ var render = function() {
           _c("lookup", {
             attrs: {
               "name-base": "toolbar",
+              "use-page-lang-prefs": true,
               "show-language-settings-group": false
             }
           })
@@ -19105,8 +19121,7 @@ var render = function() {
           expression: "$store.state.panel.visible"
         }
       ],
-      staticClass:
-        "alpheios-panel alpheios-panel--compact auk alpheios-content",
+      staticClass: "alpheios-panel alpheios-panel--compact alpheios-content",
       class: _vm.rootClasses,
       style: _vm.mainstyles,
       attrs: {
@@ -19217,100 +19232,110 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.$store.getters["ui/isActiveTab"]("definitions"),
-                  expression: "$store.getters['ui/isActiveTab']('definitions')"
-                }
-              ],
-              staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions"
-            },
-            [
-              _c(
+          _vm.$store.getters["ui/isActiveTab"]("definitions")
+            ? _c(
                 "div",
-                { staticClass: "alpheios-lookup__panel" },
+                {
+                  staticClass:
+                    "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions",
+                  attrs: { "data-alpheios-ignore": "all" }
+                },
                 [
-                  _c("lookup", {
-                    attrs: { "name-base": "panel-defs", clearLookupText: true }
+                  _c(
+                    "div",
+                    { staticClass: "alpheios-lookup__panel" },
+                    [_c("lookup", { attrs: { "name-base": "panel-defs" } })],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.$store.getters["app/defDataReady"]
+                    ? _c(
+                        "div",
+                        [
+                          _vm._l(_vm.formattedShortDefinitions, function(
+                            definition
+                          ) {
+                            return _c(
+                              "div",
+                              {
+                                key: definition.ID,
+                                staticClass: "alpheios-panel__contentitem"
+                              },
+                              [
+                                _c("shortdef", {
+                                  attrs: {
+                                    definition: definition,
+                                    languageCode:
+                                      _vm.$store.state.app.languageCode
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          }),
+                          _vm._v(" "),
+                          _c("div", {
+                            staticClass:
+                              "alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions",
+                            domProps: {
+                              innerHTML: _vm._s(_vm.formattedFullDefinitions)
+                            }
+                          })
+                        ],
+                        2
+                      )
+                    : _c("div", [
+                        _vm._v(
+                          "\n        " +
+                            _vm._s(
+                              _vm.l10n.getText("PLACEHOLDER_DEFINITIONS")
+                            ) +
+                            "\n      "
+                        )
+                      ])
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.$store.state.app.hasInflData
+            ? _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.$store.getters["ui/isActiveTab"](
+                        "inflections"
+                      ),
+                      expression:
+                        "$store.getters['ui/isActiveTab']('inflections')"
+                    }
+                  ],
+                  staticClass:
+                    "alpheios-panel__tab-panel alpheios-panel__tab__inflections",
+                  attrs: {
+                    id: _vm.inflectionsPanelID,
+                    "data-alpheios-ignore": "all"
+                  }
+                },
+                [
+                  _c("h1", { staticClass: "alpheios-panel__title" }, [
+                    _vm._v(
+                      "\n        " +
+                        _vm._s(_vm.l10n.getText("TITLE_INFLECTIONS_PANEL")) +
+                        "\n      "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("inflections", {
+                    staticClass: "alpheios-panel-inflections",
+                    on: { contentwidth: _vm.setContentWidth }
                   })
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _vm.$store.getters["app/defDataReady"]
-                ? _c(
-                    "div",
-                    [
-                      _vm._l(_vm.formattedShortDefinitions, function(
-                        definition
-                      ) {
-                        return _c(
-                          "div",
-                          {
-                            key: definition.ID,
-                            staticClass: "alpheios-panel__contentitem"
-                          },
-                          [
-                            _c("shortdef", {
-                              attrs: {
-                                definition: definition,
-                                languageCode: _vm.$store.state.app.languageCode
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      }),
-                      _vm._v(" "),
-                      _c("div", {
-                        staticClass:
-                          "alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions",
-                        domProps: {
-                          innerHTML: _vm._s(_vm.formattedFullDefinitions)
-                        }
-                      })
-                    ],
-                    2
-                  )
-                : _c("div", [
-                    _vm._v(
-                      "\n        " +
-                        _vm._s(_vm.l10n.getText("PLACEHOLDER_DEFINITIONS")) +
-                        "\n      "
-                    )
-                  ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.$store.getters["ui/isActiveTab"]("inflections"),
-                  expression: "$store.getters['ui/isActiveTab']('inflections')"
-                }
-              ],
-              staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__tab__inflections",
-              attrs: { id: _vm.inflectionsPanelID }
-            },
-            [
-              _c("inflections", {
-                staticClass: "alpheios-panel-inflections",
-                on: { contentwidth: _vm.setContentWidth }
-              })
-            ],
-            1
-          ),
+              )
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "div",
@@ -19328,9 +19353,22 @@ var render = function() {
               ],
               staticClass:
                 "alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser",
-              attrs: { id: _vm.inflectionsBrowserPanelID }
+              attrs: {
+                id: _vm.inflectionsBrowserPanelID,
+                "data-alpheios-ignore": "all"
+              }
             },
             [
+              _c("h1", { staticClass: "alpheios-panel__title" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(
+                      _vm.l10n.getText("TITLE_INFLECTIONS_BROWSER_PANEL")
+                    ) +
+                    "\n      "
+                )
+              ]),
+              _vm._v(" "),
               _c("inflection-browser", {
                 on: { contentwidth: _vm.setContentWidth }
               })
@@ -19350,7 +19388,8 @@ var render = function() {
                 }
               ],
               staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__tab__grammar\n          alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
+                "alpheios-panel__tab-panel alpheios-panel__tab__grammar\n          alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw",
+              attrs: { "data-alpheios-ignore": "all" }
             },
             [_c("grammar")],
             1
@@ -19369,7 +19408,8 @@ var render = function() {
                     }
                   ],
                   staticClass:
-                    "alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
+                    "alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw",
+                  attrs: { "data-alpheios-ignore": "all" }
                 },
                 [
                   _c("treebank", {
@@ -19392,7 +19432,8 @@ var render = function() {
                 }
               ],
               staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__tab__status"
+                "alpheios-panel__tab-panel alpheios-panel__tab__status",
+              attrs: { "data-alpheios-ignore": "all" }
             },
             _vm._l(_vm.$store.state.ui.messages, function(message) {
               return _c("div", [
@@ -19417,7 +19458,8 @@ var render = function() {
                     }
                   ],
                   staticClass:
-                    "alpheios-panel__tab-panel alpheios-panel__tab__status"
+                    "alpheios-panel__tab-panel alpheios-panel__tab__status",
+                  attrs: { "data-alpheios-ignore": "all" }
                 },
                 [_c("user-auth")],
                 1
@@ -19466,7 +19508,8 @@ var render = function() {
                 }
               ],
               staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__tab__options"
+                "alpheios-panel__tab-panel alpheios-panel__tab__options",
+              attrs: { "data-alpheios-ignore": "all" }
             },
             [
               _c("reskin-font-color"),
@@ -19604,6 +19647,18 @@ var render = function() {
                     attrs: {
                       classes: ["alpheios-panel__options-item"],
                       data:
+                        _vm.settings.contentOptions.items
+                          .wordUsageExamplesAuthMax
+                    },
+                    on: { change: _vm.contentOptionChanged }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.settings.contentOptions.items
+                ? _c("setting", {
+                    attrs: {
+                      classes: ["alpheios-panel__options-item"],
+                      data:
                         _vm.settings.contentOptions.items.wordUsageExamplesMax
                     },
                     on: { change: _vm.contentOptionChanged }
@@ -19647,20 +19702,22 @@ var render = function() {
                 }
               ],
               staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info"
+                "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info",
+              attrs: { "data-alpheios-ignore": "all" }
             },
             [
+              _c("h1", { staticClass: "alpheios-panel__title" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.l10n.getText("TITLE_HELP_PANEL")) +
+                    "\n      "
+                )
+              ]),
+              _vm._v(" "),
               _c(
                 "div",
                 { staticClass: "alpheios-lookup__panel" },
-                [
-                  _c("lookup", {
-                    attrs: {
-                      "name-base": "panel-info",
-                      "clear-lookup-text": true
-                    }
-                  })
-                ],
+                [_c("lookup", { attrs: { "name-base": "panel-info" } })],
                 1
               ),
               _vm._v(" "),
@@ -19681,7 +19738,8 @@ var render = function() {
                 }
               ],
               staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__tab__wordlist"
+                "alpheios-panel__tab-panel alpheios-panel__tab__wordlist",
+              attrs: { "data-alpheios-ignore": "all" }
             },
             [
               _c("word-list-panel", {
@@ -19860,7 +19918,7 @@ var render = function() {
           expression: "$store.state.panel.visible"
         }
       ],
-      staticClass: "alpheios-panel alpheios-panel--large auk alpheios-content",
+      staticClass: "alpheios-panel alpheios-panel--large alpheios-content",
       class: _vm.rootClasses,
       style: _vm.mainstyles,
       attrs: {
@@ -20016,14 +20074,7 @@ var render = function() {
                 _c(
                   "div",
                   { staticClass: "alpheios-lookup__panel" },
-                  [
-                    _c("lookup", {
-                      attrs: {
-                        "clear-lookup-text": true,
-                        "name-base": "panel-defs"
-                      }
-                    })
-                  ],
+                  [_c("lookup", { attrs: { "name-base": "panel-defs" } })],
                   1
                 ),
                 _vm._v(" "),
@@ -20095,7 +20146,13 @@ var render = function() {
                 }
               },
               [
-                _c("h1", [_vm._v("Inflection Tables")]),
+                _c("h1", { staticClass: "alpheios-panel__title" }, [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.l10n.getText("TITLE_INFLECTIONS_PANEL")) +
+                      "\n      "
+                  )
+                ]),
                 _vm._v(" "),
                 _c("inflections", {
                   staticClass: "alpheios-panel-inflections",
@@ -20128,7 +20185,13 @@ var render = function() {
             }
           },
           [
-            _c("h1", [_vm._v("Browse Inflection Tables")]),
+            _c("h1", { staticClass: "alpheios-panel__title" }, [
+              _vm._v(
+                "\n        " +
+                  _vm._s(_vm.l10n.getText("TITLE_INFLECTIONS_BROWSER_PANEL")) +
+                  "\n      "
+              )
+            ]),
             _vm._v(" "),
             _c("inflection-browser", {
               on: { contentwidth: _vm.setContentWidth }
@@ -20462,17 +20525,18 @@ var render = function() {
             attrs: { "data-alpheios-ignore": "all" }
           },
           [
+            _c("h1", { staticClass: "alpheios-panel__title" }, [
+              _vm._v(
+                "\n        " +
+                  _vm._s(_vm.l10n.getText("TITLE_HELP_PANEL")) +
+                  "\n      "
+              )
+            ]),
+            _vm._v(" "),
             _c(
               "div",
               { staticClass: "alpheios-lookup__panel" },
-              [
-                _c("lookup", {
-                  attrs: {
-                    "clear-lookup-text": true,
-                    "name-base": "panel-info"
-                  }
-                })
-              ],
+              [_c("lookup", { attrs: { "name-base": "panel-info" } })],
               1
             ),
             _vm._v(" "),
@@ -20615,7 +20679,7 @@ var render = function() {
         }
       ],
       ref: "popup",
-      staticClass: "alpheios-popup auk alpheios-content",
+      staticClass: "alpheios-popup alpheios-content",
       class: _vm.rootClasses,
       style: _vm.mainstyles,
       attrs: {
@@ -36517,6 +36581,8 @@ class UIController {
     // Start loading options as early as possible
     this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"](this.contentOptionsDefaults, this.options.storageAdapter)
     this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"](this.resourceOptionsDefaults, this.options.storageAdapter)
+    // Create a copy of resource options for the lookup UI component
+    this.lookupResourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"](this.resourceOptionsDefaults, this.options.storageAdapter)
     this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"](this.uiOptionsDefaults, this.options.storageAdapter)
     let optionLoadPromises = [this.contentOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
     // TODO: Site options should probably be initialized the same way as other options objects
@@ -36540,6 +36606,7 @@ class UIController {
     this.api.settings = {
       contentOptions: this.contentOptions,
       resourceOptions: this.resourceOptions,
+      lookupResourceOptions: this.lookupResourceOptions,
       uiOptions: this.uiOptions,
       siteOptions: this.siteOptions
     }
@@ -36588,8 +36655,8 @@ class UIController {
       namespaced: true,
 
       state: {
-        preferredLanguageID: undefined,
-        preferredLanguageName: undefined,
+        currentLanguageID: undefined,
+        currentLanguageName: '',
         selectedText: '',
         languageName: '',
         languageCode: '',
@@ -36648,12 +36715,12 @@ class UIController {
       },
 
       mutations: {
-        setLanguage (state, languageCodeOrID) {
+        setCurrentLanguage (state, languageCodeOrID) {
           let name
           let id
           ({ id, name } = UIController.getLanguageName(languageCodeOrID))
-          state.preferredLanguageID = id
-          state.preferredLanguageName = name
+          state.currentLanguageID = id
+          state.currentLanguageName = name
         },
 
         setTextData (state, data) {
@@ -36860,8 +36927,8 @@ class UIController {
     // Set initial values of components
     this.setRootComponentClasses()
 
-    const preferredLanguageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageIdFromCode(this.contentOptions.items.preferredLanguage.currentValue)
-    this.updateLanguage(preferredLanguageID)
+    const currentLanguageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageIdFromCode(this.contentOptions.items.preferredLanguage.currentValue)
+    this.updateLanguage(currentLanguageID)
     this.updateLemmaTranslations()
 
     this.state.setWatcher('uiActive', this.updateAnnotations.bind(this))
@@ -37009,8 +37076,8 @@ class UIController {
       let languageName
       if (homonym) {
         languageName = this.api.app.getLanguageName(homonym.languageID).name
-      } else if (this.store.state.app.preferredLanguageName) {
-        languageName = this.store.state.app.preferredLanguageName
+      } else if (this.store.state.app.currentLanguageName) {
+        languageName = this.store.state.app.currentLanguageName
       } else {
         languageName = this.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN')
       }
@@ -37155,16 +37222,16 @@ class UIController {
     }
   }
 
-  updateLanguage (preferredLanguageID) {
+  updateLanguage (currentLanguageID) {
     // the code which follows assumes we have been passed a languageID symbol
     // we can try to recover gracefully if we accidentally get passed a string value
-    if (typeof preferredLanguageID !== 'symbol') {
+    if (typeof currentLanguageID !== 'symbol') {
       console.warn('updateLanguage was called with a string value')
-      preferredLanguageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageIdFromCode(preferredLanguageID)
+      currentLanguageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageIdFromCode(currentLanguageID)
     }
-    this.store.commit('app/setLanguage', preferredLanguageID)
-    this.state.setItem('currentLanguage', alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(preferredLanguageID))
-    this.startResourceQuery({ type: 'table-of-contents', value: '', languageID: preferredLanguageID })
+    this.store.commit('app/setCurrentLanguage', currentLanguageID)
+    this.state.setItem('currentLanguage', alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(currentLanguageID))
+    this.startResourceQuery({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
 
     this.resetInflData()
   }
@@ -39006,18 +39073,33 @@ class OptionItem {
     return this.values.map(value => value.text)
   }
 
-  currentTextValue () {
-    let currentTextValue = []
+  /**
+   * If `prop` is not specified, returns a value object of a current item.
+   * Otherwise, returns a value of a property specified by `prop`.
+   * @param {string} prop - A name of a property of a current items that must be returned.
+   *        Values currently supported are: `text`, `value`, undefined.
+   * @return {* | Array<*>} - A single item or an array of items. Item type depends
+   * on the value of the `prop` or the lack of it.
+   */
+  currentItem (prop = undefined) {
+    let item = []
     for (let value of this.values) {
       if (this.multiValue) {
-        if (this.currentValue.includes(value.value)) { currentTextValue.push(value.text) }
+        if (this.currentValue.includes(value.value)) {
+          const itemValue = prop ? value[prop] : value
+          item.push(itemValue)
+        }
       } else {
         if (value.value === this.currentValue) {
-          currentTextValue = value.text
+          item = prop ? value[prop] : value
         }
       }
     }
-    return currentTextValue
+    return item
+  }
+
+  currentTextValue () {
+    return this.currentItem('text')
   }
 
   addValue (value, text) {
@@ -39075,6 +39157,22 @@ class OptionItem {
         console.error(`Storage of an option value failed: ${errorMessage}`)
       }
     )
+  }
+
+  /**
+   * Creates a copy of the current OptionItem with a different name, and, possibly,
+   * attached to a different storage adapter.
+   * @param {string} name - A name for the option clone.
+   * @param {string} labelText - A text for the label of the clone. If not specified,
+   * will be set to the same value as the one of the source.
+   * @param {StorageAdapter} storageAdapter - An instance of a storage adapter to attach to.
+   * If not specified, will use the a storage adapter from the source.
+   * @return {OptionItem} - A clone of the current option item.
+   */
+  clone (name, labelText = this.labelText, storageAdapter = this.storageAdapter) {
+    let clone = new OptionItem(JSON.parse(JSON.stringify(this)), name, storageAdapter)
+    clone.labelText = labelText
+    return clone
   }
 }
 
@@ -39152,10 +39250,10 @@ class Options {
       if (Array.isArray(this.items[item])) {
         obj.items[item] = []
         for (let option of this.items[item]) {
-          obj.items[item].push(new _options_item_js__WEBPACK_IMPORTED_MODULE_0__["default"](JSON.parse(JSON.stringify(option)), option.name, obj.storageAdapter))
+          obj.items[item].push(option.clone(option.name, obj.storageAdapter))
         }
       } else {
-        obj.items[item] = new _options_item_js__WEBPACK_IMPORTED_MODULE_0__["default"](JSON.parse(JSON.stringify(this.items[item])), item, obj.storageAdapter)
+        obj.items[item] = this.items[item].clone(item, obj.storageAdapter)
       }
     }
     return obj
@@ -39292,53 +39390,6 @@ class StorageAdapter {
 
 /***/ }),
 
-/***/ "./lib/options/temp-storage-area.js":
-/*!******************************************!*\
-  !*** ./lib/options/temp-storage-area.js ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return TempStorageArea; });
-/* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./lib/options/storage-adapter.js");
-
-
-/**
- * An implementation of a StorageAdapter interface for temporary storage
- */
-class TempStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  /**
-   * A wrapper around a local storage `setItem()` function.
-   * It allows to store one or several key-value pairs to local storage.
-   * @param {object} keysObject - An object containing one or more key/value pairs to be stored in storage.
-   * If a particular item already exists, its value will be updated.
-   * @return {Promise} - A promise that is resolved with with a void value if all key/value pairs are stored
-   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
-   */
-  set (keysObject) {
-    return new Promise((resolve) => { resolve(`TempStorageArea does not store any values permanently`) })
-  }
-
-  /**
-   * A wrapper around a local storage `getItem()` function. It retrieves one or several values from
-   * local storage.
-   * @param {string | Array | object | null | undefined } keys - A key (string)
-   * or keys (an array of strings or an object) to identify the item(s) to be retrieved from storage.
-   * If you pass an empty string, object or array here, an empty object will be retrieved. If you pass null,
-   * or an undefined value, the entire storage contents will be retrieved.
-   * @return {Promise} A Promise that will be fulfilled with a results object containing key-value pairs
-   * found in the storage area. If this operation failed, the promise will be rejected with an error message.
-   */
-  get (keys = undefined) {
-    return new Promise((resolve) => { resolve(`TempStorageArea does not have any stored values`) })
-  }
-}
-
-
-/***/ }),
-
 /***/ "./lib/queries/annotation-query.js":
 /*!*****************************************!*\
   !*** ./lib/queries/annotation-query.js ***!
@@ -39438,9 +39489,9 @@ __webpack_require__.r(__webpack_exports__);
 class LexicalQueryLookup extends _lexical_query_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
   /**
    * @createForLookup - it is used for rendering popup/panel with data for the current text
-   * @param {TextSelector} textSelector - text selector containg the word for getting data from adapters and showing in the popup/panel
+   * @param {TextSelector} textSelector - text selector containing the word for getting data from adapters and showing in the popup/panel
    * @param resourceOptions
-   * @param lemmaTranslationLang
+   * @param {symbol} lemmaTranslationLang - A language ID, such as Constants.LANG_LATIN.
    */
 
   static create (textSelector, resourceOptions, lemmaTranslationLang) {
@@ -41645,10 +41696,10 @@ module.exports = {"Number":{"message":"Number"},"Case":{"message":"Case"},"Decle
 /*!*************************************!*\
   !*** ./locales/en-us/messages.json ***!
   \*************************************/
-/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, TOOLTIP_MOVE_PANEL_LEFT, TOOLTIP_MOVE_PANEL_RIGHT, TOOLTIP_CLOSE_PANEL, TOOLTIP_HELP, TOOLTIP_INFLECT, TOOLTIP_INFLECT_BROWSER, TOOLTIP_DEFINITIONS, TOOLTIP_GRAMMAR, TOOLTIP_TREEBANK, TOOLTIP_OPTIONS, TOOLTIP_STATUS, TOOLTIP_WORDLIST, TOOLTIP_USER, TOOLTIP_SHOW_INFLECTIONS, TOOLTIP_SHOW_DEFINITIONS, TOOLTIP_SHOW_OPTIONS, TOOLTIP_SHOW_USAGEEXAMPLES, TOOLTIP_MORPHOLOGY, PLACEHOLDER_DEFINITIONS, PLACEHOLDER_INFLECT_IN_PROGRESS, PLACEHOLDER_INFLECT_UNAVAILABLE, LABEL_INFLECT_SELECT_POFS, LABEL_INFLECT_SHOWFULL, LABEL_INFLECT_COLLAPSE, TOOLTIP_INFLECT_SHOWFULL, TOOLTIP_INFLECT_COLLAPSE, LABEL_INFLECT_HIDEEMPTY, LABEL_INFLECT_SHOWEMPTY, TOOLTIP_INFLECT_HIDEEMPTY, TOOLTIP_INFLECT_SHOWEMPTY, INFLECT_MSG_TABLE_NOT_IMPLEMENTED, TEXT_INFO_GETTINGSTARTED, TEXT_INFO_ACTIVATE, TEXT_INFO_CLICK, TEXT_INFO_LANGDETECT, LABEL_INFO_CURRENTLANGUAGE, TEXT_INFO_SETTINGS, TEXT_INFO_ARROW, TEXT_INFO_REOPEN, TEXT_INFO_DEACTIVATE, TOOLTIP_POPUP_CLOSE, LABEL_POPUP_TREEBANK, LABEL_POPUP_INFLECT, LABEL_POPUP_OPTIONS, LABEL_POPUP_DEFINE, LABEL_POPUP_USAGEEXAMPLES, PLACEHOLDER_POPUP_DATA, PLACEHOLDER_NO_LANGUAGE_POPUP_DATA, PLACEHOLDER_NO_DATA_POPUP_DATA, LABEL_POPUP_CREDITS, LABEL_POPUP_SHOWCREDITS, LABEL_POPUP_HIDECREDITS, TEXT_NOTICE_SUGGEST_LOGIN, TEXT_NOTICE_CHANGE_LANGUAGE, TEXT_NOTICE_LANGUAGE_UNKNOWN, TEXT_NOTICE_GRAMMAR_NOTFOUND, TEXT_NOTICE_MORPHDATA_READY, TEXT_NOTICE_MORPHDATA_NOTFOUND, TEXT_NOTICE_INFLDATA_READY, TEXT_NOTICE_DEFSDATA_READY, TEXT_NOTICE_DEFSDATA_NOTFOUND, TEXT_NOTICE_NO_DEFS_FOUND, TEXT_NOTICE_LEXQUERY_COMPLETE, TEXT_NOTICE_GRAMMAR_READY, TEXT_NOTICE_GRAMMAR_COMPLETE, TEXT_NOTICE_RESQUERY_COMPLETE, TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS, TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS, LABEL_BROWSERACTION_DEACTIVATE, LABEL_BROWSERACTION_ACTIVATE, LABEL_BROWSERACTION_DISABLED, LABEL_CTXTMENU_DEACTIVATE, LABEL_CTXTMENU_ACTIVATE, LABEL_CTXTMENU_DISABLED, LABEL_CTXTMENU_OPENPANEL, LABEL_CTXTMENU_INFO, LABEL_CTXTMENU_SENDEXP, LABEL_LOOKUP_CONTROL, LABEL_LOOKUP_BUTTON, TOOLTIP_LOOKUP_BUTTON, LABEL_LOOKUP_SETTINGS, LABEL_RESKIN_SETTINGS, TOOLTIP_RESKIN_SMALLFONT, TOOLTIP_RESKIN_MEDIUMFONT, TOOLTIP_RESKIN_LARGEFONT, TOOLTIP_RESKIN_LIGHTBG, TOOLTIP_RESKIN_DARKBG, INFLECTIONS_CREDITS_TITLE, INFLECTIONS_PARADIGMS_EXPLANATORY_HINT, INFLECTIONS_MAIN_TABLE_LINK_TEXT, INFL_ATTRIBUTE_LINK_TEXT_SOURCE, EMBED_LIB_WARNING_TEXT, AUTH_LOGIN_BTN_LABEL, AUTH_LOGOUT_BTN_LABEL, AUTH_LOGIN_PROGRESS_MSG, AUTH_LOGIN_SUCCESS_MSG, AUTH_LOGIN_AUTH_FAILURE_MSG, AUTH_PROFILE_NICKNAME_LABEL, AUTH_PROFILE_NAME_LABEL, AUTH_LOGOUT_SUCCESS_MSG, TEXT_NOTICE_WORDUSAGE_READY, TOOLTIP_WORD_USAGE, default */
+/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, TITLE_HELP_PANEL, TITLE_INFLECTIONS_PANEL, TITLE_INFLECTIONS_BROWSER_PANEL, TOOLTIP_MOVE_PANEL_LEFT, TOOLTIP_MOVE_PANEL_RIGHT, TOOLTIP_CLOSE_PANEL, TOOLTIP_HELP, TOOLTIP_INFLECT, TOOLTIP_INFLECT_BROWSER, TOOLTIP_DEFINITIONS, TOOLTIP_GRAMMAR, TOOLTIP_TREEBANK, TOOLTIP_OPTIONS, TOOLTIP_STATUS, TOOLTIP_WORDLIST, TOOLTIP_USER, TOOLTIP_SHOW_INFLECTIONS, TOOLTIP_SHOW_DEFINITIONS, TOOLTIP_SHOW_OPTIONS, TOOLTIP_SHOW_USAGEEXAMPLES, TOOLTIP_MORPHOLOGY, PLACEHOLDER_DEFINITIONS, PLACEHOLDER_INFLECT_IN_PROGRESS, PLACEHOLDER_INFLECT_UNAVAILABLE, LABEL_INFLECT_SELECT_POFS, LABEL_INFLECT_SHOWFULL, LABEL_INFLECT_COLLAPSE, TOOLTIP_INFLECT_SHOWFULL, TOOLTIP_INFLECT_COLLAPSE, LABEL_INFLECT_HIDEEMPTY, LABEL_INFLECT_SHOWEMPTY, TOOLTIP_INFLECT_HIDEEMPTY, TOOLTIP_INFLECT_SHOWEMPTY, INFLECT_MSG_TABLE_NOT_IMPLEMENTED, TEXT_INFO_GETTINGSTARTED, TEXT_INFO_ACTIVATE, TEXT_INFO_CLICK, TEXT_INFO_LANGDETECT, LABEL_INFO_CURRENTLANGUAGE, TEXT_INFO_SETTINGS, TEXT_INFO_ARROW, TEXT_INFO_REOPEN, TEXT_INFO_DEACTIVATE, TOOLTIP_POPUP_CLOSE, LABEL_POPUP_TREEBANK, LABEL_POPUP_INFLECT, LABEL_POPUP_OPTIONS, LABEL_POPUP_DEFINE, LABEL_POPUP_USAGEEXAMPLES, PLACEHOLDER_POPUP_DATA, PLACEHOLDER_NO_LANGUAGE_POPUP_DATA, PLACEHOLDER_NO_DATA_POPUP_DATA, LABEL_POPUP_CREDITS, LABEL_POPUP_SHOWCREDITS, LABEL_POPUP_HIDECREDITS, TEXT_NOTICE_SUGGEST_LOGIN, TEXT_NOTICE_CHANGE_LANGUAGE, TEXT_NOTICE_LANGUAGE_UNKNOWN, TEXT_NOTICE_GRAMMAR_NOTFOUND, TEXT_NOTICE_MORPHDATA_READY, TEXT_NOTICE_MORPHDATA_NOTFOUND, TEXT_NOTICE_INFLDATA_READY, TEXT_NOTICE_DEFSDATA_READY, TEXT_NOTICE_DEFSDATA_NOTFOUND, TEXT_NOTICE_NO_DEFS_FOUND, TEXT_NOTICE_LEXQUERY_COMPLETE, TEXT_NOTICE_GRAMMAR_READY, TEXT_NOTICE_GRAMMAR_COMPLETE, TEXT_NOTICE_RESQUERY_COMPLETE, TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS, TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS, LABEL_BROWSERACTION_DEACTIVATE, LABEL_BROWSERACTION_ACTIVATE, LABEL_BROWSERACTION_DISABLED, LABEL_CTXTMENU_DEACTIVATE, LABEL_CTXTMENU_ACTIVATE, LABEL_CTXTMENU_DISABLED, LABEL_CTXTMENU_OPENPANEL, LABEL_CTXTMENU_INFO, LABEL_CTXTMENU_SENDEXP, LABEL_LOOKUP_CONTROL, LABEL_LOOKUP_BUTTON, TOOLTIP_LOOKUP_BUTTON, LABEL_LOOKUP_SETTINGS, LABEL_RESKIN_SETTINGS, TOOLTIP_RESKIN_SMALLFONT, TOOLTIP_RESKIN_MEDIUMFONT, TOOLTIP_RESKIN_LARGEFONT, TOOLTIP_RESKIN_LIGHTBG, TOOLTIP_RESKIN_DARKBG, INFLECTIONS_CREDITS_TITLE, INFLECTIONS_PARADIGMS_EXPLANATORY_HINT, INFLECTIONS_MAIN_TABLE_LINK_TEXT, INFL_ATTRIBUTE_LINK_TEXT_SOURCE, EMBED_LIB_WARNING_TEXT, AUTH_LOGIN_BTN_LABEL, AUTH_LOGOUT_BTN_LABEL, AUTH_LOGIN_PROGRESS_MSG, AUTH_LOGIN_SUCCESS_MSG, AUTH_LOGIN_AUTH_FAILURE_MSG, AUTH_PROFILE_NICKNAME_LABEL, AUTH_PROFILE_NAME_LABEL, AUTH_LOGOUT_SUCCESS_MSG, TEXT_NOTICE_WORDUSAGE_READY, TOOLTIP_WORD_USAGE, default */
 /***/ (function(module) {
 
-module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about a cookie.","description":"A test message that is shown in a panel","component":"Panel"},"NUM_LINES_TEST_MESSAGE":{"message":"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.","description":"A test message that is shown in a panel","component":"Panel","params":["numLines"]},"TOOLTIP_MOVE_PANEL_LEFT":{"message":"Move Panel to Left","description":"tooltip for moving the panel to the left","component":"Panel"},"TOOLTIP_MOVE_PANEL_RIGHT":{"message":"Move Panel to Right","description":"tooltip for moving the panel to the right","component":"Panel"},"TOOLTIP_CLOSE_PANEL":{"message":"Close Panel","description":"tooltip for closing the panel","component":"Panel"},"TOOLTIP_HELP":{"message":"Help","description":"tooltip for help tab","component":"Panel"},"TOOLTIP_INFLECT":{"message":"Inflections","description":"tooltip for inflections tab","component":"Panel"},"TOOLTIP_INFLECT_BROWSER":{"message":"Browse Inflection Tables","description":"tooltip for inflections browser tab","component":"Panel"},"TOOLTIP_DEFINITIONS":{"message":"Definitions","description":"tooltip for definitions tab","component":"Panel"},"TOOLTIP_GRAMMAR":{"message":"Grammar","description":"tooltip for grammar tab","component":"Panel"},"TOOLTIP_TREEBANK":{"message":"Diagram","description":"tooltip for treebank tab","component":"Panel"},"TOOLTIP_OPTIONS":{"message":"Options","description":"tooltip for options tab","component":"Panel"},"TOOLTIP_STATUS":{"message":"Status Messages","description":"tooltip for status tab","component":"Panel"},"TOOLTIP_WORDLIST":{"message":"User word list","description":"tooltip for user word list tab","component":"Panel"},"TOOLTIP_USER":{"message":"User info","description":"tooltip for a user info tab","component":"Panel"},"TOOLTIP_SHOW_INFLECTIONS":{"message":"Show inflections","description":"tooltip for button inflections","component":"Popup"},"TOOLTIP_SHOW_DEFINITIONS":{"message":"Show definitions","description":"tooltip for button definitions","component":"Popup"},"TOOLTIP_SHOW_OPTIONS":{"message":"Show options","description":"tooltip for button options","component":"Popup"},"TOOLTIP_SHOW_USAGEEXAMPLES":{"message":"Show example usages of this word","description":"tooltop for word usage examples button","component":"Popup"},"TOOLTIP_MORPHOLOGY":{"message":"Show morphology","description":"tooltop for a morphology button","component":"Panel"},"PLACEHOLDER_DEFINITIONS":{"message":"Lookup a word to show definitions...","description":"placeholder for definitions panel","component":"Panel"},"PLACEHOLDER_INFLECT_IN_PROGRESS":{"message":"Lookup a word to show inflections...","description":"placeholder for inflections panel","component":"Panel"},"PLACEHOLDER_INFLECT_UNAVAILABLE":{"message":"Inflection data is unavailable","description":"placeholder for inflections panel if unavailable","component":"Panel"},"LABEL_INFLECT_SELECT_POFS":{"message":"Part of speech:","description":"label for part of speech selector on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWFULL":{"message":"Expand","description":"label for expand button on inflections panel","component":"Panel"},"LABEL_INFLECT_COLLAPSE":{"message":"Collapse","description":"label for collapse table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWFULL":{"message":"This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table","description":"tooltip for show full table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_COLLAPSE":{"message":"This table shows all its columns. Click 'Collapse' to show the ones with matching endings only","description":"tooltip for collapse table button on inflections panel","component":"Panel"},"LABEL_INFLECT_HIDEEMPTY":{"message":"Hide empty columns","description":"label for hide empty columns button on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWEMPTY":{"message":"Show empty columns","description":"label for show empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_HIDEEMPTY":{"message":"Show table without empty columns","description":"tooltip for hide empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWEMPTY":{"message":"Show table with empty columns","description":"tooltip for show empty columns button on inflections panel","component":"Panel"},"INFLECT_MSG_TABLE_NOT_IMPLEMENTED":{"message":"This table has not been implemented yet","description":"tooltip to show instead of inflection table if the latter is not implemented","component":"Panel"},"TEXT_INFO_GETTINGSTARTED":{"message":"Getting Started","description":"info text","component":"Panel"},"TEXT_INFO_ACTIVATE":{"message":"Activate on a page with Latin, Ancient Greek, Arabic or Persian text.","description":"info text","component":"Panel"},"TEXT_INFO_CLICK":{"message":"Double-click on a word to retrieve morphology and short definitions.","description":"info text","component":"Panel"},"TEXT_INFO_LANGDETECT":{"message":"Alpheios will try to detect the language of the word from the page markup. If it cannot it will use the default language.","description":"info text","component":"Panel"},"LABEL_INFO_CURRENTLANGUAGE":{"message":"Current language:","description":"label for current language in info text","component":"Panel"},"TEXT_INFO_SETTINGS":{"message":"Click the Options wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').","description":"info text","component":"Panel"},"TEXT_INFO_ARROW":{"message":"Use the arrow at the top of this panel to move it from the right to left of your browser window.","description":"info text","component":"Panel"},"TEXT_INFO_REOPEN":{"message":"You can reopen this panel at any time by selecting 'Info' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TEXT_INFO_DEACTIVATE":{"message":"Deactivate Alpheios by clicking the toolbar icon or choosing 'Deactivate' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TOOLTIP_POPUP_CLOSE":{"message":"Close Popup","description":"tooltip for closing the popup","component":"Popup"},"LABEL_POPUP_TREEBANK":{"message":"Diagram","description":"label for treebank button on popup","component":"Popup"},"LABEL_POPUP_INFLECT":{"message":"Inflect","description":"label for inflect button on popup","component":"Popup"},"LABEL_POPUP_OPTIONS":{"message":"Options","description":"label for options button on popup","component":"Popup"},"LABEL_POPUP_DEFINE":{"message":"Define","description":"label for define button on popup","component":"Popup"},"LABEL_POPUP_USAGEEXAMPLES":{"message":"Examples","description":"label for usage examples button on popup","component":"Popup"},"PLACEHOLDER_POPUP_DATA":{"message":"Lexical data is loading","description":"placeholder text for popup data","component":"Popup"},"PLACEHOLDER_NO_LANGUAGE_POPUP_DATA":{"message":"Lexical data couldn't be populated because page language is not defined","description":"placeholder text for popup data when language is not defined","component":"Popup"},"PLACEHOLDER_NO_DATA_POPUP_DATA":{"message":"Lexical query produced no results","description":"placeholder text for popup data","component":"Popup"},"LABEL_POPUP_CREDITS":{"message":"Credits:","description":"label for credits on popup","component":"Popup"},"LABEL_POPUP_SHOWCREDITS":{"message":"Show","description":"label for show credits link on popup","component":"Popup"},"LABEL_POPUP_HIDECREDITS":{"message":"Hide","description":"label for hide credits link on popup","component":"Popup"},"TEXT_NOTICE_SUGGEST_LOGIN":{"message":"Login to save your words to your wordlist.","description":"login notification","component":"UI"},"TEXT_NOTICE_CHANGE_LANGUAGE":{"message":"Language: {languageName}<br>Wrong? Change to:","description":"language notification","component":"UI","params":["languageName"]},"TEXT_NOTICE_LANGUAGE_UNKNOWN":{"message":"unknown","description":"unknown language notification","component":"UI"},"TEXT_NOTICE_GRAMMAR_NOTFOUND":{"message":"The requested grammar resource is not currently available","description":"grammar not found notification","component":"UI"},"TEXT_NOTICE_MORPHDATA_READY":{"message":"Morphological analyzer data is ready","description":"morph data ready notice","component":"UI"},"TEXT_NOTICE_MORPHDATA_NOTFOUND":{"message":"Morphological data not found. Definition queries pending.","description":"morph data not found notice","component":"UI"},"TEXT_NOTICE_INFLDATA_READY":{"message":"Inflection data is ready","description":"inflection data ready notice","component":"UI"},"TEXT_NOTICE_DEFSDATA_READY":{"message":"{requestType} request is completed successfully. Lemma: \"{lemma}\"","description":"definition request success notice","component":"UI","params":["requestType","lemma"]},"TEXT_NOTICE_DEFSDATA_NOTFOUND":{"message":"{requestType} request failed. Lemma not found for: \"{word}\"","description":"definition request success notice","component":"UI","params":["requestType","word"]},"TEXT_NOTICE_NO_DEFS_FOUND":{"message":"No definitions found","description":"displayed by the morph compoennt when there are no definition data exist","component":"UI"},"TEXT_NOTICE_LEXQUERY_COMPLETE":{"message":"All lexical queries complete.","description":"lexical queries complete notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_READY":{"message":"Grammar resource retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_COMPLETE":{"message":"All grammar resource data retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_RESQUERY_COMPLETE":{"message":"All resource data retrieved","description":"resource query complete notice","component":"UI"},"TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Data retrieval is in progress","component":"UI"},"TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Resource retrieval is in progress","component":"UI"},"LABEL_BROWSERACTION_DEACTIVATE":{"message":"Deactivate Alpheios","description":"Deactivate browser action title","component":"UI"},"LABEL_BROWSERACTION_ACTIVATE":{"message":"Activate Alpheios","description":"Activate browser action title","component":"UI"},"LABEL_BROWSERACTION_DISABLED":{"message":"(Alpheios Extension Disabled For Page)","description":"Disabled browser action title","component":"UI"},"LABEL_CTXTMENU_DEACTIVATE":{"message":"Deactivate","description":"Deactivate context menu label","component":"UI"},"LABEL_CTXTMENU_ACTIVATE":{"message":"Activate","description":"Activate context menu label","component":"UI"},"LABEL_CTXTMENU_DISABLED":{"message":"(Disabled)","description":"Disabled context menu label","component":"UI"},"LABEL_CTXTMENU_OPENPANEL":{"message":"Open Panel","description":"Open Panel context menu label","component":"UI"},"LABEL_CTXTMENU_INFO":{"message":"Info","description":"Info context menu label","component":"UI"},"LABEL_CTXTMENU_SENDEXP":{"message":"Send Experiences to remote server","description":"send exp data context menu label","component":"UI"},"LABEL_LOOKUP_CONTROL":{"message":"Show/Hide lookup","description":"A tooltip for the button that turns the lookup panel on and off","component":"Toolbar"},"LABEL_LOOKUP_BUTTON":{"message":"Lookup","description":"lookup button in lookup.vue","component":"Popup"},"TOOLTIP_LOOKUP_BUTTON":{"message":"Lookup word","description":"Tooltip for the lookup button in lookup.vue","component":"Lookup"},"LABEL_LOOKUP_SETTINGS":{"message":"Using Language...","description":"Settings link-label in the lookup block in lookup.vue","component":"Lookup"},"LABEL_RESKIN_SETTINGS":{"message":"Reskin options","description":"Label for Reskin component","component":"ReskinFontColor"},"TOOLTIP_RESKIN_SMALLFONT":{"message":"Small font","description":"Tooltip for small font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_MEDIUMFONT":{"message":"Medium font","description":"Tooltip for medium font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LARGEFONT":{"message":"Large font","description":"Tooltip for large font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LIGHTBG":{"message":"Light background","description":"Tooltip for light colors schema icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_DARKBG":{"message":"Dark background","description":"Tooltip for dark colors schema icon","component":"ReskinFontColor"},"INFLECTIONS_CREDITS_TITLE":{"message":"Credits","description":"Title of credits section on inflection tables panel","component":"InflectionTables"},"INFLECTIONS_PARADIGMS_EXPLANATORY_HINT":{"message":"The following table(s) show conjugation patterns for verbs which are similar to those of <span>{word}</span>","description":"A hint that indicates that the current table is representative pattern for verbs similar to the one chosen","component":"InflectionTables","params":["word"]},"INFLECTIONS_MAIN_TABLE_LINK_TEXT":{"message":"Back to main","description":"A link pointing to a main inflection table","component":"InflectionTables"},"INFL_ATTRIBUTE_LINK_TEXT_SOURCE":{"message":"Source","description":"A link pointing to the source of a lemma or inflection","component":"InflAttribute"},"EMBED_LIB_WARNING_TEXT":{"message":"This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.","description":"A message that is shown when an Alpheios extension is disabled due to embedded library presence","component":"EmbedLibWarning"},"AUTH_LOGIN_BTN_LABEL":{"message":"Log In","description":"A message shown on a log in button","component":"UserAuth Vue Component"},"AUTH_LOGOUT_BTN_LABEL":{"message":"Log Out","description":"A message shown on a log out button","component":"UserAuth Vue Component"},"AUTH_LOGIN_PROGRESS_MSG":{"message":"Please be patient while we are logging you in ...","description":"A message shown to the user while he or she is waiting for an authentication to complete","component":"UserAuth Vue Component"},"AUTH_LOGIN_SUCCESS_MSG":{"message":"Congratulations! You are logged in successfully.","description":"A message shown to the user if he or she logged in successfully","component":"UserAuth Vue Component"},"AUTH_LOGIN_AUTH_FAILURE_MSG":{"message":"Authentication failed","description":"A message shown to the user if his or her authentication failed","component":"UserAuth Vue Component"},"AUTH_PROFILE_NICKNAME_LABEL":{"message":"Nickname","description":"A user's profile nickname filed label","component":"UserAuth Vue Component"},"AUTH_PROFILE_NAME_LABEL":{"message":"Name","description":"A user's profile name filed label","component":"UserAuth Vue Component"},"AUTH_LOGOUT_SUCCESS_MSG":{"message":"You have been logged out.","description":"A message shown to the user if he or she logged out successfully","component":"UserAuth Vue Component"},"TEXT_NOTICE_WORDUSAGE_READY":{"message":"Word Usage Examples are recieved","description":"Word Usage Examples recieved flag","component":"UIController onWordUsageExamplesReady"},"TOOLTIP_WORD_USAGE":{"message":"Word Usage Examples","description":"Word Usage Examples tooltip","component":"Panel"}};
+module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about a cookie.","description":"A test message that is shown in a panel","component":"Panel"},"NUM_LINES_TEST_MESSAGE":{"message":"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.","description":"A test message that is shown in a panel","component":"Panel","params":["numLines"]},"TITLE_HELP_PANEL":{"message":"Help","description":"A title of a help panel","component":"Panel"},"TITLE_INFLECTIONS_PANEL":{"message":"Inflection tables","description":"A title of an inflections panel","component":"Panel"},"TITLE_INFLECTIONS_BROWSER_PANEL":{"message":"Browse inflection tables","description":"A title of an inflections browser panel","component":"Panel"},"TOOLTIP_MOVE_PANEL_LEFT":{"message":"Move Panel to Left","description":"tooltip for moving the panel to the left","component":"Panel"},"TOOLTIP_MOVE_PANEL_RIGHT":{"message":"Move Panel to Right","description":"tooltip for moving the panel to the right","component":"Panel"},"TOOLTIP_CLOSE_PANEL":{"message":"Close Panel","description":"tooltip for closing the panel","component":"Panel"},"TOOLTIP_HELP":{"message":"Help","description":"tooltip for help tab","component":"Panel"},"TOOLTIP_INFLECT":{"message":"Inflections","description":"tooltip for inflections tab","component":"Panel"},"TOOLTIP_INFLECT_BROWSER":{"message":"Browse Inflection Tables","description":"tooltip for inflections browser tab","component":"Panel"},"TOOLTIP_DEFINITIONS":{"message":"Definitions","description":"tooltip for definitions tab","component":"Panel"},"TOOLTIP_GRAMMAR":{"message":"Grammar","description":"tooltip for grammar tab","component":"Panel"},"TOOLTIP_TREEBANK":{"message":"Diagram","description":"tooltip for treebank tab","component":"Panel"},"TOOLTIP_OPTIONS":{"message":"Options","description":"tooltip for options tab","component":"Panel"},"TOOLTIP_STATUS":{"message":"Status Messages","description":"tooltip for status tab","component":"Panel"},"TOOLTIP_WORDLIST":{"message":"User word list","description":"tooltip for user word list tab","component":"Panel"},"TOOLTIP_USER":{"message":"User info","description":"tooltip for a user info tab","component":"Panel"},"TOOLTIP_SHOW_INFLECTIONS":{"message":"Show inflections","description":"tooltip for button inflections","component":"Popup"},"TOOLTIP_SHOW_DEFINITIONS":{"message":"Show definitions","description":"tooltip for button definitions","component":"Popup"},"TOOLTIP_SHOW_OPTIONS":{"message":"Show options","description":"tooltip for button options","component":"Popup"},"TOOLTIP_SHOW_USAGEEXAMPLES":{"message":"Show example usages of this word","description":"tooltop for word usage examples button","component":"Popup"},"TOOLTIP_MORPHOLOGY":{"message":"Show morphology","description":"tooltop for a morphology button","component":"Panel"},"PLACEHOLDER_DEFINITIONS":{"message":"Lookup a word to show definitions...","description":"placeholder for definitions panel","component":"Panel"},"PLACEHOLDER_INFLECT_IN_PROGRESS":{"message":"Lookup a word to show inflections...","description":"placeholder for inflections panel","component":"Panel"},"PLACEHOLDER_INFLECT_UNAVAILABLE":{"message":"Inflection data is unavailable","description":"placeholder for inflections panel if unavailable","component":"Panel"},"LABEL_INFLECT_SELECT_POFS":{"message":"Part of speech:","description":"label for part of speech selector on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWFULL":{"message":"Expand","description":"label for expand button on inflections panel","component":"Panel"},"LABEL_INFLECT_COLLAPSE":{"message":"Collapse","description":"label for collapse table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWFULL":{"message":"This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table","description":"tooltip for show full table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_COLLAPSE":{"message":"This table shows all its columns. Click 'Collapse' to show the ones with matching endings only","description":"tooltip for collapse table button on inflections panel","component":"Panel"},"LABEL_INFLECT_HIDEEMPTY":{"message":"Hide empty columns","description":"label for hide empty columns button on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWEMPTY":{"message":"Show empty columns","description":"label for show empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_HIDEEMPTY":{"message":"Show table without empty columns","description":"tooltip for hide empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWEMPTY":{"message":"Show table with empty columns","description":"tooltip for show empty columns button on inflections panel","component":"Panel"},"INFLECT_MSG_TABLE_NOT_IMPLEMENTED":{"message":"This table has not been implemented yet","description":"tooltip to show instead of inflection table if the latter is not implemented","component":"Panel"},"TEXT_INFO_GETTINGSTARTED":{"message":"Getting Started","description":"info text","component":"Panel"},"TEXT_INFO_ACTIVATE":{"message":"Activate on a page with Latin, Ancient Greek, Arabic or Persian text.","description":"info text","component":"Panel"},"TEXT_INFO_CLICK":{"message":"Double-click on a word to retrieve morphology and short definitions.","description":"info text","component":"Panel"},"TEXT_INFO_LANGDETECT":{"message":"Alpheios will try to detect the language of the word from the page markup. If it cannot it will use the default language.","description":"info text","component":"Panel"},"LABEL_INFO_CURRENTLANGUAGE":{"message":"Current language:","description":"label for current language in info text","component":"Panel"},"TEXT_INFO_SETTINGS":{"message":"Click the Options wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').","description":"info text","component":"Panel"},"TEXT_INFO_ARROW":{"message":"Use the arrow at the top of this panel to move it from the right to left of your browser window.","description":"info text","component":"Panel"},"TEXT_INFO_REOPEN":{"message":"You can reopen this panel at any time by selecting 'Info' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TEXT_INFO_DEACTIVATE":{"message":"Deactivate Alpheios by clicking the toolbar icon or choosing 'Deactivate' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TOOLTIP_POPUP_CLOSE":{"message":"Close Popup","description":"tooltip for closing the popup","component":"Popup"},"LABEL_POPUP_TREEBANK":{"message":"Diagram","description":"label for treebank button on popup","component":"Popup"},"LABEL_POPUP_INFLECT":{"message":"Inflect","description":"label for inflect button on popup","component":"Popup"},"LABEL_POPUP_OPTIONS":{"message":"Options","description":"label for options button on popup","component":"Popup"},"LABEL_POPUP_DEFINE":{"message":"Define","description":"label for define button on popup","component":"Popup"},"LABEL_POPUP_USAGEEXAMPLES":{"message":"Examples","description":"label for usage examples button on popup","component":"Popup"},"PLACEHOLDER_POPUP_DATA":{"message":"Lexical data is loading","description":"placeholder text for popup data","component":"Popup"},"PLACEHOLDER_NO_LANGUAGE_POPUP_DATA":{"message":"Lexical data couldn't be populated because page language is not defined","description":"placeholder text for popup data when language is not defined","component":"Popup"},"PLACEHOLDER_NO_DATA_POPUP_DATA":{"message":"Lexical query produced no results","description":"placeholder text for popup data","component":"Popup"},"LABEL_POPUP_CREDITS":{"message":"Credits:","description":"label for credits on popup","component":"Popup"},"LABEL_POPUP_SHOWCREDITS":{"message":"Show","description":"label for show credits link on popup","component":"Popup"},"LABEL_POPUP_HIDECREDITS":{"message":"Hide","description":"label for hide credits link on popup","component":"Popup"},"TEXT_NOTICE_SUGGEST_LOGIN":{"message":"Login to save your words to your wordlist.","description":"login notification","component":"UI"},"TEXT_NOTICE_CHANGE_LANGUAGE":{"message":"Language: {languageName}<br>Wrong? Change to:","description":"language notification","component":"UI","params":["languageName"]},"TEXT_NOTICE_LANGUAGE_UNKNOWN":{"message":"unknown","description":"unknown language notification","component":"UI"},"TEXT_NOTICE_GRAMMAR_NOTFOUND":{"message":"The requested grammar resource is not currently available","description":"grammar not found notification","component":"UI"},"TEXT_NOTICE_MORPHDATA_READY":{"message":"Morphological analyzer data is ready","description":"morph data ready notice","component":"UI"},"TEXT_NOTICE_MORPHDATA_NOTFOUND":{"message":"Morphological data not found. Definition queries pending.","description":"morph data not found notice","component":"UI"},"TEXT_NOTICE_INFLDATA_READY":{"message":"Inflection data is ready","description":"inflection data ready notice","component":"UI"},"TEXT_NOTICE_DEFSDATA_READY":{"message":"{requestType} request is completed successfully. Lemma: \"{lemma}\"","description":"definition request success notice","component":"UI","params":["requestType","lemma"]},"TEXT_NOTICE_DEFSDATA_NOTFOUND":{"message":"{requestType} request failed. Lemma not found for: \"{word}\"","description":"definition request success notice","component":"UI","params":["requestType","word"]},"TEXT_NOTICE_NO_DEFS_FOUND":{"message":"No definitions found","description":"displayed by the morph compoennt when there are no definition data exist","component":"UI"},"TEXT_NOTICE_LEXQUERY_COMPLETE":{"message":"All lexical queries complete.","description":"lexical queries complete notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_READY":{"message":"Grammar resource retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_COMPLETE":{"message":"All grammar resource data retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_RESQUERY_COMPLETE":{"message":"All resource data retrieved","description":"resource query complete notice","component":"UI"},"TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Data retrieval is in progress","component":"UI"},"TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Resource retrieval is in progress","component":"UI"},"LABEL_BROWSERACTION_DEACTIVATE":{"message":"Deactivate Alpheios","description":"Deactivate browser action title","component":"UI"},"LABEL_BROWSERACTION_ACTIVATE":{"message":"Activate Alpheios","description":"Activate browser action title","component":"UI"},"LABEL_BROWSERACTION_DISABLED":{"message":"(Alpheios Extension Disabled For Page)","description":"Disabled browser action title","component":"UI"},"LABEL_CTXTMENU_DEACTIVATE":{"message":"Deactivate","description":"Deactivate context menu label","component":"UI"},"LABEL_CTXTMENU_ACTIVATE":{"message":"Activate","description":"Activate context menu label","component":"UI"},"LABEL_CTXTMENU_DISABLED":{"message":"(Disabled)","description":"Disabled context menu label","component":"UI"},"LABEL_CTXTMENU_OPENPANEL":{"message":"Open Panel","description":"Open Panel context menu label","component":"UI"},"LABEL_CTXTMENU_INFO":{"message":"Info","description":"Info context menu label","component":"UI"},"LABEL_CTXTMENU_SENDEXP":{"message":"Send Experiences to remote server","description":"send exp data context menu label","component":"UI"},"LABEL_LOOKUP_CONTROL":{"message":"Show/Hide lookup","description":"A tooltip for the button that turns the lookup panel on and off","component":"Toolbar"},"LABEL_LOOKUP_BUTTON":{"message":"Lookup","description":"lookup button in lookup.vue","component":"Popup"},"TOOLTIP_LOOKUP_BUTTON":{"message":"Lookup word","description":"Tooltip for the lookup button in lookup.vue","component":"Lookup"},"LABEL_LOOKUP_SETTINGS":{"message":"Using Language...","description":"Settings link-label in the lookup block in lookup.vue","component":"Lookup"},"LABEL_RESKIN_SETTINGS":{"message":"Reskin options","description":"Label for Reskin component","component":"ReskinFontColor"},"TOOLTIP_RESKIN_SMALLFONT":{"message":"Small font","description":"Tooltip for small font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_MEDIUMFONT":{"message":"Medium font","description":"Tooltip for medium font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LARGEFONT":{"message":"Large font","description":"Tooltip for large font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LIGHTBG":{"message":"Light background","description":"Tooltip for light colors schema icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_DARKBG":{"message":"Dark background","description":"Tooltip for dark colors schema icon","component":"ReskinFontColor"},"INFLECTIONS_CREDITS_TITLE":{"message":"Credits","description":"Title of credits section on inflection tables panel","component":"InflectionTables"},"INFLECTIONS_PARADIGMS_EXPLANATORY_HINT":{"message":"The following table(s) show conjugation patterns for verbs which are similar to those of <span>{word}</span>","description":"A hint that indicates that the current table is representative pattern for verbs similar to the one chosen","component":"InflectionTables","params":["word"]},"INFLECTIONS_MAIN_TABLE_LINK_TEXT":{"message":"Back to main","description":"A link pointing to a main inflection table","component":"InflectionTables"},"INFL_ATTRIBUTE_LINK_TEXT_SOURCE":{"message":"Source","description":"A link pointing to the source of a lemma or inflection","component":"InflAttribute"},"EMBED_LIB_WARNING_TEXT":{"message":"This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.","description":"A message that is shown when an Alpheios extension is disabled due to embedded library presence","component":"EmbedLibWarning"},"AUTH_LOGIN_BTN_LABEL":{"message":"Log In","description":"A message shown on a log in button","component":"UserAuth Vue Component"},"AUTH_LOGOUT_BTN_LABEL":{"message":"Log Out","description":"A message shown on a log out button","component":"UserAuth Vue Component"},"AUTH_LOGIN_PROGRESS_MSG":{"message":"Please be patient while we are logging you in ...","description":"A message shown to the user while he or she is waiting for an authentication to complete","component":"UserAuth Vue Component"},"AUTH_LOGIN_SUCCESS_MSG":{"message":"Congratulations! You are logged in successfully.","description":"A message shown to the user if he or she logged in successfully","component":"UserAuth Vue Component"},"AUTH_LOGIN_AUTH_FAILURE_MSG":{"message":"Authentication failed","description":"A message shown to the user if his or her authentication failed","component":"UserAuth Vue Component"},"AUTH_PROFILE_NICKNAME_LABEL":{"message":"Nickname","description":"A user's profile nickname filed label","component":"UserAuth Vue Component"},"AUTH_PROFILE_NAME_LABEL":{"message":"Name","description":"A user's profile name filed label","component":"UserAuth Vue Component"},"AUTH_LOGOUT_SUCCESS_MSG":{"message":"You have been logged out.","description":"A message shown to the user if he or she logged out successfully","component":"UserAuth Vue Component"},"TEXT_NOTICE_WORDUSAGE_READY":{"message":"Word Usage Examples are recieved","description":"Word Usage Examples recieved flag","component":"UIController onWordUsageExamplesReady"},"TOOLTIP_WORD_USAGE":{"message":"Word Usage Examples","description":"Word Usage Examples tooltip","component":"Panel"}};
 
 /***/ }),
 
@@ -41899,7 +41950,7 @@ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___namespace =
 /*! exports provided: domain, items, default */
 /***/ (function(module) {
 
-module.exports = {"domain":"alpheios-content-options","items":{"enableLemmaTranslations":{"defaultValue":false,"labelText":"Experimental: Enable Latin Lemma Translations","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"locale":{"defaultValue":"en-US","labelText":"UI Locale:","values":[{"value":"en-US","text":"English (US)"},{"value":"fr","text":"French"},{"value":"de","text":"German"},{"value":"it","text":"Italian"},{"value":"pt","text":"Portuguese"},{"value":"es","text":"Spanish"},{"value":"ca","text":"Catalonian"}]},"enableWordUsageExamples":{"defaultValue":false,"labelText":"Experimental: Enable Latin Word Usage Examples (Concordance)","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"wordUsageExamplesAuthMax":{"defaultValue":3,"labelText":"Word Usage Examples - max results per author","number":true,"values":[]},"wordUsageExamplesMax":{"defaultValue":500,"labelText":"Word Usage Examples - max results for single author request","number":true,"values":[]},"panelPosition":{"defaultValue":"left","labelText":"Panel position:","values":[{"value":"left","text":"Left"},{"value":"right","text":"Right"}]},"popupPosition":{"defaultValue":"fixed","labelText":"Popup position:","values":[{"value":"flexible","text":"Flexible"},{"value":"fixed","text":"Fixed"}]},"uiType":{"defaultValue":"popup","labelText":"UI type:","values":[{"value":"popup","text":"Pop-up"},{"value":"panel","text":"Panel"}]},"preferredLanguage":{"defaultValue":"lat","labelText":"Page language:","values":[{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"verboseMode":{"defaultValue":"normal","labelText":"Log Level","values":[{"value":"verbose","text":"Verbose"},{"value":"normal","text":"Normal"}]},"lookupLanguage":{"defaultValue":"lat","labelText":"Page language:","values":[{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]}}};
+module.exports = {"domain":"alpheios-content-options","items":{"enableLemmaTranslations":{"defaultValue":false,"labelText":"Experimental: Enable Latin Lemma Translations","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"locale":{"defaultValue":"en-US","labelText":"UI Locale:","values":[{"value":"en-US","text":"English (US)"},{"value":"fr","text":"French"},{"value":"de","text":"German"},{"value":"it","text":"Italian"},{"value":"pt","text":"Portuguese"},{"value":"es","text":"Spanish"},{"value":"ca","text":"Catalonian"}]},"enableWordUsageExamples":{"defaultValue":false,"labelText":"Experimental: Enable Latin Word Usage Examples (Concordance)","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"wordUsageExamplesAuthMax":{"defaultValue":3,"labelText":"Word Usage Examples - max results per author","number":true,"values":[]},"wordUsageExamplesMax":{"defaultValue":500,"labelText":"Word Usage Examples - max results for single author request","number":true,"values":[]},"panelPosition":{"defaultValue":"left","labelText":"Panel position:","values":[{"value":"left","text":"Left"},{"value":"right","text":"Right"}]},"popupPosition":{"defaultValue":"fixed","labelText":"Popup position:","values":[{"value":"flexible","text":"Flexible"},{"value":"fixed","text":"Fixed"}]},"uiType":{"defaultValue":"popup","labelText":"UI type:","values":[{"value":"popup","text":"Pop-up"},{"value":"panel","text":"Panel"}]},"preferredLanguage":{"defaultValue":"lat","labelText":"Page language:","values":[{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"lookupLanguage":{"defaultValue":"default","labelText":"Change language:","values":[{"value":"default","text":"Default"},{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"verboseMode":{"defaultValue":"normal","labelText":"Log Level","values":[{"value":"verbose","text":"Verbose"},{"value":"normal","text":"Normal"}]}}};
 
 /***/ }),
 

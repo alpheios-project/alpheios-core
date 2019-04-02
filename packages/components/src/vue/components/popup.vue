@@ -3,7 +3,7 @@
        :data-notification-visible="$store.state.ui.notification.visible"
        :data-notification-auth-visible="$store.state.auth.notification.visible"
        :style="mainstyles"
-       class="alpheios-popup auk alpheios-content"
+       class="alpheios-popup alpheios-content"
        id="alpheios-popup-inner"
        ref="popup"
        v-on-clickaway="attachTrackingClick"
@@ -250,7 +250,7 @@ export default {
       return Logger.getLogger(this.verboseMode)
     },
     noLanguage: function () {
-      return Boolean(!this.$store.state.app.preferredLanguageName)
+      return Boolean(!this.$store.state.app.currentLanguageName)
     },
     providersLinkText: function () {
       return this.showProviders ? this.l10n.getText('LABEL_POPUP_HIDECREDITS') : this.l10n.getText('LABEL_POPUP_SHOWCREDITS')
