@@ -864,180 +864,6 @@ div.alpheios-checkbox-block {
   margin-top: 1em;
 }
 
-.alph_tooltip {
-  position: relative;
-  display: inline-block;
-}
-
-.alph_tooltip .tooltiptext {
-  visibility: hidden;
-  position: absolute;
-  width: 120px;
-  background-color: #27323b;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 0.6s;
-  font-size: 12px;
-  display: none;
-}
-
-.alph_tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-  display: inline;
-}
-
-.alph_tooltip-top {
-  bottom: 125%;
-  left: 50%;
-  margin-left: -50%;
-}
-
-.alph_tooltip-top::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}
-
-.alph_tooltip-top-right {
-  bottom: 125%;
-  right: 0;
-  margin-left: -50%;
-}
-
-.alph_tooltip-top-right::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  right: 15%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}
-
-.alph_tooltip-top-left {
-  bottom: 125%;
-  left: 0;
-}
-
-.alph_tooltip-top-left::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 0;
-  margin-left: 5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}
-
-.alph_tooltip-right {
-  top: -5px;
-  left: 125%;
-}
-
-.alph_tooltip-right::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 100%;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent #555 transparent transparent;
-}
-
-.alph_tooltip-bottom {
-  top: 135%;
-  left: 50%;
-  margin-left: -50%;
-}
-
-.alph_tooltip-bottom-wide {
-  top: 135%;
-  left: -30%;
-}
-
-.alph_tooltip-bottom-narrow {
-  top: 135%;
-  left: -75%;
-}
-
-.alph_tooltip-bottom-narrow2 {
-  top: 135%;
-  left: -165%;
-}
-
-.alph_tooltip-bottom::after,
-.alph_tooltip-bottom-wide::after,
-.alph_tooltip-bottom-narrow::after,
-.alph_tooltip-bottom-narrow2::after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent #555 transparent;
-}
-
-.alph_tooltip-bottom-right {
-  top: 135%;
-  right: 0;
-  margin-left: -50%;
-}
-
-.alph_tooltip-bottom-right::after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  right: 15%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent #555 transparent;
-}
-
-.alpheios-panel-right .alph_tooltip-bottom-right {
-  top: 135%;
-  right: auto;
-  margin-left: 0;
-  left: 0;
-}
-.alpheios-panel-right .alph_tooltip-bottom-right::after {
-  margin-left: 0;
-  right: auto;
-  left: 15%;
-}
-
-.alph_tooltip-left {
-  top: -5px;
-  bottom: auto;
-  right: 128%;
-}
-
-.alph_tooltip-left::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent transparent #555;
-}
-
 .alpheios-word {
   transition: background-color 1s ease-out;
 }
@@ -1313,6 +1139,171 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
 }
 .alpheios-setting__control {
   width: 50%;
+}
+/************ UIKit vars ************************/
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
+.alph_tooltip {
+  position: relative;
+  display: inline-block;
+}
+.alph_tooltip .tooltiptext {
+  visibility: hidden;
+  position: absolute;
+  width: calc(var(--alpheios-base-ui-size) * 7.5);
+  background-color: var(--alpheios-text-bg-color);
+  color: var(--alpheios-text-color);
+  text-align: center;
+  padding: calc(var(--alpheios-base-ui-size) * 0.375) 0;
+  border: 1px solid var(--alpheios-border-color);
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.6s;
+  font-size: calc(var(--alpheios-base-text-size) * 0.75);
+  display: none;
+}
+.alph_tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+  display: inline;
+}
+.alph_tooltip-top {
+  bottom: 125%;
+  left: 50%;
+  margin-left: -50%;
+}
+.alph_tooltip-top::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--alpheios-border-color) transparent transparent transparent;
+}
+.alph_tooltip-top-right {
+  bottom: 125%;
+  right: 0;
+  margin-left: -50%;
+}
+.alph_tooltip-top-right::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 15%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--alpheios-border-color) transparent transparent transparent;
+}
+.alph_tooltip-top-left {
+  bottom: 125%;
+  left: 0;
+}
+.alph_tooltip-top-left::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-left: 5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--alpheios-border-color) transparent transparent transparent;
+}
+.alph_tooltip-right {
+  top: 50%;
+  transform: translateY(-50%);
+  left: 125%;
+}
+.alph_tooltip-right::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent var(--alpheios-border-color) transparent transparent;
+}
+.alph_tooltip-bottom {
+  top: 135%;
+  left: 50%;
+  margin-left: -50%;
+}
+.alph_tooltip-bottom-wide {
+  top: 135%;
+  left: -30%;
+}
+.alph_tooltip-bottom-narrow {
+  top: 135%;
+  left: -75%;
+}
+.alph_tooltip-bottom-narrow2 {
+  top: 135%;
+  left: -165%;
+}
+.alph_tooltip-bottom::after,
+.alph_tooltip-bottom-wide::after,
+.alph_tooltip-bottom-narrow::after,
+.alph_tooltip-bottom-narrow2::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent var(--alpheios-border-color) transparent;
+}
+.alph_tooltip-bottom-right {
+  top: 135%;
+  right: 0;
+  margin-left: -50%;
+}
+.alph_tooltip-bottom-right::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  right: 15%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent var(--alpheios-border-color) transparent;
+}
+.alpheios-panel-right .alph_tooltip-bottom-right {
+  top: 135%;
+  right: auto;
+  margin-left: 0;
+  left: 0;
+}
+.alpheios-panel-right .alph_tooltip-bottom-right::after {
+  margin-left: 0;
+  right: auto;
+  left: 15%;
+}
+.alph_tooltip-left {
+  top: 50%;
+  transform: translateY(-50%);
+  bottom: auto;
+  right: 128%;
+}
+.alph_tooltip-left::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent var(--alpheios-border-color);
 }
 /************ UIKit vars ************************/
 /*
@@ -2924,70 +2915,13 @@ ul.alpheios-skin_properties {
   border: calc(var(--alpheios-base-ui-size) * 0.0625) solid var(--alpheios-border-color);
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
 }
-.alpheios-toolbar .alph_tooltip {
-  position: relative;
-}
-.alpheios-toolbar .alph_tooltip .tooltiptext {
-  visibility: hidden;
-  position: absolute;
-  width: 120px;
-  text-align: center;
-  z-index: 1;
-  opacity: 0;
-  font-size: 12px;
-  display: none;
-  padding: 5px 0;
-  border-radius: 6px;
-  transition: opacity 0.6s ease 0s;
-  background-color: #fcfcfa;
-  color: #4e6476;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #4e6476;
-  border-image: initial;
-}
-.alpheios-toolbar .alph_tooltip .alph_tooltip-left {
-  top: 0;
-  bottom: auto;
-  right: 128%;
-}
-.alpheios-toolbar .alph_tooltip .alph_tooltip-left::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent transparent #555;
-}
-.alpheios-toolbar .alph_tooltip-left {
-  top: 5px;
-  bottom: auto;
-  right: 128%;
-}
-.alpheios-toolbar .alph_tooltip-left::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent transparent #555;
-}
-.alpheios-toolbar .alph_tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-  display: inline;
-}
 .alpheios-toolbar__header {
   box-sizing: border-box;
   border: 1px solid var(--alpheios-border-color);
   border-bottom-left-radius: calc(var(--alpheios-base-ui-size) * 0.625);
   border-bottom-right-radius: calc(var(--alpheios-base-ui-size) * 0.625);
   cursor: pointer;
-  background: #FFF;
+  background: var(--alpheios-text-bg-color);
 }
 .alpheios-toolbar__header svg {
   width: calc(var(--alpheios-base-ui-size) * 1.25);
@@ -3001,7 +2935,7 @@ ul.alpheios-skin_properties {
   top: calc(var(--alpheios-base-ui-size) * 0.3125);
 }
 .alpheios-toolbar__header:hover svg {
-  fill: #5BC8DC;
+  fill: var(--alpheios-icon-color-hover);
 }
 .alpheios-toolbar__drag-handle {
   width: calc(var(--alpheios-base-ui-size) * 2.75);
@@ -3022,7 +2956,7 @@ ul.alpheios-skin_properties {
 }
 .alpheios-toolbar__lookup-control {
   cursor: pointer;
-  background: #FFF;
+  background: var(--alpheios-text-bg-color);
 }
 .alpheios-toolbar__lookup-control .alpheios-navbuttons__btn {
   margin: 0;

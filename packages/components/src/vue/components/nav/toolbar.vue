@@ -274,70 +274,6 @@ export default {
       border: uisize(1px) solid var(--alpheios-border-color);
       border-radius: uisize(10px);
     }
-
-    .alph_tooltip {
-      position: relative;
-
-      .tooltiptext {
-        visibility: hidden;
-        position: absolute;
-        width: 120px;
-        text-align: center;
-        z-index: 1;
-        opacity: 0;
-        font-size: 12px;
-        display: none;
-        padding: 5px 0;
-        border-radius: 6px;
-        transition: opacity 0.6s ease 0s;
-        background-color: rgb(252, 252, 250);
-        color: rgb(78, 100, 118);
-        border-width: 1px;
-        border-style: solid;
-        border-color: rgb(78, 100, 118);
-        border-image: initial;
-      }
-
-      .alph_tooltip-left {
-        top: 0;
-        bottom: auto;
-        right: 128%;
-      }
-
-      .alph_tooltip-left::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 100%;
-        margin-top: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: transparent transparent transparent #555;
-      }
-    }
-
-    .alph_tooltip-left {
-      top: 5px;
-      bottom: auto;
-      right: 128%;
-
-      &::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 100%;
-        margin-top: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: transparent transparent transparent #555;
-      }
-    }
-
-    .alph_tooltip:hover .tooltiptext {
-      visibility: visible;
-      opacity: 1;
-      display: inline;
-    }
   }
 
   .alpheios-toolbar__header {
@@ -346,7 +282,7 @@ export default {
     border-bottom-left-radius: uisize(10px);
     border-bottom-right-radius: uisize(10px);
     cursor: pointer;
-    background: #FFF;
+    background: var(--alpheios-text-bg-color);
 
     svg {
       width: uisize(20px);
@@ -362,7 +298,7 @@ export default {
     }
 
     &:hover svg {
-      fill: $alpheios-link-hover-color;
+      fill: var(--alpheios-icon-color-hover);
     }
   }
 
@@ -387,7 +323,7 @@ export default {
 
   .alpheios-toolbar__lookup-control {
     cursor: pointer;
-    background: #FFF;
+    background: var(--alpheios-text-bg-color);
 
     .alpheios-navbuttons__btn {
       margin: 0;

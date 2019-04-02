@@ -864,180 +864,6 @@ div.alpheios-checkbox-block {
   margin-top: 1em !important;
 }
 
-.alph_tooltip {
-  position: relative !important;
-  display: inline-block;
-}
-
-.alph_tooltip .tooltiptext {
-  visibility: hidden !important;
-  position: absolute !important;
-  width: 120px !important;
-  background-color: #27323b !important;
-  color: #fff !important;
-  text-align: center !important;
-  padding: 5px 0 !important;
-  border-radius: 6px !important;
-  z-index: 1 !important;
-  opacity: 0 !important;
-  transition: opacity 0.6s !important;
-  font-size: 12px !important;
-  display: none;
-}
-
-.alph_tooltip:hover .tooltiptext {
-  visibility: visible !important;
-  opacity: 1 !important;
-  display: inline;
-}
-
-.alph_tooltip-top {
-  bottom: 125% !important;
-  left: 50% !important;
-  margin-left: -50% !important;
-}
-
-.alph_tooltip-top::after {
-  content: "" !important;
-  position: absolute !important;
-  top: 100% !important;
-  left: 50% !important;
-  margin-left: -5px !important;
-  border-width: 5px !important;
-  border-style: solid !important;
-  border-color: #555 transparent transparent transparent !important;
-}
-
-.alph_tooltip-top-right {
-  bottom: 125% !important;
-  right: 0 !important;
-  margin-left: -50% !important;
-}
-
-.alph_tooltip-top-right::after {
-  content: "" !important;
-  position: absolute !important;
-  top: 100% !important;
-  right: 15% !important;
-  margin-left: -5px !important;
-  border-width: 5px !important;
-  border-style: solid !important;
-  border-color: #555 transparent transparent transparent !important;
-}
-
-.alph_tooltip-top-left {
-  bottom: 125% !important;
-  left: 0 !important;
-}
-
-.alph_tooltip-top-left::after {
-  content: "" !important;
-  position: absolute !important;
-  top: 100% !important;
-  left: 0 !important;
-  margin-left: 5px !important;
-  border-width: 5px !important;
-  border-style: solid !important;
-  border-color: #555 transparent transparent transparent !important;
-}
-
-.alph_tooltip-right {
-  top: -5px !important;
-  left: 125% !important;
-}
-
-.alph_tooltip-right::after {
-  content: "" !important;
-  position: absolute !important;
-  top: 50% !important;
-  right: 100% !important;
-  margin-top: -5px !important;
-  border-width: 5px !important;
-  border-style: solid !important;
-  border-color: transparent #555 transparent transparent !important;
-}
-
-.alph_tooltip-bottom {
-  top: 135% !important;
-  left: 50% !important;
-  margin-left: -50% !important;
-}
-
-.alph_tooltip-bottom-wide {
-  top: 135% !important;
-  left: -30% !important;
-}
-
-.alph_tooltip-bottom-narrow {
-  top: 135% !important;
-  left: -75% !important;
-}
-
-.alph_tooltip-bottom-narrow2 {
-  top: 135% !important;
-  left: -165% !important;
-}
-
-.alph_tooltip-bottom::after,
-.alph_tooltip-bottom-wide::after,
-.alph_tooltip-bottom-narrow::after,
-.alph_tooltip-bottom-narrow2::after {
-  content: "" !important;
-  position: absolute !important;
-  bottom: 100% !important;
-  left: 50% !important;
-  margin-left: -5px !important;
-  border-width: 5px !important;
-  border-style: solid !important;
-  border-color: transparent transparent #555 transparent !important;
-}
-
-.alph_tooltip-bottom-right {
-  top: 135% !important;
-  right: 0 !important;
-  margin-left: -50% !important;
-}
-
-.alph_tooltip-bottom-right::after {
-  content: "" !important;
-  position: absolute !important;
-  bottom: 100% !important;
-  right: 15% !important;
-  margin-left: -5px !important;
-  border-width: 5px !important;
-  border-style: solid !important;
-  border-color: transparent transparent #555 transparent !important;
-}
-
-.alpheios-panel-right .alph_tooltip-bottom-right {
-  top: 135% !important;
-  right: auto !important;
-  margin-left: 0 !important;
-  left: 0 !important;
-}
-.alpheios-panel-right .alph_tooltip-bottom-right::after {
-  margin-left: 0 !important;
-  right: auto !important;
-  left: 15% !important;
-}
-
-.alph_tooltip-left {
-  top: -5px !important;
-  bottom: auto !important;
-  right: 128% !important;
-}
-
-.alph_tooltip-left::after {
-  content: "" !important;
-  position: absolute !important;
-  top: 50% !important;
-  left: 100% !important;
-  margin-top: -5px !important;
-  border-width: 5px !important;
-  border-style: solid !important;
-  border-color: transparent transparent transparent #555 !important;
-}
-
 .alpheios-word {
   transition: background-color 1s ease-out !important;
 }
@@ -1313,6 +1139,171 @@ fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spi
 }
 .alpheios-setting__control {
   width: 50% !important;
+}
+/************ UIKit vars ************************/
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
+.alph_tooltip {
+  position: relative !important;
+  display: inline-block;
+}
+.alph_tooltip .tooltiptext {
+  visibility: hidden !important;
+  position: absolute !important;
+  width: calc(var(--alpheios-base-ui-size) * 7.5) !important;
+  background-color: var(--alpheios-text-bg-color) !important;
+  color: var(--alpheios-text-color) !important;
+  text-align: center !important;
+  padding: calc(var(--alpheios-base-ui-size) * 0.375) 0 !important;
+  border: 1px solid var(--alpheios-border-color) !important;
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
+  z-index: 1 !important;
+  opacity: 0 !important;
+  transition: opacity 0.6s !important;
+  font-size: calc(var(--alpheios-base-text-size) * 0.75) !important;
+  display: none;
+}
+.alph_tooltip:hover .tooltiptext {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: inline;
+}
+.alph_tooltip-top {
+  bottom: 125% !important;
+  left: 50% !important;
+  margin-left: -50% !important;
+}
+.alph_tooltip-top::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 50% !important;
+  margin-left: -5px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  border-color: var(--alpheios-border-color) transparent transparent transparent !important;
+}
+.alph_tooltip-top-right {
+  bottom: 125% !important;
+  right: 0 !important;
+  margin-left: -50% !important;
+}
+.alph_tooltip-top-right::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 100% !important;
+  right: 15% !important;
+  margin-left: -5px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  border-color: var(--alpheios-border-color) transparent transparent transparent !important;
+}
+.alph_tooltip-top-left {
+  bottom: 125% !important;
+  left: 0 !important;
+}
+.alph_tooltip-top-left::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  margin-left: 5px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  border-color: var(--alpheios-border-color) transparent transparent transparent !important;
+}
+.alph_tooltip-right {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  left: 125% !important;
+}
+.alph_tooltip-right::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  right: 100% !important;
+  margin-top: -5px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  border-color: transparent var(--alpheios-border-color) transparent transparent !important;
+}
+.alph_tooltip-bottom {
+  top: 135% !important;
+  left: 50% !important;
+  margin-left: -50% !important;
+}
+.alph_tooltip-bottom-wide {
+  top: 135% !important;
+  left: -30% !important;
+}
+.alph_tooltip-bottom-narrow {
+  top: 135% !important;
+  left: -75% !important;
+}
+.alph_tooltip-bottom-narrow2 {
+  top: 135% !important;
+  left: -165% !important;
+}
+.alph_tooltip-bottom::after,
+.alph_tooltip-bottom-wide::after,
+.alph_tooltip-bottom-narrow::after,
+.alph_tooltip-bottom-narrow2::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 100% !important;
+  left: 50% !important;
+  margin-left: -5px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  border-color: transparent transparent var(--alpheios-border-color) transparent !important;
+}
+.alph_tooltip-bottom-right {
+  top: 135% !important;
+  right: 0 !important;
+  margin-left: -50% !important;
+}
+.alph_tooltip-bottom-right::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 100% !important;
+  right: 15% !important;
+  margin-left: -5px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  border-color: transparent transparent var(--alpheios-border-color) transparent !important;
+}
+.alpheios-panel-right .alph_tooltip-bottom-right {
+  top: 135% !important;
+  right: auto !important;
+  margin-left: 0 !important;
+  left: 0 !important;
+}
+.alpheios-panel-right .alph_tooltip-bottom-right::after {
+  margin-left: 0 !important;
+  right: auto !important;
+  left: 15% !important;
+}
+.alph_tooltip-left {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  bottom: auto !important;
+  right: 128% !important;
+}
+.alph_tooltip-left::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 100% !important;
+  margin-top: -5px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  border-color: transparent transparent transparent var(--alpheios-border-color) !important;
 }
 /************ UIKit vars ************************/
 /*
@@ -2924,70 +2915,13 @@ ul.alpheios-skin_properties {
   border: calc(var(--alpheios-base-ui-size) * 0.0625) solid var(--alpheios-border-color) !important;
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
-.alpheios-toolbar .alph_tooltip {
-  position: relative !important;
-}
-.alpheios-toolbar .alph_tooltip .tooltiptext {
-  visibility: hidden !important;
-  position: absolute !important;
-  width: 120px !important;
-  text-align: center !important;
-  z-index: 1 !important;
-  opacity: 0 !important;
-  font-size: 12px !important;
-  display: none;
-  padding: 5px 0 !important;
-  border-radius: 6px !important;
-  transition: opacity 0.6s ease 0s !important;
-  background-color: #fcfcfa !important;
-  color: #4e6476 !important;
-  border-width: 1px !important;
-  border-style: solid !important;
-  border-color: #4e6476 !important;
-  border-image: initial !important;
-}
-.alpheios-toolbar .alph_tooltip .alph_tooltip-left {
-  top: 0 !important;
-  bottom: auto !important;
-  right: 128% !important;
-}
-.alpheios-toolbar .alph_tooltip .alph_tooltip-left::after {
-  content: "" !important;
-  position: absolute !important;
-  top: 50% !important;
-  left: 100% !important;
-  margin-top: -5px !important;
-  border-width: 5px !important;
-  border-style: solid !important;
-  border-color: transparent transparent transparent #555 !important;
-}
-.alpheios-toolbar .alph_tooltip-left {
-  top: 5px !important;
-  bottom: auto !important;
-  right: 128% !important;
-}
-.alpheios-toolbar .alph_tooltip-left::after {
-  content: "" !important;
-  position: absolute !important;
-  top: 50% !important;
-  left: 100% !important;
-  margin-top: -5px !important;
-  border-width: 5px !important;
-  border-style: solid !important;
-  border-color: transparent transparent transparent #555 !important;
-}
-.alpheios-toolbar .alph_tooltip:hover .tooltiptext {
-  visibility: visible !important;
-  opacity: 1 !important;
-  display: inline;
-}
 .alpheios-toolbar__header {
   box-sizing: border-box !important;
   border: 1px solid var(--alpheios-border-color) !important;
   border-bottom-left-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
   border-bottom-right-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
   cursor: pointer !important;
-  background: #FFF !important;
+  background: var(--alpheios-text-bg-color) !important;
 }
 .alpheios-toolbar__header svg {
   width: calc(var(--alpheios-base-ui-size) * 1.25) !important;
@@ -3001,7 +2935,7 @@ ul.alpheios-skin_properties {
   top: calc(var(--alpheios-base-ui-size) * 0.3125) !important;
 }
 .alpheios-toolbar__header:hover svg {
-  fill: #5BC8DC !important;
+  fill: var(--alpheios-icon-color-hover) !important;
 }
 .alpheios-toolbar__drag-handle {
   width: calc(var(--alpheios-base-ui-size) * 2.75) !important;
@@ -3022,7 +2956,7 @@ ul.alpheios-skin_properties {
 }
 .alpheios-toolbar__lookup-control {
   cursor: pointer !important;
-  background: #FFF !important;
+  background: var(--alpheios-text-bg-color) !important;
 }
 .alpheios-toolbar__lookup-control .alpheios-navbuttons__btn {
   margin: 0 !important;
