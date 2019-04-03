@@ -589,6 +589,7 @@ export default {
     box-sizing: border-box;
     display: flex;
     flex-flow: wrap;
+    align-items: flex-start;
     // Need to set element as an offset parent for panel content items
     position: relative;
     background: var(--alpheios-color-neutral-lightest);

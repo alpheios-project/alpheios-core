@@ -572,6 +572,8 @@ html {
 .alpheios-content .multiselect {
   display: inline-block;
   vertical-align: middle;
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
+  border: 1px solid var(--alpheios-border-color);
 }
 .alpheios-content .multiselect__content-wrapper {
   border: 1px solid var(--alpheios-border-color);
@@ -583,7 +585,6 @@ html {
 }
 .alpheios-content .multiselect__tags {
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
-  border: 1px solid var(--alpheios-border-color);
 }
 .alpheios-content .multiselect__tag {
   background-color: var(--alpheios-btn-primary-bg-color);
@@ -2575,6 +2576,7 @@ h3.alpheios-inflections__credits-title {
   box-sizing: border-box;
   display: flex;
   flex-flow: wrap;
+  align-items: flex-start;
   position: relative;
   background: var(--alpheios-color-neutral-lightest);
   padding-top: calc(var(--alpheios-base-text-size) * 1.25);
