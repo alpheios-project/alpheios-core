@@ -651,6 +651,7 @@ export default {
   }
 
   .alpheios-panel__notifications--important {
+    color: var(--alpheios-color-neutral-lightest);
     background: var(--alpheios-color-muted);
   }
 

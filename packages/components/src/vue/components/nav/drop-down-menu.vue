@@ -209,21 +209,21 @@ export default {
 
   .alpheios-navmenu__item:hover,
   .alpheios-navmenu__item:focus {
-    color: var(--alpheios-color-neutral-light);
+    color: var(--alpheios-color-muted);
   }
 
   .alpheios-navmenu__item .alpheios-navbuttons__icon,
   .alpheios-navmenu__item.active:hover .alpheios-navbuttons__icon,
   .alpheios-navmenu__item.active:focus .alpheios-navbuttons__icon {
-    fill: var(--alpheios-color-neutral-lightest);
-    stroke: var(--alpheios-color-neutral-lightest);
+    fill: var(--alpheios-color-neutral-dark);
+    stroke: var(--alpheios-color-neutral-dark);
   }
 
   .alpheios-navmenu__item:hover .alpheios-navbuttons__icon,
   .alpheios-navmenu__item:focus .alpheios-navbuttons__icon,
   .alpheios-navmenu__item.active .alpheios-navbuttons__icon {
-    fill: var(--alpheios-color-neutral-light);
-    stroke: var(--alpheios-color-neutral-light);
+    fill: var(--alpheios-color-muted);
+    stroke: var(--alpheios-color-muted);
   }
 
   .alpheios-navbuttons__icon-cont {

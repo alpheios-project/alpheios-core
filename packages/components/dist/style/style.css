@@ -1565,19 +1565,19 @@ a.alpheios-popup__providers-link {
 }
 .alpheios-navmenu__item:hover,
 .alpheios-navmenu__item:focus {
-  color: var(--alpheios-color-neutral-light);
+  color: var(--alpheios-color-muted);
 }
 .alpheios-navmenu__item .alpheios-navbuttons__icon,
 .alpheios-navmenu__item.active:hover .alpheios-navbuttons__icon,
 .alpheios-navmenu__item.active:focus .alpheios-navbuttons__icon {
-  fill: var(--alpheios-color-neutral-lightest);
-  stroke: var(--alpheios-color-neutral-lightest);
+  fill: var(--alpheios-color-neutral-dark);
+  stroke: var(--alpheios-color-neutral-dark);
 }
 .alpheios-navmenu__item:hover .alpheios-navbuttons__icon,
 .alpheios-navmenu__item:focus .alpheios-navbuttons__icon,
 .alpheios-navmenu__item.active .alpheios-navbuttons__icon {
-  fill: var(--alpheios-color-neutral-light);
-  stroke: var(--alpheios-color-neutral-light);
+  fill: var(--alpheios-color-muted);
+  stroke: var(--alpheios-color-muted);
 }
 .alpheios-navbuttons__icon-cont {
   flex-grow: 0;
@@ -2550,6 +2550,7 @@ h3.alpheios-inflections__credits-title {
   height: 25px;
 }
 .alpheios-panel__notifications--important {
+  color: var(--alpheios-color-neutral-lightest);
   background: var(--alpheios-color-muted);
 }
 [data-notification-visible=true] .alpheios-panel__notifications {
