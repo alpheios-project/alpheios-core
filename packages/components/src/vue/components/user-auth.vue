@@ -41,7 +41,7 @@ export default {
   .alpheios-user-auth__user-info-box {
     margin-top: 20px;
     display: flex;
-    border-top: 1px solid $alpheios-link-color-dark-bg;
+    border-top: 1px solid var(--alpheios-border-color);
     flex-direction: column;
   }
 
@@ -49,7 +49,7 @@ export default {
     display: flex;
     flex-direction: row;
     padding: 5px 10px;
-    border-bottom: 1px solid $alpheios-link-color-dark-bg;
+    border-bottom: 1px solid var(--alpheios-border-color);
   }
 
   .alpheios-user-auth__user-info-item-name {
@@ -59,7 +59,7 @@ export default {
   .alpheios-user-auth__user-info-item-value {
     font-weight: 700;
     flex: 1 1;
-    color: $alpheios-link-color !important;
+    color: var(--alpheios-link-color-on-light) !important;
     text-align: right;
   }
 
@@ -67,7 +67,7 @@ export default {
     display: none;
     position: relative;
     padding: 10px 20px;
-    background: $alpheios-icon-color;
+    background: var(--alpheios-color-muted);
     flex: 0 0 60px;
     box-sizing: border-box;
     overflow: hidden;
@@ -82,14 +82,14 @@ export default {
     height: 20px;
     margin: 0;
     cursor: pointer;
-    fill: $alpheios-link-color-dark-bg;
-    stroke: $alpheios-link-color-dark-bg;
+    fill: var(--alpheios-color-neutral-lightest);
+    stroke: var(--alpheios-color-neutral-lightest);
   }
 
   .alpheios-user-auth__notifications-close-btn:hover,
   .alpheios-user-auth__notifications-close-btn:focus {
-    fill: $alpheios-link-hover-color;
-    stroke: $alpheios-link-hover-color;
+    fill: var(--alpheios-color-neutral-light);
+    stroke: var(--alpheios-color-neutral-light);
   }
 
   [data-notification-visible="true"] .alpheios-user-auth__notifications {

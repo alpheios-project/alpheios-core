@@ -39,6 +39,9 @@ html {
   --alpheios-text-color-dark: var(--alpheios-color-dark);
   --alpheios-text-color-vivid: var(--alpheios-color-vivid);
   --alpheios-text-bg-color: var(--alpheios-color-neutral-lightest);
+  --alpheios-link-color-on-light: var(--alpheios-color-vivid);
+  --alpheios-link-color-on-medium: var(--alpheios-color-muted);
+  --alpheios-link-color-on-dark: var(--alpheios-color-bright);
   --alpheios-toolbar-bg-color: var(--alpheios-color-muted);
   --alpheios-border-color: var(--alpheios-color-neutral-dark);
   --alpheios-icon-color: var(--alpheios-color-neutral-lightest);
@@ -80,4 +83,8 @@ html {
   --alpheios-btn-tertiary-font-color-pressed: var(--alpheios-color-neutral-lightest);
   --alpheios-btn-tertiary-bg-color-pressed: var(--alpheios-color-muted);
   --alpheios-btn-tertiary-border-color-pressed: var(--alpheios-color-muted);
+
+  // Those colors are not defined in a style guide
+  --alpheios-highlight-color: #F6D918;
+  --alpheios-highlight-dark-color: #E49A0D;
 }

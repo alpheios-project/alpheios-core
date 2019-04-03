@@ -317,7 +317,7 @@ export default {
   }
 
   .infl-prdgm-tbl-cell--full-match {
-    background-color: $alpheios-highlight-color;
+    background-color: var(--alpheios-highlight-color);
     font-weight: 700;
   }
 
@@ -425,7 +425,7 @@ export default {
   }
 
   .infl-suff.infl-suff--suffix-match.infl-suff--full-match {
-    background-color: $alpheios-highlight-color;
+    background-color: var(--alpheios-highlight-color);
     font-weight: 700;
   }
 

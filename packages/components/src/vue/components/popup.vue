@@ -1,6 +1,5 @@
 <template>
-  <div :class="rootClasses"
-       :data-notification-visible="$store.state.ui.notification.visible"
+  <div :data-notification-visible="$store.state.ui.notification.visible"
        :data-notification-auth-visible="$store.state.auth.notification.visible"
        :style="mainstyles"
        class="alpheios-popup alpheios-content"
@@ -234,9 +233,6 @@ export default {
     })
   },
   computed: {
-    rootClasses () {
-      return this.$store.state.ui.rootClasses
-    },
     mainstyles: function () {
       return {
         left: this.positionLeftDm,
@@ -746,7 +742,7 @@ export default {
     display: none;
     position: relative;
     padding: textsize(10px) textsize(20px);
-    background: $alpheios-logo-color;
+    background: var(--alpheios-color-muted);
     flex: 0 0 textsize(60px);
     overflow: hidden;
   }
@@ -760,14 +756,14 @@ export default {
     height: textsize(20px);
     margin: 0;
     cursor: pointer;
-    fill: $alpheios-link-color-dark-bg;
-    stroke: $alpheios-link-color-dark-bg;
+    fill: var(--alpheios-color-neutral-lightest);
+    stroke: var(--alpheios-color-neutral-lightest);
   }
 
   .alpheios-popup__notifications-close-btn:hover,
   .alpheios-popup__notifications-close-btn:focus {
-    fill: $alpheios-link-hover-color;
-    stroke: $alpheios-link-hover-color;
+    fill: var(--alpheios-color-neutral-light);
+    stroke: var(--alpheios-color-neutral-light);
   }
 
   [data-notification-visible="true"] .alpheios-popup__notifications {
@@ -779,7 +775,7 @@ export default {
   }
 
   .alpheios-popup__notifications--lang-switcher {
-    font-size: 0.75*$alpheios-base-font-size;
+    font-size: textsize(12px);
     float: right;
     margin: textsize(-20px) textsize(10px) 0 0;
     display: inline-block;
@@ -791,6 +787,6 @@ export default {
   }
 
   .alpheios-popup__notifications--important {
-    background: $alpheios-icon-color;
+    background: var(--alpheios-color-muted);
   }
 </style>

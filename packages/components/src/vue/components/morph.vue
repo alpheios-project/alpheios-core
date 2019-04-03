@@ -392,7 +392,7 @@ export default {
 
   .alpheios-morph__source {
     font-size: smaller;
-    color: $alpheios-toolbar-color;
+    color: var(--alpheios-color-muted);
     font-style: italic;
   }
 
@@ -421,13 +421,12 @@ export default {
 
   .alpheios-morph__inflset h5 {
     display: none;
-    font-size: $alpheios-base-font-size;
     line-height: 1;
     margin-bottom: .5em;
   }
 
   .alpheios-morph__inflset:first-child h5 {
-    color: $alpheios-toolbar-color;
+    color: var(--alpheios-color-muted);
     display: block;
   }
 
@@ -537,13 +536,13 @@ export default {
     .alpheios-morph__definition_list,
     .alpheios-morph__translation_list,
     .alpheios-morph__inflections {
-      /* border-top: 1px solid $alpheios-toolbar-color; */
+      // border-top: 1px solid var(--alpheios-border-color);
       margin-top: 5px;
       padding-left: 5px;
 
       .block_title {
         margin: 0;
-        color: $alpheios-toolbar-color;
+        color: var(--alpheios-color-muted);
         font-size: 10px;
         text-align: right;
       }

@@ -3,9 +3,9 @@
 }
 
 .alpheios-alignment__highlight_fix {
-    background-color: $alpheios-highlight-dark-color;
+    background-color: var(--alpheios-highlight-dark-color);
 }
 
 .alpheios-alignment__highlight {
-  	background-color: $alpheios-highlight-color;
+  	background-color: var(--alpheios-highlight-color);
 }

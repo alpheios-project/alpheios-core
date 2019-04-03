@@ -324,30 +324,25 @@ export default {
   }
 
   h3.alpheios-inflections__credits-title {
-    font-size: $alpheios-base-font-size;
     font-weight: 700;
-    color: $alpheios-toolbar-color;
     margin-bottom: 0;
   }
 
   .alpheios-inflections__credits-text {
-    font-size: 0.75*$alpheios-base-font-size;
+    font-size: textsize(12px);
     font-weight: normal;
-    color: $alpheios-toolbar-active-color;
     font-style: italic;
     padding: 5px;
   }
 
   .alpheios-inflections__paradigms-expl {
-    font-size: 0.75*$alpheios-base-font-size;
+    font-size: textsize(12px);
     font-weight: normal;
-    color: $alpheios-toolbar-active-color;
     font-style: italic;
     margin: 20px 0 10px;
   }
 
   .alpheios-inflections__paradigms-expl span {
-    color: $alpheios-toolbar-color;
     font-weight: 700;
   }
 
@@ -366,7 +361,7 @@ export default {
   }
 
   .alpheios-inflections__progress-border {
-    border: 2px solid $alpheios-icon-color;
+    border: uisize(2px) solid var(--alpheios-color-muted);
     min-width: $inflections-anim-min-width;
     height: 100%;
     padding: 2px;
@@ -383,14 +378,14 @@ export default {
     position: absolute;
     height: 100%;
     width: 100%;
-    background-color: $alpheios-icon-color;
+    background-color: var(--alpheios-color-muted);
     animation: cssload-slide 5.75s steps(40) infinite;
   }
 
   .alpheios-inflections__progress-whitespace div.alpheios-inflections__progress-text,
   .alpheios-inflections__progress-text {
     text-transform: uppercase;
-    color: $alpheios-copy-color;
+    color: var(--alpheios-text-color-dark);
     position: absolute;
     width: 100%;
     text-align: center;
@@ -410,42 +405,5 @@ export default {
       left: 100%;
     }
   }
-
-  @-o-keyframes cssload-slide {
-    0% {
-      left: -100%;
-    }
-    100% {
-      left: 100%;
-    }
-  }
-
-  @-ms-keyframes cssload-slide {
-    0% {
-      left: -100%;
-    }
-    100% {
-      left: 100%;
-    }
-  }
-
-  @-webkit-keyframes cssload-slide {
-    0% {
-      left: -100%;
-    }
-    100% {
-      left: 100%;
-    }
-  }
-
-  @-moz-keyframes cssload-slide {
-    0% {
-      left: -100%;
-    }
-    100% {
-      left: 100%;
-    }
-  }
-
   // endregion Wait animation
 </style>

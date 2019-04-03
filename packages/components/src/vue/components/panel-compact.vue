@@ -1,6 +1,5 @@
 <template>
-  <div :class="rootClasses"
-       class="alpheios-panel alpheios-panel--compact alpheios-content"
+  <div class="alpheios-panel alpheios-panel--compact alpheios-content"
        :data-notification-visible="$store.state.ui.notification.visible && $store.state.ui.notification.important"
        :data-notification-auth-visible="$store.state.auth.notification.visible"
        :style="mainstyles"
@@ -220,7 +219,6 @@
       <span class="alpheios-panel__notifications-text" v-html="$store.state.ui.notification.text"></span>
       <setting :classes="['alpheios-panel__notifications--lang-switcher alpheios-text-smaller']"
                :data="settings.contentOptions.items.preferredLanguage"
-               :show-title="false"
                @change="contentOptionChanged"
                v-show="$store.state.ui.notification.showLanguageSwitcher"></setting>
     </div>
@@ -254,7 +252,7 @@ import Info from './info.vue'
 import InflectionBrowser from './inflections-browser.vue'
 import Tooltip from './tooltip.vue'
 import Lookup from './lookup.vue'
-import ReskinFontColor from './reskin-font-color.vue'
+import ReskinFontColor from './font-size.vue'
 import UserAuth from './user-auth.vue'
 import WordUsageExamplesBlock from '@/vue/components/word-usage-examples-block.vue'
 import { Definition } from 'alpheios-data-models'
@@ -322,9 +320,6 @@ export default {
   },
 
   computed: {
-    rootClasses () {
-      return this.$store.state.ui.rootClasses
-    },
     mainstyles: function () {
       this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth
       return {
@@ -552,7 +547,7 @@ export default {
   .alpheios-panel__header-selection {
     font-size: 16px;
     font-weight: 700;
-    color: $alpheios-toolbar-color;
+    color: var(--alpheios-color-muted);
   }
 
   .alpheios-panel__header-word {
@@ -619,7 +614,7 @@ export default {
     display: none;
     position: relative;
     padding: 10px 20px;
-    background: $alpheios-logo-color;
+    background: var(--alpheios-color-muted);
     grid-area: notifications;
     overflow: hidden;
   }
@@ -633,14 +628,14 @@ export default {
     height: 20px;
     margin: 0;
     cursor: pointer;
-    fill: $alpheios-link-color-dark-bg;
-    stroke: $alpheios-link-color-dark-bg;
+    fill: var(--alpheios-color-light);
+    stroke: var(--alpheios-color-light);
   }
 
   .alpheios-panel__notifications-close-btn:hover,
   .alpheios-panel__notifications-close-btn:focus {
-    fill: $alpheios-link-hover-color;
-    stroke: $alpheios-link-hover-color;
+    fill: var(--alpheios-color-neutral-light);
+    stroke: var(--alpheios-color-neutral-light);
   }
 
   .alpheios-panel__notifications--lang-switcher {
@@ -656,7 +651,7 @@ export default {
   }
 
   .alpheios-panel__notifications--important {
-    background: $alpheios-icon-color;
+    background: var(--alpheios-color-muted);
   }
 
   [data-notification-visible="true"] .alpheios-panel__notifications {
@@ -737,12 +732,12 @@ export default {
   .alpheios-panel__menu-icon {
     width: 40px;
     height: 40px;
-    fill: $alpheios-link-color-dark-bg;
+    fill: var(--alpheios-color-neutral-lightest);
   }
 
   .alpheios-panel__menu-icon:hover,
   .alpheios-panel__menu-icon:focus {
-    fill: $alpheios-link-hover-color;
+    fill: var(--alpheios-color-neutral-light);
   }
 
   // Special styles for compact panel
@@ -751,7 +746,7 @@ export default {
     width: 100%;
     left: 0;
     bottom: 0;
-    border-top: 1px solid $alpheios-link-color-dark-bg;
+    border-top: 1px solid var(--alpheios-border-color);
 
     & .alpheios-panel__content {
       overflow: auto;

@@ -203,27 +203,27 @@ export default {
   .alpheios-navmenu__item {
     display: flex;
     padding: 10px 20px 10px 30px;
-    border-bottom: 1px solid $alpheios-link-color-dark-bg;
+    border-bottom: 1px solid var(--alpheios-border-color);
     cursor: pointer;
   }
 
   .alpheios-navmenu__item:hover,
   .alpheios-navmenu__item:focus {
-    color: $alpheios-link-hover-color;
+    color: var(--alpheios-color-neutral-light);
   }
 
   .alpheios-navmenu__item .alpheios-navbuttons__icon,
   .alpheios-navmenu__item.active:hover .alpheios-navbuttons__icon,
   .alpheios-navmenu__item.active:focus .alpheios-navbuttons__icon {
-    fill: $alpheios-link-color-dark-bg;
-    stroke: $alpheios-link-color-dark-bg;
+    fill: var(--alpheios-color-neutral-lightest);
+    stroke: var(--alpheios-color-neutral-lightest);
   }
 
   .alpheios-navmenu__item:hover .alpheios-navbuttons__icon,
   .alpheios-navmenu__item:focus .alpheios-navbuttons__icon,
   .alpheios-navmenu__item.active .alpheios-navbuttons__icon {
-    fill: $alpheios-link-hover-color;
-    stroke: $alpheios-link-hover-color;
+    fill: var(--alpheios-color-neutral-light);
+    stroke: var(--alpheios-color-neutral-light);
   }
 
   .alpheios-navbuttons__icon-cont {

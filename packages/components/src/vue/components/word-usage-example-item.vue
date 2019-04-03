@@ -27,38 +27,38 @@
   </div>
 </template>
 <script>
-  import SourceIcon from '@/images/inline-icons/source.svg'
+import SourceIcon from '@/images/inline-icons/source.svg'
 
-  export default {
-    name: 'WordUsageExampleItem',
-    components: {
-      sourceIcon: SourceIcon
+export default {
+  name: 'WordUsageExampleItem',
+  components: {
+    sourceIcon: SourceIcon
+  },
+  props: {
+    wordUsageItem: {
+      type: Object,
+      required: true
+    }
+  },
+  data () {
+    return {
+      showDataSource: false
+    }
+  },
+  computed: {
+    prefix: function () {
+      return this.wordUsageItem.prefix
     },
-    props: {
-      wordUsageItem: {
-        type: Object,
-        required: true
-      }
-    },
-    data () {
-      return {
-        showDataSource: false
-      }
-    },
-    computed: {
-      prefix: function() {
-        return this.wordUsageItem.prefix
-      },
-      suffix: function() {
-        return this.wordUsageItem.suffix
-      }
-    },
-    methods: {
-      changeShowDataSource () {
-        this.showDataSource = !this.showDataSource
-      }
+    suffix: function () {
+      return this.wordUsageItem.suffix
+    }
+  },
+  methods: {
+    changeShowDataSource () {
+      this.showDataSource = !this.showDataSource
     }
   }
+}
 </script>
 <style lang="scss">
     @import "../../styles/variables";
@@ -67,7 +67,7 @@
         display: flex;
         flex-direction: column;
         padding: 10px 0;
-        border-bottom: 1px solid $alpheios-base-border-color;
+        border-bottom: 1px solid var(--alpheios-border-color);
     }
 
     .alpheios_word_usage_list_item__text {
@@ -81,7 +81,7 @@
     .alpheios_word_usage_list_item
     .alpheios_word_usage_list_item__text
     .alpheios_word_usage_list_item__text_targetword {
-        color: $alpheios-highlight-dark-color;
+        color: var(--alpheios-highlight-dark-color);
     }
 
     .alpheios_word_usage_list_item__text_targetword {
@@ -115,7 +115,7 @@
 
     .alpheios_word_usage_list_item
     a.alpheios_word_usage_list_item__source_link {
-      color: $alpheios-link-color;
+      color: var(--alpheios-link-color-on-light);
       font-size: 95%;
       display: block;
     }

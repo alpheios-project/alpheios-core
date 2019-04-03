@@ -61,25 +61,6 @@
     margin-bottom: textsize(16px);
   }
 
-  #{$alpheios-layout-large} & {
-    h1 {
-      font-family: var(--alpheios-serif-font-face);
-      font-size: calc(var(--alpheios-base-text-size) * 2.25);
-      font-weight: 700;
-    }
-
-    h2 {
-      font-family: var(--alpheios-serif-font-face);
-      font-size: calc(var(--alpheios-base-text-size) * 1.75);
-      font-weight: 600;
-    }
-
-    h3 {
-      font-size: calc(var(--alpheios-base-text-size) * 1.375);
-      font-weight: 700;
-    }
-  }
-
   input,
   optgroup,
   select,

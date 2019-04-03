@@ -595,7 +595,6 @@ export default class UIController {
 
       state: {
         activeTab: this.defaultTab, // A currently selected panel's tab
-        rootClasses: [],
 
         messages: [],
         // Panel and popup notifications
@@ -616,10 +615,6 @@ export default class UIController {
       mutations: {
         setActiveTab (state, tabName) {
           state.activeTab = tabName
-        },
-
-        setRootClasses (state, classes) {
-          state.rootClasses = classes
         },
 
         setNotification (state, data) {
@@ -651,9 +646,6 @@ export default class UIController {
     }
 
     this.createModules()
-
-    // Set initial values of components
-    this.setRootComponentClasses()
 
     const currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(this.contentOptions.items.preferredLanguage.currentValue)
     this.updateLanguage(currentLanguageID)
@@ -1024,34 +1016,6 @@ export default class UIController {
     }
   }
 
-  /**
-   * Populates a list of classes that will be used for root HTML elements of UI module's components.
-   */
-  setRootComponentClasses () {
-    let classes = []
-
-    if (!UIController.hasRegularBaseFontSize()) {
-      classes.push(this.options.irregularBaseFontSizeClassName)
-    }
-    if (this.uiOptions.items.skin !== undefined) {
-      classes.push(`auk--${this.uiOptions.items.skin.currentValue}`)
-    }
-
-    if (this.uiOptions.items.fontSize !== undefined && this.uiOptions.items.fontSize.currentValue !== undefined) {
-      classes.push(`alpheios-font_${this.uiOptions.items.fontSize.currentValue}_class`)
-    } else {
-      classes.push(`alpheios-font_${this.uiOptions.items.fontSize.defaultValue}_class`)
-    }
-
-    if (this.uiOptions.items.colorSchema !== undefined && this.uiOptions.items.colorSchema.currentValue !== undefined) {
-      classes.push(`alpheios-color_schema_${this.uiOptions.items.colorSchema.currentValue}_class`)
-    } else {
-      classes.push(`alpheios-color_schema_${this.uiOptions.items.colorSchema.defaultValue}_class`)
-    }
-
-    this.store.commit(`ui/setRootClasses`, classes)
-  }
-
   getSelectedText (event) {
     if (this.state.isActive() && this.state.uiIsActive()) {
       /*
@@ -1291,24 +1255,16 @@ export default class UIController {
    */
   uiOptionChange (name, value) {
     const FONT_SIZE_PROP = '--alpheios-base-text-size'
-    const FONT_SIZES = {
-      small: '12px',
-      medium: '16px',
-      large: '20px'
-    }
     // TODO this should really be handled within OptionsItem
     // the difference between value and textValues is a little confusing
     // see issue #73
-    if (name === 'fontSize' || name === 'colorSchema' || name === 'panelOnActivate') {
+    if (name === 'fontSize' || name === 'panelOnActivate') {
       this.api.settings.uiOptions.items[name].setValue(value)
     } else {
       this.api.settings.uiOptions.items[name].setTextValue(value)
     }
 
     switch (name) {
-      case 'skin':
-        this.setRootComponentClasses()
-        break
       case 'panel':
         if (this.api.ui.hasModule('popup')) {
           this.store.commit('panel/close')
@@ -1325,16 +1281,11 @@ export default class UIController {
         }
         break
       case 'fontSize':
-        this.setRootComponentClasses()
-        let fontSize = FONT_SIZES[value] || FONT_SIZES.medium
         try {
-          document.documentElement.style.setProperty(FONT_SIZE_PROP, fontSize)
+          document.documentElement.style.setProperty(FONT_SIZE_PROP, `${value}px`)
         } catch (error) {
           console.error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
         }
-        break
-      case 'colorSchema':
-        this.setRootComponentClasses()
         break
     }
   }

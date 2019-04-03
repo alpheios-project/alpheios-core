@@ -31,7 +31,7 @@ export default {
   @import "../../styles/variables";
 
   .alpheios-embed-lib-warning {
-    background: $alpheios-icon-color;
+    background: var(--alpheios-color-muted);
     color: $alpheios-headers-color;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-size: 16px;
@@ -49,7 +49,7 @@ export default {
     font-size: 16px;
     line-height: normal;
     stroke-width: 2;
-    stroke: $alpheios-copy-color;
+    stroke: var(--alpheios-text-color);
     position: absolute;
     top: 5px;
     right: 5px;

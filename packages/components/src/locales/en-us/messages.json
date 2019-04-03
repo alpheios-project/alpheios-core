@@ -544,5 +544,20 @@
     "message": "Word Usage Examples",
     "description": "Word Usage Examples tooltip",
     "component": "Panel"
+  },
+  "FONTSIZE_TEXT_SMALL": {
+    "message": "Small",
+    "description": "Description of a text size option within a button",
+    "component": "Font size component"
+  },
+  "FONTSIZE_TEXT_MEDIUM": {
+    "message": "Medium",
+    "description": "Description of a text size option within a button",
+    "component": "Font size component"
+  },
+  "FONTSIZE_TEXT_LARGE": {
+    "message": "Large",
+    "description": "Description of a text size option within a button",
+    "component": "Font size component"
   }
 }

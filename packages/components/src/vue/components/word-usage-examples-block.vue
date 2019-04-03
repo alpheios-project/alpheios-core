@@ -93,7 +93,7 @@ export default {
       flex: none;
       font-weight: bold;
       padding-bottom: 5px;
-      border-bottom: 1px solid $alpheios-toolbar-active-color;
+      border-bottom: 1px solid var(--alpheios-border-color);
       margin-bottom: 10px;
     }
 

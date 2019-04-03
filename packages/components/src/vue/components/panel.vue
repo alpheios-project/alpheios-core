@@ -221,7 +221,6 @@
       <span class="alpheios-panel__notifications-text" v-html="$store.state.ui.notification.text"></span>
       <setting :classes="['alpheios-panel__notifications--lang-switcher alpheios-text-smaller']"
                :data="settings.contentOptions.items.preferredLanguage"
-               :show-title="false"
                @change="contentOptionChanged"
                v-show="$store.state.ui.notification.showLanguageSwitcher"></setting>
     </div>
@@ -258,7 +257,7 @@ export default {
 
   computed: {
     rootClasses () {
-      return this.$store.state.ui.rootClasses.concat([this.$options.positionClassVariants[this.panelPosition]])
+      return [this.$options.positionClassVariants[this.panelPosition]]
     },
     mainstyles: function () {
       this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth

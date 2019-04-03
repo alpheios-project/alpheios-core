@@ -29,7 +29,7 @@ export default {
   }
 
   .alpheios-popup-lexdataloading__progress-inner {
-    border: 2px solid $alpheios-icon-color;
+    border: uisize(2px) solid var(--alpheios-color-dark);
     border-radius: textsize(10px);
     text-align: center;
     box-sizing: border-box;
@@ -59,57 +59,13 @@ export default {
     font-size: 85%;
   }
 
-  @-webkit-keyframes progress {
-    0% {
-      background: lighten($alpheios-icon-color, 15%);
-      width: 0%;
-    }
-    100% {
-      background: $alpheios-icon-color;
-      width: 100%;
-    }
-  }
-
   @keyframes progress {
     0% {
-      background: lighten($alpheios-icon-color, 15%);
+      background: var(--alpheios-color-muted);
       width: 0%;
     }
     100% {
-      background: $alpheios-icon-color;
-      width: 100%;
-    }
-  }
-
-  @-o-keyframes progress {
-    0% {
-      background: lighten($alpheios-icon-color, 15%);
-      width: 0%;
-    }
-    100% {
-      background: $alpheios-icon-color;
-      width: 100%;
-    }
-  }
-
-  @-ms-keyframes progress {
-    0% {
-      background: lighten($alpheios-icon-color, 15%);
-      width: 0%;
-    }
-    100% {
-      background: $alpheios-icon-color;
-      width: 100%;
-    }
-  }
-
-  @-moz-keyframes progress {
-    0% {
-      background: lighten($alpheios-icon-color, 15%);
-      width: 0%;
-    }
-    100% {
-      background: $alpheios-icon-color;
+      background: var(--alpheios-color-muted);
       width: 100%;
     }
   }

@@ -31,26 +31,22 @@ export default {
   @import "../../styles/variables";
 
   .alpheios-info {
-    font-family: $alpheios-font-family;
-    font-size: $alpheios-base-font-size;
-    color: $alpheios-copy-color;
+    color: var(--alpheios-text-color);
     margin-top: 10px;
     margin-bottom: 10px;
   }
 
   .alpheios-info .alpheios-info__helptext p {
-    font-size: 0.875*$alpheios-base-font-size;
-    font-family: $alpheios-font-family;
-    font-size: $alpheios-base-font-size;
-    color: $alpheios-copy-color;
+    font-size: textsize(14px);
+    color: var(--alpheios-text-color);
   }
 
   .alpheios-info .alpheios-info__versiontext {
-    font-size: 0.675*$alpheios-base-font-size;
+    font-size: textsize(12px);
   }
 
   .alpheios-info__currentlanguage {
-    font-size: 0.675*$alpheios-base-font-size;
+    font-size: textsize(12px);
     font-weight: bold;
   }
 

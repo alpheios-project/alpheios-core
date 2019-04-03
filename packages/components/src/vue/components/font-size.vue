@@ -1,0 +1,75 @@
+<template>
+  <div class="alpheios-panel__options-item">
+    <label class="alpheios-setting__label">{{ l10n.getMsg('LABEL_RESKIN_SETTINGS') }}:</label>
+    <div class="alpheios-setting__button-group alpheios-setting__control">
+      <button
+          :class="{ active: activeButton === 12 }"
+          @click="changeFontSize(12)"
+      >
+        {{ l10n.getMsg('FONTSIZE_TEXT_SMALL') }}
+      </button>
+      <button
+          :class="{ active: activeButton === 16 }"
+          @click="changeFontSize(16)"
+      >
+        {{ l10n.getMsg('FONTSIZE_TEXT_MEDIUM') }}
+      </button>
+      <button
+          :class="{ active: activeButton === 20 }"
+          @click="changeFontSize(20)"
+      >
+        {{ l10n.getMsg('FONTSIZE_TEXT_LARGE') }}
+      </button>
+    </div>
+  </div>
+</template>
+<script>
+
+export default {
+  name: 'ReskinFontColor',
+  inject: ['ui', 'l10n'],
+  data () {
+    return {
+      activeButton: 16
+    }
+  },
+  methods: {
+    changeFontSize (size) {
+      this.ui.optionChange('fontSize', size)
+      this.activeButton = size
+    }
+  }
+}
+</script>
+<style lang="scss">
+  @import "../../styles/variables";
+
+  .alpheios-setting__button-group {
+    color: var(--alpheios-text-color-vivid);
+    border: 1px solid var(--alpheios-text-color-vivid);
+    border-radius: uisize(10px);
+    max-width: uisize(200px);
+    display: flex;
+    // To prevent buttons background from spilling outside of the border radius areas
+    overflow: hidden;
+
+    button {
+      border: none;
+      border-right: 1px solid var(--alpheios-text-color-vivid);
+      background: transparent;
+      padding: uisize(6px) uisize(12px);
+      cursor: pointer;
+      flex: 1;
+    }
+
+    button:last-child {
+      border-right: none;
+    }
+
+    button.active {
+      color: var(--alpheios-color-neutral-lightest);
+      background: var(--alpheios-text-color-vivid);
+      box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+</style>

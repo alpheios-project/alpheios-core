@@ -163,7 +163,7 @@ export default {
     bottom: 20px;
     z-index: 10;
     min-width: 200px;
-    border: 1px solid $alpheios-toolbar-color;
+    border: 1px solid var(--alpheios-border-color);
     cursor: move;
 
     -webkit-touch-callout: none;
@@ -196,13 +196,13 @@ export default {
     height: 20px;
     margin: 0;
     cursor: pointer;
-    fill: $alpheios-toolbar-color;
-    stroke: $alpheios-toolbar-color;
+    fill: var(--alpheios-color-neutral-dark);
+    stroke: var(--alpheios-color-neutral-dark);
   }
 
   .alpheios-inflections__footnote-popup-close-btn:hover,
   .alpheios-inflections__footnote-popup-close-btn:active {
-    fill: $alpheios-link-hover-color;
-    stroke: $alpheios-link-hover-color;
+    fill: var(--alpheios-color-neutral-light);
+    stroke: var(--alpheios-color-neutral-light);
   }
 </style>

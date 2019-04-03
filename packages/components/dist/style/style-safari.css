@@ -311,6 +311,9 @@ html {
   --alpheios-text-color-dark: var(--alpheios-color-dark) !important;
   --alpheios-text-color-vivid: var(--alpheios-color-vivid) !important;
   --alpheios-text-bg-color: var(--alpheios-color-neutral-lightest) !important;
+  --alpheios-link-color-on-light: var(--alpheios-color-vivid) !important;
+  --alpheios-link-color-on-medium: var(--alpheios-color-muted) !important;
+  --alpheios-link-color-on-dark: var(--alpheios-color-bright) !important;
   --alpheios-toolbar-bg-color: var(--alpheios-color-muted) !important;
   --alpheios-border-color: var(--alpheios-color-neutral-dark) !important;
   --alpheios-icon-color: var(--alpheios-color-neutral-lightest) !important;
@@ -348,9 +351,10 @@ html {
   --alpheios-btn-tertiary-font-color-pressed: var(--alpheios-color-neutral-lightest) !important;
   --alpheios-btn-tertiary-bg-color-pressed: var(--alpheios-color-muted) !important;
   --alpheios-btn-tertiary-border-color-pressed: var(--alpheios-color-muted) !important;
+  --alpheios-highlight-color: #F6D918 !important;
+  --alpheios-highlight-dark-color: #E49A0D !important;
 }
 
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -415,20 +419,6 @@ html {
   font-weight: 700 !important;
   font-style: italic !important;
   margin-bottom: calc(var(--alpheios-base-text-size) * 1) !important;
-}
-.alpheios-layout-large .alpheios-content h1 {
-  font-family: var(--alpheios-serif-font-face) !important;
-  font-size: calc(var(--alpheios-base-text-size) * 2.25) !important;
-  font-weight: 700 !important;
-}
-.alpheios-layout-large .alpheios-content h2 {
-  font-family: var(--alpheios-serif-font-face) !important;
-  font-size: calc(var(--alpheios-base-text-size) * 1.75) !important;
-  font-weight: 600 !important;
-}
-.alpheios-layout-large .alpheios-content h3 {
-  font-size: calc(var(--alpheios-base-text-size) * 1.375) !important;
-  font-weight: 700 !important;
 }
 .alpheios-content input,
 .alpheios-content optgroup,
@@ -869,11 +859,11 @@ div.alpheios-checkbox-block {
 }
 
 .alpheios-alignment__highlight_fix {
-  background-color: #E49A0D !important;
+  background-color: var(--alpheios-highlight-dark-color) !important;
 }
 
 .alpheios-alignment__highlight {
-  background-color: #F6D918 !important;
+  background-color: var(--alpheios-highlight-color) !important;
 }
 
 @font-face {
@@ -933,7 +923,6 @@ body {
   -ms-user-select: auto !important;
   user-select: auto !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -942,7 +931,6 @@ body {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -960,7 +948,6 @@ body {
 p.alpheios-lemma__translations-value {
   margin-bottom: 5px !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -974,7 +961,7 @@ p.alpheios-lemma__translations-value {
 }
 .alpheios-morph__source {
   font-size: smaller !important;
-  color: #4E6476 !important;
+  color: var(--alpheios-color-muted) !important;
   font-style: italic !important;
 }
 .alpheios-morph__dial {
@@ -1001,12 +988,11 @@ p.alpheios-lemma__translations-value {
 }
 .alpheios-morph__inflset h5 {
   display: none;
-  font-size: 16px !important;
   line-height: 1 !important;
   margin-bottom: 0.5em !important;
 }
 .alpheios-morph__inflset:first-child h5 {
-  color: #4E6476 !important;
+  color: var(--alpheios-color-muted) !important;
   display: block;
 }
 .alpheios-morph__morphdata {
@@ -1088,7 +1074,6 @@ h4.alpheios-morph__groupitem {
 .alpheios-morph__dictentry .alpheios-morph__definition_list,
 .alpheios-morph__dictentry .alpheios-morph__translation_list,
 .alpheios-morph__dictentry .alpheios-morph__inflections {
-  /* border-top: 1px solid $alpheios-toolbar-color; */
   margin-top: 5px !important;
   padding-left: 5px !important;
 }
@@ -1096,7 +1081,7 @@ h4.alpheios-morph__groupitem {
 .alpheios-morph__dictentry .alpheios-morph__translation_list .block_title,
 .alpheios-morph__dictentry .alpheios-morph__inflections .block_title {
   margin: 0 !important;
-  color: #4E6476 !important;
+  color: var(--alpheios-color-muted) !important;
   font-size: 10px !important;
   text-align: right !important;
 }
@@ -1125,7 +1110,6 @@ h4.alpheios-morph__groupitem {
   display: inline-block;
 }
 fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spinner{position:absolute !important;right:1px !important;top:1px !important;width:48px !important;height:35px !important;background:#fff !important;display:block}.multiselect__spinner:after,.multiselect__spinner:before{position:absolute !important;content:"" !important;top:50% !important;left:50% !important;margin:-8px 0 0 -8px !important;width:16px !important;height:16px !important;border-radius:100% !important;border:2px solid transparent !important;border-top-color:#41b883 !important;box-shadow:0 0 0 1px transparent !important}.multiselect__spinner:before{animation:spinning 2.4s cubic-bezier(.41,.26,.2,.62);animation-iteration-count:infinite}.multiselect__spinner:after{animation:spinning 2.4s cubic-bezier(.51,.09,.21,.8);animation-iteration-count:infinite}.multiselect__loading-enter-active,.multiselect__loading-leave-active{transition:opacity .4s ease-in-out !important;opacity:1 !important}.multiselect__loading-enter,.multiselect__loading-leave-active{opacity:0 !important}.multiselect,.multiselect__input,.multiselect__single{font-family:inherit !important;font-size:16px !important;-ms-touch-action:manipulation !important;touch-action:manipulation !important}.multiselect{box-sizing:content-box !important;display:block;position:relative !important;width:100% !important;min-height:40px !important;text-align:left !important;color:#35495e !important}.multiselect *{box-sizing:border-box !important}.multiselect:focus{outline:none !important}.multiselect--disabled{background:#ededed !important;pointer-events:none !important;opacity:.6 !important}.multiselect--active{z-index:50 !important}.multiselect--active:not(.multiselect--above) .multiselect__current,.multiselect--active:not(.multiselect--above) .multiselect__input,.multiselect--active:not(.multiselect--above) .multiselect__tags{border-bottom-left-radius:0 !important;border-bottom-right-radius:0 !important}.multiselect--active .multiselect__select{transform:rotate(180deg) !important}.multiselect--above.multiselect--active .multiselect__current,.multiselect--above.multiselect--active .multiselect__input,.multiselect--above.multiselect--active .multiselect__tags{border-top-left-radius:0 !important;border-top-right-radius:0 !important}.multiselect__input,.multiselect__single{position:relative !important;display:inline-block;min-height:20px !important;line-height:20px !important;border:none !important;border-radius:5px !important;background:#fff !important;padding:0 0 0 5px !important;width:100% !important;transition:border .1s ease !important;box-sizing:border-box !important;margin-bottom:8px !important;vertical-align:top !important}.multiselect__input:-ms-input-placeholder{color:#35495e !important}.multiselect__input::placeholder{color:#35495e !important}.multiselect__tag~.multiselect__input,.multiselect__tag~.multiselect__single{width:auto !important}.multiselect__input:hover,.multiselect__single:hover{border-color:#cfcfcf !important}.multiselect__input:focus,.multiselect__single:focus{border-color:#a8a8a8 !important;outline:none !important}.multiselect__single{padding-left:5px !important;margin-bottom:8px !important}.multiselect__tags-wrap{display:inline}.multiselect__tags{min-height:40px !important;display:block;padding:8px 40px 0 8px !important;border-radius:5px !important;border:1px solid #e8e8e8 !important;background:#fff !important;font-size:14px !important}.multiselect__tag{position:relative !important;display:inline-block;padding:4px 26px 4px 10px !important;border-radius:5px !important;margin-right:10px !important;color:#fff !important;line-height:1 !important;background:#41b883 !important;margin-bottom:5px !important;white-space:nowrap !important;overflow:hidden !important;max-width:100% !important;text-overflow:ellipsis !important}.multiselect__tag-icon{cursor:pointer !important;margin-left:7px !important;position:absolute !important;right:0 !important;top:0 !important;bottom:0 !important;font-weight:700 !important;font-style:normal !important;width:22px !important;text-align:center !important;line-height:22px !important;transition:all .2s ease !important;border-radius:5px !important}.multiselect__tag-icon:after{content:"\D7" !important;color:#266d4d !important;font-size:14px !important}.multiselect__tag-icon:focus,.multiselect__tag-icon:hover{background:#369a6e !important}.multiselect__tag-icon:focus:after,.multiselect__tag-icon:hover:after{color:#fff !important}.multiselect__current{min-height:40px !important;overflow:hidden !important;padding:8px 30px 0 12px !important;white-space:nowrap !important;border-radius:5px !important;border:1px solid #e8e8e8 !important}.multiselect__current,.multiselect__select{line-height:16px !important;box-sizing:border-box !important;display:block;margin:0 !important;text-decoration:none !important;cursor:pointer !important}.multiselect__select{position:absolute !important;width:40px !important;height:38px !important;right:1px !important;top:1px !important;padding:4px 8px !important;text-align:center !important;transition:transform .2s ease !important}.multiselect__select:before{position:relative !important;right:0 !important;top:65% !important;color:#999 !important;margin-top:4px !important;border-color:#999 transparent transparent !important;border-style:solid !important;border-width:5px 5px 0 !important;content:"" !important}.multiselect__placeholder{color:#adadad !important;display:inline-block;margin-bottom:10px !important;padding-top:2px !important}.multiselect--active .multiselect__placeholder{display:none}.multiselect__content-wrapper{position:absolute !important;display:block;background:#fff !important;width:100% !important;max-height:240px !important;overflow:auto !important;border:1px solid #e8e8e8 !important;border-top:none !important;border-bottom-left-radius:5px !important;border-bottom-right-radius:5px !important;z-index:50 !important;-webkit-overflow-scrolling:touch !important}.multiselect__content{list-style:none !important;display:inline-block;padding:0 !important;margin:0 !important;min-width:100% !important;vertical-align:top !important}.multiselect--above .multiselect__content-wrapper{bottom:100% !important;border-bottom-left-radius:0 !important;border-bottom-right-radius:0 !important;border-top-left-radius:5px !important;border-top-right-radius:5px !important;border-bottom:none !important;border-top:1px solid #e8e8e8 !important}.multiselect__content::webkit-scrollbar{display:none}.multiselect__element{display:block}.multiselect__option{display:block;padding:12px !important;min-height:40px !important;line-height:16px !important;text-decoration:none !important;text-transform:none !important;vertical-align:middle !important;position:relative !important;cursor:pointer !important;white-space:nowrap !important}.multiselect__option:after{top:0 !important;right:0 !important;position:absolute !important;line-height:40px !important;padding-right:12px !important;padding-left:20px !important;font-size:13px !important}.multiselect__option--highlight{background:#41b883 !important;outline:none !important;color:#fff !important}.multiselect__option--highlight:after{content:attr(data-select) !important;background:#41b883 !important;color:#fff !important}.multiselect__option--selected{background:#f3f3f3 !important;color:#35495e !important;font-weight:700 !important}.multiselect__option--selected:after{content:attr(data-selected) !important;color:silver !important}.multiselect__option--selected.multiselect__option--highlight{background:#ff6a6a !important;color:#fff !important}.multiselect__option--selected.multiselect__option--highlight:after{background:#ff6a6a !important;content:attr(data-deselect) !important;color:#fff !important}.multiselect--disabled .multiselect__current,.multiselect--disabled .multiselect__select{background:#ededed !important;color:#a6a6a6 !important}.multiselect__option--disabled{background:#ededed!important;color:#a6a6a6!important;cursor:text !important;pointer-events:none !important}.multiselect__option--group{background:#ededed !important;color:#35495e !important}.multiselect__option--group.multiselect__option--highlight{background:#35495e !important;color:#fff !important}.multiselect__option--group.multiselect__option--highlight:after{background:#35495e !important}.multiselect__option--disabled.multiselect__option--highlight{background:#dedede !important}.multiselect__option--group-selected.multiselect__option--highlight{background:#ff6a6a !important;color:#fff !important}.multiselect__option--group-selected.multiselect__option--highlight:after{background:#ff6a6a !important;content:attr(data-deselect) !important;color:#fff !important}.multiselect-enter-active,.multiselect-leave-active{transition:all .15s ease !important}.multiselect-enter,.multiselect-leave-active{opacity:0 !important}.multiselect__strong{margin-bottom:8px !important;line-height:20px !important;display:inline-block;vertical-align:top !important}[dir=rtl] .multiselect{text-align:right !important}[dir=rtl] .multiselect__select{right:auto !important;left:1px !important}[dir=rtl] .multiselect__tags{padding:8px 8px 0 40px !important}[dir=rtl] .multiselect__content{text-align:right !important}[dir=rtl] .multiselect__option:after{right:auto !important;left:0 !important}[dir=rtl] .multiselect__clear{right:auto !important;left:12px !important}[dir=rtl] .multiselect__spinner{right:auto !important;left:1px !important}@keyframes spinning{0%{transform:rotate(0)}to{transform:rotate(2turn)}}
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1140,7 +1124,6 @@ fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spi
 .alpheios-setting__control {
   width: 50% !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1305,7 +1288,6 @@ fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spi
   border-style: solid !important;
   border-color: transparent transparent transparent var(--alpheios-border-color) !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1318,7 +1300,7 @@ fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spi
   box-sizing: border-box !important;
 }
 .alpheios-popup-lexdataloading__progress-inner {
-  border: 2px solid #73CDDE !important;
+  border: calc(var(--alpheios-base-ui-size) * 0.125) solid var(--alpheios-color-dark) !important;
   border-radius: calc(var(--alpheios-base-text-size) * 0.625) !important;
   text-align: center !important;
   box-sizing: border-box !important;
@@ -1345,57 +1327,16 @@ fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spi
   border-radius: calc(var(--alpheios-base-text-size) * 0.625) !important;
   font-size: 85% !important;
 }
-@-webkit-keyframes progress {
-0% {
-    background: #b1e3ed;
-    width: 0%;
-}
-100% {
-    background: #73CDDE;
-    width: 100%;
-}
-}
 @keyframes progress {
 0% {
-    background: #b1e3ed;
+    background: var(--alpheios-color-muted);
     width: 0%;
 }
 100% {
-    background: #73CDDE;
+    background: var(--alpheios-color-muted);
     width: 100%;
 }
 }
-@-o-keyframes progress {
-0% {
-    background: #b1e3ed;
-    width: 0%;
-}
-100% {
-    background: #73CDDE;
-    width: 100%;
-}
-}
-@-ms-keyframes progress {
-0% {
-    background: #b1e3ed;
-    width: 0%;
-}
-100% {
-    background: #73CDDE;
-    width: 100%;
-}
-}
-@-moz-keyframes progress {
-0% {
-    background: #b1e3ed;
-    width: 0%;
-}
-100% {
-    background: #73CDDE;
-    width: 100%;
-}
-}
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1518,7 +1459,7 @@ a.alpheios-popup__providers-link {
   display: none;
   position: relative !important;
   padding: calc(var(--alpheios-base-text-size) * 0.625) calc(var(--alpheios-base-text-size) * 1.25) !important;
-  background: #BCE5F0 !important;
+  background: var(--alpheios-color-muted) !important;
   flex: 0 0 calc(var(--alpheios-base-text-size) * 3.75) !important;
   overflow: hidden !important;
 }
@@ -1531,13 +1472,13 @@ a.alpheios-popup__providers-link {
   height: calc(var(--alpheios-base-text-size) * 1.25) !important;
   margin: 0 !important;
   cursor: pointer !important;
-  fill: #D1D1D0 !important;
-  stroke: #D1D1D0 !important;
+  fill: var(--alpheios-color-neutral-lightest) !important;
+  stroke: var(--alpheios-color-neutral-lightest) !important;
 }
 .alpheios-popup__notifications-close-btn:hover,
 .alpheios-popup__notifications-close-btn:focus {
-  fill: #5BC8DC !important;
-  stroke: #5BC8DC !important;
+  fill: var(--alpheios-color-neutral-light) !important;
+  stroke: var(--alpheios-color-neutral-light) !important;
 }
 [data-notification-visible=true] .alpheios-popup__notifications {
   display: block;
@@ -1546,7 +1487,7 @@ a.alpheios-popup__providers-link {
   display: block;
 }
 .alpheios-popup__notifications--lang-switcher {
-  font-size: 12px !important;
+  font-size: calc(var(--alpheios-base-text-size) * 0.75) !important;
   float: right !important;
   margin: calc(var(--alpheios-base-text-size) * -1.25) calc(var(--alpheios-base-text-size) * 0.625) 0 0 !important;
   display: inline-block;
@@ -1556,9 +1497,8 @@ a.alpheios-popup__providers-link {
   height: calc(var(--alpheios-base-text-size) * 1.5625) !important;
 }
 .alpheios-popup__notifications--important {
-  background: #73CDDE !important;
+  background: var(--alpheios-color-muted) !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1598,7 +1538,6 @@ a.alpheios-popup__providers-link {
   stroke: var(--alpheios-icon-color-active) !important;
   background-color: var(--alpheios-icon-bg-color-active) !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1621,24 +1560,24 @@ a.alpheios-popup__providers-link {
 .alpheios-navmenu__item {
   display: flex;
   padding: 10px 20px 10px 30px !important;
-  border-bottom: 1px solid #D1D1D0 !important;
+  border-bottom: 1px solid var(--alpheios-border-color) !important;
   cursor: pointer !important;
 }
 .alpheios-navmenu__item:hover,
 .alpheios-navmenu__item:focus {
-  color: #5BC8DC !important;
+  color: var(--alpheios-color-neutral-light) !important;
 }
 .alpheios-navmenu__item .alpheios-navbuttons__icon,
 .alpheios-navmenu__item.active:hover .alpheios-navbuttons__icon,
 .alpheios-navmenu__item.active:focus .alpheios-navbuttons__icon {
-  fill: #D1D1D0 !important;
-  stroke: #D1D1D0 !important;
+  fill: var(--alpheios-color-neutral-lightest) !important;
+  stroke: var(--alpheios-color-neutral-lightest) !important;
 }
 .alpheios-navmenu__item:hover .alpheios-navbuttons__icon,
 .alpheios-navmenu__item:focus .alpheios-navbuttons__icon,
 .alpheios-navmenu__item.active .alpheios-navbuttons__icon {
-  fill: #5BC8DC !important;
-  stroke: #5BC8DC !important;
+  fill: var(--alpheios-color-neutral-light) !important;
+  stroke: var(--alpheios-color-neutral-light) !important;
 }
 .alpheios-navbuttons__icon-cont {
   flex-grow: 0 !important;
@@ -1656,7 +1595,6 @@ a.alpheios-popup__providers-link {
   top: 10px !important;
   position: relative !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1680,7 +1618,7 @@ a.alpheios-popup__providers-link {
   bottom: 20px !important;
   z-index: 10 !important;
   min-width: 200px !important;
-  border: 1px solid #4E6476 !important;
+  border: 1px solid var(--alpheios-border-color) !important;
   cursor: move !important;
   -webkit-touch-callout: none !important;
   -webkit-user-select: none !important;
@@ -1708,15 +1646,14 @@ a.alpheios-popup__providers-link {
   height: 20px !important;
   margin: 0 !important;
   cursor: pointer !important;
-  fill: #4E6476 !important;
-  stroke: #4E6476 !important;
+  fill: var(--alpheios-color-neutral-dark) !important;
+  stroke: var(--alpheios-color-neutral-dark) !important;
 }
 .alpheios-inflections__footnote-popup-close-btn:hover,
 .alpheios-inflections__footnote-popup-close-btn:active {
-  fill: #5BC8DC !important;
-  stroke: #5BC8DC !important;
+  fill: var(--alpheios-color-neutral-light) !important;
+  stroke: var(--alpheios-color-neutral-light) !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1779,7 +1716,7 @@ div.alpheios-inflections__table-ctrl-cont div.alpheios-inflections__table-ctrl-c
   font-weight: 700 !important;
 }
 .infl-prdgm-tbl-cell--full-match {
-  background-color: #F6D918 !important;
+  background-color: var(--alpheios-highlight-color) !important;
   font-weight: 700 !important;
 }
 .infl-table {
@@ -1931,10 +1868,9 @@ div.alpheios-inflections__table-ctrl-cont div.alpheios-inflections__table-ctrl-c
   background-color: lightgray !important;
 }
 .infl-suff.infl-suff--suffix-match.infl-suff--full-match {
-  background-color: #F6D918 !important;
+  background-color: var(--alpheios-highlight-color) !important;
   font-weight: 700 !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1977,7 +1913,6 @@ h3.alpheios-inflections__supp-table-title {
 a.infl-supp-tbl__reflink {
   float: right !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1997,7 +1932,6 @@ a.infl-supp-tbl__reflink {
 .alpheios-inflections__forms-targetword {
   font-weight: 700 !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2056,27 +1990,22 @@ h4.alpheios-inflections__additional_title {
   margin-bottom: 10px !important;
 }
 h3.alpheios-inflections__credits-title {
-  font-size: 16px !important;
   font-weight: 700 !important;
-  color: #4E6476 !important;
   margin-bottom: 0 !important;
 }
 .alpheios-inflections__credits-text {
-  font-size: 12px !important;
+  font-size: calc(var(--alpheios-base-text-size) * 0.75) !important;
   font-weight: normal !important;
-  color: #7E8897 !important;
   font-style: italic !important;
   padding: 5px !important;
 }
 .alpheios-inflections__paradigms-expl {
-  font-size: 12px !important;
+  font-size: calc(var(--alpheios-base-text-size) * 0.75) !important;
   font-weight: normal !important;
-  color: #7E8897 !important;
   font-style: italic !important;
   margin: 20px 0 10px !important;
 }
 .alpheios-inflections__paradigms-expl span {
-  color: #4E6476 !important;
   font-weight: 700 !important;
 }
 .alpheios-inflections__supp-tables {
@@ -2088,7 +2017,7 @@ h3.alpheios-inflections__credits-title {
   font-size: 0.875rem !important;
 }
 .alpheios-inflections__progress-border {
-  border: 2px solid #73CDDE !important;
+  border: calc(var(--alpheios-base-ui-size) * 0.125) solid var(--alpheios-color-muted) !important;
   min-width: 300px !important;
   height: 100% !important;
   padding: 2px !important;
@@ -2103,13 +2032,13 @@ h3.alpheios-inflections__credits-title {
   position: absolute !important;
   height: 100% !important;
   width: 100% !important;
-  background-color: #73CDDE !important;
+  background-color: var(--alpheios-color-muted) !important;
   animation: cssload-slide 5.75s steps(40) infinite;
 }
 .alpheios-inflections__progress-whitespace div.alpheios-inflections__progress-text,
 .alpheios-inflections__progress-text {
   text-transform: uppercase !important;
-  color: #666666 !important;
+  color: var(--alpheios-text-color-dark) !important;
   position: absolute !important;
   width: 100% !important;
   text-align: center !important;
@@ -2128,39 +2057,6 @@ h3.alpheios-inflections__credits-title {
     left: 100%;
 }
 }
-@-o-keyframes cssload-slide {
-0% {
-    left: -100%;
-}
-100% {
-    left: 100%;
-}
-}
-@-ms-keyframes cssload-slide {
-0% {
-    left: -100%;
-}
-100% {
-    left: 100%;
-}
-}
-@-webkit-keyframes cssload-slide {
-0% {
-    left: -100%;
-}
-100% {
-    left: 100%;
-}
-}
-@-moz-keyframes cssload-slide {
-0% {
-    left: -100%;
-}
-100% {
-    left: 100%;
-}
-}
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2199,7 +2095,6 @@ h3.alpheios-inflections__credits-title {
   padding: 0 !important;
   overflow: scroll !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2215,7 +2110,6 @@ h3.alpheios-inflections__credits-title {
 .alpheios-treebank__frame {
   flex: 1 1 100vh !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2225,29 +2119,24 @@ h3.alpheios-inflections__credits-title {
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
 .alpheios-info {
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
-  font-size: 16px !important;
-  color: #666666 !important;
+  color: var(--alpheios-text-color) !important;
   margin-top: 10px !important;
   margin-bottom: 10px !important;
 }
 .alpheios-info .alpheios-info__helptext p {
-  font-size: 14px !important;
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
-  font-size: 16px !important;
-  color: #666666 !important;
+  font-size: calc(var(--alpheios-base-text-size) * 0.875) !important;
+  color: var(--alpheios-text-color) !important;
 }
 .alpheios-info .alpheios-info__versiontext {
-  font-size: 10.8px !important;
+  font-size: calc(var(--alpheios-base-text-size) * 0.75) !important;
 }
 .alpheios-info__currentlanguage {
-  font-size: 10.8px !important;
+  font-size: calc(var(--alpheios-base-text-size) * 0.75) !important;
   font-weight: bold !important;
 }
 .alpheios-info__helptext {
   margin-top: 1em !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2290,7 +2179,6 @@ h3.alpheios-inflections__credits-title {
   margin-left: 2rem !important;
   margin-bottom: 1.25rem !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2348,7 +2236,6 @@ h3.alpheios-inflections__credits-title {
 .alpheios-lookup__resource-control .alpheios-setting__control {
   width: 100% !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2357,80 +2244,30 @@ h3.alpheios-inflections__credits-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-skin_properties_item {
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
-  background-color: #4E6476 !important;
-  color: #ffffff !important;
-  list-style-type: none !important;
-  vertical-align: middle !important;
-  font-size: 16px !important;
-  width: 28px !important;
-  height: 28px !important;
-  line-height: 28px !important;
+.alpheios-setting__button-group {
+  color: var(--alpheios-text-color-vivid) !important;
+  border: 1px solid var(--alpheios-text-color-vivid) !important;
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
+  max-width: calc(var(--alpheios-base-ui-size) * 12.5) !important;
+  display: flex;
+  overflow: hidden !important;
 }
-.alpheios-skin_properties_item__small_font {
-  font-size: 12.8px !important;
-  width: 22.4px !important;
-  height: 22.4px !important;
-  line-height: 22.4px !important;
-  border-radius: 11.2px !important;
-}
-.alpheios-skin_properties_item__medium_font {
-  font-size: 16px !important;
-  width: 28px !important;
-  height: 28px !important;
-  line-height: 28px !important;
-  border-radius: 14.4px !important;
-}
-.alpheios-skin_properties_item__large_font {
-  font-size: 19.2px !important;
-  width: 33.6px !important;
-  height: 33.6px !important;
-  line-height: 33.6px !important;
-  border-radius: 17.6px !important;
-}
-#alpheios-reskin-panel.alpheios-skin_panel {
-  display: inline-block;
-}
-ul.alpheios-skin_properties {
-  margin: 0 !important;
-  padding: 0 30px 10px 10px !important;
-  list-style: none !important;
-  max-width: 250px !important;
-  display: inline-block;
-}
-#alpheios-reskin-panel .alpheios-skin_properties_item {
-  display: inline-block;
-  vertical-align: middle !important;
-  text-align: center !important;
-  color: #fff !important;
-  background: #4E6476 !important;
-  cursor: pointer !important;
-  padding: 0 !important;
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
-  text-indent: 0 !important;
-  list-style-type: none !important;
-}
-#alpheios-reskin-panel .alpheios-skin_properties_item__light_bg,
-#alpheios-reskin-panel .alpheios-skin_properties_item__dark_bg {
-  border-radius: 0 !important;
+.alpheios-setting__button-group button {
+  border: none !important;
+  border-right: 1px solid var(--alpheios-text-color-vivid) !important;
   background: transparent !important;
+  padding: calc(var(--alpheios-base-ui-size) * 0.375) calc(var(--alpheios-base-ui-size) * 0.75) !important;
+  cursor: pointer !important;
+  flex: 1 !important;
 }
-#alpheios-reskin-panel .alpheios-skin_properties_item__light_bg svg,
-#alpheios-reskin-panel .alpheios-skin_properties_item__dark_bg svg {
-  width: 90% !important;
-  height: 90% !important;
+.alpheios-setting__button-group button:last-child {
+  border-right: none !important;
 }
-.alpheios-font_small_class #alpheios-reskin-panel .alpheios-skin_properties_item__small_font {
-  background: #7E8897 !important;
+.alpheios-setting__button-group button.active {
+  color: var(--alpheios-color-neutral-lightest) !important;
+  background: var(--alpheios-text-color-vivid) !important;
+  box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.1) !important;
 }
-.alpheios-font_medium_class #alpheios-reskin-panel .alpheios-skin_properties_item__medium_font {
-  background: #7E8897 !important;
-}
-.alpheios-font_large_class #alpheios-reskin-panel .alpheios-skin_properties_item__large_font {
-  background: #7E8897 !important;
-}
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2442,14 +2279,14 @@ ul.alpheios-skin_properties {
 .alpheios-user-auth__user-info-box {
   margin-top: 20px !important;
   display: flex;
-  border-top: 1px solid #D1D1D0 !important;
+  border-top: 1px solid var(--alpheios-border-color) !important;
   flex-direction: column !important;
 }
 .alpheios-user-auth__user-info-item-box {
   display: flex;
   flex-direction: row !important;
   padding: 5px 10px !important;
-  border-bottom: 1px solid #D1D1D0 !important;
+  border-bottom: 1px solid var(--alpheios-border-color) !important;
 }
 .alpheios-user-auth__user-info-item-name {
   flex: 1 1 !important;
@@ -2457,14 +2294,14 @@ ul.alpheios-skin_properties {
 .alpheios-user-auth__user-info-item-value {
   font-weight: 700 !important;
   flex: 1 1 !important;
-  color: #3E8D9C !important;
+  color: var(--alpheios-link-color-on-light) !important;
   text-align: right !important;
 }
 .alpheios-user-auth__notifications {
   display: none;
   position: relative !important;
   padding: 10px 20px !important;
-  background: #73CDDE !important;
+  background: var(--alpheios-color-muted) !important;
   flex: 0 0 60px !important;
   box-sizing: border-box !important;
   overflow: hidden !important;
@@ -2478,18 +2315,17 @@ ul.alpheios-skin_properties {
   height: 20px !important;
   margin: 0 !important;
   cursor: pointer !important;
-  fill: #D1D1D0 !important;
-  stroke: #D1D1D0 !important;
+  fill: var(--alpheios-color-neutral-lightest) !important;
+  stroke: var(--alpheios-color-neutral-lightest) !important;
 }
 .alpheios-user-auth__notifications-close-btn:hover,
 .alpheios-user-auth__notifications-close-btn:focus {
-  fill: #5BC8DC !important;
-  stroke: #5BC8DC !important;
+  fill: var(--alpheios-color-neutral-light) !important;
+  stroke: var(--alpheios-color-neutral-light) !important;
 }
 [data-notification-visible=true] .alpheios-user-auth__notifications {
   display: block;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2502,7 +2338,7 @@ ul.alpheios-skin_properties {
   display: flex;
   flex-direction: column !important;
   padding: 10px 0 !important;
-  border-bottom: 1px solid #d3d3d3 !important;
+  border-bottom: 1px solid var(--alpheios-border-color) !important;
 }
 .alpheios_word_usage_list_item__text {
   display: flex;
@@ -2512,7 +2348,7 @@ ul.alpheios-skin_properties {
   align-items: center !important;
 }
 .alpheios_word_usage_list_item .alpheios_word_usage_list_item__text .alpheios_word_usage_list_item__text_targetword {
-  color: #E49A0D !important;
+  color: var(--alpheios-highlight-dark-color) !important;
 }
 .alpheios_word_usage_list_item__text_targetword {
   padding: 0 10px !important;
@@ -2536,7 +2372,7 @@ ul.alpheios-skin_properties {
   padding-top: 10px !important;
 }
 .alpheios_word_usage_list_item a.alpheios_word_usage_list_item__source_link {
-  color: #3E8D9C !important;
+  color: var(--alpheios-link-color-on-light) !important;
   font-size: 95% !important;
   display: block;
 }
@@ -2558,7 +2394,6 @@ ul.alpheios-skin_properties {
 .alpheios-panel--compact .alpheios_word_usage_list_item .alpheios_word_usage_list_item__text .alpheios_word_usage_list_item__source {
   display: inline-block;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2576,7 +2411,7 @@ ul.alpheios-skin_properties {
   flex: none !important;
   font-weight: bold !important;
   padding-bottom: 5px !important;
-  border-bottom: 1px solid #7E8897 !important;
+  border-bottom: 1px solid var(--alpheios-border-color) !important;
   margin-bottom: 10px !important;
 }
 .alpheios-word-usage div.alpheios_word_usage_list_mainblock {
@@ -2591,7 +2426,6 @@ ul.alpheios-skin_properties {
   padding: 10px 0 !important;
   font-size: 80% !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2628,7 +2462,7 @@ ul.alpheios-skin_properties {
 .alpheios-panel__header-selection {
   font-size: 16px !important;
   font-weight: 700 !important;
-  color: #4E6476 !important;
+  color: var(--alpheios-color-muted) !important;
 }
 .alpheios-panel__header-word {
   font-size: 14px !important;
@@ -2684,7 +2518,7 @@ ul.alpheios-skin_properties {
   display: none;
   position: relative !important;
   padding: 10px 20px !important;
-  background: #BCE5F0 !important;
+  background: var(--alpheios-color-muted) !important;
   grid-area: notifications !important;
   overflow: hidden !important;
 }
@@ -2697,13 +2531,13 @@ ul.alpheios-skin_properties {
   height: 20px !important;
   margin: 0 !important;
   cursor: pointer !important;
-  fill: #D1D1D0 !important;
-  stroke: #D1D1D0 !important;
+  fill: var(--alpheios-color-light) !important;
+  stroke: var(--alpheios-color-light) !important;
 }
 .alpheios-panel__notifications-close-btn:hover,
 .alpheios-panel__notifications-close-btn:focus {
-  fill: #5BC8DC !important;
-  stroke: #5BC8DC !important;
+  fill: var(--alpheios-color-neutral-light) !important;
+  stroke: var(--alpheios-color-neutral-light) !important;
 }
 .alpheios-panel__notifications--lang-switcher {
   font-size: 12px !important;
@@ -2716,7 +2550,7 @@ ul.alpheios-skin_properties {
   height: 25px !important;
 }
 .alpheios-panel__notifications--important {
-  background: #73CDDE !important;
+  background: var(--alpheios-color-muted) !important;
 }
 [data-notification-visible=true] .alpheios-panel__notifications {
   display: block;
@@ -2780,23 +2614,22 @@ ul.alpheios-skin_properties {
 .alpheios-panel__menu-icon {
   width: 40px !important;
   height: 40px !important;
-  fill: #D1D1D0 !important;
+  fill: var(--alpheios-color-neutral-lightest) !important;
 }
 .alpheios-panel__menu-icon:hover,
 .alpheios-panel__menu-icon:focus {
-  fill: #5BC8DC !important;
+  fill: var(--alpheios-color-neutral-light) !important;
 }
 .alpheios-panel--compact {
   height: 50vh !important;
   width: 100% !important;
   left: 0 !important;
   bottom: 0 !important;
-  border-top: 1px solid #D1D1D0 !important;
+  border-top: 1px solid var(--alpheios-border-color) !important;
 }
 .alpheios-panel--compact .alpheios-panel__content {
   overflow: auto !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2857,7 +2690,6 @@ ul.alpheios-skin_properties {
   right: calc(var(--alpheios-base-text-size) * 1) !important;
   left: auto !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2867,7 +2699,7 @@ ul.alpheios-skin_properties {
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
 .alpheios-embed-lib-warning {
-  background: #73CDDE !important;
+  background: var(--alpheios-color-muted) !important;
   color: #333333 !important;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
   font-size: 16px !important;
@@ -2884,12 +2716,11 @@ ul.alpheios-skin_properties {
   font-size: 16px !important;
   line-height: normal !important;
   stroke-width: 2 !important;
-  stroke: #666666 !important;
+  stroke: var(--alpheios-text-color) !important;
   position: absolute !important;
   top: 5px !important;
   right: 5px !important;
 }
-/************ UIKit vars ************************/
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
