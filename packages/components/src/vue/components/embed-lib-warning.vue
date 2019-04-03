@@ -32,7 +32,7 @@ export default {
 
   .alpheios-embed-lib-warning {
     background: var(--alpheios-color-muted);
-    color: $alpheios-headers-color;
+    color: var(--alpheios-color-neutral-light);
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-size: 16px;
     position: fixed;

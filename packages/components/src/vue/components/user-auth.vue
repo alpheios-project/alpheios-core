@@ -1,7 +1,7 @@
 <template>
   <div :data-notification-visible="$store.state.auth.notification.visible">
     <login/>
-    <div class="alpheios-user-auth__notifications uk-text-small"
+    <div class="alpheios-user-auth__notifications"
       v-if="$store.state.auth.notification.text">
       <span @click="$store.commit(`auth/resetNotification`)" class="alpheios-popup__notifications-close-btn">
         <close-icon></close-icon>
@@ -66,8 +66,11 @@ export default {
   .alpheios-user-auth__notifications {
     display: none;
     position: relative;
-    padding: 10px 20px;
+    padding: textsize(10px) textsize(20px);
+    margin-top: textsize(10px);
+    color: var(--alpheios-color-neutral-lightest);
     background: var(--alpheios-color-muted);
+    border-radius: uisize(10px);
     flex: 0 0 60px;
     box-sizing: border-box;
     overflow: hidden;

@@ -79,6 +79,7 @@
         >
           {{ l10n.getText('TITLE_INFLECTIONS_PANEL') }}
         </h1>
+        Before Inflection table
         <inflections @contentwidth="setContentWidth" class="alpheios-panel-inflections"></inflections>
       </div>
 
@@ -126,13 +127,6 @@
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__word-usage"
            v-show="$store.getters['ui/isActiveTab']('wordUsage')"
         >
-        <word-usage-examples-block
-            :language="app.wordUsageExamples.language"
-            :provider="app.wordUsageExamples.provider"
-            :targetWord="app.wordUsageExamples.targetWord"
-            :wordUsageList="app.wordUsageExamples.wordUsageExamples">
-        </word-usage-examples-block>
-      >
         <word-usage-examples></word-usage-examples>
       </div>
 

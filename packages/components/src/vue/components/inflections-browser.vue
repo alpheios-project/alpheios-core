@@ -523,7 +523,7 @@ export default {
       htmlElements: {
         content: undefined
       },
-      languageId: this.$store.state.app.preferredLanguageID,
+      languageId: this.$store.state.app.currentLanguageID,
       inflBrowserTablesCollapsed: true
     }
   },

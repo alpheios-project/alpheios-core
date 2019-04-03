@@ -39,7 +39,7 @@
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-narrow"
                 v-show="$store.getters['app/hasTreebankData']">
-      <span @click="ui.changeTab('treebank')" class="alpheios-navbuttons__btn"
+      <div @click="ui.changeTab('treebank')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('treebank') }">
         <treebank-icon></treebank-icon>
       </div>
@@ -128,17 +128,4 @@ export default {
 }
 </script>
 <style lang="scss">
-
-  .alpheios-navbuttons--large {
-    & .alpheios-navbuttons__btn {
-      width: 20px;
-      height: 20px;
-      margin: 10px 3px;
-    }
-
-    & .alpheios-navbuttons__btn svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
 </style>

@@ -50,9 +50,10 @@ export default {
       return this.wordUsageItem.prefix
     },
     suffix () {
-      return this.wordUsageItem.suffix},
-      citFormatted () {
-        return `${this.wordUsageItem.cit} ${this.wordUsageItem.fullCit()}`
+      return this.wordUsageItem.suffix
+    },
+    citFormatted () {
+      return `${this.wordUsageItem.cit} ${this.wordUsageItem.fullCit()}`
     }
   },
   methods: {

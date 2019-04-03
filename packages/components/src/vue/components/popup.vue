@@ -142,13 +142,13 @@
                :show-title="false" @change="contentOptionChanged"
                v-show="$store.state.ui.notification.showLanguageSwitcher"></setting>
     </div>
-    <div class="alpheios-popup__notifications-auth uk-text-small alpheios-popup__notifications--important"
+    <div class="alpheios-popup__notifications-auth alpheios-popup__notifications--important"
          :data-count="$store.state.auth.notification.count"
          v-if="$store.state.auth.notification.text" v-show="$store.state.auth.notification.count === 1 || $store.state.auth.notification.count % 10 == 0">
          <span @click="$store.commit(`auth/resetNotification`)" class="alpheios-popup__notifications-close-btn">
             <close-icon></close-icon>
          </span>
-         <span v-html="l10n.getMsg($store.state.auth.notification.text)"></span>
+         <div class="alpheios-popup__notifications-auth-msg" v-html="l10n.getMsg($store.state.auth.notification.text)"></div>
          <login v-show="$store.state.auth.notification.showLogin"></login>
     </div>
   </div>
@@ -742,9 +742,14 @@ export default {
     display: none;
     position: relative;
     padding: textsize(10px) textsize(20px);
+    color: var(--alpheios-color-neutral-lightest);
     background: var(--alpheios-color-muted);
     flex: 0 0 textsize(60px);
     overflow: hidden;
+  }
+
+  .alpheios-popup__notifications-auth-msg {
+    margin-bottom: textsize(10px);
   }
 
   .alpheios-popup__notifications-close-btn {

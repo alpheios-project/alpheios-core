@@ -156,7 +156,7 @@ export default {
     grid-template-columns: 20px 1fr;
     grid-row-gap: 2px;
     background: #FFF;
-    color: $alpheios-headers-color;
+    color: var(--alpheios-text-color);
     position: absolute;
     padding: 30px 15px 15px;
     left: 0;

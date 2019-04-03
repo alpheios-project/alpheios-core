@@ -69,7 +69,9 @@ export default {
   },
   data () {
     return {
-      lookuptext: ''
+      lookuptext: '',
+      // The following variable is used to signal that language options has been updated
+      langUpdated: Date.now()
     }
   },
   props: {
@@ -107,7 +109,9 @@ export default {
   computed: {
     currentLanguage: function () {
       const selectedValue = this.$options.lookupLanguage.currentTextValue()
-      return (selectedValue === 'Default')
+      // langUpdated is included into the condition to force Vue to recalculate value
+      // every time language settings are updated
+      return (this.langUpdated && selectedValue === 'Default')
         ? this.settings.contentOptions.items.preferredLanguage.currentItem()
         : this.$options.lookupLanguage.currentItem()
     },
@@ -154,6 +158,7 @@ export default {
 
     settingChange: function (name, value) {
       this.$options.lookupLanguage.setTextValue(value)
+      this.langUpdated = Date.now()
     },
 
     resourceSettingChange: function (name, value) {

@@ -36,11 +36,6 @@ export default {
     margin-bottom: 10px;
   }
 
-  .alpheios-info .alpheios-info__helptext p {
-    font-size: textsize(14px);
-    color: var(--alpheios-text-color);
-  }
-
   .alpheios-info .alpheios-info__versiontext {
     font-size: textsize(12px);
   }

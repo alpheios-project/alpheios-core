@@ -18,7 +18,7 @@
         {{ l10n.getText('WORDUSAGE_NO_RESULTS') }}
       </div>
     </div>
-    
+
     <div class="alpheios-word_usage_list__provider" v-if="provider">
       {{provider.toString()}}
     </div>
@@ -66,9 +66,9 @@ export default {
       }
       if (this.selectedAuthor) {
         return this.app.wordUsageExamples.wordUsageExamples
-                   .filter(wordUsageExample => {
-                     return wordUsageExample.author.ID === this.selectedAuthor.ID && (this.selectedTextWork ? wordUsageExample.textWork.ID === this.selectedTextWork.ID : true)
-                   })
+          .filter(wordUsageExample => {
+            return wordUsageExample.author.ID === this.selectedAuthor.ID && (this.selectedTextWork ? wordUsageExample.textWork.ID === this.selectedTextWork.ID : true)
+          })
       }
       return this.app.wordUsageExamples.wordUsageExamples
     },
@@ -80,7 +80,7 @@ export default {
         ? Array.from(this.app.wordUsageExamples.provider.rights.entries()).map(([key, value]) => { return { key, value } })
         : []
     },
-    wordUsageListSorted() {
+    wordUsageListSorted () {
       // TODO support user-selected sort key and order
       // eventually sorting should also take language into account but
       // for now we will probably only show Latin author and work names anyway
@@ -128,13 +128,13 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      this.ui.registerAndActivateGetSelectedText('getSelectedText-usageExamples','.alpheios-word-usage')
+      this.ui.registerAndActivateGetSelectedText('getSelectedText-usageExamples', '.alpheios-word-usage')
     })
   }
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/alpheios";
+  @import "../../../styles/variables";
 
   .alpheios-word-usage {
     display: flex;
@@ -145,7 +145,7 @@ export default {
       flex: none;
       font-weight: bold;
       padding-bottom: 5px;
-      border-bottom: 1px solid $alpheios-toolbar-active-color;
+      border-bottom: 1px solid var(--alpheios-border-color);
       margin-bottom: 10px;
     }
 
@@ -164,9 +164,8 @@ export default {
     }
 
     .alpheios-word-usage-header  {
-      border-bottom: 1px solid $alpheios-toolbar-active-color;
+      border-bottom: 1px solid var(--alpheios-border-color);
     }
-
 
     .alpheios-word-usage-header-select-author,
     .alpheios-word-usage-header-select-textwork,
@@ -183,7 +182,7 @@ export default {
 
     .alpheios-word-usage-header-clear-disabled.alpheios-word-usage-header-clear-icon {
       cursor: inherit;
-      fill: $alpheios-base-disabled-font-color;
+      fill: var(--alpheios-text-color);
     }
 
   }
