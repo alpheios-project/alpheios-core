@@ -25,6 +25,67 @@ export default class LexicalQuery extends Query {
     return Query.create(LexicalQuery, selector, options)
   }
 
+  static async getWordUsageData (homonym, wordUsageExamples, params) {
+    if (wordUsageExamples) {
+      // the default query for usage examples should be to request all examples
+      // for all authors, with user pagination preference for max number of examples
+      // per author applied. Total max across all authors will be enforced on the
+      // client adapter side. Different pagination options may apply when working
+      // directly with the usage examples display
+      try {
+        let paginationParams = {}
+
+        if (params.author) {
+          paginationParams = {
+            property: 'max',
+            value: wordUsageExamples.paginationMax
+          }
+        } else {
+          paginationParams = {
+            property: 'authmax',
+            value: wordUsageExamples.paginationAuthMax
+          }
+        }
+
+        let adapterConcordanceRes = await ClientAdapters.wordusageExamples.concordance({
+          method: 'getWordUsageExamples',
+          params: { homonym: homonym,
+            pagination: paginationParams,
+            filters: {
+              author: params.author,
+              textWork: params.textWork
+            }
+          }
+        })
+
+        if (adapterConcordanceRes.errors.length > 0) {
+          adapterConcordanceRes.errors.forEach(error => console.error(error))
+        }
+
+        LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.pub(adapterConcordanceRes.result)
+      } catch (error) {
+        console.error('Some strange eror inside getWordUsageData', error)
+      }
+    }
+  }
+
+  static async getAuthorsForWordUsage () {
+    try {
+      let adapterConcordanceRes = await ClientAdapters.wordusageExamples.concordance({
+        method: 'getAuthorsWorks',
+        params: {}
+      })
+
+      if (adapterConcordanceRes.errors.length > 0) {
+        adapterConcordanceRes.errors.forEach(error => console.error(error))
+      }
+
+      return adapterConcordanceRes.result
+    } catch (error) {
+      console.error('Some strange eror inside getAuthorsForWordUsage', error)
+    }
+  }
+
   async getData () {
     this.languageID = this.selector.languageID
     let iterator = this.iterations()

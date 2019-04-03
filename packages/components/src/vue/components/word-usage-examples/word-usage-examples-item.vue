@@ -5,7 +5,7 @@
           :href="wordUsageItem.source"
           target="_blank"
           class = "alpheios_word_usage_list_item__source_link"
-          >{{ wordUsageItem.fullCit() }}</a>
+          >{{ citFormatted }}</a>
     </div>
       <div class="alpheios_word_usage_list_item__text">
         <div class="alpheios_word_usage_list_item__source">
@@ -22,7 +22,7 @@
             :href="wordUsageItem.source"
             target="_blank"
             class = "alpheios_word_usage_list_item__source_link"
-            >{{ wordUsageItem.fullCit() }}</a>
+            >{{ citFormatted }}</a>
       </div>
   </div>
 </template>
@@ -30,7 +30,7 @@
 import SourceIcon from '@/images/inline-icons/source.svg'
 
 export default {
-  name: 'WordUsageExampleItem',
+  name: 'WordUsageExamplesItem',
   components: {
     sourceIcon: SourceIcon
   },
@@ -46,11 +46,13 @@ export default {
     }
   },
   computed: {
-    prefix: function () {
+    prefix () {
       return this.wordUsageItem.prefix
     },
-    suffix: function () {
-      return this.wordUsageItem.suffix
+    suffix () {
+      return this.wordUsageItem.suffix},
+      citFormatted () {
+        return `${this.wordUsageItem.cit} ${this.wordUsageItem.fullCit()}`
     }
   },
   methods: {
@@ -61,8 +63,7 @@ export default {
 }
 </script>
 <style lang="scss">
-    @import "../../styles/variables";
-
+    @import "../../../styles/variables";
     .alpheios_word_usage_list_item {
         display: flex;
         flex-direction: column;

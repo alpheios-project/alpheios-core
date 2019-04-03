@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="this.$store.state.auth.enableLogin">
     <button @click="logIn" class="alpheios-button-primary" v-show="! this.$store.state.auth.isAuthenticated">
       {{ l10n.getMsg(`AUTH_LOGIN_BTN_LABEL`) }}
     </button>

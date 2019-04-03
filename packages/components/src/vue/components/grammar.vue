@@ -1,5 +1,5 @@
 <template>
-  <div class="alpheios-grammar" v-if="$store.getters[`app/hasGrammarRes`]">
+  <div class="alpheios-grammar" v-if="$store.getters['app/hasGrammarRes']">
     <div class="alpheios-grammar__frame-cont" v-show="$store.state.app.grammarRes.url">
       <iframe :src="$store.state.app.grammarRes.url" class="alpheios-grammar__frame" scrolling="yes" v-if="$store.state.app.grammarRes.url"></iframe>
     </div>

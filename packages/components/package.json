@@ -7,7 +7,7 @@
     "test": "eslint --fix src/**/*.js && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-lib": "eslint --fix src/**/*.js && jest tests/lib --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-components": "eslint --fix src/**/*.js && jest tests/vue --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-c": "eslint --fix src/**/*.js && jest tests/vue/components/word-usage-example-item.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "test-c": "eslint --fix src/**/*.js && jest tests/vue/components/word-usage-examples.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test-a": "eslint --fix src/**/*.js && jest tests/lib/l10n/message.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "build": "npm run build-regular && npm run build-safari",
     "build-regular": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue",

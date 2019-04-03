@@ -9,6 +9,8 @@ export default class AuthModule extends Module {
   constructor (store, api, config) {
     super(store, api, config)
     this._auth = this.config.auth
+    // enable ui in initial unauthenticated state only if we have an auth object that allows login
+    this._showUIDefault = !!this._auth && this._auth.enableLogin()
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
     api[this.constructor.moduleName] = this.constructor.api(this, store)
   }
@@ -28,18 +30,23 @@ AuthModule.store = (moduleInstance) => {
         showLogin: false,
         count: 0,
         text: null
-      }
+      },
+      showUI: moduleInstance._showUIDefault,
+      enableLogin: moduleInstance._showUIDefault, // this doesn't change based upon auth
+      promptLogin: !!moduleInstance._auth // don't prompt for login if we have no auth object
     },
     mutations: {
       setIsAuthenticated: (state, profile) => {
         state.isAuthenticated = true
         state.userId = profile.sub
         state.userNickName = profile.nickname
+        state.showUI = true
       },
       setIsNotAuthenticated: (state) => {
         state.isAuthenticated = false
         state.userId = ''
         state.userNickName = ''
+        state.showUI = moduleInstance._showUIDefault
       },
       setNotification (state, data) {
         state.notification.visible = true
@@ -59,8 +66,14 @@ AuthModule.store = (moduleInstance) => {
 
 AuthModule.api = (moduleInstance, store) => {
   return {
-    isEnabled: () => {
-      return !!moduleInstance._auth
+    session: () => {
+      moduleInstance._auth.session().then((data) => {
+        store.commit('auth/setIsAuthenticated', data)
+      }).catch((error) => {
+        // a session being unavailable is not necessarily an error
+        // user might not have authenticated or it might be client-side auth
+        console.info('Session unavailable', error)
+      })
     },
     authenticate: () => {
       store.commit(`auth/setNotification`, { text: 'AUTH_LOGIN_PROGRESS_MSG' })
@@ -82,12 +95,26 @@ AuthModule.api = (moduleInstance, store) => {
         console.error('Logout failed', error)
       })
     },
-    getAccessToken: () => {
-      if (moduleInstance._auth) {
-        return moduleInstance._auth.getUserData()
-      } else {
-        console.error('Authentication is not enabled')
-      }
+    getUserData: () => {
+      return new Promise((resolve, reject) => {
+        if (moduleInstance._auth) {
+          let accessToken
+          moduleInstance._auth.getUserData().then((token) => {
+            accessToken = token
+            return moduleInstance._auth.getEndPoints()
+          }).then((endpoints) => {
+            resolve({
+              accessToken: accessToken,
+              userId: store.state.auth.userId,
+              endpoints: endpoints
+            })
+          }).catch((error) => {
+            console.error('Error retrieving user data', error)
+          })
+        } else {
+          reject(new Error('Authentication is not enabled'))
+        }
+      })
     }
   }
 }

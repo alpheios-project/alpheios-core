@@ -494,7 +494,6 @@
     "description": "A message that is shown when an Alpheios extension is disabled due to embedded library presence",
     "component": "EmbedLibWarning"
   },
-
   "AUTH_LOGIN_BTN_LABEL": {
     "message": "Log In",
     "description": "A message shown on a log in button",
@@ -544,6 +543,81 @@
     "message": "Word Usage Examples",
     "description": "Word Usage Examples tooltip",
     "component": "Panel"
+  },
+  "WORDUSAGE_FILTERS_HIDE": {
+    "message": "hide",
+    "description": "Word Usage Examples Filters Hide link",
+    "component": "WordUsageExamplesHeader"
+  },
+  "WORDUSAGE_FILTERS_SHOW": {
+    "message": "show",
+    "description": "Word Usage Examples Filters Show Link",
+    "component": "WordUsageExamplesHeader"
+  },
+  "WORDUSAGE_GET_RESULTS": {
+    "message": "Get results",
+    "description": "Word Usage Examples Filters Get results button",
+    "component": "WordUsageExamplesHeader"
+  },
+  "WORDUSAGE_NO_RESULTS": {
+    "message": "There are no results.",
+    "description": "Word Usage Examples No results text",
+    "component": "WordUsageExamples"
+  },
+  "WORDUSAGE_SORT_BY": {
+    "message": "Sort by",
+    "description": "Word Usage Examples Sort by Title",
+    "component": "WordUsageExamplesHeader"
+  },
+  "WORDUSAGE_SORT_BY_AUTHOR": {
+    "message": "By author",
+    "description": "Word Usage Examples Sort by author",
+    "component": "WordUsageExamplesFilters"
+  },
+  "WORDUSAGE_SORT_BY_TEXTWORK": {
+    "message": "By text work",
+    "description": "Word Usage Examples Sort by text work",
+    "component": "WordUsageExamplesFilters"
+  },
+  "WORDUSAGE_SORT_BY_PREFIX": {
+    "message": "By prefix",
+    "description": "Word Usage Examples Sort by prefix",
+    "component": "WordUsageExamplesHeader"
+  },
+  "WORDUSAGE_SORT_BY_SUFFIX": {
+    "message": "By suffix",
+    "description": "Word Usage Examples Sort by suffix",
+    "component": "WordUsageExamplesHeader"
+  },
+  "WORDUSAGE_FILTERS_TYPE_NO_FILTERS": {
+    "message": "Get results without filters",
+    "description": "Word Usage Examples Type filter",
+    "component": "WordUsageExamplesFilters"
+  },
+  "WORDUSAGE_FILTERS_TYPE_MORE_RESULTS": {
+    "message": "See more results for a specific Author and/or Work",
+    "description": "Word Usage Examples Type filter",
+    "component": "WordUsageExamplesFilters"
+  },
+  "WORDUSAGE_FILTERS_TYPE_FILTER_CURRENT_RESULTS": {
+    "message": "Filter these results by Author and/or Work",
+    "description": "Word Usage Examples Type filter",
+    "component": "WordUsageExamplesFilters"
+  },
+  "WORDUSAGE_FILTERS_AUTHOR_CLEAR": {
+    "message": "Clear author filter",
+    "description": "Word Usage Examples Type filter",
+    "component": "WordUsageExamplesFilters"
+  },
+  "WORDUSAGE_FILTERS_TEXTWORK_CLEAR": {
+    "message": "Clear textwork filter",
+    "description": "Word Usage Examples Type filter",
+    "component": "WordUsageExamplesFilters"
+  },
+  "WORDUSAGE_SORTING_AUTHOR_CLEAR": {
+    "message": "Clear sorting",
+    "description": "Word Usage Examples Sorting",
+    "component": "WordUsageExamplesSorting"
   },
   "FONTSIZE_TEXT_SMALL": {
     "message": "Small",

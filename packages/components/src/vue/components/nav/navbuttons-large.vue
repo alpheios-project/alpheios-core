@@ -39,7 +39,7 @@
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-narrow"
                 v-show="$store.getters['app/hasTreebankData']">
-      <div @click="ui.changeTab('treebank')" class="alpheios-navbuttons__btn"
+      <span @click="ui.changeTab('treebank')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('treebank') }">
         <treebank-icon></treebank-icon>
       </div>
@@ -53,7 +53,7 @@
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_USER')" tooltipDirection="bottom-narrow"
-                v-if="Boolean(auth)">
+                v-if="$store.state.auth.showUI">
       <div @click="ui.changeTab('user')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('user') }">
         <user-icon></user-icon>
@@ -61,7 +61,8 @@
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORD_USAGE')" tooltipDirection="bottom-narrow"
-                v-show="$store.state.app.wordUsageExamplesReady">
+            v-if="$store.state.app.showWordUsageTab"
+    >
       <div @click="ui.changeTab('wordUsage')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordUsage') }">
         <word-usage-icon></word-usage-icon>
@@ -109,8 +110,7 @@ export default {
     app: 'app',
     ui: 'ui',
     l10n: 'l10n',
-    settings: 'settings',
-    auth: { from: 'auth', default: null } // This module is options
+    settings: 'settings'
   },
   storeModules: ['app', 'ui'], // Store modules that are required by this component
   mixins: [DependencyCheck],
@@ -128,4 +128,17 @@ export default {
 }
 </script>
 <style lang="scss">
+
+  .alpheios-navbuttons--large {
+    & .alpheios-navbuttons__btn {
+      width: 20px;
+      height: 20px;
+      margin: 10px 3px;
+    }
+
+    & .alpheios-navbuttons__btn svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
 </style>

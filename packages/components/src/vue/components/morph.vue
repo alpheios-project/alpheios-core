@@ -270,13 +270,14 @@ export default {
   computed: {
     lexemes () {
       // A call to `defDataReady` will force this computed prop to recalculate every time definitions data is updated
-      return this.$store.getters['app/defDataReady'] ? this.app.getHomonymLexemes() : []
+      let defs = this.$store.getters['app/defDataReady']
+      return this.$store.state.app.morphDataReady ? this.app.getHomonymLexemes() : []
     },
 
     translations () {
       let translations = {}
       if (this.$store.state.app.translationsDataReady) {
-        for (let lexeme of this.app.getHomonymLexemes()) {
+        for (let lexeme of this.lexemes) {
           if (lexeme.lemma.translation !== undefined) {
             translations[lexeme.lemma.ID] = lexeme.lemma.translation
           }

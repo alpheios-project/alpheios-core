@@ -65,6 +65,20 @@
         }
       ]
     },
+    "wordUsageExamplesON": {
+      "defaultValue": "onDemand",
+      "labelText": "Get word usage examples:",
+      "values": [
+        {
+          "value": "onDemand",
+          "text": "On demand"
+        },
+        {
+          "value": "onLexiqalQuery",
+          "text": "On LexiqalQuery"
+        }
+      ]
+    },
     "wordUsageExamplesAuthMax": {
       "defaultValue": 3,
       "labelText": "Word Usage Examples - max results per author",

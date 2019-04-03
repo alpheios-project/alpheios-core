@@ -349,6 +349,7 @@ export default class UIController {
       inflectionsViewSet: null,
       wordlistC: this.wordlistC, // A word list controller
       wordUsageExamples: null,
+      wordUsageAuthors: [],
 
       isDevMode: () => {
         return this.options.mode === 'development'
@@ -375,7 +376,8 @@ export default class UIController {
           return true
         }
         return false
-      }
+      },
+      getWordUsageData: this.getWordUsageData.bind(this)
     }
 
     this.store.registerModule('app', {
@@ -395,6 +397,7 @@ export default class UIController {
           y: 0
         },
         homonymDataReady: false,
+        showWordUsageTab: false,
         linkedFeatures: [], // An array of linked features, updated with every new homonym value is written to the store
         defUpdateTime: 0, // A time of the last update of defintions, in ms. Needed to track changes in definitions.
         lexicalRequest: {
@@ -412,6 +415,7 @@ export default class UIController {
           page: {}
         },
         wordUsageExamplesReady: false, // Whether word usage examples data is available
+        wordUsageAuthorsReady: false, // Whether word usage authors data is available
         hasWordListsData: false,
         wordListUpdateTime: 0, // To notify word list panel about data update
         providers: [] // A list of resource providers
@@ -475,7 +479,7 @@ export default class UIController {
           state.wordUsageExamplesReady = false
           state.linkedFeatures = []
           state.homonymDataReady = false
-          state.grammarRes = null
+          state.showWordUsageTab = false
           state.defUpdateTime = 0
           state.morphDataReady = false
           state.translationsDataReady = false
@@ -483,6 +487,10 @@ export default class UIController {
           state.hasWordListsData = false
           state.treebankData.page = {}
           state.treebankData.word = {}
+        },
+
+        resetGrammarData (state) {
+          state.grammarRes = null
         },
 
         lexicalRequestFinished (state) {
@@ -534,8 +542,12 @@ export default class UIController {
           state.treebankData.word = {}
         },
 
-        setWordUsageExamplesReady (state) {
-          state.wordUsageExamplesReady = true
+        setWordUsageExamplesReady (state, value = true) {
+          state.wordUsageExamplesReady = value
+        },
+
+        setWordUsageAuthorsReady (state, value = true) {
+          state.wordUsageAuthorsReady = value
         },
 
         setWordLists (state, wordLists) {
@@ -661,11 +673,8 @@ export default class UIController {
   async initUserDataManager (isAuthenticated) {
     let wordLists
     if (isAuthenticated) {
-      let accessToken = await this.api.auth.getAccessToken()
-      this.userDataManager = new UserDataManager(
-        { accessToken: accessToken,
-          userId: this.store.state.auth.userId
-        }, WordlistController.evt)
+      let authData = await this.api.auth.getUserData()
+      this.userDataManager = new UserDataManager(authData, WordlistController.evt)
       wordLists = this.wordlistC.initLists(this.userDataManager)
       this.store.commit('app/setWordLists', wordLists)
     } else {
@@ -709,6 +718,12 @@ export default class UIController {
     this.authUnwatch = this.store.watch((state) => state.auth.isAuthenticated, (newValue, oldValue) => {
       this.userDataManager = this.initUserDataManager(newValue)
     })
+
+    if (this.api.auth) {
+      // initiate session check so that user data is available
+      // if we have an active session
+      this.api.auth.session()
+    }
     return this
   }
 
@@ -915,8 +930,6 @@ export default class UIController {
   updateGrammar (urls = []) {
     if (urls.length > 0) {
       this.store.commit('app/setGrammarRes', urls[0])
-    } else {
-      this.store.commit('app/resetGrammarRes')
     }
   }
 
@@ -950,9 +963,12 @@ export default class UIController {
       currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(currentLanguageID)
     }
     this.store.commit('app/setCurrentLanguage', currentLanguageID)
-    this.state.setItem('currentLanguage', LanguageModelFactory.getLanguageCodeFromId(currentLanguageID))
-    this.startResourceQuery({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
-
+    let newLanguageCode = LanguageModelFactory.getLanguageCodeFromId(currentLanguageID)
+    if (this.state.currentLanguage !== newLanguageCode) {
+      this.store.commit('app/resetGrammarData')
+      this.state.setItem('currentLanguage', newLanguageCode)
+      this.startResourceQuery({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
+    }
     this.resetInflData()
   }
 
@@ -1054,7 +1070,7 @@ export default class UIController {
           resourceOptions: this.resourceOptions,
           siteOptions: [],
           lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { locale: this.contentOptions.items.locale.currentValue } : null,
-          wordUsageExamples: this.enableWordUsageExamples(textSelector)
+          wordUsageExamples: this.enableWordUsageExamples(textSelector, 'onLexiqalQuery')
             ? { paginationMax: this.contentOptions.items.wordUsageExamplesMax.currentValue,
               paginationAuthMax: this.contentOptions.items.wordUsageExamplesAuthMax.currentValue }
             : null,
@@ -1067,6 +1083,15 @@ export default class UIController {
     }
   }
 
+  async getWordUsageData (homonym, params = {}) {
+    let wordUsageExamples = this.enableWordUsageExamples({ languageID: homonym.languageID }, 'onDemand')
+      ? { paginationMax: this.contentOptions.items.wordUsageExamplesMax.currentValue,
+        paginationAuthMax: this.contentOptions.items.wordUsageExamplesAuthMax.currentValue }
+      : null
+
+    await LexicalQuery.getWordUsageData(homonym, wordUsageExamples, params)
+  }
+
   /**
    * Check to see if Lemma Translations should be enabled for a query
    *  NB this is Prototype functionality
@@ -1077,9 +1102,11 @@ export default class UIController {
       !this.contentOptions.items.locale.currentValue.match(/^en-/)
   }
 
-  enableWordUsageExamples (textSelector) {
+  enableWordUsageExamples (textSelector, requestType) {
+    let checkType = requestType === 'onLexiqalQuery' ? this.contentOptions.items.wordUsageExamplesON.currentValue === requestType : true
     return textSelector.languageID === Constants.LANG_LATIN &&
-      this.contentOptions.items.enableWordUsageExamples.currentValue
+      this.contentOptions.items.enableWordUsageExamples.currentValue &&
+      checkType
   }
 
   handleEscapeKey (event, nativeEvent) {
@@ -1144,8 +1171,7 @@ export default class UIController {
 
   onHomonymReady (homonym) {
     homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
-    this.updateProviders(homonym)
-    this.updateDefinitions(homonym)
+
     // Update status info with data from a morphological analyzer
     this.store.commit(`app/setTextData`, { text: homonym.targetWord, languageID: homonym.languageID })
 
@@ -1155,16 +1181,19 @@ export default class UIController {
       this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
     }
     this.api.app.homonym = homonym
-    this.store.commit(`app/setHomonym`, homonym)
+    this.store.commit('app/setHomonym', homonym)
     this.store.commit('app/setMorphDataReady')
     const inflDataReady = Boolean(inflectionsViewSet && inflectionsViewSet.hasMatchingViews)
     this.api.app.inflectionsViewSet = inflectionsViewSet
     this.store.commit('app/setInflData', inflDataReady)
+
+    this.updateProviders(homonym)
+    this.updateDefinitions(homonym)
   }
 
   onWordListUpdated (wordLists) {
     this.store.commit('app/setWordLists', wordLists)
-    if (this.api.auth.isEnabled() && !this.store.state.auth.isAuthenticated) {
+    if (this.store.state.auth.promptLogin && !this.store.state.auth.isAuthenticated) {
       this.store.commit(`auth/setNotification`, { text: 'TEXT_NOTICE_SUGGEST_LOGIN', showLogin: true, count: this.wordlistC.getWordListItemCount() })
     }
   }

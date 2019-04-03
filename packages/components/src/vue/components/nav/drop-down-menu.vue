@@ -73,7 +73,8 @@
     </div>
 
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('wordUsage') }"
-         v-show="$store.state.app.wordUsageExamplesReady" @click="changeTab('wordUsage')">
+        v-if="$store.state.app.showWordUsageTab"
+        @click="changeTab('wordUsage')">
       <div class="alpheios-navbuttons__icon-cont">
         <word-usage-icon class="alpheios-navbuttons__icon"></word-usage-icon>
       </div>
@@ -112,7 +113,7 @@ import GrammarIcon from '@/images/inline-icons/resources.svg'
 import TreebankIcon from '@/images/inline-icons/sitemap.svg'
 import InfoIcon from '@/images/inline-icons/info.svg'
 import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
-import WordUsageIcon from '@/images/inline-icons/books-stack.svg'
+import WordUsageIcon from '@/images/inline-icons/usage-examples-icon1.svg'
 
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'

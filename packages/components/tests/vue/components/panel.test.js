@@ -42,7 +42,7 @@ describe('panel.test.js', () => {
     closePanel: () => {}
   }
   const authAPI = {
-    isEnabled: () => {return false}
+    showUI: () => {return false}
   }
 
   console.error = function () {}
