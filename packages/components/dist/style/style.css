@@ -2087,6 +2087,7 @@ h3.alpheios-inflections__credits-title {
   position: relative;
   -webkit-overflow-scrolling: touch;
   overflow-y: auto;
+  height: 85vh;
 }
 .alpheios-grammar__frame {
   position: absolute;

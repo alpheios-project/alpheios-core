@@ -41,6 +41,7 @@ export default {
     position: relative;
     -webkit-overflow-scrolling: touch;
     overflow-y: auto;
+    height: 85vh;
   }
 
   .alpheios-grammar__frame {
