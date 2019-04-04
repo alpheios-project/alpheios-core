@@ -1,7 +1,7 @@
 <template>
     <div class = "alpheios-wordlists-tq">
       <a class = "alpheios-wordlists-tq-title" :href="source">{{ source }}</a>
-      <div class = "alpheios-wordlists-tq-contextHTML-block" 
+      <div class = "alpheios-wordlists-tq-contextHTML-block"
         v-for = "tq in tqSelectors" :key = "tq.ID"
       >
         <p class = "alpheios-wordlists-tq-contextHTML" v-html="tq.contextHTML"></p>
@@ -9,28 +9,28 @@
     </div>
 </template>
 <script>
-  export default {
-    name: 'WordTQSourceBlock',
-    props: {
-      source: {
-        type: String,
-        required: true
-      },
-      tqSelectors: {
-        type: Array,
-        required: true
-      }
+export default {
+  name: 'WordTQSourceBlock',
+  props: {
+    source: {
+      type: String,
+      required: true
     },
-    computed: {
-    },
-    methods: {
+    tqSelectors: {
+      type: Array,
+      required: true
     }
+  },
+  computed: {
+  },
+  methods: {
   }
+}
 </script>
 <style lang="scss">
-  @import "../../../styles/alpheios";
+  @import "../../../styles/variables";
   .alpheios-wordlists-tq {
-  
+
     a.alpheios-wordlists-tq-title {
       font-weight: bold;
       padding: 5px 0;
@@ -48,9 +48,9 @@
     .alpheios_worditem_incontext,
     .alpheios_worditem_incontext_add {
       font-weight: bold;
-      background: $alpheios-highlight-color;
+      background: var(--alpheios-color-bright);
       display: inline-block;
       padding: 0 5px;
-    } 
+    }
   }
 </style>

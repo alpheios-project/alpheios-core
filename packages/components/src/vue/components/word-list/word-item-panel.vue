@@ -14,10 +14,10 @@
           </div>
         </alph-tooltip>
 
-        <alph-tooltip tooltipDirection="top-left" 
+        <alph-tooltip tooltipDirection="top-left"
           :tooltipText="l10n.getMsg('TOOLTIP_TEXT_CONTEXT')"
           v-bind:class="{ 'alpheios_no_tq ': !worditem.hasTextQuoteSelectors }">
-          <div class="alpheios-worditem__data alpheios-worditem__icon alpheios-worditem__delete_icon" 
+          <div class="alpheios-worditem__data alpheios-worditem__icon alpheios-worditem__delete_icon"
                   @click="showContexts()">
                   <text-quote-icon></text-quote-icon>
           </div>
@@ -30,76 +30,77 @@
     </div>
 </template>
 <script>
-  import CheckIcon from '@/images/inline-icons/check.svg'
-  import DeleteIcon from '@/images/inline-icons/delete.svg'
-  import TextQuoteIcon from '@/images/inline-icons/text-quote.svg'
-  import Tooltip from '@/vue/components/tooltip.vue'
+import CheckIcon from '@/images/inline-icons/check.svg'
+import DeleteIcon from '@/images/inline-icons/delete.svg'
+import TextQuoteIcon from '@/images/inline-icons/text-quote.svg'
+import Tooltip from '@/vue/components/tooltip.vue'
 
-  export default {
-    name: 'WordItemBlock',
-    inject: ['l10n', 'app'],
-    components: {
-      checkIcon: CheckIcon,
-      deleteIcon: DeleteIcon,
-      textQuoteIcon: TextQuoteIcon,
-      alphTooltip: Tooltip
-    },
-    props: {
-      worditem: {
-        type: Object,
-        required: true
-      }
-    },
-    data () {
+export default {
+  name: 'WordItemBlock',
+  inject: ['l10n', 'app'],
+  components: {
+    checkIcon: CheckIcon,
+    deleteIcon: DeleteIcon,
+    textQuoteIcon: TextQuoteIcon,
+    alphTooltip: Tooltip
+  },
+  props: {
+    worditem: {
+      type: Object,
+      required: true
+    }
+  },
+  data () {
+    return {
+      important: false
+    }
+  },
+  mounted () {
+    this.important = this.worditem.important
+    this.$parent.$on('eventChangeImportant', this.eventChangeImportant)
+  },
+  computed: {
+    itemClasses () {
       return {
-        important: false
+        'alpheios-wordlist-language__worditem__active': this.important,
+        'alpheios-wordlist-language__worditem__current_session': this.worditem.currentSession
       }
     },
-    mounted () {
+    lemmasList () {
+      return this.$store.state.app.wordListUpdateTime ? this.worditem.lemmasList : ''
+    }
+  },
+  methods: {
+    changeImportant () {
+      this.$emit('changeImportant', this.worditem.targetWord, !this.worditem.important)
       this.important = this.worditem.important
-      this.$parent.$on('eventChangeImportant', this.eventChangeImportant);
     },
-    computed: {
-      itemClasses () {
-        return {
-          'alpheios-wordlist-language__worditem__active': this.important,
-          'alpheios-wordlist-language__worditem__current_session': this.worditem.currentSession
-        }
-      },
-      lemmasList () {
-        return this.$store.state.app.wordListUpdateTime ? this.worditem.lemmasList : ''
-      }
+    eventChangeImportant () {
+      this.important = this.worditem.important
     },
-    methods: {
-      changeImportant () {
-        this.$emit('changeImportant', this.worditem.targetWord, ! this.worditem.important)
-        this.important = this.worditem.important
-      },
-      eventChangeImportant () {
-        this.important = this.worditem.important
-      },
-      selectWordItem () {
-        this.app.selectWordItem(this.worditem.languageCode, this.worditem.targetWord)
-      },
-      deleteItem () {
-        this.$emit('deleteItem', this.worditem.targetWord)
-      },
-      showContexts () {
-        this.$emit('showContexts', this.worditem.targetWord)
-      }
+    selectWordItem () {
+      this.app.selectWordItem(this.worditem.languageCode, this.worditem.targetWord)
+    },
+    deleteItem () {
+      this.$emit('deleteItem', this.worditem.targetWord)
+    },
+    showContexts () {
+      this.$emit('showContexts', this.worditem.targetWord)
     }
   }
+}
 </script>
 
 <style lang="scss">
- @import "../../../styles/alpheios";
+ @import "../../../styles/variables";
+
   .alpheios-wordlist-language__worditem {
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid var(--alpheios-border-color);
       padding: 2px 0;
   }
 
   .alpheios-wordlist-language__worditem__current_session {
-    background: $alpheios-highlight-light-color;
+    background: var(--alpheios-color-bright-hover);
   }
 
   .alpheios-worditem__data {
@@ -113,8 +114,8 @@
         height: 15px;
         text-align: center;
         cursor: pointer;
-        fill: $alpheios-link-color-dark-bg;
-        stroke: $alpheios-link-color-dark-bg;
+        fill: var(--alpheios-link-color-on-dark);
+        stroke: var(--alpheios-link-color-on-dark);
         margin: 5px;
         svg {
           width: 15px;
@@ -124,20 +125,20 @@
         }
 
         &.alpheios-worditem__delete_icon {
-          fill: $alpheios-headers-color;
-          stroke: $alpheios-headers-color;
+          fill: var(--alpheios-color-dark);
+          stroke: var(--alpheios-color-dark);
         }
     }
   }
 
  .alpheios-wordlist-language__worditem__active .alpheios-worditem__data {
-    fill: $alpheios-link-hover-color;
-    stroke: $alpheios-link-hover-color;
-    color: $alpheios-link-hover-color;
+    fill: var(--alpheios-color-light);
+    stroke: var(--alpheios-color-light);
+    color: var(--alpheios-color-light);
 
     &.alpheios-worditem__delete_icon {
-      fill: $alpheios-headers-color;
-      stroke: $alpheios-headers-color;
+      fill: var(--alpheios-color-dark);
+      stroke: var(--alpheios-color-dark);
     }
   }
 

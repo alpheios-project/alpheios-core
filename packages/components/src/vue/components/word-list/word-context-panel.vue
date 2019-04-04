@@ -1,7 +1,7 @@
 <template>
     <div>
       <div class="alpheios-wordlist-commands">
-        
+
         <alph-tooltip tooltipDirection="top-left" :tooltipText="l10n.getText('TOOLTIP_BACK')">
           <div class="alpheios-wordlist-commands__item alpheios-wordlist-commands__item-back" @click="backToWordList">
               <back-icon></back-icon>
@@ -20,44 +20,44 @@
     </div>
 </template>
 <script>
-  import BackIcon from '@/images/inline-icons/back.svg'
-  import Tooltip from '@/vue/components/tooltip.vue'
-  import WordTqSourceBlock from '@/vue/components/word-list/word-tq-source-block.vue'
+import BackIcon from '@/images/inline-icons/back.svg'
+import Tooltip from '@/vue/components/tooltip.vue'
+import WordTqSourceBlock from '@/vue/components/word-list/word-tq-source-block.vue'
 
-  export default {
-    name: 'WordContextBlock',
-    components: {
-      backIcon: BackIcon,
-      alphTooltip: Tooltip,
-      wordTqSource: WordTqSourceBlock
+export default {
+  name: 'WordContextBlock',
+  components: {
+    backIcon: BackIcon,
+    alphTooltip: Tooltip,
+    wordTqSource: WordTqSourceBlock
+  },
+  inject: ['l10n'],
+  props: {
+    worditem: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    formattedContext () {
+      return this.worditem.formattedContext
     },
-    inject: ['l10n'],
-    props: {
-      worditem: {
-        type: Object,
-        required: true
-      }
-    },
-    computed: {
-      formattedContext () {
-        return this.worditem.formattedContext
-      },
-      sourcesList () {
-        return Object.keys(this.formattedContext)
-      }
-    },
-    methods: {
-      backToWordList () {
-        this.$emit('backToWordList')
-      }
+    sourcesList () {
+      return Object.keys(this.formattedContext)
+    }
+  },
+  methods: {
+    backToWordList () {
+      this.$emit('backToWordList')
     }
   }
+}
 </script>
 <style lang="scss">
-  @import "../../../styles/alpheios";
+  @import "../../../styles/variables";
 
   .alpheios-wordlist-commands {
-    border-bottom: 1px solid $alpheios-toolbar-color;
+    border-bottom: 1px solid var(--alpheios-border-color);
   }
   .alpheios-wordlist-commands .alpheios-wordlist-commands__item {
     width: 15px;
@@ -71,6 +71,6 @@
       height: 15px;
       display: inline-block;
       vertical-align: top;
-    } 
+    }
   }
 </style>

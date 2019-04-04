@@ -74,18 +74,18 @@ export default {
   },
   methods: {
     async makeAllImportant () {
-      await this.controller.updateAllImportant(this.languageCode,true)
+      await this.controller.updateAllImportant(this.languageCode, true)
       this.$emit('eventChangeImportant')
     },
     async removeAllImportant () {
-      await this.controller.updateAllImportant(this.languageCode,false)
+      await this.controller.updateAllImportant(this.languageCode, false)
       this.$emit('eventChangeImportant')
     },
     async changeImportant (targetWord, important) {
-      await this.controller.updateWordItemImportant(this.languageCode,targetWord,important)
+      await this.controller.updateWordItemImportant(this.languageCode, targetWord, important)
     },
     async deleteItem (targetWord) {
-      await this.controller.removeWordListItem(this.languageCode,targetWord)
+      await this.controller.removeWordListItem(this.languageCode, targetWord)
       this.reloadList = this.reloadList + 1
     },
     async deleteAll () {
@@ -99,10 +99,10 @@ export default {
 }
 </script>
 <style lang="scss">
-    @import "../../../styles/alpheios";
+    @import "../../../styles/variables";
 
     .alpheios-wordlist-commands {
-      border-bottom: 1px solid $alpheios-toolbar-color;
+      border-bottom: 1px solid var(--alpheios-border-color);
     }
     .alpheios-wordlist-commands .alpheios-wordlist-commands__item {
       width: 15px;
@@ -120,18 +120,17 @@ export default {
     }
 
     .alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-no-important {
-      fill: $alpheios-link-color-dark-bg;
-      stroke: $alpheios-link-color-dark-bg;
+      fill: var(--alpheios-link-color-on-dark);
+      stroke: var(--alpheios-link-color-on-dark);
     }
 
     .alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-all-important {
-      fill: $alpheios-link-hover-color;
-      stroke: $alpheios-link-hover-color;
+      fill: var(--alpheios-color-light);
+      stroke: var(--alpheios-color-light);
     }
 
     .alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-remove-all {
-      fill: $alpheios-headers-color;
-      stroke: $alpheios-headers-color;
+      fill: var(--alpheios-color-dark);
+      stroke: var(--alpheios-color-dark);
     }
-
 </style>

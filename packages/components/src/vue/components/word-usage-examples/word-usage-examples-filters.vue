@@ -98,13 +98,13 @@ export default {
 
         this.removeDisabledFromTypeFilters()
         this.typeFilter = 'moreResults'
-        this.setDisabledToType('noFilters')}
-        else if (!this.$store.state.app.wordUsageExamplesReady && !this.app.homonym) {
-          this.removeDisabledFromTypeFilters()
-          this.typeFilter = 'noFilters'
-          this.setDisabledToType('filterCurrentResults')
-          this.selectedAuthor = null
-          this.selectedTextWork = null
+        this.setDisabledToType('noFilters')
+      } else if (!this.$store.state.app.wordUsageExamplesReady && !this.app.homonym) {
+        this.removeDisabledFromTypeFilters()
+        this.typeFilter = 'noFilters'
+        this.setDisabledToType('filterCurrentResults')
+        this.selectedAuthor = null
+        this.selectedTextWork = null
       }
       return true
     },
