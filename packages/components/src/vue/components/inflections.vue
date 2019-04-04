@@ -208,6 +208,7 @@ export default {
         use this information to adjust a width of a container that displays an inflection component.
        */
         Vue.nextTick(() => {
+          console.info(`UpdateWidth`, this.$el.offsetWidth)
           this.$emit('contentwidth', { width: this.$el.offsetWidth + 1, component: 'inflections' })
         })
       }

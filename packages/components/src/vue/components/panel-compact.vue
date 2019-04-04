@@ -400,6 +400,7 @@ export default {
     },
 
     setContentWidth: function (dataObj) {
+      console.info(`setContentWidth`, dataObj)
       if (dataObj.width === 'auto') {
         this.panelWidth = null
         return

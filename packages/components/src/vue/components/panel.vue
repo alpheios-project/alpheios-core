@@ -269,6 +269,7 @@ export default {
     },
     mainstyles: function () {
       this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth
+      console.info(`mainStyles, width is ${this.panelWidth}`)
       return {
         zIndex: this.ui.zIndex,
         width: `${this.panelWidth}px`
