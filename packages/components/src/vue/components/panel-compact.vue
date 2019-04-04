@@ -217,7 +217,7 @@
                @change="contentOptionChanged"
                v-show="$store.state.ui.notification.showLanguageSwitcher"></setting>
     </div>
-    <div class="alpheios-panel__notifications-auth uk-text-small alpheios-panel__notifications--important"
+    <div class="alpheios-panel__notifications-auth alpheios-panel__notifications--important"
          :data-count="$store.state.auth.notification.count"
          v-if="$store.state.auth.notification.text" v-show="$store.state.auth.notification.count === 1 || $store.state.auth.notification.count % 10 == 0">
          <span @click="$store.commit(`auth/resetNotification`)" class="alpheios-panel__notifications-close-btn">

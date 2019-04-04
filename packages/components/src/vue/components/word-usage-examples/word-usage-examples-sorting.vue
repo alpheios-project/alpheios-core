@@ -4,7 +4,7 @@
         {{ l10n.getText('WORDUSAGE_SORT_BY') }}
       </p>
       <div>
-        <select class="uk-select alpheios-word-usage-header-select-sortBy"
+        <select class="alpheios-select alpheios-word-usage-header-select-sortBy"
                 v-model="selectedSortBy" @change="changedSortBy">
           <option v-for="typeSorting in typeSortingList" v-bind:key="typeSorting.value"
                   v-bind:value="typeSorting.value">{{ typeSorting.title }}</option>

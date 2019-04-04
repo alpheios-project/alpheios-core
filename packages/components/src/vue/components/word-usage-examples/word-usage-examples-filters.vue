@@ -11,7 +11,7 @@
       </div>
 
       <div v-show="authorsList && typeFilter !== 'noFilters'">
-        <select class="uk-select alpheios-word-usage-header-select-author" v-model="selectedAuthor">
+        <select class="alpheios-select alpheios-word-usage-header-select-author" v-model="selectedAuthor">
             <option
                 v-for="authorItem in lastAuthorsList" v-bind:key="authorItem.ID"
                 v-bind:value="authorItem">{{ calcTitle(authorItem) }}</option>
@@ -27,7 +27,7 @@
       </div>
 
       <div v-if="this.selectedAuthor && typeFilter !== 'noFilters'">
-        <select class="uk-select alpheios-word-usage-header-select-textwork"
+        <select class="alpheios-select alpheios-word-usage-header-select-textwork"
                 v-model="selectedTextWork">
           <option
               v-for="workItem in filteredWorkList" v-bind:key="workItem.ID"
@@ -44,7 +44,7 @@
       </div>
 
       <div class="alpheios-word-usage-header-actions">
-          <button @click="getResults" class="uk-button uk-button-primary uk-button-small" :disabled="disabledButton">
+          <button @click="getResults" class="alpheios-button-primary" :disabled="disabledButton">
               {{ l10n.getText('WORDUSAGE_GET_RESULTS') }}
           </button>
       </div>
