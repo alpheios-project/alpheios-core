@@ -677,6 +677,7 @@ export default {
     flex-direction: column;
     padding: textsize(20px);
     background: var(--alpheios-text-bg-color);
+    overflow: auto;
   }
 
   .alpheios-popup__toolbar {

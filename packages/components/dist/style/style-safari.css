@@ -1407,6 +1407,7 @@ fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spi
   flex-direction: column !important;
   padding: calc(var(--alpheios-base-text-size) * 1.25) !important;
   background: var(--alpheios-text-bg-color) !important;
+  overflow: auto !important;
 }
 .alpheios-popup__toolbar {
   position: relative !important;
