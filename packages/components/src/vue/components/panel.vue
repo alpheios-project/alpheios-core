@@ -79,7 +79,6 @@
         >
           {{ l10n.getText('TITLE_INFLECTIONS_PANEL') }}
         </h1>
-        Before Inflection table
         <inflections @contentwidth="setContentWidth" class="alpheios-panel-inflections"></inflections>
       </div>
 

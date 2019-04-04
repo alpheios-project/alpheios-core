@@ -12624,7 +12624,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /*
     This is a desktop version of a panel
@@ -21031,7 +21030,7 @@ var render = function() {
                       "\n      "
                   )
                 ]),
-                _vm._v("\n      Before Inflection table\n      "),
+                _vm._v(" "),
                 _c("inflections", {
                   staticClass: "alpheios-panel-inflections",
                   on: { contentwidth: _vm.setContentWidth }
