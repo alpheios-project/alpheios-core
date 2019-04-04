@@ -572,10 +572,13 @@ html {
 .alpheios-content .multiselect {
   display: inline-block;
   vertical-align: middle !important;
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
+  border: 1px solid var(--alpheios-border-color) !important;
 }
 .alpheios-content .multiselect__content-wrapper {
   border: 1px solid var(--alpheios-border-color) !important;
   border-top: 0 !important;
+  padding: calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
 .alpheios-content ul.multiselect__content {
   padding: 0 !important;
@@ -583,7 +586,6 @@ html {
 }
 .alpheios-content .multiselect__tags {
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
-  border: 1px solid var(--alpheios-border-color) !important;
 }
 .alpheios-content .multiselect__tag {
   background-color: var(--alpheios-btn-primary-bg-color) !important;
@@ -1362,20 +1364,20 @@ fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spi
 .alpheios-popup__header {
   display: flex;
   justify-content: space-between !important;
-  height: calc(var(--alpheios-base-text-size) * 3.5) !important;
+  height: calc(var(--alpheios-base-ui-size) * 3.5) !important;
   background: var(--alpheios-toolbar-bg-color) !important;
 }
 .alpheios-popup__logo {
   position: relative !important;
-  left: calc(var(--alpheios-base-text-size) * 1) !important;
-  top: calc(var(--alpheios-base-text-size) * 1.125) !important;
+  left: calc(var(--alpheios-base-ui-size) * 1) !important;
+  top: calc(var(--alpheios-base-ui-size) * 1.125) !important;
 }
 .alpheios-popup__logo svg {
-  width: calc(var(--alpheios-base-text-size) * 1.75) !important;
+  width: calc(var(--alpheios-base-ui-size) * 1.75) !important;
   height: auto !important;
 }
 .alpheios-popup__close-btn {
-  width: calc(var(--alpheios-base-text-size) * 5) !important;
+  width: calc(var(--alpheios-base-ui-size) * 5) !important;
   height: 100% !important;
   cursor: pointer !important;
   fill: var(--alpheios-icon-color) !important;
@@ -1386,8 +1388,8 @@ fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spi
   position: relative !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
-  left: calc(var(--alpheios-base-text-size) * 1) !important;
-  width: calc(var(--alpheios-base-text-size) * 2.75) !important;
+  left: calc(var(--alpheios-base-ui-size) * 1) !important;
+  width: calc(var(--alpheios-base-ui-size) * 2.75) !important;
   height: auto !important;
 }
 .alpheios-popup__close-btn:hover, .alpheios-popup__close-btn:focus {
@@ -1417,7 +1419,7 @@ fieldset[disabled] .multiselect{pointer-events:none !important}.multiselect__spi
   padding-right: calc(var(--alpheios-base-text-size) * 1.25) !important;
 }
 .alpheios-popup__toolbar-text[lang=ara] {
-  padding: 0px 20px 0px 20px !important;
+  padding: 0 calc(var(--alpheios-base-ui-size) * 1.25) 0 calc(var(--alpheios-base-ui-size) * 1.25) !important;
   /* the arabic amiri font does not like the top padding */
 }
 h3.alpheios-popup__toolbar-selection {
@@ -1429,10 +1431,10 @@ h3.alpheios-popup__toolbar-selection {
   flex-wrap: wrap !important;
 }
 .alpheios-popup__toolbar-button {
-  margin: 0 0 calc(var(--alpheios-base-text-size) * 0.625) calc(var(--alpheios-base-text-size) * 0.625) !important;
+  margin: 0 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
 .alpheios-popup__content {
-  padding: calc(var(--alpheios-base-text-size) * 1.25) !important;
+  padding: calc(var(--alpheios-base-ui-size) * 1.25) !important;
   border: 1px solid var(--alpheios-border-color) !important;
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
@@ -1458,22 +1460,22 @@ a.alpheios-popup__providers-link {
 .alpheios-popup__notifications-auth {
   display: none;
   position: relative !important;
-  padding: calc(var(--alpheios-base-text-size) * 0.625) calc(var(--alpheios-base-text-size) * 1.25) !important;
+  padding: calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 1.25) !important;
   color: var(--alpheios-color-neutral-lightest) !important;
   background: var(--alpheios-color-muted) !important;
-  flex: 0 0 calc(var(--alpheios-base-text-size) * 3.75) !important;
+  flex: 0 0 calc(var(--alpheios-base-ui-size) * 3.75) !important;
   overflow: hidden !important;
 }
 .alpheios-popup__notifications-auth-msg {
-  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625) !important;
+  margin-bottom: calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
 .alpheios-popup__notifications-close-btn {
   position: absolute !important;
-  right: calc(var(--alpheios-base-text-size) * 0.3125) !important;
-  top: calc(var(--alpheios-base-text-size) * 0.3125) !important;
+  right: calc(var(--alpheios-base-ui-size) * 0.3125) !important;
+  top: calc(var(--alpheios-base-ui-size) * 0.3125) !important;
   display: block;
-  width: calc(var(--alpheios-base-text-size) * 1.25) !important;
-  height: calc(var(--alpheios-base-text-size) * 1.25) !important;
+  width: calc(var(--alpheios-base-ui-size) * 1.25) !important;
+  height: calc(var(--alpheios-base-ui-size) * 1.25) !important;
   margin: 0 !important;
   cursor: pointer !important;
   fill: var(--alpheios-color-neutral-lightest) !important;
@@ -2259,6 +2261,7 @@ h3.alpheios-inflections__credits-title {
   padding: calc(var(--alpheios-base-ui-size) * 0.375) calc(var(--alpheios-base-ui-size) * 0.75) !important;
   cursor: pointer !important;
   flex: 1 !important;
+  margin: 0 !important;
 }
 .alpheios-setting__button-group button:last-child {
   border-right: none !important;
@@ -2515,7 +2518,7 @@ h3.alpheios-inflections__credits-title {
   direction: ltr !important;
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: calc(var(--alpheios-base-text-size) * 3.5) auto calc(var(--alpheios-base-text-size) * 3.5) !important;
+  grid-template-rows: calc(var(--alpheios-base-ui-size) * 3.5) auto calc(var(--alpheios-base-ui-size) * 3.5) !important;
   grid-template-areas: "header" "content" "content" !important;
 }
 .alpheios-panel[data-notification-visible=true] {
@@ -2543,7 +2546,7 @@ h3.alpheios-inflections__credits-title {
   top: -1px !important;
 }
 .alpheios-panel__close-btn {
-  width: calc(var(--alpheios-base-text-size) * 3.75) !important;
+  width: calc(var(--alpheios-base-ui-size) * 3.75) !important;
   height: 100% !important;
   cursor: pointer !important;
   fill: var(--alpheios-icon-color) !important;
@@ -2552,8 +2555,8 @@ h3.alpheios-inflections__credits-title {
 }
 .alpheios-panel__close-btn svg {
   position: relative !important;
-  left: calc(var(--alpheios-base-text-size) * 0.5) !important;
-  width: calc(var(--alpheios-base-text-size) * 2.75) !important;
+  left: calc(var(--alpheios-base-ui-size) * 0.5) !important;
+  width: calc(var(--alpheios-base-ui-size) * 2.75) !important;
   height: auto !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
@@ -2575,9 +2578,10 @@ h3.alpheios-inflections__credits-title {
   box-sizing: border-box !important;
   display: flex;
   flex-flow: wrap !important;
+  align-items: flex-start !important;
   position: relative !important;
   background: var(--alpheios-color-neutral-lightest) !important;
-  padding-top: calc(var(--alpheios-base-text-size) * 1.25) !important;
+  padding-top: calc(var(--alpheios-base-ui-size) * 1.25) !important;
 }
 .alpheios-panel__title {
   text-transform: capitalize !important;

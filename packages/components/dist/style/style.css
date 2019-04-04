@@ -578,6 +578,7 @@ html {
 .alpheios-content .multiselect__content-wrapper {
   border: 1px solid var(--alpheios-border-color);
   border-top: 0;
+  padding: calc(var(--alpheios-base-ui-size) * 0.625);
 }
 .alpheios-content ul.multiselect__content {
   padding: 0;
@@ -1363,20 +1364,20 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
 .alpheios-popup__header {
   display: flex;
   justify-content: space-between;
-  height: calc(var(--alpheios-base-text-size) * 3.5);
+  height: calc(var(--alpheios-base-ui-size) * 3.5);
   background: var(--alpheios-toolbar-bg-color);
 }
 .alpheios-popup__logo {
   position: relative;
-  left: calc(var(--alpheios-base-text-size) * 1);
-  top: calc(var(--alpheios-base-text-size) * 1.125);
+  left: calc(var(--alpheios-base-ui-size) * 1);
+  top: calc(var(--alpheios-base-ui-size) * 1.125);
 }
 .alpheios-popup__logo svg {
-  width: calc(var(--alpheios-base-text-size) * 1.75);
+  width: calc(var(--alpheios-base-ui-size) * 1.75);
   height: auto;
 }
 .alpheios-popup__close-btn {
-  width: calc(var(--alpheios-base-text-size) * 5);
+  width: calc(var(--alpheios-base-ui-size) * 5);
   height: 100%;
   cursor: pointer;
   fill: var(--alpheios-icon-color);
@@ -1387,8 +1388,8 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
   position: relative;
   top: 50%;
   transform: translateY(-50%);
-  left: calc(var(--alpheios-base-text-size) * 1);
-  width: calc(var(--alpheios-base-text-size) * 2.75);
+  left: calc(var(--alpheios-base-ui-size) * 1);
+  width: calc(var(--alpheios-base-ui-size) * 2.75);
   height: auto;
 }
 .alpheios-popup__close-btn:hover, .alpheios-popup__close-btn:focus {
@@ -1418,7 +1419,7 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
   padding-right: calc(var(--alpheios-base-text-size) * 1.25);
 }
 .alpheios-popup__toolbar-text[lang=ara] {
-  padding: 0px 20px 0px 20px;
+  padding: 0 calc(var(--alpheios-base-ui-size) * 1.25) 0 calc(var(--alpheios-base-ui-size) * 1.25);
   /* the arabic amiri font does not like the top padding */
 }
 h3.alpheios-popup__toolbar-selection {
@@ -1430,10 +1431,10 @@ h3.alpheios-popup__toolbar-selection {
   flex-wrap: wrap;
 }
 .alpheios-popup__toolbar-button {
-  margin: 0 0 calc(var(--alpheios-base-text-size) * 0.625) calc(var(--alpheios-base-text-size) * 0.625);
+  margin: 0 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625);
 }
 .alpheios-popup__content {
-  padding: calc(var(--alpheios-base-text-size) * 1.25);
+  padding: calc(var(--alpheios-base-ui-size) * 1.25);
   border: 1px solid var(--alpheios-border-color);
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
 }
@@ -1459,22 +1460,22 @@ a.alpheios-popup__providers-link {
 .alpheios-popup__notifications-auth {
   display: none;
   position: relative;
-  padding: calc(var(--alpheios-base-text-size) * 0.625) calc(var(--alpheios-base-text-size) * 1.25);
+  padding: calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 1.25);
   color: var(--alpheios-color-neutral-lightest);
   background: var(--alpheios-color-muted);
-  flex: 0 0 calc(var(--alpheios-base-text-size) * 3.75);
+  flex: 0 0 calc(var(--alpheios-base-ui-size) * 3.75);
   overflow: hidden;
 }
 .alpheios-popup__notifications-auth-msg {
-  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
+  margin-bottom: calc(var(--alpheios-base-ui-size) * 0.625);
 }
 .alpheios-popup__notifications-close-btn {
   position: absolute;
-  right: calc(var(--alpheios-base-text-size) * 0.3125);
-  top: calc(var(--alpheios-base-text-size) * 0.3125);
+  right: calc(var(--alpheios-base-ui-size) * 0.3125);
+  top: calc(var(--alpheios-base-ui-size) * 0.3125);
   display: block;
-  width: calc(var(--alpheios-base-text-size) * 1.25);
-  height: calc(var(--alpheios-base-text-size) * 1.25);
+  width: calc(var(--alpheios-base-ui-size) * 1.25);
+  height: calc(var(--alpheios-base-ui-size) * 1.25);
   margin: 0;
   cursor: pointer;
   fill: var(--alpheios-color-neutral-lightest);
@@ -2260,6 +2261,7 @@ h3.alpheios-inflections__credits-title {
   padding: calc(var(--alpheios-base-ui-size) * 0.375) calc(var(--alpheios-base-ui-size) * 0.75);
   cursor: pointer;
   flex: 1;
+  margin: 0;
 }
 .alpheios-setting__button-group button:last-child {
   border-right: none;
@@ -2516,7 +2518,7 @@ h3.alpheios-inflections__credits-title {
   direction: ltr;
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: calc(var(--alpheios-base-text-size) * 3.5) auto calc(var(--alpheios-base-text-size) * 3.5);
+  grid-template-rows: calc(var(--alpheios-base-ui-size) * 3.5) auto calc(var(--alpheios-base-ui-size) * 3.5);
   grid-template-areas: "header" "content" "content";
 }
 .alpheios-panel[data-notification-visible=true] {
@@ -2544,7 +2546,7 @@ h3.alpheios-inflections__credits-title {
   top: -1px;
 }
 .alpheios-panel__close-btn {
-  width: calc(var(--alpheios-base-text-size) * 3.75);
+  width: calc(var(--alpheios-base-ui-size) * 3.75);
   height: 100%;
   cursor: pointer;
   fill: var(--alpheios-icon-color);
@@ -2553,8 +2555,8 @@ h3.alpheios-inflections__credits-title {
 }
 .alpheios-panel__close-btn svg {
   position: relative;
-  left: calc(var(--alpheios-base-text-size) * 0.5);
-  width: calc(var(--alpheios-base-text-size) * 2.75);
+  left: calc(var(--alpheios-base-ui-size) * 0.5);
+  width: calc(var(--alpheios-base-ui-size) * 2.75);
   height: auto;
   top: 50%;
   transform: translateY(-50%);
@@ -2579,7 +2581,7 @@ h3.alpheios-inflections__credits-title {
   align-items: flex-start;
   position: relative;
   background: var(--alpheios-color-neutral-lightest);
-  padding-top: calc(var(--alpheios-base-text-size) * 1.25);
+  padding-top: calc(var(--alpheios-base-ui-size) * 1.25);
 }
 .alpheios-panel__title {
   text-transform: capitalize;

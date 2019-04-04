@@ -626,23 +626,23 @@ export default {
   .alpheios-popup__header {
     display: flex;
     justify-content: space-between;
-    height: textsize(56px);
+    height: uisize(56px);
     background: var(--alpheios-toolbar-bg-color);
   }
 
   .alpheios-popup__logo {
     position: relative;
-    left: textsize(16px);
-    top: textsize(18px);
+    left: uisize(16px);
+    top: uisize(18px);
 
     svg {
-      width: textsize(28px);
+      width: uisize(28px);
       height: auto;
     }
   }
 
   .alpheios-popup__close-btn {
-    width: textsize(80px);
+    width: uisize(80px);
     height: 100%;
     cursor: pointer;
     fill: var(--alpheios-icon-color);
@@ -653,8 +653,8 @@ export default {
       position: relative;
       top: 50%;
       transform: translateY(-50%);
-      left: textsize(16px);
-      width: textsize(44px);
+      left: uisize(16px);
+      width: uisize(44px);
       height: auto;
     }
 
@@ -692,7 +692,7 @@ export default {
   }
 
   .alpheios-popup__toolbar-text[lang='ara'] {
-    padding: 0px 20px 0px 20px; /* the arabic amiri font does not like the top padding */
+    padding: 0 uisize(20px) 0 uisize(20px); /* the arabic amiri font does not like the top padding */
   }
 
   h3.alpheios-popup__toolbar-selection {
@@ -706,11 +706,11 @@ export default {
   }
 
   .alpheios-popup__toolbar-button {
-    margin: 0 0 textsize(10px) textsize(10px);
+    margin: 0 0 uisize(10px) uisize(10px);
   }
 
   .alpheios-popup__content {
-    padding: textsize(20px);
+    padding: uisize(20px);
     @include alpheios-border;
   }
 
@@ -741,24 +741,24 @@ export default {
   .alpheios-popup__notifications-auth {
     display: none;
     position: relative;
-    padding: textsize(10px) textsize(20px);
+    padding: uisize(10px) uisize(20px);
     color: var(--alpheios-color-neutral-lightest);
     background: var(--alpheios-color-muted);
-    flex: 0 0 textsize(60px);
+    flex: 0 0 uisize(60px);
     overflow: hidden;
   }
 
   .alpheios-popup__notifications-auth-msg {
-    margin-bottom: textsize(10px);
+    margin-bottom: uisize(10px);
   }
 
   .alpheios-popup__notifications-close-btn {
     position: absolute;
-    right: textsize(5px);
-    top: textsize(5px);
+    right: uisize(5px);
+    top: uisize(5px);
     display: block;
-    width: textsize(20px);
-    height: textsize(20px);
+    width: uisize(20px);
+    height: uisize(20px);
     margin: 0;
     cursor: pointer;
     fill: var(--alpheios-color-neutral-lightest);

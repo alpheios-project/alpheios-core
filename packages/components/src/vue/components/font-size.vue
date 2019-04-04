@@ -60,6 +60,8 @@ export default {
       padding: uisize(6px) uisize(12px);
       cursor: pointer;
       flex: 1;
+      // Need below to override default styles of Safari
+      margin: 0;
     }
 
     button:last-child {

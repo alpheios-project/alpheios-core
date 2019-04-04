@@ -519,7 +519,7 @@ export default {
     direction: ltr;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: textsize(56px) auto textsize(56px);
+    grid-template-rows: uisize(56px) auto uisize(56px);
     grid-template-areas: "header" "content" "content";
   }
 
@@ -552,7 +552,7 @@ export default {
   }
 
   .alpheios-panel__close-btn {
-    width: textsize(60px);
+    width: uisize(60px);
     height: 100%;
     cursor: pointer;
     fill: var(--alpheios-icon-color);
@@ -561,8 +561,8 @@ export default {
 
     svg {
       position: relative;
-      left: textsize(8px);
-      width: textsize(44px);
+      left: uisize(8px);
+      width: uisize(44px);
       height: auto;
       top: 50%;
       transform: translateY(-50%);
@@ -593,7 +593,7 @@ export default {
     // Need to set element as an offset parent for panel content items
     position: relative;
     background: var(--alpheios-color-neutral-lightest);
-    padding-top: textsize(20px);
+    padding-top: uisize(20px);
   }
 
   .alpheios-panel__title {
