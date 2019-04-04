@@ -67,7 +67,7 @@ export default {
       if (this.selectedAuthor) {
         return this.app.wordUsageExamples.wordUsageExamples
           .filter(wordUsageExample => {
-            return wordUsageExample.author.ID === this.selectedAuthor.ID && (this.selectedTextWork ? wordUsageExample.textWork.ID === this.selectedTextWork.ID : true)
+            return wordUsageExample.author && (wordUsageExample.author.ID === this.selectedAuthor.ID) && (this.selectedTextWork ? wordUsageExample.textWork.ID === this.selectedTextWork.ID : true)
           })
       }
       return this.app.wordUsageExamples.wordUsageExamples

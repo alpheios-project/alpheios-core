@@ -116,7 +116,7 @@
         <user-auth></user-auth>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__word-usage"
-           v-if="$store.state.app.showWordUsageTab"
+           v-if="$store.state.app.wordUsageExampleEnabled"
            v-show="$store.getters['ui/isActiveTab']('wordUsage')"
         >
         <word-usage-examples></word-usage-examples>
@@ -200,9 +200,8 @@
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist"
            v-show="$store.getters['ui/isActiveTab']('wordlist')"
-           data-alpheios-ignore="all"
       >
-        <word-list-panel :updated="$store.state.app.wordListUpdateTime" :wordlistC="app.wordlistC"></word-list-panel>
+        <word-list-panel></word-list-panel>
       </div>
     </div>
     <div class="alpheios-panel__notifications alpheios-text-small"
@@ -251,7 +250,7 @@ import ReskinFontColor from './font-size.vue'
 import UserAuth from './user-auth.vue'
 import WordUsageExamples from '@/vue/components/word-usage-examples/word-usage-examples.vue'
 import { Definition } from 'alpheios-data-models'
-import { WordListPanel } from 'alpheios-wordlist'
+import WordListPanel from '@/vue/components/word-list/word-list-panel.vue'
 // Embeddable SVG icons
 import MenuIcon from '@/images/inline-icons/menu.svg'
 import CloseIcon from '../../images/inline-icons/close.svg'

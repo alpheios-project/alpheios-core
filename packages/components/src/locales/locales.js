@@ -1,8 +1,7 @@
-import { EnUs as EnUsWordList } from 'alpheios-wordlist'
-
 import EnUs from './en-us/messages.json'
 import EnUsData from './en-us/messages-data.json'
 import EnUsInflectons from './en-us/messages-inflections.json'
+import EnUsWordList from './en-us/messages-word-list.json'
 import EnGb from './en-gb/messages.json'
 import MessageBundle from '@/lib/l10n/message-bundle.js'
 

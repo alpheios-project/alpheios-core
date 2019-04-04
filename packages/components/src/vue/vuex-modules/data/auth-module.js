@@ -72,7 +72,7 @@ AuthModule.api = (moduleInstance, store) => {
       }).catch((error) => {
         // a session being unavailable is not necessarily an error
         // user might not have authenticated or it might be client-side auth
-        console.info('Session unavailable', error)
+        console.warn('Session unavailable', error)
       })
     },
     authenticate: () => {

@@ -347,7 +347,6 @@ export default class UIController {
       state: this.state, // An app-level state
       homonym: null,
       inflectionsViewSet: null,
-      wordlistC: this.wordlistC, // A word list controller
       wordUsageExamples: null,
       wordUsageAuthors: [],
 
@@ -377,7 +376,12 @@ export default class UIController {
         }
         return false
       },
-      getWordUsageData: this.getWordUsageData.bind(this)
+      getWordUsageData: this.getWordUsageData.bind(this),
+      getWordList: this.wordlistC.getWordList.bind(this.wordlistC),
+      selectWordItem: this.wordlistC.selectWordItem.bind(this.wordlistC),
+      getAllWordLists: () => this.wordlistC ? this.wordlistC.wordLists : [],
+      enableWordUsageExamples: this.enableWordUsageExamples.bind(this),
+      newLexicalRequest: this.newLexicalRequest.bind(this)
     }
 
     this.store.registerModule('app', {
@@ -397,7 +401,7 @@ export default class UIController {
           y: 0
         },
         homonymDataReady: false,
-        showWordUsageTab: false,
+        wordUsageExampleEnabled: false,
         linkedFeatures: [], // An array of linked features, updated with every new homonym value is written to the store
         defUpdateTime: 0, // A time of the last update of defintions, in ms. Needed to track changes in definitions.
         lexicalRequest: {
@@ -479,12 +483,12 @@ export default class UIController {
           state.wordUsageExamplesReady = false
           state.linkedFeatures = []
           state.homonymDataReady = false
-          state.showWordUsageTab = false
+          state.wordUsageExampleEnabled = false
           state.defUpdateTime = 0
           state.morphDataReady = false
           state.translationsDataReady = false
           state.providers = []
-          state.hasWordListsData = false
+
           state.treebankData.page = {}
           state.treebankData.word = {}
         },
@@ -509,6 +513,10 @@ export default class UIController {
         setHomonym (state, homonym) {
           state.homonymDataReady = true
           state.linkedFeatures = LanguageModelFactory.getLanguageModel(homonym.languageID).grammarFeatures()
+        },
+
+        setWordUsageExampleEnabled (state, wordUsageExampleEnabled) {
+          state.wordUsageExampleEnabled = wordUsageExampleEnabled
         },
 
         setInflData (state, hasInflData = true) {
@@ -551,7 +559,7 @@ export default class UIController {
         },
 
         setWordLists (state, wordLists) {
-          state.hasWordListsData = (wordLists.length > 0)
+          state.hasWordListsData = Boolean(wordLists.find(wordList => !wordList.isEmpty))
           state.wordListUpdateTime = Date.now()
         },
 
@@ -1070,7 +1078,7 @@ export default class UIController {
           resourceOptions: this.resourceOptions,
           siteOptions: [],
           lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { locale: this.contentOptions.items.locale.currentValue } : null,
-          wordUsageExamples: this.enableWordUsageExamples(textSelector, 'onLexiqalQuery')
+          wordUsageExamples: this.enableWordUsageExamples(textSelector, 'onLexicalQuery')
             ? { paginationMax: this.contentOptions.items.wordUsageExamplesMax.currentValue,
               paginationAuthMax: this.contentOptions.items.wordUsageExamplesAuthMax.currentValue }
             : null,
@@ -1084,6 +1092,8 @@ export default class UIController {
   }
 
   async getWordUsageData (homonym, params = {}) {
+    this.store.commit('app/setWordUsageExamplesReady', false)
+
     let wordUsageExamples = this.enableWordUsageExamples({ languageID: homonym.languageID }, 'onDemand')
       ? { paginationMax: this.contentOptions.items.wordUsageExamplesMax.currentValue,
         paginationAuthMax: this.contentOptions.items.wordUsageExamplesAuthMax.currentValue }
@@ -1103,7 +1113,7 @@ export default class UIController {
   }
 
   enableWordUsageExamples (textSelector, requestType) {
-    let checkType = requestType === 'onLexiqalQuery' ? this.contentOptions.items.wordUsageExamplesON.currentValue === requestType : true
+    let checkType = requestType === 'onLexicalQuery' ? this.contentOptions.items.wordUsageExamplesON.currentValue === requestType : true
     return textSelector.languageID === Constants.LANG_LATIN &&
       this.contentOptions.items.enableWordUsageExamples.currentValue &&
       checkType
@@ -1181,7 +1191,11 @@ export default class UIController {
       this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
     }
     this.api.app.homonym = homonym
+    let wordUsageExampleEnabled = this.enableWordUsageExamples({ languageID: homonym.languageID })
+
     this.store.commit('app/setHomonym', homonym)
+    this.store.commit('app/setWordUsageExampleEnabled', wordUsageExampleEnabled)
+
     this.store.commit('app/setMorphDataReady')
     const inflDataReady = Boolean(inflectionsViewSet && inflectionsViewSet.hasMatchingViews)
     this.api.app.inflectionsViewSet = inflectionsViewSet
@@ -1191,8 +1205,8 @@ export default class UIController {
     this.updateDefinitions(homonym)
   }
 
-  onWordListUpdated (wordLists) {
-    this.store.commit('app/setWordLists', wordLists)
+  onWordListUpdated (wordList) {
+    this.store.commit('app/setWordLists', [wordList])
     if (this.store.state.auth.promptLogin && !this.store.state.auth.isAuthenticated) {
       this.store.commit(`auth/setNotification`, { text: 'TEXT_NOTICE_SUGGEST_LOGIN', showLogin: true, count: this.wordlistC.getWordListItemCount() })
     }
@@ -1231,13 +1245,17 @@ export default class UIController {
   }
 
   async onWordItemSelected (wordItem) {
-    let wordItemFull = await this.userDataManager.query({ dataType: 'WordItem', params: { wordItem } }, { type: 'full' })
-    let homonym = wordItemFull[0].homonym
-    this.newLexicalRequest(homonym.targetWord, homonym.languageID)
+    if (this.userDataManager) {
+      let wordItemFull = await this.userDataManager.query({ dataType: 'WordItem', params: { wordItem } }, { type: 'full' })
+      let homonym = wordItemFull[0].homonym
+      this.newLexicalRequest(homonym.targetWord, homonym.languageID)
 
-    this.onHomonymReady(homonym)
-    this.updateDefinitions(homonym)
-    this.updateTranslations(homonym)
+      this.onHomonymReady(homonym)
+      this.updateDefinitions(homonym)
+      this.updateTranslations(homonym)
+    } else {
+      console.warn('UserDataManager is not defined, data couldn\'t be loaded from the storage')
+    }
   }
 
   /**

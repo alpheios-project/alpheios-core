@@ -61,7 +61,7 @@
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORD_USAGE')" tooltipDirection="bottom-narrow"
-            v-if="$store.state.app.showWordUsageTab"
+            v-if="$store.state.app.wordUsageExampleEnabled"
     >
       <div @click="ui.changeTab('wordUsage')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordUsage') }">
@@ -72,7 +72,7 @@
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORDLIST')" tooltipDirection="bottom-narrow">
       <div @click="ui.changeTab('wordlist')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordlist') }"
-            v-show="this.$store.state.app.wordListUpdateTime && this.app.wordlistC && Object.keys(this.app.wordlistC.wordLists).length > 0">
+            v-show="this.$store.state.app.hasWordListsData">
         <wordlist-icon></wordlist-icon>
       </div>
     </alph-tooltip>

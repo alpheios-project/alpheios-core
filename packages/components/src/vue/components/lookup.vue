@@ -145,9 +145,18 @@ export default {
 
       const resourceOptions = this.$options.resourceOptions
       const lemmaTranslationLang = this.app.state.lemmaTranslationLang
-      LexicalQueryLookup
-        .create(textSelector, resourceOptions, lemmaTranslationLang)
-        .getData()
+
+      const wordUsageExamples = this.app.enableWordUsageExamples(textSelector, 'onLexicalQuery')
+            ? { paginationMax: this.settings.contentOptions.items.wordUsageExamplesMax.currentValue,
+              paginationAuthMax: this.settings.contentOptions.items.wordUsageExamplesAuthMax.currentValue }
+            : null
+
+      let lexQuery = LexicalQueryLookup
+        .create(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples)
+
+      this.app.newLexicalRequest(this.lookuptext, languageID)
+
+      lexQuery.getData()
       // A lookup, when started from a panel, should open a popup with lookup results
       this.ui.openPopup()
       this.ui.closePanel()

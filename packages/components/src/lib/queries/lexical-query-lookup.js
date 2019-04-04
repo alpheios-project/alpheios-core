@@ -16,7 +16,7 @@ export default class LexicalQueryLookup extends LexicalQuery {
    * @param {symbol} lemmaTranslationLang - A language ID, such as Constants.LANG_LATIN.
    */
 
-  static create (textSelector, resourceOptions, lemmaTranslationLang) {
+  static create (textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples) {
     // Check to see if Lemma Translations should be enabled for a query
     // Experimental
     let lemmaTranslations
@@ -27,6 +27,8 @@ export default class LexicalQueryLookup extends LexicalQuery {
       htmlSelector: HTMLSelector.getDumpHTMLSelector(),
 
       lemmaTranslations: lemmaTranslations,
+
+      wordUsageExamples: wordUsageExamples,
 
       resourceOptions: resourceOptions,
       langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
