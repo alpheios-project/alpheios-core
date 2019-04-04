@@ -298,7 +298,7 @@ export default {
   directives: {
     onClickaway: onClickaway
   },
-  minWidth: 400, // A minimal width of a panel, in pixels
+  minWidth: 500, // A minimal width of a panel, in pixels
   defaultScrollPadding: 20,
   data: function () {
     return {
@@ -400,7 +400,6 @@ export default {
     },
 
     setContentWidth: function (dataObj) {
-      console.info(`setContentWidth`, dataObj)
       if (dataObj.width === 'auto') {
         this.panelWidth = null
         return

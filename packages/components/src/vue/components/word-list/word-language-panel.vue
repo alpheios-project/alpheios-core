@@ -74,22 +74,22 @@ export default {
   },
   methods: {
     async makeAllImportant () {
-      await this.controller.updateAllImportant(this.languageCode, true)
+      await this.app.updateAllImportant(this.languageCode, true)
       this.$emit('eventChangeImportant')
     },
     async removeAllImportant () {
-      await this.controller.updateAllImportant(this.languageCode, false)
+      await this.app.updateAllImportant(this.languageCode, false)
       this.$emit('eventChangeImportant')
     },
     async changeImportant (targetWord, important) {
-      await this.controller.updateWordItemImportant(this.languageCode, targetWord, important)
+      await this.app.updateWordItemImportant(this.languageCode, targetWord, important)
     },
     async deleteItem (targetWord) {
-      await this.controller.removeWordListItem(this.languageCode, targetWord)
+      await this.app.removeWordListItem(this.languageCode, targetWord)
       this.reloadList = this.reloadList + 1
     },
     async deleteAll () {
-      await this.controller.removeWordList(this.languageCode)
+      await this.app.removeWordList(this.languageCode)
       this.reloadList = this.reloadList + 1
     },
     showContexts (targetWord) {

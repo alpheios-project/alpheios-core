@@ -379,7 +379,12 @@ export default class UIController {
       getWordUsageData: this.getWordUsageData.bind(this),
       getWordList: this.wordlistC.getWordList.bind(this.wordlistC),
       selectWordItem: this.wordlistC.selectWordItem.bind(this.wordlistC),
+      updateAllImportant: this.wordlistC.updateAllImportant.bind(this.wordlistC),
+      updateWordItemImportant: this.wordlistC.updateWordItemImportant.bind(this.wordlistC),
+      removeWordListItem: this.wordlistC.removeWordListItem.bind(this.wordlistC),
+      removeWordList: this.wordlistC.removeWordList.bind(this.wordlistC),
       getAllWordLists: () => this.wordlistC ? this.wordlistC.wordLists : [],
+
       enableWordUsageExamples: this.enableWordUsageExamples.bind(this),
       newLexicalRequest: this.newLexicalRequest.bind(this)
     }
