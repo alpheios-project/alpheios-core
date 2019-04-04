@@ -81,7 +81,9 @@ export default {
     }
 
     &:hover,
-    &:focus {
+    &:focus,
+    &.active:hover,
+    &.active:focus{
       fill: var(--alpheios-icon-color-hover);
       stroke: var(--alpheios-icon-color-hover);
       background-color: var(--alpheios-icon-bg-color-hover);

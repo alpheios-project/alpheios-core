@@ -117,7 +117,7 @@
         </div>
       </div>
 
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__status"
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__user alpheios-panel__tab-panel--fw"
           v-if="$store.state.auth.showUI" v-show="$store.getters['ui/isActiveTab']('user')"
            data-alpheios-ignore="all">
         <user-auth></user-auth>
@@ -269,7 +269,6 @@ export default {
     },
     mainstyles: function () {
       this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth
-      console.info(`mainStyles, width is ${this.panelWidth}`)
       return {
         zIndex: this.ui.zIndex,
         width: `${this.panelWidth}px`

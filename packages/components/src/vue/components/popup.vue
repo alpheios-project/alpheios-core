@@ -12,7 +12,6 @@
         <logo-icon></logo-icon>
       </div>
       <alph-tooltip
-          :additionalStyles="additionalStylesTootipCloseIcon"
           :tooltipText="l10n.getText('TOOLTIP_POPUP_CLOSE')"
           tooltipDirection="left"
       >
@@ -375,13 +374,6 @@ export default {
       return viewportHeight - 2 * this.data.viewportMargin - horizontalScrollbarWidth
     },
 
-    additionalStylesTootipCloseIcon: function () {
-      return {
-        top: '2px',
-        right: '50px'
-      }
-    },
-
     verboseMode () {
       return this.settings.contentOptions.items.verboseMode.currentValue === `verbose`
     }
@@ -678,11 +670,13 @@ export default {
     padding: textsize(20px);
     background: var(--alpheios-text-bg-color);
     overflow: auto;
+    flex: 1 0;
   }
 
   .alpheios-popup__toolbar {
     position: relative;
     display: flex;
+    flex: 1 0;
     justify-content: space-between;
     align-items: center;
     margin-bottom: textsize(10px);
@@ -711,7 +705,12 @@ export default {
   }
 
   .alpheios-popup__content {
+    flex: 1 0;
     padding: uisize(20px);
+    // This is to solve a problem when part of content is transparent in Chrome.
+    // However, this can be fixed with flex parameters
+    background: var(--alpheios-text-bg-color);
+
     @include alpheios-border;
   }
 

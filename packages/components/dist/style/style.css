@@ -1408,10 +1408,12 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
   padding: calc(var(--alpheios-base-text-size) * 1.25);
   background: var(--alpheios-text-bg-color);
   overflow: auto;
+  flex: 1 0;
 }
 .alpheios-popup__toolbar {
   position: relative;
   display: flex;
+  flex: 1 0;
   justify-content: space-between;
   align-items: center;
   margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
@@ -1435,7 +1437,9 @@ h3.alpheios-popup__toolbar-selection {
   margin: 0 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625);
 }
 .alpheios-popup__content {
+  flex: 1 0;
   padding: calc(var(--alpheios-base-ui-size) * 1.25);
+  background: var(--alpheios-text-bg-color);
   border: 1px solid var(--alpheios-border-color);
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
 }
@@ -1535,7 +1539,7 @@ a.alpheios-popup__providers-link {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.alpheios-navbuttons__btn:hover, .alpheios-navbuttons__btn:focus {
+.alpheios-navbuttons__btn:hover, .alpheios-navbuttons__btn:focus, .alpheios-navbuttons__btn.active:hover, .alpheios-navbuttons__btn.active:focus {
   fill: var(--alpheios-icon-color-hover);
   stroke: var(--alpheios-icon-color-hover);
   background-color: var(--alpheios-icon-bg-color-hover);

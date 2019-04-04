@@ -110,7 +110,7 @@
           <div class="alpheios-panel__message">{{message}}</div>
         </div>
       </div>
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__status"
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__user"
           v-if="$store.state.auth.showUI" v-show="$store.getters['ui/isActiveTab']('user')"
            data-alpheios-ignore="all">
         <user-auth></user-auth>
@@ -298,7 +298,8 @@ export default {
   directives: {
     onClickaway: onClickaway
   },
-  minWidth: 500, // A minimal width of a panel, in pixels
+  // A minimal width of a panel, in pixels. This is high to fit all te buttons of a large size into the panel
+  minWidth: 650,
   defaultScrollPadding: 20,
   data: function () {
     return {
