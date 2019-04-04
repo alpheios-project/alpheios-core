@@ -662,7 +662,6 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    width: 100%;
   }
 
   .alpheios-panel__tab-panel--fw {
