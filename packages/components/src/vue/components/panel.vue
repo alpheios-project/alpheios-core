@@ -212,7 +212,7 @@
         <info></info>
       </div>
 
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist"
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist alpheios-panel__tab-panel--fw"
            v-show="$store.getters['ui/isActiveTab']('wordlist')"
            data-alpheios-ignore="all"
       >

@@ -1,6 +1,6 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { mount, createLocalVue } from '@vue/test-utils'
+import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Lookup from '@/vue/components/lookup.vue'
 import Setting from '@/vue/components/setting.vue'
@@ -24,6 +24,7 @@ describe('lookup.test.js', () => {
   localVue.use(Vuex)
   let contentOptions
   let resourceOptions
+  let lookupResourceOptions
   let store
   let api
   let l10nModule
@@ -47,11 +48,13 @@ describe('lookup.test.js', () => {
 
     contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
     resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
+    lookupResourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
 
     api = {
       settings: {
         contentOptions,
-        resourceOptions
+        resourceOptions,
+        lookupResourceOptions
       }
     }
 
@@ -72,9 +75,13 @@ describe('lookup.test.js', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('1 Lookup - renders a vue instance (min requirements)', () => {
-    let cmp = mount(Lookup, {
-      store,
+  it('1 Lookup - renders a vue instance (min requirements)', () => {
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        data: {
+          nameBase: 'lookup'
+        }
+      },
       localVue,
       mocks: api
     })

@@ -56,14 +56,9 @@ import { LanguageModelFactory } from 'alpheios-data-models'
 
 import Setting from './setting.vue'
 
-// Modules support
-import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
-
 export default {
   name: 'Lookup',
   inject: ['app', 'ui', 'l10n', 'settings'],
-  storeModules: ['app'], // Store modules that are required by this component
-  mixins: [DependencyCheck],
   components: {
     alphSetting: Setting
   },
@@ -147,9 +142,9 @@ export default {
       const lemmaTranslationLang = this.app.state.lemmaTranslationLang
 
       const wordUsageExamples = this.app.enableWordUsageExamples(textSelector, 'onLexicalQuery')
-            ? { paginationMax: this.settings.contentOptions.items.wordUsageExamplesMax.currentValue,
-              paginationAuthMax: this.settings.contentOptions.items.wordUsageExamplesAuthMax.currentValue }
-            : null
+        ? { paginationMax: this.settings.contentOptions.items.wordUsageExamplesMax.currentValue,
+          paginationAuthMax: this.settings.contentOptions.items.wordUsageExamplesAuthMax.currentValue }
+        : null
 
       let lexQuery = LexicalQueryLookup
         .create(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples)
