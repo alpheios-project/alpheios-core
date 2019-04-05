@@ -5486,7 +5486,7 @@ class WordList {
     * @param {String} targetWord
     */
   _makeItemKey (languageCode, targetWord) {
-    return `${languageCode}:${targetWord}`
+    return `${languageCode}:${targetWord.toLowerCase()}`
   }
 }
 

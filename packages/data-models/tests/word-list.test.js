@@ -68,6 +68,12 @@ describe('word-list.test.js', () => {
     expect(wL.size).toEqual(1)
   })
 
+  it('5 WordList - _makeItemKey is case insensetive', () => {
+    let wL = new WordList(testLanguageCode, [mockWILatin])
+    expect(wL._makeItemKey('lat', 'mare')).toEqual('lat:mare')
+    expect(wL._makeItemKey('lat', 'Mare')).toEqual('lat:mare')
+  })
+
   it.skip('4 WordList - deleteWordItem removes an item from the list', () => {
 
   })
