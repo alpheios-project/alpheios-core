@@ -22,6 +22,7 @@ import LexicalQueryLookup from '@/lib/queries/lexical-query-lookup.js'
 describe('lookup.test.js', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
+  const nameBase = 'LookupNameBase'
   let contentOptions
   let resourceOptions
   let lookupResourceOptions
@@ -46,11 +47,22 @@ describe('lookup.test.js', () => {
       }
     })
 
+    // Modify defaults to provide more precise test results
+    ContentOptionDefaults.items.preferredLanguage.defaultValue = 'grc'
+    ContentOptionDefaults.items.lookupLanguage.defaultValue = 'ara'
+
     contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
     resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
     lookupResourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
 
     api = {
+      app: {
+        state: {
+          lemmaTranslationLang: 'lat'
+        },
+        updateLanguage: () => true,
+        enableWordUsageExamples: () => true
+      },
       settings: {
         contentOptions,
         resourceOptions,
@@ -75,20 +87,138 @@ describe('lookup.test.js', () => {
     jest.clearAllMocks()
   })
 
-  it('1 Lookup - renders a vue instance (min requirements)', () => {
+  it('1 Lookup shall create a Vue instance', () => {
     let cmp = shallowMount(Lookup, {
       propsData: {
-        data: {
-          nameBase: 'lookup'
-        }
+        nameBase: nameBase
+      },
+      mocks: api
+    })
+    expect(cmp.isVueInstance()).toBeTruthy()
+    expect(cmp.props().nameBase).toBe(nameBase)
+    expect(cmp.props().usePageLangPrefs).toBeFalsy()
+    expect(cmp.vm.settings.contentOptions).toBeDefined()
+    expect(cmp.vm.settings.resourceOptions).toBeDefined()
+    expect(cmp.vm.settings.lookupResourceOptions).toBeDefined()
+  })
+
+  it('2 Lookup (with default parameters) shall be initialized properly', () => {
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        nameBase: nameBase
       },
       localVue,
       mocks: api
     })
-    expect(cmp.isVueInstance()).toBeTruthy()
+
+    expect(cmp.props().usePageLangPrefs).toBeFalsy()
+    expect(cmp.vm.$options.lookupLanguage).toBe(contentOptions.items.lookupLanguage)
+    expect(cmp.vm.$options.resourceOptions).toBe(lookupResourceOptions)
   })
 
-  it.skip('2 Lookup - full renders and click lookup button execute', () => {
+  it('3 Lookup (set to use page language preferences) shall be initialized properly', () => {
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        nameBase: nameBase,
+        usePageLangPrefs: true
+      },
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.props().usePageLangPrefs).toBeTruthy()
+    expect(cmp.vm.$options.lookupLanguage).toBe(contentOptions.items.preferredLanguage)
+    expect(cmp.vm.$options.resourceOptions).toBe(resourceOptions)
+  })
+
+  it('4 Lookup(with default parameters).currentLanguage shall return correct values', () => {
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        nameBase: nameBase
+      },
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.vm.currentLanguage).toEqual({
+      text: 'Arabic',
+      value: 'ara'
+    })
+  })
+
+  it('5 Lookup(set to use page language preferences).currentLanguage shall return correct values', () => {
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        nameBase: nameBase,
+        usePageLangPrefs: true
+      },
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.vm.currentLanguage).toEqual({
+      text: 'Greek',
+      value: 'grc'
+    })
+  })
+
+  it('6 Lookup(with default parameters).lexiconsFiltered shall return correct values', () => {
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        nameBase: nameBase
+      },
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.vm.lexiconsFiltered).toEqual([])
+  })
+
+  it('7 Lookup(set to use page language preferences).lexiconsFiltered shall return correct values', () => {
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        nameBase: nameBase,
+        usePageLangPrefs: true
+      },
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.vm.lexiconsFiltered).toEqual([{
+      currentValue: ['https://github.com/alpheios-project/lsj'],
+      defaultValue: ['https://github.com/alpheios-project/lsj'],
+      labelText: 'Greek Lexicons (short)',
+      multiValue: true,
+      name: 'lexiconsShort-grc',
+      storageAdapter: {
+        domain: 'alpheios-resource-options'
+      },
+      values: [
+        {
+          text: 'Middle Liddell',
+          value: 'https://github.com/alpheios-project/ml'
+        },
+        {
+          text: 'Liddell, Scott, Jones',
+          value: 'https://github.com/alpheios-project/lsj'
+        },
+        {
+          text: 'Autenrieth Homeric Lexicon',
+          value: 'https://github.com/alpheios-project/aut'
+        },
+        {
+          text: 'Dodson',
+          value: 'https://github.com/alpheios-project/dod'
+        },
+        {
+          text: 'Abbott-Smith',
+          value: 'https://github.com/alpheios-project/as'
+        }
+      ]
+    }])
+  })
+
+  it(`8 Lookup's lookup action shall not proceed if lookup text is empty`, () => {
     let fn = LexicalQueryLookup.create
     LexicalQueryLookup.create = function () {
       return {
@@ -96,107 +226,118 @@ describe('lookup.test.js', () => {
       }
     }
 
-    let cmp = mount(Lookup, {
-      store,
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        nameBase: nameBase
+      },
       localVue,
       mocks: api
     })
 
-    expect(cmp.vm.settings.contentOptions).toBeDefined()
-    expect(cmp.vm.settings.resourceOptions).toBeDefined()
-
-    expect(cmp.vm.currentLanguage).toEqual(contentOptions.items.lookupLanguage.currentTextValue())
-
     expect(cmp.find('input').exists()).toBeTruthy()
     jest.spyOn(LexicalQueryLookup, 'create')
 
-    // TODO: Redo this after changes in Vue components are finalized
-    /* cmp.find('button').trigger('click')
-    expect(LexicalQueryLookup.create).not.toHaveBeenCalled() */
+    cmp.find('button').trigger('click')
+    expect(LexicalQueryLookup.create).not.toHaveBeenCalled()
+
+    LexicalQueryLookup.create = fn
+  })
+
+  it(`9 Lookup's lookup action shall call LexicalQueryLookup.create if correct lookup text is provided`, () => {
+    let fn = LexicalQueryLookup.create
+    LexicalQueryLookup.create = function () {
+      return {
+        getData: function () { }
+      }
+    }
+
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        nameBase: nameBase
+      },
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.find('input').exists()).toBeTruthy()
+    jest.spyOn(LexicalQueryLookup, 'create')
 
     cmp.setData({
       lookuptext: 'footext'
     })
     expect(cmp.find('input').element.value).toEqual('footext')
 
-    // TODO: Redo this after changes in Vue components are finalized
-    /* cmp.find('button').trigger('click')
-    expect(LexicalQueryLookup.create).toHaveBeenCalled() */
+    cmp.find('button').trigger('click')
+    expect(LexicalQueryLookup.create).toHaveBeenCalled()
 
     LexicalQueryLookup.create = fn
   })
 
-  it.skip('3 Lookup - created with parent language', () => {
+  it(`10 Lookup's dictionaries block shall be displayed by default`, () => {
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        nameBase: nameBase
+      },
+      localVue,
+      mocks: api
+    })
+    expect(cmp.find('.alpheios-lookup__settings').exists()).toBe(true)
+  })
+
+  it(`11 Lookup's dictionaries block can be disabled by a prop setting`, () => {
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        nameBase: nameBase,
+        showLanguageSettingsGroup: false
+      },
+      localVue,
+      mocks: api
+    })
+    expect(cmp.find('.alpheios-lookup__settings').exists()).toBe(false)
+  })
+
+  it(`12 Lookup shall display a list of dictionaries for languages where that list exists`, () => {
     let cmp = mount(Lookup, {
       propsData: {
-        parentLanguage: 'Latin'
+        nameBase: nameBase,
+        usePageLangPrefs: true
       },
-      store,
       localVue,
       mocks: api
     })
 
-    expect(cmp.vm.currentLanguage).toEqual('Latin')
-    expect(cmp.vm.settings.contentOptions.items.lookupLanguage.currentTextValue()).toEqual('Latin')
-
-    expect(cmp.vm.lexiconSettingName).toEqual(`lexiconsShort-lat`)
-    expect(cmp.vm.lexiconsFiltered).toEqual(resourceOptions.items.lexiconsShort.filter((item) => item.name === `lexiconsShort-lat`))
+    expect(cmp.find('.alpheios-lookup__settings').exists()).toBe(true)
+    expect(cmp.find('.alpheios-lookup__resource-control').exists()).toBe(true)
   })
 
-  it.skip('4 Lookup - settings block', () => {
-    let cmp = mount(Lookup, {
-      store,
+  it(`13 Lookup shall NOT display a list of dictionaries for languages that has none`, () => {
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        nameBase: nameBase
+      },
       localVue,
       mocks: api
     })
-    expect(cmp.find('.alpheios-lookup__settings-items').element.style.display).toEqual('none')
 
-    // cmp.find('.alpheios-lookup__settings-link').trigger('click')
-
-    cmp.vm.overrideLanguage = true
-    expect(cmp.find('.alpheios-lookup__settings-items').element.style.display).not.toEqual('none')
-
-    expect(cmp.findAll(Setting).length).toEqual(1)
+    expect(cmp.find('.alpheios-lookup__settings').exists()).toBe(true)
+    expect(cmp.find('.alpheios-lookup__resource-control').exists()).toBe(false)
   })
 
-  it.skip('5 Lookup - settings block events', () => {
+  it('14 Lookup: events of selector elements shall update data correctly', () => {
     let cmp = mount(Lookup, {
-      store,
+      propsData: {
+        nameBase: nameBase
+      },
       localVue,
       mocks: api
     })
 
     cmp.vm.settingChange('', 'Greek')
-    expect(cmp.vm.instanceContentOptions.items.lookupLanguage.currentTextValue()).toEqual('Greek')
-    expect(cmp.vm.currentLanguage).toEqual('Greek')
+    expect(cmp.vm.$options.lookupLanguage.currentTextValue()).toEqual('Greek')
 
     cmp.vm.resourceSettingChange('lexiconsShort-grc', ['Liddell, Scott, Jones', 'Autenrieth Homeric Lexicon'])
     let keyinfo = resourceOptions.parseKey('lexiconsShort-grc')
 
-    expect(cmp.vm.instanceResourceOptions.items[keyinfo.setting][0].currentTextValue()).toEqual(['Liddell, Scott, Jones', 'Autenrieth Homeric Lexicon'])
-  })
-
-  it.skip('6 Lookup - override language check - not checked by default', () => {
-    let cmp = mount(Lookup, {
-      store,
-      localVue,
-      mocks: api
-    })
-
-    expect(cmp.vm.overrideLanguage).toBeFalsy()
-  })
-
-  it.skip('7 Lookup - watch clearLookupText - clears lookuptext and restore show language data from override language check', () => {
-    let cmp = mount(Lookup, {
-      store,
-      localVue,
-      mocks: api
-    })
-
-    cmp.vm.lookuptext = 'some text'
-    cmp.vm.overrideLanguage = false
-    cmp.vm.clearLookupText = true
-
-    expect(cmp.vm.lookuptext).toEqual('')
+    expect(cmp.vm.$options.resourceOptions.items[keyinfo.setting][0].currentTextValue()).toEqual(['Liddell, Scott, Jones', 'Autenrieth Homeric Lexicon'])
   })
 })
