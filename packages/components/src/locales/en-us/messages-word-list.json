@@ -20,7 +20,7 @@
         "component": "WordItemPanel"
     },
     "TOOLTIP_REMOVE": {
-        "message": "Remove worditem",
+        "message": "Remove word item",
         "description": "Remove the WordItem form the list",
         "component": "WordItemPanel"
     },
@@ -30,7 +30,7 @@
         "component": "WordItemPanel"
     },
     "TOOLTIP_BACK": {
-        "message": "Back to WordList",
+        "message": "Back to word list",
         "description": "Back to the WordList Tab",
         "component": "WordContextPanel"
     }
