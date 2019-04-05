@@ -54,14 +54,15 @@ export default class Options {
     obj.storageAdapter = new StorageAdapter(this.domain)
     obj.domain = this.domain
     obj.items = {}
+
     for (let item of this.names) {
       if (Array.isArray(this.items[item])) {
         obj.items[item] = []
         for (let option of this.items[item]) {
-          obj.items[item].push(option.clone(option.name, obj.storageAdapter))
+          obj.items[item].push(option.clone(option.name, obj.labelText, obj.storageAdapter))
         }
       } else {
-        obj.items[item] = this.items[item].clone(item, obj.storageAdapter)
+        obj.items[item] = this.items[item].clone(item, obj.labelText, obj.storageAdapter)
       }
     }
     return obj

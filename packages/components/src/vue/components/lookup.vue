@@ -122,7 +122,7 @@ export default {
       if (lang.length > 0) {
         settingName = `lexiconsShort-${lang[0].value}`
       }
-
+      
       return this.$options.resourceOptions.items.lexiconsShort.filter((item) => item.name === settingName)
     }
   },

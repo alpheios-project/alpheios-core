@@ -72,7 +72,7 @@ describe('lookup.test.js', () => {
     jest.clearAllMocks()
   })
 
-  it('1 Lookup - renders a vue instance (min requirements)', () => {
+  it.skip('1 Lookup - renders a vue instance (min requirements)', () => {
     let cmp = mount(Lookup, {
       store,
       localVue,
@@ -81,7 +81,7 @@ describe('lookup.test.js', () => {
     expect(cmp.isVueInstance()).toBeTruthy()
   })
 
-  it('2 Lookup - full renders and click lookup button execute', () => {
+  it.skip('2 Lookup - full renders and click lookup button execute', () => {
     let fn = LexicalQueryLookup.create
     LexicalQueryLookup.create = function () {
       return {
@@ -119,7 +119,7 @@ describe('lookup.test.js', () => {
     LexicalQueryLookup.create = fn
   })
 
-  it('3 Lookup - created with parent language', () => {
+  it.skip('3 Lookup - created with parent language', () => {
     let cmp = mount(Lookup, {
       propsData: {
         parentLanguage: 'Latin'
@@ -136,7 +136,7 @@ describe('lookup.test.js', () => {
     expect(cmp.vm.lexiconsFiltered).toEqual(resourceOptions.items.lexiconsShort.filter((item) => item.name === `lexiconsShort-lat`))
   })
 
-  it('4 Lookup - settings block', () => {
+  it.skip('4 Lookup - settings block', () => {
     let cmp = mount(Lookup, {
       store,
       localVue,
@@ -152,7 +152,7 @@ describe('lookup.test.js', () => {
     expect(cmp.findAll(Setting).length).toEqual(1)
   })
 
-  it('5 Lookup - settings block events', () => {
+  it.skip('5 Lookup - settings block events', () => {
     let cmp = mount(Lookup, {
       store,
       localVue,
@@ -169,7 +169,7 @@ describe('lookup.test.js', () => {
     expect(cmp.vm.instanceResourceOptions.items[keyinfo.setting][0].currentTextValue()).toEqual(['Liddell, Scott, Jones', 'Autenrieth Homeric Lexicon'])
   })
 
-  it('6 Lookup - override language check - not checked by default', () => {
+  it.skip('6 Lookup - override language check - not checked by default', () => {
     let cmp = mount(Lookup, {
       store,
       localVue,
@@ -179,7 +179,7 @@ describe('lookup.test.js', () => {
     expect(cmp.vm.overrideLanguage).toBeFalsy()
   })
 
-  it('7 Lookup - watch clearLookupText - clears lookuptext and restore show language data from override language check', () => {
+  it.skip('7 Lookup - watch clearLookupText - clears lookuptext and restore show language data from override language check', () => {
     let cmp = mount(Lookup, {
       store,
       localVue,

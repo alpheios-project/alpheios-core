@@ -7,7 +7,7 @@ import Lookup from '@/vue/components/lookup.vue'
 import Info from '@/vue/components/info.vue'
 import ShortDef from '@/vue/components/shortdef.vue'
 import Inflections from '@/vue/components/inflections.vue'
-import ReskinFontColor from '@/vue/components/reskin-font-color.vue'
+
 import Setting from '@/vue/components/setting.vue'
 import Treebank from '@/vue/components/treebank.vue'
 import Grammar from '@/vue/components/grammar.vue'
@@ -713,7 +713,6 @@ describe('panel.test.js', () => {
     })
 
     expect(cmp.find('.alpheios-panel__tab__options').element.style.display).not.toEqual('none')
-    expect(cmp.find('.alpheios-panel__tab__options').find(ReskinFontColor).exists()).toBeTruthy()
     expect(cmp.find('.alpheios-panel__tab__options').find(Setting).exists()).toBeTruthy()
     expect(cmp.find('.alpheios-panel__tab__options').findAll(Setting).length).not.toBeLessThan(8)
 
@@ -754,10 +753,6 @@ describe('panel.test.js', () => {
         expect(cmp.emitted()['resourcesettingchange'][0]).toEqual([`fooname`, `foovalue`])
       }
     }
-
-    cmp.find('.alpheios-panel__tab__options').find(ReskinFontColor).find('li.alpheios-skin_properties_item__small_font').trigger('click')
-    expect(cmp.emitted()['changeStyleClass']).toBeTruthy()
-    expect(cmp.emitted()['changeStyleClass'][0]).toEqual(['fontSize', 'small'])
   })
 
   it.skip('10 Panel - active status tab', async () => {
