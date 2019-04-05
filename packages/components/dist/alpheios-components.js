@@ -13385,6 +13385,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -13447,9 +13448,16 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    checkboxClick: function () {
+    checkboxClick () {
       if (this.data.boolean === true) {
         this.selected = !this.selected
+      }
+    },
+    checkNumberField () {
+      if (this.dataModel.number && this.dataModel.minValue) {
+        if (this.selected < this.dataModel.minValue) {
+          this.selected = this.dataModel.minValue
+        }
       }
     }
   },
@@ -13897,6 +13905,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13922,7 +13951,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data () {
     return {
-      reloadList: 1
+      reloadList: 1,
+      showDeleteAllBox: false
     }
   },
   computed: {
@@ -13939,6 +13969,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    showDeleteAll () {
+      this.showDeleteAllBox = true
+    },
     async makeAllImportant () {
       await this.app.updateAllImportant(this.languageCode, true)
       this.$emit('eventChangeImportant')
@@ -13957,6 +13990,10 @@ __webpack_require__.r(__webpack_exports__);
     async deleteAll () {
       await this.app.removeWordList(this.languageCode)
       this.reloadList = this.reloadList + 1
+      this.showDeleteAllBox = false
+    },
+    cancelDeleteAll () {
+      this.showDeleteAllBox = false
     },
     showContexts (targetWord) {
       this.$emit('showContexts', targetWord, this.languageCode)
@@ -22241,9 +22278,10 @@ var render = function() {
                   }
                 ],
                 staticClass: "alpheios-input alpheios-setting__control",
-                attrs: { type: "number", min: "0" },
+                attrs: { type: "number", min: _vm.dataModel.minValue },
                 domProps: { value: _vm.selected },
                 on: {
+                  change: _vm.checkNumberField,
                   input: function($event) {
                     if ($event.target.composing) {
                       return
@@ -22596,7 +22634,7 @@ var render = function() {
             {
               attrs: {
                 tooltipDirection: "top-left",
-                tooltipText: _vm.l10n.getText("TOOLTIP_BACK")
+                tooltipText: _vm.l10n.getText("WORDLIST_TOOLTIP_BACK")
               }
             },
             [
@@ -22678,7 +22716,7 @@ var render = function() {
         {
           attrs: {
             tooltipDirection: "top-left",
-            tooltipText: _vm.l10n.getMsg("TOOLTIP_CHANGE_IMPORTANT")
+            tooltipText: _vm.l10n.getMsg("WORDLIST_TOOLTIP_CHANGE_IMPORTANT")
           }
         },
         [
@@ -22703,7 +22741,7 @@ var render = function() {
         {
           attrs: {
             tooltipDirection: "top-left",
-            tooltipText: _vm.l10n.getMsg("TOOLTIP_REMOVE")
+            tooltipText: _vm.l10n.getMsg("WORDLIST_TOOLTIP_REMOVE")
           }
         },
         [
@@ -22730,7 +22768,7 @@ var render = function() {
           class: { "alpheios_no_tq ": !_vm.worditem.hasTextQuoteSelectors },
           attrs: {
             tooltipDirection: "top-left",
-            tooltipText: _vm.l10n.getMsg("TOOLTIP_TEXT_CONTEXT")
+            tooltipText: _vm.l10n.getMsg("WORDLIST_TOOLTIP_TEXT_CONTEXT")
           }
         },
         [
@@ -22813,7 +22851,7 @@ var render = function() {
             {
               attrs: {
                 tooltipDirection: "top-left",
-                tooltipText: _vm.l10n.getText("TOOLTIP_ALL_IMPORTANT")
+                tooltipText: _vm.l10n.getText("WORDLIST_TOOLTIP_ALL_IMPORTANT")
               }
             },
             [
@@ -22839,7 +22877,7 @@ var render = function() {
             {
               attrs: {
                 tooltipDirection: "top-left",
-                tooltipText: _vm.l10n.getText("TOOLTIP_NO_IMPORTANT")
+                tooltipText: _vm.l10n.getText("WORDLIST_TOOLTIP_NO_IMPORTANT")
               }
             },
             [
@@ -22865,7 +22903,7 @@ var render = function() {
             {
               attrs: {
                 tooltipDirection: "top-left",
-                tooltipText: _vm.l10n.getText("TOOLTIP_REMOVE_ALL")
+                tooltipText: _vm.l10n.getText("WORDLIST_TOOLTIP_REMOVE_ALL")
               }
             },
             [
@@ -22876,7 +22914,7 @@ var render = function() {
                     "alpheios-wordlist-commands__item alpheios-wordlist-commands__item-remove-all",
                   on: {
                     click: function($event) {
-                      return _vm.deleteAll()
+                      return _vm.showDeleteAll()
                     }
                   }
                 },
@@ -22887,6 +22925,103 @@ var render = function() {
           )
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.showDeleteAllBox,
+              expression: "showDeleteAllBox"
+            }
+          ],
+          staticClass: "alpheios-wordlist-delete-all-confirmation"
+        },
+        [
+          _c("p", [
+            _vm._v(_vm._s(_vm.l10n.getText("WORDLIST_DELETE_CONFIRM_MESSAGE")))
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "alpheios-wordlist-delete-all-confirmation__buttons"
+            },
+            [
+              _c(
+                "alph-tooltip",
+                {
+                  attrs: {
+                    tooltipText: _vm.l10n.getText(
+                      "WORDLIST_TOOLTIP_REMOVE_ALL"
+                    ),
+                    tooltipDirection: "bottom-wide"
+                  }
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "alpheios-button-primary alpheios-popup__toolbar-button",
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteAll()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(_vm.l10n.getText("WORDLIST_BUTTON_DELETE")) +
+                          "\n          "
+                      )
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "alph-tooltip",
+                {
+                  attrs: {
+                    tooltipText: _vm.l10n.getText(
+                      "WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL"
+                    ),
+                    tooltipDirection: "bottom-wide"
+                  }
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "alpheios-button-primary alpheios-popup__toolbar-button",
+                      on: {
+                        click: function($event) {
+                          return _vm.cancelDeleteAll()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(
+                            _vm.l10n.getText("WORDLIST_BUTTON_CANCEL_DELETE")
+                          ) +
+                          "\n          "
+                      )
+                    ]
+                  )
+                ]
+              )
+            ],
+            1
+          )
+        ]
       ),
       _vm._v(" "),
       _vm._l(_vm.wordItems, function(wordItem) {
@@ -43407,10 +43542,10 @@ module.exports = {"Number":{"message":"Number"},"Case":{"message":"Case"},"Decle
 /*!***********************************************!*\
   !*** ./locales/en-us/messages-word-list.json ***!
   \***********************************************/
-/*! exports provided: TOOLTIP_ALL_IMPORTANT, TOOLTIP_NO_IMPORTANT, TOOLTIP_REMOVE_ALL, TOOLTIP_CHANGE_IMPORTANT, TOOLTIP_REMOVE, TOOLTIP_TEXT_CONTEXT, TOOLTIP_BACK, default */
+/*! exports provided: WORDLIST_TOOLTIP_ALL_IMPORTANT, WORDLIST_TOOLTIP_NO_IMPORTANT, WORDLIST_TOOLTIP_REMOVE_ALL, WORDLIST_TOOLTIP_CHANGE_IMPORTANT, WORDLIST_TOOLTIP_REMOVE, WORDLIST_TOOLTIP_TEXT_CONTEXT, WORDLIST_TOOLTIP_BACK, WORDLIST_DELETE_CONFIRM_MESSAGE, WORDLIST_BUTTON_DELETE, WORDLIST_BUTTON_CANCEL_DELETE, WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL, default */
 /***/ (function(module) {
 
-module.exports = {"TOOLTIP_ALL_IMPORTANT":{"message":"Make all important ","description":"Make all words inside language block important","component":"WordLanguagePanel"},"TOOLTIP_NO_IMPORTANT":{"message":"Remove all important ","description":"Remove important mark from all words inside language block","component":"WordLanguagePanel"},"TOOLTIP_REMOVE_ALL":{"message":"Remove all word items","description":"Remove all words inside language block","component":"WordLanguagePanel"},"TOOLTIP_CHANGE_IMPORTANT":{"message":"Change important status","description":"Change important status for the WordItem","component":"WordItemPanel"},"TOOLTIP_REMOVE":{"message":"Remove word item","description":"Remove the WordItem form the list","component":"WordItemPanel"},"TOOLTIP_TEXT_CONTEXT":{"message":"Show contexts","description":"Show panle with contexts for the wordItem","component":"WordItemPanel"},"TOOLTIP_BACK":{"message":"Back to word list","description":"Back to the WordList Tab","component":"WordContextPanel"}};
+module.exports = {"WORDLIST_TOOLTIP_ALL_IMPORTANT":{"message":"Make all important ","description":"Make all words inside language block important","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_NO_IMPORTANT":{"message":"Remove all important ","description":"Remove important mark from all words inside language block","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_REMOVE_ALL":{"message":"Remove all word items","description":"Remove all words inside language block","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_CHANGE_IMPORTANT":{"message":"Change important status","description":"Change important status for the WordItem","component":"WordItemPanel"},"WORDLIST_TOOLTIP_REMOVE":{"message":"Remove word item","description":"Remove the WordItem form the list","component":"WordItemPanel"},"WORDLIST_TOOLTIP_TEXT_CONTEXT":{"message":"Show contexts","description":"Show panle with contexts for the wordItem","component":"WordItemPanel"},"WORDLIST_TOOLTIP_BACK":{"message":"Back to word list","description":"Back to the WordList Tab","component":"WordContextPanel"},"WORDLIST_DELETE_CONFIRM_MESSAGE":{"message":"Do you really want to delete all word items from the list?","description":"Delete all confirmation message","component":"WordLanguagePanel"},"WORDLIST_BUTTON_DELETE":{"message":"Delete","description":"Button title for delete all","component":"WordLanguagePanel"},"WORDLIST_BUTTON_CANCEL_DELETE":{"message":"Cancel","description":"Button title for cancel delete all","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL":{"message":"Cancel remove all word items","description":"Cancel remove all words inside language block","component":"WordLanguagePanel"}};
 
 /***/ }),
 
@@ -43671,7 +43806,7 @@ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___namespace =
 /*! exports provided: domain, items, default */
 /***/ (function(module) {
 
-module.exports = {"domain":"alpheios-content-options","items":{"enableLemmaTranslations":{"defaultValue":false,"labelText":"Experimental: Enable Latin Lemma Translations","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"locale":{"defaultValue":"en-US","labelText":"UI Locale:","values":[{"value":"en-US","text":"English (US)"},{"value":"fr","text":"French"},{"value":"de","text":"German"},{"value":"it","text":"Italian"},{"value":"pt","text":"Portuguese"},{"value":"es","text":"Spanish"},{"value":"ca","text":"Catalonian"}]},"enableWordUsageExamples":{"defaultValue":false,"labelText":"Experimental: Enable Latin Word Usage Examples (Concordance)","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"wordUsageExamplesON":{"defaultValue":"onDemand","labelText":"Get word usage examples:","values":[{"value":"onDemand","text":"On demand"},{"value":"onLexicalQuery","text":"On LexicalQuery"}]},"wordUsageExamplesAuthMax":{"defaultValue":3,"labelText":"Word Usage Examples - max results per author","number":true,"values":[]},"wordUsageExamplesMax":{"defaultValue":500,"labelText":"Word Usage Examples - max results for single author request","number":true,"values":[]},"panelPosition":{"defaultValue":"left","labelText":"Panel position:","values":[{"value":"left","text":"Left"},{"value":"right","text":"Right"}]},"popupPosition":{"defaultValue":"fixed","labelText":"Popup position:","values":[{"value":"flexible","text":"Flexible"},{"value":"fixed","text":"Fixed"}]},"uiType":{"defaultValue":"popup","labelText":"UI type:","values":[{"value":"popup","text":"Pop-up"},{"value":"panel","text":"Panel"}]},"preferredLanguage":{"defaultValue":"lat","labelText":"Page language:","values":[{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"lookupLanguage":{"defaultValue":"default","labelText":"Change language:","values":[{"value":"default","text":"Default"},{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"verboseMode":{"defaultValue":"normal","labelText":"Log Level","values":[{"value":"verbose","text":"Verbose"},{"value":"normal","text":"Normal"}]}}};
+module.exports = {"domain":"alpheios-content-options","items":{"enableLemmaTranslations":{"defaultValue":false,"labelText":"Experimental: Enable Latin Lemma Translations","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"locale":{"defaultValue":"en-US","labelText":"UI Locale:","values":[{"value":"en-US","text":"English (US)"},{"value":"fr","text":"French"},{"value":"de","text":"German"},{"value":"it","text":"Italian"},{"value":"pt","text":"Portuguese"},{"value":"es","text":"Spanish"},{"value":"ca","text":"Catalonian"}]},"enableWordUsageExamples":{"defaultValue":false,"labelText":"Experimental: Enable Latin Word Usage Examples (Concordance)","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"wordUsageExamplesON":{"defaultValue":"onDemand","labelText":"Get word usage examples:","values":[{"value":"onDemand","text":"On demand"},{"value":"onLexicalQuery","text":"On LexicalQuery"}]},"wordUsageExamplesAuthMax":{"defaultValue":3,"labelText":"Word Usage Examples - max results per author","number":true,"minValue":1,"values":[]},"wordUsageExamplesMax":{"defaultValue":500,"labelText":"Word Usage Examples - max results for single author request","number":true,"minValue":1,"values":[]},"panelPosition":{"defaultValue":"left","labelText":"Panel position:","values":[{"value":"left","text":"Left"},{"value":"right","text":"Right"}]},"popupPosition":{"defaultValue":"fixed","labelText":"Popup position:","values":[{"value":"flexible","text":"Flexible"},{"value":"fixed","text":"Fixed"}]},"uiType":{"defaultValue":"popup","labelText":"UI type:","values":[{"value":"popup","text":"Pop-up"},{"value":"panel","text":"Panel"}]},"preferredLanguage":{"defaultValue":"lat","labelText":"Page language:","values":[{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"lookupLanguage":{"defaultValue":"default","labelText":"Change language:","values":[{"value":"default","text":"Default"},{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"verboseMode":{"defaultValue":"normal","labelText":"Log Level","values":[{"value":"verbose","text":"Verbose"},{"value":"normal","text":"Normal"}]}}};
 
 /***/ }),
 

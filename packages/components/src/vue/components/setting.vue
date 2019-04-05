@@ -22,7 +22,8 @@
         type="number"
         v-if="dataModel.number"
         v-model="selected"
-        min="0"
+        :min="dataModel.minValue"
+        @change="checkNumberField"
     >
 
     <div class="alpheios-checkbox-block alpheios-setting__control" v-if="dataModel.boolean">
@@ -101,9 +102,16 @@ export default {
     }
   },
   methods: {
-    checkboxClick: function () {
+    checkboxClick () {
       if (this.data.boolean === true) {
         this.selected = !this.selected
+      }
+    },
+    checkNumberField () {
+      if (this.dataModel.number && this.dataModel.minValue) {
+        if (this.selected < this.dataModel.minValue) {
+          this.selected = this.dataModel.minValue
+        }
       }
     }
   },

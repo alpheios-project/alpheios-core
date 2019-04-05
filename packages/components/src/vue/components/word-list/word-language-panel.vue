@@ -1,24 +1,45 @@
 <template>
     <div>
         <div class="alpheios-wordlist-commands">
+
             <div class="alpheios-wordlist-language__title">{{ languageName }}</div>
-            <alph-tooltip tooltipDirection="top-left" :tooltipText="l10n.getText('TOOLTIP_ALL_IMPORTANT')">
+            <alph-tooltip tooltipDirection="top-left" :tooltipText="l10n.getText('WORDLIST_TOOLTIP_ALL_IMPORTANT')">
             <div class="alpheios-wordlist-commands__item alpheios-wordlist-commands__item-all-important" @click="makeAllImportant()">
                 <check-icon></check-icon>
             </div>
+
             </alph-tooltip>
-            <alph-tooltip tooltipDirection="top-left" :tooltipText="l10n.getText('TOOLTIP_NO_IMPORTANT')">
+            <alph-tooltip tooltipDirection="top-left" :tooltipText="l10n.getText('WORDLIST_TOOLTIP_NO_IMPORTANT')">
             <div class="alpheios-wordlist-commands__item alpheios-wordlist-commands__item-no-important" @click="removeAllImportant()">
                 <check-icon></check-icon>
             </div>
             </alph-tooltip>
-            <alph-tooltip tooltipDirection="top-left" :tooltipText="l10n.getText('TOOLTIP_REMOVE_ALL')">
-            <div class="alpheios-wordlist-commands__item alpheios-wordlist-commands__item-remove-all" @click="deleteAll()">
+
+            <alph-tooltip tooltipDirection="top-left" :tooltipText="l10n.getText('WORDLIST_TOOLTIP_REMOVE_ALL')">
+            <div class="alpheios-wordlist-commands__item alpheios-wordlist-commands__item-remove-all" @click="showDeleteAll()">
                 <delete-icon></delete-icon>
             </div>
             </alph-tooltip>
         </div>
 
+        <div class="alpheios-wordlist-delete-all-confirmation" v-show="showDeleteAllBox">
+          <p>{{l10n.getText('WORDLIST_DELETE_CONFIRM_MESSAGE')}}</p>
+
+          <div class="alpheios-wordlist-delete-all-confirmation__buttons">
+            <alph-tooltip :tooltipText="l10n.getText('WORDLIST_TOOLTIP_REMOVE_ALL')" tooltipDirection="bottom-wide">
+              <button @click="deleteAll()" class="alpheios-button-primary alpheios-popup__toolbar-button">
+                {{ l10n.getText('WORDLIST_BUTTON_DELETE') }}
+              </button>
+            </alph-tooltip>
+
+            <alph-tooltip :tooltipText="l10n.getText('WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL')" tooltipDirection="bottom-wide">
+              <button @click="cancelDeleteAll()" class="alpheios-button-primary alpheios-popup__toolbar-button">
+                {{ l10n.getText('WORDLIST_BUTTON_CANCEL_DELETE') }}
+              </button>
+            </alph-tooltip>
+
+          </div>
+        </div>
         <div
                 v-for="wordItem in wordItems"
                 v-bind:key="wordItem.targetWord">
@@ -56,7 +77,8 @@ export default {
   },
   data () {
     return {
-      reloadList: 1
+      reloadList: 1,
+      showDeleteAllBox: false
     }
   },
   computed: {
@@ -73,6 +95,9 @@ export default {
     }
   },
   methods: {
+    showDeleteAll () {
+      this.showDeleteAllBox = true
+    },
     async makeAllImportant () {
       await this.app.updateAllImportant(this.languageCode, true)
       this.$emit('eventChangeImportant')
@@ -91,6 +116,10 @@ export default {
     async deleteAll () {
       await this.app.removeWordList(this.languageCode)
       this.reloadList = this.reloadList + 1
+      this.showDeleteAllBox = false
+    },
+    cancelDeleteAll () {
+      this.showDeleteAllBox = false
     },
     showContexts (targetWord) {
       this.$emit('showContexts', targetWord, this.languageCode)

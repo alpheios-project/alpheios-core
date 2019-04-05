@@ -83,12 +83,14 @@
       "defaultValue": 3,
       "labelText": "Word Usage Examples - max results per author",
       "number": true,
+      "minValue": 1,
       "values": []
     },
     "wordUsageExamplesMax": {
       "defaultValue": 500,
       "labelText": "Word Usage Examples - max results for single author request",
       "number": true,
+      "minValue": 1,
       "values": []
     },
     "panelPosition": {

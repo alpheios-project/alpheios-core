@@ -1,37 +1,57 @@
 {
-    "TOOLTIP_ALL_IMPORTANT": {
+    "WORDLIST_TOOLTIP_ALL_IMPORTANT": {
         "message": "Make all important ",
         "description": "Make all words inside language block important",
         "component": "WordLanguagePanel"
     },
-    "TOOLTIP_NO_IMPORTANT": {
+    "WORDLIST_TOOLTIP_NO_IMPORTANT": {
         "message": "Remove all important ",
         "description": "Remove important mark from all words inside language block",
         "component": "WordLanguagePanel"
     },
-    "TOOLTIP_REMOVE_ALL": {
+    "WORDLIST_TOOLTIP_REMOVE_ALL": {
         "message": "Remove all word items",
         "description": "Remove all words inside language block",
         "component": "WordLanguagePanel"
     },
-    "TOOLTIP_CHANGE_IMPORTANT": {
+    "WORDLIST_TOOLTIP_CHANGE_IMPORTANT": {
         "message": "Change important status",
         "description": "Change important status for the WordItem",
         "component": "WordItemPanel"
     },
-    "TOOLTIP_REMOVE": {
+    "WORDLIST_TOOLTIP_REMOVE": {
         "message": "Remove word item",
         "description": "Remove the WordItem form the list",
         "component": "WordItemPanel"
     },
-    "TOOLTIP_TEXT_CONTEXT": {
+    "WORDLIST_TOOLTIP_TEXT_CONTEXT": {
         "message": "Show contexts",
         "description": "Show panle with contexts for the wordItem",
         "component": "WordItemPanel"
     },
-    "TOOLTIP_BACK": {
+    "WORDLIST_TOOLTIP_BACK": {
         "message": "Back to word list",
         "description": "Back to the WordList Tab",
         "component": "WordContextPanel"
+    },
+    "WORDLIST_DELETE_CONFIRM_MESSAGE": {
+        "message": "Do you really want to delete all word items from the list?",
+        "description": "Delete all confirmation message",
+        "component": "WordLanguagePanel"
+    },
+    "WORDLIST_BUTTON_DELETE": {
+        "message": "Delete",
+        "description": "Button title for delete all",
+        "component": "WordLanguagePanel"
+    },
+    "WORDLIST_BUTTON_CANCEL_DELETE": {
+        "message": "Cancel",
+        "description": "Button title for cancel delete all",
+        "component": "WordLanguagePanel"
+    },
+    "WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL": {
+        "message": "Cancel remove all word items",
+        "description": "Cancel remove all words inside language block",
+        "component": "WordLanguagePanel"
     }
 }
