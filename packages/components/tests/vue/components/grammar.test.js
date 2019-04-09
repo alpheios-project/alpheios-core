@@ -92,7 +92,7 @@ describe('grammar.test.js', () => {
       mocks: api
     })
     expect(cmp.find('iframe').attributes().src).toEqual('http://example.com/')
-    expect(cmp.find('.alpheios-grammar__provider').exists()).toBeFalsy()
+    expect(cmp.find('.alpheios-grammar__provider').attributes('style')).toBe('display: none;')
 
     store = new Vuex.Store({
       modules: {

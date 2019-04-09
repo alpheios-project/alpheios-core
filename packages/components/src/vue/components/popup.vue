@@ -43,7 +43,7 @@
           </span>
         </div>
 
-        <div class="alpheios-popup__toolbar-buttons" v-if="data">
+        <div class="alpheios-popup__toolbar-buttons" v-show="data">
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
                         v-show="$store.getters['app/defDataReady']">
             <button @click="ui.showPanelTab('definitions')"
@@ -129,10 +129,13 @@
 
     <div :class="{ 'alpheios-popup__notifications--important': this.$store.state.ui.notification.important }"
          class="alpheios-popup__notifications"
-         v-if="$store.state.ui.notification.text" v-show="$store.state.ui.notification.important">
+         v-show="$store.state.ui.notification.text && $store.state.ui.notification.important">
 
-              <span @click="$store.commit(`ui/resetNotification`)" class="alpheios-popup__notifications-close-btn">
-                  <close-icon></close-icon>
+              <span
+                  @click="$store.commit(`ui/resetNotification`)"
+                  class="alpheios-popup__notifications-close-btn"
+              >
+                  <close-icon/>
               </span>
 
       <span v-html="$store.state.ui.notification.text"></span>
@@ -141,14 +144,15 @@
                :show-title="false" @change="contentOptionChanged"
                v-show="$store.state.ui.notification.showLanguageSwitcher"></setting>
     </div>
-    <div class="alpheios-popup__notifications-auth alpheios-popup__notifications--important"
-         :data-count="$store.state.auth.notification.count"
-         v-if="$store.state.auth.notification.text" v-show="$store.state.auth.notification.count === 1 || $store.state.auth.notification.count % 10 == 0">
+    <div
+        class="alpheios-popup__notifications-auth alpheios-popup__notifications--important"
+        :data-count="$store.state.auth.notification.count"
+        v-show="showLoginNotification">
          <span @click="$store.commit(`auth/resetNotification`)" class="alpheios-popup__notifications-close-btn">
-            <close-icon></close-icon>
+            <close-icon/>
          </span>
          <div class="alpheios-popup__notifications-auth-msg" v-html="l10n.getMsg($store.state.auth.notification.text)"></div>
-         <login v-show="$store.state.auth.notification.showLogin"></login>
+         <login/>
     </div>
   </div>
 </template>
@@ -249,6 +253,17 @@ export default {
     },
     providersLinkText: function () {
       return this.showProviders ? this.l10n.getText('LABEL_POPUP_HIDECREDITS') : this.l10n.getText('LABEL_POPUP_SHOWCREDITS')
+    },
+
+    // TODO: right now this prop sets a condition for displaying both the notification message and the login button.
+    //       However, sometimes we cannot obtain the login URL and thus cannot show the button.
+    //       Need to think how to handle such situations gracefully.
+    showLoginNotification () {
+      return Boolean(
+        this.$store.state.auth.notification.text &&
+        this.$store.state.auth.notification.showLogin &&
+        (this.$store.state.auth.notification.count === 1 || this.$store.state.auth.notification.count % 10 === 0)
+      )
     },
 
     positionLeftDm: function () {

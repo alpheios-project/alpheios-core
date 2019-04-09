@@ -2,13 +2,13 @@
   <div :data-notification-visible="$store.state.auth.notification.visible">
     <login/>
     <div class="alpheios-user-auth__notifications"
-      v-if="$store.state.auth.notification.text">
+      v-show="$store.state.auth.notification.text">
       <span @click="$store.commit(`auth/resetNotification`)" class="alpheios-popup__notifications-close-btn">
         <close-icon></close-icon>
       </span>
       <span v-html="l10n.getMsg($store.state.auth.notification.text)"></span>
     </div>
-    <div class="alpheios-user-auth__user-info-box" v-if="this.$store.state.auth.isAuthenticated">
+    <div class="alpheios-user-auth__user-info-box" v-show="this.$store.state.auth.isAuthenticated">
       <div class="alpheios-user-auth__user-info-item-box">
         <div class="alpheios-user-auth__user-info-item-name">
           {{ l10n.getMsg(`AUTH_PROFILE_NICKNAME_LABEL`) }}:

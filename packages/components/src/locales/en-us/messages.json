@@ -126,11 +126,6 @@
     "description": "placeholder for inflections panel",
     "component": "Panel"
   },
-  "PLACEHOLDER_INFLECT_UNAVAILABLE":  {
-    "message": "Inflection data is unavailable",
-    "description": "placeholder for inflections panel if unavailable",
-    "component": "Panel"
-  },
   "LABEL_INFLECT_SELECT_POFS":  {
     "message": "Part of speech:",
     "description": "label for part of speech selector on inflections panel",
@@ -304,11 +299,6 @@
   "TEXT_NOTICE_LANGUAGE_UNKNOWN": {
     "message": "unknown",
     "description": "unknown language notification",
-    "component": "UI"
-  },
-  "TEXT_NOTICE_GRAMMAR_NOTFOUND": {
-    "message": "The requested grammar resource is not currently available",
-    "description": "grammar not found notification",
     "component": "UI"
   },
   "TEXT_NOTICE_MORPHDATA_READY": {

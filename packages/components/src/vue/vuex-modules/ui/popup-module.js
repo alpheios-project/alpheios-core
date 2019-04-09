@@ -23,7 +23,7 @@ export default class PopupModule extends Module {
         popup: Popup
       },
       data: {
-        // Reactive options of the Popup UI component
+        // Reactive options of the Popup UI component, are passed to popup.vue as `data`
         moduleData: {
           // Default popup position, with units
           top: '10vh',
@@ -47,7 +47,7 @@ export default class PopupModule extends Module {
           // A minimal margin between a popup and a viewport border, in pixels. In effect when popup is scaled down.
           viewportMargin: 5
         },
-        componentName: this.config.popupComponent
+        uiComponentName: this.config.popupComponent
       }
     })
   }

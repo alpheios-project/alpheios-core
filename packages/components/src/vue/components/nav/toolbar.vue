@@ -28,12 +28,8 @@
         :class="{ expanded: contentVisible }"
         @click="contentVisible = !contentVisible"
     >
-      <template v-if="!contentVisible">
-        <collapsed-icon/>
-      </template>
-      <template v-else>
-        <expanded-icon/>
-      </template>
+      <collapsed-icon v-show="!contentVisible" />
+      <expanded-icon v-show="contentVisible" />
     </div>
 
     <div
@@ -103,7 +99,7 @@
       </alph-tooltip>
 
       <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_USER')" tooltipDirection="left"
-                  v-if="$store.state.auth.showUI">
+                  v-show="$store.state.auth.showUI">
         <span @click="ui.togglePanelTab('user')" class="alpheios-navbuttons__btn"
               v-bind:class="{ active: $store.getters['ui/isActiveTab']('user') }">
           <user-icon></user-icon>
@@ -111,7 +107,7 @@
       </alph-tooltip>
 
       <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORD_USAGE')" tooltipDirection="left"
-                  v-if="$store.state.app.wordUsageExampleEnabled">
+                  v-show="$store.state.app.wordUsageExampleEnabled">
         <span @click="ui.togglePanelTab('wordUsage')" class="alpheios-navbuttons__btn"
               v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordUsage') }">
           <word-usage-icon></word-usage-icon>

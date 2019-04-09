@@ -1,12 +1,9 @@
 <template>
-  <div class="alpheios-grammar" v-if="$store.getters['app/hasGrammarRes']">
-    <div class="alpheios-grammar__frame-cont" v-show="$store.state.app.grammarRes.url">
-      <iframe :src="$store.state.app.grammarRes.url" class="alpheios-grammar__frame" scrolling="yes" v-if="$store.state.app.grammarRes.url"></iframe>
+  <div class="alpheios-grammar">
+    <div class="alpheios-grammar__frame-cont" v-if="this.hasGrammarResUrl">
+      <iframe :src="$store.state.app.grammarRes.url" class="alpheios-grammar__frame" scrolling="yes"></iframe>
     </div>
-    <div class="alpheios-grammar__provider" v-if="$store.state.app.grammarRes.provider">{{ $store.state.app.grammarRes.provider.toString() }}</div>
-  </div>
-  <div class="alpheios-grammar__provider" v-else>
-    {{ l10n.getMsg('TEXT_NOTICE_GRAMMAR_NOTFOUND') }}
+    <div class="alpheios-grammar__provider" v-show="this.hasGrammarProvider">{{ grammarProvider }}</div>
   </div>
 </template>
 <script>
@@ -16,7 +13,20 @@ export default {
   name: 'Grammar',
   inject: ['l10n'],
   storeModules: ['app'],
-  mixins: [DependencyCheck]
+  mixins: [DependencyCheck],
+  computed: {
+    hasGrammarResUrl: function () {
+      return Boolean(this.$store.state.app.grammarRes && this.$store.state.app.grammarRes.url)
+    },
+
+    hasGrammarProvider: function () {
+      return Boolean(this.$store.state.app.grammarRes && this.$store.state.app.grammarRes.provider)
+    },
+
+    grammarProvider: function () {
+      return this.hasGrammarProvider ? this.$store.state.app.grammarRes.provider.toString() : ''
+    }
+  }
 }
 </script>
 <style lang="scss">

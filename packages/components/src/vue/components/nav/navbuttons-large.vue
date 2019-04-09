@@ -53,7 +53,7 @@
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_USER')" tooltipDirection="bottom-narrow"
-                v-if="$store.state.auth.showUI">
+                v-show="$store.state.auth.showUI">
       <div @click="ui.changeTab('user')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('user') }">
         <user-icon></user-icon>
@@ -61,7 +61,7 @@
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORD_USAGE')" tooltipDirection="bottom-narrow"
-            v-if="$store.state.app.wordUsageExampleEnabled"
+            v-show="$store.state.app.wordUsageExampleEnabled"
     >
       <div @click="ui.changeTab('wordUsage')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordUsage') }">

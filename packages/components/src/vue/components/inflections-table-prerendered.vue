@@ -1,5 +1,5 @@
 <template>
-  <div v-if="view.wideTable">
+  <div v-show="view.wideTable">
     <div @click="collapse" class="alpheios-inflections__title">
       {{view.title}}
       <span v-show="state.collapsed">[+]</span>

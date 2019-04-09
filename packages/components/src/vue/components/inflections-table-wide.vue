@@ -9,15 +9,25 @@
     </div>
 
     <template v-if="!state.collapsed">
-      <h4 class="alpheios-inflections__additional_title" v-if="view.additionalTitle">{{view.additionalTitle}}</h4>
-      <div class="alpheios-inflections__not-impl-msg"
-           v-if="!view.isImplemented || (view.wideView && view.wideView.rows.length == 0)">
-        {{l10n.getMsg('INFLECT_MSG_TABLE_NOT_IMPLEMENTED')}}
-      </div>
-      <div class="alpheios-inflections__wide-view" v-else-if="view.wideView">
-        <div class="alpheios-inflections__table-ctrl-cont" v-if="!view.hasPrerenderedTables && !inflBrowserTable">
-          <div class="alpheios-inflections__table-ctrl-cell--btn"
-               v-show="view.canCollapse && state.noSuffixGroupsHidden">
+      <h4
+          v-show="view.additionalTitle"
+          class="alpheios-inflections__additional_title"
+      >
+        {{ view.additionalTitle }}
+      </h4>
+
+      <div
+          v-if="isAvailable"
+          class="alpheios-inflections__wide-view"
+      >
+        <div
+            v-if="!view.hasPrerenderedTables && !inflBrowserTable"
+            class="alpheios-inflections__table-ctrl-cont"
+        >
+          <div
+              v-if="view.canCollapse && state.noSuffixGroupsHidden"
+              class="alpheios-inflections__table-ctrl-cell--btn"
+          >
             <alph-tooltip :tooltipText="l10n.getMsg('TOOLTIP_INFLECT_SHOWFULL')"
                           tooltipDirection="bottom-right">
               <button
@@ -41,35 +51,40 @@
           </div>
         </div>
 
-        <template v-if="!view.hasPrerenderedTables">
-          <div :style="tableStyles" class="infl-table infl-table--wide" id="alpheios-wide-vue-table">
-            <template v-for="row in view.wideView.rows">
-              <div :class="cellClasses(cell)" @mouseleave.stop.prevent="cellMouseLeave(cell)"
-                   @mouseover.stop.prevent="cellMouseOver(cell)" v-for="cell in row.cells">
-                <template v-if="cell.isDataCell">
-                  <template v-for="(morpheme, index) in cell.morphemes">
+        <div class="infl-prdgm-tbl" v-if="view.hasPrerenderedTables">
+          <div class="infl-prdgm-tbl__row" v-for="row in view.wideTable.rows">
+            <div :class="prerenderedCellClasses(cell)" class="infl-prdgm-tbl__cell" v-for="cell in row.cells">
+              {{cell.value}}
+            </div>
+          </div>
+        </div>
+
+        <div :style="tableStyles" class="infl-table infl-table--wide" id="alpheios-wide-vue-table" v-if="!view.hasPrerenderedTables">
+          <template v-for="row in view.wideView.rows">
+            <div :class="cellClasses(cell)" @mouseleave.stop.prevent="cellMouseLeave(cell)"
+                 @mouseover.stop.prevent="cellMouseOver(cell)" v-for="cell in row.cells">
+              <template v-if="cell.isDataCell">
+                <template v-for="(morpheme, index) in cell.morphemes">
                                     <span :class="morphemeClasses(morpheme)">
                                         <template v-if="morpheme.value">{{morpheme.value}}</template>
                                         <template v-else>-</template>
                                     </span>
-                    <infl-footnote :footnotes="morpheme.footnotes" v-if="morpheme.hasFootnotes"></infl-footnote>
-                    <template v-if="index < cell.morphemes.length-1">,</template>
-                  </template>
+                  <infl-footnote :footnotes="morpheme.footnotes" v-if="morpheme.hasFootnotes"></infl-footnote>
+                  <template v-if="index < cell.morphemes.length-1">,</template>
                 </template>
-                <span v-else v-html="l10n.getText(cell.value)"></span>
-              </div>
-            </template>
-          </div>
-        </template>
-        <template v-else>
-          <div class="infl-prdgm-tbl">
-            <div class="infl-prdgm-tbl__row" v-for="row in view.wideTable.rows">
-              <div :class="prerenderedCellClasses(cell)" class="infl-prdgm-tbl__cell" v-for="cell in row.cells">
-                {{cell.value}}
-              </div>
+              </template>
+              <span v-else v-html="l10n.getText(cell.value)"></span>
             </div>
-          </div>
-        </template>
+          </template>
+        </div>
+
+      </div>
+
+      <div
+          class="alpheios-inflections__not-impl-msg"
+          v-show="!isAvailable"
+      >
+        {{l10n.getMsg('INFLECT_MSG_TABLE_NOT_IMPLEMENTED')}}
       </div>
     </template>
   </div>
@@ -125,6 +140,14 @@ export default {
       return {
         gridTemplateColumns: `repeat(${this.view.wideView.visibleColumnQty + this.view.wideView.titleColumnQty}, 1fr)`
       }
+    },
+
+    isAvailable: function () {
+      return (
+        this.view.isImplemented &&
+        this.view.wideView &&
+        this.view.wideView.rows.length > 0
+      )
     }
   },
 

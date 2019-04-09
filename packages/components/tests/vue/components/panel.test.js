@@ -35,6 +35,7 @@ describe('panel.test.js', () => {
   let store
   let api = {}
   let contentOptions
+  let uiOptions
   let resourceOptions
   let l10nModule
   let authModule
@@ -42,7 +43,7 @@ describe('panel.test.js', () => {
     closePanel: () => {}
   }
   const authAPI = {
-    showUI: () => {return false}
+    showUI: () => { return false }
   }
 
   console.error = function () {}
@@ -55,6 +56,7 @@ describe('panel.test.js', () => {
     jest.spyOn(console, 'warn')
 
     contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
+    uiOptions = new Options(UIOptionDefaults, LocalStorageArea)
     resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
 
     store = new Vuex.Store({
@@ -112,15 +114,17 @@ describe('panel.test.js', () => {
       }
     })
 
-    authModule  = new AuthModule(store,api,{auth:null})
+    authModule = new AuthModule(store, api, { auth: null })
     api = {
       app: {
-        wordlistC: {}
+        wordlistC: {},
+        isDevMode: () => true
       },
       ui: uiAPI,
-      auth:authAPI,
+      auth: authAPI,
       settings: {
         contentOptions,
+        uiOptions,
         resourceOptions
       }
     }

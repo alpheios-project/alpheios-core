@@ -23,7 +23,7 @@ export default class ToolbarModule extends Module {
         toolbar: Toolbar
       },
       data: {
-        componentName: 'toolbar'
+        uiComponentName: 'toolbar'
       }
     })
   }

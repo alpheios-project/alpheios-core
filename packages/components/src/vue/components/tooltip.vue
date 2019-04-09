@@ -4,7 +4,7 @@
     <span class="tooltiptext alpheios-text__smaller"
           v-bind:class="directionClass"
           v-bind:style="additionalStyles"
-          v-if="tooltipText"
+          v-show="tooltipText"
     >
       {{ tooltipText }}
     </span>

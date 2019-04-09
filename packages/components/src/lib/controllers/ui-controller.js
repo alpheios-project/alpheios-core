@@ -859,16 +859,24 @@ export default class UIController {
     this.store.commit(`ui/setNotification`, { text: message, important: true })
   }
 
+  /**
+   * Switched between tabs in a panel.
+   * All tab switching should be done through this function only as it performs safety check
+   * regarding wither or not current tab can be available.
+   * @param {string} tabName - A name of a tab to switch to.
+   * @return {UIController} - An instance of a UI controller, for chaining.
+   */
   changeTab (tabName) {
-    const statusAvailable = Boolean(this.api.settings.contentOptions.items.verboseMode.currentValue === 'verbose')
     // If tab is disabled, switch to a default one
     if (
-      /* (!this.store.state.app.tabState.hasOwnProperty(tabName)) || */
-      (!this.store.state.app.hasInflData && name === 'inflections') ||
-      (!this.store.getters['app/hasGrammarRes'] && name === 'grammar') ||
-      (!this.store.getters['app/hasTreebankData'] && name === 'treebank') ||
-      (!statusAvailable && name === 'status')
+      (name === 'definitions' && !this.store.getters['app/defDataReady']) ||
+      (name === 'inflections' && !this.store.state.app.hasInflData) ||
+      (name === 'grammar' && !this.store.getters['app/hasGrammarRes']) ||
+      (name === 'treebank' && !this.store.getters['app/hasTreebankData']) ||
+      (name === 'wordUsage' && !this.store.state.app.wordUsageExampleEnabled) ||
+      (name === 'status' && this.api.settings.contentOptions.items.verboseMode.currentValue !== 'verbose')
     ) {
+      console.warn(`Attempting to switch to a ${tabName} tab which is not available`)
       tabName = this.defaultTab
     }
     this.store.commit('ui/setActiveTab', tabName) // Reflect a tab change in a state
@@ -1217,8 +1225,12 @@ export default class UIController {
     this.store.commit('app/setWordUsageExampleEnabled', wordUsageExampleEnabled)
 
     this.store.commit('app/setMorphDataReady')
-    const inflDataReady = Boolean(inflectionsViewSet && inflectionsViewSet.hasMatchingViews)
-    this.api.app.inflectionsViewSet = inflectionsViewSet
+
+    let inflDataReady = false
+    if (LanguageModelFactory.getLanguageModel(this.store.state.app.currentLanguageID).canInflect()) {
+      inflDataReady = Boolean(inflectionsViewSet && inflectionsViewSet.hasMatchingViews)
+      this.api.app.inflectionsViewSet = inflectionsViewSet
+    }
     this.store.commit('app/setInflData', inflDataReady)
 
     this.updateProviders(homonym)
