@@ -465,7 +465,7 @@ prosum,prodesse_profui_profuturus,prosient,,subjunctive,present,plural,3rd,1
 prosum,prodesse_profui_profuturus,profuant,,subjunctive,present,plural,3rd,1
 prosum,prodesse_profui_profuturus,prodes,,imperative,present,singular,2nd,14
 prosum,prodesse_profui_profuturus,prodeste,,imperative,present,plural,2nd,14
-prosum,prodesse_profui_profuturus,prodesse,,infinitive,present,,,
+prosum,prodesse_profui_profuturus,prodesse,,infinitive,present,,,14
 prosum,prodesse_profui_profuturus,proderam,,indicative,imperfect,singular,1st,14
 prosum,prodesse_profui_profuturus,proderās,,indicative,imperfect,singular,2nd,14
 prosum,prodesse_profui_profuturus,proderat,,indicative,imperfect,singular,3rd,14
@@ -1500,7 +1500,7 @@ nequeo,nequire_nequivi(ii)_nequitus,nequīvit,active,indicative,perfect,singular
 nequeo,nequire_nequivi(ii)_nequitus,nequivimus,active,indicative,perfect,plural,1st,
 nequeo,nequire_nequivi(ii)_nequitus,nequīvistis,active,indicative,perfect,plural,2nd,
 nequeo,nequire_nequivi(ii)_nequitus,nequivērunt,active,indicative,perfect,plural,3rd,
-nequeo,nequire_nequivi(ii)_nequitus,nequivēre,active,indicative,perfect,plural,3rd,
+nequeo,nequire_nequivi(ii)_nequitus,nequivēre,active,indicative,perfect,plural,3rd,15
 nequeo,nequire_nequivi(ii)_nequitus,nequīverim,active,subjunctive,perfect,singular,1st,
 nequeo,nequire_nequivi(ii)_nequitus,nequīverīs,active,subjunctive,perfect,singular,2nd,
 nequeo,nequire_nequivi(ii)_nequitus,nequīverit,active,subjunctive,perfect,singular,3rd,
@@ -1579,7 +1579,7 @@ adeo,adire_adivi(ii)_aditus,adībāre,passive,indicative,imperfect,singular,2nd,
 adeo,adire_adivi(ii)_aditus,adībātur,passive,indicative,imperfect,singular,3rd,
 adeo,adire_adivi(ii)_aditus,adībāmur,passive,indicative,imperfect,plural,1st,
 adeo,adire_adivi(ii)_aditus,adībāminī,passive,indicative,imperfect,plural,2nd,
-adeo,adire_adivi(ii)_aditus,adībantur,passive,indicative,imperfect,singular,3rd,
+adeo,adire_adivi(ii)_aditus,adībantur,passive,indicative,imperfect,plural,3rd,
 adeo,adire_adivi(ii)_aditus,adīrer,passive,subjunctive,imperfect,singular,1st,
 adeo,adire_adivi(ii)_aditus,adīrēris,passive,subjunctive,imperfect,singular,2nd,
 adeo,adire_adivi(ii)_aditus,adīrēre,passive,subjunctive,imperfect,singular,2nd,
