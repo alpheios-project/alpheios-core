@@ -12,6 +12,21 @@ export default class Module {
    */
   constructor (store, api, config = {}) {
     this.config = Object.assign(this.constructor._configDefaults, config)
+    this.isActivated = false
+  }
+
+  /**
+   * Puts module into an activated state. Must be implemented in the descendant.
+   */
+  activate () {
+    this.isActivated = true
+  }
+
+  /**
+   * Puts module into an deactivated state. Must be implemented in the descendant.
+   */
+  deactivate () {
+    this.isActivated = false
   }
 
   static get moduleName () {

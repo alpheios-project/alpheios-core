@@ -753,6 +753,9 @@ export default class UIController {
 
     if (this.api.ui.hasModule('popup')) { this.api.ui.closePopup() }
     if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel(false) } // Close panel without updating it's state so the state can be saved for later reactivation
+    console.info(`UI controller's deactivate`)
+    const toolbar = this.api.ui.getModule('toolbar')
+    toolbar.deactivate()
     this.isActivated = false
     this.isDeactivated = true
     this.authUnwatch()

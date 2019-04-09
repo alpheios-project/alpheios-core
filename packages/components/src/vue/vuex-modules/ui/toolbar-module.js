@@ -27,6 +27,16 @@ export default class ToolbarModule extends Module {
       }
     })
   }
+
+  activate () {
+    super.activate()
+  }
+
+  deactivate () {
+    super.deactivate()
+    console.info(`Toolbar deactivation`)
+    this._vi.$store.commit(`toolbar/close`)
+  }
 }
 
 ToolbarModule.store = () => {
@@ -35,12 +45,12 @@ ToolbarModule.store = () => {
     namespaced: true,
 
     state: {
-      // Whether a panel is shown or hidden
+      // Whether a toolbar is shown or hidden
       visible: false
     },
     mutations: {
       /**
-       * Opens a panel
+       * Opens a toolbar
        * @param state
        */
       open (state) {
@@ -48,22 +58,18 @@ ToolbarModule.store = () => {
       },
 
       /**
-       * Closes a panel
+       * Closes a toolbar
        * @param state
        */
       close (state) {
         state.visible = false
-      },
-
-      setPanelLayout (state, layout) {
-        state.layout = layout
       }
     }
   }
 }
 
 ToolbarModule._configDefaults = {
-  _moduleName: 'toolbarModule',
+  _moduleName: 'toolbar',
   _moduleType: Module.types.UI,
   _supportedPlatforms: [HTMLPage.platforms.DESKTOP],
   // A selector that specifies to what DOM element a nav will be mounted.
