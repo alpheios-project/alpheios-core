@@ -42,16 +42,16 @@ html {
   --alpheios-link-color-on-light: var(--alpheios-color-vivid);
   --alpheios-link-color-on-medium: var(--alpheios-color-muted);
   --alpheios-link-color-on-dark: var(--alpheios-color-bright);
-  --alpheios-toolbar-bg-color: var(--alpheios-color-muted);
+  --alpheios-toolbar-bg-color: var(--alpheios-color-dark);
   --alpheios-border-color: var(--alpheios-color-neutral-dark);
   --alpheios-icon-color: var(--alpheios-color-neutral-lightest);
   --alpheios-icon-bg-color: transparent;
   --alpheios-icon-color-active: var(--alpheios-color-light);
   --alpheios-icon-bg-color-active: transparent;
   --alpheios-icon-color-hover: var(--alpheios-color-bright-hover);
-  --alpheios-icon-bg-color-hover: var(--alpheios-color-muted-hover);
+  --alpheios-icon-bg-color-hover: var(--alpheios-color-dark-hover);
   --alpheios-icon-color-pressed: var(--alpheios-color-bright-pressed);
-  --alpheios-icon-bg-color-pressed: var(--alpheios-color-muted-pressed);
+  --alpheios-icon-bg-color-pressed: var(--alpheios-color-dark-pressed);
 
   // Colors of buttons
   --alpheios-btn-primary-font-color: var(--alpheios-color-neutral-lightest);

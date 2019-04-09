@@ -47637,14 +47637,16 @@ class Module {
   }
 
   /**
-   * Puts module into an activated state. Must be implemented in the descendant.
+   * Puts module into an activated state.
+   * Must be implemented in the descendant if the latter has some special activation procedure.
    */
   activate () {
     this.isActivated = true
   }
 
   /**
-   * Puts module into an deactivated state. Must be implemented in the descendant.
+   * Puts module into an deactivated state.
+   * Must be implemented in the descendant if the latter has some special deactivation procedure.
    */
   deactivate () {
     this.isActivated = false
@@ -48025,11 +48027,13 @@ class ToolbarModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE
 
   activate () {
     super.activate()
+    // Open a toolbar on activation
     this._vi.$store.commit(`toolbar/open`)
   }
 
   deactivate () {
     super.deactivate()
+    // Close a toolbar on deactivation
     this._vi.$store.commit(`toolbar/close`)
   }
 }
