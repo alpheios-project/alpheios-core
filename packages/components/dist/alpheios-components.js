@@ -39326,8 +39326,10 @@ class UIController {
         this.store.commit('panel/open')
         this.state.setPanelOpen()
       }
-      // Close a toolbar when panel opens
-      this.store.commit(`toolbar/close`)
+      if (this.hasModule('toolbar')) {
+        // Close a toolbar when a panel opens
+        this.store.commit(`toolbar/close`)
+      }
     }
   }
 
@@ -39338,8 +39340,10 @@ class UIController {
     if (this.api.ui.hasModule('panel')) {
       this.store.commit('panel/close')
       if (syncState) { this.state.setPanelClosed() }
-      // Open a toolbar when panel closes
-      this.store.commit(`toolbar/open`)
+      // Open a toolbar when a panel closes. Do not open if the toolbar is deactivated.
+      if (this.hasModule('toolbar') && this.getModule('toolbar').isActivated) {
+        this.store.commit(`toolbar/open`)
+      }
     }
   }
 
