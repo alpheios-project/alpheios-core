@@ -16,14 +16,16 @@ export default class Module {
   }
 
   /**
-   * Puts module into an activated state. Must be implemented in the descendant.
+   * Puts module into an activated state.
+   * Must be implemented in the descendant if the latter has some special activation procedure.
    */
   activate () {
     this.isActivated = true
   }
 
   /**
-   * Puts module into an deactivated state. Must be implemented in the descendant.
+   * Puts module into an deactivated state.
+   * Must be implemented in the descendant if the latter has some special deactivation procedure.
    */
   deactivate () {
     this.isActivated = false

@@ -2,6 +2,7 @@
   <div
       id="alpheios-toolbar-inner"
       class="alpheios-content alpheios-toolbar"
+      v-show="$store.state.toolbar.visible"
   >
     <div
         id="alpheios-toolbar-drag-handle"
@@ -169,7 +170,7 @@ export default {
     l10n: 'l10n',
     settings: 'settings'
   },
-  storeModules: ['app', 'ui'], // Store modules that are required by this component
+  storeModules: ['toolbar', 'app', 'ui'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
     lookup: Lookup,

@@ -30,11 +30,13 @@ export default class ToolbarModule extends Module {
 
   activate () {
     super.activate()
+    // Open a toolbar on activation
+    this._vi.$store.commit(`toolbar/open`)
   }
 
   deactivate () {
     super.deactivate()
-    console.info(`Toolbar deactivation`)
+    // Close a toolbar on deactivation
     this._vi.$store.commit(`toolbar/close`)
   }
 }

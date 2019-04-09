@@ -296,6 +296,18 @@ export default class UIController {
     this.uiModules.forEach((m) => { m.instance = new m.ModuleClass(this.store, this.api, m.options) })
   }
 
+  activateModules () {
+    // Activate data modules fist, UI modules after them because UI modules are dependent on data modules
+    this.dataModules.forEach(m => m.instance.activate())
+    this.uiModules.forEach(m => m.instance.activate())
+  }
+
+  deactivateModules () {
+    // Deactivate data modules in reverse order: UI modules first, data modules after them.
+    this.dataModules.forEach(m => m.instance.deactivate())
+    this.uiModules.forEach(m => m.instance.deactivate())
+  }
+
   hasModule (moduleName) {
     return this.modules.has(moduleName)
   }
@@ -712,6 +724,8 @@ export default class UIController {
 
     this.isActivated = true
     this.isDeactivated = false
+
+    this.activateModules()
     // Activate an app first, then activate the UI
     this.state.activate()
     this.state.activateUI()
@@ -751,11 +765,9 @@ export default class UIController {
     // Deactivate event listeners
     if (this.evc) { this.evc.deactivateListeners() }
 
+    this.deactivateModules()
     if (this.api.ui.hasModule('popup')) { this.api.ui.closePopup() }
     if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel(false) } // Close panel without updating it's state so the state can be saved for later reactivation
-    console.info(`UI controller's deactivate`)
-    const toolbar = this.api.ui.getModule('toolbar')
-    toolbar.deactivate()
     this.isActivated = false
     this.isDeactivated = true
     this.authUnwatch()
