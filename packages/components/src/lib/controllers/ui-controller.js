@@ -1044,6 +1044,8 @@ export default class UIController {
         this.store.commit('panel/open')
         this.state.setPanelOpen()
       }
+      // Close a toolbar when panel opens
+      this.store.commit(`toolbar/close`)
     }
   }
 
@@ -1054,6 +1056,8 @@ export default class UIController {
     if (this.api.ui.hasModule('panel')) {
       this.store.commit('panel/close')
       if (syncState) { this.state.setPanelClosed() }
+      // Open a toolbar when panel closes
+      this.store.commit(`toolbar/open`)
     }
   }
 
