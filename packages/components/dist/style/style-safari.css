@@ -474,6 +474,20 @@ html {
   line-height: 1.5 !important;
 }
 
+.alpheios-logo-on-light .svg-logo-bg {
+  fill: #D3ECEC !important;
+}
+.alpheios-logo-on-light .svg-logo-lines {
+  fill: #062135 !important;
+}
+
+.alpheios-logo-on-dark .svg-logo-bg {
+  display: none;
+}
+.alpheios-logo-on-dark .svg-logo-lines {
+  fill: #FFF !important;
+}
+
 .alpheios-input {
   box-sizing: border-box !important;
   margin: 0 !important;

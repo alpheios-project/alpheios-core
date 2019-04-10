@@ -11,7 +11,7 @@
 
     <div class="alpheios-panel__header">
       <div class="alpheios-panel__header-logo">
-        <logo-icon></logo-icon>
+        <logo-icon class="alpheios-logo-on-dark"/>
       </div>
 
       <div class="alpheios-panel__header-btn-group--center">

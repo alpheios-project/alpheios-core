@@ -121,3 +121,25 @@
   font-size: calc(var(--alpheios-base-text-size) * 0.875);
   line-height: 1.5;
 }
+
+// Shall be applied to all logo SVGs that are shown on light background
+.alpheios-logo-on-light {
+  .svg-logo-bg {
+    fill: #D3ECEC;
+  }
+
+  .svg-logo-lines {
+    fill: #062135;
+  }
+}
+
+// Shall be applied to all logo SVGs that are shown on dark background
+.alpheios-logo-on-dark {
+  .svg-logo-bg {
+    display: none;
+  }
+
+  .svg-logo-lines {
+    fill: #FFF;
+  }
+}

@@ -9,7 +9,7 @@
        v-show="this.$store.state.popup.visible">
     <div class="alpheios-popup__header">
       <div class="alpheios-popup__logo">
-        <logo-icon></logo-icon>
+        <logo-icon class="alpheios-logo-on-dark"/>
       </div>
       <alph-tooltip
           :tooltipText="l10n.getText('TOOLTIP_POPUP_CLOSE')"

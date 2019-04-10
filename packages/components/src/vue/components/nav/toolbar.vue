@@ -9,7 +9,7 @@
         class="alpheios-toolbar__drag-handle"
     >
       <div class="alpheios-toolbar__logo-icon">
-        <logo-icon></logo-icon>
+        <logo-icon class="alpheios-logo-on-dark"/>
       </div>
     </div>
     <div
