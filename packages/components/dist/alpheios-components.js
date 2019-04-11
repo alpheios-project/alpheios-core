@@ -39636,17 +39636,24 @@ class UIController {
   }
 
   async onWordItemSelected (wordItem) {
+    if (!this.userDataManager && !wordItem.homonym) {
+      console.warn('UserDataManager is not defined, data couldn\'t be loaded from the storage')
+      return
+    }
+
+    let homonym
     if (this.userDataManager) {
       let wordItemFull = await this.userDataManager.query({ dataType: 'WordItem', params: { wordItem } }, { type: 'full' })
-      let homonym = wordItemFull[0].homonym
-      this.newLexicalRequest(homonym.targetWord, homonym.languageID)
-
-      this.onHomonymReady(homonym)
-      this.updateDefinitions(homonym)
-      this.updateTranslations(homonym)
+      homonym = wordItemFull[0].homonym
     } else {
-      console.warn('UserDataManager is not defined, data couldn\'t be loaded from the storage')
+      homonym = wordItem.homonym
     }
+
+    this.newLexicalRequest(homonym.targetWord, homonym.languageID)
+
+    this.onHomonymReady(homonym)
+    this.updateDefinitions(homonym)
+    this.updateTranslations(homonym)
   }
 
   /**
