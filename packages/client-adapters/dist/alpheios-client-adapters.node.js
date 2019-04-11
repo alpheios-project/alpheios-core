@@ -8515,12 +8515,16 @@ class AlpheiosConcordanceAdapter extends _adapters_base_adapter__WEBPACK_IMPORTE
     try {
       let url = this.createFetchURL(homonym, filters, pagination, sort)
       let wordUsageListRes = await this.fetch(url)
-      let parsedWordUsageList = await this.parseWordUsageResult(wordUsageListRes, homonym)
-      return {
-        wordUsageExamples: parsedWordUsageList,
-        targetWord: homonym.targetWord,
-        language: homonym.language,
-        provider: this.provider
+      if (Array.isArray(wordUsageListRes)) {
+        let parsedWordUsageList = await this.parseWordUsageResult(wordUsageListRes, homonym)
+        return {
+          wordUsageExamples: parsedWordUsageList,
+          targetWord: homonym.targetWord,
+          language: homonym.language,
+          provider: this.provider
+        }
+      } else {
+        return []
       }
     } catch (error) {
       this.addError(this.l10n.messages['CONCORDANCE_WORD_USAGE_FETCH_ERROR'].get(error.message))
