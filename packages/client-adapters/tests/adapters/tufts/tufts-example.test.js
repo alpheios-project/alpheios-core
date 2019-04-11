@@ -304,7 +304,7 @@ describe('tufts-example.test.js', () => {
     expect(homonym.lexemes[1].inflections[0].suffix).toEqual('est')
   }, 20000)
 
-  it('16 TuftsExample - can parse gez', async () => {
+  it.skip('16 TuftsExample - can parse gez', async () => {
     let adapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
