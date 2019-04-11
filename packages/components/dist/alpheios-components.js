@@ -14477,20 +14477,25 @@ __webpack_require__.r(__webpack_exports__);
     authorsList () {
       if (this.$store.state.app.wordUsageExamplesReady && (!this.lastTargetWord || this.lastTargetWord !== this.app.homonym.targetWord)) {
         this.lastTargetWord = this.app.homonym.targetWord
-        this.lastAuthorsList = this.app.wordUsageExamples.wordUsageExamples
-          .filter(wordUsageExampleItem => wordUsageExampleItem.author)
-          .map(wordUsageExampleItem => wordUsageExampleItem.author)
-          .filter((item, pos, self) => self.indexOf(item) == pos)
-          .slice()
+        if (!this.app.wordUsageExamples.wordUsageExamples) {
+          this.lastAuthorsList = []
+          this.lastTextWorksList = []
+        } else {
+          this.lastAuthorsList = this.app.wordUsageExamples.wordUsageExamples
+            .filter(wordUsageExampleItem => wordUsageExampleItem.author)
+            .map(wordUsageExampleItem => wordUsageExampleItem.author)
+            .filter((item, pos, self) => self.indexOf(item) == pos)
+            .slice()
 
-        this.lastTextWorksList = this.app.wordUsageExamples.wordUsageExamples
-          .map(wordUsageExampleItem => wordUsageExampleItem.textWork)
-          .filter((item, pos, self) => item && self.indexOf(item) == pos)
-          .slice()
+          this.lastTextWorksList = this.app.wordUsageExamples.wordUsageExamples
+            .map(wordUsageExampleItem => wordUsageExampleItem.textWork)
+            .filter((item, pos, self) => item && self.indexOf(item) == pos)
+            .slice()
 
-        this.removeDisabledFromTypeFilters()
-        this.typeFilter = 'moreResults'
-        this.setDisabledToType('noFilters')
+          this.removeDisabledFromTypeFilters()
+          this.typeFilter = 'moreResults'
+          this.setDisabledToType('noFilters')
+        }
       } else if (!this.$store.state.app.wordUsageExamplesReady && !this.app.homonym) {
         this.removeDisabledFromTypeFilters()
         this.typeFilter = 'noFilters'
@@ -14523,6 +14528,8 @@ __webpack_require__.r(__webpack_exports__);
       if (this.typeFilter === 'noFilters') {
         this.disabledButton = true
 
+        this.$emit('getAllResults')
+
         await this.getResultsNoFilters()
 
         this.removeDisabledFromTypeFilters()
@@ -14532,15 +14539,17 @@ __webpack_require__.r(__webpack_exports__);
         this.setDisabledToType('noFilters')
 
         this.disabledButton = false
+        
       } else if (this.typeFilter === 'moreResults') {
         this.disabledButton = true
-
+        this.$emit('getMoreResults', this.selectedAuthor, this.selectedTextWork)
         await this.getResultsWithFilters()
 
         this.setDisabledToType('filterCurrentResults')
         this.lastAuthorID = this.selectedAuthor ? this.selectedAuthor.ID : null
 
         this.disabledButton = false
+        
       } else if (this.typeFilter === 'filterCurrentResults') {
         this.$emit('filterCurrentByAuthor', this.selectedAuthor, this.selectedTextWork)
         this.lastAuthorID = this.selectedAuthor ? this.selectedAuthor.ID : null
@@ -14781,6 +14790,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -14802,7 +14815,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       sortBy: null,
       selectedAuthor: null,
-      selectedTextWork: null
+      selectedTextWork: null,
+      needInnerFilter: false
     }
   },
   computed: {
@@ -14812,16 +14826,19 @@ __webpack_require__.r(__webpack_exports__);
     language () {
       return this.$store.state.app.homonymDataReady && this.app.homonym ? this.app.homonym.language : null
     },
+    showHeader () {
+      return Boolean(this.selectedAuthor) || 
+             this.showWordUsageExampleItems && this.wordUsageListSorted.length > 0 ||
+             !this.showWordUsageExampleItems
+    },
     showWordUsageExampleItems () {
-      this.selectedAuthor = null
-      this.selectedTextWork = null
       return this.$store.state.app.wordUsageExamplesReady
     },
     wordUsageExamples () {
       if (!this.$store.state.app.wordUsageExamplesReady) {
         return []
       }
-      if (this.selectedAuthor) {
+      if (this.selectedAuthor && this.needInnerFilter) {
         return this.app.wordUsageExamples.wordUsageExamples
           .filter(wordUsageExample => {
             return wordUsageExample.author && (wordUsageExample.author.ID === this.selectedAuthor.ID) && (this.selectedTextWork ? wordUsageExample.textWork.ID === this.selectedTextWork.ID : true)
@@ -14830,7 +14847,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.app.wordUsageExamples.wordUsageExamples
     },
     provider () {
-      return this.$store.state.app.wordUsageExamplesReady ? this.app.wordUsageExamples.provider : null
+      return this.$store.state.app.wordUsageExamplesReady && this.app.wordUsageExamples.provider ? this.app.wordUsageExamples.provider.toString() : null
     },
     providerRights () {
       return (this.app.wordUsageExamples && this.app.wordUsageExamples.provider && this.app.wordUsageExamples.provider.rights)
@@ -14851,9 +14868,22 @@ __webpack_require__.r(__webpack_exports__);
     changedSortBy (sortByFromHeader) {
       this.sortBy = sortByFromHeader
     },
-    filterCurrentByAuthor (selectedAuthor, selectedTextWork) {
+    setAuthorTextWork (selectedAuthor, selectedTextWork) {
       this.selectedAuthor = selectedAuthor
       this.selectedTextWork = selectedTextWork
+    },
+    filterCurrentByAuthor (selectedAuthor, selectedTextWork) {
+      this.setAuthorTextWork(selectedAuthor, selectedTextWork)
+      this.needInnerFilter = true
+    },
+    getMoreResults (selectedAuthor, selectedTextWork) {
+      this.setAuthorTextWork(selectedAuthor, selectedTextWork)
+      this.needInnerFilter = false
+    },
+    getAllResults () {
+      this.selectedAuthor = null
+      this.selectedTextWork = null
+      this.needInnerFilter = false
     },
     getPropertyBySortBy (a, type) {
       switch (type) {
@@ -23765,93 +23795,103 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.availableSortBy
-    ? _c("div", { staticClass: "alpheios-word-usage-header-sorting" }, [
-        _c("p", { staticClass: "alpheios-word-usage-header-title" }, [
-          _vm._v(
-            "\n    " + _vm._s(_vm.l10n.getText("WORDUSAGE_SORT_BY")) + "\n  "
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          [
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.selectedSortBy,
-                    expression: "selectedSortBy"
-                  }
-                ],
-                staticClass:
-                  "alpheios-select alpheios-word-usage-header-select-sortBy",
-                on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.selectedSortBy = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                    _vm.changedSortBy
-                  ]
-                }
-              },
-              _vm._l(_vm.typeSortingList, function(typeSorting) {
-                return _c(
-                  "option",
-                  {
-                    key: typeSorting.value,
-                    domProps: { value: typeSorting.value }
-                  },
-                  [_vm._v(_vm._s(typeSorting.title))]
-                )
-              }),
-              0
-            ),
-            _vm._v(" "),
-            _c(
-              "alph-tooltip",
-              {
-                attrs: {
-                  tooltipText: _vm.l10n.getMsg(
-                    "WORDUSAGE_SORTING_AUTHOR_CLEAR"
-                  ),
-                  tooltipDirection: "top-right"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "alpheios-word-usage-header-clear-icon",
-                    class: {
-                      "alpheios-word-usage-header-clear-disabled":
-                        _vm.selectedSortBy === null
-                    },
-                    on: { click: _vm.clearSorting }
-                  },
-                  [_c("clear-filters-icon")],
-                  1
-                )
-              ]
-            )
-          ],
-          1
+  return _c(
+    "div",
+    {
+      directives: [
+        {
+          name: "show",
+          rawName: "v-show",
+          value: _vm.availableSortBy,
+          expression: "availableSortBy"
+        }
+      ],
+      staticClass: "alpheios-word-usage-header-sorting"
+    },
+    [
+      _c("p", { staticClass: "alpheios-word-usage-header-title" }, [
+        _vm._v(
+          "\n    " + _vm._s(_vm.l10n.getText("WORDUSAGE_SORT_BY")) + "\n  "
         )
-      ])
-    : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.selectedSortBy,
+                  expression: "selectedSortBy"
+                }
+              ],
+              staticClass:
+                "alpheios-select alpheios-word-usage-header-select-sortBy",
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.selectedSortBy = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  _vm.changedSortBy
+                ]
+              }
+            },
+            _vm._l(_vm.typeSortingList, function(typeSorting) {
+              return _c(
+                "option",
+                {
+                  key: typeSorting.value,
+                  domProps: { value: typeSorting.value }
+                },
+                [_vm._v(_vm._s(typeSorting.title))]
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c(
+            "alph-tooltip",
+            {
+              attrs: {
+                tooltipText: _vm.l10n.getMsg("WORDUSAGE_SORTING_AUTHOR_CLEAR"),
+                tooltipDirection: "top-right"
+              }
+            },
+            [
+              _c(
+                "span",
+                {
+                  staticClass: "alpheios-word-usage-header-clear-icon",
+                  class: {
+                    "alpheios-word-usage-header-clear-disabled":
+                      _vm.selectedSortBy === null
+                  },
+                  on: { click: _vm.clearSorting }
+                },
+                [_c("clear-filters-icon")],
+                1
+              )
+            ]
+          )
+        ],
+        1
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -23888,12 +23928,24 @@ var render = function() {
     _c(
       "div",
       {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.showHeader,
+            expression: "showHeader"
+          }
+        ],
         staticClass: "alpheios-word-usage-header",
         attrs: { "data-alpheios-ignore": "all" }
       },
       [
         _c("word-usage-examples-filters", {
-          on: { filterCurrentByAuthor: _vm.filterCurrentByAuthor }
+          on: {
+            filterCurrentByAuthor: _vm.filterCurrentByAuthor,
+            getMoreResults: _vm.getMoreResults,
+            getAllResults: _vm.getAllResults
+          }
         }),
         _vm._v(" "),
         _c("word-usage-examples-sorting", {
@@ -23926,11 +23978,21 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.provider
-      ? _c("div", { staticClass: "alpheios-word_usage_list__provider" }, [
-          _vm._v("\n    " + _vm._s(_vm.provider.toString()) + "\n  ")
-        ])
-      : _vm._e()
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.provider,
+            expression: "provider"
+          }
+        ],
+        staticClass: "alpheios-word_usage_list__provider"
+      },
+      [_vm._v("\n    " + _vm._s(_vm.provider) + "\n  ")]
+    )
   ])
 }
 var staticRenderFns = []
@@ -37165,7 +37227,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"xmlns":"http://www.w3.org/2000/svg","viewBox":"0 0 69.8 50.9"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{staticClass:"svg-logo-bg",attrs:{"d":"M42.7 45.5C25.9 60.9-4.1 40.6.5 20 2.9 9.2 12.7 2.3 23.7.5 47.4-3.4 58.8 17.7 48.2 38c-1.5 3.1-3.4 5.6-5.5 7.5z"}}),_c('path',{staticClass:"svg-logo-lines",attrs:{"d":"M42.8 48.7c-.5 0-.9-.3-1-.8-.3-1.4-.8-3.4-1.2-5.8-.8-3.9-1.8-9-3-13.2-7.1 2-12.6 2.4-14.8-.6-2-2.7-1.8-5.5.7-7.6 3.2-2.7 9.7-3.3 12.7-.2 1.1 1.1 2 3.2 2.8 5.7 6-1.9 12.5-4.6 16.8-6.3 3.6-1.5 6.4-2.6 7.8-3 .6-.1 1.1.2 1.3.8.1.6-.2 1.1-.8 1.3-1.3.3-4.2 1.5-7.5 2.9-6 2.5-11.8 4.8-16.9 6.4 1.2 4.2 2.2 9.2 3 13.4.5 2.4.9 4.4 1.2 5.7.1.6-.2 1.1-.8 1.3h-.3zM30.4 20.5c-2 0-4.2.7-5.6 1.8-1.6 1.3-1.7 2.9-.4 4.7 1.6 2.1 6.7 1.4 12.5-.2-.7-2.2-1.5-3.9-2.4-4.8-.9-1-2.4-1.5-4.1-1.5z"}}),_c('path',{staticClass:"svg-logo-lines",attrs:{"d":"M47.3 46.4c-.5 0-.9-.3-1-.8-.5-1.6-.9-3.6-1.3-5.7-.5-2.3-1-5-1.7-7.7-1.3.3-2.6.6-3.7.9l-.9.2c-8.4 2.2-18.8 4.8-23-5.7-1.7-4.4-.3-7.4 1.2-9 4.1-4.5 13-5.2 17.6-4 5.4 1.5 8.4 8.1 10.3 15.2.2 0 .4-.1.7-.1 6.9-1.5 14.7-3.1 19.3-6.2.5-.3 1.1-.2 1.5.3.3.5.2 1.1-.3 1.5-5 3.3-13 5-20.1 6.5-.2 0-.4.1-.6.1.7 2.6 1.2 5.3 1.7 7.7.4 2.1.8 4.1 1.2 5.7.1.6-.2 1.1-.8 1.3 0-.2-.1-.2-.1-.2zM29.8 16c-4.9 0-9.5 2-11.2 3.9-1.6 1.8-1.9 4.1-.8 6.9 3.5 8.8 12.1 6.6 20.5 4.5l.9-.2c1.1-.3 2.4-.6 3.7-.9-1.9-6.5-4.5-12.5-8.9-13.7-1.4-.3-2.8-.5-4.2-.5z"}}),_c('path',{staticClass:"svg-logo-lines",attrs:{"d":"M52 42.9c-.4 0-.8-.3-1-.7-.5-1.3-1-3-1.4-4.8-2.4.3-4.5.6-6 .7-1.9.2-4.3.6-6.9 1-6.8 1.2-14.5 2.5-19.1.6-3.6-1.5-6.7-5.2-8.2-9.9-1.5-4.9-1.1-9.9 1-13.2 2-3.1 6.8-5.5 13.2-6.7 5.9-1.1 11.7-.8 15.4.6 7 2.8 9.6 13.9 11.8 22.8.1.5.3 1.1.4 1.6 6.2-1 13.9-2.9 17.1-6.3.4-.4 1.1-.4 1.5 0 .4.4.4 1.1 0 1.5-3.6 3.9-11.5 5.9-18.1 7 .4 1.6.8 3.1 1.3 4.4.2.5-.1 1.1-.6 1.3-.2.1-.3.1-.4.1zM30.7 11.4c-2.1 0-4.5.2-6.7.6-5.7 1-10.2 3.2-11.9 5.7-1.8 2.8-2.1 7.2-.8 11.4s3.9 7.4 7 8.6c4.1 1.6 11.8.3 18-.8 2.6-.5 5.1-.9 7.1-1 1.3-.1 3.3-.3 5.7-.6-.1-.5-.2-.9-.3-1.4-2-8.5-4.6-19-10.5-21.4-2-.7-4.6-1.1-7.6-1.1z"}})])
+            children.concat([_c('path',{attrs:{"d":"M42.7 45.5C25.9 60.9-4.1 40.6.5 20 2.9 9.2 12.7 2.3 23.7.5 47.4-3.4 58.8 17.7 48.2 38c-1.5 3.1-3.4 5.6-5.5 7.5z","fill":"#d3ecec"}}),_c('path',{staticClass:"svg-logo-lines",attrs:{"d":"M42.8 48.7c-.5 0-.9-.3-1-.8-.3-1.4-.8-3.4-1.2-5.8-.8-3.9-1.8-9-3-13.2-7.1 2-12.6 2.4-14.8-.6-2-2.7-1.8-5.5.7-7.6 3.2-2.7 9.7-3.3 12.7-.2 1.1 1.1 2 3.2 2.8 5.7 6-1.9 12.5-4.6 16.8-6.3 3.6-1.5 6.4-2.6 7.8-3 .6-.1 1.1.2 1.3.8.1.6-.2 1.1-.8 1.3-1.3.3-4.2 1.5-7.5 2.9-6 2.5-11.8 4.8-16.9 6.4 1.2 4.2 2.2 9.2 3 13.4.5 2.4.9 4.4 1.2 5.7.1.6-.2 1.1-.8 1.3h-.3zM30.4 20.5c-2 0-4.2.7-5.6 1.8-1.6 1.3-1.7 2.9-.4 4.7 1.6 2.1 6.7 1.4 12.5-.2-.7-2.2-1.5-3.9-2.4-4.8-.9-1-2.4-1.5-4.1-1.5z"}}),_c('path',{staticClass:"svg-logo-lines",attrs:{"d":"M47.3 46.4c-.5 0-.9-.3-1-.8-.5-1.6-.9-3.6-1.3-5.7-.5-2.3-1-5-1.7-7.7-1.3.3-2.6.6-3.7.9l-.9.2c-8.4 2.2-18.8 4.8-23-5.7-1.7-4.4-.3-7.4 1.2-9 4.1-4.5 13-5.2 17.6-4 5.4 1.5 8.4 8.1 10.3 15.2.2 0 .4-.1.7-.1 6.9-1.5 14.7-3.1 19.3-6.2.5-.3 1.1-.2 1.5.3.3.5.2 1.1-.3 1.5-5 3.3-13 5-20.1 6.5-.2 0-.4.1-.6.1.7 2.6 1.2 5.3 1.7 7.7.4 2.1.8 4.1 1.2 5.7.1.6-.2 1.1-.8 1.3 0-.2-.1-.2-.1-.2zM29.8 16c-4.9 0-9.5 2-11.2 3.9-1.6 1.8-1.9 4.1-.8 6.9 3.5 8.8 12.1 6.6 20.5 4.5l.9-.2c1.1-.3 2.4-.6 3.7-.9-1.9-6.5-4.5-12.5-8.9-13.7-1.4-.3-2.8-.5-4.2-.5z"}}),_c('path',{staticClass:"svg-logo-lines",attrs:{"d":"M52 42.9c-.4 0-.8-.3-1-.7-.5-1.3-1-3-1.4-4.8-2.4.3-4.5.6-6 .7-1.9.2-4.3.6-6.9 1-6.8 1.2-14.5 2.5-19.1.6-3.6-1.5-6.7-5.2-8.2-9.9-1.5-4.9-1.1-9.9 1-13.2 2-3.1 6.8-5.5 13.2-6.7 5.9-1.1 11.7-.8 15.4.6 7 2.8 9.6 13.9 11.8 22.8.1.5.3 1.1.4 1.6 6.2-1 13.9-2.9 17.1-6.3.4-.4 1.1-.4 1.5 0 .4.4.4 1.1 0 1.5-3.6 3.9-11.5 5.9-18.1 7 .4 1.6.8 3.1 1.3 4.4.2.5-.1 1.1-.6 1.3-.2.1-.3.1-.4.1zM30.7 11.4c-2.1 0-4.5.2-6.7.6-5.7 1-10.2 3.2-11.9 5.7-1.8 2.8-2.1 7.2-.8 11.4s3.9 7.4 7 8.6c4.1 1.6 11.8.3 18-.8 2.6-.5 5.1-.9 7.1-1 1.3-.1 3.3-.3 5.7-.6-.1-.5-.2-.9-.3-1.4-2-8.5-4.6-19-10.5-21.4-2-.7-4.6-1.1-7.6-1.1z"}})])
           )
         }
       });
@@ -37205,7 +37267,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"fill":"none","stroke-width":"1.03","d":"M13 16l-6-6 6-6"}})])
+            children.concat([_c('path',{attrs:{"fill":"none","d":"M13 16l-6-6 6-6"}})])
           )
         }
       });
@@ -37245,7 +37307,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"fill":"none","stroke-width":"1.03","d":"M5.5 1l9 9-9 9"}})])
+            children.concat([_c('path',{attrs:{"fill":"none","d":"M5.5 1l9 9-9 9"}})])
           )
         }
       });
@@ -37485,7 +37547,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"stroke-width":"0","d":"M6 18.71V14H1V1h18v13h-8.29L6 18.71zM2 13h5v3.29L10.29 13H18V2H2v11z"}})])
+            children.concat([_c('path',{attrs:{"d":"M6 18.71V14H1V1h18v13h-8.29L6 18.71zM2 13h5v3.29L10.29 13H18V2H2v11z"}})])
           )
         }
       });
@@ -37645,7 +37707,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 25 21"}, attrs),
               ...rest,
             },
-            children.concat([_c('g',{attrs:{"fill":"none"}},[_c('rect',{attrs:{"ry":"2.901","height":"20","width":"24","y":".5","x":".5"}}),_c('path',{attrs:{"d":"M16.492 5.479v14.505M8.5 5.476v14.505M.993 15.458h23.005M.993 10.478h23.005M.993 5.498h23.005","stroke-width":".794"}})])])
+            children.concat([_c('g',{attrs:{"fill":"none"}},[_c('rect',{attrs:{"ry":"2.901","height":"20","width":"24","y":".5","x":".5"}}),_c('path',{attrs:{"d":"M16.492 5.479v14.505M8.5 5.476v14.505M.993 15.458h23.005M.993 10.478h23.005M.993 5.498h23.005"}})])])
           )
         }
       });
@@ -37685,7 +37747,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"stroke-width":"0","d":"M12.13 11.59c-.16 1.25-1.78 2.53-3.03 2.57-2.93.04.79-4.7-.36-5.79.56-.21 1.88-.54 1.88.44 0 .82-.5 1.74-.74 2.51-1.22 3.84 2.25-.17 2.26-.14.02.03.02.17-.01.41-.05.36.03-.24 0 0zm-.57-5.92c0 1-2.2 1.48-2.2.36 0-1.03 2.2-1.49 2.2-.36z"}}),_c('circle',{attrs:{"fill":"none","stroke-width":"1.1","cx":"10","cy":"10","r":"9"}})])
+            children.concat([_c('path',{attrs:{"d":"M12.13 11.59c-.16 1.25-1.78 2.53-3.03 2.57-2.93.04.79-4.7-.36-5.79.56-.21 1.88-.54 1.88.44 0 .82-.5 1.74-.74 2.51-1.22 3.84 2.25-.17 2.26-.14.02.03.02.17-.01.41-.05.36.03-.24 0 0zm-.57-5.92c0 1-2.2 1.48-2.2.36 0-1.03 2.2-1.49 2.2-.36z"}}),_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}})])
           )
         }
       });
@@ -37805,7 +37867,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"stroke-width":"0","d":"M1 3h18v1H1zM1 7h18v1H1zM1 11h18v1H1zM1 15h18v1H1z"}})])
+            children.concat([_c('path',{attrs:{"d":"M1 3h18v1H1zM1 7h18v1H1zM1 11h18v1H1zM1 15h18v1H1z"}})])
           )
         }
       });
@@ -37885,7 +37947,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 24 24"}, attrs),
               ...rest,
             },
-            children.concat([_c('ellipse',{attrs:{"rx":"11.405","ry":"11.405","fill":"none","cy":"12","cx":"12"}}),_c('path',{attrs:{"stroke-width":"0","d":"M19.46 10.145q0 2.49-1.178 4.494-1.426 2.356-3.969 2.708V15.18q1.21-.217 1.984-1.246.683-.947.683-1.976-.434.108-.869.108-1.302 0-2.17-.839-.868-.84-.868-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.55 0 2.481 1.11.806.975.806 2.383zm-8.534 0q0 2.49-1.178 4.494-1.426 2.356-3.968 2.708V15.18q1.209-.217 1.984-1.246.682-.947.682-1.976-.434.108-.868.108-1.302 0-2.17-.839-.869-.84-.869-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.551 0 2.481 1.11.807.975.807 2.383z"}})])
+            children.concat([_c('ellipse',{attrs:{"rx":"11.405","ry":"11.405","fill":"none","cy":"12","cx":"12"}}),_c('path',{attrs:{"d":"M19.46 10.145q0 2.49-1.178 4.494-1.426 2.356-3.969 2.708V15.18q1.21-.217 1.984-1.246.683-.947.683-1.976-.434.108-.869.108-1.302 0-2.17-.839-.868-.84-.868-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.55 0 2.481 1.11.806.975.806 2.383zm-8.534 0q0 2.49-1.178 4.494-1.426 2.356-3.968 2.708V15.18q1.209-.217 1.984-1.246.682-.947.682-1.976-.434.108-.868.108-1.302 0-2.17-.839-.869-.84-.869-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.551 0 2.481 1.11.807.975.807 2.383z"}})])
           )
         }
       });
@@ -38005,7 +38067,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('circle',{attrs:{"fill":"none","stroke-width":"1.1","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"stroke-width":"0","d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","stroke-width":"1.1","d":"M13.018 14.197l-3.573-3.572"}})])
+            children.concat([_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","d":"M13.018 14.197l-3.573-3.572"}})])
           )
         }
       });

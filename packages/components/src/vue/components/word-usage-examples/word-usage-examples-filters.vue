@@ -85,20 +85,25 @@ export default {
     authorsList () {
       if (this.$store.state.app.wordUsageExamplesReady && (!this.lastTargetWord || this.lastTargetWord !== this.app.homonym.targetWord)) {
         this.lastTargetWord = this.app.homonym.targetWord
-        this.lastAuthorsList = this.app.wordUsageExamples.wordUsageExamples
-          .filter(wordUsageExampleItem => wordUsageExampleItem.author)
-          .map(wordUsageExampleItem => wordUsageExampleItem.author)
-          .filter((item, pos, self) => self.indexOf(item) == pos)
-          .slice()
+        if (!this.app.wordUsageExamples.wordUsageExamples) {
+          this.lastAuthorsList = []
+          this.lastTextWorksList = []
+        } else {
+          this.lastAuthorsList = this.app.wordUsageExamples.wordUsageExamples
+            .filter(wordUsageExampleItem => wordUsageExampleItem.author)
+            .map(wordUsageExampleItem => wordUsageExampleItem.author)
+            .filter((item, pos, self) => self.indexOf(item) == pos)
+            .slice()
 
-        this.lastTextWorksList = this.app.wordUsageExamples.wordUsageExamples
-          .map(wordUsageExampleItem => wordUsageExampleItem.textWork)
-          .filter((item, pos, self) => item && self.indexOf(item) == pos)
-          .slice()
+          this.lastTextWorksList = this.app.wordUsageExamples.wordUsageExamples
+            .map(wordUsageExampleItem => wordUsageExampleItem.textWork)
+            .filter((item, pos, self) => item && self.indexOf(item) == pos)
+            .slice()
 
-        this.removeDisabledFromTypeFilters()
-        this.typeFilter = 'moreResults'
-        this.setDisabledToType('noFilters')
+          this.removeDisabledFromTypeFilters()
+          this.typeFilter = 'moreResults'
+          this.setDisabledToType('noFilters')
+        }
       } else if (!this.$store.state.app.wordUsageExamplesReady && !this.app.homonym) {
         this.removeDisabledFromTypeFilters()
         this.typeFilter = 'noFilters'
@@ -131,6 +136,8 @@ export default {
       if (this.typeFilter === 'noFilters') {
         this.disabledButton = true
 
+        this.$emit('getAllResults')
+
         await this.getResultsNoFilters()
 
         this.removeDisabledFromTypeFilters()
@@ -140,15 +147,17 @@ export default {
         this.setDisabledToType('noFilters')
 
         this.disabledButton = false
+        
       } else if (this.typeFilter === 'moreResults') {
         this.disabledButton = true
-
+        this.$emit('getMoreResults', this.selectedAuthor, this.selectedTextWork)
         await this.getResultsWithFilters()
 
         this.setDisabledToType('filterCurrentResults')
         this.lastAuthorID = this.selectedAuthor ? this.selectedAuthor.ID : null
 
         this.disabledButton = false
+        
       } else if (this.typeFilter === 'filterCurrentResults') {
         this.$emit('filterCurrentByAuthor', this.selectedAuthor, this.selectedTextWork)
         this.lastAuthorID = this.selectedAuthor ? this.selectedAuthor.ID : null

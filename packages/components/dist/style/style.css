@@ -2953,6 +2953,9 @@ h3.alpheios-inflections__credits-title {
   right: calc(var(--alpheios-base-text-size) * 1);
   left: auto;
 }
+.alpheios-panel__tab__word-usage {
+  width: 100%;
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.

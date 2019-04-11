@@ -438,4 +438,7 @@ export default {
       }
     }
   }
+  .alpheios-panel__tab__word-usage {
+    width: 100%;
+  }
 </style>

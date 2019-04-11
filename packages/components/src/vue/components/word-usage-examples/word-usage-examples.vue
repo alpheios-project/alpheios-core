@@ -1,8 +1,12 @@
 <template>
   <div class="alpheios-word-usage">
     <div class="alpheios_word_usage_list_title" data-alpheios-ignore="all">{{ targetWord }} ({{ language }})</div>
-    <div class="alpheios-word-usage-header" data-alpheios-ignore="all">
-      <word-usage-examples-filters @filterCurrentByAuthor = "filterCurrentByAuthor"></word-usage-examples-filters>
+    <div class="alpheios-word-usage-header" data-alpheios-ignore="all" v-show="showHeader">
+      <word-usage-examples-filters 
+        @filterCurrentByAuthor = "filterCurrentByAuthor"
+        @getMoreResults = "getMoreResults"
+        @getAllResults = "getAllResults"
+      ></word-usage-examples-filters>
       <word-usage-examples-sorting @changedSortBy = "changedSortBy"></word-usage-examples-sorting>
     </div>
 
@@ -19,8 +23,8 @@
       </div>
     </div>
 
-    <div class="alpheios-word_usage_list__provider" v-if="provider">
-      {{provider.toString()}}
+    <div class="alpheios-word_usage_list__provider" v-show="provider">
+      {{provider}}
     </div>
   </div>
 </template>
@@ -45,7 +49,8 @@ export default {
     return {
       sortBy: null,
       selectedAuthor: null,
-      selectedTextWork: null
+      selectedTextWork: null,
+      needInnerFilter: false
     }
   },
   computed: {
@@ -55,16 +60,19 @@ export default {
     language () {
       return this.$store.state.app.homonymDataReady && this.app.homonym ? this.app.homonym.language : null
     },
+    showHeader () {
+      return Boolean(this.selectedAuthor) || 
+             this.showWordUsageExampleItems && this.wordUsageListSorted.length > 0 ||
+             !this.showWordUsageExampleItems
+    },
     showWordUsageExampleItems () {
-      this.selectedAuthor = null
-      this.selectedTextWork = null
       return this.$store.state.app.wordUsageExamplesReady
     },
     wordUsageExamples () {
       if (!this.$store.state.app.wordUsageExamplesReady) {
         return []
       }
-      if (this.selectedAuthor) {
+      if (this.selectedAuthor && this.needInnerFilter) {
         return this.app.wordUsageExamples.wordUsageExamples
           .filter(wordUsageExample => {
             return wordUsageExample.author && (wordUsageExample.author.ID === this.selectedAuthor.ID) && (this.selectedTextWork ? wordUsageExample.textWork.ID === this.selectedTextWork.ID : true)
@@ -73,7 +81,7 @@ export default {
       return this.app.wordUsageExamples.wordUsageExamples
     },
     provider () {
-      return this.$store.state.app.wordUsageExamplesReady ? this.app.wordUsageExamples.provider : null
+      return this.$store.state.app.wordUsageExamplesReady && this.app.wordUsageExamples.provider ? this.app.wordUsageExamples.provider.toString() : null
     },
     providerRights () {
       return (this.app.wordUsageExamples && this.app.wordUsageExamples.provider && this.app.wordUsageExamples.provider.rights)
@@ -94,9 +102,22 @@ export default {
     changedSortBy (sortByFromHeader) {
       this.sortBy = sortByFromHeader
     },
-    filterCurrentByAuthor (selectedAuthor, selectedTextWork) {
+    setAuthorTextWork (selectedAuthor, selectedTextWork) {
       this.selectedAuthor = selectedAuthor
       this.selectedTextWork = selectedTextWork
+    },
+    filterCurrentByAuthor (selectedAuthor, selectedTextWork) {
+      this.setAuthorTextWork(selectedAuthor, selectedTextWork)
+      this.needInnerFilter = true
+    },
+    getMoreResults (selectedAuthor, selectedTextWork) {
+      this.setAuthorTextWork(selectedAuthor, selectedTextWork)
+      this.needInnerFilter = false
+    },
+    getAllResults () {
+      this.selectedAuthor = null
+      this.selectedTextWork = null
+      this.needInnerFilter = false
     },
     getPropertyBySortBy (a, type) {
       switch (type) {
