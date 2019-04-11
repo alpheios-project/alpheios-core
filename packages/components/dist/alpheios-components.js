@@ -11726,6 +11726,65 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -19924,14 +19983,6 @@ var render = function() {
           _c(
             "alph-tooltip",
             {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.$store.getters["app/defDataReady"],
-                  expression: "$store.getters['app/defDataReady']"
-                }
-              ],
               attrs: {
                 tooltipText: _vm.l10n.getText("TOOLTIP_DEFINITIONS"),
                 tooltipDirection: "left"
@@ -19943,7 +19994,8 @@ var render = function() {
                 {
                   staticClass: "alpheios-navbuttons__btn",
                   class: {
-                    active: _vm.$store.getters["ui/isActiveTab"]("definitions")
+                    active: _vm.$store.getters["ui/isActiveTab"]("definitions"),
+                    disabled: !_vm.$store.getters["app/defDataReady"]
                   },
                   on: {
                     click: function($event) {
@@ -19960,14 +20012,6 @@ var render = function() {
           _c(
             "alph-tooltip",
             {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.$store.state.app.hasInflData,
-                  expression: "$store.state.app.hasInflData"
-                }
-              ],
               attrs: {
                 tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT"),
                 tooltipDirection: "left"
@@ -19979,7 +20023,8 @@ var render = function() {
                 {
                   staticClass: "alpheios-navbuttons__btn",
                   class: {
-                    active: _vm.$store.getters["ui/isActiveTab"]("inflections")
+                    active: _vm.$store.getters["ui/isActiveTab"]("inflections"),
+                    disabled: !_vm.$store.state.app.hasInflData
                   },
                   on: {
                     click: function($event) {
@@ -20026,14 +20071,6 @@ var render = function() {
           _c(
             "alph-tooltip",
             {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.$store.getters["app/hasGrammarRes"],
-                  expression: "$store.getters[`app/hasGrammarRes`]"
-                }
-              ],
               attrs: {
                 tooltipText: _vm.l10n.getText("TOOLTIP_GRAMMAR"),
                 tooltipDirection: "left"
@@ -20045,7 +20082,8 @@ var render = function() {
                 {
                   staticClass: "alpheios-navbuttons__btn",
                   class: {
-                    active: _vm.$store.getters["ui/isActiveTab"]("grammar")
+                    active: _vm.$store.getters["ui/isActiveTab"]("grammar"),
+                    disabled: !_vm.$store.getters["app/hasGrammarRes"]
                   },
                   on: {
                     click: function($event) {
@@ -20062,14 +20100,6 @@ var render = function() {
           _c(
             "alph-tooltip",
             {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.$store.getters["app/hasTreebankData"],
-                  expression: "$store.getters['app/hasTreebankData']"
-                }
-              ],
               attrs: {
                 tooltipText: _vm.l10n.getText("TOOLTIP_TREEBANK"),
                 tooltipDirection: "left"
@@ -20081,7 +20111,8 @@ var render = function() {
                 {
                   staticClass: "alpheios-navbuttons__btn",
                   class: {
-                    active: _vm.$store.getters["ui/isActiveTab"]("treebank")
+                    active: _vm.$store.getters["ui/isActiveTab"]("treebank"),
+                    disabled: !_vm.$store.getters["app/hasTreebankData"]
                   },
                   on: {
                     click: function($event) {
@@ -20126,14 +20157,6 @@ var render = function() {
           _c(
             "alph-tooltip",
             {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.$store.state.auth.showUI,
-                  expression: "$store.state.auth.showUI"
-                }
-              ],
               attrs: {
                 tooltipText: _vm.l10n.getText("TOOLTIP_USER"),
                 tooltipDirection: "left"
@@ -20145,7 +20168,8 @@ var render = function() {
                 {
                   staticClass: "alpheios-navbuttons__btn",
                   class: {
-                    active: _vm.$store.getters["ui/isActiveTab"]("user")
+                    active: _vm.$store.getters["ui/isActiveTab"]("user"),
+                    disabled: !_vm.$store.state.auth.showUI
                   },
                   on: {
                     click: function($event) {
@@ -20162,14 +20186,6 @@ var render = function() {
           _c(
             "alph-tooltip",
             {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.$store.state.app.wordUsageExampleEnabled,
-                  expression: "$store.state.app.wordUsageExampleEnabled"
-                }
-              ],
               attrs: {
                 tooltipText: _vm.l10n.getText("TOOLTIP_WORD_USAGE"),
                 tooltipDirection: "left"
@@ -20181,7 +20197,8 @@ var render = function() {
                 {
                   staticClass: "alpheios-navbuttons__btn",
                   class: {
-                    active: _vm.$store.getters["ui/isActiveTab"]("wordUsage")
+                    active: _vm.$store.getters["ui/isActiveTab"]("wordUsage"),
+                    disabled: !_vm.$store.state.app.wordUsageExampleEnabled
                   },
                   on: {
                     click: function($event) {
@@ -20207,17 +20224,10 @@ var render = function() {
               _c(
                 "span",
                 {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: this.$store.state.app.hasWordListsData,
-                      expression: "this.$store.state.app.hasWordListsData"
-                    }
-                  ],
                   staticClass: "alpheios-navbuttons__btn",
                   class: {
-                    active: _vm.$store.getters["ui/isActiveTab"]("wordlist")
+                    active: _vm.$store.getters["ui/isActiveTab"]("wordlist"),
+                    disabled: !this.$store.state.app.hasWordListsData
                   },
                   on: {
                     click: function($event) {
@@ -20243,20 +20253,12 @@ var render = function() {
               _c(
                 "span",
                 {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value:
-                        this.settings.contentOptions.items.verboseMode
-                          .currentValue === "verbose",
-                      expression:
-                        "this.settings.contentOptions.items.verboseMode.currentValue === `verbose`"
-                    }
-                  ],
                   staticClass: "alpheios-navbuttons__btn",
                   class: {
-                    active: _vm.$store.getters["ui/isActiveTab"]("status")
+                    active: _vm.$store.getters["ui/isActiveTab"]("status"),
+                    disabled:
+                      this.settings.contentOptions.items.verboseMode
+                        .currentValue === "verbose"
                   },
                   on: {
                     click: function($event) {
@@ -38936,6 +38938,11 @@ class UIController {
           state.activeTab = tabName
         },
 
+        // Set active tab name to nothing when panel is closed so that no selected tab be shown in a toolbar
+        resetActiveTab (state) {
+          state.activeTab = ''
+        },
+
         setNotification (state, data) {
           state.notification.visible = true
           state.notification.important = data.important || false
@@ -39312,7 +39319,6 @@ class UIController {
     } else {
       if (this.api.ui.hasModule('panel') && this.state.isPanelOpen()) { this.api.ui.closePanel() }
       if (this.api.ui.hasModule('popup')) { this.api.ui.openPopup() }
-      this.changeTab('definitions')
     }
     return this
   }
@@ -39339,6 +39345,7 @@ class UIController {
   closePanel (syncState = true) {
     if (this.api.ui.hasModule('panel')) {
       this.store.commit('panel/close')
+      this.store.commit('ui/resetActiveTab')
       if (syncState) { this.state.setPanelClosed() }
       // Open a toolbar when a panel closes. Do not open if the toolbar is deactivated.
       if (this.hasModule('toolbar') && this.getModule('toolbar').isActivated) {

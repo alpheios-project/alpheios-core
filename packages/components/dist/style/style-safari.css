@@ -3084,5 +3084,9 @@ h3.alpheios-inflections__credits-title {
   display: flex;
   flex-direction: column !important;
 }
+.alpheios-toolbar__buttons .alpheios-navbuttons__btn.disabled {
+  fill: var(--alpheios-color-neutral-dark) !important;
+  stroke: var(--alpheios-color-neutral-dark) !important;
+}
 
 /*# sourceMappingURL=style-safari.css.map*/

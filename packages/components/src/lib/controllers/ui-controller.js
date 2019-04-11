@@ -654,6 +654,11 @@ export default class UIController {
           state.activeTab = tabName
         },
 
+        // Set active tab name to nothing when panel is closed so that no selected tab be shown in a toolbar
+        resetActiveTab (state) {
+          state.activeTab = ''
+        },
+
         setNotification (state, data) {
           state.notification.visible = true
           state.notification.important = data.important || false
@@ -1030,7 +1035,6 @@ export default class UIController {
     } else {
       if (this.api.ui.hasModule('panel') && this.state.isPanelOpen()) { this.api.ui.closePanel() }
       if (this.api.ui.hasModule('popup')) { this.api.ui.openPopup() }
-      this.changeTab('definitions')
     }
     return this
   }
@@ -1057,6 +1061,7 @@ export default class UIController {
   closePanel (syncState = true) {
     if (this.api.ui.hasModule('panel')) {
       this.store.commit('panel/close')
+      this.store.commit('ui/resetActiveTab')
       if (syncState) { this.state.setPanelClosed() }
       // Open a toolbar when a panel closes. Do not open if the toolbar is deactivated.
       if (this.hasModule('toolbar') && this.getModule('toolbar').isActivated) {
