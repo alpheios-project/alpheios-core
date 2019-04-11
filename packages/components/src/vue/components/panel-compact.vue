@@ -338,7 +338,7 @@ import { Definition } from 'alpheios-data-models'
 import WordListPanel from '@/vue/components/word-list/word-list-panel.vue'
 // Embeddable SVG icons
 import MenuIcon from '@/images/inline-icons/menu.svg'
-import CloseIcon from '../../images/inline-icons/close.svg'
+import CloseIcon from '@/images/inline-icons/x-close.svg'
 // Vue directives
 import { directive as onClickaway } from '../directives/clickaway.js'
 // JS imports

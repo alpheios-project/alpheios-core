@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-import CloseIcon from '../../images/inline-icons/close.svg'
+import CloseIcon from '@/images/inline-icons/x-close.svg'
 
 export default {
   name: 'EmbedLibWarning',

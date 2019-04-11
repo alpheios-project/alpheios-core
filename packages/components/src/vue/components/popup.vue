@@ -167,7 +167,7 @@ import Tooltip from './tooltip.vue'
 import ProgressBar from './progress-bar.vue'
 // Embeddable SVG icons
 import LogoIcon from '@/images/alpheios/logo.svg'
-import CloseIcon from '../../images/inline-icons/close.svg'
+import CloseIcon from '@/images/inline-icons/x-close.svg'
 
 import { directive as onClickaway } from '../directives/clickaway.js'
 // Modules support
@@ -633,14 +633,14 @@ export default {
   .alpheios-popup__header {
     display: flex;
     justify-content: space-between;
-    height: uisize(56px);
+    height: uisize(44px);
     background: var(--alpheios-toolbar-bg-color);
   }
 
   .alpheios-popup__logo {
     position: relative;
-    left: uisize(16px);
-    top: uisize(18px);
+    left: uisize(12px);
+    top: uisize(12px);
 
     svg {
       width: uisize(28px);
@@ -649,7 +649,7 @@ export default {
   }
 
   .alpheios-popup__close-btn {
-    width: uisize(80px);
+    width: uisize(56px);
     height: 100%;
     cursor: pointer;
     fill: var(--alpheios-icon-color);
@@ -661,7 +661,7 @@ export default {
       top: 50%;
       transform: translateY(-50%);
       left: uisize(16px);
-      width: uisize(44px);
+      width: uisize(22px);
       height: auto;
     }
 
