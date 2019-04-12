@@ -723,7 +723,6 @@ export default class UIController {
     if (this.state.isDisabled()) { return `UI controller is disabled` }
 
     if (!this.isInitialized) { await this.init() }
-
     // Activate listeners
     if (this.evc) { this.evc.activateListeners() }
 
@@ -744,6 +743,9 @@ export default class UIController {
     }
 
     if (this.state.tab) {
+      if (this.state.isTabStateDefault()) {
+        this.state.tab = this.defaultTab
+      }
       this.changeTab(this.state.tab)
     }
 
@@ -896,6 +898,10 @@ export default class UIController {
       tabName = this.defaultTab
     }
     this.store.commit('ui/setActiveTab', tabName) // Reflect a tab change in a state
+    // This is for compatibility with watchers in webextension that track tab changes
+    // and sends this into to a background script
+    this.state.changeTab(tabName)
+
     return this
   }
 
