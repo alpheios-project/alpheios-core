@@ -865,6 +865,24 @@ export default class UIController {
   }
 
   /**
+   * Checks wither a given tab is disabled.
+   * @param {string} tabName - A tab name  to be checked.
+   * @return {boolean} - True if the given tab is disabled,
+   *         false otherwise (including if we have no disabling conditions on this tab).
+   */
+  isDisabledTab (tabName) {
+    const tabsCheck = {
+      definitions: () => this.store.getters['app/defDataReady'],
+      inflections: () => this.store.state.app.hasInflData,
+      grammar: () => this.store.getters['app/hasGrammarRes'],
+      treebank: () => this.store.getters['app/hasTreebankData'],
+      wordUsage: () => this.store.state.app.wordUsageExampleEnabled,
+      status: () => this.api.settings.contentOptions.items.verboseMode.currentValue !== 'verbose'
+    }
+    return tabsCheck.hasOwnProperty(tabName) && !tabsCheck[tabName]()
+  }
+
+  /**
    * Switched between tabs in a panel.
    * All tab switching should be done through this function only as it performs safety check
    * regarding wither or not current tab can be available.
@@ -873,14 +891,7 @@ export default class UIController {
    */
   changeTab (tabName) {
     // If tab is disabled, switch to a default one
-    if (
-      (name === 'definitions' && !this.store.getters['app/defDataReady']) ||
-      (name === 'inflections' && !this.store.state.app.hasInflData) ||
-      (name === 'grammar' && !this.store.getters['app/hasGrammarRes']) ||
-      (name === 'treebank' && !this.store.getters['app/hasTreebankData']) ||
-      (name === 'wordUsage' && !this.store.state.app.wordUsageExampleEnabled) ||
-      (name === 'status' && this.api.settings.contentOptions.items.verboseMode.currentValue !== 'verbose')
-    ) {
+    if (this.isDisabledTab(tabName)) {
       console.warn(`Attempting to switch to a ${tabName} tab which is not available`)
       tabName = this.defaultTab
     }
@@ -903,9 +914,12 @@ export default class UIController {
         this.api.ui.openPanel()
       }
     } else {
-      this.api.ui.changeTab(tabName)
-      if (!this.state.isPanelOpen()) {
-        this.api.ui.openPanel()
+      if (!this.isDisabledTab(tabName)) {
+        // Do not switch to a tab and do not open a panel if a tab is disabled.
+        this.api.ui.changeTab(tabName)
+        if (!this.state.isPanelOpen()) {
+          this.api.ui.openPanel()
+        }
       }
     }
     return this

@@ -3,7 +3,7 @@
     <login/>
     <div class="alpheios-user-auth__notifications"
       v-show="$store.state.auth.notification.text">
-      <span @click="$store.commit(`auth/resetNotification`)" class="alpheios-popup__notifications-close-btn">
+      <span @click="$store.commit(`auth/resetNotification`)" class="alpheios-user-auth__notifications-close-btn">
         <close-icon></close-icon>
       </span>
       <span v-html="l10n.getMsg($store.state.auth.notification.text)"></span>
@@ -39,7 +39,7 @@ export default {
   @import "../../styles/variables";
 
   .alpheios-user-auth__user-info-box {
-    margin-top: 20px;
+    margin-top: uisize(20px);
     display: flex;
     border-top: 1px solid var(--alpheios-border-color);
     flex-direction: column;
@@ -48,7 +48,7 @@ export default {
   .alpheios-user-auth__user-info-item-box {
     display: flex;
     flex-direction: row;
-    padding: 5px 10px;
+    padding: uisize(5px) uisize(10px);
     border-bottom: 1px solid var(--alpheios-border-color);
   }
 
@@ -71,32 +71,38 @@ export default {
     color: var(--alpheios-color-neutral-lightest);
     background: var(--alpheios-color-muted);
     border-radius: uisize(10px);
-    flex: 0 0 60px;
+    flex: 0 0 uisize(60px);
     box-sizing: border-box;
     overflow: hidden;
+    // To match scaling via the --alpheios-base-ui-size
+    min-height: uisize(36px);
   }
 
   .alpheios-user-auth__notifications-close-btn {
     position: absolute;
-    right: 5px;
-    top: 5px;
+    right: uisize(10px);
+    top: uisize(10px);
     display: block;
-    width: 20px;
-    height: 20px;
+    width: uisize(20px);
+    height: auto;
     margin: 0;
     cursor: pointer;
     fill: var(--alpheios-color-neutral-lightest);
     stroke: var(--alpheios-color-neutral-lightest);
-  }
 
-  .alpheios-user-auth__notifications-close-btn:hover,
-  .alpheios-user-auth__notifications-close-btn:focus {
-    fill: var(--alpheios-color-neutral-light);
-    stroke: var(--alpheios-color-neutral-light);
+    &:hover,
+    &:focus {
+      fill: var(--alpheios-icon-color-hover);
+      stroke: var(--alpheios-icon-color-hover);
+    }
+
+    &:active {
+      fill: var(--alpheios-icon-color-active);
+      stroke: var(--alpheios-icon-color-active);
+    }
   }
 
   [data-notification-visible="true"] .alpheios-user-auth__notifications {
     display: block;
   }
-
 </style>

@@ -1,6 +1,5 @@
 <template>
   <div :class="rootClasses"
-       :data-notification-visible="$store.state.ui.notification.visible && $store.state.ui.notification.important"
        :style="mainstyles"
        class="alpheios-panel alpheios-panel--large alpheios-content"
        data-component="alpheios-panel"
@@ -285,27 +284,9 @@
       >
         <word-list-panel :updated="$store.state.app.wordListUpdateTime" :wordlistC="app.wordlistC"></word-list-panel>
       </div>
+    </div>
 
-    </div>
-    <div
-        :class="{ 'alpheios-panel__notifications--important': $store.state.ui.notification.important }"
-        class="alpheios-panel__notifications alpheios-text-small"
-        v-show="$store.state.ui.notification.visible && $store.state.ui.notification.important"
-    >
-            <span
-                class="alpheios-panel__notifications-close-btn"
-                @click="$store.commit(`ui/resetNotification`)"
-            >
-                <close-icon/>
-            </span>
-      <span class="alpheios-panel__notifications-text" v-html="$store.state.ui.notification.text"></span>
-      <setting
-          :classes="['alpheios-panel__notifications--lang-switcher alpheios-text-smaller']"
-          :data="settings.contentOptions.items.preferredLanguage"
-          @change="contentOptionChanged"
-          v-show="$store.state.ui.notification.showLanguageSwitcher"
-      />
-    </div>
+    <notification-area/>
   </div>
 </template>
 <script>
@@ -370,22 +351,24 @@ export default {
   }
 
   .alpheios-panel__header-logo {
-    width: 44px;
+    width: uisize(44px);
     height: auto;
-    // To compensate for an extra white space at the top of the logo image
-    top: -1px;
   }
 
   .alpheios-panel--large {
     .alpheios-navbuttons__btn {
       svg {
-        width: 28px;
+        width: uisize(28px);
       }
     }
   }
 
   .alpheios-navbuttons__btn--attach {
     stroke-width: 2.5;
+  }
+
+  .alpheios-panel__close-btn {
+    width: uisize(80px);
   }
 
   .alpheios-panel-left {
@@ -395,20 +378,20 @@ export default {
 
     .alpheios-panel__header {
       direction: ltr;
-      border-top-right-radius: textsize(10px);
-      padding-left: textsize(14px);
+      border-top-right-radius: uisize(10px);
+      padding-left: uisize(14px);
     }
 
-    .alpheios-panel__content {
+    .alpheios-panel__content,
+    .alpheios-notification-area {
       border-right: 1px solid var(--alpheios-border-color);
     }
 
     .alpheios-panel__close-btn {
-      width: textsize(80px);
-      border-top-right-radius: textsize(10px);
+      border-top-right-radius: uisize(10px);
 
       svg {
-        left: textsize(16px);
+        left: uisize(20px);
       }
     }
   }
@@ -420,20 +403,20 @@ export default {
 
     .alpheios-panel__header {
       direction: rtl;
-      border-top-left-radius: textsize(10px);
-      padding-right: textsize(14px);
+      border-top-left-radius: uisize(10px);
+      padding-right: uisize(14px);
     }
 
-    .alpheios-panel__content {
+    .alpheios-panel__content,
+    .alpheios-notification-area {
       border-left: 1px solid var(--alpheios-border-color);
     }
 
     .alpheios-panel__close-btn {
-      width: textsize(80px);
-      border-top-left-radius: textsize(10px);
+      border-top-left-radius: uisize(10px);
 
       svg {
-        right: textsize(16px);
+        right: uisize(20px);
         left: auto;
       }
     }

@@ -1,7 +1,5 @@
 <template>
   <div class="alpheios-panel alpheios-panel--compact alpheios-content"
-       :data-notification-visible="$store.state.ui.notification.visible && $store.state.ui.notification.important"
-       :data-notification-auth-visible="$store.state.auth.notification.visible"
        :style="mainstyles"
        data-component="alpheios-panel"
        data-resizable="true"
@@ -275,41 +273,8 @@
         <word-list-panel></word-list-panel>
       </div>
     </div>
-    <div
-        :class="{ 'alpheios-panel__notifications--important': $store.state.ui.notification.important }"
-        class="alpheios-panel__notifications alpheios-text-small"
-        v-show="$store.state.ui.notification.visible && $store.state.ui.notification.important"
-    >
-            <span
-                class="alpheios-panel__notifications-close-btn"
-                @click="$store.commit(`ui/resetNotification`)"
-            >
-                <close-icon/>
-            </span>
-      <span class="alpheios-panel__notifications-text" v-html="$store.state.ui.notification.text"></span>
-      <setting
-          v-show="$store.state.ui.notification.showLanguageSwitcher"
-          :classes="['alpheios-panel__notifications--lang-switcher alpheios-text-smaller']"
-          :data="settings.contentOptions.items.preferredLanguage"
-          @change="contentOptionChanged"
-      />
-    </div>
-    <div
-        v-show="showLoginNotification"
-        class="alpheios-panel__notifications-auth alpheios-panel__notifications--important"
-        :data-count="$store.state.auth.notification.count"
-    >
-         <span
-             class="alpheios-panel__notifications-close-btn"
-             @click="$store.commit(`auth/resetNotification`)"
-         >
-            <close-icon/>
-         </span>
-         <span
-             v-html="l10n.getMsg($store.state.auth.notification.text)"
-         />
-         <login/>
-    </div>
+
+    <notification-area/>
   </div>
 </template>
 <script>
@@ -320,9 +285,9 @@
 // Vue components
 import DropDownMenu from '@/vue/components/nav/drop-down-menu.vue'
 import NavbuttonsCompact from '@/vue/components/nav/navbuttons-compact.vue'
+import NotificationArea from '@/vue/components//notification-area.vue'
 import Inflections from './inflections.vue'
 import Setting from './setting.vue'
-import Login from './login.vue'
 import ShortDef from './shortdef.vue'
 import Grammar from './grammar.vue'
 import Morph from './morph.vue'
@@ -363,10 +328,10 @@ export default {
     menuIcon: MenuIcon,
     dropDownMenu: DropDownMenu,
     navbuttonsCompact: NavbuttonsCompact,
+    notificationArea: NotificationArea,
     inflections: Inflections,
     inflectionBrowser: InflectionBrowser,
     setting: Setting,
-    login: Login,
     shortdef: ShortDef,
     info: Info,
     grammar: Grammar,
@@ -406,6 +371,7 @@ export default {
         zIndex: this.ui.zIndex
       }
     },
+
     resourceSettingsLexicons: function () {
       return this.settings.resourceOptions.items && this.settings.resourceOptions.items.lexicons
         ? this.settings.resourceOptions.items.lexicons.filter(item => item.values.length > 0)
@@ -461,14 +427,6 @@ export default {
         }
       }
       return content
-    },
-
-    showLoginNotification () {
-      return Boolean(
-        this.$store.state.auth.notification.text &&
-        this.$store.state.auth.notification.showLogin &&
-        (this.$store.state.auth.notification.count === 1 || this.$store.state.auth.notification.count % 10 === 0)
-      )
     }
   },
   methods: {
@@ -612,12 +570,8 @@ export default {
     direction: ltr;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: uisize(56px) auto uisize(56px);
-    grid-template-areas: "header" "content" "content";
-  }
-
-  .alpheios-panel[data-notification-visible="true"] {
-    grid-template-areas: "header" "content" "notifications"
+    grid-template-rows: uisize(56px) 1fr min-content;
+    grid-template-areas: "header" "content" "notifications";
   }
 
   .alpheios-panel__header {
@@ -655,7 +609,7 @@ export default {
     svg {
       position: relative;
       left: uisize(8px);
-      width: uisize(44px);
+      width: uisize(28px);
       height: auto;
       top: 50%;
       transform: translateY(-50%);
@@ -697,59 +651,6 @@ export default {
     display: block;
     border-bottom: 1px solid;
     margin-bottom: 20px;
-  }
-
-  .alpheios-panel__notifications, .alpheios-panel_notifications-auth {
-    display: none;
-    position: relative;
-    padding: 10px 20px;
-    background: var(--alpheios-color-muted);
-    grid-area: notifications;
-    overflow: hidden;
-  }
-
-  .alpheios-panel__notifications-close-btn {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    display: block;
-    width: 20px;
-    height: 20px;
-    margin: 0;
-    cursor: pointer;
-    fill: var(--alpheios-color-light);
-    stroke: var(--alpheios-color-light);
-  }
-
-  .alpheios-panel__notifications-close-btn:hover,
-  .alpheios-panel__notifications-close-btn:focus {
-    fill: var(--alpheios-color-neutral-light);
-    stroke: var(--alpheios-color-neutral-light);
-  }
-
-  .alpheios-panel__notifications--lang-switcher {
-    font-size: 12px;
-    float: right;
-    margin: -20px 10px 0 0;
-    display: inline-block;
-  }
-
-  .alpheios-panel__notifications--lang-switcher .alpheios-select {
-    width: 120px;
-    height: 25px;
-  }
-
-  .alpheios-panel__notifications--important {
-    color: var(--alpheios-color-neutral-lightest);
-    background: var(--alpheios-color-muted);
-  }
-
-  [data-notification-visible="true"] .alpheios-panel__notifications {
-    display: block;
-  }
-
-  [data-notification-auth-visible="true"] .alpheios-panel__notifications-auth {
-    display: block;
   }
 
   .alpheios-panel__tab-panel {

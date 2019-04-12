@@ -604,11 +604,12 @@ html {
 .alpheios-content .multiselect__tag {
   background-color: var(--alpheios-btn-primary-bg-color);
   display: inline-block;
-  border-radius: 5px;
-  padding: 4px 26px 4px 10px;
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.3125);
+  padding: calc(var(--alpheios-base-ui-size) * 0.25) calc(var(--alpheios-base-ui-size) * 1.625) calc(var(--alpheios-base-ui-size) * 0.25) calc(var(--alpheios-base-ui-size) * 0.625);
   position: relative;
   text-overflow: ellipsis;
   white-space: nowrap;
+  min-height: calc(var(--alpheios-base-ui-size) * 1.5);
 }
 .alpheios-content .multiselect__tag span {
   color: var(--alpheios-btn-primary-font-color);
@@ -745,6 +746,7 @@ div.alpheios-checkbox-block {
   margin: 0;
   border: 1px solid transparent;
   overflow: visible;
+  white-space: nowrap;
   display: inline-block;
   box-sizing: border-box;
   padding: 0.6em 1.2em;
@@ -1148,6 +1150,54 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-notification-area {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 0 0 auto;
+}
+.alpheios-notification-area__notification {
+  display: flex;
+  padding: calc(var(--alpheios-base-ui-size) * 0.625) 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 1.25);
+  flex: 0 0 calc(var(--alpheios-base-ui-size) * 3.75);
+  color: var(--alpheios-color-neutral-lightest);
+  background: var(--alpheios-color-muted);
+}
+.alpheios-notification-area__notification--important {
+  color: var(--alpheios-color-neutral-lightest);
+  background: var(--alpheios-color-vivid);
+}
+.alpheios-notification-area__msg {
+  padding-right: calc(var(--alpheios-base-ui-size) * 0.625);
+  flex: 1 1 auto;
+}
+.alpheios-notification-area__control .alpheios-setting__control {
+  width: 140px;
+}
+.alpheios-notification-area__close-btn {
+  width: calc(var(--alpheios-base-ui-size) * 1.25);
+  height: calc(var(--alpheios-base-ui-size) * 1.25);
+  padding: 0 calc(var(--alpheios-base-ui-size) * 0.625) 0 calc(var(--alpheios-base-ui-size) * 1.25);
+  cursor: pointer;
+  fill: var(--alpheios-color-neutral-lightest);
+  stroke: var(--alpheios-color-neutral-lightest);
+}
+.alpheios-notification-area__close-btn:hover, .alpheios-notification-area__close-btn:focus {
+  fill: var(--alpheios-icon-color-hover);
+  stroke: var(--alpheios-icon-color-hover);
+}
+.alpheios-notification-area__close-btn:active {
+  fill: var(--alpheios-icon-color-active);
+  stroke: var(--alpheios-icon-color-active);
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
 .alph_tooltip {
   position: relative;
   display: inline-block;
@@ -1474,55 +1524,6 @@ a.alpheios-popup__providers-link {
 }
 .alpheios-popup__providers-item {
   color: var(--alpheios-color-neutral-dark);
-}
-.alpheios-popup__notifications,
-.alpheios-popup__notifications-auth {
-  display: none;
-  position: relative;
-  padding: calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 1.25);
-  color: var(--alpheios-color-neutral-lightest);
-  background: var(--alpheios-color-muted);
-  flex: 0 0 calc(var(--alpheios-base-ui-size) * 3.75);
-  overflow: hidden;
-}
-.alpheios-popup__notifications-auth-msg {
-  margin-bottom: calc(var(--alpheios-base-ui-size) * 0.625);
-}
-.alpheios-popup__notifications-close-btn {
-  position: absolute;
-  right: calc(var(--alpheios-base-ui-size) * 0.3125);
-  top: calc(var(--alpheios-base-ui-size) * 0.3125);
-  display: block;
-  width: calc(var(--alpheios-base-ui-size) * 1.25);
-  height: calc(var(--alpheios-base-ui-size) * 1.25);
-  margin: 0;
-  cursor: pointer;
-  fill: var(--alpheios-color-neutral-lightest);
-  stroke: var(--alpheios-color-neutral-lightest);
-}
-.alpheios-popup__notifications-close-btn:hover,
-.alpheios-popup__notifications-close-btn:focus {
-  fill: var(--alpheios-color-neutral-light);
-  stroke: var(--alpheios-color-neutral-light);
-}
-[data-notification-visible=true] .alpheios-popup__notifications {
-  display: block;
-}
-[data-notification-auth-visible=true] .alpheios-popup__notifications-auth {
-  display: block;
-}
-.alpheios-popup__notifications--lang-switcher {
-  font-size: calc(var(--alpheios-base-text-size) * 0.75);
-  float: right;
-  margin: calc(var(--alpheios-base-text-size) * -1.25) calc(var(--alpheios-base-text-size) * 0.625) 0 0;
-  display: inline-block;
-}
-.alpheios-popup__notifications--lang-switcher .alpheios-select {
-  width: calc(var(--alpheios-base-text-size) * 7.5);
-  height: calc(var(--alpheios-base-text-size) * 1.5625);
-}
-.alpheios-popup__notifications--important {
-  background: var(--alpheios-color-muted);
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -2300,7 +2301,7 @@ h3.alpheios-inflections__credits-title {
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
 .alpheios-user-auth__user-info-box {
-  margin-top: 20px;
+  margin-top: calc(var(--alpheios-base-ui-size) * 1.25);
   display: flex;
   border-top: 1px solid var(--alpheios-border-color);
   flex-direction: column;
@@ -2308,7 +2309,7 @@ h3.alpheios-inflections__credits-title {
 .alpheios-user-auth__user-info-item-box {
   display: flex;
   flex-direction: row;
-  padding: 5px 10px;
+  padding: calc(var(--alpheios-base-ui-size) * 0.3125) calc(var(--alpheios-base-ui-size) * 0.625);
   border-bottom: 1px solid var(--alpheios-border-color);
 }
 .alpheios-user-auth__user-info-item-name {
@@ -2328,26 +2329,30 @@ h3.alpheios-inflections__credits-title {
   color: var(--alpheios-color-neutral-lightest);
   background: var(--alpheios-color-muted);
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
-  flex: 0 0 60px;
+  flex: 0 0 calc(var(--alpheios-base-ui-size) * 3.75);
   box-sizing: border-box;
   overflow: hidden;
+  min-height: calc(var(--alpheios-base-ui-size) * 2.25);
 }
 .alpheios-user-auth__notifications-close-btn {
   position: absolute;
-  right: 5px;
-  top: 5px;
+  right: calc(var(--alpheios-base-ui-size) * 0.625);
+  top: calc(var(--alpheios-base-ui-size) * 0.625);
   display: block;
-  width: 20px;
-  height: 20px;
+  width: calc(var(--alpheios-base-ui-size) * 1.25);
+  height: auto;
   margin: 0;
   cursor: pointer;
   fill: var(--alpheios-color-neutral-lightest);
   stroke: var(--alpheios-color-neutral-lightest);
 }
-.alpheios-user-auth__notifications-close-btn:hover,
-.alpheios-user-auth__notifications-close-btn:focus {
-  fill: var(--alpheios-color-neutral-light);
-  stroke: var(--alpheios-color-neutral-light);
+.alpheios-user-auth__notifications-close-btn:hover, .alpheios-user-auth__notifications-close-btn:focus {
+  fill: var(--alpheios-icon-color-hover);
+  stroke: var(--alpheios-icon-color-hover);
+}
+.alpheios-user-auth__notifications-close-btn:active {
+  fill: var(--alpheios-icon-color-active);
+  stroke: var(--alpheios-icon-color-active);
 }
 [data-notification-visible=true] .alpheios-user-auth__notifications {
   display: block;
@@ -2704,10 +2709,7 @@ h3.alpheios-inflections__credits-title {
   direction: ltr;
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: calc(var(--alpheios-base-ui-size) * 3.5) auto calc(var(--alpheios-base-ui-size) * 3.5);
-  grid-template-areas: "header" "content" "content";
-}
-.alpheios-panel[data-notification-visible=true] {
+  grid-template-rows: calc(var(--alpheios-base-ui-size) * 3.5) 1fr min-content;
   grid-template-areas: "header" "content" "notifications";
 }
 .alpheios-panel__header {
@@ -2742,7 +2744,7 @@ h3.alpheios-inflections__credits-title {
 .alpheios-panel__close-btn svg {
   position: relative;
   left: calc(var(--alpheios-base-ui-size) * 0.5);
-  width: calc(var(--alpheios-base-ui-size) * 2.75);
+  width: calc(var(--alpheios-base-ui-size) * 1.75);
   height: auto;
   top: 50%;
   transform: translateY(-50%);
@@ -2776,51 +2778,6 @@ h3.alpheios-inflections__credits-title {
   display: block;
   border-bottom: 1px solid;
   margin-bottom: 20px;
-}
-.alpheios-panel__notifications, .alpheios-panel_notifications-auth {
-  display: none;
-  position: relative;
-  padding: 10px 20px;
-  background: var(--alpheios-color-muted);
-  grid-area: notifications;
-  overflow: hidden;
-}
-.alpheios-panel__notifications-close-btn {
-  position: absolute;
-  right: 5px;
-  top: 5px;
-  display: block;
-  width: 20px;
-  height: 20px;
-  margin: 0;
-  cursor: pointer;
-  fill: var(--alpheios-color-light);
-  stroke: var(--alpheios-color-light);
-}
-.alpheios-panel__notifications-close-btn:hover,
-.alpheios-panel__notifications-close-btn:focus {
-  fill: var(--alpheios-color-neutral-light);
-  stroke: var(--alpheios-color-neutral-light);
-}
-.alpheios-panel__notifications--lang-switcher {
-  font-size: 12px;
-  float: right;
-  margin: -20px 10px 0 0;
-  display: inline-block;
-}
-.alpheios-panel__notifications--lang-switcher .alpheios-select {
-  width: 120px;
-  height: 25px;
-}
-.alpheios-panel__notifications--important {
-  color: var(--alpheios-color-neutral-lightest);
-  background: var(--alpheios-color-muted);
-}
-[data-notification-visible=true] .alpheios-panel__notifications {
-  display: block;
-}
-[data-notification-auth-visible=true] .alpheios-panel__notifications-auth {
-  display: block;
 }
 .alpheios-panel__tab-panel {
   display: flex;
@@ -2906,51 +2863,53 @@ h3.alpheios-inflections__credits-title {
   top: 0;
 }
 .alpheios-panel__header-logo {
-  width: 44px;
+  width: calc(var(--alpheios-base-ui-size) * 2.75);
   height: auto;
-  top: -1px;
 }
 .alpheios-panel--large .alpheios-navbuttons__btn svg {
-  width: 28px;
+  width: calc(var(--alpheios-base-ui-size) * 1.75);
 }
 .alpheios-navbuttons__btn--attach {
   stroke-width: 2.5;
+}
+.alpheios-panel__close-btn {
+  width: calc(var(--alpheios-base-ui-size) * 5);
 }
 .alpheios-panel-left.alpheios-panel {
   left: 0;
 }
 .alpheios-panel-left .alpheios-panel__header {
   direction: ltr;
-  border-top-right-radius: calc(var(--alpheios-base-text-size) * 0.625);
-  padding-left: calc(var(--alpheios-base-text-size) * 0.875);
+  border-top-right-radius: calc(var(--alpheios-base-ui-size) * 0.625);
+  padding-left: calc(var(--alpheios-base-ui-size) * 0.875);
 }
-.alpheios-panel-left .alpheios-panel__content {
+.alpheios-panel-left .alpheios-panel__content,
+.alpheios-panel-left .alpheios-notification-area {
   border-right: 1px solid var(--alpheios-border-color);
 }
 .alpheios-panel-left .alpheios-panel__close-btn {
-  width: calc(var(--alpheios-base-text-size) * 5);
-  border-top-right-radius: calc(var(--alpheios-base-text-size) * 0.625);
+  border-top-right-radius: calc(var(--alpheios-base-ui-size) * 0.625);
 }
 .alpheios-panel-left .alpheios-panel__close-btn svg {
-  left: calc(var(--alpheios-base-text-size) * 1);
+  left: calc(var(--alpheios-base-ui-size) * 1.25);
 }
 .alpheios-panel-right.alpheios-panel {
   right: 0;
 }
 .alpheios-panel-right .alpheios-panel__header {
   direction: rtl;
-  border-top-left-radius: calc(var(--alpheios-base-text-size) * 0.625);
-  padding-right: calc(var(--alpheios-base-text-size) * 0.875);
+  border-top-left-radius: calc(var(--alpheios-base-ui-size) * 0.625);
+  padding-right: calc(var(--alpheios-base-ui-size) * 0.875);
 }
-.alpheios-panel-right .alpheios-panel__content {
+.alpheios-panel-right .alpheios-panel__content,
+.alpheios-panel-right .alpheios-notification-area {
   border-left: 1px solid var(--alpheios-border-color);
 }
 .alpheios-panel-right .alpheios-panel__close-btn {
-  width: calc(var(--alpheios-base-text-size) * 5);
-  border-top-left-radius: calc(var(--alpheios-base-text-size) * 0.625);
+  border-top-left-radius: calc(var(--alpheios-base-ui-size) * 0.625);
 }
 .alpheios-panel-right .alpheios-panel__close-btn svg {
-  right: calc(var(--alpheios-base-text-size) * 1);
+  right: calc(var(--alpheios-base-ui-size) * 1.25);
   left: auto;
 }
 .alpheios-panel__tab__word-usage {
@@ -3090,6 +3049,7 @@ h3.alpheios-inflections__credits-title {
 .alpheios-toolbar__buttons .alpheios-navbuttons__btn.disabled {
   fill: var(--alpheios-color-neutral-dark);
   stroke: var(--alpheios-color-neutral-dark);
+  cursor: default;
 }
 
 /*# sourceMappingURL=style.css.map*/

@@ -26,12 +26,15 @@
     background-color: var(--alpheios-btn-primary-bg-color);
 
     display: inline-block;
-    border-radius: 5px;
-    padding: 4px 26px 4px 10px;
+    border-radius: uisize(5px);
+    padding: uisize(4px) uisize(26px) uisize(4px) uisize(10px);
 
     position: relative;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    // To match scaling via the --alpheios-base-ui-size
+    min-height: uisize(24px);
 
     span {
       color: var(--alpheios-btn-primary-font-color);

@@ -421,6 +421,7 @@ export default {
     .alpheios-navbuttons__btn.disabled {
       fill: var(--alpheios-color-neutral-dark);
       stroke: var(--alpheios-color-neutral-dark);
+      cursor: default;
     }
   }
 </style>
