@@ -88,6 +88,9 @@ export default {
         if (!this.app.wordUsageExamples.wordUsageExamples) {
           this.lastAuthorsList = []
           this.lastTextWorksList = []
+          this.typeFilter = 'noFilters'
+          this.setDisabledToType('moreResults')
+          this.setDisabledToType('filterCurrentResults')
         } else {
           this.lastAuthorsList = this.app.wordUsageExamples.wordUsageExamples
             .filter(wordUsageExampleItem => wordUsageExampleItem.author)

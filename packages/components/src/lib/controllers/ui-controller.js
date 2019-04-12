@@ -1156,8 +1156,8 @@ export default class UIController {
   enableWordUsageExamples (textSelector, requestType) {
     let checkType = requestType === 'onLexicalQuery' ? this.contentOptions.items.wordUsageExamplesON.currentValue === requestType : true
     return textSelector.languageID === Constants.LANG_LATIN &&
-      this.contentOptions.items.enableWordUsageExamples.currentValue &&
-      checkType
+    this.contentOptions.items.enableWordUsageExamples.currentValue &&
+    checkType
   }
 
   handleEscapeKey (event, nativeEvent) {

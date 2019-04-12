@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes" v-if="dataModel && Object.keys(dataModel).length > 0">
+  <div :class="classes" v-if="dataModel && Object.keys(dataModel).length > 0  && !dataModel.hidden">
     <label class="alpheios-setting__label" v-show="showTitle">{{dataModel.labelText}}</label>
 
     <multiselect
@@ -23,6 +23,7 @@
         v-if="dataModel.number"
         v-model="selected"
         :min="dataModel.minValue"
+        :max="dataModel.maxValue"
         @change="checkNumberField"
     >
 
@@ -111,6 +112,11 @@ export default {
       if (this.dataModel.number && this.dataModel.minValue) {
         if (this.selected < this.dataModel.minValue) {
           this.selected = this.dataModel.minValue
+        }
+      }
+      if (this.dataModel.number && this.dataModel.maxValue) {
+        if (this.selected > this.dataModel.maxValue) {
+          this.selected = this.dataModel.maxValue
         }
       }
     }
