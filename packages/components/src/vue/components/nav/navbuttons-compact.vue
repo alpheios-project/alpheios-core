@@ -1,25 +1,44 @@
 <template>
   <div class="alpheios-navbuttons alpheios-navbuttons--compact">
-    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MORPHOLOGY')" tooltipDirection="top">
-      <div :class="{ active: $store.getters['ui/isActiveTab']('morphology') }" @click="ui.changeTab('morphology')"
-            class="alpheios-navbuttons__btn">
-        <morphology-icon></morphology-icon>
+    <alph-tooltip
+        :tooltipText="l10n.getText('TOOLTIP_MORPHOLOGY')"
+        tooltipDirection="top"
+        v-show="hasMorphologyData"
+    >
+      <div
+          :class="{ active: $store.getters['ui/isActiveTab']('morphology') }"
+          class="alpheios-navbuttons__btn"
+          @click="ui.changeTab('morphology')"
+      >
+        <morphology-icon/>
       </div>
     </alph-tooltip>
 
-    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')" tooltipDirection="top"
-                  v-show="$store.getters['app/defDataReady']">
-      <div :class="{ active: $store.getters['ui/isActiveTab']('definitions') }" @click="ui.changeTab('definitions')"
-            class="alpheios-navbuttons__btn">
-        <definitions-icon></definitions-icon>
+    <alph-tooltip
+        :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')"
+        tooltipDirection="top"
+        v-show="$store.getters['app/defDataReady']"
+    >
+      <div
+          :class="{ active: $store.getters['ui/isActiveTab']('definitions') }"
+          class="alpheios-navbuttons__btn"
+          @click="ui.changeTab('definitions')"
+      >
+        <definitions-icon/>
       </div>
     </alph-tooltip>
 
-    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT')" tooltipDirection="top"
-                v-show="$store.state.app.hasInflData">
-      <div @click="ui.changeTab('inflections')" class="alpheios-navbuttons__btn"
-            v-bind:class="{ active: $store.getters['ui/isActiveTab']('inflections') }">
-        <inflections-icon></inflections-icon>
+    <alph-tooltip
+        :tooltipText="l10n.getText('TOOLTIP_INFLECT')"
+        tooltipDirection="top"
+        v-show="$store.state.app.hasInflData"
+    >
+      <div
+          :class="{ active: $store.getters['ui/isActiveTab']('inflections') }"
+          class="alpheios-navbuttons__btn"
+          @click="ui.changeTab('inflections')"
+      >
+        <inflections-icon/>
       </div>
     </alph-tooltip>
   </div>
@@ -51,6 +70,12 @@ export default {
     definitionsIcon: DefinitionsIcon,
     inflectionsIcon: InflectionsIcon,
     alphTooltip: Tooltip
+  },
+
+  computed: {
+    hasMorphologyData: function () {
+      return this.$store.state.app.morphDataReady && this.app.hasMorphData()
+    }
   }
 }
 </script>

@@ -2955,11 +2955,40 @@ h3.alpheios-inflections__credits-title {
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
 .alpheios-toolbar {
-  background: transparent !important;
   position: fixed !important;
+  z-index: 1000000 !important;
+}
+.alpheios-toolbar.alpheios-toolbar--compact {
+  cursor: pointer !important;
+  background-color: var(--alpheios-toolbar-bg-color) !important;
+  border-radius: 50% !important;
+  right: 15px !important;
+  bottom: 60px !important;
+  width: 44px !important;
+  height: 44px !important;
+}
+.alpheios-toolbar.alpheios-toolbar--compact svg {
+  width: calc(var(--alpheios-base-ui-size) * 1.25) !important;
+  height: auto !important;
+  position: relative !important;
+  fill: var(--alpheios-icon-color) !important;
+  stroke: var(--alpheios-icon-color) !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
+.alpheios-toolbar.alpheios-toolbar--large {
+  background: transparent !important;
   top: 10px !important;
   right: 15px !important;
-  z-index: 10000 !important;
 }
 .alpheios-toolbar .alpheios-navbuttons__btn {
   width: calc(var(--alpheios-base-ui-size) * 2.75) !important;

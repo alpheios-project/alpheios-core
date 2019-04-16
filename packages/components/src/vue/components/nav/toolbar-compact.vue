@@ -1,0 +1,61 @@
+<template>
+  <div
+      id="alpheios-toolbar-inner"
+      class="alpheios-content alpheios-toolbar alpheios-toolbar--compact"
+      v-show="$store.state.toolbar.visible"
+      @click="ui.showPanelTab('info')"
+  >
+    <toolbar-icon/>
+  </div>
+</template>
+<script>
+// Embeddable SVG icons
+import ToolbarIcon from '@/images/inline-icons/toolbar-compact-icon.svg'
+
+// Modules support
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+
+export default {
+  name: 'Toolbar',
+  // API modules that are required for this component
+  inject: {
+    app: 'app',
+    ui: 'ui',
+    l10n: 'l10n'
+  },
+  storeModules: ['toolbar', 'app', 'ui'], // Store modules that are required by this component
+  mixins: [DependencyCheck],
+  components: {
+    toolbarIcon: ToolbarIcon
+  }
+}
+</script>
+<style lang="scss">
+  @import "../../../styles/variables";
+
+  .alpheios-toolbar {
+    position: fixed;
+    z-index: 1000000;
+
+    &.alpheios-toolbar--compact {
+      cursor: pointer;
+      background-color: var(--alpheios-toolbar-bg-color);
+      border-radius: 50%;
+      right: 15px;
+      bottom: 60px;
+      width: 44px;
+      height: 44px;
+
+      svg {
+        width: uisize(20px);
+        height: auto;
+        position: relative;
+        fill: var(--alpheios-icon-color);
+        stroke: var(--alpheios-icon-color);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+</style>

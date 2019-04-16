@@ -1,7 +1,7 @@
 <template>
   <div
       id="alpheios-toolbar-inner"
-      class="alpheios-content alpheios-toolbar"
+      class="alpheios-content alpheios-toolbar alpheios-toolbar--large"
       v-show="$store.state.toolbar.visible"
   >
     <div
@@ -212,12 +212,14 @@ import CollapsedIcon from '@/images/inline-icons/collapsed.svg'
 import ExpandedIcon from '@/images/inline-icons/expanded.svg'
 import LookupIcon from '@/images/inline-icons/lookup.svg'
 // Vue components
+import ToolbarCompact from '@/vue/components/nav/toolbar-compact.vue'
 import Lookup from '@/vue/components/lookup.vue'
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'Toolbar',
+  extends: ToolbarCompact,
   // API modules that are required for this component
   inject: {
     app: 'app',
@@ -310,14 +312,12 @@ export default {
 <style lang="scss">
   @import "../../../styles/variables";
 
-  $alpheios-toolbar-base-width: 44px;
-
   .alpheios-toolbar {
-    background: transparent;
-    position: fixed;
-    top: 10px;
-    right: 15px;
-    z-index: 10000;
+    &.alpheios-toolbar--large {
+      background: transparent;
+      top: 10px;
+      right: 15px;
+    }
 
     .alpheios-navbuttons__btn {
       width: uisize($alpheios-toolbar-base-width);

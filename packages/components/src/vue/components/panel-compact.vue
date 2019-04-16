@@ -33,7 +33,7 @@
           v-show="$store.getters['ui/isActiveTab']('morphology')">
 
         <div :id="'alpheios-panel-lexical-data-container'" class="alpheios-popup__morph-cont alpheios-text-small alpheios-popup__morph-cont-ready"
-             v-show="$store.state.app.morphDataReady && app.hasMorphData()">
+             v-show="hasMorphologyData">
           <morph :id="'alpheios-panel-morph-component'"></morph>
 
           <!--<div class="alpheios-popup__morph-cont-providers" v-if="showProviders">
@@ -263,6 +263,7 @@
         <div class="alpheios-lookup__panel">
           <lookup
               :name-base="`panel-info`"
+              :show-results-in="`panel`"
           />
         </div>
         <info></info>
@@ -370,6 +371,10 @@ export default {
       return {
         zIndex: this.ui.zIndex
       }
+    },
+
+    hasMorphologyData: function () {
+      return this.$store.state.app.morphDataReady && this.app.hasMorphData()
     },
 
     resourceSettingsLexicons: function () {

@@ -5,5 +5,5 @@
   <component v-bind:is="$store.state.panel.layout"></component>
 </div>
 <div id="alpheios-toolbar">
-  <component v-bind:is="uiComponentName"></component>
+  <component v-bind:is="$store.state.toolbar.layout"></component>
 </div>

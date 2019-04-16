@@ -905,12 +905,22 @@ export default class UIController {
     return this
   }
 
+  /**
+   * Opens a panel and switches tab to the one specified.
+   * @param {string} tabName - A name of a tab to switch to.
+   * @return {UIController} - A UI controller's instance reference, for chaining.
+   */
   showPanelTab (tabName) {
     this.api.ui.changeTab(tabName)
     this.api.ui.openPanel()
     return this
   }
 
+  /**
+   * Reverses the current visibility state of a panel and switches it to the tab specified.
+   * @param {string} tabName - A name of a tab to switch to.
+   * @return {UIController} - A UI controller's instance reference, for chaining.
+   */
   togglePanelTab (tabName) {
     if (this.store.state.ui.activeTab === tabName) {
       // If clicked on the tab matching a currently selected tab, close the panel
