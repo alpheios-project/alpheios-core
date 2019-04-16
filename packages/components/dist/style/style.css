@@ -488,7 +488,7 @@ html {
   fill: #FFF;
 }
 
-.alpheios-input {
+input.alpheios-input, input.alpheios-input[type] {
   box-sizing: border-box;
   margin: 0;
   font: inherit;
@@ -505,29 +505,34 @@ html {
   -webkit-appearance: none;
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
 }
-.alpheios-input[type=search]::-webkit-search-cancel-button, .alpheios-input[type=search]::-webkit-search-decoration {
+input.alpheios-input[type=search]::-webkit-search-cancel-button, input.alpheios-input[type=search]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
-.alpheios-input[type=number]::-webkit-inner-spin-button, .alpheios-input[type=number]::-webkit-outer-spin-button {
+input.alpheios-input[type=number]::-webkit-inner-spin-button, input.alpheios-input[type=number]::-webkit-outer-spin-button {
   height: auto;
 }
-.alpheios-input::-moz-placeholder {
+input.alpheios-input::-moz-placeholder {
   opacity: 1;
 }
-.alpheios-input:not(input) {
+input.alpheios-input:not(input) {
   line-height: 40px;
 }
-.alpheios-input:focus {
+input.alpheios-input:focus, input.alpheios-input[type]:focus {
   outline: none;
+  border: inherit;
+  border: 1px solid var(--alpheios-border-color);
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
 }
-.alpheios-input:disabled {
+input.alpheios-input:disabled {
   background-color: var(--alpheios-color-neutral-dark);
   color: var(--alpheios-color-neutral-lightest);
+  border: 1px solid var(--alpheios-border-color);
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
 }
-.alpheios-input::placeholder {
+input.alpheios-input::placeholder {
   color: var(--alpheios-color-neutral-light);
 }
-.alpheios-input::-ms-input-placeholder {
+input.alpheios-input::-ms-input-placeholder {
   color: var(--alpheios-color-neutral-light) !important;
 }
 
@@ -1139,7 +1144,9 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
 .alpheios-setting__label {
   width: 50%;
 }
-.alpheios-setting__control {
+input.alpheios-input.alpheios-setting__control,
+select.alpheios-setting__control,
+.multiselect.alpheios-setting__control {
   width: 50%;
 }
 /*
@@ -1374,7 +1381,8 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
   background: white;
 }
 .alpheios-popup-lexdataloading__progress-line {
-  -webkit-animation: progress 3s infinite;
+  background: var(--alpheios-color-muted);
+  animation: progress 3s infinite;
   position: absolute;
   left: 0;
   top: 0;
@@ -1395,12 +1403,10 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
 }
 @keyframes progress {
 0% {
-    background: var(--alpheios-color-muted);
-    width: 0%;
+    transform: translateX(-49.5%) scaleX(0.01);
 }
 100% {
-    background: var(--alpheios-color-muted);
-    width: 100%;
+    transform: translateX(0%) scaleX(1);
 }
 }
 /*
@@ -1966,10 +1972,6 @@ a.infl-supp-tbl__reflink {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-inflections__placeholder {
-  padding: 0 20px;
-  margin-bottom: 1rem;
-}
 h4.alpheios-inflections__additional_title {
   line-height: 1.6;
   font-weight: bold;
@@ -1993,9 +1995,6 @@ h4.alpheios-inflections__additional_title {
   font-weight: bold;
   line-height: 1.2;
   justify-content: flex-start;
-}
-.alpheios-inflections__placeholder {
-  text-align: center;
 }
 .alpheios-inflections__footnotes {
   display: none;
@@ -2036,52 +2035,6 @@ h3.alpheios-inflections__credits-title {
 }
 .alpheios-inflections__supp-tables {
   margin-top: 4rem;
-}
-.alpheios-inflections__progress-wrapper {
-  height: 1.2rem;
-  margin: 0 1rem 2rem;
-  font-size: 0.875rem;
-}
-.alpheios-inflections__progress-border {
-  border: calc(var(--alpheios-base-ui-size) * 0.125) solid var(--alpheios-color-muted);
-  min-width: 300px;
-  height: 100%;
-  padding: 2px;
-}
-.alpheios-inflections__progress-whitespace {
-  overflow: hidden;
-  height: 100%;
-  margin: 0 auto;
-  position: relative;
-}
-.alpheios-inflections__progress-line {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-color: var(--alpheios-color-muted);
-  animation: cssload-slide 5.75s steps(40) infinite;
-}
-.alpheios-inflections__progress-whitespace div.alpheios-inflections__progress-text,
-.alpheios-inflections__progress-text {
-  text-transform: uppercase;
-  color: var(--alpheios-text-color-dark);
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 300px;
-  font-size: 13px;
-  top: 3px;
-}
-@keyframes cssload-slide {
-0% {
-    left: -100%;
-}
-100% {
-    left: 100%;
-}
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -2243,7 +2196,8 @@ h3.alpheios-inflections__credits-title {
 .alpheios-lookup__search-control {
   display: flex;
 }
-.alpheios-lookup__search-control input {
+.alpheios-lookup__search-control input.alpheios-input,
+.alpheios-lookup__search-control input.alpheios-input:focus {
   width: 70%;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -2539,9 +2493,6 @@ h3.alpheios-inflections__credits-title {
   border-bottom: 1px solid var(--alpheios-border-color);
   padding: 2px 0;
 }
-.alpheios-wordlist-language__worditem__current_session {
-  background: var(--alpheios-color-bright-hover);
-}
 .alpheios-worditem__data {
   display: inline-block;
   vertical-align: middle;
@@ -2565,6 +2516,10 @@ h3.alpheios-inflections__credits-title {
   fill: var(--alpheios-color-dark);
   stroke: var(--alpheios-color-dark);
 }
+.alpheios-wordlist-language__worditem .alpheios-worditem__icon.alpheios-worditem__current_session_icon {
+  stroke: var(--alpheios-color-bright-hover);
+  fill: var(--alpheios-color-bright-hover);
+}
 .alpheios-wordlist-language__worditem__active .alpheios-worditem__data {
   fill: var(--alpheios-color-light);
   stroke: var(--alpheios-color-light);
@@ -2582,7 +2537,7 @@ h3.alpheios-inflections__credits-title {
 .alpheios-worditem__lemmasList {
   width: 38%;
 }
-.alpheios_no_tq {
+.alpheios-visibility__hidden {
   visibility: hidden;
 }
 /*

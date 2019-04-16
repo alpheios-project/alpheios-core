@@ -53,5 +53,10 @@
         "message": "Cancel remove all word items",
         "description": "Cancel remove all words inside language block",
         "component": "WordLanguagePanel"
+    },
+    "WORDLIST_CURRENT_SESSION": {
+        "message": "Added in the current session",
+        "description": "Icon indicates, thats it was retrieved durent the current session",
+        "component": "WordItemPanel"
     }
 }

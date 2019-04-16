@@ -14,9 +14,15 @@
           </div>
         </alph-tooltip>
 
+        <alph-tooltip tooltipDirection="top-left" :tooltipText="l10n.getMsg('WORDLIST_CURRENT_SESSION')" :class="{'alpheios-visibility__hidden ': !this.worditem.currentSession}">
+          <div class="alpheios-worditem__data alpheios-worditem__icon alpheios-worditem__current_session_icon">
+                  <current-session-icon></current-session-icon>
+          </div>
+        </alph-tooltip>
+
         <alph-tooltip tooltipDirection="top-left"
           :tooltipText="l10n.getMsg('WORDLIST_TOOLTIP_TEXT_CONTEXT')"
-          v-bind:class="{ 'alpheios_no_tq ': !worditem.hasTextQuoteSelectors }">
+          v-bind:class="{ 'alpheios-visibility__hidden ': !worditem.hasTextQuoteSelectors }">
           <div class="alpheios-worditem__data alpheios-worditem__icon alpheios-worditem__delete_icon"
                   @click="showContexts()">
                   <text-quote-icon></text-quote-icon>
@@ -33,6 +39,7 @@
 import CheckIcon from '@/images/inline-icons/check.svg'
 import DeleteIcon from '@/images/inline-icons/delete.svg'
 import TextQuoteIcon from '@/images/inline-icons/text-quote.svg'
+import CurrentSessionIcon from '@/images/inline-icons/current-session.svg'
 import Tooltip from '@/vue/components/tooltip.vue'
 
 export default {
@@ -42,6 +49,7 @@ export default {
     checkIcon: CheckIcon,
     deleteIcon: DeleteIcon,
     textQuoteIcon: TextQuoteIcon,
+    currentSessionIcon: CurrentSessionIcon,
     alphTooltip: Tooltip
   },
   props: {
@@ -62,8 +70,7 @@ export default {
   computed: {
     itemClasses () {
       return {
-        'alpheios-wordlist-language__worditem__active': this.important,
-        'alpheios-wordlist-language__worditem__current_session': this.worditem.currentSession
+        'alpheios-wordlist-language__worditem__active': this.important
       }
     },
     lemmasList () {
@@ -99,10 +106,6 @@ export default {
       padding: 2px 0;
   }
 
-  .alpheios-wordlist-language__worditem__current_session {
-    background: var(--alpheios-color-bright-hover);
-  }
-
   .alpheios-worditem__data {
       display: inline-block;
       vertical-align: middle;
@@ -128,6 +131,11 @@ export default {
           fill: var(--alpheios-color-dark);
           stroke: var(--alpheios-color-dark);
         }
+
+        &.alpheios-worditem__current_session_icon {
+          stroke: var(--alpheios-color-bright-hover);
+          fill: var(--alpheios-color-bright-hover);
+        }
     }
   }
 
@@ -150,7 +158,8 @@ export default {
   .alpheios-worditem__lemmasList {
       width: 38%;
   }
-  .alpheios_no_tq {
+
+  .alpheios-visibility__hidden {
     visibility: hidden;
   }
 </style>

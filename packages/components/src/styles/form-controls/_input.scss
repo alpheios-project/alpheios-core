@@ -1,18 +1,24 @@
-.alpheios-input {
-  box-sizing: border-box;
-  margin: 0;
-  font: inherit;
-  font-size: var(--alpheios-base-text-size);
-  max-width: 100%;
-  width: 100%;
-  @include alpheios-border;
-  padding: textsize(8px);
-  background: var(--alpheios-text-bg-color);
-  color: var(--alpheios-text-color);
-  vertical-align: middle;
-  display: inline-block;
-  -webkit-appearance: none;
-  border-radius: uisize(10px);
+// We're using a double selector here to protect from styles leaked from the pages
+input.alpheios-input {
+
+  &,
+  // The second selector below is required to override aggressive styling of some pages
+  &[type] {
+    box-sizing: border-box;
+    margin: 0;
+    font: inherit;
+    font-size: var(--alpheios-base-text-size);
+    max-width: 100%;
+    width: 100%;
+    @include alpheios-border;
+    padding: textsize(8px);
+    background: var(--alpheios-text-bg-color);
+    color: var(--alpheios-text-color);
+    vertical-align: middle;
+    display: inline-block;
+    -webkit-appearance: none;
+    border-radius: uisize(10px);
+  }
 
   &[type="search"]::-webkit-search-cancel-button,
   &[type="search"]::-webkit-search-decoration {
@@ -32,13 +38,20 @@
     line-height: 40px;
   }
 
-  &:focus {
+  &:focus,
+  // The second selector below is required to override aggressive styling of some pages
+  &[type]:focus {
     outline: none;
+    border: inherit;
+    // Include below is to override custom styles set by a page
+    @include alpheios-border;
   }
 
   &:disabled {
     background-color: var(--alpheios-color-neutral-dark);
     color: var(--alpheios-color-neutral-lightest);
+    // Include below is to override custom styles set by a page
+    @include alpheios-border;
   }
 
   &::placeholder {

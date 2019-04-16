@@ -230,7 +230,10 @@ export default {
   .alpheios-lookup__search-control {
     display: flex;
 
-    input {
+    // Double selector is used to prevent style leaks from host pages
+    input.alpheios-input,
+    input.alpheios-input:focus
+    {
       width: 70%;
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;

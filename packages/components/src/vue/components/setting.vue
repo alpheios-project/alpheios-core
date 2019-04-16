@@ -134,7 +134,10 @@ export default {
     width: 50%;
   }
 
-  .alpheios-setting__control {
+  // The multiple selector is required to override styles from the page
+  input.alpheios-input.alpheios-setting__control,
+  select.alpheios-setting__control,
+  .multiselect.alpheios-setting__control {
     width: 50%;
   }
 

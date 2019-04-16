@@ -38,7 +38,8 @@ export default {
   }
 
   .alpheios-popup-lexdataloading__progress-line {
-    -webkit-animation: progress 3s infinite;
+    background: var(--alpheios-color-muted);
+    animation: progress 3s infinite;
     position: absolute;
     left: 0;
     top: 0;
@@ -61,12 +62,10 @@ export default {
 
   @keyframes progress {
     0% {
-      background: var(--alpheios-color-muted);
-      width: 0%;
+      transform: translateX(-49.5%) scaleX(0.01);
     }
     100% {
-      background: var(--alpheios-color-muted);
-      width: 100%;
+      transform: translateX(0%) scaleX(1);
     }
   }
 

@@ -10236,18 +10236,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 // Subcomponents
 
@@ -14164,7 +14152,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_inline_icons_check_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/images/inline-icons/check.svg */ "./images/inline-icons/check.svg");
 /* harmony import */ var _images_inline_icons_delete_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/images/inline-icons/delete.svg */ "./images/inline-icons/delete.svg");
 /* harmony import */ var _images_inline_icons_text_quote_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/images/inline-icons/text-quote.svg */ "./images/inline-icons/text-quote.svg");
-/* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
+/* harmony import */ var _images_inline_icons_current_session_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/images/inline-icons/current-session.svg */ "./images/inline-icons/current-session.svg");
+/* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
 //
 //
 //
@@ -14196,6 +14185,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -14209,7 +14205,8 @@ __webpack_require__.r(__webpack_exports__);
     checkIcon: _images_inline_icons_check_svg__WEBPACK_IMPORTED_MODULE_0__["default"],
     deleteIcon: _images_inline_icons_delete_svg__WEBPACK_IMPORTED_MODULE_1__["default"],
     textQuoteIcon: _images_inline_icons_text_quote_svg__WEBPACK_IMPORTED_MODULE_2__["default"],
-    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    currentSessionIcon: _images_inline_icons_current_session_svg__WEBPACK_IMPORTED_MODULE_3__["default"],
+    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   props: {
     worditem: {
@@ -14229,8 +14226,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     itemClasses () {
       return {
-        'alpheios-wordlist-language__worditem__active': this.important,
-        'alpheios-wordlist-language__worditem__current_session': this.worditem.currentSession
+        'alpheios-wordlist-language__worditem__active': this.important
       }
     },
     lemmasList () {
@@ -17675,50 +17671,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: _vm.elementIDs.content } }, [
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.$store.state.app.inflectionsWaitState,
-            expression: "$store.state.app.inflectionsWaitState"
-          }
-        ],
-        staticClass: "alpheios-inflections__placeholder"
-      },
-      [
-        _c("div", { staticClass: "alpheios-inflections__progress-wrapper" }, [
-          _c("div", { staticClass: "alpheios-inflections__progress-border" }, [
-            _c(
-              "div",
-              { staticClass: "alpheios-inflections__progress-whitespace" },
-              [
-                _c("div", {
-                  staticClass: "alpheios-inflections__progress-line"
-                }),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "alpheios-inflections__progress-text" },
-                  [
-                    _vm._v(
-                      "\n            " +
-                        _vm._s(
-                          _vm.l10n.getMsg("PLACEHOLDER_INFLECT_IN_PROGRESS")
-                        ) +
-                        "\n          "
-                    )
-                  ]
-                )
-              ]
-            )
-          ])
-        ])
-      ]
-    ),
-    _vm._v(" "),
     _vm.$store.state.app.hasInflData
       ? _c(
           "div",
@@ -22293,27 +22245,18 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "alpheios-popup__content" }, [
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value:
-                    !_vm.$store.state.app.morphDataReady && !_vm.noLanguage,
-                  expression: "!$store.state.app.morphDataReady && !noLanguage"
-                }
-              ],
-              staticClass: "alpheios-popup__definitions--placeholder"
-            },
-            [
-              _c("progress-bar", {
-                attrs: { text: _vm.l10n.getText("PLACEHOLDER_POPUP_DATA") }
-              })
-            ],
-            1
-          ),
+          !_vm.$store.state.app.morphDataReady && !_vm.noLanguage
+            ? _c(
+                "div",
+                { staticClass: "alpheios-popup__definitions--placeholder" },
+                [
+                  _c("progress-bar", {
+                    attrs: { text: _vm.l10n.getText("PLACEHOLDER_POPUP_DATA") }
+                  })
+                ],
+                1
+              )
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "div",
@@ -23086,7 +23029,33 @@ var render = function() {
       _c(
         "alph-tooltip",
         {
-          class: { "alpheios_no_tq ": !_vm.worditem.hasTextQuoteSelectors },
+          class: {
+            "alpheios-visibility__hidden ": !this.worditem.currentSession
+          },
+          attrs: {
+            tooltipDirection: "top-left",
+            tooltipText: _vm.l10n.getMsg("WORDLIST_CURRENT_SESSION")
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "alpheios-worditem__data alpheios-worditem__icon alpheios-worditem__current_session_icon"
+            },
+            [_c("current-session-icon")],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "alph-tooltip",
+        {
+          class: {
+            "alpheios-visibility__hidden ": !_vm.worditem.hasTextQuoteSelectors
+          },
           attrs: {
             tooltipDirection: "top-left",
             tooltipText: _vm.l10n.getMsg("WORDLIST_TOOLTIP_TEXT_CONTEXT")
@@ -37533,6 +37502,46 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./images/inline-icons/current-session.svg":
+/*!*************************************************!*\
+  !*** ./images/inline-icons/current-session.svg ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+      /* harmony default export */ __webpack_exports__["default"] = ({
+        functional: true,
+        render(_h, _vm) {
+          const { _c, _v, data, children = [] } = _vm;
+
+          const {
+            class: classNames,
+            staticClass,
+            style,
+            staticStyle,
+            attrs = {},
+            ...rest
+          } = data;
+
+          return _c(
+            'svg',
+            {
+              class: [classNames,staticClass],
+              style: [style,staticStyle],
+              attrs: Object.assign({"viewBox":"0 0 24 24","xmlns":"http://www.w3.org/2000/svg"}, attrs),
+              ...rest,
+            },
+            children.concat([_c('path',{attrs:{"d":"M8.355.996L6.33 4.34l-3.869.851.363 3.87L.21 11.994l2.615 2.924-.363 3.88 3.87.862 2.024 3.344L12 21.459l3.644 1.535 2.026-3.344 3.869-.863-.363-3.869 2.615-2.924-2.615-2.922.363-3.87-3.87-.862L15.646.996 12 2.531 8.356.996zm1.993 3.363h3.304l-.382 11.072h-2.51L10.348 4.36zm.146 13.115h3.012v2.166h-3.012v-2.166z"}})])
+          )
+        }
+      });
+    
+
+/***/ }),
+
 /***/ "./images/inline-icons/definitions.svg":
 /*!*********************************************!*\
   !*** ./images/inline-icons/definitions.svg ***!
@@ -44012,10 +44021,10 @@ module.exports = {"Number":{"message":"Number"},"Case":{"message":"Case"},"Decle
 /*!***********************************************!*\
   !*** ./locales/en-us/messages-word-list.json ***!
   \***********************************************/
-/*! exports provided: WORDLIST_TOOLTIP_ALL_IMPORTANT, WORDLIST_TOOLTIP_NO_IMPORTANT, WORDLIST_TOOLTIP_REMOVE_ALL, WORDLIST_TOOLTIP_CHANGE_IMPORTANT, WORDLIST_TOOLTIP_REMOVE, WORDLIST_TOOLTIP_TEXT_CONTEXT, WORDLIST_TOOLTIP_BACK, WORDLIST_DELETE_CONFIRM_MESSAGE, WORDLIST_BUTTON_DELETE, WORDLIST_BUTTON_CANCEL_DELETE, WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL, default */
+/*! exports provided: WORDLIST_TOOLTIP_ALL_IMPORTANT, WORDLIST_TOOLTIP_NO_IMPORTANT, WORDLIST_TOOLTIP_REMOVE_ALL, WORDLIST_TOOLTIP_CHANGE_IMPORTANT, WORDLIST_TOOLTIP_REMOVE, WORDLIST_TOOLTIP_TEXT_CONTEXT, WORDLIST_TOOLTIP_BACK, WORDLIST_DELETE_CONFIRM_MESSAGE, WORDLIST_BUTTON_DELETE, WORDLIST_BUTTON_CANCEL_DELETE, WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL, WORDLIST_CURRENT_SESSION, default */
 /***/ (function(module) {
 
-module.exports = {"WORDLIST_TOOLTIP_ALL_IMPORTANT":{"message":"Make all important ","description":"Make all words inside language block important","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_NO_IMPORTANT":{"message":"Remove all important ","description":"Remove important mark from all words inside language block","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_REMOVE_ALL":{"message":"Remove all word items","description":"Remove all words inside language block","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_CHANGE_IMPORTANT":{"message":"Change important status","description":"Change important status for the WordItem","component":"WordItemPanel"},"WORDLIST_TOOLTIP_REMOVE":{"message":"Remove word item","description":"Remove the WordItem form the list","component":"WordItemPanel"},"WORDLIST_TOOLTIP_TEXT_CONTEXT":{"message":"Show contexts","description":"Show panle with contexts for the wordItem","component":"WordItemPanel"},"WORDLIST_TOOLTIP_BACK":{"message":"Back to word list","description":"Back to the WordList Tab","component":"WordContextPanel"},"WORDLIST_DELETE_CONFIRM_MESSAGE":{"message":"Do you really want to delete all word items from the list?","description":"Delete all confirmation message","component":"WordLanguagePanel"},"WORDLIST_BUTTON_DELETE":{"message":"Delete","description":"Button title for delete all","component":"WordLanguagePanel"},"WORDLIST_BUTTON_CANCEL_DELETE":{"message":"Cancel","description":"Button title for cancel delete all","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL":{"message":"Cancel remove all word items","description":"Cancel remove all words inside language block","component":"WordLanguagePanel"}};
+module.exports = {"WORDLIST_TOOLTIP_ALL_IMPORTANT":{"message":"Make all important ","description":"Make all words inside language block important","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_NO_IMPORTANT":{"message":"Remove all important ","description":"Remove important mark from all words inside language block","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_REMOVE_ALL":{"message":"Remove all word items","description":"Remove all words inside language block","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_CHANGE_IMPORTANT":{"message":"Change important status","description":"Change important status for the WordItem","component":"WordItemPanel"},"WORDLIST_TOOLTIP_REMOVE":{"message":"Remove word item","description":"Remove the WordItem form the list","component":"WordItemPanel"},"WORDLIST_TOOLTIP_TEXT_CONTEXT":{"message":"Show contexts","description":"Show panle with contexts for the wordItem","component":"WordItemPanel"},"WORDLIST_TOOLTIP_BACK":{"message":"Back to word list","description":"Back to the WordList Tab","component":"WordContextPanel"},"WORDLIST_DELETE_CONFIRM_MESSAGE":{"message":"Do you really want to delete all word items from the list?","description":"Delete all confirmation message","component":"WordLanguagePanel"},"WORDLIST_BUTTON_DELETE":{"message":"Delete","description":"Button title for delete all","component":"WordLanguagePanel"},"WORDLIST_BUTTON_CANCEL_DELETE":{"message":"Cancel","description":"Button title for cancel delete all","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL":{"message":"Cancel remove all word items","description":"Cancel remove all words inside language block","component":"WordLanguagePanel"},"WORDLIST_CURRENT_SESSION":{"message":"Added in the current session","description":"Icon indicates, thats it was retrieved durent the current session","component":"WordItemPanel"}};
 
 /***/ }),
 

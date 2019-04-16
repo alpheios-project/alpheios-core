@@ -88,7 +88,7 @@
 
       <div class="alpheios-popup__content">
         <div class="alpheios-popup__definitions--placeholder"
-             v-show="!$store.state.app.morphDataReady && !noLanguage">
+             v-if="!$store.state.app.morphDataReady && !noLanguage">
           <progress-bar :text="l10n.getText('PLACEHOLDER_POPUP_DATA')"></progress-bar>
         </div>
 

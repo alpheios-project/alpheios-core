@@ -1,17 +1,5 @@
 <template>
   <div :id="elementIDs.content">
-    <div class="alpheios-inflections__placeholder" v-show="$store.state.app.inflectionsWaitState">
-      <div class="alpheios-inflections__progress-wrapper">
-        <div class="alpheios-inflections__progress-border">
-          <div class="alpheios-inflections__progress-whitespace">
-            <div class="alpheios-inflections__progress-line"></div>
-            <div class="alpheios-inflections__progress-text">
-              {{ l10n.getMsg('PLACEHOLDER_INFLECT_IN_PROGRESS') }}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="alpheios-inflections__content" v-if="$store.state.app.hasInflData">
       <word-forms
           :lexemes="selectedView.homonym.lexemes"
@@ -258,11 +246,6 @@ export default {
 <style lang="scss">
   @import "../../styles/variables";
 
-  .alpheios-inflections__placeholder {
-    padding: 0 20px;
-    margin-bottom: 1rem;
-  }
-
   h4.alpheios-inflections__additional_title {
     line-height: 1.6;
     font-weight: bold;
@@ -289,10 +272,6 @@ export default {
     font-weight: bold;
     line-height: 1.2;
     justify-content: flex-start;
-  }
-
-  .alpheios-inflections__placeholder {
-    text-align: center;
   }
 
   // region Footnotes
@@ -344,61 +323,5 @@ export default {
   .alpheios-inflections__supp-tables {
     margin-top: 4rem;
   }
-
   // endregion Footnotes
-
-  // region Wait animation
-  $inflections-anim-min-width: 300px;
-  .alpheios-inflections__progress-wrapper {
-    height: 1.2rem;
-    margin: 0 1rem 2rem;
-    font-size: 0.875rem;
-  }
-
-  .alpheios-inflections__progress-border {
-    border: uisize(2px) solid var(--alpheios-color-muted);
-    min-width: $inflections-anim-min-width;
-    height: 100%;
-    padding: 2px;
-  }
-
-  .alpheios-inflections__progress-whitespace {
-    overflow: hidden;
-    height: 100%;
-    margin: 0 auto;
-    position: relative;
-  }
-
-  .alpheios-inflections__progress-line {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    background-color: var(--alpheios-color-muted);
-    animation: cssload-slide 5.75s steps(40) infinite;
-  }
-
-  .alpheios-inflections__progress-whitespace div.alpheios-inflections__progress-text,
-  .alpheios-inflections__progress-text {
-    text-transform: uppercase;
-    color: var(--alpheios-text-color-dark);
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: $inflections-anim-min-width;
-    font-size: 13px;
-    top: 3px;
-  }
-
-  @keyframes cssload-slide {
-    0% {
-      left: -100%;
-    }
-    100% {
-      left: 100%;
-    }
-  }
-  // endregion Wait animation
 </style>
