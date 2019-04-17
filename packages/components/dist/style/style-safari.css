@@ -2429,8 +2429,8 @@ h3.alpheios-inflections__credits-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-word-usage-header .alpheios-word-usage-header-select-sortBy {
-  margin-bottom: 10px !important;
+.alpheios-word-usage-header-sorting {
+  padding-bottom: 10px !important;
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -2477,6 +2477,11 @@ h3.alpheios-inflections__credits-title {
   height: 20px !important;
   display: inline-block;
   cursor: pointer !important;
+  vertical-align: middle !important;
+}
+.alpheios-word-usage .alpheios-word-usage-header-clear-icon svg {
+  width: 100% !important;
+  height: 100% !important;
 }
 .alpheios-word-usage .alpheios-word-usage-header-clear-disabled.alpheios-word-usage-header-clear-icon {
   cursor: inherit !important;
@@ -2549,6 +2554,38 @@ h3.alpheios-inflections__credits-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-wordlist-filters {
+  padding: 10px !important;
+}
+.alpheios-wordlist-filters .alpheios-wordlist-header-title {
+  margin: 0 !important;
+  font-weight: bold !important;
+  padding-bottom: 10px !important;
+}
+.alpheios-wordlist-filters .alpheios-wordlist-header-select-filterBy {
+  width: 50% !important;
+}
+.alpheios-wordlist-filters .alpheios-wordlist-header-clear-icon {
+  width: 20px !important;
+  height: 20px !important;
+  display: inline-block;
+  cursor: pointer !important;
+  vertical-align: middle !important;
+}
+.alpheios-wordlist-filters .alpheios-wordlist-header-clear-icon svg {
+  width: 100% !important;
+  height: 100% !important;
+  display: inline-block;
+  vertical-align: top !important;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
 .alpheios-wordlist-commands {
   border-bottom: 1px solid var(--alpheios-border-color) !important;
 }
@@ -2556,6 +2593,7 @@ h3.alpheios-inflections__credits-title {
   width: 15px !important;
   height: 15px !important;
   display: inline-block;
+  vertical-align: middle !important;
   text-align: center !important;
   cursor: pointer !important;
   margin: 0 5px 10px !important;
@@ -2645,6 +2683,7 @@ h3.alpheios-inflections__credits-title {
   font-weight: bold !important;
   font-size: 110% !important;
   display: inline-block;
+  vertical-align: middle !important;
 }
 .alpheios-wordlist-language__worditem.active {
   color: var(--alpheios-color-light) !important;

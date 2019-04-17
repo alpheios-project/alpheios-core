@@ -40,6 +40,10 @@
 
           </div>
         </div>
+
+        <div class="alpheios-wordlist-filter-panel">
+          <word-filter-panel @changedFilterBy="changedFilterBy"></word-filter-panel>
+        </div>
         <div
                 v-for="wordItem in wordItems"
                 v-bind:key="wordItem.targetWord">
@@ -58,6 +62,7 @@ import { Constants } from 'alpheios-data-models'
 import CheckIcon from '@/images/inline-icons/check.svg'
 import DeleteIcon from '@/images/inline-icons/delete.svg'
 import WordItemPanel from '@/vue/components/word-list/word-item-panel.vue'
+import WordFilterPanel from '@/vue/components/word-list/word-filter-panel.vue'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 
 export default {
@@ -66,6 +71,7 @@ export default {
     checkIcon: CheckIcon,
     deleteIcon: DeleteIcon,
     wordItem: WordItemPanel,
+    wordFilterPanel: WordFilterPanel,
     alphTooltip: Tooltip
   },
   inject: ['l10n', 'app'],
@@ -78,7 +84,8 @@ export default {
   data () {
     return {
       reloadList: 1,
-      showDeleteAllBox: false
+      showDeleteAllBox: false,
+      selectedFilterBy: null
     }
   },
   computed: {
@@ -86,7 +93,15 @@ export default {
       return this.$store.state.app.wordListUpdateTime && this.reloadList ? this.app.getWordList(this.languageCode) : {}
     },
     wordItems () {
-      return this.$store.state.app.wordListUpdateTime && this.reloadList ? this.wordlist.values : []
+      if (this.$store.state.app.wordListUpdateTime && this.reloadList) {
+        if (!this.selectedFilterBy) {
+          return this.wordlist.values
+        }
+        if (this.selectedFilterBy === 'byCurrentSession') {
+          return this.wordlist.values.filter(wordItem => wordItem.currentSession)
+        }
+      }
+      return []
     },
     languageName () {
       // TODO with upcoming merge, this can be retrived from utility library
@@ -123,6 +138,9 @@ export default {
     },
     showContexts (targetWord) {
       this.$emit('showContexts', targetWord, this.languageCode)
+    },
+    changedFilterBy (selectedFilterBy) {
+      this.selectedFilterBy = selectedFilterBy
     }
   }
 }
@@ -137,6 +155,7 @@ export default {
       width: 15px;
       height: 15px;
       display: inline-block;
+      vertical-align: middle;
       text-align: center;
       cursor: pointer;
       margin: 0 5px 10px;

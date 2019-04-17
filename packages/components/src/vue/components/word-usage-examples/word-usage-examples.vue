@@ -199,6 +199,11 @@ export default {
       height: 20px;
       display: inline-block;
       cursor: pointer;
+      vertical-align: middle;
+      svg {
+        width: 100%;
+        height: 100%;
+      }
     }
 
     .alpheios-word-usage-header-clear-disabled.alpheios-word-usage-header-clear-icon {

@@ -7826,6 +7826,17 @@ var singleton = jumper();
 
 /***/ }),
 
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/src/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-list/word-filter-panel.vue?vue&type=style&index=0&lang=scss&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/src!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/word-list/word-filter-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/src/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-list/word-item-panel.vue?vue&type=style&index=0&lang=scss&":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/src!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/word-list/word-item-panel.vue?vue&type=style&index=0&lang=scss& ***!
@@ -14140,6 +14151,70 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/word-list/word-filter-panel.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/word-list/word-filter-panel.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _images_inline_icons_clear_filters_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/images/inline-icons/clear-filters.svg */ "./images/inline-icons/clear-filters.svg");
+/* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'WordFilterPanel',
+  inject: ['app', 'l10n'],
+  components: {
+    clearFiltersIcon: _images_inline_icons_clear_filters_svg__WEBPACK_IMPORTED_MODULE_0__["default"],
+    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data () {
+    return {
+      selectedFilterBy: null,
+      typeFiltersList: [
+        { value: 'byCurrentSession', title: this.l10n.getText('WORDLIST_FILTER_BYCURRENTSESSION') }
+      ]
+    }
+  },
+  methods: {
+    changedFilterBy () {
+      this.$emit('changedFilterBy', this.selectedFilterBy)
+    },
+    clearFiltering () {
+      this.selectedFilterBy = null
+      this.changedFilterBy()
+    }
+  }
+});
+
+
+/***/ }),
+
 /***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/word-list/word-item-panel.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************!*\
   !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/word-list/word-item-panel.vue?vue&type=script&lang=js& ***!
@@ -14271,8 +14346,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_inline_icons_check_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/images/inline-icons/check.svg */ "./images/inline-icons/check.svg");
 /* harmony import */ var _images_inline_icons_delete_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/images/inline-icons/delete.svg */ "./images/inline-icons/delete.svg");
 /* harmony import */ var _vue_components_word_list_word_item_panel_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/vue/components/word-list/word-item-panel.vue */ "./vue/components/word-list/word-item-panel.vue");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _vue_components_word_list_word_filter_panel_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/components/word-list/word-filter-panel.vue */ "./vue/components/word-list/word-filter-panel.vue");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_6__);
 //
 //
 //
@@ -14327,6 +14403,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
@@ -14341,6 +14422,7 @@ __webpack_require__.r(__webpack_exports__);
     checkIcon: _images_inline_icons_check_svg__WEBPACK_IMPORTED_MODULE_2__["default"],
     deleteIcon: _images_inline_icons_delete_svg__WEBPACK_IMPORTED_MODULE_3__["default"],
     wordItem: _vue_components_word_list_word_item_panel_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    wordFilterPanel: _vue_components_word_list_word_filter_panel_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
     alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   inject: ['l10n', 'app'],
@@ -14353,7 +14435,8 @@ __webpack_require__.r(__webpack_exports__);
   data () {
     return {
       reloadList: 1,
-      showDeleteAllBox: false
+      showDeleteAllBox: false,
+      selectedFilterBy: null
     }
   },
   computed: {
@@ -14361,7 +14444,15 @@ __webpack_require__.r(__webpack_exports__);
       return this.$store.state.app.wordListUpdateTime && this.reloadList ? this.app.getWordList(this.languageCode) : {}
     },
     wordItems () {
-      return this.$store.state.app.wordListUpdateTime && this.reloadList ? this.wordlist.values : []
+      if (this.$store.state.app.wordListUpdateTime && this.reloadList) {
+        if (!this.selectedFilterBy) {
+          return this.wordlist.values
+        }
+        if (this.selectedFilterBy === 'byCurrentSession') {
+          return this.wordlist.values.filter(wordItem => wordItem.currentSession)
+        }
+      }
+      return []
     },
     languageName () {
       // TODO with upcoming merge, this can be retrived from utility library
@@ -14398,6 +14489,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     showContexts (targetWord) {
       this.$emit('showContexts', targetWord, this.languageCode)
+    },
+    changedFilterBy (selectedFilterBy) {
+      this.selectedFilterBy = selectedFilterBy
     }
   }
 });
@@ -22953,6 +23047,110 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-list/word-filter-panel.vue?vue&type=template&id=6351eb82&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/word-list/word-filter-panel.vue?vue&type=template&id=6351eb82& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "alpheios-wordlist-filters" }, [
+    _c("p", { staticClass: "alpheios-wordlist-header-title" }, [
+      _vm._v(_vm._s(_vm.l10n.getText("WORDLIST_FILTER_BY")))
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      [
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.selectedFilterBy,
+                expression: "selectedFilterBy"
+              }
+            ],
+            staticClass:
+              "alpheios-select alpheios-wordlist-header-select-filterBy",
+            on: {
+              change: [
+                function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.selectedFilterBy = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                },
+                _vm.changedFilterBy
+              ]
+            }
+          },
+          _vm._l(_vm.typeFiltersList, function(typeFiltering) {
+            return _c(
+              "option",
+              {
+                key: typeFiltering.value,
+                domProps: { value: typeFiltering.value }
+              },
+              [_vm._v(_vm._s(typeFiltering.title))]
+            )
+          }),
+          0
+        ),
+        _vm._v(" "),
+        _c(
+          "alph-tooltip",
+          {
+            attrs: {
+              tooltipText: _vm.l10n.getMsg("WORDLIST_FILTER_CLEAR"),
+              tooltipDirection: "top-right"
+            }
+          },
+          [
+            _c(
+              "span",
+              {
+                staticClass: "alpheios-wordlist-header-clear-icon",
+                class: {
+                  "alpheios-wordlist-header-clear-disabled":
+                    _vm.selectedFilterBy === null
+                },
+                on: { click: _vm.clearFiltering }
+              },
+              [_c("clear-filters-icon")],
+              1
+            )
+          ]
+        )
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-list/word-item-panel.vue?vue&type=template&id=66bc181d&":
 /*!*********************************************************************************************************************************************************************************************************************!*\
   !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/word-list/word-item-panel.vue?vue&type=template&id=66bc181d& ***!
@@ -23312,6 +23510,17 @@ var render = function() {
             1
           )
         ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "alpheios-wordlist-filter-panel" },
+        [
+          _c("word-filter-panel", {
+            on: { changedFilterBy: _vm.changedFilterBy }
+          })
+        ],
+        1
       ),
       _vm._v(" "),
       _vm._l(_vm.wordItems, function(wordItem) {
@@ -44022,10 +44231,10 @@ module.exports = {"Number":{"message":"Number"},"Case":{"message":"Case"},"Decle
 /*!***********************************************!*\
   !*** ./locales/en-us/messages-word-list.json ***!
   \***********************************************/
-/*! exports provided: WORDLIST_TOOLTIP_ALL_IMPORTANT, WORDLIST_TOOLTIP_NO_IMPORTANT, WORDLIST_TOOLTIP_REMOVE_ALL, WORDLIST_TOOLTIP_CHANGE_IMPORTANT, WORDLIST_TOOLTIP_REMOVE, WORDLIST_TOOLTIP_TEXT_CONTEXT, WORDLIST_TOOLTIP_BACK, WORDLIST_DELETE_CONFIRM_MESSAGE, WORDLIST_BUTTON_DELETE, WORDLIST_BUTTON_CANCEL_DELETE, WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL, WORDLIST_CURRENT_SESSION, default */
+/*! exports provided: WORDLIST_TOOLTIP_ALL_IMPORTANT, WORDLIST_TOOLTIP_NO_IMPORTANT, WORDLIST_TOOLTIP_REMOVE_ALL, WORDLIST_TOOLTIP_CHANGE_IMPORTANT, WORDLIST_TOOLTIP_REMOVE, WORDLIST_TOOLTIP_TEXT_CONTEXT, WORDLIST_TOOLTIP_BACK, WORDLIST_DELETE_CONFIRM_MESSAGE, WORDLIST_BUTTON_DELETE, WORDLIST_BUTTON_CANCEL_DELETE, WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL, WORDLIST_FILTER_BYCURRENTSESSION, WORDLIST_FILTER_BY, WORDLIST_FILTER_CLEAR, WORDLIST_CURRENT_SESSION, default */
 /***/ (function(module) {
 
-module.exports = {"WORDLIST_TOOLTIP_ALL_IMPORTANT":{"message":"Make all important ","description":"Make all words inside language block important","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_NO_IMPORTANT":{"message":"Remove all important ","description":"Remove important mark from all words inside language block","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_REMOVE_ALL":{"message":"Remove all word items","description":"Remove all words inside language block","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_CHANGE_IMPORTANT":{"message":"Change important status","description":"Change important status for the WordItem","component":"WordItemPanel"},"WORDLIST_TOOLTIP_REMOVE":{"message":"Remove word item","description":"Remove the WordItem form the list","component":"WordItemPanel"},"WORDLIST_TOOLTIP_TEXT_CONTEXT":{"message":"Show contexts","description":"Show panle with contexts for the wordItem","component":"WordItemPanel"},"WORDLIST_TOOLTIP_BACK":{"message":"Back to word list","description":"Back to the WordList Tab","component":"WordContextPanel"},"WORDLIST_DELETE_CONFIRM_MESSAGE":{"message":"Do you really want to delete all word items from the list?","description":"Delete all confirmation message","component":"WordLanguagePanel"},"WORDLIST_BUTTON_DELETE":{"message":"Delete","description":"Button title for delete all","component":"WordLanguagePanel"},"WORDLIST_BUTTON_CANCEL_DELETE":{"message":"Cancel","description":"Button title for cancel delete all","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL":{"message":"Cancel remove all word items","description":"Cancel remove all words inside language block","component":"WordLanguagePanel"},"WORDLIST_CURRENT_SESSION":{"message":"Added in the current session","description":"Icon indicates, thats it was retrieved durent the current session","component":"WordItemPanel"}};
+module.exports = {"WORDLIST_TOOLTIP_ALL_IMPORTANT":{"message":"Make all important ","description":"Make all words inside language block important","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_NO_IMPORTANT":{"message":"Remove all important ","description":"Remove important mark from all words inside language block","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_REMOVE_ALL":{"message":"Remove all word items","description":"Remove all words inside language block","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_CHANGE_IMPORTANT":{"message":"Change important status","description":"Change important status for the WordItem","component":"WordItemPanel"},"WORDLIST_TOOLTIP_REMOVE":{"message":"Remove word item","description":"Remove the WordItem form the list","component":"WordItemPanel"},"WORDLIST_TOOLTIP_TEXT_CONTEXT":{"message":"Show contexts","description":"Show panle with contexts for the wordItem","component":"WordItemPanel"},"WORDLIST_TOOLTIP_BACK":{"message":"Back to word list","description":"Back to the WordList Tab","component":"WordContextPanel"},"WORDLIST_DELETE_CONFIRM_MESSAGE":{"message":"Do you really want to delete all word items from the list?","description":"Delete all confirmation message","component":"WordLanguagePanel"},"WORDLIST_BUTTON_DELETE":{"message":"Delete","description":"Button title for delete all","component":"WordLanguagePanel"},"WORDLIST_BUTTON_CANCEL_DELETE":{"message":"Cancel","description":"Button title for cancel delete all","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL":{"message":"Cancel remove all word items","description":"Cancel remove all words inside language block","component":"WordLanguagePanel"},"WORDLIST_FILTER_BYCURRENTSESSION":{"message":"This session","description":"Filter only those words that were selected in the current session","component":"WordFilterPanel"},"WORDLIST_FILTER_BY":{"message":"Filter by","description":"Filter by label on the panel","component":"WordFilterPanel"},"WORDLIST_FILTER_CLEAR":{"message":"Clear filter by","description":"Tooltip for clear filter icon","component":"WordFilterPanel"},"WORDLIST_CURRENT_SESSION":{"message":"Added in the current session","description":"Icon indicates, thats it was retrieved durent the current session","component":"WordItemPanel"}};
 
 /***/ }),
 
@@ -47054,6 +47263,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_panel_vue_vue_type_template_id_4d1dab3a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_panel_vue_vue_type_template_id_4d1dab3a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./vue/components/word-list/word-filter-panel.vue":
+/*!********************************************************!*\
+  !*** ./vue/components/word-list/word-filter-panel.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _word_filter_panel_vue_vue_type_template_id_6351eb82___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-filter-panel.vue?vue&type=template&id=6351eb82& */ "./vue/components/word-list/word-filter-panel.vue?vue&type=template&id=6351eb82&");
+/* harmony import */ var _word_filter_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./word-filter-panel.vue?vue&type=script&lang=js& */ "./vue/components/word-list/word-filter-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _word_filter_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./word-filter-panel.vue?vue&type=style&index=0&lang=scss& */ "./vue/components/word-list/word-filter-panel.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _word_filter_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _word_filter_panel_vue_vue_type_template_id_6351eb82___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _word_filter_panel_vue_vue_type_template_id_6351eb82___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "vue/components/word-list/word-filter-panel.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./vue/components/word-list/word-filter-panel.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./vue/components/word-list/word-filter-panel.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_filter_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib??vue-loader-options!../../../../node_modules/source-map-loader!./word-filter-panel.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/word-list/word-filter-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_filter_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./vue/components/word-list/word-filter-panel.vue?vue&type=style&index=0&lang=scss&":
+/*!******************************************************************************************!*\
+  !*** ./vue/components/word-list/word-filter-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_filter_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src!../../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../../node_modules/vue-loader/lib??vue-loader-options!./word-filter-panel.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/src/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-list/word-filter-panel.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_filter_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_filter_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_filter_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_filter_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_word_filter_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./vue/components/word-list/word-filter-panel.vue?vue&type=template&id=6351eb82&":
+/*!***************************************************************************************!*\
+  !*** ./vue/components/word-list/word-filter-panel.vue?vue&type=template&id=6351eb82& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_filter_panel_vue_vue_type_template_id_6351eb82___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./word-filter-panel.vue?vue&type=template&id=6351eb82& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-list/word-filter-panel.vue?vue&type=template&id=6351eb82&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_filter_panel_vue_vue_type_template_id_6351eb82___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_filter_panel_vue_vue_type_template_id_6351eb82___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

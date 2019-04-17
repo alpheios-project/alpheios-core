@@ -67,8 +67,7 @@ export default {
 <style lang="scss">
   @import "../../../styles/variables";
 
-  .alpheios-word-usage-header
-  .alpheios-word-usage-header-select-sortBy {
-    margin-bottom: 10px;
+  .alpheios-word-usage-header-sorting {
+    padding-bottom: 10px;
   }
 </style>

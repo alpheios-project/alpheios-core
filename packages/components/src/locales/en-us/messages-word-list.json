@@ -54,6 +54,21 @@
         "description": "Cancel remove all words inside language block",
         "component": "WordLanguagePanel"
     },
+    "WORDLIST_FILTER_BYCURRENTSESSION": {
+        "message": "This session",
+        "description": "Filter only those words that were selected in the current session",
+        "component": "WordFilterPanel"
+    },
+    "WORDLIST_FILTER_BY": {
+        "message": "Filter by",
+        "description": "Filter by label on the panel",
+        "component": "WordFilterPanel"
+    },
+    "WORDLIST_FILTER_CLEAR": {
+        "message": "Clear filter by",
+        "description": "Tooltip for clear filter icon",
+        "component": "WordFilterPanel"
+    },
     "WORDLIST_CURRENT_SESSION": {
         "message": "Added in the current session",
         "description": "Icon indicates, thats it was retrieved durent the current session",
