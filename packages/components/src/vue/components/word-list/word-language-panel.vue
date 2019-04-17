@@ -83,7 +83,7 @@ export default {
   },
   computed: {
     wordlist () {
-      return this.app.getWordList(this.languageCode)
+      return this.$store.state.app.wordListUpdateTime && this.reloadList ? this.app.getWordList(this.languageCode) : {}
     },
     wordItems () {
       return this.$store.state.app.wordListUpdateTime && this.reloadList ? this.wordlist.values : []

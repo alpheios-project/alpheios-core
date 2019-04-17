@@ -695,6 +695,7 @@ div.alpheios-checkbox-block {
   line-height: calc(var(--alpheios-base-ui-size) * 1.375);
   max-width: calc(var(--alpheios-base-ui-size) * 14.6875);
   vertical-align: top;
+  min-height: calc(var(--alpheios-base-ui-size) * 1.375);
 }
 
 .alpheios-checkbox-block input[type=checkbox] {

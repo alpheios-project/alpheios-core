@@ -576,7 +576,8 @@ export default class UIController {
         },
 
         setWordLists (state, wordLists) {
-          state.hasWordListsData = Boolean(wordLists.find(wordList => !wordList.isEmpty))
+          let checkWordLists = Array.isArray(wordLists) ? wordLists : Object.values(wordLists)
+          state.hasWordListsData = Boolean(checkWordLists.find(wordList => !wordList.isEmpty))
           state.wordListUpdateTime = Date.now()
         },
 
@@ -705,11 +706,11 @@ export default class UIController {
     if (isAuthenticated) {
       let authData = await this.api.auth.getUserData()
       this.userDataManager = new UserDataManager(authData, WordlistController.evt)
-      wordLists = this.wordlistC.initLists(this.userDataManager)
+      wordLists = await this.wordlistC.initLists(this.userDataManager)
       this.store.commit('app/setWordLists', wordLists)
     } else {
       this.userDataManager = null
-      wordLists = this.wordlistC.initLists()
+      wordLists = await this.wordlistC.initLists()
     }
     this.store.commit('app/setWordLists', wordLists)
   }

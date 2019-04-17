@@ -14358,7 +14358,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     wordlist () {
-      return this.app.getWordList(this.languageCode)
+      return this.$store.state.app.wordListUpdateTime && this.reloadList ? this.app.getWordList(this.languageCode) : {}
     },
     wordItems () {
       return this.$store.state.app.wordListUpdateTime && this.reloadList ? this.wordlist.values : []
@@ -39029,7 +39029,8 @@ class UIController {
         },
 
         setWordLists (state, wordLists) {
-          state.hasWordListsData = Boolean(wordLists.find(wordList => !wordList.isEmpty))
+          let checkWordLists = Array.isArray(wordLists) ? wordLists : Object.values(wordLists)
+          state.hasWordListsData = Boolean(checkWordLists.find(wordList => !wordList.isEmpty))
           state.wordListUpdateTime = Date.now()
         },
 
@@ -39158,11 +39159,11 @@ class UIController {
     if (isAuthenticated) {
       let authData = await this.api.auth.getUserData()
       this.userDataManager = new alpheios_wordlist__WEBPACK_IMPORTED_MODULE_3__["UserDataManager"](authData, alpheios_wordlist__WEBPACK_IMPORTED_MODULE_3__["WordlistController"].evt)
-      wordLists = this.wordlistC.initLists(this.userDataManager)
+      wordLists = await this.wordlistC.initLists(this.userDataManager)
       this.store.commit('app/setWordLists', wordLists)
     } else {
       this.userDataManager = null
-      wordLists = this.wordlistC.initLists()
+      wordLists = await this.wordlistC.initLists()
     }
     this.store.commit('app/setWordLists', wordLists)
   }
@@ -48056,6 +48057,9 @@ AuthModule.api = (moduleInstance, store) => {
       moduleInstance._auth.authenticate().then(() => {
         return moduleInstance._auth.getProfileData()
       }).then((data) => {
+        if (!data.sub) {
+          throw new RangeError('UserId is empty!')
+        }
         store.commit('auth/setIsAuthenticated', data)
         store.commit(`auth/setNotification`, { text: 'AUTH_LOGIN_SUCCESS_MSG' })
       }).catch((error) => {

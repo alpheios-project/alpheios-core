@@ -7,6 +7,8 @@ div.alpheios-checkbox-block {
 
   max-width: uisize(235px);
   vertical-align: top;
+
+  min-height: calc(var(--alpheios-base-ui-size) * 1.375);
 }
 
 .alpheios-checkbox-block {

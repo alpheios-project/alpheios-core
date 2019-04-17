@@ -80,6 +80,9 @@ AuthModule.api = (moduleInstance, store) => {
       moduleInstance._auth.authenticate().then(() => {
         return moduleInstance._auth.getProfileData()
       }).then((data) => {
+        if (!data.sub) {
+          throw new RangeError('UserId is empty!')
+        }
         store.commit('auth/setIsAuthenticated', data)
         store.commit(`auth/setNotification`, { text: 'AUTH_LOGIN_SUCCESS_MSG' })
       }).catch((error) => {
