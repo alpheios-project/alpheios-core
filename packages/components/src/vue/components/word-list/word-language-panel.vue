@@ -97,10 +97,10 @@ export default {
       filterMethods: {
         'byCurrentSession': (wordItem) => wordItem.currentSession,
         'byImportant': (wordItem) => wordItem.important,
-        'byWordFormFull': (wordItem) => wordItem.targetWord === this.textInput,
-        'byWordFormPart': (wordItem) => wordItem.targetWord.indexOf(this.textInput) > -1,
-        'byLemmaFull': (wordItem) => wordItem.lemmasList.split(',').indexOf(this.textInput) > -1,
-        'byLemmaPart': (wordItem) => wordItem.lemmasList.split(',').find(lemmaItem => lemmaItem.indexOf(this.textInput) > -1)
+        'byWordFormFull': (wordItem) => wordItem.targetWord.toLowerCase() === this.textInput.toLowerCase(),
+        'byWordFormPart': (wordItem) => wordItem.targetWord.toLowerCase().indexOf(this.textInput.toLowerCase()) > -1,
+        'byLemmaFull': (wordItem) => wordItem.lemmasList.split(', ').some(lemmaItem => lemmaItem.toLowerCase() === this.textInput.toLowerCase()),
+        'byLemmaPart': (wordItem) => wordItem.lemmasList.split(', ').some(lemmaItem => lemmaItem.toLowerCase().indexOf(this.textInput.toLowerCase()) > -1)
       }
     }
   },
