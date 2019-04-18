@@ -16,7 +16,10 @@
         class="alpheios-toolbar__lookup-control"
         @click="lookupVisible = !lookupVisible"
     >
-      <alph-tooltip :tooltipText="l10n.getText('LABEL_LOOKUP_CONTROL')" tooltipDirection="left">
+      <alph-tooltip
+          :tooltip-text="l10n.getText('LABEL_LOOKUP_CONTROL')"
+          :tooltip-direction="tooltipDirection"
+      >
         <span class="alpheios-navbuttons__btn"
               :class="{ active: lookupVisible }">
           <lookup-icon></lookup-icon>
@@ -47,8 +50,8 @@
         class="alpheios-toolbar__buttons"
         v-show="contentVisible">
       <alph-tooltip
-          :tooltipText="l10n.getText('TOOLTIP_HELP')"
-          tooltipDirection="left"
+          :tooltip-text="l10n.getText('TOOLTIP_HELP')"
+          :tooltip-direction="tooltipDirection"
       >
         <span
             @click="ui.togglePanelTab('info')"
@@ -60,8 +63,8 @@
       </alph-tooltip>
 
       <alph-tooltip
-          :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')"
-          tooltipDirection="left"
+          :tooltip-text="l10n.getText('TOOLTIP_DEFINITIONS')"
+          :tooltip-direction="tooltipDirection"
       >
         <span
             :class="{ active: $store.getters['ui/isActiveTab']('definitions'), disabled: !$store.getters['app/defDataReady'] }"
@@ -73,8 +76,8 @@
       </alph-tooltip>
 
       <alph-tooltip
-          :tooltipText="l10n.getText('TOOLTIP_INFLECT')"
-          tooltipDirection="left"
+          :tooltip-text="l10n.getText('TOOLTIP_INFLECT')"
+          :tooltip-direction="tooltipDirection"
       >
         <span
             :class="{ active: $store.getters['ui/isActiveTab']('inflections'), disabled: !$store.state.app.hasInflData }"
@@ -86,8 +89,8 @@
       </alph-tooltip>
 
       <alph-tooltip
-          :tooltipText="l10n.getText('TOOLTIP_INFLECT_BROWSER')"
-          tooltipDirection="left"
+          :tooltip-text="l10n.getText('TOOLTIP_INFLECT_BROWSER')"
+          :tooltip-direction="tooltipDirection"
       >
         <span
             @click="ui.togglePanelTab('inflectionsbrowser')"
@@ -99,8 +102,8 @@
       </alph-tooltip>
 
       <alph-tooltip
-          :tooltipText="l10n.getText('TOOLTIP_GRAMMAR')"
-          tooltipDirection="left"
+          :tooltip-text="l10n.getText('TOOLTIP_GRAMMAR')"
+          :tooltip-direction="tooltipDirection"
       >
         <span
             :class="{ active: $store.getters['ui/isActiveTab']('grammar'), disabled: !$store.getters[`app/hasGrammarRes`] }"
@@ -112,8 +115,8 @@
       </alph-tooltip>
 
       <alph-tooltip
-          :tooltipText="l10n.getText('TOOLTIP_TREEBANK')"
-          tooltipDirection="left"
+          :tooltip-text="l10n.getText('TOOLTIP_TREEBANK')"
+          :tooltip-direction="tooltipDirection"
       >
         <span
             :class="{ active: $store.getters['ui/isActiveTab']('treebank'), disabled: !$store.getters['app/hasTreebankData'] }"
@@ -125,8 +128,8 @@
       </alph-tooltip>
 
       <alph-tooltip
-          :tooltipText="l10n.getText('TOOLTIP_OPTIONS')"
-          tooltipDirection="left"
+          :tooltip-text="l10n.getText('TOOLTIP_OPTIONS')"
+          :tooltip-direction="tooltipDirection"
       >
         <span
             :class="{ active: $store.getters['ui/isActiveTab']('options') }"
@@ -138,8 +141,8 @@
       </alph-tooltip>
 
       <alph-tooltip
-          :tooltipText="l10n.getText('TOOLTIP_USER')"
-          tooltipDirection="left"
+          :tooltip-text="l10n.getText('TOOLTIP_USER')"
+          :tooltip-direction="tooltipDirection"
       >
         <span
             :class="{ active: $store.getters['ui/isActiveTab']('user'), disabled: !$store.state.auth.showUI }"
@@ -151,8 +154,8 @@
       </alph-tooltip>
 
       <alph-tooltip
-          :tooltipText="l10n.getText('TOOLTIP_WORD_USAGE')"
-          tooltipDirection="left"
+          :tooltip-text="l10n.getText('TOOLTIP_WORD_USAGE')"
+          :tooltip-direction="tooltipDirection"
       >
         <span
             :class="{ active: $store.getters['ui/isActiveTab']('wordUsage'), disabled: !$store.state.app.wordUsageExampleEnabled }"
@@ -164,8 +167,8 @@
       </alph-tooltip>
 
       <alph-tooltip
-          :tooltipText="l10n.getText('TOOLTIP_WORDLIST')"
-          tooltipDirection="left"
+          :tooltip-text="l10n.getText('TOOLTIP_WORDLIST')"
+          :tooltip-direction="tooltipDirection"
       >
         <span
             :class="{ active: $store.getters['ui/isActiveTab']('wordlist'), disabled: !this.$store.state.app.hasWordListsData }"
@@ -177,8 +180,8 @@
       </alph-tooltip>
 
       <alph-tooltip
-          :tooltipText="l10n.getText('TOOLTIP_STATUS')"
-          tooltipDirection="left"
+          :tooltip-text="l10n.getText('TOOLTIP_STATUS')"
+          :tooltip-direction="tooltipDirection"
       >
         <span
             :class="{ active: $store.getters['ui/isActiveTab']('status'), disabled: this.settings.contentOptions.items.verboseMode.currentValue === `verbose` }"
@@ -257,9 +260,22 @@ export default {
   data: function () {
     return {
       lookupVisible: false,
-      contentVisible: false
+      contentVisible: false,
+
+      position: {
+        x: null,
+        y: null
+      }
     }
   },
+
+  computed: {
+    tooltipDirection: function () {
+      console.info(`Tooltip direction, ${this.position.x}`)
+      return (this.position.x && this.position.x < 100) ? 'right' : 'left'
+    }
+  },
+
   methods: {
     dragMoveListener (event) {
       const target = this.$el
@@ -286,14 +302,12 @@ export default {
         }
         dy = 0
       }
-      const x = (parseFloat(target.getAttribute('data-x')) || 0) + dx
-      const y = (parseFloat(target.getAttribute('data-y')) || 0) + dy
-      target.style.webkitTransform = `translate(${x}px, ${y}px)`
-      target.style.transform = `translate(${x}px, ${y}px)`
-      target.setAttribute('data-x', x)
-      target.setAttribute('data-y', y)
+      this.position.x += dx
+      this.position.y += dy
+      target.style.transform = `translate(${this.position.x}px, ${this.position.y}px)`
     }
   },
+
   mounted: function () {
     this.$options.interactInstance = interact(this.$el.querySelector('#alpheios-toolbar-drag-handle'))
       .draggable({
