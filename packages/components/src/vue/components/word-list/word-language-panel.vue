@@ -41,7 +41,11 @@
         </div>
 
         <div class="alpheios-wordlist-filter-panel">
-          <word-filter-panel @changedFilterBy="changedFilterBy"></word-filter-panel>
+          <word-filter-panel 
+            @changedFilterBy="changedFilterBy"
+            @clearClickedLemma = "clearClickedLemma"
+            :clickedLemma = "clickedLemma"
+          ></word-filter-panel>
         </div>
         <div
                 v-for="wordItem in wordItems"
@@ -51,6 +55,7 @@
               @changeImportant = "changeImportant"
               @deleteItem = "deleteItem"
               @showContexts = "showContexts"
+              @setLemmaFilterByClick = "setLemmaFilterByClick"
             ></word-item>
         </div>
     </div>
@@ -86,7 +91,17 @@ export default {
     return {
       reloadList: 1,
       showDeleteAllBox: false,
-      selectedFilterBy: null
+      selectedFilterBy: null,
+      textInput: null,
+      clickedLemma: null,
+      filterMethods: {
+        'byCurrentSession': (wordItem) => wordItem.currentSession,
+        'byImportant': (wordItem) => wordItem.important,
+        'byWordFormFull': (wordItem) => wordItem.targetWord === this.textInput,
+        'byWordFormPart': (wordItem) => wordItem.targetWord.indexOf(this.textInput) > -1,
+        'byLemmaFull': (wordItem) => wordItem.lemmasList.split(',').indexOf(this.textInput) > -1,
+        'byLemmaPart': (wordItem) => wordItem.lemmasList.split(',').find(lemmaItem => lemmaItem.indexOf(this.textInput) > -1)
+      }
     }
   },
   computed: {
@@ -98,8 +113,10 @@ export default {
         if (!this.selectedFilterBy) {
           return this.wordlist.values
         }
-        if (this.selectedFilterBy === 'byCurrentSession') {
-          return this.wordlist.values.filter(wordItem => wordItem.currentSession)
+        if (this.filterMethods[this.selectedFilterBy]) {
+          return this.wordlist.values.filter(this.filterMethods[this.selectedFilterBy])
+        } else {
+          console.warn(`The current filter method - ${this.selectedFilterBy} - is not defined, that's why empty result is returned!`)
         }
       }
       return []
@@ -140,8 +157,15 @@ export default {
     showContexts (targetWord) {
       this.$emit('showContexts', targetWord, this.languageCode)
     },
-    changedFilterBy (selectedFilterBy) {
+    changedFilterBy (selectedFilterBy, textInput) {
       this.selectedFilterBy = selectedFilterBy
+      this.textInput = textInput
+    },
+    setLemmaFilterByClick (lemma) {
+      this.clickedLemma = lemma
+    },
+    clearClickedLemma () {
+      this.clickedLemma = null
     }
   }
 }

@@ -32,7 +32,12 @@
           class="alpheios-worditem__data alpheios-worditem__targetWord"
           @click="selectWordItem()"
         >{{ worditem.targetWord }}</div>
-        <div class="alpheios-worditem__data alpheios-worditem__lemmasList">{{ lemmasList }}</div>
+        <div class="alpheios-worditem__data alpheios-worditem__lemmasList">
+          <span v-for="(lemma, lemmaIndex) in lemmasList" 
+                @click="setLemmaFilterByClick(lemma)"
+                class="alpheios-worditem__lemmasList-lemmaitem"
+          >{{ lemma }}<span v-if="lemmaIndex < lemmasList.length-1">, </span></span>
+        </div>
     </div>
 </template>
 <script>
@@ -74,7 +79,7 @@ export default {
       }
     },
     lemmasList () {
-      return this.$store.state.app.wordListUpdateTime ? this.worditem.lemmasList : ''
+      return this.$store.state.app.wordListUpdateTime ? this.worditem.lemmasList.split(',') : []
     }
   },
   methods: {
@@ -93,6 +98,9 @@ export default {
     },
     showContexts () {
       this.$emit('showContexts', this.worditem.targetWord)
+    },
+    setLemmaFilterByClick(lemma) {
+      this.$emit('setLemmaFilterByClick', lemma)
     }
   }
 }
@@ -161,5 +169,9 @@ export default {
 
   .alpheios-visibility__hidden {
     visibility: hidden;
+  }
+
+  .alpheios-worditem__lemmasList-lemmaitem {
+    cursor: pointer;
   }
 </style>

@@ -2577,6 +2577,9 @@ h3.alpheios-inflections__credits-title {
 .alpheios-visibility__hidden {
   visibility: hidden !important;
 }
+.alpheios-worditem__lemmasList-lemmaitem {
+  cursor: pointer !important;
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2593,8 +2596,20 @@ h3.alpheios-inflections__credits-title {
   font-weight: bold !important;
   padding-bottom: 10px !important;
 }
+.alpheios-wordlist-filters .alpheios-wordlist-header-select-filterBy-block,
+.alpheios-wordlist-filters .alpheios-wordlist-header-input-filterBy-block {
+  width: 48% !important;
+  display: inline-block;
+  vertical-align: middle !important;
+}
+.alpheios-wordlist-filters .alpheios-wordlist-header-input-filterBy-block {
+  margin-left: 2% !important;
+}
 .alpheios-wordlist-filters .alpheios-wordlist-header-select-filterBy {
-  width: 50% !important;
+  width: 90% !important;
+}
+.alpheios-wordlist-filters .alpheios-wordlist-header-input-filterBy {
+  width: 80% !important;
 }
 .alpheios-wordlist-filters .alpheios-wordlist-header-clear-icon {
   width: 20px !important;
