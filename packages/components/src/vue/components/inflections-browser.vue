@@ -625,7 +625,7 @@ export default {
     .alpheios-inflections__title {
       font-family: var(--alpheios-sans-font-face);
       font-size: var(--alpheios-base-text-size);
-      margin: 0 0 1.25rem 3rem;
+      margin: 0 0 textsize(20px) textsize(48px);
     }
   }
 
@@ -634,7 +634,7 @@ export default {
     font-size: textsize(24px);
     font-family: var(--alpheios-serif-font-face);
     font-weight: 700;
-    margin-bottom: 1.25rem;
+    margin-bottom: textsize(20px);
     // To have the border under the text only
     display: inline-block;
 
@@ -651,14 +651,14 @@ export default {
 
   .alpheios-ib__pofs-title-l2 {
     font-weight: 700;
-    margin-left: 1rem;
-    margin-bottom: 1.25rem;
+    margin-left: textsize(16px);
+    margin-bottom: textsize(20px);
   }
 
   .alpheios-ib__pofs-title-l3 {
     font-weight: 700;
-    margin-left: 2rem;
-    margin-bottom: 1.25rem;
+    margin-left: textsize(32px);
+    margin-bottom: textsize(20px);
   }
 
 </style>

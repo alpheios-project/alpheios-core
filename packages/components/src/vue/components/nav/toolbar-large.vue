@@ -171,7 +171,7 @@
           :tooltip-direction="tooltipDirection"
       >
         <span
-            :class="{ active: $store.getters['ui/isActiveTab']('wordlist'), disabled: !this.$store.state.app.hasWordListsData }"
+            :class="{ active: $store.getters['ui/isActiveTab']('wordlist'), disabled: !$store.state.app.hasWordListsData }"
             class="alpheios-navbuttons__btn"
             @click="ui.togglePanelTab('wordlist')"
         >
@@ -182,9 +182,10 @@
       <alph-tooltip
           :tooltip-text="l10n.getText('TOOLTIP_STATUS')"
           :tooltip-direction="tooltipDirection"
+          v-show="settings.contentOptions.items.verboseMode.currentValue === `verbose`"
       >
         <span
-            :class="{ active: $store.getters['ui/isActiveTab']('status'), disabled: this.settings.contentOptions.items.verboseMode.currentValue === `verbose` }"
+            :class="{ active: $store.getters['ui/isActiveTab']('status') }"
             class="alpheios-navbuttons__btn"
             @click="ui.togglePanelTab('status')"
         >

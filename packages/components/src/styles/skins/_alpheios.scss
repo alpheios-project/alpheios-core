@@ -5,8 +5,6 @@ html {
   --alpheios-base-text-size: 16px;
   // Base size of UI elements that are scalable
   --alpheios-base-ui-size: 16px;
-  // A base font size for elements that are not scalable
-  font-size: 16px;
 
   --alpheios-sans-font-face: 'Source Sans Pro', sans-serif;
   --alpheios-serif-font-face: 'Source Serif Pro', serif;
@@ -83,6 +81,12 @@ html {
   --alpheios-btn-tertiary-font-color-pressed: var(--alpheios-color-neutral-lightest);
   --alpheios-btn-tertiary-bg-color-pressed: var(--alpheios-color-muted);
   --alpheios-btn-tertiary-border-color-pressed: var(--alpheios-color-muted);
+
+  // Notifications
+  --alpheios-notification-bg-color: rgba(255, 193, 77, 0.5);
+  --alpheios-notification-border-color: var(--alpheios-color-bright);
+  --alpheios-notification-important-bg-color: rgba(198, 73, 6, 0.31);
+  --alpheios-notification-important-border-color: var(--alpheios-color-vivid);
 
   // Those colors are not defined in a style guide
   --alpheios-highlight-color: #F6D918;

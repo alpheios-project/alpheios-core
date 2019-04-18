@@ -402,9 +402,11 @@ export default {
     }
 
     .alpheios-panel__header {
-      direction: rtl;
       border-top-left-radius: uisize(10px);
-      padding-right: uisize(14px);
+    }
+
+    .alpheios-panel__header-logo {
+      margin-left: uisize(16px);
     }
 
     .alpheios-panel__content,
@@ -413,11 +415,9 @@ export default {
     }
 
     .alpheios-panel__close-btn {
-      border-top-left-radius: uisize(10px);
 
       svg {
-        right: uisize(20px);
-        left: auto;
+        left: uisize(28px);
       }
     }
   }

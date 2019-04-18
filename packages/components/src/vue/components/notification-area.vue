@@ -35,7 +35,7 @@
       />
       <login
           class="alpheios-notification-area__control"
-          btn-class="alpheios-button-tertiary"
+          btn-class="alpheios-button-primary"
       />
       <div
           class="alpheios-notification-area__close-btn"
@@ -100,18 +100,60 @@ export default {
     flex-direction: column;
     align-items: stretch;
     flex: 0 0 auto;
+    background: var(--alpheios-color-neutral-lightest);
+    padding: 0 uisize(16px);
 
     &__notification {
       display: flex;
-      padding: uisize(10px) 0 uisize(10px) uisize(20px);
-      flex: 0 0 uisize(60px);
-      color: var(--alpheios-color-neutral-lightest);
-      background: var(--alpheios-color-muted);
+      padding: uisize(16px) 0 uisize(16px) uisize(16px);
+      flex: 0 0 auto;
+      color: var(--alpheios-color-dark);
+      background: var(--alpheios-notification-bg-color);
+      border: 1px solid var(--alpheios-notification-border-color);
+      border-radius: uisize(10px);
+      margin-bottom: uisize(16px);
+    }
+
+    &__close-btn {
+      width: uisize(20px);
+      height: uisize(20px);
+      padding: 0 uisize(10px) 0 uisize(20px);
+      cursor: pointer;
+      fill: var(--alpheios-color-dark);
+      stroke: var(--alpheios-color-dark);
+
+      &:hover,
+      &:focus {
+        fill: var(--alpheios-color-dark-hover);
+        stroke: var(--alpheios-color-dark-hover);
+      }
+
+      &:active {
+        fill: var(--alpheios-color-dark-pressed);
+        stroke: var(--alpheios-color-dark-pressed);
+      }
     }
 
     &__notification--important {
-      color: var(--alpheios-color-neutral-lightest);
-      background: var(--alpheios-color-vivid);
+      color: var(--alpheios-color-vivid);
+      background: var(--alpheios-notification-important-bg-color);
+      border: 1px solid var(--alpheios-notification-important-border-color);
+
+      .alpheios-notification-area__close-btn {
+        fill: var(--alpheios-color-vivid);
+        stroke: var(--alpheios-color-vivid);
+
+        &:hover,
+        &:focus {
+          fill: var(--alpheios-color-vivid-hover);
+          stroke: var(--alpheios-color-vivid-hover);
+        }
+
+        &:active {
+          fill: var(--alpheios-color-vivid-pressed);
+          stroke: var(--alpheios-color-vivid-pressed);
+        }
+      }
     }
 
     &__msg {
@@ -122,26 +164,6 @@ export default {
     &__control {
       .alpheios-setting__control {
         width: 140px;
-      }
-    }
-
-    &__close-btn {
-      width: uisize(20px);
-      height: uisize(20px);
-      padding: 0 uisize(10px) 0 uisize(20px);
-      cursor: pointer;
-      fill: var(--alpheios-color-neutral-lightest);
-      stroke: var(--alpheios-color-neutral-lightest);
-
-      &:hover,
-      &:focus {
-        fill: var(--alpheios-icon-color-hover);
-        stroke: var(--alpheios-icon-color-hover);
-      }
-
-      &:active {
-        fill: var(--alpheios-icon-color-active);
-        stroke: var(--alpheios-icon-color-active);
       }
     }
   }

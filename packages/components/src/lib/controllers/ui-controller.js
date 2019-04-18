@@ -874,13 +874,17 @@ export default class UIController {
    *         false otherwise (including if we have no disabling conditions on this tab).
    */
   isDisabledTab (tabName) {
+    /**
+     * A structure that defines availability condition for panel's tabs.
+     * The key is a tab name, and a value is the function that returns true if the tab is available.
+     */
     const tabsCheck = {
       definitions: () => this.store.getters['app/defDataReady'],
       inflections: () => this.store.state.app.hasInflData,
       grammar: () => this.store.getters['app/hasGrammarRes'],
       treebank: () => this.store.getters['app/hasTreebankData'],
       wordUsage: () => this.store.state.app.wordUsageExampleEnabled,
-      status: () => this.api.settings.contentOptions.items.verboseMode.currentValue !== 'verbose'
+      status: () => this.api.settings.contentOptions.items.verboseMode.currentValue === 'verbose'
     }
     return tabsCheck.hasOwnProperty(tabName) && !tabsCheck[tabName]()
   }

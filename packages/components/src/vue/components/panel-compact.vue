@@ -566,6 +566,7 @@ export default {
 </script>
 <style lang="scss">
   @import "../../styles/variables";
+  $alpheios-toolbar-height: uisize(56px);
 
   .alpheios-panel {
     z-index: 2000;
@@ -575,7 +576,7 @@ export default {
     direction: ltr;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: uisize(56px) 1fr min-content;
+    grid-template-rows: $alpheios-toolbar-height 1fr min-content;
     grid-template-areas: "header" "content" "notifications";
   }
 
@@ -605,7 +606,7 @@ export default {
 
   .alpheios-panel__close-btn {
     width: uisize(60px);
-    height: 100%;
+    height: $alpheios-toolbar-height;
     cursor: pointer;
     fill: var(--alpheios-icon-color);
     stroke: var(--alpheios-icon-color);
@@ -695,7 +696,7 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     box-sizing: border-box;
-    height: 100%;
+    align-items: stretch;
   }
 
   .alpheios-panel__header-btn-group--end {
@@ -703,7 +704,7 @@ export default {
     flex-wrap: nowrap;
     justify-content: flex-end;
     box-sizing: border-box;
-    height: 100%;
+    align-items: stretch;
   }
 
   .alpheios-panel__tab__options {

@@ -639,7 +639,7 @@ export default {
   .alpheios-popup__body {
     display: flex;
     flex-direction: column;
-    padding: textsize(20px);
+    padding: textsize(16px);
     background: var(--alpheios-text-bg-color);
     overflow: auto;
     flex: 1 0;

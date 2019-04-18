@@ -22,22 +22,21 @@
             </alph-tooltip>
         </div>
 
-        <div class="alpheios-wordlist-delete-all-confirmation" v-show="showDeleteAllBox">
-          <p>{{l10n.getText('WORDLIST_DELETE_CONFIRM_MESSAGE')}}</p>
+        <div class="alpheios-wordlist-delete-all-confirmation alpheios-notification-area__notification alpheios-notification-area__notification--important" v-show="showDeleteAllBox">
+          <div class="alpheios-notification-area__msg">{{l10n.getText('WORDLIST_DELETE_CONFIRM_MESSAGE')}}</div>
 
-          <div class="alpheios-wordlist-delete-all-confirmation__buttons">
+          <div class="alpheios-wordlist-delete-all-confirmation__buttons alpheios-notification-area__control">
             <alph-tooltip :tooltipText="l10n.getText('WORDLIST_TOOLTIP_REMOVE_ALL')" tooltipDirection="bottom-wide">
-              <button @click="deleteAll()" class="alpheios-button-primary alpheios-popup__toolbar-button">
+              <button @click="deleteAll()" class="alpheios-button-primary">
                 {{ l10n.getText('WORDLIST_BUTTON_DELETE') }}
               </button>
             </alph-tooltip>
-
-            <alph-tooltip :tooltipText="l10n.getText('WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL')" tooltipDirection="bottom-wide">
-              <button @click="cancelDeleteAll()" class="alpheios-button-primary alpheios-popup__toolbar-button">
-                {{ l10n.getText('WORDLIST_BUTTON_CANCEL_DELETE') }}
-              </button>
-            </alph-tooltip>
-
+          </div>
+          <div
+              class="alpheios-notification-area__close-btn"
+              @click="cancelDeleteAll()"
+          >
+            <close-icon/>
           </div>
         </div>
 
@@ -61,6 +60,7 @@ import Tooltip from '@/vue/components/tooltip.vue'
 import { Constants } from 'alpheios-data-models'
 import CheckIcon from '@/images/inline-icons/check.svg'
 import DeleteIcon from '@/images/inline-icons/delete.svg'
+import CloseIcon from '@/images/inline-icons/x-close.svg'
 import WordItemPanel from '@/vue/components/word-list/word-item-panel.vue'
 import WordFilterPanel from '@/vue/components/word-list/word-filter-panel.vue'
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
@@ -68,6 +68,7 @@ import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 export default {
   name: 'WordLanguagePanel',
   components: {
+    closeIcon: CloseIcon,
     checkIcon: CheckIcon,
     deleteIcon: DeleteIcon,
     wordItem: WordItemPanel,
@@ -180,5 +181,9 @@ export default {
     .alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-remove-all {
       fill: var(--alpheios-color-dark);
       stroke: var(--alpheios-color-dark);
+    }
+
+    .alpheios-wordlist-delete-all-confirmation {
+      margin-top: 10px;
     }
 </style>

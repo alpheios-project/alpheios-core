@@ -18,6 +18,7 @@
   }
 
   .multiselect__tags {
+    font-size: uisize(16px);
     // Need this to prevent tags element's background to overlap rounded corners of multiselect
     border-radius: uisize(10px);
   }
