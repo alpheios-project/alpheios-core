@@ -2,6 +2,8 @@
   <div
       id="alpheios-toolbar-inner"
       class="alpheios-content alpheios-toolbar alpheios-toolbar--large"
+      :class="positionClass"
+      :style="`top: ${this.initial.top}px; right: ${this.initial.right}px; transform: translate(${this.shift.x}px, ${this.shift.y}px)`"
       v-show="$store.state.toolbar.visible"
   >
     <div
@@ -263,23 +265,36 @@ export default {
       lookupVisible: false,
       contentVisible: false,
 
-      position: {
-        x: null,
-        y: null
+      // Initial position of a toolbar, in pixels. Need this as variable for positioning calculations
+      initial: {
+        top: 10,
+        right: 15
+      },
+
+      // How much a toolbar has been dragged from its initial position, in pixels
+      shift: {
+        x: 0,
+        y: 0
       }
     }
   },
 
   computed: {
+    isInLeftHalf: function () {
+      return (window.innerWidth / 2 - this.initial.right + this.shift.x < 0)
+    },
+
+    positionClass: function () {
+      return this.isInLeftHalf ? 'alpheios-toolbar--left' : 'alpheios-toolbar--right'
+    },
+
     tooltipDirection: function () {
-      console.info(`Tooltip direction, ${this.position.x}`)
-      return (this.position.x && this.position.x < 100) ? 'right' : 'left'
+      return this.isInLeftHalf ? 'right' : 'left'
     }
   },
 
   methods: {
     dragMoveListener (event) {
-      const target = this.$el
       let dx = event.dx
       let dy = event.dy
       /*
@@ -303,9 +318,8 @@ export default {
         }
         dy = 0
       }
-      this.position.x += dx
-      this.position.y += dy
-      target.style.transform = `translate(${this.position.x}px, ${this.position.y}px)`
+      this.shift.x += dx
+      this.shift.y += dy
     }
   },
 
@@ -330,8 +344,6 @@ export default {
   .alpheios-toolbar {
     &.alpheios-toolbar--large {
       background: transparent;
-      top: 10px;
-      right: 15px;
     }
 
     .alpheios-navbuttons__btn {
@@ -411,14 +423,17 @@ export default {
     left: uisize(-320px);
     top: 0;
     border: uisize(1px) solid var(--alpheios-border-color);
-    border-top-left-radius: uisize(10px);
-    border-bottom-left-radius: uisize(10px);
-    border-right: none;
+    border-radius: uisize(10px) 0 0 uisize(10px);
     box-sizing: border-box;
-    padding: uisize(10px);
-    padding-right: uisize(20px);
+    padding: uisize(10px) uisize(20px) uisize(10px) uisize(10px);
     // To place it below other toolbar elements so that it will blend smoothly with rounded corners of those
     z-index: -1;
+
+    .alpheios-toolbar--left & {
+      left: $alpheios-toolbar-base-width - 10px;
+      border-radius: 0 uisize(10px) uisize(10px) 0;
+      padding: uisize(10px) uisize(10px) uisize(10px) uisize(20px);
+    }
 
     .alpheios-lookup__form {
       justify-content: flex-end;

@@ -11908,6 +11908,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -11974,12 +11979,38 @@ __webpack_require__.r(__webpack_exports__);
   data: function () {
     return {
       lookupVisible: false,
-      contentVisible: false
+      contentVisible: false,
+
+      // Initial position of a toolbar, in pixels. Need this as variable for positioning calculations
+      initial: {
+        top: 10,
+        right: 15
+      },
+
+      // How much a toolbar has been dragged from its initial position, in pixels
+      shift: {
+        x: 0,
+        y: 0
+      }
     }
   },
+
+  computed: {
+    isInLeftHalf: function () {
+      return (window.innerWidth / 2 - this.initial.right + this.shift.x < 0)
+    },
+
+    positionClass: function () {
+      return this.isInLeftHalf ? 'alpheios-toolbar--left' : 'alpheios-toolbar--right'
+    },
+
+    tooltipDirection: function () {
+      return this.isInLeftHalf ? 'right' : 'left'
+    }
+  },
+
   methods: {
     dragMoveListener (event) {
-      const target = this.$el
       let dx = event.dx
       let dy = event.dy
       /*
@@ -12003,14 +12034,11 @@ __webpack_require__.r(__webpack_exports__);
         }
         dy = 0
       }
-      const x = (parseFloat(target.getAttribute('data-x')) || 0) + dx
-      const y = (parseFloat(target.getAttribute('data-y')) || 0) + dy
-      target.style.webkitTransform = `translate(${x}px, ${y}px)`
-      target.style.transform = `translate(${x}px, ${y}px)`
-      target.setAttribute('data-x', x)
-      target.setAttribute('data-y', y)
+      this.shift.x += dx
+      this.shift.y += dy
     }
   },
+
   mounted: function () {
     this.$options.interactInstance = interactjs__WEBPACK_IMPORTED_MODULE_0___default()(this.$el.querySelector('#alpheios-toolbar-drag-handle'))
       .draggable({
@@ -20099,6 +20127,17 @@ var render = function() {
         }
       ],
       staticClass: "alpheios-content alpheios-toolbar alpheios-toolbar--large",
+      class: _vm.positionClass,
+      style:
+        "top: " +
+        this.initial.top +
+        "px; right: " +
+        this.initial.right +
+        "px; transform: translate(" +
+        this.shift.x +
+        "px, " +
+        this.shift.y +
+        "px)",
       attrs: { id: "alpheios-toolbar-inner" }
     },
     [
@@ -20133,8 +20172,8 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                tooltipText: _vm.l10n.getText("LABEL_LOOKUP_CONTROL"),
-                tooltipDirection: "left"
+                "tooltip-text": _vm.l10n.getText("LABEL_LOOKUP_CONTROL"),
+                "tooltip-direction": _vm.tooltipDirection
               }
             },
             [
@@ -20233,8 +20272,8 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                tooltipText: _vm.l10n.getText("TOOLTIP_HELP"),
-                tooltipDirection: "left"
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_HELP"),
+                "tooltip-direction": _vm.tooltipDirection
               }
             },
             [
@@ -20261,8 +20300,8 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                tooltipText: _vm.l10n.getText("TOOLTIP_DEFINITIONS"),
-                tooltipDirection: "left"
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_DEFINITIONS"),
+                "tooltip-direction": _vm.tooltipDirection
               }
             },
             [
@@ -20290,8 +20329,8 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT"),
-                tooltipDirection: "left"
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_INFLECT"),
+                "tooltip-direction": _vm.tooltipDirection
               }
             },
             [
@@ -20319,8 +20358,8 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT_BROWSER"),
-                tooltipDirection: "left"
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_INFLECT_BROWSER"),
+                "tooltip-direction": _vm.tooltipDirection
               }
             },
             [
@@ -20349,8 +20388,8 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                tooltipText: _vm.l10n.getText("TOOLTIP_GRAMMAR"),
-                tooltipDirection: "left"
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_GRAMMAR"),
+                "tooltip-direction": _vm.tooltipDirection
               }
             },
             [
@@ -20378,8 +20417,8 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                tooltipText: _vm.l10n.getText("TOOLTIP_TREEBANK"),
-                tooltipDirection: "left"
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_TREEBANK"),
+                "tooltip-direction": _vm.tooltipDirection
               }
             },
             [
@@ -20407,8 +20446,8 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                tooltipText: _vm.l10n.getText("TOOLTIP_OPTIONS"),
-                tooltipDirection: "left"
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_OPTIONS"),
+                "tooltip-direction": _vm.tooltipDirection
               }
             },
             [
@@ -20435,8 +20474,8 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                tooltipText: _vm.l10n.getText("TOOLTIP_USER"),
-                tooltipDirection: "left"
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_USER"),
+                "tooltip-direction": _vm.tooltipDirection
               }
             },
             [
@@ -20464,8 +20503,8 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                tooltipText: _vm.l10n.getText("TOOLTIP_WORD_USAGE"),
-                tooltipDirection: "left"
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_WORD_USAGE"),
+                "tooltip-direction": _vm.tooltipDirection
               }
             },
             [
@@ -20493,8 +20532,8 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                tooltipText: _vm.l10n.getText("TOOLTIP_WORDLIST"),
-                tooltipDirection: "left"
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_WORDLIST"),
+                "tooltip-direction": _vm.tooltipDirection
               }
             },
             [
@@ -20533,8 +20572,8 @@ var render = function() {
                 }
               ],
               attrs: {
-                tooltipText: _vm.l10n.getText("TOOLTIP_STATUS"),
-                tooltipDirection: "left"
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_STATUS"),
+                "tooltip-direction": _vm.tooltipDirection
               }
             },
             [

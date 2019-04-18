@@ -3013,8 +3013,6 @@ h3.alpheios-inflections__credits-title {
  */
 .alpheios-toolbar.alpheios-toolbar--large {
   background: transparent !important;
-  top: 10px !important;
-  right: 15px !important;
 }
 .alpheios-toolbar .alpheios-navbuttons__btn {
   width: calc(var(--alpheios-base-ui-size) * 2.75) !important;
@@ -3083,13 +3081,15 @@ h3.alpheios-inflections__credits-title {
   left: calc(var(--alpheios-base-ui-size) * -20) !important;
   top: 0 !important;
   border: calc(var(--alpheios-base-ui-size) * 0.0625) solid var(--alpheios-border-color) !important;
-  border-top-left-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
-  border-bottom-left-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
-  border-right: none !important;
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) 0 0 calc(var(--alpheios-base-ui-size) * 0.625) !important;
   box-sizing: border-box !important;
-  padding: calc(var(--alpheios-base-ui-size) * 0.625) !important;
-  padding-right: calc(var(--alpheios-base-ui-size) * 1.25) !important;
+  padding: calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 1.25) calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) !important;
   z-index: -1 !important;
+}
+.alpheios-toolbar--left .alpheios-toolbar__lookup {
+  left: 34px !important;
+  border-radius: 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) 0 !important;
+  padding: calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 1.25) !important;
 }
 .alpheios-toolbar__lookup .alpheios-lookup__form {
   justify-content: flex-end !important;
