@@ -1008,12 +1008,12 @@ p.alpheios-lemma__translations-value {
   font-weight: normal !important;
   padding-right: 0.25em !important;
 }
-.alpheios-morph__linkedattr {
+.alpheios-content .alpheios-morph__linkedattr {
   color: var(--alpheios-color-vivid) !important;
   cursor: pointer !important;
   font-weight: 700 !important;
 }
-.alpheios-morph__linkedattr:hover, .alpheios-morph__linkedattr:active {
+.alpheios-content .alpheios-morph__linkedattr:hover, .alpheios-content .alpheios-morph__linkedattr:active {
   text-decoration: underline !important;
 }
 .alpheios-morph__pofs span:last-child:after {
@@ -2309,39 +2309,10 @@ h3.alpheios-inflections__credits-title {
 }
 .alpheios-user-auth__notifications {
   display: none;
-  position: relative !important;
-  padding: calc(var(--alpheios-base-text-size) * 0.625) calc(var(--alpheios-base-text-size) * 1.25) !important;
   margin-top: calc(var(--alpheios-base-text-size) * 0.625) !important;
-  color: var(--alpheios-color-neutral-lightest) !important;
-  background: var(--alpheios-color-muted) !important;
-  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
-  flex: 0 0 calc(var(--alpheios-base-ui-size) * 3.75) !important;
-  box-sizing: border-box !important;
-  overflow: hidden !important;
-  min-height: calc(var(--alpheios-base-ui-size) * 2.25) !important;
-}
-.alpheios-user-auth__notifications-close-btn {
-  position: absolute !important;
-  right: calc(var(--alpheios-base-ui-size) * 0.625) !important;
-  top: calc(var(--alpheios-base-ui-size) * 0.625) !important;
-  display: block;
-  width: calc(var(--alpheios-base-ui-size) * 1.25) !important;
-  height: auto !important;
-  margin: 0 !important;
-  cursor: pointer !important;
-  fill: var(--alpheios-color-neutral-lightest) !important;
-  stroke: var(--alpheios-color-neutral-lightest) !important;
-}
-.alpheios-user-auth__notifications-close-btn:hover, .alpheios-user-auth__notifications-close-btn:focus {
-  fill: var(--alpheios-icon-color-hover) !important;
-  stroke: var(--alpheios-icon-color-hover) !important;
-}
-.alpheios-user-auth__notifications-close-btn:active {
-  fill: var(--alpheios-icon-color-active) !important;
-  stroke: var(--alpheios-icon-color-active) !important;
 }
 [data-notification-visible=true] .alpheios-user-auth__notifications {
-  display: block;
+  display: flex;
 }
 /*
  Calculates a size of text elements relative to the base size.

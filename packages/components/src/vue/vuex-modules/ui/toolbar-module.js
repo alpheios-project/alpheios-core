@@ -49,7 +49,9 @@ ToolbarModule.store = (moduleInstance) => {
       // Whether a toolbar is shown or hidden
       visible: false,
       // Choose compact or large layout from the value of the `platform` prop of a configuration object
-      layout: moduleInstance.config.platform === HTMLPage.platforms.DESKTOP ? `toolbarLarge` : 'toolbarCompact'
+      layout: moduleInstance.config.platform === HTMLPage.platforms.DESKTOP ? `toolbarLarge` : 'toolbarCompact',
+      // Initial position of a toolbar
+      initialPos: moduleInstance.config.initialPos
     },
     mutations: {
       /**
@@ -77,5 +79,12 @@ ToolbarModule._configDefaults = {
   _supportedPlatforms: [HTMLPage.platforms.DESKTOP, HTMLPage.platforms.MOBILE],
   // A selector that specifies to what DOM element a nav will be mounted.
   // This element will be replaced with the root element of the panel component.
-  mountPoint: '#alpheios-toolbar'
+  mountPoint: '#alpheios-toolbar',
+  // Initial position of a toolbar, in pixels. Any combination of positioning parameters (top, right, bottom, left)
+  // in two different dimensions (X and Y) must be specified. Pixel units should NOT be added to the values.
+  // Default values are the ones below.
+  initialPos: {
+    top: 10,
+    right: 15
+  }
 }

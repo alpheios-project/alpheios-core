@@ -1008,12 +1008,12 @@ p.alpheios-lemma__translations-value {
   font-weight: normal;
   padding-right: 0.25em;
 }
-.alpheios-morph__linkedattr {
+.alpheios-content .alpheios-morph__linkedattr {
   color: var(--alpheios-color-vivid);
   cursor: pointer;
   font-weight: 700;
 }
-.alpheios-morph__linkedattr:hover, .alpheios-morph__linkedattr:active {
+.alpheios-content .alpheios-morph__linkedattr:hover, .alpheios-content .alpheios-morph__linkedattr:active {
   text-decoration: underline;
 }
 .alpheios-morph__pofs span:last-child:after {
@@ -2309,39 +2309,10 @@ h3.alpheios-inflections__credits-title {
 }
 .alpheios-user-auth__notifications {
   display: none;
-  position: relative;
-  padding: calc(var(--alpheios-base-text-size) * 0.625) calc(var(--alpheios-base-text-size) * 1.25);
   margin-top: calc(var(--alpheios-base-text-size) * 0.625);
-  color: var(--alpheios-color-neutral-lightest);
-  background: var(--alpheios-color-muted);
-  border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
-  flex: 0 0 calc(var(--alpheios-base-ui-size) * 3.75);
-  box-sizing: border-box;
-  overflow: hidden;
-  min-height: calc(var(--alpheios-base-ui-size) * 2.25);
-}
-.alpheios-user-auth__notifications-close-btn {
-  position: absolute;
-  right: calc(var(--alpheios-base-ui-size) * 0.625);
-  top: calc(var(--alpheios-base-ui-size) * 0.625);
-  display: block;
-  width: calc(var(--alpheios-base-ui-size) * 1.25);
-  height: auto;
-  margin: 0;
-  cursor: pointer;
-  fill: var(--alpheios-color-neutral-lightest);
-  stroke: var(--alpheios-color-neutral-lightest);
-}
-.alpheios-user-auth__notifications-close-btn:hover, .alpheios-user-auth__notifications-close-btn:focus {
-  fill: var(--alpheios-icon-color-hover);
-  stroke: var(--alpheios-icon-color-hover);
-}
-.alpheios-user-auth__notifications-close-btn:active {
-  fill: var(--alpheios-icon-color-active);
-  stroke: var(--alpheios-icon-color-active);
 }
 [data-notification-visible=true] .alpheios-user-auth__notifications {
-  display: block;
+  display: flex;
 }
 /*
  Calculates a size of text elements relative to the base size.

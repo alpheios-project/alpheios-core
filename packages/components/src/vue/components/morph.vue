@@ -406,7 +406,9 @@ export default {
     padding-right: .25em;
   }
 
-  .alpheios-morph__linkedattr {
+  // We have to use namespace to override increased specificity of content styles, that, in turn, had
+  // specificity increased to fight style leakage from some problematic websites
+  #{$alpheios-namespace} .alpheios-morph__linkedattr {
     @include alpheios-interactive;
     font-weight: 700;
   }

@@ -3,7 +3,7 @@
       id="alpheios-toolbar-inner"
       class="alpheios-content alpheios-toolbar alpheios-toolbar--large"
       :class="positionClass"
-      :style="`top: ${this.initial.top}px; right: ${this.initial.right}px; transform: translate(${this.shift.x}px, ${this.shift.y}px)`"
+      :style="componentStyles"
       v-show="$store.state.toolbar.visible"
   >
     <div
@@ -65,32 +65,6 @@
       </alph-tooltip>
 
       <alph-tooltip
-          :tooltip-text="l10n.getText('TOOLTIP_DEFINITIONS')"
-          :tooltip-direction="tooltipDirection"
-      >
-        <span
-            :class="{ active: $store.getters['ui/isActiveTab']('definitions'), disabled: !$store.getters['app/defDataReady'] }"
-            class="alpheios-navbuttons__btn"
-            @click="ui.togglePanelTab('definitions')"
-          >
-          <definitions-icon/>
-        </span>
-      </alph-tooltip>
-
-      <alph-tooltip
-          :tooltip-text="l10n.getText('TOOLTIP_INFLECT')"
-          :tooltip-direction="tooltipDirection"
-      >
-        <span
-            :class="{ active: $store.getters['ui/isActiveTab']('inflections'), disabled: !$store.state.app.hasInflData }"
-            class="alpheios-navbuttons__btn"
-            @click="ui.togglePanelTab('inflections')"
-          >
-          <inflections-icon/>
-        </span>
-      </alph-tooltip>
-
-      <alph-tooltip
           :tooltip-text="l10n.getText('TOOLTIP_INFLECT_BROWSER')"
           :tooltip-direction="tooltipDirection"
       >
@@ -117,19 +91,6 @@
       </alph-tooltip>
 
       <alph-tooltip
-          :tooltip-text="l10n.getText('TOOLTIP_TREEBANK')"
-          :tooltip-direction="tooltipDirection"
-      >
-        <span
-            :class="{ active: $store.getters['ui/isActiveTab']('treebank'), disabled: !$store.getters['app/hasTreebankData'] }"
-            class="alpheios-navbuttons__btn"
-            @click="ui.togglePanelTab('treebank')"
-        >
-          <treebank-icon/>
-        </span>
-      </alph-tooltip>
-
-      <alph-tooltip
           :tooltip-text="l10n.getText('TOOLTIP_OPTIONS')"
           :tooltip-direction="tooltipDirection"
       >
@@ -152,19 +113,6 @@
             @click="ui.togglePanelTab('user')"
         >
           <user-icon/>
-        </span>
-      </alph-tooltip>
-
-      <alph-tooltip
-          :tooltip-text="l10n.getText('TOOLTIP_WORD_USAGE')"
-          :tooltip-direction="tooltipDirection"
-      >
-        <span
-            :class="{ active: $store.getters['ui/isActiveTab']('wordUsage'), disabled: !$store.state.app.wordUsageExampleEnabled }"
-            class="alpheios-navbuttons__btn"
-            @click="ui.togglePanelTab('wordUsage')"
-        >
-          <word-usage-icon/>
         </span>
       </alph-tooltip>
 
@@ -265,12 +213,6 @@ export default {
       lookupVisible: false,
       contentVisible: false,
 
-      // Initial position of a toolbar, in pixels. Need this as variable for positioning calculations
-      initial: {
-        top: 10,
-        right: 15
-      },
-
       // How much a toolbar has been dragged from its initial position, in pixels
       shift: {
         x: 0,
@@ -280,8 +222,37 @@ export default {
   },
 
   computed: {
+    componentStyles: function () {
+      let styles = {
+        transform: `translate(${this.shift.x}px, ${this.shift.y}px)`
+      }
+
+      if (this.$store.state.toolbar.initialPos) {
+        if (this.$store.state.toolbar.initialPos.top) {
+          styles.top = `${this.$store.state.toolbar.initialPos.top}px`
+        }
+        if (this.$store.state.toolbar.initialPos.right) {
+          styles.right = `${this.$store.state.toolbar.initialPos.right}px`
+        }
+        if (this.$store.state.toolbar.initialPos.bottom) {
+          styles.bottom = `${this.$store.state.toolbar.initialPos.bottom}px`
+        }
+        if (this.$store.state.toolbar.initialPos.left) {
+          styles.left = `${this.$store.state.toolbar.initialPos.left}px`
+        }
+      }
+      return styles
+    },
+
     isInLeftHalf: function () {
-      return (window.innerWidth / 2 - this.initial.right + this.shift.x < 0)
+      if (this.$store.state.toolbar.initialPos.hasOwnProperty(`right`)) {
+        return (window.innerWidth / 2 - this.$store.state.toolbar.initialPos.right + this.shift.x < 0)
+      } else if (this.$store.state.toolbar.initialPos.hasOwnProperty(`left`)) {
+        return (this.$store.state.toolbar.initialPos.left + this.shift.x < window.innerWidth / 2)
+      } else {
+        // We have no information in which part of the screen the toolbar is, will default to right
+        return false
+      }
     },
 
     positionClass: function () {
