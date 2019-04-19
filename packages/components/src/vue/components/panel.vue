@@ -282,7 +282,7 @@
            v-show="$store.getters['ui/isActiveTab']('wordlist')"
            data-alpheios-ignore="all"
       >
-        <word-list-panel :updated="$store.state.app.wordListUpdateTime" :wordlistC="app.wordlistC"></word-list-panel>
+        <word-list-panel/>
       </div>
     </div>
 
