@@ -78,9 +78,12 @@
         />
       </div>
 
-      <div :id="inflectionsPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflections"
-           v-if="$store.state.app.hasInflData" v-show="$store.getters['ui/isActiveTab']('inflections')"
-           data-alpheios-ignore="all">
+      <div
+          :id="inflectionsPanelID"
+          class="alpheios-panel__tab-panel alpheios-panel__tab__inflections"
+           v-show="$store.state.app.hasInflData && $store.getters['ui/isActiveTab']('inflections')"
+          data-alpheios-ignore="all"
+      >
         <h1
             class="alpheios-panel__title"
         >
@@ -88,6 +91,7 @@
         </h1>
         <inflections @contentwidth="setContentWidth" class="alpheios-panel-inflections"></inflections>
       </div>
+
       <div :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser"
            v-show="$store.getters['ui/isActiveTab']('inflectionsbrowser')"
            data-alpheios-ignore="all">
@@ -99,12 +103,14 @@
         <inflection-browser @contentwidth="setContentWidth">
         </inflection-browser>
       </div>
+
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__grammar
             alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
             data-alpheios-ignore="all"
            v-show="$store.getters['ui/isActiveTab']('grammar')">
         <grammar></grammar>
       </div>
+
       <div
           class="alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
           v-if="$store.getters['app/hasTreebankData']" v-show="$store.getters['ui/isActiveTab']('treebank')"
@@ -133,6 +139,7 @@
         >
         <word-usage-examples/>
       </div>
+
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__options"
            v-show="$store.getters['ui/isActiveTab']('options')"
            data-alpheios-ignore="all"
@@ -252,6 +259,7 @@
         >
         </setting>
       </div>
+
       <div class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info"
            v-show="$store.getters['ui/isActiveTab']('info')"
            data-alpheios-ignore="all">
@@ -268,10 +276,12 @@
         </div>
         <info></info>
       </div>
+
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist alpheios-panel__tab-panel--fw"
            v-show="$store.getters['ui/isActiveTab']('wordlist')"
+           data-alpheios-ignore="all"
       >
-        <word-list-panel></word-list-panel>
+        <word-list-panel :updated="$store.state.app.wordListUpdateTime" :wordlistC="app.wordlistC"></word-list-panel>
       </div>
     </div>
 
