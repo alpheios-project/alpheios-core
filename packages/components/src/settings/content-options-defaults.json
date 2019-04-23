@@ -124,6 +124,30 @@
         }
       ]
     },
+    "popupShiftX": {
+      "defaultValue": 0,
+      "labelText": "Popup shift, x axe:",
+      "number": true,
+      "values": []
+    },
+    "popupShiftY": {
+      "defaultValue": 0,
+      "labelText": "Popup shift, y axe:",
+      "number": true,
+      "values": []
+    },
+    "toolbarShiftX": {
+      "defaultValue": 0,
+      "labelText": "Toolbar shift, x axe:",
+      "number": true,
+      "values": []
+    },
+    "toolbarShiftY": {
+      "defaultValue": 0,
+      "labelText": "Toolbar shift, y axe:",
+      "number": true,
+      "values": []
+    },
     "uiType": {
       "defaultValue": "popup",
       "labelText": "UI type:",

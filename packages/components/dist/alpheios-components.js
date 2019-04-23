@@ -11697,23 +11697,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
 /* harmony import */ var _images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/images/alpheios/logo.svg */ "./images/alpheios/logo.svg");
-/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/images/inline-icons/definitions.svg */ "./images/inline-icons/definitions.svg");
-/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/images/inline-icons/inflections.svg */ "./images/inline-icons/inflections.svg");
-/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
-/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/images/inline-icons/status.svg */ "./images/inline-icons/status.svg");
-/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
-/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
-/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
-/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/images/inline-icons/sitemap.svg */ "./images/inline-icons/sitemap.svg");
-/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/images/inline-icons/info.svg */ "./images/inline-icons/info.svg");
-/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
-/* harmony import */ var _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/images/inline-icons/usage-examples-icon1.svg */ "./images/inline-icons/usage-examples-icon1.svg");
-/* harmony import */ var _images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/images/inline-icons/collapsed.svg */ "./images/inline-icons/collapsed.svg");
-/* harmony import */ var _images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/images/inline-icons/expanded.svg */ "./images/inline-icons/expanded.svg");
-/* harmony import */ var _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/images/inline-icons/lookup.svg */ "./images/inline-icons/lookup.svg");
-/* harmony import */ var _vue_components_nav_toolbar_compact_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/vue/components/nav/toolbar-compact.vue */ "./vue/components/nav/toolbar-compact.vue");
-/* harmony import */ var _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/vue/components/lookup.vue */ "./vue/components/lookup.vue");
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
+/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/images/inline-icons/status.svg */ "./images/inline-icons/status.svg");
+/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
+/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
+/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
+/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/images/inline-icons/info.svg */ "./images/inline-icons/info.svg");
+/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
+/* harmony import */ var _images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/images/inline-icons/collapsed.svg */ "./images/inline-icons/collapsed.svg");
+/* harmony import */ var _images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/images/inline-icons/expanded.svg */ "./images/inline-icons/expanded.svg");
+/* harmony import */ var _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/images/inline-icons/lookup.svg */ "./images/inline-icons/lookup.svg");
+/* harmony import */ var _vue_components_nav_toolbar_compact_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/vue/components/nav/toolbar-compact.vue */ "./vue/components/nav/toolbar-compact.vue");
+/* harmony import */ var _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/vue/components/lookup.vue */ "./vue/components/lookup.vue");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
 //
@@ -11877,10 +11873,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
 // Vue components
 
 
@@ -11889,7 +11881,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Toolbar',
-  extends: _vue_components_nav_toolbar_compact_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
+  extends: _vue_components_nav_toolbar_compact_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
   // API modules that are required for this component
   inject: {
     app: 'app',
@@ -11898,31 +11890,33 @@ __webpack_require__.r(__webpack_exports__);
     settings: 'settings'
   },
   storeModules: ['toolbar', 'app', 'ui'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_19__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_15__["default"]],
   components: {
-    lookup: _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
+    lookup: _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
     alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     logoIcon: _images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_2__["default"],
-    definitionsIcon: _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_3__["default"],
-    inflectionsIcon: _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_4__["default"],
-    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_5__["default"],
-    statusIcon: _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_6__["default"],
-    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_7__["default"],
-    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_8__["default"],
-    infoIcon: _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_11__["default"],
-    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_9__["default"],
-    treebankIcon: _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_10__["default"],
-    wordUsageIcon: _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_13__["default"],
-    wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_12__["default"],
-    collapsedIcon: _images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_14__["default"],
-    expandedIcon: _images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_15__["default"],
-    lookupIcon: _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_16__["default"]
+    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_3__["default"],
+    statusIcon: _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_4__["default"],
+    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_5__["default"],
+    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_6__["default"],
+    infoIcon: _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_8__["default"],
+    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_7__["default"],
+    wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_9__["default"],
+    collapsedIcon: _images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_10__["default"],
+    expandedIcon: _images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_11__["default"],
+    lookupIcon: _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_12__["default"]
   },
   interactInstance: null,
   dragTreshold: 100, // Drag distance values above this will be considered abnormal
   // Whether there is an error with Interact.js drag coordinates in the corresponding direction
   dragErrorX: false,
   dragErrorY: false,
+  props: {
+    moduleData: {
+      type: Object,
+      required: true
+    }
+  },
 
   data: function () {
     return {
@@ -11931,8 +11925,8 @@ __webpack_require__.r(__webpack_exports__);
 
       // How much a toolbar has been dragged from its initial position, in pixels
       shift: {
-        x: 0,
-        y: 0
+        x: this.moduleData.initialShift.x,
+        y: this.moduleData.initialShift.y
       }
     }
   },
@@ -11971,7 +11965,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
 
-    positionClass: function () {
+    componentClasses: function () {
       return this.isInLeftHalf ? 'alpheios-toolbar--left' : 'alpheios-toolbar--right'
     },
 
@@ -12007,6 +12001,11 @@ __webpack_require__.r(__webpack_exports__);
       }
       this.shift.x += dx
       this.shift.y += dy
+    },
+
+    dragEndListener () {
+      this.settings.contentOptions.items.toolbarShiftX.setValue(this.shift.x)
+      this.settings.contentOptions.items.toolbarShiftY.setValue(this.shift.y)
     }
   },
 
@@ -12018,9 +12017,10 @@ __webpack_require__.r(__webpack_exports__);
         restrict: {
           elementRect: { top: 0.5, left: 0.5, bottom: 0.5, right: 0.5 }
         },
-        ignoreFrom: 'input, textarea, a[href], select, option',
-        onmove: this.dragMoveListener
+        ignoreFrom: 'input, textarea, a[href], select, option'
       })
+      .on('dragmove', this.dragMoveListener)
+      .on('dragend', this.dragEndListener)
       .on('resizemove', this.resizeListener)
   }
 });
@@ -13298,6 +13298,7 @@ __webpack_require__.r(__webpack_exports__);
   // Custom props to store unwatch functions
   visibleUnwatch: null,
   lexrqStartedUnwatch: null,
+  positioningUnwatch: null,
 
   data: function () {
     return {
@@ -13323,13 +13324,20 @@ __webpack_require__.r(__webpack_exports__);
       resizeDelta: 20, // Changes in size below this value (in pixels) will be ignored to avoid minor dimension updates
       resizeCount: 0, // Should not exceed `resizeCountMax`
       resizeCountMax: 100, // Max number of resize iteration
+
+      // How much a popup has been dragged from its initial position, in pixels
+      shift: {
+        x: this.moduleData.initialShift.x || 0,
+        y: this.moduleData.initialShift.y || 0
+      },
+
       updateDimensionsTimeout: null,
 
       showProviders: false
     }
   },
   props: {
-    data: {
+    moduleData: {
       type: Object,
       required: true
     }
@@ -13341,13 +13349,14 @@ __webpack_require__.r(__webpack_exports__);
     })
   },
   computed: {
-    mainstyles: function () {
+    componentStyles: function () {
       return {
         left: this.positionLeftDm,
         top: this.positionTopDm,
         width: this.widthDm,
         height: this.heightDm,
-        zIndex: this.ui.zIndex
+        zIndex: this.ui.zIndex,
+        transform: `translate(${this.shift.x}px, ${this.shift.y}px)`
       }
     },
 
@@ -13367,8 +13376,8 @@ __webpack_require__.r(__webpack_exports__);
         return '0px'
       }
 
-      if (this.settings.contentOptions.items && this.settings.contentOptions.items.popupPosition.currentValue === 'fixed') {
-        return this.data.left
+      if (this.$store.getters['popup/isFixedPositioned']) {
+        return this.moduleData.left
       }
 
       let left = this.positionLeftValue
@@ -13380,17 +13389,17 @@ __webpack_require__.r(__webpack_exports__);
       if (this.widthDm !== 'auto') {
         // Popup is too wide and was restricted in height
         this.logger.log(`Setting position left for a set width`)
-        left = this.data.viewportMargin
-      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.data.viewportMargin &&
-          leftSide > this.data.viewportMargin) {
+        left = this.moduleData.viewportMargin
+      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.moduleData.viewportMargin &&
+          leftSide > this.moduleData.viewportMargin) {
         // We can center it with the target
         left = placementTargetX - Math.floor(this.exactWidth / 2)
-      } else if (leftSide > this.data.viewportMargin) {
+      } else if (leftSide > this.moduleData.viewportMargin) {
         // There is space at the left, move it there
-        left = viewportWidth - verticalScrollbarWidth - this.data.viewportMargin - this.exactWidth
-      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.data.viewportMargin) {
+        left = viewportWidth - verticalScrollbarWidth - this.moduleData.viewportMargin - this.exactWidth
+      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.moduleData.viewportMargin) {
         // There is space at the right, move it there
-        left = this.data.viewportMargin
+        left = this.moduleData.viewportMargin
       }
       return `${left}px`
     },
@@ -13401,8 +13410,8 @@ __webpack_require__.r(__webpack_exports__);
         return '0px'
       }
 
-      if (this.settings.contentOptions.items && this.settings.contentOptions.items.popupPosition.currentValue === 'fixed') {
-        return this.data.top
+      if (this.$store.getters['popup/isFixedPositioned']) {
+        return this.moduleData.top
       }
 
       let time = Date.now()
@@ -13414,19 +13423,19 @@ __webpack_require__.r(__webpack_exports__);
       if (this.heightDm !== 'auto') {
         // Popup is too wide and was restricted in height
         this.logger.log(`Setting position top for a set height`)
-        top = this.data.viewportMargin
-      } else if (placementTargetY + this.data.placementMargin + this.exactHeight < viewportHeight - this.data.viewportMargin - horizontalScrollbarWidth) {
+        top = this.moduleData.viewportMargin
+      } else if (placementTargetY + this.moduleData.placementMargin + this.exactHeight < viewportHeight - this.moduleData.viewportMargin - horizontalScrollbarWidth) {
         // Place it below a selection
-        top = placementTargetY + this.data.placementMargin
-      } else if (placementTargetY - this.data.placementMargin - this.exactHeight > this.data.viewportMargin) {
+        top = placementTargetY + this.moduleData.placementMargin
+      } else if (placementTargetY - this.moduleData.placementMargin - this.exactHeight > this.moduleData.viewportMargin) {
         // Place it above a selection
-        top = placementTargetY - this.data.placementMargin - this.exactHeight
+        top = placementTargetY - this.moduleData.placementMargin - this.exactHeight
       } else if (placementTargetY < viewportHeight - horizontalScrollbarWidth - placementTargetY) {
         // There is no space neither above nor below. Word is shifted to the top. Place a popup at the bottom.
-        top = viewportHeight - horizontalScrollbarWidth - this.data.viewportMargin - this.exactHeight
+        top = viewportHeight - horizontalScrollbarWidth - this.moduleData.viewportMargin - this.exactHeight
       } else if (placementTargetY > viewportHeight - horizontalScrollbarWidth - placementTargetY) {
         // There is no space neither above nor below. Word is shifted to the bottom. Place a popup at the top.
-        top = this.data.viewportMargin
+        top = this.moduleData.viewportMargin
       } else {
         // There is no space neither above nor below. Center it vertically.
         top = Math.round((viewportHeight - horizontalScrollbarWidth - this.exactHeight) / 2)
@@ -13443,7 +13452,7 @@ __webpack_require__.r(__webpack_exports__);
       set: function (newWidth) {
         let viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
         let verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth
-        let maxWidth = viewportWidth - 2 * this.data.viewportMargin - verticalScrollbarWidth
+        let maxWidth = viewportWidth - 2 * this.moduleData.viewportMargin - verticalScrollbarWidth
         if (newWidth >= maxWidth) {
           this.logger.log(`Popup is too wide, limiting its width to ${maxWidth}px`)
           this.widthValue = maxWidth
@@ -13466,7 +13475,7 @@ __webpack_require__.r(__webpack_exports__);
         /*
               let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
               let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
-              let maxHeight = viewportHeight - 2*this.data.viewportMargin - horizontalScrollbarWidth
+              let maxHeight = viewportHeight - 2*this.moduleData.viewportMargin - horizontalScrollbarWidth
               */
         if (newHeight >= this.maxHeight) {
           this.logger.log(`Popup is too tall, limiting its height to ${this.maxHeight}px`)
@@ -13481,7 +13490,7 @@ __webpack_require__.r(__webpack_exports__);
     maxHeight () {
       let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
       let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
-      return viewportHeight - 2 * this.data.viewportMargin - horizontalScrollbarWidth
+      return viewportHeight - 2 * this.moduleData.viewportMargin - horizontalScrollbarWidth
     },
 
     verboseMode () {
@@ -13526,16 +13535,15 @@ __webpack_require__.r(__webpack_exports__);
         restrict: {
           elementRect: { top: 0.5, left: 0.5, bottom: 0.5, right: 0.5 }
         },
-        ignoreFrom: 'input, textarea, a[href], select, option',
-        onmove: this.dragMoveListener
+        ignoreFrom: 'input, textarea, a[href], select, option'
       }
     },
 
     resizeListener (event) {
       if (this.resizable) {
         const target = event.target
-        let x = (parseFloat(target.getAttribute('data-x')) || 0)
-        let y = (parseFloat(target.getAttribute('data-y')) || 0)
+        let x = this.shift.x
+        let y = this.shift.y
 
         // update the element's style
         target.style.width = event.rect.width + 'px'
@@ -13547,14 +13555,13 @@ __webpack_require__.r(__webpack_exports__);
 
         target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
 
-        target.setAttribute('data-x', x)
-        target.setAttribute('data-y', y)
+        this.shift.x = x
+        this.shift.y = y
       }
     },
 
     dragMoveListener (event) {
       if (this.draggable) {
-        const target = event.target
         let dx = event.dx
         let dy = event.dy
 
@@ -13580,14 +13587,16 @@ __webpack_require__.r(__webpack_exports__);
           }
           dy = 0
         }
-        const x = (parseFloat(target.getAttribute('data-x')) || 0) + dx
-        const y = (parseFloat(target.getAttribute('data-y')) || 0) + dy
+        this.shift.x += dx
+        this.shift.y += dy
+      }
+    },
 
-        target.style.webkitTransform = `translate(${x}px, ${y}px)`
-        target.style.transform = `translate(${x}px, ${y}px)`
-
-        target.setAttribute('data-x', x)
-        target.setAttribute('data-y', y)
+    dragEndListener () {
+      if (this.$store.getters['popup/isFixedPositioned']) {
+        // Do not store shift values for flexible positioning as they will be erased after each lexical query
+        this.settings.contentOptions.items.popupShiftX.setValue(this.shift.x)
+        this.settings.contentOptions.items.popupShiftY.setValue(this.shift.y)
       }
     },
 
@@ -13640,11 +13649,10 @@ __webpack_require__.r(__webpack_exports__);
       this.heightValue = 0
       this.exactWidth = 0
       this.exactHeight = 0
-      if (this.$el) {
-        this.$el.style.webkitTransform = `translate(0px, $0px)`
-        this.$el.style.transform = `translate(0px, 0px)`
-        this.$el.setAttribute('data-x', '0')
-        this.$el.setAttribute('data-y', '0')
+      if (this.$store.getters['popup/isFlexPositioned']) {
+        // Reset positioning shift for a `flexible` position of popup only. For a `fixed` position we must retain it
+        // so that the popup will open at its last position.
+        this.shift = { x: 0, y: 0 }
       }
     },
 
@@ -13654,10 +13662,12 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   mounted () {
-    if (this.data && this.data.draggable && this.data.resizable) {
+    if (this.moduleData && this.moduleData.draggable && this.moduleData.resizable) {
       this.interactInstance = interactjs__WEBPACK_IMPORTED_MODULE_2___default()(this.$el)
         .resizable(this.resizableSettings())
         .draggable(this.draggableSettings())
+        .on('dragmove', this.dragMoveListener)
+        .on('dragend', this.dragEndListener)
         .on('resizemove', this.resizeListener)
     }
 
@@ -13677,12 +13687,24 @@ __webpack_require__.r(__webpack_exports__);
       this.resetPopupDimensions()
       this.showProviders = false
     })
+
+    this.$options.positioningUnwatch = this.$store.watch((state) => state.popup.positioning, () => {
+      if (this.$store.getters['popup/isFlexPositioned']) {
+        this.shift = { x: 0, y: 0 }
+      } else if (this.$store.getters['popup/isFixedPositioned']) {
+        this.shift = {
+          x: this.settings.contentOptions.items.popupShiftX.currentValue,
+          y: this.settings.contentOptions.items.popupShiftY.currentValue
+        }
+      }
+    })
   },
 
   beforeDestroy () {
     // Teardown the watch function
     this.$options.visibleUnwatch()
     this.$options.lexrqStartedUnwatch()
+    this.$options.positioningUnwatch()
   },
 
   updated () {
@@ -20240,7 +20262,7 @@ var render = function() {
         }
       ],
       staticClass: "alpheios-content alpheios-toolbar alpheios-toolbar--large",
-      class: _vm.positionClass,
+      class: _vm.componentClasses,
       style: _vm.componentStyles,
       attrs: { id: "alpheios-toolbar-inner" }
     },
@@ -22064,7 +22086,7 @@ var render = function() {
       ],
       ref: "popup",
       staticClass: "alpheios-popup alpheios-content",
-      style: _vm.mainstyles,
+      style: _vm.componentStyles,
       attrs: { id: "alpheios-popup-inner" }
     },
     [
@@ -22168,8 +22190,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.data,
-                  expression: "data"
+                  value: _vm.moduleData,
+                  expression: "moduleData"
                 }
               ],
               staticClass: "alpheios-popup__toolbar-buttons"
@@ -37917,7 +37939,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"d":"M6 18.71V14H1V1h18v13h-8.29L6 18.71zM2 13h5v3.29L10.29 13H18V2H2v11z"}})])
+            children.concat([_c('path',{attrs:{"stroke-width":"0","d":"M6 18.71V14H1V1h18v13h-8.29L6 18.71zM2 13h5v3.29L10.29 13H18V2H2v11z"}})])
           )
         }
       });
@@ -38117,7 +38139,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 25 21"}, attrs),
               ...rest,
             },
-            children.concat([_c('g',{attrs:{"fill":"none"}},[_c('rect',{attrs:{"ry":"2.901","height":"20","width":"24","y":".5","x":".5"}}),_c('path',{attrs:{"d":"M16.492 5.479v14.505M8.5 5.476v14.505M.993 15.458h23.005M.993 10.478h23.005M.993 5.498h23.005"}})])])
+            children.concat([_c('g',{attrs:{"fill":"none"}},[_c('rect',{attrs:{"ry":"2.901","height":"20","width":"24","y":".5","x":".5"}}),_c('path',{attrs:{"d":"M16.492 5.479v14.505M8.5 5.476v14.505M.993 15.458h23.005M.993 10.478h23.005M.993 5.498h23.005","stroke-width":".794"}})])])
           )
         }
       });
@@ -39524,6 +39546,25 @@ class UIController {
       resourceSettingChange: this.resourceSettingChange.bind(this)
     }
 
+    // Set options of modules before modules are created
+    if (this.hasModule('popup')) {
+      let popupOptions = this.modules.get('popup').options
+      popupOptions.positioning = this.contentOptions.items.popupPosition.currentValue
+      popupOptions.initialShift = {
+        x: this.contentOptions.items.popupShiftX.currentValue,
+        y: this.contentOptions.items.popupShiftY.currentValue
+      }
+    }
+
+    if (this.hasModule('toolbar')) {
+      let toolbarOptions = this.modules.get('toolbar').options
+      toolbarOptions.initialShift = {
+        x: this.contentOptions.items.toolbarShiftX.currentValue,
+        y: this.contentOptions.items.toolbarShiftY.currentValue
+      }
+    }
+
+    // Create all registered modules
     this.createModules()
 
     const currentLanguageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageIdFromCode(this.contentOptions.items.preferredLanguage.currentValue)
@@ -40214,6 +40255,9 @@ class UIController {
         break
       case 'enableLemmaTranslations':
         this.updateLemmaTranslations()
+        break
+      case 'popupPosition':
+        this.store.commit('popup/setPositioning', this.api.settings.contentOptions.items.popupPosition.currentValue)
         break
     }
   }
@@ -44673,7 +44717,7 @@ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___namespace =
 /*! exports provided: domain, items, default */
 /***/ (function(module) {
 
-module.exports = {"domain":"alpheios-content-options","items":{"enableLemmaTranslations":{"defaultValue":false,"labelText":"Experimental: Enable Latin Lemma Translations","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"locale":{"defaultValue":"en-US","labelText":"UI Locale:","values":[{"value":"en-US","text":"English (US)"},{"value":"fr","text":"French"},{"value":"de","text":"German"},{"value":"it","text":"Italian"},{"value":"pt","text":"Portuguese"},{"value":"es","text":"Spanish"},{"value":"ca","text":"Catalonian"}]},"enableWordUsageExamples":{"defaultValue":false,"labelText":"Experimental: Enable Latin Word Usage Examples (Concordance)","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"wordUsageExamplesON":{"defaultValue":"onDemand","labelText":"Get word usage examples:","values":[{"value":"onDemand","text":"On demand"},{"value":"onLexicalQuery","text":"On LexicalQuery"}],"hidden":true},"wordUsageExamplesAuthMax":{"defaultValue":3,"labelText":"Word Usage Examples - max results per author","number":true,"minValue":1,"maxValue":1000,"values":[]},"wordUsageExamplesMax":{"defaultValue":500,"labelText":"Word Usage Examples - max results for single author request","number":true,"minValue":1,"maxValue":1000,"values":[]},"panelPosition":{"defaultValue":"left","labelText":"Panel position:","values":[{"value":"left","text":"Left"},{"value":"right","text":"Right"}]},"popupPosition":{"defaultValue":"fixed","labelText":"Popup position:","values":[{"value":"flexible","text":"Flexible"},{"value":"fixed","text":"Fixed"}]},"uiType":{"defaultValue":"popup","labelText":"UI type:","values":[{"value":"popup","text":"Pop-up"},{"value":"panel","text":"Panel"}]},"preferredLanguage":{"defaultValue":"lat","labelText":"Page language:","values":[{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"lookupLanguage":{"defaultValue":"default","labelText":"Change language:","values":[{"value":"default","text":"Default"},{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"verboseMode":{"defaultValue":"normal","labelText":"Log Level","values":[{"value":"verbose","text":"Verbose"},{"value":"normal","text":"Normal"}]}}};
+module.exports = {"domain":"alpheios-content-options","items":{"enableLemmaTranslations":{"defaultValue":false,"labelText":"Experimental: Enable Latin Lemma Translations","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"locale":{"defaultValue":"en-US","labelText":"UI Locale:","values":[{"value":"en-US","text":"English (US)"},{"value":"fr","text":"French"},{"value":"de","text":"German"},{"value":"it","text":"Italian"},{"value":"pt","text":"Portuguese"},{"value":"es","text":"Spanish"},{"value":"ca","text":"Catalonian"}]},"enableWordUsageExamples":{"defaultValue":false,"labelText":"Experimental: Enable Latin Word Usage Examples (Concordance)","boolean":true,"values":[{"value":true,"text":"Yes"},{"value":false,"text":"No"}]},"wordUsageExamplesON":{"defaultValue":"onDemand","labelText":"Get word usage examples:","values":[{"value":"onDemand","text":"On demand"},{"value":"onLexicalQuery","text":"On LexicalQuery"}],"hidden":true},"wordUsageExamplesAuthMax":{"defaultValue":3,"labelText":"Word Usage Examples - max results per author","number":true,"minValue":1,"maxValue":1000,"values":[]},"wordUsageExamplesMax":{"defaultValue":500,"labelText":"Word Usage Examples - max results for single author request","number":true,"minValue":1,"maxValue":1000,"values":[]},"panelPosition":{"defaultValue":"left","labelText":"Panel position:","values":[{"value":"left","text":"Left"},{"value":"right","text":"Right"}]},"popupPosition":{"defaultValue":"fixed","labelText":"Popup position:","values":[{"value":"flexible","text":"Flexible"},{"value":"fixed","text":"Fixed"}]},"popupShiftX":{"defaultValue":0,"labelText":"Popup shift, x axe:","number":true,"values":[]},"popupShiftY":{"defaultValue":0,"labelText":"Popup shift, y axe:","number":true,"values":[]},"toolbarShiftX":{"defaultValue":0,"labelText":"Toolbar shift, x axe:","number":true,"values":[]},"toolbarShiftY":{"defaultValue":0,"labelText":"Toolbar shift, y axe:","number":true,"values":[]},"uiType":{"defaultValue":"popup","labelText":"UI type:","values":[{"value":"popup","text":"Pop-up"},{"value":"panel","text":"Panel"}]},"preferredLanguage":{"defaultValue":"lat","labelText":"Page language:","values":[{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"lookupLanguage":{"defaultValue":"default","labelText":"Change language:","values":[{"value":"default","text":"Default"},{"value":"lat","text":"Latin"},{"value":"grc","text":"Greek"},{"value":"ara","text":"Arabic"},{"value":"per","text":"Persian"},{"value":"gez","text":"Ancient Ethiopic (Ge'ez - Experimental)"}]},"verboseMode":{"defaultValue":"normal","labelText":"Log Level","values":[{"value":"verbose","text":"Verbose"},{"value":"normal","text":"Normal"}]}}};
 
 /***/ }),
 
@@ -44728,7 +44772,7 @@ module.exports = {"domain":"alpheios-ui-options","items":{"skin":{"defaultValue"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n  <component v-bind:is=\"uiComponentName\" :data=\"moduleData\"></component>\r\n</div>\r\n<div id=\"alpheios-panel\">\r\n  <component v-bind:is=\"$store.state.panel.layout\"></component>\r\n</div>\r\n<div id=\"alpheios-toolbar\">\r\n  <component v-bind:is=\"$store.state.toolbar.layout\"></component>\r\n</div>\r\n";
+module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n  <component v-bind:is=\"uiComponentName\" :module-data=\"moduleData\"></component>\r\n</div>\r\n<div id=\"alpheios-panel\">\r\n  <component v-bind:is=\"$store.state.panel.layout\"></component>\r\n</div>\r\n<div id=\"alpheios-toolbar\">\r\n  <component v-bind:is=\"$store.state.toolbar.layout\" :module-data=\"moduleData\"></component>\r\n</div>\r\n";
 
 /***/ }),
 
@@ -48992,7 +49036,7 @@ class PopupModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1
   constructor (store, api, config) {
     super(store, api, config)
 
-    store.registerModule(this.constructor.moduleName, this.constructor.store())
+    store.registerModule(this.constructor.moduleName, this.constructor.store(this))
 
     this._vi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       el: this.config.mountPoint,
@@ -49029,7 +49073,9 @@ class PopupModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1
           // A margin between a popup and a selection
           placementMargin: 15,
           // A minimal margin between a popup and a viewport border, in pixels. In effect when popup is scaled down.
-          viewportMargin: 5
+          viewportMargin: 5,
+
+          initialShift: this.config.initialShift
         },
         uiComponentName: this.config.popupComponent
       }
@@ -49037,15 +49083,23 @@ class PopupModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1
   }
 }
 
-PopupModule.store = () => {
+PopupModule.store = (moduleInstance) => {
   return {
     // All stores of modules are namespaced
     namespaced: true,
 
     state: {
       // Whether a popup is displayed
-      visible: false
+      visible: false,
+
+      positioning: moduleInstance.config.positioning
     },
+
+    getters: {
+      isFlexPositioned: state => state.positioning === 'flexible',
+      isFixedPositioned: state => state.positioning === 'fixed'
+    },
+
     mutations: {
       /**
        * Opens a panel
@@ -49061,6 +49115,15 @@ PopupModule.store = () => {
        */
       close (state) {
         state.visible = false
+      },
+
+      /**
+       * Changes a positioning schema of a popup
+       * @param state
+       * @param {string} positioning - A positioning rule for a popup, see defaults for details.
+       */
+      setPositioning (state, positioning) {
+        state.positioning = positioning
       }
     }
   }
@@ -49081,7 +49144,18 @@ PopupModule._configDefaults = {
 
   // Whether a popup can be dragged and resized
   draggable: true,
-  resizable: true
+  resizable: true,
+
+  // How the popup is positioned:
+  //     `fixed`: will remember its last position;
+  //     `flexible`: will try to adapt its position to appear near the selected word (experimental)
+  positioning: 'fixed',
+
+  // How much a popup is shifted from its initial position.
+  initialShift: {
+    x: 0,
+    y: 0
+  }
 }
 
 
@@ -49128,6 +49202,11 @@ class ToolbarModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE
       components: {
         toolbarCompact: _vue_components_nav_toolbar_compact_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
         toolbarLarge: _vue_components_nav_toolbar_large_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+      },
+      data: {
+        moduleData: {
+          initialShift: this.config.initialShift
+        }
       }
     })
   }
@@ -49191,6 +49270,11 @@ ToolbarModule._configDefaults = {
   initialPos: {
     top: 10,
     right: 15
+  },
+  // How much a toolbar is shifted from its initial position.
+  initialShift: {
+    x: 0,
+    y: 0
   }
 }
 

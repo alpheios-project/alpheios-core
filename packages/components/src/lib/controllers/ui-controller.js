@@ -688,6 +688,25 @@ export default class UIController {
       resourceSettingChange: this.resourceSettingChange.bind(this)
     }
 
+    // Set options of modules before modules are created
+    if (this.hasModule('popup')) {
+      let popupOptions = this.modules.get('popup').options
+      popupOptions.positioning = this.contentOptions.items.popupPosition.currentValue
+      popupOptions.initialShift = {
+        x: this.contentOptions.items.popupShiftX.currentValue,
+        y: this.contentOptions.items.popupShiftY.currentValue
+      }
+    }
+
+    if (this.hasModule('toolbar')) {
+      let toolbarOptions = this.modules.get('toolbar').options
+      toolbarOptions.initialShift = {
+        x: this.contentOptions.items.toolbarShiftX.currentValue,
+        y: this.contentOptions.items.toolbarShiftY.currentValue
+      }
+    }
+
+    // Create all registered modules
     this.createModules()
 
     const currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(this.contentOptions.items.preferredLanguage.currentValue)
@@ -1378,6 +1397,9 @@ export default class UIController {
         break
       case 'enableLemmaTranslations':
         this.updateLemmaTranslations()
+        break
+      case 'popupPosition':
+        this.store.commit('popup/setPositioning', this.api.settings.contentOptions.items.popupPosition.currentValue)
         break
     }
   }

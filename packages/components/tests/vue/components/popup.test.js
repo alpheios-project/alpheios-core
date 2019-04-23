@@ -111,6 +111,9 @@ describe('popup.test.js', () => {
   it('1 Popup - renders a vue instance (min requirements)', () => {
     let cmp = shallowMount(Popup, {
       propsData: {
+        moduleData: {
+          initialShift: { x: 0, y: 0 }
+        },
         messages: [],
         lexemes: [],
         definitions: {},
@@ -121,6 +124,9 @@ describe('popup.test.js', () => {
       store,
       localVue,
       mocks: api
+    })
+    cmp.setData({
+      shift: { x: 0, y: 0 }
     })
     expect(cmp.isVueInstance()).toBeTruthy()
   })

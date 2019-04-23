@@ -2,7 +2,7 @@
   <div
       id="alpheios-toolbar-inner"
       class="alpheios-content alpheios-toolbar alpheios-toolbar--large"
-      :class="positionClass"
+      :class="componentClasses"
       :style="componentStyles"
       v-show="$store.state.toolbar.visible"
   >
@@ -151,17 +151,13 @@ import interact from 'interactjs'
 import Tooltip from '@/vue/components/tooltip.vue'
 // Embeddable SVG icons
 import LogoIcon from '@/images/alpheios/logo.svg'
-import DefinitionsIcon from '@/images/inline-icons/definitions.svg'
-import InflectionsIcon from '@/images/inline-icons/inflections.svg'
 import InflectionsBrowserIcon from '@/images/inline-icons/inflections-browser.svg'
 import StatusIcon from '@/images/inline-icons/status.svg'
 import UserIcon from '@/images/inline-icons/user.svg'
 import OptionsIcon from '@/images/inline-icons/options.svg'
 import GrammarIcon from '@/images/inline-icons/resources.svg'
-import TreebankIcon from '@/images/inline-icons/sitemap.svg'
 import InfoIcon from '@/images/inline-icons/info.svg'
 import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
-import WordUsageIcon from '@/images/inline-icons/usage-examples-icon1.svg'
 import CollapsedIcon from '@/images/inline-icons/collapsed.svg'
 import ExpandedIcon from '@/images/inline-icons/expanded.svg'
 import LookupIcon from '@/images/inline-icons/lookup.svg'
@@ -187,16 +183,12 @@ export default {
     lookup: Lookup,
     alphTooltip: Tooltip,
     logoIcon: LogoIcon,
-    definitionsIcon: DefinitionsIcon,
-    inflectionsIcon: InflectionsIcon,
     inflectionsBrowserIcon: InflectionsBrowserIcon,
     statusIcon: StatusIcon,
     userIcon: UserIcon,
     optionsIcon: OptionsIcon,
     infoIcon: InfoIcon,
     grammarIcon: GrammarIcon,
-    treebankIcon: TreebankIcon,
-    wordUsageIcon: WordUsageIcon,
     wordlistIcon: WordlistIcon,
     collapsedIcon: CollapsedIcon,
     expandedIcon: ExpandedIcon,
@@ -207,6 +199,12 @@ export default {
   // Whether there is an error with Interact.js drag coordinates in the corresponding direction
   dragErrorX: false,
   dragErrorY: false,
+  props: {
+    moduleData: {
+      type: Object,
+      required: true
+    }
+  },
 
   data: function () {
     return {
@@ -215,8 +213,8 @@ export default {
 
       // How much a toolbar has been dragged from its initial position, in pixels
       shift: {
-        x: 0,
-        y: 0
+        x: this.moduleData.initialShift.x,
+        y: this.moduleData.initialShift.y
       }
     }
   },
@@ -255,7 +253,7 @@ export default {
       }
     },
 
-    positionClass: function () {
+    componentClasses: function () {
       return this.isInLeftHalf ? 'alpheios-toolbar--left' : 'alpheios-toolbar--right'
     },
 
@@ -291,6 +289,11 @@ export default {
       }
       this.shift.x += dx
       this.shift.y += dy
+    },
+
+    dragEndListener () {
+      this.settings.contentOptions.items.toolbarShiftX.setValue(this.shift.x)
+      this.settings.contentOptions.items.toolbarShiftY.setValue(this.shift.y)
     }
   },
 
@@ -302,9 +305,10 @@ export default {
         restrict: {
           elementRect: { top: 0.5, left: 0.5, bottom: 0.5, right: 0.5 }
         },
-        ignoreFrom: 'input, textarea, a[href], select, option',
-        onmove: this.dragMoveListener
+        ignoreFrom: 'input, textarea, a[href], select, option'
       })
+      .on('dragmove', this.dragMoveListener)
+      .on('dragend', this.dragEndListener)
       .on('resizemove', this.resizeListener)
   }
 }

@@ -8,7 +8,7 @@ export default class PopupModule extends Module {
   constructor (store, api, config) {
     super(store, api, config)
 
-    store.registerModule(this.constructor.moduleName, this.constructor.store())
+    store.registerModule(this.constructor.moduleName, this.constructor.store(this))
 
     this._vi = new Vue({
       el: this.config.mountPoint,
@@ -45,7 +45,9 @@ export default class PopupModule extends Module {
           // A margin between a popup and a selection
           placementMargin: 15,
           // A minimal margin between a popup and a viewport border, in pixels. In effect when popup is scaled down.
-          viewportMargin: 5
+          viewportMargin: 5,
+
+          initialShift: this.config.initialShift
         },
         uiComponentName: this.config.popupComponent
       }
@@ -53,15 +55,23 @@ export default class PopupModule extends Module {
   }
 }
 
-PopupModule.store = () => {
+PopupModule.store = (moduleInstance) => {
   return {
     // All stores of modules are namespaced
     namespaced: true,
 
     state: {
       // Whether a popup is displayed
-      visible: false
+      visible: false,
+
+      positioning: moduleInstance.config.positioning
     },
+
+    getters: {
+      isFlexPositioned: state => state.positioning === 'flexible',
+      isFixedPositioned: state => state.positioning === 'fixed'
+    },
+
     mutations: {
       /**
        * Opens a panel
@@ -77,6 +87,15 @@ PopupModule.store = () => {
        */
       close (state) {
         state.visible = false
+      },
+
+      /**
+       * Changes a positioning schema of a popup
+       * @param state
+       * @param {string} positioning - A positioning rule for a popup, see defaults for details.
+       */
+      setPositioning (state, positioning) {
+        state.positioning = positioning
       }
     }
   }
@@ -97,5 +116,16 @@ PopupModule._configDefaults = {
 
   // Whether a popup can be dragged and resized
   draggable: true,
-  resizable: true
+  resizable: true,
+
+  // How the popup is positioned:
+  //     `fixed`: will remember its last position;
+  //     `flexible`: will try to adapt its position to appear near the selected word (experimental)
+  positioning: 'fixed',
+
+  // How much a popup is shifted from its initial position.
+  initialShift: {
+    x: 0,
+    y: 0
+  }
 }

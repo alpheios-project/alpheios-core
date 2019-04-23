@@ -1,6 +1,6 @@
 <template>
   <div
-     :style="mainstyles"
+     :style="componentStyles"
      class="alpheios-popup alpheios-content"
      id="alpheios-popup-inner"
      ref="popup"
@@ -43,7 +43,7 @@
           </span>
         </div>
 
-        <div class="alpheios-popup__toolbar-buttons" v-show="data">
+        <div class="alpheios-popup__toolbar-buttons" v-show="moduleData">
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
                         v-show="$store.getters['app/defDataReady']">
             <button @click="ui.showPanelTab('definitions')"
@@ -164,6 +164,7 @@ export default {
   // Custom props to store unwatch functions
   visibleUnwatch: null,
   lexrqStartedUnwatch: null,
+  positioningUnwatch: null,
 
   data: function () {
     return {
@@ -189,13 +190,20 @@ export default {
       resizeDelta: 20, // Changes in size below this value (in pixels) will be ignored to avoid minor dimension updates
       resizeCount: 0, // Should not exceed `resizeCountMax`
       resizeCountMax: 100, // Max number of resize iteration
+
+      // How much a popup has been dragged from its initial position, in pixels
+      shift: {
+        x: this.moduleData.initialShift.x || 0,
+        y: this.moduleData.initialShift.y || 0
+      },
+
       updateDimensionsTimeout: null,
 
       showProviders: false
     }
   },
   props: {
-    data: {
+    moduleData: {
       type: Object,
       required: true
     }
@@ -207,13 +215,14 @@ export default {
     })
   },
   computed: {
-    mainstyles: function () {
+    componentStyles: function () {
       return {
         left: this.positionLeftDm,
         top: this.positionTopDm,
         width: this.widthDm,
         height: this.heightDm,
-        zIndex: this.ui.zIndex
+        zIndex: this.ui.zIndex,
+        transform: `translate(${this.shift.x}px, ${this.shift.y}px)`
       }
     },
 
@@ -233,8 +242,8 @@ export default {
         return '0px'
       }
 
-      if (this.settings.contentOptions.items && this.settings.contentOptions.items.popupPosition.currentValue === 'fixed') {
-        return this.data.left
+      if (this.$store.getters['popup/isFixedPositioned']) {
+        return this.moduleData.left
       }
 
       let left = this.positionLeftValue
@@ -246,17 +255,17 @@ export default {
       if (this.widthDm !== 'auto') {
         // Popup is too wide and was restricted in height
         this.logger.log(`Setting position left for a set width`)
-        left = this.data.viewportMargin
-      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.data.viewportMargin &&
-          leftSide > this.data.viewportMargin) {
+        left = this.moduleData.viewportMargin
+      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.moduleData.viewportMargin &&
+          leftSide > this.moduleData.viewportMargin) {
         // We can center it with the target
         left = placementTargetX - Math.floor(this.exactWidth / 2)
-      } else if (leftSide > this.data.viewportMargin) {
+      } else if (leftSide > this.moduleData.viewportMargin) {
         // There is space at the left, move it there
-        left = viewportWidth - verticalScrollbarWidth - this.data.viewportMargin - this.exactWidth
-      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.data.viewportMargin) {
+        left = viewportWidth - verticalScrollbarWidth - this.moduleData.viewportMargin - this.exactWidth
+      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.moduleData.viewportMargin) {
         // There is space at the right, move it there
-        left = this.data.viewportMargin
+        left = this.moduleData.viewportMargin
       }
       return `${left}px`
     },
@@ -267,8 +276,8 @@ export default {
         return '0px'
       }
 
-      if (this.settings.contentOptions.items && this.settings.contentOptions.items.popupPosition.currentValue === 'fixed') {
-        return this.data.top
+      if (this.$store.getters['popup/isFixedPositioned']) {
+        return this.moduleData.top
       }
 
       let time = Date.now()
@@ -280,19 +289,19 @@ export default {
       if (this.heightDm !== 'auto') {
         // Popup is too wide and was restricted in height
         this.logger.log(`Setting position top for a set height`)
-        top = this.data.viewportMargin
-      } else if (placementTargetY + this.data.placementMargin + this.exactHeight < viewportHeight - this.data.viewportMargin - horizontalScrollbarWidth) {
+        top = this.moduleData.viewportMargin
+      } else if (placementTargetY + this.moduleData.placementMargin + this.exactHeight < viewportHeight - this.moduleData.viewportMargin - horizontalScrollbarWidth) {
         // Place it below a selection
-        top = placementTargetY + this.data.placementMargin
-      } else if (placementTargetY - this.data.placementMargin - this.exactHeight > this.data.viewportMargin) {
+        top = placementTargetY + this.moduleData.placementMargin
+      } else if (placementTargetY - this.moduleData.placementMargin - this.exactHeight > this.moduleData.viewportMargin) {
         // Place it above a selection
-        top = placementTargetY - this.data.placementMargin - this.exactHeight
+        top = placementTargetY - this.moduleData.placementMargin - this.exactHeight
       } else if (placementTargetY < viewportHeight - horizontalScrollbarWidth - placementTargetY) {
         // There is no space neither above nor below. Word is shifted to the top. Place a popup at the bottom.
-        top = viewportHeight - horizontalScrollbarWidth - this.data.viewportMargin - this.exactHeight
+        top = viewportHeight - horizontalScrollbarWidth - this.moduleData.viewportMargin - this.exactHeight
       } else if (placementTargetY > viewportHeight - horizontalScrollbarWidth - placementTargetY) {
         // There is no space neither above nor below. Word is shifted to the bottom. Place a popup at the top.
-        top = this.data.viewportMargin
+        top = this.moduleData.viewportMargin
       } else {
         // There is no space neither above nor below. Center it vertically.
         top = Math.round((viewportHeight - horizontalScrollbarWidth - this.exactHeight) / 2)
@@ -309,7 +318,7 @@ export default {
       set: function (newWidth) {
         let viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
         let verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth
-        let maxWidth = viewportWidth - 2 * this.data.viewportMargin - verticalScrollbarWidth
+        let maxWidth = viewportWidth - 2 * this.moduleData.viewportMargin - verticalScrollbarWidth
         if (newWidth >= maxWidth) {
           this.logger.log(`Popup is too wide, limiting its width to ${maxWidth}px`)
           this.widthValue = maxWidth
@@ -332,7 +341,7 @@ export default {
         /*
               let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
               let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
-              let maxHeight = viewportHeight - 2*this.data.viewportMargin - horizontalScrollbarWidth
+              let maxHeight = viewportHeight - 2*this.moduleData.viewportMargin - horizontalScrollbarWidth
               */
         if (newHeight >= this.maxHeight) {
           this.logger.log(`Popup is too tall, limiting its height to ${this.maxHeight}px`)
@@ -347,7 +356,7 @@ export default {
     maxHeight () {
       let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
       let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
-      return viewportHeight - 2 * this.data.viewportMargin - horizontalScrollbarWidth
+      return viewportHeight - 2 * this.moduleData.viewportMargin - horizontalScrollbarWidth
     },
 
     verboseMode () {
@@ -392,16 +401,15 @@ export default {
         restrict: {
           elementRect: { top: 0.5, left: 0.5, bottom: 0.5, right: 0.5 }
         },
-        ignoreFrom: 'input, textarea, a[href], select, option',
-        onmove: this.dragMoveListener
+        ignoreFrom: 'input, textarea, a[href], select, option'
       }
     },
 
     resizeListener (event) {
       if (this.resizable) {
         const target = event.target
-        let x = (parseFloat(target.getAttribute('data-x')) || 0)
-        let y = (parseFloat(target.getAttribute('data-y')) || 0)
+        let x = this.shift.x
+        let y = this.shift.y
 
         // update the element's style
         target.style.width = event.rect.width + 'px'
@@ -413,14 +421,13 @@ export default {
 
         target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
 
-        target.setAttribute('data-x', x)
-        target.setAttribute('data-y', y)
+        this.shift.x = x
+        this.shift.y = y
       }
     },
 
     dragMoveListener (event) {
       if (this.draggable) {
-        const target = event.target
         let dx = event.dx
         let dy = event.dy
 
@@ -446,14 +453,16 @@ export default {
           }
           dy = 0
         }
-        const x = (parseFloat(target.getAttribute('data-x')) || 0) + dx
-        const y = (parseFloat(target.getAttribute('data-y')) || 0) + dy
+        this.shift.x += dx
+        this.shift.y += dy
+      }
+    },
 
-        target.style.webkitTransform = `translate(${x}px, ${y}px)`
-        target.style.transform = `translate(${x}px, ${y}px)`
-
-        target.setAttribute('data-x', x)
-        target.setAttribute('data-y', y)
+    dragEndListener () {
+      if (this.$store.getters['popup/isFixedPositioned']) {
+        // Do not store shift values for flexible positioning as they will be erased after each lexical query
+        this.settings.contentOptions.items.popupShiftX.setValue(this.shift.x)
+        this.settings.contentOptions.items.popupShiftY.setValue(this.shift.y)
       }
     },
 
@@ -506,11 +515,10 @@ export default {
       this.heightValue = 0
       this.exactWidth = 0
       this.exactHeight = 0
-      if (this.$el) {
-        this.$el.style.webkitTransform = `translate(0px, $0px)`
-        this.$el.style.transform = `translate(0px, 0px)`
-        this.$el.setAttribute('data-x', '0')
-        this.$el.setAttribute('data-y', '0')
+      if (this.$store.getters['popup/isFlexPositioned']) {
+        // Reset positioning shift for a `flexible` position of popup only. For a `fixed` position we must retain it
+        // so that the popup will open at its last position.
+        this.shift = { x: 0, y: 0 }
       }
     },
 
@@ -520,10 +528,12 @@ export default {
   },
 
   mounted () {
-    if (this.data && this.data.draggable && this.data.resizable) {
+    if (this.moduleData && this.moduleData.draggable && this.moduleData.resizable) {
       this.interactInstance = interact(this.$el)
         .resizable(this.resizableSettings())
         .draggable(this.draggableSettings())
+        .on('dragmove', this.dragMoveListener)
+        .on('dragend', this.dragEndListener)
         .on('resizemove', this.resizeListener)
     }
 
@@ -543,12 +553,24 @@ export default {
       this.resetPopupDimensions()
       this.showProviders = false
     })
+
+    this.$options.positioningUnwatch = this.$store.watch((state) => state.popup.positioning, () => {
+      if (this.$store.getters['popup/isFlexPositioned']) {
+        this.shift = { x: 0, y: 0 }
+      } else if (this.$store.getters['popup/isFixedPositioned']) {
+        this.shift = {
+          x: this.settings.contentOptions.items.popupShiftX.currentValue,
+          y: this.settings.contentOptions.items.popupShiftY.currentValue
+        }
+      }
+    })
   },
 
   beforeDestroy () {
     // Teardown the watch function
     this.$options.visibleUnwatch()
     this.$options.lexrqStartedUnwatch()
+    this.$options.positioningUnwatch()
   },
 
   updated () {

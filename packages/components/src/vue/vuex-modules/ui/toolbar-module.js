@@ -23,6 +23,11 @@ export default class ToolbarModule extends Module {
       components: {
         toolbarCompact: ToolbarCompact,
         toolbarLarge: ToolbarLarge
+      },
+      data: {
+        moduleData: {
+          initialShift: this.config.initialShift
+        }
       }
     })
   }
@@ -86,5 +91,10 @@ ToolbarModule._configDefaults = {
   initialPos: {
     top: 10,
     right: 15
+  },
+  // How much a toolbar is shifted from its initial position.
+  initialShift: {
+    x: 0,
+    y: 0
   }
 }
