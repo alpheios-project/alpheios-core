@@ -101,7 +101,7 @@ export default {
     align-items: stretch;
     flex: 0 0 auto;
     background: var(--alpheios-color-neutral-lightest);
-    padding: 0 uisize(16px);
+    padding: uisize(16px) uisize(16px) 0;
 
     &__notification {
       display: flex;

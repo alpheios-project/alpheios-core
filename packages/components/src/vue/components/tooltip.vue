@@ -211,7 +211,7 @@ export default {
     border-color: transparent transparent var(--alpheios-border-color) transparent;
   }
 
-  .alpheios-panel-right {
+  .alpheios-panel--right {
     .alph_tooltip-bottom-right {
       top: 135%;
       right: auto;

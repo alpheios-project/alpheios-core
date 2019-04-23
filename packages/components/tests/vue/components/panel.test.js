@@ -62,8 +62,10 @@ describe('panel.test.js', () => {
     store = new Vuex.Store({
       modules: {
         panel: {
+          namespaced: true,
           state: {
-            visible: false
+            visible: false,
+            position: 'left'
           },
           actions: {},
           getters: {}
@@ -161,7 +163,6 @@ describe('panel.test.js', () => {
     expect(cmp.isVueInstance()).toBeTruthy()
     expect(cmp.vm.attachToLeftVisible).toBeFalsy()
     expect(cmp.vm.attachToRightVisible).toBeTruthy()
-    expect(cmp.vm.panelPosition).toBe('left')
   })
 
   it.skip('2 Panel - render with children components (min requirements)', () => {

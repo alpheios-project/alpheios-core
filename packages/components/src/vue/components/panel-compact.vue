@@ -1,10 +1,12 @@
 <template>
-  <div class="alpheios-panel alpheios-panel--compact alpheios-content"
-       :style="mainstyles"
-       data-component="alpheios-panel"
-       data-resizable="true"
-       id="alpheios-panel-inner"
-       v-show="$store.state.panel.visible"
+  <div
+      :class="rootClasses"
+      class="alpheios-panel alpheios-panel--compact alpheios-content"
+      :style="mainstyles"
+      data-component="alpheios-panel"
+      data-resizable="true"
+      id="alpheios-panel-inner"
+      v-show="$store.state.panel.visible"
   >
 
     <div class="alpheios-panel__header" >
@@ -29,7 +31,7 @@
       <drop-down-menu :visibility="menuVisible"/>
 
       <div
-          class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw"
+          class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding"
           v-show="$store.getters['ui/isActiveTab']('morphology')">
 
         <div :id="'alpheios-panel-lexical-data-container'" class="alpheios-popup__morph-cont alpheios-text-small alpheios-popup__morph-cont-ready"
@@ -46,7 +48,7 @@
       </div>
 
       <div
-          class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions"
+          class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__definitions"
           v-show="$store.getters['ui/isActiveTab']('definitions')"
           data-alpheios-ignore="all"
       >
@@ -105,14 +107,14 @@
       </div>
 
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__grammar
-            alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
+            alpheios-panel__tab-panel--no-padding"
             data-alpheios-ignore="all"
            v-show="$store.getters['ui/isActiveTab']('grammar')">
         <grammar></grammar>
       </div>
 
       <div
-          class="alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
+          class="alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding"
           v-if="$store.getters['app/hasTreebankData']" v-show="$store.getters['ui/isActiveTab']('treebank')"
           data-alpheios-ignore="all">
         <!-- TODO: Instead of this we need to create a universal mechanism for handling panel resizing for every tab's content change -->
@@ -134,13 +136,13 @@
       </div>
 
       <div
-          class="alpheios-panel__tab-panel alpheios-panel__tab__word-usage"
+          class="alpheios-panel__tab-panel"
           v-show="$store.getters['ui/isActiveTab']('wordUsage')"
         >
         <word-usage-examples/>
       </div>
 
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__options"
+      <div class="alpheios-panel__tab-panel"
            v-show="$store.getters['ui/isActiveTab']('options')"
            data-alpheios-ignore="all"
       >
@@ -277,7 +279,7 @@
         <info></info>
       </div>
 
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist alpheios-panel__tab-panel--fw"
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist"
            v-show="$store.getters['ui/isActiveTab']('wordlist')"
            data-alpheios-ignore="all"
       >
@@ -292,7 +294,8 @@
 /*
   This is a mobile version of a panel
    */
-
+// Support libraries
+import HTMLPage from '@/lib/utility/html-page.js'
 // Vue components
 import DropDownMenu from '@/vue/components/nav/drop-down-menu.vue'
 import NavbuttonsCompact from '@/vue/components/nav/navbuttons-compact.vue'
@@ -367,7 +370,6 @@ export default {
       menuVisible: false,
       inflectionsPanelID: 'alpheios-panel__inflections-panel',
       inflectionsBrowserPanelID: 'alpheios-panel__inflections-browser-panel',
-      panelPosition: 'left',
       panelLeftPadding: 0,
       panelRightPadding: 0,
       scrollPadding: 0,
@@ -375,7 +377,24 @@ export default {
     }
   },
 
+  // `positionClassVariants` is a custom property. This is to prent Vue from attaching reactivity to it.
+  positionClassVariants: {
+    left: 'alpheios-panel--left',
+    right: 'alpheios-panel--right'
+  },
+
   computed: {
+    rootClasses () {
+      /*
+      Position classes are needed for landscape orientations only as only those
+      can have compact panel attached to either left or right.
+      For portrait-oriented screens a compact panel will occupy full width.
+       */
+      return (this.$store.state.panel.orientation === HTMLPage.orientations.LANDSCAPE)
+        ? this.$options.positionClassVariants[this.$store.state.panel.position]
+        : ''
+    },
+
     mainstyles: function () {
       this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth
       return {
@@ -396,14 +415,6 @@ export default {
       return this.settings.resourceOptions.items && this.settings.resourceOptions.items.lexiconsShort
         ? this.settings.resourceOptions.items.lexiconsShort.filter(item => item.values.length > 0)
         : []
-    },
-
-    attachToLeftVisible: function () {
-      return this.panelPosition === 'right'
-    },
-
-    attachToRightVisible: function () {
-      return this.panelPosition === 'left'
     },
 
     additionalStylesTootipCloseIcon: function () {
@@ -451,7 +462,7 @@ export default {
 
     setPosition (position) {
       this.settings.contentOptions.items.panelPosition.setValue(position)
-      this.panelPosition = position
+      this.$store.commit('panel/setPosition', position)
     },
 
     contentOptionChanged: function (name, value) {
@@ -652,7 +663,7 @@ export default {
     box-sizing: border-box;
     display: flex;
     flex-flow: wrap;
-    align-items: flex-start;
+    align-items: stretch;
     // Need to set element as an offset parent for panel content items
     position: relative;
     background: var(--alpheios-color-neutral-lightest);
@@ -673,10 +684,8 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 20px;
-  }
-
-  .alpheios-panel__tab-panel--fw {
-    width: 100%;
+    flex: 1 1 auto;
+    box-sizing: border-box;
   }
 
   .alpheios-panel__tab-panel--no-padding {
@@ -717,11 +726,6 @@ export default {
     align-items: stretch;
   }
 
-  .alpheios-panel__tab__options {
-    width: 100%;
-    max-width: uisize(600px);
-  }
-
   .alpheios-panel__options-item {
     margin-bottom: textsize(10px);
     display: flex;
@@ -752,7 +756,22 @@ export default {
     width: 100%;
     left: 0;
     bottom: 0;
-    border-top: 1px solid var(--alpheios-border-color);
+
+    &.alpheios-panel--left {
+      height: 100vh;
+      width: 50vw;
+      top: 0;
+      bottom: auto;
+    }
+
+    &.alpheios-panel--right {
+      height: 100vh;
+      width: 50vw;
+      right: 0;
+      left: auto;
+      top: 0;
+      bottom: auto;
+    }
 
     & .alpheios-panel__content {
       overflow: auto;

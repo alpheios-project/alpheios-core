@@ -49,13 +49,13 @@ export default class Module {
 
   /**
    * Checks whether a specified platform is supported by the module.
-   * @param {HTMLPage.platforms} platform - A name of a platforms.
+   * @param {HTMLPage.deviceTypes} platform - A name of a deviceTypes.
    * @return {boolean} True if platform is supported, false otherwise.
    */
   static isSupportedPlatform (platform) {
-    if (this._configDefaults._supportedPlatforms.includes(HTMLPage.platforms.ANY)) {
+    if (this._configDefaults._supportedDeviceTypes.includes(HTMLPage.deviceTypes.ANY)) {
       return true
-    } else if (this._configDefaults._supportedPlatforms.includes(platform)) {
+    } else if (this._configDefaults._supportedDeviceTypes.includes(platform.deviceType)) {
       return true
     }
     return false
@@ -109,7 +109,7 @@ Module._configDefaults = {
   _moduleType: Module.types.DATA,
 
   /**
-   * A list of platforms supported by a module according to HTMLPage.platforms list.
+   * A list of deviceTypes supported by a module according to HTMLPage.deviceTypes list.
    */
-  _supportedPlatforms: [HTMLPage.platforms.ANY]
+  _supportedDeviceTypes: [HTMLPage.deviceTypes.ANY]
 }

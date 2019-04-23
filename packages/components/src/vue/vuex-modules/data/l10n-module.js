@@ -108,7 +108,7 @@ L10nModule.api = (moduleInstance, store) => {
 L10nModule._configDefaults = {
   _moduleName: 'l10n',
   _moduleType: Module.types.DATA,
-  _supportedPlatforms: [HTMLPage.platforms.ANY],
+  _supportedDeviceTypes: [HTMLPage.deviceTypes.ANY],
   defaultLocale: Locales.en_US,
   messageBundles: []
 }

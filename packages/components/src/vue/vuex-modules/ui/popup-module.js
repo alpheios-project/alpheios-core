@@ -104,7 +104,7 @@ PopupModule.store = (moduleInstance) => {
 PopupModule._configDefaults = {
   _moduleName: 'popup',
   _moduleType: Module.types.UI,
-  _supportedPlatforms: [HTMLPage.platforms.DESKTOP],
+  _supportedDeviceTypes: [HTMLPage.deviceTypes.DESKTOP],
 
   // A selector that specifies to what DOM element a popup will be mounted.
   // This element will be replaced with the root element of the popup component.

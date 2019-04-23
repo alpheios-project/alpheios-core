@@ -36,7 +36,7 @@ export default class StorageAdapter {
    * found in the storage area. If this operation failed, the promise will be rejected with an error message.
    */
   get (keys) {
-    return new Promise((resolve, reject) => reject(new Error(`Set method should be implemented in a subclass`)))
+    return new Promise((resolve, reject) => reject(new Error(`Get method should be implemented in a subclass`)))
   }
 
   /**

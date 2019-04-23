@@ -20,6 +20,7 @@ import ContentOptionDefaults from '@/settings/content-options-defaults.json'
 import UIOptionDefaults from '@/settings/ui-options-defaults.json'
 import HTMLSelector from '@/lib/selection/media/html-selector.js'
 import HTMLPage from '@/lib/utility/html-page.js'
+import Platform from '@/lib/utility/platform.js'
 import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
 import MouseDblClick from '@/lib/custom-pointer-events/mouse-dbl-click.js'
 import LongTap from '@/lib/custom-pointer-events/long-tap.js'
@@ -88,12 +89,12 @@ export default class UIController {
     this.userDataManager = null
 
     /**
-     * A name of the platform (mobile/desktop) UI controller is running within.
-     * @type {string} - A platform name from {HTMLPage.platforms}
+     * Information about the platform an app is running upon.
+     * @type {Platform} - A an object containing data about the platform.
      */
-    this.platform = HTMLPage.getPlatform()
+    this.platform = new Platform()
     // Assign a class that will specify what type of layout will be used
-    const layoutClassName = (this.platform === HTMLPage.platforms.MOBILE)
+    const layoutClassName = (this.platform.isMobile)
       ? layoutClasses.COMPACT
       : layoutClasses.LARGE
     document.body.classList.add(layoutClassName)
@@ -277,7 +278,7 @@ export default class UIController {
       options.platform = this.platform
       this.modules.set(moduleClass.moduleName, { ModuleClass: moduleClass, options, instance: null })
     } else {
-      console.warn(`Skipping registration of a ${moduleClass.moduleName} module because it does not support a ${this.platform} platform`)
+      console.warn(`Skipping registration of a ${moduleClass.moduleName} module because it does not support a ${this.platform.deviceType} type of devices`)
     }
     return this
   }
@@ -339,6 +340,7 @@ export default class UIController {
     container.outerHTML = this.options.template.html
 
     await Promise.all(optionLoadPromises)
+    // All options has been loaded after this point
 
     /**
      * This is a settings API. It exposes different options to modules and UI components.
@@ -708,6 +710,11 @@ export default class UIController {
 
     // Create all registered modules
     this.createModules()
+
+    // Adjust configuration of modules according to content options
+    if (this.hasModule('panel')) {
+      this.store.commit('panel/setPosition', this.contentOptions.items.panelPosition.currentValue)
+    }
 
     const currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(this.contentOptions.items.preferredLanguage.currentValue)
     this.updateLanguage(currentLanguageID)
@@ -1082,7 +1089,7 @@ export default class UIController {
   }
 
   open () {
-    if (this.api.ui.hasModule('panel') && this.platform === HTMLPage.platforms.MOBILE) {
+    if (this.api.ui.hasModule('panel') && this.platform.isMobile) {
       // This is a compact version of a UI
       this.api.ui.openPanel()
       this.changeTab('morphology')
@@ -1398,6 +1405,9 @@ export default class UIController {
       case 'enableLemmaTranslations':
         this.updateLemmaTranslations()
         break
+      case 'panelPosition':
+        this.store.commit('panel/setPosition', this.api.settings.contentOptions.items.panelPosition.currentValue)
+        break
       case 'popupPosition':
         this.store.commit('popup/setPositioning', this.api.settings.contentOptions.items.popupPosition.currentValue)
         break
@@ -1453,7 +1463,7 @@ export default class UIController {
 
   registerGetSelectedText (listenerName, selector) {
     let ev
-    if (this.platform === HTMLPage.platforms.MOBILE) {
+    if (this.platform.isMobile) {
       ev = LongTap
     } else {
       switch (this.options.textQueryTrigger) {

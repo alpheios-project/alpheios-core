@@ -1,12 +1,14 @@
 <template>
-  <div :class="rootClasses"
-       :style="mainstyles"
-       class="alpheios-panel alpheios-panel--large alpheios-content"
-       data-component="alpheios-panel"
-       data-resizable="true"
-       id="alpheios-panel-inner"
-       v-on-clickaway="attachTrackingClick"
-       v-show="$store.state.panel.visible">
+  <div
+      :class="rootClasses"
+      :style="mainstyles"
+      class="alpheios-panel alpheios-panel--large alpheios-content"
+      data-component="alpheios-panel"
+      data-resizable="true"
+      id="alpheios-panel-inner"
+      v-on-clickaway="attachTrackingClick"
+      v-show="$store.state.panel.visible"
+  >
 
     <div class="alpheios-panel__header">
       <div class="alpheios-panel__header-logo">
@@ -48,7 +50,7 @@
 
     <div class="alpheios-panel__content">
       <div
-          class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions"
+          class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__definitions"
           v-show="$store.getters['ui/isActiveTab']('definitions')"
           data-alpheios-ignore="all"
           >
@@ -107,14 +109,14 @@
       </div>
 
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__grammar
-            alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
+            alpheios-panel__tab-panel--no-padding"
             data-alpheios-ignore="all"
             v-show="$store.getters['ui/isActiveTab']('grammar')">
         <grammar></grammar>
       </div>
 
       <div
-          class="alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw"
+          class="alpheios-panel__tab-panel alpheios-panel__tab__treebank"
           v-if="$store.getters['app/hasTreebankData']" v-show="$store.getters['ui/isActiveTab']('treebank')"
           data-alpheios-ignore="all">
         <!-- TODO: Instead of this we need to create a universal mechanism for handling panel resizing for every tab's content change -->
@@ -129,20 +131,20 @@
         </div>
       </div>
 
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__user alpheios-panel__tab-panel--fw"
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__user"
           v-if="$store.state.auth.showUI" v-show="$store.getters['ui/isActiveTab']('user')"
            data-alpheios-ignore="all">
         <user-auth></user-auth>
       </div>
 
       <div
-          class="alpheios-panel__tab-panel alpheios-panel__tab__word-usage"
+          class="alpheios-panel__tab-panel"
           v-show="$store.getters['ui/isActiveTab']('wordUsage')"
         >
         <word-usage-examples/>
       </div>
 
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__options"
+      <div class="alpheios-panel__tab-panel"
            v-show="$store.getters['ui/isActiveTab']('options')"
            data-alpheios-ignore="all"
       >
@@ -278,7 +280,7 @@
         <info></info>
       </div>
 
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist alpheios-panel__tab-panel--fw"
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist"
            v-show="$store.getters['ui/isActiveTab']('wordlist')"
            data-alpheios-ignore="all"
       >
@@ -312,22 +314,26 @@ export default {
     attachRightIcon: AttachRightIcon
   },
   tabChangeUnwatch: null, // Will hold a function for removal of a tab change watcher
-  // `positionClassVariants` is a custom property. This is to prent Vue from attaching reactivity to it.
-  positionClassVariants: {
-    left: 'alpheios-panel-left',
-    right: 'alpheios-panel-right'
-  },
 
   computed: {
     rootClasses () {
-      return [this.$options.positionClassVariants[this.panelPosition]]
+      return this.$options.positionClassVariants[this.$store.state.panel.position]
     },
+
     mainstyles: function () {
       this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth
       return {
         zIndex: this.ui.zIndex,
         width: `${this.panelWidth}px`
       }
+    },
+
+    attachToLeftVisible: function () {
+      return this.$store.state.panel.position === 'right'
+    },
+
+    attachToRightVisible: function () {
+      return this.$store.state.panel.position === 'left'
     }
   },
 
@@ -371,7 +377,7 @@ export default {
     width: uisize(80px);
   }
 
-  .alpheios-panel-left {
+  .alpheios-panel--left {
     &.alpheios-panel {
       left: 0;
     }
@@ -396,7 +402,7 @@ export default {
     }
   }
 
-  .alpheios-panel-right {
+  .alpheios-panel--right {
     &.alpheios-panel {
       right: 0;
     }
@@ -420,8 +426,5 @@ export default {
         left: uisize(28px);
       }
     }
-  }
-  .alpheios-panel__tab__word-usage {
-    width: 100%;
   }
 </style>

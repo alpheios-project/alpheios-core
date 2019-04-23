@@ -126,11 +126,19 @@ export default class HTMLPage {
 
   /**
    * Determines what version of a UI shall be used.
-   * @return {string} - A name of one of the platforms defined in HTMLPage.platforms.
+   * @return {string} - A name of one of the deviceTypes defined in {@link HTMLPage@deviceTypes}.
    */
-  static getPlatform () {
+  static getDeviceType () {
     const screenWidthThreshold = 720
-    return window.screen.width <= screenWidthThreshold ? HTMLPage.platforms.MOBILE : HTMLPage.platforms.DESKTOP
+    return window.screen.width <= screenWidthThreshold ? HTMLPage.deviceTypes.MOBILE : HTMLPage.deviceTypes.DESKTOP
+  }
+
+  /**
+   * Determines a screen orientation of a device.
+   * @return {string} - A name of the screen orientation as defined in {@link HTMLPage@orientations}.
+   */
+  static getOrientation () {
+    return (window.screen.width <= window.screen.height) ? HTMLPage.orientations.PORTRAIT : HTMLPage.orientations.LANDSCAPE
   }
 }
 
@@ -146,10 +154,10 @@ HTMLPage.targetRequirements = {
 }
 
 /**
- * Constants that determine platforms where an app is running.
+ * Constants that determines types of devices where an app is running.
  * Used by modules and components to tweak their appearance.
  */
-HTMLPage.platforms = {
+HTMLPage.deviceTypes = {
   /**
    * An environment with limited screen estate with finger-based interactions.
    */
@@ -164,4 +172,12 @@ HTMLPage.platforms = {
    * Indicates a platform agnostic value.
    */
   ANY: 'any'
+}
+
+/**
+ * Constants for screen orientations.
+ */
+HTMLPage.orientations = {
+  PORTRAIT: 'portrait',
+  LANDSCAPE: 'landscape'
 }

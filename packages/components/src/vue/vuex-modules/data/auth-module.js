@@ -125,6 +125,6 @@ AuthModule.api = (moduleInstance, store) => {
 AuthModule._configDefaults = {
   _moduleName: 'auth',
   _moduleType: Module.types.DATA,
-  _supportedPlatforms: [HTMLPage.platforms.ANY],
+  _supportedDeviceTypes: [HTMLPage.deviceTypes.ANY],
   auth: null
 }
