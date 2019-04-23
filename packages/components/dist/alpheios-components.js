@@ -12147,31 +12147,34 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _vue_components_nav_drop_down_menu_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/components/nav/drop-down-menu.vue */ "./vue/components/nav/drop-down-menu.vue");
-/* harmony import */ var _vue_components_nav_navbuttons_compact_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/components/nav/navbuttons-compact.vue */ "./vue/components/nav/navbuttons-compact.vue");
-/* harmony import */ var _vue_components_notification_area_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/components//notification-area.vue */ "./vue/components/notification-area.vue");
-/* harmony import */ var _inflections_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./inflections.vue */ "./vue/components/inflections.vue");
-/* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
-/* harmony import */ var _shortdef_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./shortdef.vue */ "./vue/components/shortdef.vue");
-/* harmony import */ var _grammar_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./grammar.vue */ "./vue/components/grammar.vue");
-/* harmony import */ var _morph_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./morph.vue */ "./vue/components/morph.vue");
-/* harmony import */ var _treebank_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./treebank.vue */ "./vue/components/treebank.vue");
-/* harmony import */ var _info_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./info.vue */ "./vue/components/info.vue");
-/* harmony import */ var _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./inflections-browser.vue */ "./vue/components/inflections-browser.vue");
-/* harmony import */ var _tooltip_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./tooltip.vue */ "./vue/components/tooltip.vue");
-/* harmony import */ var _lookup_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./lookup.vue */ "./vue/components/lookup.vue");
-/* harmony import */ var _font_size_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./font-size.vue */ "./vue/components/font-size.vue");
-/* harmony import */ var _user_auth_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./user-auth.vue */ "./vue/components/user-auth.vue");
-/* harmony import */ var _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/vue/components/word-usage-examples/word-usage-examples.vue */ "./vue/components/word-usage-examples/word-usage-examples.vue");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/vue/components/word-list/word-list-panel.vue */ "./vue/components/word-list/word-list-panel.vue");
-/* harmony import */ var _images_inline_icons_menu_svg__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/images/inline-icons/menu.svg */ "./images/inline-icons/menu.svg");
-/* harmony import */ var _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/images/inline-icons/x-close.svg */ "./images/inline-icons/x-close.svg");
-/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
-/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
-/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
+/* harmony import */ var _vue_components_nav_drop_down_menu_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/components/nav/drop-down-menu.vue */ "./vue/components/nav/drop-down-menu.vue");
+/* harmony import */ var _vue_components_nav_navbuttons_compact_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/components/nav/navbuttons-compact.vue */ "./vue/components/nav/navbuttons-compact.vue");
+/* harmony import */ var _vue_components_notification_area_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/vue/components//notification-area.vue */ "./vue/components/notification-area.vue");
+/* harmony import */ var _inflections_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./inflections.vue */ "./vue/components/inflections.vue");
+/* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
+/* harmony import */ var _shortdef_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./shortdef.vue */ "./vue/components/shortdef.vue");
+/* harmony import */ var _grammar_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./grammar.vue */ "./vue/components/grammar.vue");
+/* harmony import */ var _morph_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./morph.vue */ "./vue/components/morph.vue");
+/* harmony import */ var _treebank_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./treebank.vue */ "./vue/components/treebank.vue");
+/* harmony import */ var _info_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./info.vue */ "./vue/components/info.vue");
+/* harmony import */ var _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./inflections-browser.vue */ "./vue/components/inflections-browser.vue");
+/* harmony import */ var _tooltip_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./tooltip.vue */ "./vue/components/tooltip.vue");
+/* harmony import */ var _lookup_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./lookup.vue */ "./vue/components/lookup.vue");
+/* harmony import */ var _font_size_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./font-size.vue */ "./vue/components/font-size.vue");
+/* harmony import */ var _user_auth_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./user-auth.vue */ "./vue/components/user-auth.vue");
+/* harmony import */ var _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/vue/components/word-usage-examples/word-usage-examples.vue */ "./vue/components/word-usage-examples/word-usage-examples.vue");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/vue/components/word-list/word-list-panel.vue */ "./vue/components/word-list/word-list-panel.vue");
+/* harmony import */ var _images_inline_icons_menu_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/images/inline-icons/menu.svg */ "./images/inline-icons/menu.svg");
+/* harmony import */ var _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/images/inline-icons/x-close.svg */ "./images/inline-icons/x-close.svg");
+/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
+/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
+/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+//
+//
 //
 //
 //
@@ -12466,6 +12469,7 @@ __webpack_require__.r(__webpack_exports__);
 /*
   This is a mobile version of a panel
    */
+// Support libraries
 
 // Vue components
 
@@ -12508,30 +12512,30 @@ __webpack_require__.r(__webpack_exports__);
     auth: 'auth'
   },
   storeModules: ['app', 'ui', 'panel', 'auth'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_22__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_23__["default"]],
   components: {
-    menuIcon: _images_inline_icons_menu_svg__WEBPACK_IMPORTED_MODULE_18__["default"],
-    dropDownMenu: _vue_components_nav_drop_down_menu_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    navbuttonsCompact: _vue_components_nav_navbuttons_compact_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    notificationArea: _vue_components_notification_area_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    inflectionBrowser: _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-    setting: _setting_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    shortdef: _shortdef_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    info: _info_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-    grammar: _grammar_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
-    morph: _morph_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
-    treebank: _treebank_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
-    userAuth: _user_auth_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
-    closeIcon: _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_19__["default"],
-    alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
-    lookup: _lookup_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
-    reskinFontColor: _font_size_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
-    wordListPanel: _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
-    wordUsageExamples: _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
+    menuIcon: _images_inline_icons_menu_svg__WEBPACK_IMPORTED_MODULE_19__["default"],
+    dropDownMenu: _vue_components_nav_drop_down_menu_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    navbuttonsCompact: _vue_components_nav_navbuttons_compact_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    notificationArea: _vue_components_notification_area_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    inflectionBrowser: _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
+    setting: _setting_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    shortdef: _shortdef_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    info: _info_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    grammar: _grammar_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    morph: _morph_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+    treebank: _treebank_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    userAuth: _user_auth_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+    closeIcon: _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_20__["default"],
+    alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+    lookup: _lookup_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+    reskinFontColor: _font_size_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+    wordListPanel: _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
+    wordUsageExamples: _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
   },
   directives: {
-    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_20__["directive"]
+    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_21__["directive"]
   },
   // A minimal width of a panel, in pixels. This is high to fit all te buttons of a large size into the panel
   minWidth: 650,
@@ -12541,7 +12545,6 @@ __webpack_require__.r(__webpack_exports__);
       menuVisible: false,
       inflectionsPanelID: 'alpheios-panel__inflections-panel',
       inflectionsBrowserPanelID: 'alpheios-panel__inflections-browser-panel',
-      panelPosition: 'left',
       panelLeftPadding: 0,
       panelRightPadding: 0,
       scrollPadding: 0,
@@ -12549,7 +12552,24 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
 
+  // `positionClassVariants` is a custom property. This is to prent Vue from attaching reactivity to it.
+  positionClassVariants: {
+    left: 'alpheios-panel--left',
+    right: 'alpheios-panel--right'
+  },
+
   computed: {
+    rootClasses () {
+      /*
+      Position classes are needed for landscape orientations only as only those
+      can have compact panel attached to either left or right.
+      For portrait-oriented screens a compact panel will occupy full width.
+       */
+      return (this.$store.state.panel.orientation === _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].orientations.LANDSCAPE)
+        ? this.$options.positionClassVariants[this.$store.state.panel.position]
+        : ''
+    },
+
     mainstyles: function () {
       this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth
       return {
@@ -12572,14 +12592,6 @@ __webpack_require__.r(__webpack_exports__);
         : []
     },
 
-    attachToLeftVisible: function () {
-      return this.panelPosition === 'right'
-    },
-
-    attachToRightVisible: function () {
-      return this.panelPosition === 'left'
-    },
-
     additionalStylesTootipCloseIcon: function () {
       return {
         top: '2px',
@@ -12598,7 +12610,7 @@ __webpack_require__.r(__webpack_exports__);
           if (lexeme.meaning.shortDefs.length > 0) {
             definitions.push(...lexeme.meaning.shortDefs)
           } else if (Object.entries(lexeme.lemma.features).length > 0) {
-            definitions.push(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_16__["Definition"](this.l10n.getMsg('TEXT_NOTICE_NO_DEFS_FOUND'), 'en-US', 'text/plain', lexeme.lemma.word))
+            definitions.push(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_17__["Definition"](this.l10n.getMsg('TEXT_NOTICE_NO_DEFS_FOUND'), 'en-US', 'text/plain', lexeme.lemma.word))
           }
         }
       }
@@ -12625,7 +12637,7 @@ __webpack_require__.r(__webpack_exports__);
 
     setPosition (position) {
       this.settings.contentOptions.items.panelPosition.setValue(position)
-      this.panelPosition = position
+      this.$store.commit('panel/setPosition', position)
     },
 
     contentOptionChanged: function (name, value) {
@@ -12721,7 +12733,7 @@ __webpack_require__.r(__webpack_exports__);
       this.calcWidthPaddings()
 
       // Initialize Interact.js: make panel resizable
-      interactjs__WEBPACK_IMPORTED_MODULE_21___default()(this.$el)
+      interactjs__WEBPACK_IMPORTED_MODULE_22___default()(this.$el)
         .resizable({
           // resize from all edges and corners
           edges: { left: true, right: true, bottom: false, top: false },
@@ -13056,6 +13068,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /*
     This is a desktop version of a panel
@@ -13079,22 +13093,26 @@ __webpack_require__.r(__webpack_exports__);
     attachRightIcon: _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   tabChangeUnwatch: null, // Will hold a function for removal of a tab change watcher
-  // `positionClassVariants` is a custom property. This is to prent Vue from attaching reactivity to it.
-  positionClassVariants: {
-    left: 'alpheios-panel-left',
-    right: 'alpheios-panel-right'
-  },
 
   computed: {
     rootClasses () {
-      return [this.$options.positionClassVariants[this.panelPosition]]
+      return this.$options.positionClassVariants[this.$store.state.panel.position]
     },
+
     mainstyles: function () {
       this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth
       return {
         zIndex: this.ui.zIndex,
         width: `${this.panelWidth}px`
       }
+    },
+
+    attachToLeftVisible: function () {
+      return this.$store.state.panel.position === 'right'
+    },
+
+    attachToRightVisible: function () {
+      return this.$store.state.panel.position === 'left'
     }
   },
 
@@ -13671,17 +13689,6 @@ __webpack_require__.r(__webpack_exports__);
         .on('resizemove', this.resizeListener)
     }
 
-    // Updated popup dimensions when its visibility is updated
-    this.$options.visibleUnwatch = this.$store.watch((state) => state.popup.visible, (oldValue, newValue) => {
-      if (newValue) {
-        // A popup became visible
-        this.updatePopupDimensions()
-      } else {
-        // A popup became invisible
-        this.resetPopupDimensions()
-      }
-    })
-
     this.$options.lexrqStartedUnwatch = this.$store.watch((state, getters) => state.app.lexicalRequest.startTime, () => {
       // There is a new request coming in, reset popup dimensions
       this.resetPopupDimensions()
@@ -13702,7 +13709,7 @@ __webpack_require__.r(__webpack_exports__);
 
   beforeDestroy () {
     // Teardown the watch function
-    this.$options.visibleUnwatch()
+    // this.$options.visibleUnwatch()
     this.$options.lexrqStartedUnwatch()
     this.$options.positioningUnwatch()
   },
@@ -20773,6 +20780,7 @@ var render = function() {
         }
       ],
       staticClass: "alpheios-panel alpheios-panel--compact alpheios-content",
+      class: _vm.rootClasses,
       style: _vm.mainstyles,
       attrs: {
         "data-component": "alpheios-panel",
@@ -20846,7 +20854,7 @@ var render = function() {
                 }
               ],
               staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw"
+                "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding"
             },
             [
               _c(
@@ -20886,7 +20894,7 @@ var render = function() {
                 }
               ],
               staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions",
+                "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__definitions",
               attrs: { "data-alpheios-ignore": "all" }
             },
             [
@@ -21037,7 +21045,7 @@ var render = function() {
                 }
               ],
               staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__tab__grammar\n          alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw",
+                "alpheios-panel__tab-panel alpheios-panel__tab__grammar\n          alpheios-panel__tab-panel--no-padding",
               attrs: { "data-alpheios-ignore": "all" }
             },
             [_c("grammar")],
@@ -21057,7 +21065,7 @@ var render = function() {
                     }
                   ],
                   staticClass:
-                    "alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw",
+                    "alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding",
                   attrs: { "data-alpheios-ignore": "all" }
                 },
                 [
@@ -21126,8 +21134,7 @@ var render = function() {
                   expression: "$store.getters['ui/isActiveTab']('wordUsage')"
                 }
               ],
-              staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__tab__word-usage"
+              staticClass: "alpheios-panel__tab-panel"
             },
             [_c("word-usage-examples")],
             1
@@ -21144,8 +21151,7 @@ var render = function() {
                   expression: "$store.getters['ui/isActiveTab']('options')"
                 }
               ],
-              staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__tab__options",
+              staticClass: "alpheios-panel__tab-panel",
               attrs: { "data-alpheios-ignore": "all" }
             },
             [
@@ -21364,7 +21370,7 @@ var render = function() {
                 }
               ],
               staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__tab__wordlist alpheios-panel__tab-panel--fw",
+                "alpheios-panel__tab-panel alpheios-panel__tab__wordlist",
               attrs: { "data-alpheios-ignore": "all" }
             },
             [_c("word-list-panel")],
@@ -21571,7 +21577,7 @@ var render = function() {
               }
             ],
             staticClass:
-              "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab-panel--fw alpheios-panel__tab__definitions",
+              "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__definitions",
             attrs: { "data-alpheios-ignore": "all" }
           },
           [
@@ -21715,7 +21721,7 @@ var render = function() {
               }
             ],
             staticClass:
-              "alpheios-panel__tab-panel alpheios-panel__tab__grammar\n          alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw",
+              "alpheios-panel__tab-panel alpheios-panel__tab__grammar\n          alpheios-panel__tab-panel--no-padding",
             attrs: { "data-alpheios-ignore": "all" }
           },
           [_c("grammar")],
@@ -21735,7 +21741,7 @@ var render = function() {
                   }
                 ],
                 staticClass:
-                  "alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding alpheios-panel__tab-panel--fw",
+                  "alpheios-panel__tab-panel alpheios-panel__tab__treebank",
                 attrs: { "data-alpheios-ignore": "all" }
               },
               [
@@ -21785,7 +21791,7 @@ var render = function() {
                   }
                 ],
                 staticClass:
-                  "alpheios-panel__tab-panel alpheios-panel__tab__user alpheios-panel__tab-panel--fw",
+                  "alpheios-panel__tab-panel alpheios-panel__tab__user",
                 attrs: { "data-alpheios-ignore": "all" }
               },
               [_c("user-auth")],
@@ -21804,8 +21810,7 @@ var render = function() {
                 expression: "$store.getters['ui/isActiveTab']('wordUsage')"
               }
             ],
-            staticClass:
-              "alpheios-panel__tab-panel alpheios-panel__tab__word-usage"
+            staticClass: "alpheios-panel__tab-panel"
           },
           [_c("word-usage-examples")],
           1
@@ -21822,8 +21827,7 @@ var render = function() {
                 expression: "$store.getters['ui/isActiveTab']('options')"
               }
             ],
-            staticClass:
-              "alpheios-panel__tab-panel alpheios-panel__tab__options",
+            staticClass: "alpheios-panel__tab-panel",
             attrs: { "data-alpheios-ignore": "all" }
           },
           [
@@ -22032,7 +22036,7 @@ var render = function() {
               }
             ],
             staticClass:
-              "alpheios-panel__tab-panel alpheios-panel__tab__wordlist alpheios-panel__tab-panel--fw",
+              "alpheios-panel__tab-panel alpheios-panel__tab__wordlist",
             attrs: { "data-alpheios-ignore": "all" }
           },
           [_c("word-list-panel")],
@@ -38848,14 +38852,15 @@ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_14___namesp
 var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_15___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
 /* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
 /* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
-/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
-var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
-/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
-/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
-/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
-/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
-/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
-/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
+/* harmony import */ var _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/lib/utility/platform.js */ "./lib/utility/platform.js");
+/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
+var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
+/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
+/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
+/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
+/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
+/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
+/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
 
 
 
@@ -38864,6 +38869,7 @@ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18___names
  // Vue in a runtime + compiler configuration
 
 // Modules and their support dependencies
+
 
 
 
@@ -38925,7 +38931,7 @@ class UIController {
     needs to provide its own defaults, they shall be defined in a `create()` function.
      */
     this.contentOptionsDefaults = _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_14__
-    this.resourceOptionsDefaults = _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__
+    this.resourceOptionsDefaults = _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_19__
     this.uiOptionsDefaults = _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_15__
     this.siteOptionsDefaults = _settings_site_options_json__WEBPACK_IMPORTED_MODULE_13__
     /*
@@ -38946,12 +38952,12 @@ class UIController {
     this.userDataManager = null
 
     /**
-     * A name of the platform (mobile/desktop) UI controller is running within.
-     * @type {string} - A platform name from {HTMLPage.platforms}
+     * Information about the platform an app is running upon.
+     * @type {Platform} - A an object containing data about the platform.
      */
-    this.platform = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_17__["default"].getPlatform()
+    this.platform = new _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_18__["default"]()
     // Assign a class that will specify what type of layout will be used
-    const layoutClassName = (this.platform === _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_17__["default"].platforms.MOBILE)
+    const layoutClassName = (this.platform.isMobile)
       ? layoutClasses.COMPACT
       : layoutClasses.LARGE
     document.body.classList.add(layoutClassName)
@@ -39011,10 +39017,10 @@ class UIController {
     }) */
 
     // Creates on configures an event listener
-    uiController.evc = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_24__["default"]()
+    uiController.evc = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_25__["default"]()
     uiController.registerGetSelectedText('GetSelectedText', uiController.options.textQuerySelector)
-    uiController.evc.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_21__["default"], 'keydown')
-    uiController.evc.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_21__["default"], 'Alpheios_Page_Load')
+    uiController.evc.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_22__["default"], 'keydown')
+    uiController.evc.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_22__["default"], 'Alpheios_Page_Load')
 
     // Subscribe to LexicalQuery events
     _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
@@ -39072,7 +39078,7 @@ class UIController {
         version: 'version'
       },
       mode: 'production', // Controls options available and output. Other possible values: `development`
-      storageAdapter: _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_23__["default"],
+      storageAdapter: _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_24__["default"],
       openPanel: true,
       textQueryTrigger: 'dblClick',
       textQuerySelector: 'body',
@@ -39135,7 +39141,7 @@ class UIController {
       options.platform = this.platform
       this.modules.set(moduleClass.moduleName, { ModuleClass: moduleClass, options, instance: null })
     } else {
-      console.warn(`Skipping registration of a ${moduleClass.moduleName} module because it does not support a ${this.platform} platform`)
+      console.warn(`Skipping registration of a ${moduleClass.moduleName} module because it does not support a ${this.platform.deviceType} type of devices`)
     }
     return this
   }
@@ -39177,11 +39183,11 @@ class UIController {
   async init () {
     if (this.isInitialized) { return `Already initialized` }
     // Start loading options as early as possible
-    this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"](this.contentOptionsDefaults, this.options.storageAdapter)
-    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"](this.resourceOptionsDefaults, this.options.storageAdapter)
+    this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](this.contentOptionsDefaults, this.options.storageAdapter)
+    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](this.resourceOptionsDefaults, this.options.storageAdapter)
     // Create a copy of resource options for the lookup UI component
-    this.lookupResourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"](this.resourceOptionsDefaults, this.options.storageAdapter)
-    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"](this.uiOptionsDefaults, this.options.storageAdapter)
+    this.lookupResourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](this.resourceOptionsDefaults, this.options.storageAdapter)
+    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](this.uiOptionsDefaults, this.options.storageAdapter)
     let optionLoadPromises = [this.contentOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
     // TODO: Site options should probably be initialized the same way as other options objects
     this.siteOptions = this.loadSiteOptions(this.siteOptionsDefaults)
@@ -39197,6 +39203,7 @@ class UIController {
     container.outerHTML = this.options.template.html
 
     await Promise.all(optionLoadPromises)
+    // All options has been loaded after this point
 
     /**
      * This is a settings API. It exposes different options to modules and UI components.
@@ -39567,6 +39574,11 @@ class UIController {
     // Create all registered modules
     this.createModules()
 
+    // Adjust configuration of modules according to content options
+    if (this.hasModule('panel')) {
+      this.store.commit('panel/setPosition', this.contentOptions.items.panelPosition.currentValue)
+    }
+
     const currentLanguageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageIdFromCode(this.contentOptions.items.preferredLanguage.currentValue)
     this.updateLanguage(currentLanguageID)
     this.updateLemmaTranslations()
@@ -39686,7 +39698,7 @@ class UIController {
     let allSiteOptions = []
     for (let site of siteOptions) {
       for (let domain of site.options) {
-        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_22__["default"](domain, this.options.storageAdapter)
+        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_23__["default"](domain, this.options.storageAdapter)
         allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
     }
@@ -39940,7 +39952,7 @@ class UIController {
   }
 
   open () {
-    if (this.api.ui.hasModule('panel') && this.platform === _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_17__["default"].platforms.MOBILE) {
+    if (this.api.ui.hasModule('panel') && this.platform.isMobile) {
       // This is a compact version of a UI
       this.api.ui.openPanel()
       this.changeTab('morphology')
@@ -40256,6 +40268,9 @@ class UIController {
       case 'enableLemmaTranslations':
         this.updateLemmaTranslations()
         break
+      case 'panelPosition':
+        this.store.commit('panel/setPosition', this.api.settings.contentOptions.items.panelPosition.currentValue)
+        break
       case 'popupPosition':
         this.store.commit('popup/setPositioning', this.api.settings.contentOptions.items.popupPosition.currentValue)
         break
@@ -40311,18 +40326,18 @@ class UIController {
 
   registerGetSelectedText (listenerName, selector) {
     let ev
-    if (this.platform === _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_17__["default"].platforms.MOBILE) {
-      ev = _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_20__["default"]
+    if (this.platform.isMobile) {
+      ev = _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_21__["default"]
     } else {
       switch (this.options.textQueryTrigger) {
         case 'dblClick':
-          ev = _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_19__["default"]
+          ev = _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_20__["default"]
           break
         case 'dblclick':
-          ev = _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_19__["default"]
+          ev = _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_20__["default"]
           break
         case 'longTap':
-          ev = _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_20__["default"]
+          ev = _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_21__["default"]
           break
         default:
           ev = null
@@ -40332,7 +40347,7 @@ class UIController {
       this.evc.registerListener(listenerName, selector, this.getSelectedText.bind(this), ev)
     } else {
       this.evc.registerListener(
-        listenerName, selector, this.getSelectedText.bind(this), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_21__["default"], this.options.textQueryTrigger)
+        listenerName, selector, this.getSelectedText.bind(this), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_22__["default"], this.options.textQueryTrigger)
     }
   }
 
@@ -42065,7 +42080,7 @@ class StorageAdapter {
    * found in the storage area. If this operation failed, the promise will be rejected with an error message.
    */
   get (keys) {
-    return new Promise((resolve, reject) => reject(new Error(`Set method should be implemented in a subclass`)))
+    return new Promise((resolve, reject) => reject(new Error(`Get method should be implemented in a subclass`)))
   }
 
   /**
@@ -44373,11 +44388,19 @@ class HTMLPage {
 
   /**
    * Determines what version of a UI shall be used.
-   * @return {string} - A name of one of the platforms defined in HTMLPage.platforms.
+   * @return {string} - A name of one of the deviceTypes defined in {@link HTMLPage@deviceTypes}.
    */
-  static getPlatform () {
+  static getDeviceType () {
     const screenWidthThreshold = 720
-    return window.screen.width <= screenWidthThreshold ? HTMLPage.platforms.MOBILE : HTMLPage.platforms.DESKTOP
+    return window.screen.width <= screenWidthThreshold ? HTMLPage.deviceTypes.MOBILE : HTMLPage.deviceTypes.DESKTOP
+  }
+
+  /**
+   * Determines a screen orientation of a device.
+   * @return {string} - A name of the screen orientation as defined in {@link HTMLPage@orientations}.
+   */
+  static getOrientation () {
+    return (window.screen.width <= window.screen.height) ? HTMLPage.orientations.PORTRAIT : HTMLPage.orientations.LANDSCAPE
   }
 }
 
@@ -44393,10 +44416,10 @@ HTMLPage.targetRequirements = {
 }
 
 /**
- * Constants that determine platforms where an app is running.
+ * Constants that determines types of devices where an app is running.
  * Used by modules and components to tweak their appearance.
  */
-HTMLPage.platforms = {
+HTMLPage.deviceTypes = {
   /**
    * An environment with limited screen estate with finger-based interactions.
    */
@@ -44411,6 +44434,57 @@ HTMLPage.platforms = {
    * Indicates a platform agnostic value.
    */
   ANY: 'any'
+}
+
+/**
+ * Constants for screen orientations.
+ */
+HTMLPage.orientations = {
+  PORTRAIT: 'portrait',
+  LANDSCAPE: 'landscape'
+}
+
+
+/***/ }),
+
+/***/ "./lib/utility/platform.js":
+/*!*********************************!*\
+  !*** ./lib/utility/platform.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Platform; });
+/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
+
+
+class Platform {
+  constructor () {
+    this.deviceType = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].getDeviceType()
+    this.orientation = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].getOrientation()
+  }
+
+  get isDesktop () {
+    return this.deviceType === _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].deviceTypes.DESKTOP
+  }
+
+  get isMobile () {
+    return this.deviceType === _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].deviceTypes.MOBILE
+  }
+
+  get isAny () {
+    return this.deviceType === _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].deviceTypes.ANY
+  }
+
+  get isPortrait () {
+    return this.orientation === _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].orientations.PORTRAIT
+  }
+
+  get isLandscape () {
+    return this.orientation === _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].orientations.LANDSCAPE
+  }
 }
 
 
@@ -48620,7 +48694,7 @@ AuthModule.api = (moduleInstance, store) => {
 AuthModule._configDefaults = {
   _moduleName: 'auth',
   _moduleType: _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0__["default"].types.DATA,
-  _supportedPlatforms: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_1__["default"].platforms.ANY],
+  _supportedDeviceTypes: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_1__["default"].deviceTypes.ANY],
   auth: null
 }
 
@@ -48751,7 +48825,7 @@ L10nModule.api = (moduleInstance, store) => {
 L10nModule._configDefaults = {
   _moduleName: 'l10n',
   _moduleType: _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0__["default"].types.DATA,
-  _supportedPlatforms: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_3__["default"].platforms.ANY],
+  _supportedDeviceTypes: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_3__["default"].deviceTypes.ANY],
   defaultLocale: _locales_locales_js__WEBPACK_IMPORTED_MODULE_2__["default"].en_US,
   messageBundles: []
 }
@@ -48821,13 +48895,13 @@ class Module {
 
   /**
    * Checks whether a specified platform is supported by the module.
-   * @param {HTMLPage.platforms} platform - A name of a platforms.
+   * @param {HTMLPage.deviceTypes} platform - A name of a deviceTypes.
    * @return {boolean} True if platform is supported, false otherwise.
    */
   static isSupportedPlatform (platform) {
-    if (this._configDefaults._supportedPlatforms.includes(_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].platforms.ANY)) {
+    if (this._configDefaults._supportedDeviceTypes.includes(_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].deviceTypes.ANY)) {
       return true
-    } else if (this._configDefaults._supportedPlatforms.includes(platform)) {
+    } else if (this._configDefaults._supportedDeviceTypes.includes(platform.deviceType)) {
       return true
     }
     return false
@@ -48881,9 +48955,9 @@ Module._configDefaults = {
   _moduleType: Module.types.DATA,
 
   /**
-   * A list of platforms supported by a module according to HTMLPage.platforms list.
+   * A list of deviceTypes supported by a module according to HTMLPage.deviceTypes list.
    */
-  _supportedPlatforms: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].platforms.ANY]
+  _supportedDeviceTypes: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].deviceTypes.ANY]
 }
 
 
@@ -48973,7 +49047,11 @@ PanelModule.store = (moduleInstance) => {
       // Whether a panel is shown or hidden
       visible: false,
       // Choose mobile or desktop layout from the value of the `platform` prop of a configuration object
-      layout: moduleInstance.config.platform === _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_4__["default"].platforms.DESKTOP ? `panel` : 'compactPanel'
+      layout: moduleInstance.config.platform.isDesktop ? `panel` : 'compactPanel',
+      // Where a panel is located. Possible values are `left` or `right`.
+      position: 'left',
+      // Device orientation
+      orientation: moduleInstance.config.platform.orientation
     },
     mutations: {
       /**
@@ -48994,6 +49072,10 @@ PanelModule.store = (moduleInstance) => {
 
       setPanelLayout (state, layout) {
         state.layout = layout
+      },
+
+      setPosition (state, position) {
+        state.position = position
       }
     }
   }
@@ -49002,7 +49084,7 @@ PanelModule.store = (moduleInstance) => {
 PanelModule._configDefaults = {
   _moduleName: 'panel',
   _moduleType: _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.UI,
-  _supportedPlatforms: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_4__["default"].platforms.DESKTOP, _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_4__["default"].platforms.MOBILE],
+  _supportedDeviceTypes: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_4__["default"].deviceTypes.DESKTOP, _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_4__["default"].deviceTypes.MOBILE],
   // A selector that specifies to what DOM element a panel will be mounted.
   // This element will be replaced with the root element of the panel component.
   mountPoint: '#alpheios-panel'
@@ -49132,7 +49214,7 @@ PopupModule.store = (moduleInstance) => {
 PopupModule._configDefaults = {
   _moduleName: 'popup',
   _moduleType: _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.UI,
-  _supportedPlatforms: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_3__["default"].platforms.DESKTOP],
+  _supportedDeviceTypes: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_3__["default"].deviceTypes.DESKTOP],
 
   // A selector that specifies to what DOM element a popup will be mounted.
   // This element will be replaced with the root element of the popup component.
@@ -49233,7 +49315,7 @@ ToolbarModule.store = (moduleInstance) => {
       // Whether a toolbar is shown or hidden
       visible: false,
       // Choose compact or large layout from the value of the `platform` prop of a configuration object
-      layout: moduleInstance.config.platform === _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_4__["default"].platforms.DESKTOP ? `toolbarLarge` : 'toolbarCompact',
+      layout: moduleInstance.config.platform.isDesktop ? `toolbarLarge` : 'toolbarCompact',
       // Initial position of a toolbar
       initialPos: moduleInstance.config.initialPos
     },
@@ -49260,7 +49342,7 @@ ToolbarModule.store = (moduleInstance) => {
 ToolbarModule._configDefaults = {
   _moduleName: 'toolbar',
   _moduleType: _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.UI,
-  _supportedPlatforms: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_4__["default"].platforms.DESKTOP, _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_4__["default"].platforms.MOBILE],
+  _supportedDeviceTypes: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_4__["default"].deviceTypes.DESKTOP, _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_4__["default"].deviceTypes.MOBILE],
   // A selector that specifies to what DOM element a nav will be mounted.
   // This element will be replaced with the root element of the panel component.
   mountPoint: '#alpheios-toolbar',
