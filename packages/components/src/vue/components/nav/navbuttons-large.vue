@@ -53,7 +53,7 @@
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_USER')" tooltipDirection="bottom-narrow"
-                v-show="$store.state.auth.showUI">
+                v-show="$store.state.auth.enableLogin">
       <div @click="ui.changeTab('user')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('user') }">
         <user-icon></user-icon>

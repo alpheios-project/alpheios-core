@@ -130,7 +130,7 @@
       </div>
 
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__user"
-          v-if="$store.state.auth.showUI" v-show="$store.getters['ui/isActiveTab']('user')"
+          v-if="$store.state.auth.enableLogin" v-show="$store.getters['ui/isActiveTab']('user')"
            data-alpheios-ignore="all">
         <user-auth></user-auth>
       </div>

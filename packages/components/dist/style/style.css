@@ -2310,13 +2310,6 @@ h3.alpheios-inflections__credits-title {
   color: var(--alpheios-link-color-on-light) !important;
   text-align: right;
 }
-.alpheios-user-auth__notifications {
-  display: none;
-  margin-top: calc(var(--alpheios-base-text-size) * 0.625);
-}
-[data-notification-visible=true] .alpheios-user-auth__notifications {
-  display: flex;
-}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.

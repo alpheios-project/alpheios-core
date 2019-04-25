@@ -10532,6 +10532,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -10551,7 +10561,18 @@ __webpack_require__.r(__webpack_exports__);
     return {
     }
   },
-
+  computed: {
+    loginLink: function () {
+      if (this.$store.state.auth.externalLoginUrl) {
+        return this.$store.state.auth.externalLoginUrl.replace('{FROM_URL}',window.location.href)
+      }
+    },
+    logoutLink: function () {
+      if (this.$store.state.auth.externalLoginUrl) {
+        return this.$store.state.auth.externalLogoutUrl.replace('{FROM_URL}',window.location.href)
+      }
+    }
+  },
   methods: {
     logIn: function () {
       this.auth.authenticate()
@@ -14076,21 +14097,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _login_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./login.vue */ "./vue/components/login.vue");
 /* harmony import */ var _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/images/inline-icons/x-close.svg */ "./images/inline-icons/x-close.svg");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -18369,8 +18375,11 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: !this.$store.state.auth.isAuthenticated,
-              expression: "! this.$store.state.auth.isAuthenticated"
+              value:
+                !this.$store.state.auth.isAuthenticated &&
+                !this.$store.state.auth.externalLoginUrl,
+              expression:
+                "! this.$store.state.auth.isAuthenticated && ! this.$store.state.auth.externalLoginUrl"
             }
           ],
           class: _vm.btnClass,
@@ -18384,14 +18393,44 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
+        "a",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value:
+                !this.$store.state.auth.isAuthenticated &&
+                this.$store.state.auth.externalLoginUrl,
+              expression:
+                "! this.$store.state.auth.isAuthenticated && this.$store.state.auth.externalLoginUrl"
+            }
+          ],
+          attrs: { href: _vm.loginLink }
+        },
+        [
+          _c("button", { class: _vm.btnClass }, [
+            _vm._v(
+              "\n      " +
+                _vm._s(_vm.l10n.getMsg("AUTH_LOGIN_BTN_LABEL")) +
+                "\n    "
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
         "button",
         {
           directives: [
             {
               name: "show",
               rawName: "v-show",
-              value: this.$store.state.auth.isAuthenticated,
-              expression: "this.$store.state.auth.isAuthenticated"
+              value:
+                this.$store.state.auth.isAuthenticated &&
+                !this.$store.state.auth.externalLogoutUrl,
+              expression:
+                "this.$store.state.auth.isAuthenticated && !this.$store.state.auth.externalLogoutUrl"
             }
           ],
           class: _vm.btnClass,
@@ -18401,6 +18440,33 @@ var render = function() {
           _vm._v(
             "\n    " + _vm._s(_vm.l10n.getMsg("AUTH_LOGOUT_BTN_LABEL")) + "\n  "
           )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value:
+                this.$store.state.auth.isAuthenticated &&
+                this.$store.state.auth.externalLogoutUrl,
+              expression:
+                "this.$store.state.auth.isAuthenticated && this.$store.state.auth.externalLogoutUrl"
+            }
+          ],
+          attrs: { href: _vm.logoutLink }
+        },
+        [
+          _c("button", { class: _vm.btnClass }, [
+            _vm._v(
+              "\n      " +
+                _vm._s(_vm.l10n.getMsg("AUTH_LOGOUT_BTN_LABEL")) +
+                "\n    "
+            )
+          ])
         ]
       )
     ]
@@ -19514,8 +19580,8 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm.$store.state.auth.showUI,
-              expression: "$store.state.auth.showUI"
+              value: _vm.$store.state.auth.enableLogin,
+              expression: "$store.state.auth.enableLogin"
             }
           ],
           staticClass: "alpheios-navmenu__item",
@@ -20046,8 +20112,8 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm.$store.state.auth.showUI,
-              expression: "$store.state.auth.showUI"
+              value: _vm.$store.state.auth.enableLogin,
+              expression: "$store.state.auth.enableLogin"
             }
           ],
           attrs: {
@@ -20527,7 +20593,7 @@ var render = function() {
                   staticClass: "alpheios-navbuttons__btn",
                   class: {
                     active: _vm.$store.getters["ui/isActiveTab"]("user"),
-                    disabled: !_vm.$store.state.auth.showUI
+                    disabled: !_vm.$store.state.auth.enableLogin
                   },
                   on: {
                     click: function($event) {
@@ -21098,7 +21164,7 @@ var render = function() {
             0
           ),
           _vm._v(" "),
-          _vm.$store.state.auth.showUI
+          _vm.$store.state.auth.enableLogin
             ? _c(
                 "div",
                 {
@@ -21774,7 +21840,7 @@ var render = function() {
           0
         ),
         _vm._v(" "),
-        _vm.$store.state.auth.showUI
+        _vm.$store.state.auth.enableLogin
           ? _c(
               "div",
               {
@@ -22915,53 +22981,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      attrs: {
-        "data-notification-visible": _vm.$store.state.auth.notification.visible
-      }
-    },
     [
       _c("login"),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.$store.state.auth.notification.text,
-              expression: "$store.state.auth.notification.text"
-            }
-          ],
-          staticClass:
-            "alpheios-user-auth__notifications alpheios-notification-area__notification"
-        },
-        [
-          _c("div", {
-            staticClass: "alpheios-notification-area__msg",
-            domProps: {
-              innerHTML: _vm._s(
-                _vm.l10n.getMsg(_vm.$store.state.auth.notification.text)
-              )
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "alpheios-notification-area__close-btn",
-              on: {
-                click: function($event) {
-                  return _vm.$store.commit("auth/resetNotification")
-                }
-              }
-            },
-            [_c("close-icon")],
-            1
-          )
-        ]
-      ),
       _vm._v(" "),
       _c(
         "div",
@@ -37659,7 +37680,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"fill":"none","d":"M14 1l-8 9 8 9"}})])
+            children.concat([_c('path',{attrs:{"fill":"none","stroke-width":"1.6","d":"M14 1l-8 9 8 9"}})])
           )
         }
       });
@@ -37699,7 +37720,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"fill":"none","d":"M6 1l8 9-8 9"}})])
+            children.concat([_c('path',{attrs:{"fill":"none","stroke-width":"1.6","d":"M6 1l8 9-8 9"}})])
           )
         }
       });
@@ -38179,7 +38200,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"d":"M12.13 11.59c-.16 1.25-1.78 2.53-3.03 2.57-2.93.04.79-4.7-.36-5.79.56-.21 1.88-.54 1.88.44 0 .82-.5 1.74-.74 2.51-1.22 3.84 2.25-.17 2.26-.14.02.03.02.17-.01.41-.05.36.03-.24 0 0zm-.57-5.92c0 1-2.2 1.48-2.2.36 0-1.03 2.2-1.49 2.2-.36z"}}),_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}})])
+            children.concat([_c('path',{attrs:{"stroke-width":"0","d":"M12.13 11.59c-.16 1.25-1.78 2.53-3.03 2.57-2.93.04.79-4.7-.36-5.79.56-.21 1.88-.54 1.88.44 0 .82-.5 1.74-.74 2.51-1.22 3.84 2.25-.17 2.26-.14.02.03.02.17-.01.41-.05.36.03-.24 0 0zm-.57-5.92c0 1-2.2 1.48-2.2.36 0-1.03 2.2-1.49 2.2-.36z"}}),_c('circle',{attrs:{"fill":"none","stroke-width":"1.1","cx":"10","cy":"10","r":"9"}})])
           )
         }
       });
@@ -38299,7 +38320,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"d":"M1 3h18v1H1zM1 7h18v1H1zM1 11h18v1H1zM1 15h18v1H1z"}})])
+            children.concat([_c('path',{attrs:{"stroke-width":"0","d":"M1 3h18v1H1zM1 7h18v1H1zM1 11h18v1H1zM1 15h18v1H1z"}})])
           )
         }
       });
@@ -38379,7 +38400,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 24 24"}, attrs),
               ...rest,
             },
-            children.concat([_c('ellipse',{attrs:{"rx":"11.405","ry":"11.405","fill":"none","cy":"12","cx":"12"}}),_c('path',{attrs:{"d":"M19.46 10.145q0 2.49-1.178 4.494-1.426 2.356-3.969 2.708V15.18q1.21-.217 1.984-1.246.683-.947.683-1.976-.434.108-.869.108-1.302 0-2.17-.839-.868-.84-.868-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.55 0 2.481 1.11.806.975.806 2.383zm-8.534 0q0 2.49-1.178 4.494-1.426 2.356-3.968 2.708V15.18q1.209-.217 1.984-1.246.682-.947.682-1.976-.434.108-.868.108-1.302 0-2.17-.839-.869-.84-.869-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.551 0 2.481 1.11.807.975.807 2.383z"}})])
+            children.concat([_c('ellipse',{attrs:{"rx":"11.405","ry":"11.405","fill":"none","cy":"12","cx":"12"}}),_c('path',{attrs:{"stroke-width":"0","d":"M19.46 10.145q0 2.49-1.178 4.494-1.426 2.356-3.969 2.708V15.18q1.21-.217 1.984-1.246.683-.947.683-1.976-.434.108-.869.108-1.302 0-2.17-.839-.868-.84-.868-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.55 0 2.481 1.11.806.975.806 2.383zm-8.534 0q0 2.49-1.178 4.494-1.426 2.356-3.968 2.708V15.18q1.209-.217 1.984-1.246.682-.947.682-1.976-.434.108-.868.108-1.302 0-2.17-.839-.869-.84-.869-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.551 0 2.481 1.11.807.975.807 2.383z"}})])
           )
         }
       });
@@ -38499,7 +38520,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","d":"M13.018 14.197l-3.573-3.572"}})])
+            children.concat([_c('circle',{attrs:{"fill":"none","stroke-width":"1.1","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"stroke-width":"0","d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","stroke-width":"1.1","d":"M13.018 14.197l-3.573-3.572"}})])
           )
         }
       });
@@ -40173,7 +40194,7 @@ class UIController {
 
   onWordListUpdated (wordList) {
     this.store.commit('app/setWordLists', [wordList])
-    if (this.store.state.auth.promptLogin && !this.store.state.auth.isAuthenticated) {
+    if (this.store.state.auth.enableLogin && !this.store.state.auth.isAuthenticated) {
       this.store.commit(`auth/setNotification`, { text: 'TEXT_NOTICE_SUGGEST_LOGIN', showLogin: true, count: this.wordlistC.getWordListItemCount() })
     }
   }
@@ -48575,8 +48596,12 @@ class AuthModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0_
   constructor (store, api, config) {
     super(store, api, config)
     this._auth = this.config.auth
-    // enable ui in initial unauthenticated state only if we have an auth object that allows login
-    this._showUIDefault = !!this._auth && this._auth.enableLogin()
+    this._externalLoginUrl = null
+    this._externalLogoutUrl = null
+    if (this._auth) {
+      this._externalLoginUrl = this._auth.loginUrl()
+      this._externalLogoutUrl = this._auth.logoutUrl()
+    }
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
     api[this.constructor.moduleName] = this.constructor.api(this, store)
   }
@@ -48597,22 +48622,20 @@ AuthModule.store = (moduleInstance) => {
         count: 0,
         text: null
       },
-      showUI: moduleInstance._showUIDefault,
-      enableLogin: moduleInstance._showUIDefault, // this doesn't change based upon auth
-      promptLogin: !!moduleInstance._auth // don't prompt for login if we have no auth object
+      externalLoginUrl: moduleInstance._externalLoginUrl,
+      externalLogoutUrl: moduleInstance._externalLogoutUrl,
+      enableLogin: Boolean(moduleInstance._auth) // don't enable login if we have no auth object
     },
     mutations: {
       setIsAuthenticated: (state, profile) => {
         state.isAuthenticated = true
         state.userId = profile.sub
         state.userNickName = profile.nickname
-        state.showUI = true
       },
       setIsNotAuthenticated: (state) => {
         state.isAuthenticated = false
         state.userId = ''
         state.userNickName = ''
-        state.showUI = moduleInstance._showUIDefault
       },
       setNotification (state, data) {
         state.notification.visible = true

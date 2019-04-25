@@ -9,8 +9,12 @@ export default class AuthModule extends Module {
   constructor (store, api, config) {
     super(store, api, config)
     this._auth = this.config.auth
-    // enable ui in initial unauthenticated state only if we have an auth object that allows login
-    this._showUIDefault = !!this._auth && this._auth.enableLogin()
+    this._externalLoginUrl = null
+    this._externalLogoutUrl = null
+    if (this._auth) {
+      this._externalLoginUrl = this._auth.loginUrl()
+      this._externalLogoutUrl = this._auth.logoutUrl()
+    }
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
     api[this.constructor.moduleName] = this.constructor.api(this, store)
   }
@@ -31,22 +35,20 @@ AuthModule.store = (moduleInstance) => {
         count: 0,
         text: null
       },
-      showUI: moduleInstance._showUIDefault,
-      enableLogin: moduleInstance._showUIDefault, // this doesn't change based upon auth
-      promptLogin: !!moduleInstance._auth // don't prompt for login if we have no auth object
+      externalLoginUrl: moduleInstance._externalLoginUrl,
+      externalLogoutUrl: moduleInstance._externalLogoutUrl,
+      enableLogin: Boolean(moduleInstance._auth) // don't enable login if we have no auth object
     },
     mutations: {
       setIsAuthenticated: (state, profile) => {
         state.isAuthenticated = true
         state.userId = profile.sub
         state.userNickName = profile.nickname
-        state.showUI = true
       },
       setIsNotAuthenticated: (state) => {
         state.isAuthenticated = false
         state.userId = ''
         state.userNickName = ''
-        state.showUI = moduleInstance._showUIDefault
       },
       setNotification (state, data) {
         state.notification.visible = true

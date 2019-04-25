@@ -1314,7 +1314,7 @@ export default class UIController {
 
   onWordListUpdated (wordList) {
     this.store.commit('app/setWordLists', [wordList])
-    if (this.store.state.auth.promptLogin && !this.store.state.auth.isAuthenticated) {
+    if (this.store.state.auth.enableLogin && !this.store.state.auth.isAuthenticated) {
       this.store.commit(`auth/setNotification`, { text: 'TEXT_NOTICE_SUGGEST_LOGIN', showLogin: true, count: this.wordlistC.getWordListItemCount() })
     }
   }

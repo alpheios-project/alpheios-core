@@ -108,7 +108,7 @@
           :tooltip-direction="tooltipDirection"
       >
         <span
-            :class="{ active: $store.getters['ui/isActiveTab']('user'), disabled: !$store.state.auth.showUI }"
+            :class="{ active: $store.getters['ui/isActiveTab']('user'), disabled: !$store.state.auth.enableLogin }"
             class="alpheios-navbuttons__btn"
             @click="ui.togglePanelTab('user')"
         >

@@ -65,7 +65,7 @@
     </div>
 
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('user') }"
-         v-show="$store.state.auth.showUI" @click="changeTab('user')">
+         v-show="$store.state.auth.enableLogin" @click="changeTab('user')">
       <div class="alpheios-navbuttons__icon-cont">
         <user-icon class="alpheios-navbuttons__icon"></user-icon>
       </div>

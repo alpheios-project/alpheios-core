@@ -1,21 +1,6 @@
 <template>
-  <div :data-notification-visible="$store.state.auth.notification.visible">
+  <div>
     <login/>
-    <div
-        class="alpheios-user-auth__notifications alpheios-notification-area__notification"
-        v-show="$store.state.auth.notification.text"
-    >
-      <div
-          class="alpheios-notification-area__msg"
-          v-html="l10n.getMsg($store.state.auth.notification.text)"
-      />
-      <div
-          @click="$store.commit(`auth/resetNotification`)"
-          class="alpheios-notification-area__close-btn"
-      >
-        <close-icon/>
-      </div>
-    </div>
     <div class="alpheios-user-auth__user-info-box" v-show="this.$store.state.auth.isAuthenticated">
       <div class="alpheios-user-auth__user-info-item-box">
         <div class="alpheios-user-auth__user-info-item-name">
@@ -70,14 +55,5 @@ export default {
     flex: 1 1;
     color: var(--alpheios-link-color-on-light) !important;
     text-align: right;
-  }
-
-  .alpheios-user-auth__notifications {
-    display: none;
-    margin-top: textsize(10px);
-  }
-
-  [data-notification-visible="true"] .alpheios-user-auth__notifications {
-    display: flex;
   }
 </style>
