@@ -61,7 +61,7 @@
     "component": "Panel"
   },
   "TOOLTIP_GRAMMAR": {
-    "message": "Grammar",
+    "message": "Browse Grammar",
     "description": "tooltip for grammar tab",
     "component": "Panel"
   },

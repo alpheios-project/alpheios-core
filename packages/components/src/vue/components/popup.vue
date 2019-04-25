@@ -61,7 +61,7 @@
           </alph-tooltip>
 
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_USAGEEXAMPLES')" tooltipDirection="bottom-wide"
-                        v-show="$store.state.app.wordUsageExamplesReady">
+                        v-show="$store.state.app.wordUsageExampleEnabled">
             <button @click="ui.showPanelTab('wordUsage')"
                     class="alpheios-button-primary alpheios-popup__toolbar-button">
               {{ l10n.getText('LABEL_POPUP_USAGEEXAMPLES') }}

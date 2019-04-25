@@ -988,6 +988,7 @@ export default class UIController {
     this.resetInflData()
     this.store.commit('ui/resetNotification')
     this.store.commit('ui/resetMessages')
+    this.store.commit('auth/resetNotification')
 
     // Set new data values
     this.store.commit(`app/setTextData`, { text: targetWord, languageID: languageID })
