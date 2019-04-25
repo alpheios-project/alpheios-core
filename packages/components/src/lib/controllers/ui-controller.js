@@ -777,7 +777,7 @@ export default class UIController {
     }
 
     this.authUnwatch = this.store.watch((state) => state.auth.isAuthenticated, (newValue, oldValue) => {
-      this.userDataManager = this.initUserDataManager(newValue)
+      this.initUserDataManager(newValue)
     })
 
     if (this.api.auth) {
