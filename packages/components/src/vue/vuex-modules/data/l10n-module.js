@@ -14,6 +14,7 @@ export default class L10nModule extends Module {
    */
   constructor (store, api, config) {
     super(store, api, config)
+    console.info(`L10n constructor`)
     this._l10n = new L10n()
     this.config.messageBundles.forEach(mb => this._l10n.addMessageBundle(mb))
     this._l10n.setLocale(this.config.defaultLocale)
