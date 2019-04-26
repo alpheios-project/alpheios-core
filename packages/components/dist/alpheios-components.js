@@ -38397,10 +38397,10 @@ __webpack_require__.r(__webpack_exports__);
             {
               class: [classNames,staticClass],
               style: [style,staticStyle],
-              attrs: Object.assign({"viewBox":"0 0 24 24"}, attrs),
+              attrs: Object.assign({"viewBox":"0 0 252 205"}, attrs),
               ...rest,
             },
-            children.concat([_c('ellipse',{attrs:{"rx":"11.405","ry":"11.405","fill":"none","cy":"12","cx":"12"}}),_c('path',{attrs:{"stroke-width":"0","d":"M19.46 10.145q0 2.49-1.178 4.494-1.426 2.356-3.969 2.708V15.18q1.21-.217 1.984-1.246.683-.947.683-1.976-.434.108-.869.108-1.302 0-2.17-.839-.868-.84-.868-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.55 0 2.481 1.11.806.975.806 2.383zm-8.534 0q0 2.49-1.178 4.494-1.426 2.356-3.968 2.708V15.18q1.209-.217 1.984-1.246.682-.947.682-1.976-.434.108-.868.108-1.302 0-2.17-.839-.869-.84-.869-1.868 0-1.11.9-1.895.93-.813 2.2-.813 1.551 0 2.481 1.11.807.975.807 2.383z"}})])
+            children.concat([_c('path',{attrs:{"d":"M15.005 4.975v6.403H5a5 5 0 0 0-5 5v158.26a5 5 0 0 0 5 5h14.258v-.092c.266.045.539.068.817.07 27.785.166 78.066 4.897 95.725 23.086 1.047 1.078 2.453 1.77 3.955 1.77h12.192c1.663 0 3.189-.843 4.339-2.045 8.297-8.674 35.91-22.564 94.874-22.801.365-.002.72-.042 1.063-.116v.128h14.259a5 5 0 0 0 5-5V16.378a5 5 0 0 0-5-5h-10.26V4.965c0-2.761-2.294-4.993-5.055-4.965-63.984.65-90.15 13.593-100.02 21.175-2.871 2.205-8.202 2.417-11.148.313C109.463 13.964 82.145.688 20.054.002c-2.762-.03-5.05 2.211-5.05 4.973zm9.63 4.882v141.14c74.752 0 94.517 21.032 94.517 21.032H120V35.19h-.34S110.03 9.85 24.633 9.85zM131.684 35h.313v136.88c2.305-1.895 27.375-21.136 94.594-21.136V10.104c-77.342 0-93.44 22.54-94.908 24.89z","clip-rule":"evenodd","fill-rule":"evenodd"}})])
           )
         }
       });
@@ -44864,7 +44864,7 @@ module.exports = {"domain":"alpheios-ui-options","items":{"skin":{"defaultValue"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\n  <component v-bind:is=\"uiComponentName\" :module-data=\"moduleData\"></component>\n</div>\n<div id=\"alpheios-panel\">\n  <component v-bind:is=\"$store.state.panel.layout\"></component>\n</div>\n<div id=\"alpheios-toolbar\">\n  <component v-bind:is=\"$store.state.toolbar.layout\" :module-data=\"moduleData\"></component>\n</div>\n";
+module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n  <component v-bind:is=\"uiComponentName\" :module-data=\"moduleData\"></component>\r\n</div>\r\n<div id=\"alpheios-panel\">\r\n  <component v-bind:is=\"$store.state.panel.layout\"></component>\r\n</div>\r\n<div id=\"alpheios-toolbar\">\r\n  <component v-bind:is=\"$store.state.toolbar.layout\" :module-data=\"moduleData\"></component>\r\n</div>\r\n";
 
 /***/ }),
 
