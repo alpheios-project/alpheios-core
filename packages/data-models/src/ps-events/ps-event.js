@@ -1,3 +1,4 @@
+import uuidv4 from 'uuid/v4'
 import PsEventData from '../../src/ps-events/ps-event-data.js'
 
 /**
@@ -24,9 +25,9 @@ export default class PsEvent {
 
     /**
      * A subscribers that listens to the published event.
-     * @type {Function[]} - A subscriber function
+     * @type {Map<int, EventSubscriber>} - A map of subscriber's functions
      */
-    this._subscribers = []
+    this._subscribers = new Map()
   }
 
   /**
@@ -43,16 +44,21 @@ export default class PsEvent {
    * @return {EventSubscriber[]} An array of event subscriber functions.
    */
   get subscribers () {
-    return this._subscribers
+    return Array.from(this._subscribers.values())
   }
 
   /**
    * Subscribes a function to the published event.
    * When event is published, a @type {Event~subscriber} function is called.
    * @param {EventSubscriber} subscriber - A subscriber function.
+   * @return {Function} - An function that, when called, will unsubscribe the current subscriber from an event.
    */
   sub (subscriber) {
-    this._subscribers.push(subscriber)
+    const subId = uuidv4()
+    this._subscribers.set(subId, subscriber)
+    return () => {
+      this._subscribers.delete(subId)
+    }
   }
 
   /**
@@ -63,5 +69,12 @@ export default class PsEvent {
    */
   pub (data = {}, caller = '') {
     this._subscribers.forEach(l => l(data, new PsEventData(this, caller)))
+  }
+
+  /**
+   * Unsubscribes all subscribers from an event.
+   */
+  unsubAll () {
+    this._subscribers.clear()
   }
 }

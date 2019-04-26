@@ -44,6 +44,16 @@ describe('event.test.js', () => {
     expect(event.subscribers).toContain(anotherSubscriber)
   })
 
+  it('Event.sub: should return an unsubscribe function that, when called should remove current subscription', () => {
+    const anotherSubscriber = () => {}
+    const unsub = event.sub(anotherSubscriber)
+    // Subscription should be added to the subscribers list
+    expect(event.subscribers).toContain(anotherSubscriber)
+    // Unsubscribe from an event
+    unsub()
+    expect(event.subscribers).not.toContain(anotherSubscriber)
+  })
+
   it('Event.pub: should call each subscriber function once', () => {
     const anotherSubscriber = jest.fn()
     event.sub(anotherSubscriber)
@@ -84,5 +94,15 @@ describe('event.test.js', () => {
     event.pub()
     expect(subscriber).toBeCalledWith({}, eventData)
     expect(anotherSubscriber).toBeCalledWith({}, eventData)
+  })
+
+  it('Event.unsub: should unsubscribe all subscribers listening to an event', () => {
+    const anotherSubscriber = () => {}
+    event.sub(anotherSubscriber)
+    // Subscriber's list should contain two subscribers
+    expect(event.subscribers).toHaveLength(2)
+    // Unsubscribe all subscribers
+    event.unsubAll()
+    expect(event.subscribers).toHaveLength(0)
   })
 })

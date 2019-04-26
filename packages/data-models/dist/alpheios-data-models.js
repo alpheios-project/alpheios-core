@@ -4752,7 +4752,10 @@ class PsEventData {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PsEvent; });
-/* harmony import */ var _src_ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../src/ps-events/ps-event-data.js */ "./ps-events/ps-event-data.js");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid/v4 */ "../node_modules/uuid/v4.js");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _src_ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../src/ps-events/ps-event-data.js */ "./ps-events/ps-event-data.js");
+
 
 
 /**
@@ -4779,9 +4782,9 @@ class PsEvent {
 
     /**
      * A subscribers that listens to the published event.
-     * @type {Function[]} - A subscriber function
+     * @type {Map<int, EventSubscriber>} - A map of subscriber's functions
      */
-    this._subscribers = []
+    this._subscribers = new Map()
   }
 
   /**
@@ -4798,16 +4801,21 @@ class PsEvent {
    * @return {EventSubscriber[]} An array of event subscriber functions.
    */
   get subscribers () {
-    return this._subscribers
+    return Array.from(this._subscribers.values())
   }
 
   /**
    * Subscribes a function to the published event.
    * When event is published, a @type {Event~subscriber} function is called.
    * @param {EventSubscriber} subscriber - A subscriber function.
+   * @return {Function} - An function that, when called, will unsubscribe the current subscriber from an event.
    */
   sub (subscriber) {
-    this._subscribers.push(subscriber)
+    const subId = uuid_v4__WEBPACK_IMPORTED_MODULE_0___default()()
+    this._subscribers.set(subId, subscriber)
+    return () => {
+      this._subscribers.delete(subId)
+    }
   }
 
   /**
@@ -4817,7 +4825,14 @@ class PsEvent {
    * @param {string} [caller=''] - The name of the function that called `pub`.
    */
   pub (data = {}, caller = '') {
-    this._subscribers.forEach(l => l(data, new _src_ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](this, caller)))
+    this._subscribers.forEach(l => l(data, new _src_ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_1__["default"](this, caller)))
+  }
+
+  /**
+   * Unsubscribes all subscribers from an event.
+   */
+  unsubAll () {
+    this._subscribers.clear()
   }
 }
 
