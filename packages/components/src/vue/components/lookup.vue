@@ -20,7 +20,7 @@
               v-model="lookuptext"
           >
           <button
-              @click="lookup"
+              @click.stop="lookup"
               class="alpheios-button-primary"
               tabindex="-1"
               type="button"

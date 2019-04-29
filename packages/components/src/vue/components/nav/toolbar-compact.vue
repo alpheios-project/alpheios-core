@@ -3,7 +3,7 @@
       id="alpheios-toolbar-inner"
       class="alpheios-content alpheios-toolbar alpheios-toolbar--compact"
       v-show="$store.state.toolbar.visible"
-      @click="ui.showPanelTab('info')"
+      @click="openActionPanel"
   >
     <toolbar-icon/>
   </div>
@@ -23,10 +23,19 @@ export default {
     ui: 'ui',
     l10n: 'l10n'
   },
-  storeModules: ['toolbar', 'app', 'ui'], // Store modules that are required by this component
+  storeModules: ['toolbar', 'app', 'ui', 'actionPanel'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
     toolbarIcon: ToolbarIcon
+  },
+
+  methods: {
+    openActionPanel: function () {
+      // Toggle an action panel
+      this.$store.state.actionPanel.visible
+        ? this.$store.commit('actionPanel/close')
+        : this.$store.commit('actionPanel/open')
+    }
   }
 }
 </script>

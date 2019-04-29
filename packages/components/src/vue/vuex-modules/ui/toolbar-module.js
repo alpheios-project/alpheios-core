@@ -54,7 +54,7 @@ ToolbarModule.store = (moduleInstance) => {
       // Whether a toolbar is shown or hidden
       visible: false,
       // Choose compact or large layout from the value of the `platform` prop of a configuration object
-      layout: moduleInstance.config.platform.isDesktop ? `toolbarLarge` : 'toolbarCompact',
+      layout: 'toolbarCompact',
       // Initial position of a toolbar
       initialPos: moduleInstance.config.initialPos
     },

@@ -1,4 +1,8 @@
+import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import HTMLPage from '@/lib/utility/html-page.js'
+// This is a root Vue instance that is a common parent for all modules, and correspondingly, all UI components.
+// It is used to share information across all Vue instances created.
+let rootVi = null
 
 /**
  * A base class for all data and UI modules. Its role is to define common features that are shared
@@ -11,6 +15,15 @@ export default class Module {
    * @param {Object} config - A module's configuration object
    */
   constructor (store, api, config = {}) {
+    if (!rootVi) {
+      // Create a root Vue instance if not has been done already.
+      // All properties registered here will be shared across all Vue instances (i.e. components).
+      rootVi = new Vue({
+        store: store, // Install store into the instance
+        provide: api // Public API of the modules for child components
+      })
+    }
+
     this.config = Object.assign(this.constructor._configDefaults, config)
     this.isActivated = false
   }
@@ -29,6 +42,10 @@ export default class Module {
    */
   deactivate () {
     this.isActivated = false
+  }
+
+  static get rootVi () {
+    return rootVi
   }
 
   static get moduleName () {

@@ -2936,136 +2936,56 @@ h3.alpheios-inflections__credits-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-toolbar {
+.alpheios-action-panel {
+  width: 300px;
+  height: 400px;
   position: fixed;
-  z-index: 1000000;
+  padding: 10px 20px;
+  border: 1px solid var(--alpheios-border-color);
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
+  background-color: var(--alpheios-text-bg-color);
 }
-.alpheios-toolbar.alpheios-toolbar--compact {
+.alpheios-action-panel__lookup {
+  margin-bottom: 10px;
+}
+.alpheios-action-panel__nav-cont {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+.alpheios-action-panel__navbuttons {
+  display: block;
+  width: calc(var(--alpheios-base-ui-size) * 2.75);
+  height: calc(var(--alpheios-base-ui-size) * 2.75);
   cursor: pointer;
-  background-color: var(--alpheios-toolbar-bg-color);
-  border-radius: 50%;
-  right: 15px;
-  bottom: 60px;
-  width: 44px;
-  height: 44px;
-}
-.alpheios-toolbar.alpheios-toolbar--compact svg {
-  width: calc(var(--alpheios-base-ui-size) * 1.25);
-  height: auto;
-  position: relative;
   fill: var(--alpheios-icon-color);
   stroke: var(--alpheios-icon-color);
+  background-color: var(--alpheios-color-dark);
+  border-radius: 50%;
+  margin-right: 8px;
+}
+.alpheios-action-panel__navbuttons.disabled {
+  fill: var(--alpheios-color-neutral-dark);
+  stroke: var(--alpheios-color-neutral-dark);
+  cursor: not-allowed;
+}
+.alpheios-action-panel__navbuttons svg {
+  width: 50%;
+  height: auto;
+  position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
-/*
- Calculates a size of text elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
- */
-/*
- Calculates a size of UI elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
- */
-.alpheios-action-panel {
-  width: 300px;
-  height: 400px;
-  background: lightslategray;
-}
-.alpheios-toolbar.alpheios-toolbar--large {
-  background: transparent;
-}
-.alpheios-toolbar .alpheios-navbuttons__btn {
-  width: calc(var(--alpheios-base-ui-size) * 2.75);
-  height: calc(var(--alpheios-base-ui-size) * 2.75);
-  margin: calc(var(--alpheios-base-ui-size) * 0.5) 0;
-  box-sizing: border-box;
-  position: relative;
-  background-color: var(--alpheios-toolbar-bg-color);
-  border: calc(var(--alpheios-base-ui-size) * 0.0625) solid var(--alpheios-border-color);
-  border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
-}
-.alpheios-toolbar__header {
-  box-sizing: border-box;
-  border: 1px solid var(--alpheios-border-color);
-  border-bottom-left-radius: calc(var(--alpheios-base-ui-size) * 0.625);
-  border-bottom-right-radius: calc(var(--alpheios-base-ui-size) * 0.625);
-  cursor: pointer;
-  background: var(--alpheios-text-bg-color);
-}
-.alpheios-toolbar__header svg {
-  width: calc(var(--alpheios-base-ui-size) * 1.25);
-  height: auto;
-  position: relative;
-  left: calc(var(--alpheios-base-ui-size) * 0.6875);
-  top: calc(var(--alpheios-base-ui-size) * -0.3125);
-  fill: var(--alpheios-border-color);
-}
-.alpheios-toolbar__header.expanded svg {
-  top: calc(var(--alpheios-base-ui-size) * 0.3125);
-}
-.alpheios-toolbar__header:hover svg {
+.alpheios-action-panel__navbuttons:hover:not(.disabled), .alpheios-action-panel__navbuttons:focus:not(.disabled) {
   fill: var(--alpheios-icon-color-hover);
+  stroke: var(--alpheios-icon-color-hover);
+  background-color: var(--alpheios-icon-bg-color-hover);
 }
-.alpheios-toolbar__drag-handle {
-  width: calc(var(--alpheios-base-ui-size) * 2.75);
-  height: calc(var(--alpheios-base-ui-size) * 2.75);
-  border-bottom: none;
-  background: var(--alpheios-toolbar-bg-color);
-  box-sizing: border-box;
-  border-top-left-radius: calc(var(--alpheios-base-ui-size) * 0.625);
-  border-top-right-radius: calc(var(--alpheios-base-ui-size) * 0.625);
-}
-.alpheios-toolbar__logo-icon {
-  width: 60%;
-  height: auto;
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-45%, -45%);
-}
-.alpheios-toolbar__lookup-control {
-  cursor: pointer;
-  background: var(--alpheios-text-bg-color);
-}
-.alpheios-toolbar__lookup-control .alpheios-navbuttons__btn {
-  margin: 0;
-  border-radius: 0;
-  border-bottom: none;
-}
-.alpheios-toolbar__lookup {
-  display: flex;
-  position: absolute;
-  width: calc(var(--alpheios-base-ui-size) * 20.625);
-  height: calc(var(--alpheios-base-ui-size) * 5.625);
-  background: var(--alpheios-text-bg-color);
-  left: calc(var(--alpheios-base-ui-size) * -20);
-  top: 0;
-  border: calc(var(--alpheios-base-ui-size) * 0.0625) solid var(--alpheios-border-color);
-  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) 0 0 calc(var(--alpheios-base-ui-size) * 0.625);
-  box-sizing: border-box;
-  padding: calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 1.25) calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625);
-  z-index: -1;
-}
-.alpheios-toolbar--left .alpheios-toolbar__lookup {
-  left: 34px;
-  border-radius: 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) 0;
-  padding: calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 1.25);
-}
-.alpheios-toolbar__lookup .alpheios-lookup__form {
-  justify-content: flex-end;
-}
-.alpheios-toolbar__lookup .alph_tooltip {
-  display: inline-block;
-}
-.alpheios-toolbar__buttons {
-  display: flex;
-  flex-direction: column;
-}
-.alpheios-toolbar__buttons .alpheios-navbuttons__btn.disabled {
-  fill: var(--alpheios-color-neutral-dark);
-  stroke: var(--alpheios-color-neutral-dark);
-  cursor: default;
+.alpheios-action-panel__navbuttons.active {
+  fill: var(--alpheios-icon-color-active);
+  stroke: var(--alpheios-icon-color-active);
+  background-color: var(--alpheios-icon-bg-color-active);
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -3097,6 +3017,37 @@ h3.alpheios-inflections__credits-title {
   position: absolute;
   top: 5px;
   right: 5px;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
+.alpheios-toolbar {
+  position: fixed;
+  z-index: 1000000;
+}
+.alpheios-toolbar.alpheios-toolbar--compact {
+  cursor: pointer;
+  background-color: var(--alpheios-toolbar-bg-color);
+  border-radius: 50%;
+  right: 15px;
+  bottom: 60px;
+  width: 44px;
+  height: 44px;
+}
+.alpheios-toolbar.alpheios-toolbar--compact svg {
+  width: calc(var(--alpheios-base-ui-size) * 1.25);
+  height: auto;
+  position: relative;
+  fill: var(--alpheios-icon-color);
+  stroke: var(--alpheios-icon-color);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 /*
  Calculates a size of text elements relative to the base size.

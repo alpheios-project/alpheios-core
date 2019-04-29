@@ -6,71 +6,40 @@ import HTMLPage from '@/lib/utility/html-page.js'
 export default class ActionPanelModule extends Module {
   constructor (store, api, config) {
     super(store, api, config)
-    console.info(`Action panel module constructor`)
 
     // Create the mount point as the last child of the page's body
     let el = document.createElement('div')
-    let mountEl = document.body.appendChild(el)
-    //    let moduleInstance = this
+    let mountEl = document.querySelector(this.config.mountInto)
+    if (!mountEl) {
+      console.warn(`A ${this.config.mountInto} element for mounting ${this.constructor.moduleName} is not found. Will mount into the body instead`)
+      mountEl = document.body
+    }
+    let viEl = mountEl.appendChild(el)
 
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
 
     let VueComponentClass = Vue.extend(ActionPanel)
     this._vi = new VueComponentClass({
-      store: store, // Install store into the toolbar
-      provide: api, // Public API of the modules for child components
-      /*
-        Since this is a root component and we cannot claim APIs with `inject`
-        let's assign APIs to a custom prop to have access to it
-      */
-      // api: api,
-      // API modules that are required for this component
-      inject: ['l10n'],
-      /* inject: {
-        app: 'app',
-        ui: 'ui',
-        l10n: 'l10n',
-        settings: 'settings'
-      }, */
+      parent: this.constructor.rootVi,
       data: () => {
         return {
-          moduleData: {
-            initialShift: this.config.initialShift
-          }
+          // Make module configuration directly accessible by the module's Vue instance as a data prop
+          moduleConfig: this.config
         }
       }
     })
-    this._vi.$mount(mountEl)
-
-    /* this._vi = new Vue({
-      el: mountEl,
-      store: store, // Install store into the toolbar
-      provide: api, // Public API of the modules for child components
-      /!*
-      Since this is a root component and we cannot claim APIs with `inject`
-      let's assign APIs to a custom prop to have access to it
-       *!/
-      api: api,
-      components: {
-        actionPanel: ActionPanel
-      },
-      data: {
-        moduleData: {
-          initialShift: this.config.initialShift
-        }
-      }
-    }) */
+    this._vi.$mount(viEl)
   }
 
   activate () {
     super.activate()
-    // Open a toolbar on activation
+    // Open an action panel on activation
     this._vi.$store.commit(`actionPanel/open`)
   }
 
   deactivate () {
     super.deactivate()
-    // Close a toolbar on deactivation
+    // Close an action panel on deactivation
     this._vi.$store.commit(`actionPanel/close`)
   }
 }
@@ -81,17 +50,14 @@ ActionPanelModule.store = (moduleInstance) => {
     namespaced: true,
 
     state: {
-      // Whether a toolbar is shown or hidden
+      // Whether an action panel is shown or hidden
       visible: true,
-      someProp: 77,
-      // Choose compact or large layout from the value of the `platform` prop of a configuration object
-      layout: moduleInstance.config.platform.isDesktop ? `toolbarLarge` : 'toolbarCompact',
-      // Initial position of a toolbar
+      // Initial position of an action panel
       initialPos: moduleInstance.config.initialPos
     },
     mutations: {
       /**
-       * Opens a toolbar
+       * Opens an action panel
        * @param state
        */
       open (state) {
@@ -115,17 +81,19 @@ ActionPanelModule._configDefaults = {
   _supportedDeviceTypes: [HTMLPage.deviceTypes.DESKTOP, HTMLPage.deviceTypes.MOBILE],
   // A selector that specifies to what DOM element a nav will be mounted.
   // This element will be replaced with the root element of the panel component.
-  mountPoint: '#alpheios-toolbar',
-  // Initial position of a toolbar, in pixels. Any combination of positioning parameters (top, right, bottom, left)
+  mountInto: 'body',
+
+  rootElementId: null,
+  // Initial position of an action panel, in pixels. Any combination of positioning parameters (top, right, bottom, left)
   // in two different dimensions (X and Y) must be specified. Pixel units should NOT be added to the values.
   // Default values are the ones below.
   initialPos: {
-    top: 10,
-    left: 10
+    bottom: 120,
+    right: 20
   },
-  // How much a toolbar is shifted from its initial position.
+  // How much an action panel is shifted from its initial position.
   initialShift: {
     x: 0,
-    y: 33
+    y: 0
   }
 }

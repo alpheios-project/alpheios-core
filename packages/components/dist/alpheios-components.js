@@ -11216,23 +11216,18 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
-/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
-/* harmony import */ var _images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/images/alpheios/logo.svg */ "./images/alpheios/logo.svg");
+/* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
+/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/images/inline-icons/definitions.svg */ "./images/inline-icons/definitions.svg");
+/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/images/inline-icons/inflections.svg */ "./images/inline-icons/inflections.svg");
 /* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
 /* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/images/inline-icons/status.svg */ "./images/inline-icons/status.svg");
 /* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
 /* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
 /* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
-/* harmony import */ var _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/images/inline-icons/info.svg */ "./images/inline-icons/info.svg");
+/* harmony import */ var _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/images/inline-icons/usage-examples-icon1.svg */ "./images/inline-icons/usage-examples-icon1.svg");
 /* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
-/* harmony import */ var _images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/images/inline-icons/collapsed.svg */ "./images/inline-icons/collapsed.svg");
-/* harmony import */ var _images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/images/inline-icons/expanded.svg */ "./images/inline-icons/expanded.svg");
-/* harmony import */ var _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/images/inline-icons/lookup.svg */ "./images/inline-icons/lookup.svg");
-/* harmony import */ var _vue_components_nav_toolbar_compact_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/vue/components/nav/toolbar-compact.vue */ "./vue/components/nav/toolbar-compact.vue");
-/* harmony import */ var _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/vue/components/lookup.vue */ "./vue/components/lookup.vue");
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+/* harmony import */ var _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/vue/components/lookup.vue */ "./vue/components/lookup.vue");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
 //
@@ -11240,8 +11235,136 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 // Embeddable SVG icons
@@ -11254,62 +11377,49 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
 // Vue components
-
 
 // Modules support
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ActionPanel',
+  parent: undefined,
   // API modules that are required for this component
-  /*inject: {
+  inject: {
     app: 'app',
     ui: 'ui',
     l10n: 'l10n',
     settings: 'settings'
-  },*/
+  },
   storeModules: ['actionPanel', 'app', 'ui'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_15__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_11__["default"]],
   components: {
-    lookup: _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
-    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    logoIcon: _images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_2__["default"],
+    lookup: _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    definitionsIcon: _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_1__["default"],
+    inflectionsIcon: _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_2__["default"],
     inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_3__["default"],
     statusIcon: _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_4__["default"],
     userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_5__["default"],
     optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_6__["default"],
-    infoIcon: _images_inline_icons_info_svg__WEBPACK_IMPORTED_MODULE_8__["default"],
     grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_7__["default"],
-    wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_9__["default"],
-    collapsedIcon: _images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_10__["default"],
-    expandedIcon: _images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_11__["default"],
-    lookupIcon: _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_12__["default"]
+    wordUsageIcon: _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_8__["default"],
+    wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_9__["default"]
   },
-  interactInstance: null,
-  dragTreshold: 100, // Drag distance values above this will be considered abnormal
-  // Whether there is an error with Interact.js drag coordinates in the corresponding direction
-  dragErrorX: false,
-  dragErrorY: false,
-  /* props: {
-    moduleData: {
-      type: Object,
-      required: true
-    }
-  }, */
 
   data: function () {
     return {
       lookupVisible: false,
       contentVisible: false,
 
-      // How much a toolbar has been dragged from its initial position, in pixels
+      // How much an action panel has been dragged from its initial position, in pixels
       shift: {
         x: 0, // this.moduleData.initialShift.x,
         y: 0 // this.moduleData.initialShift.y
-      }
+      },
+
+      tooltipDirection: 'top'
     }
   },
 
@@ -11319,93 +11429,25 @@ __webpack_require__.r(__webpack_exports__);
         transform: `translate(${this.shift.x}px, ${this.shift.y}px)`
       }
 
-      if (this.$store.state.toolbar.initialPos) {
-        if (this.$store.state.toolbar.initialPos.top) {
-          styles.top = `${this.$store.state.toolbar.initialPos.top}px`
+      if (this.$store.state.actionPanel.initialPos) {
+        if (this.$store.state.actionPanel.initialPos.top) {
+          styles.top = `${this.$store.state.actionPanel.initialPos.top}px`
         }
-        if (this.$store.state.toolbar.initialPos.right) {
-          styles.right = `${this.$store.state.toolbar.initialPos.right}px`
+        if (this.$store.state.actionPanel.initialPos.right) {
+          styles.right = `${this.$store.state.actionPanel.initialPos.right}px`
         }
-        if (this.$store.state.toolbar.initialPos.bottom) {
-          styles.bottom = `${this.$store.state.toolbar.initialPos.bottom}px`
+        if (this.$store.state.actionPanel.initialPos.bottom) {
+          styles.bottom = `${this.$store.state.actionPanel.initialPos.bottom}px`
         }
-        if (this.$store.state.toolbar.initialPos.left) {
-          styles.left = `${this.$store.state.toolbar.initialPos.left}px`
+        if (this.$store.state.actionPanel.initialPos.left) {
+          styles.left = `${this.$store.state.actionPanel.initialPos.left}px`
         }
       }
       return styles
-    },
-
-    isInLeftHalf: function () {
-      if (this.$store.state.toolbar.initialPos.hasOwnProperty(`right`)) {
-        return (window.innerWidth / 2 - this.$store.state.toolbar.initialPos.right + this.shift.x < 0)
-      } else if (this.$store.state.toolbar.initialPos.hasOwnProperty(`left`)) {
-        return (this.$store.state.toolbar.initialPos.left + this.shift.x < window.innerWidth / 2)
-      } else {
-        // We have no information in which part of the screen the toolbar is, will default to right
-        return false
-      }
-    },
-
-    componentClasses: function () {
-      return this.isInLeftHalf ? 'alpheios-toolbar--left' : 'alpheios-toolbar--right'
-    },
-
-    tooltipDirection: function () {
-      return this.isInLeftHalf ? 'right' : 'left'
     }
   },
 
   methods: {
-    dragMoveListener (event) {
-      let dx = event.dx
-      let dy = event.dy
-      /*
-            On some websites Interact.js is unable to determine correct clientX or clientY coordinates.
-            This will result in a popup moving abruptly beyond screen limits.
-            To fix this, we will filter out erroneous coordinates and chancel a move in the corresponding
-            direction as incorrect. This will allow us to keep the popup on screen by sacrificing its movement
-            in (usually) one direction. This is probably the best we can do with all the information we have.
-             */
-      if (Math.abs(dx) > this.$options.dragTreshold) {
-        if (!this.$options.dragErrorX) {
-          console.warn(`Calculated horizontal drag distance is out of bounds: ${dx}. This is probably an error. Dragging in horizontal direction will be disabled.`)
-          this.$options.dragErrorX = true
-        }
-        dx = 0
-      }
-      if (Math.abs(dy) > this.$options.dragTreshold) {
-        if (!this.$options.dragErrorY) {
-          console.warn(`Calculated vertical drag distance is out of bounds: ${dy}. This is probably an error. Dragging in vertical direction will be disabled.`)
-          this.$options.dragErrorY = true
-        }
-        dy = 0
-      }
-      this.shift.x += dx
-      this.shift.y += dy
-    },
-
-    dragEndListener () {
-      this.settings.contentOptions.items.toolbarShiftX.setValue(this.shift.x)
-      this.settings.contentOptions.items.toolbarShiftY.setValue(this.shift.y)
-    }
-  },
-
-  mounted: function () {
-    console.info(`Action panel is mounted`)
-    console.info(`Store value is: ${this.$store.state.actionPanel.someProp}`)
-    /* this.$options.interactInstance = interact(this.$el.querySelector('#alpheios-toolbar-drag-handle'))
-      .draggable({
-        inertia: true,
-        autoScroll: false,
-        restrict: {
-          elementRect: { top: 0.5, left: 0.5, bottom: 0.5, right: 0.5 }
-        },
-        ignoreFrom: 'input, textarea, a[href], select, option'
-      })
-      .on('dragmove', this.dragMoveListener)
-      .on('dragend', this.dragEndListener)
-      .on('resizemove', this.resizeListener) */
   }
 });
 
@@ -11911,10 +11953,19 @@ __webpack_require__.r(__webpack_exports__);
     ui: 'ui',
     l10n: 'l10n'
   },
-  storeModules: ['toolbar', 'app', 'ui'], // Store modules that are required by this component
+  storeModules: ['toolbar', 'app', 'ui', 'actionPanel'], // Store modules that are required by this component
   mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
   components: {
     toolbarIcon: _images_inline_icons_toolbar_compact_icon_svg__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+
+  methods: {
+    openActionPanel: function () {
+      // Toggle an action panel
+      this.$store.state.actionPanel.visible
+        ? this.$store.commit('actionPanel/close')
+        : this.$store.commit('actionPanel/open')
+    }
   }
 });
 
@@ -18777,7 +18828,12 @@ var render = function() {
                 {
                   staticClass: "alpheios-button-primary",
                   attrs: { tabindex: "-1", type: "button" },
-                  on: { click: _vm.lookup }
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.lookup($event)
+                    }
+                  }
                 },
                 [
                   _vm._v(
@@ -19521,7 +19577,320 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "alpheios-action-panel alpheios-content" })
+  return _c(
+    "div",
+    {
+      directives: [
+        {
+          name: "show",
+          rawName: "v-show",
+          value:
+            _vm.$store.state.actionPanel.visible &&
+            !_vm.$store.state.panel.visible,
+          expression:
+            "$store.state.actionPanel.visible && !$store.state.panel.visible"
+        }
+      ],
+      staticClass: "alpheios-action-panel alpheios-content",
+      style: _vm.componentStyles,
+      attrs: { id: _vm.moduleConfig.rootElementId }
+    },
+    [
+      _c("lookup", {
+        staticClass: "alpheios-action-panel__lookup",
+        attrs: {
+          "name-base": "action-panel",
+          "use-page-lang-prefs": true,
+          "show-language-settings-group": false
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "alpheios-action-panel__nav-cont" },
+        [
+          _c(
+            "alph-tooltip",
+            {
+              attrs: {
+                tooltipText: _vm.l10n.getText("TOOLTIP_DEFINITIONS"),
+                tooltipDirection: "tooltipDirection"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-action-panel__navbuttons",
+                  class: { disabled: !_vm.$store.getters["app/defDataReady"] },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.ui.showPanelTab("definitions")
+                    }
+                  }
+                },
+                [_c("definitions-icon")],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "alph-tooltip",
+            {
+              attrs: {
+                tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT"),
+                tooltipDirection: "tooltipDirection"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-action-panel__navbuttons",
+                  class: { disabled: !_vm.$store.state.app.hasInflData },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.ui.showPanelTab("inflections")
+                    }
+                  }
+                },
+                [_c("inflections-icon")],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "alph-tooltip",
+            {
+              attrs: {
+                tooltipText: _vm.l10n.getText("TOOLTIP_WORD_USAGE"),
+                tooltipDirection: "tooltipDirection"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-action-panel__navbuttons",
+                  class: {
+                    disabled: !_vm.$store.state.app.wordUsageExampleEnabled
+                  },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.ui.showPanelTab("wordUsage")
+                    }
+                  }
+                },
+                [_c("word-usage-icon")],
+                1
+              )
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "alpheios-action-panel__nav-cont" },
+        [
+          _c(
+            "alph-tooltip",
+            {
+              attrs: {
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_INFLECT_BROWSER"),
+                "tooltip-direction": _vm.tooltipDirection
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-action-panel__navbuttons",
+                  class: {
+                    active: _vm.$store.getters["ui/isActiveTab"](
+                      "inflectionsbrowser"
+                    )
+                  },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.ui.showPanelTab("inflectionsbrowser")
+                    }
+                  }
+                },
+                [_c("inflections-browser-icon")],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "alph-tooltip",
+            {
+              attrs: {
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_GRAMMAR"),
+                "tooltip-direction": _vm.tooltipDirection
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-action-panel__navbuttons",
+                  class: {
+                    active: _vm.$store.getters["ui/isActiveTab"]("grammar"),
+                    disabled: !_vm.$store.getters["app/hasGrammarRes"]
+                  },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.ui.showPanelTab("grammar")
+                    }
+                  }
+                },
+                [_c("grammar-icon")],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "alph-tooltip",
+            {
+              attrs: {
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_OPTIONS"),
+                "tooltip-direction": _vm.tooltipDirection
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-action-panel__navbuttons",
+                  class: {
+                    active: _vm.$store.getters["ui/isActiveTab"]("options")
+                  },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.ui.showPanelTab("options")
+                    }
+                  }
+                },
+                [_c("options-icon")],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "alph-tooltip",
+            {
+              attrs: {
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_USER"),
+                "tooltip-direction": _vm.tooltipDirection
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-action-panel__navbuttons",
+                  class: {
+                    active: _vm.$store.getters["ui/isActiveTab"]("user"),
+                    disabled: !_vm.$store.state.auth.enableLogin
+                  },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.ui.showPanelTab("user")
+                    }
+                  }
+                },
+                [_c("user-icon")],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "alph-tooltip",
+            {
+              attrs: {
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_WORDLIST"),
+                "tooltip-direction": _vm.tooltipDirection
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-action-panel__navbuttons",
+                  class: { disabled: !_vm.$store.state.app.hasWordListsData },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.ui.showPanelTab("wordlist")
+                    }
+                  }
+                },
+                [_c("wordlist-icon")],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "alph-tooltip",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    _vm.settings.contentOptions.items.verboseMode
+                      .currentValue === "verbose",
+                  expression:
+                    "settings.contentOptions.items.verboseMode.currentValue === `verbose`"
+                }
+              ],
+              attrs: {
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_STATUS"),
+                "tooltip-direction": _vm.tooltipDirection
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-action-panel__navbuttons",
+                  class: {
+                    active: _vm.$store.getters["ui/isActiveTab"]("status")
+                  },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.ui.showPanelTab("status")
+                    }
+                  }
+                },
+                [_c("status-icon")],
+                1
+              )
+            ]
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -20527,11 +20896,7 @@ var render = function() {
       staticClass:
         "alpheios-content alpheios-toolbar alpheios-toolbar--compact",
       attrs: { id: "alpheios-toolbar-inner" },
-      on: {
-        click: function($event) {
-          return _vm.ui.showPanelTab("info")
-        }
-      }
+      on: { click: _vm.openActionPanel }
     },
     [_c("toolbar-icon")],
     1
@@ -39276,8 +39641,8 @@ class UIController {
     }) */
 
     uiController.registerModule(_vue_vuex_modules_ui_action_panel_module_js__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      rootElementId: 'some-new'
     })
-    console.info(`Action panel module has been registered`)
 
     // Creates on configures an event listener
     uiController.evc = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_26__["default"]()
@@ -40049,6 +40414,7 @@ class UIController {
    * @return {UIController} - An instance of a UI controller, for chaining.
    */
   changeTab (tabName) {
+    console.info(`Change tab`)
     // If tab is disabled, switch to a default one
     if (this.isDisabledTab(tabName)) {
       console.warn(`Attempting to switch to a ${tabName} tab which is not available`)
@@ -40068,6 +40434,7 @@ class UIController {
    * @return {UIController} - A UI controller's instance reference, for chaining.
    */
   showPanelTab (tabName) {
+    console.info(`Show panel tab ${tabName}`)
     this.api.ui.changeTab(tabName)
     this.api.ui.openPanel()
     return this
@@ -40231,6 +40598,7 @@ class UIController {
    * Opens a panel. Used from a content script upon a panel status change request.
    */
   openPanel (forceOpen = false) {
+    console.info(`Open panel`)
     if (this.api.ui.hasModule('panel')) {
       if (forceOpen || !this.state.isPanelOpen()) {
         this.store.commit('panel/open')
@@ -40240,6 +40608,10 @@ class UIController {
         // Close a toolbar when a panel opens
         this.store.commit(`toolbar/close`)
       }
+      /* if (this.hasModule('actionPanel')) {
+        console.info(`Closing an action panel`)
+        this.store.commit('actionPanel/close')
+      } */
     }
   }
 
@@ -40247,6 +40619,7 @@ class UIController {
    * Closes a panel. Used from a content script upon a panel status change request.
    */
   closePanel (syncState = true) {
+    console.info(`Close panel`)
     if (this.api.ui.hasModule('panel')) {
       this.store.commit('panel/close')
       this.store.commit('ui/resetActiveTab')
@@ -49084,7 +49457,6 @@ class L10nModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0_
    */
   constructor (store, api, config) {
     super(store, api, config)
-    console.info(`L10n constructor`)
     this._l10n = new _lib_l10n_l10n_js__WEBPACK_IMPORTED_MODULE_1__["default"]()
     this.config.messageBundles.forEach(mb => this._l10n.addMessageBundle(mb))
     this._l10n.setLocale(this.config.defaultLocale)
@@ -49197,8 +49569,14 @@ L10nModule._configDefaults = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Module; });
-/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
+ // Vue in a runtime + compiler configuration
 
+// This is a root Vue instance that is a common parent for all modules, and correspondingly, all UI components.
+// It is used to share information across all Vue instances created.
+let rootVi = null
 
 /**
  * A base class for all data and UI modules. Its role is to define common features that are shared
@@ -49211,6 +49589,15 @@ class Module {
    * @param {Object} config - A module's configuration object
    */
   constructor (store, api, config = {}) {
+    if (!rootVi) {
+      // Create a root Vue instance if not has been done already.
+      // All properties registered here will be shared across all Vue instances (i.e. components).
+      rootVi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+        store: store, // Install store into the instance
+        provide: api // Public API of the modules for child components
+      })
+    }
+
     this.config = Object.assign(this.constructor._configDefaults, config)
     this.isActivated = false
   }
@@ -49229,6 +49616,10 @@ class Module {
    */
   deactivate () {
     this.isActivated = false
+  }
+
+  static get rootVi () {
+    return rootVi
   }
 
   static get moduleName () {
@@ -49253,7 +49644,7 @@ class Module {
    * @return {boolean} True if platform is supported, false otherwise.
    */
   static isSupportedPlatform (platform) {
-    if (this._configDefaults._supportedDeviceTypes.includes(_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].deviceTypes.ANY)) {
+    if (this._configDefaults._supportedDeviceTypes.includes(_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_1__["default"].deviceTypes.ANY)) {
       return true
     } else if (this._configDefaults._supportedDeviceTypes.includes(platform.deviceType)) {
       return true
@@ -49311,7 +49702,7 @@ Module._configDefaults = {
   /**
    * A list of deviceTypes supported by a module according to HTMLPage.deviceTypes list.
    */
-  _supportedDeviceTypes: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].deviceTypes.ANY]
+  _supportedDeviceTypes: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_1__["default"].deviceTypes.ANY]
 }
 
 
@@ -49369,71 +49760,40 @@ __webpack_require__.r(__webpack_exports__);
 class ActionPanelModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
   constructor (store, api, config) {
     super(store, api, config)
-    console.info(`Action panel module constructor`)
 
     // Create the mount point as the last child of the page's body
     let el = document.createElement('div')
-    let mountEl = document.body.appendChild(el)
-    //    let moduleInstance = this
+    let mountEl = document.querySelector(this.config.mountInto)
+    if (!mountEl) {
+      console.warn(`A ${this.config.mountInto} element for mounting ${this.constructor.moduleName} is not found. Will mount into the body instead`)
+      mountEl = document.body
+    }
+    let viEl = mountEl.appendChild(el)
 
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
 
     let VueComponentClass = vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend(_vue_components_nav_action_panel_vue__WEBPACK_IMPORTED_MODULE_2__["default"])
     this._vi = new VueComponentClass({
-      store: store, // Install store into the toolbar
-      provide: api, // Public API of the modules for child components
-      /*
-        Since this is a root component and we cannot claim APIs with `inject`
-        let's assign APIs to a custom prop to have access to it
-      */
-      // api: api,
-      // API modules that are required for this component
-      inject: ['l10n'],
-      /* inject: {
-        app: 'app',
-        ui: 'ui',
-        l10n: 'l10n',
-        settings: 'settings'
-      }, */
+      parent: this.constructor.rootVi,
       data: () => {
         return {
-          moduleData: {
-            initialShift: this.config.initialShift
-          }
+          // Make module configuration directly accessible by the module's Vue instance as a data prop
+          moduleConfig: this.config
         }
       }
     })
-    this._vi.$mount(mountEl)
-
-    /* this._vi = new Vue({
-      el: mountEl,
-      store: store, // Install store into the toolbar
-      provide: api, // Public API of the modules for child components
-      /!*
-      Since this is a root component and we cannot claim APIs with `inject`
-      let's assign APIs to a custom prop to have access to it
-       *!/
-      api: api,
-      components: {
-        actionPanel: ActionPanel
-      },
-      data: {
-        moduleData: {
-          initialShift: this.config.initialShift
-        }
-      }
-    }) */
+    this._vi.$mount(viEl)
   }
 
   activate () {
     super.activate()
-    // Open a toolbar on activation
+    // Open an action panel on activation
     this._vi.$store.commit(`actionPanel/open`)
   }
 
   deactivate () {
     super.deactivate()
-    // Close a toolbar on deactivation
+    // Close an action panel on deactivation
     this._vi.$store.commit(`actionPanel/close`)
   }
 }
@@ -49444,17 +49804,14 @@ ActionPanelModule.store = (moduleInstance) => {
     namespaced: true,
 
     state: {
-      // Whether a toolbar is shown or hidden
+      // Whether an action panel is shown or hidden
       visible: true,
-      someProp: 77,
-      // Choose compact or large layout from the value of the `platform` prop of a configuration object
-      layout: moduleInstance.config.platform.isDesktop ? `toolbarLarge` : 'toolbarCompact',
-      // Initial position of a toolbar
+      // Initial position of an action panel
       initialPos: moduleInstance.config.initialPos
     },
     mutations: {
       /**
-       * Opens a toolbar
+       * Opens an action panel
        * @param state
        */
       open (state) {
@@ -49478,18 +49835,20 @@ ActionPanelModule._configDefaults = {
   _supportedDeviceTypes: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_3__["default"].deviceTypes.DESKTOP, _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_3__["default"].deviceTypes.MOBILE],
   // A selector that specifies to what DOM element a nav will be mounted.
   // This element will be replaced with the root element of the panel component.
-  mountPoint: '#alpheios-toolbar',
-  // Initial position of a toolbar, in pixels. Any combination of positioning parameters (top, right, bottom, left)
+  mountInto: 'body',
+
+  rootElementId: null,
+  // Initial position of an action panel, in pixels. Any combination of positioning parameters (top, right, bottom, left)
   // in two different dimensions (X and Y) must be specified. Pixel units should NOT be added to the values.
   // Default values are the ones below.
   initialPos: {
-    top: 10,
-    left: 10
+    bottom: 120,
+    right: 20
   },
-  // How much a toolbar is shifted from its initial position.
+  // How much an action panel is shifted from its initial position.
   initialShift: {
     x: 0,
-    y: 33
+    y: 0
   }
 }
 
@@ -49539,6 +49898,7 @@ class PanelModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1
         compactPanel: _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_3__["default"] // A mobile version of a panel
       }
     })
+    console.info(`Panel module is created`)
   }
 }
 
@@ -49571,6 +49931,7 @@ PanelModule.store = (moduleInstance) => {
        * @param state
        */
       close (state) {
+        console.info(`Panel close is called`)
         state.visible = false
       },
 
@@ -49819,7 +50180,7 @@ ToolbarModule.store = (moduleInstance) => {
       // Whether a toolbar is shown or hidden
       visible: false,
       // Choose compact or large layout from the value of the `platform` prop of a configuration object
-      layout: moduleInstance.config.platform.isDesktop ? `toolbarLarge` : 'toolbarCompact',
+      layout: 'toolbarCompact',
       // Initial position of a toolbar
       initialPos: moduleInstance.config.initialPos
     },
