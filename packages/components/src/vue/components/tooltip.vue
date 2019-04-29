@@ -95,7 +95,7 @@ export default {
   .alph_tooltip-top {
     bottom: 125%;
     left: 50%;
-    margin-left: -50%;
+    transform: translateX(-50%);
   }
 
   .alph_tooltip-top::after {

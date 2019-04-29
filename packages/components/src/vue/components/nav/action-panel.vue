@@ -15,12 +15,12 @@
     <div class="alpheios-action-panel__nav-cont">
       <alph-tooltip
           :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')"
-          tooltipDirection="tooltipDirection"
+          :tooltipDirection="tooltipDirection"
       >
         <div
             :class="{ disabled: !$store.getters['app/defDataReady'] }"
             @click.stop="ui.showPanelTab('definitions')"
-            class="alpheios-action-panel__navbuttons"
+            class="alpheios-action-panel__navbutton"
         >
           <definitions-icon/>
         </div>
@@ -28,11 +28,11 @@
 
       <alph-tooltip
           :tooltipText="l10n.getText('TOOLTIP_INFLECT')"
-          tooltipDirection="tooltipDirection"
+          :tooltipDirection="tooltipDirection"
       >
         <div
             @click.stop="ui.showPanelTab('inflections')"
-            class="alpheios-action-panel__navbuttons"
+            class="alpheios-action-panel__navbutton"
             :class="{ disabled: !$store.state.app.hasInflData }"
         >
           <inflections-icon/>
@@ -41,11 +41,11 @@
 
       <alph-tooltip
           :tooltipText="l10n.getText('TOOLTIP_WORD_USAGE')"
-          tooltipDirection="tooltipDirection"
+          :tooltipDirection="tooltipDirection"
       >
         <div
             @click.stop="ui.showPanelTab('wordUsage')"
-            class="alpheios-action-panel__navbuttons"
+            class="alpheios-action-panel__navbutton"
             :class="{ disabled: !$store.state.app.wordUsageExampleEnabled }"
         >
           <word-usage-icon/>
@@ -60,7 +60,7 @@
       >
         <div
             @click.stop="ui.showPanelTab('inflectionsbrowser')"
-            class="alpheios-action-panel__navbuttons"
+            class="alpheios-action-panel__navbutton"
             :class="{ active: $store.getters['ui/isActiveTab']('inflectionsbrowser') }"
         >
           <inflections-browser-icon/>
@@ -73,7 +73,7 @@
       >
         <div
             :class="{ active: $store.getters['ui/isActiveTab']('grammar'), disabled: !$store.getters[`app/hasGrammarRes`] }"
-            class="alpheios-action-panel__navbuttons"
+            class="alpheios-action-panel__navbutton"
             @click.stop="ui.showPanelTab('grammar')"
         >
           <grammar-icon/>
@@ -86,7 +86,7 @@
       >
         <div
             :class="{ active: $store.getters['ui/isActiveTab']('options') }"
-            class="alpheios-action-panel__navbuttons"
+            class="alpheios-action-panel__navbutton"
             @click.stop="ui.showPanelTab('options')"
         >
           <options-icon/>
@@ -99,7 +99,7 @@
       >
         <div
             :class="{ active: $store.getters['ui/isActiveTab']('user'), disabled: !$store.state.auth.enableLogin }"
-            class="alpheios-action-panel__navbuttons"
+            class="alpheios-action-panel__navbutton"
             @click.stop="ui.showPanelTab('user')"
         >
           <user-icon/>
@@ -112,7 +112,7 @@
       >
         <div
             :class="{ disabled: !$store.state.app.hasWordListsData }"
-            class="alpheios-action-panel__navbuttons"
+            class="alpheios-action-panel__navbutton"
             @click.stop="ui.showPanelTab('wordlist')"
         >
           <wordlist-icon/>
@@ -126,7 +126,7 @@
       >
         <div
             :class="{ active: $store.getters['ui/isActiveTab']('status') }"
-            class="alpheios-action-panel__navbuttons"
+            class="alpheios-action-panel__navbutton"
             @click.stop="ui.showPanelTab('status')"
         >
           <status-icon/>
@@ -231,19 +231,29 @@ export default {
     padding: 10px 20px;
     @include alpheios-border;
     background-color: var(--alpheios-text-bg-color);
+    transition: display 0.4s;
   }
 
   .alpheios-action-panel__lookup {
     margin-bottom: 10px;
+
+    & input.alpheios-input,
+    & input.alpheios-input:focus {
+      width: 65%;
+    }
   }
 
   .alpheios-action-panel__nav-cont {
     display: flex;
     justify-content: flex-start;
     margin-bottom: 10px;
+
+    & .alph_tooltip {
+      margin-right: 8px;
+    }
   }
 
-  .alpheios-action-panel__navbuttons {
+  .alpheios-action-panel__navbutton {
     display: block;
     width: uisize(44px);
     height: uisize(44px);
@@ -252,7 +262,6 @@ export default {
     stroke: var(--alpheios-icon-color);
     background-color: var(--alpheios-color-dark);
     border-radius: 50%;
-    margin-right: 8px;
 
     &.disabled {
       fill: var(--alpheios-color-neutral-dark);

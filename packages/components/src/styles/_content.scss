@@ -21,6 +21,9 @@
     font-style: normal;
     font-size: var(--alpheios-base-text-size);
     color: var(--alpheios-text-color);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
     // To override page styles
     margin: 0;
     // To override default Firefox styles
@@ -29,7 +32,7 @@
   }
 
   p {
-    margin-bottom: textsize(16px);
+    margin: 0 0 textsize(16px);
   }
 
   a {

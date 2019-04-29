@@ -386,12 +386,14 @@ html {
   font-style: normal;
   font-size: var(--alpheios-base-text-size);
   color: var(--alpheios-text-color);
+}
+.alpheios-content h1, .alpheios-content h2, .alpheios-content h3, .alpheios-content h4, .alpheios-content h5, .alpheios-content h6 {
   margin: 0;
   margin-block-start: 0;
   margin-block-end: 0;
 }
 .alpheios-content p {
-  margin-bottom: calc(var(--alpheios-base-text-size) * 1);
+  margin: 0 0 calc(var(--alpheios-base-text-size) * 1);
 }
 .alpheios-content a {
   color: var(--alpheios-color-vivid);
@@ -1265,7 +1267,7 @@ select.alpheios-setting__control,
 .alph_tooltip-top {
   bottom: 125%;
   left: 50%;
-  margin-left: -50%;
+  transform: translateX(-50%);
 }
 .alph_tooltip-top::after {
   content: "";
@@ -2944,16 +2946,23 @@ h3.alpheios-inflections__credits-title {
   border: 1px solid var(--alpheios-border-color);
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
   background-color: var(--alpheios-text-bg-color);
+  transition: display 0.4s;
 }
 .alpheios-action-panel__lookup {
   margin-bottom: 10px;
+}
+.alpheios-action-panel__lookup input.alpheios-input, .alpheios-action-panel__lookup input.alpheios-input:focus {
+  width: 65%;
 }
 .alpheios-action-panel__nav-cont {
   display: flex;
   justify-content: flex-start;
   margin-bottom: 10px;
 }
-.alpheios-action-panel__navbuttons {
+.alpheios-action-panel__nav-cont .alph_tooltip {
+  margin-right: 8px;
+}
+.alpheios-action-panel__navbutton {
   display: block;
   width: calc(var(--alpheios-base-ui-size) * 2.75);
   height: calc(var(--alpheios-base-ui-size) * 2.75);
@@ -2962,14 +2971,13 @@ h3.alpheios-inflections__credits-title {
   stroke: var(--alpheios-icon-color);
   background-color: var(--alpheios-color-dark);
   border-radius: 50%;
-  margin-right: 8px;
 }
-.alpheios-action-panel__navbuttons.disabled {
+.alpheios-action-panel__navbutton.disabled {
   fill: var(--alpheios-color-neutral-dark);
   stroke: var(--alpheios-color-neutral-dark);
   cursor: not-allowed;
 }
-.alpheios-action-panel__navbuttons svg {
+.alpheios-action-panel__navbutton svg {
   width: 50%;
   height: auto;
   position: relative;
@@ -2977,12 +2985,12 @@ h3.alpheios-inflections__credits-title {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.alpheios-action-panel__navbuttons:hover:not(.disabled), .alpheios-action-panel__navbuttons:focus:not(.disabled) {
+.alpheios-action-panel__navbutton:hover:not(.disabled), .alpheios-action-panel__navbutton:focus:not(.disabled) {
   fill: var(--alpheios-icon-color-hover);
   stroke: var(--alpheios-icon-color-hover);
   background-color: var(--alpheios-icon-bg-color-hover);
 }
-.alpheios-action-panel__navbuttons.active {
+.alpheios-action-panel__navbutton.active {
   fill: var(--alpheios-icon-color-active);
   stroke: var(--alpheios-icon-color-active);
   background-color: var(--alpheios-icon-bg-color-active);
