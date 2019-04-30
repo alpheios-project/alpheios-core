@@ -1672,6 +1672,169 @@ a.alpheios-popup__providers-link {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-lookup__form {
+  text-align: left !important;
+  display: flex;
+  flex-direction: column !important;
+  width: 100% !important;
+}
+.alpheios-lookup__form .alpheios-setting__label {
+  display: inline-block;
+  margin-bottom: calc(var(--alpheios-base-ui-size) * 0.375) !important;
+  width: auto !important;
+}
+.alpheios-lookup__form-element {
+  margin-bottom: calc(var(--alpheios-base-ui-size) * 0.625) !important;
+}
+.alpheios-lookup__form-element.alpheios-lookup__lang-control {
+  flex-direction: column !important;
+  margin-right: calc(var(--alpheios-base-ui-size) * 3.125) !important;
+}
+.alpheios-lookup__form-element.alpheios-lookup__lang-control .alpheios-setting__control {
+  width: calc(var(--alpheios-base-text-size) * 7.5) !important;
+}
+.alpheios-lookup__settings {
+  display: flex;
+  flex-direction: column !important;
+}
+.alpheios-lookup__form-row {
+  display: flex;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+}
+.alpheios-lookup__search-control {
+  display: flex;
+}
+.alpheios-lookup__search-control input.alpheios-input,
+.alpheios-lookup__search-control input.alpheios-input:focus {
+  width: 70% !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+.alpheios-lookup__search-control button {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+.alpheios-lookup__resource-control {
+  display: flex;
+  flex-direction: column !important;
+}
+.alpheios-lookup__resource-control .alpheios-setting__control {
+  width: 100% !important;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
+.alpheios-action-menu {
+  width: 300px !important;
+  height: 245px !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  padding: 10px 20px !important;
+  border: 1px solid var(--alpheios-border-color) !important;
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
+  background-color: var(--alpheios-text-bg-color) !important;
+  transition: display 0.4s !important;
+  z-index: 100 !important;
+}
+.alpheios-action-menu__close-icon {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  cursor: pointer !important;
+  width: 20px !important;
+  height: auto !important;
+  fill: var(--alpheios-color-vivid) !important;
+}
+.alpheios-action-menu__close-icon:hover, .alpheios-action-menu__close-icon:focus {
+  fill: var(--alpheios-color-vivid-hover) !important;
+}
+.alpheios-action-menu__close-icon:active {
+  fill: var(--alpheios-color-vivid-pressed) !important;
+}
+.alpheios-action-menu__lookup-cont {
+  margin: 20px 0 10px !important;
+  height: 90px !important;
+  position: relative !important;
+}
+.alpheios-action-menu__lookup input.alpheios-input, .alpheios-action-menu__lookup input.alpheios-input:focus {
+  width: 65% !important;
+}
+.alpheios-action-menu__progress-bar {
+  position: absolute !important;
+  left: 0 !important;
+  top: 70px !important;
+  width: 100% !important;
+}
+.alpheios-action-menu__progress-bar .alpheios-popup-lexdataloading__progress-inner {
+  height: 16px !important;
+  border-color: var(--alpheios-color-vivid) !important;
+}
+.alpheios-action-menu__progress-bar .alpheios-popup-lexdataloading__progress-line {
+  background-color: var(--alpheios-color-vivid-hover) !important;
+  left: 0.6% !important;
+  top: 1px !important;
+  height: 10px !important;
+  width: 98.8% !important;
+}
+.alpheios-action-menu__progress-bar .alpheios-popup-lexdataloading__progress-text {
+  display: none;
+}
+.alpheios-action-menu__nav-cont {
+  display: flex;
+  justify-content: flex-start !important;
+  margin-bottom: 10px !important;
+}
+.alpheios-action-menu__nav-cont .alph_tooltip {
+  margin-right: 8px !important;
+}
+.alpheios-action-menu__navbutton {
+  display: block;
+  width: calc(var(--alpheios-base-ui-size) * 2.75) !important;
+  height: calc(var(--alpheios-base-ui-size) * 2.75) !important;
+  cursor: pointer !important;
+  fill: var(--alpheios-icon-color) !important;
+  stroke: var(--alpheios-icon-color) !important;
+  background-color: var(--alpheios-color-dark) !important;
+  border-radius: 50% !important;
+}
+.alpheios-action-menu__navbutton.disabled {
+  fill: var(--alpheios-color-neutral-dark) !important;
+  stroke: var(--alpheios-color-neutral-dark) !important;
+  cursor: default !important;
+}
+.alpheios-action-menu__navbutton svg {
+  width: 50% !important;
+  height: auto !important;
+  position: relative !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+.alpheios-action-menu__navbutton:hover:not(.disabled), .alpheios-action-menu__navbutton:focus:not(.disabled) {
+  fill: var(--alpheios-icon-color-hover) !important;
+  stroke: var(--alpheios-icon-color-hover) !important;
+  background-color: var(--alpheios-icon-bg-color-hover) !important;
+}
+.alpheios-action-menu__navbutton.active {
+  fill: var(--alpheios-icon-color-active) !important;
+  stroke: var(--alpheios-icon-color-active) !important;
+  background-color: var(--alpheios-icon-bg-color-active) !important;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
 .infl-suff-footnote-link {
   position: relative !important;
 }
@@ -2191,64 +2354,6 @@ h3.alpheios-inflections__credits-title {
   font-weight: 700 !important;
   margin-left: calc(var(--alpheios-base-text-size) * 2) !important;
   margin-bottom: calc(var(--alpheios-base-text-size) * 1.25) !important;
-}
-/*
- Calculates a size of text elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
- */
-/*
- Calculates a size of UI elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
- */
-.alpheios-lookup__form {
-  text-align: left !important;
-  display: flex;
-  flex-direction: column !important;
-  width: 100% !important;
-}
-.alpheios-lookup__form .alpheios-setting__label {
-  display: inline-block;
-  margin-bottom: calc(var(--alpheios-base-ui-size) * 0.375) !important;
-  width: auto !important;
-}
-.alpheios-lookup__form-element {
-  margin-bottom: calc(var(--alpheios-base-ui-size) * 0.625) !important;
-}
-.alpheios-lookup__form-element.alpheios-lookup__lang-control {
-  flex-direction: column !important;
-  margin-right: calc(var(--alpheios-base-ui-size) * 3.125) !important;
-}
-.alpheios-lookup__form-element.alpheios-lookup__lang-control .alpheios-setting__control {
-  width: calc(var(--alpheios-base-text-size) * 7.5) !important;
-}
-.alpheios-lookup__settings {
-  display: flex;
-  flex-direction: column !important;
-}
-.alpheios-lookup__form-row {
-  display: flex;
-  align-items: flex-start !important;
-  justify-content: space-between !important;
-}
-.alpheios-lookup__search-control {
-  display: flex;
-}
-.alpheios-lookup__search-control input.alpheios-input,
-.alpheios-lookup__search-control input.alpheios-input:focus {
-  width: 70% !important;
-  border-top-right-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-}
-.alpheios-lookup__search-control button {
-  border-top-left-radius: 0 !important;
-  border-bottom-left-radius: 0 !important;
-}
-.alpheios-lookup__resource-control {
-  display: flex;
-  flex-direction: column !important;
-}
-.alpheios-lookup__resource-control .alpheios-setting__control {
-  width: 100% !important;
 }
 /*
  Calculates a size of text elements relative to the base size.

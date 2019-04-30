@@ -28,7 +28,8 @@
     </div>
 
     <div class="alpheios-panel__content">
-      <drop-down-menu :visibility="menuVisible"/>
+<!--      <drop-down-menu :visibility="menuVisible"/>-->
+      <action-menu :visible="menuVisible" v-on:close-action-menu="closeMenu"/>
 
       <div
           class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding"
@@ -298,6 +299,7 @@
 import HTMLPage from '@/lib/utility/html-page.js'
 // Vue components
 import DropDownMenu from '@/vue/components/nav/drop-down-menu.vue'
+import ActionMenu from '@/vue/components/nav/action-menu.vue'
 import NavbuttonsCompact from '@/vue/components/nav/navbuttons-compact.vue'
 import NotificationArea from '@/vue/components//notification-area.vue'
 import Inflections from './inflections.vue'
@@ -341,6 +343,7 @@ export default {
   components: {
     menuIcon: MenuIcon,
     dropDownMenu: DropDownMenu,
+    actionMenu: ActionMenu,
     navbuttonsCompact: NavbuttonsCompact,
     notificationArea: NotificationArea,
     inflections: Inflections,
@@ -549,6 +552,10 @@ export default {
           }
         }
       }
+    },
+
+    closeMenu: function () {
+      this.menuVisible = false
     }
   },
 

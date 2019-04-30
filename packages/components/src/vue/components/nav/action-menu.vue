@@ -1,37 +1,35 @@
 <template>
   <div
-      :id="moduleConfig.rootElementId"
-      class="alpheios-action-panel alpheios-content"
-      :style="componentStyles"
-      v-show="$store.state.actionPanel.visible && !$store.state.panel.visible"
+      class="alpheios-action-menu alpheios-content"
+      v-show="visible"
   >
     <close-icon
-        class="alpheios-action-panel__close-icon"
-        @click.stop="$store.commit('actionPanel/close')"
+        class="alpheios-action-menu__close-icon"
+        @click.stop="close"
     />
 
-    <div class="alpheios-action-panel__lookup-cont">
+    <div class="alpheios-action-menu__lookup-cont">
       <lookup
-          class="alpheios-action-panel__lookup"
+          class="alpheios-action-menu__lookup"
           :name-base="`action-panel`"
           :use-page-lang-prefs="true"
           :show-language-settings-group="false"
       />
-        <progress-bar
-            class="alpheios-action-panel__progress-bar"
-            v-if="$store.getters['app/lexicalRequestInProgress']"
-        />
+      <progress-bar
+          class="alpheios-action-menu__progress-bar"
+          v-if="$store.getters['app/lexicalRequestInProgress']"
+      />
     </div>
 
-    <div class="alpheios-action-panel__nav-cont">
+    <div class="alpheios-action-menu__nav-cont">
       <alph-tooltip
           :tooltipText="tooltipText('TOOLTIP_DEFINITIONS', $store.getters['app/defDataReady'])"
           :tooltipDirection="tooltipDirection"
       >
         <div
             :class="{ disabled: !$store.getters['app/defDataReady'] }"
-            @click.stop="ui.showPanelTab('definitions')"
-            class="alpheios-action-panel__navbutton"
+            @click.stop="showPanelTab('definitions')"
+            class="alpheios-action-menu__navbutton"
         >
           <definitions-icon/>
         </div>
@@ -42,8 +40,8 @@
           :tooltipDirection="tooltipDirection"
       >
         <div
-            @click.stop="ui.showPanelTab('inflections')"
-            class="alpheios-action-panel__navbutton"
+            @click.stop="showPanelTab('inflections')"
+            class="alpheios-action-menu__navbutton"
             :class="{ disabled: !$store.state.app.hasInflData }"
         >
           <inflections-icon/>
@@ -55,8 +53,8 @@
           :tooltipDirection="tooltipDirection"
       >
         <div
-            @click.stop="ui.showPanelTab('wordUsage')"
-            class="alpheios-action-panel__navbutton"
+            @click.stop="showPanelTab('wordUsage')"
+            class="alpheios-action-menu__navbutton"
             :class="{ disabled: !$store.state.app.wordUsageExampleEnabled }"
         >
           <word-usage-icon/>
@@ -68,8 +66,8 @@
           :tooltipDirection="tooltipDirection"
       >
         <div
-            @click.stop="ui.showPanelTab('treebank')"
-            class="alpheios-action-panel__navbutton"
+            @click.stop="showPanelTab('treebank')"
+            class="alpheios-action-menu__navbutton"
             :class="{ disabled: !$store.getters['app/hasTreebankData'] }"
         >
           <treebank-icon/>
@@ -77,14 +75,14 @@
       </alph-tooltip>
     </div>
 
-    <div class="alpheios-action-panel__nav-cont">
+    <div class="alpheios-action-menu__nav-cont">
       <alph-tooltip
           :tooltip-text="tooltipText('TOOLTIP_INFLECT_BROWSER')"
           :tooltip-direction="tooltipDirection"
       >
         <div
-            @click.stop="ui.showPanelTab('inflectionsbrowser')"
-            class="alpheios-action-panel__navbutton"
+            @click.stop="showPanelTab('inflectionsbrowser')"
+            class="alpheios-action-menu__navbutton"
         >
           <inflections-browser-icon/>
         </div>
@@ -96,8 +94,8 @@
       >
         <div
             :class="{ disabled: !$store.getters[`app/hasGrammarRes`] }"
-            class="alpheios-action-panel__navbutton"
-            @click.stop="ui.showPanelTab('grammar')"
+            class="alpheios-action-menu__navbutton"
+            @click.stop="showPanelTab('grammar')"
         >
           <grammar-icon/>
         </div>
@@ -109,8 +107,8 @@
       >
         <div
             :class="{ disabled: !$store.state.app.hasWordListsData }"
-            class="alpheios-action-panel__navbutton"
-            @click.stop="ui.showPanelTab('wordlist')"
+            class="alpheios-action-menu__navbutton"
+            @click.stop="showPanelTab('wordlist')"
         >
           <wordlist-icon/>
         </div>
@@ -122,8 +120,8 @@
       >
         <div
             :class="{ disabled: !$store.state.auth.enableLogin }"
-            class="alpheios-action-panel__navbutton"
-            @click.stop="ui.showPanelTab('user')"
+            class="alpheios-action-menu__navbutton"
+            @click.stop="showPanelTab('user')"
         >
           <user-icon/>
         </div>
@@ -134,8 +132,8 @@
           :tooltip-direction="tooltipDirection"
       >
         <div
-            class="alpheios-action-panel__navbutton"
-            @click.stop="ui.showPanelTab('options')"
+            class="alpheios-action-menu__navbutton"
+            @click.stop="showPanelTab('options')"
         >
           <options-icon/>
         </div>
@@ -163,7 +161,7 @@ import Lookup from '@/vue/components/lookup.vue'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
-  name: 'ActionPanel',
+  name: 'ActionPanelMenu',
   // API modules that are required for this component
   inject: {
     ui: 'ui',
@@ -187,6 +185,14 @@ export default {
     closeIcon: CloseIcon
   },
 
+  props: {
+    visible: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
+
   data: function () {
     return {
       lookupVisible: false,
@@ -202,30 +208,6 @@ export default {
     }
   },
 
-  computed: {
-    componentStyles: function () {
-      let styles = {
-        transform: `translate(${this.shift.x}px, ${this.shift.y}px)`
-      }
-
-      if (this.$store.state.actionPanel.initialPos) {
-        if (this.$store.state.actionPanel.initialPos.top) {
-          styles.top = `${this.$store.state.actionPanel.initialPos.top}px`
-        }
-        if (this.$store.state.actionPanel.initialPos.right) {
-          styles.right = `${this.$store.state.actionPanel.initialPos.right}px`
-        }
-        if (this.$store.state.actionPanel.initialPos.bottom) {
-          styles.bottom = `${this.$store.state.actionPanel.initialPos.bottom}px`
-        }
-        if (this.$store.state.actionPanel.initialPos.left) {
-          styles.left = `${this.$store.state.actionPanel.initialPos.left}px`
-        }
-      }
-      return styles
-    }
-  },
-
   methods: {
     tooltipText (messageID, availabilityCondition = 'N/A') {
       if (availabilityCondition !== 'N/A') {
@@ -234,6 +216,15 @@ export default {
           : `${this.l10n.getText(messageID)} (${this.l10n.getText('TOOLTIP_NOT_AVAIL_POSTFIX')})`
       }
       return this.l10n.getText(messageID)
+    },
+
+    close () {
+      this.$emit('close-action-menu')
+    },
+
+    showPanelTab (tabName) {
+      this.ui.showPanelTab(tabName)
+      this.close()
     }
   }
 }
@@ -241,17 +232,20 @@ export default {
 <style lang="scss">
   @import "../../../styles/variables";
 
-  .alpheios-action-panel {
+  .alpheios-action-menu {
     width: 300px;
     height: 245px;
-    position: fixed;
+    position: absolute;
+    top: 0;
+    left: 0;
     padding: 10px 20px;
     @include alpheios-border;
     background-color: var(--alpheios-text-bg-color);
     transition: display 0.4s;
+    z-index: 100;
   }
 
-  .alpheios-action-panel__close-icon {
+  .alpheios-action-menu__close-icon {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -270,20 +264,20 @@ export default {
     }
   }
 
-  .alpheios-action-panel__lookup-cont {
+  .alpheios-action-menu__lookup-cont {
     margin: 20px 0 10px;
     height: 90px;
     position: relative;
   }
 
-  .alpheios-action-panel__lookup {
+  .alpheios-action-menu__lookup {
     & input.alpheios-input,
     & input.alpheios-input:focus {
       width: 65%;
     }
   }
 
-  .alpheios-action-panel__progress-bar {
+  .alpheios-action-menu__progress-bar {
     position: absolute;
     left: 0;
     top: 70px;
@@ -307,7 +301,7 @@ export default {
     }
   }
 
-  .alpheios-action-panel__nav-cont {
+  .alpheios-action-menu__nav-cont {
     display: flex;
     justify-content: flex-start;
     margin-bottom: 10px;
@@ -317,7 +311,7 @@ export default {
     }
   }
 
-  .alpheios-action-panel__navbutton {
+  .alpheios-action-menu__navbutton {
     display: block;
     width: uisize(44px);
     height: uisize(44px);

@@ -1672,6 +1672,169 @@ a.alpheios-popup__providers-link {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-lookup__form {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.alpheios-lookup__form .alpheios-setting__label {
+  display: inline-block;
+  margin-bottom: calc(var(--alpheios-base-ui-size) * 0.375);
+  width: auto;
+}
+.alpheios-lookup__form-element {
+  margin-bottom: calc(var(--alpheios-base-ui-size) * 0.625);
+}
+.alpheios-lookup__form-element.alpheios-lookup__lang-control {
+  flex-direction: column;
+  margin-right: calc(var(--alpheios-base-ui-size) * 3.125);
+}
+.alpheios-lookup__form-element.alpheios-lookup__lang-control .alpheios-setting__control {
+  width: calc(var(--alpheios-base-text-size) * 7.5);
+}
+.alpheios-lookup__settings {
+  display: flex;
+  flex-direction: column;
+}
+.alpheios-lookup__form-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.alpheios-lookup__search-control {
+  display: flex;
+}
+.alpheios-lookup__search-control input.alpheios-input,
+.alpheios-lookup__search-control input.alpheios-input:focus {
+  width: 70%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.alpheios-lookup__search-control button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.alpheios-lookup__resource-control {
+  display: flex;
+  flex-direction: column;
+}
+.alpheios-lookup__resource-control .alpheios-setting__control {
+  width: 100%;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
+.alpheios-action-menu {
+  width: 300px;
+  height: 245px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 20px;
+  border: 1px solid var(--alpheios-border-color);
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
+  background-color: var(--alpheios-text-bg-color);
+  transition: display 0.4s;
+  z-index: 100;
+}
+.alpheios-action-menu__close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  width: 20px;
+  height: auto;
+  fill: var(--alpheios-color-vivid);
+}
+.alpheios-action-menu__close-icon:hover, .alpheios-action-menu__close-icon:focus {
+  fill: var(--alpheios-color-vivid-hover);
+}
+.alpheios-action-menu__close-icon:active {
+  fill: var(--alpheios-color-vivid-pressed);
+}
+.alpheios-action-menu__lookup-cont {
+  margin: 20px 0 10px;
+  height: 90px;
+  position: relative;
+}
+.alpheios-action-menu__lookup input.alpheios-input, .alpheios-action-menu__lookup input.alpheios-input:focus {
+  width: 65%;
+}
+.alpheios-action-menu__progress-bar {
+  position: absolute;
+  left: 0;
+  top: 70px;
+  width: 100%;
+}
+.alpheios-action-menu__progress-bar .alpheios-popup-lexdataloading__progress-inner {
+  height: 16px;
+  border-color: var(--alpheios-color-vivid);
+}
+.alpheios-action-menu__progress-bar .alpheios-popup-lexdataloading__progress-line {
+  background-color: var(--alpheios-color-vivid-hover);
+  left: 0.6%;
+  top: 1px;
+  height: 10px;
+  width: 98.8%;
+}
+.alpheios-action-menu__progress-bar .alpheios-popup-lexdataloading__progress-text {
+  display: none;
+}
+.alpheios-action-menu__nav-cont {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+.alpheios-action-menu__nav-cont .alph_tooltip {
+  margin-right: 8px;
+}
+.alpheios-action-menu__navbutton {
+  display: block;
+  width: calc(var(--alpheios-base-ui-size) * 2.75);
+  height: calc(var(--alpheios-base-ui-size) * 2.75);
+  cursor: pointer;
+  fill: var(--alpheios-icon-color);
+  stroke: var(--alpheios-icon-color);
+  background-color: var(--alpheios-color-dark);
+  border-radius: 50%;
+}
+.alpheios-action-menu__navbutton.disabled {
+  fill: var(--alpheios-color-neutral-dark);
+  stroke: var(--alpheios-color-neutral-dark);
+  cursor: default;
+}
+.alpheios-action-menu__navbutton svg {
+  width: 50%;
+  height: auto;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.alpheios-action-menu__navbutton:hover:not(.disabled), .alpheios-action-menu__navbutton:focus:not(.disabled) {
+  fill: var(--alpheios-icon-color-hover);
+  stroke: var(--alpheios-icon-color-hover);
+  background-color: var(--alpheios-icon-bg-color-hover);
+}
+.alpheios-action-menu__navbutton.active {
+  fill: var(--alpheios-icon-color-active);
+  stroke: var(--alpheios-icon-color-active);
+  background-color: var(--alpheios-icon-bg-color-active);
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
 .infl-suff-footnote-link {
   position: relative;
 }
@@ -2191,64 +2354,6 @@ h3.alpheios-inflections__credits-title {
   font-weight: 700;
   margin-left: calc(var(--alpheios-base-text-size) * 2);
   margin-bottom: calc(var(--alpheios-base-text-size) * 1.25);
-}
-/*
- Calculates a size of text elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
- */
-/*
- Calculates a size of UI elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
- */
-.alpheios-lookup__form {
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-.alpheios-lookup__form .alpheios-setting__label {
-  display: inline-block;
-  margin-bottom: calc(var(--alpheios-base-ui-size) * 0.375);
-  width: auto;
-}
-.alpheios-lookup__form-element {
-  margin-bottom: calc(var(--alpheios-base-ui-size) * 0.625);
-}
-.alpheios-lookup__form-element.alpheios-lookup__lang-control {
-  flex-direction: column;
-  margin-right: calc(var(--alpheios-base-ui-size) * 3.125);
-}
-.alpheios-lookup__form-element.alpheios-lookup__lang-control .alpheios-setting__control {
-  width: calc(var(--alpheios-base-text-size) * 7.5);
-}
-.alpheios-lookup__settings {
-  display: flex;
-  flex-direction: column;
-}
-.alpheios-lookup__form-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-.alpheios-lookup__search-control {
-  display: flex;
-}
-.alpheios-lookup__search-control input.alpheios-input,
-.alpheios-lookup__search-control input.alpheios-input:focus {
-  width: 70%;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-.alpheios-lookup__search-control button {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.alpheios-lookup__resource-control {
-  display: flex;
-  flex-direction: column;
-}
-.alpheios-lookup__resource-control .alpheios-setting__control {
-  width: 100%;
 }
 /*
  Calculates a size of text elements relative to the base size.

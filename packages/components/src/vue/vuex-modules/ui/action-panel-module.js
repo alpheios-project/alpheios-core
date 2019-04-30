@@ -34,13 +34,13 @@ export default class ActionPanelModule extends Module {
   activate () {
     super.activate()
     // Open an action panel on activation
-    this._vi.$store.commit(`actionPanel/open`)
+    this._vi.$store.commit(`${this.constructor.moduleName}/open`)
   }
 
   deactivate () {
     super.deactivate()
     // Close an action panel on deactivation
-    this._vi.$store.commit(`actionPanel/close`)
+    this._vi.$store.commit(`${this.constructor.moduleName}/close`)
   }
 }
 
