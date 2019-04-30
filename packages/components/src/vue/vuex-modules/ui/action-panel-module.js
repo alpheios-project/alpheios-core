@@ -33,8 +33,6 @@ export default class ActionPanelModule extends Module {
 
   activate () {
     super.activate()
-    // Open an action panel on activation
-    this._vi.$store.commit(`${this.constructor.moduleName}/open`)
   }
 
   deactivate () {
@@ -51,7 +49,7 @@ ActionPanelModule.store = (moduleInstance) => {
 
     state: {
       // Whether an action panel is shown or hidden
-      visible: true,
+      visible: false,
       // Initial position of an action panel
       initialPos: moduleInstance.config.initialPos
     },
@@ -65,7 +63,7 @@ ActionPanelModule.store = (moduleInstance) => {
       },
 
       /**
-       * Closes a toolbar
+       * Closes an action panel
        * @param state
        */
       close (state) {

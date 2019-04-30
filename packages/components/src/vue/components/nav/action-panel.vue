@@ -3,7 +3,7 @@
       :id="moduleConfig.rootElementId"
       class="alpheios-action-panel alpheios-content"
       :style="componentStyles"
-      v-show="$store.state.actionPanel.visible && !$store.state.panel.visible"
+      v-show="showPanel"
   >
     <close-icon
         class="alpheios-action-panel__close-icon"
@@ -223,6 +223,13 @@ export default {
         }
       }
       return styles
+    },
+
+    showPanel: function () {
+      // As modules are registered in an arbitrary order, panel module may not be available
+      // during rendering of an action panel
+      const panelVisible = this.$store.state.panel ? this.$store.state.panel.visible : false
+      return this.$store.state.actionPanel.visible && !panelVisible
     }
   },
 

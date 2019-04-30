@@ -25,7 +25,6 @@ export default class PanelModule extends Module {
         compactPanel: CompactPanel // A mobile version of a panel
       }
     })
-    console.info(`Panel module is created`)
   }
 }
 
@@ -58,7 +57,6 @@ PanelModule.store = (moduleInstance) => {
        * @param state
        */
       close (state) {
-        console.info(`Panel close is called`)
         state.visible = false
       },
 

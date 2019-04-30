@@ -11723,6 +11723,13 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
       return styles
+    },
+
+    showPanel: function () {
+      // As modules are registered in an arbitrary order, panel module may not be available
+      // during rendering of an action panel
+      const panelVisible = this.$store.state.panel ? this.$store.state.panel.visible : false
+      return this.$store.state.actionPanel.visible && !panelVisible
     }
   },
 
@@ -20234,11 +20241,8 @@ var render = function() {
         {
           name: "show",
           rawName: "v-show",
-          value:
-            _vm.$store.state.actionPanel.visible &&
-            !_vm.$store.state.panel.visible,
-          expression:
-            "$store.state.actionPanel.visible && !$store.state.panel.visible"
+          value: _vm.showPanel,
+          expression: "showPanel"
         }
       ],
       staticClass: "alpheios-action-panel alpheios-content",
@@ -41098,7 +41102,6 @@ class UIController {
    * @return {UIController} - An instance of a UI controller, for chaining.
    */
   changeTab (tabName) {
-    console.info(`Change tab`)
     // If tab is disabled, switch to a default one
     if (this.isDisabledTab(tabName)) {
       console.warn(`Attempting to switch to a ${tabName} tab which is not available`)
@@ -41118,7 +41121,6 @@ class UIController {
    * @return {UIController} - A UI controller's instance reference, for chaining.
    */
   showPanelTab (tabName) {
-    console.info(`Show panel tab ${tabName}`)
     this.api.ui.changeTab(tabName)
     this.api.ui.openPanel()
     return this
@@ -41282,7 +41284,6 @@ class UIController {
    * Opens a panel. Used from a content script upon a panel status change request.
    */
   openPanel (forceOpen = false) {
-    console.info(`Open panel`)
     if (this.api.ui.hasModule('panel')) {
       if (forceOpen || !this.state.isPanelOpen()) {
         this.store.commit('panel/open')
@@ -41292,10 +41293,6 @@ class UIController {
         // Close a toolbar when a panel opens
         this.store.commit(`toolbar/close`)
       }
-      /* if (this.hasModule('actionPanel')) {
-        console.info(`Closing an action panel`)
-        this.store.commit('actionPanel/close')
-      } */
     }
   }
 
@@ -41303,7 +41300,6 @@ class UIController {
    * Closes a panel. Used from a content script upon a panel status change request.
    */
   closePanel (syncState = true) {
-    console.info(`Close panel`)
     if (this.api.ui.hasModule('panel')) {
       this.store.commit('panel/close')
       this.store.commit('ui/resetActiveTab')
@@ -50558,8 +50554,6 @@ class ActionPanelModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MO
 
   activate () {
     super.activate()
-    // Open an action panel on activation
-    this._vi.$store.commit(`${this.constructor.moduleName}/open`)
   }
 
   deactivate () {
@@ -50576,7 +50570,7 @@ ActionPanelModule.store = (moduleInstance) => {
 
     state: {
       // Whether an action panel is shown or hidden
-      visible: true,
+      visible: false,
       // Initial position of an action panel
       initialPos: moduleInstance.config.initialPos
     },
@@ -50590,7 +50584,7 @@ ActionPanelModule.store = (moduleInstance) => {
       },
 
       /**
-       * Closes a toolbar
+       * Closes an action panel
        * @param state
        */
       close (state) {
@@ -50669,7 +50663,6 @@ class PanelModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1
         compactPanel: _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_3__["default"] // A mobile version of a panel
       }
     })
-    console.info(`Panel module is created`)
   }
 }
 
@@ -50702,7 +50695,6 @@ PanelModule.store = (moduleInstance) => {
        * @param state
        */
       close (state) {
-        console.info(`Panel close is called`)
         state.visible = false
       },
 

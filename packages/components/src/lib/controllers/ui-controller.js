@@ -930,7 +930,6 @@ export default class UIController {
    * @return {UIController} - An instance of a UI controller, for chaining.
    */
   changeTab (tabName) {
-    console.info(`Change tab`)
     // If tab is disabled, switch to a default one
     if (this.isDisabledTab(tabName)) {
       console.warn(`Attempting to switch to a ${tabName} tab which is not available`)
@@ -950,7 +949,6 @@ export default class UIController {
    * @return {UIController} - A UI controller's instance reference, for chaining.
    */
   showPanelTab (tabName) {
-    console.info(`Show panel tab ${tabName}`)
     this.api.ui.changeTab(tabName)
     this.api.ui.openPanel()
     return this
@@ -1114,7 +1112,6 @@ export default class UIController {
    * Opens a panel. Used from a content script upon a panel status change request.
    */
   openPanel (forceOpen = false) {
-    console.info(`Open panel`)
     if (this.api.ui.hasModule('panel')) {
       if (forceOpen || !this.state.isPanelOpen()) {
         this.store.commit('panel/open')
@@ -1124,10 +1121,6 @@ export default class UIController {
         // Close a toolbar when a panel opens
         this.store.commit(`toolbar/close`)
       }
-      /* if (this.hasModule('actionPanel')) {
-        console.info(`Closing an action panel`)
-        this.store.commit('actionPanel/close')
-      } */
     }
   }
 
@@ -1135,7 +1128,6 @@ export default class UIController {
    * Closes a panel. Used from a content script upon a panel status change request.
    */
   closePanel (syncState = true) {
-    console.info(`Close panel`)
     if (this.api.ui.hasModule('panel')) {
       this.store.commit('panel/close')
       this.store.commit('ui/resetActiveTab')
