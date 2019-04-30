@@ -2940,7 +2940,7 @@ h3.alpheios-inflections__credits-title {
  */
 .alpheios-action-panel {
   width: 300px !important;
-  height: 400px !important;
+  height: 245px !important;
   position: fixed !important;
   padding: 10px 20px !important;
   border: 1px solid var(--alpheios-border-color) !important;
@@ -2948,11 +2948,48 @@ h3.alpheios-inflections__credits-title {
   background-color: var(--alpheios-text-bg-color) !important;
   transition: display 0.4s !important;
 }
-.alpheios-action-panel__lookup {
-  margin-bottom: 10px !important;
+.alpheios-action-panel__close-icon {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  cursor: pointer !important;
+  width: 20px !important;
+  height: auto !important;
+  fill: var(--alpheios-color-vivid) !important;
+}
+.alpheios-action-panel__close-icon:hover, .alpheios-action-panel__close-icon:focus {
+  fill: var(--alpheios-color-vivid-hover) !important;
+}
+.alpheios-action-panel__close-icon:active {
+  fill: var(--alpheios-color-vivid-pressed) !important;
+}
+.alpheios-action-panel__lookup-cont {
+  margin: 20px 0 10px !important;
+  height: 90px !important;
+  position: relative !important;
 }
 .alpheios-action-panel__lookup input.alpheios-input, .alpheios-action-panel__lookup input.alpheios-input:focus {
   width: 65% !important;
+}
+.alpheios-action-panel__progress-bar {
+  position: absolute !important;
+  left: 0 !important;
+  top: 70px !important;
+  width: 100% !important;
+}
+.alpheios-action-panel__progress-bar .alpheios-popup-lexdataloading__progress-inner {
+  height: 16px !important;
+  border-color: var(--alpheios-color-vivid) !important;
+}
+.alpheios-action-panel__progress-bar .alpheios-popup-lexdataloading__progress-line {
+  background-color: var(--alpheios-color-vivid-hover) !important;
+  left: 0.6% !important;
+  top: 1px !important;
+  height: 10px !important;
+  width: 98.8% !important;
+}
+.alpheios-action-panel__progress-bar .alpheios-popup-lexdataloading__progress-text {
+  display: none;
 }
 .alpheios-action-panel__nav-cont {
   display: flex;
@@ -2975,7 +3012,7 @@ h3.alpheios-inflections__credits-title {
 .alpheios-action-panel__navbutton.disabled {
   fill: var(--alpheios-color-neutral-dark) !important;
   stroke: var(--alpheios-color-neutral-dark) !important;
-  cursor: not-allowed !important;
+  cursor: default !important;
 }
 .alpheios-action-panel__navbutton svg {
   width: 50% !important;

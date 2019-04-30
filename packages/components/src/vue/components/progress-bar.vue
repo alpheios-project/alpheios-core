@@ -3,7 +3,10 @@
     <div class="alpheios-popup-lexdataloading__progress-wrapper">
       <div class="alpheios-popup-lexdataloading__progress-inner">
         <div class="alpheios-popup-lexdataloading__progress-line"></div>
-        <div class="alpheios-popup-lexdataloading__progress-text">
+        <div
+            class="alpheios-popup-lexdataloading__progress-text"
+            v-show="text"
+        >
           {{ text }}
         </div>
       </div>
@@ -16,7 +19,8 @@ export default {
   props: {
     text: {
       type: String,
-      required: false
+      required: false,
+      default: ''
     }
   }
 }

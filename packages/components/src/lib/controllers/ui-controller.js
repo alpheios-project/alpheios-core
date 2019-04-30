@@ -154,9 +154,7 @@ export default class UIController {
       mountPoint: '#alpheios-popup'
     }) */
 
-    uiController.registerModule(ActionPanelModule, {
-      rootElementId: 'some-new'
-    })
+    uiController.registerModule(ActionPanelModule, {})
 
     // Creates on configures an event listener
     uiController.evc = new UIEventController()
@@ -471,6 +469,10 @@ export default class UIController {
           // Treebank data is available if we have it for the word or the page
           return Boolean((state.treebankData.page && state.treebankData.page.src) ||
             (state.treebankData.word && state.treebankData.word.src))
+        },
+
+        lexicalRequestInProgress (state) {
+          return state.lexicalRequest.startTime > state.lexicalRequest.endTime
         }
       },
 
