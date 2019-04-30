@@ -9,6 +9,7 @@ import WordItemIndexedDbDriver from '@/storage/worditem-indexeddb-driver.js'
 import WordItemRemoteDbDriver from '@/storage/worditem-remotedb-driver.js'
 import IndexedDBAdapter from '@/storage/indexed-db-adapter.js'
 import RemoteDBAdapter from '@/storage/remote-db-adapter.js'
+import WordlistController from '@/controllers/wordlist-controller'
 
 import axios from 'axios'
 
@@ -302,7 +303,7 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
 
-  it('6 UserDataManager - update method skips update for remote if fullHomonym segment is given, but updates local for this segment', async () => {
+  it('6 UserDataManager - update method its update for remote if fullHomonym segment is given, but updates local for this segment', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -787,4 +788,20 @@ describe('user-data-manager.test.js', () => {
     resultQuery = await localAdapter.query({ languageCode: 'lat' })
     expect(resultQuery.length).toEqual(1)
   }, 50000)
+
+  it('21 UserDataManager - clear unsubscribes events', async () => {
+    let mockUnsub = jest.fn()
+    let mockEvent = {
+      sub: () => {
+        return mockUnsub
+      }
+    }
+    let udm = new UserDataManager(auth,{
+      WORDITEM_UPDATED: mockEvent,
+      WORDITEM_DELETED: mockEvent,
+      WORDLIST_DELETED: mockEvent})
+    expect(udm.subscriptions.length).toEqual(3)
+    udm.clear()
+    expect(udm.subscriptions.length).toEqual(0)
+  })
 })

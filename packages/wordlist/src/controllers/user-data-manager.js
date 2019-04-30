@@ -12,13 +12,30 @@ export default class UserDataManager {
    */
   constructor (auth, events) {
     this.auth = auth
+    this.subscriptions = []
     if (events) {
-      events.WORDITEM_UPDATED.sub(this.update.bind(this))
-      events.WORDITEM_DELETED.sub(this.delete.bind(this))
-      events.WORDLIST_DELETED.sub(this.deleteMany.bind(this))
+      this.subscriptions.push(events.WORDITEM_UPDATED.sub(this.update.bind(this)))
+      this.subscriptions.push(events.WORDITEM_DELETED.sub(this.delete.bind(this)))
+      this.subscriptions.push(events.WORDLIST_DELETED.sub(this.deleteMany.bind(this)))
     }
     this.blocked = false
     this.requestsQueue = []
+  }
+
+  /**
+   * Clear this instance
+   * TODO we should make the UserDataManager a singleton so that it can
+   * fully accomodate switching users gracefully
+   */
+  clear() {
+    if (this.blocked) {
+      // TODO we should wait on the request queue completion
+      console.error("Destroying User Data Manager with requests pending")
+    }
+    for (let unsub of this.subscriptions) {
+      unsub()
+    }
+    this.subscriptions = []
   }
 
   /**
