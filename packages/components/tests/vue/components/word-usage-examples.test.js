@@ -14,7 +14,6 @@ import enUSInfl from '@/locales/en-us/messages-inflections.json'
 import enGB from '@/locales/en-gb/messages.json'
 
 import WordUsageExamples from '@/vue/components/word-usage-examples/word-usage-examples.vue'
-import wordUsageExampleItem from '@/vue/components/word-usage-examples/word-usage-examples-item.vue'
 
 describe('word-usage-examples-block.test.js', () => {
   const localVue = createLocalVue()

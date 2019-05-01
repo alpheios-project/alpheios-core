@@ -14,11 +14,13 @@ import EmbedLibWarning from '@/vue/components/embed-lib-warning.vue'
 
 import Template from '@/templates/template.htmlf'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
+import LexicalQueryLookup from '@/lib/queries/lexical-query-lookup.js'
 import ResourceQuery from '@/lib/queries/resource-query.js'
 import AnnotationQuery from '@/lib/queries/annotation-query.js'
 import SiteOptions from '@/settings/site-options.json'
 import ContentOptionDefaults from '@/settings/content-options-defaults.json'
 import UIOptionDefaults from '@/settings/ui-options-defaults.json'
+import TextSelector from '@/lib/selection/text-selector'
 import HTMLSelector from '@/lib/selection/media/html-selector.js'
 import HTMLPage from '@/lib/utility/html-page.js'
 import Platform from '@/lib/utility/platform.js'
@@ -742,6 +744,9 @@ export default class UIController {
       wordLists = await this.wordlistC.initLists(this.userDataManager)
       this.store.commit('app/setWordLists', wordLists)
     } else {
+      // TODO we need to make the UserDataManager a singleton that can
+      // handle switching users gracefully
+      this.userDataManager.clear()
       this.userDataManager = null
       wordLists = await this.wordlistC.initLists()
     }
@@ -1188,10 +1193,7 @@ export default class UIController {
           resourceOptions: this.resourceOptions,
           siteOptions: [],
           lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { locale: this.contentOptions.items.locale.currentValue } : null,
-          wordUsageExamples: this.enableWordUsageExamples(textSelector, 'onLexicalQuery')
-            ? { paginationMax: this.contentOptions.items.wordUsageExamplesMax.currentValue,
-              paginationAuthMax: this.contentOptions.items.wordUsageExamplesAuthMax.currentValue }
-            : null,
+          wordUsageExamples: this.getWordUsageExamplesQueryParams(textSelector),
           langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
         })
 
@@ -1227,6 +1229,15 @@ export default class UIController {
     return textSelector.languageID === Constants.LANG_LATIN &&
     this.contentOptions.items.enableWordUsageExamples.currentValue &&
     checkType
+  }
+
+  getWordUsageExamplesQueryParams (textSelector) {
+    if (this.enableWordUsageExamples(textSelector, 'onLexicalQuery')) {
+      return { paginationMax: this.contentOptions.items.wordUsageExamplesMax.currentValue,
+        paginationAuthMax: this.contentOptions.items.wordUsageExamplesAuthMax.currentValue }
+    } else {
+      return null
+    }
   }
 
   handleEscapeKey (event, nativeEvent) {
@@ -1372,11 +1383,19 @@ export default class UIController {
       homonym = wordItem.homonym
     }
 
-    this.newLexicalRequest(homonym.targetWord, homonym.languageID)
-
-    this.onHomonymReady(homonym)
-    this.updateDefinitions(homonym)
-    this.updateTranslations(homonym)
+    this.newLexicalRequest(homonym.targetWord, homonym.languageID, true)
+    if (homonym.lexemes.length > 0 && homonym.lexemes.filter(l => l.isPopulated()).length === homonym.lexemes.length) {
+      // if we were able to retrieve full homonym data then we can just display it
+      this.onHomonymReady(homonym)
+      this.updateDefinitions(homonym)
+      this.updateTranslations(homonym)
+    } else {
+      // otherwise we can query for it as usual
+      let textSelector = TextSelector.createObjectFromText(homonym.targetWord, homonym.languageID)
+      let wordUsageExamples = this.getWordUsageExamplesQueryParams(textSelector)
+      let lexQuery = LexicalQueryLookup.create(textSelector, this.resourceOptions, this.state.lemmaTranslationLang, wordUsageExamples)
+      lexQuery.getData()
+    }
   }
 
   /**

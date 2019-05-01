@@ -6,7 +6,6 @@ export default class LexicalQuery extends Query {
   constructor (name, selector, options) {
     super(name)
     this.selector = selector
-    this.htmlSelector = options.htmlSelector
     this.langData = options.langData
     this.langOpts = options.langOpts || []
     this.resourceOptions = options.resourceOptions || []

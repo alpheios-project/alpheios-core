@@ -225,28 +225,28 @@ export default {
         transform: `translate(${this.shift.x}px, ${this.shift.y}px)`
       }
 
-      if (this.$store.state.toolbar.initialPos) {
-        if (this.$store.state.toolbar.initialPos.top) {
-          styles.top = `${this.$store.state.toolbar.initialPos.top}px`
+      if (this.moduleData.initialPos) {
+        if (this.moduleData.initialPos.top) {
+          styles.top = this.moduleData.initialPos.top
         }
-        if (this.$store.state.toolbar.initialPos.right) {
-          styles.right = `${this.$store.state.toolbar.initialPos.right}px`
+        if (this.moduleData.initialPos.right) {
+          styles.right = this.moduleData.initialPos.right
         }
-        if (this.$store.state.toolbar.initialPos.bottom) {
-          styles.bottom = `${this.$store.state.toolbar.initialPos.bottom}px`
+        if (this.moduleData.initialPos.bottom) {
+          styles.bottom = this.moduleData.initialPos.bottom
         }
-        if (this.$store.state.toolbar.initialPos.left) {
-          styles.left = `${this.$store.state.toolbar.initialPos.left}px`
+        if (this.moduleData.initialPos.left) {
+          styles.left = this.moduleData.initialPos.left
         }
       }
       return styles
     },
 
     isInLeftHalf: function () {
-      if (this.$store.state.toolbar.initialPos.hasOwnProperty(`right`)) {
-        return (window.innerWidth / 2 - this.$store.state.toolbar.initialPos.right + this.shift.x < 0)
-      } else if (this.$store.state.toolbar.initialPos.hasOwnProperty(`left`)) {
-        return (this.$store.state.toolbar.initialPos.left + this.shift.x < window.innerWidth / 2)
+      if (this.moduleData.initialPos.hasOwnProperty(`right`)) {
+        return (window.innerWidth / 2 - this.moduleData.initialPos.right + this.shift.x < 0)
+      } else if (this.moduleData.initialPos.hasOwnProperty(`left`)) {
+        return (this.moduleData.initialPos.left + this.shift.x < window.innerWidth / 2)
       } else {
         // We have no information in which part of the screen the toolbar is, will default to right
         return false

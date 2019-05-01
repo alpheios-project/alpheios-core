@@ -29,14 +29,13 @@
       </div>
 
       <div v-if="!selectedView.hasPrerenderedTables">
-        <main-table-wide-vue :collapsed="false" :view="selectedView" @widthchange="updateWidth">
+        <main-table-wide-vue :collapsed="false" :view="selectedView">
         </main-table-wide-vue>
 
         <template v-if="selectedView.linkedViews">
           <main-table-wide-vue
               :collapsed="false"
               :view="linkedView"
-              @widthchange="updateWidth"
               v-for="linkedView in selectedView.linkedViews"
               :key = "linkedView.id"
           />
@@ -184,18 +183,6 @@ export default {
       }
     },
 
-    updateWidth: function () {
-      if (typeof this.$el.querySelector === 'function') {
-        /*
-        An inflection component needs to notify its parent of how wide an inflection table content is. Parent will
-        use this information to adjust a width of a container that displays an inflection component.
-       */
-        Vue.nextTick(() => {
-          this.$emit('contentwidth', { width: this.$el.offsetWidth + 1, component: 'inflections' })
-        })
-      }
-    },
-
     navigate (reflink) {
       let panel = document.querySelector(`#${this.elementIDs.panelInner}`)
       if (!panel) {
@@ -223,7 +210,6 @@ export default {
 
     this.$options.visibilityUnwatch = this.$store.watch((state) => state.ui.activeTab, (tabName) => {
       if (tabName === 'inflections') {
-        this.updateWidth()
         // Scroll to top if panel is reopened
         this.navigate('top')
       }

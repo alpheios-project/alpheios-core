@@ -3,7 +3,7 @@
 import Style from './styles/style.scss'
 
 import Popup from './vue/components/popup.vue'
-import Panel from './vue/components/panel.vue'
+import Panel from './vue/components/panel-large.vue'
 import L10n from './lib/l10n/l10n'
 import Locales from './locales/locales'
 import enUS from './locales/en-us/messages.json'

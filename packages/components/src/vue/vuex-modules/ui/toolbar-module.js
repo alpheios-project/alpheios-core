@@ -26,7 +26,8 @@ export default class ToolbarModule extends Module {
       },
       data: {
         moduleData: {
-          initialShift: this.config.initialShift
+          initialShift: this.config.initialShift,
+          initialPos: this.config.initialPos
         }
       }
     })
@@ -54,9 +55,7 @@ ToolbarModule.store = (moduleInstance) => {
       // Whether a toolbar is shown or hidden
       visible: false,
       // Choose compact or large layout from the value of the `platform` prop of a configuration object
-      layout: 'toolbarCompact',
-      // Initial position of a toolbar
-      initialPos: moduleInstance.config.initialPos
+      layout: moduleInstance.config.platform.isDesktop ? `toolbarLarge` : 'toolbarCompact'
     },
     mutations: {
       /**
@@ -89,8 +88,8 @@ ToolbarModule._configDefaults = {
   // in two different dimensions (X and Y) must be specified. Pixel units should NOT be added to the values.
   // Default values are the ones below.
   initialPos: {
-    top: 10,
-    right: 15
+    top: '10px',
+    right: '15px'
   },
   // How much a toolbar is shifted from its initial position.
   initialShift: {

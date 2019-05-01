@@ -2,7 +2,7 @@
   <div
       :class="rootClasses"
       class="alpheios-panel alpheios-panel--compact alpheios-content"
-      :style="mainstyles"
+      :style="componentStyles"
       data-component="alpheios-panel"
       data-resizable="true"
       id="alpheios-panel-inner"
@@ -92,7 +92,7 @@
         >
           {{ l10n.getText('TITLE_INFLECTIONS_PANEL') }}
         </h1>
-        <inflections @contentwidth="setContentWidth" class="alpheios-panel-inflections"></inflections>
+        <inflections class="alpheios-panel-inflections"></inflections>
       </div>
 
       <div :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser"
@@ -103,8 +103,7 @@
         >
           {{ l10n.getText('TITLE_INFLECTIONS_BROWSER_PANEL') }}
         </h1>
-        <inflection-browser @contentwidth="setContentWidth">
-        </inflection-browser>
+        <inflection-browser/>
       </div>
 
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__grammar
@@ -118,8 +117,7 @@
           class="alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding"
           v-if="$store.getters['app/hasTreebankData']" v-show="$store.getters['ui/isActiveTab']('treebank')"
           data-alpheios-ignore="all">
-        <!-- TODO: Instead of this we need to create a universal mechanism for handling panel resizing for every tab's content change -->
-        <treebank @treebankcontentwidth="setTreebankContentWidth"></treebank>
+        <treebank/>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__status"
            v-show="$store.getters['ui/isActiveTab']('status')"
@@ -139,6 +137,7 @@
       <div
           class="alpheios-panel__tab-panel"
           v-show="$store.getters['ui/isActiveTab']('wordUsage')"
+          data-alpheios-ignore="all"
         >
         <word-usage-examples/>
       </div>
@@ -322,8 +321,7 @@ import MenuIcon from '@/images/inline-icons/menu.svg'
 import CloseIcon from '@/images/inline-icons/x-close.svg'
 // Vue directives
 import { directive as onClickaway } from '../directives/clickaway.js'
-// JS imports
-import interact from 'interactjs'
+
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
@@ -365,9 +363,6 @@ export default {
   directives: {
     onClickaway: onClickaway
   },
-  // A minimal width of a panel, in pixels. This is high to fit all te buttons of a large size into the panel
-  minWidth: 650,
-  defaultScrollPadding: 20,
   data: function () {
     return {
       menuVisible: false,
@@ -376,7 +371,7 @@ export default {
       panelLeftPadding: 0,
       panelRightPadding: 0,
       scrollPadding: 0,
-      panelWidth: null
+      resized: false
     }
   },
 
@@ -398,8 +393,7 @@ export default {
         : ''
     },
 
-    mainstyles: function () {
-      this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth
+    componentStyles: function () {
       return {
         zIndex: this.ui.zIndex
       }
@@ -480,114 +474,8 @@ export default {
       this.ui.optionChange(name, value)
     },
 
-    setContentWidth: function (dataObj) {
-      if (dataObj.width === 'auto') {
-        this.panelWidth = null
-        return
-      }
-
-      this.calcWidthPaddings(dataObj.component)
-      this.calcScrollPadding()
-
-      let widthDelta = this.navbarWidth +
-          this.panelLeftPadding +
-          this.panelRightPadding +
-          this.scrollPadding
-
-      if (dataObj.width > this.$options.minWidth - widthDelta) {
-        let adjustedWidth = dataObj.width + widthDelta
-        // Max viewport width less some space to display page content
-        let maxWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 20
-
-        if (adjustedWidth > maxWidth) { adjustedWidth = maxWidth }
-        this.panelWidth = adjustedWidth
-      }
-    },
-
-    setTreebankContentWidth: function (width) {
-      this.panelWidth = width
-    },
-
     attachTrackingClick: function () {
       this.ui.closePanel()
-    },
-
-    calcScrollPadding: function () {
-      if (typeof this.$el.querySelector === 'function') {
-        this.scrollPadding = this.$el.scrollHeight > this.$el.offsetHeight
-          ? this.$options.defaultScrollPadding : 0
-      }
-    },
-
-    calcWidthPaddings: function (component) {
-      let panelTabId
-      if (component === 'inflections') {
-        panelTabId = this.inflectionsPanelID
-      } else if (component === 'inflections-browser') {
-        panelTabId = this.inflectionsBrowserPanelID
-      }
-
-      if (typeof this.$el.querySelector === 'function' && panelTabId && (this.panelLeftPadding === 0 || this.panelRightPadding === 0)) {
-        let navbar = this.$el.querySelector(`#${this.navbarID}`)
-        let panel = this.$el.querySelector(`#${panelTabId}`)
-        this.navbarWidth = 0
-        if (navbar) {
-          let width = window.getComputedStyle(navbar).getPropertyValue('width').match(/\d+/)
-          if (width && Array.isArray(width) && width.length > 0) { this.navbarWidth = width[0] }
-        }
-
-        if (panel) {
-          let resPl1 = window.getComputedStyle(panel).getPropertyValue('padding-left').match(/\d+/)
-          if (Array.isArray(resPl1)) {
-            this.panelLeftPadding = parseInt(resPl1[0])
-          } else {
-            this.panelLeftPadding = 0
-          }
-
-          let resPl2 = window.getComputedStyle(panel).getPropertyValue('padding-right').match(/\d+/)
-          if (Array.isArray(resPl2)) {
-            this.panelRightPadding = parseInt(resPl2[0])
-          } else {
-            this.panelRightPadding = 0
-          }
-        }
-      }
-    },
-
-    closeMenu: function () {
-      this.menuVisible = false
-    }
-  },
-
-  mounted: function () {
-    // Determine paddings and sidebar width for calculation of a panel width to fit content
-    if (typeof this.$el.querySelector === 'function') {
-      this.calcWidthPaddings()
-
-      // Initialize Interact.js: make panel resizable
-      interact(this.$el)
-        .resizable({
-          // resize from all edges and corners
-          edges: { left: true, right: true, bottom: false, top: false },
-
-          // keep the edges inside the parent
-          restrictEdges: {
-            outer: document.body,
-            endOnly: true
-          },
-
-          // minimum size
-          restrictSize: {
-            min: { width: this.$options.minWidth }
-          },
-
-          inertia: true
-        })
-        .on('resizemove', event => {
-          let target = event.target
-          // update the element's style
-          target.style.width = `${event.rect.width}px`
-        })
     }
   }
 }
@@ -603,9 +491,13 @@ export default {
     opacity: 0.95;
     direction: ltr;
     display: grid;
-    grid-template-columns: auto;
+    grid-template-columns: min-content;
     grid-template-rows: $alpheios-toolbar-height 1fr min-content;
     grid-template-areas: "header" "content" "notifications";
+
+    &[data-resized="true"] {
+      grid-template-columns: auto;
+    }
   }
 
   .alpheios-panel__header {
@@ -675,6 +567,10 @@ export default {
     position: relative;
     background: var(--alpheios-color-neutral-lightest);
     padding-top: uisize(20px);
+
+    [data-resized="true"] & {
+      max-width: none;
+    }
   }
 
   .alpheios-panel__title {
@@ -693,6 +589,10 @@ export default {
     padding: 20px;
     flex: 1 1 auto;
     box-sizing: border-box;
+  }
+
+  .alpheios-panel__tab-panel--scroll {
+    overflow: auto;
   }
 
   .alpheios-panel__tab-panel--no-padding {
@@ -760,9 +660,13 @@ export default {
   // Special styles for compact panel
   .alpheios-panel--compact {
     height: 50vh;
-    width: 100%;
+    width: 100vw;
     left: 0;
     bottom: 0;
+
+    &.alpheios-panel {
+      grid-template-columns: auto;
+    }
 
     &.alpheios-panel--left {
       height: 100vh;

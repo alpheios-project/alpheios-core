@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
-import Panel from '@/vue/components/panel.vue'
+import Panel from '@/vue/components/panel-large.vue'
 import Tooltip from '@/vue/components/tooltip.vue'
 import Lookup from '@/vue/components/lookup.vue'
 import Info from '@/vue/components/info.vue'

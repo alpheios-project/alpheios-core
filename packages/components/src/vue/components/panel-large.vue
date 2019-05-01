@@ -1,10 +1,11 @@
 <template>
   <div
       :class="rootClasses"
-      :style="mainstyles"
+      :style="componentStyles"
       class="alpheios-panel alpheios-panel--large alpheios-content"
       data-component="alpheios-panel"
       data-resizable="true"
+      :data-resized="resized"
       id="alpheios-panel-inner"
       v-on-clickaway="attachTrackingClick"
       v-show="$store.state.panel.visible"
@@ -93,7 +94,7 @@
         >
           {{ l10n.getText('TITLE_INFLECTIONS_PANEL') }}
         </h1>
-        <inflections @contentwidth="setContentWidth" class="alpheios-panel-inflections"></inflections>
+        <inflections class="alpheios-panel-inflections"></inflections>
       </div>
 
       <div :id="inflectionsBrowserPanelID" class="alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser"
@@ -104,8 +105,7 @@
         >
           {{ l10n.getText('TITLE_INFLECTIONS_BROWSER_PANEL') }}
         </h1>
-        <inflection-browser @contentwidth="setContentWidth">
-        </inflection-browser>
+        <inflection-browser/>
       </div>
 
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__grammar
@@ -119,8 +119,7 @@
           class="alpheios-panel__tab-panel alpheios-panel__tab__treebank"
           v-if="$store.getters['app/hasTreebankData']" v-show="$store.getters['ui/isActiveTab']('treebank')"
           data-alpheios-ignore="all">
-        <!-- TODO: Instead of this we need to create a universal mechanism for handling panel resizing for every tab's content change -->
-        <treebank @treebankcontentwidth="setTreebankContentWidth"></treebank>
+        <treebank/>
       </div>
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__status"
            v-show="$store.getters['ui/isActiveTab']('status')"
@@ -138,7 +137,7 @@
       </div>
 
       <div
-          class="alpheios-panel__tab-panel"
+          class="alpheios-panel__tab-panel alpheios-panel__tab-panel--scroll"
           v-show="$store.getters['ui/isActiveTab']('wordUsage')"
         >
         <word-usage-examples/>
@@ -295,6 +294,8 @@
 /*
     This is a desktop version of a panel
      */
+// JS imports
+import interact from 'interactjs'
 // UI components
 import NavbuttonsLarge from '@/vue/components/nav/navbuttons-large.vue'
 // SVG icons
@@ -305,7 +306,7 @@ import AttachRightIcon from '@/images/inline-icons/attach-right.svg'
 import CompactPanel from '@/vue/components/panel-compact.vue'
 
 export default {
-  name: 'Panel',
+  name: 'PanelLarge',
   extends: CompactPanel,
   components: {
     navbuttonsLarge: NavbuttonsLarge,
@@ -313,19 +314,14 @@ export default {
     attachLeftIcon: AttachLeftIcon,
     attachRightIcon: AttachRightIcon
   },
-  tabChangeUnwatch: null, // Will hold a function for removal of a tab change watcher
+  // A minimal width of a panel, in pixels. It should be large enough to fit all the buttons of a large size into the panel
+  minWidth: 698,
+  // Maximum allowed size of a panel, as percentage of the viewport width.
+  maxWidthPct: 80,
 
   computed: {
     rootClasses () {
       return this.$options.positionClassVariants[this.$store.state.panel.position]
-    },
-
-    mainstyles: function () {
-      this.panelWidth = this.panelWidth ? this.panelWidth : this.$options.minWidth
-      return {
-        zIndex: this.ui.zIndex,
-        width: `${this.panelWidth}px`
-      }
     },
 
     attachToLeftVisible: function () {
@@ -338,13 +334,38 @@ export default {
   },
 
   mounted: function () {
-    this.$options.tabChangeUnwatch = this.$store.watch((state, getters) => state.ui.activeTab, (tabName) => {
-      this.setContentWidth({ width: 'auto', component: null })
-    })
-  },
+    // Determine paddings and sidebar width for calculation of a panel width to fit content
+    if (typeof this.$el.querySelector === 'function') {
+      const maxWidth = Math.floor(document.documentElement.clientWidth / 100 * this.$options.maxWidthPct)
 
-  beforeDestroy: function () {
-    this.$options.tabChangeUnwatch()
+      // Initialize Interact.js: make panel resizable
+      interact(this.$el)
+        .resizable({
+          // resize from all edges and corners
+          edges: { left: true, right: true, bottom: false, top: false },
+
+          // keep the edges inside the parent
+          restrictEdges: {
+            outer: document.body,
+            endOnly: true
+          },
+
+          // minimum size
+          restrictSize: {
+            min: { width: this.$options.minWidth },
+            max: { width: maxWidth }
+          },
+
+          inertia: true
+        })
+        .on('resizemove', event => {
+          let target = event.target
+          // Indicate that panel received a custom size
+          this.resized = true
+          // update the element's style
+          target.style.width = `${event.rect.width}px`
+        })
+    }
   }
 }
 </script>
@@ -354,19 +375,21 @@ export default {
   .alpheios-panel--large {
     height: 100vh;
     top: 0;
-  }
 
-  .alpheios-panel__header-logo {
-    width: uisize(44px);
-    height: auto;
-  }
+    & .alpheios-panel__content {
+      max-width: 80vw;
+    }
 
-  .alpheios-panel--large {
     .alpheios-navbuttons__btn {
       svg {
         width: uisize(28px);
       }
     }
+  }
+
+  .alpheios-panel__header-logo {
+    width: uisize(44px);
+    height: auto;
   }
 
   .alpheios-navbuttons__btn--attach {

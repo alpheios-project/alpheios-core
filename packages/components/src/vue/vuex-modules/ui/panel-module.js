@@ -1,6 +1,6 @@
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Module from '@/vue/vuex-modules/module.js'
-import Panel from '@/vue/components/panel.vue'
+import LargePanel from '@/vue/components/panel-large.vue'
 import CompactPanel from '@/vue/components/panel-compact.vue'
 import HTMLPage from '@/lib/utility/html-page.js'
 
@@ -21,7 +21,7 @@ export default class PanelModule extends Module {
        */
       api: api,
       components: {
-        panel: Panel, // A desktop version of a panel
+        largePanel: LargePanel, // A desktop version of a panel
         compactPanel: CompactPanel // A mobile version of a panel
       }
     })
@@ -37,7 +37,7 @@ PanelModule.store = (moduleInstance) => {
       // Whether a panel is shown or hidden
       visible: false,
       // Choose mobile or desktop layout from the value of the `platform` prop of a configuration object
-      layout: moduleInstance.config.platform.isDesktop ? `panel` : 'compactPanel',
+      layout: moduleInstance.config.platform.isDesktop ? `largePanel` : 'compactPanel',
       // Where a panel is located. Possible values are `left` or `right`.
       position: 'left',
       // Device orientation

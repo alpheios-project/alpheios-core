@@ -26,8 +26,8 @@ export default class PopupModule extends Module {
         // Reactive options of the Popup UI component, are passed to popup.vue as `data`
         moduleData: {
           // Default popup position, with units
-          top: '10vh',
-          left: '10vw',
+          top: this.config.initialPos.top,
+          left: this.config.initialPos.left,
 
           draggable: this.config.draggable,
           resizable: this.config.resizable,
@@ -127,5 +127,9 @@ PopupModule._configDefaults = {
   initialShift: {
     x: 0,
     y: 0
+  },
+  initialPos: {
+    top: '10vh',
+    left: '10vw'
   }
 }

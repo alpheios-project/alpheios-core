@@ -12,8 +12,12 @@ export default class AuthModule extends Module {
     this._externalLoginUrl = null
     this._externalLogoutUrl = null
     if (this._auth) {
-      this._externalLoginUrl = this._auth.loginUrl()
-      this._externalLogoutUrl = this._auth.logoutUrl()
+      try {
+        this._externalLoginUrl = this._auth.loginUrl()
+        this._externalLogoutUrl = this._auth.logoutUrl()
+      } catch (e) {
+        console.warn('AuthModule is missing loginUrl/logoutUrl methods')
+      }
     }
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
     api[this.constructor.moduleName] = this.constructor.api(this, store)

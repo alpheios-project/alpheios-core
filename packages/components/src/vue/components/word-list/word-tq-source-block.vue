@@ -1,6 +1,6 @@
 <template>
     <div class = "alpheios-wordlists-tq">
-      <a class = "alpheios-wordlists-tq-title" :href="source">{{ source }}</a>
+      <a class = "alpheios-wordlists-tq-title" :href="source" target="_blank">{{ source }}</a>
       <div class = "alpheios-wordlists-tq-contextHTML-block"
         v-for = "tq in tqSelectors" :key = "tq.ID"
       >

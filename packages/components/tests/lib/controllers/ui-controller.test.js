@@ -20,7 +20,7 @@ import enGB from '@/locales/en-gb/messages.json'
 
 import { LanguageModelFactory as LMF, Definition, Constants } from 'alpheios-data-models'
 
-import Panel from '@/vue/components/panel.vue'
+import Panel from '@/vue/components/panel-large.vue'
 import Popup from '@/vue/components/popup.vue'
 
 describe.skip('ui-controller.test.js', () => {

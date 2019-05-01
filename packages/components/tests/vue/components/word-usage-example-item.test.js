@@ -6,9 +6,9 @@ import { mount } from '@vue/test-utils'
 import { Constants, Author, TextWork } from 'alpheios-data-models'
 import { ClientAdapters } from 'alpheios-client-adapters'
 
-import wordUsageExampleItem from '@/vue/components/word-usage-examples/word-usage-examples-item.vue'
+// import wordUsageExampleItem from '@/vue/components/word-usage-examples/word-usage-examples-item.vue'
 
-describe('word-usage-example-item.test.js', () => {
+describe.skip('word-usage-example-item.test.js', () => {
   console.error = function () {}
   //console.log = function () {}
   console.warn = function () {}

@@ -614,6 +614,11 @@
     "description": "Word Usage Examples Sorting",
     "component": "WordUsageExamplesSorting"
   },
+  "WORDUSAGE_SHOw_SOURCE_LINKS": {
+    "message": "Show/hide source links",
+    "description": "Message on a button that toggles source links on or off",
+    "component": "WordUsageExamples"
+  },
   "FONTSIZE_TEXT_SMALL": {
     "message": "Small",
     "description": "Description of a text size option within a button",

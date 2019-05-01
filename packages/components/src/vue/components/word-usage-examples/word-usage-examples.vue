@@ -2,7 +2,7 @@
   <div class="alpheios-word-usage">
     <div class="alpheios_word_usage_list_title" data-alpheios-ignore="all">{{ targetWord }} ({{ language }})</div>
     <div class="alpheios-word-usage-header" data-alpheios-ignore="all" v-show="showHeader">
-      <word-usage-examples-filters 
+      <word-usage-examples-filters
         @filterCurrentByAuthor = "filterCurrentByAuthor"
         @getMoreResults = "getMoreResults"
         @getAllResults = "getAllResults"
@@ -11,16 +11,56 @@
     </div>
 
     <div class="alpheios_word_usage_list_mainblock" v-if="showWordUsageExampleItems">
-      <div v-if="wordUsageListSorted.length > 0">
-        <word-usage-examples-item
-            v-for="wordUsageItem in wordUsageListSorted"
-            v-bind:key="wordUsageItem.ID"
-            :wordUsageItem="wordUsageItem"
-        ></word-usage-examples-item>
-      </div>
-      <div v-else>
+      <template v-if="wordUsageListSorted.length > 0">
+        <div
+            class="alpheios-word-usage__examples-show-sources-btn alpheios-button-primary"
+            @click="changeShowDataSource"
+        >
+          {{ l10n.getText('WORDUSAGE_SHOw_SOURCE_LINKS') }}
+        </div>
+        <div
+            class="alpheios-word-usage__examples"
+            :class="{'alpheios-word-usage__examples--sources-visible': showDataSource}"
+        >
+          <template
+              v-for="wordUsageItem in wordUsageListSorted"
+              :wordUsageItem="wordUsageItem"
+          >
+            <a
+                class="alpheios-word-usage__examples-source-link-large"
+                :href="wordUsageItem.source"
+                target="_blank"
+            >
+              {{ `${wordUsageItem.cit} ${wordUsageItem.fullCit()}` }}
+            </a>
+            <div
+                class="alpheios-word-usage__examples-pre"
+            >
+              {{ wordUsageItem.prefix }}
+            </div>
+            <div
+                class="alpheios-word-usage__examples-target-word"
+                v-html="wordUsageItem.normalizedText"
+            />
+            <div
+                class="alpheios-word-usage__examples-post"
+            >
+              {{ wordUsageItem.suffix }}
+            </div>
+            <a
+                class="alpheios-word-usage__examples-source-link-compact"
+                :href="wordUsageItem.source"
+                target="_blank"
+                v-show="showDataSource"
+            >
+              {{ `${wordUsageItem.cit} ${wordUsageItem.fullCit()}` }}
+            </a>
+          </template>
+        </div>
+      </template>
+      <template v-else>
         {{ l10n.getText('WORDUSAGE_NO_RESULTS') }}
-      </div>
+      </template>
     </div>
 
     <div class="alpheios-word_usage_list__provider" v-show="provider">
@@ -29,7 +69,6 @@
   </div>
 </template>
 <script>
-import WordUsageExamplesItem from '@/vue/components/word-usage-examples/word-usage-examples-item.vue'
 import WordUsageExamplesFilters from '@/vue/components/word-usage-examples/word-usage-examples-filters.vue'
 import WordUsageExamplesSorting from '@/vue/components/word-usage-examples/word-usage-examples-sorting.vue'
 
@@ -41,7 +80,6 @@ export default {
   storeModules: ['ui'],
   mixins: [DependencyCheck],
   components: {
-    wordUsageExamplesItem: WordUsageExamplesItem,
     wordUsageExamplesFilters: WordUsageExamplesFilters,
     wordUsageExamplesSorting: WordUsageExamplesSorting
   },
@@ -50,7 +88,9 @@ export default {
       sortBy: null,
       selectedAuthor: null,
       selectedTextWork: null,
-      needInnerFilter: false
+      needInnerFilter: false,
+      // Whether to show reference links on mobile layout or not
+      showDataSource: false
     }
   },
   computed: {
@@ -61,7 +101,7 @@ export default {
       return this.$store.state.app.homonymDataReady && this.app.homonym ? this.app.homonym.language : null
     },
     showHeader () {
-      return Boolean(this.selectedAuthor) || 
+      return Boolean(this.selectedAuthor) ||
              this.showWordUsageExampleItems && this.wordUsageListSorted.length > 0 ||
              !this.showWordUsageExampleItems
     },
@@ -145,6 +185,9 @@ export default {
         }
         return 0
       })
+    },
+    changeShowDataSource () {
+      this.showDataSource = !this.showDataSource
     }
   },
   mounted () {
@@ -192,6 +235,7 @@ export default {
     .alpheios-word-usage-header-select-textwork,
     .alpheios-word-usage-header-select-sortBy {
       width: 88%;
+      max-width: 400px;
     }
 
     .alpheios-word-usage-header-clear-icon {
@@ -211,5 +255,73 @@ export default {
       fill: var(--alpheios-text-color);
     }
 
+    &__examples {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      grid-auto-rows: auto;
+    }
+
+    &__examples-show-sources-btn {
+      margin: 40px 0  20px;
+    }
+
+    .alpheios-panel--large &__examples-show-sources-btn {
+      display: none;
+    }
+
+    a#{&}__examples-source-link-large {
+      grid-column: 1/4;
+      color: var(--alpheios-link-color-on-light);
+      padding-top: 10px;
+      padding-bottom: 5px;
+    }
+
+    a#{&}__examples-source-link-compact {
+      grid-column: 1/4;
+      color: var(--alpheios-link-color-on-light);
+      padding-top: 5px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--alpheios-border-color);
+    }
+
+    &__examples-pre {
+      grid-column: 1;
+      text-align: right;
+      border-bottom: 1px solid var(--alpheios-border-color);
+    }
+
+    &__examples-target-word {
+      grid-column: 2;
+      text-align: center;
+      padding: 0 3px;
+      color: var(--alpheios-highlight-dark-color);
+      font-weight: 700;
+      border-bottom: 1px solid var(--alpheios-border-color);
+    }
+
+    &__examples-post {
+      grid-column: 3;
+      text-align: left;
+      border-bottom: 1px solid var(--alpheios-border-color);
+    }
+
+    &__examples-pre,
+    &__examples-target-word,
+    &__examples-post {
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--alpheios-border-color);
+      white-space: nowrap;
+    }
+
+    &__examples--sources-visible &__examples-pre,
+    &__examples--sources-visible &__examples-target-word,
+    &__examples--sources-visible &__examples-post {
+      padding-bottom: 5px;
+      border-bottom: none;
+    }
+
+    .alpheios-panel--compact &__examples-source-link-large {
+      display: none;
+    }
   }
 </style>

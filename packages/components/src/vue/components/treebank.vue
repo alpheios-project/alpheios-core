@@ -12,10 +12,6 @@ export default {
   storeModules: ['app'],
   mixins: [DependencyCheck],
   computed: {
-    visible: function () {
-      return this.$store.getters[`app/hasTreebankData`]
-    },
-
     /*
     Returns a source URL of a treebank page. This computed prop will be cached by Vue.js.
     If caching will not work effectively, we shall prevent unnecessary page reloads manually.
@@ -32,13 +28,6 @@ export default {
         }
       }
       return newSrcUrl
-    }
-  },
-  watch: {
-    visible: function (val) {
-      if (val) {
-        this.$emit('treebankcontentwidth', '43em')
-      }
     }
   }
 }
