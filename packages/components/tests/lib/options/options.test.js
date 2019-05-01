@@ -67,12 +67,10 @@ describe('options.test.js', () => {
     let testDefaults = {
       domain: 'alpheios-content-options',
       items: { locale: testOption },
-      fooProperty: 'bar'
     }
     let opt = new Options(testDefaults, StorageAdapter)
 
     expect(opt.domain).toEqual(testDefaults.domain)
-    expect(opt.fooProperty).toEqual(testDefaults.fooProperty)
     expect(Options.initItems).toHaveBeenCalled()
     expect(opt.items.locale.constructor.name).toEqual('OptionItem')
     expect(opt.items.locale.defaultValue).toEqual(testOption.defaultValue)
@@ -209,5 +207,22 @@ describe('options.test.js', () => {
 
     expect(Array.isArray(res.items.locale)).toBeTruthy()
     expect(res.items.locale[0].name).toEqual('locale-foo')
+  })
+
+  it('13 Options - reset sets everything back to defaults',async () => {
+    let testOption = { defaultValue: 'en-US', labelText: 'UI Locale:', values: [ { text: 'English (US)', value: 'en-US' } ] }
+    let testDefaults = {
+      domain: 'alpheios-test-options',
+      items: { locale6: testOption },
+      fooProperty: 'bar'
+    }
+    window.localStorage.values['alpheios-test-options-keys'] = '["locale6"]'
+    window.localStorage.values.locale6 = 'Foo'
+    let opt = new Options(testDefaults, LocalStorageArea)
+    let callBackFn = jest.fn(() => { })
+    let returnedOptions = await opt.load(callBackFn)
+    expect(opt.items.locale6.currentValue).toEqual('Foo')
+    await opt.reset()
+    expect(opt.items.locale6.currentValue).toEqual('en-US')
   })
 })

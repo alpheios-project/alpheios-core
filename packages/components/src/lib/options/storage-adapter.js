@@ -50,4 +50,11 @@ export default class StorageAdapter {
   remove (key) {
     return new Promise((resolve, reject) => reject(new Error(`Remove method should be implemented in a subclass`)))
   }
+
+  /**
+   * clear all items in the storage
+   */
+  clearAll () {
+    return new Promise((resolve, reject) => reject(new Error(`clearAll method should be implemented in a subclass`)))
+  }
 }

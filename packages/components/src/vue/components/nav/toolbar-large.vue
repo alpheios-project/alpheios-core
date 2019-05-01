@@ -302,14 +302,21 @@ export default {
       .draggable({
         inertia: true,
         autoScroll: false,
-        restrict: {
-          elementRect: { top: 0.5, left: 0.5, bottom: 0.5, right: 0.5 }
-        },
+        modifiers: [
+          interact.modifiers.restrict({
+            restriction: {
+              x: 27,
+              y: 22,
+              width: document.documentElement.clientWidth - 50,
+              height: document.documentElement.clientHeight - 50
+            },
+            endOnly: true
+          })
+        ],
         ignoreFrom: 'input, textarea, a[href], select, option'
       })
       .on('dragmove', this.dragMoveListener)
       .on('dragend', this.dragEndListener)
-      .on('resizemove', this.resizeListener)
   }
 }
 </script>
@@ -367,6 +374,8 @@ export default {
     box-sizing: border-box;
     border-top-left-radius: uisize(10px);
     border-top-right-radius: uisize(10px);
+    // Need this for interact.js to work more reliably
+    touch-action: none;
   }
 
   .alpheios-toolbar__logo-icon {

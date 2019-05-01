@@ -438,6 +438,11 @@
     "description": "Label for Reskin component",
     "component": "ReskinFontColor"
   },
+  "LABEL_RESET_OPTIONS": {
+    "message": "Reset All",
+    "description": "Label for Reset button",
+    "component": "Options"
+  },
   "TOOLTIP_RESKIN_SMALLFONT": {
     "message": "Small font",
     "description": "Tooltip for small font icon",

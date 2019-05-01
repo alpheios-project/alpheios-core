@@ -375,6 +375,7 @@ export default class UIController {
 
       // TODO: Some of the functions below should probably belong to other API groups.
       contentOptionChange: this.contentOptionChange.bind(this),
+      resetAllOptions: this.resetAllOptions.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
       getLanguageName: UIController.getLanguageName,
       startResourceQuery: this.startResourceQuery.bind(this),
@@ -629,7 +630,6 @@ export default class UIController {
       closePanel: this.closePanel.bind(this),
       openPopup: this.openPopup.bind(this),
       closePopup: this.closePopup.bind(this),
-      switchPopup: this.switchPopup.bind(this), // Switches between different types of popups
       changeTab: this.changeTab.bind(this),
       showPanelTab: this.showPanelTab.bind(this),
       togglePanelTab: this.togglePanelTab.bind(this),
@@ -1398,17 +1398,14 @@ export default class UIController {
     }
   }
 
-  /**
-   * This is to support a switch between different popup types.
-   * It is not used now as the only type of popup is available currently.
-   */
-  switchPopup () {
-    if (this.api.ui.hasModule('popup')) {
-      const popup = this.api.ui.getModule('popup')
-      popup.close() // Close an old popup
-      popup.currentPopupComponent = this.api.settings.uiOptions.items[name].currentValue
-      popup.open() // Will trigger an initialisation of popup dimensions
-    }
+  resetAllOptions () {
+    this.contentOptions.reset()
+    this.resourceOptions.reset()
+    this.uiOptions.reset()
+    // TODO this is a hack until we refactor settings to use the Vuex store
+    // what we really need to do here is make sure that any state handlers that need to be called
+    // in response to any setting change are called and that the ui components for the settings are redrawn
+    alert('Restart your browser now for setting reset to take affect')
   }
 
   contentOptionChange (name, value) {
@@ -1459,18 +1456,10 @@ export default class UIController {
 
     switch (name) {
       case 'panel':
-        if (this.api.ui.hasModule('popup')) {
+        if (this.api.ui.hasModule('panel')) {
           this.store.commit('panel/close')
           this.store.commit('panel/setPanelLayout', this.api.settings.uiOptions.items[name].currentValue)
           this.store.commit('panel/open')
-        }
-        break
-      case 'popup':
-        if (this.api.ui.hasModule('popup')) {
-          const popup = this.api.ui.getModule('popup')
-          popup.close() // Close an old popup
-          popup.currentPopupComponent = this.api.settings.uiOptions.items[name].currentValue
-          popup.open() // Will trigger an initialisation of popup dimensions
         }
         break
       case 'fontSize':

@@ -145,4 +145,16 @@ describe('local-storage-area.test.js', () => {
     expect(window.localStorage.values['alpheios-content-options12-keys']).toEqual('["panelPosition12"]')
     expect(window.localStorage.preferredLanguage12).toBeUndefined()
   })
+
+  it('13 LocalStorageArea - clearAll method removes all values from local storage', async() => {
+    let stAdapter = new LocalStorageArea('alpheios-content-options13')
+    await stAdapter.set({ foo1: 'bar' })
+    await stAdapter.set({ foo2: 'bar2' })
+    expect(window.localStorage.values.foo1).toEqual('bar')
+    expect(window.localStorage.values.foo2).toEqual('bar2')
+    await stAdapter.clearAll()
+    expect(window.localStorage.values.foo1).toBeUndefined()
+    expect(window.localStorage.values.foo2).toBeUndefined()
+    expect(window.localStorage.values['alpheios-content-options13-keys']).toEqual('[]')
+  })
 })

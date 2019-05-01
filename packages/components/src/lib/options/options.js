@@ -23,10 +23,7 @@ export default class Options {
     this.defaults = defaults
     this.domain = defaults.domain
     this.storageAdapter = new StorageAdapter(defaults.domain)
-    for (const key of Object.keys(defaults)) {
-      this[key] = defaults[key]
-    }
-    this.items = Options.initItems(this.items, this.storageAdapter)
+    this.items = Options.initItems(this.defaults.items, this.storageAdapter)
   }
 
   static initItems (defaults, storageAdapter) {
@@ -42,6 +39,14 @@ export default class Options {
       }
     }
     return items
+  }
+
+  /**
+   * Reset all options to default values
+   */
+  async reset () {
+    await this.storageAdapter.clearAll()
+    this.items = Options.initItems(this.defaults.items, this.storageAdapter)
   }
 
   /**

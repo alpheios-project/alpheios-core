@@ -373,6 +373,9 @@ html {
   color: var(--alpheios-text-color);
   box-sizing: border-box;
   margin: 0;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
 }
 .alpheios-content [lang=ara] {
   font-family: var(--alpheios-arabic-font-face) !important;
@@ -380,7 +383,6 @@ html {
 .alpheios-content h1, .alpheios-content h2, .alpheios-content h3, .alpheios-content h4, .alpheios-content h5, .alpheios-content h6, .alpheios-content p, .alpheios-content span, .alpheios-content a {
   line-height: 1.15;
   text-align: left;
-  text-size-adjust: 100%;
   padding: 0;
   font-family: var(--alpheios-sans-font-face);
   font-style: normal;
@@ -3151,6 +3153,7 @@ h3.alpheios-inflections__credits-title {
   box-sizing: border-box;
   border-top-left-radius: calc(var(--alpheios-base-ui-size) * 0.625);
   border-top-right-radius: calc(var(--alpheios-base-ui-size) * 0.625);
+  touch-action: none;
 }
 .alpheios-toolbar__logo-icon {
   width: 60%;

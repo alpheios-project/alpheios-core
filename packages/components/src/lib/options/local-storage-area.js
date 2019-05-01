@@ -121,4 +121,28 @@ export default class LocalStorageArea extends StorageAdapter {
       }
     })
   }
+
+  clearAll () {
+    return new Promise((resolve, reject) => {
+      try {
+        let result = null
+        let keys = window.localStorage.getItem(`${this.domain}-keys`)
+        if (keys) {
+          keys = JSON.parse(keys)
+          for (let key of keys) {
+            window.localStorage.removeItem(key)
+          }
+          window.localStorage.setItem(`${this.domain}-keys`, JSON.stringify([]))
+          resolve(true)
+        } else {
+          // Nothing to retrieve
+          console.log(`Unable to retrieve data for "${this.domain}" storage domain because no keys provided or no keys listed in local storage. ` +
+            `This might be normal for devices where no data is saved to the local storage yet`)
+          resolve(result)
+        }
+      } catch (e) {
+        reject(e)
+      }
+    })
+  }
 }

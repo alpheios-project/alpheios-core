@@ -202,12 +202,6 @@
         </setting>
         <setting
             :classes="['alpheios-panel__options-item']"
-            :data="settings.uiOptions.items.popup"
-            @change="uiOptionChanged"
-        >
-        </setting>
-        <setting
-            :classes="['alpheios-panel__options-item']"
             :data="settings.uiOptions.items.panelOnActivate"
             @change="uiOptionChanged"
         >
@@ -270,6 +264,11 @@
             @change="contentOptionChanged"
         >
         </setting>
+        <div>
+          <button @click="resetAllOptions"
+              class="alpheios-button-primary">{{l10n.getText('LABEL_RESET_OPTIONS')}}
+          </button>
+        </div>
       </div>
 
       <div class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info"
@@ -515,6 +514,10 @@ export default {
 
     contentOptionChanged: function (name, value) {
       this.app.contentOptionChange(name, value)
+    },
+
+    resetAllOptions: function() {
+      this.app.resetAllOptions()
     },
 
     resourceSettingChanged: function (name, value) {
