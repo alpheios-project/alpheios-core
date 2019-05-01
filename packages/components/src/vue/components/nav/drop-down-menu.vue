@@ -1,5 +1,5 @@
 <template>
-  <div class="alpheios-navmenu" v-show="visible">
+  <div class="alpheios-navmenu">
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('info') }"
          @click="changeTab('info')">
       <div class="alpheios-navbuttons__icon-cont">
@@ -8,8 +8,12 @@
       <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_HELP') }}</div>
     </div>
 
-    <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('morphology') }"
-         @click="changeTab('morphology')">
+    <div
+        class="alpheios-navmenu__item"
+        :class="{ active: $store.getters['ui/isActiveTab']('morphology') }"
+        @click="changeTab('morphology')"
+        v-show="$store.state.app.morphDataReady && app.hasMorphData()"
+    >
       <div class="alpheios-navbuttons__icon-cont">
         <morphology-icon class="alpheios-navbuttons__icon"></morphology-icon>
       </div>
@@ -96,7 +100,7 @@
       <div class="alpheios-navbuttons__icon-cont">
         <status-icon class="alpheios-navbuttons__icon"></status-icon>
       </div>
-      <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_HELP') }}</div>
+      <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_STATUS') }}</div>
     </div>
   </div>
 </template>
@@ -144,7 +148,6 @@ export default {
     wordUsageIcon: WordUsageIcon,
     wordlistIcon: WordlistIcon
   },
-  tabChangeUnwatch: null, // Will hold a function for removal of a tab change watcher
 
   props: {
     visibility: {
@@ -154,35 +157,11 @@ export default {
     }
   },
 
-  data: function () {
-    return {
-      visible: false
-    }
-  },
-
-  watch: {
-    visibility: function () {
-      // If visibility is changed it means a menu button is clicked.
-      // We'll toggle visibility in a response to that.
-      this.visible = !this.visible
-    }
-  },
-
   methods: {
     changeTab: function (tabName) {
       this.ui.changeTab(tabName)
-      this.visible = false // Close the menu panel
+      this.$emit('drop-down-menu-item-selected')
     }
-  },
-
-  mounted: function () {
-    this.$options.tabChangeUnwatch = this.$store.watch((state, getters) => state.ui.activeTab, (tabName) => {
-      this.visible = false // Close the menu panel
-    })
-  },
-
-  beforeDestroy: function () {
-    this.$options.tabChangeUnwatch()
   }
 }
 </script>
@@ -192,39 +171,43 @@ export default {
   .alpheios-navmenu {
     position: absolute;
     z-index: 1000;
-    top: 0;
-    bottom: 0;
+    top: uisize(56px);
     left: 0;
     right: 0;
     background: #FFF;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
   }
 
   .alpheios-navmenu__item {
     display: flex;
     padding: 10px 20px 10px 30px;
-    border-bottom: 1px solid var(--alpheios-border-color);
+    border-bottom: 1px solid var(--alpheios-color-neutral-light);
     cursor: pointer;
-  }
 
-  .alpheios-navmenu__item:hover,
-  .alpheios-navmenu__item:focus {
-    color: var(--alpheios-color-muted);
-  }
+    &:hover,
+    &:focus {
+      color: var(--alpheios-color-vivid-hover);
+    }
 
-  .alpheios-navmenu__item .alpheios-navbuttons__icon,
-  .alpheios-navmenu__item.active:hover .alpheios-navbuttons__icon,
-  .alpheios-navmenu__item.active:focus .alpheios-navbuttons__icon {
-    fill: var(--alpheios-color-neutral-dark);
-    stroke: var(--alpheios-color-neutral-dark);
-  }
+    &.active {
+      color: var(--alpheios-color-vivid);
+    }
 
-  .alpheios-navmenu__item:hover .alpheios-navbuttons__icon,
-  .alpheios-navmenu__item:focus .alpheios-navbuttons__icon,
-  .alpheios-navmenu__item.active .alpheios-navbuttons__icon {
-    fill: var(--alpheios-color-muted);
-    stroke: var(--alpheios-color-muted);
+    & .alpheios-navbuttons__icon,
+    &:hover .alpheios-navbuttons__icon,
+    &.active:focus .alpheios-navbuttons__icon {
+      fill: var(--alpheios-color-vivid);
+      stroke: var(--alpheios-color-vivid);
+    }
+
+    &:hover .alpheios-navbuttons__icon,
+    &:focus .alpheios-navbuttons__icon,
+    &.active .alpheios-navbuttons__icon {
+      fill: var(--alpheios-color-vivid-hover);
+      stroke: var(--alpheios-color-vivid-hover);
+    }
   }
 
   .alpheios-navbuttons__icon-cont {

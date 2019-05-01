@@ -7,7 +7,7 @@
       data-resizable="true"
       :data-resized="resized"
       id="alpheios-panel-inner"
-      v-on-clickaway="attachTrackingClick"
+      v-on-clickaway="closePanel"
       v-show="$store.state.panel.visible"
   >
 
@@ -390,6 +390,14 @@ export default {
   .alpheios-panel__header-logo {
     width: uisize(44px);
     height: auto;
+  }
+
+  .alpheios-panel__header-btn-group--center {
+    direction: ltr;
+    display: flex;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+    align-items: stretch;
   }
 
   .alpheios-navbuttons__btn--attach {

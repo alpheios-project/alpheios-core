@@ -10,7 +10,7 @@
 </template>
 <script>
 // Embeddable SVG icons
-import ToolbarIcon from '@/images/inline-icons/toolbar-compact-icon.svg'
+import ToolbarIcon from '@/images/inline-icons/book-open.svg'
 
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'

@@ -16,65 +16,12 @@
           :name-base="`action-panel`"
           :use-page-lang-prefs="true"
           :show-language-settings-group="false"
+          :show-results-in="`panel`"
       />
         <progress-bar
             class="alpheios-action-panel__progress-bar"
             v-if="$store.getters['app/lexicalRequestInProgress']"
         />
-    </div>
-
-    <div class="alpheios-action-panel__nav-cont">
-      <alph-tooltip
-          :tooltipText="tooltipText('TOOLTIP_DEFINITIONS', $store.getters['app/defDataReady'])"
-          :tooltipDirection="tooltipDirection"
-      >
-        <div
-            :class="{ disabled: !$store.getters['app/defDataReady'] }"
-            @click.stop="ui.showPanelTab('definitions')"
-            class="alpheios-action-panel__navbutton"
-        >
-          <definitions-icon/>
-        </div>
-      </alph-tooltip>
-
-      <alph-tooltip
-          :tooltipText="tooltipText('TOOLTIP_INFLECT', $store.state.app.hasInflData)"
-          :tooltipDirection="tooltipDirection"
-      >
-        <div
-            @click.stop="ui.showPanelTab('inflections')"
-            class="alpheios-action-panel__navbutton"
-            :class="{ disabled: !$store.state.app.hasInflData }"
-        >
-          <inflections-icon/>
-        </div>
-      </alph-tooltip>
-
-      <alph-tooltip
-          :tooltipText="tooltipText('TOOLTIP_WORD_USAGE', $store.state.app.wordUsageExampleEnabled)"
-          :tooltipDirection="tooltipDirection"
-      >
-        <div
-            @click.stop="ui.showPanelTab('wordUsage')"
-            class="alpheios-action-panel__navbutton"
-            :class="{ disabled: !$store.state.app.wordUsageExampleEnabled }"
-        >
-          <word-usage-icon/>
-        </div>
-      </alph-tooltip>
-
-      <alph-tooltip
-          :tooltipText="tooltipText('TOOLTIP_TREEBANK', $store.getters['app/hasTreebankData'])"
-          :tooltipDirection="tooltipDirection"
-      >
-        <div
-            @click.stop="ui.showPanelTab('treebank')"
-            class="alpheios-action-panel__navbutton"
-            :class="{ disabled: !$store.getters['app/hasTreebankData'] }"
-        >
-          <treebank-icon/>
-        </div>
-      </alph-tooltip>
     </div>
 
     <div class="alpheios-action-panel__nav-cont">
@@ -147,14 +94,10 @@
 import Tooltip from '@/vue/components/tooltip.vue'
 import ProgressBar from '@/vue/components/progress-bar.vue'
 // Embeddable SVG icons
-import DefinitionsIcon from '@/images/inline-icons/definitions.svg'
-import InflectionsIcon from '@/images/inline-icons/inflections.svg'
 import InflectionsBrowserIcon from '@/images/inline-icons/inflections-browser.svg'
-import TreebankIcon from '@/images/inline-icons/sitemap.svg'
 import UserIcon from '@/images/inline-icons/user.svg'
 import OptionsIcon from '@/images/inline-icons/options.svg'
 import GrammarIcon from '@/images/inline-icons/resources.svg'
-import UsageExamplesIcon from '@/images/inline-icons/usage-examples-icon1.svg'
 import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
 import CloseIcon from '@/images/inline-icons/x-close.svg'
 // Vue components
@@ -175,14 +118,10 @@ export default {
     lookup: Lookup,
     alphTooltip: Tooltip,
     progressBar: ProgressBar,
-    definitionsIcon: DefinitionsIcon,
-    inflectionsIcon: InflectionsIcon,
     inflectionsBrowserIcon: InflectionsBrowserIcon,
-    treebankIcon: TreebankIcon,
     userIcon: UserIcon,
     optionsIcon: OptionsIcon,
     grammarIcon: GrammarIcon,
-    wordUsageIcon: UsageExamplesIcon,
     wordlistIcon: WordlistIcon,
     closeIcon: CloseIcon
   },
@@ -250,7 +189,7 @@ export default {
 
   .alpheios-action-panel {
     width: 300px;
-    height: 245px;
+    height: 190px;
     position: fixed;
     padding: 10px 20px;
     @include alpheios-border;

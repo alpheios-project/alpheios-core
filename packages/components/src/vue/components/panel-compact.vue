@@ -10,26 +10,37 @@
   >
 
     <div class="alpheios-panel__header" >
-      <div class="alpheios-panel__menu-btn" @click="menuItemClicked">
-        <menu-icon class="alpheios-panel__menu-icon"></menu-icon>
+      <div class="alpheios-panel__menu-btn" @click="menuItemSelected">
+        <menu-icon
+            class="alpheios-panel__menu-icon"
+            :class="{'menu-open': menuVisible}"
+        />
       </div>
-      <div class="alpheios-panel__header-btn-group--center">
-        <navbuttons-compact></navbuttons-compact>
+
+      <div class="alpheios-panel__header-title">
+        {{ panelTitle }}
       </div>
+
       <span class="alpheios-panel__header-btn-group--end">
         <alph-tooltip
             :tooltipText="l10n.getText('TOOLTIP_CLOSE_PANEL')"
             tooltipDirection="top">
-          <div @click="ui.closePanel" class="alpheios-panel__close-btn">
-              <close-icon></close-icon>
+          <div
+              @click="closePanel"
+              class="alpheios-panel__close-btn"
+          >
+              <close-icon/>
           </div>
         </alph-tooltip>
       </span>
     </div>
 
+    <drop-down-menu
+        v-show="menuVisible"
+        @drop-down-menu-item-selected="menuItemSelected"
+    />
+
     <div class="alpheios-panel__content">
-<!--      <drop-down-menu :visibility="menuVisible"/>-->
-      <action-menu :visible="menuVisible" v-on:close-action-menu="closeMenu"/>
 
       <div
           class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding"
@@ -298,8 +309,6 @@
 import HTMLPage from '@/lib/utility/html-page.js'
 // Vue components
 import DropDownMenu from '@/vue/components/nav/drop-down-menu.vue'
-import ActionMenu from '@/vue/components/nav/action-menu.vue'
-import NavbuttonsCompact from '@/vue/components/nav/navbuttons-compact.vue'
 import NotificationArea from '@/vue/components//notification-area.vue'
 import Inflections from './inflections.vue'
 import Setting from './setting.vue'
@@ -317,7 +326,7 @@ import WordUsageExamples from '@/vue/components/word-usage-examples/word-usage-e
 import { Definition } from 'alpheios-data-models'
 import WordListPanel from '@/vue/components/word-list/word-list-panel.vue'
 // Embeddable SVG icons
-import MenuIcon from '@/images/inline-icons/menu.svg'
+import MenuIcon from '@/images/inline-icons/book-open.svg'
 import CloseIcon from '@/images/inline-icons/x-close.svg'
 // Vue directives
 import { directive as onClickaway } from '../directives/clickaway.js'
@@ -341,8 +350,6 @@ export default {
   components: {
     menuIcon: MenuIcon,
     dropDownMenu: DropDownMenu,
-    actionMenu: ActionMenu,
-    navbuttonsCompact: NavbuttonsCompact,
     notificationArea: NotificationArea,
     inflections: Inflections,
     inflectionBrowser: InflectionBrowser,
@@ -450,10 +457,53 @@ export default {
         }
       }
       return content
+    },
+
+    panelTitle () {
+      let title = ''
+      switch (this.$store.state.ui.activeTab) {
+        case 'info':
+          title = this.l10n.getText('TOOLTIP_HELP')
+          break
+        case 'morphology':
+          title = this.l10n.getText('TOOLTIP_MORPHOLOGY')
+          break
+        case 'definitions':
+          title = this.l10n.getText('TOOLTIP_DEFINITIONS')
+          break
+        case 'inflections':
+          title = this.l10n.getText('TOOLTIP_INFLECT')
+          break
+        case 'inflectionsbrowser':
+          title = this.l10n.getText('TOOLTIP_INFLECT_BROWSER')
+          break
+        case 'grammar':
+          title = this.l10n.getText('TOOLTIP_GRAMMAR')
+          break
+        case 'treebank':
+          title = this.l10n.getText('TOOLTIP_TREEBANK')
+          break
+        case 'options':
+          title = this.l10n.getText('TOOLTIP_OPTIONS')
+          break
+        case 'user':
+          title = this.l10n.getText('TOOLTIP_USER')
+          break
+        case 'wordUsage':
+          title = this.l10n.getText('TOOLTIP_WORD_USAGE')
+          break
+        case 'wordlist':
+          title = this.l10n.getText('TOOLTIP_WORDLIST')
+          break
+        case 'status':
+          title = this.l10n.getText('TOOLTIP_STATUS')
+          break
+      }
+      return title
     }
   },
   methods: {
-    menuItemClicked () {
+    menuItemSelected () {
       this.menuVisible = !this.menuVisible
     },
 
@@ -474,8 +524,10 @@ export default {
       this.ui.optionChange(name, value)
     },
 
-    attachTrackingClick: function () {
+    closePanel () {
       this.ui.closePanel()
+      // Close the menu if it was open during the panel closing
+      this.menuVisible = false
     }
   }
 }
@@ -617,12 +669,15 @@ export default {
     margin-bottom: 1em;
   }
 
-  .alpheios-panel__header-btn-group--center {
+  .alpheios-panel__header-title {
     direction: ltr;
     display: flex;
     flex-wrap: nowrap;
     box-sizing: border-box;
     align-items: stretch;
+    color: var(--alpheios-color-light);
+    font-family: var(--alpheios-serif-font-face);
+    font-size: uisize(24px);
   }
 
   .alpheios-panel__header-btn-group--end {
@@ -650,11 +705,14 @@ export default {
     width: 40px;
     height: 40px;
     fill: var(--alpheios-color-neutral-lightest);
-  }
 
-  .alpheios-panel__menu-icon:hover,
-  .alpheios-panel__menu-icon:focus {
-    fill: var(--alpheios-color-neutral-light);
+    &:hover {
+      fill: var(--alpheios-color-bright-hover);
+    }
+
+    &.menu-open {
+      fill: var(--alpheios-color-bright);
+    }
   }
 
   // Special styles for compact panel

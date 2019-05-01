@@ -112,7 +112,7 @@
     "component": "Popup"
   },
   "TOOLTIP_MORPHOLOGY": {
-    "message": "Show morphology",
+    "message": "Morphology",
     "description": "tooltop for a morphology button",
     "component": "Panel"
   },

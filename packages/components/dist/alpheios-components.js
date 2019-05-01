@@ -10112,6 +10112,17 @@ var singleton = jumper();
 
 /***/ }),
 
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/src/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/action-panel.vue?vue&type=style&index=0&lang=scss&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/src!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/nav/action-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/src/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/drop-down-menu.vue?vue&type=style&index=0&lang=scss&":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/src!../node_modules/sass-loader/lib/loader.js??ref--5-3!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/nav/drop-down-menu.vue?vue&type=style&index=0&lang=scss& ***!
@@ -13612,6 +13623,214 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/nav/action-panel.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/nav/action-panel.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
+/* harmony import */ var _vue_components_progress_bar_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/components/progress-bar.vue */ "./vue/components/progress-bar.vue");
+/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
+/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
+/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
+/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
+/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
+/* harmony import */ var _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/images/inline-icons/x-close.svg */ "./images/inline-icons/x-close.svg");
+/* harmony import */ var _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/vue/components/lookup.vue */ "./vue/components/lookup.vue");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+// Embeddable SVG icons
+
+
+
+
+
+
+// Vue components
+
+// Modules support
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ActionPanel',
+  // API modules that are required for this component
+  inject: {
+    ui: 'ui',
+    l10n: 'l10n'
+  },
+  storeModules: ['actionPanel', 'app'], // Store modules that are required by this component
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_9__["default"]],
+  components: {
+    lookup: _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    progressBar: _vue_components_progress_bar_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_2__["default"],
+    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_3__["default"],
+    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_4__["default"],
+    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_5__["default"],
+    wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_6__["default"],
+    closeIcon: _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_7__["default"]
+  },
+
+  data: function () {
+    return {
+      lookupVisible: false,
+      contentVisible: false,
+
+      // How much an action panel has been dragged from its initial position, in pixels
+      shift: {
+        x: 0, // this.moduleData.initialShift.x,
+        y: 0 // this.moduleData.initialShift.y
+      },
+
+      tooltipDirection: 'top'
+    }
+  },
+
+  computed: {
+    componentStyles: function () {
+      let styles = {
+        transform: `translate(${this.shift.x}px, ${this.shift.y}px)`
+      }
+
+      if (this.$store.state.actionPanel.initialPos) {
+        if (this.$store.state.actionPanel.initialPos.top) {
+          styles.top = `${this.$store.state.actionPanel.initialPos.top}px`
+        }
+        if (this.$store.state.actionPanel.initialPos.right) {
+          styles.right = `${this.$store.state.actionPanel.initialPos.right}px`
+        }
+        if (this.$store.state.actionPanel.initialPos.bottom) {
+          styles.bottom = `${this.$store.state.actionPanel.initialPos.bottom}px`
+        }
+        if (this.$store.state.actionPanel.initialPos.left) {
+          styles.left = `${this.$store.state.actionPanel.initialPos.left}px`
+        }
+      }
+      return styles
+    },
+
+    showPanel: function () {
+      // As modules are registered in an arbitrary order, panel module may not be available
+      // during rendering of an action panel
+      const panelVisible = this.$store.state.panel ? this.$store.state.panel.visible : false
+      return this.$store.state.actionPanel.visible && !panelVisible
+    }
+  },
+
+  methods: {
+    tooltipText (messageID, availabilityCondition = 'N/A') {
+      if (availabilityCondition !== 'N/A') {
+        return availabilityCondition
+          ? this.l10n.getText(messageID)
+          : `${this.l10n.getText(messageID)} (${this.l10n.getText('TOOLTIP_NOT_AVAIL_POSTFIX')})`
+      }
+      return this.l10n.getText(messageID)
+    }
+  }
+});
+
+
+/***/ }),
+
 /***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/nav/drop-down-menu.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************!*\
   !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/nav/drop-down-menu.vue?vue&type=script&lang=js& ***!
@@ -13634,6 +13853,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
 /* harmony import */ var _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/images/inline-icons/usage-examples-icon1.svg */ "./images/inline-icons/usage-examples-icon1.svg");
 /* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+//
+//
+//
+//
 //
 //
 //
@@ -13780,7 +14003,6 @@ __webpack_require__.r(__webpack_exports__);
     wordUsageIcon: _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_11__["default"],
     wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_10__["default"]
   },
-  tabChangeUnwatch: null, // Will hold a function for removal of a tab change watcher
 
   props: {
     visibility: {
@@ -13790,35 +14012,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
 
-  data: function () {
-    return {
-      visible: false
-    }
-  },
-
-  watch: {
-    visibility: function () {
-      // If visibility is changed it means a menu button is clicked.
-      // We'll toggle visibility in a response to that.
-      this.visible = !this.visible
-    }
-  },
-
   methods: {
     changeTab: function (tabName) {
       this.ui.changeTab(tabName)
-      this.visible = false // Close the menu panel
+      this.$emit('drop-down-menu-item-selected')
     }
-  },
-
-  mounted: function () {
-    this.$options.tabChangeUnwatch = this.$store.watch((state, getters) => state.ui.activeTab, (tabName) => {
-      this.visible = false // Close the menu panel
-    })
-  },
-
-  beforeDestroy: function () {
-    this.$options.tabChangeUnwatch()
   }
 });
 
@@ -14084,7 +14282,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _images_inline_icons_toolbar_compact_icon_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/images/inline-icons/toolbar-compact-icon.svg */ "./images/inline-icons/toolbar-compact-icon.svg");
+/* harmony import */ var _images_inline_icons_book_open_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/images/inline-icons/book-open.svg */ "./images/inline-icons/book-open.svg");
 /* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
@@ -14111,10 +14309,19 @@ __webpack_require__.r(__webpack_exports__);
     ui: 'ui',
     l10n: 'l10n'
   },
-  storeModules: ['toolbar', 'app', 'ui'], // Store modules that are required by this component
+  storeModules: ['toolbar', 'app', 'ui', 'actionPanel'], // Store modules that are required by this component
   mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
   components: {
-    toolbarIcon: _images_inline_icons_toolbar_compact_icon_svg__WEBPACK_IMPORTED_MODULE_0__["default"]
+    toolbarIcon: _images_inline_icons_book_open_svg__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+
+  methods: {
+    openActionPanel: function () {
+      // Toggle an action panel
+      this.$store.state.actionPanel.visible
+        ? this.$store.commit('actionPanel/close')
+        : this.$store.commit('actionPanel/open')
+    }
   }
 });
 
@@ -14582,28 +14789,39 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
 /* harmony import */ var _vue_components_nav_drop_down_menu_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/components/nav/drop-down-menu.vue */ "./vue/components/nav/drop-down-menu.vue");
-/* harmony import */ var _vue_components_nav_navbuttons_compact_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/components/nav/navbuttons-compact.vue */ "./vue/components/nav/navbuttons-compact.vue");
-/* harmony import */ var _vue_components_notification_area_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/vue/components//notification-area.vue */ "./vue/components/notification-area.vue");
-/* harmony import */ var _inflections_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./inflections.vue */ "./vue/components/inflections.vue");
-/* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
-/* harmony import */ var _shortdef_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./shortdef.vue */ "./vue/components/shortdef.vue");
-/* harmony import */ var _grammar_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./grammar.vue */ "./vue/components/grammar.vue");
-/* harmony import */ var _morph_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./morph.vue */ "./vue/components/morph.vue");
-/* harmony import */ var _treebank_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./treebank.vue */ "./vue/components/treebank.vue");
-/* harmony import */ var _info_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./info.vue */ "./vue/components/info.vue");
-/* harmony import */ var _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./inflections-browser.vue */ "./vue/components/inflections-browser.vue");
-/* harmony import */ var _tooltip_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./tooltip.vue */ "./vue/components/tooltip.vue");
-/* harmony import */ var _lookup_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./lookup.vue */ "./vue/components/lookup.vue");
-/* harmony import */ var _font_size_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./font-size.vue */ "./vue/components/font-size.vue");
-/* harmony import */ var _user_auth_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./user-auth.vue */ "./vue/components/user-auth.vue");
-/* harmony import */ var _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/vue/components/word-usage-examples/word-usage-examples.vue */ "./vue/components/word-usage-examples/word-usage-examples.vue");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/vue/components/word-list/word-list-panel.vue */ "./vue/components/word-list/word-list-panel.vue");
-/* harmony import */ var _images_inline_icons_menu_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/images/inline-icons/menu.svg */ "./images/inline-icons/menu.svg");
-/* harmony import */ var _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/images/inline-icons/x-close.svg */ "./images/inline-icons/x-close.svg");
-/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+/* harmony import */ var _vue_components_notification_area_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/components//notification-area.vue */ "./vue/components/notification-area.vue");
+/* harmony import */ var _inflections_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./inflections.vue */ "./vue/components/inflections.vue");
+/* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
+/* harmony import */ var _shortdef_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./shortdef.vue */ "./vue/components/shortdef.vue");
+/* harmony import */ var _grammar_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./grammar.vue */ "./vue/components/grammar.vue");
+/* harmony import */ var _morph_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./morph.vue */ "./vue/components/morph.vue");
+/* harmony import */ var _treebank_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./treebank.vue */ "./vue/components/treebank.vue");
+/* harmony import */ var _info_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./info.vue */ "./vue/components/info.vue");
+/* harmony import */ var _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./inflections-browser.vue */ "./vue/components/inflections-browser.vue");
+/* harmony import */ var _tooltip_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./tooltip.vue */ "./vue/components/tooltip.vue");
+/* harmony import */ var _lookup_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./lookup.vue */ "./vue/components/lookup.vue");
+/* harmony import */ var _font_size_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./font-size.vue */ "./vue/components/font-size.vue");
+/* harmony import */ var _user_auth_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./user-auth.vue */ "./vue/components/user-auth.vue");
+/* harmony import */ var _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/vue/components/word-usage-examples/word-usage-examples.vue */ "./vue/components/word-usage-examples/word-usage-examples.vue");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/vue/components/word-list/word-list-panel.vue */ "./vue/components/word-list/word-list-panel.vue");
+/* harmony import */ var _images_inline_icons_book_open_svg__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/images/inline-icons/book-open.svg */ "./images/inline-icons/book-open.svg");
+/* harmony import */ var _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/images/inline-icons/x-close.svg */ "./images/inline-icons/x-close.svg");
+/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -14919,7 +15137,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 // Embeddable SVG icons
 
 
@@ -14941,30 +15158,29 @@ __webpack_require__.r(__webpack_exports__);
     auth: 'auth'
   },
   storeModules: ['app', 'ui', 'panel', 'auth'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_22__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_21__["default"]],
   components: {
-    menuIcon: _images_inline_icons_menu_svg__WEBPACK_IMPORTED_MODULE_19__["default"],
+    menuIcon: _images_inline_icons_book_open_svg__WEBPACK_IMPORTED_MODULE_18__["default"],
     dropDownMenu: _vue_components_nav_drop_down_menu_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    navbuttonsCompact: _vue_components_nav_navbuttons_compact_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    notificationArea: _vue_components_notification_area_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    inflectionBrowser: _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
-    setting: _setting_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    shortdef: _shortdef_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
-    info: _info_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-    grammar: _grammar_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
-    morph: _morph_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
-    treebank: _treebank_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-    userAuth: _user_auth_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
-    closeIcon: _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_20__["default"],
-    alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
-    lookup: _lookup_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
-    reskinFontColor: _font_size_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
-    wordListPanel: _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
-    wordUsageExamples: _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
+    notificationArea: _vue_components_notification_area_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    inflectionBrowser: _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    setting: _setting_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    shortdef: _shortdef_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    info: _info_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    grammar: _grammar_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    morph: _morph_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    treebank: _treebank_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+    userAuth: _user_auth_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+    closeIcon: _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_19__["default"],
+    alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
+    lookup: _lookup_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+    reskinFontColor: _font_size_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+    wordListPanel: _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
+    wordUsageExamples: _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
   },
   directives: {
-    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_21__["directive"]
+    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_20__["directive"]
   },
   data: function () {
     return {
@@ -15035,7 +15251,7 @@ __webpack_require__.r(__webpack_exports__);
           if (lexeme.meaning.shortDefs.length > 0) {
             definitions.push(...lexeme.meaning.shortDefs)
           } else if (Object.entries(lexeme.lemma.features).length > 0) {
-            definitions.push(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_17__["Definition"](this.l10n.getMsg('TEXT_NOTICE_NO_DEFS_FOUND'), 'en-US', 'text/plain', lexeme.lemma.word))
+            definitions.push(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_16__["Definition"](this.l10n.getMsg('TEXT_NOTICE_NO_DEFS_FOUND'), 'en-US', 'text/plain', lexeme.lemma.word))
           }
         }
       }
@@ -15053,10 +15269,53 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
       return content
+    },
+
+    panelTitle () {
+      let title = ''
+      switch (this.$store.state.ui.activeTab) {
+        case 'info':
+          title = this.l10n.getText('TOOLTIP_HELP')
+          break
+        case 'morphology':
+          title = this.l10n.getText('TOOLTIP_MORPHOLOGY')
+          break
+        case 'definitions':
+          title = this.l10n.getText('TOOLTIP_DEFINITIONS')
+          break
+        case 'inflections':
+          title = this.l10n.getText('TOOLTIP_INFLECT')
+          break
+        case 'inflectionsbrowser':
+          title = this.l10n.getText('TOOLTIP_INFLECT_BROWSER')
+          break
+        case 'grammar':
+          title = this.l10n.getText('TOOLTIP_GRAMMAR')
+          break
+        case 'treebank':
+          title = this.l10n.getText('TOOLTIP_TREEBANK')
+          break
+        case 'options':
+          title = this.l10n.getText('TOOLTIP_OPTIONS')
+          break
+        case 'user':
+          title = this.l10n.getText('TOOLTIP_USER')
+          break
+        case 'wordUsage':
+          title = this.l10n.getText('TOOLTIP_WORD_USAGE')
+          break
+        case 'wordlist':
+          title = this.l10n.getText('TOOLTIP_WORDLIST')
+          break
+        case 'status':
+          title = this.l10n.getText('TOOLTIP_STATUS')
+          break
+      }
+      return title
     }
   },
   methods: {
-    menuItemClicked () {
+    menuItemSelected () {
       this.menuVisible = !this.menuVisible
     },
 
@@ -15077,8 +15336,10 @@ __webpack_require__.r(__webpack_exports__);
       this.ui.optionChange(name, value)
     },
 
-    attachTrackingClick: function () {
+    closePanel () {
       this.ui.closePanel()
+      // Close the menu if it was open during the panel closing
+      this.menuVisible = false
     }
   }
 });
@@ -16102,13 +16363,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ProgressBar',
   props: {
     text: {
       type: String,
-      required: false
+      required: false,
+      default: ''
     }
   }
 });
@@ -20724,7 +20989,12 @@ var render = function() {
                 {
                   staticClass: "alpheios-button-primary",
                   attrs: { tabindex: "-1", type: "button" },
-                  on: { click: _vm.lookup }
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.lookup($event)
+                    }
+                  }
                 },
                 [
                   _vm._v(
@@ -21453,10 +21723,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/drop-down-menu.vue?vue&type=template&id=864df42c&":
-/*!**************************************************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/nav/drop-down-menu.vue?vue&type=template&id=864df42c& ***!
-  \**************************************************************************************************************************************************************************************************************/
+/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/action-panel.vue?vue&type=template&id=29780f6a&":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/nav/action-panel.vue?vue&type=template&id=29780f6a& ***!
+  \************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -21475,407 +21745,609 @@ var render = function() {
         {
           name: "show",
           rawName: "v-show",
-          value: _vm.visible,
-          expression: "visible"
+          value: _vm.showPanel,
+          expression: "showPanel"
         }
       ],
-      staticClass: "alpheios-navmenu"
+      staticClass: "alpheios-action-panel alpheios-content",
+      style: _vm.componentStyles,
+      attrs: { id: _vm.moduleConfig.rootElementId }
     },
     [
-      _c(
-        "div",
-        {
-          staticClass: "alpheios-navmenu__item",
-          class: { active: _vm.$store.getters["ui/isActiveTab"]("info") },
-          on: {
-            click: function($event) {
-              return _vm.changeTab("info")
-            }
+      _c("close-icon", {
+        staticClass: "alpheios-action-panel__close-icon",
+        on: {
+          click: function($event) {
+            $event.stopPropagation()
+            return _vm.$store.commit("actionPanel/close")
           }
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "alpheios-navbuttons__icon-cont" },
-            [_c("info-icon", { staticClass: "alpheios-navbuttons__icon" })],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "alpheios-navmenu__text" }, [
-            _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_HELP")))
-          ])
-        ]
-      ),
+        }
+      }),
       _vm._v(" "),
       _c(
         "div",
-        {
-          staticClass: "alpheios-navmenu__item",
-          class: { active: _vm.$store.getters["ui/isActiveTab"]("morphology") },
-          on: {
-            click: function($event) {
-              return _vm.changeTab("morphology")
-            }
-          }
-        },
+        { staticClass: "alpheios-action-panel__lookup-cont" },
         [
-          _c(
-            "div",
-            { staticClass: "alpheios-navbuttons__icon-cont" },
-            [
-              _c("morphology-icon", {
-                staticClass: "alpheios-navbuttons__icon"
+          _c("lookup", {
+            staticClass: "alpheios-action-panel__lookup",
+            attrs: {
+              "name-base": "action-panel",
+              "use-page-lang-prefs": true,
+              "show-language-settings-group": false,
+              "show-results-in": "panel"
+            }
+          }),
+          _vm._v(" "),
+          _vm.$store.getters["app/lexicalRequestInProgress"]
+            ? _c("progress-bar", {
+                staticClass: "alpheios-action-panel__progress-bar"
               })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "alpheios-navmenu__text" }, [
-            _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_MORPHOLOGY")))
-          ])
-        ]
+            : _vm._e()
+        ],
+        1
       ),
       _vm._v(" "),
       _c(
         "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.$store.getters["app/defDataReady"],
-              expression: "$store.getters['app/defDataReady']"
-            }
-          ],
-          staticClass: "alpheios-navmenu__item",
-          class: {
-            active: _vm.$store.getters["ui/isActiveTab"]("definitions")
-          },
-          on: {
-            click: function($event) {
-              return _vm.changeTab("definitions")
-            }
-          }
-        },
+        { staticClass: "alpheios-action-panel__nav-cont" },
         [
           _c(
-            "div",
-            { staticClass: "alpheios-navbuttons__icon-cont" },
+            "alph-tooltip",
+            {
+              attrs: {
+                "tooltip-text": _vm.tooltipText("TOOLTIP_INFLECT_BROWSER"),
+                "tooltip-direction": _vm.tooltipDirection
+              }
+            },
             [
-              _c("definitions-icon", {
-                staticClass: "alpheios-navbuttons__icon"
-              })
-            ],
-            1
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-action-panel__navbutton",
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.ui.showPanelTab("inflectionsbrowser")
+                    }
+                  }
+                },
+                [_c("inflections-browser-icon")],
+                1
+              )
+            ]
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "alpheios-navmenu__text" }, [
-            _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_DEFINITIONS")))
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.$store.getters["app/hasInflData"],
-              expression: "$store.getters[`app/hasInflData`]"
-            }
-          ],
-          staticClass: "alpheios-navmenu__item",
-          class: {
-            active: _vm.$store.getters["ui/isActiveTab"]("inflections")
-          },
-          on: {
-            click: function($event) {
-              return _vm.changeTab("inflections")
-            }
-          }
-        },
-        [
           _c(
-            "div",
-            { staticClass: "alpheios-navbuttons__icon-cont" },
+            "alph-tooltip",
+            {
+              attrs: {
+                "tooltip-text": _vm.tooltipText(
+                  "TOOLTIP_GRAMMAR",
+                  _vm.$store.getters["app/hasGrammarRes"]
+                ),
+                "tooltip-direction": _vm.tooltipDirection
+              }
+            },
             [
-              _c("inflections-icon", {
-                staticClass: "alpheios-navbuttons__icon"
-              })
-            ],
-            1
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-action-panel__navbutton",
+                  class: { disabled: !_vm.$store.getters["app/hasGrammarRes"] },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.ui.showPanelTab("grammar")
+                    }
+                  }
+                },
+                [_c("grammar-icon")],
+                1
+              )
+            ]
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "alpheios-navmenu__text" }, [
-            _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_INFLECT")))
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "alpheios-navmenu__item",
-          class: {
-            active: _vm.$store.getters["ui/isActiveTab"]("inflectionsbrowser")
-          },
-          on: {
-            click: function($event) {
-              return _vm.changeTab("inflectionsbrowser")
-            }
-          }
-        },
-        [
           _c(
-            "div",
-            { staticClass: "alpheios-navbuttons__icon-cont" },
+            "alph-tooltip",
+            {
+              attrs: {
+                "tooltip-text": _vm.tooltipText(
+                  "TOOLTIP_WORDLIST",
+                  _vm.$store.state.app.hasWordListsData
+                ),
+                "tooltip-direction": _vm.tooltipDirection
+              }
+            },
             [
-              _c("inflections-browser-icon", {
-                staticClass: "alpheios-navbuttons__icon"
-              })
-            ],
-            1
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-action-panel__navbutton",
+                  class: { disabled: !_vm.$store.state.app.hasWordListsData },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.ui.showPanelTab("wordlist")
+                    }
+                  }
+                },
+                [_c("wordlist-icon")],
+                1
+              )
+            ]
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "alpheios-navmenu__text" }, [
-            _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_INFLECT_BROWSER")))
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
+          _c(
+            "alph-tooltip",
             {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.$store.getters["app/hasGrammarRes"],
-              expression: "$store.getters[`app/hasGrammarRes`]"
-            }
-          ],
-          staticClass: "alpheios-navmenu__item",
-          class: { active: _vm.$store.getters["ui/isActiveTab"]("grammar") },
-          on: {
-            click: function($event) {
-              return _vm.changeTab("grammar")
-            }
-          }
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "alpheios-navbuttons__icon-cont" },
-            [_c("grammar-icon", { staticClass: "alpheios-navbuttons__icon" })],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "alpheios-navmenu__text" }, [
-            _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_GRAMMAR")))
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.$store.getters["app/hasTreebankData"],
-              expression: "$store.getters['app/hasTreebankData']"
-            }
-          ],
-          staticClass: "alpheios-navmenu__item",
-          class: { active: _vm.$store.getters["ui/isActiveTab"]("treebank") },
-          on: {
-            click: function($event) {
-              return _vm.changeTab("treebank")
-            }
-          }
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "alpheios-navbuttons__icon-cont" },
-            [_c("treebank-icon", { staticClass: "alpheios-navbuttons__icon" })],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "alpheios-navmenu__text" }, [
-            _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_TREEBANK")))
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "alpheios-navmenu__item",
-          class: { active: _vm.$store.getters["ui/isActiveTab"]("options") },
-          on: {
-            click: function($event) {
-              return _vm.changeTab("options")
-            }
-          }
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "alpheios-navbuttons__icon-cont" },
-            [_c("options-icon", { staticClass: "alpheios-navbuttons__icon" })],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "alpheios-navmenu__text" }, [
-            _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_OPTIONS")))
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.$store.state.auth.enableLogin,
-              expression: "$store.state.auth.enableLogin"
-            }
-          ],
-          staticClass: "alpheios-navmenu__item",
-          class: { active: _vm.$store.getters["ui/isActiveTab"]("user") },
-          on: {
-            click: function($event) {
-              return _vm.changeTab("user")
-            }
-          }
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "alpheios-navbuttons__icon-cont" },
-            [_c("user-icon", { staticClass: "alpheios-navbuttons__icon" })],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "alpheios-navmenu__text" }, [
-            _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_USER")))
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.$store.state.app.wordUsageExampleEnabled,
-              expression: "$store.state.app.wordUsageExampleEnabled"
-            }
-          ],
-          staticClass: "alpheios-navmenu__item",
-          class: { active: _vm.$store.getters["ui/isActiveTab"]("wordUsage") },
-          on: {
-            click: function($event) {
-              return _vm.changeTab("wordUsage")
-            }
-          }
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "alpheios-navbuttons__icon-cont" },
+              attrs: {
+                "tooltip-text": _vm.tooltipText(
+                  "TOOLTIP_USER",
+                  _vm.$store.state.auth.enableLogin
+                ),
+                "tooltip-direction": _vm.tooltipDirection
+              }
+            },
             [
-              _c("word-usage-icon", {
-                staticClass: "alpheios-navbuttons__icon"
-              })
-            ],
-            1
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-action-panel__navbutton",
+                  class: { disabled: !_vm.$store.state.auth.enableLogin },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.ui.showPanelTab("user")
+                    }
+                  }
+                },
+                [_c("user-icon")],
+                1
+              )
+            ]
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "alpheios-navmenu__text" }, [
-            _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_WORD_USAGE")))
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: this.$store.state.app.hasWordListsData,
-              expression: "this.$store.state.app.hasWordListsData"
-            }
-          ],
-          staticClass: "alpheios-navmenu__item",
-          class: { active: _vm.$store.getters["ui/isActiveTab"]("wordlist") },
-          on: {
-            click: function($event) {
-              return _vm.changeTab("wordlist")
-            }
-          }
-        },
-        [
           _c(
-            "div",
-            { staticClass: "alpheios-navbuttons__icon-cont" },
-            [_c("wordlist-icon", { staticClass: "alpheios-navbuttons__icon" })],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "alpheios-navmenu__text" }, [
-            _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_WORDLIST")))
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
+            "alph-tooltip",
             {
-              name: "show",
-              rawName: "v-show",
-              value:
-                this.settings.contentOptions.items.verboseMode.currentValue ===
-                "verbose",
-              expression:
-                "this.settings.contentOptions.items.verboseMode.currentValue === `verbose`"
-            }
-          ],
-          staticClass: "alpheios-navmenu__item",
-          class: { active: _vm.$store.getters["ui/isActiveTab"]("status") },
-          on: {
-            click: function($event) {
-              return _vm.changeTab("status")
-            }
-          }
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "alpheios-navbuttons__icon-cont" },
-            [_c("status-icon", { staticClass: "alpheios-navbuttons__icon" })],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "alpheios-navmenu__text" }, [
-            _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_HELP")))
-          ])
-        ]
+              attrs: {
+                "tooltip-text": _vm.tooltipText("TOOLTIP_OPTIONS"),
+                "tooltip-direction": _vm.tooltipDirection
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-action-panel__navbutton",
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.ui.showPanelTab("options")
+                    }
+                  }
+                },
+                [_c("options-icon")],
+                1
+              )
+            ]
+          )
+        ],
+        1
       )
-    ]
+    ],
+    1
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/drop-down-menu.vue?vue&type=template&id=864df42c&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/nav/drop-down-menu.vue?vue&type=template&id=864df42c& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "alpheios-navmenu" }, [
+    _c(
+      "div",
+      {
+        staticClass: "alpheios-navmenu__item",
+        class: { active: _vm.$store.getters["ui/isActiveTab"]("info") },
+        on: {
+          click: function($event) {
+            return _vm.changeTab("info")
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "alpheios-navbuttons__icon-cont" },
+          [_c("info-icon", { staticClass: "alpheios-navbuttons__icon" })],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "alpheios-navmenu__text" }, [
+          _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_HELP")))
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value:
+              _vm.$store.state.app.morphDataReady && _vm.app.hasMorphData(),
+            expression: "$store.state.app.morphDataReady && app.hasMorphData()"
+          }
+        ],
+        staticClass: "alpheios-navmenu__item",
+        class: { active: _vm.$store.getters["ui/isActiveTab"]("morphology") },
+        on: {
+          click: function($event) {
+            return _vm.changeTab("morphology")
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "alpheios-navbuttons__icon-cont" },
+          [_c("morphology-icon", { staticClass: "alpheios-navbuttons__icon" })],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "alpheios-navmenu__text" }, [
+          _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_MORPHOLOGY")))
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.$store.getters["app/defDataReady"],
+            expression: "$store.getters['app/defDataReady']"
+          }
+        ],
+        staticClass: "alpheios-navmenu__item",
+        class: { active: _vm.$store.getters["ui/isActiveTab"]("definitions") },
+        on: {
+          click: function($event) {
+            return _vm.changeTab("definitions")
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "alpheios-navbuttons__icon-cont" },
+          [
+            _c("definitions-icon", { staticClass: "alpheios-navbuttons__icon" })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "alpheios-navmenu__text" }, [
+          _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_DEFINITIONS")))
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.$store.getters["app/hasInflData"],
+            expression: "$store.getters[`app/hasInflData`]"
+          }
+        ],
+        staticClass: "alpheios-navmenu__item",
+        class: { active: _vm.$store.getters["ui/isActiveTab"]("inflections") },
+        on: {
+          click: function($event) {
+            return _vm.changeTab("inflections")
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "alpheios-navbuttons__icon-cont" },
+          [
+            _c("inflections-icon", { staticClass: "alpheios-navbuttons__icon" })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "alpheios-navmenu__text" }, [
+          _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_INFLECT")))
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "alpheios-navmenu__item",
+        class: {
+          active: _vm.$store.getters["ui/isActiveTab"]("inflectionsbrowser")
+        },
+        on: {
+          click: function($event) {
+            return _vm.changeTab("inflectionsbrowser")
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "alpheios-navbuttons__icon-cont" },
+          [
+            _c("inflections-browser-icon", {
+              staticClass: "alpheios-navbuttons__icon"
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "alpheios-navmenu__text" }, [
+          _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_INFLECT_BROWSER")))
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.$store.getters["app/hasGrammarRes"],
+            expression: "$store.getters[`app/hasGrammarRes`]"
+          }
+        ],
+        staticClass: "alpheios-navmenu__item",
+        class: { active: _vm.$store.getters["ui/isActiveTab"]("grammar") },
+        on: {
+          click: function($event) {
+            return _vm.changeTab("grammar")
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "alpheios-navbuttons__icon-cont" },
+          [_c("grammar-icon", { staticClass: "alpheios-navbuttons__icon" })],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "alpheios-navmenu__text" }, [
+          _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_GRAMMAR")))
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.$store.getters["app/hasTreebankData"],
+            expression: "$store.getters['app/hasTreebankData']"
+          }
+        ],
+        staticClass: "alpheios-navmenu__item",
+        class: { active: _vm.$store.getters["ui/isActiveTab"]("treebank") },
+        on: {
+          click: function($event) {
+            return _vm.changeTab("treebank")
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "alpheios-navbuttons__icon-cont" },
+          [_c("treebank-icon", { staticClass: "alpheios-navbuttons__icon" })],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "alpheios-navmenu__text" }, [
+          _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_TREEBANK")))
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "alpheios-navmenu__item",
+        class: { active: _vm.$store.getters["ui/isActiveTab"]("options") },
+        on: {
+          click: function($event) {
+            return _vm.changeTab("options")
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "alpheios-navbuttons__icon-cont" },
+          [_c("options-icon", { staticClass: "alpheios-navbuttons__icon" })],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "alpheios-navmenu__text" }, [
+          _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_OPTIONS")))
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.$store.state.auth.enableLogin,
+            expression: "$store.state.auth.enableLogin"
+          }
+        ],
+        staticClass: "alpheios-navmenu__item",
+        class: { active: _vm.$store.getters["ui/isActiveTab"]("user") },
+        on: {
+          click: function($event) {
+            return _vm.changeTab("user")
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "alpheios-navbuttons__icon-cont" },
+          [_c("user-icon", { staticClass: "alpheios-navbuttons__icon" })],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "alpheios-navmenu__text" }, [
+          _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_USER")))
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.$store.state.app.wordUsageExampleEnabled,
+            expression: "$store.state.app.wordUsageExampleEnabled"
+          }
+        ],
+        staticClass: "alpheios-navmenu__item",
+        class: { active: _vm.$store.getters["ui/isActiveTab"]("wordUsage") },
+        on: {
+          click: function($event) {
+            return _vm.changeTab("wordUsage")
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "alpheios-navbuttons__icon-cont" },
+          [_c("word-usage-icon", { staticClass: "alpheios-navbuttons__icon" })],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "alpheios-navmenu__text" }, [
+          _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_WORD_USAGE")))
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: this.$store.state.app.hasWordListsData,
+            expression: "this.$store.state.app.hasWordListsData"
+          }
+        ],
+        staticClass: "alpheios-navmenu__item",
+        class: { active: _vm.$store.getters["ui/isActiveTab"]("wordlist") },
+        on: {
+          click: function($event) {
+            return _vm.changeTab("wordlist")
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "alpheios-navbuttons__icon-cont" },
+          [_c("wordlist-icon", { staticClass: "alpheios-navbuttons__icon" })],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "alpheios-navmenu__text" }, [
+          _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_WORDLIST")))
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value:
+              this.settings.contentOptions.items.verboseMode.currentValue ===
+              "verbose",
+            expression:
+              "this.settings.contentOptions.items.verboseMode.currentValue === `verbose`"
+          }
+        ],
+        staticClass: "alpheios-navmenu__item",
+        class: { active: _vm.$store.getters["ui/isActiveTab"]("status") },
+        on: {
+          click: function($event) {
+            return _vm.changeTab("status")
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "alpheios-navbuttons__icon-cont" },
+          [_c("status-icon", { staticClass: "alpheios-navbuttons__icon" })],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "alpheios-navmenu__text" }, [
+          _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_STATUS")))
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -22450,11 +22922,7 @@ var render = function() {
       staticClass:
         "alpheios-content alpheios-toolbar alpheios-toolbar--compact",
       attrs: { id: "alpheios-toolbar-inner" },
-      on: {
-        click: function($event) {
-          return _vm.ui.showPanelTab("info")
-        }
-      }
+      on: { click: _vm.openActionPanel }
     },
     [_c("toolbar-icon")],
     1
@@ -23019,18 +23487,20 @@ var render = function() {
           "div",
           {
             staticClass: "alpheios-panel__menu-btn",
-            on: { click: _vm.menuItemClicked }
+            on: { click: _vm.menuItemSelected }
           },
-          [_c("menu-icon", { staticClass: "alpheios-panel__menu-icon" })],
+          [
+            _c("menu-icon", {
+              staticClass: "alpheios-panel__menu-icon",
+              class: { "menu-open": _vm.menuVisible }
+            })
+          ],
           1
         ),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "alpheios-panel__header-btn-group--center" },
-          [_c("navbuttons-compact")],
-          1
-        ),
+        _c("div", { staticClass: "alpheios-panel__header-title" }, [
+          _vm._v("\n      " + _vm._s(_vm.panelTitle) + "\n    ")
+        ]),
         _vm._v(" "),
         _c(
           "span",
@@ -23049,7 +23519,7 @@ var render = function() {
                   "div",
                   {
                     staticClass: "alpheios-panel__close-btn",
-                    on: { click: _vm.ui.closePanel }
+                    on: { click: _vm.closePanel }
                   },
                   [_c("close-icon")],
                   1
@@ -23061,541 +23531,534 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "alpheios-panel__content" },
-        [
-          _c("drop-down-menu", { attrs: { visibility: _vm.menuVisible } }),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.$store.getters["ui/isActiveTab"]("morphology"),
-                  expression: "$store.getters['ui/isActiveTab']('morphology')"
-                }
-              ],
-              staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding"
-            },
-            [
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.hasMorphologyData,
-                      expression: "hasMorphologyData"
-                    }
-                  ],
-                  staticClass:
-                    "alpheios-popup__morph-cont alpheios-text-small alpheios-popup__morph-cont-ready",
-                  attrs: { id: "alpheios-panel-lexical-data-container" }
-                },
-                [
-                  _c("morph", {
-                    attrs: { id: "alpheios-panel-morph-component" }
-                  })
-                ],
-                1
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.$store.getters["ui/isActiveTab"]("definitions"),
-                  expression: "$store.getters['ui/isActiveTab']('definitions')"
-                }
-              ],
-              staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__definitions",
-              attrs: { "data-alpheios-ignore": "all" }
-            },
-            [
-              _c(
-                "div",
-                { staticClass: "alpheios-lookup__panel" },
-                [_c("lookup", { attrs: { "name-base": "panel-defs" } })],
-                1
-              ),
-              _vm._v(" "),
-              _vm.$store.getters["app/defDataReady"]
-                ? _c(
-                    "div",
-                    [
-                      _vm._l(_vm.formattedShortDefinitions, function(
-                        definition
-                      ) {
-                        return _c(
-                          "div",
-                          {
-                            key: definition.ID,
-                            staticClass: "alpheios-panel__contentitem"
-                          },
-                          [
-                            _c("shortdef", {
-                              attrs: {
-                                definition: definition,
-                                languageCode: _vm.$store.state.app.languageCode
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      }),
-                      _vm._v(" "),
-                      _c("div", {
-                        staticClass:
-                          "alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions",
-                        domProps: {
-                          innerHTML: _vm._s(_vm.formattedFullDefinitions)
-                        }
-                      })
-                    ],
-                    2
-                  )
-                : _c("div", [
-                    _vm._v(
-                      "\n        " +
-                        _vm._s(_vm.l10n.getText("PLACEHOLDER_DEFINITIONS")) +
-                        "\n      "
-                    )
-                  ]),
-              _vm._v(" "),
-              _c("div", {
-                staticClass:
-                  "alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions",
-                domProps: { innerHTML: _vm._s(_vm.formattedFullDefinitions) }
-              })
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value:
-                    _vm.$store.state.app.hasInflData &&
-                    _vm.$store.getters["ui/isActiveTab"]("inflections"),
-                  expression:
-                    "$store.state.app.hasInflData && $store.getters['ui/isActiveTab']('inflections')"
-                }
-              ],
-              staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__tab__inflections",
-              attrs: {
-                id: _vm.inflectionsPanelID,
-                "data-alpheios-ignore": "all"
+      _c("drop-down-menu", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.menuVisible,
+            expression: "menuVisible"
+          }
+        ],
+        on: { "drop-down-menu-item-selected": _vm.menuItemSelected }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "alpheios-panel__content" }, [
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.$store.getters["ui/isActiveTab"]("morphology"),
+                expression: "$store.getters['ui/isActiveTab']('morphology')"
               }
-            },
-            [
-              _c("h1", { staticClass: "alpheios-panel__title" }, [
-                _vm._v(
-                  "\n        " +
-                    _vm._s(_vm.l10n.getText("TITLE_INFLECTIONS_PANEL")) +
-                    "\n      "
-                )
-              ]),
-              _vm._v(" "),
-              _c("inflections", { staticClass: "alpheios-panel-inflections" })
             ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.$store.getters["ui/isActiveTab"](
-                    "inflectionsbrowser"
-                  ),
-                  expression:
-                    "$store.getters['ui/isActiveTab']('inflectionsbrowser')"
-                }
-              ],
-              staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser",
-              attrs: {
-                id: _vm.inflectionsBrowserPanelID,
-                "data-alpheios-ignore": "all"
-              }
-            },
-            [
-              _c("h1", { staticClass: "alpheios-panel__title" }, [
-                _vm._v(
-                  "\n        " +
-                    _vm._s(
-                      _vm.l10n.getText("TITLE_INFLECTIONS_BROWSER_PANEL")
-                    ) +
-                    "\n      "
-                )
-              ]),
-              _vm._v(" "),
-              _c("inflection-browser")
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.$store.getters["ui/isActiveTab"]("grammar"),
-                  expression: "$store.getters['ui/isActiveTab']('grammar')"
-                }
-              ],
-              staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__tab__grammar\n          alpheios-panel__tab-panel--no-padding",
-              attrs: { "data-alpheios-ignore": "all" }
-            },
-            [_c("grammar")],
-            1
-          ),
-          _vm._v(" "),
-          _vm.$store.getters["app/hasTreebankData"]
-            ? _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.$store.getters["ui/isActiveTab"]("treebank"),
-                      expression: "$store.getters['ui/isActiveTab']('treebank')"
-                    }
-                  ],
-                  staticClass:
-                    "alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding",
-                  attrs: { "data-alpheios-ignore": "all" }
-                },
-                [_c("treebank")],
-                1
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.$store.getters["ui/isActiveTab"]("status"),
-                  expression: "$store.getters['ui/isActiveTab']('status')"
-                }
-              ],
-              staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__tab__status",
-              attrs: { "data-alpheios-ignore": "all" }
-            },
-            _vm._l(_vm.$store.state.ui.messages, function(message) {
-              return _c("div", [
-                _c("div", { staticClass: "alpheios-panel__message" }, [
-                  _vm._v(_vm._s(message))
-                ])
-              ])
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _vm.$store.state.auth.enableLogin
-            ? _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.$store.getters["ui/isActiveTab"]("user"),
-                      expression: "$store.getters['ui/isActiveTab']('user')"
-                    }
-                  ],
-                  staticClass:
-                    "alpheios-panel__tab-panel alpheios-panel__tab__user",
-                  attrs: { "data-alpheios-ignore": "all" }
-                },
-                [_c("user-auth")],
-                1
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.$store.getters["ui/isActiveTab"]("wordUsage"),
-                  expression: "$store.getters['ui/isActiveTab']('wordUsage')"
-                }
-              ],
-              staticClass: "alpheios-panel__tab-panel",
-              attrs: { "data-alpheios-ignore": "all" }
-            },
-            [_c("word-usage-examples")],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.$store.getters["ui/isActiveTab"]("options"),
-                  expression: "$store.getters['ui/isActiveTab']('options')"
-                }
-              ],
-              staticClass: "alpheios-panel__tab-panel",
-              attrs: { "data-alpheios-ignore": "all" }
-            },
-            [
-              _c("reskin-font-color"),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.contentOptions.items.preferredLanguage
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.contentOptions.items.panelPosition
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.contentOptions.items.popupPosition
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.contentOptions.items.uiType
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.contentOptions.items.verboseMode
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.uiOptions.items.skin
-                },
-                on: { change: _vm.uiOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
+            staticClass:
+              "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding"
+          },
+          [
+            _c(
+              "div",
+              {
                 directives: [
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.app.isDevMode(),
-                    expression: "app.isDevMode()"
+                    value: _vm.hasMorphologyData,
+                    expression: "hasMorphologyData"
                   }
                 ],
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.uiOptions.items.panel
-                },
-                on: { change: _vm.uiOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.uiOptions.items.popup
-                },
-                on: { change: _vm.uiOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.uiOptions.items.panelOnActivate
-                },
-                on: { change: _vm.uiOptionChanged }
-              }),
-              _vm._v(" "),
-              _vm._l(_vm.resourceSettingsLexicons, function(languageSetting) {
-                return _c("setting", {
-                  key: languageSetting.name,
-                  attrs: {
-                    classes: ["alpheios-panel__options-item"],
-                    data: languageSetting
-                  },
-                  on: { change: _vm.resourceSettingChanged }
-                })
-              }),
-              _vm._v(" "),
-              _vm._l(_vm.resourceSettingsLexiconsShort, function(
-                languageSetting
-              ) {
-                return _c("setting", {
-                  key: languageSetting.name,
-                  attrs: {
-                    classes: ["alpheios-panel__options-item"],
-                    data: languageSetting
-                  },
-                  on: { change: _vm.resourceSettingChanged }
-                })
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data:
-                    _vm.settings.contentOptions.items.enableWordUsageExamples
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.contentOptions.items.wordUsageExamplesON
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data:
-                    _vm.settings.contentOptions.items.wordUsageExamplesAuthMax
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.contentOptions.items.wordUsageExamplesMax
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data:
-                    _vm.settings.contentOptions.items.enableLemmaTranslations
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.contentOptions.items.locale
-                },
-                on: { change: _vm.contentOptionChanged }
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.$store.getters["ui/isActiveTab"]("info"),
-                  expression: "$store.getters['ui/isActiveTab']('info')"
-                }
+                staticClass:
+                  "alpheios-popup__morph-cont alpheios-text-small alpheios-popup__morph-cont-ready",
+                attrs: { id: "alpheios-panel-lexical-data-container" }
+              },
+              [
+                _c("morph", { attrs: { id: "alpheios-panel-morph-component" } })
               ],
-              staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info",
-              attrs: { "data-alpheios-ignore": "all" }
-            },
-            [
-              _c("h1", { staticClass: "alpheios-panel__title" }, [
-                _vm._v(
-                  "\n        " +
-                    _vm._s(_vm.l10n.getText("TITLE_HELP_PANEL")) +
-                    "\n      "
+              1
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.$store.getters["ui/isActiveTab"]("definitions"),
+                expression: "$store.getters['ui/isActiveTab']('definitions')"
+              }
+            ],
+            staticClass:
+              "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__definitions",
+            attrs: { "data-alpheios-ignore": "all" }
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "alpheios-lookup__panel" },
+              [_c("lookup", { attrs: { "name-base": "panel-defs" } })],
+              1
+            ),
+            _vm._v(" "),
+            _vm.$store.getters["app/defDataReady"]
+              ? _c(
+                  "div",
+                  [
+                    _vm._l(_vm.formattedShortDefinitions, function(definition) {
+                      return _c(
+                        "div",
+                        {
+                          key: definition.ID,
+                          staticClass: "alpheios-panel__contentitem"
+                        },
+                        [
+                          _c("shortdef", {
+                            attrs: {
+                              definition: definition,
+                              languageCode: _vm.$store.state.app.languageCode
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    }),
+                    _vm._v(" "),
+                    _c("div", {
+                      staticClass:
+                        "alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions",
+                      domProps: {
+                        innerHTML: _vm._s(_vm.formattedFullDefinitions)
+                      }
+                    })
+                  ],
+                  2
                 )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "alpheios-lookup__panel" },
-                [
-                  _c("lookup", {
-                    attrs: {
-                      "name-base": "panel-info",
-                      "show-results-in": "panel"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("info")
+              : _c("div", [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.l10n.getText("PLACEHOLDER_DEFINITIONS")) +
+                      "\n      "
+                  )
+                ]),
+            _vm._v(" "),
+            _c("div", {
+              staticClass:
+                "alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions",
+              domProps: { innerHTML: _vm._s(_vm.formattedFullDefinitions) }
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value:
+                  _vm.$store.state.app.hasInflData &&
+                  _vm.$store.getters["ui/isActiveTab"]("inflections"),
+                expression:
+                  "$store.state.app.hasInflData && $store.getters['ui/isActiveTab']('inflections')"
+              }
             ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
+            staticClass:
+              "alpheios-panel__tab-panel alpheios-panel__tab__inflections",
+            attrs: { id: _vm.inflectionsPanelID, "data-alpheios-ignore": "all" }
+          },
+          [
+            _c("h1", { staticClass: "alpheios-panel__title" }, [
+              _vm._v(
+                "\n        " +
+                  _vm._s(_vm.l10n.getText("TITLE_INFLECTIONS_PANEL")) +
+                  "\n      "
+              )
+            ]),
+            _vm._v(" "),
+            _c("inflections", { staticClass: "alpheios-panel-inflections" })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.$store.getters["ui/isActiveTab"](
+                  "inflectionsbrowser"
+                ),
+                expression:
+                  "$store.getters['ui/isActiveTab']('inflectionsbrowser')"
+              }
+            ],
+            staticClass:
+              "alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser",
+            attrs: {
+              id: _vm.inflectionsBrowserPanelID,
+              "data-alpheios-ignore": "all"
+            }
+          },
+          [
+            _c("h1", { staticClass: "alpheios-panel__title" }, [
+              _vm._v(
+                "\n        " +
+                  _vm._s(_vm.l10n.getText("TITLE_INFLECTIONS_BROWSER_PANEL")) +
+                  "\n      "
+              )
+            ]),
+            _vm._v(" "),
+            _c("inflection-browser")
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.$store.getters["ui/isActiveTab"]("grammar"),
+                expression: "$store.getters['ui/isActiveTab']('grammar')"
+              }
+            ],
+            staticClass:
+              "alpheios-panel__tab-panel alpheios-panel__tab__grammar\n          alpheios-panel__tab-panel--no-padding",
+            attrs: { "data-alpheios-ignore": "all" }
+          },
+          [_c("grammar")],
+          1
+        ),
+        _vm._v(" "),
+        _vm.$store.getters["app/hasTreebankData"]
+          ? _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.$store.getters["ui/isActiveTab"]("treebank"),
+                    expression: "$store.getters['ui/isActiveTab']('treebank')"
+                  }
+                ],
+                staticClass:
+                  "alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding",
+                attrs: { "data-alpheios-ignore": "all" }
+              },
+              [_c("treebank")],
+              1
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.$store.getters["ui/isActiveTab"]("status"),
+                expression: "$store.getters['ui/isActiveTab']('status')"
+              }
+            ],
+            staticClass:
+              "alpheios-panel__tab-panel alpheios-panel__tab__status",
+            attrs: { "data-alpheios-ignore": "all" }
+          },
+          _vm._l(_vm.$store.state.ui.messages, function(message) {
+            return _c("div", [
+              _c("div", { staticClass: "alpheios-panel__message" }, [
+                _vm._v(_vm._s(message))
+              ])
+            ])
+          }),
+          0
+        ),
+        _vm._v(" "),
+        _vm.$store.state.auth.enableLogin
+          ? _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.$store.getters["ui/isActiveTab"]("user"),
+                    expression: "$store.getters['ui/isActiveTab']('user')"
+                  }
+                ],
+                staticClass:
+                  "alpheios-panel__tab-panel alpheios-panel__tab__user",
+                attrs: { "data-alpheios-ignore": "all" }
+              },
+              [_c("user-auth")],
+              1
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.$store.getters["ui/isActiveTab"]("wordUsage"),
+                expression: "$store.getters['ui/isActiveTab']('wordUsage')"
+              }
+            ],
+            staticClass: "alpheios-panel__tab-panel",
+            attrs: { "data-alpheios-ignore": "all" }
+          },
+          [_c("word-usage-examples")],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.$store.getters["ui/isActiveTab"]("options"),
+                expression: "$store.getters['ui/isActiveTab']('options')"
+              }
+            ],
+            staticClass: "alpheios-panel__tab-panel",
+            attrs: { "data-alpheios-ignore": "all" }
+          },
+          [
+            _c("reskin-font-color"),
+            _vm._v(" "),
+            _c("setting", {
+              attrs: {
+                classes: ["alpheios-panel__options-item"],
+                data: _vm.settings.contentOptions.items.preferredLanguage
+              },
+              on: { change: _vm.contentOptionChanged }
+            }),
+            _vm._v(" "),
+            _c("setting", {
+              attrs: {
+                classes: ["alpheios-panel__options-item"],
+                data: _vm.settings.contentOptions.items.panelPosition
+              },
+              on: { change: _vm.contentOptionChanged }
+            }),
+            _vm._v(" "),
+            _c("setting", {
+              attrs: {
+                classes: ["alpheios-panel__options-item"],
+                data: _vm.settings.contentOptions.items.popupPosition
+              },
+              on: { change: _vm.contentOptionChanged }
+            }),
+            _vm._v(" "),
+            _c("setting", {
+              attrs: {
+                classes: ["alpheios-panel__options-item"],
+                data: _vm.settings.contentOptions.items.uiType
+              },
+              on: { change: _vm.contentOptionChanged }
+            }),
+            _vm._v(" "),
+            _c("setting", {
+              attrs: {
+                classes: ["alpheios-panel__options-item"],
+                data: _vm.settings.contentOptions.items.verboseMode
+              },
+              on: { change: _vm.contentOptionChanged }
+            }),
+            _vm._v(" "),
+            _c("setting", {
+              attrs: {
+                classes: ["alpheios-panel__options-item"],
+                data: _vm.settings.uiOptions.items.skin
+              },
+              on: { change: _vm.uiOptionChanged }
+            }),
+            _vm._v(" "),
+            _c("setting", {
               directives: [
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.$store.getters["ui/isActiveTab"]("wordlist"),
-                  expression: "$store.getters['ui/isActiveTab']('wordlist')"
+                  value: _vm.app.isDevMode(),
+                  expression: "app.isDevMode()"
                 }
               ],
-              staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__tab__wordlist",
-              attrs: { "data-alpheios-ignore": "all" }
-            },
-            [_c("word-list-panel")],
-            1
-          )
-        ],
-        1
-      ),
+              attrs: {
+                classes: ["alpheios-panel__options-item"],
+                data: _vm.settings.uiOptions.items.panel
+              },
+              on: { change: _vm.uiOptionChanged }
+            }),
+            _vm._v(" "),
+            _c("setting", {
+              attrs: {
+                classes: ["alpheios-panel__options-item"],
+                data: _vm.settings.uiOptions.items.popup
+              },
+              on: { change: _vm.uiOptionChanged }
+            }),
+            _vm._v(" "),
+            _c("setting", {
+              attrs: {
+                classes: ["alpheios-panel__options-item"],
+                data: _vm.settings.uiOptions.items.panelOnActivate
+              },
+              on: { change: _vm.uiOptionChanged }
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.resourceSettingsLexicons, function(languageSetting) {
+              return _c("setting", {
+                key: languageSetting.name,
+                attrs: {
+                  classes: ["alpheios-panel__options-item"],
+                  data: languageSetting
+                },
+                on: { change: _vm.resourceSettingChanged }
+              })
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.resourceSettingsLexiconsShort, function(
+              languageSetting
+            ) {
+              return _c("setting", {
+                key: languageSetting.name,
+                attrs: {
+                  classes: ["alpheios-panel__options-item"],
+                  data: languageSetting
+                },
+                on: { change: _vm.resourceSettingChanged }
+              })
+            }),
+            _vm._v(" "),
+            _c("setting", {
+              attrs: {
+                classes: ["alpheios-panel__options-item"],
+                data: _vm.settings.contentOptions.items.enableWordUsageExamples
+              },
+              on: { change: _vm.contentOptionChanged }
+            }),
+            _vm._v(" "),
+            _c("setting", {
+              attrs: {
+                classes: ["alpheios-panel__options-item"],
+                data: _vm.settings.contentOptions.items.wordUsageExamplesON
+              },
+              on: { change: _vm.contentOptionChanged }
+            }),
+            _vm._v(" "),
+            _c("setting", {
+              attrs: {
+                classes: ["alpheios-panel__options-item"],
+                data: _vm.settings.contentOptions.items.wordUsageExamplesAuthMax
+              },
+              on: { change: _vm.contentOptionChanged }
+            }),
+            _vm._v(" "),
+            _c("setting", {
+              attrs: {
+                classes: ["alpheios-panel__options-item"],
+                data: _vm.settings.contentOptions.items.wordUsageExamplesMax
+              },
+              on: { change: _vm.contentOptionChanged }
+            }),
+            _vm._v(" "),
+            _c("setting", {
+              attrs: {
+                classes: ["alpheios-panel__options-item"],
+                data: _vm.settings.contentOptions.items.enableLemmaTranslations
+              },
+              on: { change: _vm.contentOptionChanged }
+            }),
+            _vm._v(" "),
+            _c("setting", {
+              attrs: {
+                classes: ["alpheios-panel__options-item"],
+                data: _vm.settings.contentOptions.items.locale
+              },
+              on: { change: _vm.contentOptionChanged }
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.$store.getters["ui/isActiveTab"]("info"),
+                expression: "$store.getters['ui/isActiveTab']('info')"
+              }
+            ],
+            staticClass:
+              "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info",
+            attrs: { "data-alpheios-ignore": "all" }
+          },
+          [
+            _c("h1", { staticClass: "alpheios-panel__title" }, [
+              _vm._v(
+                "\n        " +
+                  _vm._s(_vm.l10n.getText("TITLE_HELP_PANEL")) +
+                  "\n      "
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "alpheios-lookup__panel" },
+              [
+                _c("lookup", {
+                  attrs: {
+                    "name-base": "panel-info",
+                    "show-results-in": "panel"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("info")
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.$store.getters["ui/isActiveTab"]("wordlist"),
+                expression: "$store.getters['ui/isActiveTab']('wordlist')"
+              }
+            ],
+            staticClass:
+              "alpheios-panel__tab-panel alpheios-panel__tab__wordlist",
+            attrs: { "data-alpheios-ignore": "all" }
+          },
+          [_c("word-list-panel")],
+          1
+        )
+      ]),
       _vm._v(" "),
       _c("notification-area")
     ],
@@ -23631,8 +24094,8 @@ var render = function() {
         {
           name: "on-clickaway",
           rawName: "v-on-clickaway",
-          value: _vm.attachTrackingClick,
-          expression: "attachTrackingClick"
+          value: _vm.closePanel,
+          expression: "closePanel"
         },
         {
           name: "show",
@@ -24784,7 +25247,17 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "alpheios-popup-lexdataloading__progress-text" },
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.text,
+                    expression: "text"
+                  }
+                ],
+                staticClass: "alpheios-popup-lexdataloading__progress-text"
+              },
               [_vm._v("\n        " + _vm._s(_vm.text) + "\n      ")]
             )
           ]
@@ -39850,7 +40323,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"fill":"none","stroke-width":"1.6","d":"M14 1l-8 9 8 9"}})])
+            children.concat([_c('path',{attrs:{"fill":"none","d":"M14 1l-8 9 8 9"}})])
           )
         }
       });
@@ -39890,7 +40363,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"fill":"none","stroke-width":"1.6","d":"M6 1l8 9-8 9"}})])
+            children.concat([_c('path',{attrs:{"fill":"none","d":"M6 1l8 9-8 9"}})])
           )
         }
       });
@@ -39931,6 +40404,46 @@ __webpack_require__.r(__webpack_exports__);
               ...rest,
             },
             children.concat([_c('path',{attrs:{"d":"M178.5 140.25v-102L0 216.75l178.5 178.5V290.7c127.5 0 216.75 40.8 280.5 130.05-25.5-127.5-102-255-280.5-280.5z"}})])
+          )
+        }
+      });
+    
+
+/***/ }),
+
+/***/ "./images/inline-icons/book-open.svg":
+/*!*******************************************!*\
+  !*** ./images/inline-icons/book-open.svg ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+      /* harmony default export */ __webpack_exports__["default"] = ({
+        functional: true,
+        render(_h, _vm) {
+          const { _c, _v, data, children = [] } = _vm;
+
+          const {
+            class: classNames,
+            staticClass,
+            style,
+            staticStyle,
+            attrs = {},
+            ...rest
+          } = data;
+
+          return _c(
+            'svg',
+            {
+              class: [classNames,staticClass],
+              style: [style,staticStyle],
+              attrs: Object.assign({"viewBox":"0 0 30 27","xmlns":"http://www.w3.org/2000/svg"}, attrs),
+              ...rest,
+            },
+            children.concat([_c('path',{attrs:{"d":"M24.285 9.961a.456.456 0 0 1 .477.458c0 .26-.212.47-.47.474-1.043.02-3.58.162-5.198 1.049-.274.15-.656-.037-.656-.348a.27.27 0 0 1 .08-.202c.307-.29 1.611-1.225 5.767-1.43zm.477-4.816a.456.456 0 0 0-.477-.457c-4.156.205-5.46 1.141-5.767 1.43a.272.272 0 0 0-.08.202c0 .312.383.497.656.348 1.618-.886 4.155-1.029 5.197-1.049a.478.478 0 0 0 .471-.474zm-.477 10.09a.456.456 0 0 1 .477.458.478.478 0 0 1-.47.474c-1.043.02-3.58.162-5.198 1.048-.274.15-.656-.036-.656-.347 0-.077.024-.15.08-.203.307-.288 1.611-1.224 5.767-1.43z"}}),_c('path',{attrs:{"fill-rule":"evenodd","clip-rule":"evenodd","d":"M1.79.457v1.007H.46a.459.459 0 0 0-.46.458v20.674c0 .253.205.459.459.459h1.838v-.006c3.317.01 9.478.615 11.563 3.014a.495.495 0 0 0 .37.176h1.574a.535.535 0 0 0 .404-.204c.93-1.114 4.248-2.975 11.495-2.984v.004h1.883A.414.414 0 0 0 30 22.64V1.878a.414.414 0 0 0-.414-.414H28.18V.454A.458.458 0 0 0 27.715 0c-8.08.068-11.158 1.893-12.217 2.846-.257.23-.767.25-1.034.031C13.32 1.935 10.075.071 2.254 0a.46.46 0 0 0-.464.457zm1.15.811V19.38c8.462 0 11.017 2.43 11.256 2.679V4.363c-.386-.65-2.423-3.095-11.256-3.095zM14.215 22.08l-.004-.004h1.52l-.004.004h-1.512zm12.817-2.731c-8.026 0-11.015 2.474-11.285 2.713V4.436c.334-.507 2.49-3.135 11.285-3.135v18.047z"}})])
           )
         }
       });
@@ -40290,7 +40803,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"fill":"none","d":"M-1-1h22v22H-1z"}}),_c('g',[_c('g',{attrs:{"stroke":"null"}},[_c('rect',{attrs:{"fill":"none","stroke-width":".551","x":".322","y":".475","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"fill":"none","stroke-width":".438","d":"M9.14 3.518v8.812M4.733 3.518v8.811M.593 9.58H13.28M.594 6.555H13.28M.594 3.53H13.28"}}),_c('rect',{attrs:{"fill":"#185F6D","stroke-width":".551","x":"3.103","y":"2.807","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"fill":"none","stroke-width":".438","d":"M11.922 5.85v8.812M7.515 5.85v8.811m-4.14-2.749h12.686M3.374 8.888H16.06M3.374 5.862H16.06"}}),_c('rect',{attrs:{"fill":"#185F6D","stroke-width":".551","x":"5.481","y":"4.525","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"fill":"none","stroke-width":".438","d":"M14.3 7.568v8.812M9.893 7.568v8.812m-4.14-2.75H18.44M5.753 10.607H18.44M5.752 7.58h12.686"}}),_c('circle',{attrs:{"fill":"#185F6D","stroke-width":".367","r":"5.711","cy":"12.808","stroke-linecap":"round","cx":"13.667","stroke-linejoin":"round"}}),_c('path',{attrs:{"fill":"#185F6D","d":"M13.856 6.175c-.037-.002-.074-.005-.11-.005l-.03.001-.05-.001c-3.322 0-6.025 2.978-6.025 6.637 0 3.66 2.703 6.638 6.026 6.638s6.025-2.978 6.025-6.638c0-3.59-2.601-6.521-5.836-6.632h0zm-.095 12.298h-.032.032zm-.532-.125c-.608-.297-1.143-1.105-1.508-2.205a7.654 7.654 0 0 1 1.508-.245v2.45h0zm0-3.416a8.45 8.45 0 0 0-1.758.288 11.298 11.298 0 0 1-.24-1.93h1.998v1.642h0zm-1.998-2.606c.03-.753.128-1.47.281-2.116.543.146 1.12.238 1.717.273v1.843h-1.998 0zm1.998-2.81c-.5-.033-.986-.11-1.445-.23.362-1.008.87-1.743 1.445-2.024v2.254zm.876.975a8.503 8.503 0 0 0 1.874-.282c.153.647.252 1.363.281 2.117h-2.155V10.49h0zm0-.966V7.197c.64.215 1.21.993 1.604 2.093a7.73 7.73 0 0 1-1.604.235h0zM15.96 7.73a5.2 5.2 0 0 1 1.244.96 5.545 5.545 0 0 1-.652.318 6.858 6.858 0 0 0-.592-1.28v.002zM10.94 9.007a5.566 5.566 0 0 1-.753-.377c.416-.42.895-.766 1.42-1.02-.257.399-.48.869-.667 1.396v.001zm-.27.92a12.08 12.08 0 0 0-.317 2.399H8.538a5.982 5.982 0 0 1 1.044-2.964c.33.218.696.407 1.088.566h0zm-.316 3.364a12.2 12.2 0 0 0 .275 2.215c-.415.171-.798.376-1.14.612a5.998 5.998 0 0 1-.952-2.827h1.817zm.528 3.139c.198.603.445 1.135.73 1.579a5.172 5.172 0 0 1-1.547-1.152c.249-.16.524-.303.817-.427h0zm3.222 1.983V15.89c.58.025 1.142.113 1.665.254-.395 1.194-.992 2.042-1.665 2.27h0zm0-3.49V13.29h2.155c-.027.68-.11 1.329-.238 1.924a8.472 8.472 0 0 0-1.917-.292h0zm3.032-1.632h1.66a6.004 6.004 0 0 1-.903 2.752 6.133 6.133 0 0 0-1.031-.54 12.22 12.22 0 0 0 .274-2.212h0zm0-.965c-.03-.858-.139-1.667-.315-2.399.35-.141.678-.307.98-.496.555.822.912 1.816.994 2.895h-1.659 0zm-1.184 5.564a7.07 7.07 0 0 0 .656-1.46c.255.108.495.23.716.366a5.234 5.234 0 0 1-1.372 1.094h0z"}})])])])
+            children.concat([_c('path',{attrs:{"fill":"none","d":"M-1-1h22v22H-1z"}}),_c('g',{attrs:{"stroke":"null"}},[_c('rect',{attrs:{"stroke-width":".551","x":".322","y":".475","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"stroke-width":".438","d":"M9.14 3.518v8.812M4.733 3.518v8.811M.593 9.58H13.28M.594 6.555H13.28M.594 3.53H13.28"}}),_c('rect',{attrs:{"fill":"#757575","stroke-width":".551","x":"3.103","y":"2.807","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"stroke-width":".438","d":"M11.922 5.85v8.812M7.515 5.85v8.811m-4.14-2.749h12.686M3.374 8.888H16.06M3.374 5.862H16.06"}}),_c('rect',{attrs:{"fill":"#757575","stroke-width":".551","x":"5.481","y":"4.525","width":"13.235","height":"12.15","ry":"1.6"}}),_c('path',{attrs:{"stroke-width":".438","d":"M14.3 7.568v8.812M9.893 7.568v8.812m-4.14-2.75H18.44M5.753 10.607H18.44M5.752 7.58h12.686"}}),_c('circle',{attrs:{"fill":"#757575","stroke-width":".367","r":"5.711","cy":"12.808","stroke-linecap":"round","cx":"13.667","stroke-linejoin":"round"}}),_c('path',{attrs:{"fill":"#757575","d":"M13.856 6.175c-.037-.002-.074-.005-.11-.005l-.03.001-.05-.001c-3.322 0-6.025 2.978-6.025 6.637 0 3.66 2.703 6.638 6.026 6.638s6.025-2.978 6.025-6.638c0-3.59-2.601-6.521-5.836-6.632h0zm-.095 12.298h-.032.032zm-.532-.125c-.608-.297-1.143-1.105-1.508-2.205a7.654 7.654 0 0 1 1.508-.245v2.45h0zm0-3.416a8.45 8.45 0 0 0-1.758.288 11.298 11.298 0 0 1-.24-1.93h1.998v1.642h0zm-1.998-2.606c.03-.753.128-1.47.281-2.116.543.146 1.12.238 1.717.273v1.843h-1.998 0zm1.998-2.81c-.5-.033-.986-.11-1.445-.23.362-1.008.87-1.743 1.445-2.024v2.254zm.876.975a8.503 8.503 0 0 0 1.874-.282c.153.647.252 1.363.281 2.117h-2.155V10.49h0zm0-.966V7.197c.64.215 1.21.993 1.604 2.093a7.73 7.73 0 0 1-1.604.235h0zM15.96 7.73a5.2 5.2 0 0 1 1.244.96 5.545 5.545 0 0 1-.652.318 6.858 6.858 0 0 0-.592-1.28v.002zM10.94 9.007a5.566 5.566 0 0 1-.753-.377c.416-.42.895-.766 1.42-1.02-.257.399-.48.869-.667 1.396v.001zm-.27.92a12.08 12.08 0 0 0-.317 2.399H8.538a5.982 5.982 0 0 1 1.044-2.964c.33.218.696.407 1.088.566h0zm-.316 3.364a12.2 12.2 0 0 0 .275 2.215c-.415.171-.798.376-1.14.612a5.998 5.998 0 0 1-.952-2.827h1.817zm.528 3.139c.198.603.445 1.135.73 1.579a5.172 5.172 0 0 1-1.547-1.152c.249-.16.524-.303.817-.427h0zm3.222 1.983V15.89c.58.025 1.142.113 1.665.254-.395 1.194-.992 2.042-1.665 2.27h0zm0-3.49V13.29h2.155c-.027.68-.11 1.329-.238 1.924a8.472 8.472 0 0 0-1.917-.292h0zm3.032-1.632h1.66a6.004 6.004 0 0 1-.903 2.752 6.133 6.133 0 0 0-1.031-.54 12.22 12.22 0 0 0 .274-2.212h0zm0-.965c-.03-.858-.139-1.667-.315-2.399.35-.141.678-.307.98-.496.555.822.912 1.816.994 2.895h-1.659 0zm-1.184 5.564a7.07 7.07 0 0 0 .656-1.46c.255.108.495.23.716.366a5.234 5.234 0 0 1-1.372 1.094h0z"}})])])
           )
         }
       });
@@ -40370,7 +40883,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"stroke-width":"0","d":"M12.13 11.59c-.16 1.25-1.78 2.53-3.03 2.57-2.93.04.79-4.7-.36-5.79.56-.21 1.88-.54 1.88.44 0 .82-.5 1.74-.74 2.51-1.22 3.84 2.25-.17 2.26-.14.02.03.02.17-.01.41-.05.36.03-.24 0 0zm-.57-5.92c0 1-2.2 1.48-2.2.36 0-1.03 2.2-1.49 2.2-.36z"}}),_c('circle',{attrs:{"fill":"none","stroke-width":"1.1","cx":"10","cy":"10","r":"9"}})])
+            children.concat([_c('path',{attrs:{"d":"M12.13 11.59c-.16 1.25-1.78 2.53-3.03 2.57-2.93.04.79-4.7-.36-5.79.56-.21 1.88-.54 1.88.44 0 .82-.5 1.74-.74 2.51-1.22 3.84 2.25-.17 2.26-.14.02.03.02.17-.01.41-.05.36.03-.24 0 0zm-.57-5.92c0 1-2.2 1.48-2.2.36 0-1.03 2.2-1.49 2.2-.36z"}}),_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}})])
           )
         }
       });
@@ -40451,46 +40964,6 @@ __webpack_require__.r(__webpack_exports__);
               ...rest,
             },
             children.concat([_c('path',{attrs:{"d":"M1216 832q0-185-131.5-316.5T768 384 451.5 515.5 320 832t131.5 316.5T768 1280t316.5-131.5T1216 832zm512 832q0 52-38 90t-90 38q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225T64 832t55.5-273.5 150-225 225-150T768 128t273.5 55.5 225 150 150 225T1472 832q0 220-124 399l343 343q37 37 37 90z"}})])
-          )
-        }
-      });
-    
-
-/***/ }),
-
-/***/ "./images/inline-icons/menu.svg":
-/*!**************************************!*\
-  !*** ./images/inline-icons/menu.svg ***!
-  \**************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-      /* harmony default export */ __webpack_exports__["default"] = ({
-        functional: true,
-        render(_h, _vm) {
-          const { _c, _v, data, children = [] } = _vm;
-
-          const {
-            class: classNames,
-            staticClass,
-            style,
-            staticStyle,
-            attrs = {},
-            ...rest
-          } = data;
-
-          return _c(
-            'svg',
-            {
-              class: [classNames,staticClass],
-              style: [style,staticStyle],
-              attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
-              ...rest,
-            },
-            children.concat([_c('path',{attrs:{"stroke-width":"0","d":"M1 3h18v1H1zM1 7h18v1H1zM1 11h18v1H1zM1 15h18v1H1z"}})])
           )
         }
       });
@@ -40650,7 +41123,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('circle',{attrs:{"fill":"none","stroke-width":"1.1","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"stroke-width":"0","d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","stroke-width":"1.1","d":"M13.018 14.197l-3.573-3.572"}})])
+            children.concat([_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","d":"M13.018 14.197l-3.573-3.572"}})])
           )
         }
       });
@@ -40691,46 +41164,6 @@ __webpack_require__.r(__webpack_exports__);
               ...rest,
             },
             children.concat([_c('path',{attrs:{"d":"M171 336H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.523 0 10-4.477 10-10s-4.477-10-10-10zM322 336H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 86H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h252c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 136H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 186H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 236H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM322 286H221c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.522 0 10-4.477 10-10s-4.478-10-10-10zM171 286H70c-5.523 0-10 4.477-10 10s4.477 10 10 10h101c5.523 0 10-4.477 10-10s-4.477-10-10-10zM171 136H70c-5.523 0-10 4.477-10 10v101c0 5.523 4.477 10 10 10h101c5.523 0 10-4.477 10-10V146c0-5.523-4.477-10-10-10zm-10 101H80v-81h81v81z"}}),_c('path',{attrs:{"d":"M422 76h-30V46c0-11.028-8.972-20-20-20H20C8.972 26 0 34.972 0 46v320c0 27.57 22.43 50 50 50h342c27.57 0 50-22.43 50-50V96c0-11.028-8.972-20-20-20zm0 290c0 16.542-13.458 30-30 30H50c-16.542 0-30-13.458-30-30V46h352v305c0 13.785 11.215 25 25 25 5.522 0 10-4.477 10-10s-4.478-10-10-10c-2.757 0-5-2.243-5-5V96h30v270z"}})])
-          )
-        }
-      });
-    
-
-/***/ }),
-
-/***/ "./images/inline-icons/toolbar-compact-icon.svg":
-/*!******************************************************!*\
-  !*** ./images/inline-icons/toolbar-compact-icon.svg ***!
-  \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-      /* harmony default export */ __webpack_exports__["default"] = ({
-        functional: true,
-        render(_h, _vm) {
-          const { _c, _v, data, children = [] } = _vm;
-
-          const {
-            class: classNames,
-            staticClass,
-            style,
-            staticStyle,
-            attrs = {},
-            ...rest
-          } = data;
-
-          return _c(
-            'svg',
-            {
-              class: [classNames,staticClass],
-              style: [style,staticStyle],
-              attrs: Object.assign({"viewBox":"0 0 30 27","xmlns":"http://www.w3.org/2000/svg"}, attrs),
-              ...rest,
-            },
-            children.concat([_c('path',{attrs:{"d":"M24.285 9.961a.456.456 0 0 1 .477.458c0 .26-.212.47-.47.474-1.043.02-3.58.162-5.198 1.049-.274.15-.656-.037-.656-.348a.27.27 0 0 1 .08-.202c.307-.29 1.611-1.225 5.767-1.43zm.477-4.816a.456.456 0 0 0-.477-.457c-4.156.205-5.46 1.141-5.767 1.43a.272.272 0 0 0-.08.202c0 .312.383.497.656.348 1.618-.886 4.155-1.029 5.197-1.049a.478.478 0 0 0 .471-.474zm-.477 10.09a.456.456 0 0 1 .477.458.478.478 0 0 1-.47.474c-1.043.02-3.58.162-5.198 1.048-.274.15-.656-.036-.656-.347 0-.077.024-.15.08-.203.307-.288 1.611-1.224 5.767-1.43z"}}),_c('path',{attrs:{"fill-rule":"evenodd","clip-rule":"evenodd","d":"M1.79.457v1.007H.46a.459.459 0 0 0-.46.458v20.674c0 .253.205.459.459.459h1.838v-.006c3.317.01 9.478.615 11.563 3.014a.495.495 0 0 0 .37.176h1.574a.535.535 0 0 0 .404-.204c.93-1.114 4.248-2.975 11.495-2.984v.004h1.883A.414.414 0 0 0 30 22.64V1.878a.414.414 0 0 0-.414-.414H28.18V.454A.458.458 0 0 0 27.715 0c-8.08.068-11.158 1.893-12.217 2.846-.257.23-.767.25-1.034.031C13.32 1.935 10.075.071 2.254 0a.46.46 0 0 0-.464.457zm1.15.811V19.38c8.462 0 11.017 2.43 11.256 2.679V4.363c-.386-.65-2.423-3.095-11.256-3.095zM14.215 22.08l-.004-.004h1.52l-.004.004h-1.512zm12.817-2.731c-8.026 0-11.015 2.474-11.285 2.713V4.436c.334-.507 2.49-3.135 11.285-3.135v18.047z"}})])
           )
         }
       });
@@ -40984,32 +41417,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "../node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/vue/vuex-modules/data/l10n-module.js */ "./vue/vuex-modules/data/l10n-module.js");
-/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
-/* harmony import */ var _vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/vue/components/embed-lib-warning.vue */ "./vue/components/embed-lib-warning.vue");
-/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/templates/template.htmlf */ "./templates/template.htmlf");
-/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_templates_template_htmlf__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
-/* harmony import */ var _lib_queries_lexical_query_lookup_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/lib/queries/lexical-query-lookup.js */ "./lib/queries/lexical-query-lookup.js");
-/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
-/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
-/* harmony import */ var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/settings/site-options.json */ "./settings/site-options.json");
-var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_14___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/site-options.json */ "./settings/site-options.json", 1);
-/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json");
-var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_15___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json", 1);
-/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
-var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_16___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
-/* harmony import */ var _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/lib/selection/text-selector */ "./lib/selection/text-selector.js");
-/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
-/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
-/* harmony import */ var _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/lib/utility/platform.js */ "./lib/utility/platform.js");
-/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
-var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_21___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
-/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
-/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
-/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
-/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
-/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @/lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
-/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
+/* harmony import */ var _vue_vuex_modules_ui_action_panel_module_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/vue/vuex-modules/ui/action-panel-module.js */ "./vue/vuex-modules/ui/action-panel-module.js");
+/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/vue/components/embed-lib-warning.vue */ "./vue/components/embed-lib-warning.vue");
+/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/templates/template.htmlf */ "./templates/template.htmlf");
+/* harmony import */ var _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_templates_template_htmlf__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
+/* harmony import */ var _lib_queries_lexical_query_lookup_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/lib/queries/lexical-query-lookup.js */ "./lib/queries/lexical-query-lookup.js");
+/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
+/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
+/* harmony import */ var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/settings/site-options.json */ "./settings/site-options.json");
+var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_15___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/site-options.json */ "./settings/site-options.json", 1);
+/* harmony import */ var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json");
+var _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_16___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/content-options-defaults.json */ "./settings/content-options-defaults.json", 1);
+/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
+var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_17___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
+/* harmony import */ var _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/lib/selection/text-selector */ "./lib/selection/text-selector.js");
+/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
+/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
+/* harmony import */ var _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/lib/utility/platform.js */ "./lib/utility/platform.js");
+/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
+var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
+/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
+/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
+/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
+/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
+/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @/lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
+/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
 
 
 
@@ -41018,6 +41452,7 @@ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_21___names
  // Vue in a runtime + compiler configuration
 
 // Modules and their support dependencies
+
 
 
 
@@ -41081,10 +41516,10 @@ class UIController {
     Define defaults for resource options. If a UI controller creator
     needs to provide its own defaults, they shall be defined in a `create()` function.
      */
-    this.contentOptionsDefaults = _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_15__
-    this.resourceOptionsDefaults = _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_21__
-    this.uiOptionsDefaults = _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_16__
-    this.siteOptionsDefaults = _settings_site_options_json__WEBPACK_IMPORTED_MODULE_14__
+    this.contentOptionsDefaults = _settings_content_options_defaults_json__WEBPACK_IMPORTED_MODULE_16__
+    this.resourceOptionsDefaults = _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22__
+    this.uiOptionsDefaults = _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__
+    this.siteOptionsDefaults = _settings_site_options_json__WEBPACK_IMPORTED_MODULE_15__
     /*
     All following options will be created during an init phase.
     This will allow creators of UI controller to provide their own options defaults
@@ -41106,7 +41541,7 @@ class UIController {
      * Information about the platform an app is running upon.
      * @type {Platform} - A an object containing data about the platform.
      */
-    this.platform = new _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_20__["default"]()
+    this.platform = new _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_21__["default"]()
     // Assign a class that will specify what type of layout will be used
     const layoutClassName = (this.platform.isMobile)
       ? layoutClasses.COMPACT
@@ -41145,8 +41580,8 @@ class UIController {
 
     // Register data modules
     uiController.registerModule(_vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_6__["default"], {
-      defaultLocale: _locales_locales_js__WEBPACK_IMPORTED_MODULE_7__["default"].en_US,
-      messageBundles: _locales_locales_js__WEBPACK_IMPORTED_MODULE_7__["default"].bundleArr()
+      defaultLocale: _locales_locales_js__WEBPACK_IMPORTED_MODULE_8__["default"].en_US,
+      messageBundles: _locales_locales_js__WEBPACK_IMPORTED_MODULE_8__["default"].bundleArr()
     })
 
     /*
@@ -41157,41 +41592,43 @@ class UIController {
     but from within an environment that creates a UI controller
     (after a call to `create()` function, usually).
      */
-    // uiController.registerDataModule(AuthModule, undefined)
+    // uiController.registerModule(AuthModule, undefined)
 
     // Register UI modules. This is environment specific and thus shall be done after a `create()` call.
-    /* uiController.registerUiModule(PanelModule, {
+    /* uiController.registerModule(PanelModule, {
       mountPoint: '#alpheios-panel' // To what element a panel will be mounted
     })
-    uiController.registerUiModule(PopupModule, {
+    uiController.registerModule(PopupModule, {
       mountPoint: '#alpheios-popup'
     }) */
 
+    uiController.registerModule(_vue_vuex_modules_ui_action_panel_module_js__WEBPACK_IMPORTED_MODULE_7__["default"], {})
+
     // Creates on configures an event listener
-    uiController.evc = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_27__["default"]()
+    uiController.evc = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_28__["default"]()
     uiController.registerGetSelectedText('GetSelectedText', uiController.options.textQuerySelector)
-    uiController.evc.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_24__["default"], 'keydown')
-    uiController.evc.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_24__["default"], 'Alpheios_Page_Load')
+    uiController.evc.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__["default"], 'keydown')
+    uiController.evc.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__["default"], 'Alpheios_Page_Load')
 
     // Subscribe to LexicalQuery events
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.MORPH_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.LEMMA_TRANSL_READY.sub(uiController.updateTranslations.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.WORD_USAGE_EXAMPLES_READY.sub(uiController.updateWordUsageExamples.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.MORPH_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.LEMMA_TRANSL_READY.sub(uiController.updateTranslations.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.WORD_USAGE_EXAMPLES_READY.sub(uiController.updateWordUsageExamples.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
 
     // Subscribe to ResourceQuery events
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.RESOURCE_QUERY_COMPLETE.sub(uiController.onResourceQueryComplete.bind(uiController))
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.GRAMMAR_AVAILABLE.sub(uiController.onGrammarAvailable.bind(uiController))
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.GRAMMAR_NOT_FOUND.sub(uiController.onGrammarNotFound.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.RESOURCE_QUERY_COMPLETE.sub(uiController.onResourceQueryComplete.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.GRAMMAR_AVAILABLE.sub(uiController.onGrammarAvailable.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.GRAMMAR_NOT_FOUND.sub(uiController.onGrammarNotFound.bind(uiController))
 
     // Subscribe to AnnotationQuery events
-    _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.ANNOTATIONS_AVAILABLE.sub(uiController.onAnnotationsAvailable.bind(uiController))
+    _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.ANNOTATIONS_AVAILABLE.sub(uiController.onAnnotationsAvailable.bind(uiController))
 
-    uiController.wordlistC = new alpheios_wordlist__WEBPACK_IMPORTED_MODULE_3__["WordlistController"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].availableLanguages(), _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].evt)
+    uiController.wordlistC = new alpheios_wordlist__WEBPACK_IMPORTED_MODULE_3__["WordlistController"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].availableLanguages(), _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt)
     alpheios_wordlist__WEBPACK_IMPORTED_MODULE_3__["WordlistController"].evt.WORDLIST_UPDATED.sub(uiController.onWordListUpdated.bind(uiController))
     alpheios_wordlist__WEBPACK_IMPORTED_MODULE_3__["WordlistController"].evt.WORDITEM_SELECTED.sub(uiController.onWordItemSelected.bind(uiController))
 
@@ -41229,14 +41666,14 @@ class UIController {
         version: 'version'
       },
       mode: 'production', // Controls options available and output. Other possible values: `development`
-      storageAdapter: _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_26__["default"],
+      storageAdapter: _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_27__["default"],
       openPanel: true,
       textQueryTrigger: 'dblClick',
       textQuerySelector: 'body',
       enableLemmaTranslations: false,
       irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size',
       template: {
-        html: _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_9___default.a
+        html: _templates_template_htmlf__WEBPACK_IMPORTED_MODULE_10___default.a
       }
     }
   }
@@ -41334,16 +41771,16 @@ class UIController {
   async init () {
     if (this.isInitialized) { return `Already initialized` }
     // Start loading options as early as possible
-    this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_25__["default"](this.contentOptionsDefaults, this.options.storageAdapter)
-    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_25__["default"](this.resourceOptionsDefaults, this.options.storageAdapter)
+    this.contentOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](this.contentOptionsDefaults, this.options.storageAdapter)
+    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](this.resourceOptionsDefaults, this.options.storageAdapter)
     // Create a copy of resource options for the lookup UI component
-    this.lookupResourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_25__["default"](this.resourceOptionsDefaults, this.options.storageAdapter)
-    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_25__["default"](this.uiOptionsDefaults, this.options.storageAdapter)
+    this.lookupResourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](this.resourceOptionsDefaults, this.options.storageAdapter)
+    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](this.uiOptionsDefaults, this.options.storageAdapter)
     let optionLoadPromises = [this.contentOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
     // TODO: Site options should probably be initialized the same way as other options objects
     this.siteOptions = this.loadSiteOptions(this.siteOptionsDefaults)
 
-    this.zIndex = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_19__["default"].getZIndexMax()
+    this.zIndex = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_20__["default"].getZIndexMax()
 
     // Will add morph adapter options to the `options` object of UI controller constructor as needed.
 
@@ -41480,6 +41917,10 @@ class UIController {
           // Treebank data is available if we have it for the word or the page
           return Boolean((state.treebankData.page && state.treebankData.page.src) ||
             (state.treebankData.word && state.treebankData.word.src))
+        },
+
+        lexicalRequestInProgress (state) {
+          return state.lexicalRequest.startTime > state.lexicalRequest.endTime
         }
       },
 
@@ -41835,7 +42276,7 @@ class UIController {
    */
   static getEmbedLibWarning (message) {
     if (!UIController.embedLibWarningInstance) {
-      let EmbedLibWarningClass = vue_dist_vue__WEBPACK_IMPORTED_MODULE_4___default.a.extend(_vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_8__["default"])
+      let EmbedLibWarningClass = vue_dist_vue__WEBPACK_IMPORTED_MODULE_4___default.a.extend(_vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_9__["default"])
       UIController.embedLibWarningInstance = new EmbedLibWarningClass({
         propsData: { text: message }
       })
@@ -41852,7 +42293,7 @@ class UIController {
     let allSiteOptions = []
     for (let site of siteOptions) {
       for (let domain of site.options) {
-        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_25__["default"](domain, this.options.storageAdapter)
+        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](domain, this.options.storageAdapter)
         allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
     }
@@ -42167,7 +42608,7 @@ class UIController {
       HTMLSelector conveys page-specific information, such as location of a selection on a page.
       It's probably better to keep them separated in order to follow a more abstract model.
        */
-      let htmlSelector = new _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_18__["default"](event, this.contentOptions.items.preferredLanguage.currentValue)
+      let htmlSelector = new _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_19__["default"](event, this.contentOptions.items.preferredLanguage.currentValue)
       this.store.commit('app/setHtmlSelector', htmlSelector)
       let textSelector = htmlSelector.createTextSelector()
 
@@ -42193,7 +42634,7 @@ class UIController {
           })
           .getData() */
 
-        let lexQuery = _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].create(textSelector, {
+        let lexQuery = _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].create(textSelector, {
           htmlSelector: htmlSelector,
           resourceOptions: this.resourceOptions,
           siteOptions: [],
@@ -42216,7 +42657,7 @@ class UIController {
         paginationAuthMax: this.contentOptions.items.wordUsageExamplesAuthMax.currentValue }
       : null
 
-    await _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].getWordUsageData(homonym, wordUsageExamples, params)
+    await _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].getWordUsageData(homonym, wordUsageExamples, params)
   }
 
   /**
@@ -42262,7 +42703,7 @@ class UIController {
    */
   updateAnnotations () {
     if (this.state.isActive() && this.state.uiIsActive()) {
-      _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].create({
+      _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].create({
         document: document,
         siteOptions: this.siteOptions
       }).getData()
@@ -42271,7 +42712,7 @@ class UIController {
 
   startResourceQuery (feature) {
     // ExpObjMon.track(
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].create(feature, {
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].create(feature, {
       grammars: alpheios_res_client__WEBPACK_IMPORTED_MODULE_1__["Grammars"]
     }).getData()
     //, {
@@ -42286,11 +42727,11 @@ class UIController {
 
   onLexicalQueryComplete (data) {
     switch (data.resultStatus) {
-      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].resultStatus.SUCCEEDED:
+      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].resultStatus.SUCCEEDED:
         this.showLanguageInfo(data.homonym)
         this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
         break
-      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_10__["default"].resultStatus.FAILED:
+      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].resultStatus.FAILED:
         this.showLanguageInfo(data.homonym)
         this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
     }
@@ -42396,9 +42837,9 @@ class UIController {
       this.updateTranslations(homonym)
     } else {
       // otherwise we can query for it as usual
-      let textSelector = _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_17__["default"].createObjectFromText(homonym.targetWord, homonym.languageID)
+      let textSelector = _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_18__["default"].createObjectFromText(homonym.targetWord, homonym.languageID)
       let wordUsageExamples = this.getWordUsageExamplesQueryParams(textSelector)
-      let lexQuery = _lib_queries_lexical_query_lookup_js__WEBPACK_IMPORTED_MODULE_11__["default"].create(textSelector, this.resourceOptions, this.state.lemmaTranslationLang, wordUsageExamples)
+      let lexQuery = _lib_queries_lexical_query_lookup_js__WEBPACK_IMPORTED_MODULE_12__["default"].create(textSelector, this.resourceOptions, this.state.lemmaTranslationLang, wordUsageExamples)
       lexQuery.getData()
     }
   }
@@ -42496,17 +42937,17 @@ class UIController {
   registerGetSelectedText (listenerName, selector) {
     let ev
     if (this.platform.isMobile) {
-      ev = _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_23__["default"]
+      ev = _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_24__["default"]
     } else {
       switch (this.options.textQueryTrigger) {
         case 'dblClick':
-          ev = _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_22__["default"]
+          ev = _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_23__["default"]
           break
         case 'dblclick':
-          ev = _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_22__["default"]
+          ev = _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_23__["default"]
           break
         case 'longTap':
-          ev = _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_23__["default"]
+          ev = _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_24__["default"]
           break
         default:
           ev = null
@@ -42516,7 +42957,7 @@ class UIController {
       this.evc.registerListener(listenerName, selector, this.getSelectedText.bind(this), ev)
     } else {
       this.evc.registerListener(
-        listenerName, selector, this.getSelectedText.bind(this), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_24__["default"], this.options.textQueryTrigger)
+        listenerName, selector, this.getSelectedText.bind(this), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__["default"], this.options.textQueryTrigger)
     }
   }
 
@@ -46706,10 +47147,10 @@ module.exports = {"WORDLIST_TOOLTIP_ALL_IMPORTANT":{"message":"Make all importan
 /*!*************************************!*\
   !*** ./locales/en-us/messages.json ***!
   \*************************************/
-/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, TITLE_HELP_PANEL, TITLE_INFLECTIONS_PANEL, TITLE_INFLECTIONS_BROWSER_PANEL, TOOLTIP_MOVE_PANEL_LEFT, TOOLTIP_MOVE_PANEL_RIGHT, TOOLTIP_CLOSE_PANEL, TOOLTIP_HELP, TOOLTIP_INFLECT, TOOLTIP_INFLECT_BROWSER, TOOLTIP_DEFINITIONS, TOOLTIP_GRAMMAR, TOOLTIP_TREEBANK, TOOLTIP_OPTIONS, TOOLTIP_STATUS, TOOLTIP_WORDLIST, TOOLTIP_USER, TOOLTIP_SHOW_INFLECTIONS, TOOLTIP_SHOW_DEFINITIONS, TOOLTIP_SHOW_OPTIONS, TOOLTIP_SHOW_USAGEEXAMPLES, TOOLTIP_MORPHOLOGY, PLACEHOLDER_DEFINITIONS, PLACEHOLDER_INFLECT_IN_PROGRESS, LABEL_INFLECT_SELECT_POFS, LABEL_INFLECT_SHOWFULL, LABEL_INFLECT_COLLAPSE, TOOLTIP_INFLECT_SHOWFULL, TOOLTIP_INFLECT_COLLAPSE, LABEL_INFLECT_HIDEEMPTY, LABEL_INFLECT_SHOWEMPTY, TOOLTIP_INFLECT_HIDEEMPTY, TOOLTIP_INFLECT_SHOWEMPTY, INFLECT_MSG_TABLE_NOT_IMPLEMENTED, TEXT_INFO_GETTINGSTARTED, TEXT_INFO_ACTIVATE, TEXT_INFO_CLICK, TEXT_INFO_LANGDETECT, LABEL_INFO_CURRENTLANGUAGE, TEXT_INFO_SETTINGS, TEXT_INFO_ARROW, TEXT_INFO_REOPEN, TEXT_INFO_DEACTIVATE, TOOLTIP_POPUP_CLOSE, LABEL_POPUP_TREEBANK, LABEL_POPUP_INFLECT, LABEL_POPUP_OPTIONS, LABEL_POPUP_DEFINE, LABEL_POPUP_USAGEEXAMPLES, PLACEHOLDER_POPUP_DATA, PLACEHOLDER_NO_LANGUAGE_POPUP_DATA, PLACEHOLDER_NO_DATA_POPUP_DATA, LABEL_POPUP_CREDITS, LABEL_POPUP_SHOWCREDITS, LABEL_POPUP_HIDECREDITS, TEXT_NOTICE_SUGGEST_LOGIN, TEXT_NOTICE_CHANGE_LANGUAGE, TEXT_NOTICE_LANGUAGE_UNKNOWN, TEXT_NOTICE_MORPHDATA_READY, TEXT_NOTICE_MORPHDATA_NOTFOUND, TEXT_NOTICE_INFLDATA_READY, TEXT_NOTICE_DEFSDATA_READY, TEXT_NOTICE_DEFSDATA_NOTFOUND, TEXT_NOTICE_NO_DEFS_FOUND, TEXT_NOTICE_LEXQUERY_COMPLETE, TEXT_NOTICE_GRAMMAR_READY, TEXT_NOTICE_GRAMMAR_COMPLETE, TEXT_NOTICE_RESQUERY_COMPLETE, TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS, TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS, LABEL_BROWSERACTION_DEACTIVATE, LABEL_BROWSERACTION_ACTIVATE, LABEL_BROWSERACTION_DISABLED, LABEL_CTXTMENU_DEACTIVATE, LABEL_CTXTMENU_ACTIVATE, LABEL_CTXTMENU_DISABLED, LABEL_CTXTMENU_OPENPANEL, LABEL_CTXTMENU_INFO, LABEL_CTXTMENU_SENDEXP, LABEL_LOOKUP_CONTROL, LABEL_LOOKUP_BUTTON, TOOLTIP_LOOKUP_BUTTON, LABEL_LOOKUP_SETTINGS, LABEL_RESKIN_SETTINGS, TOOLTIP_RESKIN_SMALLFONT, TOOLTIP_RESKIN_MEDIUMFONT, TOOLTIP_RESKIN_LARGEFONT, TOOLTIP_RESKIN_LIGHTBG, TOOLTIP_RESKIN_DARKBG, INFLECTIONS_CREDITS_TITLE, INFLECTIONS_PARADIGMS_EXPLANATORY_HINT, INFLECTIONS_MAIN_TABLE_LINK_TEXT, INFL_ATTRIBUTE_LINK_TEXT_SOURCE, EMBED_LIB_WARNING_TEXT, AUTH_LOGIN_BTN_LABEL, AUTH_LOGOUT_BTN_LABEL, AUTH_LOGIN_PROGRESS_MSG, AUTH_LOGIN_SUCCESS_MSG, AUTH_LOGIN_AUTH_FAILURE_MSG, AUTH_PROFILE_NICKNAME_LABEL, AUTH_PROFILE_NAME_LABEL, AUTH_LOGOUT_SUCCESS_MSG, TEXT_NOTICE_WORDUSAGE_READY, TOOLTIP_WORD_USAGE, WORDUSAGE_FILTERS_HIDE, WORDUSAGE_FILTERS_SHOW, WORDUSAGE_GET_RESULTS, WORDUSAGE_NO_RESULTS, WORDUSAGE_SORT_BY, WORDUSAGE_SORT_BY_AUTHOR, WORDUSAGE_SORT_BY_TEXTWORK, WORDUSAGE_SORT_BY_PREFIX, WORDUSAGE_SORT_BY_SUFFIX, WORDUSAGE_FILTERS_TYPE_NO_FILTERS, WORDUSAGE_FILTERS_TYPE_MORE_RESULTS, WORDUSAGE_FILTERS_TYPE_FILTER_CURRENT_RESULTS, WORDUSAGE_FILTERS_AUTHOR_CLEAR, WORDUSAGE_FILTERS_TEXTWORK_CLEAR, WORDUSAGE_SORTING_AUTHOR_CLEAR, WORDUSAGE_SHOw_SOURCE_LINKS, FONTSIZE_TEXT_SMALL, FONTSIZE_TEXT_MEDIUM, FONTSIZE_TEXT_LARGE, default */
+/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, TITLE_HELP_PANEL, TITLE_INFLECTIONS_PANEL, TITLE_INFLECTIONS_BROWSER_PANEL, TOOLTIP_MOVE_PANEL_LEFT, TOOLTIP_MOVE_PANEL_RIGHT, TOOLTIP_CLOSE_PANEL, TOOLTIP_HELP, TOOLTIP_INFLECT, TOOLTIP_INFLECT_BROWSER, TOOLTIP_DEFINITIONS, TOOLTIP_GRAMMAR, TOOLTIP_TREEBANK, TOOLTIP_OPTIONS, TOOLTIP_STATUS, TOOLTIP_WORDLIST, TOOLTIP_USER, TOOLTIP_SHOW_INFLECTIONS, TOOLTIP_SHOW_DEFINITIONS, TOOLTIP_SHOW_OPTIONS, TOOLTIP_SHOW_USAGEEXAMPLES, TOOLTIP_MORPHOLOGY, TOOLTIP_NOT_AVAIL_POSTFIX, PLACEHOLDER_DEFINITIONS, PLACEHOLDER_INFLECT_IN_PROGRESS, LABEL_INFLECT_SELECT_POFS, LABEL_INFLECT_SHOWFULL, LABEL_INFLECT_COLLAPSE, TOOLTIP_INFLECT_SHOWFULL, TOOLTIP_INFLECT_COLLAPSE, LABEL_INFLECT_HIDEEMPTY, LABEL_INFLECT_SHOWEMPTY, TOOLTIP_INFLECT_HIDEEMPTY, TOOLTIP_INFLECT_SHOWEMPTY, INFLECT_MSG_TABLE_NOT_IMPLEMENTED, TEXT_INFO_GETTINGSTARTED, TEXT_INFO_ACTIVATE, TEXT_INFO_CLICK, TEXT_INFO_LANGDETECT, LABEL_INFO_CURRENTLANGUAGE, TEXT_INFO_SETTINGS, TEXT_INFO_ARROW, TEXT_INFO_REOPEN, TEXT_INFO_DEACTIVATE, TOOLTIP_POPUP_CLOSE, LABEL_POPUP_TREEBANK, LABEL_POPUP_INFLECT, LABEL_POPUP_OPTIONS, LABEL_POPUP_DEFINE, LABEL_POPUP_USAGEEXAMPLES, PLACEHOLDER_POPUP_DATA, PLACEHOLDER_NO_LANGUAGE_POPUP_DATA, PLACEHOLDER_NO_DATA_POPUP_DATA, LABEL_POPUP_CREDITS, LABEL_POPUP_SHOWCREDITS, LABEL_POPUP_HIDECREDITS, TEXT_NOTICE_SUGGEST_LOGIN, TEXT_NOTICE_CHANGE_LANGUAGE, TEXT_NOTICE_LANGUAGE_UNKNOWN, TEXT_NOTICE_MORPHDATA_READY, TEXT_NOTICE_MORPHDATA_NOTFOUND, TEXT_NOTICE_INFLDATA_READY, TEXT_NOTICE_DEFSDATA_READY, TEXT_NOTICE_DEFSDATA_NOTFOUND, TEXT_NOTICE_NO_DEFS_FOUND, TEXT_NOTICE_LEXQUERY_COMPLETE, TEXT_NOTICE_GRAMMAR_READY, TEXT_NOTICE_GRAMMAR_COMPLETE, TEXT_NOTICE_RESQUERY_COMPLETE, TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS, TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS, LABEL_BROWSERACTION_DEACTIVATE, LABEL_BROWSERACTION_ACTIVATE, LABEL_BROWSERACTION_DISABLED, LABEL_CTXTMENU_DEACTIVATE, LABEL_CTXTMENU_ACTIVATE, LABEL_CTXTMENU_DISABLED, LABEL_CTXTMENU_OPENPANEL, LABEL_CTXTMENU_INFO, LABEL_CTXTMENU_SENDEXP, LABEL_LOOKUP_CONTROL, LABEL_LOOKUP_BUTTON, TOOLTIP_LOOKUP_BUTTON, LABEL_LOOKUP_SETTINGS, LABEL_RESKIN_SETTINGS, TOOLTIP_RESKIN_SMALLFONT, TOOLTIP_RESKIN_MEDIUMFONT, TOOLTIP_RESKIN_LARGEFONT, TOOLTIP_RESKIN_LIGHTBG, TOOLTIP_RESKIN_DARKBG, INFLECTIONS_CREDITS_TITLE, INFLECTIONS_PARADIGMS_EXPLANATORY_HINT, INFLECTIONS_MAIN_TABLE_LINK_TEXT, INFL_ATTRIBUTE_LINK_TEXT_SOURCE, EMBED_LIB_WARNING_TEXT, AUTH_LOGIN_BTN_LABEL, AUTH_LOGOUT_BTN_LABEL, AUTH_LOGIN_PROGRESS_MSG, AUTH_LOGIN_SUCCESS_MSG, AUTH_LOGIN_AUTH_FAILURE_MSG, AUTH_PROFILE_NICKNAME_LABEL, AUTH_PROFILE_NAME_LABEL, AUTH_LOGOUT_SUCCESS_MSG, TEXT_NOTICE_WORDUSAGE_READY, TOOLTIP_WORD_USAGE, WORDUSAGE_FILTERS_HIDE, WORDUSAGE_FILTERS_SHOW, WORDUSAGE_GET_RESULTS, WORDUSAGE_NO_RESULTS, WORDUSAGE_SORT_BY, WORDUSAGE_SORT_BY_AUTHOR, WORDUSAGE_SORT_BY_TEXTWORK, WORDUSAGE_SORT_BY_PREFIX, WORDUSAGE_SORT_BY_SUFFIX, WORDUSAGE_FILTERS_TYPE_NO_FILTERS, WORDUSAGE_FILTERS_TYPE_MORE_RESULTS, WORDUSAGE_FILTERS_TYPE_FILTER_CURRENT_RESULTS, WORDUSAGE_FILTERS_AUTHOR_CLEAR, WORDUSAGE_FILTERS_TEXTWORK_CLEAR, WORDUSAGE_SORTING_AUTHOR_CLEAR, WORDUSAGE_SHOw_SOURCE_LINKS, FONTSIZE_TEXT_SMALL, FONTSIZE_TEXT_MEDIUM, FONTSIZE_TEXT_LARGE, default */
 /***/ (function(module) {
 
-module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about a cookie.","description":"A test message that is shown in a panel","component":"Panel"},"NUM_LINES_TEST_MESSAGE":{"message":"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.","description":"A test message that is shown in a panel","component":"Panel","params":["numLines"]},"TITLE_HELP_PANEL":{"message":"Help","description":"A title of a help panel","component":"Panel"},"TITLE_INFLECTIONS_PANEL":{"message":"Inflection tables","description":"A title of an inflections panel","component":"Panel"},"TITLE_INFLECTIONS_BROWSER_PANEL":{"message":"Browse inflection tables","description":"A title of an inflections browser panel","component":"Panel"},"TOOLTIP_MOVE_PANEL_LEFT":{"message":"Move Panel to Left","description":"tooltip for moving the panel to the left","component":"Panel"},"TOOLTIP_MOVE_PANEL_RIGHT":{"message":"Move Panel to Right","description":"tooltip for moving the panel to the right","component":"Panel"},"TOOLTIP_CLOSE_PANEL":{"message":"Close Panel","description":"tooltip for closing the panel","component":"Panel"},"TOOLTIP_HELP":{"message":"Help","description":"tooltip for help tab","component":"Panel"},"TOOLTIP_INFLECT":{"message":"Inflections","description":"tooltip for inflections tab","component":"Panel"},"TOOLTIP_INFLECT_BROWSER":{"message":"Browse Inflection Tables","description":"tooltip for inflections browser tab","component":"Panel"},"TOOLTIP_DEFINITIONS":{"message":"Definitions","description":"tooltip for definitions tab","component":"Panel"},"TOOLTIP_GRAMMAR":{"message":"Browse Grammar","description":"tooltip for grammar tab","component":"Panel"},"TOOLTIP_TREEBANK":{"message":"Diagram","description":"tooltip for treebank tab","component":"Panel"},"TOOLTIP_OPTIONS":{"message":"Options","description":"tooltip for options tab","component":"Panel"},"TOOLTIP_STATUS":{"message":"Status Messages","description":"tooltip for status tab","component":"Panel"},"TOOLTIP_WORDLIST":{"message":"User word list","description":"tooltip for user word list tab","component":"Panel"},"TOOLTIP_USER":{"message":"User info","description":"tooltip for a user info tab","component":"Panel"},"TOOLTIP_SHOW_INFLECTIONS":{"message":"Show inflections","description":"tooltip for button inflections","component":"Popup"},"TOOLTIP_SHOW_DEFINITIONS":{"message":"Show definitions","description":"tooltip for button definitions","component":"Popup"},"TOOLTIP_SHOW_OPTIONS":{"message":"Show options","description":"tooltip for button options","component":"Popup"},"TOOLTIP_SHOW_USAGEEXAMPLES":{"message":"Show example usages of this word","description":"tooltop for word usage examples button","component":"Popup"},"TOOLTIP_MORPHOLOGY":{"message":"Show morphology","description":"tooltop for a morphology button","component":"Panel"},"PLACEHOLDER_DEFINITIONS":{"message":"Lookup a word to show definitions...","description":"placeholder for definitions panel","component":"Panel"},"PLACEHOLDER_INFLECT_IN_PROGRESS":{"message":"Lookup a word to show inflections...","description":"placeholder for inflections panel","component":"Panel"},"LABEL_INFLECT_SELECT_POFS":{"message":"Part of speech:","description":"label for part of speech selector on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWFULL":{"message":"Expand","description":"label for expand button on inflections panel","component":"Panel"},"LABEL_INFLECT_COLLAPSE":{"message":"Collapse","description":"label for collapse table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWFULL":{"message":"This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table","description":"tooltip for show full table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_COLLAPSE":{"message":"This table shows all its columns. Click 'Collapse' to show the ones with matching endings only","description":"tooltip for collapse table button on inflections panel","component":"Panel"},"LABEL_INFLECT_HIDEEMPTY":{"message":"Hide empty columns","description":"label for hide empty columns button on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWEMPTY":{"message":"Show empty columns","description":"label for show empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_HIDEEMPTY":{"message":"Show table without empty columns","description":"tooltip for hide empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWEMPTY":{"message":"Show table with empty columns","description":"tooltip for show empty columns button on inflections panel","component":"Panel"},"INFLECT_MSG_TABLE_NOT_IMPLEMENTED":{"message":"This table has not been implemented yet","description":"tooltip to show instead of inflection table if the latter is not implemented","component":"Panel"},"TEXT_INFO_GETTINGSTARTED":{"message":"Getting Started","description":"info text","component":"Panel"},"TEXT_INFO_ACTIVATE":{"message":"Activate on a page with Latin, Ancient Greek, Arabic or Persian text.","description":"info text","component":"Panel"},"TEXT_INFO_CLICK":{"message":"Double-click on a word to retrieve morphology and short definitions.","description":"info text","component":"Panel"},"TEXT_INFO_LANGDETECT":{"message":"Alpheios will try to detect the language of the word from the page markup. If it cannot it will use the default language.","description":"info text","component":"Panel"},"LABEL_INFO_CURRENTLANGUAGE":{"message":"Current language:","description":"label for current language in info text","component":"Panel"},"TEXT_INFO_SETTINGS":{"message":"Click the Options wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').","description":"info text","component":"Panel"},"TEXT_INFO_ARROW":{"message":"Use the arrow at the top of this panel to move it from the right to left of your browser window.","description":"info text","component":"Panel"},"TEXT_INFO_REOPEN":{"message":"You can reopen this panel at any time by selecting 'Info' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TEXT_INFO_DEACTIVATE":{"message":"Deactivate Alpheios by clicking the toolbar icon or choosing 'Deactivate' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TOOLTIP_POPUP_CLOSE":{"message":"Close Popup","description":"tooltip for closing the popup","component":"Popup"},"LABEL_POPUP_TREEBANK":{"message":"Diagram","description":"label for treebank button on popup","component":"Popup"},"LABEL_POPUP_INFLECT":{"message":"Inflect","description":"label for inflect button on popup","component":"Popup"},"LABEL_POPUP_OPTIONS":{"message":"Options","description":"label for options button on popup","component":"Popup"},"LABEL_POPUP_DEFINE":{"message":"Define","description":"label for define button on popup","component":"Popup"},"LABEL_POPUP_USAGEEXAMPLES":{"message":"Examples","description":"label for usage examples button on popup","component":"Popup"},"PLACEHOLDER_POPUP_DATA":{"message":"Lexical data is loading","description":"placeholder text for popup data","component":"Popup"},"PLACEHOLDER_NO_LANGUAGE_POPUP_DATA":{"message":"Lexical data couldn't be populated because page language is not defined","description":"placeholder text for popup data when language is not defined","component":"Popup"},"PLACEHOLDER_NO_DATA_POPUP_DATA":{"message":"Lexical query produced no results","description":"placeholder text for popup data","component":"Popup"},"LABEL_POPUP_CREDITS":{"message":"Credits:","description":"label for credits on popup","component":"Popup"},"LABEL_POPUP_SHOWCREDITS":{"message":"Show","description":"label for show credits link on popup","component":"Popup"},"LABEL_POPUP_HIDECREDITS":{"message":"Hide","description":"label for hide credits link on popup","component":"Popup"},"TEXT_NOTICE_SUGGEST_LOGIN":{"message":"Login to save your words to your wordlist.","description":"login notification","component":"UI"},"TEXT_NOTICE_CHANGE_LANGUAGE":{"message":"Language: {languageName}<br>Wrong? Change to:","description":"language notification","component":"UI","params":["languageName"]},"TEXT_NOTICE_LANGUAGE_UNKNOWN":{"message":"unknown","description":"unknown language notification","component":"UI"},"TEXT_NOTICE_MORPHDATA_READY":{"message":"Morphological analyzer data is ready","description":"morph data ready notice","component":"UI"},"TEXT_NOTICE_MORPHDATA_NOTFOUND":{"message":"Morphological data not found. Definition queries pending.","description":"morph data not found notice","component":"UI"},"TEXT_NOTICE_INFLDATA_READY":{"message":"Inflection data is ready","description":"inflection data ready notice","component":"UI"},"TEXT_NOTICE_DEFSDATA_READY":{"message":"{requestType} request is completed successfully. Lemma: \"{lemma}\"","description":"definition request success notice","component":"UI","params":["requestType","lemma"]},"TEXT_NOTICE_DEFSDATA_NOTFOUND":{"message":"{requestType} request failed. Lemma not found for: \"{word}\"","description":"definition request success notice","component":"UI","params":["requestType","word"]},"TEXT_NOTICE_NO_DEFS_FOUND":{"message":"No definitions found","description":"displayed by the morph compoennt when there are no definition data exist","component":"UI"},"TEXT_NOTICE_LEXQUERY_COMPLETE":{"message":"All lexical queries complete.","description":"lexical queries complete notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_READY":{"message":"Grammar resource retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_COMPLETE":{"message":"All grammar resource data retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_RESQUERY_COMPLETE":{"message":"All resource data retrieved","description":"resource query complete notice","component":"UI"},"TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Data retrieval is in progress","component":"UI"},"TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Resource retrieval is in progress","component":"UI"},"LABEL_BROWSERACTION_DEACTIVATE":{"message":"Deactivate Alpheios","description":"Deactivate browser action title","component":"UI"},"LABEL_BROWSERACTION_ACTIVATE":{"message":"Activate Alpheios","description":"Activate browser action title","component":"UI"},"LABEL_BROWSERACTION_DISABLED":{"message":"(Alpheios Extension Disabled For Page)","description":"Disabled browser action title","component":"UI"},"LABEL_CTXTMENU_DEACTIVATE":{"message":"Deactivate","description":"Deactivate context menu label","component":"UI"},"LABEL_CTXTMENU_ACTIVATE":{"message":"Activate","description":"Activate context menu label","component":"UI"},"LABEL_CTXTMENU_DISABLED":{"message":"(Disabled)","description":"Disabled context menu label","component":"UI"},"LABEL_CTXTMENU_OPENPANEL":{"message":"Open Panel","description":"Open Panel context menu label","component":"UI"},"LABEL_CTXTMENU_INFO":{"message":"Info","description":"Info context menu label","component":"UI"},"LABEL_CTXTMENU_SENDEXP":{"message":"Send Experiences to remote server","description":"send exp data context menu label","component":"UI"},"LABEL_LOOKUP_CONTROL":{"message":"Show/Hide lookup","description":"A tooltip for the button that turns the lookup panel on and off","component":"Toolbar"},"LABEL_LOOKUP_BUTTON":{"message":"Lookup","description":"lookup button in lookup.vue","component":"Popup"},"TOOLTIP_LOOKUP_BUTTON":{"message":"Lookup word","description":"Tooltip for the lookup button in lookup.vue","component":"Lookup"},"LABEL_LOOKUP_SETTINGS":{"message":"Using Language...","description":"Settings link-label in the lookup block in lookup.vue","component":"Lookup"},"LABEL_RESKIN_SETTINGS":{"message":"Reskin options","description":"Label for Reskin component","component":"ReskinFontColor"},"TOOLTIP_RESKIN_SMALLFONT":{"message":"Small font","description":"Tooltip for small font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_MEDIUMFONT":{"message":"Medium font","description":"Tooltip for medium font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LARGEFONT":{"message":"Large font","description":"Tooltip for large font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LIGHTBG":{"message":"Light background","description":"Tooltip for light colors schema icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_DARKBG":{"message":"Dark background","description":"Tooltip for dark colors schema icon","component":"ReskinFontColor"},"INFLECTIONS_CREDITS_TITLE":{"message":"Credits","description":"Title of credits section on inflection tables panel","component":"InflectionTables"},"INFLECTIONS_PARADIGMS_EXPLANATORY_HINT":{"message":"The following table(s) show conjugation patterns for verbs which are similar to those of <span>{word}</span>","description":"A hint that indicates that the current table is representative pattern for verbs similar to the one chosen","component":"InflectionTables","params":["word"]},"INFLECTIONS_MAIN_TABLE_LINK_TEXT":{"message":"Back to main","description":"A link pointing to a main inflection table","component":"InflectionTables"},"INFL_ATTRIBUTE_LINK_TEXT_SOURCE":{"message":"Source","description":"A link pointing to the source of a lemma or inflection","component":"InflAttribute"},"EMBED_LIB_WARNING_TEXT":{"message":"This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.","description":"A message that is shown when an Alpheios extension is disabled due to embedded library presence","component":"EmbedLibWarning"},"AUTH_LOGIN_BTN_LABEL":{"message":"Log In","description":"A message shown on a log in button","component":"UserAuth Vue Component"},"AUTH_LOGOUT_BTN_LABEL":{"message":"Log Out","description":"A message shown on a log out button","component":"UserAuth Vue Component"},"AUTH_LOGIN_PROGRESS_MSG":{"message":"Please be patient while we are logging you in ...","description":"A message shown to the user while he or she is waiting for an authentication to complete","component":"UserAuth Vue Component"},"AUTH_LOGIN_SUCCESS_MSG":{"message":"Congratulations! You are logged in successfully.","description":"A message shown to the user if he or she logged in successfully","component":"UserAuth Vue Component"},"AUTH_LOGIN_AUTH_FAILURE_MSG":{"message":"Authentication failed","description":"A message shown to the user if his or her authentication failed","component":"UserAuth Vue Component"},"AUTH_PROFILE_NICKNAME_LABEL":{"message":"Nickname","description":"A user's profile nickname filed label","component":"UserAuth Vue Component"},"AUTH_PROFILE_NAME_LABEL":{"message":"Name","description":"A user's profile name filed label","component":"UserAuth Vue Component"},"AUTH_LOGOUT_SUCCESS_MSG":{"message":"You have been logged out.","description":"A message shown to the user if he or she logged out successfully","component":"UserAuth Vue Component"},"TEXT_NOTICE_WORDUSAGE_READY":{"message":"Word Usage Examples are recieved","description":"Word Usage Examples recieved flag","component":"UIController onWordUsageExamplesReady"},"TOOLTIP_WORD_USAGE":{"message":"Word Usage Examples","description":"Word Usage Examples tooltip","component":"Panel"},"WORDUSAGE_FILTERS_HIDE":{"message":"hide","description":"Word Usage Examples Filters Hide link","component":"WordUsageExamplesHeader"},"WORDUSAGE_FILTERS_SHOW":{"message":"show","description":"Word Usage Examples Filters Show Link","component":"WordUsageExamplesHeader"},"WORDUSAGE_GET_RESULTS":{"message":"Get results","description":"Word Usage Examples Filters Get results button","component":"WordUsageExamplesHeader"},"WORDUSAGE_NO_RESULTS":{"message":"There are no results.","description":"Word Usage Examples No results text","component":"WordUsageExamples"},"WORDUSAGE_SORT_BY":{"message":"Sort by","description":"Word Usage Examples Sort by Title","component":"WordUsageExamplesHeader"},"WORDUSAGE_SORT_BY_AUTHOR":{"message":"By author","description":"Word Usage Examples Sort by author","component":"WordUsageExamplesFilters"},"WORDUSAGE_SORT_BY_TEXTWORK":{"message":"By text work","description":"Word Usage Examples Sort by text work","component":"WordUsageExamplesFilters"},"WORDUSAGE_SORT_BY_PREFIX":{"message":"By prefix","description":"Word Usage Examples Sort by prefix","component":"WordUsageExamplesHeader"},"WORDUSAGE_SORT_BY_SUFFIX":{"message":"By suffix","description":"Word Usage Examples Sort by suffix","component":"WordUsageExamplesHeader"},"WORDUSAGE_FILTERS_TYPE_NO_FILTERS":{"message":"Get results without filters","description":"Word Usage Examples Type filter","component":"WordUsageExamplesFilters"},"WORDUSAGE_FILTERS_TYPE_MORE_RESULTS":{"message":"See more results for a specific Author and/or Work","description":"Word Usage Examples Type filter","component":"WordUsageExamplesFilters"},"WORDUSAGE_FILTERS_TYPE_FILTER_CURRENT_RESULTS":{"message":"Filter these results by Author and/or Work","description":"Word Usage Examples Type filter","component":"WordUsageExamplesFilters"},"WORDUSAGE_FILTERS_AUTHOR_CLEAR":{"message":"Clear author filter","description":"Word Usage Examples Type filter","component":"WordUsageExamplesFilters"},"WORDUSAGE_FILTERS_TEXTWORK_CLEAR":{"message":"Clear textwork filter","description":"Word Usage Examples Type filter","component":"WordUsageExamplesFilters"},"WORDUSAGE_SORTING_AUTHOR_CLEAR":{"message":"Clear sorting","description":"Word Usage Examples Sorting","component":"WordUsageExamplesSorting"},"WORDUSAGE_SHOw_SOURCE_LINKS":{"message":"Show/hide source links","description":"Message on a button that toggles source links on or off","component":"WordUsageExamples"},"FONTSIZE_TEXT_SMALL":{"message":"Small","description":"Description of a text size option within a button","component":"Font size component"},"FONTSIZE_TEXT_MEDIUM":{"message":"Medium","description":"Description of a text size option within a button","component":"Font size component"},"FONTSIZE_TEXT_LARGE":{"message":"Large","description":"Description of a text size option within a button","component":"Font size component"}};
+module.exports = {"COOKIE_TEST_MESSAGE":{"message":"This is a test message about a cookie.","description":"A test message that is shown in a panel","component":"Panel"},"NUM_LINES_TEST_MESSAGE":{"message":"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.","description":"A test message that is shown in a panel","component":"Panel","params":["numLines"]},"TITLE_HELP_PANEL":{"message":"Help","description":"A title of a help panel","component":"Panel"},"TITLE_INFLECTIONS_PANEL":{"message":"Inflection tables","description":"A title of an inflections panel","component":"Panel"},"TITLE_INFLECTIONS_BROWSER_PANEL":{"message":"Browse inflection tables","description":"A title of an inflections browser panel","component":"Panel"},"TOOLTIP_MOVE_PANEL_LEFT":{"message":"Move Panel to Left","description":"tooltip for moving the panel to the left","component":"Panel"},"TOOLTIP_MOVE_PANEL_RIGHT":{"message":"Move Panel to Right","description":"tooltip for moving the panel to the right","component":"Panel"},"TOOLTIP_CLOSE_PANEL":{"message":"Close Panel","description":"tooltip for closing the panel","component":"Panel"},"TOOLTIP_HELP":{"message":"Help","description":"tooltip for help tab","component":"Panel"},"TOOLTIP_INFLECT":{"message":"Inflections","description":"tooltip for inflections tab","component":"Panel"},"TOOLTIP_INFLECT_BROWSER":{"message":"Browse Inflection Tables","description":"tooltip for inflections browser tab","component":"Panel"},"TOOLTIP_DEFINITIONS":{"message":"Definitions","description":"tooltip for definitions tab","component":"Panel"},"TOOLTIP_GRAMMAR":{"message":"Browse Grammar","description":"tooltip for grammar tab","component":"Panel"},"TOOLTIP_TREEBANK":{"message":"Diagram","description":"tooltip for treebank tab","component":"Panel"},"TOOLTIP_OPTIONS":{"message":"Options","description":"tooltip for options tab","component":"Panel"},"TOOLTIP_STATUS":{"message":"Status Messages","description":"tooltip for status tab","component":"Panel"},"TOOLTIP_WORDLIST":{"message":"User word list","description":"tooltip for user word list tab","component":"Panel"},"TOOLTIP_USER":{"message":"User info","description":"tooltip for a user info tab","component":"Panel"},"TOOLTIP_SHOW_INFLECTIONS":{"message":"Show inflections","description":"tooltip for button inflections","component":"Popup"},"TOOLTIP_SHOW_DEFINITIONS":{"message":"Show definitions","description":"tooltip for button definitions","component":"Popup"},"TOOLTIP_SHOW_OPTIONS":{"message":"Show options","description":"tooltip for button options","component":"Popup"},"TOOLTIP_SHOW_USAGEEXAMPLES":{"message":"Show example usages of this word","description":"tooltop for word usage examples button","component":"Popup"},"TOOLTIP_MORPHOLOGY":{"message":"Morphology","description":"tooltop for a morphology button","component":"Panel"},"TOOLTIP_NOT_AVAIL_POSTFIX":{"message":"not available","description":"A postix added to tooltips when they are not available","component":"Any"},"PLACEHOLDER_DEFINITIONS":{"message":"Lookup a word to show definitions...","description":"placeholder for definitions panel","component":"Panel"},"PLACEHOLDER_INFLECT_IN_PROGRESS":{"message":"Lookup a word to show inflections...","description":"placeholder for inflections panel","component":"Panel"},"LABEL_INFLECT_SELECT_POFS":{"message":"Part of speech:","description":"label for part of speech selector on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWFULL":{"message":"Expand","description":"label for expand button on inflections panel","component":"Panel"},"LABEL_INFLECT_COLLAPSE":{"message":"Collapse","description":"label for collapse table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWFULL":{"message":"This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table","description":"tooltip for show full table button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_COLLAPSE":{"message":"This table shows all its columns. Click 'Collapse' to show the ones with matching endings only","description":"tooltip for collapse table button on inflections panel","component":"Panel"},"LABEL_INFLECT_HIDEEMPTY":{"message":"Hide empty columns","description":"label for hide empty columns button on inflections panel","component":"Panel"},"LABEL_INFLECT_SHOWEMPTY":{"message":"Show empty columns","description":"label for show empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_HIDEEMPTY":{"message":"Show table without empty columns","description":"tooltip for hide empty columns button on inflections panel","component":"Panel"},"TOOLTIP_INFLECT_SHOWEMPTY":{"message":"Show table with empty columns","description":"tooltip for show empty columns button on inflections panel","component":"Panel"},"INFLECT_MSG_TABLE_NOT_IMPLEMENTED":{"message":"This table has not been implemented yet","description":"tooltip to show instead of inflection table if the latter is not implemented","component":"Panel"},"TEXT_INFO_GETTINGSTARTED":{"message":"Getting Started","description":"info text","component":"Panel"},"TEXT_INFO_ACTIVATE":{"message":"Activate on a page with Latin, Ancient Greek, Arabic or Persian text.","description":"info text","component":"Panel"},"TEXT_INFO_CLICK":{"message":"Double-click on a word to retrieve morphology and short definitions.","description":"info text","component":"Panel"},"TEXT_INFO_LANGDETECT":{"message":"Alpheios will try to detect the language of the word from the page markup. If it cannot it will use the default language.","description":"info text","component":"Panel"},"LABEL_INFO_CURRENTLANGUAGE":{"message":"Current language:","description":"label for current language in info text","component":"Panel"},"TEXT_INFO_SETTINGS":{"message":"Click the Options wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').","description":"info text","component":"Panel"},"TEXT_INFO_ARROW":{"message":"Use the arrow at the top of this panel to move it from the right to left of your browser window.","description":"info text","component":"Panel"},"TEXT_INFO_REOPEN":{"message":"You can reopen this panel at any time by selecting 'Info' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TEXT_INFO_DEACTIVATE":{"message":"Deactivate Alpheios by clicking the toolbar icon or choosing 'Deactivate' from the Alpheios Reading Tools option in your browser's context menu.","description":"info text","component":"Panel"},"TOOLTIP_POPUP_CLOSE":{"message":"Close Popup","description":"tooltip for closing the popup","component":"Popup"},"LABEL_POPUP_TREEBANK":{"message":"Diagram","description":"label for treebank button on popup","component":"Popup"},"LABEL_POPUP_INFLECT":{"message":"Inflect","description":"label for inflect button on popup","component":"Popup"},"LABEL_POPUP_OPTIONS":{"message":"Options","description":"label for options button on popup","component":"Popup"},"LABEL_POPUP_DEFINE":{"message":"Define","description":"label for define button on popup","component":"Popup"},"LABEL_POPUP_USAGEEXAMPLES":{"message":"Examples","description":"label for usage examples button on popup","component":"Popup"},"PLACEHOLDER_POPUP_DATA":{"message":"Lexical data is loading","description":"placeholder text for popup data","component":"Popup"},"PLACEHOLDER_NO_LANGUAGE_POPUP_DATA":{"message":"Lexical data couldn't be populated because page language is not defined","description":"placeholder text for popup data when language is not defined","component":"Popup"},"PLACEHOLDER_NO_DATA_POPUP_DATA":{"message":"Lexical query produced no results","description":"placeholder text for popup data","component":"Popup"},"LABEL_POPUP_CREDITS":{"message":"Credits:","description":"label for credits on popup","component":"Popup"},"LABEL_POPUP_SHOWCREDITS":{"message":"Show","description":"label for show credits link on popup","component":"Popup"},"LABEL_POPUP_HIDECREDITS":{"message":"Hide","description":"label for hide credits link on popup","component":"Popup"},"TEXT_NOTICE_SUGGEST_LOGIN":{"message":"Login to save your words to your wordlist.","description":"login notification","component":"UI"},"TEXT_NOTICE_CHANGE_LANGUAGE":{"message":"Language: {languageName}<br>Wrong? Change to:","description":"language notification","component":"UI","params":["languageName"]},"TEXT_NOTICE_LANGUAGE_UNKNOWN":{"message":"unknown","description":"unknown language notification","component":"UI"},"TEXT_NOTICE_MORPHDATA_READY":{"message":"Morphological analyzer data is ready","description":"morph data ready notice","component":"UI"},"TEXT_NOTICE_MORPHDATA_NOTFOUND":{"message":"Morphological data not found. Definition queries pending.","description":"morph data not found notice","component":"UI"},"TEXT_NOTICE_INFLDATA_READY":{"message":"Inflection data is ready","description":"inflection data ready notice","component":"UI"},"TEXT_NOTICE_DEFSDATA_READY":{"message":"{requestType} request is completed successfully. Lemma: \"{lemma}\"","description":"definition request success notice","component":"UI","params":["requestType","lemma"]},"TEXT_NOTICE_DEFSDATA_NOTFOUND":{"message":"{requestType} request failed. Lemma not found for: \"{word}\"","description":"definition request success notice","component":"UI","params":["requestType","word"]},"TEXT_NOTICE_NO_DEFS_FOUND":{"message":"No definitions found","description":"displayed by the morph compoennt when there are no definition data exist","component":"UI"},"TEXT_NOTICE_LEXQUERY_COMPLETE":{"message":"All lexical queries complete.","description":"lexical queries complete notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_READY":{"message":"Grammar resource retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_GRAMMAR_COMPLETE":{"message":"All grammar resource data retrieved","description":"grammar retrieved notice","component":"UI"},"TEXT_NOTICE_RESQUERY_COMPLETE":{"message":"All resource data retrieved","description":"resource query complete notice","component":"UI"},"TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Data retrieval is in progress","component":"UI"},"TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS":{"message":"Please wait while data is retrieved ...","description":"Resource retrieval is in progress","component":"UI"},"LABEL_BROWSERACTION_DEACTIVATE":{"message":"Deactivate Alpheios","description":"Deactivate browser action title","component":"UI"},"LABEL_BROWSERACTION_ACTIVATE":{"message":"Activate Alpheios","description":"Activate browser action title","component":"UI"},"LABEL_BROWSERACTION_DISABLED":{"message":"(Alpheios Extension Disabled For Page)","description":"Disabled browser action title","component":"UI"},"LABEL_CTXTMENU_DEACTIVATE":{"message":"Deactivate","description":"Deactivate context menu label","component":"UI"},"LABEL_CTXTMENU_ACTIVATE":{"message":"Activate","description":"Activate context menu label","component":"UI"},"LABEL_CTXTMENU_DISABLED":{"message":"(Disabled)","description":"Disabled context menu label","component":"UI"},"LABEL_CTXTMENU_OPENPANEL":{"message":"Open Panel","description":"Open Panel context menu label","component":"UI"},"LABEL_CTXTMENU_INFO":{"message":"Info","description":"Info context menu label","component":"UI"},"LABEL_CTXTMENU_SENDEXP":{"message":"Send Experiences to remote server","description":"send exp data context menu label","component":"UI"},"LABEL_LOOKUP_CONTROL":{"message":"Show/Hide lookup","description":"A tooltip for the button that turns the lookup panel on and off","component":"Toolbar"},"LABEL_LOOKUP_BUTTON":{"message":"Lookup","description":"lookup button in lookup.vue","component":"Popup"},"TOOLTIP_LOOKUP_BUTTON":{"message":"Lookup word","description":"Tooltip for the lookup button in lookup.vue","component":"Lookup"},"LABEL_LOOKUP_SETTINGS":{"message":"Using Language...","description":"Settings link-label in the lookup block in lookup.vue","component":"Lookup"},"LABEL_RESKIN_SETTINGS":{"message":"Reskin options","description":"Label for Reskin component","component":"ReskinFontColor"},"TOOLTIP_RESKIN_SMALLFONT":{"message":"Small font","description":"Tooltip for small font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_MEDIUMFONT":{"message":"Medium font","description":"Tooltip for medium font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LARGEFONT":{"message":"Large font","description":"Tooltip for large font icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_LIGHTBG":{"message":"Light background","description":"Tooltip for light colors schema icon","component":"ReskinFontColor"},"TOOLTIP_RESKIN_DARKBG":{"message":"Dark background","description":"Tooltip for dark colors schema icon","component":"ReskinFontColor"},"INFLECTIONS_CREDITS_TITLE":{"message":"Credits","description":"Title of credits section on inflection tables panel","component":"InflectionTables"},"INFLECTIONS_PARADIGMS_EXPLANATORY_HINT":{"message":"The following table(s) show conjugation patterns for verbs which are similar to those of <span>{word}</span>","description":"A hint that indicates that the current table is representative pattern for verbs similar to the one chosen","component":"InflectionTables","params":["word"]},"INFLECTIONS_MAIN_TABLE_LINK_TEXT":{"message":"Back to main","description":"A link pointing to a main inflection table","component":"InflectionTables"},"INFL_ATTRIBUTE_LINK_TEXT_SOURCE":{"message":"Source","description":"A link pointing to the source of a lemma or inflection","component":"InflAttribute"},"EMBED_LIB_WARNING_TEXT":{"message":"This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.","description":"A message that is shown when an Alpheios extension is disabled due to embedded library presence","component":"EmbedLibWarning"},"AUTH_LOGIN_BTN_LABEL":{"message":"Log In","description":"A message shown on a log in button","component":"UserAuth Vue Component"},"AUTH_LOGOUT_BTN_LABEL":{"message":"Log Out","description":"A message shown on a log out button","component":"UserAuth Vue Component"},"AUTH_LOGIN_PROGRESS_MSG":{"message":"Please be patient while we are logging you in ...","description":"A message shown to the user while he or she is waiting for an authentication to complete","component":"UserAuth Vue Component"},"AUTH_LOGIN_SUCCESS_MSG":{"message":"Congratulations! You are logged in successfully.","description":"A message shown to the user if he or she logged in successfully","component":"UserAuth Vue Component"},"AUTH_LOGIN_AUTH_FAILURE_MSG":{"message":"Authentication failed","description":"A message shown to the user if his or her authentication failed","component":"UserAuth Vue Component"},"AUTH_PROFILE_NICKNAME_LABEL":{"message":"Nickname","description":"A user's profile nickname filed label","component":"UserAuth Vue Component"},"AUTH_PROFILE_NAME_LABEL":{"message":"Name","description":"A user's profile name filed label","component":"UserAuth Vue Component"},"AUTH_LOGOUT_SUCCESS_MSG":{"message":"You have been logged out.","description":"A message shown to the user if he or she logged out successfully","component":"UserAuth Vue Component"},"TEXT_NOTICE_WORDUSAGE_READY":{"message":"Word Usage Examples are recieved","description":"Word Usage Examples recieved flag","component":"UIController onWordUsageExamplesReady"},"TOOLTIP_WORD_USAGE":{"message":"Word Usage Examples","description":"Word Usage Examples tooltip","component":"Panel"},"WORDUSAGE_FILTERS_HIDE":{"message":"hide","description":"Word Usage Examples Filters Hide link","component":"WordUsageExamplesHeader"},"WORDUSAGE_FILTERS_SHOW":{"message":"show","description":"Word Usage Examples Filters Show Link","component":"WordUsageExamplesHeader"},"WORDUSAGE_GET_RESULTS":{"message":"Get results","description":"Word Usage Examples Filters Get results button","component":"WordUsageExamplesHeader"},"WORDUSAGE_NO_RESULTS":{"message":"There are no results.","description":"Word Usage Examples No results text","component":"WordUsageExamples"},"WORDUSAGE_SORT_BY":{"message":"Sort by","description":"Word Usage Examples Sort by Title","component":"WordUsageExamplesHeader"},"WORDUSAGE_SORT_BY_AUTHOR":{"message":"By author","description":"Word Usage Examples Sort by author","component":"WordUsageExamplesFilters"},"WORDUSAGE_SORT_BY_TEXTWORK":{"message":"By text work","description":"Word Usage Examples Sort by text work","component":"WordUsageExamplesFilters"},"WORDUSAGE_SORT_BY_PREFIX":{"message":"By prefix","description":"Word Usage Examples Sort by prefix","component":"WordUsageExamplesHeader"},"WORDUSAGE_SORT_BY_SUFFIX":{"message":"By suffix","description":"Word Usage Examples Sort by suffix","component":"WordUsageExamplesHeader"},"WORDUSAGE_FILTERS_TYPE_NO_FILTERS":{"message":"Get results without filters","description":"Word Usage Examples Type filter","component":"WordUsageExamplesFilters"},"WORDUSAGE_FILTERS_TYPE_MORE_RESULTS":{"message":"See more results for a specific Author and/or Work","description":"Word Usage Examples Type filter","component":"WordUsageExamplesFilters"},"WORDUSAGE_FILTERS_TYPE_FILTER_CURRENT_RESULTS":{"message":"Filter these results by Author and/or Work","description":"Word Usage Examples Type filter","component":"WordUsageExamplesFilters"},"WORDUSAGE_FILTERS_AUTHOR_CLEAR":{"message":"Clear author filter","description":"Word Usage Examples Type filter","component":"WordUsageExamplesFilters"},"WORDUSAGE_FILTERS_TEXTWORK_CLEAR":{"message":"Clear textwork filter","description":"Word Usage Examples Type filter","component":"WordUsageExamplesFilters"},"WORDUSAGE_SORTING_AUTHOR_CLEAR":{"message":"Clear sorting","description":"Word Usage Examples Sorting","component":"WordUsageExamplesSorting"},"WORDUSAGE_SHOw_SOURCE_LINKS":{"message":"Show/hide source links","description":"Message on a button that toggles source links on or off","component":"WordUsageExamples"},"FONTSIZE_TEXT_SMALL":{"message":"Small","description":"Description of a text size option within a button","component":"Font size component"},"FONTSIZE_TEXT_MEDIUM":{"message":"Medium","description":"Description of a text size option within a button","component":"Font size component"},"FONTSIZE_TEXT_LARGE":{"message":"Large","description":"Description of a text size option within a button","component":"Font size component"}};
 
 /***/ }),
 
@@ -48351,6 +48792,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_vue_vue_type_template_id_5375b274___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_morph_vue_vue_type_template_id_5375b274___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./vue/components/nav/action-panel.vue":
+/*!*********************************************!*\
+  !*** ./vue/components/nav/action-panel.vue ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _action_panel_vue_vue_type_template_id_29780f6a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./action-panel.vue?vue&type=template&id=29780f6a& */ "./vue/components/nav/action-panel.vue?vue&type=template&id=29780f6a&");
+/* harmony import */ var _action_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./action-panel.vue?vue&type=script&lang=js& */ "./vue/components/nav/action-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _action_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./action-panel.vue?vue&type=style&index=0&lang=scss& */ "./vue/components/nav/action-panel.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _action_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _action_panel_vue_vue_type_template_id_29780f6a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _action_panel_vue_vue_type_template_id_29780f6a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "vue/components/nav/action-panel.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./vue/components/nav/action-panel.vue?vue&type=script&lang=js&":
+/*!**********************************************************************!*\
+  !*** ./vue/components/nav/action-panel.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_action_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib??vue-loader-options!../../../../node_modules/source-map-loader!./action-panel.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/nav/action-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_action_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./vue/components/nav/action-panel.vue?vue&type=style&index=0&lang=scss&":
+/*!*******************************************************************************!*\
+  !*** ./vue/components/nav/action-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_action_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src!../../../../node_modules/sass-loader/lib/loader.js??ref--5-3!../../../../node_modules/vue-loader/lib??vue-loader-options!./action-panel.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/postcss-loader/src/index.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/action-panel.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_action_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_action_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_action_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_action_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_action_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./vue/components/nav/action-panel.vue?vue&type=template&id=29780f6a&":
+/*!****************************************************************************!*\
+  !*** ./vue/components/nav/action-panel.vue?vue&type=template&id=29780f6a& ***!
+  \****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_action_panel_vue_vue_type_template_id_29780f6a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./action-panel.vue?vue&type=template&id=29780f6a& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/nav/action-panel.vue?vue&type=template&id=29780f6a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_action_panel_vue_vue_type_template_id_29780f6a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_action_panel_vue_vue_type_template_id_29780f6a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -50930,8 +51458,14 @@ L10nModule._configDefaults = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Module; });
-/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
+ // Vue in a runtime + compiler configuration
 
+// This is a root Vue instance that is a common parent for all modules, and correspondingly, all UI components.
+// It is used to share information across all Vue instances created.
+let rootVi = null
 
 /**
  * A base class for all data and UI modules. Its role is to define common features that are shared
@@ -50944,6 +51478,15 @@ class Module {
    * @param {Object} config - A module's configuration object
    */
   constructor (store, api, config = {}) {
+    if (!rootVi) {
+      // Create a root Vue instance if not has been done already.
+      // All properties registered here will be shared across all Vue instances (i.e. components).
+      rootVi = new vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+        store: store, // Install store into the instance
+        provide: api // Public API of the modules for child components
+      })
+    }
+
     this.config = Object.assign(this.constructor._configDefaults, config)
     this.isActivated = false
   }
@@ -50962,6 +51505,10 @@ class Module {
    */
   deactivate () {
     this.isActivated = false
+  }
+
+  static get rootVi () {
+    return rootVi
   }
 
   static get moduleName () {
@@ -50986,7 +51533,7 @@ class Module {
    * @return {boolean} True if platform is supported, false otherwise.
    */
   static isSupportedPlatform (platform) {
-    if (this._configDefaults._supportedDeviceTypes.includes(_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].deviceTypes.ANY)) {
+    if (this._configDefaults._supportedDeviceTypes.includes(_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_1__["default"].deviceTypes.ANY)) {
       return true
     } else if (this._configDefaults._supportedDeviceTypes.includes(platform.deviceType)) {
       return true
@@ -51044,7 +51591,7 @@ Module._configDefaults = {
   /**
    * A list of deviceTypes supported by a module according to HTMLPage.deviceTypes list.
    */
-  _supportedDeviceTypes: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].deviceTypes.ANY]
+  _supportedDeviceTypes: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_1__["default"].deviceTypes.ANY]
 }
 
 
@@ -51075,6 +51622,122 @@ __webpack_require__.r(__webpack_exports__);
     }
   }
 });
+
+
+/***/ }),
+
+/***/ "./vue/vuex-modules/ui/action-panel-module.js":
+/*!****************************************************!*\
+  !*** ./vue/vuex-modules/ui/action-panel-module.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ActionPanelModule; });
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/vuex-modules/module.js */ "./vue/vuex-modules/module.js");
+/* harmony import */ var _vue_components_nav_action_panel_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/components/nav/action-panel.vue */ "./vue/components/nav/action-panel.vue");
+/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
+ // Vue in a runtime + compiler configuration
+
+
+
+
+class ActionPanelModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
+  constructor (store, api, config) {
+    super(store, api, config)
+
+    // Create the mount point as the last child of the page's body
+    let el = document.createElement('div')
+    let mountEl = document.querySelector(this.config.mountInto)
+    if (!mountEl) {
+      console.warn(`A ${this.config.mountInto} element for mounting ${this.constructor.moduleName} is not found. Will mount into the body instead`)
+      mountEl = document.body
+    }
+    let viEl = mountEl.appendChild(el)
+
+    store.registerModule(this.constructor.moduleName, this.constructor.store(this))
+
+    let VueComponentClass = vue_dist_vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend(_vue_components_nav_action_panel_vue__WEBPACK_IMPORTED_MODULE_2__["default"])
+    this._vi = new VueComponentClass({
+      parent: this.constructor.rootVi,
+      data: () => {
+        return {
+          // Make module configuration directly accessible by the module's Vue instance as a data prop
+          moduleConfig: this.config
+        }
+      }
+    })
+    this._vi.$mount(viEl)
+  }
+
+  activate () {
+    super.activate()
+  }
+
+  deactivate () {
+    super.deactivate()
+    // Close an action panel on deactivation
+    this._vi.$store.commit(`${this.constructor.moduleName}/close`)
+  }
+}
+
+ActionPanelModule.store = (moduleInstance) => {
+  return {
+    // All stores of modules are namespaced
+    namespaced: true,
+
+    state: {
+      // Whether an action panel is shown or hidden
+      visible: false,
+      // Initial position of an action panel
+      initialPos: moduleInstance.config.initialPos
+    },
+    mutations: {
+      /**
+       * Opens an action panel
+       * @param state
+       */
+      open (state) {
+        state.visible = true
+      },
+
+      /**
+       * Closes an action panel
+       * @param state
+       */
+      close (state) {
+        state.visible = false
+      }
+    }
+  }
+}
+
+ActionPanelModule._configDefaults = {
+  _moduleName: 'actionPanel',
+  _moduleType: _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.UI,
+  _supportedDeviceTypes: [_lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_3__["default"].deviceTypes.DESKTOP, _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_3__["default"].deviceTypes.MOBILE],
+  // A selector that specifies to what DOM element a nav will be mounted.
+  // This element will be replaced with the root element of the panel component.
+  mountInto: 'body',
+
+  rootElementId: null,
+  // Initial position of an action panel, in pixels. Any combination of positioning parameters (top, right, bottom, left)
+  // in two different dimensions (X and Y) must be specified. Pixel units should NOT be added to the values.
+  // Default values are the ones below.
+  initialPos: {
+    bottom: 120,
+    right: 20
+  },
+  // How much an action panel is shifted from its initial position.
+  initialShift: {
+    x: 0,
+    y: 0
+  }
+}
 
 
 /***/ }),
