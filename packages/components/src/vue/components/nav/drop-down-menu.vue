@@ -169,15 +169,10 @@ export default {
   @import "../../../styles/variables";
 
   .alpheios-navmenu {
-    position: absolute;
-    z-index: 1000;
-    top: uisize(56px);
-    left: 0;
-    right: 0;
     background: #FFF;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    flex: 1 1 auto;
   }
 
   .alpheios-navmenu__item {

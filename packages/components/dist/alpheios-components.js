@@ -15113,6 +15113,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /*
   This is a mobile version of a panel
@@ -23531,536 +23532,594 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("drop-down-menu", {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.menuVisible,
-            expression: "menuVisible"
-          }
-        ],
-        on: { "drop-down-menu-item-selected": _vm.menuItemSelected }
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "alpheios-panel__content" }, [
-        _c(
-          "div",
-          {
+      _c(
+        "div",
+        { staticClass: "alpheios-panel__content" },
+        [
+          _c("drop-down-menu", {
             directives: [
               {
                 name: "show",
                 rawName: "v-show",
-                value: _vm.$store.getters["ui/isActiveTab"]("morphology"),
-                expression: "$store.getters['ui/isActiveTab']('morphology')"
+                value: _vm.menuVisible,
+                expression: "menuVisible"
               }
             ],
-            staticClass:
-              "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding"
-          },
-          [
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.hasMorphologyData,
-                    expression: "hasMorphologyData"
-                  }
-                ],
-                staticClass:
-                  "alpheios-popup__morph-cont alpheios-text-small alpheios-popup__morph-cont-ready",
-                attrs: { id: "alpheios-panel-lexical-data-container" }
-              },
-              [
-                _c("morph", { attrs: { id: "alpheios-panel-morph-component" } })
-              ],
-              1
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.$store.getters["ui/isActiveTab"]("definitions"),
-                expression: "$store.getters['ui/isActiveTab']('definitions')"
-              }
-            ],
-            staticClass:
-              "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__definitions",
-            attrs: { "data-alpheios-ignore": "all" }
-          },
-          [
-            _c(
-              "div",
-              { staticClass: "alpheios-lookup__panel" },
-              [_c("lookup", { attrs: { "name-base": "panel-defs" } })],
-              1
-            ),
-            _vm._v(" "),
-            _vm.$store.getters["app/defDataReady"]
-              ? _c(
-                  "div",
-                  [
-                    _vm._l(_vm.formattedShortDefinitions, function(definition) {
-                      return _c(
-                        "div",
-                        {
-                          key: definition.ID,
-                          staticClass: "alpheios-panel__contentitem"
-                        },
-                        [
-                          _c("shortdef", {
-                            attrs: {
-                              definition: definition,
-                              languageCode: _vm.$store.state.app.languageCode
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    }),
-                    _vm._v(" "),
-                    _c("div", {
-                      staticClass:
-                        "alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions",
-                      domProps: {
-                        innerHTML: _vm._s(_vm.formattedFullDefinitions)
-                      }
-                    })
-                  ],
-                  2
-                )
-              : _c("div", [
-                  _vm._v(
-                    "\n        " +
-                      _vm._s(_vm.l10n.getText("PLACEHOLDER_DEFINITIONS")) +
-                      "\n      "
-                  )
-                ]),
-            _vm._v(" "),
-            _c("div", {
-              staticClass:
-                "alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions",
-              domProps: { innerHTML: _vm._s(_vm.formattedFullDefinitions) }
-            })
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value:
-                  _vm.$store.state.app.hasInflData &&
-                  _vm.$store.getters["ui/isActiveTab"]("inflections"),
-                expression:
-                  "$store.state.app.hasInflData && $store.getters['ui/isActiveTab']('inflections')"
-              }
-            ],
-            staticClass:
-              "alpheios-panel__tab-panel alpheios-panel__tab__inflections",
-            attrs: { id: _vm.inflectionsPanelID, "data-alpheios-ignore": "all" }
-          },
-          [
-            _c("h1", { staticClass: "alpheios-panel__title" }, [
-              _vm._v(
-                "\n        " +
-                  _vm._s(_vm.l10n.getText("TITLE_INFLECTIONS_PANEL")) +
-                  "\n      "
-              )
-            ]),
-            _vm._v(" "),
-            _c("inflections", { staticClass: "alpheios-panel-inflections" })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.$store.getters["ui/isActiveTab"](
-                  "inflectionsbrowser"
-                ),
-                expression:
-                  "$store.getters['ui/isActiveTab']('inflectionsbrowser')"
-              }
-            ],
-            staticClass:
-              "alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser",
-            attrs: {
-              id: _vm.inflectionsBrowserPanelID,
-              "data-alpheios-ignore": "all"
-            }
-          },
-          [
-            _c("h1", { staticClass: "alpheios-panel__title" }, [
-              _vm._v(
-                "\n        " +
-                  _vm._s(_vm.l10n.getText("TITLE_INFLECTIONS_BROWSER_PANEL")) +
-                  "\n      "
-              )
-            ]),
-            _vm._v(" "),
-            _c("inflection-browser")
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.$store.getters["ui/isActiveTab"]("grammar"),
-                expression: "$store.getters['ui/isActiveTab']('grammar')"
-              }
-            ],
-            staticClass:
-              "alpheios-panel__tab-panel alpheios-panel__tab__grammar\n          alpheios-panel__tab-panel--no-padding",
-            attrs: { "data-alpheios-ignore": "all" }
-          },
-          [_c("grammar")],
-          1
-        ),
-        _vm._v(" "),
-        _vm.$store.getters["app/hasTreebankData"]
-          ? _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.$store.getters["ui/isActiveTab"]("treebank"),
-                    expression: "$store.getters['ui/isActiveTab']('treebank')"
-                  }
-                ],
-                staticClass:
-                  "alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding",
-                attrs: { "data-alpheios-ignore": "all" }
-              },
-              [_c("treebank")],
-              1
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.$store.getters["ui/isActiveTab"]("status"),
-                expression: "$store.getters['ui/isActiveTab']('status')"
-              }
-            ],
-            staticClass:
-              "alpheios-panel__tab-panel alpheios-panel__tab__status",
-            attrs: { "data-alpheios-ignore": "all" }
-          },
-          _vm._l(_vm.$store.state.ui.messages, function(message) {
-            return _c("div", [
-              _c("div", { staticClass: "alpheios-panel__message" }, [
-                _vm._v(_vm._s(message))
-              ])
-            ])
+            on: { "drop-down-menu-item-selected": _vm.menuItemSelected }
           }),
-          0
-        ),
-        _vm._v(" "),
-        _vm.$store.state.auth.enableLogin
-          ? _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.$store.getters["ui/isActiveTab"]("user"),
-                    expression: "$store.getters['ui/isActiveTab']('user')"
-                  }
-                ],
-                staticClass:
-                  "alpheios-panel__tab-panel alpheios-panel__tab__user",
-                attrs: { "data-alpheios-ignore": "all" }
-              },
-              [_c("user-auth")],
-              1
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.$store.getters["ui/isActiveTab"]("wordUsage"),
-                expression: "$store.getters['ui/isActiveTab']('wordUsage')"
-              }
-            ],
-            staticClass: "alpheios-panel__tab-panel",
-            attrs: { "data-alpheios-ignore": "all" }
-          },
-          [_c("word-usage-examples")],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.$store.getters["ui/isActiveTab"]("options"),
-                expression: "$store.getters['ui/isActiveTab']('options')"
-              }
-            ],
-            staticClass: "alpheios-panel__tab-panel",
-            attrs: { "data-alpheios-ignore": "all" }
-          },
-          [
-            _c("reskin-font-color"),
-            _vm._v(" "),
-            _c("setting", {
-              attrs: {
-                classes: ["alpheios-panel__options-item"],
-                data: _vm.settings.contentOptions.items.preferredLanguage
-              },
-              on: { change: _vm.contentOptionChanged }
-            }),
-            _vm._v(" "),
-            _c("setting", {
-              attrs: {
-                classes: ["alpheios-panel__options-item"],
-                data: _vm.settings.contentOptions.items.panelPosition
-              },
-              on: { change: _vm.contentOptionChanged }
-            }),
-            _vm._v(" "),
-            _c("setting", {
-              attrs: {
-                classes: ["alpheios-panel__options-item"],
-                data: _vm.settings.contentOptions.items.popupPosition
-              },
-              on: { change: _vm.contentOptionChanged }
-            }),
-            _vm._v(" "),
-            _c("setting", {
-              attrs: {
-                classes: ["alpheios-panel__options-item"],
-                data: _vm.settings.contentOptions.items.uiType
-              },
-              on: { change: _vm.contentOptionChanged }
-            }),
-            _vm._v(" "),
-            _c("setting", {
-              attrs: {
-                classes: ["alpheios-panel__options-item"],
-                data: _vm.settings.contentOptions.items.verboseMode
-              },
-              on: { change: _vm.contentOptionChanged }
-            }),
-            _vm._v(" "),
-            _c("setting", {
-              attrs: {
-                classes: ["alpheios-panel__options-item"],
-                data: _vm.settings.uiOptions.items.skin
-              },
-              on: { change: _vm.uiOptionChanged }
-            }),
-            _vm._v(" "),
-            _c("setting", {
+          _vm._v(" "),
+          _c(
+            "div",
+            {
               directives: [
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.app.isDevMode(),
-                  expression: "app.isDevMode()"
+                  value:
+                    _vm.$store.getters["ui/isActiveTab"]("morphology") &&
+                    !_vm.menuVisible,
+                  expression:
+                    "$store.getters['ui/isActiveTab']('morphology') && !menuVisible"
                 }
               ],
-              attrs: {
-                classes: ["alpheios-panel__options-item"],
-                data: _vm.settings.uiOptions.items.panel
-              },
-              on: { change: _vm.uiOptionChanged }
-            }),
-            _vm._v(" "),
-            _c("setting", {
-              attrs: {
-                classes: ["alpheios-panel__options-item"],
-                data: _vm.settings.uiOptions.items.popup
-              },
-              on: { change: _vm.uiOptionChanged }
-            }),
-            _vm._v(" "),
-            _c("setting", {
-              attrs: {
-                classes: ["alpheios-panel__options-item"],
-                data: _vm.settings.uiOptions.items.panelOnActivate
-              },
-              on: { change: _vm.uiOptionChanged }
-            }),
-            _vm._v(" "),
-            _vm._l(_vm.resourceSettingsLexicons, function(languageSetting) {
-              return _c("setting", {
-                key: languageSetting.name,
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: languageSetting
+              staticClass:
+                "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding"
+            },
+            [
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.hasMorphologyData,
+                      expression: "hasMorphologyData"
+                    }
+                  ],
+                  staticClass:
+                    "alpheios-popup__morph-cont alpheios-text-small alpheios-popup__morph-cont-ready",
+                  attrs: { id: "alpheios-panel-lexical-data-container" }
                 },
-                on: { change: _vm.resourceSettingChanged }
-              })
-            }),
-            _vm._v(" "),
-            _vm._l(_vm.resourceSettingsLexiconsShort, function(
-              languageSetting
-            ) {
-              return _c("setting", {
-                key: languageSetting.name,
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: languageSetting
-                },
-                on: { change: _vm.resourceSettingChanged }
-              })
-            }),
-            _vm._v(" "),
-            _c("setting", {
-              attrs: {
-                classes: ["alpheios-panel__options-item"],
-                data: _vm.settings.contentOptions.items.enableWordUsageExamples
-              },
-              on: { change: _vm.contentOptionChanged }
-            }),
-            _vm._v(" "),
-            _c("setting", {
-              attrs: {
-                classes: ["alpheios-panel__options-item"],
-                data: _vm.settings.contentOptions.items.wordUsageExamplesON
-              },
-              on: { change: _vm.contentOptionChanged }
-            }),
-            _vm._v(" "),
-            _c("setting", {
-              attrs: {
-                classes: ["alpheios-panel__options-item"],
-                data: _vm.settings.contentOptions.items.wordUsageExamplesAuthMax
-              },
-              on: { change: _vm.contentOptionChanged }
-            }),
-            _vm._v(" "),
-            _c("setting", {
-              attrs: {
-                classes: ["alpheios-panel__options-item"],
-                data: _vm.settings.contentOptions.items.wordUsageExamplesMax
-              },
-              on: { change: _vm.contentOptionChanged }
-            }),
-            _vm._v(" "),
-            _c("setting", {
-              attrs: {
-                classes: ["alpheios-panel__options-item"],
-                data: _vm.settings.contentOptions.items.enableLemmaTranslations
-              },
-              on: { change: _vm.contentOptionChanged }
-            }),
-            _vm._v(" "),
-            _c("setting", {
-              attrs: {
-                classes: ["alpheios-panel__options-item"],
-                data: _vm.settings.contentOptions.items.locale
-              },
-              on: { change: _vm.contentOptionChanged }
-            })
-          ],
-          2
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.$store.getters["ui/isActiveTab"]("info"),
-                expression: "$store.getters['ui/isActiveTab']('info')"
-              }
-            ],
-            staticClass:
-              "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info",
-            attrs: { "data-alpheios-ignore": "all" }
-          },
-          [
-            _c("h1", { staticClass: "alpheios-panel__title" }, [
-              _vm._v(
-                "\n        " +
-                  _vm._s(_vm.l10n.getText("TITLE_HELP_PANEL")) +
-                  "\n      "
+                [
+                  _c("morph", {
+                    attrs: { id: "alpheios-panel-morph-component" }
+                  })
+                ],
+                1
               )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "alpheios-lookup__panel" },
-              [
-                _c("lookup", {
-                  attrs: {
-                    "name-base": "panel-info",
-                    "show-results-in": "panel"
-                  }
-                })
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    _vm.$store.getters["ui/isActiveTab"]("definitions") &&
+                    !_vm.menuVisible,
+                  expression:
+                    "$store.getters['ui/isActiveTab']('definitions') && !menuVisible"
+                }
               ],
-              1
-            ),
-            _vm._v(" "),
-            _c("info")
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.$store.getters["ui/isActiveTab"]("wordlist"),
-                expression: "$store.getters['ui/isActiveTab']('wordlist')"
+              staticClass:
+                "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__definitions",
+              attrs: { "data-alpheios-ignore": "all" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "alpheios-lookup__panel" },
+                [_c("lookup", { attrs: { "name-base": "panel-defs" } })],
+                1
+              ),
+              _vm._v(" "),
+              _vm.$store.getters["app/defDataReady"]
+                ? _c(
+                    "div",
+                    [
+                      _vm._l(_vm.formattedShortDefinitions, function(
+                        definition
+                      ) {
+                        return _c(
+                          "div",
+                          {
+                            key: definition.ID,
+                            staticClass: "alpheios-panel__contentitem"
+                          },
+                          [
+                            _c("shortdef", {
+                              attrs: {
+                                definition: definition,
+                                languageCode: _vm.$store.state.app.languageCode
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      }),
+                      _vm._v(" "),
+                      _c("div", {
+                        staticClass:
+                          "alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions",
+                        domProps: {
+                          innerHTML: _vm._s(_vm.formattedFullDefinitions)
+                        }
+                      })
+                    ],
+                    2
+                  )
+                : _c("div", [
+                    _vm._v(
+                      "\n        " +
+                        _vm._s(_vm.l10n.getText("PLACEHOLDER_DEFINITIONS")) +
+                        "\n      "
+                    )
+                  ]),
+              _vm._v(" "),
+              _c("div", {
+                staticClass:
+                  "alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions",
+                domProps: { innerHTML: _vm._s(_vm.formattedFullDefinitions) }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    _vm.$store.state.app.hasInflData &&
+                    _vm.$store.getters["ui/isActiveTab"]("inflections") &&
+                    !_vm.menuVisible,
+                  expression:
+                    "$store.state.app.hasInflData && $store.getters['ui/isActiveTab']('inflections') && !menuVisible"
+                }
+              ],
+              staticClass:
+                "alpheios-panel__tab-panel alpheios-panel__tab__inflections",
+              attrs: {
+                id: _vm.inflectionsPanelID,
+                "data-alpheios-ignore": "all"
               }
+            },
+            [
+              _c("h1", { staticClass: "alpheios-panel__title" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.l10n.getText("TITLE_INFLECTIONS_PANEL")) +
+                    "\n      "
+                )
+              ]),
+              _vm._v(" "),
+              _c("inflections", { staticClass: "alpheios-panel-inflections" })
             ],
-            staticClass:
-              "alpheios-panel__tab-panel alpheios-panel__tab__wordlist",
-            attrs: { "data-alpheios-ignore": "all" }
-          },
-          [_c("word-list-panel")],
-          1
-        )
-      ]),
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    _vm.$store.getters["ui/isActiveTab"](
+                      "inflectionsbrowser"
+                    ) && !_vm.menuVisible,
+                  expression:
+                    "$store.getters['ui/isActiveTab']('inflectionsbrowser') && !menuVisible"
+                }
+              ],
+              staticClass:
+                "alpheios-panel__tab-panel alpheios-panel__tab__inflectionsbrowser",
+              attrs: {
+                id: _vm.inflectionsBrowserPanelID,
+                "data-alpheios-ignore": "all"
+              }
+            },
+            [
+              _c("h1", { staticClass: "alpheios-panel__title" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(
+                      _vm.l10n.getText("TITLE_INFLECTIONS_BROWSER_PANEL")
+                    ) +
+                    "\n      "
+                )
+              ]),
+              _vm._v(" "),
+              _c("inflection-browser")
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    _vm.$store.getters["ui/isActiveTab"]("grammar") &&
+                    !_vm.menuVisible,
+                  expression:
+                    "$store.getters['ui/isActiveTab']('grammar') && !menuVisible"
+                }
+              ],
+              staticClass:
+                "alpheios-panel__tab-panel alpheios-panel__tab__grammar\n          alpheios-panel__tab-panel--no-padding",
+              attrs: { "data-alpheios-ignore": "all" }
+            },
+            [_c("grammar")],
+            1
+          ),
+          _vm._v(" "),
+          _vm.$store.getters["app/hasTreebankData"]
+            ? _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.$store.getters["ui/isActiveTab"]("treebank") &&
+                        !_vm.menuVisible,
+                      expression:
+                        "$store.getters['ui/isActiveTab']('treebank') && !menuVisible"
+                    }
+                  ],
+                  staticClass:
+                    "alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding",
+                  attrs: { "data-alpheios-ignore": "all" }
+                },
+                [_c("treebank")],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    _vm.$store.getters["ui/isActiveTab"]("status") &&
+                    !_vm.menuVisible,
+                  expression:
+                    "$store.getters['ui/isActiveTab']('status') && !menuVisible"
+                }
+              ],
+              staticClass:
+                "alpheios-panel__tab-panel alpheios-panel__tab__status",
+              attrs: { "data-alpheios-ignore": "all" }
+            },
+            _vm._l(_vm.$store.state.ui.messages, function(message) {
+              return _c("div", [
+                _c("div", { staticClass: "alpheios-panel__message" }, [
+                  _vm._v(_vm._s(message))
+                ])
+              ])
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _vm.$store.state.auth.enableLogin
+            ? _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.$store.getters["ui/isActiveTab"]("user") &&
+                        !_vm.menuVisible,
+                      expression:
+                        "$store.getters['ui/isActiveTab']('user') && !menuVisible"
+                    }
+                  ],
+                  staticClass:
+                    "alpheios-panel__tab-panel alpheios-panel__tab__user",
+                  attrs: { "data-alpheios-ignore": "all" }
+                },
+                [_c("user-auth")],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    _vm.$store.getters["ui/isActiveTab"]("wordUsage") &&
+                    !_vm.menuVisible,
+                  expression:
+                    "$store.getters['ui/isActiveTab']('wordUsage') && !menuVisible"
+                }
+              ],
+              staticClass: "alpheios-panel__tab-panel",
+              attrs: { "data-alpheios-ignore": "all" }
+            },
+            [_c("word-usage-examples")],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    _vm.$store.getters["ui/isActiveTab"]("options") &&
+                    !_vm.menuVisible,
+                  expression:
+                    "$store.getters['ui/isActiveTab']('options') && !menuVisible"
+                }
+              ],
+              staticClass: "alpheios-panel__tab-panel",
+              attrs: { "data-alpheios-ignore": "all" }
+            },
+            [
+              _c("reskin-font-color"),
+              _vm._v(" "),
+              _c("setting", {
+                attrs: {
+                  classes: ["alpheios-panel__options-item"],
+                  data: _vm.settings.contentOptions.items.preferredLanguage
+                },
+                on: { change: _vm.contentOptionChanged }
+              }),
+              _vm._v(" "),
+              _c("setting", {
+                attrs: {
+                  classes: ["alpheios-panel__options-item"],
+                  data: _vm.settings.contentOptions.items.panelPosition
+                },
+                on: { change: _vm.contentOptionChanged }
+              }),
+              _vm._v(" "),
+              _c("setting", {
+                attrs: {
+                  classes: ["alpheios-panel__options-item"],
+                  data: _vm.settings.contentOptions.items.popupPosition
+                },
+                on: { change: _vm.contentOptionChanged }
+              }),
+              _vm._v(" "),
+              _c("setting", {
+                attrs: {
+                  classes: ["alpheios-panel__options-item"],
+                  data: _vm.settings.contentOptions.items.uiType
+                },
+                on: { change: _vm.contentOptionChanged }
+              }),
+              _vm._v(" "),
+              _c("setting", {
+                attrs: {
+                  classes: ["alpheios-panel__options-item"],
+                  data: _vm.settings.contentOptions.items.verboseMode
+                },
+                on: { change: _vm.contentOptionChanged }
+              }),
+              _vm._v(" "),
+              _c("setting", {
+                attrs: {
+                  classes: ["alpheios-panel__options-item"],
+                  data: _vm.settings.uiOptions.items.skin
+                },
+                on: { change: _vm.uiOptionChanged }
+              }),
+              _vm._v(" "),
+              _c("setting", {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.app.isDevMode(),
+                    expression: "app.isDevMode()"
+                  }
+                ],
+                attrs: {
+                  classes: ["alpheios-panel__options-item"],
+                  data: _vm.settings.uiOptions.items.panel
+                },
+                on: { change: _vm.uiOptionChanged }
+              }),
+              _vm._v(" "),
+              _c("setting", {
+                attrs: {
+                  classes: ["alpheios-panel__options-item"],
+                  data: _vm.settings.uiOptions.items.popup
+                },
+                on: { change: _vm.uiOptionChanged }
+              }),
+              _vm._v(" "),
+              _c("setting", {
+                attrs: {
+                  classes: ["alpheios-panel__options-item"],
+                  data: _vm.settings.uiOptions.items.panelOnActivate
+                },
+                on: { change: _vm.uiOptionChanged }
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.resourceSettingsLexicons, function(languageSetting) {
+                return _c("setting", {
+                  key: languageSetting.name,
+                  attrs: {
+                    classes: ["alpheios-panel__options-item"],
+                    data: languageSetting
+                  },
+                  on: { change: _vm.resourceSettingChanged }
+                })
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.resourceSettingsLexiconsShort, function(
+                languageSetting
+              ) {
+                return _c("setting", {
+                  key: languageSetting.name,
+                  attrs: {
+                    classes: ["alpheios-panel__options-item"],
+                    data: languageSetting
+                  },
+                  on: { change: _vm.resourceSettingChanged }
+                })
+              }),
+              _vm._v(" "),
+              _c("setting", {
+                attrs: {
+                  classes: ["alpheios-panel__options-item"],
+                  data:
+                    _vm.settings.contentOptions.items.enableWordUsageExamples
+                },
+                on: { change: _vm.contentOptionChanged }
+              }),
+              _vm._v(" "),
+              _c("setting", {
+                attrs: {
+                  classes: ["alpheios-panel__options-item"],
+                  data: _vm.settings.contentOptions.items.wordUsageExamplesON
+                },
+                on: { change: _vm.contentOptionChanged }
+              }),
+              _vm._v(" "),
+              _c("setting", {
+                attrs: {
+                  classes: ["alpheios-panel__options-item"],
+                  data:
+                    _vm.settings.contentOptions.items.wordUsageExamplesAuthMax
+                },
+                on: { change: _vm.contentOptionChanged }
+              }),
+              _vm._v(" "),
+              _c("setting", {
+                attrs: {
+                  classes: ["alpheios-panel__options-item"],
+                  data: _vm.settings.contentOptions.items.wordUsageExamplesMax
+                },
+                on: { change: _vm.contentOptionChanged }
+              }),
+              _vm._v(" "),
+              _c("setting", {
+                attrs: {
+                  classes: ["alpheios-panel__options-item"],
+                  data:
+                    _vm.settings.contentOptions.items.enableLemmaTranslations
+                },
+                on: { change: _vm.contentOptionChanged }
+              }),
+              _vm._v(" "),
+              _c("setting", {
+                attrs: {
+                  classes: ["alpheios-panel__options-item"],
+                  data: _vm.settings.contentOptions.items.locale
+                },
+                on: { change: _vm.contentOptionChanged }
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    _vm.$store.getters["ui/isActiveTab"]("info") &&
+                    !_vm.menuVisible,
+                  expression:
+                    "$store.getters['ui/isActiveTab']('info') && !menuVisible"
+                }
+              ],
+              staticClass:
+                "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info",
+              attrs: { "data-alpheios-ignore": "all" }
+            },
+            [
+              _c("h1", { staticClass: "alpheios-panel__title" }, [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.l10n.getText("TITLE_HELP_PANEL")) +
+                    "\n      "
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "alpheios-lookup__panel" },
+                [
+                  _c("lookup", {
+                    attrs: {
+                      "name-base": "panel-info",
+                      "show-results-in": "panel"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("info")
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    _vm.$store.getters["ui/isActiveTab"]("wordlist") &&
+                    !_vm.menuVisible,
+                  expression:
+                    "$store.getters['ui/isActiveTab']('wordlist') && !menuVisible"
+                }
+              ],
+              staticClass:
+                "alpheios-panel__tab-panel alpheios-panel__tab__wordlist",
+              attrs: { "data-alpheios-ignore": "all" }
+            },
+            [_c("word-list-panel")],
+            1
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
-      _c("notification-area")
+      _c("notification-area", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: !_vm.menuVisible,
+            expression: "!menuVisible"
+          }
+        ]
+      })
     ],
     1
   )
