@@ -2,14 +2,14 @@
   .multiselect {
     display: inline-block;
     vertical-align: middle;
-    border-radius: uisize(10px);
+    border-radius: textsize(10px);
     border: 1px solid var(--alpheios-border-color);
   }
 
   .multiselect__content-wrapper {
     border: 1px solid var(--alpheios-border-color);
     border-top: 0;
-    padding: uisize(10px);
+    padding: textsize(10px);
   }
 
   ul.multiselect__content {
@@ -18,24 +18,26 @@
   }
 
   .multiselect__tags {
-    font-size: uisize(16px);
+    font-size: textsize(16px);
     // Need this to prevent tags element's background to overlap rounded corners of multiselect
-    border-radius: uisize(10px);
+    border-radius: textsize(10px);
+    min-height: textsize(40px);
+    padding: textsize(8px) textsize(40px) 0 textsize(8px);
   }
 
   .multiselect__tag {
     background-color: var(--alpheios-btn-primary-bg-color);
 
     display: inline-block;
-    border-radius: uisize(5px);
-    padding: uisize(4px) uisize(26px) uisize(4px) uisize(10px);
+    border-radius: textsize(5px);
+    padding: textsize(4px) textsize(26px) textsize(4px) textsize(10px);
 
     position: relative;
     text-overflow: ellipsis;
     white-space: nowrap;
 
     // To match scaling via the --alpheios-base-ui-size
-    min-height: uisize(24px);
+    min-height: textsize(24px);
 
     span {
       color: var(--alpheios-btn-primary-font-color);
@@ -48,8 +50,8 @@
     background-repeat: no-repeat;
     background-position: center center;
 
-    width: 25px;
-    height: 30px;
+    width: textsize(28px);
+    height: 100%;
   }
 
   .multiselect__select::before {
@@ -101,7 +103,7 @@
   .multiselect__tag-icon:after {
     content: "\D7";
     color: var(--alpheios-btn-primary-font-color);
-    font-size: uisize(24px);
+    font-size: textsize(24px);
   }
 
   .multiselect__tag-icon {
@@ -117,7 +119,7 @@
     text-align: center;
     top: 0;
     transition: all .2s ease;
-    width: uisize(24px);
+    width: textsize(24px);
     color: var(--alpheios-btn-primary-font-color);
 
     &:hover {

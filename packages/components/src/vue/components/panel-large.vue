@@ -18,10 +18,9 @@
 
       <div class="alpheios-panel__header-btn-group--center">
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MOVE_PANEL_LEFT')" tooltipDirection="bottom-narrow"
-                      v-show="attachToLeftVisible">
+                      v-show="isAttachedToRight">
           <span @click="setPosition('left')"
-                class="alpheios-navbuttons__btn alpheios-navbuttons__btn--attach"
-                v-show="attachToLeftVisible">
+                class="alpheios-navbuttons__btn alpheios-navbuttons__btn--attach">
               <attach-left-icon></attach-left-icon>
           </span>
         </alph-tooltip>
@@ -29,16 +28,15 @@
         <navbuttons-large></navbuttons-large>
 
         <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MOVE_PANEL_RIGHT')" tooltipDirection="bottom-narrow"
-                      v-show="attachToRightVisible">
+                      v-show="isAttachedToLeft">
           <span @click="setPosition('right')"
-                class="alpheios-navbuttons__btn alpheios-navbuttons__btn--attach"
-                v-show="attachToRightVisible">
+                class="alpheios-navbuttons__btn alpheios-navbuttons__btn--attach">
               <attach-right-icon></attach-right-icon>
           </span>
         </alph-tooltip>
       </div>
 
-      <span class="alpheios-panel__header-btn-group--end">
+      <div class="alpheios-panel__header-btn-group--end">
         <alph-tooltip
             :tooltipText="l10n.getText('TOOLTIP_CLOSE_PANEL')"
             tooltipDirection="bottom-right">
@@ -46,12 +44,12 @@
               <close-icon></close-icon>
           </div>
         </alph-tooltip>
-      </span>
+      </div>
     </div>
 
     <div class="alpheios-panel__content">
       <div
-          class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__definitions"
+          class="alpheios-panel__tab-panel alpheios-panel__tab__definitions"
           v-show="$store.getters['ui/isActiveTab']('definitions')"
           data-alpheios-ignore="all"
           >
@@ -262,7 +260,7 @@
         </div>
       </div>
 
-      <div class="alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info"
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__info"
            v-show="$store.getters['ui/isActiveTab']('info')"
            data-alpheios-ignore="all">
         <h1
@@ -321,14 +319,6 @@ export default {
   computed: {
     rootClasses () {
       return this.$options.positionClassVariants[this.$store.state.panel.position]
-    },
-
-    attachToLeftVisible: function () {
-      return this.$store.state.panel.position === 'right'
-    },
-
-    attachToRightVisible: function () {
-      return this.$store.state.panel.position === 'left'
     }
   },
 
@@ -384,77 +374,32 @@ export default {
         width: uisize(28px);
       }
     }
-  }
 
-  .alpheios-panel__header-logo {
-    width: uisize(44px);
-    height: auto;
-  }
-
-  .alpheios-panel__header-btn-group--center {
-    direction: ltr;
-    display: flex;
-    flex-wrap: nowrap;
-    box-sizing: border-box;
-    align-items: stretch;
-  }
-
-  .alpheios-navbuttons__btn--attach {
-    stroke-width: 2.5;
-  }
-
-  .alpheios-panel__close-btn {
-    width: uisize(80px);
-  }
-
-  .alpheios-panel--left {
-    &.alpheios-panel {
-      left: 0;
-    }
-
-    .alpheios-panel__header {
-      direction: ltr;
-      border-top-right-radius: uisize(10px);
-      padding-left: uisize(14px);
-    }
-
-    .alpheios-panel__content,
-    .alpheios-notification-area {
-      border-right: 1px solid var(--alpheios-border-color);
-    }
-
-    .alpheios-panel__close-btn {
-      border-top-right-radius: uisize(10px);
-
-      svg {
-        left: uisize(20px);
+    &.alpheios-panel--left {
+      .alpheios-panel__header {
+        padding-left: uisize(14px);
       }
-    }
-  }
-
-  .alpheios-panel--right {
-    &.alpheios-panel {
-      right: 0;
-    }
-
-    .alpheios-panel__header {
-      border-top-left-radius: uisize(10px);
     }
 
     .alpheios-panel__header-logo {
-      margin-left: uisize(16px);
+      width: uisize(44px);
+      height: auto;
     }
 
-    .alpheios-panel__content,
-    .alpheios-notification-area {
-      border-left: 1px solid var(--alpheios-border-color);
+    .alpheios-panel__header-btn-group--center {
+      direction: ltr;
+      display: flex;
+      flex-wrap: nowrap;
+      box-sizing: border-box;
+      align-items: stretch;
+    }
+
+    .alpheios-navbuttons__btn--attach {
+      stroke-width: 2.5;
     }
 
     .alpheios-panel__close-btn {
-
-      svg {
-        left: uisize(28px);
-      }
+      width: uisize(80px);
     }
   }
 </style>

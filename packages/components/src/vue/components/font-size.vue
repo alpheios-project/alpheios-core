@@ -47,8 +47,8 @@ export default {
   .alpheios-setting__button-group {
     color: var(--alpheios-text-color-vivid);
     border: 1px solid var(--alpheios-text-color-vivid);
-    border-radius: uisize(10px);
-    max-width: uisize(200px);
+    border-radius: textsize(10px);
+    max-width: textsize(200px);
     display: flex;
     // To prevent buttons background from spilling outside of the border radius areas
     overflow: hidden;
@@ -57,7 +57,8 @@ export default {
       border: none;
       border-right: 1px solid var(--alpheios-text-color-vivid);
       background: transparent;
-      padding: uisize(6px) uisize(12px);
+      padding: textsize(6px) textsize(12px);
+      font-size: textsize(8px);
       cursor: pointer;
       flex: 1;
       // Need below to override default styles of Safari
@@ -71,7 +72,7 @@ export default {
     button.active {
       color: var(--alpheios-color-neutral-lightest);
       background: var(--alpheios-text-color-vivid);
-      box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.1);
+      box-shadow: inset 0 textsize(4px) textsize(4px) rgba(0, 0, 0, 0.1);
     }
   }
 </style>

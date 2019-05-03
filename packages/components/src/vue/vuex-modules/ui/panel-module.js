@@ -66,6 +66,10 @@ PanelModule.store = (moduleInstance) => {
 
       setPosition (state, position) {
         state.position = position
+      },
+
+      setOrientation (state, orientation) {
+        state.orientation = orientation
       }
     }
   }

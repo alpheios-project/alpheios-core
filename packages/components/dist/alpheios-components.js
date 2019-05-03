@@ -14794,29 +14794,69 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
-/* harmony import */ var _vue_components_nav_drop_down_menu_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/components/nav/drop-down-menu.vue */ "./vue/components/nav/drop-down-menu.vue");
-/* harmony import */ var _vue_components_notification_area_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/components//notification-area.vue */ "./vue/components/notification-area.vue");
-/* harmony import */ var _inflections_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./inflections.vue */ "./vue/components/inflections.vue");
-/* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
-/* harmony import */ var _shortdef_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./shortdef.vue */ "./vue/components/shortdef.vue");
-/* harmony import */ var _grammar_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./grammar.vue */ "./vue/components/grammar.vue");
-/* harmony import */ var _morph_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./morph.vue */ "./vue/components/morph.vue");
-/* harmony import */ var _treebank_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./treebank.vue */ "./vue/components/treebank.vue");
-/* harmony import */ var _info_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./info.vue */ "./vue/components/info.vue");
-/* harmony import */ var _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./inflections-browser.vue */ "./vue/components/inflections-browser.vue");
-/* harmony import */ var _tooltip_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./tooltip.vue */ "./vue/components/tooltip.vue");
-/* harmony import */ var _lookup_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./lookup.vue */ "./vue/components/lookup.vue");
-/* harmony import */ var _font_size_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./font-size.vue */ "./vue/components/font-size.vue");
-/* harmony import */ var _user_auth_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./user-auth.vue */ "./vue/components/user-auth.vue");
-/* harmony import */ var _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/vue/components/word-usage-examples/word-usage-examples.vue */ "./vue/components/word-usage-examples/word-usage-examples.vue");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/vue/components/word-list/word-list-panel.vue */ "./vue/components/word-list/word-list-panel.vue");
-/* harmony import */ var _images_inline_icons_book_open_svg__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/images/inline-icons/book-open.svg */ "./images/inline-icons/book-open.svg");
-/* harmony import */ var _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/images/inline-icons/x-close.svg */ "./images/inline-icons/x-close.svg");
-/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
+/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
+/* harmony import */ var _vue_components_nav_drop_down_menu_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/components/nav/drop-down-menu.vue */ "./vue/components/nav/drop-down-menu.vue");
+/* harmony import */ var _vue_components_notification_area_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/vue/components//notification-area.vue */ "./vue/components/notification-area.vue");
+/* harmony import */ var _inflections_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./inflections.vue */ "./vue/components/inflections.vue");
+/* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
+/* harmony import */ var _shortdef_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./shortdef.vue */ "./vue/components/shortdef.vue");
+/* harmony import */ var _grammar_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./grammar.vue */ "./vue/components/grammar.vue");
+/* harmony import */ var _morph_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./morph.vue */ "./vue/components/morph.vue");
+/* harmony import */ var _treebank_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./treebank.vue */ "./vue/components/treebank.vue");
+/* harmony import */ var _info_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./info.vue */ "./vue/components/info.vue");
+/* harmony import */ var _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./inflections-browser.vue */ "./vue/components/inflections-browser.vue");
+/* harmony import */ var _tooltip_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./tooltip.vue */ "./vue/components/tooltip.vue");
+/* harmony import */ var _lookup_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./lookup.vue */ "./vue/components/lookup.vue");
+/* harmony import */ var _font_size_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./font-size.vue */ "./vue/components/font-size.vue");
+/* harmony import */ var _user_auth_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./user-auth.vue */ "./vue/components/user-auth.vue");
+/* harmony import */ var _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/vue/components/word-usage-examples/word-usage-examples.vue */ "./vue/components/word-usage-examples/word-usage-examples.vue");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/vue/components/word-list/word-list-panel.vue */ "./vue/components/word-list/word-list-panel.vue");
+/* harmony import */ var _images_inline_icons_book_open_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/images/inline-icons/book-open.svg */ "./images/inline-icons/book-open.svg");
+/* harmony import */ var _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/images/inline-icons/x-close.svg */ "./images/inline-icons/x-close.svg");
+/* harmony import */ var _images_inline_icons_chevron_up_svg__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/images/inline-icons/chevron-up.svg */ "./images/inline-icons/chevron-up.svg");
+/* harmony import */ var _images_inline_icons_chevron_down_svg__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/images/inline-icons/chevron-down.svg */ "./images/inline-icons/chevron-down.svg");
+/* harmony import */ var _images_inline_icons_chevron_left_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/images/inline-icons/chevron-left.svg */ "./images/inline-icons/chevron-left.svg");
+/* harmony import */ var _images_inline_icons_chevron_right_svg__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/images/inline-icons/chevron-right.svg */ "./images/inline-icons/chevron-right.svg");
+/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -15124,6 +15164,8 @@ __webpack_require__.r(__webpack_exports__);
 /*
   This is a mobile version of a panel
    */
+// JS imports
+
 // Support libraries
 
 // Vue components
@@ -15147,6 +15189,10 @@ __webpack_require__.r(__webpack_exports__);
 // Embeddable SVG icons
 
 
+
+
+
+
 // Vue directives
 
 
@@ -15165,38 +15211,55 @@ __webpack_require__.r(__webpack_exports__);
     auth: 'auth'
   },
   storeModules: ['app', 'ui', 'panel', 'auth'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_21__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_26__["default"]],
   components: {
-    menuIcon: _images_inline_icons_book_open_svg__WEBPACK_IMPORTED_MODULE_18__["default"],
-    dropDownMenu: _vue_components_nav_drop_down_menu_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    notificationArea: _vue_components_notification_area_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    inflectionBrowser: _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-    setting: _setting_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    shortdef: _shortdef_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    info: _info_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-    grammar: _grammar_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
-    morph: _morph_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
-    treebank: _treebank_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
-    userAuth: _user_auth_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
-    closeIcon: _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_19__["default"],
-    alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
-    lookup: _lookup_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
-    reskinFontColor: _font_size_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
-    wordListPanel: _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
-    wordUsageExamples: _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
+    menuIcon: _images_inline_icons_book_open_svg__WEBPACK_IMPORTED_MODULE_19__["default"],
+    dropDownMenu: _vue_components_nav_drop_down_menu_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    notificationArea: _vue_components_notification_area_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    inflectionBrowser: _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
+    setting: _setting_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    shortdef: _shortdef_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    info: _info_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    grammar: _grammar_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    morph: _morph_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+    treebank: _treebank_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    userAuth: _user_auth_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+    closeIcon: _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_20__["default"],
+    alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+    lookup: _lookup_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+    reskinFontColor: _font_size_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+    wordListPanel: _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
+    wordUsageExamples: _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+    upIcon: _images_inline_icons_chevron_up_svg__WEBPACK_IMPORTED_MODULE_21__["default"],
+    downIcon: _images_inline_icons_chevron_down_svg__WEBPACK_IMPORTED_MODULE_22__["default"],
+    leftIcon: _images_inline_icons_chevron_left_svg__WEBPACK_IMPORTED_MODULE_23__["default"],
+    rightIcon: _images_inline_icons_chevron_right_svg__WEBPACK_IMPORTED_MODULE_24__["default"]
   },
   directives: {
-    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_20__["directive"]
+    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_25__["directive"]
   },
+  // Custom props
+  // An HTML element that contains alpheios CSS custom props
+  customPropEl: undefined,
+  customPropStyle: undefined,
+  baseTextSize: undefined,
+  scaledTextSize: undefined,
+  panelVisibilityUnwatch: undefined,
+  panelPositionUnwatch: undefined,
+  panelOrientationUnwatch: undefined,
+
   data: function () {
     return {
+      panelId: 'alpheios-panel-inner',
       menuVisible: false,
       inflectionsPanelID: 'alpheios-panel__inflections-panel',
       inflectionsBrowserPanelID: 'alpheios-panel__inflections-browser-panel',
       panelLeftPadding: 0,
       panelRightPadding: 0,
       scrollPadding: 0,
+      // Whether the panel is expanded full width
+      expanded: false,
       resized: false
     }
   },
@@ -15209,20 +15272,47 @@ __webpack_require__.r(__webpack_exports__);
 
   computed: {
     rootClasses () {
+      let classes = []
+
       /*
       Position classes are needed for landscape orientations only as only those
       can have compact panel attached to either left or right.
       For portrait-oriented screens a compact panel will occupy full width.
        */
-      return (this.$store.state.panel.orientation === _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].orientations.LANDSCAPE)
-        ? this.$options.positionClassVariants[this.$store.state.panel.position]
-        : ''
+      if (this.isLandscape) {
+        classes.push(this.$options.positionClassVariants[this.$store.state.panel.position])
+      }
+
+      if (this.expanded) {
+        classes.push('alpheios-panel--expanded')
+      }
+      return classes
     },
 
     componentStyles: function () {
       return {
         zIndex: this.ui.zIndex
       }
+    },
+
+    isLandscape: function () {
+      return this.$store.state.panel.orientation === _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_1__["default"].orientations.LANDSCAPE
+    },
+
+    isAttachedToLeft: function () {
+      return this.$store.state.panel.position === 'left'
+    },
+
+    isAttachedToRight: function () {
+      return this.$store.state.panel.position === 'right'
+    },
+
+    leftBtnVisible: function () {
+      return (this.isAttachedToLeft && this.expanded) || (this.isAttachedToRight && !this.expanded)
+    },
+
+    rightBtnVisible: function () {
+      return (this.isAttachedToRight && this.expanded) || (this.isAttachedToLeft && !this.expanded)
     },
 
     hasMorphologyData: function () {
@@ -15258,7 +15348,7 @@ __webpack_require__.r(__webpack_exports__);
           if (lexeme.meaning.shortDefs.length > 0) {
             definitions.push(...lexeme.meaning.shortDefs)
           } else if (Object.entries(lexeme.lemma.features).length > 0) {
-            definitions.push(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_16__["Definition"](this.l10n.getMsg('TEXT_NOTICE_NO_DEFS_FOUND'), 'en-US', 'text/plain', lexeme.lemma.word))
+            definitions.push(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_17__["Definition"](this.l10n.getMsg('TEXT_NOTICE_NO_DEFS_FOUND'), 'en-US', 'text/plain', lexeme.lemma.word))
           }
         }
       }
@@ -15331,11 +15421,21 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.commit('panel/setPosition', position)
     },
 
+    squeezePage () {
+      let propName = this.isAttachedToRight ? 'padding-right' : 'padding-left'
+      document.documentElement.style.setProperty(propName, '50%')
+    },
+
+    unsqueezePage () {
+      document.documentElement.style.removeProperty('padding-left')
+      document.documentElement.style.removeProperty('padding-right')
+    },
+
     contentOptionChanged: function (name, value) {
       this.app.contentOptionChange(name, value)
     },
 
-    resetAllOptions: function() {
+    resetAllOptions: function () {
       this.app.resetAllOptions()
     },
 
@@ -15347,11 +15447,82 @@ __webpack_require__.r(__webpack_exports__);
       this.ui.optionChange(name, value)
     },
 
+    expand () {
+      this.expanded = true
+    },
+
+    contract () {
+      this.expanded = false
+    },
+
+    expandOrContract () {
+      this.expanded = !this.expanded
+    },
+
     closePanel () {
       this.ui.closePanel()
+      // Reset a scaled font size
+      document.documentElement.style.removeProperty('--alpheios-base-text-size')
+
       // Close the menu if it was open during the panel closing
       this.menuVisible = false
+    },
+
+    gestureMoveListener: function (event) {
+      const computedFontSize = Math.round(this.$options.scaledTextSize * event.scale)
+      document.documentElement.style.setProperty('--alpheios-base-text-size', `${computedFontSize}px`, 'important')
+    },
+
+    gestureEndListener: function (event) {
+      this.$options.scaledTextSize = Math.round(this.$options.scaledTextSize * event.scale)
     }
+  },
+
+  mounted: function () {
+    this.$options.customPropEl = document.querySelector('html')
+    this.$options.customPropStyle = window.getComputedStyle(this.$options.customPropEl, null)
+    this.$options.baseTextSize = this.$options.customPropStyle.getPropertyValue('font-size')
+    // Remove pixel units from the value string
+    this.$options.baseTextSize = this.$options.baseTextSize.replace(/px/, '')
+    this.$options.scaledTextSize = this.$options.baseTextSize
+
+    interactjs__WEBPACK_IMPORTED_MODULE_0___default()(`#${this.panelId}`).gesturable({})
+      .on('gesturemove', this.gestureMoveListener.bind(this))
+      .on('gestureend', this.gestureEndListener.bind(this))
+
+    this.$options.panelVisibilityUnwatch = this.$store.watch((state) => state.panel.visible, (newValue) => {
+      if (this.app.platform.isMobile) {
+        if (newValue && this.isLandscape) {
+          // Panel became visible
+          this.squeezePage()
+        } else {
+          // Panel was hidden
+          this.unsqueezePage()
+        }
+      }
+    })
+
+    this.$options.panelPositionUnwatch = this.$store.watch((state) => state.panel.position, () => {
+      if (this.app.platform.isMobile && this.isLandscape && this.$store.state.panel.visible) {
+        // Clear previous values first, then set new ones
+        this.unsqueezePage()
+        this.squeezePage()
+      }
+    })
+
+    this.$options.panelOrientationUnwatch = this.$store.watch((state) => state.panel.orientation, () => {
+      this.unsqueezePage()
+      if (this.app.platform.isMobile && this.isLandscape && this.$store.state.panel.visible) {
+        this.squeezePage()
+      }
+    })
+  },
+
+  beforeDestroy () {
+    // Teardown the watcher
+    this.$options.panelVisibilityUnwatch()
+    this.$options.panelPositionUnwatch()
+    this.$options.panelOrientationUnwatch()
   }
 });
 
@@ -15374,8 +15545,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/images/inline-icons/attach-left.svg */ "./images/inline-icons/attach-left.svg");
 /* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/images/inline-icons/attach-right.svg */ "./images/inline-icons/attach-right.svg");
 /* harmony import */ var _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/components/panel-compact.vue */ "./vue/components/panel-compact.vue");
-//
-//
 //
 //
 //
@@ -15697,14 +15866,6 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     rootClasses () {
       return this.$options.positionClassVariants[this.$store.state.panel.position]
-    },
-
-    attachToLeftVisible: function () {
-      return this.$store.state.panel.position === 'right'
-    },
-
-    attachToRightVisible: function () {
-      return this.$store.state.panel.position === 'left'
     }
   },
 
@@ -23488,7 +23649,7 @@ var render = function() {
       attrs: {
         "data-component": "alpheios-panel",
         "data-resizable": "true",
-        id: "alpheios-panel-inner"
+        id: _vm.panelId
       }
     },
     [
@@ -23509,11 +23670,85 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "alpheios-panel__header-title" }, [
-          _vm._v("\n      " + _vm._s(_vm.panelTitle) + "\n    ")
+          _c("div", { staticClass: "alpheios-panel__header-title-text" }, [
+            _vm._v("\n        " + _vm._s(_vm.panelTitle) + "\n      ")
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: !_vm.isLandscape && !_vm.expanded,
+                  expression: "!isLandscape && !expanded"
+                }
+              ],
+              staticClass: "alpheios-panel__header-btn",
+              on: { click: _vm.expand }
+            },
+            [_c("up-icon")],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: !_vm.isLandscape && _vm.expanded,
+                  expression: "!isLandscape && expanded"
+                }
+              ],
+              staticClass: "alpheios-panel__header-btn",
+              on: { click: _vm.contract }
+            },
+            [_c("down-icon")],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.isLandscape && _vm.leftBtnVisible,
+                  expression: "isLandscape && leftBtnVisible"
+                }
+              ],
+              staticClass: "alpheios-panel__header-btn",
+              on: { click: _vm.expandOrContract }
+            },
+            [_c("left-icon")],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.isLandscape && _vm.rightBtnVisible,
+                  expression: "isLandscape && rightBtnVisible"
+                }
+              ],
+              staticClass: "alpheios-panel__header-btn",
+              on: { click: _vm.expandOrContract }
+            },
+            [_c("right-icon")],
+            1
+          )
         ]),
         _vm._v(" "),
         _c(
-          "span",
+          "div",
           { staticClass: "alpheios-panel__header-btn-group--end" },
           [
             _c(
@@ -23571,8 +23806,7 @@ var render = function() {
                     "$store.getters['ui/isActiveTab']('morphology') && !menuVisible"
                 }
               ],
-              staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding"
+              staticClass: "alpheios-panel__tab-panel"
             },
             [
               _c(
@@ -23615,7 +23849,7 @@ var render = function() {
                 }
               ],
               staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__definitions",
+                "alpheios-panel__tab-panel alpheios-panel__tab__definitions",
               attrs: { "data-alpheios-ignore": "all" }
             },
             [
@@ -24071,7 +24305,7 @@ var render = function() {
                 }
               ],
               staticClass:
-                "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info",
+                "alpheios-panel__tab-panel alpheios-panel__tab__info",
               attrs: { "data-alpheios-ignore": "all" }
             },
             [
@@ -24210,8 +24444,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.attachToLeftVisible,
-                    expression: "attachToLeftVisible"
+                    value: _vm.isAttachedToRight,
+                    expression: "isAttachedToRight"
                   }
                 ],
                 attrs: {
@@ -24223,14 +24457,6 @@ var render = function() {
                 _c(
                   "span",
                   {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.attachToLeftVisible,
-                        expression: "attachToLeftVisible"
-                      }
-                    ],
                     staticClass:
                       "alpheios-navbuttons__btn alpheios-navbuttons__btn--attach",
                     on: {
@@ -24254,8 +24480,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.attachToRightVisible,
-                    expression: "attachToRightVisible"
+                    value: _vm.isAttachedToLeft,
+                    expression: "isAttachedToLeft"
                   }
                 ],
                 attrs: {
@@ -24267,14 +24493,6 @@ var render = function() {
                 _c(
                   "span",
                   {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.attachToRightVisible,
-                        expression: "attachToRightVisible"
-                      }
-                    ],
                     staticClass:
                       "alpheios-navbuttons__btn alpheios-navbuttons__btn--attach",
                     on: {
@@ -24293,7 +24511,7 @@ var render = function() {
         ),
         _vm._v(" "),
         _c(
-          "span",
+          "div",
           { staticClass: "alpheios-panel__header-btn-group--end" },
           [
             _c(
@@ -24334,7 +24552,7 @@ var render = function() {
               }
             ],
             staticClass:
-              "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__definitions",
+              "alpheios-panel__tab-panel alpheios-panel__tab__definitions",
             attrs: { "data-alpheios-ignore": "all" }
           },
           [
@@ -24756,8 +24974,7 @@ var render = function() {
                 expression: "$store.getters['ui/isActiveTab']('info')"
               }
             ],
-            staticClass:
-              "alpheios-panel__tab-panel alpheios-panel__content_no_top_padding alpheios-panel__tab__info",
+            staticClass: "alpheios-panel__tab-panel alpheios-panel__tab__info",
             attrs: { "data-alpheios-ignore": "all" }
           },
           [
@@ -40575,6 +40792,166 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./images/inline-icons/chevron-down.svg":
+/*!**********************************************!*\
+  !*** ./images/inline-icons/chevron-down.svg ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+      /* harmony default export */ __webpack_exports__["default"] = ({
+        functional: true,
+        render(_h, _vm) {
+          const { _c, _v, data, children = [] } = _vm;
+
+          const {
+            class: classNames,
+            staticClass,
+            style,
+            staticStyle,
+            attrs = {},
+            ...rest
+          } = data;
+
+          return _c(
+            'svg',
+            {
+              class: [classNames,staticClass],
+              style: [style,staticStyle],
+              attrs: Object.assign({"viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}, attrs),
+              ...rest,
+            },
+            children.concat([_c('path',{attrs:{"d":"M1683 808l-742 741q-19 19-45 19t-45-19L109 808q-19-19-19-45.5t19-45.5l166-165q19-19 45-19t45 19l531 531 531-531q19-19 45-19t45 19l166 165q19 19 19 45.5t-19 45.5z"}})])
+          )
+        }
+      });
+    
+
+/***/ }),
+
+/***/ "./images/inline-icons/chevron-left.svg":
+/*!**********************************************!*\
+  !*** ./images/inline-icons/chevron-left.svg ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+      /* harmony default export */ __webpack_exports__["default"] = ({
+        functional: true,
+        render(_h, _vm) {
+          const { _c, _v, data, children = [] } = _vm;
+
+          const {
+            class: classNames,
+            staticClass,
+            style,
+            staticStyle,
+            attrs = {},
+            ...rest
+          } = data;
+
+          return _c(
+            'svg',
+            {
+              class: [classNames,staticClass],
+              style: [style,staticStyle],
+              attrs: Object.assign({"viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}, attrs),
+              ...rest,
+            },
+            children.concat([_c('path',{attrs:{"d":"M1427 301L896 832l531 531q19 19 19 45t-19 45l-166 166q-19 19-45 19t-45-19L429 877q-19-19-19-45t19-45l742-742q19-19 45-19t45 19l166 166q19 19 19 45t-19 45z"}})])
+          )
+        }
+      });
+    
+
+/***/ }),
+
+/***/ "./images/inline-icons/chevron-right.svg":
+/*!***********************************************!*\
+  !*** ./images/inline-icons/chevron-right.svg ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+      /* harmony default export */ __webpack_exports__["default"] = ({
+        functional: true,
+        render(_h, _vm) {
+          const { _c, _v, data, children = [] } = _vm;
+
+          const {
+            class: classNames,
+            staticClass,
+            style,
+            staticStyle,
+            attrs = {},
+            ...rest
+          } = data;
+
+          return _c(
+            'svg',
+            {
+              class: [classNames,staticClass],
+              style: [style,staticStyle],
+              attrs: Object.assign({"viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}, attrs),
+              ...rest,
+            },
+            children.concat([_c('path',{attrs:{"d":"M1363 877l-742 742q-19 19-45 19t-45-19l-166-166q-19-19-19-45t19-45l531-531-531-531q-19-19-19-45t19-45L531 45q19-19 45-19t45 19l742 742q19 19 19 45t-19 45z"}})])
+          )
+        }
+      });
+    
+
+/***/ }),
+
+/***/ "./images/inline-icons/chevron-up.svg":
+/*!********************************************!*\
+  !*** ./images/inline-icons/chevron-up.svg ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+      /* harmony default export */ __webpack_exports__["default"] = ({
+        functional: true,
+        render(_h, _vm) {
+          const { _c, _v, data, children = [] } = _vm;
+
+          const {
+            class: classNames,
+            staticClass,
+            style,
+            staticStyle,
+            attrs = {},
+            ...rest
+          } = data;
+
+          return _c(
+            'svg',
+            {
+              class: [classNames,staticClass],
+              style: [style,staticStyle],
+              attrs: Object.assign({"viewBox":"0 0 1792 1792","xmlns":"http://www.w3.org/2000/svg"}, attrs),
+              ...rest,
+            },
+            children.concat([_c('path',{attrs:{"d":"M1683 1331l-166 165q-19 19-45 19t-45-19L896 965l-531 531q-19 19-45 19t-45-19l-166-165q-19-19-19-45.5t19-45.5l742-741q19-19 45-19t45 19l742 741q19 19 19 45.5t-19 45.5z"}})])
+          )
+        }
+      });
+    
+
+/***/ }),
+
 /***/ "./images/inline-icons/clear-filters.svg":
 /*!***********************************************!*\
   !*** ./images/inline-icons/clear-filters.svg ***!
@@ -41648,6 +42025,15 @@ class UIController {
     this.evc = null
 
     this.wordlistC = {} // This is a word list controller
+
+    // Detect device's orientation change in order to update panel layout
+    window.addEventListener('orientationchange', () => {
+      // Update platform information
+      this.platform = new _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_21__["default"]()
+      if (this.hasModule('panel')) {
+        this.store.commit('panel/setOrientation', this.platform.orientation)
+      }
+    })
   }
 
   /**
@@ -41891,6 +42277,7 @@ class UIController {
     this.api.app = {
       name: this.options.app.name, // A name of an application
       version: this.options.app.version, // An application's version
+      platform: this.platform,
       mode: this.options.mode, // Mode of an application: `production` or `development`
       defaultTab: this.defaultTab, // A name of a default tab (a string)
       state: this.state, // An app-level state
@@ -51939,6 +52326,10 @@ PanelModule.store = (moduleInstance) => {
 
       setPosition (state, position) {
         state.position = position
+      },
+
+      setOrientation (state, orientation) {
+        state.orientation = orientation
       }
     }
   }

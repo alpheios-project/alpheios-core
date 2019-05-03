@@ -118,6 +118,15 @@ export default class UIController {
     this.evc = null
 
     this.wordlistC = {} // This is a word list controller
+
+    // Detect device's orientation change in order to update panel layout
+    window.addEventListener('orientationchange', () => {
+      // Update platform information
+      this.platform = new Platform()
+      if (this.hasModule('panel')) {
+        this.store.commit('panel/setOrientation', this.platform.orientation)
+      }
+    })
   }
 
   /**
@@ -361,6 +370,7 @@ export default class UIController {
     this.api.app = {
       name: this.options.app.name, // A name of an application
       version: this.options.app.version, // An application's version
+      platform: this.platform,
       mode: this.options.mode, // Mode of an application: `production` or `development`
       defaultTab: this.defaultTab, // A name of a default tab (a string)
       state: this.state, // An app-level state

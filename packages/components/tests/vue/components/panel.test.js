@@ -161,8 +161,8 @@ describe('panel.test.js', () => {
       mocks: api
     })
     expect(cmp.isVueInstance()).toBeTruthy()
-    expect(cmp.vm.attachToLeftVisible).toBeFalsy()
-    expect(cmp.vm.attachToRightVisible).toBeTruthy()
+    expect(cmp.vm.isAttachedToRight).toBeFalsy()
+    expect(cmp.vm.isAttachedToLeft).toBeTruthy()
   })
 
   it.skip('2 Panel - render with children components (min requirements)', () => {

@@ -192,7 +192,7 @@ export default {
     height: 190px;
     position: fixed;
     padding: 10px 20px;
-    @include alpheios-border;
+    @include alpheios-ui-border;
     background-color: var(--alpheios-text-bg-color);
     transition: display 0.4s;
   }

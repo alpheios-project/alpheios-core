@@ -595,7 +595,7 @@ export default {
     // Required for Interact.js to take element size with paddings and work correctly
     box-sizing: border-box;
     overflow: auto;
-    @include alpheios-border;
+    @include alpheios-ui-border;
 
     & .alpheios-notification-area {
       padding-top: 0;
@@ -698,7 +698,7 @@ export default {
     // However, this can be fixed with flex parameters
     background: var(--alpheios-text-bg-color);
 
-    @include alpheios-border;
+    @include alpheios-ui-border;
   }
 
   .alpheios-popup__providers {

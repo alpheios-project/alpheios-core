@@ -10,14 +10,13 @@ input.alpheios-input {
     font-size: var(--alpheios-base-text-size);
     max-width: 100%;
     width: 100%;
-    @include alpheios-border;
+    @include alpheios-controls-border;
     padding: textsize(8px);
     background: var(--alpheios-text-bg-color);
     color: var(--alpheios-text-color);
     vertical-align: middle;
     display: inline-block;
     -webkit-appearance: none;
-    border-radius: uisize(10px);
   }
 
   &[type="search"]::-webkit-search-cancel-button,
@@ -44,14 +43,15 @@ input.alpheios-input {
     outline: none;
     border: inherit;
     // Include below is to override custom styles set by a page
-    @include alpheios-border;
+    border: 1px solid var(--alpheios-border-color);
+    @include alpheios-controls-border;
   }
 
   &:disabled {
     background-color: var(--alpheios-color-neutral-dark);
     color: var(--alpheios-color-neutral-lightest);
     // Include below is to override custom styles set by a page
-    @include alpheios-border;
+    @include alpheios-controls-border;
   }
 
   &::placeholder {

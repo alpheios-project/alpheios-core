@@ -238,6 +238,10 @@ export default {
       max-width: 400px;
     }
 
+    & .alpheios-select:not([multiple]):not([size]) {
+      background-size: 10%;
+    }
+
     .alpheios-word-usage-header-clear-icon {
       width: 20px;
       height: 20px;

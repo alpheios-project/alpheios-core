@@ -1,7 +1,7 @@
 .alpheios-select {
   box-sizing: border-box;
   margin: 0;
-  border-radius: uisize(10px);
+  border-radius: textsize(10px);
   font: inherit;
   text-transform: none;
   max-width: 100%;
@@ -13,19 +13,19 @@
   -webkit-appearance: none;
 
   &:not([multiple]):not([size]) {
-    height: 40px;
+    height: textsize(36px);
     vertical-align: middle;
     display: inline-block;
   }
 
   &:not(select) {
-    line-height: 40px;
+    line-height: textsize(36px);
   }
 
   &[multiple],
   &[size] {
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding-top: textsize(4px);
+    padding-bottom: textsize(4px);
     vertical-align: top;
   }
 
@@ -34,17 +34,18 @@
   }
 
   &:disabled {
-    background-color: #f8f8f8;
-    color: #999;
+    background-color: var(--alpheios-color-neutral-lightest);
+    color: var(--alpheios-color-neutral-light);
   }
 
   &:not([multiple]):not([size]) {
     -webkit-appearance: none;
     -moz-appearance: none;
-    padding-right: 20px;
+    padding-right: textsize(20px);
     background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666%22%20points%3D%2212%201%209%206%2015%206%22%20%2F%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666%22%20points%3D%2212%2013%209%208%2015%208%22%20%2F%3E%0A%3C%2Fsvg%3E%0A");
     background-repeat: no-repeat;
     background-position: 100% 50%;
+    background-size: textsize(24px);
   }
 
   &:not([multiple]):not([size])::-ms-expand {
@@ -52,7 +53,7 @@
   }
 
   &:not([multiple]):not([size]) option {
-    color: #444;
+    color: var(--alpheios-text-color);
   }
 
   &:not([multiple]):not([size]):disabled {

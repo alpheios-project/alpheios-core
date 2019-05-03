@@ -3,9 +3,9 @@ div.alpheios-checkbox-block {
   display: inline-block;
   position: relative;
   overflow: hidden;
-  line-height: uisize(22px);
+  line-height: textsize(22px);
 
-  max-width: uisize(235px);
+  max-width: textsize(235px);
   vertical-align: top;
 
   min-height: calc(var(--alpheios-base-ui-size) * 1.375);
@@ -25,8 +25,8 @@ div.alpheios-checkbox-block {
     vertical-align: top;
 
     /*16px width of fake checkbox + 6px distance between fake checkbox and text*/
-    padding-left: uisize(22px);
-    padding-top: uisize(2px);
+    padding-left: textsize(22px);
+    padding-top: textsize(2px);
 
     &::before,
     &::after {
@@ -38,29 +38,29 @@ div.alpheios-checkbox-block {
     }
 
     &::before {
-      height: uisize(16px);
-      width: uisize(16px);
+      height: textsize(16px);
+      width: textsize(16px);
 
-      border: uisize(1px) solid;
-      border-radius: uisize(4px);
+      border: textsize(1px) solid;
+      border-radius: textsize(4px);
       left: 0;
 
       /*(24px line-height - 16px height of fake checkbox) / 2 - 1px for the border
        *to vertically center it.
        */
-      top: uisize(3px);
+      top: textsize(3px);
     }
 
     &::after {
-      height: uisize(5px);
-      width: uisize(9px);
-      border-left: uisize(2px) solid;
-      border-bottom: uisize(2px) solid;
+      height: textsize(5px);
+      width: textsize(9px);
+      border-left: textsize(2px) solid;
+      border-bottom: textsize(2px) solid;
 
       transform: rotate(-45deg);
 
-      left: uisize(3px);
-      top: uisize(6px);
+      left: textsize(3px);
+      top: textsize(6px);
     }
   }
 
