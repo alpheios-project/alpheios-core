@@ -260,22 +260,22 @@
     "description": "label for usage examples button on popup",
     "component": "Popup"
   },
-  "PLACEHOLDER_POPUP_DATA": {
+  "PLACEHOLDER_LEX_DATA_LOADING": {
     "message": "Lexical data is loading",
     "description": "placeholder text for popup data",
     "component": "Popup"
   },
-  "PLACEHOLDER_NO_LANGUAGE_POPUP_DATA": {
+  "PLACEHOLDER_NO_LANGUAGE_DATA": {
     "message": "Lexical data couldn't be populated because page language is not defined",
     "description": "placeholder text for popup data when language is not defined",
     "component": "Popup"
   },
-  "PLACEHOLDER_NO_DATA_POPUP_DATA": {
+  "PLACEHOLDER_NO_MORPH_DATA": {
     "message": "Lexical query produced no results",
     "description": "placeholder text for popup data",
     "component": "Popup"
   },
-  "LABEL_POPUP_CREDITS": {
+  "LABEL_PROVIDERS_CREDITS": {
     "message": "Credits:",
     "description": "label for credits on popup",
     "component": "Popup"

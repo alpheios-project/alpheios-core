@@ -78,17 +78,44 @@
           class="alpheios-panel__tab-panel"
           v-show="$store.getters['ui/isActiveTab']('morphology') && !menuVisible">
 
-        <div :id="'alpheios-panel-lexical-data-container'"
-             class="alpheios-popup__morph-cont alpheios-text-small alpheios-popup__morph-cont-ready"
-             v-show="hasMorphologyData">
-          <morph :id="'alpheios-panel-morph-component'"></morph>
+        <div class="alpheios-popup__definitions--placeholder"
+             v-if="!$store.state.app.morphDataReady && Boolean(this.$store.state.app.currentLanguageName)">
+          <progress-bar :text="l10n.getText('PLACEHOLDER_LEX_DATA_LOADING')"></progress-bar>
+        </div>
 
-          <!--<div class="alpheios-popup__morph-cont-providers" v-if="showProviders">
-            <div class="alpheios-popup__morph-cont-providers-header">{{ l10n.getText('LABEL_POPUP_CREDITS') }}</div>
-            <div class="alpheios-popup__morph-cont-providers-source" v-for="p in $store.state.app.providers">
+        <div class="alpheios-popup__definitions--placeholder"
+             v-show="!this.$store.state.app.currentLanguageName && !$store.state.app.morphDataReady">
+          {{ l10n.getText('PLACEHOLDER_NO_LANGUAGE_DATA') }}
+        </div>
+        <div class="alpheios-popup__definitions--placeholder"
+             v-show="$store.state.app.morphDataReady && !app.hasMorphData() && Boolean(this.$store.state.app.currentLanguageName)">
+          {{ l10n.getText('PLACEHOLDER_NO_MORPH_DATA') }}
+        </div>
+        <div :id="lexicalDataContainerID"
+             v-show="$store.state.app.morphDataReady && app.hasMorphData()"
+        >
+          <morph/>
+        </div>
+
+        <div
+            class="alpheios-popup__providers"
+            v-show="$store.state.app.morphDataReady && app.hasMorphData()"
+        >
+          <div class="alpheios-popup__providers-title">{{ l10n.getText('LABEL_PROVIDERS_CREDITS') }}</div>
+          <a
+              class="alpheios-popup__providers-link"
+              v-on:click="switchProviders"
+          >
+            {{ providersLinkText }}
+          </a>
+          <div v-show="showProviders">
+            <div
+                class="alpheios-popup__providers-item"
+                v-for="p in $store.state.app.providers"
+            >
               {{ p.toString() }}
             </div>
-          </div>-->
+          </div>
         </div>
       </div>
 
@@ -361,6 +388,7 @@ import UserAuth from './user-auth.vue'
 import WordUsageExamples from '@/vue/components/word-usage-examples/word-usage-examples.vue'
 import { Definition } from 'alpheios-data-models'
 import WordListPanel from '@/vue/components/word-list/word-list-panel.vue'
+import ProgressBar from '@/vue/components/progress-bar.vue'
 // Embeddable SVG icons
 import MenuIcon from '@/images/inline-icons/book-open.svg'
 import CloseIcon from '@/images/inline-icons/x-close.svg'
@@ -390,6 +418,7 @@ export default {
   components: {
     menuIcon: MenuIcon,
     dropDownMenu: DropDownMenu,
+    progressBar: ProgressBar,
     notificationArea: NotificationArea,
     inflections: Inflections,
     inflectionBrowser: InflectionBrowser,
@@ -430,12 +459,14 @@ export default {
       menuVisible: false,
       inflectionsPanelID: 'alpheios-panel__inflections-panel',
       inflectionsBrowserPanelID: 'alpheios-panel__inflections-browser-panel',
+      lexicalDataContainerID: 'alpheios-panel__lex-data-container',
       panelLeftPadding: 0,
       panelRightPadding: 0,
       scrollPadding: 0,
       // Whether the panel is expanded full width
       expanded: false,
-      resized: false
+      resized: false,
+      showProviders: false
     }
   },
 
@@ -584,6 +615,10 @@ export default {
           break
       }
       return title
+    },
+
+    providersLinkText: function () {
+      return this.showProviders ? this.l10n.getText('LABEL_POPUP_HIDECREDITS') : this.l10n.getText('LABEL_POPUP_SHOWCREDITS')
     }
   },
   methods: {
@@ -650,6 +685,10 @@ export default {
 
     gestureEndListener: function (event) {
       this.$options.scaledTextSize = Math.round(this.$options.scaledTextSize * event.scale)
+    },
+
+    switchProviders: function () {
+      this.showProviders = !this.showProviders
     }
   },
 

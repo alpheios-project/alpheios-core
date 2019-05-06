@@ -89,16 +89,16 @@
       <div class="alpheios-popup__content">
         <div class="alpheios-popup__definitions--placeholder"
              v-if="!$store.state.app.morphDataReady && !noLanguage">
-          <progress-bar :text="l10n.getText('PLACEHOLDER_POPUP_DATA')"></progress-bar>
+          <progress-bar :text="l10n.getText('PLACEHOLDER_LEX_DATA_LOADING')"></progress-bar>
         </div>
 
         <div class="alpheios-popup__definitions--placeholder"
              v-show="noLanguage && !$store.state.app.morphDataReady">
-          {{ l10n.getText('PLACEHOLDER_NO_LANGUAGE_POPUP_DATA') }}
+          {{ l10n.getText('PLACEHOLDER_NO_LANGUAGE_DATA') }}
         </div>
         <div class="alpheios-popup__definitions--placeholder"
              v-show="$store.state.app.morphDataReady && !app.hasMorphData() && !noLanguage">
-          {{ l10n.getText('PLACEHOLDER_NO_DATA_POPUP_DATA') }}
+          {{ l10n.getText('PLACEHOLDER_NO_MORPH_DATA') }}
         </div>
         <div :id="lexicalDataContainerID"
              v-show="$store.state.app.morphDataReady && app.hasMorphData()"
@@ -112,7 +112,7 @@
             class="alpheios-popup__providers"
             v-show="$store.state.app.morphDataReady && app.hasMorphData()"
         >
-          <div class="alpheios-popup__providers-title">{{ l10n.getText('LABEL_POPUP_CREDITS') }}</div>
+          <div class="alpheios-popup__providers-title">{{ l10n.getText('LABEL_PROVIDERS_CREDITS') }}</div>
           <a class="alpheios-popup__providers-link" v-on:click="switchProviders">{{ providersLinkText }}</a>
           <div v-if="showProviders">
             <div
