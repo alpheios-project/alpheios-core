@@ -22274,8 +22274,8 @@ var render = function() {
           {
             name: "show",
             rawName: "v-show",
-            value: _vm.$store.getters["app/hasInflData"],
-            expression: "$store.getters[`app/hasInflData`]"
+            value: _vm.$store.state.app.hasInflData,
+            expression: "$store.state.app.hasInflData"
           }
         ],
         staticClass: "alpheios-navmenu__item",

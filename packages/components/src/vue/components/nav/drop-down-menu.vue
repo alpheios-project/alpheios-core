@@ -29,7 +29,7 @@
     </div>
 
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('inflections') }"
-         v-show="$store.getters[`app/hasInflData`]" @click="changeTab('inflections')">
+         v-show="$store.state.app.hasInflData" @click="changeTab('inflections')">
       <div class="alpheios-navbuttons__icon-cont">
         <inflections-icon class="alpheios-navbuttons__icon"></inflections-icon>
       </div>
