@@ -91,15 +91,15 @@
       </alph-tooltip>
 
       <alph-tooltip
-          :tooltip-text="l10n.getText('TOOLTIP_OPTIONS')"
+          :tooltip-text="l10n.getText('TOOLTIP_WORDLIST')"
           :tooltip-direction="tooltipDirection"
       >
         <span
-            :class="{ active: $store.getters['ui/isActiveTab']('options') }"
+            :class="{ active: $store.getters['ui/isActiveTab']('wordlist'), disabled: !$store.state.app.hasWordListsData }"
             class="alpheios-navbuttons__btn"
-            @click="ui.togglePanelTab('options')"
+            @click="ui.togglePanelTab('wordlist')"
         >
-          <options-icon/>
+          <wordlist-icon/>
         </span>
       </alph-tooltip>
 
@@ -117,15 +117,15 @@
       </alph-tooltip>
 
       <alph-tooltip
-          :tooltip-text="l10n.getText('TOOLTIP_WORDLIST')"
+          :tooltip-text="l10n.getText('TOOLTIP_OPTIONS')"
           :tooltip-direction="tooltipDirection"
       >
         <span
-            :class="{ active: $store.getters['ui/isActiveTab']('wordlist'), disabled: !$store.state.app.hasWordListsData }"
+            :class="{ active: $store.getters['ui/isActiveTab']('options') }"
             class="alpheios-navbuttons__btn"
-            @click="ui.togglePanelTab('wordlist')"
+            @click="ui.togglePanelTab('options')"
         >
-          <wordlist-icon/>
+          <options-icon/>
         </span>
       </alph-tooltip>
 

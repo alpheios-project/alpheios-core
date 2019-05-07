@@ -45,10 +45,20 @@
       </div>
     </alph-tooltip>
 
-    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_OPTIONS')" tooltipDirection="bottom-narrow">
-      <div @click="ui.changeTab('options')" class="alpheios-navbuttons__btn"
-            v-bind:class="{ active: $store.getters['ui/isActiveTab']('options') }">
-        <options-icon></options-icon>
+    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORD_USAGE')" tooltipDirection="bottom-narrow"
+                  v-show="$store.state.app.wordUsageExampleEnabled"
+    >
+      <div @click="ui.changeTab('wordUsage')" class="alpheios-navbuttons__btn"
+           v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordUsage') }">
+        <word-usage-icon></word-usage-icon>
+      </div>
+    </alph-tooltip>
+
+    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORDLIST')" tooltipDirection="bottom-narrow">
+      <div @click="ui.changeTab('wordlist')" class="alpheios-navbuttons__btn"
+           v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordlist') }"
+           v-show="this.$store.state.app.hasWordListsData">
+        <wordlist-icon></wordlist-icon>
       </div>
     </alph-tooltip>
 
@@ -60,20 +70,10 @@
       </div>
     </alph-tooltip>
 
-    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORD_USAGE')" tooltipDirection="bottom-narrow"
-            v-show="$store.state.app.wordUsageExampleEnabled"
-    >
-      <div @click="ui.changeTab('wordUsage')" class="alpheios-navbuttons__btn"
-            v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordUsage') }">
-        <word-usage-icon></word-usage-icon>
-      </div>
-    </alph-tooltip>
-
-    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORDLIST')" tooltipDirection="bottom-narrow">
-      <div @click="ui.changeTab('wordlist')" class="alpheios-navbuttons__btn"
-            v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordlist') }"
-            v-show="this.$store.state.app.hasWordListsData">
-        <wordlist-icon></wordlist-icon>
+    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_OPTIONS')" tooltipDirection="bottom-narrow">
+      <div @click="ui.changeTab('options')" class="alpheios-navbuttons__btn"
+           v-bind:class="{ active: $store.getters['ui/isActiveTab']('options') }">
+        <options-icon></options-icon>
       </div>
     </alph-tooltip>
 

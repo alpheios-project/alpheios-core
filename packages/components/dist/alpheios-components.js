@@ -22402,64 +22402,6 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "alpheios-navmenu__item",
-        class: { active: _vm.$store.getters["ui/isActiveTab"]("options") },
-        on: {
-          click: function($event) {
-            return _vm.changeTab("options")
-          }
-        }
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "alpheios-navbuttons__icon-cont" },
-          [_c("options-icon", { staticClass: "alpheios-navbuttons__icon" })],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-navmenu__text" }, [
-          _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_OPTIONS")))
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.$store.state.auth.enableLogin,
-            expression: "$store.state.auth.enableLogin"
-          }
-        ],
-        staticClass: "alpheios-navmenu__item",
-        class: { active: _vm.$store.getters["ui/isActiveTab"]("user") },
-        on: {
-          click: function($event) {
-            return _vm.changeTab("user")
-          }
-        }
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "alpheios-navbuttons__icon-cont" },
-          [_c("user-icon", { staticClass: "alpheios-navbuttons__icon" })],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "alpheios-navmenu__text" }, [
-          _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_USER")))
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
         directives: [
           {
             name: "show",
@@ -22519,6 +22461,64 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "alpheios-navmenu__text" }, [
           _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_WORDLIST")))
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.$store.state.auth.enableLogin,
+            expression: "$store.state.auth.enableLogin"
+          }
+        ],
+        staticClass: "alpheios-navmenu__item",
+        class: { active: _vm.$store.getters["ui/isActiveTab"]("user") },
+        on: {
+          click: function($event) {
+            return _vm.changeTab("user")
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "alpheios-navbuttons__icon-cont" },
+          [_c("user-icon", { staticClass: "alpheios-navbuttons__icon" })],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "alpheios-navmenu__text" }, [
+          _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_USER")))
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "alpheios-navmenu__item",
+        class: { active: _vm.$store.getters["ui/isActiveTab"]("options") },
+        on: {
+          click: function($event) {
+            return _vm.changeTab("options")
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "alpheios-navbuttons__icon-cont" },
+          [_c("options-icon", { staticClass: "alpheios-navbuttons__icon" })],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "alpheios-navmenu__text" }, [
+          _vm._v(_vm._s(_vm.l10n.getText("TOOLTIP_OPTIONS")))
         ])
       ]
     ),
@@ -22926,68 +22926,6 @@ var render = function() {
       _c(
         "alph-tooltip",
         {
-          attrs: {
-            tooltipText: _vm.l10n.getText("TOOLTIP_OPTIONS"),
-            tooltipDirection: "bottom-narrow"
-          }
-        },
-        [
-          _c(
-            "div",
-            {
-              staticClass: "alpheios-navbuttons__btn",
-              class: {
-                active: _vm.$store.getters["ui/isActiveTab"]("options")
-              },
-              on: {
-                click: function($event) {
-                  return _vm.ui.changeTab("options")
-                }
-              }
-            },
-            [_c("options-icon")],
-            1
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "alph-tooltip",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.$store.state.auth.enableLogin,
-              expression: "$store.state.auth.enableLogin"
-            }
-          ],
-          attrs: {
-            tooltipText: _vm.l10n.getText("TOOLTIP_USER"),
-            tooltipDirection: "bottom-narrow"
-          }
-        },
-        [
-          _c(
-            "div",
-            {
-              staticClass: "alpheios-navbuttons__btn",
-              class: { active: _vm.$store.getters["ui/isActiveTab"]("user") },
-              on: {
-                click: function($event) {
-                  return _vm.ui.changeTab("user")
-                }
-              }
-            },
-            [_c("user-icon")],
-            1
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "alph-tooltip",
-        {
           directives: [
             {
               name: "show",
@@ -23052,6 +22990,68 @@ var render = function() {
               }
             },
             [_c("wordlist-icon")],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "alph-tooltip",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.$store.state.auth.enableLogin,
+              expression: "$store.state.auth.enableLogin"
+            }
+          ],
+          attrs: {
+            tooltipText: _vm.l10n.getText("TOOLTIP_USER"),
+            tooltipDirection: "bottom-narrow"
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "alpheios-navbuttons__btn",
+              class: { active: _vm.$store.getters["ui/isActiveTab"]("user") },
+              on: {
+                click: function($event) {
+                  return _vm.ui.changeTab("user")
+                }
+              }
+            },
+            [_c("user-icon")],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "alph-tooltip",
+        {
+          attrs: {
+            tooltipText: _vm.l10n.getText("TOOLTIP_OPTIONS"),
+            tooltipDirection: "bottom-narrow"
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "alpheios-navbuttons__btn",
+              class: {
+                active: _vm.$store.getters["ui/isActiveTab"]("options")
+              },
+              on: {
+                click: function($event) {
+                  return _vm.ui.changeTab("options")
+                }
+              }
+            },
+            [_c("options-icon")],
             1
           )
         ]
@@ -23396,7 +23396,7 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                "tooltip-text": _vm.l10n.getText("TOOLTIP_OPTIONS"),
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_WORDLIST"),
                 "tooltip-direction": _vm.tooltipDirection
               }
             },
@@ -23406,15 +23406,16 @@ var render = function() {
                 {
                   staticClass: "alpheios-navbuttons__btn",
                   class: {
-                    active: _vm.$store.getters["ui/isActiveTab"]("options")
+                    active: _vm.$store.getters["ui/isActiveTab"]("wordlist"),
+                    disabled: !_vm.$store.state.app.hasWordListsData
                   },
                   on: {
                     click: function($event) {
-                      return _vm.ui.togglePanelTab("options")
+                      return _vm.ui.togglePanelTab("wordlist")
                     }
                   }
                 },
-                [_c("options-icon")],
+                [_c("wordlist-icon")],
                 1
               )
             ]
@@ -23453,7 +23454,7 @@ var render = function() {
             "alph-tooltip",
             {
               attrs: {
-                "tooltip-text": _vm.l10n.getText("TOOLTIP_WORDLIST"),
+                "tooltip-text": _vm.l10n.getText("TOOLTIP_OPTIONS"),
                 "tooltip-direction": _vm.tooltipDirection
               }
             },
@@ -23463,16 +23464,15 @@ var render = function() {
                 {
                   staticClass: "alpheios-navbuttons__btn",
                   class: {
-                    active: _vm.$store.getters["ui/isActiveTab"]("wordlist"),
-                    disabled: !_vm.$store.state.app.hasWordListsData
+                    active: _vm.$store.getters["ui/isActiveTab"]("options")
                   },
                   on: {
                     click: function($event) {
-                      return _vm.ui.togglePanelTab("wordlist")
+                      return _vm.ui.togglePanelTab("options")
                     }
                   }
                 },
-                [_c("wordlist-icon")],
+                [_c("options-icon")],
                 1
               )
             ]

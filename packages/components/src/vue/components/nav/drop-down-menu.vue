@@ -60,25 +60,9 @@
       <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_TREEBANK') }}</div>
     </div>
 
-    <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('options') }"
-         @click="changeTab('options')">
-      <div  class="alpheios-navbuttons__icon-cont">
-        <options-icon class="alpheios-navbuttons__icon"></options-icon>
-      </div>
-      <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_OPTIONS') }}</div>
-    </div>
-
-    <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('user') }"
-         v-show="$store.state.auth.enableLogin" @click="changeTab('user')">
-      <div class="alpheios-navbuttons__icon-cont">
-        <user-icon class="alpheios-navbuttons__icon"></user-icon>
-      </div>
-      <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_USER') }}</div>
-    </div>
-
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('wordUsage') }"
-        v-show="$store.state.app.wordUsageExampleEnabled"
-        @click="changeTab('wordUsage')">
+         v-show="$store.state.app.wordUsageExampleEnabled"
+         @click="changeTab('wordUsage')">
       <div class="alpheios-navbuttons__icon-cont">
         <word-usage-icon class="alpheios-navbuttons__icon"></word-usage-icon>
       </div>
@@ -92,6 +76,22 @@
         <wordlist-icon class="alpheios-navbuttons__icon"></wordlist-icon>
       </div>
       <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_WORDLIST') }}</div>
+    </div>
+
+    <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('user') }"
+         v-show="$store.state.auth.enableLogin" @click="changeTab('user')">
+      <div class="alpheios-navbuttons__icon-cont">
+        <user-icon class="alpheios-navbuttons__icon"></user-icon>
+      </div>
+      <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_USER') }}</div>
+    </div>
+
+    <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('options') }"
+         @click="changeTab('options')">
+      <div  class="alpheios-navbuttons__icon-cont">
+        <options-icon class="alpheios-navbuttons__icon"></options-icon>
+      </div>
+      <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_OPTIONS') }}</div>
     </div>
 
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('status') }"
