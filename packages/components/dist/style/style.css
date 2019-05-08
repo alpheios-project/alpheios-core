@@ -398,7 +398,7 @@ html {
   margin: 0 0 calc(var(--alpheios-base-text-size) * 1);
 }
 .alpheios-content a {
-  color: var(--alpheios-color-vivid);
+  color: var(--alpheios-color-muted);
   cursor: pointer;
 }
 .alpheios-content a:hover, .alpheios-content a:active {
@@ -1027,7 +1027,7 @@ p.alpheios-lemma__translations-value {
   padding-right: 0.25em;
 }
 .alpheios-content .alpheios-morph__linkedattr {
-  color: var(--alpheios-color-vivid);
+  color: var(--alpheios-color-muted);
   cursor: pointer;
   font-weight: 700;
 }
@@ -2752,21 +2752,6 @@ h3.alpheios-inflections__credits-title {
 .alpheios-panel__menu-icon.menu-open {
   fill: var(--alpheios-color-bright);
 }
-.alpheios-panel__header-title {
-  direction: ltr;
-  display: flex;
-  flex-wrap: nowrap;
-  box-sizing: border-box;
-  align-items: stretch;
-  color: var(--alpheios-color-light);
-  font-family: var(--alpheios-serif-font-face);
-  font-size: calc(var(--alpheios-base-ui-size) * 1.5);
-}
-.alpheios-panel__header-title-text {
-  padding-top: calc(var(--alpheios-base-ui-size) * 0.5);
-  margin: 0 calc(var(--alpheios-base-ui-size) * 1.25);
-  white-space: nowrap;
-}
 .alpheios-panel__header-btn-group--end {
   display: flex;
   flex-wrap: nowrap;
@@ -2879,6 +2864,9 @@ h3.alpheios-inflections__credits-title {
 }
 .alpheios-panel--compact.alpheios-panel {
   grid-template-columns: auto;
+}
+.alpheios-panel--compact .alpheios-panel__close-btn {
+  margin-left: calc(var(--alpheios-base-ui-size) * 1.25);
 }
 .alpheios-panel--compact.alpheios-panel--left {
   height: 100vh;

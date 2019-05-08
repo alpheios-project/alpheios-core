@@ -31,7 +31,7 @@
 }
 
 @mixin alpheios-interactive {
-  color: var(--alpheios-color-vivid);
+  color: var(--alpheios-color-muted);
   cursor: pointer;
 
   &:hover,

@@ -398,7 +398,7 @@ html {
   margin: 0 0 calc(var(--alpheios-base-text-size) * 1) !important;
 }
 .alpheios-content a {
-  color: var(--alpheios-color-vivid) !important;
+  color: var(--alpheios-color-muted) !important;
   cursor: pointer !important;
 }
 .alpheios-content a:hover, .alpheios-content a:active {
@@ -1027,7 +1027,7 @@ p.alpheios-lemma__translations-value {
   padding-right: 0.25em !important;
 }
 .alpheios-content .alpheios-morph__linkedattr {
-  color: var(--alpheios-color-vivid) !important;
+  color: var(--alpheios-color-muted) !important;
   cursor: pointer !important;
   font-weight: 700 !important;
 }
@@ -2752,21 +2752,6 @@ h3.alpheios-inflections__credits-title {
 .alpheios-panel__menu-icon.menu-open {
   fill: var(--alpheios-color-bright) !important;
 }
-.alpheios-panel__header-title {
-  direction: ltr !important;
-  display: flex;
-  flex-wrap: nowrap !important;
-  box-sizing: border-box !important;
-  align-items: stretch !important;
-  color: var(--alpheios-color-light) !important;
-  font-family: var(--alpheios-serif-font-face) !important;
-  font-size: calc(var(--alpheios-base-ui-size) * 1.5) !important;
-}
-.alpheios-panel__header-title-text {
-  padding-top: calc(var(--alpheios-base-ui-size) * 0.5) !important;
-  margin: 0 calc(var(--alpheios-base-ui-size) * 1.25) !important;
-  white-space: nowrap !important;
-}
 .alpheios-panel__header-btn-group--end {
   display: flex;
   flex-wrap: nowrap !important;
@@ -2879,6 +2864,9 @@ h3.alpheios-inflections__credits-title {
 }
 .alpheios-panel--compact.alpheios-panel {
   grid-template-columns: auto;
+}
+.alpheios-panel--compact .alpheios-panel__close-btn {
+  margin-left: calc(var(--alpheios-base-ui-size) * 1.25) !important;
 }
 .alpheios-panel--compact.alpheios-panel--left {
   height: 100vh !important;

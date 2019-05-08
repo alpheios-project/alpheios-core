@@ -17,15 +17,11 @@
         />
       </div>
 
-      <div class="alpheios-panel__header-title">
-        <div class="alpheios-panel__header-title-text">
-          {{ panelTitle }}
-        </div>
-
+      <div class="alpheios-panel__header-btn-group--end">
         <div
-          class="alpheios-panel__header-btn"
-          @click="expand"
-          v-show="!isLandscape && !expanded"
+            class="alpheios-panel__header-btn"
+            @click="expand"
+            v-show="!isLandscape && !expanded"
         >
           <up-icon/>
         </div>
@@ -53,19 +49,13 @@
         >
           <right-icon/>
         </div>
-      </div>
 
-      <div class="alpheios-panel__header-btn-group--end">
-        <alph-tooltip
-            :tooltipText="l10n.getText('TOOLTIP_CLOSE_PANEL')"
-            tooltipDirection="top">
-          <div
-              @click="closePanel"
-              class="alpheios-panel__close-btn"
-          >
-              <close-icon/>
-          </div>
-        </alph-tooltip>
+        <div
+            @click="closePanel"
+            class="alpheios-panel__close-btn"
+        >
+          <close-icon/>
+        </div>
       </div>
     </div>
 
@@ -381,7 +371,6 @@ import Morph from './morph.vue'
 import Treebank from './treebank.vue'
 import Info from './info.vue'
 import InflectionBrowser from './inflections-browser.vue'
-import Tooltip from './tooltip.vue'
 import Lookup from './lookup.vue'
 import ReskinFontColor from './font-size.vue'
 import UserAuth from './user-auth.vue'
@@ -430,7 +419,6 @@ export default {
     treebank: Treebank,
     userAuth: UserAuth,
     closeIcon: CloseIcon,
-    alphTooltip: Tooltip,
     lookup: Lookup,
     reskinFontColor: ReskinFontColor,
     wordListPanel: WordListPanel,
@@ -572,49 +560,6 @@ export default {
         }
       }
       return content
-    },
-
-    panelTitle () {
-      let title = ''
-      switch (this.$store.state.ui.activeTab) {
-        case 'info':
-          title = this.l10n.getText('TOOLTIP_HELP')
-          break
-        case 'morphology':
-          title = this.l10n.getText('TOOLTIP_MORPHOLOGY')
-          break
-        case 'definitions':
-          title = this.l10n.getText('TOOLTIP_DEFINITIONS')
-          break
-        case 'inflections':
-          title = this.l10n.getText('TOOLTIP_INFLECT')
-          break
-        case 'inflectionsbrowser':
-          title = this.l10n.getText('TOOLTIP_INFLECT_BROWSER')
-          break
-        case 'grammar':
-          title = this.l10n.getText('TOOLTIP_GRAMMAR')
-          break
-        case 'treebank':
-          title = this.l10n.getText('TOOLTIP_TREEBANK')
-          break
-        case 'options':
-          title = this.l10n.getText('TOOLTIP_OPTIONS')
-          break
-        case 'user':
-          title = this.l10n.getText('TOOLTIP_USER')
-          break
-        case 'wordUsage':
-          title = this.l10n.getText('TOOLTIP_WORD_USAGE')
-          break
-        case 'wordlist':
-          title = this.l10n.getText('TOOLTIP_WORDLIST')
-          break
-        case 'status':
-          title = this.l10n.getText('TOOLTIP_STATUS')
-          break
-      }
-      return title
     },
 
     providersLinkText: function () {
@@ -790,23 +735,6 @@ export default {
     }
   }
 
-  .alpheios-panel__header-title {
-    direction: ltr;
-    display: flex;
-    flex-wrap: nowrap;
-    box-sizing: border-box;
-    align-items: stretch;
-    color: var(--alpheios-color-light);
-    font-family: var(--alpheios-serif-font-face);
-    font-size: uisize(24px);
-  }
-
-  .alpheios-panel__header-title-text {
-    padding-top: uisize(8px);
-    margin: 0 uisize(20px);
-    white-space: nowrap;
-  }
-
   .alpheios-panel__header-btn-group--end {
     display: flex;
     flex-wrap: nowrap;
@@ -944,6 +872,10 @@ export default {
 
     &.alpheios-panel {
       grid-template-columns: auto;
+    }
+
+    & .alpheios-panel__close-btn {
+      margin-left: uisize(20px);
     }
 
     &.alpheios-panel--left {
