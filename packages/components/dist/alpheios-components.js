@@ -11228,10 +11228,19 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
-/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid/v4 */ "../node_modules/uuid/v4.js");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
+/* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
+/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -11256,10 +11265,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 
+
+
+
+// Modules support
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'InflFootnote',
+  // API modules that are required for this component
+  inject: {
+    app: 'app'
+  },
+  storeModules: ['panel'], // Store modules that are required by this component
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_3__["default"]],
+
+  visibleUnwatch: null,
+
   props: {
     footnotes: {
       type: Array,
@@ -11271,9 +11293,10 @@ __webpack_require__.r(__webpack_exports__);
 
   data () {
     return {
+      id: uuid_v4__WEBPACK_IMPORTED_MODULE_0___default()(),
       target: null,
       footnotesPopupVisible: false,
-      draggable: true,
+      draggable: false,
       popupAlignmentStyles: { transform: undefined },
       inflpopup: null,
       inflpanel: null,
@@ -11284,15 +11307,26 @@ __webpack_require__.r(__webpack_exports__);
   mounted () {
     this.inflpopup = this.$el.querySelector('.alpheios-inflections__footnote-popup')
     this.inflpanel = this.$el.closest('#alpheios-panel__inflections-panel')
+
+    if (this.app.platform.isMobile) {
+      this.$options.visibleUnwatch = this.$store.watch((state) => state.panel.visibleFootnoteId, (id) => {
+        if (this.footnotesPopupVisible && id !== this.id) {
+          this.hidePopup()
+        }
+      })
+    }
   },
   beforeDestroy () {
     this.$_alpheios_cleanup()
+    if (this.$options.visibleUnwatch) {
+      this.$options.visibleUnwatch()
+    }
   },
   methods: {
     // Named according to Vue style guide: https://vuejs.org/v2/style-guide/#Private-property-names-essential
     $_alpheios_init () {
       if (this.draggable && !this.$options.interactInstance) {
-        this.$options.interactInstance = interactjs__WEBPACK_IMPORTED_MODULE_0___default()(this.inflpopup)
+        this.$options.interactInstance = interactjs__WEBPACK_IMPORTED_MODULE_1___default()(this.inflpopup)
           .draggable(this.draggableSettings())
 
         this.setTransformPopup('translate(-50%)')
@@ -11365,9 +11399,13 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     showPopup () {
-      this.$_alpheios_init()
+      if (this.app.platform.isDesktop) {
+        this.draggable = true
+        this.$_alpheios_init()
+        vue_dist_vue__WEBPACK_IMPORTED_MODULE_2___default.a.nextTick().then(() => this.checkBounds())
+      }
       this.footnotesPopupVisible = true
-      vue_dist_vue__WEBPACK_IMPORTED_MODULE_1___default.a.nextTick().then(() => this.checkBounds())
+      this.$store.commit('panel/setVisibleFootnote', this.id)
     },
 
     hidePopup () {
@@ -12583,7 +12621,6 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   mounted: function () {
-    console.info(`Inflections table wide is mounted`)
     if (this.inflBrowserTable) {
       this.options.noSuffixMatchesHidden = false
     }
@@ -18396,9 +18433,13 @@ var render = function() {
           _vm._v(" "),
           _vm._l(_vm.footnotes, function(footnote) {
             return [
-              _c("dt", [_vm._v(_vm._s(footnote.index))]),
+              _c("dt", [
+                _vm._v("\n        " + _vm._s(footnote.index) + "\n      ")
+              ]),
               _vm._v(" "),
-              _c("dd", [_vm._v(_vm._s(footnote.text))])
+              _c("dd", [
+                _vm._v("\n        " + _vm._s(footnote.text) + "\n      ")
+              ])
             ]
           }),
           _vm._v(" "),
@@ -42131,6 +42172,7 @@ class UIController {
     window.addEventListener('orientationchange', () => {
       // Update platform information
       this.platform = new _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_21__["default"]()
+      document.body.dataset.alpheiosPlatformOrientation = this.platform.isPortrait ? 'portrait' : 'landscape'
       if (this.hasModule('panel')) {
         this.store.commit('panel/setOrientation', this.platform.orientation)
       }
@@ -42357,6 +42399,9 @@ class UIController {
 
     // Inject HTML code of a plugin. Should go in reverse order.
     document.body.classList.add('alpheios')
+    // Set platform attibutes
+    document.body.dataset.alpheiosPlatformOrientation = this.platform.isPortrait ? 'portrait' : 'landscape'
+    document.body.dataset.alpheiosPlatformLayoutType = this.platform.isDesktop ? 'large' : 'compact'
     let container = document.createElement('div')
     document.body.insertBefore(container, null)
     container.outerHTML = this.options.template.html
@@ -52402,7 +52447,9 @@ PanelModule.store = (moduleInstance) => {
       // Where a panel is located. Possible values are `left` or `right`.
       position: 'left',
       // Device orientation
-      orientation: moduleInstance.config.platform.orientation
+      orientation: moduleInstance.config.platform.orientation,
+      // An ID of the last opened footnote. Required for the modal footnote popup mode on mobile
+      visibleFootnoteId: false
     },
     mutations: {
       /**
@@ -52431,6 +52478,10 @@ PanelModule.store = (moduleInstance) => {
 
       setOrientation (state, orientation) {
         state.orientation = orientation
+      },
+
+      setVisibleFootnote (state, id) {
+        state.visibleFootnoteId = id
       }
     }
   }

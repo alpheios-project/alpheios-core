@@ -1690,20 +1690,42 @@ a.alpheios-popup__providers-link {
   grid-row-gap: 2px !important;
   background: #FFF !important;
   color: var(--alpheios-text-color) !important;
-  position: absolute !important;
-  padding: 30px 15px 15px !important;
-  left: 0 !important;
-  bottom: 20px !important;
   z-index: 10 !important;
-  min-width: 200px !important;
-  border: 1px solid var(--alpheios-border-color) !important;
-  cursor: move !important;
+  box-sizing: border-box !important;
   -webkit-touch-callout: none !important;
   -webkit-user-select: none !important;
   -khtml-user-select: none !important;
   -moz-user-select: none !important;
   -ms-user-select: none !important;
   user-select: none !important;
+}
+[data-alpheios-platform-layout-type=compact] .alpheios-inflections__footnote-popup {
+  position: fixed !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  width: 50vw !important;
+  border-top: 1px solid var(--alpheios-border-color) !important;
+  padding: calc(var(--alpheios-base-text-size) * 1.875) 15px 15px calc(var(--alpheios-base-ui-size) * 3.125) !important;
+}
+[data-alpheios-platform-layout-type=compact] .alpheios-panel--left .alpheios-inflections__footnote-popup {
+  border-right: 1px solid var(--alpheios-border-color) !important;
+}
+[data-alpheios-platform-layout-type=compact] .alpheios-panel--right .alpheios-inflections__footnote-popup {
+  left: auto !important;
+  right: 0 !important;
+  border-left: 1px solid var(--alpheios-border-color) !important;
+}
+[data-alpheios-platform-orientation=portrait][data-alpheios-platform-layout-type=compact] .alpheios-inflections__footnote-popup, [data-alpheios-platform-layout-type=compact] .alpheios-panel--expanded .alpheios-inflections__footnote-popup {
+  width: 100vw !important;
+}
+[data-alpheios-platform-layout-type=large] .alpheios-inflections__footnote-popup {
+  position: absolute !important;
+  left: 0 !important;
+  bottom: 20px !important;
+  min-width: 200px !important;
+  border: 1px solid var(--alpheios-border-color) !important;
+  cursor: move !important;
+  padding: 30px 15px 15px !important;
 }
 .alpheios-inflections__footnote-popup.hidden {
   display: none;
@@ -1713,19 +1735,27 @@ a.alpheios-popup__providers-link {
   position: absolute !important;
   text-transform: uppercase !important;
   left: 15px !important;
+  top: calc(var(--alpheios-base-ui-size) * 0.4375) !important;
+}
+[data-alpheios-platform-layout-type=large] .alpheios-inflections__footnote-popup-title {
+  left: 15px !important;
   top: 7px !important;
 }
 .alpheios-inflections__footnote-popup-close-btn {
   position: absolute !important;
-  right: 5px !important;
-  top: 5px !important;
+  right: calc(var(--alpheios-base-ui-size) * 0.3125) !important;
+  top: calc(var(--alpheios-base-ui-size) * 0.3125) !important;
   display: block;
-  width: 20px !important;
-  height: 20px !important;
+  width: calc(var(--alpheios-base-ui-size) * 2.75) !important;
+  height: calc(var(--alpheios-base-ui-size) * 2.75) !important;
   margin: 0 !important;
   cursor: pointer !important;
   fill: var(--alpheios-color-neutral-dark) !important;
   stroke: var(--alpheios-color-neutral-dark) !important;
+}
+[data-alpheios-platform-layout-type=large] .alpheios-inflections__footnote-popup-close-btn {
+  width: 20px !important;
+  height: 20px !important;
 }
 .alpheios-inflections__footnote-popup-close-btn:hover,
 .alpheios-inflections__footnote-popup-close-btn:active {

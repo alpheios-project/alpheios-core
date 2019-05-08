@@ -41,7 +41,9 @@ PanelModule.store = (moduleInstance) => {
       // Where a panel is located. Possible values are `left` or `right`.
       position: 'left',
       // Device orientation
-      orientation: moduleInstance.config.platform.orientation
+      orientation: moduleInstance.config.platform.orientation,
+      // An ID of the last opened footnote. Required for the modal footnote popup mode on mobile
+      visibleFootnoteId: false
     },
     mutations: {
       /**
@@ -70,6 +72,10 @@ PanelModule.store = (moduleInstance) => {
 
       setOrientation (state, orientation) {
         state.orientation = orientation
+      },
+
+      setVisibleFootnote (state, id) {
+        state.visibleFootnoteId = id
       }
     }
   }

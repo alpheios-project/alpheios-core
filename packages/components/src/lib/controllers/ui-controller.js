@@ -123,6 +123,7 @@ export default class UIController {
     window.addEventListener('orientationchange', () => {
       // Update platform information
       this.platform = new Platform()
+      document.body.dataset.alpheiosPlatformOrientation = this.platform.isPortrait ? 'portrait' : 'landscape'
       if (this.hasModule('panel')) {
         this.store.commit('panel/setOrientation', this.platform.orientation)
       }
@@ -349,6 +350,9 @@ export default class UIController {
 
     // Inject HTML code of a plugin. Should go in reverse order.
     document.body.classList.add('alpheios')
+    // Set platform attibutes
+    document.body.dataset.alpheiosPlatformOrientation = this.platform.isPortrait ? 'portrait' : 'landscape'
+    document.body.dataset.alpheiosPlatformLayoutType = this.platform.isDesktop ? 'large' : 'compact'
     let container = document.createElement('div')
     document.body.insertBefore(container, null)
     container.outerHTML = this.options.template.html

@@ -255,7 +255,6 @@ export default {
   },
 
   mounted: function () {
-    console.info(`Inflections table wide is mounted`)
     if (this.inflBrowserTable) {
       this.options.noSuffixMatchesHidden = false
     }

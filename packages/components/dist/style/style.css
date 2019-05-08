@@ -1690,20 +1690,42 @@ a.alpheios-popup__providers-link {
   grid-row-gap: 2px;
   background: #FFF;
   color: var(--alpheios-text-color);
-  position: absolute;
-  padding: 30px 15px 15px;
-  left: 0;
-  bottom: 20px;
   z-index: 10;
-  min-width: 200px;
-  border: 1px solid var(--alpheios-border-color);
-  cursor: move;
+  box-sizing: border-box;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+[data-alpheios-platform-layout-type=compact] .alpheios-inflections__footnote-popup {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 50vw;
+  border-top: 1px solid var(--alpheios-border-color);
+  padding: calc(var(--alpheios-base-text-size) * 1.875) 15px 15px calc(var(--alpheios-base-ui-size) * 3.125);
+}
+[data-alpheios-platform-layout-type=compact] .alpheios-panel--left .alpheios-inflections__footnote-popup {
+  border-right: 1px solid var(--alpheios-border-color);
+}
+[data-alpheios-platform-layout-type=compact] .alpheios-panel--right .alpheios-inflections__footnote-popup {
+  left: auto;
+  right: 0;
+  border-left: 1px solid var(--alpheios-border-color);
+}
+[data-alpheios-platform-orientation=portrait][data-alpheios-platform-layout-type=compact] .alpheios-inflections__footnote-popup, [data-alpheios-platform-layout-type=compact] .alpheios-panel--expanded .alpheios-inflections__footnote-popup {
+  width: 100vw;
+}
+[data-alpheios-platform-layout-type=large] .alpheios-inflections__footnote-popup {
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+  min-width: 200px;
+  border: 1px solid var(--alpheios-border-color);
+  cursor: move;
+  padding: 30px 15px 15px;
 }
 .alpheios-inflections__footnote-popup.hidden {
   display: none;
@@ -1713,19 +1735,27 @@ a.alpheios-popup__providers-link {
   position: absolute;
   text-transform: uppercase;
   left: 15px;
+  top: calc(var(--alpheios-base-ui-size) * 0.4375);
+}
+[data-alpheios-platform-layout-type=large] .alpheios-inflections__footnote-popup-title {
+  left: 15px;
   top: 7px;
 }
 .alpheios-inflections__footnote-popup-close-btn {
   position: absolute;
-  right: 5px;
-  top: 5px;
+  right: calc(var(--alpheios-base-ui-size) * 0.3125);
+  top: calc(var(--alpheios-base-ui-size) * 0.3125);
   display: block;
-  width: 20px;
-  height: 20px;
+  width: calc(var(--alpheios-base-ui-size) * 2.75);
+  height: calc(var(--alpheios-base-ui-size) * 2.75);
   margin: 0;
   cursor: pointer;
   fill: var(--alpheios-color-neutral-dark);
   stroke: var(--alpheios-color-neutral-dark);
+}
+[data-alpheios-platform-layout-type=large] .alpheios-inflections__footnote-popup-close-btn {
+  width: 20px;
+  height: 20px;
 }
 .alpheios-inflections__footnote-popup-close-btn:hover,
 .alpheios-inflections__footnote-popup-close-btn:active {
