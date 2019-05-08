@@ -437,6 +437,7 @@ export default {
   customPropStyle: undefined,
   baseTextSize: undefined,
   scaledTextSize: undefined,
+  currentTextSize: undefined,
   panelVisibilityUnwatch: undefined,
   panelPositionUnwatch: undefined,
   panelOrientationUnwatch: undefined,
@@ -625,11 +626,15 @@ export default {
 
     gestureMoveListener: function (event) {
       const computedFontSize = Math.round(this.$options.scaledTextSize * event.scale)
-      document.documentElement.style.setProperty('--alpheios-base-text-size', `${computedFontSize}px`, 'important')
+      if (Math.abs(computedFontSize - this.$options.currentTextSize) > 1) {
+        // Update element's style only when size change is greater than 1px to avoid extra redraws
+        this.$options.currentTextSize = computedFontSize
+        document.documentElement.style.setProperty('--alpheios-base-text-size', `${this.$options.currentTextSize}px`, 'important')
+      }
     },
 
-    gestureEndListener: function (event) {
-      this.$options.scaledTextSize = Math.round(this.$options.scaledTextSize * event.scale)
+    gestureEndListener: function () {
+      this.$options.scaledTextSize = this.$options.currentTextSize
     },
 
     switchProviders: function () {
@@ -644,6 +649,7 @@ export default {
     // Remove pixel units from the value string
     this.$options.baseTextSize = this.$options.baseTextSize.replace(/px/, '')
     this.$options.scaledTextSize = this.$options.baseTextSize
+    this.$options.currentTextSize = this.$options.baseTextSize
 
     interact(`#${this.panelId}`).gesturable({})
       .on('gesturemove', this.gestureMoveListener.bind(this))

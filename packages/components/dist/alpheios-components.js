@@ -11266,12 +11266,14 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     }
   },
+  // An instance of interact.js
+  interactInstance: undefined,
+
   data () {
     return {
       target: null,
       footnotesPopupVisible: false,
       draggable: true,
-      interactInstance: null,
       popupAlignmentStyles: { transform: undefined },
       inflpopup: null,
       inflpanel: null,
@@ -11289,8 +11291,8 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     // Named according to Vue style guide: https://vuejs.org/v2/style-guide/#Private-property-names-essential
     $_alpheios_init () {
-      if (this.draggable && !this.interactInstance) {
-        this.interactInstance = interactjs__WEBPACK_IMPORTED_MODULE_0___default()(this.inflpopup)
+      if (this.draggable && !this.$options.interactInstance) {
+        this.$options.interactInstance = interactjs__WEBPACK_IMPORTED_MODULE_0___default()(this.inflpopup)
           .draggable(this.draggableSettings())
 
         this.setTransformPopup('translate(-50%)')
@@ -11298,9 +11300,9 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     $_alpheios_cleanup () {
-      if (this.interactInstance) {
-        this.interactInstance.unset()
-        this.interactInstance = null
+      if (this.$options.interactInstance) {
+        this.$options.interactInstance.unset()
+        this.$options.interactInstance = null
       }
     },
 
@@ -12258,7 +12260,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     collapse: function () {
       this.state.collapsed = !this.state.collapsed
-      this.$emit('widthchange') // When view is open, we might need to adjust a panel width
     },
 
     cellClasses: function (cell) {
@@ -12487,19 +12488,16 @@ __webpack_require__.r(__webpack_exports__);
       if (this.view.isImplemented) {
         this.view.wideView.collapsed = this.state.collapsed
       }
-      this.$emit('widthchange') // When view is open, we might need to adjust a panel width
     },
 
     hideNoSuffixGroups: function () {
       this.view.noSuffixMatchesGroupsHidden(true)
       this.state.noSuffixGroupsHidden = true
-      this.$emit('widthchange')
     },
 
     showNoSuffixGroups: function () {
       this.view.noSuffixMatchesGroupsHidden(false)
       this.state.noSuffixGroupsHidden = false
-      this.$emit('widthchange')
     },
 
     // Cell classes for regular tables
@@ -12574,7 +12572,6 @@ __webpack_require__.r(__webpack_exports__);
 
   watch: {
     view: function () {
-      this.$emit('widthchange')
       this.state.noSuffixGroupsHidden = this.view.isNoSuffixMatchesGroupsHidden
     },
 
@@ -12586,6 +12583,7 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   mounted: function () {
+    console.info(`Inflections table wide is mounted`)
     if (this.inflBrowserTable) {
       this.options.noSuffixMatchesHidden = false
     }
@@ -12614,9 +12612,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inflections_subtables_wide_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./inflections-subtables-wide.vue */ "./vue/components/inflections-subtables-wide.vue");
 /* harmony import */ var _inflections_supp_table_wide_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./inflections-supp-table-wide.vue */ "./vue/components/inflections-supp-table-wide.vue");
 /* harmony import */ var _wordforms_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./wordforms.vue */ "./vue/components/wordforms.vue");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue/dist/vue */ "../node_modules/vue/dist/vue.js");
-/* harmony import */ var vue_dist_vue__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
 //
@@ -12695,8 +12691,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
 // Modules support
 
 
@@ -12704,7 +12698,7 @@ __webpack_require__.r(__webpack_exports__);
   name: 'Inflections',
   inject: ['app', 'l10n'],
   storeModules: ['app', 'ui'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_6__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_5__["default"]],
   components: {
     prerenderedTableWide: _inflections_table_prerendered_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     mainTableWideVue: _inflections_table_wide_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -15262,6 +15256,7 @@ __webpack_require__.r(__webpack_exports__);
   customPropStyle: undefined,
   baseTextSize: undefined,
   scaledTextSize: undefined,
+  currentTextSize: undefined,
   panelVisibilityUnwatch: undefined,
   panelPositionUnwatch: undefined,
   panelOrientationUnwatch: undefined,
@@ -15450,11 +15445,15 @@ __webpack_require__.r(__webpack_exports__);
 
     gestureMoveListener: function (event) {
       const computedFontSize = Math.round(this.$options.scaledTextSize * event.scale)
-      document.documentElement.style.setProperty('--alpheios-base-text-size', `${computedFontSize}px`, 'important')
+      if (Math.abs(computedFontSize - this.$options.currentTextSize) > 1) {
+        // Update element's style only when size change is greater than 1px to avoid extra redraws
+        this.$options.currentTextSize = computedFontSize
+        document.documentElement.style.setProperty('--alpheios-base-text-size', `${this.$options.currentTextSize}px`, 'important')
+      }
     },
 
-    gestureEndListener: function (event) {
-      this.$options.scaledTextSize = Math.round(this.$options.scaledTextSize * event.scale)
+    gestureEndListener: function () {
+      this.$options.scaledTextSize = this.$options.currentTextSize
     },
 
     switchProviders: function () {
@@ -15469,6 +15468,7 @@ __webpack_require__.r(__webpack_exports__);
     // Remove pixel units from the value string
     this.$options.baseTextSize = this.$options.baseTextSize.replace(/px/, '')
     this.$options.scaledTextSize = this.$options.baseTextSize
+    this.$options.currentTextSize = this.$options.baseTextSize
 
     interactjs__WEBPACK_IMPORTED_MODULE_0___default()(`#${this.panelId}`).gesturable({})
       .on('gesturemove', this.gestureMoveListener.bind(this))
@@ -15529,6 +15529,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/images/inline-icons/attach-left.svg */ "./images/inline-icons/attach-left.svg");
 /* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/images/inline-icons/attach-right.svg */ "./images/inline-icons/attach-right.svg");
 /* harmony import */ var _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/components/panel-compact.vue */ "./vue/components/panel-compact.vue");
+/* harmony import */ var _tooltip_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./tooltip.vue */ "./vue/components/tooltip.vue");
 //
 //
 //
@@ -15833,10 +15834,12 @@ __webpack_require__.r(__webpack_exports__);
 // Vue components
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PanelLarge',
   extends: _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
   components: {
+    alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
     navbuttonsLarge: _vue_components_nav_navbuttons_large_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     logoIcon: _images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_2__["default"],
     attachLeftIcon: _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_3__["default"],
@@ -40722,7 +40725,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"fill":"none","d":"M14 1l-8 9 8 9"}})])
+            children.concat([_c('path',{attrs:{"fill":"none","stroke-width":"1.6","d":"M14 1l-8 9 8 9"}})])
           )
         }
       });
@@ -40762,7 +40765,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"fill":"none","d":"M6 1l8 9-8 9"}})])
+            children.concat([_c('path',{attrs:{"fill":"none","stroke-width":"1.6","d":"M6 1l8 9-8 9"}})])
           )
         }
       });
@@ -41442,7 +41445,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"d":"M12.13 11.59c-.16 1.25-1.78 2.53-3.03 2.57-2.93.04.79-4.7-.36-5.79.56-.21 1.88-.54 1.88.44 0 .82-.5 1.74-.74 2.51-1.22 3.84 2.25-.17 2.26-.14.02.03.02.17-.01.41-.05.36.03-.24 0 0zm-.57-5.92c0 1-2.2 1.48-2.2.36 0-1.03 2.2-1.49 2.2-.36z"}}),_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}})])
+            children.concat([_c('path',{attrs:{"stroke-width":"0","d":"M12.13 11.59c-.16 1.25-1.78 2.53-3.03 2.57-2.93.04.79-4.7-.36-5.79.56-.21 1.88-.54 1.88.44 0 .82-.5 1.74-.74 2.51-1.22 3.84 2.25-.17 2.26-.14.02.03.02.17-.01.41-.05.36.03-.24 0 0zm-.57-5.92c0 1-2.2 1.48-2.2.36 0-1.03 2.2-1.49 2.2-.36z"}}),_c('circle',{attrs:{"fill":"none","stroke-width":"1.1","cx":"10","cy":"10","r":"9"}})])
           )
         }
       });
@@ -41682,7 +41685,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","d":"M13.018 14.197l-3.573-3.572"}})])
+            children.concat([_c('circle',{attrs:{"fill":"none","stroke-width":"1.1","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"stroke-width":"0","d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","stroke-width":"1.1","d":"M13.018 14.197l-3.573-3.572"}})])
           )
         }
       });

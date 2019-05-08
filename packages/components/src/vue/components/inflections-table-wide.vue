@@ -160,19 +160,16 @@ export default {
       if (this.view.isImplemented) {
         this.view.wideView.collapsed = this.state.collapsed
       }
-      this.$emit('widthchange') // When view is open, we might need to adjust a panel width
     },
 
     hideNoSuffixGroups: function () {
       this.view.noSuffixMatchesGroupsHidden(true)
       this.state.noSuffixGroupsHidden = true
-      this.$emit('widthchange')
     },
 
     showNoSuffixGroups: function () {
       this.view.noSuffixMatchesGroupsHidden(false)
       this.state.noSuffixGroupsHidden = false
-      this.$emit('widthchange')
     },
 
     // Cell classes for regular tables
@@ -247,7 +244,6 @@ export default {
 
   watch: {
     view: function () {
-      this.$emit('widthchange')
       this.state.noSuffixGroupsHidden = this.view.isNoSuffixMatchesGroupsHidden
     },
 
@@ -259,6 +255,7 @@ export default {
   },
 
   mounted: function () {
+    console.info(`Inflections table wide is mounted`)
     if (this.inflBrowserTable) {
       this.options.noSuffixMatchesHidden = false
     }

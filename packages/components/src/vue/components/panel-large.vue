@@ -301,11 +301,13 @@ import AttachLeftIcon from '@/images/inline-icons/attach-left.svg'
 import AttachRightIcon from '@/images/inline-icons/attach-right.svg'
 // Vue components
 import CompactPanel from '@/vue/components/panel-compact.vue'
+import Tooltip from './tooltip.vue'
 
 export default {
   name: 'PanelLarge',
   extends: CompactPanel,
   components: {
+    alphTooltip: Tooltip,
     navbuttonsLarge: NavbuttonsLarge,
     logoIcon: LogoIcon,
     attachLeftIcon: AttachLeftIcon,

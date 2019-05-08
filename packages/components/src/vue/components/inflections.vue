@@ -76,8 +76,6 @@ import WideSubTables from './inflections-subtables-wide.vue'
 import WideSuppTable from './inflections-supp-table-wide.vue'
 import WordForms from './wordforms.vue'
 
-import Vue from 'vue/dist/vue'
-
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 

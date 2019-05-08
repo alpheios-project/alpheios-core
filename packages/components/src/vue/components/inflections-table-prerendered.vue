@@ -63,7 +63,6 @@ export default {
   methods: {
     collapse: function () {
       this.state.collapsed = !this.state.collapsed
-      this.$emit('widthchange') // When view is open, we might need to adjust a panel width
     },
 
     cellClasses: function (cell) {

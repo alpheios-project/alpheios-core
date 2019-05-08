@@ -32,12 +32,14 @@ export default {
       required: true
     }
   },
+  // An instance of interact.js
+  interactInstance: undefined,
+
   data () {
     return {
       target: null,
       footnotesPopupVisible: false,
       draggable: true,
-      interactInstance: null,
       popupAlignmentStyles: { transform: undefined },
       inflpopup: null,
       inflpanel: null,
@@ -55,8 +57,8 @@ export default {
   methods: {
     // Named according to Vue style guide: https://vuejs.org/v2/style-guide/#Private-property-names-essential
     $_alpheios_init () {
-      if (this.draggable && !this.interactInstance) {
-        this.interactInstance = interact(this.inflpopup)
+      if (this.draggable && !this.$options.interactInstance) {
+        this.$options.interactInstance = interact(this.inflpopup)
           .draggable(this.draggableSettings())
 
         this.setTransformPopup('translate(-50%)')
@@ -64,9 +66,9 @@ export default {
     },
 
     $_alpheios_cleanup () {
-      if (this.interactInstance) {
-        this.interactInstance.unset()
-        this.interactInstance = null
+      if (this.$options.interactInstance) {
+        this.$options.interactInstance.unset()
+        this.$options.interactInstance = null
       }
     },
 
