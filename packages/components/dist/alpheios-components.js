@@ -14793,9 +14793,19 @@ __webpack_require__.r(__webpack_exports__);
 
   computed: {
     notificationClasses: function () {
-      return this.$store.state.ui.notification.important
-        ? 'alpheios-notification-area__notification--important'
-        : undefined
+      let classes = []
+      if (this.$store.state.ui.notification.important) {
+        classes.push('alpheios-notification-area__notification--important')
+      }
+      if (!this.showNotification) {
+        // The presence of this class will let the login notification set the top margin
+        classes.push(`alpheios-notification-area__notification--hidden`)
+      }
+      return classes
+    },
+
+    showNotification () {
+      return this.$store.state.ui.notification.visible && this.$store.state.ui.notification.important
     },
 
     showLoginNotification () {
@@ -23540,11 +23550,8 @@ var render = function() {
           {
             name: "show",
             rawName: "v-show",
-            value:
-              _vm.$store.state.ui.notification.visible &&
-              _vm.$store.state.ui.notification.important,
-            expression:
-              "$store.state.ui.notification.visible && $store.state.ui.notification.important"
+            value: _vm.showNotification,
+            expression: "showNotification"
           }
         ],
         staticClass: "alpheios-notification-area__notification",
@@ -23602,7 +23609,7 @@ var render = function() {
           }
         ],
         staticClass:
-          "alpheios-notification-area__notification alpheios-notification-area__notification--important",
+          "alpheios-notification-area__notification alpheios-notification-area__notification--important alpheios-notification-area__login-notification",
         attrs: { "data-count": _vm.$store.state.auth.notification.count }
       },
       [
@@ -42144,7 +42151,7 @@ class UIController {
      * Information about the platform an app is running upon.
      * @type {Platform} - A an object containing data about the platform.
      */
-    this.platform = new _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_21__["default"]()
+    this.platform = new _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_21__["default"](true)
     // Assign a class that will specify what type of layout will be used
     const layoutClassName = (this.platform.isMobile)
       ? layoutClasses.COMPACT
@@ -42171,8 +42178,7 @@ class UIController {
     // Detect device's orientation change in order to update panel layout
     window.addEventListener('orientationchange', () => {
       // Update platform information
-      this.platform = new _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_21__["default"]()
-      document.body.dataset.alpheiosPlatformOrientation = this.platform.isPortrait ? 'portrait' : 'landscape'
+      this.platform = new _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_21__["default"](true)
       if (this.hasModule('panel')) {
         this.store.commit('panel/setOrientation', this.platform.orientation)
       }
@@ -42399,9 +42405,6 @@ class UIController {
 
     // Inject HTML code of a plugin. Should go in reverse order.
     document.body.classList.add('alpheios')
-    // Set platform attibutes
-    document.body.dataset.alpheiosPlatformOrientation = this.platform.isPortrait ? 'portrait' : 'landscape'
-    document.body.dataset.alpheiosPlatformLayoutType = this.platform.isDesktop ? 'large' : 'compact'
     let container = document.createElement('div')
     document.body.insertBefore(container, null)
     container.outerHTML = this.options.template.html
@@ -47716,9 +47719,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class Platform {
-  constructor () {
+  constructor (setRootAttributes = false) {
     this.deviceType = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].getDeviceType()
     this.orientation = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].getOrientation()
+
+    if (setRootAttributes) {
+      this.setRootAttributes()
+    }
+  }
+
+  setRootAttributes () {
+    if (document && document.documentElement) {
+      document.documentElement.dataset.apScreenOrientation = this.isPortrait ? 'portrait' : 'landscape'
+      document.documentElement.dataset.apLayoutType = this.isDesktop ? 'large' : 'compact'
+    } else {
+      console.warn(`Cannot set platform attributes because either document or documentElement are not defined`)
+    }
   }
 
   get isDesktop () {

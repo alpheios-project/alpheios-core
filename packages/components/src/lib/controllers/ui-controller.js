@@ -95,7 +95,7 @@ export default class UIController {
      * Information about the platform an app is running upon.
      * @type {Platform} - A an object containing data about the platform.
      */
-    this.platform = new Platform()
+    this.platform = new Platform(true)
     // Assign a class that will specify what type of layout will be used
     const layoutClassName = (this.platform.isMobile)
       ? layoutClasses.COMPACT
@@ -122,8 +122,7 @@ export default class UIController {
     // Detect device's orientation change in order to update panel layout
     window.addEventListener('orientationchange', () => {
       // Update platform information
-      this.platform = new Platform()
-      document.body.dataset.alpheiosPlatformOrientation = this.platform.isPortrait ? 'portrait' : 'landscape'
+      this.platform = new Platform(true)
       if (this.hasModule('panel')) {
         this.store.commit('panel/setOrientation', this.platform.orientation)
       }
@@ -350,9 +349,6 @@ export default class UIController {
 
     // Inject HTML code of a plugin. Should go in reverse order.
     document.body.classList.add('alpheios')
-    // Set platform attibutes
-    document.body.dataset.alpheiosPlatformOrientation = this.platform.isPortrait ? 'portrait' : 'landscape'
-    document.body.dataset.alpheiosPlatformLayoutType = this.platform.isDesktop ? 'large' : 'compact'
     let container = document.createElement('div')
     document.body.insertBefore(container, null)
     container.outerHTML = this.options.template.html

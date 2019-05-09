@@ -885,14 +885,14 @@ export default {
     }
 
     &.alpheios-panel--left {
-      height: 100vh;
+      height: 100%;
       width: 50vw;
       top: 0;
       bottom: auto;
     }
 
     &.alpheios-panel--right {
-      height: 100vh;
+      height: 100%;
       width: 50vw;
       right: 0;
       left: auto;

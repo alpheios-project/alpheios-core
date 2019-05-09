@@ -190,7 +190,7 @@ export default {
 
   .alpheios-inflections__footnote-popup {
     display: grid;
-    grid-template-columns: 20px 1fr;
+    grid-template-columns: max-content 1fr;
     grid-row-gap: 2px;
     background: #FFF;
     color: var(--alpheios-text-color);
@@ -204,7 +204,13 @@ export default {
     -ms-user-select: none;
     user-select: none;
 
-    [data-alpheios-platform-layout-type="compact"] & {
+    & dd {
+      // Reset browser's default styling
+      margin-inline-start: 0;
+      padding-left: textsize(10px);
+    }
+
+    [data-ap-layout-type="compact"] & {
       position: fixed;
       left: 0;
       bottom: 0;
@@ -213,22 +219,22 @@ export default {
       padding: textsize(30px) 15px 15px uisize(50px);
     }
 
-    [data-alpheios-platform-layout-type="compact"] .alpheios-panel--left & {
+    [data-ap-layout-type="compact"] .alpheios-panel--left & {
       border-right: 1px solid var(--alpheios-border-color);
     }
 
-    [data-alpheios-platform-layout-type="compact"] .alpheios-panel--right & {
+    [data-ap-layout-type="compact"] .alpheios-panel--right & {
       left: auto;
       right: 0;
       border-left: 1px solid var(--alpheios-border-color);
     }
 
-    [data-alpheios-platform-orientation="portrait"][data-alpheios-platform-layout-type="compact"] &,
-    [data-alpheios-platform-layout-type="compact"] .alpheios-panel--expanded & {
+    [data-ap-screen-orientation="portrait"][data-ap-layout-type="compact"] &,
+    [data-ap-layout-type="compact"] .alpheios-panel--expanded & {
       width: 100vw;
     }
 
-    [data-alpheios-platform-layout-type="large"] & {
+    [data-ap-layout-type="large"] & {
       position: absolute;
       left: 0;
       bottom: 20px;
@@ -250,7 +256,7 @@ export default {
     left: 15px;
     top: uisize(7px);
 
-    [data-alpheios-platform-layout-type="large"] & {
+    [data-ap-layout-type="large"] & {
       left: 15px;
       top: 7px;
     }
@@ -268,7 +274,7 @@ export default {
     fill: var(--alpheios-color-neutral-dark);
     stroke: var(--alpheios-color-neutral-dark);
 
-    [data-alpheios-platform-layout-type="large"] & {
+    [data-ap-layout-type="large"] & {
       width: 20px;
       height: 20px;
     }

@@ -5,7 +5,7 @@
     <div
         class="alpheios-notification-area__notification"
         :class="notificationClasses"
-        v-show="$store.state.ui.notification.visible && $store.state.ui.notification.important"
+        v-show="showNotification"
     >
       <div
           class="alpheios-notification-area__msg"
@@ -25,7 +25,7 @@
       </div>
     </div>
     <div
-        class="alpheios-notification-area__notification alpheios-notification-area__notification--important"
+        class="alpheios-notification-area__notification alpheios-notification-area__notification--important alpheios-notification-area__login-notification"
         :data-count="$store.state.auth.notification.count"
         v-show="showLoginNotification"
     >
@@ -68,9 +68,19 @@ export default {
 
   computed: {
     notificationClasses: function () {
-      return this.$store.state.ui.notification.important
-        ? 'alpheios-notification-area__notification--important'
-        : undefined
+      let classes = []
+      if (this.$store.state.ui.notification.important) {
+        classes.push('alpheios-notification-area__notification--important')
+      }
+      if (!this.showNotification) {
+        // The presence of this class will let the login notification set the top margin
+        classes.push(`alpheios-notification-area__notification--hidden`)
+      }
+      return classes
+    },
+
+    showNotification () {
+      return this.$store.state.ui.notification.visible && this.$store.state.ui.notification.important
     },
 
     showLoginNotification () {
@@ -97,7 +107,6 @@ export default {
     align-items: stretch;
     flex: 0 0 auto;
     background: var(--alpheios-color-neutral-lightest);
-    padding: uisize(16px) uisize(16px) 0;
 
     &__notification {
       display: flex;
@@ -107,7 +116,16 @@ export default {
       background: var(--alpheios-notification-bg-color);
       border: 1px solid var(--alpheios-notification-border-color);
       border-radius: uisize(10px);
-      margin-bottom: uisize(16px);
+      margin: 0 uisize(16px) uisize(16px);
+    }
+
+    &__notification:first-child {
+      margin-top: uisize(16px);
+    }
+
+    &__notification--hidden + &__login-notification {
+      // If notification is hidden, set top margin of the login notification
+      margin-top: uisize(16px);
     }
 
     &__close-btn {

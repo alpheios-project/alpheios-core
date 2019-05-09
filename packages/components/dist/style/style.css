@@ -1195,7 +1195,6 @@ select.alpheios-setting__control,
   align-items: stretch;
   flex: 0 0 auto;
   background: var(--alpheios-color-neutral-lightest);
-  padding: calc(var(--alpheios-base-ui-size) * 1) calc(var(--alpheios-base-ui-size) * 1) 0;
 }
 .alpheios-notification-area__notification {
   display: flex;
@@ -1205,7 +1204,13 @@ select.alpheios-setting__control,
   background: var(--alpheios-notification-bg-color);
   border: 1px solid var(--alpheios-notification-border-color);
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
-  margin-bottom: calc(var(--alpheios-base-ui-size) * 1);
+  margin: 0 calc(var(--alpheios-base-ui-size) * 1) calc(var(--alpheios-base-ui-size) * 1);
+}
+.alpheios-notification-area__notification:first-child {
+  margin-top: calc(var(--alpheios-base-ui-size) * 1);
+}
+.alpheios-notification-area__notification--hidden + .alpheios-notification-area__login-notification {
+  margin-top: calc(var(--alpheios-base-ui-size) * 1);
 }
 .alpheios-notification-area__close-btn {
   width: calc(var(--alpheios-base-ui-size) * 1.25);
@@ -1686,7 +1691,7 @@ a.alpheios-popup__providers-link {
 }
 .alpheios-inflections__footnote-popup {
   display: grid;
-  grid-template-columns: 20px 1fr;
+  grid-template-columns: max-content 1fr;
   grid-row-gap: 2px;
   background: #FFF;
   color: var(--alpheios-text-color);
@@ -1699,7 +1704,11 @@ a.alpheios-popup__providers-link {
   -ms-user-select: none;
   user-select: none;
 }
-[data-alpheios-platform-layout-type=compact] .alpheios-inflections__footnote-popup {
+.alpheios-inflections__footnote-popup dd {
+  margin-inline-start: 0;
+  padding-left: calc(var(--alpheios-base-text-size) * 0.625);
+}
+[data-ap-layout-type=compact] .alpheios-inflections__footnote-popup {
   position: fixed;
   left: 0;
   bottom: 0;
@@ -1707,18 +1716,18 @@ a.alpheios-popup__providers-link {
   border-top: 1px solid var(--alpheios-border-color);
   padding: calc(var(--alpheios-base-text-size) * 1.875) 15px 15px calc(var(--alpheios-base-ui-size) * 3.125);
 }
-[data-alpheios-platform-layout-type=compact] .alpheios-panel--left .alpheios-inflections__footnote-popup {
+[data-ap-layout-type=compact] .alpheios-panel--left .alpheios-inflections__footnote-popup {
   border-right: 1px solid var(--alpheios-border-color);
 }
-[data-alpheios-platform-layout-type=compact] .alpheios-panel--right .alpheios-inflections__footnote-popup {
+[data-ap-layout-type=compact] .alpheios-panel--right .alpheios-inflections__footnote-popup {
   left: auto;
   right: 0;
   border-left: 1px solid var(--alpheios-border-color);
 }
-[data-alpheios-platform-orientation=portrait][data-alpheios-platform-layout-type=compact] .alpheios-inflections__footnote-popup, [data-alpheios-platform-layout-type=compact] .alpheios-panel--expanded .alpheios-inflections__footnote-popup {
+[data-ap-screen-orientation=portrait][data-ap-layout-type=compact] .alpheios-inflections__footnote-popup, [data-ap-layout-type=compact] .alpheios-panel--expanded .alpheios-inflections__footnote-popup {
   width: 100vw;
 }
-[data-alpheios-platform-layout-type=large] .alpheios-inflections__footnote-popup {
+[data-ap-layout-type=large] .alpheios-inflections__footnote-popup {
   position: absolute;
   left: 0;
   bottom: 20px;
@@ -1737,7 +1746,7 @@ a.alpheios-popup__providers-link {
   left: 15px;
   top: calc(var(--alpheios-base-ui-size) * 0.4375);
 }
-[data-alpheios-platform-layout-type=large] .alpheios-inflections__footnote-popup-title {
+[data-ap-layout-type=large] .alpheios-inflections__footnote-popup-title {
   left: 15px;
   top: 7px;
 }
@@ -1753,7 +1762,7 @@ a.alpheios-popup__providers-link {
   fill: var(--alpheios-color-neutral-dark);
   stroke: var(--alpheios-color-neutral-dark);
 }
-[data-alpheios-platform-layout-type=large] .alpheios-inflections__footnote-popup-close-btn {
+[data-ap-layout-type=large] .alpheios-inflections__footnote-popup-close-btn {
   width: 20px;
   height: 20px;
 }
@@ -2899,13 +2908,13 @@ h3.alpheios-inflections__credits-title {
   margin-left: calc(var(--alpheios-base-ui-size) * 1.25);
 }
 .alpheios-panel--compact.alpheios-panel--left {
-  height: 100vh;
+  height: 100%;
   width: 50vw;
   top: 0;
   bottom: auto;
 }
 .alpheios-panel--compact.alpheios-panel--right {
-  height: 100vh;
+  height: 100%;
   width: 50vw;
   right: 0;
   left: auto;
