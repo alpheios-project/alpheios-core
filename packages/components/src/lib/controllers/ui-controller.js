@@ -1003,7 +1003,7 @@ export default class UIController {
     return this
   }
 
-  newLexicalRequest (targetWord, languageID, data=null) {
+  newLexicalRequest (targetWord, languageID, data = null) {
     // Reset old word-related data
     this.api.app.homonym = null
     this.store.commit('app/resetWordData')

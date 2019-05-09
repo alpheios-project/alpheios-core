@@ -361,7 +361,7 @@ import { Definition } from 'alpheios-data-models'
 import WordListPanel from '@/vue/components/word-list/word-list-panel.vue'
 import ProgressBar from '@/vue/components/progress-bar.vue'
 // Embeddable SVG icons
-import MenuIcon from '@/images/inline-icons/book-open.svg'
+import MenuIcon from '@/images/inline-icons/reading-tools.svg'
 import CloseIcon from '@/images/inline-icons/x-close.svg'
 import UpIcon from '@/images/inline-icons/chevron-up.svg'
 import DownIcon from '@/images/inline-icons/chevron-down.svg'
@@ -709,8 +709,8 @@ export default {
   }
 
   .alpheios-panel__menu-icon {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: auto;
     fill: var(--alpheios-color-neutral-lightest);
 
     &:hover {
@@ -846,7 +846,7 @@ export default {
   .alpheios-panel__menu-btn {
     width: 40px;
     height: 40px;
-    margin: 10px 10px 10px 30px;
+    margin: 16px 10px 10px 30px;
     cursor: pointer;
   }
 

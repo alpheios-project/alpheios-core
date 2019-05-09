@@ -33,6 +33,13 @@
         :class="{ expanded: contentVisible }"
         @click="contentVisible = !contentVisible"
     >
+      <reading-tools-icon/>
+    </div>
+    <div
+        class="alpheios-toolbar__header-control"
+        :class="{ expanded: contentVisible }"
+        @click="contentVisible = !contentVisible"
+    >
       <collapsed-icon v-show="!contentVisible" />
       <expanded-icon v-show="contentVisible" />
     </div>
@@ -160,6 +167,7 @@ import InfoIcon from '@/images/inline-icons/info.svg'
 import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
 import CollapsedIcon from '@/images/inline-icons/collapsed.svg'
 import ExpandedIcon from '@/images/inline-icons/expanded.svg'
+import ReadingToolsIcon from '@/images/inline-icons/reading-tools.svg'
 import LookupIcon from '@/images/inline-icons/lookup.svg'
 // Vue components
 import ToolbarCompact from '@/vue/components/nav/toolbar-compact.vue'
@@ -192,6 +200,7 @@ export default {
     wordlistIcon: WordlistIcon,
     collapsedIcon: CollapsedIcon,
     expandedIcon: ExpandedIcon,
+    readingToolsIcon: ReadingToolsIcon,
     lookupIcon: LookupIcon
   },
   interactInstance: null,
@@ -341,6 +350,25 @@ export default {
   }
 
   .alpheios-toolbar__header {
+    width: uisize($alpheios-toolbar-base-width);
+    height: uisize($alpheios-toolbar-base-width);
+    border-bottom: none;
+    background: var(--alpheios-toolbar-bg-color);
+    box-sizing: border-box;
+    text-align: center;
+    // Need this for interact.js to work more reliably
+    touch-action: none;
+
+    & svg {
+      width: uisize(24px);
+      height: auto;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  .alpheios-toolbar__header-control {
     box-sizing: border-box;
     border: 1px solid var(--alpheios-border-color);
     border-bottom-left-radius: uisize(10px);
