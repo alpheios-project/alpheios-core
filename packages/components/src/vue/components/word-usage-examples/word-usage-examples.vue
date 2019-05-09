@@ -1,7 +1,10 @@
 <template>
   <div class="alpheios-word-usage">
-    <div class="alpheios_word_usage_list_title" data-alpheios-ignore="all">{{ targetWord }} ({{ language }})</div>
-    <div class="alpheios-word-usage-header" data-alpheios-ignore="all" v-show="showHeader">
+    <div class="alpheios_word_usage_list_title" data-alpheios-ignore="all">{{ targetWord }} ({{ language }})
+      (<span class="alpheios-word-usage-header-show-link" v-if="showHeader" @click="collapsedHeader = !collapsedHeader">{{ collapsedHeaderTitle }}</span>)
+    </div>
+
+    <div class="alpheios-word-usage-header" data-alpheios-ignore="all" v-show="!collapsedHeader && showHeader">
       <word-usage-examples-filters
         @filterCurrentByAuthor = "filterCurrentByAuthor"
         @getMoreResults = "getMoreResults"
@@ -16,7 +19,7 @@
             class="alpheios-word-usage__examples-show-sources-btn alpheios-button-primary"
             @click="changeShowDataSource"
         >
-          {{ l10n.getText('WORDUSAGE_SHOw_SOURCE_LINKS') }}
+          {{ l10n.getText('WORDUSAGE_SHOW_SOURCE_LINKS') }}
         </div>
         <div
             class="alpheios-word-usage__examples"
@@ -90,7 +93,8 @@ export default {
       selectedTextWork: null,
       needInnerFilter: false,
       // Whether to show reference links on mobile layout or not
-      showDataSource: false
+      showDataSource: false,
+      collapsedHeader: false
     }
   },
   computed: {
@@ -136,6 +140,9 @@ export default {
         return this.sortWordUSageExamplesBy()
       }
       return []
+    },
+    collapsedHeaderTitle () {
+      return this.collapsedHeader ? this.l10n.getText('WORDUSAGE_SHOW_FILTERS_TEXT') : this.l10n.getText('WORDUSAGE_HIDE_FILTERS_TEXT')
     }
   },
   methods: {
@@ -327,5 +334,47 @@ export default {
     .alpheios-panel--compact &__examples-source-link-large {
       display: none;
     }
+
+    .alpheios-word-usage-header-show-link {
+      cursor: pointer;
+      color: var(--alpheios-color-vivid);
+      &:hover {
+        text-decoration: underline;
+        color: var(--alpheios-color-vivid-hover);
+      }
+    }
   }
+
+
+  .alpheios-layout-compact {
+    .alpheios-word-usage-header-select-type-filters-block
+    .alpheios-word-usage-header-select-type-filter {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 20px;
+    }
+
+    .alpheios-word-usage-filters-select,
+    .alpheios-word-usage-header-actions {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .alpheios-word-usage-filters-select {
+      width: 100%;
+      max-width: 450px;
+    }
+
+    .alpheios-word-usage-header-actions {
+      border-top: 0;
+      margin-top: 0;
+      padding-top: 10px;
+    }
+
+    .alpheios-word-usage__examples-show-sources-btn {
+      margin: 20px 0;
+    }
+  }
+
+
 </style>

@@ -22,21 +22,6 @@
       </div>
     </alph-tooltip>
 
-    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT_BROWSER')" tooltipDirection="bottom-narrow">
-      <div @click="ui.changeTab('inflectionsbrowser')" class="alpheios-navbuttons__btn"
-            v-bind:class="{ active: $store.getters['ui/isActiveTab']('inflectionsbrowser') }">
-        <inflections-browser-icon></inflections-browser-icon>
-      </div>
-    </alph-tooltip>
-
-    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_GRAMMAR')" tooltipDirection="bottom-narrow"
-                v-show="$store.getters[`app/hasGrammarRes`]">
-      <div @click="ui.changeTab('grammar')" class="alpheios-navbuttons__btn"
-            v-bind:class="{ active: $store.getters['ui/isActiveTab']('grammar') }">
-        <grammar-icon></grammar-icon>
-      </div>
-    </alph-tooltip>
-
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-narrow"
                 v-show="$store.getters['app/hasTreebankData']">
       <div @click="ui.changeTab('treebank')" class="alpheios-navbuttons__btn"
@@ -51,6 +36,21 @@
       <div @click="ui.changeTab('wordUsage')" class="alpheios-navbuttons__btn"
            v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordUsage') }">
         <word-usage-icon></word-usage-icon>
+      </div>
+    </alph-tooltip>
+
+    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT_BROWSER')" tooltipDirection="bottom-narrow">
+      <div @click="ui.changeTab('inflectionsbrowser')" class="alpheios-navbuttons__btn"
+            v-bind:class="{ active: $store.getters['ui/isActiveTab']('inflectionsbrowser') }">
+        <inflections-browser-icon></inflections-browser-icon>
+      </div>
+    </alph-tooltip>
+
+    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_GRAMMAR')" tooltipDirection="bottom-narrow"
+                v-show="$store.getters[`app/hasGrammarRes`]">
+      <div @click="ui.changeTab('grammar')" class="alpheios-navbuttons__btn"
+            v-bind:class="{ active: $store.getters['ui/isActiveTab']('grammar') }">
+        <grammar-icon></grammar-icon>
       </div>
     </alph-tooltip>
 

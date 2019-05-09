@@ -10,7 +10,7 @@
         </div>
       </div>
 
-      <div v-show="authorsList && typeFilter !== 'noFilters'">
+      <div v-show="authorsList && typeFilter !== 'noFilters'" class="alpheios-word-usage-filters-select">
         <select class="alpheios-select alpheios-word-usage-header-select-author" v-model="selectedAuthor">
             <option
                 v-for="authorItem in lastAuthorsList" v-bind:key="authorItem.ID"
@@ -26,7 +26,7 @@
         </alph-tooltip>
       </div>
 
-      <div v-if="this.selectedAuthor && typeFilter !== 'noFilters'">
+      <div v-if="this.selectedAuthor && typeFilter !== 'noFilters'" class="alpheios-word-usage-filters-select">
         <select class="alpheios-select alpheios-word-usage-header-select-textwork"
                 v-model="selectedTextWork">
           <option
@@ -209,13 +209,14 @@ export default {
 
     .alpheios-word-usage-header-select-type-filter {
       cursor: pointer;
+
       input[type="radio"] {
         display: inline-block;
         vertical-align: middle;
       }
       label {
         padding-left: 5px;
-        font-size: 80%;
+        font-size: var(--alpheios-base-text-size);
         line-height: 100%;
         display: inline-block;
         vertical-align: middle;
@@ -230,6 +231,7 @@ export default {
   .alpheios-word-usage-header-filters
   .alpheios-word-usage-header-actions button:disabled {
     background-color: var(--alpheios-color-neutral-dark);
+    border-color: transparent;
   }
 
   .alpheios-word-usage-header

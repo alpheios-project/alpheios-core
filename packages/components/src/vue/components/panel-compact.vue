@@ -322,23 +322,6 @@
         </div>
       </div>
 
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__info"
-           v-show="$store.getters['ui/isActiveTab']('info') && !menuVisible"
-           data-alpheios-ignore="all">
-        <h1
-            class="alpheios-panel__title"
-        >
-          {{ l10n.getText('TITLE_HELP_PANEL') }}
-        </h1>
-        <div class="alpheios-lookup__panel">
-          <lookup
-              :name-base="`panel-info`"
-              :show-results-in="`panel`"
-          />
-        </div>
-        <info></info>
-      </div>
-
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist"
            v-show="$store.getters['ui/isActiveTab']('wordlist') && !menuVisible"
            data-alpheios-ignore="all"
@@ -369,7 +352,6 @@ import ShortDef from './shortdef.vue'
 import Grammar from './grammar.vue'
 import Morph from './morph.vue'
 import Treebank from './treebank.vue'
-import Info from './info.vue'
 import InflectionBrowser from './inflections-browser.vue'
 import Lookup from './lookup.vue'
 import ReskinFontColor from './font-size.vue'
@@ -413,7 +395,6 @@ export default {
     inflectionBrowser: InflectionBrowser,
     setting: Setting,
     shortdef: ShortDef,
-    info: Info,
     grammar: Grammar,
     morph: Morph,
     treebank: Treebank,

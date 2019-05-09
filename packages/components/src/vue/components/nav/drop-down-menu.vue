@@ -1,13 +1,6 @@
 <template>
-  <div class="alpheios-navmenu">
-    <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('info') }"
-         @click="changeTab('info')">
-      <div class="alpheios-navbuttons__icon-cont">
-        <info-icon class="alpheios-navbuttons__icon"></info-icon>
-      </div>
-      <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_HELP') }}</div>
-    </div>
 
+  <div class="alpheios-navmenu">
     <div
         class="alpheios-navmenu__item"
         :class="{ active: $store.getters['ui/isActiveTab']('morphology') }"
@@ -36,22 +29,6 @@
       <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_INFLECT') }}</div>
     </div>
 
-    <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('inflectionsbrowser') }"
-         @click="changeTab('inflectionsbrowser')">
-      <div  class="alpheios-navbuttons__icon-cont">
-        <inflections-browser-icon class="alpheios-navbuttons__icon"></inflections-browser-icon>
-      </div>
-      <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_INFLECT_BROWSER') }}</div>
-    </div>
-
-    <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('grammar') }"
-         v-show="$store.getters[`app/hasGrammarRes`]" @click="changeTab('grammar')">
-      <div  class="alpheios-navbuttons__icon-cont">
-        <grammar-icon class="alpheios-navbuttons__icon"></grammar-icon>
-      </div>
-      <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_GRAMMAR') }}</div>
-    </div>
-
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('treebank') }"
          v-show="$store.getters['app/hasTreebankData']" @click="changeTab('treebank')">
       <div class="alpheios-navbuttons__icon-cont">
@@ -67,6 +44,22 @@
         <word-usage-icon class="alpheios-navbuttons__icon"></word-usage-icon>
       </div>
       <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_WORD_USAGE') }}</div>
+    </div>
+
+    <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('inflectionsbrowser') }"
+         @click="changeTab('inflectionsbrowser')">
+      <div  class="alpheios-navbuttons__icon-cont">
+        <inflections-browser-icon class="alpheios-navbuttons__icon"></inflections-browser-icon>
+      </div>
+      <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_INFLECT_BROWSER') }}</div>
+    </div>
+
+    <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('grammar') }"
+         v-show="$store.getters[`app/hasGrammarRes`]" @click="changeTab('grammar')">
+      <div  class="alpheios-navbuttons__icon-cont">
+        <grammar-icon class="alpheios-navbuttons__icon"></grammar-icon>
+      </div>
+      <div class="alpheios-navmenu__text">{{ l10n.getText('TOOLTIP_GRAMMAR') }}</div>
     </div>
 
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('wordlist') }"
@@ -115,7 +108,6 @@ import UserIcon from '@/images/inline-icons/user.svg'
 import OptionsIcon from '@/images/inline-icons/options.svg'
 import GrammarIcon from '@/images/inline-icons/resources.svg'
 import TreebankIcon from '@/images/inline-icons/sitemap.svg'
-import InfoIcon from '@/images/inline-icons/info.svg'
 import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
 import WordUsageIcon from '@/images/inline-icons/usage-examples-icon1.svg'
 
@@ -142,7 +134,6 @@ export default {
     statusIcon: StatusIcon,
     userIcon: UserIcon,
     optionsIcon: OptionsIcon,
-    infoIcon: InfoIcon,
     grammarIcon: GrammarIcon,
     treebankIcon: TreebankIcon,
     wordUsageIcon: WordUsageIcon,

@@ -3,7 +3,7 @@
       <p class="alpheios-word-usage-header-title">
         {{ l10n.getText('WORDUSAGE_SORT_BY') }}
       </p>
-      <div>
+      <div class="alpheios-word-usage-sorting-select">
         <select class="alpheios-select alpheios-word-usage-header-select-sortBy"
                 v-model="selectedSortBy" @change="changedSortBy">
           <option v-for="typeSorting in typeSortingList" v-bind:key="typeSorting.value"

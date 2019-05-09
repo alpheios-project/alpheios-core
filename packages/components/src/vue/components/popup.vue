@@ -714,6 +714,10 @@ export default {
     display: inline-block;
     margin-bottom: textsize(6px);
     font-weight: 700;
+    color: var(--alpheios-color-vivid);
+    &:hover {
+      color: var(--alpheios-color-vivid-hover);
+    }
   }
 
   .alpheios-popup__definitions--placeholder {
