@@ -1003,7 +1003,7 @@ export default class UIController {
     return this
   }
 
-  newLexicalRequest (targetWord, languageID) {
+  newLexicalRequest (targetWord, languageID, data=null) {
     // Reset old word-related data
     this.api.app.homonym = null
     this.store.commit('app/resetWordData')
@@ -1016,7 +1016,7 @@ export default class UIController {
     this.store.commit(`app/setTextData`, { text: targetWord, languageID: languageID })
     this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
     this.updateLanguage(languageID)
-    this.updateWordAnnotationData()
+    this.updateWordAnnotationData(data)
     this.store.commit('app/lexicalRequestStarted', targetWord)
     this.open()
     return this
@@ -1207,7 +1207,7 @@ export default class UIController {
           langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
         })
 
-        this.newLexicalRequest(textSelector.normalizedText, textSelector.languageID)
+        this.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data)
         lexQuery.getData()
       }
     }
@@ -1393,7 +1393,7 @@ export default class UIController {
       homonym = wordItem.homonym
     }
 
-    this.newLexicalRequest(homonym.targetWord, homonym.languageID, true)
+    this.newLexicalRequest(homonym.targetWord, homonym.languageID)
     if (homonym.lexemes.length > 0 && homonym.lexemes.filter(l => l.isPopulated()).length === homonym.lexemes.length) {
       // if we were able to retrieve full homonym data then we can just display it
       this.onHomonymReady(homonym)

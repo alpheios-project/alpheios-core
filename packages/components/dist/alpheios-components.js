@@ -15546,7 +15546,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/images/inline-icons/attach-left.svg */ "./images/inline-icons/attach-left.svg");
 /* harmony import */ var _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/images/inline-icons/attach-right.svg */ "./images/inline-icons/attach-right.svg");
 /* harmony import */ var _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/components/panel-compact.vue */ "./vue/components/panel-compact.vue");
-/* harmony import */ var _tooltip_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./tooltip.vue */ "./vue/components/tooltip.vue");
+/* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
 /* harmony import */ var _vue_components_info_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/vue/components/info.vue */ "./vue/components/info.vue");
 //
 //
@@ -15858,12 +15858,13 @@ __webpack_require__.r(__webpack_exports__);
   name: 'PanelLarge',
   extends: _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
   components: {
-    alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
     info: _vue_components_info_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
     navbuttonsLarge: _vue_components_nav_navbuttons_large_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     logoIcon: _images_alpheios_logo_svg__WEBPACK_IMPORTED_MODULE_2__["default"],
     attachLeftIcon: _images_inline_icons_attach_left_svg__WEBPACK_IMPORTED_MODULE_3__["default"],
-    attachRightIcon: _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_4__["default"]
+    attachRightIcon: _images_inline_icons_attach_right_svg__WEBPACK_IMPORTED_MODULE_4__["default"],
+    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   // A minimal width of a panel, in pixels. It should be large enough to fit all the buttons of a large size into the panel
   minWidth: 698,
@@ -42990,7 +42991,7 @@ class UIController {
     return this
   }
 
-  newLexicalRequest (targetWord, languageID) {
+  newLexicalRequest (targetWord, languageID, data=null) {
     // Reset old word-related data
     this.api.app.homonym = null
     this.store.commit('app/resetWordData')
@@ -43003,7 +43004,7 @@ class UIController {
     this.store.commit(`app/setTextData`, { text: targetWord, languageID: languageID })
     this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
     this.updateLanguage(languageID)
-    this.updateWordAnnotationData()
+    this.updateWordAnnotationData(data)
     this.store.commit('app/lexicalRequestStarted', targetWord)
     this.open()
     return this
@@ -43194,7 +43195,7 @@ class UIController {
           langOpts: { [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
         })
 
-        this.newLexicalRequest(textSelector.normalizedText, textSelector.languageID)
+        this.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data)
         lexQuery.getData()
       }
     }
@@ -43380,7 +43381,7 @@ class UIController {
       homonym = wordItem.homonym
     }
 
-    this.newLexicalRequest(homonym.targetWord, homonym.languageID, true)
+    this.newLexicalRequest(homonym.targetWord, homonym.languageID)
     if (homonym.lexemes.length > 0 && homonym.lexemes.filter(l => l.isPopulated()).length === homonym.lexemes.length) {
       // if we were able to retrieve full homonym data then we can just display it
       this.onHomonymReady(homonym)
@@ -48048,7 +48049,7 @@ module.exports = {"domain":"alpheios-ui-options","items":{"skin":{"defaultValue"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\r\n  <component v-bind:is=\"uiComponentName\" :module-data=\"moduleData\"></component>\r\n</div>\r\n<div id=\"alpheios-panel\">\r\n  <component v-bind:is=\"$store.state.panel.layout\"></component>\r\n</div>\r\n<div id=\"alpheios-toolbar\">\r\n  <component v-bind:is=\"$store.state.toolbar.layout\" :module-data=\"moduleData\"></component>\r\n</div>\r\n";
+module.exports = "<div id=\"alpheios-popup\" data-alpheios-ignore=\"all\">\n  <component v-bind:is=\"uiComponentName\" :module-data=\"moduleData\"></component>\n</div>\n<div id=\"alpheios-panel\">\n  <component v-bind:is=\"$store.state.panel.layout\"></component>\n</div>\n<div id=\"alpheios-toolbar\">\n  <component v-bind:is=\"$store.state.toolbar.layout\" :module-data=\"moduleData\"></component>\n</div>\n";
 
 /***/ }),
 
