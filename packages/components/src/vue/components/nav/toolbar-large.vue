@@ -393,6 +393,8 @@ export default {
 
   .alpheios-toolbar__header-icon-collapsed,
   .alpheios-toolbar__header-icon-expanded {
+    width: uisize(22px);
+    height: auto;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);

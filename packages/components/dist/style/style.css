@@ -3256,6 +3256,8 @@ h3.alpheios-inflections__credits-title {
 }
 .alpheios-toolbar__header-icon-collapsed,
 .alpheios-toolbar__header-icon-expanded {
+  width: calc(var(--alpheios-base-ui-size) * 1.375);
+  height: auto;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
