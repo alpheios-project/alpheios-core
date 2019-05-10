@@ -14588,7 +14588,10 @@ __webpack_require__.r(__webpack_exports__);
       shift: {
         x: this.moduleData.initialShift.x,
         y: this.moduleData.initialShift.y
-      }
+      },
+
+      // An X position of the central point of a toolbar
+      xCenter: undefined,
     }
   },
 
@@ -14616,14 +14619,11 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     isInLeftHalf: function () {
-      if (this.moduleData.initialPos.hasOwnProperty(`right`)) {
-        return (window.innerWidth / 2 - this.moduleData.initialPos.right + this.shift.x < 0)
-      } else if (this.moduleData.initialPos.hasOwnProperty(`left`)) {
-        return (this.moduleData.initialPos.left + this.shift.x < window.innerWidth / 2)
-      } else {
-        // We have no information in which part of the screen the toolbar is, will default to right
-        return false
+      if (this.xCenter) {
+        return (window.innerWidth / 2 - this.xCenter > 0)
       }
+      // Default value is false as the toolbar's default position is at the right
+      return false
     },
 
     componentClasses: function () {
@@ -14667,10 +14667,24 @@ __webpack_require__.r(__webpack_exports__);
     dragEndListener () {
       this.settings.contentOptions.items.toolbarShiftX.setValue(this.shift.x)
       this.settings.contentOptions.items.toolbarShiftY.setValue(this.shift.y)
+      // Recalculate the new position of a toolbar center
+      this.xCenter = this.getXCenter()
+    },
+
+    /**
+     * Return a x-coordinate of a central position of the toolbar
+     * @return {number}
+     */
+    getXCenter () {
+      const rect = this.$el.getBoundingClientRect()
+      return rect.x + rect.width / 2
     }
   },
 
   mounted: function () {
+    // Calculate an initial position of the central point
+    this.xCenter = this.getXCenter()
+
     this.$options.interactInstance = interactjs__WEBPACK_IMPORTED_MODULE_0___default()(this.$el.querySelector('#alpheios-toolbar-drag-handle'))
       .draggable({
         inertia: true,
