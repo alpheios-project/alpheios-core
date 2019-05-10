@@ -3216,61 +3216,15 @@ h3.alpheios-inflections__credits-title {
   border: calc(var(--alpheios-base-ui-size) * 0.0625) solid var(--alpheios-border-color);
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
 }
-.alpheios-toolbar__header {
-  width: calc(var(--alpheios-base-ui-size) * 2.75);
-  height: calc(var(--alpheios-base-ui-size) * 2.75);
-  border-bottom: none;
-  background: var(--alpheios-toolbar-bg-color);
-  box-sizing: border-box;
-  text-align: center;
-  touch-action: none;
-}
-.alpheios-toolbar__header svg {
-  width: calc(var(--alpheios-base-ui-size) * 1.5);
-  height: auto;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.alpheios-toolbar__header-control {
-  box-sizing: border-box;
-  border: 1px solid var(--alpheios-border-color);
-  border-bottom-left-radius: calc(var(--alpheios-base-ui-size) * 0.625);
-  border-bottom-right-radius: calc(var(--alpheios-base-ui-size) * 0.625);
-  cursor: pointer;
-  background: var(--alpheios-text-bg-color);
-}
-.alpheios-toolbar__header-control svg {
-  width: calc(var(--alpheios-base-ui-size) * 1.25);
-  height: auto;
-  position: relative;
-  left: calc(var(--alpheios-base-ui-size) * 0.6875);
-  top: calc(var(--alpheios-base-ui-size) * -0.3125);
-  fill: var(--alpheios-border-color);
-}
-.alpheios-toolbar__header-control.expanded svg {
-  top: calc(var(--alpheios-base-ui-size) * 0.3125);
-}
-.alpheios-toolbar__header-control:hover svg {
-  fill: var(--alpheios-icon-color-hover);
-}
 .alpheios-toolbar__drag-handle {
   width: calc(var(--alpheios-base-ui-size) * 2.75);
-  height: calc(var(--alpheios-base-ui-size) * 2.75);
+  height: calc(var(--alpheios-base-ui-size) * 1.5);
   border-bottom: none;
   background: var(--alpheios-toolbar-bg-color);
   box-sizing: border-box;
   border-top-left-radius: calc(var(--alpheios-base-ui-size) * 0.625);
   border-top-right-radius: calc(var(--alpheios-base-ui-size) * 0.625);
   touch-action: none;
-}
-.alpheios-toolbar__logo-icon {
-  width: 60%;
-  height: auto;
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-45%, -45%);
 }
 .alpheios-toolbar__lookup-control {
   cursor: pointer;
@@ -3281,11 +3235,55 @@ h3.alpheios-inflections__credits-title {
   border-radius: 0;
   border-bottom: none;
 }
+.alpheios-toolbar__header {
+  width: calc(var(--alpheios-base-ui-size) * 2.75);
+  height: calc(var(--alpheios-base-ui-size) * 3.375);
+  border-bottom: none;
+  background: var(--alpheios-toolbar-bg-color);
+  box-sizing: border-box;
+  text-align: center;
+  border-bottom-left-radius: calc(var(--alpheios-base-ui-size) * 0.625);
+  border-bottom-right-radius: calc(var(--alpheios-base-ui-size) * 0.625);
+  position: relative;
+  touch-action: none;
+}
+.alpheios-toolbar__header-icon {
+  width: calc(var(--alpheios-base-ui-size) * 1.5);
+  height: auto;
+  position: relative;
+  top: calc(var(--alpheios-base-ui-size) * 0.25);
+  left: 1px;
+}
+.alpheios-toolbar__header-icon-collapsed,
+.alpheios-toolbar__header-icon-expanded {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  fill: var(--alpheios-color-neutral-lightest);
+  stroke: var(--alpheios-color-neutral-lightest);
+  cursor: pointer;
+}
+.alpheios-toolbar__header-icon-collapsed:hover,
+.alpheios-toolbar__header-icon-expanded:hover {
+  fill: var(--alpheios-color-bright-hover);
+  stroke: var(--alpheios-color-bright-hover);
+}
+.expanded .alpheios-toolbar__header-icon-collapsed,
+.expanded .alpheios-toolbar__header-icon-expanded {
+  fill: var(--alpheios-color-bright);
+  stroke: var(--alpheios-color-bright);
+}
+.alpheios-toolbar__header-icon-collapsed {
+  top: calc(var(--alpheios-base-ui-size) * 1.5);
+}
+.alpheios-toolbar__header-icon-expanded {
+  top: calc(var(--alpheios-base-ui-size) * 2.125);
+}
 .alpheios-toolbar__lookup {
   display: flex;
   position: absolute;
   width: calc(var(--alpheios-base-ui-size) * 20.625);
-  height: calc(var(--alpheios-base-ui-size) * 5.625);
+  height: calc(var(--alpheios-base-ui-size) * 7.625);
   background: var(--alpheios-text-bg-color);
   left: calc(var(--alpheios-base-ui-size) * -20);
   top: 0;
@@ -3301,7 +3299,7 @@ h3.alpheios-inflections__credits-title {
   padding: calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 1.25);
 }
 .alpheios-toolbar__lookup .alpheios-lookup__form {
-  justify-content: flex-end;
+  justify-content: center;
 }
 .alpheios-toolbar__lookup .alph_tooltip {
   display: inline-block;
