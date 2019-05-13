@@ -886,8 +886,6 @@ export default {
       width: 50vw;
       right: 0;
       left: auto;
-      top: 0;
-      bottom: auto;
     }
 
     & .alpheios-panel__content {

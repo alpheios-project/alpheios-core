@@ -8,6 +8,16 @@ export default class Platform {
     if (setRootAttributes) {
       this.setRootAttributes()
     }
+
+    this.viewport = {
+      width: window.innerWidth && document.documentElement.clientWidth && document.body.clientWidth
+        ? Math.min(window.innerWidth, document.documentElement.clientWidth, document.body.clientWidth)
+        : document.body.clientWidth || window.innerWidth || document.documentElement.clientWidth,
+
+      height: window.innerHeight && document.documentElement.clientHeight
+        ? Math.min(window.innerHeight, document.documentElement.clientHeight)
+        : window.innerHeight || document.documentElement.clientHeight
+    }
   }
 
   setRootAttributes () {

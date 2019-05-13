@@ -14585,6 +14585,8 @@ __webpack_require__.r(__webpack_exports__);
   // Whether there is an error with Interact.js drag coordinates in the corresponding direction
   dragErrorX: false,
   dragErrorY: false,
+  visibleUnwatch: null,
+
   props: {
     moduleData: {
       type: Object,
@@ -14601,10 +14603,7 @@ __webpack_require__.r(__webpack_exports__);
       shift: {
         x: this.moduleData.initialShift.x,
         y: this.moduleData.initialShift.y
-      },
-
-      // An X position of the central point of a toolbar
-      xCenter: undefined,
+      }
     }
   },
 
@@ -14633,11 +14632,14 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     isInLeftHalf: function () {
-      if (this.xCenter) {
-        return (window.innerWidth / 2 - this.xCenter > 0)
+      if (this.moduleData.initialPos.hasOwnProperty(`right`)) {
+        return (window.innerWidth / 2 - this.moduleData.initialPos.right + this.shift.x < 0)
+      } else if (this.moduleData.initialPos.hasOwnProperty(`left`)) {
+        return (this.moduleData.initialPos.left + this.shift.x < window.innerWidth / 2)
+      } else {
+        // We have no information in which part of the screen the toolbar is, will default to right
+        return false
       }
-      // Default value is false as the toolbar's default position is at the right
-      return false
     },
 
     componentClasses: function () {
@@ -14681,23 +14683,29 @@ __webpack_require__.r(__webpack_exports__);
     dragEndListener () {
       this.settings.contentOptions.items.toolbarShiftX.setValue(this.shift.x)
       this.settings.contentOptions.items.toolbarShiftY.setValue(this.shift.y)
-      // Recalculate the new position of a toolbar center
-      this.xCenter = this.getXCenter()
     },
 
-    /**
-     * Return a x-coordinate of a central position of the toolbar
-     * @return {number}
-     */
-    getXCenter () {
+    isWithinViewport () {
       const rect = this.$el.getBoundingClientRect()
-      return rect.x + rect.width / 2
+      return (
+        rect.x >= 0 && (rect.x + rect.width) <= this.app.platform.viewport.width &&
+        rect.y >= 0 && (rect.y + rect.height) <= this.app.platform.viewport.height
+      )
     }
   },
 
   mounted: function () {
-    // Calculate an initial position of the central point
-    this.xCenter = this.getXCenter()
+    this.$options.visibleUnwatch = this.$store.watch((state) => state.toolbar.visible, (value) => {
+      if (value) {
+        // Check if the viewport is within the bounds of the viewport
+        if (!this.isWithinViewport()) {
+          // Reset the toolbar to its default position
+          this.shift.x = 0
+          this.shift.y = 0
+          console.warn(`Toolbar has been reset to its default position to stay within the viewport`)
+        }
+      }
+    })
 
     this.$options.interactInstance = interactjs__WEBPACK_IMPORTED_MODULE_0___default()(this.$el.querySelector('#alpheios-toolbar-drag-handle'))
       .draggable({
@@ -14708,8 +14716,8 @@ __webpack_require__.r(__webpack_exports__);
             restriction: {
               x: 27,
               y: 22,
-              width: document.documentElement.clientWidth - 50,
-              height: document.documentElement.clientHeight - 50
+              width: this.app.platform.viewport.width - 54,
+              height: this.app.platform.viewport.height - 80
             },
             endOnly: true
           })
@@ -14718,6 +14726,10 @@ __webpack_require__.r(__webpack_exports__);
       })
       .on('dragmove', this.dragMoveListener)
       .on('dragend', this.dragEndListener)
+  },
+
+  beforeDestroy () {
+    this.visibleUnwatch()
   }
 });
 
@@ -14877,6 +14889,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_inline_icons_chevron_right_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/images/inline-icons/chevron-right.svg */ "./images/inline-icons/chevron-right.svg");
 /* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
 /* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+//
+//
+//
+//
 //
 //
 //
@@ -15571,6 +15587,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/components/panel-compact.vue */ "./vue/components/panel-compact.vue");
 /* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
 /* harmony import */ var _vue_components_info_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/vue/components/info.vue */ "./vue/components/info.vue");
+//
+//
+//
+//
 //
 //
 //
@@ -17629,7 +17649,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -17652,7 +17671,7 @@ __webpack_require__.r(__webpack_exports__);
       lastTextWorksList: [],
       typeFiltersList: [
         { value: 'noFilters', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_NO_FILTERS') },
-        { value: 'moreResults', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_MORE_RESULTS'), disabled: true, skip: true },
+        { value: 'moreResults', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_MORE_RESULTS'), disabled: true },
         { value: 'filterCurrentResults', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_FILTER_CURRENT_RESULTS'), disabled: true }
       ],
       disabledButton: false
@@ -17669,7 +17688,8 @@ __webpack_require__.r(__webpack_exports__);
           this.lastAuthorsList = []
           this.lastTextWorksList = []
           this.typeFilter = 'noFilters'
-          this.setDisabledToType(['moreResults', 'filterCurrentResults'])
+          this.setDisabledToType('moreResults')
+          this.setDisabledToType('filterCurrentResults')
         } else {
           this.lastAuthorsList = this.app.wordUsageExamples.wordUsageExamples
             .filter(wordUsageExampleItem => wordUsageExampleItem.author)
@@ -17682,12 +17702,14 @@ __webpack_require__.r(__webpack_exports__);
             .filter((item, pos, self) => item && self.indexOf(item) == pos)
             .slice()
 
+          this.removeDisabledFromTypeFilters()
           this.typeFilter = 'moreResults'
-          this.setDisabledToType(['noFilters'])
+          this.setDisabledToType('noFilters')
         }
       } else if (!this.$store.state.app.wordUsageExamplesReady && !this.app.homonym) {
+        this.removeDisabledFromTypeFilters()
         this.typeFilter = 'noFilters'
-        this.setDisabledToType(['moreResults', 'filterCurrentResults'])
+        this.setDisabledToType('filterCurrentResults')
         this.selectedAuthor = null
         this.selectedTextWork = null
       }
@@ -17703,14 +17725,14 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    setDisabledToType (typeValues) {
+    removeDisabledFromTypeFilters () {
       this.typeFiltersList.forEach(item => {
-        if (typeValues.indexOf(item.value) > -1) {
-          item.disabled = true
-        } else {
-          item.disabled = false
-        }
+        item.disabled = false
       })
+    },
+    setDisabledToType (typeValue) {
+      this.removeDisabledFromTypeFilters()
+      this.typeFiltersList.find(item => item.value === typeValue).disabled = true
     },
     async getResults () {
       if (this.typeFilter === 'noFilters') {
@@ -17720,10 +17742,11 @@ __webpack_require__.r(__webpack_exports__);
 
         await this.getResultsNoFilters()
 
+        this.removeDisabledFromTypeFilters()
         this.clearFilter('author')
         this.lastAuthorID = null
-        this.typeFilter = 'filterCurrentResults'
-        this.setDisabledToType(['noFilters'])
+        this.typeFilter = 'moreResults'
+        this.setDisabledToType('noFilters')
 
         this.disabledButton = false
         
@@ -17732,7 +17755,7 @@ __webpack_require__.r(__webpack_exports__);
         this.$emit('getMoreResults', this.selectedAuthor, this.selectedTextWork)
         await this.getResultsWithFilters()
 
-        this.setDisabledToType(['filterCurrentResults'])
+        this.setDisabledToType('filterCurrentResults')
         this.lastAuthorID = this.selectedAuthor ? this.selectedAuthor.ID : null
 
         this.disabledButton = false
@@ -24027,7 +24050,13 @@ var render = function() {
                         _vm._s(_vm.l10n.getText("PLACEHOLDER_DEFINITIONS")) +
                         "\n      "
                     )
-                  ])
+                  ]),
+              _vm._v(" "),
+              _c("div", {
+                staticClass:
+                  "alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions",
+                domProps: { innerHTML: _vm._s(_vm.formattedFullDefinitions) }
+              })
             ]
           ),
           _vm._v(" "),
@@ -24689,7 +24718,13 @@ var render = function() {
                       _vm._s(_vm.l10n.getText("PLACEHOLDER_DEFINITIONS")) +
                       "\n      "
                   )
-                ])
+                ]),
+            _vm._v(" "),
+            _c("div", {
+              staticClass:
+                "alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions",
+              domProps: { innerHTML: _vm._s(_vm.formattedFullDefinitions) }
+            })
           ]
         ),
         _vm._v(" "),
@@ -26864,49 +26899,47 @@ var render = function() {
       "div",
       { staticClass: "alpheios-word-usage-header-select-type-filters-block" },
       _vm._l(_vm.typeFiltersList, function(typeFilterItem) {
-        return !typeFilterItem.skip
-          ? _c(
-              "div",
-              {
-                key: typeFilterItem.value,
-                staticClass: "alpheios-word-usage-header-select-type-filter",
-                class: {
-                  "alpheios-word-usage-header-select-type-filter-disabled":
-                    typeFilterItem.disabled === true
+        return _c(
+          "div",
+          {
+            key: typeFilterItem.value,
+            staticClass: "alpheios-word-usage-header-select-type-filter",
+            class: {
+              "alpheios-word-usage-header-select-type-filter-disabled":
+                typeFilterItem.disabled === true
+            }
+          },
+          [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.typeFilter,
+                  expression: "typeFilter"
                 }
+              ],
+              attrs: {
+                type: "radio",
+                id: typeFilterItem.value,
+                disabled: typeFilterItem.disabled === true
               },
-              [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.typeFilter,
-                      expression: "typeFilter"
-                    }
-                  ],
-                  attrs: {
-                    type: "radio",
-                    id: typeFilterItem.value,
-                    disabled: typeFilterItem.disabled === true
-                  },
-                  domProps: {
-                    value: typeFilterItem.value,
-                    checked: _vm._q(_vm.typeFilter, typeFilterItem.value)
-                  },
-                  on: {
-                    change: function($event) {
-                      _vm.typeFilter = typeFilterItem.value
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("label", { attrs: { for: typeFilterItem.value } }, [
-                  _vm._v(_vm._s(typeFilterItem.label))
-                ])
-              ]
-            )
-          : _vm._e()
+              domProps: {
+                value: typeFilterItem.value,
+                checked: _vm._q(_vm.typeFilter, typeFilterItem.value)
+              },
+              on: {
+                change: function($event) {
+                  _vm.typeFilter = typeFilterItem.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: typeFilterItem.value } }, [
+              _vm._v(_vm._s(typeFilterItem.label))
+            ])
+          ]
+        )
       }),
       0
     ),
@@ -39616,7 +39649,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Store", function() { return Store; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Store", function() { return Store; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "install", function() { return install; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapState", function() { return mapState; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapMutations", function() { return mapMutations; });
@@ -39624,7 +39657,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
 /**
- * vuex v3.1.1
+ * vuex v3.1.0
  * (c) 2019 Evan You
  * @license MIT
  */
@@ -39664,12 +39697,9 @@ function applyMixin (Vue) {
   }
 }
 
-var target = typeof window !== 'undefined'
-  ? window
-  : typeof global !== 'undefined'
-    ? global
-    : {};
-var devtoolHook = target.__VUE_DEVTOOLS_GLOBAL_HOOK__;
+var devtoolHook =
+  typeof window !== 'undefined' &&
+  window.__VUE_DEVTOOLS_GLOBAL_HOOK__;
 
 function devtoolPlugin (store) {
   if (!devtoolHook) { return }
@@ -39713,12 +39743,6 @@ function isPromise (val) {
 
 function assert (condition, msg) {
   if (!condition) { throw new Error(("[vuex] " + msg)) }
-}
-
-function partial (fn, arg) {
-  return function () {
-    return fn(arg)
-  }
 }
 
 // Base data struct for store's module, package with some attribute and method
@@ -40182,9 +40206,7 @@ function resetStoreVM (store, state, hot) {
   var computed = {};
   forEachValue(wrappedGetters, function (fn, key) {
     // use computed to leverage its lazy-caching mechanism
-    // direct inline function use will lead to closure preserving oldVm.
-    // using partial to return function with only arguments preserved in closure enviroment.
-    computed[key] = partial(fn, store);
+    computed[key] = function () { return fn(store); };
     Object.defineProperty(store.getters, key, {
       get: function () { return store._vm[key]; },
       enumerable: true // for local getters
@@ -40623,7 +40645,7 @@ function getModuleByNamespace (store, helper, namespace) {
 var index_esm = {
   Store: Store,
   install: install,
-  version: '3.1.1',
+  version: '3.1.0',
   mapState: mapState,
   mapMutations: mapMutations,
   mapGetters: mapGetters,
@@ -40634,7 +40656,6 @@ var index_esm = {
 /* harmony default export */ __webpack_exports__["default"] = (index_esm);
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -43934,7 +43955,6 @@ class MouseDblClick extends _pointer_evt_js__WEBPACK_IMPORTED_MODULE_0__["defaul
    * @param domEvt
    */
   eventListener (domEvt) {
-    domEvt.stopPropagation()
     const valid = this
       .setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
       .setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
@@ -47694,6 +47714,16 @@ class Platform {
 
     if (setRootAttributes) {
       this.setRootAttributes()
+    }
+
+    this.viewport = {
+      width: window.innerWidth && document.documentElement.clientWidth && document.body.clientWidth
+        ? Math.min(window.innerWidth, document.documentElement.clientWidth, document.body.clientWidth)
+        : document.body.clientWidth || window.innerWidth || document.documentElement.clientWidth,
+
+      height: window.innerHeight && document.documentElement.clientHeight
+        ? Math.min(window.innerHeight, document.documentElement.clientHeight)
+        : window.innerHeight || document.documentElement.clientHeight
     }
   }
 

@@ -205,6 +205,8 @@ export default {
   // Whether there is an error with Interact.js drag coordinates in the corresponding direction
   dragErrorX: false,
   dragErrorY: false,
+  visibleUnwatch: null,
+
   props: {
     moduleData: {
       type: Object,
@@ -305,6 +307,14 @@ export default {
       this.xCenter = this.getXCenter()
     },
 
+    isWithinViewport () {
+      const rect = this.$el.getBoundingClientRect()
+      return (
+        rect.x >= 0 && (rect.x + rect.width) <= this.app.platform.viewport.width &&
+        rect.y >= 0 && (rect.y + rect.height) <= this.app.platform.viewport.height
+      )
+    },
+
     /**
      * Return a x-coordinate of a central position of the toolbar
      * @return {number}
@@ -319,6 +329,18 @@ export default {
     // Calculate an initial position of the central point
     this.xCenter = this.getXCenter()
 
+    this.$options.visibleUnwatch = this.$store.watch((state) => state.toolbar.visible, (value) => {
+      if (value) {
+        // Check if the viewport is within the bounds of the viewport
+        if (!this.isWithinViewport()) {
+          // Reset the toolbar to its default position
+          this.shift.x = 0
+          this.shift.y = 0
+          console.warn(`Toolbar has been reset to its default position to stay within the viewport`)
+        }
+      }
+    })
+
     this.$options.interactInstance = interact(this.$el.querySelector('#alpheios-toolbar-drag-handle'))
       .draggable({
         inertia: true,
@@ -328,8 +350,8 @@ export default {
             restriction: {
               x: 27,
               y: 22,
-              width: document.documentElement.clientWidth - 50,
-              height: document.documentElement.clientHeight - 50
+              width: this.app.platform.viewport.width - 54,
+              height: this.app.platform.viewport.height - 80
             },
             endOnly: true
           })
@@ -338,6 +360,10 @@ export default {
       })
       .on('dragmove', this.dragMoveListener)
       .on('dragend', this.dragEndListener)
+  },
+
+  beforeDestroy () {
+    this.visibleUnwatch()
   }
 }
 </script>

@@ -373,6 +373,7 @@ html {
   color: var(--alpheios-text-color);
   box-sizing: border-box;
   margin: 0;
+  text-align: left;
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -2942,8 +2943,6 @@ h3.alpheios-inflections__credits-title {
   width: 50vw;
   right: 0;
   left: auto;
-  top: 0;
-  bottom: auto;
 }
 .alpheios-panel--compact .alpheios-panel__content {
   overflow: auto;
