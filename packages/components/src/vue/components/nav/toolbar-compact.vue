@@ -2,6 +2,7 @@
   <div
       id="alpheios-toolbar-inner"
       class="alpheios-content alpheios-toolbar alpheios-toolbar--compact"
+      :style="componentStyles"
       v-show="$store.state.toolbar.visible"
       @click="openActionPanel"
   >
@@ -29,6 +30,14 @@ export default {
     toolbarIcon: ToolbarIcon
   },
 
+  computed: {
+    componentStyles: function () {
+      return {
+        zIndex: this.ui.zIndex
+      }
+    }
+  },
+
   methods: {
     openActionPanel: function () {
       // Toggle an action panel
@@ -44,7 +53,6 @@ export default {
 
   .alpheios-toolbar {
     position: fixed;
-    z-index: 1000000;
 
     &.alpheios-toolbar--compact {
       cursor: pointer;

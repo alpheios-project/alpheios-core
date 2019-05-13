@@ -14,6 +14,8 @@
         <div class="alpheios-lookup__search-control">
           <input
               :placeholder="l10n.getMsg('LABEL_LOOKUP_BUTTON')"
+              autocapitalize="off"
+              autocorrect="off"
               @keyup.enter="lookup"
               class="alpheios-input"
               type="text"

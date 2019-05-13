@@ -117,6 +117,7 @@
         <div class="alpheios-lookup__panel">
           <lookup
               :name-base="`panel-defs`"
+              :show-results-in="`panel`"
           />
         </div>
         <div v-if="$store.getters['app/defDataReady']">
@@ -136,10 +137,6 @@
         <div v-else>
           {{ l10n.getText('PLACEHOLDER_DEFINITIONS') }}
         </div>
-        <div
-            class="alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions"
-            v-html="formattedFullDefinitions"
-        />
       </div>
 
       <div
@@ -198,123 +195,125 @@
       <div
           class="alpheios-panel__tab-panel"
           v-show="$store.getters['ui/isActiveTab']('wordUsage') && !menuVisible"
-          data-alpheios-ignore="all"
       >
         <word-usage-examples/>
       </div>
 
-      <div class="alpheios-panel__tab-panel"
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab-panel--options"
            v-show="$store.getters['ui/isActiveTab']('options') && !menuVisible"
            data-alpheios-ignore="all"
       >
-        <reskin-font-color></reskin-font-color>
-        <setting
-            :classes="['alpheios-panel__options-item']"
-            :data="settings.contentOptions.items.preferredLanguage"
-            @change="contentOptionChanged"
-        >
-        </setting>
-        <setting
-            :classes="['alpheios-panel__options-item']"
-            :data="settings.contentOptions.items.panelPosition"
-            @change="contentOptionChanged"
-        >
-        </setting>
-        <setting
-            :classes="['alpheios-panel__options-item']"
-            :data="settings.contentOptions.items.popupPosition"
-            @change="contentOptionChanged"
-        >
-        </setting>
-        <setting
-            :classes="['alpheios-panel__options-item']"
-            :data="settings.contentOptions.items.uiType"
-            @change="contentOptionChanged"
-        >
-        </setting>
-        <setting
-            :classes="['alpheios-panel__options-item']"
-            :data="settings.contentOptions.items.verboseMode"
-            @change="contentOptionChanged"
-        >
-        </setting>
-        <setting
-            :classes="['alpheios-panel__options-item']"
-            :data="settings.uiOptions.items.skin"
-            @change="uiOptionChanged"
-        >
-        </setting>
-        <setting
-            :classes="['alpheios-panel__options-item']"
-            :data="settings.uiOptions.items.panel"
-            @change="uiOptionChanged"
-            v-show="app.isDevMode()"
-        >
-        </setting>
-        <setting
-            :classes="['alpheios-panel__options-item']"
-            :data="settings.uiOptions.items.panelOnActivate"
-            @change="uiOptionChanged"
-        >
-        </setting>
-        <setting
-            :classes="['alpheios-panel__options-item']"
-            :data="languageSetting"
-            :key="languageSetting.name"
-            @change="resourceSettingChanged"
-            v-for="languageSetting in resourceSettingsLexicons"
-        >
-        </setting>
-        <setting
-            :classes="['alpheios-panel__options-item']"
-            :data="languageSetting"
-            :key="languageSetting.name"
-            @change="resourceSettingChanged"
-            v-for="languageSetting in resourceSettingsLexiconsShort"
-        >
-        </setting>
+        <!-- This extra container element is required for iOS browsers so that the flex option items will have height to match their content -->
+        <div class="alpheios-panel__tab-panel-options-cont">
+          <reskin-font-color></reskin-font-color>
+          <setting
+              :classes="['alpheios-panel__options-item']"
+              :data="settings.contentOptions.items.preferredLanguage"
+              @change="contentOptionChanged"
+          >
+          </setting>
+          <setting
+              :classes="['alpheios-panel__options-item']"
+              :data="settings.contentOptions.items.panelPosition"
+              @change="contentOptionChanged"
+          >
+          </setting>
+          <setting
+              :classes="['alpheios-panel__options-item']"
+              :data="settings.contentOptions.items.popupPosition"
+              @change="contentOptionChanged"
+          >
+          </setting>
+          <setting
+              :classes="['alpheios-panel__options-item']"
+              :data="settings.contentOptions.items.uiType"
+              @change="contentOptionChanged"
+          >
+          </setting>
+          <setting
+              :classes="['alpheios-panel__options-item']"
+              :data="settings.contentOptions.items.verboseMode"
+              @change="contentOptionChanged"
+          >
+          </setting>
+          <setting
+              :classes="['alpheios-panel__options-item']"
+              :data="settings.uiOptions.items.skin"
+              @change="uiOptionChanged"
+          >
+          </setting>
+          <setting
+              :classes="['alpheios-panel__options-item']"
+              :data="settings.uiOptions.items.panel"
+              @change="uiOptionChanged"
+              v-show="app.isDevMode()"
+          >
+          </setting>
+          <setting
+              :classes="['alpheios-panel__options-item']"
+              :data="settings.uiOptions.items.panelOnActivate"
+              @change="uiOptionChanged"
+          >
+          </setting>
+          <setting
+              :classes="['alpheios-panel__options-item']"
+              :data="languageSetting"
+              :key="languageSetting.name"
+              @change="resourceSettingChanged"
+              v-for="languageSetting in resourceSettingsLexicons"
+          >
+          </setting>
+          <setting
+              :classes="['alpheios-panel__options-item']"
+              :data="languageSetting"
+              :key="languageSetting.name"
+              @change="resourceSettingChanged"
+              v-for="languageSetting in resourceSettingsLexiconsShort"
+          >
+          </setting>
 
-        <setting
-            :classes="['alpheios-panel__options-item']"
-            :data="settings.contentOptions.items.enableWordUsageExamples"
-            @change="contentOptionChanged"
-        >
-        </setting>
+          <setting
+              :classes="['alpheios-panel__options-item']"
+              :data="settings.contentOptions.items.enableWordUsageExamples"
+              @change="contentOptionChanged"
+          >
+          </setting>
 
-        <setting
-            :classes="['alpheios-panel__options-item']"
-            :data="settings.contentOptions.items.wordUsageExamplesON"
-            @change="contentOptionChanged"
-        >
-        </setting>
+          <setting
+              :classes="['alpheios-panel__options-item']"
+              :data="settings.contentOptions.items.wordUsageExamplesON"
+              @change="contentOptionChanged"
+          >
+          </setting>
 
-        <setting
-            :classes="['alpheios-panel__options-item']"
-            :data="settings.contentOptions.items.wordUsageExamplesAuthMax"
-            @change="contentOptionChanged"
-        >
-        </setting>
+          <setting
+              :classes="['alpheios-panel__options-item']"
+              :data="settings.contentOptions.items.wordUsageExamplesAuthMax"
+              @change="contentOptionChanged"
+          >
+          </setting>
 
-        <setting
-            :classes="['alpheios-panel__options-item']"
-            :data="settings.contentOptions.items.wordUsageExamplesMax"
-            @change="contentOptionChanged"
-        >
-        </setting>
+          <setting
+              :classes="['alpheios-panel__options-item']"
+              :data="settings.contentOptions.items.wordUsageExamplesMax"
+              @change="contentOptionChanged"
+          >
+          </setting>
 
-        <setting
-            :classes="['alpheios-panel__options-item']"
-            :data="settings.contentOptions.items.enableLemmaTranslations"
-            @change="contentOptionChanged"
-        >
-        </setting>
+          <setting
+              :classes="['alpheios-panel__options-item']"
+              :data="settings.contentOptions.items.enableLemmaTranslations"
+              @change="contentOptionChanged"
+          >
+          </setting>
 
-        <setting
-            :classes="['alpheios-panel__options-item']"
-            :data="settings.contentOptions.items.locale"
-            @change="contentOptionChanged"
-        >
-        </setting>
+          <setting
+              :classes="['alpheios-panel__options-item']"
+              :data="settings.contentOptions.items.locale"
+              @change="contentOptionChanged"
+          >
+          </setting>
+        </div>
         <div>
           <button @click="resetAllOptions"
               class="alpheios-button-primary">{{l10n.getText('LABEL_RESET_OPTIONS')}}
@@ -837,10 +836,20 @@ export default {
     margin-bottom: 1em;
   }
 
+  .alpheios-panel__tab-panel--options {
+    display: block;
+  }
+
+  .alpheios-panel__tab-panel-options-cont {
+    display: flex;
+    flex-direction: column;
+  }
+
   .alpheios-panel__options-item {
     margin-bottom: textsize(10px);
     display: flex;
     align-items: flex-start;
+    flex: 1 1 auto;
   }
 
   .alpheios-panel__menu-btn {

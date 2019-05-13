@@ -4,6 +4,7 @@
         <div class="alpheios-word-usage-header-select-type-filter"
             v-for="typeFilterItem of typeFiltersList" v-bind:key="typeFilterItem.value"
             :class="{ 'alpheios-word-usage-header-select-type-filter-disabled': typeFilterItem.disabled === true }"
+            v-if="!typeFilterItem.skip"
         >
           <input type="radio" :id="typeFilterItem.value" :value="typeFilterItem.value" v-model="typeFilter" :disabled = "typeFilterItem.disabled === true">
           <label :for="typeFilterItem.value">{{ typeFilterItem.label }}</label>
@@ -72,7 +73,7 @@ export default {
       lastTextWorksList: [],
       typeFiltersList: [
         { value: 'noFilters', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_NO_FILTERS') },
-        { value: 'moreResults', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_MORE_RESULTS'), disabled: true },
+        { value: 'moreResults', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_MORE_RESULTS'), disabled: true, skip: true },
         { value: 'filterCurrentResults', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_FILTER_CURRENT_RESULTS'), disabled: true }
       ],
       disabledButton: false
@@ -89,8 +90,7 @@ export default {
           this.lastAuthorsList = []
           this.lastTextWorksList = []
           this.typeFilter = 'noFilters'
-          this.setDisabledToType('moreResults')
-          this.setDisabledToType('filterCurrentResults')
+          this.setDisabledToType(['moreResults', 'filterCurrentResults'])
         } else {
           this.lastAuthorsList = this.app.wordUsageExamples.wordUsageExamples
             .filter(wordUsageExampleItem => wordUsageExampleItem.author)
@@ -103,14 +103,12 @@ export default {
             .filter((item, pos, self) => item && self.indexOf(item) == pos)
             .slice()
 
-          this.removeDisabledFromTypeFilters()
           this.typeFilter = 'moreResults'
-          this.setDisabledToType('noFilters')
+          this.setDisabledToType(['noFilters'])
         }
       } else if (!this.$store.state.app.wordUsageExamplesReady && !this.app.homonym) {
-        this.removeDisabledFromTypeFilters()
         this.typeFilter = 'noFilters'
-        this.setDisabledToType('filterCurrentResults')
+        this.setDisabledToType(['moreResults', 'filterCurrentResults'])
         this.selectedAuthor = null
         this.selectedTextWork = null
       }
@@ -126,14 +124,14 @@ export default {
     }
   },
   methods: {
-    removeDisabledFromTypeFilters () {
+    setDisabledToType (typeValues) {
       this.typeFiltersList.forEach(item => {
-        item.disabled = false
+        if (typeValues.indexOf(item.value) > -1) {
+          item.disabled = true
+        } else {
+          item.disabled = false
+        }
       })
-    },
-    setDisabledToType (typeValue) {
-      this.removeDisabledFromTypeFilters()
-      this.typeFiltersList.find(item => item.value === typeValue).disabled = true
     },
     async getResults () {
       if (this.typeFilter === 'noFilters') {
@@ -143,11 +141,10 @@ export default {
 
         await this.getResultsNoFilters()
 
-        this.removeDisabledFromTypeFilters()
         this.clearFilter('author')
         this.lastAuthorID = null
-        this.typeFilter = 'moreResults'
-        this.setDisabledToType('noFilters')
+        this.typeFilter = 'filterCurrentResults'
+        this.setDisabledToType(['noFilters'])
 
         this.disabledButton = false
         
@@ -156,7 +153,7 @@ export default {
         this.$emit('getMoreResults', this.selectedAuthor, this.selectedTextWork)
         await this.getResultsWithFilters()
 
-        this.setDisabledToType('filterCurrentResults')
+        this.setDisabledToType(['filterCurrentResults'])
         this.lastAuthorID = this.selectedAuthor ? this.selectedAuthor.ID : null
 
         this.disabledButton = false

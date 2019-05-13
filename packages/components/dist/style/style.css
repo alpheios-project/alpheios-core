@@ -1213,12 +1213,14 @@ select.alpheios-setting__control,
   margin-top: calc(var(--alpheios-base-ui-size) * 1);
 }
 .alpheios-notification-area__close-btn {
-  width: calc(var(--alpheios-base-ui-size) * 1.25);
-  height: calc(var(--alpheios-base-ui-size) * 1.25);
   padding: 0 calc(var(--alpheios-base-ui-size) * 0.625) 0 calc(var(--alpheios-base-ui-size) * 1.25);
   cursor: pointer;
   fill: var(--alpheios-color-dark);
   stroke: var(--alpheios-color-dark);
+}
+.alpheios-notification-area__close-btn svg {
+  width: calc(var(--alpheios-base-ui-size) * 1.25);
+  height: calc(var(--alpheios-base-ui-size) * 1.25);
 }
 .alpheios-notification-area__close-btn:hover, .alpheios-notification-area__close-btn:focus {
   fill: var(--alpheios-color-dark-hover);
@@ -1578,13 +1580,15 @@ h3.alpheios-popup__toolbar-selection {
   font-weight: 700;
   color: var(--alpheios-color-neutral-dark);
 }
-a.alpheios-popup__providers-link {
+a.alpheios-popup__providers-link,
+a:not([href]):not([tabindex]).alpheios-popup__providers-link {
   display: inline-block;
   margin-bottom: calc(var(--alpheios-base-text-size) * 0.375);
   font-weight: 700;
   color: var(--alpheios-color-vivid);
 }
-a.alpheios-popup__providers-link:hover {
+a.alpheios-popup__providers-link:hover,
+a:not([href]):not([tabindex]).alpheios-popup__providers-link:hover {
   color: var(--alpheios-color-vivid-hover);
 }
 .alpheios-popup__definitions--placeholder {
@@ -2626,7 +2630,7 @@ h3.alpheios-inflections__credits-title {
   margin-left: 2%;
 }
 .alpheios-wordlist-filters .alpheios-wordlist-header-select-filterBy {
-  width: 90%;
+  width: 80%;
 }
 .alpheios-wordlist-filters .alpheios-wordlist-header-input-filterBy {
   width: 80%;
@@ -2896,10 +2900,18 @@ h3.alpheios-inflections__credits-title {
 .alpheios-panel__contentitem {
   margin-bottom: 1em;
 }
+.alpheios-panel__tab-panel--options {
+  display: block;
+}
+.alpheios-panel__tab-panel-options-cont {
+  display: flex;
+  flex-direction: column;
+}
 .alpheios-panel__options-item {
   margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
   display: flex;
   align-items: flex-start;
+  flex: 1 1 auto;
 }
 .alpheios-panel__menu-btn {
   width: 40px;
@@ -3174,7 +3186,6 @@ h3.alpheios-inflections__credits-title {
  */
 .alpheios-toolbar {
   position: fixed;
-  z-index: 1000000;
 }
 .alpheios-toolbar.alpheios-toolbar--compact {
   cursor: pointer;

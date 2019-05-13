@@ -710,7 +710,9 @@ export default {
     color: var(--alpheios-color-neutral-dark);
   }
 
-  a.alpheios-popup__providers-link {
+  a.alpheios-popup__providers-link,
+  // This is required to override Bootstrap styles
+  a:not([href]):not([tabindex]).alpheios-popup__providers-link {
     display: inline-block;
     margin-bottom: textsize(6px);
     font-weight: 700;

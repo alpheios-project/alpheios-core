@@ -1213,12 +1213,14 @@ select.alpheios-setting__control,
   margin-top: calc(var(--alpheios-base-ui-size) * 1) !important;
 }
 .alpheios-notification-area__close-btn {
-  width: calc(var(--alpheios-base-ui-size) * 1.25) !important;
-  height: calc(var(--alpheios-base-ui-size) * 1.25) !important;
   padding: 0 calc(var(--alpheios-base-ui-size) * 0.625) 0 calc(var(--alpheios-base-ui-size) * 1.25) !important;
   cursor: pointer !important;
   fill: var(--alpheios-color-dark) !important;
   stroke: var(--alpheios-color-dark) !important;
+}
+.alpheios-notification-area__close-btn svg {
+  width: calc(var(--alpheios-base-ui-size) * 1.25) !important;
+  height: calc(var(--alpheios-base-ui-size) * 1.25) !important;
 }
 .alpheios-notification-area__close-btn:hover, .alpheios-notification-area__close-btn:focus {
   fill: var(--alpheios-color-dark-hover) !important;
@@ -1578,13 +1580,15 @@ h3.alpheios-popup__toolbar-selection {
   font-weight: 700 !important;
   color: var(--alpheios-color-neutral-dark) !important;
 }
-a.alpheios-popup__providers-link {
+a.alpheios-popup__providers-link,
+a:not([href]):not([tabindex]).alpheios-popup__providers-link {
   display: inline-block;
   margin-bottom: calc(var(--alpheios-base-text-size) * 0.375) !important;
   font-weight: 700 !important;
   color: var(--alpheios-color-vivid) !important;
 }
-a.alpheios-popup__providers-link:hover {
+a.alpheios-popup__providers-link:hover,
+a:not([href]):not([tabindex]).alpheios-popup__providers-link:hover {
   color: var(--alpheios-color-vivid-hover) !important;
 }
 .alpheios-popup__definitions--placeholder {
@@ -2626,7 +2630,7 @@ h3.alpheios-inflections__credits-title {
   margin-left: 2% !important;
 }
 .alpheios-wordlist-filters .alpheios-wordlist-header-select-filterBy {
-  width: 90% !important;
+  width: 80% !important;
 }
 .alpheios-wordlist-filters .alpheios-wordlist-header-input-filterBy {
   width: 80% !important;
@@ -2896,10 +2900,18 @@ h3.alpheios-inflections__credits-title {
 .alpheios-panel__contentitem {
   margin-bottom: 1em !important;
 }
+.alpheios-panel__tab-panel--options {
+  display: block;
+}
+.alpheios-panel__tab-panel-options-cont {
+  display: flex;
+  flex-direction: column !important;
+}
 .alpheios-panel__options-item {
   margin-bottom: calc(var(--alpheios-base-text-size) * 0.625) !important;
   display: flex;
   align-items: flex-start !important;
+  flex: 1 1 auto !important;
 }
 .alpheios-panel__menu-btn {
   width: 40px !important;
@@ -3174,7 +3186,6 @@ h3.alpheios-inflections__credits-title {
  */
 .alpheios-toolbar {
   position: fixed !important;
-  z-index: 1000000 !important;
 }
 .alpheios-toolbar.alpheios-toolbar--compact {
   cursor: pointer !important;

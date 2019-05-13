@@ -34,6 +34,7 @@ export default class MouseDblClick extends PointerEvt {
    * @param domEvt
    */
   eventListener (domEvt) {
+    domEvt.stopPropagation()
     const valid = this
       .setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
       .setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)

@@ -13100,6 +13100,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -13809,7 +13811,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     componentStyles: function () {
       let styles = {
-        transform: `translate(${this.shift.x}px, ${this.shift.y}px)`
+        transform: `translate(${this.shift.x}px, ${this.shift.y}px)`,
+        // Should stay on top of a toolbar
+        zIndex: this.ui.zIndex + 10
       }
 
       if (this.$store.state.actionPanel.initialPos) {
@@ -14305,6 +14309,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 // Embeddable SVG icons
 
@@ -14324,6 +14329,14 @@ __webpack_require__.r(__webpack_exports__);
   mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
   components: {
     toolbarIcon: _images_inline_icons_reading_tools_svg__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+
+  computed: {
+    componentStyles: function () {
+      return {
+        zIndex: this.ui.zIndex
+      }
+    }
   },
 
   methods: {
@@ -14598,7 +14611,8 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     componentStyles: function () {
       let styles = {
-        transform: `translate(${this.shift.x}px, ${this.shift.y}px)`
+        transform: `translate(${this.shift.x}px, ${this.shift.y}px)`,
+        zIndex: this.ui.zIndex
       }
 
       if (this.moduleData.initialPos) {
@@ -14863,7 +14877,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_inline_icons_chevron_right_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/images/inline-icons/chevron-right.svg */ "./images/inline-icons/chevron-right.svg");
 /* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
 /* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
-//
 //
 //
 //
@@ -15558,10 +15571,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/components/panel-compact.vue */ "./vue/components/panel-compact.vue");
 /* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
 /* harmony import */ var _vue_components_info_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/vue/components/info.vue */ "./vue/components/info.vue");
-//
-//
-//
-//
 //
 //
 //
@@ -17620,6 +17629,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -17642,7 +17652,7 @@ __webpack_require__.r(__webpack_exports__);
       lastTextWorksList: [],
       typeFiltersList: [
         { value: 'noFilters', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_NO_FILTERS') },
-        { value: 'moreResults', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_MORE_RESULTS'), disabled: true },
+        { value: 'moreResults', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_MORE_RESULTS'), disabled: true, skip: true },
         { value: 'filterCurrentResults', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_FILTER_CURRENT_RESULTS'), disabled: true }
       ],
       disabledButton: false
@@ -17659,8 +17669,7 @@ __webpack_require__.r(__webpack_exports__);
           this.lastAuthorsList = []
           this.lastTextWorksList = []
           this.typeFilter = 'noFilters'
-          this.setDisabledToType('moreResults')
-          this.setDisabledToType('filterCurrentResults')
+          this.setDisabledToType(['moreResults', 'filterCurrentResults'])
         } else {
           this.lastAuthorsList = this.app.wordUsageExamples.wordUsageExamples
             .filter(wordUsageExampleItem => wordUsageExampleItem.author)
@@ -17673,14 +17682,12 @@ __webpack_require__.r(__webpack_exports__);
             .filter((item, pos, self) => item && self.indexOf(item) == pos)
             .slice()
 
-          this.removeDisabledFromTypeFilters()
           this.typeFilter = 'moreResults'
-          this.setDisabledToType('noFilters')
+          this.setDisabledToType(['noFilters'])
         }
       } else if (!this.$store.state.app.wordUsageExamplesReady && !this.app.homonym) {
-        this.removeDisabledFromTypeFilters()
         this.typeFilter = 'noFilters'
-        this.setDisabledToType('filterCurrentResults')
+        this.setDisabledToType(['moreResults', 'filterCurrentResults'])
         this.selectedAuthor = null
         this.selectedTextWork = null
       }
@@ -17696,14 +17703,14 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    removeDisabledFromTypeFilters () {
+    setDisabledToType (typeValues) {
       this.typeFiltersList.forEach(item => {
-        item.disabled = false
+        if (typeValues.indexOf(item.value) > -1) {
+          item.disabled = true
+        } else {
+          item.disabled = false
+        }
       })
-    },
-    setDisabledToType (typeValue) {
-      this.removeDisabledFromTypeFilters()
-      this.typeFiltersList.find(item => item.value === typeValue).disabled = true
     },
     async getResults () {
       if (this.typeFilter === 'noFilters') {
@@ -17713,11 +17720,10 @@ __webpack_require__.r(__webpack_exports__);
 
         await this.getResultsNoFilters()
 
-        this.removeDisabledFromTypeFilters()
         this.clearFilter('author')
         this.lastAuthorID = null
-        this.typeFilter = 'moreResults'
-        this.setDisabledToType('noFilters')
+        this.typeFilter = 'filterCurrentResults'
+        this.setDisabledToType(['noFilters'])
 
         this.disabledButton = false
         
@@ -17726,7 +17732,7 @@ __webpack_require__.r(__webpack_exports__);
         this.$emit('getMoreResults', this.selectedAuthor, this.selectedTextWork)
         await this.getResultsWithFilters()
 
-        this.setDisabledToType('filterCurrentResults')
+        this.setDisabledToType(['filterCurrentResults'])
         this.lastAuthorID = this.selectedAuthor ? this.selectedAuthor.ID : null
 
         this.disabledButton = false
@@ -21162,6 +21168,8 @@ var render = function() {
                 staticClass: "alpheios-input",
                 attrs: {
                   placeholder: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
+                  autocapitalize: "off",
+                  autocorrect: "off",
                   type: "text"
                 },
                 domProps: { value: _vm.lookuptext },
@@ -23096,6 +23104,7 @@ var render = function() {
       ],
       staticClass:
         "alpheios-content alpheios-toolbar alpheios-toolbar--compact",
+      style: _vm.componentStyles,
       attrs: { id: "alpheios-toolbar-inner" },
       on: { click: _vm.openActionPanel }
     },
@@ -23966,7 +23975,14 @@ var render = function() {
               _c(
                 "div",
                 { staticClass: "alpheios-lookup__panel" },
-                [_c("lookup", { attrs: { "name-base": "panel-defs" } })],
+                [
+                  _c("lookup", {
+                    attrs: {
+                      "name-base": "panel-defs",
+                      "show-results-in": "panel"
+                    }
+                  })
+                ],
                 1
               ),
               _vm._v(" "),
@@ -24011,13 +24027,7 @@ var render = function() {
                         _vm._s(_vm.l10n.getText("PLACEHOLDER_DEFINITIONS")) +
                         "\n      "
                     )
-                  ]),
-              _vm._v(" "),
-              _c("div", {
-                staticClass:
-                  "alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions",
-                domProps: { innerHTML: _vm._s(_vm.formattedFullDefinitions) }
-              })
+                  ])
             ]
           ),
           _vm._v(" "),
@@ -24207,8 +24217,7 @@ var render = function() {
                     "$store.getters['ui/isActiveTab']('wordUsage') && !menuVisible"
                 }
               ],
-              staticClass: "alpheios-panel__tab-panel",
-              attrs: { "data-alpheios-ignore": "all" }
+              staticClass: "alpheios-panel__tab-panel"
             },
             [_c("word-usage-examples")],
             1
@@ -24228,158 +24237,173 @@ var render = function() {
                     "$store.getters['ui/isActiveTab']('options') && !menuVisible"
                 }
               ],
-              staticClass: "alpheios-panel__tab-panel",
+              staticClass:
+                "alpheios-panel__tab-panel alpheios-panel__tab-panel--options",
               attrs: { "data-alpheios-ignore": "all" }
             },
             [
-              _c("reskin-font-color"),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.contentOptions.items.preferredLanguage
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.contentOptions.items.panelPosition
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.contentOptions.items.popupPosition
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.contentOptions.items.uiType
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.contentOptions.items.verboseMode
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.uiOptions.items.skin
-                },
-                on: { change: _vm.uiOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.app.isDevMode(),
-                    expression: "app.isDevMode()"
-                  }
+              _c(
+                "div",
+                { staticClass: "alpheios-panel__tab-panel-options-cont" },
+                [
+                  _c("reskin-font-color"),
+                  _vm._v(" "),
+                  _c("setting", {
+                    attrs: {
+                      classes: ["alpheios-panel__options-item"],
+                      data: _vm.settings.contentOptions.items.preferredLanguage
+                    },
+                    on: { change: _vm.contentOptionChanged }
+                  }),
+                  _vm._v(" "),
+                  _c("setting", {
+                    attrs: {
+                      classes: ["alpheios-panel__options-item"],
+                      data: _vm.settings.contentOptions.items.panelPosition
+                    },
+                    on: { change: _vm.contentOptionChanged }
+                  }),
+                  _vm._v(" "),
+                  _c("setting", {
+                    attrs: {
+                      classes: ["alpheios-panel__options-item"],
+                      data: _vm.settings.contentOptions.items.popupPosition
+                    },
+                    on: { change: _vm.contentOptionChanged }
+                  }),
+                  _vm._v(" "),
+                  _c("setting", {
+                    attrs: {
+                      classes: ["alpheios-panel__options-item"],
+                      data: _vm.settings.contentOptions.items.uiType
+                    },
+                    on: { change: _vm.contentOptionChanged }
+                  }),
+                  _vm._v(" "),
+                  _c("setting", {
+                    attrs: {
+                      classes: ["alpheios-panel__options-item"],
+                      data: _vm.settings.contentOptions.items.verboseMode
+                    },
+                    on: { change: _vm.contentOptionChanged }
+                  }),
+                  _vm._v(" "),
+                  _c("setting", {
+                    attrs: {
+                      classes: ["alpheios-panel__options-item"],
+                      data: _vm.settings.uiOptions.items.skin
+                    },
+                    on: { change: _vm.uiOptionChanged }
+                  }),
+                  _vm._v(" "),
+                  _c("setting", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.app.isDevMode(),
+                        expression: "app.isDevMode()"
+                      }
+                    ],
+                    attrs: {
+                      classes: ["alpheios-panel__options-item"],
+                      data: _vm.settings.uiOptions.items.panel
+                    },
+                    on: { change: _vm.uiOptionChanged }
+                  }),
+                  _vm._v(" "),
+                  _c("setting", {
+                    attrs: {
+                      classes: ["alpheios-panel__options-item"],
+                      data: _vm.settings.uiOptions.items.panelOnActivate
+                    },
+                    on: { change: _vm.uiOptionChanged }
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.resourceSettingsLexicons, function(
+                    languageSetting
+                  ) {
+                    return _c("setting", {
+                      key: languageSetting.name,
+                      attrs: {
+                        classes: ["alpheios-panel__options-item"],
+                        data: languageSetting
+                      },
+                      on: { change: _vm.resourceSettingChanged }
+                    })
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.resourceSettingsLexiconsShort, function(
+                    languageSetting
+                  ) {
+                    return _c("setting", {
+                      key: languageSetting.name,
+                      attrs: {
+                        classes: ["alpheios-panel__options-item"],
+                        data: languageSetting
+                      },
+                      on: { change: _vm.resourceSettingChanged }
+                    })
+                  }),
+                  _vm._v(" "),
+                  _c("setting", {
+                    attrs: {
+                      classes: ["alpheios-panel__options-item"],
+                      data:
+                        _vm.settings.contentOptions.items
+                          .enableWordUsageExamples
+                    },
+                    on: { change: _vm.contentOptionChanged }
+                  }),
+                  _vm._v(" "),
+                  _c("setting", {
+                    attrs: {
+                      classes: ["alpheios-panel__options-item"],
+                      data:
+                        _vm.settings.contentOptions.items.wordUsageExamplesON
+                    },
+                    on: { change: _vm.contentOptionChanged }
+                  }),
+                  _vm._v(" "),
+                  _c("setting", {
+                    attrs: {
+                      classes: ["alpheios-panel__options-item"],
+                      data:
+                        _vm.settings.contentOptions.items
+                          .wordUsageExamplesAuthMax
+                    },
+                    on: { change: _vm.contentOptionChanged }
+                  }),
+                  _vm._v(" "),
+                  _c("setting", {
+                    attrs: {
+                      classes: ["alpheios-panel__options-item"],
+                      data:
+                        _vm.settings.contentOptions.items.wordUsageExamplesMax
+                    },
+                    on: { change: _vm.contentOptionChanged }
+                  }),
+                  _vm._v(" "),
+                  _c("setting", {
+                    attrs: {
+                      classes: ["alpheios-panel__options-item"],
+                      data:
+                        _vm.settings.contentOptions.items
+                          .enableLemmaTranslations
+                    },
+                    on: { change: _vm.contentOptionChanged }
+                  }),
+                  _vm._v(" "),
+                  _c("setting", {
+                    attrs: {
+                      classes: ["alpheios-panel__options-item"],
+                      data: _vm.settings.contentOptions.items.locale
+                    },
+                    on: { change: _vm.contentOptionChanged }
+                  })
                 ],
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.uiOptions.items.panel
-                },
-                on: { change: _vm.uiOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.uiOptions.items.panelOnActivate
-                },
-                on: { change: _vm.uiOptionChanged }
-              }),
-              _vm._v(" "),
-              _vm._l(_vm.resourceSettingsLexicons, function(languageSetting) {
-                return _c("setting", {
-                  key: languageSetting.name,
-                  attrs: {
-                    classes: ["alpheios-panel__options-item"],
-                    data: languageSetting
-                  },
-                  on: { change: _vm.resourceSettingChanged }
-                })
-              }),
-              _vm._v(" "),
-              _vm._l(_vm.resourceSettingsLexiconsShort, function(
-                languageSetting
-              ) {
-                return _c("setting", {
-                  key: languageSetting.name,
-                  attrs: {
-                    classes: ["alpheios-panel__options-item"],
-                    data: languageSetting
-                  },
-                  on: { change: _vm.resourceSettingChanged }
-                })
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data:
-                    _vm.settings.contentOptions.items.enableWordUsageExamples
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.contentOptions.items.wordUsageExamplesON
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data:
-                    _vm.settings.contentOptions.items.wordUsageExamplesAuthMax
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.contentOptions.items.wordUsageExamplesMax
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data:
-                    _vm.settings.contentOptions.items.enableLemmaTranslations
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
-              _vm._v(" "),
-              _c("setting", {
-                attrs: {
-                  classes: ["alpheios-panel__options-item"],
-                  data: _vm.settings.contentOptions.items.locale
-                },
-                on: { change: _vm.contentOptionChanged }
-              }),
+                2
+              ),
               _vm._v(" "),
               _c("div", [
                 _c(
@@ -24396,8 +24420,7 @@ var render = function() {
                   ]
                 )
               ])
-            ],
-            2
+            ]
           ),
           _vm._v(" "),
           _c(
@@ -24666,13 +24689,7 @@ var render = function() {
                       _vm._s(_vm.l10n.getText("PLACEHOLDER_DEFINITIONS")) +
                       "\n      "
                   )
-                ]),
-            _vm._v(" "),
-            _c("div", {
-              staticClass:
-                "alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions",
-              domProps: { innerHTML: _vm._s(_vm.formattedFullDefinitions) }
-            })
+                ])
           ]
         ),
         _vm._v(" "),
@@ -26847,47 +26864,49 @@ var render = function() {
       "div",
       { staticClass: "alpheios-word-usage-header-select-type-filters-block" },
       _vm._l(_vm.typeFiltersList, function(typeFilterItem) {
-        return _c(
-          "div",
-          {
-            key: typeFilterItem.value,
-            staticClass: "alpheios-word-usage-header-select-type-filter",
-            class: {
-              "alpheios-word-usage-header-select-type-filter-disabled":
-                typeFilterItem.disabled === true
-            }
-          },
-          [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.typeFilter,
-                  expression: "typeFilter"
+        return !typeFilterItem.skip
+          ? _c(
+              "div",
+              {
+                key: typeFilterItem.value,
+                staticClass: "alpheios-word-usage-header-select-type-filter",
+                class: {
+                  "alpheios-word-usage-header-select-type-filter-disabled":
+                    typeFilterItem.disabled === true
                 }
-              ],
-              attrs: {
-                type: "radio",
-                id: typeFilterItem.value,
-                disabled: typeFilterItem.disabled === true
               },
-              domProps: {
-                value: typeFilterItem.value,
-                checked: _vm._q(_vm.typeFilter, typeFilterItem.value)
-              },
-              on: {
-                change: function($event) {
-                  _vm.typeFilter = typeFilterItem.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("label", { attrs: { for: typeFilterItem.value } }, [
-              _vm._v(_vm._s(typeFilterItem.label))
-            ])
-          ]
-        )
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.typeFilter,
+                      expression: "typeFilter"
+                    }
+                  ],
+                  attrs: {
+                    type: "radio",
+                    id: typeFilterItem.value,
+                    disabled: typeFilterItem.disabled === true
+                  },
+                  domProps: {
+                    value: typeFilterItem.value,
+                    checked: _vm._q(_vm.typeFilter, typeFilterItem.value)
+                  },
+                  on: {
+                    change: function($event) {
+                      _vm.typeFilter = typeFilterItem.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: typeFilterItem.value } }, [
+                  _vm._v(_vm._s(typeFilterItem.label))
+                ])
+              ]
+            )
+          : _vm._e()
       }),
       0
     ),
@@ -39597,7 +39616,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Store", function() { return Store; });
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Store", function() { return Store; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "install", function() { return install; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapState", function() { return mapState; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapMutations", function() { return mapMutations; });
@@ -39605,7 +39624,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
 /**
- * vuex v3.1.0
+ * vuex v3.1.1
  * (c) 2019 Evan You
  * @license MIT
  */
@@ -39645,9 +39664,12 @@ function applyMixin (Vue) {
   }
 }
 
-var devtoolHook =
-  typeof window !== 'undefined' &&
-  window.__VUE_DEVTOOLS_GLOBAL_HOOK__;
+var target = typeof window !== 'undefined'
+  ? window
+  : typeof global !== 'undefined'
+    ? global
+    : {};
+var devtoolHook = target.__VUE_DEVTOOLS_GLOBAL_HOOK__;
 
 function devtoolPlugin (store) {
   if (!devtoolHook) { return }
@@ -39691,6 +39713,12 @@ function isPromise (val) {
 
 function assert (condition, msg) {
   if (!condition) { throw new Error(("[vuex] " + msg)) }
+}
+
+function partial (fn, arg) {
+  return function () {
+    return fn(arg)
+  }
 }
 
 // Base data struct for store's module, package with some attribute and method
@@ -40154,7 +40182,9 @@ function resetStoreVM (store, state, hot) {
   var computed = {};
   forEachValue(wrappedGetters, function (fn, key) {
     // use computed to leverage its lazy-caching mechanism
-    computed[key] = function () { return fn(store); };
+    // direct inline function use will lead to closure preserving oldVm.
+    // using partial to return function with only arguments preserved in closure enviroment.
+    computed[key] = partial(fn, store);
     Object.defineProperty(store.getters, key, {
       get: function () { return store._vm[key]; },
       enumerable: true // for local getters
@@ -40593,7 +40623,7 @@ function getModuleByNamespace (store, helper, namespace) {
 var index_esm = {
   Store: Store,
   install: install,
-  version: '3.1.0',
+  version: '3.1.1',
   mapState: mapState,
   mapMutations: mapMutations,
   mapGetters: mapGetters,
@@ -40604,6 +40634,7 @@ var index_esm = {
 /* harmony default export */ __webpack_exports__["default"] = (index_esm);
 
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -43903,6 +43934,7 @@ class MouseDblClick extends _pointer_evt_js__WEBPACK_IMPORTED_MODULE_0__["defaul
    * @param domEvt
    */
   eventListener (domEvt) {
+    domEvt.stopPropagation()
     const valid = this
       .setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
       .setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
@@ -48032,7 +48064,7 @@ module.exports = [{"uriMatch":"https?://thelatinlibrary.com/caesar/gall1.shtml",
 /*! exports provided: domain, items, default */
 /***/ (function(module) {
 
-module.exports = {"domain":"alpheios-ui-options","items":{"skin":{"defaultValue":"default","labelText":"Skin","values":[{"value":"default","text":"Alpheios Default Skin"}]},"panel":{"defaultValue":"panel","labelText":"Panel layout","values":[{"value":"panel","text":"Normal panel layout"},{"value":"compactPanel","text":"Compact panel layout"}]},"panelOnActivate":{"defaultValue":true,"labelText":"Panel on activate","boolean":true,"values":[{"value":true,"text":"Open"},{"value":false,"text":"Close"}]},"fontSize":{"defaultValue":"medium","labelText":"Font size","values":[{"value":"small","text":"Small font size"},{"value":"medium","text":"Medium font size"},{"value":"large","text":"Large font size"}]}}};
+module.exports = {"domain":"alpheios-ui-options","items":{"skin":{"defaultValue":"default","labelText":"Skin","values":[{"value":"default","text":"Alpheios Default Skin"}]},"panel":{"defaultValue":"panel","labelText":"Panel layout","values":[{"value":"panel","text":"Normal panel layout"},{"value":"compactPanel","text":"Compact panel layout"}]},"panelOnActivate":{"defaultValue":false,"labelText":"Panel on activate","boolean":true,"values":[{"value":true,"text":"Open"},{"value":false,"text":"Close"}]},"fontSize":{"defaultValue":"medium","labelText":"Font size","values":[{"value":"small","text":"Small font size"},{"value":"medium","text":"Medium font size"},{"value":"large","text":"Large font size"}]}}};
 
 /***/ }),
 

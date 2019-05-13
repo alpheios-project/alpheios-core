@@ -161,7 +161,7 @@
       }
 
       .alpheios-wordlist-header-select-filterBy{
-        width: 90%;
+        width: 80%;
       }
 
       .alpheios-wordlist-header-input-filterBy {

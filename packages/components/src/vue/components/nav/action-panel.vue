@@ -144,7 +144,9 @@ export default {
   computed: {
     componentStyles: function () {
       let styles = {
-        transform: `translate(${this.shift.x}px, ${this.shift.y}px)`
+        transform: `translate(${this.shift.x}px, ${this.shift.y}px)`,
+        // Should stay on top of a toolbar
+        zIndex: this.ui.zIndex + 10
       }
 
       if (this.$store.state.actionPanel.initialPos) {

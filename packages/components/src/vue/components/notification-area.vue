@@ -129,12 +129,15 @@ export default {
     }
 
     &__close-btn {
-      width: uisize(20px);
-      height: uisize(20px);
       padding: 0 uisize(10px) 0 uisize(20px);
       cursor: pointer;
       fill: var(--alpheios-color-dark);
       stroke: var(--alpheios-color-dark);
+
+      & svg {
+        width: uisize(20px);
+        height: uisize(20px);
+      }
 
       &:hover,
       &:focus {

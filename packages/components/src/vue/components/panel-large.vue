@@ -75,10 +75,6 @@
         <div v-else>
           {{ l10n.getText('PLACEHOLDER_DEFINITIONS') }}
         </div>
-        <div
-            class="alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions"
-             v-html="formattedFullDefinitions"
-        />
       </div>
 
       <div

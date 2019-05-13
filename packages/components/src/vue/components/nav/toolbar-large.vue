@@ -231,7 +231,8 @@ export default {
   computed: {
     componentStyles: function () {
       let styles = {
-        transform: `translate(${this.shift.x}px, ${this.shift.y}px)`
+        transform: `translate(${this.shift.x}px, ${this.shift.y}px)`,
+        zIndex: this.ui.zIndex
       }
 
       if (this.moduleData.initialPos) {
