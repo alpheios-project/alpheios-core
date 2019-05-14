@@ -276,7 +276,7 @@
     "component": "Popup"
   },
   "LABEL_PROVIDERS_CREDITS": {
-    "message": "Credits:",
+    "message": "Credits",
     "description": "label for credits on popup",
     "component": "Popup"
   },

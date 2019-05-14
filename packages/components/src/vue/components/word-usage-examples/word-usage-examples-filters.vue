@@ -103,7 +103,7 @@ export default {
             .filter((item, pos, self) => item && self.indexOf(item) == pos)
             .slice()
 
-          this.typeFilter = 'moreResults'
+          this.typeFilter = 'filterCurrentResults'
           this.setDisabledToType(['noFilters'])
         }
       } else if (!this.$store.state.app.wordUsageExamplesReady && !this.app.homonym) {

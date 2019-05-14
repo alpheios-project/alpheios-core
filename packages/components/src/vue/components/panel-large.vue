@@ -37,13 +37,9 @@
       </div>
 
       <div class="alpheios-panel__header-btn-group--end">
-        <alph-tooltip
-            :tooltipText="l10n.getText('TOOLTIP_CLOSE_PANEL')"
-            tooltipDirection="bottom-right">
           <div @click="ui.closePanel" class="alpheios-panel__close-btn">
               <close-icon></close-icon>
           </div>
-        </alph-tooltip>
       </div>
     </div>
 
