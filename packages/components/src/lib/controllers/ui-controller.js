@@ -45,6 +45,10 @@ const layoutClasses = {
   LARGE: 'alpheios-layout-large'
 }
 
+const injectionClasses = {
+  DISABLE_TEXT_SELECTION: 'alpheios-disable-user-selection'
+}
+
 // Enable Vuex
 Vue.use(Vuex)
 
@@ -235,6 +239,8 @@ export default class UIController {
       textQuerySelector: 'body',
       enableLemmaTranslations: false,
       irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size',
+      // Whether to disable text selection on mobile devices
+      disableTextSelection: false,
       template: {
         html: Template
       }
@@ -772,6 +778,10 @@ export default class UIController {
     if (this.state.isDisabled()) { return `UI controller is disabled` }
 
     if (!this.isInitialized) { await this.init() }
+
+    // Inject Alpheios CSS rules
+    this.addPageInjections()
+
     // Activate listeners
     if (this.evc) { this.evc.activateListeners() }
 
@@ -824,6 +834,10 @@ export default class UIController {
     this.deactivateModules()
     if (this.api.ui.hasModule('popup')) { this.api.ui.closePopup() }
     if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel(false) } // Close panel without updating it's state so the state can be saved for later reactivation
+
+    // Remove Alpheios CSS rules
+    this.removePageInjections()
+
     this.isActivated = false
     this.isDeactivated = true
     this.authUnwatch()
@@ -849,6 +863,21 @@ export default class UIController {
     return UIController.embedLibWarningInstance
   }
 
+  addPageInjections () {
+    if (this.options.disableTextSelection) {
+      if (document && document.body) {
+        document.body.classList.add(injectionClasses.DISABLE_TEXT_SELECTION)
+      } else {
+        console.warn(`Cannot inject Alpheios CSS rules because either document or body do not exist`)
+      }
+    }
+  }
+
+  removePageInjections () {
+    if (document && document.body) {
+      document.body.classList.add(injectionClasses.DISABLE_TEXT_SELECTION)
+    }
+  }
   /**
    * Load site-specific settings
    * @param {Object[]} siteOptions - An array of site options
@@ -1018,7 +1047,6 @@ export default class UIController {
     this.updateLanguage(languageID)
     this.updateWordAnnotationData(data)
     this.store.commit('app/lexicalRequestStarted', targetWord)
-    this.open()
     return this
   }
 
@@ -1112,6 +1140,7 @@ export default class UIController {
   }
 
   open () {
+    console.info('open')
     if (this.api.ui.hasModule('panel') && this.platform.isMobile) {
       // This is a compact version of a UI
       this.api.ui.openPanel()
@@ -1167,6 +1196,8 @@ export default class UIController {
 
   getSelectedText (event) {
     if (this.state.isActive() && this.state.uiIsActive()) {
+      // Open the UI immediately to reduce visual delays
+      this.open()
       /*
       TextSelector conveys text selection information. It is more generic of the two.
       HTMLSelector conveys page-specific information, such as location of a selection on a page.
