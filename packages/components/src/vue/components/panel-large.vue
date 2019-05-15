@@ -17,21 +17,13 @@
       </div>
 
       <div class="alpheios-panel__header-btn-group--center">
-        <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MOVE_PANEL_LEFT')" tooltipDirection="bottom-narrow"
-                      v-show="isAttachedToRight">
-          <span @click="setPosition('left')"
-                class="alpheios-navbuttons__btn alpheios-navbuttons__btn--attach">
-              <attach-left-icon></attach-left-icon>
-          </span>
-        </alph-tooltip>
 
         <navbuttons-large></navbuttons-large>
 
-        <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_MOVE_PANEL_RIGHT')" tooltipDirection="bottom-narrow"
-                      v-show="isAttachedToLeft">
-          <span @click="setPosition('right')"
-                class="alpheios-navbuttons__btn alpheios-navbuttons__btn--attach">
-              <attach-right-icon></attach-right-icon>
+        <alph-tooltip :tooltipText="swapTooltip" tooltipDirection="bottom-narrow">
+          <span @click="swapPosition()"
+                class="alpheios-navbuttons__btn">
+              <swap-position></swap-position>
           </span>
         </alph-tooltip>
       </div>
@@ -292,8 +284,7 @@ import interact from 'interactjs'
 import NavbuttonsLarge from '@/vue/components/nav/navbuttons-large.vue'
 // SVG icons
 import LogoIcon from '@/images/alpheios/logo.svg'
-import AttachLeftIcon from '@/images/inline-icons/attach-left.svg'
-import AttachRightIcon from '@/images/inline-icons/attach-right.svg'
+import SwapPosition from '@/images/inline-icons/swap-horizontally.svg'
 // Vue components
 import CompactPanel from '@/vue/components/panel-compact.vue'
 import Tooltip from '@/vue/components/tooltip.vue'
@@ -307,9 +298,7 @@ export default {
     info: Info,
     navbuttonsLarge: NavbuttonsLarge,
     logoIcon: LogoIcon,
-    attachLeftIcon: AttachLeftIcon,
-    attachRightIcon: AttachRightIcon,
-    alphTooltip: Tooltip
+    swapPosition: SwapPosition
   },
   // A minimal width of a panel, in pixels. It should be large enough to fit all the buttons of a large size into the panel
   minWidth: 698,
@@ -319,6 +308,12 @@ export default {
   computed: {
     rootClasses () {
       return this.$options.positionClassVariants[this.$store.state.panel.position]
+    },
+
+    swapTooltip () {
+      return this.isAttachedToLeft
+        ? this.l10n.getText('TOOLTIP_MOVE_PANEL_RIGHT')
+        : this.l10n.getText('TOOLTIP_MOVE_PANEL_LEFT')
     }
   },
 
@@ -392,10 +387,6 @@ export default {
       flex-wrap: nowrap;
       box-sizing: border-box;
       align-items: stretch;
-    }
-
-    .alpheios-navbuttons__btn--attach {
-      stroke-width: 2.5;
     }
 
     .alpheios-panel__close-btn {

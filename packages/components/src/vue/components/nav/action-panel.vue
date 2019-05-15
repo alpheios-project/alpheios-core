@@ -1,6 +1,6 @@
 <template>
   <div
-      :id="moduleConfig.rootElementId"
+      :id="config.rootElementId"
       class="alpheios-action-panel alpheios-content"
       :style="componentStyles"
       v-show="showPanel"
@@ -16,7 +16,8 @@
           :name-base="`action-panel`"
           :use-page-lang-prefs="true"
           :show-language-settings-group="false"
-          :show-results-in="`panel`"
+          :show-results-in="config.lookupResultsIn"
+          @lookup-started="lookupStarted"
       />
         <progress-bar
             class="alpheios-action-panel__progress-bar"
@@ -30,7 +31,7 @@
           :tooltip-direction="tooltipDirection"
       >
         <div
-            @click.stop="ui.showPanelTab('inflectionsbrowser')"
+            @click.stop="openTab('inflectionsbrowser')"
             class="alpheios-action-panel__navbutton"
         >
           <inflections-browser-icon/>
@@ -44,7 +45,7 @@
         <div
             :class="{ disabled: !$store.getters[`app/hasGrammarRes`] }"
             class="alpheios-action-panel__navbutton"
-            @click.stop="ui.showPanelTab('grammar')"
+            @click.stop="openTab('grammar')"
         >
           <grammar-icon/>
         </div>
@@ -57,7 +58,7 @@
         <div
             :class="{ disabled: !$store.state.app.hasWordListsData }"
             class="alpheios-action-panel__navbutton"
-            @click.stop="ui.showPanelTab('wordlist')"
+            @click.stop="openTab('wordlist')"
         >
           <wordlist-icon/>
         </div>
@@ -70,7 +71,7 @@
         <div
             :class="{ disabled: !$store.state.auth.enableLogin }"
             class="alpheios-action-panel__navbutton"
-            @click.stop="ui.showPanelTab('user')"
+            @click.stop="openTab('user')"
         >
           <user-icon/>
         </div>
@@ -82,7 +83,7 @@
       >
         <div
             class="alpheios-action-panel__navbutton"
-            @click.stop="ui.showPanelTab('options')"
+            @click.stop="openTab('options')"
         >
           <options-icon/>
         </div>
@@ -133,12 +134,18 @@ export default {
 
       // How much an action panel has been dragged from its initial position, in pixels
       shift: {
-        x: 0, // this.moduleData.initialShift.x,
-        y: 0 // this.moduleData.initialShift.y
+        x: 0,
+        y: 0
       },
 
       tooltipDirection: 'top'
     }
+  },
+
+  created () {
+    // This is the earliest moment when data props are available
+    this.shift.x = this.config.initialShift.x
+    this.shift.y = this.config.initialShift.y
   },
 
   computed: {
@@ -171,6 +178,11 @@ export default {
       // during rendering of an action panel
       const panelVisible = this.$store.state.panel ? this.$store.state.panel.visible : false
       return this.$store.state.actionPanel.visible && !panelVisible
+    },
+
+    // Need this to return an object to Vue template when moduleConfig data is not available yet.
+    config () {
+      return this.moduleConfig || {}
     }
   },
 
@@ -182,6 +194,20 @@ export default {
           : `${this.l10n.getText(messageID)} (${this.l10n.getText('TOOLTIP_NOT_AVAIL_POSTFIX')})`
       }
       return this.l10n.getText(messageID)
+    },
+
+    openTab (tabName) {
+      this.ui.showPanelTab(tabName)
+      if (this.config.closeAfterNav) {
+        this.$store.commit('actionPanel/close')
+      }
+    },
+
+    // A callback for the `lookup-started` emitted by the Lookup component.
+    lookupStarted () {
+      if (this.config.closeAfterLookup) {
+        this.$store.commit('actionPanel/close')
+      }
     }
   }
 }

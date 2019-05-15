@@ -82,6 +82,12 @@ ActionPanelModule._configDefaults = {
   mountInto: 'body',
 
   rootElementId: null,
+  // What module shall be used to display lookup results. Possible values: `panel`, `popup`.
+  lookupResultsIn: 'panel',
+  // Whether to close an action panel after a lookup is started.
+  closeAfterLookup: false,
+  // Whether to close an action panel after a navigational button is pressed.
+  closeAfterNav: false,
   // Initial position of an action panel, in pixels. Any combination of positioning parameters (top, right, bottom, left)
   // in two different dimensions (X and Y) must be specified. Pixel units should NOT be added to the values.
   // Default values are the ones below.

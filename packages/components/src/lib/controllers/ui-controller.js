@@ -7,7 +7,6 @@ import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Vuex from 'vuex'
 // Modules and their support dependencies
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
-import ActionPanelModule from '@/vue/vuex-modules/ui/action-panel-module.js'
 import Locales from '@/locales/locales.js'
 
 import EmbedLibWarning from '@/vue/components/embed-lib-warning.vue'
@@ -167,9 +166,9 @@ export default class UIController {
     })
     uiController.registerModule(PopupModule, {
       mountPoint: '#alpheios-popup'
-    }) */
-
+    })
     uiController.registerModule(ActionPanelModule, {})
+    */
 
     // Creates on configures an event listener
     uiController.evc = new UIEventController()
@@ -292,7 +291,7 @@ export default class UIController {
    * @param options - Arbitrary number of values that will be passed to the module constructor.
    * @return {UIController} - A self reference for chaining.
    */
-  registerModule (moduleClass, options) {
+  registerModule (moduleClass, options = {}) {
     if (moduleClass.isSupportedPlatform(this.platform)) {
       // Add `platform` to module's options
       options.platform = this.platform
@@ -1188,9 +1187,26 @@ export default class UIController {
       this.store.commit('popup/open')
     }
   }
+
   closePopup () {
     if (this.api.ui.hasModule('popup')) {
       this.store.commit('popup/close')
+    }
+  }
+
+  openToolbar () {
+    if (this.api.ui.hasModule('toolbar')) {
+      this.store.commit('toolbar/open')
+    } else {
+      console.warn(`Toolbar cannot be opened because its module is not registered`)
+    }
+  }
+
+  openActionPanel () {
+    if (this.api.ui.hasModule('actionPanel')) {
+      this.store.commit('actionPanel/open')
+    } else {
+      console.warn(`Action panel cannot be opened because its module is not registered`)
     }
   }
 

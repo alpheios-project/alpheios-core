@@ -395,6 +395,7 @@ export default {
     box-sizing: border-box;
     border-top-left-radius: uisize(10px);
     border-top-right-radius: uisize(10px);
+    border-bottom: 1px solid var();
     // Need this for interact.js to work more reliably
     touch-action: none;
   }
@@ -406,7 +407,7 @@ export default {
     .alpheios-navbuttons__btn {
       margin: 0;
       border-radius: 0;
-      border-bottom: none;
+      border: none;
     }
   }
 

@@ -136,6 +136,8 @@ export default {
         return null
       }
 
+      console.info(`Lookup, show results in ${this.showResultsIn}`)
+
       /*
       If we override the language, then the lookup language must be a current value of our `lookupLanguage` prop,
       otherwise it must be a value of panel's options `preferredLanguage` options item
@@ -159,6 +161,8 @@ export default {
 
       this.app.newLexicalRequest(this.lookuptext, languageID)
       lexQuery.getData()
+      // Notify parent that the lookup has been started so that the parent can close itself if necessary
+      this.$emit('lookup-started')
 
       switch (this.showResultsIn) {
         case 'popup':

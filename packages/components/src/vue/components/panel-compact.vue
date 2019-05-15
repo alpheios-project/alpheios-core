@@ -552,6 +552,10 @@ export default {
       this.menuVisible = !this.menuVisible
     },
 
+    swapPosition () {
+      this.isAttachedToLeft ? this.setPosition('right') : this.setPosition('left')
+    },
+
     setPosition (position) {
       this.settings.contentOptions.items.panelPosition.setValue(position)
       this.$store.commit('panel/setPosition', position)
