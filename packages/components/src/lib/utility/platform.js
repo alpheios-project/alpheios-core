@@ -18,6 +18,7 @@ export default class Platform {
         ? Math.min(window.innerHeight, document.documentElement.clientHeight)
         : window.innerHeight || document.documentElement.clientHeight
     }
+    console.info(`Viewport dimensions are: width ${this.viewport.width}, height ${this.viewport.height}`)
   }
 
   setRootAttributes () {
