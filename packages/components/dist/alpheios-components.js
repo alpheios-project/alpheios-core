@@ -47568,6 +47568,7 @@ class HTMLPage {
    */
   static getDeviceType () {
     const screenWidthThreshold = 720
+    console.info(`Get device type, screen width is ${window.screen.width}`)
     return window.screen.width <= screenWidthThreshold ? HTMLPage.deviceTypes.MOBILE : HTMLPage.deviceTypes.DESKTOP
   }
 
@@ -47576,6 +47577,7 @@ class HTMLPage {
    * @return {string} - A name of the screen orientation as defined in {@link HTMLPage@orientations}.
    */
   static getOrientation () {
+    console.info(`Get device orientation, screen width is ${window.screen.width}`)
     return (window.screen.width <= window.screen.height) ? HTMLPage.orientations.PORTRAIT : HTMLPage.orientations.LANDSCAPE
   }
 }
@@ -47654,6 +47656,7 @@ class Platform {
         ? Math.min(window.innerHeight, document.documentElement.clientHeight)
         : window.innerHeight || document.documentElement.clientHeight
     }
+    console.info(`Viewport dimensions are: width ${this.viewport.width}, height ${this.viewport.height}`)
   }
 
   setRootAttributes () {
