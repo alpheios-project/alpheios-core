@@ -136,8 +136,6 @@ export default {
         return null
       }
 
-      console.info(`Lookup, show results in ${this.showResultsIn}`)
-
       /*
       If we override the language, then the lookup language must be a current value of our `lookupLanguage` prop,
       otherwise it must be a value of panel's options `preferredLanguage` options item

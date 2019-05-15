@@ -130,7 +130,6 @@ export default class HTMLPage {
    */
   static getDeviceType () {
     const screenWidthThreshold = 720
-    console.info(`Get device type, screen width is ${window.screen.width}`)
     return window.screen.width <= screenWidthThreshold ? HTMLPage.deviceTypes.MOBILE : HTMLPage.deviceTypes.DESKTOP
   }
 
@@ -139,7 +138,6 @@ export default class HTMLPage {
    * @return {string} - A name of the screen orientation as defined in {@link HTMLPage@orientations}.
    */
   static getOrientation () {
-    console.info(`Get device orientation, screen width is ${window.screen.width}`)
     return (window.screen.width <= window.screen.height) ? HTMLPage.orientations.PORTRAIT : HTMLPage.orientations.LANDSCAPE
   }
 }
