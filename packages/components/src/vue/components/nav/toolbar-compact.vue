@@ -4,7 +4,7 @@
       class="alpheios-content alpheios-toolbar alpheios-toolbar--compact"
       :style="componentStyles"
       v-show="$store.state.toolbar.visible"
-      @click="openActionPanel"
+      @click="ui.toggleActionPanel"
   >
     <toolbar-icon/>
   </div>
@@ -24,7 +24,7 @@ export default {
     ui: 'ui',
     l10n: 'l10n'
   },
-  storeModules: ['toolbar', 'app', 'ui', 'actionPanel'], // Store modules that are required by this component
+  storeModules: ['toolbar', 'app', 'ui'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
     toolbarIcon: ToolbarIcon
@@ -35,15 +35,6 @@ export default {
       return {
         zIndex: this.ui.zIndex
       }
-    }
-  },
-
-  methods: {
-    openActionPanel: function () {
-      // Toggle an action panel
-      this.$store.state.actionPanel.visible
-        ? this.$store.commit('actionPanel/close')
-        : this.$store.commit('actionPanel/open')
     }
   }
 }

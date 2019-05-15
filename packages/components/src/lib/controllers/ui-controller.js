@@ -645,6 +645,9 @@ export default class UIController {
       closePanel: this.closePanel.bind(this),
       openPopup: this.openPopup.bind(this),
       closePopup: this.closePopup.bind(this),
+      openActionPanel: this.openActionPanel.bind(this),
+      closeActionPanel: this.closeActionPanel.bind(this),
+      toggleActionPanel: this.toggleActionPanel.bind(this),
       changeTab: this.changeTab.bind(this),
       showPanelTab: this.showPanelTab.bind(this),
       togglePanelTab: this.togglePanelTab.bind(this),
@@ -863,7 +866,7 @@ export default class UIController {
   }
 
   addPageInjections () {
-    if (this.options.disableTextSelection) {
+    if (this.options.disableTextSelection && this.platform.isMobile) {
       if (document && document.body) {
         document.body.classList.add(injectionClasses.DISABLE_TEXT_SELECTION)
       } else {
@@ -1139,7 +1142,6 @@ export default class UIController {
   }
 
   open () {
-    console.info('open')
     if (this.api.ui.hasModule('panel') && this.platform.isMobile) {
       // This is a compact version of a UI
       this.api.ui.openPanel()
@@ -1207,6 +1209,24 @@ export default class UIController {
       this.store.commit('actionPanel/open')
     } else {
       console.warn(`Action panel cannot be opened because its module is not registered`)
+    }
+  }
+
+  closeActionPanel () {
+    if (this.api.ui.hasModule('actionPanel')) {
+      this.store.commit('actionPanel/close')
+    } else {
+      console.warn(`Action panel cannot be closed because its module is not registered`)
+    }
+  }
+
+  toggleActionPanel () {
+    if (this.api.ui.hasModule('actionPanel')) {
+      this.store.state.actionPanel.visible
+        ? this.store.commit('actionPanel/close')
+        : this.store.commit('actionPanel/open')
+    } else {
+      console.warn(`Action panel cannot be toggled because its module is not registered`)
     }
   }
 

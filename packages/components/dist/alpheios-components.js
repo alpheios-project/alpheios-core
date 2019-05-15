@@ -14355,7 +14355,7 @@ __webpack_require__.r(__webpack_exports__);
     ui: 'ui',
     l10n: 'l10n'
   },
-  storeModules: ['toolbar', 'app', 'ui', 'actionPanel'], // Store modules that are required by this component
+  storeModules: ['toolbar', 'app', 'ui'], // Store modules that are required by this component
   mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
   components: {
     toolbarIcon: _images_inline_icons_reading_tools_svg__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -14366,15 +14366,6 @@ __webpack_require__.r(__webpack_exports__);
       return {
         zIndex: this.ui.zIndex
       }
-    }
-  },
-
-  methods: {
-    openActionPanel: function () {
-      // Toggle an action panel
-      this.$store.state.actionPanel.visible
-        ? this.$store.commit('actionPanel/close')
-        : this.$store.commit('actionPanel/open')
     }
   }
 });
@@ -23148,7 +23139,7 @@ var render = function() {
         "alpheios-content alpheios-toolbar alpheios-toolbar--compact",
       style: _vm.componentStyles,
       attrs: { id: "alpheios-toolbar-inner" },
-      on: { click: _vm.openActionPanel }
+      on: { click: _vm.ui.toggleActionPanel }
     },
     [_c("toolbar-icon")],
     1
@@ -42560,6 +42551,9 @@ class UIController {
       closePanel: this.closePanel.bind(this),
       openPopup: this.openPopup.bind(this),
       closePopup: this.closePopup.bind(this),
+      openActionPanel: this.openActionPanel.bind(this),
+      closeActionPanel: this.closeActionPanel.bind(this),
+      toggleActionPanel: this.toggleActionPanel.bind(this),
       changeTab: this.changeTab.bind(this),
       showPanelTab: this.showPanelTab.bind(this),
       togglePanelTab: this.togglePanelTab.bind(this),
@@ -42778,7 +42772,7 @@ class UIController {
   }
 
   addPageInjections () {
-    if (this.options.disableTextSelection) {
+    if (this.options.disableTextSelection && this.platform.isMobile) {
       if (document && document.body) {
         document.body.classList.add(injectionClasses.DISABLE_TEXT_SELECTION)
       } else {
@@ -43054,7 +43048,6 @@ class UIController {
   }
 
   open () {
-    console.info('open')
     if (this.api.ui.hasModule('panel') && this.platform.isMobile) {
       // This is a compact version of a UI
       this.api.ui.openPanel()
@@ -43122,6 +43115,24 @@ class UIController {
       this.store.commit('actionPanel/open')
     } else {
       console.warn(`Action panel cannot be opened because its module is not registered`)
+    }
+  }
+
+  closeActionPanel () {
+    if (this.api.ui.hasModule('actionPanel')) {
+      this.store.commit('actionPanel/close')
+    } else {
+      console.warn(`Action panel cannot be closed because its module is not registered`)
+    }
+  }
+
+  toggleActionPanel () {
+    if (this.api.ui.hasModule('actionPanel')) {
+      this.store.state.actionPanel.visible
+        ? this.store.commit('actionPanel/close')
+        : this.store.commit('actionPanel/open')
+    } else {
+      console.warn(`Action panel cannot be toggled because its module is not registered`)
     }
   }
 
