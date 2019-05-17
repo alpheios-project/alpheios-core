@@ -89,15 +89,11 @@
 
         <div
             class="alpheios-popup__providers"
-            v-show="$store.state.app.morphDataReady && app.hasMorphData()"
+            v-show="$store.state.app.morphDataReady && app.hasMorphData() && $store.state.app.providers.length > 0"
         >
-          <div class="alpheios-popup__providers-title">{{ l10n.getText('LABEL_PROVIDERS_CREDITS') }}</div>
-          <a
-              class="alpheios-popup__providers-link"
-              v-on:click="switchProviders"
-          >
-            {{ providersLinkText }}
-          </a>
+          <div class="alpheios-popup__providers-title">
+            <a class="alpheios-popup__providers-link" v-on:click="switchProviders">{{ l10n.getText('LABEL_PROVIDERS_CREDITS') }}</a>
+          </div>
           <div v-show="showProviders">
             <div
                 class="alpheios-popup__providers-item"
