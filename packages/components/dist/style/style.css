@@ -290,6 +290,7 @@ html {
   --alpheios-sans-font-face: "Source Sans Pro", sans-serif;
   --alpheios-serif-font-face: "Source Serif Pro", serif;
   --alpheios-arabic-font-face: Amiri, serif;
+  --alpheios-color-placehoder: #ddd;
   --alpheios-color-neutral-dark: #757575;
   --alpheios-color-neutral-light: #E6E6E6;
   --alpheios-color-neutral-lightest: #FFF;
@@ -2358,6 +2359,9 @@ h3.alpheios-inflections__credits-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-word-usage-filters-select .alpheios-select option.alpheios-select-disabled-option {
+  color: var(--alpheios-color-placehoder);
+}
 .alpheios-word-usage-header-select-type-filters-block {
   margin-bottom: 10px;
 }
@@ -2400,6 +2404,9 @@ h3.alpheios-inflections__credits-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-word-usage-sorting-select .alpheios-select option.alpheios-select-disabled-option {
+  color: var(--alpheios-color-placehoder);
+}
 .alpheios-word-usage-header-sorting {
   padding-bottom: 10px;
 }
@@ -2618,6 +2625,9 @@ h3.alpheios-inflections__credits-title {
  */
 .alpheios-wordlist-filters {
   padding: 10px;
+}
+.alpheios-wordlist-filters .alpheios-select.alpheios-wordlist-header-select-filterBy option.alpheios-select-disabled-option {
+  color: var(--alpheios-color-placehoder);
 }
 .alpheios-wordlist-filters .alpheios-wordlist-header-title {
   margin: 0;

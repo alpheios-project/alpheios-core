@@ -123,5 +123,10 @@
         "message": "Added in the current session",
         "description": "Icon indicates, thats it was retrieved durent the current session",
         "component": "WordItemPanel"
+    },
+    "WORDLIST_FILTER_PLACEHOLDER": {
+        "message": "Select a filter",
+        "description": "Placeholder for filter selection",
+        "component": "WordFilterPanel"
     }
 }

@@ -6,7 +6,9 @@
           <select class="alpheios-select alpheios-wordlist-header-select-filterBy"
                   v-model="selectedFilterBy" @change="changedFilterBy">
             <option v-for="typeFiltering in typeFiltersList" v-bind:key="typeFiltering.value"
-                    v-bind:value="typeFiltering.value">{{ typeFiltering.title }}</option>
+                    v-bind:value="typeFiltering.value" v-bind:disabled="typeFiltering.disabled"
+                    :class='{ "alpheios-select-disabled-option": typeFiltering.disabled }'
+            >{{ typeFiltering.title }}</option>
           </select>
           <alph-tooltip :tooltipText="l10n.getMsg('WORDLIST_FILTER_CLEAR')" tooltipDirection="top-right">
             <span class="alpheios-wordlist-header-clear-icon"
@@ -67,6 +69,7 @@
       return {
         selectedFilterBy: null,
         typeFiltersList: [
+          { value: null, title: this.l10n.getText('WORDLIST_FILTER_PLACEHOLDER'), disabled: true },
           { value: 'byCurrentSession', title: this.l10n.getText('WORDLIST_FILTER_BYCURRENTSESSION'), onChange: true },
           { value: 'byImportant', title: this.l10n.getText('WORDLIST_FILTER_BYIMPORTANT'), onChange: true },
           { value: 'byWordFormFull', 
@@ -143,6 +146,13 @@
 
   .alpheios-wordlist-filters {
       padding: 10px;
+
+      .alpheios-select.alpheios-wordlist-header-select-filterBy {
+        option.alpheios-select-disabled-option {
+          color: var(--alpheios-color-placehoder);
+        }
+      }
+
       .alpheios-wordlist-header-title {
           margin: 0;
           font-weight: bold;
@@ -184,4 +194,6 @@
       }
       
   }
+
+  
 </style>

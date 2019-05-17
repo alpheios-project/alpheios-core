@@ -7,7 +7,9 @@
         <select class="alpheios-select alpheios-word-usage-header-select-sortBy"
                 v-model="selectedSortBy" @change="changedSortBy">
           <option v-for="typeSorting in typeSortingList" v-bind:key="typeSorting.value"
-                  v-bind:value="typeSorting.value">{{ typeSorting.title }}</option>
+                  v-bind:value="typeSorting.value"
+                  :class='{ "alpheios-select-disabled-option": typeSorting.disabled }'
+                  >{{ typeSorting.title }}</option>
         </select>
         <alph-tooltip :tooltipText="l10n.getMsg('WORDUSAGE_SORTING_AUTHOR_CLEAR')" tooltipDirection="top-right">
           <span class="alpheios-word-usage-header-clear-icon"
@@ -35,6 +37,7 @@ export default {
     return {
       selectedSortBy: null,
       typeSortingList: [
+        { value: null, title: this.l10n.getText('WORDUSAGE_SORT_BY_PLACEHOLDER'), disabled: true },
         { value: 'byAuthor', title: this.l10n.getText('WORDUSAGE_SORT_BY_AUTHOR') },
         { value: 'byTextWork', title: this.l10n.getText('WORDUSAGE_SORT_BY_TEXTWORK') },
         { value: 'byPrefix', title: this.l10n.getText('WORDUSAGE_SORT_BY_PREFIX') },
@@ -66,6 +69,12 @@ export default {
 </script>
 <style lang="scss">
   @import "../../../styles/variables";
+
+  .alpheios-word-usage-sorting-select .alpheios-select {
+    option.alpheios-select-disabled-option {
+      color: var(--alpheios-color-placehoder);
+    }
+  }
 
   .alpheios-word-usage-header-sorting {
     padding-bottom: 10px;

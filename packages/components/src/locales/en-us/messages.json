@@ -634,6 +634,21 @@
     "description": "Hide filters/sorting block",
     "component": "WordUsageExamples"
   },
+  "WORDUSAGE_FILTERS_AUTHOR_PLACEHOLDER": {
+    "message": "Select an author",
+    "description": "Placeholder for author selection",
+    "component": "WordUsageExamples"
+  },
+  "WORDUSAGE_FILTERS_TEXTWORK_PLACEHOLDER": {
+    "message": "Select a textwork",
+    "description": "Placeholder for textwork selection",
+    "component": "WordUsageExamples"
+  },
+  "WORDUSAGE_SORT_BY_PLACEHOLDER": {
+    "message": "Select sorting type",
+    "description": "Placeholder for sorting selection",
+    "component": "WordUsageExamples"
+  },
   "FONTSIZE_TEXT_SMALL": {
     "message": "Small",
     "description": "Description of a text size option within a button",
