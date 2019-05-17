@@ -125,7 +125,7 @@ export default class UIController {
     // Detect device's orientation change in order to update panel layout
     window.addEventListener('orientationchange', () => {
       // Update platform information
-      this.platform = new Platform(true)
+      this.platform.getData()
       if (this.hasModule('panel')) {
         this.store.commit('panel/setOrientation', this.platform.orientation)
       }

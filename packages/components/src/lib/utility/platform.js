@@ -2,12 +2,19 @@ import HTMLPage from '@/lib/utility/html-page.js'
 
 export default class Platform {
   constructor (setRootAttributes = false) {
-    this.deviceType = HTMLPage.getDeviceType()
-    this.orientation = HTMLPage.getOrientation()
+    this.getData()
 
     if (setRootAttributes) {
       this.setRootAttributes()
     }
+  }
+
+  /**
+   * Retrieves data about a platform.
+   */
+  getData () {
+    this.deviceType = HTMLPage.getDeviceType()
+    this.orientation = HTMLPage.getOrientation()
 
     this.viewport = {
       width: window.innerWidth && document.documentElement.clientWidth && document.body.clientWidth
@@ -18,6 +25,8 @@ export default class Platform {
         ? Math.min(window.innerHeight, document.documentElement.clientHeight)
         : window.innerHeight || document.documentElement.clientHeight
     }
+
+    this.dpr = window.devicePixelRatio
   }
 
   setRootAttributes () {

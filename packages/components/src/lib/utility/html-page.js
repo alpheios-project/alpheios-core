@@ -129,8 +129,9 @@ export default class HTMLPage {
    * @return {string} - A name of one of the deviceTypes defined in {@link HTMLPage@deviceTypes}.
    */
   static getDeviceType () {
-    const screenWidthThreshold = 720
-    return window.screen.width <= screenWidthThreshold ? HTMLPage.deviceTypes.MOBILE : HTMLPage.deviceTypes.DESKTOP
+    // TODO: Probably need a more complex algorithm for the future
+    const screenWidthThreshold = 900
+    return Math.max(window.screen.width, window.screen.width) <= screenWidthThreshold ? HTMLPage.deviceTypes.MOBILE : HTMLPage.deviceTypes.DESKTOP
   }
 
   /**
@@ -138,7 +139,9 @@ export default class HTMLPage {
    * @return {string} - A name of the screen orientation as defined in {@link HTMLPage@orientations}.
    */
   static getOrientation () {
-    return (window.screen.width <= window.screen.height) ? HTMLPage.orientations.PORTRAIT : HTMLPage.orientations.LANDSCAPE
+    // windows.screen.width/height dimensions are not updated on iOS devices when the device is rotated.
+    // Because of this we'd better use window.innerWidth and window.innerHeight instead.
+    return (window.innerWidth <= window.innerHeight) ? HTMLPage.orientations.PORTRAIT : HTMLPage.orientations.LANDSCAPE
   }
 }
 

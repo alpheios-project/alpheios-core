@@ -42070,7 +42070,7 @@ class UIController {
     // Detect device's orientation change in order to update panel layout
     window.addEventListener('orientationchange', () => {
       // Update platform information
-      this.platform = new _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_20__["default"](true)
+      this.platform.getData()
       if (this.hasModule('panel')) {
         this.store.commit('panel/setOrientation', this.platform.orientation)
       }
@@ -47612,8 +47612,9 @@ class HTMLPage {
    * @return {string} - A name of one of the deviceTypes defined in {@link HTMLPage@deviceTypes}.
    */
   static getDeviceType () {
-    const screenWidthThreshold = 720
-    return window.screen.width <= screenWidthThreshold ? HTMLPage.deviceTypes.MOBILE : HTMLPage.deviceTypes.DESKTOP
+    // TODO: Probably need a more complex algorithm for the future
+    const screenWidthThreshold = 900
+    return Math.max(window.screen.width, window.screen.width) <= screenWidthThreshold ? HTMLPage.deviceTypes.MOBILE : HTMLPage.deviceTypes.DESKTOP
   }
 
   /**
@@ -47621,7 +47622,9 @@ class HTMLPage {
    * @return {string} - A name of the screen orientation as defined in {@link HTMLPage@orientations}.
    */
   static getOrientation () {
-    return (window.screen.width <= window.screen.height) ? HTMLPage.orientations.PORTRAIT : HTMLPage.orientations.LANDSCAPE
+    // windows.screen.width/height dimensions are not updated on iOS devices when the device is rotated.
+    // Because of this we'd better use window.innerWidth and window.innerHeight instead.
+    return (window.innerWidth <= window.innerHeight) ? HTMLPage.orientations.PORTRAIT : HTMLPage.orientations.LANDSCAPE
   }
 }
 
@@ -47683,12 +47686,19 @@ __webpack_require__.r(__webpack_exports__);
 
 class Platform {
   constructor (setRootAttributes = false) {
-    this.deviceType = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].getDeviceType()
-    this.orientation = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].getOrientation()
+    this.getData()
 
     if (setRootAttributes) {
       this.setRootAttributes()
     }
+  }
+
+  /**
+   * Retrieves data about a platform.
+   */
+  getData () {
+    this.deviceType = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].getDeviceType()
+    this.orientation = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_0__["default"].getOrientation()
 
     this.viewport = {
       width: window.innerWidth && document.documentElement.clientWidth && document.body.clientWidth
@@ -47699,6 +47709,8 @@ class Platform {
         ? Math.min(window.innerHeight, document.documentElement.clientHeight)
         : window.innerHeight || document.documentElement.clientHeight
     }
+
+    this.dpr = window.devicePixelRatio
   }
 
   setRootAttributes () {
