@@ -69,7 +69,7 @@
           v-show="$store.getters['ui/isActiveTab']('morphology') && !menuVisible">
 
         <div class="alpheios-popup__definitions--placeholder"
-             v-if="!$store.state.app.morphDataReady && Boolean(this.$store.state.app.currentLanguageName)">
+             v-if="$store.getters['app/lexicalRequestInProgress'] && Boolean(this.$store.state.app.currentLanguageName)">
           <progress-bar :text="l10n.getText('PLACEHOLDER_LEX_DATA_LOADING')"></progress-bar>
         </div>
 

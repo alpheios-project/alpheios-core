@@ -78,7 +78,7 @@
 
       <div class="alpheios-popup__content">
         <div class="alpheios-popup__definitions--placeholder"
-             v-if="!$store.state.app.morphDataReady && !noLanguage">
+             v-if="$store.getters['app/lexicalRequestInProgress'] && !noLanguage">
           <progress-bar :text="l10n.getText('PLACEHOLDER_LEX_DATA_LOADING')"></progress-bar>
         </div>
 

@@ -963,7 +963,8 @@ export default class UIController {
       grammar: () => this.store.getters['app/hasGrammarRes'],
       treebank: () => this.store.getters['app/hasTreebankData'],
       wordUsage: () => this.store.state.app.wordUsageExampleEnabled,
-      status: () => this.api.settings.contentOptions.items.verboseMode.currentValue === 'verbose'
+      status: () => this.api.settings.contentOptions.items.verboseMode.currentValue === 'verbose',
+      wordlist: () => this.store.state.app.hasWordListsData
     }
     return tabsCheck.hasOwnProperty(tabName) && !tabsCheck[tabName]()
   }
@@ -1243,7 +1244,7 @@ export default class UIController {
       this.store.commit('app/setHtmlSelector', htmlSelector)
       let textSelector = htmlSelector.createTextSelector()
 
-      if (!textSelector.isEmpty()) {
+      if (textSelector && !textSelector.isEmpty()) {
         // TODO: disable experience monitor as it might cause memory leaks
         /* ExpObjMon.track(
           LexicalQuery.create(textSelector, {
@@ -1276,6 +1277,8 @@ export default class UIController {
 
         this.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data)
         lexQuery.getData()
+      } else {
+        this.closePopup() // because we open popup before any check, but selection could be incorrect
       }
     }
   }
@@ -1459,13 +1462,14 @@ export default class UIController {
     } else {
       homonym = wordItem.homonym
     }
-
+    this.open()
     this.newLexicalRequest(homonym.targetWord, homonym.languageID)
     if (homonym.lexemes.length > 0 && homonym.lexemes.filter(l => l.isPopulated()).length === homonym.lexemes.length) {
       // if we were able to retrieve full homonym data then we can just display it
       this.onHomonymReady(homonym)
       this.updateDefinitions(homonym)
       this.updateTranslations(homonym)
+      this.store.commit('app/lexicalRequestFinished')
     } else {
       // otherwise we can query for it as usual
       let textSelector = TextSelector.createObjectFromText(homonym.targetWord, homonym.languageID)

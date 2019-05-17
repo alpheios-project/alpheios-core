@@ -23823,7 +23823,7 @@ var render = function() {
               staticClass: "alpheios-panel__tab-panel"
             },
             [
-              !_vm.$store.state.app.morphDataReady &&
+              _vm.$store.getters["app/lexicalRequestInProgress"] &&
               Boolean(this.$store.state.app.currentLanguageName)
                 ? _c(
                     "div",
@@ -25385,7 +25385,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "alpheios-popup__content" }, [
-          !_vm.$store.state.app.morphDataReady && !_vm.noLanguage
+          _vm.$store.getters["app/lexicalRequestInProgress"] && !_vm.noLanguage
             ? _c(
                 "div",
                 { staticClass: "alpheios-popup__definitions--placeholder" },
@@ -39549,7 +39549,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Store", function() { return Store; });
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Store", function() { return Store; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "install", function() { return install; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapState", function() { return mapState; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapMutations", function() { return mapMutations; });
@@ -39557,7 +39557,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
 /**
- * vuex v3.1.0
+ * vuex v3.1.1
  * (c) 2019 Evan You
  * @license MIT
  */
@@ -39597,9 +39597,12 @@ function applyMixin (Vue) {
   }
 }
 
-var devtoolHook =
-  typeof window !== 'undefined' &&
-  window.__VUE_DEVTOOLS_GLOBAL_HOOK__;
+var target = typeof window !== 'undefined'
+  ? window
+  : typeof global !== 'undefined'
+    ? global
+    : {};
+var devtoolHook = target.__VUE_DEVTOOLS_GLOBAL_HOOK__;
 
 function devtoolPlugin (store) {
   if (!devtoolHook) { return }
@@ -39643,6 +39646,12 @@ function isPromise (val) {
 
 function assert (condition, msg) {
   if (!condition) { throw new Error(("[vuex] " + msg)) }
+}
+
+function partial (fn, arg) {
+  return function () {
+    return fn(arg)
+  }
 }
 
 // Base data struct for store's module, package with some attribute and method
@@ -40106,7 +40115,9 @@ function resetStoreVM (store, state, hot) {
   var computed = {};
   forEachValue(wrappedGetters, function (fn, key) {
     // use computed to leverage its lazy-caching mechanism
-    computed[key] = function () { return fn(store); };
+    // direct inline function use will lead to closure preserving oldVm.
+    // using partial to return function with only arguments preserved in closure enviroment.
+    computed[key] = partial(fn, store);
     Object.defineProperty(store.getters, key, {
       get: function () { return store._vm[key]; },
       enumerable: true // for local getters
@@ -40545,7 +40556,7 @@ function getModuleByNamespace (store, helper, namespace) {
 var index_esm = {
   Store: Store,
   install: install,
-  version: '3.1.0',
+  version: '3.1.1',
   mapState: mapState,
   mapMutations: mapMutations,
   mapGetters: mapGetters,
@@ -40556,6 +40567,7 @@ var index_esm = {
 /* harmony default export */ __webpack_exports__["default"] = (index_esm);
 
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -42867,7 +42879,8 @@ class UIController {
       grammar: () => this.store.getters['app/hasGrammarRes'],
       treebank: () => this.store.getters['app/hasTreebankData'],
       wordUsage: () => this.store.state.app.wordUsageExampleEnabled,
-      status: () => this.api.settings.contentOptions.items.verboseMode.currentValue === 'verbose'
+      status: () => this.api.settings.contentOptions.items.verboseMode.currentValue === 'verbose',
+      wordlist: () => this.store.state.app.hasWordListsData
     }
     return tabsCheck.hasOwnProperty(tabName) && !tabsCheck[tabName]()
   }
@@ -43147,7 +43160,7 @@ class UIController {
       this.store.commit('app/setHtmlSelector', htmlSelector)
       let textSelector = htmlSelector.createTextSelector()
 
-      if (!textSelector.isEmpty()) {
+      if (textSelector && !textSelector.isEmpty()) {
         // TODO: disable experience monitor as it might cause memory leaks
         /* ExpObjMon.track(
           LexicalQuery.create(textSelector, {
@@ -43180,6 +43193,8 @@ class UIController {
 
         this.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data)
         lexQuery.getData()
+      } else {
+        this.closePopup() // because we open popup before any check, but selection could be incorrect
       }
     }
   }
@@ -43363,13 +43378,14 @@ class UIController {
     } else {
       homonym = wordItem.homonym
     }
-
+    this.open()
     this.newLexicalRequest(homonym.targetWord, homonym.languageID)
     if (homonym.lexemes.length > 0 && homonym.lexemes.filter(l => l.isPopulated()).length === homonym.lexemes.length) {
       // if we were able to retrieve full homonym data then we can just display it
       this.onHomonymReady(homonym)
       this.updateDefinitions(homonym)
       this.updateTranslations(homonym)
+      this.store.commit('app/lexicalRequestFinished')
     } else {
       // otherwise we can query for it as usual
       let textSelector = _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_17__["default"].createObjectFromText(homonym.targetWord, homonym.languageID)
@@ -43743,6 +43759,7 @@ class GenericEvt extends _pointer_evt_js__WEBPACK_IMPORTED_MODULE_0__["default"]
    */
   static listen (selector, evtHandler, evtType) {
     let elements = document.querySelectorAll(selector)
+
     for (const element of elements) {
       let listener = new this(element, evtHandler, evtType)
       listener.set()
@@ -44145,6 +44162,7 @@ class Swipe extends _pointer_evt_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
       _log_html_console_js__WEBPACK_IMPORTED_MODULE_1__["default"].instance.log(`Swipe (${completed ? 'completed' : 'not completed'}), [x,y]: [${this.end.client.x}, ${this.end.client.y}], movement: ${this.mvmntDist},` +
         `direction: ${this.direction}, duration: ${this.duration}`)
     }
+
     return completed && !this.start.excluded && !this.end.excluded
   }
 

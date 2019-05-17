@@ -65,6 +65,7 @@ export default class GenericEvt extends PointerEvt {
    */
   static listen (selector, evtHandler, evtType) {
     let elements = document.querySelectorAll(selector)
+
     for (const element of elements) {
       let listener = new this(element, evtHandler, evtType)
       listener.set()

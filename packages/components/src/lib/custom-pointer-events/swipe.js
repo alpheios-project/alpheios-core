@@ -63,6 +63,7 @@ export default class Swipe extends PointerEvt {
       HTMLConsole.instance.log(`Swipe (${completed ? 'completed' : 'not completed'}), [x,y]: [${this.end.client.x}, ${this.end.client.y}], movement: ${this.mvmntDist},` +
         `direction: ${this.direction}, duration: ${this.duration}`)
     }
+
     return completed && !this.start.excluded && !this.end.excluded
   }
 
