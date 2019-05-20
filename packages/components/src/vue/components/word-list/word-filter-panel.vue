@@ -1,5 +1,5 @@
 <template>
-    <div class="alpheios-wordlist-filters">
+    <div class="alpheios-wordlist-filters" >
         <p class="alpheios-wordlist-header-title">{{ l10n.getText('WORDLIST_FILTER_BY') }}</p>
         <div>
         <div class="alpheios-wordlist-header-select-filterBy-block">
@@ -22,26 +22,52 @@
         <div class="alpheios-wordlist-header-input-filterBy-block"
           v-if="currentClickedLemma && currentTypeFilter && currentTypeFilter.showTextInput"
         >
-          <input v-model="textInput"  class="alpheios-input alpheios-wordlist-header-input-filterBy"
-                :placeholder="currentTypeFilter.textInputPlaceholder"
-                v-on:keyup.enter = "clickFilterBy"
-                >
+          <div class="alpheios-select-input-group"
+               :class = '{ "alpheios-select-input-group-show-select": shownVariantsSelect }'
+          >
+            <input v-model="textInput"  class="alpheios-input alpheios-wordlist-header-input-filterBy"
+                  :placeholder="currentTypeFilter.textInputPlaceholder"
+                  v-on:keyup.enter = "clickFilterBy"
+                  v-on:input = "filterVariants"
+                  v-on:focus = "filterVariants"
+                  v-on:blur = "hideAutocomplete"
+                  >
+            
+            <ul class="alpheios-select-list"
+                    v-model="selectedExactForm" 
+                    v-if = "selectedFilterBy === 'byExactForm'"
+                    >
+              <li v-for="(exactForm, exactFormIndex) in wordExactFormsFiltered" v-bind:key="exactFormIndex"
+                  @click="selectExactForm(exactForm)" v-html="exactForm"
+              ></li>
+            </ul>
+
+            <ul class="alpheios-select-list"
+                    v-model="selectedLemma" 
+                    v-if = "selectedFilterBy === 'byLemma'"
+                    >
+              <li v-for="(lemmaForm, lemmaFormIndex) in wordLemmaFormsFiltered" v-bind:key="lemmaFormIndex"
+                  @click="selectLemmaForm(lemmaForm)" v-html="lemmaForm"
+              ></li>
+            </ul>
+          </div>
           <alph-tooltip :tooltipText="l10n.getMsg('WORDLIST_FILTER')" tooltipDirection="top-right">
-            <span class="alpheios-wordlist-header-clear-icon"
-                  @click="clickFilterBy"
-                  :class = '{ "alpheios-wordlist-header-clear-disabled": textInput === null }'
-                  >
-              <go-icon></go-icon>
-            </span>
-          </alph-tooltip>
-          <alph-tooltip :tooltipText="l10n.getMsg('WORDLIST_FILTER_CLEAR')" tooltipDirection="top-right">
-            <span class="alpheios-wordlist-header-clear-icon"
-                  @click="clearFilteringText"
-                  :class = '{ "alpheios-wordlist-header-clear-disabled": textInput === null }'
-                  >
-              <clear-filters-icon></clear-filters-icon>
-            </span>
-          </alph-tooltip>
+              <span class="alpheios-wordlist-header-clear-icon"
+                    @click="clickFilterBy"
+                    :class = '{ "alpheios-wordlist-header-clear-disabled": textInput === null }'
+                    >
+                <go-icon></go-icon>
+              </span>
+            </alph-tooltip>
+            <alph-tooltip :tooltipText="l10n.getMsg('WORDLIST_FILTER_CLEAR')" tooltipDirection="top-right">
+              <span class="alpheios-wordlist-header-clear-icon"
+                    @click="clearFilteringText"
+                    :class = '{ "alpheios-wordlist-header-clear-disabled": textInput === null }'
+                    >
+                <clear-filters-icon></clear-filters-icon>
+              </span>
+            </alph-tooltip>
+
         </div>
       </div>
     </div>
@@ -63,48 +89,92 @@
       clickedLemma: {
         type: String,
         required: false
+      },
+      wordExactForms: {
+        type: Array,
+        required: false,
+        default: []
+      },
+      wordLemmaForms: {
+        type: Array,
+        required: false,
+        default: []
+      },
+      clearFilters: {
+        type: Number,
+        required: true
       }
     },
     data () {
       return {
         selectedFilterBy: null,
+        selectedExactForm: null,
+        selectedLemma: null,
         typeFiltersList: [
           { value: null, title: this.l10n.getText('WORDLIST_FILTER_PLACEHOLDER'), disabled: true },
           { value: 'byCurrentSession', title: this.l10n.getText('WORDLIST_FILTER_BYCURRENTSESSION'), onChange: true },
           { value: 'byImportant', title: this.l10n.getText('WORDLIST_FILTER_BYIMPORTANT'), onChange: true },
-          { value: 'byWordFormFull', 
+          { value: 'byExactForm', 
             title: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_FULL'), 
             onClick: true, showTextInput: true, 
             textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_FULL_PLACEHOLDER') 
           },
-          { value: 'byWordFormPart', 
-            title: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_PART'), 
-            onClick: true, showTextInput: true, 
-            textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_PART_PLACEHOLDER') 
-          },
-          { value: 'byLemmaFull', 
+          { value: 'byLemma', 
             title: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL'), 
             onClick: true, showTextInput: true, 
             textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL_PLACEHOLDER')
-          },
-          { value: 'byLemmaPart', 
-            title: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_PART'), 
-            onClick: true, showTextInput: true, 
-            textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_PART_PLACEHOLDER')
           }
         ],
-        textInput: null
+        textInput: null,
+        shownVariantsSelect: false,
+        markLayout: {
+          start: '<span class="alpheios-select-input-filter-part">',
+          end: '</span>'
+        }
       }
     },
     computed: {
       currentTypeFilter () {
-        return this.selectedFilterBy ? this.typeFiltersList.find(typeFilter => typeFilter.value === this.selectedFilterBy) : null
+        let curFilter = this.selectedFilterBy ? this.typeFiltersList.find(typeFilter => typeFilter.value === this.selectedFilterBy) : null
+        return curFilter
       },
       currentClickedLemma () {
         if (this.clickedLemma) {
           this.setClickedLemmaFilter()
         }
         return true
+      },
+      wordExactFormsFiltered () {
+        if (this.selectedFilterBy === 'byExactForm') {
+          if (this.textInput && this.textInput.length > 0) {
+            return this.wordExactForms.filter(exactForm => exactForm.indexOf(this.textInput) > -1).map(exactForm => {
+              let startIndex = exactForm.indexOf(this.textInput)
+              return exactForm.substr(0, startIndex) + this.markLayout.start + this.textInput + this.markLayout.end + exactForm.substr(startIndex + this.textInput.length)
+            })
+          } else {
+            return this.wordExactForms
+          }
+        }
+        return []
+      },
+      wordLemmaFormsFiltered () {
+        if (this.selectedFilterBy === 'byLemma') {
+          if (this.textInput && this.textInput.length > 0) {
+            return this.wordLemmaForms.filter(lemmaForm => lemmaForm.indexOf(this.textInput) > -1).map(lemmaForm => {
+              let startIndex = lemmaForm.indexOf(this.textInput)
+              return lemmaForm.substr(0, startIndex) + this.markLayout.start + this.textInput + this.markLayout.end + lemmaForm.substr(startIndex + this.textInput.length)
+            })
+          } else {
+            return this.wordLemmaForms
+          }
+        }
+        return []
+      }
+    },
+    watch: {
+      clearFilters (value) {
+        this.selectedFilterBy = null
+        this.textInput = null
       }
     },
     methods: {
@@ -115,9 +185,28 @@
           this.clearFilteringText()
         }
       },
+      selectExactForm (selectedExactForm) {
+        let formattedExactForm = selectedExactForm
+        this.textInput = formattedExactForm.replace('<span class="alpheios-select-input-filter-part">','').replace('</span>','')
+
+        this.clickFilterBy()
+      },
+      selectLemmaForm (selectedLemmaForm) {
+        let formattedLemmaForm = selectedLemmaForm
+        this.textInput = formattedLemmaForm.replace('<span class="alpheios-select-input-filter-part">','').replace('</span>','')
+
+        this.clickFilterBy()
+      },
       clickFilterBy () {
-        if (this.currentTypeFilter.onClick && this.textInput) {
+        if (this.currentTypeFilter && this.currentTypeFilter.onClick && this.textInput) {
+          if (this.selectedFilterBy === 'byExactForm' && this.wordExactForms.indexOf(this.textInput) === -1) {
+            return
+          }
+          if (this.selectedFilterBy === 'byLemma' && this.wordLemmaForms.indexOf(this.textInput) === -1) {
+            return
+          }
           this.$emit('changedFilterBy', this.selectedFilterBy, this.textInput)
+          this.shownVariantsSelect = false
         }
       },
       clearFiltering () {
@@ -133,10 +222,22 @@
         this.$emit('changedFilterBy', null)
       },
       setClickedLemmaFilter () {
-        this.selectedFilterBy = 'byLemmaFull'
+        this.selectedFilterBy = 'byLemma'
         this.textInput = this.clickedLemma
         this.clickFilterBy()
         this.$emit('clearClickedLemma')
+      },
+      filterVariants () {
+        if (this.textInput && this.textInput.length > 0) {
+          this.shownVariantsSelect = true
+        } else {
+          this.shownVariantsSelect = false
+        }
+      },
+      hideAutocomplete () {
+        setTimeout(() => {
+          this.shownVariantsSelect = false
+        }, 300)
       }
     }
   }
@@ -175,7 +276,7 @@
       }
 
       .alpheios-wordlist-header-input-filterBy {
-        width: 80%;
+        width: 100%;
       }
 
       .alpheios-wordlist-header-clear-icon {
@@ -192,7 +293,55 @@
           vertical-align: top;
         }
       }
-      
+    
+    .alpheios-select-input-group {
+      position: relative;
+      width: 80%;
+      display: inline-block;
+
+      &.alpheios-select-input-group-show-select {
+        .alpheios-wordlist-header-input-filterBy {
+          border-bottom-right-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+
+        .alpheios-select-list {
+          display: block;
+          border-bottom-right-radius: calc(var(--alpheios-base-text-size) * 0.625);
+          border-bottom-left-radius: calc(var(--alpheios-base-text-size) * 0.625);
+        }
+      }
+    }
+    .alpheios-select-list {
+      position:absolute;
+      box-sizing: border-box;
+      width: 100%;
+      margin: 0;
+      background: var(--alpheios-color-neutral-lightest);
+
+      padding: 5px 0;
+      border: 1px solid var(--alpheios-border-color);
+      border-top: 0;
+
+      max-height: 110px;
+      overflow-y: auto;
+
+      list-style: none;
+      display: none;
+
+      li {
+        cursor: pointer;
+        padding: 0 5px;
+        &:hover {
+          background-color: var(--alpheios-color-bright-hover);
+        }
+
+        .alpheios-select-input-filter-part {
+          font-weight: bold;
+          color: var(--alpheios-color-vivid);
+        }
+      }
+    }
   }
 
   

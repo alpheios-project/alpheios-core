@@ -17068,6 +17068,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -17085,48 +17111,92 @@ __webpack_require__.r(__webpack_exports__);
     clickedLemma: {
       type: String,
       required: false
+    },
+    wordExactForms: {
+      type: Array,
+      required: false,
+      default: []
+    },
+    wordLemmaForms: {
+      type: Array,
+      required: false,
+      default: []
+    },
+    clearFilters: {
+      type: Number,
+      required: true
     }
   },
   data () {
     return {
       selectedFilterBy: null,
+      selectedExactForm: null,
+      selectedLemma: null,
       typeFiltersList: [
         { value: null, title: this.l10n.getText('WORDLIST_FILTER_PLACEHOLDER'), disabled: true },
         { value: 'byCurrentSession', title: this.l10n.getText('WORDLIST_FILTER_BYCURRENTSESSION'), onChange: true },
         { value: 'byImportant', title: this.l10n.getText('WORDLIST_FILTER_BYIMPORTANT'), onChange: true },
-        { value: 'byWordFormFull', 
+        { value: 'byExactForm', 
           title: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_FULL'), 
           onClick: true, showTextInput: true, 
           textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_FULL_PLACEHOLDER') 
         },
-        { value: 'byWordFormPart', 
-          title: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_PART'), 
-          onClick: true, showTextInput: true, 
-          textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_PART_PLACEHOLDER') 
-        },
-        { value: 'byLemmaFull', 
+        { value: 'byLemma', 
           title: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL'), 
           onClick: true, showTextInput: true, 
           textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL_PLACEHOLDER')
-        },
-        { value: 'byLemmaPart', 
-          title: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_PART'), 
-          onClick: true, showTextInput: true, 
-          textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_PART_PLACEHOLDER')
         }
       ],
-      textInput: null
+      textInput: null,
+      shownVariantsSelect: false,
+      markLayout: {
+        start: '<span class="alpheios-select-input-filter-part">',
+        end: '</span>'
+      }
     }
   },
   computed: {
     currentTypeFilter () {
-      return this.selectedFilterBy ? this.typeFiltersList.find(typeFilter => typeFilter.value === this.selectedFilterBy) : null
+      let curFilter = this.selectedFilterBy ? this.typeFiltersList.find(typeFilter => typeFilter.value === this.selectedFilterBy) : null
+      return curFilter
     },
     currentClickedLemma () {
       if (this.clickedLemma) {
         this.setClickedLemmaFilter()
       }
       return true
+    },
+    wordExactFormsFiltered () {
+      if (this.selectedFilterBy === 'byExactForm') {
+        if (this.textInput && this.textInput.length > 0) {
+          return this.wordExactForms.filter(exactForm => exactForm.indexOf(this.textInput) > -1).map(exactForm => {
+            let startIndex = exactForm.indexOf(this.textInput)
+            return exactForm.substr(0, startIndex) + this.markLayout.start + this.textInput + this.markLayout.end + exactForm.substr(startIndex + this.textInput.length)
+          })
+        } else {
+          return this.wordExactForms
+        }
+      }
+      return []
+    },
+    wordLemmaFormsFiltered () {
+      if (this.selectedFilterBy === 'byLemma') {
+        if (this.textInput && this.textInput.length > 0) {
+          return this.wordLemmaForms.filter(lemmaForm => lemmaForm.indexOf(this.textInput) > -1).map(lemmaForm => {
+            let startIndex = lemmaForm.indexOf(this.textInput)
+            return lemmaForm.substr(0, startIndex) + this.markLayout.start + this.textInput + this.markLayout.end + lemmaForm.substr(startIndex + this.textInput.length)
+          })
+        } else {
+          return this.wordLemmaForms
+        }
+      }
+      return []
+    }
+  },
+  watch: {
+    clearFilters (value) {
+      this.selectedFilterBy = null
+      this.textInput = null
     }
   },
   methods: {
@@ -17137,9 +17207,28 @@ __webpack_require__.r(__webpack_exports__);
         this.clearFilteringText()
       }
     },
+    selectExactForm (selectedExactForm) {
+      let formattedExactForm = selectedExactForm
+      this.textInput = formattedExactForm.replace('<span class="alpheios-select-input-filter-part">','').replace('</span>','')
+
+      this.clickFilterBy()
+    },
+    selectLemmaForm (selectedLemmaForm) {
+      let formattedLemmaForm = selectedLemmaForm
+      this.textInput = formattedLemmaForm.replace('<span class="alpheios-select-input-filter-part">','').replace('</span>','')
+
+      this.clickFilterBy()
+    },
     clickFilterBy () {
-      if (this.currentTypeFilter.onClick && this.textInput) {
+      if (this.currentTypeFilter && this.currentTypeFilter.onClick && this.textInput) {
+        if (this.selectedFilterBy === 'byExactForm' && this.wordExactForms.indexOf(this.textInput) === -1) {
+          return
+        }
+        if (this.selectedFilterBy === 'byLemma' && this.wordLemmaForms.indexOf(this.textInput) === -1) {
+          return
+        }
         this.$emit('changedFilterBy', this.selectedFilterBy, this.textInput)
+        this.shownVariantsSelect = false
       }
     },
     clearFiltering () {
@@ -17155,10 +17244,22 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('changedFilterBy', null)
     },
     setClickedLemmaFilter () {
-      this.selectedFilterBy = 'byLemmaFull'
+      this.selectedFilterBy = 'byLemma'
       this.textInput = this.clickedLemma
       this.clickFilterBy()
       this.$emit('clearClickedLemma')
+    },
+    filterVariants () {
+      if (this.textInput && this.textInput.length > 0) {
+        this.shownVariantsSelect = true
+      } else {
+        this.shownVariantsSelect = false
+      }
+    },
+    hideAutocomplete () {
+      setTimeout(() => {
+        this.shownVariantsSelect = false
+      }, 300)
     }
   }
 });
@@ -17371,6 +17472,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -17408,19 +17513,23 @@ __webpack_require__.r(__webpack_exports__);
       filterMethods: {
         'byCurrentSession': (wordItem) => wordItem.currentSession,
         'byImportant': (wordItem) => wordItem.important,
-        'byWordFormFull': (wordItem) => wordItem.targetWord.toLowerCase() === this.textInput.toLowerCase(),
-        'byWordFormPart': (wordItem) => wordItem.targetWord.toLowerCase().indexOf(this.textInput.toLowerCase()) > -1,
-        'byLemmaFull': (wordItem) => wordItem.lemmasList.split(', ').some(lemmaItem => lemmaItem.toLowerCase() === this.textInput.toLowerCase()),
-        'byLemmaPart': (wordItem) => wordItem.lemmasList.split(', ').some(lemmaItem => lemmaItem.toLowerCase().indexOf(this.textInput.toLowerCase()) > -1)
-      }
+        'byExactForm': (wordItem) => wordItem.targetWord.toLowerCase() === this.textInput.toLowerCase(),
+        'byLemma': (wordItem) => wordItem.lemmasList.split(', ').some(lemmaItem => lemmaItem.toLowerCase() === this.textInput.toLowerCase())
+      }, 
+      clearFilters: 0
     }
   },
   computed: {
+    hasFilterPanel () {
+      return this.wordlist && this.wordlist.values && this.wordlist.values.length > 1
+    },
     wordlist () {
+      this.clearFilters = this.clearFilters + 1
+      this.changedFilterBy(null, null)
       return this.$store.state.app.wordListUpdateTime && this.reloadList ? this.app.getWordList(this.languageCode) : {}
     },
     wordItems () {
-      if (this.$store.state.app.wordListUpdateTime && this.reloadList) {
+      if (this.$store.state.app.wordListUpdateTime && this.reloadList) {        
         if (!this.selectedFilterBy) {
           return this.wordlist.values
         }
@@ -17429,8 +17538,30 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           console.warn(`The current filter method - ${this.selectedFilterBy} - is not defined, that's why empty result is returned!`)
         }
-      }
+      }      
       return []
+    },
+    wordExactForms () {
+      let exactForms = this.wordlist.values.reduce((acc, wordItem) => {
+          let exactForm = wordItem.targetWord.toLowerCase()
+          if (!acc.includes(exactForm)) {
+            acc.push(exactForm)
+        }
+        return acc
+      }, [])
+      return exactForms.sort()
+    },
+    wordLemmaForms () {
+      let lemmaForms = this.wordlist.values.reduce((acc, wordItem) => {
+        let currentLemmaForms = wordItem.lemmasList.split(', ')
+        currentLemmaForms.forEach(lemmaForm => {
+          if (!acc.includes(lemmaForm)) {
+            acc.push(lemmaForm)
+          }
+        })
+        return acc
+      }, [])
+      return lemmaForms.sort()
     },
     languageName () {
       // TODO with upcoming merge, this can be retrived from utility library
@@ -26219,39 +26350,124 @@ var render = function() {
             "div",
             { staticClass: "alpheios-wordlist-header-input-filterBy-block" },
             [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.textInput,
-                    expression: "textInput"
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-select-input-group",
+                  class: {
+                    "alpheios-select-input-group-show-select":
+                      _vm.shownVariantsSelect
                   }
-                ],
-                staticClass:
-                  "alpheios-input alpheios-wordlist-header-input-filterBy",
-                attrs: {
-                  placeholder: _vm.currentTypeFilter.textInputPlaceholder
                 },
-                domProps: { value: _vm.textInput },
-                on: {
-                  keyup: function($event) {
-                    if (
-                      !$event.type.indexOf("key") &&
-                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                    ) {
-                      return null
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.textInput,
+                        expression: "textInput"
+                      }
+                    ],
+                    staticClass:
+                      "alpheios-input alpheios-wordlist-header-input-filterBy",
+                    attrs: {
+                      placeholder: _vm.currentTypeFilter.textInputPlaceholder
+                    },
+                    domProps: { value: _vm.textInput },
+                    on: {
+                      keyup: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.clickFilterBy($event)
+                      },
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.textInput = $event.target.value
+                        },
+                        _vm.filterVariants
+                      ],
+                      focus: _vm.filterVariants,
+                      blur: _vm.hideAutocomplete
                     }
-                    return _vm.clickFilterBy($event)
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.textInput = $event.target.value
-                  }
-                }
-              }),
+                  }),
+                  _vm._v(" "),
+                  _vm.selectedFilterBy === "byExactForm"
+                    ? _c(
+                        "ul",
+                        {
+                          staticClass: "alpheios-select-list",
+                          model: {
+                            value: _vm.selectedExactForm,
+                            callback: function($$v) {
+                              _vm.selectedExactForm = $$v
+                            },
+                            expression: "selectedExactForm"
+                          }
+                        },
+                        _vm._l(_vm.wordExactFormsFiltered, function(
+                          exactForm,
+                          exactFormIndex
+                        ) {
+                          return _c("li", {
+                            key: exactFormIndex,
+                            domProps: { innerHTML: _vm._s(exactForm) },
+                            on: {
+                              click: function($event) {
+                                return _vm.selectExactForm(exactForm)
+                              }
+                            }
+                          })
+                        }),
+                        0
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.selectedFilterBy === "byLemma"
+                    ? _c(
+                        "ul",
+                        {
+                          staticClass: "alpheios-select-list",
+                          model: {
+                            value: _vm.selectedLemma,
+                            callback: function($$v) {
+                              _vm.selectedLemma = $$v
+                            },
+                            expression: "selectedLemma"
+                          }
+                        },
+                        _vm._l(_vm.wordLemmaFormsFiltered, function(
+                          lemmaForm,
+                          lemmaFormIndex
+                        ) {
+                          return _c("li", {
+                            key: lemmaFormIndex,
+                            domProps: { innerHTML: _vm._s(lemmaForm) },
+                            on: {
+                              click: function($event) {
+                                return _vm.selectLemmaForm(lemmaForm)
+                              }
+                            }
+                          })
+                        }),
+                        0
+                      )
+                    : _vm._e()
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "alph-tooltip",
@@ -26681,7 +26897,20 @@ var render = function() {
         { staticClass: "alpheios-wordlist-filter-panel" },
         [
           _c("word-filter-panel", {
-            attrs: { clickedLemma: _vm.clickedLemma },
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.hasFilterPanel,
+                expression: "hasFilterPanel"
+              }
+            ],
+            attrs: {
+              clickedLemma: _vm.clickedLemma,
+              wordExactForms: _vm.wordExactForms,
+              wordLemmaForms: _vm.wordLemmaForms,
+              clearFilters: _vm.clearFilters
+            },
             on: {
               changedFilterBy: _vm.changedFilterBy,
               clearClickedLemma: _vm.clearClickedLemma
@@ -41349,7 +41578,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"d":"M12.13 11.59c-.16 1.25-1.78 2.53-3.03 2.57-2.93.04.79-4.7-.36-5.79.56-.21 1.88-.54 1.88.44 0 .82-.5 1.74-.74 2.51-1.22 3.84 2.25-.17 2.26-.14.02.03.02.17-.01.41-.05.36.03-.24 0 0zm-.57-5.92c0 1-2.2 1.48-2.2.36 0-1.03 2.2-1.49 2.2-.36z"}}),_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}})])
+            children.concat([_c('path',{attrs:{"stroke-width":"0","d":"M12.13 11.59c-.16 1.25-1.78 2.53-3.03 2.57-2.93.04.79-4.7-.36-5.79.56-.21 1.88-.54 1.88.44 0 .82-.5 1.74-.74 2.51-1.22 3.84 2.25-.17 2.26-.14.02.03.02.17-.01.41-.05.36.03-.24 0 0zm-.57-5.92c0 1-2.2 1.48-2.2.36 0-1.03 2.2-1.49 2.2-.36z"}}),_c('circle',{attrs:{"fill":"none","stroke-width":"1.1","cx":"10","cy":"10","r":"9"}})])
           )
         }
       });
@@ -41629,7 +41858,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","d":"M13.018 14.197l-3.573-3.572"}})])
+            children.concat([_c('circle',{attrs:{"fill":"none","stroke-width":"1.1","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"stroke-width":"0","d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","stroke-width":"1.1","d":"M13.018 14.197l-3.573-3.572"}})])
           )
         }
       });
@@ -47829,10 +48058,10 @@ module.exports = {"Number":{"message":"Number"},"Case":{"message":"Case"},"Decle
 /*!***********************************************!*\
   !*** ./locales/en-us/messages-word-list.json ***!
   \***********************************************/
-/*! exports provided: WORDLIST_TOOLTIP_ALL_IMPORTANT, WORDLIST_TOOLTIP_NO_IMPORTANT, WORDLIST_TOOLTIP_REMOVE_ALL, WORDLIST_TOOLTIP_CHANGE_IMPORTANT, WORDLIST_TOOLTIP_REMOVE, WORDLIST_TOOLTIP_TEXT_CONTEXT, WORDLIST_TOOLTIP_BACK, WORDLIST_DELETE_CONFIRM_MESSAGE, WORDLIST_BUTTON_DELETE, WORDLIST_BUTTON_CANCEL_DELETE, WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL, WORDLIST_FILTER_BYCURRENTSESSION, WORDLIST_FILTER_BYIMPORTANT, WORDLIST_FILTER_BYWORDFORM_FULL, WORDLIST_FILTER_BYWORDFORM_PART, WORDLIST_FILTER_BYLEMMA_FULL, WORDLIST_FILTER_BYLEMMA_PART, WORDLIST_FILTER_BYWORDFORM_FULL_PLACEHOLDER, WORDLIST_FILTER_BYWORDFORM_PART_PLACEHOLDER, WORDLIST_FILTER_BYLEMMA_FULL_PLACEHOLDER, WORDLIST_FILTER_BYLEMMA_PART_PLACEHOLDER, WORDLIST_FILTER_BY, WORDLIST_FILTER_CLEAR, WORDLIST_FILTER, WORDLIST_CURRENT_SESSION, WORDLIST_FILTER_PLACEHOLDER, default */
+/*! exports provided: WORDLIST_TOOLTIP_ALL_IMPORTANT, WORDLIST_TOOLTIP_NO_IMPORTANT, WORDLIST_TOOLTIP_REMOVE_ALL, WORDLIST_TOOLTIP_CHANGE_IMPORTANT, WORDLIST_TOOLTIP_REMOVE, WORDLIST_TOOLTIP_TEXT_CONTEXT, WORDLIST_TOOLTIP_BACK, WORDLIST_DELETE_CONFIRM_MESSAGE, WORDLIST_BUTTON_DELETE, WORDLIST_BUTTON_CANCEL_DELETE, WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL, WORDLIST_FILTER_BYCURRENTSESSION, WORDLIST_FILTER_BYIMPORTANT, WORDLIST_FILTER_BYWORDFORM_FULL, WORDLIST_FILTER_BYWORDFORM_PART, WORDLIST_FILTER_BYLEMMA_FULL, WORDLIST_FILTER_BYLEMMA_PART, WORDLIST_FILTER_BYWORDFORM_FULL_PLACEHOLDER, WORDLIST_FILTER_BYLEMMA_FULL_PLACEHOLDER, WORDLIST_FILTER_BY, WORDLIST_FILTER_CLEAR, WORDLIST_FILTER, WORDLIST_CURRENT_SESSION, WORDLIST_FILTER_PLACEHOLDER, default */
 /***/ (function(module) {
 
-module.exports = {"WORDLIST_TOOLTIP_ALL_IMPORTANT":{"message":"Make all important ","description":"Make all words inside language block important","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_NO_IMPORTANT":{"message":"Remove all important ","description":"Remove important mark from all words inside language block","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_REMOVE_ALL":{"message":"Remove all word items","description":"Remove all words inside language block","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_CHANGE_IMPORTANT":{"message":"Change important status","description":"Change important status for the WordItem","component":"WordItemPanel"},"WORDLIST_TOOLTIP_REMOVE":{"message":"Remove word item","description":"Remove the WordItem form the list","component":"WordItemPanel"},"WORDLIST_TOOLTIP_TEXT_CONTEXT":{"message":"Show contexts","description":"Show panle with contexts for the wordItem","component":"WordItemPanel"},"WORDLIST_TOOLTIP_BACK":{"message":"Back to word list","description":"Back to the WordList Tab","component":"WordContextPanel"},"WORDLIST_DELETE_CONFIRM_MESSAGE":{"message":"Do you really want to delete all word items from the list?","description":"Delete all confirmation message","component":"WordLanguagePanel"},"WORDLIST_BUTTON_DELETE":{"message":"Delete","description":"Button title for delete all","component":"WordLanguagePanel"},"WORDLIST_BUTTON_CANCEL_DELETE":{"message":"Cancel","description":"Button title for cancel delete all","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL":{"message":"Cancel remove all word items","description":"Cancel remove all words inside language block","component":"WordLanguagePanel"},"WORDLIST_FILTER_BYCURRENTSESSION":{"message":"by this session","description":"Filter only those words that were selected in the current session","component":"WordFilterPanel"},"WORDLIST_FILTER_BYIMPORTANT":{"message":"by important","description":"Filter only those words that has an important flag","component":"WordFilterPanel"},"WORDLIST_FILTER_BYWORDFORM_FULL":{"message":"by word form (full)","description":"Filter only those words that has this word form","component":"WordFilterPanel"},"WORDLIST_FILTER_BYWORDFORM_PART":{"message":"by word form (part)","description":"Filter only those words that has this part of word form","component":"WordFilterPanel"},"WORDLIST_FILTER_BYLEMMA_FULL":{"message":"by lemma (full)","description":"Filter only those words that has this lemma","component":"WordFilterPanel"},"WORDLIST_FILTER_BYLEMMA_PART":{"message":"by lemma (part)","description":"Filter only those words that has this part of lemma","component":"WordFilterPanel"},"WORDLIST_FILTER_BYWORDFORM_FULL_PLACEHOLDER":{"message":"type full word form here","description":"Placeholder for the text input for filter by word form (full)","component":"WordFilterPanel"},"WORDLIST_FILTER_BYWORDFORM_PART_PLACEHOLDER":{"message":"type part of word form here","description":"Placeholder for the text input for filter by word form (part)","component":"WordFilterPanel"},"WORDLIST_FILTER_BYLEMMA_FULL_PLACEHOLDER":{"message":"type full lemma here","description":"Placeholder for the text input for filter by lemma (full)","component":"WordFilterPanel"},"WORDLIST_FILTER_BYLEMMA_PART_PLACEHOLDER":{"message":"type part of lemma here","description":"Placeholder for the text input for filter by lemma (part)","component":"WordFilterPanel"},"WORDLIST_FILTER_BY":{"message":"Filter by","description":"Filter by label on the panel","component":"WordFilterPanel"},"WORDLIST_FILTER_CLEAR":{"message":"Clear filter by","description":"Tooltip for clear filter icon","component":"WordFilterPanel"},"WORDLIST_FILTER":{"message":"Filter","description":"Tooltip for filter icon","component":"WordFilterPanel"},"WORDLIST_CURRENT_SESSION":{"message":"Added in the current session","description":"Icon indicates, thats it was retrieved durent the current session","component":"WordItemPanel"},"WORDLIST_FILTER_PLACEHOLDER":{"message":"Select a filter","description":"Placeholder for filter selection","component":"WordFilterPanel"}};
+module.exports = {"WORDLIST_TOOLTIP_ALL_IMPORTANT":{"message":"Make all important ","description":"Make all words inside language block important","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_NO_IMPORTANT":{"message":"Remove all important ","description":"Remove important mark from all words inside language block","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_REMOVE_ALL":{"message":"Remove all word items","description":"Remove all words inside language block","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_CHANGE_IMPORTANT":{"message":"Change important status","description":"Change important status for the WordItem","component":"WordItemPanel"},"WORDLIST_TOOLTIP_REMOVE":{"message":"Remove word item","description":"Remove the WordItem form the list","component":"WordItemPanel"},"WORDLIST_TOOLTIP_TEXT_CONTEXT":{"message":"Show contexts","description":"Show panle with contexts for the wordItem","component":"WordItemPanel"},"WORDLIST_TOOLTIP_BACK":{"message":"Back to word list","description":"Back to the WordList Tab","component":"WordContextPanel"},"WORDLIST_DELETE_CONFIRM_MESSAGE":{"message":"Do you really want to delete all word items from the list?","description":"Delete all confirmation message","component":"WordLanguagePanel"},"WORDLIST_BUTTON_DELETE":{"message":"Delete","description":"Button title for delete all","component":"WordLanguagePanel"},"WORDLIST_BUTTON_CANCEL_DELETE":{"message":"Cancel","description":"Button title for cancel delete all","component":"WordLanguagePanel"},"WORDLIST_TOOLTIP_CANCEL_REMOVE_ALL":{"message":"Cancel remove all word items","description":"Cancel remove all words inside language block","component":"WordLanguagePanel"},"WORDLIST_FILTER_BYCURRENTSESSION":{"message":"by this session","description":"Filter only those words that were selected in the current session","component":"WordFilterPanel"},"WORDLIST_FILTER_BYIMPORTANT":{"message":"by important","description":"Filter only those words that has an important flag","component":"WordFilterPanel"},"WORDLIST_FILTER_BYWORDFORM_FULL":{"message":"by exact form","description":"Filter only those words that has this word form","component":"WordFilterPanel"},"WORDLIST_FILTER_BYWORDFORM_PART":{"message":"by word form (part)","description":"Filter only those words that has this part of word form","component":"WordFilterPanel"},"WORDLIST_FILTER_BYLEMMA_FULL":{"message":"by lemma","description":"Filter only those words that has this lemma","component":"WordFilterPanel"},"WORDLIST_FILTER_BYLEMMA_PART":{"message":"by lemma (part)","description":"Filter only those words that has this part of lemma","component":"WordFilterPanel"},"WORDLIST_FILTER_BYWORDFORM_FULL_PLACEHOLDER":{"message":"type exact form here","description":"Placeholder for the text input for filter by word form (full)","component":"WordFilterPanel"},"WORDLIST_FILTER_BYLEMMA_FULL_PLACEHOLDER":{"message":"type lemma here","description":"Placeholder for the text input for filter by lemma (full)","component":"WordFilterPanel"},"WORDLIST_FILTER_BY":{"message":"Filter by","description":"Filter by label on the panel","component":"WordFilterPanel"},"WORDLIST_FILTER_CLEAR":{"message":"Clear filter by","description":"Tooltip for clear filter icon","component":"WordFilterPanel"},"WORDLIST_FILTER":{"message":"Filter","description":"Tooltip for filter icon","component":"WordFilterPanel"},"WORDLIST_CURRENT_SESSION":{"message":"Added in the current session","description":"Icon indicates, thats it was retrieved durent the current session","component":"WordItemPanel"},"WORDLIST_FILTER_PLACEHOLDER":{"message":"Select a filter","description":"Placeholder for filter selection","component":"WordFilterPanel"}};
 
 /***/ }),
 

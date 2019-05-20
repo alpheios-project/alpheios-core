@@ -2647,7 +2647,7 @@ h3.alpheios-inflections__credits-title {
   width: 80%;
 }
 .alpheios-wordlist-filters .alpheios-wordlist-header-input-filterBy {
-  width: 80%;
+  width: 100%;
 }
 .alpheios-wordlist-filters .alpheios-wordlist-header-clear-icon {
   width: 20px;
@@ -2661,6 +2661,45 @@ h3.alpheios-inflections__credits-title {
   height: 100%;
   display: inline-block;
   vertical-align: top;
+}
+.alpheios-wordlist-filters .alpheios-select-input-group {
+  position: relative;
+  width: 80%;
+  display: inline-block;
+}
+.alpheios-wordlist-filters .alpheios-select-input-group.alpheios-select-input-group-show-select .alpheios-wordlist-header-input-filterBy {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.alpheios-wordlist-filters .alpheios-select-input-group.alpheios-select-input-group-show-select .alpheios-select-list {
+  display: block;
+  border-bottom-right-radius: calc(var(--alpheios-base-text-size) * 0.625);
+  border-bottom-left-radius: calc(var(--alpheios-base-text-size) * 0.625);
+}
+.alpheios-wordlist-filters .alpheios-select-list {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  background: var(--alpheios-color-neutral-lightest);
+  padding: 5px 0;
+  border: 1px solid var(--alpheios-border-color);
+  border-top: 0;
+  max-height: 110px;
+  overflow-y: auto;
+  list-style: none;
+  display: none;
+}
+.alpheios-wordlist-filters .alpheios-select-list li {
+  cursor: pointer;
+  padding: 0 5px;
+}
+.alpheios-wordlist-filters .alpheios-select-list li:hover {
+  background-color: var(--alpheios-color-bright-hover);
+}
+.alpheios-wordlist-filters .alpheios-select-list li .alpheios-select-input-filter-part {
+  font-weight: bold;
+  color: var(--alpheios-color-vivid);
 }
 /*
  Calculates a size of text elements relative to the base size.

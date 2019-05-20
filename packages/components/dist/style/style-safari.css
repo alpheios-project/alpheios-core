@@ -2647,7 +2647,7 @@ h3.alpheios-inflections__credits-title {
   width: 80% !important;
 }
 .alpheios-wordlist-filters .alpheios-wordlist-header-input-filterBy {
-  width: 80% !important;
+  width: 100% !important;
 }
 .alpheios-wordlist-filters .alpheios-wordlist-header-clear-icon {
   width: 20px !important;
@@ -2661,6 +2661,45 @@ h3.alpheios-inflections__credits-title {
   height: 100% !important;
   display: inline-block;
   vertical-align: top !important;
+}
+.alpheios-wordlist-filters .alpheios-select-input-group {
+  position: relative !important;
+  width: 80% !important;
+  display: inline-block;
+}
+.alpheios-wordlist-filters .alpheios-select-input-group.alpheios-select-input-group-show-select .alpheios-wordlist-header-input-filterBy {
+  border-bottom-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+.alpheios-wordlist-filters .alpheios-select-input-group.alpheios-select-input-group-show-select .alpheios-select-list {
+  display: block;
+  border-bottom-right-radius: calc(var(--alpheios-base-text-size) * 0.625) !important;
+  border-bottom-left-radius: calc(var(--alpheios-base-text-size) * 0.625) !important;
+}
+.alpheios-wordlist-filters .alpheios-select-list {
+  position: absolute !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  margin: 0 !important;
+  background: var(--alpheios-color-neutral-lightest) !important;
+  padding: 5px 0 !important;
+  border: 1px solid var(--alpheios-border-color) !important;
+  border-top: 0 !important;
+  max-height: 110px !important;
+  overflow-y: auto !important;
+  list-style: none !important;
+  display: none;
+}
+.alpheios-wordlist-filters .alpheios-select-list li {
+  cursor: pointer !important;
+  padding: 0 5px !important;
+}
+.alpheios-wordlist-filters .alpheios-select-list li:hover {
+  background-color: var(--alpheios-color-bright-hover) !important;
+}
+.alpheios-wordlist-filters .alpheios-select-list li .alpheios-select-input-filter-part {
+  font-weight: bold !important;
+  color: var(--alpheios-color-vivid) !important;
 }
 /*
  Calculates a size of text elements relative to the base size.

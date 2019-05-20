@@ -45,6 +45,10 @@
             @changedFilterBy="changedFilterBy"
             @clearClickedLemma = "clearClickedLemma"
             :clickedLemma = "clickedLemma"
+            :wordExactForms = "wordExactForms"
+            :wordLemmaForms = "wordLemmaForms"
+            :clearFilters = "clearFilters"
+            v-show = "hasFilterPanel"
           ></word-filter-panel>
         </div>
         <div
@@ -97,19 +101,23 @@ export default {
       filterMethods: {
         'byCurrentSession': (wordItem) => wordItem.currentSession,
         'byImportant': (wordItem) => wordItem.important,
-        'byWordFormFull': (wordItem) => wordItem.targetWord.toLowerCase() === this.textInput.toLowerCase(),
-        'byWordFormPart': (wordItem) => wordItem.targetWord.toLowerCase().indexOf(this.textInput.toLowerCase()) > -1,
-        'byLemmaFull': (wordItem) => wordItem.lemmasList.split(', ').some(lemmaItem => lemmaItem.toLowerCase() === this.textInput.toLowerCase()),
-        'byLemmaPart': (wordItem) => wordItem.lemmasList.split(', ').some(lemmaItem => lemmaItem.toLowerCase().indexOf(this.textInput.toLowerCase()) > -1)
-      }
+        'byExactForm': (wordItem) => wordItem.targetWord.toLowerCase() === this.textInput.toLowerCase(),
+        'byLemma': (wordItem) => wordItem.lemmasList.split(', ').some(lemmaItem => lemmaItem.toLowerCase() === this.textInput.toLowerCase())
+      }, 
+      clearFilters: 0
     }
   },
   computed: {
+    hasFilterPanel () {
+      return this.wordlist && this.wordlist.values && this.wordlist.values.length > 1
+    },
     wordlist () {
+      this.clearFilters = this.clearFilters + 1
+      this.changedFilterBy(null, null)
       return this.$store.state.app.wordListUpdateTime && this.reloadList ? this.app.getWordList(this.languageCode) : {}
     },
     wordItems () {
-      if (this.$store.state.app.wordListUpdateTime && this.reloadList) {
+      if (this.$store.state.app.wordListUpdateTime && this.reloadList) {        
         if (!this.selectedFilterBy) {
           return this.wordlist.values
         }
@@ -118,8 +126,30 @@ export default {
         } else {
           console.warn(`The current filter method - ${this.selectedFilterBy} - is not defined, that's why empty result is returned!`)
         }
-      }
+      }      
       return []
+    },
+    wordExactForms () {
+      let exactForms = this.wordlist.values.reduce((acc, wordItem) => {
+          let exactForm = wordItem.targetWord.toLowerCase()
+          if (!acc.includes(exactForm)) {
+            acc.push(exactForm)
+        }
+        return acc
+      }, [])
+      return exactForms.sort()
+    },
+    wordLemmaForms () {
+      let lemmaForms = this.wordlist.values.reduce((acc, wordItem) => {
+        let currentLemmaForms = wordItem.lemmasList.split(', ')
+        currentLemmaForms.forEach(lemmaForm => {
+          if (!acc.includes(lemmaForm)) {
+            acc.push(lemmaForm)
+          }
+        })
+        return acc
+      }, [])
+      return lemmaForms.sort()
     },
     languageName () {
       // TODO with upcoming merge, this can be retrived from utility library
