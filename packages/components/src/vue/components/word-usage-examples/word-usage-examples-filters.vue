@@ -4,14 +4,14 @@
         <div class="alpheios-word-usage-header-select-type-filter"
             v-for="typeFilterItem of typeFiltersList" v-bind:key="typeFilterItem.value"
             :class="{ 'alpheios-word-usage-header-select-type-filter-disabled': typeFilterItem.disabled === true }"
-            v-if="!typeFilterItem.skip"
+            v-if="checkVisibilityFilterOption(typeFilterItem)"
         >
           <input type="radio" :id="typeFilterItem.value" :value="typeFilterItem.value" v-model="typeFilter" :disabled = "typeFilterItem.disabled === true">
           <label :for="typeFilterItem.value">{{ typeFilterItem.label }}</label>
         </div>
       </div>
 
-      <div v-show="authorsList && typeFilter !== 'noFilters'" class="alpheios-word-usage-filters-select">
+      <div v-show="authorsList && typeFilter !== 'noFilters' && !collapsedHeader" class="alpheios-word-usage-filters-select">
         <select class="alpheios-select alpheios-word-usage-header-select-author" v-model="selectedAuthor">
             <option
                 v-for="(authorItem, authorIndex) in lastAuthorsList" v-bind:key="authorIndex"
@@ -29,7 +29,7 @@
         </alph-tooltip>
       </div>
 
-      <div v-if="this.selectedAuthor && typeFilter !== 'noFilters'" class="alpheios-word-usage-filters-select">
+      <div v-if="this.selectedAuthor && typeFilter !== 'noFilters' && !collapsedHeader" class="alpheios-word-usage-filters-select">
         <select class="alpheios-select alpheios-word-usage-header-select-textwork"
                 v-model="selectedTextWork">
           <option
@@ -66,6 +66,13 @@ export default {
     clearFiltersIcon: ClearFilters,
     alphTooltip: Tooltip
   },
+  props: {
+    collapsedHeader: {
+      type: Boolean,
+      required: false,
+      default: true
+    }
+  },
   data () {
     return {
       typeFilter: 'noFilters',
@@ -80,7 +87,8 @@ export default {
         { value: 'moreResults', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_MORE_RESULTS'), disabled: true, skip: true },
         { value: 'filterCurrentResults', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_FILTER_CURRENT_RESULTS'), disabled: true }
       ],
-      disabledButton: false
+      disabledButton: false,
+      noMoreResults: true
     }
   },
   computed: {
@@ -112,7 +120,6 @@ export default {
           this.lastTextWorksList.unshift(null)
 
           this.typeFilter = 'filterCurrentResults'
-          this.setDisabledToType(['noFilters'])          
         }
       } else if (!this.$store.state.app.wordUsageExamplesReady && !this.app.homonym) {
         this.typeFilter = 'noFilters'
@@ -135,6 +142,15 @@ export default {
     }
   },
   methods: {
+    checkVisibilityFilterOption(typeFilterItem) {
+      if (typeFilterItem.skip) {
+        return false
+      }
+      if (typeFilterItem.value !== this.typeFilter && this.collapsedHeader) {
+        return false
+      }
+      return true
+    },
     setDisabledToType (typeValues) {
       this.typeFiltersList.forEach(item => {
         if (typeValues.indexOf(item.value) > -1) {
@@ -150,12 +166,16 @@ export default {
 
         this.$emit('getAllResults')
 
-        await this.getResultsNoFilters()
+        if (this.noMoreResults && this.lastAuthorsList.length > 0) {
+          this.removeFiltersFromResults()
+        } else {
+          await this.getResultsNoFilters()
+        }
 
         this.clearFilter('author')
         this.lastAuthorID = null
         this.typeFilter = 'filterCurrentResults'
-        this.setDisabledToType(['noFilters'])
+        this.setDisabledToType([])
 
         this.disabledButton = false
         
@@ -182,6 +202,10 @@ export default {
         author: this.selectedAuthor && this.selectedAuthor.ID !== 0 ? this.selectedAuthor : null,
         textWork: this.selectedTextWork && this.selectedTextWork.ID !== 0 ? this.selectedTextWork : null
       })
+    },
+    removeFiltersFromResults () {
+      this.$emit('filterCurrentByAuthor', null, null)
+      this.lastAuthorID = this.selectedAuthor ? this.selectedAuthor.ID : null
     },
     calcTitle (item, type) {
       if (item) {
