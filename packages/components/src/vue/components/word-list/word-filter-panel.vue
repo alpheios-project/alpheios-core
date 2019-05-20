@@ -187,13 +187,13 @@
       },
       selectExactForm (selectedExactForm) {
         let formattedExactForm = selectedExactForm
-        this.textInput = formattedExactForm.replace('<span class="alpheios-select-input-filter-part">','').replace('</span>','')
+        this.textInput = formattedExactForm.replace(this.markLayout.start,'').replace(this.markLayout.end,'')
 
         this.clickFilterBy()
       },
       selectLemmaForm (selectedLemmaForm) {
         let formattedLemmaForm = selectedLemmaForm
-        this.textInput = formattedLemmaForm.replace('<span class="alpheios-select-input-filter-part">','').replace('</span>','')
+        this.textInput = formattedLemmaForm.replace(this.markLayout.start,'').replace(this.markLayout.end,'')
 
         this.clickFilterBy()
       },
