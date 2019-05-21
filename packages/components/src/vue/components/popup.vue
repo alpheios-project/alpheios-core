@@ -396,16 +396,16 @@ export default {
     resizeListener (event) {
       if (this.resizable) {
         const target = event.target
-        let x = this.shift.x
-        let y = this.shift.y
+        let x = this.shift.x || 0
+        let y = this.shift.y || 0
 
         // update the element's style
         target.style.width = event.rect.width + 'px'
         target.style.height = event.rect.height + 'px'
 
         // translate when resizing from top or left edges
-        x += event.deltaRect.left
-        y += event.deltaRect.top
+        x += (event.deltaRect.left || 0)
+        y += (event.deltaRect.top || 0)
 
         target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
 
