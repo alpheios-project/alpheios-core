@@ -17221,10 +17221,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     clickFilterBy () {
       if (this.currentTypeFilter && this.currentTypeFilter.onClick && this.textInput) {
-        if (this.selectedFilterBy === 'byExactForm' && this.wordExactForms.indexOf(this.textInput) === -1) {
+        if (this.selectedFilterBy === 'byExactForm' && !this.wordExactForms.includes(this.textInput)) {
           return
         }
-        if (this.selectedFilterBy === 'byLemma' && this.wordLemmaForms.indexOf(this.textInput) === -1) {
+        if (this.selectedFilterBy === 'byLemma' && !this.wordLemmaForms.includes(this.textInput)) {
           return
         }
         this.$emit('changedFilterBy', this.selectedFilterBy, this.textInput)
@@ -17245,7 +17245,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     setClickedLemmaFilter () {
       this.selectedFilterBy = 'byLemma'
-      this.textInput = this.clickedLemma
+      this.textInput = this.clickedLemma.trim()
       this.clickFilterBy()
       this.$emit('clearClickedLemma')
     },
