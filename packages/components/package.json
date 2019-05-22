@@ -1,6 +1,6 @@
 {
   "name": "alpheios-components",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Alpheios UI Components",
   "main": "dist/alpheios-components.min.js",
   "scripts": {
@@ -27,10 +27,10 @@
   },
   "homepage": "https://github.com/alpheios-project/components#readme",
   "devDependencies": {
-    "@babel/core": "^7.4.4",
+    "@babel/core": "^7.4.5",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
     "@babel/plugin-transform-runtime": "^7.4.4",
-    "@babel/runtime": "^7.4.4",
+    "@babel/runtime": "^7.4.5",
     "@vue/test-utils": "^1.0.0-beta.29",
     "acorn": "^6.1.1",
     "alpheios-client-adapters": "github:alpheios-project/client-adapters",
@@ -51,7 +51,7 @@
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.17.2",
-    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-node": "^9.0.1",
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^5.2.2",
@@ -62,7 +62,7 @@
     "html-loader": "^0.5.5",
     "html-loader-jest": "^0.2.1",
     "interactjs": "^1.4.1",
-    "intl-messageformat": "^2.2.0",
+    "intl-messageformat": "^3.0.0",
     "jest": "^24.8.0",
     "jump.js": "^1.0.2",
     "raw-loader": "^2.0.0",
@@ -74,7 +74,7 @@
     "vue": "^2.6.10",
     "vue-jest": "^3.0.4",
     "vue-multiselect": "^2.1.6",
-    "vuex": "^3.1.0",
+    "vuex": "^3.1.1",
     "whatwg-fetch": "^3.0.0",
     "wrap-range-text": "^1.0.1"
   },
