@@ -9,7 +9,7 @@
   >
     <div class="alpheios-popup__header">
       <div class="alpheios-popup__logo">
-        <logo-icon class="alpheios-logo-on-dark"></logo-icon>
+        <logo-icon class="alpheios-logo-on-dark"/>
       </div>
       <div @click="ui.closePopup" class="alpheios-popup__close-btn">
         <close-icon></close-icon>
@@ -90,7 +90,9 @@
         <div :id="lexicalDataContainerID"
              v-show="$store.state.app.morphDataReady && app.hasMorphData()"
         >
-          <morph :id="morphComponentID"></morph>
+          <morph
+              :id="morphComponentID"
+          />
         </div>
 
         <div
@@ -112,7 +114,7 @@
 
       </div>
     </div>
-    <notification-area></notification-area>
+    <notification-area/>
   </div>
 </template>
 <script>
