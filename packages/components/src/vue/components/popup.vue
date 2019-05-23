@@ -9,7 +9,7 @@
   >
     <div class="alpheios-popup__header">
       <div class="alpheios-popup__logo">
-        <logo-icon class="alpheios-logo-on-dark"/>
+        <logo-icon class="alpheios-logo-on-dark"></logo-icon>
       </div>
       <div @click="ui.closePopup" class="alpheios-popup__close-btn">
         <close-icon></close-icon>
@@ -69,9 +69,6 @@
                     class="alpheios-button-primary alpheios-popup__toolbar-button">
               {{ l10n.getText('LABEL_POPUP_TREEBANK') }}
             </button>
-
-          </alph-tooltip>
-
           </alph-tooltip>
         </div>
       </div>
@@ -93,9 +90,7 @@
         <div :id="lexicalDataContainerID"
              v-show="$store.state.app.morphDataReady && app.hasMorphData()"
         >
-          <morph
-              :id="morphComponentID"
-          />
+          <morph :id="morphComponentID"></morph>
         </div>
 
         <div
@@ -117,7 +112,7 @@
 
       </div>
     </div>
-    <notification-area/>
+    <notification-area></notification-area>
   </div>
 </template>
 <script>
@@ -164,9 +159,6 @@ export default {
       // Whether there is an error with Interact.js drag coordinates in the corresponding direction
       dragErrorX: false,
       dragErrorY: false,
-      // contentHeight: 0, // Morphological content height (updated with `heightchange` event emitted by a morph component)
-      minResizableWidth: 0, // Resizable's min width (for Interact.js)
-      minResizableHeight: 0, // Resizable's min height (for Interact.js)
       interactInstance: undefined,
       lexicalDataContainerID: 'alpheios-lexical-data-container',
       morphComponentID: 'alpheios-morph-component',
@@ -181,6 +173,9 @@ export default {
       resizeDelta: 20, // Changes in size below this value (in pixels) will be ignored to avoid minor dimension updates
       resizeCount: 0, // Should not exceed `resizeCountMax`
       resizeCountMax: 100, // Max number of resize iteration
+      // If resized manually, the following two props will contain adjusted with and height
+      resizedWidth: null,
+      resizedHeight: null,
 
       // How much a popup has been dragged from its initial position, in pixels
       shift: {
@@ -301,6 +296,10 @@ export default {
 
     widthDm: {
       get: function () {
+        if (this.resizedWidth !== null) {
+          // Popup has been resized manually
+          return `${this.resizedWidth}px`
+        }
         return this.widthValue === 'auto' ? 'auto' : `${this.widthValue}px`
       },
       set: function (newWidth) {
@@ -320,6 +319,10 @@ export default {
     heightDm: {
       get: function () {
         let time = Date.now()
+        if (this.resizedHeight !== null) {
+          // Popup has been resized manually
+          return `${this.resizedHeight}px`
+        }
         this.logger.log(`${time}: height getter, return value is ${this.heightValue}`)
         return this.heightValue === 'auto' ? 'auto' : `${this.heightValue}px`
       },
@@ -371,9 +374,6 @@ export default {
       return {
         preserveAspectRatio: false,
         edges: { left: true, right: true, bottom: true, top: true },
-        restrictSize: {
-          min: { width: this.minResizableWidth, height: this.minResizableHeight }
-        },
         restrictEdges: {
           restriction: document.body,
           endOnly: true
@@ -395,22 +395,13 @@ export default {
 
     resizeListener (event) {
       if (this.resizable) {
-        const target = event.target
-        let x = this.shift.x || 0
-        let y = this.shift.y || 0
+        // update dimensions of the element
+        this.resizedWidth = event.rect.width
+        this.resizedHeight = event.rect.height
 
-        // update the element's style
-        target.style.width = event.rect.width + 'px'
-        target.style.height = event.rect.height + 'px'
-
-        // translate when resizing from top or left edges
-        x += (event.deltaRect.left || 0)
-        y += (event.deltaRect.top || 0)
-
-        target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
-
-        this.shift.x = x
-        this.shift.y = y
+        // Update popup position when resizing from top or left edges
+        this.shift.x += (event.deltaRect.left || 0)
+        this.shift.y += (event.deltaRect.top || 0)
       }
     },
 
@@ -503,6 +494,8 @@ export default {
       this.heightValue = 0
       this.exactWidth = 0
       this.exactHeight = 0
+      this.resizedWidth = null
+      this.resizedHeight = null
       if (this.$store.getters['popup/isFlexPositioned']) {
         // Reset positioning shift for a `flexible` position of popup only. For a `fixed` position we must retain it
         // so that the popup will open at its last position.
@@ -651,7 +644,7 @@ export default {
   .alpheios-popup__toolbar {
     position: relative;
     display: flex;
-    flex: 1 0;
+    flex: 0 0;
     justify-content: space-between;
     align-items: center;
     margin-bottom: textsize(10px);

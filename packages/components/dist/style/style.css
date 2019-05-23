@@ -1552,7 +1552,7 @@ select.alpheios-setting__control,
 .alpheios-popup__toolbar {
   position: relative;
   display: flex;
-  flex: 1 0;
+  flex: 0 0;
   justify-content: space-between;
   align-items: center;
   margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
