@@ -88,9 +88,31 @@ describe('text-selector.test.js', () => {
     expect(testTSelector.normalizedText).toEqual(testModel.normalizeWord('caelis'))
   })
 
-  it.skip('9 TextSelector - textQuoteSelector returns an object TextQuoteSelector', () => {
-    let testTSelector = new TextSelector()
-    let testTQSelector = testTSelector.textQuoteSelector
-    expect(testTQSelector.constructor.name).toEqual('TextQuoteSelector')
+  it('9 TextSelector - createTextQuoteSelector creates textQuoteSelector from htmlSelector', () => {
+    let testModel = LMF.getLanguageModel(testLangId)
+
+    let testTSelector = TextSelector.createObjectFromText('caelis', testLangId)
+    testTSelector.start = 5
+    testTSelector.end = 11
+    
+    let testElement = document.createElement("p")
+    let node = document.createTextNode("mare caelis cepit differ")
+    testElement.appendChild(node)
+    document.body.appendChild(testElement)
+
+    testElement.ownerDocument.getSelection = () => {
+      return {
+        anchorNode: {
+          data: 'mare caelis cepit differ'
+        }
+      }
+    }
+
+    testTSelector.createTextQuoteSelector(testElement)
+
+    expect(testTSelector.textQuoteSelector).toBeDefined()
+    expect(testTSelector.textQuoteSelector.text).toEqual('caelis')
+    expect(testTSelector.textQuoteSelector.prefix).toEqual('mare')
+    expect(testTSelector.textQuoteSelector.suffix).toEqual('cepit differ')
   })
 })

@@ -284,7 +284,8 @@ export default class HTMLSelector extends MediaSelector {
         selection.setBaseAndExtent(anchor, wordStart, focus, wordEnd)
       }
     }
-    textSelector.createTextQuoteSelector(this)
+
+    textSelector.createTextQuoteSelector(this.target)
     return textSelector
   }
 

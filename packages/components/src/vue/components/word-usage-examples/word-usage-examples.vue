@@ -114,9 +114,12 @@ export default {
              !this.showWordUsageExampleItems
     },
     showWordUsageExampleItems () {
+      if (!this.$store.state.app.wordUsageExamplesReady) {
+        this.collapsedHeader = true
+      }
       return this.$store.state.app.wordUsageExamplesReady
     },
-    wordUsageExamples () {
+    wordUsageExamples () {     
       if (!this.$store.state.app.wordUsageExamplesReady) {
         return []
       }

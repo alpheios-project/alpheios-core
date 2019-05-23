@@ -2,7 +2,7 @@ import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Module from '@/vue/vuex-modules/module.js'
 import ToolbarCompact from '@/vue/components/nav/toolbar-compact.vue'
 import ToolbarLarge from '@/vue/components/nav/toolbar-large.vue'
-import HTMLPage from '@/lib/utility/html-page.js'
+import Platform from '@/lib/utility/platform.js'
 
 // TODO: Add a check for required modules
 export default class ToolbarModule extends Module {
@@ -80,7 +80,7 @@ ToolbarModule.store = (moduleInstance) => {
 ToolbarModule._configDefaults = {
   _moduleName: 'toolbar',
   _moduleType: Module.types.UI,
-  _supportedDeviceTypes: [HTMLPage.deviceTypes.DESKTOP, HTMLPage.deviceTypes.MOBILE],
+  _supportedDeviceTypes: [Platform.deviceTypes.DESKTOP, Platform.deviceTypes.MOBILE],
   // A selector that specifies to what DOM element a nav will be mounted.
   // This element will be replaced with the root element of the panel component.
   mountPoint: '#alpheios-toolbar',

@@ -114,7 +114,7 @@ export default {
     wordlist () {
       this.clearFilters = this.clearFilters + 1
       this.changedFilterBy(null, null)
-      return this.$store.state.app.wordListUpdateTime && this.reloadList ? this.app.getWordList(this.languageCode) : {}
+      return this.$store.state.app.wordListUpdateTime && this.reloadList ? this.app.getWordList(this.languageCode) : { items: {} }
     },
     wordItems () {
       if (this.$store.state.app.wordListUpdateTime && this.reloadList) {        

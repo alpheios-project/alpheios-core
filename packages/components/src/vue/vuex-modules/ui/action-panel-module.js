@@ -1,7 +1,7 @@
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Module from '@/vue/vuex-modules/module.js'
 import ActionPanel from '@/vue/components/nav/action-panel.vue'
-import HTMLPage from '@/lib/utility/html-page.js'
+import Platform from '@/lib/utility/platform.js'
 
 export default class ActionPanelModule extends Module {
   constructor (store, api, config) {
@@ -76,7 +76,7 @@ ActionPanelModule.store = (moduleInstance) => {
 ActionPanelModule._configDefaults = {
   _moduleName: 'actionPanel',
   _moduleType: Module.types.UI,
-  _supportedDeviceTypes: [HTMLPage.deviceTypes.DESKTOP, HTMLPage.deviceTypes.MOBILE],
+  _supportedDeviceTypes: [Platform.deviceTypes.DESKTOP, Platform.deviceTypes.MOBILE],
   // A selector that specifies to what DOM element a nav will be mounted.
   // This element will be replaced with the root element of the panel component.
   mountInto: 'body',

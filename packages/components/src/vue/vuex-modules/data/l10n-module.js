@@ -1,7 +1,7 @@
 import Module from '@/vue/vuex-modules/module.js'
 import L10n from '@/lib/l10n/l10n.js'
 import Locales from '@/locales/locales.js'
-import HTMLPage from '@/lib/utility/html-page.js'
+import Platform from '@/lib/utility/platform.js'
 
 export default class L10nModule extends Module {
   // defaultLocale = Locales.en_US, messageBundles = []
@@ -108,7 +108,7 @@ L10nModule.api = (moduleInstance, store) => {
 L10nModule._configDefaults = {
   _moduleName: 'l10n',
   _moduleType: Module.types.DATA,
-  _supportedDeviceTypes: [HTMLPage.deviceTypes.ANY],
+  _supportedDeviceTypes: [Platform.deviceTypes.ANY],
   defaultLocale: Locales.en_US,
   messageBundles: []
 }

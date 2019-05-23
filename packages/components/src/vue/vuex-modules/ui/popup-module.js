@@ -1,7 +1,7 @@
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Module from '@/vue/vuex-modules/module.js'
 import Popup from '@/vue/components/popup.vue'
-import HTMLPage from '@/lib/utility/html-page.js'
+import Platform from '@/lib/utility/platform.js'
 
 // TODO: Add a check for required modules
 export default class PopupModule extends Module {
@@ -104,7 +104,7 @@ PopupModule.store = (moduleInstance) => {
 PopupModule._configDefaults = {
   _moduleName: 'popup',
   _moduleType: Module.types.UI,
-  _supportedDeviceTypes: [HTMLPage.deviceTypes.DESKTOP],
+  _supportedDeviceTypes: [Platform.deviceTypes.DESKTOP],
 
   // A selector that specifies to what DOM element a popup will be mounted.
   // This element will be replaced with the root element of the popup component.

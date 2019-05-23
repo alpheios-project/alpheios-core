@@ -121,15 +121,6 @@ export default class UIController {
     this.evc = null
 
     this.wordlistC = {} // This is a word list controller
-
-    // Detect device's orientation change in order to update panel layout
-    window.addEventListener('orientationchange', () => {
-      // Update platform information
-      this.platform.getData()
-      if (this.hasModule('panel')) {
-        this.store.commit('panel/setOrientation', this.platform.orientation)
-      }
-    })
   }
 
   /**

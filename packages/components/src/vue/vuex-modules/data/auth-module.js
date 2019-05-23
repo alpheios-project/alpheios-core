@@ -1,5 +1,5 @@
 import Module from '@/vue/vuex-modules/module.js'
-import HTMLPage from '@/lib/utility/html-page.js'
+import Platform from '@/lib/utility/platform.js'
 
 export default class AuthModule extends Module {
   /**
@@ -131,6 +131,6 @@ AuthModule.api = (moduleInstance, store) => {
 AuthModule._configDefaults = {
   _moduleName: 'auth',
   _moduleType: Module.types.DATA,
-  _supportedDeviceTypes: [HTMLPage.deviceTypes.ANY],
+  _supportedDeviceTypes: [Platform.deviceTypes.ANY],
   auth: null
 }

@@ -91,9 +91,9 @@ export default class TextSelector {
     return Models.LanguageModelFactory.getLanguageForCode(languageCode)
   } */
 
-  createTextQuoteSelector (htmlSelector) {
+  createTextQuoteSelector (target) {
     this.textQuoteSelector = new TextQuoteSelector(this.languageCode, this.normalizedText)
-    let selection = HTMLSelector.getSelection(htmlSelector.target)
+    let selection = HTMLSelector.getSelection(target)
     this.textQuoteSelector.createContext(selection, this)
   }
 }

@@ -126,6 +126,8 @@ export default {
         this.setDisabledToType(['moreResults', 'filterCurrentResults'])
         this.selectedAuthor = null
         this.selectedTextWork = null
+        this.lastAuthorsList = []
+        this.lastTextWorksList = []
       }
       return true
     },

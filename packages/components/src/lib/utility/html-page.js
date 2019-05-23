@@ -123,26 +123,6 @@ export default class HTMLPage {
     const attrValue = window.document.body.getAttribute('alpheios-embed-lib-status')
     return attrValue === 'active'
   }
-
-  /**
-   * Determines what version of a UI shall be used.
-   * @return {string} - A name of one of the deviceTypes defined in {@link HTMLPage@deviceTypes}.
-   */
-  static getDeviceType () {
-    // TODO: Probably need a more complex algorithm for the future
-    const screenWidthThreshold = 900
-    return Math.max(window.screen.width, window.screen.width) <= screenWidthThreshold ? HTMLPage.deviceTypes.MOBILE : HTMLPage.deviceTypes.DESKTOP
-  }
-
-  /**
-   * Determines a screen orientation of a device.
-   * @return {string} - A name of the screen orientation as defined in {@link HTMLPage@orientations}.
-   */
-  static getOrientation () {
-    // windows.screen.width/height dimensions are not updated on iOS devices when the device is rotated.
-    // Because of this we'd better use window.innerWidth and window.innerHeight instead.
-    return (window.innerWidth <= window.innerHeight) ? HTMLPage.orientations.PORTRAIT : HTMLPage.orientations.LANDSCAPE
-  }
 }
 
 HTMLPage.targetRequirements = {
@@ -154,33 +134,4 @@ HTMLPage.targetRequirements = {
     'grammars.alpheios.net',
     'alpheios.net/alpheios-treebanks'
   ]
-}
-
-/**
- * Constants that determines types of devices where an app is running.
- * Used by modules and components to tweak their appearance.
- */
-HTMLPage.deviceTypes = {
-  /**
-   * An environment with limited screen estate with finger-based interactions.
-   */
-  MOBILE: 'mobile',
-
-  /**
-   * Environment with larger screens and mouse-based interactions.
-   */
-  DESKTOP: 'desktop',
-
-  /**
-   * Indicates a platform agnostic value.
-   */
-  ANY: 'any'
-}
-
-/**
- * Constants for screen orientations.
- */
-HTMLPage.orientations = {
-  PORTRAIT: 'portrait',
-  LANDSCAPE: 'landscape'
 }

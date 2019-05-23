@@ -226,7 +226,7 @@ export default {
       },
 
       // An X position of the central point of a toolbar
-      xCenter: undefined,
+      xCenter: undefined
     }
   },
 

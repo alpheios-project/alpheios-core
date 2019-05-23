@@ -1,5 +1,5 @@
 import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
-import HTMLPage from '@/lib/utility/html-page.js'
+import Platform from '@/lib/utility/platform.js'
 // This is a root Vue instance that is a common parent for all modules, and correspondingly, all UI components.
 // It is used to share information across all Vue instances created.
 let rootVi = null
@@ -66,11 +66,11 @@ export default class Module {
 
   /**
    * Checks whether a specified platform is supported by the module.
-   * @param {HTMLPage.deviceTypes} platform - A name of a deviceTypes.
+   * @param {Platform.deviceTypes} platform - A name of a deviceTypes.
    * @return {boolean} True if platform is supported, false otherwise.
    */
   static isSupportedPlatform (platform) {
-    if (this._configDefaults._supportedDeviceTypes.includes(HTMLPage.deviceTypes.ANY)) {
+    if (this._configDefaults._supportedDeviceTypes.includes(Platform.deviceTypes.ANY)) {
       return true
     } else if (this._configDefaults._supportedDeviceTypes.includes(platform.deviceType)) {
       return true
@@ -126,7 +126,7 @@ Module._configDefaults = {
   _moduleType: Module.types.DATA,
 
   /**
-   * A list of deviceTypes supported by a module according to HTMLPage.deviceTypes list.
+   * A list of deviceTypes supported by a module according to Platform.deviceTypes list.
    */
-  _supportedDeviceTypes: [HTMLPage.deviceTypes.ANY]
+  _supportedDeviceTypes: [Platform.deviceTypes.ANY]
 }

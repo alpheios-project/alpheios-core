@@ -1,26 +1,82 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
+
 import HTMLSelector from '@/lib/selection/media/html-selector'
 import TextSelector from '@/lib/selection/text-selector'
-import { LanguageModelFactory as LMF } from 'alpheios-data-models'
+import MouseDblClick from '@/lib/custom-pointer-events/mouse-dbl-click.js'
+import { Constants, TextQuoteSelector, LanguageModelFactory } from 'alpheios-data-models'
 
 describe('html-selector.test.js', () => {
-  let testEventE = {
-    target: {
-      ownerDocument: {
-        location: { href: 'http://localhost:8888/demo/' }
-      }
-    }
-  }
-  console.error = function () {}
+  // console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
+  
+  let eventEl, testElement, parentElement
+  beforeAll(() => {
+    testElement = document.createElement("p")
+    let node = document.createTextNode("a bene placito")
+    testElement.appendChild(node)
 
+    parentElement = document.createElement("div")
+    parentElement.appendChild(testElement)
+    document.body.appendChild(parentElement)
+
+    testElement.ownerDocument.getSelection = jest.fn(() => {
+      return {
+        anchorNode: {
+          data: 'a bene placito'
+        },
+        anchorOffset: 7,
+        focusNode: {
+          data: 'a bene placito'
+        },
+        focusOffset: 14,
+        baseNode: {
+          data: 'a bene placito'
+        },
+        extentNode: {
+          data: 'a bene placito'
+        },
+        baseOffset: 14,
+        extentOffset: 14,
+        setBaseAndExtent: () => {},
+        removeAllRanges: () => {},
+        addRange: () => {}
+      }
+    })
+
+    document.caretRangeFromPoint = jest.fn(() => {
+      return {
+        commonAncestorContainer: testElement,
+        startContainer: testElement,
+        endContainer: testElement,
+        startOffset: 10,
+        endOffset: 10
+      }
+    })
+
+    document.createRange = jest.fn(() => {
+      return {
+        commonAncestorContainer: testElement,
+        startContainer: testElement,
+        endContainer: testElement,
+        startOffset: 13,
+        endOffset: 13,
+        setStart: () => {},
+        setEnd: () => {}
+      }
+    })
+
+    let evtHandler = jest.fn(() => {})
+    eventEl = new MouseDblClick(testElement, evtHandler)
+    eventEl.start.client = { x:72, y:480 }
+    eventEl.end.client = { x:72, y:480 }
+    eventEl.end.target = testElement
+  }),
   beforeEach(() => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
-    HTMLSelector.isMouseEvent = jest.fn(() => true)
   })
   afterEach(() => {
     jest.resetModules()
@@ -29,132 +85,255 @@ describe('html-selector.test.js', () => {
     jest.clearAllMocks()
   })
 
-  document.createRange = function () { return { selectNode: function () {} } }
+  function createEventWithSelection (text, start) {
+    let testElement2 = document.createElement("p")
+    let node = document.createTextNode(text)
+    testElement2.appendChild(node)
+    document.body.appendChild(testElement2)
 
-  let testEventF = {
-    type: 'mouse-testing',
-    target: {
-      ownerDocument: {
-        location: { href: 'http://localhost:8888/demo/' },
-        querySelector: function (key) { return key },
-        getSelection: function () {
-          return {
-            anchorNode: { data: 'mare' },
-            focusNode: { }
-          }
-        }
-      },
-      dataset: {},
-      clientX: 10,
-      clientY: 20,
-      getAttribute: function () { return 'lat' }
-    }
+    let evtHandler = jest.fn(() => {})
+    let eventEl2 = new MouseDblClick(testElement2, evtHandler)
+    eventEl2.start = eventEl.start
+    eventEl2.start = eventEl.end
+    eventEl2.end.target = testElement2
+
+    testElement2.ownerDocument.getSelection = jest.fn(() => {
+      return {
+        anchorNode: {
+          data: text
+        },
+        anchorOffset: start,
+        focusNode: {
+          data: text
+        },
+        setBaseAndExtent: () => {},
+        removeAllRanges: () => {},
+        addRange: () => {}
+      }
+    })
+
+    return eventEl2
   }
-  /*
-  it('2 HTMLSelector - constructor fills targetRect properties, ', () => {
-    let testHTMLEvent = new HTMLSelector(testEventF)
 
-    expect(testHTMLEvent.targetRect.top).toEqual(testEventF.clientY)
-    expect(testHTMLEvent.targetRect.left).toEqual(testEventF.clientX)
-    expect(testHTMLEvent.wordSeparator).toBeDefined()
+  it('1 HTMLSelector - constructor creates an object with event, target, targetRect, location, languageID, wordSeparator', () => {
+    let htmlSel = new HTMLSelector(eventEl, 'lat')
+    
+    expect(htmlSel.event).toEqual(eventEl)
+    expect(htmlSel.target).toEqual(eventEl.end.target)
+    expect(htmlSel.targetRect).toEqual({
+      top: eventEl.start.client.y,
+      left: eventEl.start.client.x
+    })
+    expect(htmlSel.languageID).toEqual(Constants.LANG_LATIN)
+    expect(htmlSel.wordSeparator).toBeInstanceOf(Map)
   })
 
-  it('3 HTMLSelector - createTextSelector method creates TextSelector object, executes getSelection ', () => {
-    let testHTMLEvent = new HTMLSelector(testEventF)
-
-    jest.spyOn(HTMLSelector, 'getSelection')
-    jest.spyOn(testHTMLEvent, 'getLanguageCodeFromSource')
-
-    let res = testHTMLEvent.createTextSelector()
-    expect(res.constructor.name).toEqual('TextSelector')
-
-    expect(res.text).toEqual('mare') // testEventF.target.ownerDocument.getSelection().anchorNode.data
-    expect(res.location).toEqual('http://localhost:8888/demo/') // testEventF.target.ownerDocument.location
-    expect(HTMLSelector.getSelection).toHaveBeenCalled()
-
-    expect(res.languageID).toEqual(LMF.getLanguageIdFromCode('lat')) // testEventF.getAttribute()
+  it('2 HTMLSelector - static getSelector creates HTMLSelector from given event and languageCode and returns textSelector', () => {
+    let textSel = HTMLSelector.getSelector(eventEl, 'lat')
+    expect(textSel.text).toEqual('placito')
+    expect(textSel.languageID).toEqual(Constants.LANG_LATIN)
+    expect(textSel.start).toEqual(7)
+    expect(textSel.end).toEqual(14)
+    expect(textSel.textQuoteSelector).toBeInstanceOf(TextQuoteSelector)
   })
 
-  it('4 HTMLSelector - getLanguageCodeFromSource method returns languageCode from testEventF.getAttribute() ', () => {
-    let testHTMLEvent = new HTMLSelector(testEventF)
-    expect(testHTMLEvent.getLanguageCodeFromSource()).toEqual('lat')
+  it('3 HTMLSelector - createTextSelector methods returns textSelector from HTMLSelector', () => {
+    let htmlSel = new HTMLSelector(eventEl, 'lat')
+    let textSel = htmlSel.createTextSelector()
+
+    expect(textSel.text).toEqual('placito')
+    expect(textSel.languageID).toEqual(Constants.LANG_LATIN)
+    expect(textSel.start).toEqual(7)
+    expect(textSel.end).toEqual(14)
+    expect(textSel.textQuoteSelector).toBeInstanceOf(TextQuoteSelector)
   })
 
-  it('5 HTMLSelector - getLanguageCodeFromSource method returns languageCode from closest block if there is no lang in getAttribute ', () => {
-    let curTestEvent = Object.assign({}, testEventF)
-    curTestEvent.target.getAttribute = function () { return null }
+  it('4 HTMLSelector - createSelectionFromPoint method returns range from the selection (used variant with document.caretRangeFromPoint)', () => {
+    let range = HTMLSelector.createSelectionFromPoint(72, 480)
+    expect(document.caretRangeFromPoint).toHaveBeenCalled()
+    expect(document.createRange).toHaveBeenCalled()
+    expect(document.getSelection).toHaveBeenCalled()
 
-    curTestEvent.target.closest = function () { return { getAttribute: function () { return 'grc' } } }
-    let testHTMLEvent = new HTMLSelector(curTestEvent)
-
-    expect(testHTMLEvent.getLanguageCodeFromSource()).toEqual('grc')
+    expect(range).toBeDefined()
   })
 
-  it('6 HTMLSelector - getLanguageCodeFromSource method returns undefined if there is no getAttribute in target and there is no closest with lang attribute', () => {
-    let curTestEvent = Object.assign({}, testEventF)
-    curTestEvent.target.getAttribute = function () { return null }
+  it('5 HTMLSelector - setDataAttributes method adds treebank properties to the selection if an element has data-alpheios_tb_src properties and data-alpheios_tb_ref', () => {
+    let alpheios_tb_ref = 'phi0959.phi006.alpheios-text-lat1#1-2'
+    let alpheios_tb_src = 'http://alpheios.net/alpheios-treebanks/DOC.html?chunk=SENTENCE&w=WORD'
 
-    curTestEvent.target.closest = function () { return null }
-    let testHTMLEvent = new HTMLSelector(curTestEvent)
+    testElement.setAttribute('data-alpheios_tb_ref', alpheios_tb_ref)
+    testElement.setAttribute('data-alpheios_tb_src', alpheios_tb_src)
+    let htmlSel = new HTMLSelector(eventEl, 'lat')
+    htmlSel.setDataAttributes()
 
-    expect(testHTMLEvent.getLanguageCodeFromSource()).toBeNull()
-  })
-*/
-  it('7 HTMLSelector - getSelection method executes target.ownerDocument.getSelection and if getSelection returns null then console warns', () => {
-    let res = HTMLSelector.getSelection({ ownerDocument: { getSelection: function () { return null } } })
+    expect(htmlSel.data.treebank).toBeDefined()
+    expect(htmlSel.data.treebank.word.src).toEqual(alpheios_tb_src)
+    expect(htmlSel.data.treebank.word.ref).toEqual(alpheios_tb_ref)
 
-    expect(console.warn).toHaveBeenCalledWith(`Cannot get selection from a document`)
-    expect(res).toBeNull()
-
-    let res1 = HTMLSelector.getSelection({ ownerDocument: { getSelection: function () { return 'test' } } })
-    expect(res1).toEqual('test')
-  })
-  /*
-  it('8 HTMLSelector - doSpaceSeparatedWordSelection method reload data to TextElement from selection, word is the last from anchorNode (focusNode.data is null', () => {
-    let curTestEvent = Object.assign({}, testEventF)
-    curTestEvent.target.ownerDocument.getSelection = function () {
-      return {
-        anchorNode: { data: 'bene text data' },
-        focusNode: { data: null },
-        removeAllRanges: function () { return null },
-        addRange: function () { return null }
-      }
-    }
-
-    let testHTMLEvent = new HTMLSelector(curTestEvent)
-    let testTextElement = TextSelector.createObjectFromText('mare', LMF.getLanguageIdFromCode('lat'))
-
-    let res = testHTMLEvent.doSpaceSeparatedWordSelection(testTextElement)
-    expect(res.text).toEqual('data')
+    testElement.removeAttribute('data-alpheios_tb_ref')
+    testElement.removeAttribute('data-alpheios_tb_src')
   })
 
-  it('9 HTMLSelector - doSpaceSeparatedWordSelection method - if ancorNode.data is not similiar to focusNode data, then word would be taken from textContent', () => {
-    let curTestEvent = Object.assign({}, testEventF)
-    curTestEvent.target.ownerDocument.getSelection = function () {
-      return {
-        anchorNode: { data: 'bene test' },
-        focusNode: { data: 'caelise' },
-        removeAllRanges: function () { return null },
-        addRange: function () { return null },
-        setBaseAndExtent: function () { return null }
-      }
-    }
-    curTestEvent.target.textContent = 'mare'
+  it('6 HTMLSelector - setDataAttributes method doesn\'t add treebank properties to the selection if an element has not data-alpheios_tb_src properties or data-alpheios_tb_ref', () => {
+    let alpheios_tb_ref = 'phi0959.phi006.alpheios-text-lat1#1-2'
+    let alpheios_tb_src = 'http://alpheios.net/alpheios-treebanks/DOC.html?chunk=SENTENCE&w=WORD'
 
-    let testHTMLEvent = new HTMLSelector(curTestEvent)
-    let testTextElement = TextSelector.createObjectFromText('bene', LMF.getLanguageIdFromCode('lat'))
+    testElement.setAttribute('data-alpheios_tb_ref', alpheios_tb_ref)
 
-    let res = testHTMLEvent.doSpaceSeparatedWordSelection(testTextElement)
-    expect(res.text).toEqual('mare')
+    let htmlSel1 = new HTMLSelector(eventEl, 'lat')
+    htmlSel1.setDataAttributes()
+    expect(htmlSel1.data.treebank).not.toBeDefined()
+    testElement.removeAttribute('data-alpheios_tb_ref')
+
+    testElement.setAttribute('data-alpheios_tb_src', alpheios_tb_src)
+    let htmlSel2 = new HTMLSelector(eventEl, 'lat')
+    htmlSel2.setDataAttributes()
+    expect(htmlSel2.data.treebank).not.toBeDefined()
+    testElement.removeAttribute('data-alpheios_tb_src')
   })
-*/
-  it('10 HTMLSelector - getDumpHTMLSelector returns emptyObject', () => {
+
+  it('7 HTMLSelector - setDataAttributes method adds alignment properties to the selection if an element has data-alpheios_align_src properties and data-alpheios_align_ref', () => {
+    let alpheios_align_ref = '#aligned-eng span[data-alpheios_align_word=\'s7\']'
+    let alpheios_align_src = 'fooSrc'
+
+    testElement.setAttribute('data-alpheios_align_src', alpheios_align_src)
+    testElement.setAttribute('data-alpheios_align_ref', alpheios_align_ref)
+    let htmlSel = new HTMLSelector(eventEl, 'lat')
+    htmlSel.setDataAttributes()
+
+    expect(htmlSel.data.translation).toBeDefined()
+    expect(htmlSel.data.translation.src).toEqual(alpheios_align_src)
+    expect(htmlSel.data.translation.ref).toEqual(alpheios_align_ref)
+
+    testElement.removeAttribute('data-alpheios_align_src')
+    testElement.removeAttribute('data-alpheios_align_ref')
+  })
+
+  it('8 HTMLSelector - setDataAttributes method doesn\'t add alignment properties to the selection if an element has not data-alpheios_align_src properties or data-alpheios_align_ref', () => {
+    let alpheios_align_ref = '#aligned-eng span[data-alpheios_align_word=\'s7\']'
+    let alpheios_align_src = 'fooSrc'
+
+    testElement.setAttribute('data-alpheios_align_ref', alpheios_align_ref)
+
+    let htmlSel1 = new HTMLSelector(eventEl, 'lat')
+    htmlSel1.setDataAttributes()
+    expect(htmlSel1.data.translation).not.toBeDefined()
+    testElement.removeAttribute('data-alpheios_align_ref')
+
+    testElement.setAttribute('data-alpheios_align_src', alpheios_align_src)
+    let htmlSel2 = new HTMLSelector(eventEl, 'lat')
+    htmlSel2.setDataAttributes()
+    expect(htmlSel2.data.translation).not.toBeDefined()
+    testElement.removeAttribute('data-alpheios_align_src')
+  })
+
+  it('9 HTMLSelector - getLanguageCodeFromSource method returns lang if element has lang property', () => {
+    testElement.setAttribute('xml:lang', 'grc')
+    let htmlSel = new HTMLSelector(eventEl, 'lat')
+    let langCode = htmlSel.getLanguageCodeFromSource()
+    expect(langCode).toEqual('grc')
+    testElement.removeAttribute('xml:lang')
+  })
+
+  it('10 HTMLSelector - getLanguageCodeFromSource method returns lang if element has no lang property, but parent has', () => {
+    parentElement.setAttribute('xml:lang', 'gez')
+    let htmlSel = new HTMLSelector(eventEl, 'lat')
+    let langCode = htmlSel.getLanguageCodeFromSource()
+    expect(langCode).toEqual('gez')
+  })
+  
+  it('11 HTMLSelector - static getSelection method executes getSelection of the ownerDocument ', () => {
+    HTMLSelector.getSelection(testElement)
+    expect(testElement.ownerDocument.getSelection).toHaveBeenCalled()
+  })
+
+  it('12 HTMLSelector - doSpaceSeparatedWordSelection method fills given textSelector with data from htmlSelector - text, start, end, context, position and executes createTextQuoteSelector ', () => {
+    let eventEl2 = createEventWithSelection('mare cupidinibus cepit differ', 0) 
+
+    let htmlSel = new HTMLSelector(eventEl2, 'lat')
+    let textSelector = new TextSelector(Constants.LANG_LATIN)
+    textSelector.model = LanguageModelFactory.getLanguageModel(Constants.LANG_LATIN)
+    textSelector.location = htmlSel.location
+    textSelector.data = htmlSel.data
+
+    jest.spyOn(textSelector, 'createTextQuoteSelector')
+
+    expect(textSelector.text).toEqual('')
+    expect(textSelector.start).toEqual(0)
+    expect(textSelector.end).toEqual(0)
+    expect(textSelector.context).toBeNull()
+    expect(textSelector.position).toEqual(0)
+
+    htmlSel.doSpaceSeparatedWordSelection(textSelector)
+
+    expect(textSelector.text).toEqual('mare')
+    expect(textSelector.start).toEqual(0)
+    expect(textSelector.end).toEqual(4)
+    expect(textSelector.context).toBeNull()
+    expect(textSelector.position).toEqual(0)
+
+    expect(textSelector.createTextQuoteSelector).toHaveBeenCalledWith(eventEl2.element)
+  })
+
+  it('13 HTMLSelector - doSpaceSeparatedWordSelection method fills given textSelector with data from htmlSelector - text, start, end, escapes punctuation ', () => {
+    let eventEl2 = createEventWithSelection('(mare[cupidinibus]cepit|differ)', 6) 
+
+    let htmlSel = new HTMLSelector(eventEl2, 'lat')
+    let textSelector = new TextSelector(Constants.LANG_LATIN)
+    textSelector.model = LanguageModelFactory.getLanguageModel(Constants.LANG_LATIN)
+    textSelector.location = htmlSel.location
+    textSelector.data = htmlSel.data
+
+    expect(textSelector.text).toEqual('')
+    expect(textSelector.start).toEqual(0)
+    expect(textSelector.end).toEqual(0)
+    expect(textSelector.context).toBeNull()
+    expect(textSelector.position).toEqual(0)
+
+    htmlSel.doSpaceSeparatedWordSelection(textSelector)
+
+    expect(textSelector.text).toEqual('cupidinibus')
+    expect(textSelector.start).toEqual(6)
+    expect(textSelector.end).toEqual(17)
+    expect(textSelector.context).toBeNull()
+    expect(textSelector.position).toEqual(0)
+
+  })
+
+  it('14 HTMLSelector - doSpaceSeparatedWordSelection method fills given textSelector with data from htmlSelector - if selection is null, then textSelector is null too ', () => {
+    let eventEl2 = createEventWithSelection('', 0) 
+
+    let htmlSel = new HTMLSelector(eventEl2, 'lat')
+    let textSelector = new TextSelector(Constants.LANG_LATIN)
+    textSelector.model = LanguageModelFactory.getLanguageModel(Constants.LANG_LATIN)
+    textSelector.location = htmlSel.location
+    textSelector.data = htmlSel.data
+
+    expect(textSelector.text).toEqual('')
+    expect(textSelector.start).toEqual(0)
+    expect(textSelector.end).toEqual(0)
+    expect(textSelector.context).toBeNull()
+    expect(textSelector.position).toEqual(0)
+
+    htmlSel.doSpaceSeparatedWordSelection(textSelector)
+
+    expect(textSelector.text).toEqual('')
+    expect(textSelector.start).toEqual(0)
+    expect(textSelector.end).toEqual(0)
+    expect(textSelector.context).toBeNull()
+    expect(textSelector.position).toEqual(0)
+  })
+
+  it('15 HTMLSelector - _escapeRegExp method escapes punctuation from the string', () => {
+    let htmlSel = new HTMLSelector(eventEl, 'lat')
+    let res = htmlSel._escapeRegExp('(mare[cupidinibus]cepit|differ)')
+    expect(res).toEqual('\\(mare\\[cupidinibus\\]cepit\\|differ\\)')
+  })
+
+  it('16 HTMLSelector - static getDumpHTMLSelector method returns minimal object (for lookups)', () => {
     let res = HTMLSelector.getDumpHTMLSelector()
-    expect(res.targetRect).toEqual({ top: 0, left: 0 })
-  })
-
-  it('11 HTMLSelector - selectTextRange', () => {
-    let res = HTMLSelector.getDumpHTMLSelector()
-    expect(res.targetRect).toEqual({ top: 0, left: 0 })
+    expect(res.targetRect).toEqual({
+      top: 0, left: 0
+    })
   })
 })

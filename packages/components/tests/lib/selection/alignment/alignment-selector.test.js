@@ -62,7 +62,7 @@ describe('alignment-selector.test.js', () => {
     expect(alignment.blur).toHaveBeenCalled()
     expect(document.querySelector('#word1').classList.contains('mockClass2')).toBeFalsy()
   })
-  it('3 AlignmentSelector - halts if disabled, ', () => {
+  it('4 AlignmentSelector - halts if disabled, ', () => {
     let mockEvent = document.createEvent('Event')
     mockEvent.initEvent('mouseenter', true, true)
     let alignment = new AlignmentSelector(document, { highlightClass: 'mockClass2' })
@@ -72,5 +72,47 @@ describe('alignment-selector.test.js', () => {
     document.querySelector('#word1').dispatchEvent(mockEvent)
     expect(alignment.focus).toHaveBeenCalled()
     expect(document.querySelector('#word1').classList.contains('mockClass2')).toBeFalsy()
+  })
+
+  it('5 AlignmentSelector - setFixedAttribute method sets highlight_fixed property to one element with value from arguments, ', () => {
+    let testElement = document.createElement("p")
+    let node = document.createTextNode("mare caelis cepit differ")
+    testElement.appendChild(node)
+    document.body.appendChild(testElement)
+
+    let alignmentS = new AlignmentSelector(document)
+    alignmentS.setFixedAttribute(testElement, true)
+
+    expect(testElement.dataset.highlight_fixed).toBeTruthy()
+  })
+
+  it('6 AlignmentSelector - setFixedAttribute method sets highlight_fixed property to all elements from NodeList with value from arguments, ', () => {
+    let testElement = document.createElement("p")
+    let node = document.createTextNode("mare caelis cepit differ")
+    testElement.appendChild(node)
+    let testElement2 = document.createElement("p")
+    document.body.appendChild(testElement)
+    document.body.appendChild(testElement2)
+
+    let alignmentS = new AlignmentSelector(document)
+    alignmentS.setFixedAttribute(document.querySelectorAll("p"), true)
+
+    expect(testElement.dataset.highlight_fixed).toBeTruthy()
+    expect(testElement2.dataset.highlight_fixed).toBeTruthy()
+  })
+
+  it('7 AlignmentSelector - setFixedAttribute method sets highlight_fixed property to all elements from Array with value from arguments, ', () => {
+    let testElement = document.createElement("p")
+    let node = document.createTextNode("mare caelis cepit differ")
+    testElement.appendChild(node)
+    let testElement2 = document.createElement("p")
+    document.body.appendChild(testElement)
+    document.body.appendChild(testElement2)
+
+    let alignmentS = new AlignmentSelector(document)
+    alignmentS.setFixedAttribute([testElement, testElement2], true)
+
+    expect(testElement.dataset.highlight_fixed).toBeTruthy()
+    expect(testElement2.dataset.highlight_fixed).toBeTruthy()
   })
 })

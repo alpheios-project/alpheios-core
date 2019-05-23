@@ -337,7 +337,7 @@
 // JS imports
 import interact from 'interactjs'
 // Support libraries
-import HTMLPage from '@/lib/utility/html-page.js'
+import Platform from '@/lib/utility/platform.js'
 // Vue components
 import DropDownMenu from '@/vue/components/nav/drop-down-menu.vue'
 import NotificationArea from '@/vue/components//notification-area.vue'
@@ -467,7 +467,8 @@ export default {
     },
 
     isLandscape: function () {
-      return this.$store.state.panel.orientation === HTMLPage.orientations.LANDSCAPE
+      // Have to use store prop to keep orientation reactive
+      return this.$store.state.panel.orientation === Platform.orientations.LANDSCAPE
     },
 
     isAttachedToLeft: function () {

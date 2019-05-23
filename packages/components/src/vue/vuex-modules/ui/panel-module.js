@@ -2,7 +2,7 @@ import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
 import Module from '@/vue/vuex-modules/module.js'
 import LargePanel from '@/vue/components/panel-large.vue'
 import CompactPanel from '@/vue/components/panel-compact.vue'
-import HTMLPage from '@/lib/utility/html-page.js'
+import Platform from '@/lib/utility/platform.js'
 
 // TODO: Add a check for required modules
 export default class PanelModule extends Module {
@@ -25,6 +25,10 @@ export default class PanelModule extends Module {
         compactPanel: CompactPanel // A mobile version of a panel
       }
     })
+
+    Platform.evt.ORIENTATION_CHANGE.sub(() => {
+      this._vi.$store.commit('panel/setOrientation', this.config.platform.simpleOrientation)
+    })
   }
 }
 
@@ -41,7 +45,7 @@ PanelModule.store = (moduleInstance) => {
       // Where a panel is located. Possible values are `left` or `right`.
       position: 'left',
       // Device orientation
-      orientation: moduleInstance.config.platform.orientation,
+      orientation: moduleInstance.config.platform.simpleOrientation,
       // An ID of the last opened footnote. Required for the modal footnote popup mode on mobile
       visibleFootnoteId: false
     },
@@ -84,7 +88,7 @@ PanelModule.store = (moduleInstance) => {
 PanelModule._configDefaults = {
   _moduleName: 'panel',
   _moduleType: Module.types.UI,
-  _supportedDeviceTypes: [HTMLPage.deviceTypes.DESKTOP, HTMLPage.deviceTypes.MOBILE],
+  _supportedDeviceTypes: [Platform.deviceTypes.DESKTOP, Platform.deviceTypes.MOBILE],
   // A selector that specifies to what DOM element a panel will be mounted.
   // This element will be replaced with the root element of the panel component.
   mountPoint: '#alpheios-panel'
