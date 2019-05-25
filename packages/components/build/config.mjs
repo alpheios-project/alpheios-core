@@ -17,7 +17,7 @@ const webpack = {
       alias: {
         // Below will force all imported modules with unresolved dependencies to use a single instance of that dependency
         'alpheios-data-models': path.join(projectRoot, 'node_modules/alpheios-data-models/dist/alpheios-data-models.js'),
-        'alpheios-wordlist': path.join(projectRoot, 'node_modules/wordlist/dist/alpheios-wordlist.js'),
+        'alpheios-wordlist': path.join(projectRoot, 'node_modules/alpheios-wordlist/dist/alpheios-wordlist.js'),
         'vue-multiselect-css': path.join(projectRoot, 'node_modules/vue-multiselect/dist/vue-multiselect.min.css'),
         '@': path.join(projectRoot, 'src')
       }
@@ -30,7 +30,7 @@ const webpack = {
       'alpheios-experience': 'alpheios-experience',
       'alpheios-res-client': 'alpheios-res-client',
       'intl-messageformat': 'intl-messageformat',
-      'uuid': 'uuid'
+      uuid: 'uuid'
     },
     plugins: [
       new VueLoaderPlugin()

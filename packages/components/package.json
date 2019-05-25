@@ -3,6 +3,7 @@
   "version": "1.0.16",
   "description": "Alpheios UI Components",
   "main": "dist/alpheios-components.min.js",
+  "module": "src/plugin.js",
   "scripts": {
     "test": "eslint --fix src/**/*.js && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-lib": "eslint --fix src/**/*.js && jest tests/lib --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
@@ -14,6 +15,7 @@
     "build-safari": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue-postcss config-safari.mjs",
     "build-prod": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue",
     "build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue",
+    "code-analysis-prod": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack production vue config.mjs --code-analysis",
     "lint": "eslint --fix src/**/*.js && eslint --fix-dry-run src/**/*.vue"
   },
   "repository": {
@@ -37,7 +39,7 @@
     "alpheios-data-models": "github:alpheios-project/data-models",
     "alpheios-experience": "github:alpheios-project/experience",
     "alpheios-inflection-tables": "github:alpheios-project/inflection-tables",
-    "alpheios-node-build": "github:alpheios-project/node-build",
+    "alpheios-node-build": "file:../node-build",
     "alpheios-res-client": "github:alpheios-project/res-client",
     "alpheios-wordlist": "github:alpheios-project/wordlist",
     "autoprefixer": "^9.5.0",
@@ -136,5 +138,13 @@
   "eslintIgnore": [
     "**/dist",
     "**/support"
-  ]
+  ],
+  "dependencies": {
+    "vue-loader": "^15.7.0",
+    "vue-style-loader": "^4.1.2",
+    "vue-svg-loader": "^0.12.0",
+    "vue-template-compiler": "^2.6.10",
+    "vue-template-loader": "^1.0.0",
+    "webpack": "^4.32.2"
+  }
 }
