@@ -45,7 +45,7 @@
         <div
             :class="{ disabled: !$store.getters[`app/hasGrammarRes`] }"
             class="alpheios-action-panel__navbutton"
-            @click.stop="openTab('grammar')"
+            @click.stop="$store.getters[`app/hasGrammarRes`] ? openTab('grammar') : null"
         >
           <grammar-icon/>
         </div>
@@ -58,7 +58,7 @@
         <div
             :class="{ disabled: !$store.state.app.hasWordListsData }"
             class="alpheios-action-panel__navbutton"
-            @click.stop="openTab('wordlist')"
+            @click.stop="$store.state.app.hasWordListsData ? openTab('wordlist') : null"
         >
           <wordlist-icon/>
         </div>
@@ -71,7 +71,7 @@
         <div
             :class="{ disabled: !$store.state.auth.enableLogin }"
             class="alpheios-action-panel__navbutton"
-            @click.stop="openTab('user')"
+            @click.stop="$store.state.auth.enableLogin ? openTab('user') : null"
         >
           <user-icon/>
         </div>

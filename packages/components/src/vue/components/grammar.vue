@@ -41,7 +41,6 @@ export default {
   .alpheios-grammar__provider {
     flex: none;
     font-weight: normal;
-
     padding: 20px 25px 20px;
     font-size: 80%;
   }
@@ -51,7 +50,7 @@ export default {
     position: relative;
     -webkit-overflow-scrolling: touch;
     overflow-y: auto;
-    height: 85vh;
+    flex-direction: column;
   }
 
   .alpheios-grammar__frame {

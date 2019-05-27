@@ -160,11 +160,11 @@ export default {
 
   .alpheios-worditem__targetWord {
       font-weight: bold;
-      width: 30%;
+      width: 28%;
       cursor: pointer;
   }
   .alpheios-worditem__lemmasList {
-      width: 38%;
+      width: 34%;
   }
 
   .alpheios-visibility__hidden {

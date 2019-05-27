@@ -17,6 +17,7 @@
                 v-for="(authorItem, authorIndex) in lastAuthorsList" v-bind:key="authorIndex"
                 v-bind:value="authorItem"
                 :class='{ "alpheios-select-disabled-option": !authorItem}'
+                v-bind:disabled="!authorItem"
                 >{{ calcTitle(authorItem, 'author') }}</option>
         </select>
         <alph-tooltip :tooltipText="l10n.getMsg('WORDUSAGE_FILTERS_AUTHOR_CLEAR')" tooltipDirection="top-right">
@@ -36,6 +37,7 @@
               v-for="(workItem, workIndex) in filteredWorkList" v-bind:key="workIndex"
               v-bind:value="workItem"
               :class='{ "alpheios-select-disabled-option": !workItem}'
+              v-bind:disabled="!workItem"
               >{{ calcTitle(workItem, 'textwork') }}</option>
         </select>
         <alph-tooltip :tooltipText="l10n.getMsg('WORDUSAGE_FILTERS_TEXTWORK_CLEAR')" tooltipDirection="top-right">
@@ -166,14 +168,12 @@ export default {
       if (this.typeFilter === 'noFilters') {
         this.disabledButton = true
 
-        this.$emit('getAllResults')
-
         if (this.noMoreResults && this.lastAuthorsList.length > 0) {
           this.removeFiltersFromResults()
         } else {
           await this.getResultsNoFilters()
         }
-
+        this.$emit('getAllResults')
         this.clearFilter('author')
         this.lastAuthorID = null
         this.typeFilter = 'filterCurrentResults'

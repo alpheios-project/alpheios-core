@@ -609,7 +609,7 @@ export default {
     cursor: pointer;
     fill: var(--alpheios-icon-color);
     stroke: var(--alpheios-icon-color);
-    stroke-width: 2.5;
+    stroke-width: 0;
 
     svg {
       position: relative;

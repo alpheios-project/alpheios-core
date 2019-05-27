@@ -1,7 +1,7 @@
 <template>
   <div class="alpheios-word-usage">
     <div class="alpheios_word_usage_list_title" data-alpheios-ignore="all">{{ targetWord }} ({{ language }})
-      (<span class="alpheios-word-usage-header-show-link" v-if="showHeader" @click="collapsedHeader = !collapsedHeader">{{ collapsedHeaderTitle }}</span>)
+      <span class="alpheios-word-usage-header-show-link" v-if="showHeaderFilters" @click="collapsedHeader = !collapsedHeader"> ({{ collapsedHeaderTitle }})</span>
     </div>
 
     <div class="alpheios-word-usage-header" data-alpheios-ignore="all" v-show="showHeader">
@@ -59,6 +59,7 @@
                 :href="wordUsageItem.source"
                 target="_blank"
                 v-show="showDataSource"
+                data-alpheios-ignore="all"
             >
               {{ `${wordUsageItem.cit} ${wordUsageItem.fullCit()}` }}
             </a>
@@ -108,10 +109,13 @@ export default {
     language () {
       return this.$store.state.app.homonymDataReady && this.app.homonym ? this.app.homonym.language : null
     },
+    showHeaderFilters () {
+      return this.$store.state.app.wordUsageExamplesReady
+    },
     showHeader () {
       return Boolean(this.selectedAuthor) ||
-             this.showWordUsageExampleItems && this.wordUsageListSorted.length > 0 ||
-             !this.showWordUsageExampleItems
+             this.showWordUsageExampleItems && this.wordUsageListSorted.length > 0  ||
+             !this.$store.state.app.wordUsageExamplesReady
     },
     showWordUsageExampleItems () {
       if (!this.$store.state.app.wordUsageExamplesReady) {
