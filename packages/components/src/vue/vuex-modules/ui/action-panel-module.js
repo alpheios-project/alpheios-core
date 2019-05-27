@@ -77,10 +77,10 @@ ActionPanelModule._configDefaults = {
   _moduleName: 'actionPanel',
   _moduleType: Module.types.UI,
   _supportedDeviceTypes: [Platform.deviceTypes.DESKTOP, Platform.deviceTypes.MOBILE],
-  // A selector that specifies to what DOM element a nav will be mounted.
-  // This element will be replaced with the root element of the panel component.
+  // A module's element will be appended to the element specified by the selector here
   mountInto: 'body',
 
+  // What should be the id of the root module's UI element (null if no root element must been set)
   rootElementId: null,
   // What module shall be used to display lookup results. Possible values: `panel`, `popup`.
   lookupResultsIn: 'panel',
