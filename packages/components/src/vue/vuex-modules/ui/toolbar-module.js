@@ -9,16 +9,37 @@ export default class ToolbarModule extends Module {
   constructor (store, api, config) {
     super(store, api, config)
 
+    // Create the mount point as the last child of the page's body
+    let el = document.createElement('div')
+    let mountEl = document.querySelector(this.config.mountInto)
+    if (!mountEl) {
+      console.warn(`A ${this.config.mountInto} element for mounting ${this.constructor.moduleName} is not found. Will mount into the body instead`)
+      mountEl = document.body
+    }
+    let viEl = mountEl.appendChild(el)
+
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
 
-    this._vi = new Vue({
+    let component = this.config.platform.isDesktop ? ToolbarLarge : ToolbarCompact
+    let VueComponentClass = Vue.extend(component)
+    this._vi = new VueComponentClass({
+      parent: this.constructor.rootVi,
+      data: () => {
+        return {
+          // Make module configuration directly accessible by the module's Vue instance as a data prop
+          moduleConfig: this.config
+        }
+      }
+    })
+
+    /* this._vi = new Vue({
       el: this.config.mountPoint,
       store: store, // Install store into the toolbar
       provide: api, // Public API of the modules for child components
-      /*
+      /!*
       Since this is a root component and we cannot claim APIs with `inject`
       let's assign APIs to a custom prop to have access to it
-       */
+       *!/
       api: api,
       components: {
         toolbarCompact: ToolbarCompact,
@@ -30,7 +51,8 @@ export default class ToolbarModule extends Module {
           initialPos: this.config.initialPos
         }
       }
-    })
+    }) */
+    this._vi.$mount(viEl)
   }
 
   activate () {

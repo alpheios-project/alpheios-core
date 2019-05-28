@@ -31,6 +31,12 @@ export default {
   },
 
   computed: {
+    // Need this to return an object to Vue template when moduleConfig data is not available yet.
+    config () {
+      console.info('config')
+      return this.moduleConfig || {}
+    },
+
     componentStyles: function () {
       return {
         zIndex: this.ui.zIndex
