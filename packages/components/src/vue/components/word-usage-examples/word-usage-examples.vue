@@ -236,7 +236,6 @@ export default {
       flex: 1 1 auto;
       position: relative;
       -webkit-overflow-scrolling: touch;
-      overflow-y: auto;
     }
     div.alpheios-word_usage_list__provider {
       flex: none;
