@@ -174,4 +174,10 @@ export default {
   .alpheios-worditem__lemmasList-lemmaitem {
     cursor: pointer;
   }
+
+  .alpheios-layout-compact { 
+    .alpheios-worditem__targetWord {
+      width: 25%;
+    }
+  }
 </style>

@@ -27,7 +27,8 @@
               tabindex="-1"
               type="button"
           >
-            {{ l10n.getMsg('LABEL_LOOKUP_BUTTON') }}
+            <span class="alpheios-lookup__search-control-label">{{ l10n.getMsg('LABEL_LOOKUP_BUTTON') }}</span>
+            <span class="alpheios-lookup__search-control-icon alpheios-navbuttons__btn"><lookup-icon/></span>
           </button>
         </div>
       </div>
@@ -55,6 +56,7 @@
 import TextSelector from '@/lib/selection/text-selector'
 import LexicalQueryLookup from '@/lib/queries/lexical-query-lookup'
 import { LanguageModelFactory } from 'alpheios-data-models'
+import LookupIcon from '@/images/inline-icons/lookup.svg'
 
 import Setting from './setting.vue'
 
@@ -62,7 +64,8 @@ export default {
   name: 'Lookup',
   inject: ['app', 'ui', 'l10n', 'settings'],
   components: {
-    alphSetting: Setting
+    alphSetting: Setting,
+    lookupIcon: LookupIcon
   },
   data () {
     return {
@@ -255,6 +258,27 @@ export default {
 
     .alpheios-setting__control {
       width: 100%;
+    }
+  }
+
+  .alpheios-lookup__search-control-icon {
+    display: none;
+  }
+  .alpheios-button-primary span.alpheios-lookup__search-control-label {
+    color: var(--alpheios-btn-primary-font-color);
+  }
+
+  .alpheios-lookup__panel.alpheios-landscape {
+    .alpheios-lookup__search-control-label {
+      display: none;
+    }
+    .alpheios-button-primary {
+      padding: 0;
+    }
+    .alpheios-lookup__search-control-icon {
+      display: inline-block;
+      width: 35px;
+      height: 25px;
     }
   }
 </style>

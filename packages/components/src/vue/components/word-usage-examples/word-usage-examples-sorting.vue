@@ -7,7 +7,7 @@
         <select class="alpheios-select alpheios-word-usage-header-select-sortBy"
                 v-model="selectedSortBy" @change="changedSortBy">
           <option v-for="typeSorting in typeSortingList" v-bind:key="typeSorting.value"
-                  v-bind:value="typeSorting.value"
+                  v-bind:value="typeSorting.value" v-bind:disabled="typeSorting.disabled"
                   :class='{ "alpheios-select-disabled-option": typeSorting.disabled }'
                   >{{ typeSorting.title }}</option>
         </select>
@@ -46,9 +46,11 @@ export default {
       typeSortingList: [
         { value: null, title: this.l10n.getText('WORDUSAGE_SORT_BY_PLACEHOLDER'), disabled: true },
         { value: 'byAuthor', title: this.l10n.getText('WORDUSAGE_SORT_BY_AUTHOR') },
-        { value: 'byTextWork', title: this.l10n.getText('WORDUSAGE_SORT_BY_TEXTWORK') },
-        { value: 'byPrefix', title: this.l10n.getText('WORDUSAGE_SORT_BY_PREFIX') },
-        { value: 'bySuffix', title: this.l10n.getText('WORDUSAGE_SORT_BY_SUFFIX') }
+        { value: 'byTextWork', title: this.l10n.getText('WORDUSAGE_SORT_BY_TEXTWORK') }
+        /**
+         { value: 'byPrefix', title: this.l10n.getText('WORDUSAGE_SORT_BY_PREFIX') },
+         { value: 'bySuffix', title: this.l10n.getText('WORDUSAGE_SORT_BY_SUFFIX') }
+        **/
       ]
     }
   },

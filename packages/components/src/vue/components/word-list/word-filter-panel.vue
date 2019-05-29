@@ -31,10 +31,12 @@
                   v-on:input = "filterVariants"
                   v-on:focus = "filterVariants"
                   v-on:blur = "hideAutocomplete"
+                  autocapitalize = "off"
+                  autocorrect = "off"
                   >
-            
+
             <ul class="alpheios-select-list"
-                    v-model="selectedExactForm" 
+                    v-model="selectedExactForm"
                     v-if = "selectedFilterBy === 'byExactForm'"
                     >
               <li v-for="(exactForm, exactFormIndex) in wordExactFormsFiltered" v-bind:key="exactFormIndex"
@@ -43,7 +45,7 @@
             </ul>
 
             <ul class="alpheios-select-list"
-                    v-model="selectedLemma" 
+                    v-model="selectedLemma"
                     v-if = "selectedFilterBy === 'byLemma'"
                     >
               <li v-for="(lemmaForm, lemmaFormIndex) in wordLemmaFormsFiltered" v-bind:key="lemmaFormIndex"
@@ -114,14 +116,14 @@
           { value: null, title: this.l10n.getText('WORDLIST_FILTER_PLACEHOLDER'), disabled: true },
           { value: 'byCurrentSession', title: this.l10n.getText('WORDLIST_FILTER_BYCURRENTSESSION'), onChange: true },
           { value: 'byImportant', title: this.l10n.getText('WORDLIST_FILTER_BYIMPORTANT'), onChange: true },
-          { value: 'byExactForm', 
-            title: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_FULL'), 
-            onClick: true, showTextInput: true, 
-            textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_FULL_PLACEHOLDER') 
+          { value: 'byExactForm',
+            title: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_FULL'),
+            onClick: true, showTextInput: true,
+            textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_FULL_PLACEHOLDER')
           },
-          { value: 'byLemma', 
-            title: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL'), 
-            onClick: true, showTextInput: true, 
+          { value: 'byLemma',
+            title: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL'),
+            onClick: true, showTextInput: true,
             textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL_PLACEHOLDER')
           }
         ],
@@ -268,7 +270,7 @@
       }
 
       .alpheios-wordlist-header-input-filterBy-block {
-        margin-left: 2%;
+        margin-left: 1%;
       }
 
       .alpheios-wordlist-header-select-filterBy{
@@ -293,7 +295,7 @@
           vertical-align: top;
         }
       }
-    
+
     .alpheios-select-input-group {
       position: relative;
       width: 80%;
@@ -343,6 +345,23 @@
       }
     }
   }
+  .alpheios-layout-compact {
+    .alpheios-wordlist-filters {
+      padding: 10px 2px;
+    }
+    .alpheios-wordlist-header-select-filterBy-block {
+      width: 42%;
+    }
+    .alpheios-wordlist-header-select-filterBy,
+    .alpheios-wordlist-header-input-filterBy {
+      font-size: 85%;
+    }
+    .alpheios-wordlist-header-input-filterBy-block {
+      width: 52%;
+    }
+    .alpheios-select-input-group {
+      width: 68%;
+    }
+  }
 
-  
 </style>

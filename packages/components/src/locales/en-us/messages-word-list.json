@@ -65,8 +65,8 @@
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYWORDFORM_FULL": {
-        "message": "by exact form",
-        "description": "Filter only those words that has this word form",
+        "message": "by exact word",
+        "description": "Filter only those words that has this word word",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYWORDFORM_PART": {
@@ -85,13 +85,13 @@
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYWORDFORM_FULL_PLACEHOLDER": {
-        "message": "type exact form here",
-        "description": "Placeholder for the text input for filter by word form (full)",
+        "message": "type exact word here",
+        "description": "Placeholder for the text input for filter by word",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYLEMMA_FULL_PLACEHOLDER": {
         "message": "type lemma here",
-        "description": "Placeholder for the text input for filter by lemma (full)",
+        "description": "Placeholder for the text input for filter by lemma",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BY": {

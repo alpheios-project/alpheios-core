@@ -167,6 +167,7 @@ export default {
     filterCurrentByAuthor (selectedAuthor, selectedTextWork) {
       this.setAuthorTextWork(selectedAuthor, selectedTextWork)
       this.needInnerFilter = true
+      this.collapsedHeader = true
     },
     getMoreResults (selectedAuthor, selectedTextWork) {
       this.setAuthorTextWork(selectedAuthor, selectedTextWork)
@@ -176,7 +177,7 @@ export default {
       this.selectedAuthor = null
       this.selectedTextWork = null
       this.needInnerFilter = false
-      this.collapsedHeader = false
+      this.collapsedHeader = true
     },
     getPropertyBySortBy (a, type) {
       switch (type) {
