@@ -38,7 +38,7 @@
           </span>
         </div>
 
-        <div class="alpheios-popup__toolbar-buttons" v-show="moduleData">
+        <div class="alpheios-popup__toolbar-buttons">
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
                         v-show="$store.getters['app/defDataReady']">
             <button @click="ui.showPanelTab('definitions')"
@@ -181,8 +181,8 @@ export default {
 
       // How much a popup has been dragged from its initial position, in pixels
       shift: {
-        x: this.moduleData.initialShift.x || 0,
-        y: this.moduleData.initialShift.y || 0
+        x: 0,
+        y: 0
       },
 
       updateDimensionsTimeout: null,
@@ -190,13 +190,12 @@ export default {
       showProviders: false
     }
   },
-  props: {
-    moduleData: {
-      type: Object,
-      required: true
-    }
-  },
+
   created () {
+    // This is the earliest moment when data props are available
+    this.shift.x = this.moduleConfig.initialShift.x
+    this.shift.y = this.moduleConfig.initialShift.y
+
     let vm = this
     this.$on('updatePopupDimensions', function () {
       vm.updatePopupDimensions()
@@ -228,7 +227,7 @@ export default {
       }
 
       if (this.$store.getters['popup/isFixedPositioned']) {
-        return this.moduleData.left
+        return this.moduleConfig.initialPos.left
       }
 
       let left = this.positionLeftValue
@@ -240,17 +239,17 @@ export default {
       if (this.widthDm !== 'auto') {
         // Popup is too wide and was restricted in height
         this.logger.log(`Setting position left for a set width`)
-        left = this.moduleData.viewportMargin
-      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.moduleData.viewportMargin &&
-          leftSide > this.moduleData.viewportMargin) {
+        left = this.moduleConfig.viewportMargin
+      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.moduleConfig.viewportMargin &&
+          leftSide > this.moduleConfig.viewportMargin) {
         // We can center it with the target
         left = placementTargetX - Math.floor(this.exactWidth / 2)
-      } else if (leftSide > this.moduleData.viewportMargin) {
+      } else if (leftSide > this.moduleConfig.viewportMargin) {
         // There is space at the left, move it there
-        left = viewportWidth - verticalScrollbarWidth - this.moduleData.viewportMargin - this.exactWidth
-      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.moduleData.viewportMargin) {
+        left = viewportWidth - verticalScrollbarWidth - this.moduleConfig.viewportMargin - this.exactWidth
+      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.moduleConfig.viewportMargin) {
         // There is space at the right, move it there
-        left = this.moduleData.viewportMargin
+        left = this.moduleConfig.viewportMargin
       }
       return `${left}px`
     },
@@ -262,7 +261,7 @@ export default {
       }
 
       if (this.$store.getters['popup/isFixedPositioned']) {
-        return this.moduleData.top
+        return this.moduleConfig.initialPos.top
       }
 
       let time = Date.now()
@@ -274,19 +273,19 @@ export default {
       if (this.heightDm !== 'auto') {
         // Popup is too wide and was restricted in height
         this.logger.log(`Setting position top for a set height`)
-        top = this.moduleData.viewportMargin
-      } else if (placementTargetY + this.moduleData.placementMargin + this.exactHeight < viewportHeight - this.moduleData.viewportMargin - horizontalScrollbarWidth) {
+        top = this.moduleConfig.viewportMargin
+      } else if (placementTargetY + this.moduleConfig.placementMargin + this.exactHeight < viewportHeight - this.moduleConfig.viewportMargin - horizontalScrollbarWidth) {
         // Place it below a selection
-        top = placementTargetY + this.moduleData.placementMargin
-      } else if (placementTargetY - this.moduleData.placementMargin - this.exactHeight > this.moduleData.viewportMargin) {
+        top = placementTargetY + this.moduleConfig.placementMargin
+      } else if (placementTargetY - this.moduleConfig.placementMargin - this.exactHeight > this.moduleConfig.viewportMargin) {
         // Place it above a selection
-        top = placementTargetY - this.moduleData.placementMargin - this.exactHeight
+        top = placementTargetY - this.moduleConfig.placementMargin - this.exactHeight
       } else if (placementTargetY < viewportHeight - horizontalScrollbarWidth - placementTargetY) {
         // There is no space neither above nor below. Word is shifted to the top. Place a popup at the bottom.
-        top = viewportHeight - horizontalScrollbarWidth - this.moduleData.viewportMargin - this.exactHeight
+        top = viewportHeight - horizontalScrollbarWidth - this.moduleConfig.viewportMargin - this.exactHeight
       } else if (placementTargetY > viewportHeight - horizontalScrollbarWidth - placementTargetY) {
         // There is no space neither above nor below. Word is shifted to the bottom. Place a popup at the top.
-        top = this.moduleData.viewportMargin
+        top = this.moduleConfig.viewportMargin
       } else {
         // There is no space neither above nor below. Center it vertically.
         top = Math.round((viewportHeight - horizontalScrollbarWidth - this.exactHeight) / 2)
@@ -307,7 +306,7 @@ export default {
       set: function (newWidth) {
         let viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
         let verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth
-        let maxWidth = viewportWidth - 2 * this.moduleData.viewportMargin - verticalScrollbarWidth
+        let maxWidth = viewportWidth - 2 * this.moduleConfig.viewportMargin - verticalScrollbarWidth
         if (newWidth >= maxWidth) {
           this.logger.log(`Popup is too wide, limiting its width to ${maxWidth}px`)
           this.widthValue = maxWidth
@@ -334,7 +333,7 @@ export default {
         /*
               let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
               let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
-              let maxHeight = viewportHeight - 2*this.moduleData.viewportMargin - horizontalScrollbarWidth
+              let maxHeight = viewportHeight - 2*this.moduleConfig.viewportMargin - horizontalScrollbarWidth
               */
         if (newHeight >= this.maxHeight) {
           this.logger.log(`Popup is too tall, limiting its height to ${this.maxHeight}px`)
@@ -349,7 +348,7 @@ export default {
     maxHeight () {
       let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
       let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
-      return viewportHeight - 2 * this.moduleData.viewportMargin - horizontalScrollbarWidth
+      return viewportHeight - 2 * this.moduleConfig.viewportMargin - horizontalScrollbarWidth
     },
 
     verboseMode () {
@@ -511,7 +510,7 @@ export default {
   },
 
   mounted () {
-    if (this.moduleData && this.moduleData.draggable && this.moduleData.resizable) {
+    if (this.moduleConfig.draggable && this.moduleConfig.resizable) {
       this.interactInstance = interact(this.$el)
         .resizable(this.resizableSettings())
         .draggable(this.draggableSettings())

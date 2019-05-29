@@ -9,22 +9,29 @@ export default class PanelModule extends Module {
   constructor (store, api, config) {
     super(store, api, config)
 
+    // Create the mount point as the last child of the page's body
+    let el = document.createElement('div')
+    let mountEl = document.querySelector(this.config.mountInto)
+    if (!mountEl) {
+      console.warn(`A ${this.config.mountInto} element for mounting ${this.constructor.moduleName} is not found. Will mount into the body instead`)
+      mountEl = document.body
+    }
+    let viEl = mountEl.appendChild(el)
+
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
 
-    this._vi = new Vue({
-      el: this.config.mountPoint,
-      store: store, // Install store into the panel
-      provide: api, // Public API of the modules for child components
-      /*
-      Since this is a root component and we cannot claim APIs with `inject`
-      let's assign APIs to a custom prop to have access to it
-       */
-      api: api,
-      components: {
-        largePanel: LargePanel, // A desktop version of a panel
-        compactPanel: CompactPanel // A mobile version of a panel
+    let component = this.config.platform.isDesktop ? LargePanel : CompactPanel
+    let VueComponentClass = Vue.extend(component)
+    this._vi = new VueComponentClass({
+      parent: this.constructor.rootVi,
+      data: () => {
+        return {
+          // Make module configuration directly accessible by the module's Vue instance as a data prop
+          moduleConfig: this.config
+        }
       }
     })
+    this._vi.$mount(viEl)
 
     Platform.evt.ORIENTATION_CHANGE.sub(() => {
       this._vi.$store.commit('panel/setOrientation', this.config.platform.simpleOrientation)
@@ -40,8 +47,6 @@ PanelModule.store = (moduleInstance) => {
     state: {
       // Whether a panel is shown or hidden
       visible: false,
-      // Choose mobile or desktop layout from the value of the `platform` prop of a configuration object
-      layout: moduleInstance.config.platform.isDesktop ? `largePanel` : 'compactPanel',
       // Where a panel is located. Possible values are `left` or `right`.
       position: 'left',
       // Device orientation
@@ -89,7 +94,9 @@ PanelModule._configDefaults = {
   _moduleName: 'panel',
   _moduleType: Module.types.UI,
   _supportedDeviceTypes: [Platform.deviceTypes.DESKTOP, Platform.deviceTypes.MOBILE],
-  // A selector that specifies to what DOM element a panel will be mounted.
-  // This element will be replaced with the root element of the panel component.
-  mountPoint: '#alpheios-panel'
+  // A module's element will be appended to the element specified by the selector here
+  mountInto: 'body',
+
+  // What should be the id of the root module's UI element (null if no root element must been set)
+  rootElementId: null
 }

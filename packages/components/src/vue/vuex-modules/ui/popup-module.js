@@ -8,50 +8,29 @@ export default class PopupModule extends Module {
   constructor (store, api, config) {
     super(store, api, config)
 
+    // Create the mount point as the last child of the page's body
+    let el = document.createElement('div')
+    let mountEl = document.querySelector(this.config.mountInto)
+    if (!mountEl) {
+      console.warn(`A ${this.config.mountInto} element for mounting ${this.constructor.moduleName} is not found. Will mount into the body instead`)
+      mountEl = document.body
+    }
+    let viEl = mountEl.appendChild(el)
+
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
 
-    this._vi = new Vue({
-      el: this.config.mountPoint,
-      store: store,
-      provide: api, // Expose APIs to child components
-      /*
-      Since this is a root component and we cannot claim APIs with `inject`
-      let's assign APIs to a custom prop to have access to it
-       */
-      api: api,
-      components: {
-        popup: Popup
-      },
-      data: {
-        // Reactive options of the Popup UI component, are passed to popup.vue as `data`
-        moduleData: {
-          // Default popup position, with units
-          top: this.config.initialPos.top,
-          left: this.config.initialPos.left,
-
-          draggable: this.config.draggable,
-          resizable: this.config.resizable,
-          // Default popup dimensions, in pixels, without units. These values will override CSS rules.
-          // Can be scaled down on small screens automatically.
-          width: 210,
-          /*
-          `fixedElementsHeight` is a sum of heights of all elements of a popup, including a top bar, a button area,
-          and a bottom bar. A height of all variable elements (i.e. morphological data container) will be
-          a height of a popup less this value.
-           */
-          fixedElementsHeight: 120,
-          heightMin: 150, // Initially, popup height will be set to this value
-          heightMax: 400, // If a morphological content height is greater than `contentHeightLimit`, a popup height will be increased to this value
-          // A margin between a popup and a selection
-          placementMargin: 15,
-          // A minimal margin between a popup and a viewport border, in pixels. In effect when popup is scaled down.
-          viewportMargin: 5,
-
-          initialShift: this.config.initialShift
-        },
-        uiComponentName: this.config.popupComponent
+    let component = Popup
+    let VueComponentClass = Vue.extend(component)
+    this._vi = new VueComponentClass({
+      parent: this.constructor.rootVi,
+      data: () => {
+        return {
+          // Make module configuration directly accessible by the module's Vue instance as a data prop
+          moduleConfig: this.config
+        }
       }
     })
+    this._vi.$mount(viEl)
   }
 }
 
@@ -106,9 +85,11 @@ PopupModule._configDefaults = {
   _moduleType: Module.types.UI,
   _supportedDeviceTypes: [Platform.deviceTypes.DESKTOP],
 
-  // A selector that specifies to what DOM element a popup will be mounted.
-  // This element will be replaced with the root element of the popup component.
-  mountPoint: '#alpheios-popup',
+  // A module's element will be appended to the element specified by the selector here
+  mountInto: 'body',
+
+  // What should be the id of the root module's UI element (null if no root element must been set)
+  rootElementId: null,
 
   // A name of the popup component defined in `components` section of a Vue instance.
   // This is a component that will be mounted.
@@ -128,8 +109,25 @@ PopupModule._configDefaults = {
     x: 0,
     y: 0
   },
+
   initialPos: {
     top: '10vh',
     left: '10vw'
-  }
+  },
+
+  // Default popup dimensions, in pixels, without units. These values will override CSS rules.
+  // Can be scaled down on small screens automatically.
+  // width: 210,
+  /*
+  `fixedElementsHeight` is a sum of heights of all elements of a popup, including a top bar, a button area,
+  and a bottom bar. A height of all variable elements (i.e. morphological data container) will be
+  a height of a popup less this value.
+   */
+  // fixedElementsHeight: 120,
+  // heightMin: 150, // Initially, popup height will be set to this value
+  // heightMax: 400, // If a morphological content height is greater than `contentHeightLimit`, a popup height will be increased to this value
+  // A margin between a popup and a selection
+  placementMargin: 15,
+  // A minimal margin between a popup and a viewport border, in pixels. In effect when popup is scaled down.
+  viewportMargin: 5
 }

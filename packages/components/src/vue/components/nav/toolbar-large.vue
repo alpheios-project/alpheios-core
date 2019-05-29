@@ -214,8 +214,8 @@ export default {
 
       // How much a toolbar has been dragged from its initial position, in pixels
       shift: {
-        x: this.config.initialShift.x,
-        y: this.config.initialShift.y
+        x: 0,
+        y: 0
       },
 
       // An X position of the central point of a toolbar
@@ -223,26 +223,31 @@ export default {
     }
   },
 
+  created () {
+    // This is the earliest moment when data props are available
+    this.shift.x = this.moduleConfig.initialShift.x
+    this.shift.y = this.moduleConfig.initialShift.y
+  },
+
   computed: {
     componentStyles: function () {
-      console.info('component styles')
       let styles = {
         transform: `translate(${this.shift.x}px, ${this.shift.y}px)`,
         zIndex: this.ui.zIndex
       }
 
-      if (this.config.initialPos) {
-        if (this.config.initialPos.top) {
-          styles.top = this.config.initialPos.top
+      if (this.moduleConfig) {
+        if (this.moduleConfig.initialPos.top) {
+          styles.top = this.moduleConfig.initialPos.top
         }
-        if (this.config.initialPos.right) {
-          styles.right = this.config.initialPos.right
+        if (this.moduleConfig.initialPos.right) {
+          styles.right = this.moduleConfig.initialPos.right
         }
-        if (this.config.initialPos.bottom) {
-          styles.bottom = this.config.initialPos.bottom
+        if (this.moduleConfig.initialPos.bottom) {
+          styles.bottom = this.moduleConfig.initialPos.bottom
         }
-        if (this.config.initialPos.left) {
-          styles.left = this.config.initialPos.left
+        if (this.moduleConfig.initialPos.left) {
+          styles.left = this.moduleConfig.initialPos.left
         }
       }
       return styles

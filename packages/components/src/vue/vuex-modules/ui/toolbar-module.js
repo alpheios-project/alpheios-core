@@ -4,7 +4,6 @@ import ToolbarCompact from '@/vue/components/nav/toolbar-compact.vue'
 import ToolbarLarge from '@/vue/components/nav/toolbar-large.vue'
 import Platform from '@/lib/utility/platform.js'
 
-// TODO: Add a check for required modules
 export default class ToolbarModule extends Module {
   constructor (store, api, config) {
     super(store, api, config)
@@ -31,27 +30,6 @@ export default class ToolbarModule extends Module {
         }
       }
     })
-
-    /* this._vi = new Vue({
-      el: this.config.mountPoint,
-      store: store, // Install store into the toolbar
-      provide: api, // Public API of the modules for child components
-      /!*
-      Since this is a root component and we cannot claim APIs with `inject`
-      let's assign APIs to a custom prop to have access to it
-       *!/
-      api: api,
-      components: {
-        toolbarCompact: ToolbarCompact,
-        toolbarLarge: ToolbarLarge
-      },
-      data: {
-        moduleData: {
-          initialShift: this.config.initialShift,
-          initialPos: this.config.initialPos
-        }
-      }
-    }) */
     this._vi.$mount(viEl)
   }
 
@@ -75,9 +53,7 @@ ToolbarModule.store = (moduleInstance) => {
 
     state: {
       // Whether a toolbar is shown or hidden
-      visible: false,
-      // Choose compact or large layout from the value of the `platform` prop of a configuration object
-      layout: moduleInstance.config.platform.isDesktop ? `toolbarLarge` : 'toolbarCompact'
+      visible: false
     },
     mutations: {
       /**
@@ -103,9 +79,11 @@ ToolbarModule._configDefaults = {
   _moduleName: 'toolbar',
   _moduleType: Module.types.UI,
   _supportedDeviceTypes: [Platform.deviceTypes.DESKTOP, Platform.deviceTypes.MOBILE],
-  // A selector that specifies to what DOM element a nav will be mounted.
-  // This element will be replaced with the root element of the panel component.
-  mountPoint: '#alpheios-toolbar',
+  // A module's element will be appended to the element specified by the selector here
+  mountInto: 'body',
+
+  // What should be the id of the root module's UI element (null if no root element must been set)
+  rootElementId: null,
   // Initial position of a toolbar, in pixels. Any combination of positioning parameters (top, right, bottom, left)
   // in two different dimensions (X and Y) must be specified. Pixel units should NOT be added to the values.
   // Default values are the ones below.
