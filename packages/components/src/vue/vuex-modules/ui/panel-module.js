@@ -1,4 +1,4 @@
-import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
+import Vue from 'vue/dist/vue.runtime.esm.js' // Vue in a runtime + compiler configuration
 import Module from '@/vue/vuex-modules/module.js'
 import LargePanel from '@/vue/components/panel-large.vue'
 import CompactPanel from '@/vue/components/panel-compact.vue'

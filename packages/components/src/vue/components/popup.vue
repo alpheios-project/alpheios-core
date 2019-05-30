@@ -6,6 +6,7 @@
      ref="popup"
      v-on-clickaway="attachTrackingClick"
      v-show="this.$store.state.popup.visible"
+     data-alpheios-ignore="all"
   >
     <div class="alpheios-popup__header">
       <div class="alpheios-popup__logo">
