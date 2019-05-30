@@ -1,4 +1,4 @@
-import VueLoaderPlugin from '../node_modules/vue-loader/lib/plugin.js'
+import VueLoaderPlugin from 'vue-loader/lib/plugin.js'
 
 import path from 'path'
 const projectRoot = process.cwd()
@@ -19,7 +19,8 @@ const webpack = {
         'alpheios-data-models': path.join(projectRoot, 'node_modules/alpheios-data-models/dist/alpheios-data-models.js'),
         'alpheios-wordlist': path.join(projectRoot, 'node_modules/alpheios-wordlist/dist/alpheios-wordlist.js'),
         'vue-multiselect-css': path.join(projectRoot, 'node_modules/vue-multiselect/dist/vue-multiselect.min.css'),
-        '@': path.join(projectRoot, 'src')
+        '@vue-runtime': path.join(projectRoot, 'node_modules/vue/dist/vue.runtime.esm.js'),
+        '@comp-src': path.join(projectRoot, 'src')
       }
     },
     externals: {
@@ -30,6 +31,7 @@ const webpack = {
       'alpheios-experience': 'alpheios-experience',
       'alpheios-res-client': 'alpheios-res-client',
       'intl-messageformat': 'intl-messageformat',
+      '@vue-runtime': 'Vue',
       uuid: 'uuid'
     },
     plugins: [

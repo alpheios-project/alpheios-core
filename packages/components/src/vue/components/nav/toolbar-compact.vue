@@ -11,10 +11,10 @@
 </template>
 <script>
 // Embeddable SVG icons
-import ToolbarIcon from '@/images/inline-icons/reading-tools.svg'
+import ToolbarIcon from '@comp-src/images/inline-icons/reading-tools.svg'
 
 // Modules support
-import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+import DependencyCheck from '@comp-src/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'Toolbar',

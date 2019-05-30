@@ -20,9 +20,9 @@
     </div>
 </template>
 <script>
-import BackIcon from '@/images/inline-icons/back.svg'
-import Tooltip from '@/vue/components/tooltip.vue'
-import WordTqSourceBlock from '@/vue/components/word-list/word-tq-source-block.vue'
+import BackIcon from '@comp-src/images/inline-icons/back.svg'
+import Tooltip from '@comp-src/vue/components/tooltip.vue'
+import WordTqSourceBlock from '@comp-src/vue/components/word-list/word-tq-source-block.vue'
 
 export default {
   name: 'WordContextBlock',

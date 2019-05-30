@@ -1,7 +1,7 @@
-import Module from '@/vue/vuex-modules/module.js'
-import L10n from '@/lib/l10n/l10n.js'
-import Locales from '@/locales/locales.js'
-import Platform from '@/lib/utility/platform.js'
+import Module from '@comp-src/vue/vuex-modules/module.js'
+import L10n from '@comp-src/lib/l10n/l10n.js'
+import Locales from '@comp-src/locales/locales.js'
+import Platform from '@comp-src/lib/utility/platform.js'
 
 export default class L10nModule extends Module {
   // defaultLocale = Locales.en_US, messageBundles = []

@@ -250,7 +250,7 @@ import ShortDef from './shortdef.vue'
 import InflectionAttribute from './infl-attribute.vue'
 import LemmaTranslation from './lemma-translation.vue'
 // Modules support
-import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+import DependencyCheck from '@comp-src/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'Morph',

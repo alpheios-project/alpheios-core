@@ -380,9 +380,9 @@
 // JS imports
 import interact from 'interactjs'
 // Support libraries
-import Platform from '@/lib/utility/platform.js'
+import Platform from '@comp-src/lib/utility/platform.js'
 // Vue components
-import NotificationArea from '@/vue/components//notification-area.vue'
+import NotificationArea from '@comp-src/vue/components//notification-area.vue'
 import Inflections from './inflections.vue'
 import Setting from './setting.vue'
 import ShortDef from './shortdef.vue'
@@ -393,33 +393,33 @@ import InflectionBrowser from './inflections-browser.vue'
 import Lookup from './lookup.vue'
 import ReskinFontColor from './font-size.vue'
 import UserAuth from './user-auth.vue'
-import WordUsageExamples from '@/vue/components/word-usage-examples/word-usage-examples.vue'
+import WordUsageExamples from '@comp-src/vue/components/word-usage-examples/word-usage-examples.vue'
 import { Definition } from 'alpheios-data-models'
-import WordListPanel from '@/vue/components/word-list/word-list-panel.vue'
-import ProgressBar from '@/vue/components/progress-bar.vue'
+import WordListPanel from '@comp-src/vue/components/word-list/word-list-panel.vue'
+import ProgressBar from '@comp-src/vue/components/progress-bar.vue'
 // Embeddable SVG icons
-import CloseIcon from '@/images/inline-icons/x-close.svg'
-import UpIcon from '@/images/inline-icons/chevron-up.svg'
-import DownIcon from '@/images/inline-icons/chevron-down.svg'
-import LeftIcon from '@/images/inline-icons/chevron-left.svg'
-import RightIcon from '@/images/inline-icons/chevron-right.svg'
+import CloseIcon from '@comp-src/images/inline-icons/x-close.svg'
+import UpIcon from '@comp-src/images/inline-icons/chevron-up.svg'
+import DownIcon from '@comp-src/images/inline-icons/chevron-down.svg'
+import LeftIcon from '@comp-src/images/inline-icons/chevron-left.svg'
+import RightIcon from '@comp-src/images/inline-icons/chevron-right.svg'
 
-import MorphologyIcon from '@/images/inline-icons/language.svg'
-import DefinitionsIcon from '@/images/inline-icons/definitions.svg'
-import InflectionsIcon from '@/images/inline-icons/inflections.svg'
-import WordUsageIcon from '@/images/inline-icons/usage-examples-icon1.svg'
-import InflectionsBrowserIcon from '@/images/inline-icons/inflections-browser.svg'
-import UserIcon from '@/images/inline-icons/user.svg'
-import OptionsIcon from '@/images/inline-icons/options.svg'
-import GrammarIcon from '@/images/inline-icons/resources.svg'
-import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
-import TreebankIcon from '@/images/inline-icons/sitemap.svg'
+import MorphologyIcon from '@comp-src/images/inline-icons/language.svg'
+import DefinitionsIcon from '@comp-src/images/inline-icons/definitions.svg'
+import InflectionsIcon from '@comp-src/images/inline-icons/inflections.svg'
+import WordUsageIcon from '@comp-src/images/inline-icons/usage-examples-icon1.svg'
+import InflectionsBrowserIcon from '@comp-src/images/inline-icons/inflections-browser.svg'
+import UserIcon from '@comp-src/images/inline-icons/user.svg'
+import OptionsIcon from '@comp-src/images/inline-icons/options.svg'
+import GrammarIcon from '@comp-src/images/inline-icons/resources.svg'
+import WordlistIcon from '@comp-src/images/inline-icons/wordlist-icon.svg'
+import TreebankIcon from '@comp-src/images/inline-icons/sitemap.svg'
 
 // Vue directives
 import { directive as onClickaway } from '../directives/clickaway.js'
 
 // Modules support
-import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+import DependencyCheck from '@comp-src/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'PanelCompact',

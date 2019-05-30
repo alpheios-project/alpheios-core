@@ -1,8 +1,8 @@
-import Vue from 'vue/dist/vue.runtime.esm.js' // Vue in a runtime + compiler configuration
-import Module from '@/vue/vuex-modules/module.js'
-import LargePanel from '@/vue/components/panel-large.vue'
-import CompactPanel from '@/vue/components/panel-compact.vue'
-import Platform from '@/lib/utility/platform.js'
+import Vue from '@vue-runtime'
+import Module from '@comp-src/vue/vuex-modules/module.js'
+import LargePanel from '@comp-src/vue/components/panel-large.vue'
+import CompactPanel from '@comp-src/vue/components/panel-compact.vue'
+import Platform from '@comp-src/lib/utility/platform.js'
 
 // TODO: Add a check for required modules
 export default class PanelModule extends Module {

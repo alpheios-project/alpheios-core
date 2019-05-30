@@ -140,6 +140,7 @@
     "**/support"
   ],
   "dependencies": {
+    "mini-css-extract-plugin": "^0.7.0",
     "vue-loader": "^15.7.0",
     "vue-style-loader": "^4.1.2",
     "vue-svg-loader": "^0.12.0",

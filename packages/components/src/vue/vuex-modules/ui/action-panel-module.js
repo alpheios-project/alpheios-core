@@ -1,7 +1,7 @@
-import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
-import Module from '@/vue/vuex-modules/module.js'
-import ActionPanel from '@/vue/components/nav/action-panel.vue'
-import Platform from '@/lib/utility/platform.js'
+import Vue from '@vue-runtime'
+import Module from '@comp-src/vue/vuex-modules/module.js'
+import ActionPanel from '@comp-src/vue/components/nav/action-panel.vue'
+import Platform from '@comp-src/lib/utility/platform.js'
 
 export default class ActionPanelModule extends Module {
   constructor (store, api, config) {

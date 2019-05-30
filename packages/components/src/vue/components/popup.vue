@@ -122,17 +122,17 @@
 import Morph from './morph.vue'
 import NotificationArea from './notification-area.vue'
 import interact from 'interactjs'
-import Logger from '@/lib/log/logger'
+import Logger from '@comp-src/lib/log/logger'
 
 import Tooltip from './tooltip.vue'
 import ProgressBar from './progress-bar.vue'
 // Embeddable SVG icons
-import LogoIcon from '@/images/alpheios/logo.svg'
-import CloseIcon from '@/images/inline-icons/x-close.svg'
+import LogoIcon from '@comp-src/images/alpheios/logo.svg'
+import CloseIcon from '@comp-src/images/inline-icons/x-close.svg'
 
 import { directive as onClickaway } from '../directives/clickaway.js'
 // Modules support
-import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+import DependencyCheck from '@comp-src/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'Popup',

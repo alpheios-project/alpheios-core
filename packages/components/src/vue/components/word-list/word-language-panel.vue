@@ -65,14 +65,12 @@
     </div>
 </template>
 <script>
-import Tooltip from '@/vue/components/tooltip.vue'
-import { Constants } from 'alpheios-data-models'
-import CheckIcon from '@/images/inline-icons/check.svg'
-import DeleteIcon from '@/images/inline-icons/delete.svg'
-import CloseIcon from '@/images/inline-icons/x-close.svg'
-import WordItemPanel from '@/vue/components/word-list/word-item-panel.vue'
-import WordFilterPanel from '@/vue/components/word-list/word-filter-panel.vue'
-import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
+import Tooltip from '@comp-src/vue/components/tooltip.vue'
+import CheckIcon from '@comp-src/images/inline-icons/check.svg'
+import DeleteIcon from '@comp-src/images/inline-icons/delete.svg'
+import CloseIcon from '@comp-src/images/inline-icons/x-close.svg'
+import WordItemPanel from '@comp-src/vue/components/word-list/word-item-panel.vue'
+import WordFilterPanel from '@comp-src/vue/components/word-list/word-filter-panel.vue'
 
 export default {
   name: 'WordLanguagePanel',

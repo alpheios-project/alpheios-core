@@ -1,8 +1,8 @@
-import Vue from 'vue/dist/vue' // Vue in a runtime + compiler configuration
-import Module from '@/vue/vuex-modules/module.js'
-import ToolbarCompact from '@/vue/components/nav/toolbar-compact.vue'
-import ToolbarLarge from '@/vue/components/nav/toolbar-large.vue'
-import Platform from '@/lib/utility/platform.js'
+import Vue from '@vue-runtime'
+import Module from '@comp-src/vue/vuex-modules/module.js'
+import ToolbarCompact from '@comp-src/vue/components/nav/toolbar-compact.vue'
+import ToolbarLarge from '@comp-src/vue/components/nav/toolbar-large.vue'
+import Platform from '@comp-src/lib/utility/platform.js'
 
 export default class ToolbarModule extends Module {
   constructor (store, api, config) {

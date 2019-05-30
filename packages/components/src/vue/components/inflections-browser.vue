@@ -489,13 +489,12 @@
 <script>
 import { Constants } from 'alpheios-data-models'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
-import Comparable from '@/lib/utility/comparable.js'
+import Comparable from '@comp-src/lib/utility/comparable.js'
 
 import WideTable from './inflections-table-wide.vue'
-import Vue from 'vue/dist/vue'
 
 // Modules support
-import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+import DependencyCheck from '@comp-src/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'InflectionStandardForms',

@@ -48,12 +48,12 @@
 </template>
 <script>
 // Embeddable SVG icons
-import CloseIcon from '@/images/inline-icons/x-close.svg'
+import CloseIcon from '@comp-src/images/inline-icons/x-close.svg'
 // UI modules
-import Setting from '@/vue/components/setting.vue'
-import Login from '@/vue/components/login.vue'
+import Setting from '@comp-src/vue/components/setting.vue'
+import Login from '@comp-src/vue/components/login.vue'
 // Modules support
-import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+import DependencyCheck from '@comp-src/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'NotificationArea',

@@ -142,23 +142,23 @@
   </div>
 </template>
 <script>
-import Tooltip from '@/vue/components/tooltip.vue'
-import ProgressBar from '@/vue/components/progress-bar.vue'
+import Tooltip from '@comp-src/vue/components/tooltip.vue'
+import ProgressBar from '@comp-src/vue/components/progress-bar.vue'
 // Embeddable SVG icons
-import DefinitionsIcon from '@/images/inline-icons/definitions.svg'
-import InflectionsIcon from '@/images/inline-icons/inflections.svg'
-import InflectionsBrowserIcon from '@/images/inline-icons/inflections-browser.svg'
-import TreebankIcon from '@/images/inline-icons/sitemap.svg'
-import UserIcon from '@/images/inline-icons/user.svg'
-import OptionsIcon from '@/images/inline-icons/options.svg'
-import GrammarIcon from '@/images/inline-icons/resources.svg'
-import UsageExamplesIcon from '@/images/inline-icons/usage-examples-icon1.svg'
-import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
-import CloseIcon from '@/images/inline-icons/x-close.svg'
+import DefinitionsIcon from '@comp-src/images/inline-icons/definitions.svg'
+import InflectionsIcon from '@comp-src/images/inline-icons/inflections.svg'
+import InflectionsBrowserIcon from '@comp-src/images/inline-icons/inflections-browser.svg'
+import TreebankIcon from '@comp-src/images/inline-icons/sitemap.svg'
+import UserIcon from '@comp-src/images/inline-icons/user.svg'
+import OptionsIcon from '@comp-src/images/inline-icons/options.svg'
+import GrammarIcon from '@comp-src/images/inline-icons/resources.svg'
+import UsageExamplesIcon from '@comp-src/images/inline-icons/usage-examples-icon1.svg'
+import WordlistIcon from '@comp-src/images/inline-icons/wordlist-icon.svg'
+import CloseIcon from '@comp-src/images/inline-icons/x-close.svg'
 // Vue components
-import Lookup from '@/vue/components/lookup.vue'
+import Lookup from '@comp-src/vue/components/lookup.vue'
 // Modules support
-import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+import DependencyCheck from '@comp-src/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'ActionPanelMenu',

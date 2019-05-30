@@ -88,19 +88,19 @@
 </template>
 <script>
 // Vue components
-import NavbuttonsCompact from '@/vue/components/nav/navbuttons-compact.vue'
+import NavbuttonsCompact from '@comp-src/vue/components/nav/navbuttons-compact.vue'
 // Embeddable SVG icons
-import InflectionsBrowserIcon from '@/images/inline-icons/inflections-browser.svg'
-import StatusIcon from '@/images/inline-icons/status.svg'
-import UserIcon from '@/images/inline-icons/user.svg'
-import OptionsIcon from '@/images/inline-icons/options.svg'
-import GrammarIcon from '@/images/inline-icons/resources.svg'
-import TreebankIcon from '@/images/inline-icons/sitemap.svg'
-import InfoIcon from '@/images/inline-icons/info.svg'
-import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
-import WordUsageIcon from '@/images/inline-icons/usage-examples-icon1.svg'
+import InflectionsBrowserIcon from '@comp-src/images/inline-icons/inflections-browser.svg'
+import StatusIcon from '@comp-src/images/inline-icons/status.svg'
+import UserIcon from '@comp-src/images/inline-icons/user.svg'
+import OptionsIcon from '@comp-src/images/inline-icons/options.svg'
+import GrammarIcon from '@comp-src/images/inline-icons/resources.svg'
+import TreebankIcon from '@comp-src/images/inline-icons/sitemap.svg'
+import InfoIcon from '@comp-src/images/inline-icons/info.svg'
+import WordlistIcon from '@comp-src/images/inline-icons/wordlist-icon.svg'
+import WordUsageIcon from '@comp-src/images/inline-icons/usage-examples-icon1.svg'
 // Modules support
-import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+import DependencyCheck from '@comp-src/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'NavbuttonsLarge',

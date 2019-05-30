@@ -154,24 +154,24 @@
 <script>
 import interact from 'interactjs'
 
-import Tooltip from '@/vue/components/tooltip.vue'
+import Tooltip from '@comp-src/vue/components/tooltip.vue'
 // Embeddable SVG icons
-import InflectionsBrowserIcon from '@/images/inline-icons/inflections-browser.svg'
-import StatusIcon from '@/images/inline-icons/status.svg'
-import UserIcon from '@/images/inline-icons/user.svg'
-import OptionsIcon from '@/images/inline-icons/options.svg'
-import GrammarIcon from '@/images/inline-icons/resources.svg'
-import InfoIcon from '@/images/inline-icons/info.svg'
-import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
-import CollapsedIcon from '@/images/inline-icons/collapsed.svg'
-import ExpandedIcon from '@/images/inline-icons/expanded.svg'
-import ReadingToolsIcon from '@/images/inline-icons/reading-tools.svg'
-import LookupIcon from '@/images/inline-icons/lookup.svg'
+import InflectionsBrowserIcon from '@comp-src/images/inline-icons/inflections-browser.svg'
+import StatusIcon from '@comp-src/images/inline-icons/status.svg'
+import UserIcon from '@comp-src/images/inline-icons/user.svg'
+import OptionsIcon from '@comp-src/images/inline-icons/options.svg'
+import GrammarIcon from '@comp-src/images/inline-icons/resources.svg'
+import InfoIcon from '@comp-src/images/inline-icons/info.svg'
+import WordlistIcon from '@comp-src/images/inline-icons/wordlist-icon.svg'
+import CollapsedIcon from '@comp-src/images/inline-icons/collapsed.svg'
+import ExpandedIcon from '@comp-src/images/inline-icons/expanded.svg'
+import ReadingToolsIcon from '@comp-src/images/inline-icons/reading-tools.svg'
+import LookupIcon from '@comp-src/images/inline-icons/lookup.svg'
 // Vue components
-import ToolbarCompact from '@/vue/components/nav/toolbar-compact.vue'
-import Lookup from '@/vue/components/lookup.vue'
+import ToolbarCompact from '@comp-src/vue/components/nav/toolbar-compact.vue'
+import Lookup from '@comp-src/vue/components/lookup.vue'
 // Modules support
-import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+import DependencyCheck from '@comp-src/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'Toolbar',

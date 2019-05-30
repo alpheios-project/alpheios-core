@@ -1,5 +1,5 @@
-import Module from '@/vue/vuex-modules/module.js'
-import Platform from '@/lib/utility/platform.js'
+import Module from '@comp-src/vue/vuex-modules/module.js'
+import Platform from '@comp-src/lib/utility/platform.js'
 
 export default class AuthModule extends Module {
   /**
