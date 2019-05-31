@@ -2452,12 +2452,14 @@ h3.alpheios-inflections__credits-title {
   padding-top: 10px;
   padding-bottom: 5px;
 }
-.alpheios-word-usage a.alpheios-word-usage__examples-source-link-compact {
+.alpheios-word-usage__examples-source-link-compact-cont {
   grid-column: 1/4;
-  color: var(--alpheios-link-color-on-light);
   padding-top: 5px;
   padding-bottom: 10px;
   border-bottom: 1px solid var(--alpheios-border-color);
+}
+.alpheios-word-usage a.alpheios-word-usage__examples-source-link-compact-text {
+  color: var(--alpheios-link-color-on-light);
 }
 .alpheios-word-usage__examples-pre {
   grid-column: 1;

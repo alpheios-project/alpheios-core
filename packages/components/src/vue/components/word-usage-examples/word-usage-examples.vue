@@ -11,7 +11,7 @@
         @getMoreResults = "getMoreResults"
         @getAllResults = "getAllResults"
       ></word-usage-examples-filters>
-      <word-usage-examples-sorting 
+      <word-usage-examples-sorting
         @changedSortBy = "changedSortBy"
         :collapsedHeader = "collapsedHeader"
       ></word-usage-examples-sorting>
@@ -22,6 +22,7 @@
         <div
             class="alpheios-word-usage__examples-show-sources-btn alpheios-button-primary"
             @click="changeShowDataSource"
+            data-alpheios-ignore="all"
         >
           {{ l10n.getText('WORDUSAGE_SHOW_SOURCE_LINKS') }}
         </div>
@@ -54,15 +55,19 @@
             >
               {{ wordUsageItem.suffix }}
             </div>
-            <a
-                class="alpheios-word-usage__examples-source-link-compact"
-                :href="wordUsageItem.source"
-                target="_blank"
+            <div
+                class="alpheios-word-usage__examples-source-link-compact-cont"
                 v-show="showDataSource"
                 data-alpheios-ignore="all"
             >
-              {{ `${wordUsageItem.cit} ${wordUsageItem.fullCit()}` }}
-            </a>
+              <a
+                  class="alpheios-word-usage__examples-source-link-compact-text"
+                 :href="wordUsageItem.source"
+                 target="_blank"
+              >
+                {{ `${wordUsageItem.cit} ${wordUsageItem.fullCit()}` }}
+              </a>
+            </div>
           </template>
         </div>
       </template>
@@ -114,7 +119,7 @@ export default {
     },
     showHeader () {
       return Boolean(this.selectedAuthor) ||
-             this.showWordUsageExampleItems && this.wordUsageListSorted.length > 0  ||
+             this.showWordUsageExampleItems && this.wordUsageListSorted.length > 0 ||
              !this.$store.state.app.wordUsageExamplesReady
     },
     showWordUsageExampleItems () {
@@ -123,7 +128,7 @@ export default {
       }
       return this.$store.state.app.wordUsageExamplesReady
     },
-    wordUsageExamples () {     
+    wordUsageExamples () {
       if (!this.$store.state.app.wordUsageExamplesReady) {
         return []
       }
@@ -299,12 +304,15 @@ export default {
       padding-bottom: 5px;
     }
 
-    a#{&}__examples-source-link-compact {
+    &__examples-source-link-compact-cont {
       grid-column: 1/4;
-      color: var(--alpheios-link-color-on-light);
       padding-top: 5px;
       padding-bottom: 10px;
       border-bottom: 1px solid var(--alpheios-border-color);
+    }
+
+    a#{&}__examples-source-link-compact-text {
+      color: var(--alpheios-link-color-on-light);
     }
 
     &__examples-pre {
@@ -357,7 +365,6 @@ export default {
     }
   }
 
-
   .alpheios-layout-compact {
     .alpheios-word-usage-header-select-type-filters-block
     .alpheios-word-usage-header-select-type-filter {
@@ -387,6 +394,5 @@ export default {
       margin: 20px 0;
     }
   }
-
 
 </style>
