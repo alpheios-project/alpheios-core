@@ -93,6 +93,8 @@ export default class UIController {
     this.isDeactivated = false
     this.userDataManager = null
 
+    console.info('UI controller')
+
     /**
      * Information about the platform an app is running upon.
      * @type {Platform} - A an object containing data about the platform.

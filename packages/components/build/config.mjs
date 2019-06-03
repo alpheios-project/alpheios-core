@@ -30,9 +30,7 @@ const webpack = {
       'alpheios-inflection-tables': 'alpheios-inflection-tables',
       'alpheios-experience': 'alpheios-experience',
       'alpheios-res-client': 'alpheios-res-client',
-      'intl-messageformat': 'intl-messageformat',
-      '@vue-runtime': 'Vue',
-      uuid: 'uuid'
+      'intl-messageformat': 'intl-messageformat'
     },
     plugins: [
       new VueLoaderPlugin()
