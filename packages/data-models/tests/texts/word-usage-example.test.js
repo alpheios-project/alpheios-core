@@ -103,7 +103,7 @@ describe('word-usage-example.test.js', () => {
     let wordUsageExample = new WordUsageExample('usque', 'lat')
     wordUsageExample.prefix = '. fooprefix part2'
 
-    expect(wordUsageExample.prefixForSort).toEqual('FOOPREFIXPART2')
+    expect(wordUsageExample.prefixForSort).toEqual('PART2')
   })
 
   it('7 WordUsageExample - suffixForSort returns normalized prefix without punctuation', () => {

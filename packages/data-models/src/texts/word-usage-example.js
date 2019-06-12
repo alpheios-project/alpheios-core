@@ -71,7 +71,8 @@ export default class WordUsageExample extends TextQuoteSelector {
 
   get prefixForSort () {
     let model = LanguageModelFactory.getLanguageModelFromCode(this.languageCode)
-    return this.prefix.replace(new RegExp('[' + model.getPunctuation() + ' ]', 'g'), '').toUpperCase()
+    let clearPrefix = this.prefix.replace(new RegExp('[' + model.getPunctuation() + ' ]', 'g'), ' ').toUpperCase().split(' ').filter(item => item.length > 0)
+    return clearPrefix[clearPrefix.length - 1]
   }
 
   get suffixForSort () {
