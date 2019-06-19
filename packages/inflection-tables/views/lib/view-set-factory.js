@@ -32,7 +32,19 @@ export default class ViewSetFactory {
     }
   }
 
-  static getStandardForm (languageID, options) {
-    return this.getConstructor(languageID).getStandardForm(options)
+  /**
+   * Returns a created and initialized instance of a standard form view
+   * @param standardFormData
+   * @param {Object} standardFormData - A data object for the standard form view
+   * @param {symbol} standardFormData.langID - A language ID
+   * @param {String} standardFormData.viewID - A view ID
+   * @param {String} [standardFormData.title] - A view title (optional)
+   * @param {String} [standardFormData.form] - A word form (optional)
+   * @param {String} [standardFormData.suffix] - A word suffix (optional)
+   * @param {String} [standardFormData.paradigmID] - A paradigm ID (for Greek paradigms only)
+   * @return {View} An initialized view
+   */
+  static getStandardForm (standardFormData) {
+    return this.getConstructor(standardFormData.langID).getStandardForm(standardFormData)
   }
 }
