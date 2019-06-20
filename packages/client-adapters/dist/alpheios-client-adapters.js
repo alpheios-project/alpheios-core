@@ -123,7 +123,6 @@ var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "../node_modules
 var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "../node_modules/axios/lib/helpers/parseHeaders.js");
 var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "../node_modules/axios/lib/helpers/isURLSameOrigin.js");
 var createError = __webpack_require__(/*! ../core/createError */ "../node_modules/axios/lib/core/createError.js");
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ "../node_modules/axios/lib/helpers/btoa.js");
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -135,22 +134,6 @@ module.exports = function xhrAdapter(config) {
     }
 
     var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if ( true &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
 
     // HTTP basic authentication
     if (config.auth) {
@@ -165,8 +148,8 @@ module.exports = function xhrAdapter(config) {
     request.timeout = config.timeout;
 
     // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
+    request.onreadystatechange = function handleLoad() {
+      if (!request || request.readyState !== 4) {
         return;
       }
 
@@ -183,15 +166,26 @@ module.exports = function xhrAdapter(config) {
       var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
       var response = {
         data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        status: request.status,
+        statusText: request.statusText,
         headers: responseHeaders,
         config: config,
         request: request
       };
 
       settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle browser request cancellation (as opposed to a manual cancellation)
+    request.onabort = function handleAbort() {
+      if (!request) {
+        return;
+      }
+
+      reject(createError('Request aborted', config, 'ECONNABORTED', request));
 
       // Clean up request
       request = null;
@@ -224,8 +218,8 @@ module.exports = function xhrAdapter(config) {
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
-          cookies.read(config.xsrfCookieName) :
-          undefined;
+        cookies.read(config.xsrfCookieName) :
+        undefined;
 
       if (xsrfValue) {
         requestHeaders[config.xsrfHeaderName] = xsrfValue;
@@ -312,6 +306,7 @@ module.exports = function xhrAdapter(config) {
 var utils = __webpack_require__(/*! ./utils */ "../node_modules/axios/lib/utils.js");
 var bind = __webpack_require__(/*! ./helpers/bind */ "../node_modules/axios/lib/helpers/bind.js");
 var Axios = __webpack_require__(/*! ./core/Axios */ "../node_modules/axios/lib/core/Axios.js");
+var mergeConfig = __webpack_require__(/*! ./core/mergeConfig */ "../node_modules/axios/lib/core/mergeConfig.js");
 var defaults = __webpack_require__(/*! ./defaults */ "../node_modules/axios/lib/defaults.js");
 
 /**
@@ -341,7 +336,7 @@ axios.Axios = Axios;
 
 // Factory for creating new instances
 axios.create = function create(instanceConfig) {
-  return createInstance(utils.merge(defaults, instanceConfig));
+  return createInstance(mergeConfig(axios.defaults, instanceConfig));
 };
 
 // Expose Cancel & CancelToken
@@ -490,10 +485,11 @@ module.exports = function isCancel(value) {
 "use strict";
 
 
-var defaults = __webpack_require__(/*! ./../defaults */ "../node_modules/axios/lib/defaults.js");
 var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+var buildURL = __webpack_require__(/*! ../helpers/buildURL */ "../node_modules/axios/lib/helpers/buildURL.js");
 var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ "../node_modules/axios/lib/core/InterceptorManager.js");
 var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ "../node_modules/axios/lib/core/dispatchRequest.js");
+var mergeConfig = __webpack_require__(/*! ./mergeConfig */ "../node_modules/axios/lib/core/mergeConfig.js");
 
 /**
  * Create a new instance of Axios
@@ -517,13 +513,14 @@ Axios.prototype.request = function request(config) {
   /*eslint no-param-reassign:0*/
   // Allow for axios('example/url'[, config]) a la fetch API
   if (typeof config === 'string') {
-    config = utils.merge({
-      url: arguments[0]
-    }, arguments[1]);
+    config = arguments[1] || {};
+    config.url = arguments[0];
+  } else {
+    config = config || {};
   }
 
-  config = utils.merge(defaults, {method: 'get'}, this.defaults, config);
-  config.method = config.method.toLowerCase();
+  config = mergeConfig(this.defaults, config);
+  config.method = config.method ? config.method.toLowerCase() : 'get';
 
   // Hook up interceptors middleware
   var chain = [dispatchRequest, undefined];
@@ -542,6 +539,11 @@ Axios.prototype.request = function request(config) {
   }
 
   return promise;
+};
+
+Axios.prototype.getUri = function getUri(config) {
+  config = mergeConfig(this.defaults, config);
+  return buildURL(config.url, config.params, config.paramsSerializer).replace(/^\?/, '');
 };
 
 // Provide aliases for supported request methods
@@ -788,9 +790,93 @@ module.exports = function enhanceError(error, config, code, request, response) {
   if (code) {
     error.code = code;
   }
+
   error.request = request;
   error.response = response;
+  error.isAxiosError = true;
+
+  error.toJSON = function() {
+    return {
+      // Standard
+      message: this.message,
+      name: this.name,
+      // Microsoft
+      description: this.description,
+      number: this.number,
+      // Mozilla
+      fileName: this.fileName,
+      lineNumber: this.lineNumber,
+      columnNumber: this.columnNumber,
+      stack: this.stack,
+      // Axios
+      config: this.config,
+      code: this.code
+    };
+  };
   return error;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/core/mergeConfig.js":
+/*!*****************************************************!*\
+  !*** ../node_modules/axios/lib/core/mergeConfig.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ../utils */ "../node_modules/axios/lib/utils.js");
+
+/**
+ * Config-specific merge-function which creates a new config-object
+ * by merging two configuration objects together.
+ *
+ * @param {Object} config1
+ * @param {Object} config2
+ * @returns {Object} New object resulting from merging config2 to config1
+ */
+module.exports = function mergeConfig(config1, config2) {
+  // eslint-disable-next-line no-param-reassign
+  config2 = config2 || {};
+  var config = {};
+
+  utils.forEach(['url', 'method', 'params', 'data'], function valueFromConfig2(prop) {
+    if (typeof config2[prop] !== 'undefined') {
+      config[prop] = config2[prop];
+    }
+  });
+
+  utils.forEach(['headers', 'auth', 'proxy'], function mergeDeepProperties(prop) {
+    if (utils.isObject(config2[prop])) {
+      config[prop] = utils.deepMerge(config1[prop], config2[prop]);
+    } else if (typeof config2[prop] !== 'undefined') {
+      config[prop] = config2[prop];
+    } else if (utils.isObject(config1[prop])) {
+      config[prop] = utils.deepMerge(config1[prop]);
+    } else if (typeof config1[prop] !== 'undefined') {
+      config[prop] = config1[prop];
+    }
+  });
+
+  utils.forEach([
+    'baseURL', 'transformRequest', 'transformResponse', 'paramsSerializer',
+    'timeout', 'withCredentials', 'adapter', 'responseType', 'xsrfCookieName',
+    'xsrfHeaderName', 'onUploadProgress', 'onDownloadProgress', 'maxContentLength',
+    'validateStatus', 'maxRedirects', 'httpAgent', 'httpsAgent', 'cancelToken',
+    'socketPath'
+  ], function defaultToConfig2(prop) {
+    if (typeof config2[prop] !== 'undefined') {
+      config[prop] = config2[prop];
+    } else if (typeof config1[prop] !== 'undefined') {
+      config[prop] = config1[prop];
+    }
+  });
+
+  return config;
 };
 
 
@@ -817,8 +903,7 @@ var createError = __webpack_require__(/*! ./createError */ "../node_modules/axio
  */
 module.exports = function settle(resolve, reject, response) {
   var validateStatus = response.config.validateStatus;
-  // Note: status is not exposed by XDomainRequest
-  if (!response.status || !validateStatus || validateStatus(response.status)) {
+  if (!validateStatus || validateStatus(response.status)) {
     resolve(response);
   } else {
     reject(createError(
@@ -891,12 +976,13 @@ function setContentTypeIfUnset(headers, value) {
 
 function getDefaultAdapter() {
   var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(/*! ./adapters/xhr */ "../node_modules/axios/lib/adapters/xhr.js");
-  } else if (typeof process !== 'undefined') {
+  // Only Node.JS has a process variable that is of [[Class]] process
+  if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
     // For node use HTTP adapter
     adapter = __webpack_require__(/*! ./adapters/http */ "../node_modules/axios/lib/adapters/xhr.js");
+  } else if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(/*! ./adapters/xhr */ "../node_modules/axios/lib/adapters/xhr.js");
   }
   return adapter;
 }
@@ -905,6 +991,7 @@ var defaults = {
   adapter: getDefaultAdapter(),
 
   transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Accept');
     normalizeHeaderName(headers, 'Content-Type');
     if (utils.isFormData(data) ||
       utils.isArrayBuffer(data) ||
@@ -998,54 +1085,6 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/helpers/btoa.js":
-/*!*************************************************!*\
-  !*** ../node_modules/axios/lib/helpers/btoa.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
-
-var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-
-function E() {
-  this.message = 'String contains an invalid character';
-}
-E.prototype = new Error;
-E.prototype.code = 5;
-E.prototype.name = 'InvalidCharacterError';
-
-function btoa(input) {
-  var str = String(input);
-  var output = '';
-  for (
-    // initialize result and counter
-    var block, charCode, idx = 0, map = chars;
-    // if the next str index does not exist:
-    //   change the mapping table to "="
-    //   check if d has no fractional digits
-    str.charAt(idx | 0) || (map = '=', idx % 1);
-    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
-    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
-  ) {
-    charCode = str.charCodeAt(idx += 3 / 4);
-    if (charCode > 0xFF) {
-      throw new E();
-    }
-    block = block << 8 | charCode;
-  }
-  return output;
-}
-
-module.exports = btoa;
-
-
-/***/ }),
-
 /***/ "../node_modules/axios/lib/helpers/buildURL.js":
 /*!*****************************************************!*\
   !*** ../node_modules/axios/lib/helpers/buildURL.js ***!
@@ -1115,6 +1154,11 @@ module.exports = function buildURL(url, params, paramsSerializer) {
   }
 
   if (serializedParams) {
+    var hashmarkIndex = url.indexOf('#');
+    if (hashmarkIndex !== -1) {
+      url = url.slice(0, hashmarkIndex);
+    }
+
     url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
   }
 
@@ -1166,50 +1210,50 @@ module.exports = (
   utils.isStandardBrowserEnv() ?
 
   // Standard browser envs support document.cookie
-  (function standardBrowserEnv() {
-    return {
-      write: function write(name, value, expires, path, domain, secure) {
-        var cookie = [];
-        cookie.push(name + '=' + encodeURIComponent(value));
+    (function standardBrowserEnv() {
+      return {
+        write: function write(name, value, expires, path, domain, secure) {
+          var cookie = [];
+          cookie.push(name + '=' + encodeURIComponent(value));
 
-        if (utils.isNumber(expires)) {
-          cookie.push('expires=' + new Date(expires).toGMTString());
+          if (utils.isNumber(expires)) {
+            cookie.push('expires=' + new Date(expires).toGMTString());
+          }
+
+          if (utils.isString(path)) {
+            cookie.push('path=' + path);
+          }
+
+          if (utils.isString(domain)) {
+            cookie.push('domain=' + domain);
+          }
+
+          if (secure === true) {
+            cookie.push('secure');
+          }
+
+          document.cookie = cookie.join('; ');
+        },
+
+        read: function read(name) {
+          var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+          return (match ? decodeURIComponent(match[3]) : null);
+        },
+
+        remove: function remove(name) {
+          this.write(name, '', Date.now() - 86400000);
         }
-
-        if (utils.isString(path)) {
-          cookie.push('path=' + path);
-        }
-
-        if (utils.isString(domain)) {
-          cookie.push('domain=' + domain);
-        }
-
-        if (secure === true) {
-          cookie.push('secure');
-        }
-
-        document.cookie = cookie.join('; ');
-      },
-
-      read: function read(name) {
-        var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
-        return (match ? decodeURIComponent(match[3]) : null);
-      },
-
-      remove: function remove(name) {
-        this.write(name, '', Date.now() - 86400000);
-      }
-    };
-  })() :
+      };
+    })() :
 
   // Non standard browser env (web workers, react-native) lack needed support.
-  (function nonStandardBrowserEnv() {
-    return {
-      write: function write() {},
-      read: function read() { return null; },
-      remove: function remove() {}
-    };
-  })()
+    (function nonStandardBrowserEnv() {
+      return {
+        write: function write() {},
+        read: function read() { return null; },
+        remove: function remove() {}
+      };
+    })()
 );
 
 
@@ -1258,64 +1302,64 @@ module.exports = (
 
   // Standard browser envs have full support of the APIs needed to test
   // whether the request URL is of the same origin as current location.
-  (function standardBrowserEnv() {
-    var msie = /(msie|trident)/i.test(navigator.userAgent);
-    var urlParsingNode = document.createElement('a');
-    var originURL;
+    (function standardBrowserEnv() {
+      var msie = /(msie|trident)/i.test(navigator.userAgent);
+      var urlParsingNode = document.createElement('a');
+      var originURL;
 
-    /**
+      /**
     * Parse a URL to discover it's components
     *
     * @param {String} url The URL to be parsed
     * @returns {Object}
     */
-    function resolveURL(url) {
-      var href = url;
+      function resolveURL(url) {
+        var href = url;
 
-      if (msie) {
+        if (msie) {
         // IE needs attribute set twice to normalize properties
+          urlParsingNode.setAttribute('href', href);
+          href = urlParsingNode.href;
+        }
+
         urlParsingNode.setAttribute('href', href);
-        href = urlParsingNode.href;
+
+        // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
+        return {
+          href: urlParsingNode.href,
+          protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+          host: urlParsingNode.host,
+          search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+          hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+          hostname: urlParsingNode.hostname,
+          port: urlParsingNode.port,
+          pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
+            urlParsingNode.pathname :
+            '/' + urlParsingNode.pathname
+        };
       }
 
-      urlParsingNode.setAttribute('href', href);
+      originURL = resolveURL(window.location.href);
 
-      // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
-      return {
-        href: urlParsingNode.href,
-        protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
-        host: urlParsingNode.host,
-        search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
-        hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
-        hostname: urlParsingNode.hostname,
-        port: urlParsingNode.port,
-        pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
-                  urlParsingNode.pathname :
-                  '/' + urlParsingNode.pathname
-      };
-    }
-
-    originURL = resolveURL(window.location.href);
-
-    /**
+      /**
     * Determine if a URL shares the same origin as the current location
     *
     * @param {String} requestURL The URL to test
     * @returns {boolean} True if URL shares the same origin, otherwise false
     */
-    return function isURLSameOrigin(requestURL) {
-      var parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
-      return (parsed.protocol === originURL.protocol &&
+      return function isURLSameOrigin(requestURL) {
+        var parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
+        return (parsed.protocol === originURL.protocol &&
             parsed.host === originURL.host);
-    };
-  })() :
+      };
+    })() :
 
   // Non standard browser envs (web workers, react-native) lack needed support.
-  (function nonStandardBrowserEnv() {
-    return function isURLSameOrigin() {
-      return true;
-    };
-  })()
+    (function nonStandardBrowserEnv() {
+      return function isURLSameOrigin() {
+        return true;
+      };
+    })()
 );
 
 
@@ -1460,7 +1504,7 @@ module.exports = function spread(callback) {
 
 
 var bind = __webpack_require__(/*! ./helpers/bind */ "../node_modules/axios/lib/helpers/bind.js");
-var isBuffer = __webpack_require__(/*! is-buffer */ "../node_modules/is-buffer/index.js");
+var isBuffer = __webpack_require__(/*! is-buffer */ "../node_modules/axios/node_modules/is-buffer/index.js");
 
 /*global toString:true*/
 
@@ -1636,9 +1680,13 @@ function trim(str) {
  *
  * react-native:
  *  navigator.product -> 'ReactNative'
+ * nativescript
+ *  navigator.product -> 'NativeScript' or 'NS'
  */
 function isStandardBrowserEnv() {
-  if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
+  if (typeof navigator !== 'undefined' && (navigator.product === 'ReactNative' ||
+                                           navigator.product === 'NativeScript' ||
+                                           navigator.product === 'NS')) {
     return false;
   }
   return (
@@ -1720,6 +1768,32 @@ function merge(/* obj1, obj2, obj3, ... */) {
 }
 
 /**
+ * Function equal to merge with the difference being that no reference
+ * to original objects is kept.
+ *
+ * @see merge
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+function deepMerge(/* obj1, obj2, obj3, ... */) {
+  var result = {};
+  function assignValue(val, key) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
+      result[key] = deepMerge(result[key], val);
+    } else if (typeof val === 'object') {
+      result[key] = deepMerge({}, val);
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+/**
  * Extends object a by mutably adding to it the properties of object b.
  *
  * @param {Object} a The object to be extended
@@ -1757,9 +1831,32 @@ module.exports = {
   isStandardBrowserEnv: isStandardBrowserEnv,
   forEach: forEach,
   merge: merge,
+  deepMerge: deepMerge,
   extend: extend,
   trim: trim
 };
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/node_modules/is-buffer/index.js":
+/*!*************************************************************!*\
+  !*** ../node_modules/axios/node_modules/is-buffer/index.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+module.exports = function isBuffer (obj) {
+  return obj != null && obj.constructor != null &&
+    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
 
 
 /***/ }),
@@ -1927,1808 +2024,6 @@ function fromByteArray (uint8) {
 
 /***/ }),
 
-/***/ "../node_modules/buffer/index.js":
-/*!***************************************!*\
-  !*** ../node_modules/buffer/index.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {/*!
- * The buffer module from node.js, for the browser.
- *
- * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
- * @license  MIT
- */
-/* eslint-disable no-proto */
-
-
-
-var base64 = __webpack_require__(/*! base64-js */ "../node_modules/base64-js/index.js")
-var ieee754 = __webpack_require__(/*! ieee754 */ "../node_modules/ieee754/index.js")
-var isArray = __webpack_require__(/*! isarray */ "../node_modules/isarray/index.js")
-
-exports.Buffer = Buffer
-exports.SlowBuffer = SlowBuffer
-exports.INSPECT_MAX_BYTES = 50
-
-/**
- * If `Buffer.TYPED_ARRAY_SUPPORT`:
- *   === true    Use Uint8Array implementation (fastest)
- *   === false   Use Object implementation (most compatible, even IE6)
- *
- * Browsers that support typed arrays are IE 10+, Firefox 4+, Chrome 7+, Safari 5.1+,
- * Opera 11.6+, iOS 4.2+.
- *
- * Due to various browser bugs, sometimes the Object implementation will be used even
- * when the browser supports typed arrays.
- *
- * Note:
- *
- *   - Firefox 4-29 lacks support for adding new properties to `Uint8Array` instances,
- *     See: https://bugzilla.mozilla.org/show_bug.cgi?id=695438.
- *
- *   - Chrome 9-10 is missing the `TypedArray.prototype.subarray` function.
- *
- *   - IE10 has a broken `TypedArray.prototype.subarray` function which returns arrays of
- *     incorrect length in some situations.
-
- * We detect these buggy browsers and set `Buffer.TYPED_ARRAY_SUPPORT` to `false` so they
- * get the Object implementation, which is slower but behaves correctly.
- */
-Buffer.TYPED_ARRAY_SUPPORT = global.TYPED_ARRAY_SUPPORT !== undefined
-  ? global.TYPED_ARRAY_SUPPORT
-  : typedArraySupport()
-
-/*
- * Export kMaxLength after typed array support is determined.
- */
-exports.kMaxLength = kMaxLength()
-
-function typedArraySupport () {
-  try {
-    var arr = new Uint8Array(1)
-    arr.__proto__ = {__proto__: Uint8Array.prototype, foo: function () { return 42 }}
-    return arr.foo() === 42 && // typed array instances can be augmented
-        typeof arr.subarray === 'function' && // chrome 9-10 lack `subarray`
-        arr.subarray(1, 1).byteLength === 0 // ie10 has broken `subarray`
-  } catch (e) {
-    return false
-  }
-}
-
-function kMaxLength () {
-  return Buffer.TYPED_ARRAY_SUPPORT
-    ? 0x7fffffff
-    : 0x3fffffff
-}
-
-function createBuffer (that, length) {
-  if (kMaxLength() < length) {
-    throw new RangeError('Invalid typed array length')
-  }
-  if (Buffer.TYPED_ARRAY_SUPPORT) {
-    // Return an augmented `Uint8Array` instance, for best performance
-    that = new Uint8Array(length)
-    that.__proto__ = Buffer.prototype
-  } else {
-    // Fallback: Return an object instance of the Buffer class
-    if (that === null) {
-      that = new Buffer(length)
-    }
-    that.length = length
-  }
-
-  return that
-}
-
-/**
- * The Buffer constructor returns instances of `Uint8Array` that have their
- * prototype changed to `Buffer.prototype`. Furthermore, `Buffer` is a subclass of
- * `Uint8Array`, so the returned instances will have all the node `Buffer` methods
- * and the `Uint8Array` methods. Square bracket notation works as expected -- it
- * returns a single octet.
- *
- * The `Uint8Array` prototype remains unmodified.
- */
-
-function Buffer (arg, encodingOrOffset, length) {
-  if (!Buffer.TYPED_ARRAY_SUPPORT && !(this instanceof Buffer)) {
-    return new Buffer(arg, encodingOrOffset, length)
-  }
-
-  // Common case.
-  if (typeof arg === 'number') {
-    if (typeof encodingOrOffset === 'string') {
-      throw new Error(
-        'If encoding is specified then the first argument must be a string'
-      )
-    }
-    return allocUnsafe(this, arg)
-  }
-  return from(this, arg, encodingOrOffset, length)
-}
-
-Buffer.poolSize = 8192 // not used by this implementation
-
-// TODO: Legacy, not needed anymore. Remove in next major version.
-Buffer._augment = function (arr) {
-  arr.__proto__ = Buffer.prototype
-  return arr
-}
-
-function from (that, value, encodingOrOffset, length) {
-  if (typeof value === 'number') {
-    throw new TypeError('"value" argument must not be a number')
-  }
-
-  if (typeof ArrayBuffer !== 'undefined' && value instanceof ArrayBuffer) {
-    return fromArrayBuffer(that, value, encodingOrOffset, length)
-  }
-
-  if (typeof value === 'string') {
-    return fromString(that, value, encodingOrOffset)
-  }
-
-  return fromObject(that, value)
-}
-
-/**
- * Functionally equivalent to Buffer(arg, encoding) but throws a TypeError
- * if value is a number.
- * Buffer.from(str[, encoding])
- * Buffer.from(array)
- * Buffer.from(buffer)
- * Buffer.from(arrayBuffer[, byteOffset[, length]])
- **/
-Buffer.from = function (value, encodingOrOffset, length) {
-  return from(null, value, encodingOrOffset, length)
-}
-
-if (Buffer.TYPED_ARRAY_SUPPORT) {
-  Buffer.prototype.__proto__ = Uint8Array.prototype
-  Buffer.__proto__ = Uint8Array
-  if (typeof Symbol !== 'undefined' && Symbol.species &&
-      Buffer[Symbol.species] === Buffer) {
-    // Fix subarray() in ES2016. See: https://github.com/feross/buffer/pull/97
-    Object.defineProperty(Buffer, Symbol.species, {
-      value: null,
-      configurable: true
-    })
-  }
-}
-
-function assertSize (size) {
-  if (typeof size !== 'number') {
-    throw new TypeError('"size" argument must be a number')
-  } else if (size < 0) {
-    throw new RangeError('"size" argument must not be negative')
-  }
-}
-
-function alloc (that, size, fill, encoding) {
-  assertSize(size)
-  if (size <= 0) {
-    return createBuffer(that, size)
-  }
-  if (fill !== undefined) {
-    // Only pay attention to encoding if it's a string. This
-    // prevents accidentally sending in a number that would
-    // be interpretted as a start offset.
-    return typeof encoding === 'string'
-      ? createBuffer(that, size).fill(fill, encoding)
-      : createBuffer(that, size).fill(fill)
-  }
-  return createBuffer(that, size)
-}
-
-/**
- * Creates a new filled Buffer instance.
- * alloc(size[, fill[, encoding]])
- **/
-Buffer.alloc = function (size, fill, encoding) {
-  return alloc(null, size, fill, encoding)
-}
-
-function allocUnsafe (that, size) {
-  assertSize(size)
-  that = createBuffer(that, size < 0 ? 0 : checked(size) | 0)
-  if (!Buffer.TYPED_ARRAY_SUPPORT) {
-    for (var i = 0; i < size; ++i) {
-      that[i] = 0
-    }
-  }
-  return that
-}
-
-/**
- * Equivalent to Buffer(num), by default creates a non-zero-filled Buffer instance.
- * */
-Buffer.allocUnsafe = function (size) {
-  return allocUnsafe(null, size)
-}
-/**
- * Equivalent to SlowBuffer(num), by default creates a non-zero-filled Buffer instance.
- */
-Buffer.allocUnsafeSlow = function (size) {
-  return allocUnsafe(null, size)
-}
-
-function fromString (that, string, encoding) {
-  if (typeof encoding !== 'string' || encoding === '') {
-    encoding = 'utf8'
-  }
-
-  if (!Buffer.isEncoding(encoding)) {
-    throw new TypeError('"encoding" must be a valid string encoding')
-  }
-
-  var length = byteLength(string, encoding) | 0
-  that = createBuffer(that, length)
-
-  var actual = that.write(string, encoding)
-
-  if (actual !== length) {
-    // Writing a hex string, for example, that contains invalid characters will
-    // cause everything after the first invalid character to be ignored. (e.g.
-    // 'abxxcd' will be treated as 'ab')
-    that = that.slice(0, actual)
-  }
-
-  return that
-}
-
-function fromArrayLike (that, array) {
-  var length = array.length < 0 ? 0 : checked(array.length) | 0
-  that = createBuffer(that, length)
-  for (var i = 0; i < length; i += 1) {
-    that[i] = array[i] & 255
-  }
-  return that
-}
-
-function fromArrayBuffer (that, array, byteOffset, length) {
-  array.byteLength // this throws if `array` is not a valid ArrayBuffer
-
-  if (byteOffset < 0 || array.byteLength < byteOffset) {
-    throw new RangeError('\'offset\' is out of bounds')
-  }
-
-  if (array.byteLength < byteOffset + (length || 0)) {
-    throw new RangeError('\'length\' is out of bounds')
-  }
-
-  if (byteOffset === undefined && length === undefined) {
-    array = new Uint8Array(array)
-  } else if (length === undefined) {
-    array = new Uint8Array(array, byteOffset)
-  } else {
-    array = new Uint8Array(array, byteOffset, length)
-  }
-
-  if (Buffer.TYPED_ARRAY_SUPPORT) {
-    // Return an augmented `Uint8Array` instance, for best performance
-    that = array
-    that.__proto__ = Buffer.prototype
-  } else {
-    // Fallback: Return an object instance of the Buffer class
-    that = fromArrayLike(that, array)
-  }
-  return that
-}
-
-function fromObject (that, obj) {
-  if (Buffer.isBuffer(obj)) {
-    var len = checked(obj.length) | 0
-    that = createBuffer(that, len)
-
-    if (that.length === 0) {
-      return that
-    }
-
-    obj.copy(that, 0, 0, len)
-    return that
-  }
-
-  if (obj) {
-    if ((typeof ArrayBuffer !== 'undefined' &&
-        obj.buffer instanceof ArrayBuffer) || 'length' in obj) {
-      if (typeof obj.length !== 'number' || isnan(obj.length)) {
-        return createBuffer(that, 0)
-      }
-      return fromArrayLike(that, obj)
-    }
-
-    if (obj.type === 'Buffer' && isArray(obj.data)) {
-      return fromArrayLike(that, obj.data)
-    }
-  }
-
-  throw new TypeError('First argument must be a string, Buffer, ArrayBuffer, Array, or array-like object.')
-}
-
-function checked (length) {
-  // Note: cannot use `length < kMaxLength()` here because that fails when
-  // length is NaN (which is otherwise coerced to zero.)
-  if (length >= kMaxLength()) {
-    throw new RangeError('Attempt to allocate Buffer larger than maximum ' +
-                         'size: 0x' + kMaxLength().toString(16) + ' bytes')
-  }
-  return length | 0
-}
-
-function SlowBuffer (length) {
-  if (+length != length) { // eslint-disable-line eqeqeq
-    length = 0
-  }
-  return Buffer.alloc(+length)
-}
-
-Buffer.isBuffer = function isBuffer (b) {
-  return !!(b != null && b._isBuffer)
-}
-
-Buffer.compare = function compare (a, b) {
-  if (!Buffer.isBuffer(a) || !Buffer.isBuffer(b)) {
-    throw new TypeError('Arguments must be Buffers')
-  }
-
-  if (a === b) return 0
-
-  var x = a.length
-  var y = b.length
-
-  for (var i = 0, len = Math.min(x, y); i < len; ++i) {
-    if (a[i] !== b[i]) {
-      x = a[i]
-      y = b[i]
-      break
-    }
-  }
-
-  if (x < y) return -1
-  if (y < x) return 1
-  return 0
-}
-
-Buffer.isEncoding = function isEncoding (encoding) {
-  switch (String(encoding).toLowerCase()) {
-    case 'hex':
-    case 'utf8':
-    case 'utf-8':
-    case 'ascii':
-    case 'latin1':
-    case 'binary':
-    case 'base64':
-    case 'ucs2':
-    case 'ucs-2':
-    case 'utf16le':
-    case 'utf-16le':
-      return true
-    default:
-      return false
-  }
-}
-
-Buffer.concat = function concat (list, length) {
-  if (!isArray(list)) {
-    throw new TypeError('"list" argument must be an Array of Buffers')
-  }
-
-  if (list.length === 0) {
-    return Buffer.alloc(0)
-  }
-
-  var i
-  if (length === undefined) {
-    length = 0
-    for (i = 0; i < list.length; ++i) {
-      length += list[i].length
-    }
-  }
-
-  var buffer = Buffer.allocUnsafe(length)
-  var pos = 0
-  for (i = 0; i < list.length; ++i) {
-    var buf = list[i]
-    if (!Buffer.isBuffer(buf)) {
-      throw new TypeError('"list" argument must be an Array of Buffers')
-    }
-    buf.copy(buffer, pos)
-    pos += buf.length
-  }
-  return buffer
-}
-
-function byteLength (string, encoding) {
-  if (Buffer.isBuffer(string)) {
-    return string.length
-  }
-  if (typeof ArrayBuffer !== 'undefined' && typeof ArrayBuffer.isView === 'function' &&
-      (ArrayBuffer.isView(string) || string instanceof ArrayBuffer)) {
-    return string.byteLength
-  }
-  if (typeof string !== 'string') {
-    string = '' + string
-  }
-
-  var len = string.length
-  if (len === 0) return 0
-
-  // Use a for loop to avoid recursion
-  var loweredCase = false
-  for (;;) {
-    switch (encoding) {
-      case 'ascii':
-      case 'latin1':
-      case 'binary':
-        return len
-      case 'utf8':
-      case 'utf-8':
-      case undefined:
-        return utf8ToBytes(string).length
-      case 'ucs2':
-      case 'ucs-2':
-      case 'utf16le':
-      case 'utf-16le':
-        return len * 2
-      case 'hex':
-        return len >>> 1
-      case 'base64':
-        return base64ToBytes(string).length
-      default:
-        if (loweredCase) return utf8ToBytes(string).length // assume utf8
-        encoding = ('' + encoding).toLowerCase()
-        loweredCase = true
-    }
-  }
-}
-Buffer.byteLength = byteLength
-
-function slowToString (encoding, start, end) {
-  var loweredCase = false
-
-  // No need to verify that "this.length <= MAX_UINT32" since it's a read-only
-  // property of a typed array.
-
-  // This behaves neither like String nor Uint8Array in that we set start/end
-  // to their upper/lower bounds if the value passed is out of range.
-  // undefined is handled specially as per ECMA-262 6th Edition,
-  // Section 13.3.3.7 Runtime Semantics: KeyedBindingInitialization.
-  if (start === undefined || start < 0) {
-    start = 0
-  }
-  // Return early if start > this.length. Done here to prevent potential uint32
-  // coercion fail below.
-  if (start > this.length) {
-    return ''
-  }
-
-  if (end === undefined || end > this.length) {
-    end = this.length
-  }
-
-  if (end <= 0) {
-    return ''
-  }
-
-  // Force coersion to uint32. This will also coerce falsey/NaN values to 0.
-  end >>>= 0
-  start >>>= 0
-
-  if (end <= start) {
-    return ''
-  }
-
-  if (!encoding) encoding = 'utf8'
-
-  while (true) {
-    switch (encoding) {
-      case 'hex':
-        return hexSlice(this, start, end)
-
-      case 'utf8':
-      case 'utf-8':
-        return utf8Slice(this, start, end)
-
-      case 'ascii':
-        return asciiSlice(this, start, end)
-
-      case 'latin1':
-      case 'binary':
-        return latin1Slice(this, start, end)
-
-      case 'base64':
-        return base64Slice(this, start, end)
-
-      case 'ucs2':
-      case 'ucs-2':
-      case 'utf16le':
-      case 'utf-16le':
-        return utf16leSlice(this, start, end)
-
-      default:
-        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
-        encoding = (encoding + '').toLowerCase()
-        loweredCase = true
-    }
-  }
-}
-
-// The property is used by `Buffer.isBuffer` and `is-buffer` (in Safari 5-7) to detect
-// Buffer instances.
-Buffer.prototype._isBuffer = true
-
-function swap (b, n, m) {
-  var i = b[n]
-  b[n] = b[m]
-  b[m] = i
-}
-
-Buffer.prototype.swap16 = function swap16 () {
-  var len = this.length
-  if (len % 2 !== 0) {
-    throw new RangeError('Buffer size must be a multiple of 16-bits')
-  }
-  for (var i = 0; i < len; i += 2) {
-    swap(this, i, i + 1)
-  }
-  return this
-}
-
-Buffer.prototype.swap32 = function swap32 () {
-  var len = this.length
-  if (len % 4 !== 0) {
-    throw new RangeError('Buffer size must be a multiple of 32-bits')
-  }
-  for (var i = 0; i < len; i += 4) {
-    swap(this, i, i + 3)
-    swap(this, i + 1, i + 2)
-  }
-  return this
-}
-
-Buffer.prototype.swap64 = function swap64 () {
-  var len = this.length
-  if (len % 8 !== 0) {
-    throw new RangeError('Buffer size must be a multiple of 64-bits')
-  }
-  for (var i = 0; i < len; i += 8) {
-    swap(this, i, i + 7)
-    swap(this, i + 1, i + 6)
-    swap(this, i + 2, i + 5)
-    swap(this, i + 3, i + 4)
-  }
-  return this
-}
-
-Buffer.prototype.toString = function toString () {
-  var length = this.length | 0
-  if (length === 0) return ''
-  if (arguments.length === 0) return utf8Slice(this, 0, length)
-  return slowToString.apply(this, arguments)
-}
-
-Buffer.prototype.equals = function equals (b) {
-  if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
-  if (this === b) return true
-  return Buffer.compare(this, b) === 0
-}
-
-Buffer.prototype.inspect = function inspect () {
-  var str = ''
-  var max = exports.INSPECT_MAX_BYTES
-  if (this.length > 0) {
-    str = this.toString('hex', 0, max).match(/.{2}/g).join(' ')
-    if (this.length > max) str += ' ... '
-  }
-  return '<Buffer ' + str + '>'
-}
-
-Buffer.prototype.compare = function compare (target, start, end, thisStart, thisEnd) {
-  if (!Buffer.isBuffer(target)) {
-    throw new TypeError('Argument must be a Buffer')
-  }
-
-  if (start === undefined) {
-    start = 0
-  }
-  if (end === undefined) {
-    end = target ? target.length : 0
-  }
-  if (thisStart === undefined) {
-    thisStart = 0
-  }
-  if (thisEnd === undefined) {
-    thisEnd = this.length
-  }
-
-  if (start < 0 || end > target.length || thisStart < 0 || thisEnd > this.length) {
-    throw new RangeError('out of range index')
-  }
-
-  if (thisStart >= thisEnd && start >= end) {
-    return 0
-  }
-  if (thisStart >= thisEnd) {
-    return -1
-  }
-  if (start >= end) {
-    return 1
-  }
-
-  start >>>= 0
-  end >>>= 0
-  thisStart >>>= 0
-  thisEnd >>>= 0
-
-  if (this === target) return 0
-
-  var x = thisEnd - thisStart
-  var y = end - start
-  var len = Math.min(x, y)
-
-  var thisCopy = this.slice(thisStart, thisEnd)
-  var targetCopy = target.slice(start, end)
-
-  for (var i = 0; i < len; ++i) {
-    if (thisCopy[i] !== targetCopy[i]) {
-      x = thisCopy[i]
-      y = targetCopy[i]
-      break
-    }
-  }
-
-  if (x < y) return -1
-  if (y < x) return 1
-  return 0
-}
-
-// Finds either the first index of `val` in `buffer` at offset >= `byteOffset`,
-// OR the last index of `val` in `buffer` at offset <= `byteOffset`.
-//
-// Arguments:
-// - buffer - a Buffer to search
-// - val - a string, Buffer, or number
-// - byteOffset - an index into `buffer`; will be clamped to an int32
-// - encoding - an optional encoding, relevant is val is a string
-// - dir - true for indexOf, false for lastIndexOf
-function bidirectionalIndexOf (buffer, val, byteOffset, encoding, dir) {
-  // Empty buffer means no match
-  if (buffer.length === 0) return -1
-
-  // Normalize byteOffset
-  if (typeof byteOffset === 'string') {
-    encoding = byteOffset
-    byteOffset = 0
-  } else if (byteOffset > 0x7fffffff) {
-    byteOffset = 0x7fffffff
-  } else if (byteOffset < -0x80000000) {
-    byteOffset = -0x80000000
-  }
-  byteOffset = +byteOffset  // Coerce to Number.
-  if (isNaN(byteOffset)) {
-    // byteOffset: it it's undefined, null, NaN, "foo", etc, search whole buffer
-    byteOffset = dir ? 0 : (buffer.length - 1)
-  }
-
-  // Normalize byteOffset: negative offsets start from the end of the buffer
-  if (byteOffset < 0) byteOffset = buffer.length + byteOffset
-  if (byteOffset >= buffer.length) {
-    if (dir) return -1
-    else byteOffset = buffer.length - 1
-  } else if (byteOffset < 0) {
-    if (dir) byteOffset = 0
-    else return -1
-  }
-
-  // Normalize val
-  if (typeof val === 'string') {
-    val = Buffer.from(val, encoding)
-  }
-
-  // Finally, search either indexOf (if dir is true) or lastIndexOf
-  if (Buffer.isBuffer(val)) {
-    // Special case: looking for empty string/buffer always fails
-    if (val.length === 0) {
-      return -1
-    }
-    return arrayIndexOf(buffer, val, byteOffset, encoding, dir)
-  } else if (typeof val === 'number') {
-    val = val & 0xFF // Search for a byte value [0-255]
-    if (Buffer.TYPED_ARRAY_SUPPORT &&
-        typeof Uint8Array.prototype.indexOf === 'function') {
-      if (dir) {
-        return Uint8Array.prototype.indexOf.call(buffer, val, byteOffset)
-      } else {
-        return Uint8Array.prototype.lastIndexOf.call(buffer, val, byteOffset)
-      }
-    }
-    return arrayIndexOf(buffer, [ val ], byteOffset, encoding, dir)
-  }
-
-  throw new TypeError('val must be string, number or Buffer')
-}
-
-function arrayIndexOf (arr, val, byteOffset, encoding, dir) {
-  var indexSize = 1
-  var arrLength = arr.length
-  var valLength = val.length
-
-  if (encoding !== undefined) {
-    encoding = String(encoding).toLowerCase()
-    if (encoding === 'ucs2' || encoding === 'ucs-2' ||
-        encoding === 'utf16le' || encoding === 'utf-16le') {
-      if (arr.length < 2 || val.length < 2) {
-        return -1
-      }
-      indexSize = 2
-      arrLength /= 2
-      valLength /= 2
-      byteOffset /= 2
-    }
-  }
-
-  function read (buf, i) {
-    if (indexSize === 1) {
-      return buf[i]
-    } else {
-      return buf.readUInt16BE(i * indexSize)
-    }
-  }
-
-  var i
-  if (dir) {
-    var foundIndex = -1
-    for (i = byteOffset; i < arrLength; i++) {
-      if (read(arr, i) === read(val, foundIndex === -1 ? 0 : i - foundIndex)) {
-        if (foundIndex === -1) foundIndex = i
-        if (i - foundIndex + 1 === valLength) return foundIndex * indexSize
-      } else {
-        if (foundIndex !== -1) i -= i - foundIndex
-        foundIndex = -1
-      }
-    }
-  } else {
-    if (byteOffset + valLength > arrLength) byteOffset = arrLength - valLength
-    for (i = byteOffset; i >= 0; i--) {
-      var found = true
-      for (var j = 0; j < valLength; j++) {
-        if (read(arr, i + j) !== read(val, j)) {
-          found = false
-          break
-        }
-      }
-      if (found) return i
-    }
-  }
-
-  return -1
-}
-
-Buffer.prototype.includes = function includes (val, byteOffset, encoding) {
-  return this.indexOf(val, byteOffset, encoding) !== -1
-}
-
-Buffer.prototype.indexOf = function indexOf (val, byteOffset, encoding) {
-  return bidirectionalIndexOf(this, val, byteOffset, encoding, true)
-}
-
-Buffer.prototype.lastIndexOf = function lastIndexOf (val, byteOffset, encoding) {
-  return bidirectionalIndexOf(this, val, byteOffset, encoding, false)
-}
-
-function hexWrite (buf, string, offset, length) {
-  offset = Number(offset) || 0
-  var remaining = buf.length - offset
-  if (!length) {
-    length = remaining
-  } else {
-    length = Number(length)
-    if (length > remaining) {
-      length = remaining
-    }
-  }
-
-  // must be an even number of digits
-  var strLen = string.length
-  if (strLen % 2 !== 0) throw new TypeError('Invalid hex string')
-
-  if (length > strLen / 2) {
-    length = strLen / 2
-  }
-  for (var i = 0; i < length; ++i) {
-    var parsed = parseInt(string.substr(i * 2, 2), 16)
-    if (isNaN(parsed)) return i
-    buf[offset + i] = parsed
-  }
-  return i
-}
-
-function utf8Write (buf, string, offset, length) {
-  return blitBuffer(utf8ToBytes(string, buf.length - offset), buf, offset, length)
-}
-
-function asciiWrite (buf, string, offset, length) {
-  return blitBuffer(asciiToBytes(string), buf, offset, length)
-}
-
-function latin1Write (buf, string, offset, length) {
-  return asciiWrite(buf, string, offset, length)
-}
-
-function base64Write (buf, string, offset, length) {
-  return blitBuffer(base64ToBytes(string), buf, offset, length)
-}
-
-function ucs2Write (buf, string, offset, length) {
-  return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length)
-}
-
-Buffer.prototype.write = function write (string, offset, length, encoding) {
-  // Buffer#write(string)
-  if (offset === undefined) {
-    encoding = 'utf8'
-    length = this.length
-    offset = 0
-  // Buffer#write(string, encoding)
-  } else if (length === undefined && typeof offset === 'string') {
-    encoding = offset
-    length = this.length
-    offset = 0
-  // Buffer#write(string, offset[, length][, encoding])
-  } else if (isFinite(offset)) {
-    offset = offset | 0
-    if (isFinite(length)) {
-      length = length | 0
-      if (encoding === undefined) encoding = 'utf8'
-    } else {
-      encoding = length
-      length = undefined
-    }
-  // legacy write(string, encoding, offset, length) - remove in v0.13
-  } else {
-    throw new Error(
-      'Buffer.write(string, encoding, offset[, length]) is no longer supported'
-    )
-  }
-
-  var remaining = this.length - offset
-  if (length === undefined || length > remaining) length = remaining
-
-  if ((string.length > 0 && (length < 0 || offset < 0)) || offset > this.length) {
-    throw new RangeError('Attempt to write outside buffer bounds')
-  }
-
-  if (!encoding) encoding = 'utf8'
-
-  var loweredCase = false
-  for (;;) {
-    switch (encoding) {
-      case 'hex':
-        return hexWrite(this, string, offset, length)
-
-      case 'utf8':
-      case 'utf-8':
-        return utf8Write(this, string, offset, length)
-
-      case 'ascii':
-        return asciiWrite(this, string, offset, length)
-
-      case 'latin1':
-      case 'binary':
-        return latin1Write(this, string, offset, length)
-
-      case 'base64':
-        // Warning: maxLength not taken into account in base64Write
-        return base64Write(this, string, offset, length)
-
-      case 'ucs2':
-      case 'ucs-2':
-      case 'utf16le':
-      case 'utf-16le':
-        return ucs2Write(this, string, offset, length)
-
-      default:
-        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
-        encoding = ('' + encoding).toLowerCase()
-        loweredCase = true
-    }
-  }
-}
-
-Buffer.prototype.toJSON = function toJSON () {
-  return {
-    type: 'Buffer',
-    data: Array.prototype.slice.call(this._arr || this, 0)
-  }
-}
-
-function base64Slice (buf, start, end) {
-  if (start === 0 && end === buf.length) {
-    return base64.fromByteArray(buf)
-  } else {
-    return base64.fromByteArray(buf.slice(start, end))
-  }
-}
-
-function utf8Slice (buf, start, end) {
-  end = Math.min(buf.length, end)
-  var res = []
-
-  var i = start
-  while (i < end) {
-    var firstByte = buf[i]
-    var codePoint = null
-    var bytesPerSequence = (firstByte > 0xEF) ? 4
-      : (firstByte > 0xDF) ? 3
-      : (firstByte > 0xBF) ? 2
-      : 1
-
-    if (i + bytesPerSequence <= end) {
-      var secondByte, thirdByte, fourthByte, tempCodePoint
-
-      switch (bytesPerSequence) {
-        case 1:
-          if (firstByte < 0x80) {
-            codePoint = firstByte
-          }
-          break
-        case 2:
-          secondByte = buf[i + 1]
-          if ((secondByte & 0xC0) === 0x80) {
-            tempCodePoint = (firstByte & 0x1F) << 0x6 | (secondByte & 0x3F)
-            if (tempCodePoint > 0x7F) {
-              codePoint = tempCodePoint
-            }
-          }
-          break
-        case 3:
-          secondByte = buf[i + 1]
-          thirdByte = buf[i + 2]
-          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80) {
-            tempCodePoint = (firstByte & 0xF) << 0xC | (secondByte & 0x3F) << 0x6 | (thirdByte & 0x3F)
-            if (tempCodePoint > 0x7FF && (tempCodePoint < 0xD800 || tempCodePoint > 0xDFFF)) {
-              codePoint = tempCodePoint
-            }
-          }
-          break
-        case 4:
-          secondByte = buf[i + 1]
-          thirdByte = buf[i + 2]
-          fourthByte = buf[i + 3]
-          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80 && (fourthByte & 0xC0) === 0x80) {
-            tempCodePoint = (firstByte & 0xF) << 0x12 | (secondByte & 0x3F) << 0xC | (thirdByte & 0x3F) << 0x6 | (fourthByte & 0x3F)
-            if (tempCodePoint > 0xFFFF && tempCodePoint < 0x110000) {
-              codePoint = tempCodePoint
-            }
-          }
-      }
-    }
-
-    if (codePoint === null) {
-      // we did not generate a valid codePoint so insert a
-      // replacement char (U+FFFD) and advance only 1 byte
-      codePoint = 0xFFFD
-      bytesPerSequence = 1
-    } else if (codePoint > 0xFFFF) {
-      // encode to utf16 (surrogate pair dance)
-      codePoint -= 0x10000
-      res.push(codePoint >>> 10 & 0x3FF | 0xD800)
-      codePoint = 0xDC00 | codePoint & 0x3FF
-    }
-
-    res.push(codePoint)
-    i += bytesPerSequence
-  }
-
-  return decodeCodePointsArray(res)
-}
-
-// Based on http://stackoverflow.com/a/22747272/680742, the browser with
-// the lowest limit is Chrome, with 0x10000 args.
-// We go 1 magnitude less, for safety
-var MAX_ARGUMENTS_LENGTH = 0x1000
-
-function decodeCodePointsArray (codePoints) {
-  var len = codePoints.length
-  if (len <= MAX_ARGUMENTS_LENGTH) {
-    return String.fromCharCode.apply(String, codePoints) // avoid extra slice()
-  }
-
-  // Decode in chunks to avoid "call stack size exceeded".
-  var res = ''
-  var i = 0
-  while (i < len) {
-    res += String.fromCharCode.apply(
-      String,
-      codePoints.slice(i, i += MAX_ARGUMENTS_LENGTH)
-    )
-  }
-  return res
-}
-
-function asciiSlice (buf, start, end) {
-  var ret = ''
-  end = Math.min(buf.length, end)
-
-  for (var i = start; i < end; ++i) {
-    ret += String.fromCharCode(buf[i] & 0x7F)
-  }
-  return ret
-}
-
-function latin1Slice (buf, start, end) {
-  var ret = ''
-  end = Math.min(buf.length, end)
-
-  for (var i = start; i < end; ++i) {
-    ret += String.fromCharCode(buf[i])
-  }
-  return ret
-}
-
-function hexSlice (buf, start, end) {
-  var len = buf.length
-
-  if (!start || start < 0) start = 0
-  if (!end || end < 0 || end > len) end = len
-
-  var out = ''
-  for (var i = start; i < end; ++i) {
-    out += toHex(buf[i])
-  }
-  return out
-}
-
-function utf16leSlice (buf, start, end) {
-  var bytes = buf.slice(start, end)
-  var res = ''
-  for (var i = 0; i < bytes.length; i += 2) {
-    res += String.fromCharCode(bytes[i] + bytes[i + 1] * 256)
-  }
-  return res
-}
-
-Buffer.prototype.slice = function slice (start, end) {
-  var len = this.length
-  start = ~~start
-  end = end === undefined ? len : ~~end
-
-  if (start < 0) {
-    start += len
-    if (start < 0) start = 0
-  } else if (start > len) {
-    start = len
-  }
-
-  if (end < 0) {
-    end += len
-    if (end < 0) end = 0
-  } else if (end > len) {
-    end = len
-  }
-
-  if (end < start) end = start
-
-  var newBuf
-  if (Buffer.TYPED_ARRAY_SUPPORT) {
-    newBuf = this.subarray(start, end)
-    newBuf.__proto__ = Buffer.prototype
-  } else {
-    var sliceLen = end - start
-    newBuf = new Buffer(sliceLen, undefined)
-    for (var i = 0; i < sliceLen; ++i) {
-      newBuf[i] = this[i + start]
-    }
-  }
-
-  return newBuf
-}
-
-/*
- * Need to make sure that buffer isn't trying to write out of bounds.
- */
-function checkOffset (offset, ext, length) {
-  if ((offset % 1) !== 0 || offset < 0) throw new RangeError('offset is not uint')
-  if (offset + ext > length) throw new RangeError('Trying to access beyond buffer length')
-}
-
-Buffer.prototype.readUIntLE = function readUIntLE (offset, byteLength, noAssert) {
-  offset = offset | 0
-  byteLength = byteLength | 0
-  if (!noAssert) checkOffset(offset, byteLength, this.length)
-
-  var val = this[offset]
-  var mul = 1
-  var i = 0
-  while (++i < byteLength && (mul *= 0x100)) {
-    val += this[offset + i] * mul
-  }
-
-  return val
-}
-
-Buffer.prototype.readUIntBE = function readUIntBE (offset, byteLength, noAssert) {
-  offset = offset | 0
-  byteLength = byteLength | 0
-  if (!noAssert) {
-    checkOffset(offset, byteLength, this.length)
-  }
-
-  var val = this[offset + --byteLength]
-  var mul = 1
-  while (byteLength > 0 && (mul *= 0x100)) {
-    val += this[offset + --byteLength] * mul
-  }
-
-  return val
-}
-
-Buffer.prototype.readUInt8 = function readUInt8 (offset, noAssert) {
-  if (!noAssert) checkOffset(offset, 1, this.length)
-  return this[offset]
-}
-
-Buffer.prototype.readUInt16LE = function readUInt16LE (offset, noAssert) {
-  if (!noAssert) checkOffset(offset, 2, this.length)
-  return this[offset] | (this[offset + 1] << 8)
-}
-
-Buffer.prototype.readUInt16BE = function readUInt16BE (offset, noAssert) {
-  if (!noAssert) checkOffset(offset, 2, this.length)
-  return (this[offset] << 8) | this[offset + 1]
-}
-
-Buffer.prototype.readUInt32LE = function readUInt32LE (offset, noAssert) {
-  if (!noAssert) checkOffset(offset, 4, this.length)
-
-  return ((this[offset]) |
-      (this[offset + 1] << 8) |
-      (this[offset + 2] << 16)) +
-      (this[offset + 3] * 0x1000000)
-}
-
-Buffer.prototype.readUInt32BE = function readUInt32BE (offset, noAssert) {
-  if (!noAssert) checkOffset(offset, 4, this.length)
-
-  return (this[offset] * 0x1000000) +
-    ((this[offset + 1] << 16) |
-    (this[offset + 2] << 8) |
-    this[offset + 3])
-}
-
-Buffer.prototype.readIntLE = function readIntLE (offset, byteLength, noAssert) {
-  offset = offset | 0
-  byteLength = byteLength | 0
-  if (!noAssert) checkOffset(offset, byteLength, this.length)
-
-  var val = this[offset]
-  var mul = 1
-  var i = 0
-  while (++i < byteLength && (mul *= 0x100)) {
-    val += this[offset + i] * mul
-  }
-  mul *= 0x80
-
-  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
-
-  return val
-}
-
-Buffer.prototype.readIntBE = function readIntBE (offset, byteLength, noAssert) {
-  offset = offset | 0
-  byteLength = byteLength | 0
-  if (!noAssert) checkOffset(offset, byteLength, this.length)
-
-  var i = byteLength
-  var mul = 1
-  var val = this[offset + --i]
-  while (i > 0 && (mul *= 0x100)) {
-    val += this[offset + --i] * mul
-  }
-  mul *= 0x80
-
-  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
-
-  return val
-}
-
-Buffer.prototype.readInt8 = function readInt8 (offset, noAssert) {
-  if (!noAssert) checkOffset(offset, 1, this.length)
-  if (!(this[offset] & 0x80)) return (this[offset])
-  return ((0xff - this[offset] + 1) * -1)
-}
-
-Buffer.prototype.readInt16LE = function readInt16LE (offset, noAssert) {
-  if (!noAssert) checkOffset(offset, 2, this.length)
-  var val = this[offset] | (this[offset + 1] << 8)
-  return (val & 0x8000) ? val | 0xFFFF0000 : val
-}
-
-Buffer.prototype.readInt16BE = function readInt16BE (offset, noAssert) {
-  if (!noAssert) checkOffset(offset, 2, this.length)
-  var val = this[offset + 1] | (this[offset] << 8)
-  return (val & 0x8000) ? val | 0xFFFF0000 : val
-}
-
-Buffer.prototype.readInt32LE = function readInt32LE (offset, noAssert) {
-  if (!noAssert) checkOffset(offset, 4, this.length)
-
-  return (this[offset]) |
-    (this[offset + 1] << 8) |
-    (this[offset + 2] << 16) |
-    (this[offset + 3] << 24)
-}
-
-Buffer.prototype.readInt32BE = function readInt32BE (offset, noAssert) {
-  if (!noAssert) checkOffset(offset, 4, this.length)
-
-  return (this[offset] << 24) |
-    (this[offset + 1] << 16) |
-    (this[offset + 2] << 8) |
-    (this[offset + 3])
-}
-
-Buffer.prototype.readFloatLE = function readFloatLE (offset, noAssert) {
-  if (!noAssert) checkOffset(offset, 4, this.length)
-  return ieee754.read(this, offset, true, 23, 4)
-}
-
-Buffer.prototype.readFloatBE = function readFloatBE (offset, noAssert) {
-  if (!noAssert) checkOffset(offset, 4, this.length)
-  return ieee754.read(this, offset, false, 23, 4)
-}
-
-Buffer.prototype.readDoubleLE = function readDoubleLE (offset, noAssert) {
-  if (!noAssert) checkOffset(offset, 8, this.length)
-  return ieee754.read(this, offset, true, 52, 8)
-}
-
-Buffer.prototype.readDoubleBE = function readDoubleBE (offset, noAssert) {
-  if (!noAssert) checkOffset(offset, 8, this.length)
-  return ieee754.read(this, offset, false, 52, 8)
-}
-
-function checkInt (buf, value, offset, ext, max, min) {
-  if (!Buffer.isBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance')
-  if (value > max || value < min) throw new RangeError('"value" argument is out of bounds')
-  if (offset + ext > buf.length) throw new RangeError('Index out of range')
-}
-
-Buffer.prototype.writeUIntLE = function writeUIntLE (value, offset, byteLength, noAssert) {
-  value = +value
-  offset = offset | 0
-  byteLength = byteLength | 0
-  if (!noAssert) {
-    var maxBytes = Math.pow(2, 8 * byteLength) - 1
-    checkInt(this, value, offset, byteLength, maxBytes, 0)
-  }
-
-  var mul = 1
-  var i = 0
-  this[offset] = value & 0xFF
-  while (++i < byteLength && (mul *= 0x100)) {
-    this[offset + i] = (value / mul) & 0xFF
-  }
-
-  return offset + byteLength
-}
-
-Buffer.prototype.writeUIntBE = function writeUIntBE (value, offset, byteLength, noAssert) {
-  value = +value
-  offset = offset | 0
-  byteLength = byteLength | 0
-  if (!noAssert) {
-    var maxBytes = Math.pow(2, 8 * byteLength) - 1
-    checkInt(this, value, offset, byteLength, maxBytes, 0)
-  }
-
-  var i = byteLength - 1
-  var mul = 1
-  this[offset + i] = value & 0xFF
-  while (--i >= 0 && (mul *= 0x100)) {
-    this[offset + i] = (value / mul) & 0xFF
-  }
-
-  return offset + byteLength
-}
-
-Buffer.prototype.writeUInt8 = function writeUInt8 (value, offset, noAssert) {
-  value = +value
-  offset = offset | 0
-  if (!noAssert) checkInt(this, value, offset, 1, 0xff, 0)
-  if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
-  this[offset] = (value & 0xff)
-  return offset + 1
-}
-
-function objectWriteUInt16 (buf, value, offset, littleEndian) {
-  if (value < 0) value = 0xffff + value + 1
-  for (var i = 0, j = Math.min(buf.length - offset, 2); i < j; ++i) {
-    buf[offset + i] = (value & (0xff << (8 * (littleEndian ? i : 1 - i)))) >>>
-      (littleEndian ? i : 1 - i) * 8
-  }
-}
-
-Buffer.prototype.writeUInt16LE = function writeUInt16LE (value, offset, noAssert) {
-  value = +value
-  offset = offset | 0
-  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
-  if (Buffer.TYPED_ARRAY_SUPPORT) {
-    this[offset] = (value & 0xff)
-    this[offset + 1] = (value >>> 8)
-  } else {
-    objectWriteUInt16(this, value, offset, true)
-  }
-  return offset + 2
-}
-
-Buffer.prototype.writeUInt16BE = function writeUInt16BE (value, offset, noAssert) {
-  value = +value
-  offset = offset | 0
-  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
-  if (Buffer.TYPED_ARRAY_SUPPORT) {
-    this[offset] = (value >>> 8)
-    this[offset + 1] = (value & 0xff)
-  } else {
-    objectWriteUInt16(this, value, offset, false)
-  }
-  return offset + 2
-}
-
-function objectWriteUInt32 (buf, value, offset, littleEndian) {
-  if (value < 0) value = 0xffffffff + value + 1
-  for (var i = 0, j = Math.min(buf.length - offset, 4); i < j; ++i) {
-    buf[offset + i] = (value >>> (littleEndian ? i : 3 - i) * 8) & 0xff
-  }
-}
-
-Buffer.prototype.writeUInt32LE = function writeUInt32LE (value, offset, noAssert) {
-  value = +value
-  offset = offset | 0
-  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
-  if (Buffer.TYPED_ARRAY_SUPPORT) {
-    this[offset + 3] = (value >>> 24)
-    this[offset + 2] = (value >>> 16)
-    this[offset + 1] = (value >>> 8)
-    this[offset] = (value & 0xff)
-  } else {
-    objectWriteUInt32(this, value, offset, true)
-  }
-  return offset + 4
-}
-
-Buffer.prototype.writeUInt32BE = function writeUInt32BE (value, offset, noAssert) {
-  value = +value
-  offset = offset | 0
-  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
-  if (Buffer.TYPED_ARRAY_SUPPORT) {
-    this[offset] = (value >>> 24)
-    this[offset + 1] = (value >>> 16)
-    this[offset + 2] = (value >>> 8)
-    this[offset + 3] = (value & 0xff)
-  } else {
-    objectWriteUInt32(this, value, offset, false)
-  }
-  return offset + 4
-}
-
-Buffer.prototype.writeIntLE = function writeIntLE (value, offset, byteLength, noAssert) {
-  value = +value
-  offset = offset | 0
-  if (!noAssert) {
-    var limit = Math.pow(2, 8 * byteLength - 1)
-
-    checkInt(this, value, offset, byteLength, limit - 1, -limit)
-  }
-
-  var i = 0
-  var mul = 1
-  var sub = 0
-  this[offset] = value & 0xFF
-  while (++i < byteLength && (mul *= 0x100)) {
-    if (value < 0 && sub === 0 && this[offset + i - 1] !== 0) {
-      sub = 1
-    }
-    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
-  }
-
-  return offset + byteLength
-}
-
-Buffer.prototype.writeIntBE = function writeIntBE (value, offset, byteLength, noAssert) {
-  value = +value
-  offset = offset | 0
-  if (!noAssert) {
-    var limit = Math.pow(2, 8 * byteLength - 1)
-
-    checkInt(this, value, offset, byteLength, limit - 1, -limit)
-  }
-
-  var i = byteLength - 1
-  var mul = 1
-  var sub = 0
-  this[offset + i] = value & 0xFF
-  while (--i >= 0 && (mul *= 0x100)) {
-    if (value < 0 && sub === 0 && this[offset + i + 1] !== 0) {
-      sub = 1
-    }
-    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
-  }
-
-  return offset + byteLength
-}
-
-Buffer.prototype.writeInt8 = function writeInt8 (value, offset, noAssert) {
-  value = +value
-  offset = offset | 0
-  if (!noAssert) checkInt(this, value, offset, 1, 0x7f, -0x80)
-  if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
-  if (value < 0) value = 0xff + value + 1
-  this[offset] = (value & 0xff)
-  return offset + 1
-}
-
-Buffer.prototype.writeInt16LE = function writeInt16LE (value, offset, noAssert) {
-  value = +value
-  offset = offset | 0
-  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
-  if (Buffer.TYPED_ARRAY_SUPPORT) {
-    this[offset] = (value & 0xff)
-    this[offset + 1] = (value >>> 8)
-  } else {
-    objectWriteUInt16(this, value, offset, true)
-  }
-  return offset + 2
-}
-
-Buffer.prototype.writeInt16BE = function writeInt16BE (value, offset, noAssert) {
-  value = +value
-  offset = offset | 0
-  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
-  if (Buffer.TYPED_ARRAY_SUPPORT) {
-    this[offset] = (value >>> 8)
-    this[offset + 1] = (value & 0xff)
-  } else {
-    objectWriteUInt16(this, value, offset, false)
-  }
-  return offset + 2
-}
-
-Buffer.prototype.writeInt32LE = function writeInt32LE (value, offset, noAssert) {
-  value = +value
-  offset = offset | 0
-  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
-  if (Buffer.TYPED_ARRAY_SUPPORT) {
-    this[offset] = (value & 0xff)
-    this[offset + 1] = (value >>> 8)
-    this[offset + 2] = (value >>> 16)
-    this[offset + 3] = (value >>> 24)
-  } else {
-    objectWriteUInt32(this, value, offset, true)
-  }
-  return offset + 4
-}
-
-Buffer.prototype.writeInt32BE = function writeInt32BE (value, offset, noAssert) {
-  value = +value
-  offset = offset | 0
-  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
-  if (value < 0) value = 0xffffffff + value + 1
-  if (Buffer.TYPED_ARRAY_SUPPORT) {
-    this[offset] = (value >>> 24)
-    this[offset + 1] = (value >>> 16)
-    this[offset + 2] = (value >>> 8)
-    this[offset + 3] = (value & 0xff)
-  } else {
-    objectWriteUInt32(this, value, offset, false)
-  }
-  return offset + 4
-}
-
-function checkIEEE754 (buf, value, offset, ext, max, min) {
-  if (offset + ext > buf.length) throw new RangeError('Index out of range')
-  if (offset < 0) throw new RangeError('Index out of range')
-}
-
-function writeFloat (buf, value, offset, littleEndian, noAssert) {
-  if (!noAssert) {
-    checkIEEE754(buf, value, offset, 4, 3.4028234663852886e+38, -3.4028234663852886e+38)
-  }
-  ieee754.write(buf, value, offset, littleEndian, 23, 4)
-  return offset + 4
-}
-
-Buffer.prototype.writeFloatLE = function writeFloatLE (value, offset, noAssert) {
-  return writeFloat(this, value, offset, true, noAssert)
-}
-
-Buffer.prototype.writeFloatBE = function writeFloatBE (value, offset, noAssert) {
-  return writeFloat(this, value, offset, false, noAssert)
-}
-
-function writeDouble (buf, value, offset, littleEndian, noAssert) {
-  if (!noAssert) {
-    checkIEEE754(buf, value, offset, 8, 1.7976931348623157E+308, -1.7976931348623157E+308)
-  }
-  ieee754.write(buf, value, offset, littleEndian, 52, 8)
-  return offset + 8
-}
-
-Buffer.prototype.writeDoubleLE = function writeDoubleLE (value, offset, noAssert) {
-  return writeDouble(this, value, offset, true, noAssert)
-}
-
-Buffer.prototype.writeDoubleBE = function writeDoubleBE (value, offset, noAssert) {
-  return writeDouble(this, value, offset, false, noAssert)
-}
-
-// copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
-Buffer.prototype.copy = function copy (target, targetStart, start, end) {
-  if (!start) start = 0
-  if (!end && end !== 0) end = this.length
-  if (targetStart >= target.length) targetStart = target.length
-  if (!targetStart) targetStart = 0
-  if (end > 0 && end < start) end = start
-
-  // Copy 0 bytes; we're done
-  if (end === start) return 0
-  if (target.length === 0 || this.length === 0) return 0
-
-  // Fatal error conditions
-  if (targetStart < 0) {
-    throw new RangeError('targetStart out of bounds')
-  }
-  if (start < 0 || start >= this.length) throw new RangeError('sourceStart out of bounds')
-  if (end < 0) throw new RangeError('sourceEnd out of bounds')
-
-  // Are we oob?
-  if (end > this.length) end = this.length
-  if (target.length - targetStart < end - start) {
-    end = target.length - targetStart + start
-  }
-
-  var len = end - start
-  var i
-
-  if (this === target && start < targetStart && targetStart < end) {
-    // descending copy from end
-    for (i = len - 1; i >= 0; --i) {
-      target[i + targetStart] = this[i + start]
-    }
-  } else if (len < 1000 || !Buffer.TYPED_ARRAY_SUPPORT) {
-    // ascending copy from start
-    for (i = 0; i < len; ++i) {
-      target[i + targetStart] = this[i + start]
-    }
-  } else {
-    Uint8Array.prototype.set.call(
-      target,
-      this.subarray(start, start + len),
-      targetStart
-    )
-  }
-
-  return len
-}
-
-// Usage:
-//    buffer.fill(number[, offset[, end]])
-//    buffer.fill(buffer[, offset[, end]])
-//    buffer.fill(string[, offset[, end]][, encoding])
-Buffer.prototype.fill = function fill (val, start, end, encoding) {
-  // Handle string cases:
-  if (typeof val === 'string') {
-    if (typeof start === 'string') {
-      encoding = start
-      start = 0
-      end = this.length
-    } else if (typeof end === 'string') {
-      encoding = end
-      end = this.length
-    }
-    if (val.length === 1) {
-      var code = val.charCodeAt(0)
-      if (code < 256) {
-        val = code
-      }
-    }
-    if (encoding !== undefined && typeof encoding !== 'string') {
-      throw new TypeError('encoding must be a string')
-    }
-    if (typeof encoding === 'string' && !Buffer.isEncoding(encoding)) {
-      throw new TypeError('Unknown encoding: ' + encoding)
-    }
-  } else if (typeof val === 'number') {
-    val = val & 255
-  }
-
-  // Invalid ranges are not set to a default, so can range check early.
-  if (start < 0 || this.length < start || this.length < end) {
-    throw new RangeError('Out of range index')
-  }
-
-  if (end <= start) {
-    return this
-  }
-
-  start = start >>> 0
-  end = end === undefined ? this.length : end >>> 0
-
-  if (!val) val = 0
-
-  var i
-  if (typeof val === 'number') {
-    for (i = start; i < end; ++i) {
-      this[i] = val
-    }
-  } else {
-    var bytes = Buffer.isBuffer(val)
-      ? val
-      : utf8ToBytes(new Buffer(val, encoding).toString())
-    var len = bytes.length
-    for (i = 0; i < end - start; ++i) {
-      this[i + start] = bytes[i % len]
-    }
-  }
-
-  return this
-}
-
-// HELPER FUNCTIONS
-// ================
-
-var INVALID_BASE64_RE = /[^+\/0-9A-Za-z-_]/g
-
-function base64clean (str) {
-  // Node strips out invalid characters like \n and \t from the string, base64-js does not
-  str = stringtrim(str).replace(INVALID_BASE64_RE, '')
-  // Node converts strings with length < 2 to ''
-  if (str.length < 2) return ''
-  // Node allows for non-padded base64 strings (missing trailing ===), base64-js does not
-  while (str.length % 4 !== 0) {
-    str = str + '='
-  }
-  return str
-}
-
-function stringtrim (str) {
-  if (str.trim) return str.trim()
-  return str.replace(/^\s+|\s+$/g, '')
-}
-
-function toHex (n) {
-  if (n < 16) return '0' + n.toString(16)
-  return n.toString(16)
-}
-
-function utf8ToBytes (string, units) {
-  units = units || Infinity
-  var codePoint
-  var length = string.length
-  var leadSurrogate = null
-  var bytes = []
-
-  for (var i = 0; i < length; ++i) {
-    codePoint = string.charCodeAt(i)
-
-    // is surrogate component
-    if (codePoint > 0xD7FF && codePoint < 0xE000) {
-      // last char was a lead
-      if (!leadSurrogate) {
-        // no lead yet
-        if (codePoint > 0xDBFF) {
-          // unexpected trail
-          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
-          continue
-        } else if (i + 1 === length) {
-          // unpaired lead
-          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
-          continue
-        }
-
-        // valid lead
-        leadSurrogate = codePoint
-
-        continue
-      }
-
-      // 2 leads in a row
-      if (codePoint < 0xDC00) {
-        if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
-        leadSurrogate = codePoint
-        continue
-      }
-
-      // valid surrogate pair
-      codePoint = (leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00) + 0x10000
-    } else if (leadSurrogate) {
-      // valid bmp char, but last char was a lead
-      if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
-    }
-
-    leadSurrogate = null
-
-    // encode utf8
-    if (codePoint < 0x80) {
-      if ((units -= 1) < 0) break
-      bytes.push(codePoint)
-    } else if (codePoint < 0x800) {
-      if ((units -= 2) < 0) break
-      bytes.push(
-        codePoint >> 0x6 | 0xC0,
-        codePoint & 0x3F | 0x80
-      )
-    } else if (codePoint < 0x10000) {
-      if ((units -= 3) < 0) break
-      bytes.push(
-        codePoint >> 0xC | 0xE0,
-        codePoint >> 0x6 & 0x3F | 0x80,
-        codePoint & 0x3F | 0x80
-      )
-    } else if (codePoint < 0x110000) {
-      if ((units -= 4) < 0) break
-      bytes.push(
-        codePoint >> 0x12 | 0xF0,
-        codePoint >> 0xC & 0x3F | 0x80,
-        codePoint >> 0x6 & 0x3F | 0x80,
-        codePoint & 0x3F | 0x80
-      )
-    } else {
-      throw new Error('Invalid code point')
-    }
-  }
-
-  return bytes
-}
-
-function asciiToBytes (str) {
-  var byteArray = []
-  for (var i = 0; i < str.length; ++i) {
-    // Node's code seems to be doing this and not & 0x7F..
-    byteArray.push(str.charCodeAt(i) & 0xFF)
-  }
-  return byteArray
-}
-
-function utf16leToBytes (str, units) {
-  var c, hi, lo
-  var byteArray = []
-  for (var i = 0; i < str.length; ++i) {
-    if ((units -= 2) < 0) break
-
-    c = str.charCodeAt(i)
-    hi = c >> 8
-    lo = c % 256
-    byteArray.push(lo)
-    byteArray.push(hi)
-  }
-
-  return byteArray
-}
-
-function base64ToBytes (str) {
-  return base64.toByteArray(base64clean(str))
-}
-
-function blitBuffer (src, dst, offset, length) {
-  for (var i = 0; i < length; ++i) {
-    if ((i + offset >= dst.length) || (i >= src.length)) break
-    dst[i + offset] = src[i]
-  }
-  return i
-}
-
-function isnan (val) {
-  return val !== val // eslint-disable-line no-self-compare
-}
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js")))
-
-/***/ }),
-
 /***/ "../node_modules/core-util-is/lib/util.js":
 /*!************************************************!*\
   !*** ../node_modules/core-util-is/lib/util.js ***!
@@ -3844,7 +2139,7 @@ function objectToString(o) {
   return Object.prototype.toString.call(o);
 }
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../buffer/index.js */ "../node_modules/buffer/index.js").Buffer))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node-libs-browser/node_modules/buffer/index.js */ "../node_modules/node-libs-browser/node_modules/buffer/index.js").Buffer))
 
 /***/ }),
 
@@ -6560,38 +4855,6 @@ exports.hop = hop;
 
 /***/ }),
 
-/***/ "../node_modules/is-buffer/index.js":
-/*!******************************************!*\
-  !*** ../node_modules/is-buffer/index.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-// The _isBuffer check is for Safari 5-7 support, because it's missing
-// Object.prototype.constructor. Remove this eventually
-module.exports = function (obj) {
-  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
-}
-
-function isBuffer (obj) {
-  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-// For Node v0.10 support. Remove this eventually.
-function isSlowBuffer (obj) {
-  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
-}
-
-
-/***/ }),
-
 /***/ "../node_modules/isarray/index.js":
 /*!****************************************!*\
   !*** ../node_modules/isarray/index.js ***!
@@ -6605,6 +4868,1808 @@ module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
+
+/***/ }),
+
+/***/ "../node_modules/node-libs-browser/node_modules/buffer/index.js":
+/*!**********************************************************************!*\
+  !*** ../node_modules/node-libs-browser/node_modules/buffer/index.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @license  MIT
+ */
+/* eslint-disable no-proto */
+
+
+
+var base64 = __webpack_require__(/*! base64-js */ "../node_modules/base64-js/index.js")
+var ieee754 = __webpack_require__(/*! ieee754 */ "../node_modules/ieee754/index.js")
+var isArray = __webpack_require__(/*! isarray */ "../node_modules/isarray/index.js")
+
+exports.Buffer = Buffer
+exports.SlowBuffer = SlowBuffer
+exports.INSPECT_MAX_BYTES = 50
+
+/**
+ * If `Buffer.TYPED_ARRAY_SUPPORT`:
+ *   === true    Use Uint8Array implementation (fastest)
+ *   === false   Use Object implementation (most compatible, even IE6)
+ *
+ * Browsers that support typed arrays are IE 10+, Firefox 4+, Chrome 7+, Safari 5.1+,
+ * Opera 11.6+, iOS 4.2+.
+ *
+ * Due to various browser bugs, sometimes the Object implementation will be used even
+ * when the browser supports typed arrays.
+ *
+ * Note:
+ *
+ *   - Firefox 4-29 lacks support for adding new properties to `Uint8Array` instances,
+ *     See: https://bugzilla.mozilla.org/show_bug.cgi?id=695438.
+ *
+ *   - Chrome 9-10 is missing the `TypedArray.prototype.subarray` function.
+ *
+ *   - IE10 has a broken `TypedArray.prototype.subarray` function which returns arrays of
+ *     incorrect length in some situations.
+
+ * We detect these buggy browsers and set `Buffer.TYPED_ARRAY_SUPPORT` to `false` so they
+ * get the Object implementation, which is slower but behaves correctly.
+ */
+Buffer.TYPED_ARRAY_SUPPORT = global.TYPED_ARRAY_SUPPORT !== undefined
+  ? global.TYPED_ARRAY_SUPPORT
+  : typedArraySupport()
+
+/*
+ * Export kMaxLength after typed array support is determined.
+ */
+exports.kMaxLength = kMaxLength()
+
+function typedArraySupport () {
+  try {
+    var arr = new Uint8Array(1)
+    arr.__proto__ = {__proto__: Uint8Array.prototype, foo: function () { return 42 }}
+    return arr.foo() === 42 && // typed array instances can be augmented
+        typeof arr.subarray === 'function' && // chrome 9-10 lack `subarray`
+        arr.subarray(1, 1).byteLength === 0 // ie10 has broken `subarray`
+  } catch (e) {
+    return false
+  }
+}
+
+function kMaxLength () {
+  return Buffer.TYPED_ARRAY_SUPPORT
+    ? 0x7fffffff
+    : 0x3fffffff
+}
+
+function createBuffer (that, length) {
+  if (kMaxLength() < length) {
+    throw new RangeError('Invalid typed array length')
+  }
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    // Return an augmented `Uint8Array` instance, for best performance
+    that = new Uint8Array(length)
+    that.__proto__ = Buffer.prototype
+  } else {
+    // Fallback: Return an object instance of the Buffer class
+    if (that === null) {
+      that = new Buffer(length)
+    }
+    that.length = length
+  }
+
+  return that
+}
+
+/**
+ * The Buffer constructor returns instances of `Uint8Array` that have their
+ * prototype changed to `Buffer.prototype`. Furthermore, `Buffer` is a subclass of
+ * `Uint8Array`, so the returned instances will have all the node `Buffer` methods
+ * and the `Uint8Array` methods. Square bracket notation works as expected -- it
+ * returns a single octet.
+ *
+ * The `Uint8Array` prototype remains unmodified.
+ */
+
+function Buffer (arg, encodingOrOffset, length) {
+  if (!Buffer.TYPED_ARRAY_SUPPORT && !(this instanceof Buffer)) {
+    return new Buffer(arg, encodingOrOffset, length)
+  }
+
+  // Common case.
+  if (typeof arg === 'number') {
+    if (typeof encodingOrOffset === 'string') {
+      throw new Error(
+        'If encoding is specified then the first argument must be a string'
+      )
+    }
+    return allocUnsafe(this, arg)
+  }
+  return from(this, arg, encodingOrOffset, length)
+}
+
+Buffer.poolSize = 8192 // not used by this implementation
+
+// TODO: Legacy, not needed anymore. Remove in next major version.
+Buffer._augment = function (arr) {
+  arr.__proto__ = Buffer.prototype
+  return arr
+}
+
+function from (that, value, encodingOrOffset, length) {
+  if (typeof value === 'number') {
+    throw new TypeError('"value" argument must not be a number')
+  }
+
+  if (typeof ArrayBuffer !== 'undefined' && value instanceof ArrayBuffer) {
+    return fromArrayBuffer(that, value, encodingOrOffset, length)
+  }
+
+  if (typeof value === 'string') {
+    return fromString(that, value, encodingOrOffset)
+  }
+
+  return fromObject(that, value)
+}
+
+/**
+ * Functionally equivalent to Buffer(arg, encoding) but throws a TypeError
+ * if value is a number.
+ * Buffer.from(str[, encoding])
+ * Buffer.from(array)
+ * Buffer.from(buffer)
+ * Buffer.from(arrayBuffer[, byteOffset[, length]])
+ **/
+Buffer.from = function (value, encodingOrOffset, length) {
+  return from(null, value, encodingOrOffset, length)
+}
+
+if (Buffer.TYPED_ARRAY_SUPPORT) {
+  Buffer.prototype.__proto__ = Uint8Array.prototype
+  Buffer.__proto__ = Uint8Array
+  if (typeof Symbol !== 'undefined' && Symbol.species &&
+      Buffer[Symbol.species] === Buffer) {
+    // Fix subarray() in ES2016. See: https://github.com/feross/buffer/pull/97
+    Object.defineProperty(Buffer, Symbol.species, {
+      value: null,
+      configurable: true
+    })
+  }
+}
+
+function assertSize (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('"size" argument must be a number')
+  } else if (size < 0) {
+    throw new RangeError('"size" argument must not be negative')
+  }
+}
+
+function alloc (that, size, fill, encoding) {
+  assertSize(size)
+  if (size <= 0) {
+    return createBuffer(that, size)
+  }
+  if (fill !== undefined) {
+    // Only pay attention to encoding if it's a string. This
+    // prevents accidentally sending in a number that would
+    // be interpretted as a start offset.
+    return typeof encoding === 'string'
+      ? createBuffer(that, size).fill(fill, encoding)
+      : createBuffer(that, size).fill(fill)
+  }
+  return createBuffer(that, size)
+}
+
+/**
+ * Creates a new filled Buffer instance.
+ * alloc(size[, fill[, encoding]])
+ **/
+Buffer.alloc = function (size, fill, encoding) {
+  return alloc(null, size, fill, encoding)
+}
+
+function allocUnsafe (that, size) {
+  assertSize(size)
+  that = createBuffer(that, size < 0 ? 0 : checked(size) | 0)
+  if (!Buffer.TYPED_ARRAY_SUPPORT) {
+    for (var i = 0; i < size; ++i) {
+      that[i] = 0
+    }
+  }
+  return that
+}
+
+/**
+ * Equivalent to Buffer(num), by default creates a non-zero-filled Buffer instance.
+ * */
+Buffer.allocUnsafe = function (size) {
+  return allocUnsafe(null, size)
+}
+/**
+ * Equivalent to SlowBuffer(num), by default creates a non-zero-filled Buffer instance.
+ */
+Buffer.allocUnsafeSlow = function (size) {
+  return allocUnsafe(null, size)
+}
+
+function fromString (that, string, encoding) {
+  if (typeof encoding !== 'string' || encoding === '') {
+    encoding = 'utf8'
+  }
+
+  if (!Buffer.isEncoding(encoding)) {
+    throw new TypeError('"encoding" must be a valid string encoding')
+  }
+
+  var length = byteLength(string, encoding) | 0
+  that = createBuffer(that, length)
+
+  var actual = that.write(string, encoding)
+
+  if (actual !== length) {
+    // Writing a hex string, for example, that contains invalid characters will
+    // cause everything after the first invalid character to be ignored. (e.g.
+    // 'abxxcd' will be treated as 'ab')
+    that = that.slice(0, actual)
+  }
+
+  return that
+}
+
+function fromArrayLike (that, array) {
+  var length = array.length < 0 ? 0 : checked(array.length) | 0
+  that = createBuffer(that, length)
+  for (var i = 0; i < length; i += 1) {
+    that[i] = array[i] & 255
+  }
+  return that
+}
+
+function fromArrayBuffer (that, array, byteOffset, length) {
+  array.byteLength // this throws if `array` is not a valid ArrayBuffer
+
+  if (byteOffset < 0 || array.byteLength < byteOffset) {
+    throw new RangeError('\'offset\' is out of bounds')
+  }
+
+  if (array.byteLength < byteOffset + (length || 0)) {
+    throw new RangeError('\'length\' is out of bounds')
+  }
+
+  if (byteOffset === undefined && length === undefined) {
+    array = new Uint8Array(array)
+  } else if (length === undefined) {
+    array = new Uint8Array(array, byteOffset)
+  } else {
+    array = new Uint8Array(array, byteOffset, length)
+  }
+
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    // Return an augmented `Uint8Array` instance, for best performance
+    that = array
+    that.__proto__ = Buffer.prototype
+  } else {
+    // Fallback: Return an object instance of the Buffer class
+    that = fromArrayLike(that, array)
+  }
+  return that
+}
+
+function fromObject (that, obj) {
+  if (Buffer.isBuffer(obj)) {
+    var len = checked(obj.length) | 0
+    that = createBuffer(that, len)
+
+    if (that.length === 0) {
+      return that
+    }
+
+    obj.copy(that, 0, 0, len)
+    return that
+  }
+
+  if (obj) {
+    if ((typeof ArrayBuffer !== 'undefined' &&
+        obj.buffer instanceof ArrayBuffer) || 'length' in obj) {
+      if (typeof obj.length !== 'number' || isnan(obj.length)) {
+        return createBuffer(that, 0)
+      }
+      return fromArrayLike(that, obj)
+    }
+
+    if (obj.type === 'Buffer' && isArray(obj.data)) {
+      return fromArrayLike(that, obj.data)
+    }
+  }
+
+  throw new TypeError('First argument must be a string, Buffer, ArrayBuffer, Array, or array-like object.')
+}
+
+function checked (length) {
+  // Note: cannot use `length < kMaxLength()` here because that fails when
+  // length is NaN (which is otherwise coerced to zero.)
+  if (length >= kMaxLength()) {
+    throw new RangeError('Attempt to allocate Buffer larger than maximum ' +
+                         'size: 0x' + kMaxLength().toString(16) + ' bytes')
+  }
+  return length | 0
+}
+
+function SlowBuffer (length) {
+  if (+length != length) { // eslint-disable-line eqeqeq
+    length = 0
+  }
+  return Buffer.alloc(+length)
+}
+
+Buffer.isBuffer = function isBuffer (b) {
+  return !!(b != null && b._isBuffer)
+}
+
+Buffer.compare = function compare (a, b) {
+  if (!Buffer.isBuffer(a) || !Buffer.isBuffer(b)) {
+    throw new TypeError('Arguments must be Buffers')
+  }
+
+  if (a === b) return 0
+
+  var x = a.length
+  var y = b.length
+
+  for (var i = 0, len = Math.min(x, y); i < len; ++i) {
+    if (a[i] !== b[i]) {
+      x = a[i]
+      y = b[i]
+      break
+    }
+  }
+
+  if (x < y) return -1
+  if (y < x) return 1
+  return 0
+}
+
+Buffer.isEncoding = function isEncoding (encoding) {
+  switch (String(encoding).toLowerCase()) {
+    case 'hex':
+    case 'utf8':
+    case 'utf-8':
+    case 'ascii':
+    case 'latin1':
+    case 'binary':
+    case 'base64':
+    case 'ucs2':
+    case 'ucs-2':
+    case 'utf16le':
+    case 'utf-16le':
+      return true
+    default:
+      return false
+  }
+}
+
+Buffer.concat = function concat (list, length) {
+  if (!isArray(list)) {
+    throw new TypeError('"list" argument must be an Array of Buffers')
+  }
+
+  if (list.length === 0) {
+    return Buffer.alloc(0)
+  }
+
+  var i
+  if (length === undefined) {
+    length = 0
+    for (i = 0; i < list.length; ++i) {
+      length += list[i].length
+    }
+  }
+
+  var buffer = Buffer.allocUnsafe(length)
+  var pos = 0
+  for (i = 0; i < list.length; ++i) {
+    var buf = list[i]
+    if (!Buffer.isBuffer(buf)) {
+      throw new TypeError('"list" argument must be an Array of Buffers')
+    }
+    buf.copy(buffer, pos)
+    pos += buf.length
+  }
+  return buffer
+}
+
+function byteLength (string, encoding) {
+  if (Buffer.isBuffer(string)) {
+    return string.length
+  }
+  if (typeof ArrayBuffer !== 'undefined' && typeof ArrayBuffer.isView === 'function' &&
+      (ArrayBuffer.isView(string) || string instanceof ArrayBuffer)) {
+    return string.byteLength
+  }
+  if (typeof string !== 'string') {
+    string = '' + string
+  }
+
+  var len = string.length
+  if (len === 0) return 0
+
+  // Use a for loop to avoid recursion
+  var loweredCase = false
+  for (;;) {
+    switch (encoding) {
+      case 'ascii':
+      case 'latin1':
+      case 'binary':
+        return len
+      case 'utf8':
+      case 'utf-8':
+      case undefined:
+        return utf8ToBytes(string).length
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return len * 2
+      case 'hex':
+        return len >>> 1
+      case 'base64':
+        return base64ToBytes(string).length
+      default:
+        if (loweredCase) return utf8ToBytes(string).length // assume utf8
+        encoding = ('' + encoding).toLowerCase()
+        loweredCase = true
+    }
+  }
+}
+Buffer.byteLength = byteLength
+
+function slowToString (encoding, start, end) {
+  var loweredCase = false
+
+  // No need to verify that "this.length <= MAX_UINT32" since it's a read-only
+  // property of a typed array.
+
+  // This behaves neither like String nor Uint8Array in that we set start/end
+  // to their upper/lower bounds if the value passed is out of range.
+  // undefined is handled specially as per ECMA-262 6th Edition,
+  // Section 13.3.3.7 Runtime Semantics: KeyedBindingInitialization.
+  if (start === undefined || start < 0) {
+    start = 0
+  }
+  // Return early if start > this.length. Done here to prevent potential uint32
+  // coercion fail below.
+  if (start > this.length) {
+    return ''
+  }
+
+  if (end === undefined || end > this.length) {
+    end = this.length
+  }
+
+  if (end <= 0) {
+    return ''
+  }
+
+  // Force coersion to uint32. This will also coerce falsey/NaN values to 0.
+  end >>>= 0
+  start >>>= 0
+
+  if (end <= start) {
+    return ''
+  }
+
+  if (!encoding) encoding = 'utf8'
+
+  while (true) {
+    switch (encoding) {
+      case 'hex':
+        return hexSlice(this, start, end)
+
+      case 'utf8':
+      case 'utf-8':
+        return utf8Slice(this, start, end)
+
+      case 'ascii':
+        return asciiSlice(this, start, end)
+
+      case 'latin1':
+      case 'binary':
+        return latin1Slice(this, start, end)
+
+      case 'base64':
+        return base64Slice(this, start, end)
+
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return utf16leSlice(this, start, end)
+
+      default:
+        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
+        encoding = (encoding + '').toLowerCase()
+        loweredCase = true
+    }
+  }
+}
+
+// The property is used by `Buffer.isBuffer` and `is-buffer` (in Safari 5-7) to detect
+// Buffer instances.
+Buffer.prototype._isBuffer = true
+
+function swap (b, n, m) {
+  var i = b[n]
+  b[n] = b[m]
+  b[m] = i
+}
+
+Buffer.prototype.swap16 = function swap16 () {
+  var len = this.length
+  if (len % 2 !== 0) {
+    throw new RangeError('Buffer size must be a multiple of 16-bits')
+  }
+  for (var i = 0; i < len; i += 2) {
+    swap(this, i, i + 1)
+  }
+  return this
+}
+
+Buffer.prototype.swap32 = function swap32 () {
+  var len = this.length
+  if (len % 4 !== 0) {
+    throw new RangeError('Buffer size must be a multiple of 32-bits')
+  }
+  for (var i = 0; i < len; i += 4) {
+    swap(this, i, i + 3)
+    swap(this, i + 1, i + 2)
+  }
+  return this
+}
+
+Buffer.prototype.swap64 = function swap64 () {
+  var len = this.length
+  if (len % 8 !== 0) {
+    throw new RangeError('Buffer size must be a multiple of 64-bits')
+  }
+  for (var i = 0; i < len; i += 8) {
+    swap(this, i, i + 7)
+    swap(this, i + 1, i + 6)
+    swap(this, i + 2, i + 5)
+    swap(this, i + 3, i + 4)
+  }
+  return this
+}
+
+Buffer.prototype.toString = function toString () {
+  var length = this.length | 0
+  if (length === 0) return ''
+  if (arguments.length === 0) return utf8Slice(this, 0, length)
+  return slowToString.apply(this, arguments)
+}
+
+Buffer.prototype.equals = function equals (b) {
+  if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
+  if (this === b) return true
+  return Buffer.compare(this, b) === 0
+}
+
+Buffer.prototype.inspect = function inspect () {
+  var str = ''
+  var max = exports.INSPECT_MAX_BYTES
+  if (this.length > 0) {
+    str = this.toString('hex', 0, max).match(/.{2}/g).join(' ')
+    if (this.length > max) str += ' ... '
+  }
+  return '<Buffer ' + str + '>'
+}
+
+Buffer.prototype.compare = function compare (target, start, end, thisStart, thisEnd) {
+  if (!Buffer.isBuffer(target)) {
+    throw new TypeError('Argument must be a Buffer')
+  }
+
+  if (start === undefined) {
+    start = 0
+  }
+  if (end === undefined) {
+    end = target ? target.length : 0
+  }
+  if (thisStart === undefined) {
+    thisStart = 0
+  }
+  if (thisEnd === undefined) {
+    thisEnd = this.length
+  }
+
+  if (start < 0 || end > target.length || thisStart < 0 || thisEnd > this.length) {
+    throw new RangeError('out of range index')
+  }
+
+  if (thisStart >= thisEnd && start >= end) {
+    return 0
+  }
+  if (thisStart >= thisEnd) {
+    return -1
+  }
+  if (start >= end) {
+    return 1
+  }
+
+  start >>>= 0
+  end >>>= 0
+  thisStart >>>= 0
+  thisEnd >>>= 0
+
+  if (this === target) return 0
+
+  var x = thisEnd - thisStart
+  var y = end - start
+  var len = Math.min(x, y)
+
+  var thisCopy = this.slice(thisStart, thisEnd)
+  var targetCopy = target.slice(start, end)
+
+  for (var i = 0; i < len; ++i) {
+    if (thisCopy[i] !== targetCopy[i]) {
+      x = thisCopy[i]
+      y = targetCopy[i]
+      break
+    }
+  }
+
+  if (x < y) return -1
+  if (y < x) return 1
+  return 0
+}
+
+// Finds either the first index of `val` in `buffer` at offset >= `byteOffset`,
+// OR the last index of `val` in `buffer` at offset <= `byteOffset`.
+//
+// Arguments:
+// - buffer - a Buffer to search
+// - val - a string, Buffer, or number
+// - byteOffset - an index into `buffer`; will be clamped to an int32
+// - encoding - an optional encoding, relevant is val is a string
+// - dir - true for indexOf, false for lastIndexOf
+function bidirectionalIndexOf (buffer, val, byteOffset, encoding, dir) {
+  // Empty buffer means no match
+  if (buffer.length === 0) return -1
+
+  // Normalize byteOffset
+  if (typeof byteOffset === 'string') {
+    encoding = byteOffset
+    byteOffset = 0
+  } else if (byteOffset > 0x7fffffff) {
+    byteOffset = 0x7fffffff
+  } else if (byteOffset < -0x80000000) {
+    byteOffset = -0x80000000
+  }
+  byteOffset = +byteOffset  // Coerce to Number.
+  if (isNaN(byteOffset)) {
+    // byteOffset: it it's undefined, null, NaN, "foo", etc, search whole buffer
+    byteOffset = dir ? 0 : (buffer.length - 1)
+  }
+
+  // Normalize byteOffset: negative offsets start from the end of the buffer
+  if (byteOffset < 0) byteOffset = buffer.length + byteOffset
+  if (byteOffset >= buffer.length) {
+    if (dir) return -1
+    else byteOffset = buffer.length - 1
+  } else if (byteOffset < 0) {
+    if (dir) byteOffset = 0
+    else return -1
+  }
+
+  // Normalize val
+  if (typeof val === 'string') {
+    val = Buffer.from(val, encoding)
+  }
+
+  // Finally, search either indexOf (if dir is true) or lastIndexOf
+  if (Buffer.isBuffer(val)) {
+    // Special case: looking for empty string/buffer always fails
+    if (val.length === 0) {
+      return -1
+    }
+    return arrayIndexOf(buffer, val, byteOffset, encoding, dir)
+  } else if (typeof val === 'number') {
+    val = val & 0xFF // Search for a byte value [0-255]
+    if (Buffer.TYPED_ARRAY_SUPPORT &&
+        typeof Uint8Array.prototype.indexOf === 'function') {
+      if (dir) {
+        return Uint8Array.prototype.indexOf.call(buffer, val, byteOffset)
+      } else {
+        return Uint8Array.prototype.lastIndexOf.call(buffer, val, byteOffset)
+      }
+    }
+    return arrayIndexOf(buffer, [ val ], byteOffset, encoding, dir)
+  }
+
+  throw new TypeError('val must be string, number or Buffer')
+}
+
+function arrayIndexOf (arr, val, byteOffset, encoding, dir) {
+  var indexSize = 1
+  var arrLength = arr.length
+  var valLength = val.length
+
+  if (encoding !== undefined) {
+    encoding = String(encoding).toLowerCase()
+    if (encoding === 'ucs2' || encoding === 'ucs-2' ||
+        encoding === 'utf16le' || encoding === 'utf-16le') {
+      if (arr.length < 2 || val.length < 2) {
+        return -1
+      }
+      indexSize = 2
+      arrLength /= 2
+      valLength /= 2
+      byteOffset /= 2
+    }
+  }
+
+  function read (buf, i) {
+    if (indexSize === 1) {
+      return buf[i]
+    } else {
+      return buf.readUInt16BE(i * indexSize)
+    }
+  }
+
+  var i
+  if (dir) {
+    var foundIndex = -1
+    for (i = byteOffset; i < arrLength; i++) {
+      if (read(arr, i) === read(val, foundIndex === -1 ? 0 : i - foundIndex)) {
+        if (foundIndex === -1) foundIndex = i
+        if (i - foundIndex + 1 === valLength) return foundIndex * indexSize
+      } else {
+        if (foundIndex !== -1) i -= i - foundIndex
+        foundIndex = -1
+      }
+    }
+  } else {
+    if (byteOffset + valLength > arrLength) byteOffset = arrLength - valLength
+    for (i = byteOffset; i >= 0; i--) {
+      var found = true
+      for (var j = 0; j < valLength; j++) {
+        if (read(arr, i + j) !== read(val, j)) {
+          found = false
+          break
+        }
+      }
+      if (found) return i
+    }
+  }
+
+  return -1
+}
+
+Buffer.prototype.includes = function includes (val, byteOffset, encoding) {
+  return this.indexOf(val, byteOffset, encoding) !== -1
+}
+
+Buffer.prototype.indexOf = function indexOf (val, byteOffset, encoding) {
+  return bidirectionalIndexOf(this, val, byteOffset, encoding, true)
+}
+
+Buffer.prototype.lastIndexOf = function lastIndexOf (val, byteOffset, encoding) {
+  return bidirectionalIndexOf(this, val, byteOffset, encoding, false)
+}
+
+function hexWrite (buf, string, offset, length) {
+  offset = Number(offset) || 0
+  var remaining = buf.length - offset
+  if (!length) {
+    length = remaining
+  } else {
+    length = Number(length)
+    if (length > remaining) {
+      length = remaining
+    }
+  }
+
+  // must be an even number of digits
+  var strLen = string.length
+  if (strLen % 2 !== 0) throw new TypeError('Invalid hex string')
+
+  if (length > strLen / 2) {
+    length = strLen / 2
+  }
+  for (var i = 0; i < length; ++i) {
+    var parsed = parseInt(string.substr(i * 2, 2), 16)
+    if (isNaN(parsed)) return i
+    buf[offset + i] = parsed
+  }
+  return i
+}
+
+function utf8Write (buf, string, offset, length) {
+  return blitBuffer(utf8ToBytes(string, buf.length - offset), buf, offset, length)
+}
+
+function asciiWrite (buf, string, offset, length) {
+  return blitBuffer(asciiToBytes(string), buf, offset, length)
+}
+
+function latin1Write (buf, string, offset, length) {
+  return asciiWrite(buf, string, offset, length)
+}
+
+function base64Write (buf, string, offset, length) {
+  return blitBuffer(base64ToBytes(string), buf, offset, length)
+}
+
+function ucs2Write (buf, string, offset, length) {
+  return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length)
+}
+
+Buffer.prototype.write = function write (string, offset, length, encoding) {
+  // Buffer#write(string)
+  if (offset === undefined) {
+    encoding = 'utf8'
+    length = this.length
+    offset = 0
+  // Buffer#write(string, encoding)
+  } else if (length === undefined && typeof offset === 'string') {
+    encoding = offset
+    length = this.length
+    offset = 0
+  // Buffer#write(string, offset[, length][, encoding])
+  } else if (isFinite(offset)) {
+    offset = offset | 0
+    if (isFinite(length)) {
+      length = length | 0
+      if (encoding === undefined) encoding = 'utf8'
+    } else {
+      encoding = length
+      length = undefined
+    }
+  // legacy write(string, encoding, offset, length) - remove in v0.13
+  } else {
+    throw new Error(
+      'Buffer.write(string, encoding, offset[, length]) is no longer supported'
+    )
+  }
+
+  var remaining = this.length - offset
+  if (length === undefined || length > remaining) length = remaining
+
+  if ((string.length > 0 && (length < 0 || offset < 0)) || offset > this.length) {
+    throw new RangeError('Attempt to write outside buffer bounds')
+  }
+
+  if (!encoding) encoding = 'utf8'
+
+  var loweredCase = false
+  for (;;) {
+    switch (encoding) {
+      case 'hex':
+        return hexWrite(this, string, offset, length)
+
+      case 'utf8':
+      case 'utf-8':
+        return utf8Write(this, string, offset, length)
+
+      case 'ascii':
+        return asciiWrite(this, string, offset, length)
+
+      case 'latin1':
+      case 'binary':
+        return latin1Write(this, string, offset, length)
+
+      case 'base64':
+        // Warning: maxLength not taken into account in base64Write
+        return base64Write(this, string, offset, length)
+
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return ucs2Write(this, string, offset, length)
+
+      default:
+        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
+        encoding = ('' + encoding).toLowerCase()
+        loweredCase = true
+    }
+  }
+}
+
+Buffer.prototype.toJSON = function toJSON () {
+  return {
+    type: 'Buffer',
+    data: Array.prototype.slice.call(this._arr || this, 0)
+  }
+}
+
+function base64Slice (buf, start, end) {
+  if (start === 0 && end === buf.length) {
+    return base64.fromByteArray(buf)
+  } else {
+    return base64.fromByteArray(buf.slice(start, end))
+  }
+}
+
+function utf8Slice (buf, start, end) {
+  end = Math.min(buf.length, end)
+  var res = []
+
+  var i = start
+  while (i < end) {
+    var firstByte = buf[i]
+    var codePoint = null
+    var bytesPerSequence = (firstByte > 0xEF) ? 4
+      : (firstByte > 0xDF) ? 3
+      : (firstByte > 0xBF) ? 2
+      : 1
+
+    if (i + bytesPerSequence <= end) {
+      var secondByte, thirdByte, fourthByte, tempCodePoint
+
+      switch (bytesPerSequence) {
+        case 1:
+          if (firstByte < 0x80) {
+            codePoint = firstByte
+          }
+          break
+        case 2:
+          secondByte = buf[i + 1]
+          if ((secondByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0x1F) << 0x6 | (secondByte & 0x3F)
+            if (tempCodePoint > 0x7F) {
+              codePoint = tempCodePoint
+            }
+          }
+          break
+        case 3:
+          secondByte = buf[i + 1]
+          thirdByte = buf[i + 2]
+          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0xF) << 0xC | (secondByte & 0x3F) << 0x6 | (thirdByte & 0x3F)
+            if (tempCodePoint > 0x7FF && (tempCodePoint < 0xD800 || tempCodePoint > 0xDFFF)) {
+              codePoint = tempCodePoint
+            }
+          }
+          break
+        case 4:
+          secondByte = buf[i + 1]
+          thirdByte = buf[i + 2]
+          fourthByte = buf[i + 3]
+          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80 && (fourthByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0xF) << 0x12 | (secondByte & 0x3F) << 0xC | (thirdByte & 0x3F) << 0x6 | (fourthByte & 0x3F)
+            if (tempCodePoint > 0xFFFF && tempCodePoint < 0x110000) {
+              codePoint = tempCodePoint
+            }
+          }
+      }
+    }
+
+    if (codePoint === null) {
+      // we did not generate a valid codePoint so insert a
+      // replacement char (U+FFFD) and advance only 1 byte
+      codePoint = 0xFFFD
+      bytesPerSequence = 1
+    } else if (codePoint > 0xFFFF) {
+      // encode to utf16 (surrogate pair dance)
+      codePoint -= 0x10000
+      res.push(codePoint >>> 10 & 0x3FF | 0xD800)
+      codePoint = 0xDC00 | codePoint & 0x3FF
+    }
+
+    res.push(codePoint)
+    i += bytesPerSequence
+  }
+
+  return decodeCodePointsArray(res)
+}
+
+// Based on http://stackoverflow.com/a/22747272/680742, the browser with
+// the lowest limit is Chrome, with 0x10000 args.
+// We go 1 magnitude less, for safety
+var MAX_ARGUMENTS_LENGTH = 0x1000
+
+function decodeCodePointsArray (codePoints) {
+  var len = codePoints.length
+  if (len <= MAX_ARGUMENTS_LENGTH) {
+    return String.fromCharCode.apply(String, codePoints) // avoid extra slice()
+  }
+
+  // Decode in chunks to avoid "call stack size exceeded".
+  var res = ''
+  var i = 0
+  while (i < len) {
+    res += String.fromCharCode.apply(
+      String,
+      codePoints.slice(i, i += MAX_ARGUMENTS_LENGTH)
+    )
+  }
+  return res
+}
+
+function asciiSlice (buf, start, end) {
+  var ret = ''
+  end = Math.min(buf.length, end)
+
+  for (var i = start; i < end; ++i) {
+    ret += String.fromCharCode(buf[i] & 0x7F)
+  }
+  return ret
+}
+
+function latin1Slice (buf, start, end) {
+  var ret = ''
+  end = Math.min(buf.length, end)
+
+  for (var i = start; i < end; ++i) {
+    ret += String.fromCharCode(buf[i])
+  }
+  return ret
+}
+
+function hexSlice (buf, start, end) {
+  var len = buf.length
+
+  if (!start || start < 0) start = 0
+  if (!end || end < 0 || end > len) end = len
+
+  var out = ''
+  for (var i = start; i < end; ++i) {
+    out += toHex(buf[i])
+  }
+  return out
+}
+
+function utf16leSlice (buf, start, end) {
+  var bytes = buf.slice(start, end)
+  var res = ''
+  for (var i = 0; i < bytes.length; i += 2) {
+    res += String.fromCharCode(bytes[i] + bytes[i + 1] * 256)
+  }
+  return res
+}
+
+Buffer.prototype.slice = function slice (start, end) {
+  var len = this.length
+  start = ~~start
+  end = end === undefined ? len : ~~end
+
+  if (start < 0) {
+    start += len
+    if (start < 0) start = 0
+  } else if (start > len) {
+    start = len
+  }
+
+  if (end < 0) {
+    end += len
+    if (end < 0) end = 0
+  } else if (end > len) {
+    end = len
+  }
+
+  if (end < start) end = start
+
+  var newBuf
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    newBuf = this.subarray(start, end)
+    newBuf.__proto__ = Buffer.prototype
+  } else {
+    var sliceLen = end - start
+    newBuf = new Buffer(sliceLen, undefined)
+    for (var i = 0; i < sliceLen; ++i) {
+      newBuf[i] = this[i + start]
+    }
+  }
+
+  return newBuf
+}
+
+/*
+ * Need to make sure that buffer isn't trying to write out of bounds.
+ */
+function checkOffset (offset, ext, length) {
+  if ((offset % 1) !== 0 || offset < 0) throw new RangeError('offset is not uint')
+  if (offset + ext > length) throw new RangeError('Trying to access beyond buffer length')
+}
+
+Buffer.prototype.readUIntLE = function readUIntLE (offset, byteLength, noAssert) {
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) checkOffset(offset, byteLength, this.length)
+
+  var val = this[offset]
+  var mul = 1
+  var i = 0
+  while (++i < byteLength && (mul *= 0x100)) {
+    val += this[offset + i] * mul
+  }
+
+  return val
+}
+
+Buffer.prototype.readUIntBE = function readUIntBE (offset, byteLength, noAssert) {
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) {
+    checkOffset(offset, byteLength, this.length)
+  }
+
+  var val = this[offset + --byteLength]
+  var mul = 1
+  while (byteLength > 0 && (mul *= 0x100)) {
+    val += this[offset + --byteLength] * mul
+  }
+
+  return val
+}
+
+Buffer.prototype.readUInt8 = function readUInt8 (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 1, this.length)
+  return this[offset]
+}
+
+Buffer.prototype.readUInt16LE = function readUInt16LE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  return this[offset] | (this[offset + 1] << 8)
+}
+
+Buffer.prototype.readUInt16BE = function readUInt16BE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  return (this[offset] << 8) | this[offset + 1]
+}
+
+Buffer.prototype.readUInt32LE = function readUInt32LE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return ((this[offset]) |
+      (this[offset + 1] << 8) |
+      (this[offset + 2] << 16)) +
+      (this[offset + 3] * 0x1000000)
+}
+
+Buffer.prototype.readUInt32BE = function readUInt32BE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return (this[offset] * 0x1000000) +
+    ((this[offset + 1] << 16) |
+    (this[offset + 2] << 8) |
+    this[offset + 3])
+}
+
+Buffer.prototype.readIntLE = function readIntLE (offset, byteLength, noAssert) {
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) checkOffset(offset, byteLength, this.length)
+
+  var val = this[offset]
+  var mul = 1
+  var i = 0
+  while (++i < byteLength && (mul *= 0x100)) {
+    val += this[offset + i] * mul
+  }
+  mul *= 0x80
+
+  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
+
+  return val
+}
+
+Buffer.prototype.readIntBE = function readIntBE (offset, byteLength, noAssert) {
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) checkOffset(offset, byteLength, this.length)
+
+  var i = byteLength
+  var mul = 1
+  var val = this[offset + --i]
+  while (i > 0 && (mul *= 0x100)) {
+    val += this[offset + --i] * mul
+  }
+  mul *= 0x80
+
+  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
+
+  return val
+}
+
+Buffer.prototype.readInt8 = function readInt8 (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 1, this.length)
+  if (!(this[offset] & 0x80)) return (this[offset])
+  return ((0xff - this[offset] + 1) * -1)
+}
+
+Buffer.prototype.readInt16LE = function readInt16LE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  var val = this[offset] | (this[offset + 1] << 8)
+  return (val & 0x8000) ? val | 0xFFFF0000 : val
+}
+
+Buffer.prototype.readInt16BE = function readInt16BE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  var val = this[offset + 1] | (this[offset] << 8)
+  return (val & 0x8000) ? val | 0xFFFF0000 : val
+}
+
+Buffer.prototype.readInt32LE = function readInt32LE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return (this[offset]) |
+    (this[offset + 1] << 8) |
+    (this[offset + 2] << 16) |
+    (this[offset + 3] << 24)
+}
+
+Buffer.prototype.readInt32BE = function readInt32BE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return (this[offset] << 24) |
+    (this[offset + 1] << 16) |
+    (this[offset + 2] << 8) |
+    (this[offset + 3])
+}
+
+Buffer.prototype.readFloatLE = function readFloatLE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+  return ieee754.read(this, offset, true, 23, 4)
+}
+
+Buffer.prototype.readFloatBE = function readFloatBE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+  return ieee754.read(this, offset, false, 23, 4)
+}
+
+Buffer.prototype.readDoubleLE = function readDoubleLE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 8, this.length)
+  return ieee754.read(this, offset, true, 52, 8)
+}
+
+Buffer.prototype.readDoubleBE = function readDoubleBE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 8, this.length)
+  return ieee754.read(this, offset, false, 52, 8)
+}
+
+function checkInt (buf, value, offset, ext, max, min) {
+  if (!Buffer.isBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance')
+  if (value > max || value < min) throw new RangeError('"value" argument is out of bounds')
+  if (offset + ext > buf.length) throw new RangeError('Index out of range')
+}
+
+Buffer.prototype.writeUIntLE = function writeUIntLE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) {
+    var maxBytes = Math.pow(2, 8 * byteLength) - 1
+    checkInt(this, value, offset, byteLength, maxBytes, 0)
+  }
+
+  var mul = 1
+  var i = 0
+  this[offset] = value & 0xFF
+  while (++i < byteLength && (mul *= 0x100)) {
+    this[offset + i] = (value / mul) & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeUIntBE = function writeUIntBE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) {
+    var maxBytes = Math.pow(2, 8 * byteLength) - 1
+    checkInt(this, value, offset, byteLength, maxBytes, 0)
+  }
+
+  var i = byteLength - 1
+  var mul = 1
+  this[offset + i] = value & 0xFF
+  while (--i >= 0 && (mul *= 0x100)) {
+    this[offset + i] = (value / mul) & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeUInt8 = function writeUInt8 (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 1, 0xff, 0)
+  if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
+  this[offset] = (value & 0xff)
+  return offset + 1
+}
+
+function objectWriteUInt16 (buf, value, offset, littleEndian) {
+  if (value < 0) value = 0xffff + value + 1
+  for (var i = 0, j = Math.min(buf.length - offset, 2); i < j; ++i) {
+    buf[offset + i] = (value & (0xff << (8 * (littleEndian ? i : 1 - i)))) >>>
+      (littleEndian ? i : 1 - i) * 8
+  }
+}
+
+Buffer.prototype.writeUInt16LE = function writeUInt16LE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value & 0xff)
+    this[offset + 1] = (value >>> 8)
+  } else {
+    objectWriteUInt16(this, value, offset, true)
+  }
+  return offset + 2
+}
+
+Buffer.prototype.writeUInt16BE = function writeUInt16BE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value >>> 8)
+    this[offset + 1] = (value & 0xff)
+  } else {
+    objectWriteUInt16(this, value, offset, false)
+  }
+  return offset + 2
+}
+
+function objectWriteUInt32 (buf, value, offset, littleEndian) {
+  if (value < 0) value = 0xffffffff + value + 1
+  for (var i = 0, j = Math.min(buf.length - offset, 4); i < j; ++i) {
+    buf[offset + i] = (value >>> (littleEndian ? i : 3 - i) * 8) & 0xff
+  }
+}
+
+Buffer.prototype.writeUInt32LE = function writeUInt32LE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset + 3] = (value >>> 24)
+    this[offset + 2] = (value >>> 16)
+    this[offset + 1] = (value >>> 8)
+    this[offset] = (value & 0xff)
+  } else {
+    objectWriteUInt32(this, value, offset, true)
+  }
+  return offset + 4
+}
+
+Buffer.prototype.writeUInt32BE = function writeUInt32BE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value >>> 24)
+    this[offset + 1] = (value >>> 16)
+    this[offset + 2] = (value >>> 8)
+    this[offset + 3] = (value & 0xff)
+  } else {
+    objectWriteUInt32(this, value, offset, false)
+  }
+  return offset + 4
+}
+
+Buffer.prototype.writeIntLE = function writeIntLE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) {
+    var limit = Math.pow(2, 8 * byteLength - 1)
+
+    checkInt(this, value, offset, byteLength, limit - 1, -limit)
+  }
+
+  var i = 0
+  var mul = 1
+  var sub = 0
+  this[offset] = value & 0xFF
+  while (++i < byteLength && (mul *= 0x100)) {
+    if (value < 0 && sub === 0 && this[offset + i - 1] !== 0) {
+      sub = 1
+    }
+    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeIntBE = function writeIntBE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) {
+    var limit = Math.pow(2, 8 * byteLength - 1)
+
+    checkInt(this, value, offset, byteLength, limit - 1, -limit)
+  }
+
+  var i = byteLength - 1
+  var mul = 1
+  var sub = 0
+  this[offset + i] = value & 0xFF
+  while (--i >= 0 && (mul *= 0x100)) {
+    if (value < 0 && sub === 0 && this[offset + i + 1] !== 0) {
+      sub = 1
+    }
+    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeInt8 = function writeInt8 (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 1, 0x7f, -0x80)
+  if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
+  if (value < 0) value = 0xff + value + 1
+  this[offset] = (value & 0xff)
+  return offset + 1
+}
+
+Buffer.prototype.writeInt16LE = function writeInt16LE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value & 0xff)
+    this[offset + 1] = (value >>> 8)
+  } else {
+    objectWriteUInt16(this, value, offset, true)
+  }
+  return offset + 2
+}
+
+Buffer.prototype.writeInt16BE = function writeInt16BE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value >>> 8)
+    this[offset + 1] = (value & 0xff)
+  } else {
+    objectWriteUInt16(this, value, offset, false)
+  }
+  return offset + 2
+}
+
+Buffer.prototype.writeInt32LE = function writeInt32LE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value & 0xff)
+    this[offset + 1] = (value >>> 8)
+    this[offset + 2] = (value >>> 16)
+    this[offset + 3] = (value >>> 24)
+  } else {
+    objectWriteUInt32(this, value, offset, true)
+  }
+  return offset + 4
+}
+
+Buffer.prototype.writeInt32BE = function writeInt32BE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
+  if (value < 0) value = 0xffffffff + value + 1
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value >>> 24)
+    this[offset + 1] = (value >>> 16)
+    this[offset + 2] = (value >>> 8)
+    this[offset + 3] = (value & 0xff)
+  } else {
+    objectWriteUInt32(this, value, offset, false)
+  }
+  return offset + 4
+}
+
+function checkIEEE754 (buf, value, offset, ext, max, min) {
+  if (offset + ext > buf.length) throw new RangeError('Index out of range')
+  if (offset < 0) throw new RangeError('Index out of range')
+}
+
+function writeFloat (buf, value, offset, littleEndian, noAssert) {
+  if (!noAssert) {
+    checkIEEE754(buf, value, offset, 4, 3.4028234663852886e+38, -3.4028234663852886e+38)
+  }
+  ieee754.write(buf, value, offset, littleEndian, 23, 4)
+  return offset + 4
+}
+
+Buffer.prototype.writeFloatLE = function writeFloatLE (value, offset, noAssert) {
+  return writeFloat(this, value, offset, true, noAssert)
+}
+
+Buffer.prototype.writeFloatBE = function writeFloatBE (value, offset, noAssert) {
+  return writeFloat(this, value, offset, false, noAssert)
+}
+
+function writeDouble (buf, value, offset, littleEndian, noAssert) {
+  if (!noAssert) {
+    checkIEEE754(buf, value, offset, 8, 1.7976931348623157E+308, -1.7976931348623157E+308)
+  }
+  ieee754.write(buf, value, offset, littleEndian, 52, 8)
+  return offset + 8
+}
+
+Buffer.prototype.writeDoubleLE = function writeDoubleLE (value, offset, noAssert) {
+  return writeDouble(this, value, offset, true, noAssert)
+}
+
+Buffer.prototype.writeDoubleBE = function writeDoubleBE (value, offset, noAssert) {
+  return writeDouble(this, value, offset, false, noAssert)
+}
+
+// copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
+Buffer.prototype.copy = function copy (target, targetStart, start, end) {
+  if (!start) start = 0
+  if (!end && end !== 0) end = this.length
+  if (targetStart >= target.length) targetStart = target.length
+  if (!targetStart) targetStart = 0
+  if (end > 0 && end < start) end = start
+
+  // Copy 0 bytes; we're done
+  if (end === start) return 0
+  if (target.length === 0 || this.length === 0) return 0
+
+  // Fatal error conditions
+  if (targetStart < 0) {
+    throw new RangeError('targetStart out of bounds')
+  }
+  if (start < 0 || start >= this.length) throw new RangeError('sourceStart out of bounds')
+  if (end < 0) throw new RangeError('sourceEnd out of bounds')
+
+  // Are we oob?
+  if (end > this.length) end = this.length
+  if (target.length - targetStart < end - start) {
+    end = target.length - targetStart + start
+  }
+
+  var len = end - start
+  var i
+
+  if (this === target && start < targetStart && targetStart < end) {
+    // descending copy from end
+    for (i = len - 1; i >= 0; --i) {
+      target[i + targetStart] = this[i + start]
+    }
+  } else if (len < 1000 || !Buffer.TYPED_ARRAY_SUPPORT) {
+    // ascending copy from start
+    for (i = 0; i < len; ++i) {
+      target[i + targetStart] = this[i + start]
+    }
+  } else {
+    Uint8Array.prototype.set.call(
+      target,
+      this.subarray(start, start + len),
+      targetStart
+    )
+  }
+
+  return len
+}
+
+// Usage:
+//    buffer.fill(number[, offset[, end]])
+//    buffer.fill(buffer[, offset[, end]])
+//    buffer.fill(string[, offset[, end]][, encoding])
+Buffer.prototype.fill = function fill (val, start, end, encoding) {
+  // Handle string cases:
+  if (typeof val === 'string') {
+    if (typeof start === 'string') {
+      encoding = start
+      start = 0
+      end = this.length
+    } else if (typeof end === 'string') {
+      encoding = end
+      end = this.length
+    }
+    if (val.length === 1) {
+      var code = val.charCodeAt(0)
+      if (code < 256) {
+        val = code
+      }
+    }
+    if (encoding !== undefined && typeof encoding !== 'string') {
+      throw new TypeError('encoding must be a string')
+    }
+    if (typeof encoding === 'string' && !Buffer.isEncoding(encoding)) {
+      throw new TypeError('Unknown encoding: ' + encoding)
+    }
+  } else if (typeof val === 'number') {
+    val = val & 255
+  }
+
+  // Invalid ranges are not set to a default, so can range check early.
+  if (start < 0 || this.length < start || this.length < end) {
+    throw new RangeError('Out of range index')
+  }
+
+  if (end <= start) {
+    return this
+  }
+
+  start = start >>> 0
+  end = end === undefined ? this.length : end >>> 0
+
+  if (!val) val = 0
+
+  var i
+  if (typeof val === 'number') {
+    for (i = start; i < end; ++i) {
+      this[i] = val
+    }
+  } else {
+    var bytes = Buffer.isBuffer(val)
+      ? val
+      : utf8ToBytes(new Buffer(val, encoding).toString())
+    var len = bytes.length
+    for (i = 0; i < end - start; ++i) {
+      this[i + start] = bytes[i % len]
+    }
+  }
+
+  return this
+}
+
+// HELPER FUNCTIONS
+// ================
+
+var INVALID_BASE64_RE = /[^+\/0-9A-Za-z-_]/g
+
+function base64clean (str) {
+  // Node strips out invalid characters like \n and \t from the string, base64-js does not
+  str = stringtrim(str).replace(INVALID_BASE64_RE, '')
+  // Node converts strings with length < 2 to ''
+  if (str.length < 2) return ''
+  // Node allows for non-padded base64 strings (missing trailing ===), base64-js does not
+  while (str.length % 4 !== 0) {
+    str = str + '='
+  }
+  return str
+}
+
+function stringtrim (str) {
+  if (str.trim) return str.trim()
+  return str.replace(/^\s+|\s+$/g, '')
+}
+
+function toHex (n) {
+  if (n < 16) return '0' + n.toString(16)
+  return n.toString(16)
+}
+
+function utf8ToBytes (string, units) {
+  units = units || Infinity
+  var codePoint
+  var length = string.length
+  var leadSurrogate = null
+  var bytes = []
+
+  for (var i = 0; i < length; ++i) {
+    codePoint = string.charCodeAt(i)
+
+    // is surrogate component
+    if (codePoint > 0xD7FF && codePoint < 0xE000) {
+      // last char was a lead
+      if (!leadSurrogate) {
+        // no lead yet
+        if (codePoint > 0xDBFF) {
+          // unexpected trail
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          continue
+        } else if (i + 1 === length) {
+          // unpaired lead
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          continue
+        }
+
+        // valid lead
+        leadSurrogate = codePoint
+
+        continue
+      }
+
+      // 2 leads in a row
+      if (codePoint < 0xDC00) {
+        if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+        leadSurrogate = codePoint
+        continue
+      }
+
+      // valid surrogate pair
+      codePoint = (leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00) + 0x10000
+    } else if (leadSurrogate) {
+      // valid bmp char, but last char was a lead
+      if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+    }
+
+    leadSurrogate = null
+
+    // encode utf8
+    if (codePoint < 0x80) {
+      if ((units -= 1) < 0) break
+      bytes.push(codePoint)
+    } else if (codePoint < 0x800) {
+      if ((units -= 2) < 0) break
+      bytes.push(
+        codePoint >> 0x6 | 0xC0,
+        codePoint & 0x3F | 0x80
+      )
+    } else if (codePoint < 0x10000) {
+      if ((units -= 3) < 0) break
+      bytes.push(
+        codePoint >> 0xC | 0xE0,
+        codePoint >> 0x6 & 0x3F | 0x80,
+        codePoint & 0x3F | 0x80
+      )
+    } else if (codePoint < 0x110000) {
+      if ((units -= 4) < 0) break
+      bytes.push(
+        codePoint >> 0x12 | 0xF0,
+        codePoint >> 0xC & 0x3F | 0x80,
+        codePoint >> 0x6 & 0x3F | 0x80,
+        codePoint & 0x3F | 0x80
+      )
+    } else {
+      throw new Error('Invalid code point')
+    }
+  }
+
+  return bytes
+}
+
+function asciiToBytes (str) {
+  var byteArray = []
+  for (var i = 0; i < str.length; ++i) {
+    // Node's code seems to be doing this and not & 0x7F..
+    byteArray.push(str.charCodeAt(i) & 0xFF)
+  }
+  return byteArray
+}
+
+function utf16leToBytes (str, units) {
+  var c, hi, lo
+  var byteArray = []
+  for (var i = 0; i < str.length; ++i) {
+    if ((units -= 2) < 0) break
+
+    c = str.charCodeAt(i)
+    hi = c >> 8
+    lo = c % 256
+    byteArray.push(lo)
+    byteArray.push(hi)
+  }
+
+  return byteArray
+}
+
+function base64ToBytes (str) {
+  return base64.toByteArray(base64clean(str))
+}
+
+function blitBuffer (src, dst, offset, length) {
+  for (var i = 0; i < length; ++i) {
+    if ((i + offset >= dst.length) || (i >= src.length)) break
+    dst[i + offset] = src[i]
+  }
+  return i
+}
+
+function isnan (val) {
+  return val !== val // eslint-disable-line no-self-compare
+}
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -11836,7 +11901,7 @@ module.exports = __webpack_require__(/*! ./lib/_stream_writable.js */ "../node_m
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint-disable node/no-deprecated-api */
-var buffer = __webpack_require__(/*! buffer */ "../node_modules/buffer/index.js")
+var buffer = __webpack_require__(/*! buffer */ "../node_modules/node-libs-browser/node_modules/buffer/index.js")
 var Buffer = buffer.Buffer
 
 // alternative to using Object.keys for old browsers
@@ -13648,7 +13713,7 @@ class AlpheiosConcordanceAdapter extends _adapters_base_adapter__WEBPACK_IMPORTE
 /*! exports provided: authors, default */
 /***/ (function(module) {
 
-module.exports = {"authors":[{"urn":"urn:cts:latinLit:phi2456","title":[{"@lang":"lat","@value":"Parthenius Presbyter"}],"abbreviations":[{"@lang":"lat","@value":"Parth"}],"works":[{"urn":"urn:cts:latinLit:phi2456.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0119","title":[{"@lang":"lat","@value":"Titus Maccius Plautus"}],"abbreviations":[{"@lang":"lat","@value":"Pl"}],"works":[{"urn":"urn:cts:latinLit:phi0119.phi0001","title":[{"@lang":"lat","@value":"Amphitruo"}],"abbreviations":[{"@lang":"lat","@value":"Am"}]},{"urn":"urn:cts:latinLit:phi0119.phi0002","title":[{"@lang":"lat","@value":"Asinaria"}],"abbreviations":[{"@lang":"lat","@value":"As"}]},{"urn":"urn:cts:latinLit:phi0119.phi0003","title":[{"@lang":"lat","@value":"Aulularia"}],"abbreviations":[{"@lang":"lat","@value":"Aul"}]},{"urn":"urn:cts:latinLit:phi0119.phi0004","title":[{"@lang":"lat","@value":"Bacchides"}],"abbreviations":[{"@lang":"lat","@value":"Bac"}]},{"urn":"urn:cts:latinLit:phi0119.phi0005","title":[{"@lang":"lat","@value":"Captivi"}],"abbreviations":[{"@lang":"lat","@value":"Capt"}]},{"urn":"urn:cts:latinLit:phi0119.phi0006","title":[{"@lang":"lat","@value":"Casina"}],"abbreviations":[{"@lang":"lat","@value":"Cas"}]},{"urn":"urn:cts:latinLit:phi0119.phi0007","title":[{"@lang":"lat","@value":"Cistellaria"}],"abbreviations":[{"@lang":"lat","@value":"Cist"}]},{"urn":"urn:cts:latinLit:phi0119.phi0008","title":[{"@lang":"lat","@value":"Curculio"}],"abbreviations":[{"@lang":"lat","@value":"Cur"}]},{"urn":"urn:cts:latinLit:phi0119.phi0009","title":[{"@lang":"lat","@value":"Epidicus"}],"abbreviations":[{"@lang":"lat","@value":"Epid"}]},{"urn":"urn:cts:latinLit:phi0119.phi0010","title":[{"@lang":"lat","@value":"Menaechmi"}],"abbreviations":[{"@lang":"lat","@value":"Men"}]},{"urn":"urn:cts:latinLit:phi0119.phi0011","title":[{"@lang":"lat","@value":"Mercator"}],"abbreviations":[{"@lang":"lat","@value":"Mer"}]},{"urn":"urn:cts:latinLit:phi0119.phi0012","title":[{"@lang":"lat","@value":"Miles Gloriosus"}],"abbreviations":[{"@lang":"lat","@value":"Mil"}]},{"urn":"urn:cts:latinLit:phi0119.phi0013","title":[{"@lang":"lat","@value":"Mostellaria"}],"abbreviations":[{"@lang":"lat","@value":"Mos"}]},{"urn":"urn:cts:latinLit:phi0119.phi0014","title":[{"@lang":"lat","@value":"Persa"}],"abbreviations":[{"@lang":"lat","@value":"Per"}]},{"urn":"urn:cts:latinLit:phi0119.phi0015","title":[{"@lang":"lat","@value":"Poenulus"}],"abbreviations":[{"@lang":"lat","@value":"Poen"}]},{"urn":"urn:cts:latinLit:phi0119.phi0016","title":[{"@lang":"lat","@value":"Pseudolus"}],"abbreviations":[{"@lang":"lat","@value":"Ps"}]},{"urn":"urn:cts:latinLit:phi0119.phi0017","title":[{"@lang":"lat","@value":"Rudens"}],"abbreviations":[{"@lang":"lat","@value":"Rud"}]},{"urn":"urn:cts:latinLit:phi0119.phi0018","title":[{"@lang":"lat","@value":"Stichus"}],"abbreviations":[{"@lang":"lat","@value":"St"}]},{"urn":"urn:cts:latinLit:phi0119.phi0019","title":[{"@lang":"lat","@value":"Trinummus"}],"abbreviations":[{"@lang":"lat","@value":"Trin"}]},{"urn":"urn:cts:latinLit:phi0119.phi0020","title":[{"@lang":"lat","@value":"Truculentus"}],"abbreviations":[{"@lang":"lat","@value":"Truc"}]},{"urn":"urn:cts:latinLit:phi0119.phi0021","title":[{"@lang":"lat","@value":"Vidularia"}],"abbreviations":[{"@lang":"lat","@value":"Vid"}]},{"urn":"urn:cts:latinLit:phi0119.phi0022","title":[{"@lang":"lat","@value":"Fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"Fr"}]}]},{"urn":"urn:cts:latinLit:phi0881","title":[{"@lang":"lat","@value":"Claudius Caesar Germanicus"}],"abbreviations":[{"@lang":"lat","@value":"Germ"}],"works":[{"urn":"urn:cts:latinLit:phi0881.phi0001","title":[{"@lang":"lat","@value":"Aratea"}],"abbreviations":[{"@lang":"lat","@value":"Arat"}]},{"urn":"urn:cts:latinLit:phi0881.phi0002","title":[{"@lang":"lat","@value":"fragmenta Aratea"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]},{"urn":"urn:cts:latinLit:phi0881.phi0003","title":[{"@lang":"lat","@value":"epigrammata"}],"abbreviations":[{"@lang":"lat","@value":"Epig"}]}]},{"urn":"urn:cts:latinLit:phi0821","title":[{"@lang":"lat","@value":"Bucolica Einsidlensia"}],"abbreviations":[{"@lang":"lat","@value":"BucEins"}],"works":[{"urn":"urn:cts:latinLit:phi0821.phi0001","title":[{"@lang":"lat","@value":"Bucolica Einsidlensia"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0845","title":[{"@lang":"lat","@value":"L. Iunius Moderatus Columella"}],"abbreviations":[{"@lang":"lat","@value":"Col"}],"works":[{"urn":"urn:cts:latinLit:phi0845.phi0001","title":[{"@lang":"lat","@value":"De Arboribus"}],"abbreviations":[{"@lang":"lat","@value":"Arb"}]},{"urn":"urn:cts:latinLit:phi0845.phi0002","title":[{"@lang":"lat","@value":"De Re Rustica"}],"abbreviations":[{"@lang":"lat","@value":"RR"}]}]},{"urn":"urn:cts:latinLit:phi0984","title":[{"@lang":"lat","@value":"Pompeius Trogus"}],"abbreviations":[{"@lang":"lat","@value":"Trog"}],"works":[{"urn":"urn:cts:latinLit:phi0984.phi0001","title":[{"@lang":"lat","@value":"De Animalibus"}],"abbreviations":[{"@lang":"lat","@value":"Anim"}]},{"urn":"urn:cts:latinLit:phi0984.phi0002","title":[{"@lang":"lat","@value":"Historiae Philippicae"}],"abbreviations":[{"@lang":"lat","@value":"Hist"}]}]},{"urn":"urn:cts:latinLit:phi0558","title":[{"@lang":"lat","@value":"Gaius Cilnius Maecenas"}],"abbreviations":[{"@lang":"lat","@value":"Maec"}],"works":[{"urn":"urn:cts:latinLit:phi0558.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0558.phi0002","title":[{"@lang":"lat","@value":"fragmentum a Morel omissum"}],"abbreviations":[{"@lang":"lat","@value":"poetB"}]}]},{"urn":"urn:cts:latinLit:phi1297","title":[{"@lang":"lat","@value":"Marullus"}],"abbreviations":[{"@lang":"lat","@value":"Marull"}],"works":[{"urn":"urn:cts:latinLit:phi1297.phi0001","title":[{"@lang":"lat","@value":"mimi"}],"abbreviations":[{"@lang":"lat","@value":"mim"}]}]},{"urn":"urn:cts:latinLit:phi1251","title":[{"@lang":"lat","@value":"Gaius"}],"abbreviations":[{"@lang":"lat","@value":"Gaius"}],"works":[{"urn":"urn:cts:latinLit:phi1251.phi0001","title":[{"@lang":"lat","@value":"Institutiones"}],"abbreviations":[{"@lang":"lat","@value":"Inst"}]},{"urn":"urn:cts:latinLit:phi1251.phi0002","title":[{"@lang":"lat","@value":"Institut., frr. Aeg. et Oxyrh."}],"abbreviations":[{"@lang":"lat","@value":"Instfrg"}]},{"urn":"urn:cts:latinLit:phi1251.phi0004","title":[{"@lang":"lat","@value":"Gai Institutionum epitome"}],"abbreviations":[{"@lang":"lat","@value":"Epit"}]}]},{"urn":"urn:cts:latinLit:phi0412","title":[{"@lang":"lat","@value":"Gaius Aquilius Gallus"}],"abbreviations":[{"@lang":"lat","@value":"AquilGall"}],"works":[{"urn":"urn:cts:latinLit:phi0412.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi1282","title":[{"@lang":"lat","@value":"Lentulus"}],"abbreviations":[{"@lang":"lat","@value":"Lentul"}],"works":[{"urn":"urn:cts:latinLit:phi1282.phi0001","title":[{"@lang":"lat","@value":"mimus"}],"abbreviations":[{"@lang":"lat","@value":"mim"}]}]},{"urn":"urn:cts:latinLit:phi0863","title":[{"@lang":"lat","@value":"Dorcatius"}],"abbreviations":[{"@lang":"lat","@value":"Dorc"}],"works":[{"urn":"urn:cts:latinLit:phi0863.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0028","title":[{"@lang":"lat","@value":"Lucius Coelius Antipater"}],"abbreviations":[{"@lang":"lat","@value":"Coel"}],"works":[{"urn":"urn:cts:latinLit:phi0028.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0500","title":[{"@lang":"lat","@value":"Lucius Licinius Crassus"}],"abbreviations":[{"@lang":"lat","@value":"Cras"}],"works":[{"urn":"urn:cts:latinLit:phi0500.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0706","title":[{"@lang":"lat","@value":"Carmen de Bello Aegyptiaco"}],"abbreviations":[{"@lang":"lat","@value":"CarmBellAeg"}],"works":[{"urn":"urn:cts:latinLit:phi0706.phi0001","title":[{"@lang":"lat","@value":"Carmen de Bello Aegyptiaco"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0037","title":[{"@lang":"lat","@value":"Gaius Scribonius Curio pater"}],"abbreviations":[{"@lang":"lat","@value":"CurPat"}],"works":[{"urn":"urn:cts:latinLit:phi0037.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0917","title":[{"@lang":"lat","@value":"Marcus Annaeus Lucanus"}],"abbreviations":[{"@lang":"lat","@value":"Luc"}],"works":[{"urn":"urn:cts:latinLit:phi0917.phi0001","title":[{"@lang":"lat","@value":"Bellum Civile"}],"abbreviations":[{"@lang":"lat","@value":"BC"}]},{"urn":"urn:cts:latinLit:phi0917.phi0002","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0590","title":[{"@lang":"lat","@value":"Publius Nigidius Figulus"}],"abbreviations":[{"@lang":"lat","@value":"Nigid"}],"works":[{"urn":"urn:cts:latinLit:phi0590.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0662","title":[{"@lang":"lat","@value":"Marcus Tullius Tiro"}],"abbreviations":[{"@lang":"lat","@value":"Tiro"}],"works":[{"urn":"urn:cts:latinLit:phi0662.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi2003","title":[{"@lang":"lat","@value":"Caelius Apicius"}],"abbreviations":[{"@lang":"lat","@value":"Apic"}],"works":[{"urn":"urn:cts:latinLit:phi2003.phi0001","title":[{"@lang":"lat","@value":"De Re Coquinaria"}],"abbreviations":[{"@lang":"lat","@value":"Coqu"}]},{"urn":"urn:cts:latinLit:phi2003.phi0002","title":[{"@lang":"lat","@value":"Brevis Ciborum, excerpta"}],"abbreviations":[{"@lang":"lat","@value":"ExcCib"}]},{"urn":"urn:cts:latinLit:phi2003.phi0003","title":[{"@lang":"lat","@value":"Brevis Pimentorum, excerpta"}],"abbreviations":[{"@lang":"lat","@value":"ExcPim"}]}]},{"urn":"urn:cts:latinLit:phi0911","title":[{"@lang":"lat","@value":"Laus Pisonis"}],"abbreviations":[{"@lang":"lat","@value":"LausPis"}],"works":[{"urn":"urn:cts:latinLit:phi0911.phi0001","title":[{"@lang":"lat","@value":"Laus Pisonis"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0678","title":[{"@lang":"lat","@value":"Quintus Valerius Soranus"}],"abbreviations":[{"@lang":"lat","@value":"VSor"}],"works":[{"urn":"urn:cts:latinLit:phi0678.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1050","title":[{"@lang":"lat","@value":"Lucius Verginius Rufus"}],"abbreviations":[{"@lang":"lat","@value":"Vergin"}],"works":[{"urn":"urn:cts:latinLit:phi1050.phi0001","title":[{"@lang":"lat","@value":"epigramma"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0524","title":[{"@lang":"lat","@value":"Gaius Cornelius Gallus"}],"abbreviations":[{"@lang":"lat","@value":"CGal"}],"works":[{"urn":"urn:cts:latinLit:phi0524.phi0001","title":[{"@lang":"lat","@value":"elegia"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0524.phi0002","title":[{"@lang":"lat","@value":"elegia in pap. Qas1r Ibrîm"}],"abbreviations":[{"@lang":"lat","@value":"CarmPap"}]}]},{"urn":"urn:cts:latinLit:phi0301","title":[{"@lang":"lat","@value":"Gnaeus Domitius Ahenobarbus"}],"abbreviations":[{"@lang":"lat","@value":"Ahenobarbus"}],"works":[{"urn":"urn:cts:latinLit:phi0301.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1370","title":[{"@lang":"lat","@value":"Quintus Terentius Scaurus"}],"abbreviations":[{"@lang":"lat","@value":"TerScaur"}],"works":[{"urn":"urn:cts:latinLit:phi1370.phi0001","title":[{"@lang":"lat","@value":"De Orthographia"}],"abbreviations":[{"@lang":"lat","@value":"Orth"}]},{"urn":"urn:cts:latinLit:phi1370.phi0002","title":[{"@lang":"lat","@value":"De Adverbio et Praeposit."}],"abbreviations":[{"@lang":"lat","@value":"AdPr"}]},{"urn":"urn:cts:latinLit:phi1370.phi0003","title":[{"@lang":"lat","@value":"fr. in codice Parisino 7520"}],"abbreviations":[{"@lang":"lat","@value":"frgParis"}]},{"urn":"urn:cts:latinLit:phi1370.phi0004","title":[{"@lang":"lat","@value":"De ordinat. part. orat. [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"frgOrd"}]}]},{"urn":"urn:cts:latinLit:phi1260","title":[{"@lang":"lat","@value":"Hadrianus"}],"abbreviations":[{"@lang":"lat","@value":"Hadr"}],"works":[{"urn":"urn:cts:latinLit:phi1260.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi1260.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0474","title":[{"@lang":"lat","@value":"Marcus Tullius Cicero"}],"abbreviations":[{"@lang":"lat","@value":"Cic"}],"works":[{"urn":"urn:cts:latinLit:phi0474.phi0001","title":[{"@lang":"lat","@value":"Pro Quinctio"}],"abbreviations":[{"@lang":"lat","@value":"Quinct"}]},{"urn":"urn:cts:latinLit:phi0474.phi0002","title":[{"@lang":"lat","@value":"Pro S. Roscio Amerino"}],"abbreviations":[{"@lang":"lat","@value":"SRosc"}]},{"urn":"urn:cts:latinLit:phi0474.phi0003","title":[{"@lang":"lat","@value":"Pro Q. Roscio Comoedo"}],"abbreviations":[{"@lang":"lat","@value":"QRosc"}]},{"urn":"urn:cts:latinLit:phi0474.phi0004","title":[{"@lang":"lat","@value":"In Q. Caecilium"}],"abbreviations":[{"@lang":"lat","@value":"DivCaec"}]},{"urn":"urn:cts:latinLit:phi0474.phi0005","title":[{"@lang":"lat","@value":"In Verrem"}],"abbreviations":[{"@lang":"lat","@value":"Ver"}]},{"urn":"urn:cts:latinLit:phi0474.phi0006","title":[{"@lang":"lat","@value":"Pro Tullio"}],"abbreviations":[{"@lang":"lat","@value":"Tul"}]},{"urn":"urn:cts:latinLit:phi0474.phi0007","title":[{"@lang":"lat","@value":"Pro Fonteio"}],"abbreviations":[{"@lang":"lat","@value":"Font"}]},{"urn":"urn:cts:latinLit:phi0474.phi0008","title":[{"@lang":"lat","@value":"Pro Caecina"}],"abbreviations":[{"@lang":"lat","@value":"Caec"}]},{"urn":"urn:cts:latinLit:phi0474.phi0009","title":[{"@lang":"lat","@value":"Pro Lege Manilia"}],"abbreviations":[{"@lang":"lat","@value":"Man"}]},{"urn":"urn:cts:latinLit:phi0474.phi0010","title":[{"@lang":"lat","@value":"Pro Cluentio"}],"abbreviations":[{"@lang":"lat","@value":"Clu"}]},{"urn":"urn:cts:latinLit:phi0474.phi0011","title":[{"@lang":"lat","@value":"De Lege Agraria"}],"abbreviations":[{"@lang":"lat","@value":"Agr"}]},{"urn":"urn:cts:latinLit:phi0474.phi0012","title":[{"@lang":"lat","@value":"Pro Rabirio Perduellionis Reo"}],"abbreviations":[{"@lang":"lat","@value":"RabPerd"}]},{"urn":"urn:cts:latinLit:phi0474.phi0013","title":[{"@lang":"lat","@value":"In Catilinam"}],"abbreviations":[{"@lang":"lat","@value":"Catil"}]},{"urn":"urn:cts:latinLit:phi0474.phi0014","title":[{"@lang":"lat","@value":"Pro Murena"}],"abbreviations":[{"@lang":"lat","@value":"Mur"}]},{"urn":"urn:cts:latinLit:phi0474.phi0015","title":[{"@lang":"lat","@value":"Pro Sulla"}],"abbreviations":[{"@lang":"lat","@value":"Sul"}]},{"urn":"urn:cts:latinLit:phi0474.phi0016","title":[{"@lang":"lat","@value":"Pro Archia"}],"abbreviations":[{"@lang":"lat","@value":"Arch"}]},{"urn":"urn:cts:latinLit:phi0474.phi0017","title":[{"@lang":"lat","@value":"Pro Flacco"}],"abbreviations":[{"@lang":"lat","@value":"Flac"}]},{"urn":"urn:cts:latinLit:phi0474.phi0018","title":[{"@lang":"lat","@value":"Post Reditum ad Populum"}],"abbreviations":[{"@lang":"lat","@value":"RedPop"}]},{"urn":"urn:cts:latinLit:phi0474.phi0019","title":[{"@lang":"lat","@value":"Post Reditum in Senatu"}],"abbreviations":[{"@lang":"lat","@value":"RedSen"}]},{"urn":"urn:cts:latinLit:phi0474.phi0020","title":[{"@lang":"lat","@value":"De Domo Sua"}],"abbreviations":[{"@lang":"lat","@value":"Dom"}]},{"urn":"urn:cts:latinLit:phi0474.phi0021","title":[{"@lang":"lat","@value":"De Haruspicum Responso"}],"abbreviations":[{"@lang":"lat","@value":"Har"}]},{"urn":"urn:cts:latinLit:phi0474.phi0022","title":[{"@lang":"lat","@value":"Pro Sestio"}],"abbreviations":[{"@lang":"lat","@value":"Sest"}]},{"urn":"urn:cts:latinLit:phi0474.phi0023","title":[{"@lang":"lat","@value":"In Vatinium"}],"abbreviations":[{"@lang":"lat","@value":"Vat"}]},{"urn":"urn:cts:latinLit:phi0474.phi0024","title":[{"@lang":"lat","@value":"Pro Caelio"}],"abbreviations":[{"@lang":"lat","@value":"Cael"}]},{"urn":"urn:cts:latinLit:phi0474.phi0025","title":[{"@lang":"lat","@value":"De Provinciis Consularibus"}],"abbreviations":[{"@lang":"lat","@value":"Prov"}]},{"urn":"urn:cts:latinLit:phi0474.phi0026","title":[{"@lang":"lat","@value":"Pro Balbo"}],"abbreviations":[{"@lang":"lat","@value":"Balb"}]},{"urn":"urn:cts:latinLit:phi0474.phi0027","title":[{"@lang":"lat","@value":"In Pisonem"}],"abbreviations":[{"@lang":"lat","@value":"Pis"}]},{"urn":"urn:cts:latinLit:phi0474.phi0028","title":[{"@lang":"lat","@value":"Pro Plancio"}],"abbreviations":[{"@lang":"lat","@value":"Planc"}]},{"urn":"urn:cts:latinLit:phi0474.phi0029","title":[{"@lang":"lat","@value":"Pro Scauro"}],"abbreviations":[{"@lang":"lat","@value":"Scaur"}]},{"urn":"urn:cts:latinLit:phi0474.phi0030","title":[{"@lang":"lat","@value":"Pro Rabirio Postumo"}],"abbreviations":[{"@lang":"lat","@value":"RabPost"}]},{"urn":"urn:cts:latinLit:phi0474.phi0031","title":[{"@lang":"lat","@value":"Pro Milone"}],"abbreviations":[{"@lang":"lat","@value":"Mil"}]},{"urn":"urn:cts:latinLit:phi0474.phi0032","title":[{"@lang":"lat","@value":"Pro Marcello"}],"abbreviations":[{"@lang":"lat","@value":"Marc"}]},{"urn":"urn:cts:latinLit:phi0474.phi0033","title":[{"@lang":"lat","@value":"Pro Ligario"}],"abbreviations":[{"@lang":"lat","@value":"Lig"}]},{"urn":"urn:cts:latinLit:phi0474.phi0034","title":[{"@lang":"lat","@value":"Pro Rege Deiotaro"}],"abbreviations":[{"@lang":"lat","@value":"Deiot"}]},{"urn":"urn:cts:latinLit:phi0474.phi0035","title":[{"@lang":"lat","@value":"Philippicae"}],"abbreviations":[{"@lang":"lat","@value":"Phil"}]},{"urn":"urn:cts:latinLit:phi0474.phi0036","title":[{"@lang":"lat","@value":"De Inventione"}],"abbreviations":[{"@lang":"lat","@value":"Inv"}]},{"urn":"urn:cts:latinLit:phi0474.phi0037","title":[{"@lang":"lat","@value":"De Oratore"}],"abbreviations":[{"@lang":"lat","@value":"deOrat"}]},{"urn":"urn:cts:latinLit:phi0474.phi0038","title":[{"@lang":"lat","@value":"De Partitione Oratoria"}],"abbreviations":[{"@lang":"lat","@value":"Part"}]},{"urn":"urn:cts:latinLit:phi0474.phi0039","title":[{"@lang":"lat","@value":"Brutus"}],"abbreviations":[{"@lang":"lat","@value":"Brut"}]},{"urn":"urn:cts:latinLit:phi0474.phi0040","title":[{"@lang":"lat","@value":"Orator"}],"abbreviations":[{"@lang":"lat","@value":"Orat"}]},{"urn":"urn:cts:latinLit:phi0474.phi0041","title":[{"@lang":"lat","@value":"De Optimo Genere Oratorum"}],"abbreviations":[{"@lang":"lat","@value":"OptGen"}]},{"urn":"urn:cts:latinLit:phi0474.phi0042","title":[{"@lang":"lat","@value":"Topica"}],"abbreviations":[{"@lang":"lat","@value":"Top"}]},{"urn":"urn:cts:latinLit:phi0474.phi0043","title":[{"@lang":"lat","@value":"De Republica"}],"abbreviations":[{"@lang":"lat","@value":"Rep"}]},{"urn":"urn:cts:latinLit:phi0474.phi0044","title":[{"@lang":"lat","@value":"De Legibus"}],"abbreviations":[{"@lang":"lat","@value":"Leg"}]},{"urn":"urn:cts:latinLit:phi0474.phi0045","title":[{"@lang":"lat","@value":"Academica"}],"abbreviations":[{"@lang":"lat","@value":"Ac"}]},{"urn":"urn:cts:latinLit:phi0474.phi0046","title":[{"@lang":"lat","@value":"Lucullus"}],"abbreviations":[{"@lang":"lat","@value":"Luc"}]},{"urn":"urn:cts:latinLit:phi0474.phi0047","title":[{"@lang":"lat","@value":"Paradoxa Stoicorum"}],"abbreviations":[{"@lang":"lat","@value":"Parad"}]},{"urn":"urn:cts:latinLit:phi0474.phi0048","title":[{"@lang":"lat","@value":"De Finibus"}],"abbreviations":[{"@lang":"lat","@value":"Fin"}]},{"urn":"urn:cts:latinLit:phi0474.phi0049","title":[{"@lang":"lat","@value":"Tusculanae Disputationes"}],"abbreviations":[{"@lang":"lat","@value":"Tusc"}]},{"urn":"urn:cts:latinLit:phi0474.phi0050","title":[{"@lang":"lat","@value":"De Natura Deorum"}],"abbreviations":[{"@lang":"lat","@value":"ND"}]},{"urn":"urn:cts:latinLit:phi0474.phi0051","title":[{"@lang":"lat","@value":"Cato Maior de Senectute"}],"abbreviations":[{"@lang":"lat","@value":"Sen"}]},{"urn":"urn:cts:latinLit:phi0474.phi0052","title":[{"@lang":"lat","@value":"Laelius de Amicitia"}],"abbreviations":[{"@lang":"lat","@value":"Amic"}]},{"urn":"urn:cts:latinLit:phi0474.phi0053","title":[{"@lang":"lat","@value":"De Divinatione"}],"abbreviations":[{"@lang":"lat","@value":"Div"}]},{"urn":"urn:cts:latinLit:phi0474.phi0054","title":[{"@lang":"lat","@value":"De Fato"}],"abbreviations":[{"@lang":"lat","@value":"Fat"}]},{"urn":"urn:cts:latinLit:phi0474.phi0055","title":[{"@lang":"lat","@value":"De Officiis"}],"abbreviations":[{"@lang":"lat","@value":"Off"}]},{"urn":"urn:cts:latinLit:phi0474.phi0056","title":[{"@lang":"lat","@value":"Epistulae ad Familiares"}],"abbreviations":[{"@lang":"lat","@value":"Fam"}]},{"urn":"urn:cts:latinLit:phi0474.phi0057","title":[{"@lang":"lat","@value":"Epistulae ad Atticum"}],"abbreviations":[{"@lang":"lat","@value":"Att"}]},{"urn":"urn:cts:latinLit:phi0474.phi0058","title":[{"@lang":"lat","@value":"Epistulae ad Quintum Fratrem"}],"abbreviations":[{"@lang":"lat","@value":"Qfr"}]},{"urn":"urn:cts:latinLit:phi0474.phi0059","title":[{"@lang":"lat","@value":"Epistulae ad Brutum"}],"abbreviations":[{"@lang":"lat","@value":"adBrut"}]},{"urn":"urn:cts:latinLit:phi0474.phi0060","title":[{"@lang":"lat","@value":"Arati Phaenomena"}],"abbreviations":[{"@lang":"lat","@value":"AratPhaen"}]},{"urn":"urn:cts:latinLit:phi0474.phi0061","title":[{"@lang":"lat","@value":"Facete Dicta"}],"abbreviations":[{"@lang":"lat","@value":"Facet"}]},{"urn":"urn:cts:latinLit:phi0474.phi0062","title":[{"@lang":"lat","@value":"carmina, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0474.phi0063","title":[{"@lang":"lat","@value":"Commentarii Causarum"}],"abbreviations":[{"@lang":"lat","@value":"CommCaus"}]},{"urn":"urn:cts:latinLit:phi0474.phi0064","title":[{"@lang":"lat","@value":"epistulae, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"epfrg"}]},{"urn":"urn:cts:latinLit:phi0474.phi0065","title":[{"@lang":"lat","@value":"Hortensius"}],"abbreviations":[{"@lang":"lat","@value":"Hort"}]},{"urn":"urn:cts:latinLit:phi0474.phi0066","title":[{"@lang":"lat","@value":"incertorum librorum fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"libinc"}]},{"urn":"urn:cts:latinLit:phi0474.phi0067","title":[{"@lang":"lat","@value":"De Iure Civ. in Artem Redig."}],"abbreviations":[{"@lang":"lat","@value":"IurCiv"}]},{"urn":"urn:cts:latinLit:phi0474.phi0068","title":[{"@lang":"lat","@value":"orationum deperditarum frr."}],"abbreviations":[{"@lang":"lat","@value":"oratdep"}]},{"urn":"urn:cts:latinLit:phi0474.phi0069","title":[{"@lang":"lat","@value":"orationum incertarum frr."}],"abbreviations":[{"@lang":"lat","@value":"incorat"}]},{"urn":"urn:cts:latinLit:phi0474.phi0070","title":[{"@lang":"lat","@value":"philosophicorum librorum frr."}],"abbreviations":[{"@lang":"lat","@value":"philfrg"}]},{"urn":"urn:cts:latinLit:phi0474.phi0071","title":[{"@lang":"lat","@value":"Arati Prognostica"}],"abbreviations":[{"@lang":"lat","@value":"AratProgn"}]},{"urn":"urn:cts:latinLit:phi0474.phi0072","title":[{"@lang":"lat","@value":"Timaeus"}],"abbreviations":[{"@lang":"lat","@value":"Tim"}]},{"urn":"urn:cts:latinLit:phi0474.phi0073","title":[{"@lang":"lat","@value":"Rhetorica ad Herennium [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"RhetHer"}]},{"urn":"urn:cts:latinLit:phi0474.phi0074","title":[{"@lang":"lat","@value":"In Sallustium [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Sal"}]},{"urn":"urn:cts:latinLit:phi0474.phi0075","title":[{"@lang":"lat","@value":"epistula ad Octavianum [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"EpOct"}]}]},{"urn":"urn:cts:latinLit:phi0535","title":[{"@lang":"lat","@value":"Marcus Iuventius Laterensis"}],"abbreviations":[{"@lang":"lat","@value":"Iuventius"}],"works":[{"urn":"urn:cts:latinLit:phi0535.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0721","title":[{"@lang":"lat","@value":"Antonius Panurgus"}],"abbreviations":[{"@lang":"lat","@value":"AntPan"}],"works":[{"urn":"urn:cts:latinLit:phi0721.phi0001","title":[{"@lang":"lat","@value":"grammatica, fragmentum"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi1263","title":[{"@lang":"lat","@value":"Hyginus"}],"abbreviations":[{"@lang":"lat","@value":"HygFab"}],"works":[{"urn":"urn:cts:latinLit:phi1263.phi0001","title":[{"@lang":"lat","@value":"Fabulae"}],"abbreviations":[{"@lang":"lat","@value":"Fab"}]}]},{"urn":"urn:cts:latinLit:phi2468","title":[{"@lang":"lat","@value":"Aurelius Augustinus"}],"abbreviations":[{"@lang":"lat","@value":"August"}],"works":[{"urn":"urn:cts:latinLit:phi2468.phi0001","title":[{"@lang":"lat","@value":"Laus Cerei"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1257","title":[{"@lang":"lat","@value":"Granius Licinianus"}],"abbreviations":[{"@lang":"lat","@value":"GranLic"}],"works":[{"urn":"urn:cts:latinLit:phi1257.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"Ann"}]}]},{"urn":"urn:cts:latinLit:phi0944","title":[{"@lang":"lat","@value":"Imperator Nero"}],"abbreviations":[{"@lang":"lat","@value":"Nero"}],"works":[{"urn":"urn:cts:latinLit:phi0944.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1242","title":[{"@lang":"lat","@value":"Annius Florus"}],"abbreviations":[{"@lang":"lat","@value":"Flor"}],"works":[{"urn":"urn:cts:latinLit:phi1242.phi0001","title":[{"@lang":"lat","@value":"Epitome Bell. Omn. Ann. DCC"}],"abbreviations":[{"@lang":"lat","@value":"Epit"}]},{"urn":"urn:cts:latinLit:phi1242.phi0002","title":[{"@lang":"lat","@value":"Vergilius Orator an Poeta"}],"abbreviations":[{"@lang":"lat","@value":"Verg"}]},{"urn":"urn:cts:latinLit:phi1242.phi0003","title":[{"@lang":"lat","@value":"carmina in Anthologia Latina"}],"abbreviations":[{"@lang":"lat","@value":"anth"}]},{"urn":"urn:cts:latinLit:phi1242.phi0004","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi1242.phi0005","title":[{"@lang":"lat","@value":"epist. ad imperat. Hadrianum"}],"abbreviations":[{"@lang":"lat","@value":"Epist"}]}]},{"urn":"urn:cts:latinLit:phi0634","title":[{"@lang":"lat","@value":"Santra"}],"abbreviations":[{"@lang":"lat","@value":"San"}],"works":[{"urn":"urn:cts:latinLit:phi0634.phi0001","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]},{"urn":"urn:cts:latinLit:phi0634.phi0002","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0143","title":[{"@lang":"lat","@value":"Trabea"}],"abbreviations":[{"@lang":"lat","@value":"Trab"}],"works":[{"urn":"urn:cts:latinLit:phi0143.phi0001","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi0546","title":[{"@lang":"lat","@value":"Gaius Licinius Mucianus"}],"abbreviations":[{"@lang":"lat","@value":"Muc"}],"works":[{"urn":"urn:cts:latinLit:phi0546.phi0001","title":[{"@lang":"lat","@value":"historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1908","title":[{"@lang":"lat","@value":"Gallus Antipater"}],"abbreviations":[{"@lang":"lat","@value":"GalAnt"}],"works":[{"urn":"urn:cts:latinLit:phi1908.phi0001","title":[{"@lang":"lat","@value":"historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0694","title":[{"@lang":"lat","@value":"Volumnius"}],"abbreviations":[{"@lang":"lat","@value":"Vol"}],"works":[{"urn":"urn:cts:latinLit:phi0694.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0827","title":[{"@lang":"lat","@value":"Caesellius Vindex"}],"abbreviations":[{"@lang":"lat","@value":"Caesel"}],"works":[{"urn":"urn:cts:latinLit:phi0827.phi0001","title":[{"@lang":"lat","@value":"grammatica, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi1224","title":[{"@lang":"lat","@value":"Marcus Aurelius"}],"abbreviations":[{"@lang":"lat","@value":"Aur"}],"works":[{"urn":"urn:cts:latinLit:phi1224.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0692","title":[{"@lang":"lat","@value":"Appendix Vergiliana"}],"abbreviations":[{"@lang":"lat","@value":"AppVerg"}],"works":[{"urn":"urn:cts:latinLit:phi0692.phi0001","title":[{"@lang":"lat","@value":"Dirae"}],"abbreviations":[{"@lang":"lat","@value":"Dirae"}]},{"urn":"urn:cts:latinLit:phi0692.phi0002","title":[{"@lang":"lat","@value":"Lydia"}],"abbreviations":[{"@lang":"lat","@value":"Lydia"}]},{"urn":"urn:cts:latinLit:phi0692.phi0003","title":[{"@lang":"lat","@value":"Culex"}],"abbreviations":[{"@lang":"lat","@value":"Culex"}]},{"urn":"urn:cts:latinLit:phi0692.phi0004","title":[{"@lang":"lat","@value":"Aetna"}],"abbreviations":[{"@lang":"lat","@value":"Aetna"}]},{"urn":"urn:cts:latinLit:phi0692.phi0005","title":[{"@lang":"lat","@value":"Copa"}],"abbreviations":[{"@lang":"lat","@value":"Copa"}]},{"urn":"urn:cts:latinLit:phi0692.phi0006","title":[{"@lang":"lat","@value":"Elegiae in Maecenatem"}],"abbreviations":[{"@lang":"lat","@value":"ElegMaec"}]},{"urn":"urn:cts:latinLit:phi0692.phi0007","title":[{"@lang":"lat","@value":"Ciris"}],"abbreviations":[{"@lang":"lat","@value":"Ciris"}]},{"urn":"urn:cts:latinLit:phi0692.phi0008","title":[{"@lang":"lat","@value":"Priapea"}],"abbreviations":[{"@lang":"lat","@value":"Priapea"}]},{"urn":"urn:cts:latinLit:phi0692.phi0009","title":[{"@lang":"lat","@value":"Catalepton"}],"abbreviations":[{"@lang":"lat","@value":"Catal"}]},{"urn":"urn:cts:latinLit:phi0692.phi0010","title":[{"@lang":"lat","@value":"Priapeum 'Quid Hoc Novi Est?'"}],"abbreviations":[{"@lang":"lat","@value":"Priapeum"}]},{"urn":"urn:cts:latinLit:phi0692.phi0011","title":[{"@lang":"lat","@value":"Moretum"}],"abbreviations":[{"@lang":"lat","@value":"Mor"}]},{"urn":"urn:cts:latinLit:phi0692.phi0012","title":[{"@lang":"lat","@value":"De Institutione Viri Boni"}],"abbreviations":[{"@lang":"lat","@value":"InstVir"}]},{"urn":"urn:cts:latinLit:phi0692.phi0013","title":[{"@lang":"lat","@value":"De Est et Non"}],"abbreviations":[{"@lang":"lat","@value":"DeEst"}]},{"urn":"urn:cts:latinLit:phi0692.phi0014","title":[{"@lang":"lat","@value":"De Rosis Nascentibus"}],"abbreviations":[{"@lang":"lat","@value":"Rosis"}]}]},{"urn":"urn:cts:latinLit:phi1306","title":[{"@lang":"lat","@value":"Lucius Neratius Priscus"}],"abbreviations":[{"@lang":"lat","@value":"Nerat"}],"works":[{"urn":"urn:cts:latinLit:phi1306.phi0002","title":[{"@lang":"lat","@value":"fr. in fragmentis Vaticanis"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0636","title":[{"@lang":"lat","@value":"Quintus Mucius Scaevola"}],"abbreviations":[{"@lang":"lat","@value":"Scaev"}],"works":[{"urn":"urn:cts:latinLit:phi0636.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0648","title":[{"@lang":"lat","@value":"Staberius Eros"}],"abbreviations":[{"@lang":"lat","@value":"Staber"}],"works":[{"urn":"urn:cts:latinLit:phi0648.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0442","title":[{"@lang":"lat","@value":"Aulus Caecina"}],"abbreviations":[{"@lang":"lat","@value":"Caecin"}],"works":[{"urn":"urn:cts:latinLit:phi0442.phi0002","title":[{"@lang":"lat","@value":"fragmentum"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0658","title":[{"@lang":"lat","@value":"Tabulae Censoriae"}],"abbreviations":[{"@lang":"lat","@value":"TabCens"}],"works":[{"urn":"urn:cts:latinLit:phi0658.phi0001","title":[{"@lang":"lat","@value":"Tabulae Censoriae"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0987","title":[{"@lang":"lat","@value":"Publius Pomponius Secundus"}],"abbreviations":[{"@lang":"lat","@value":"PPompon"}],"works":[{"urn":"urn:cts:latinLit:phi0987.phi0001","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]},{"urn":"urn:cts:latinLit:phi0987.phi0002","title":[{"@lang":"lat","@value":"praetextae"}],"abbreviations":[{"@lang":"lat","@value":"praet"}]}]},{"urn":"urn:cts:latinLit:phi1203","title":[{"@lang":"lat","@value":"Alfius Avitus"}],"abbreviations":[{"@lang":"lat","@value":"Avit"}],"works":[{"urn":"urn:cts:latinLit:phi1203.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0664","title":[{"@lang":"lat","@value":"Gaius Trebatius Testa"}],"abbreviations":[{"@lang":"lat","@value":"Treb"}],"works":[{"urn":"urn:cts:latinLit:phi0664.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia et al."}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0302","title":[{"@lang":"lat","@value":"Marcus Antonius"}],"abbreviations":[{"@lang":"lat","@value":"Antonius"}],"works":[{"urn":"urn:cts:latinLit:phi0302.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0022","title":[{"@lang":"lat","@value":"Marcus Porcius Cato"}],"abbreviations":[{"@lang":"lat","@value":"CatoCens"}],"works":[{"urn":"urn:cts:latinLit:phi0022.phi0001","title":[{"@lang":"lat","@value":"De Agri Cultura"}],"abbreviations":[{"@lang":"lat","@value":"Agr"}]},{"urn":"urn:cts:latinLit:phi0022.phi0002","title":[{"@lang":"lat","@value":"De Agri Cultura, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"Agrfr"}]},{"urn":"urn:cts:latinLit:phi0022.phi0003","title":[{"@lang":"lat","@value":"Dicta Memorabilia"}],"abbreviations":[{"@lang":"lat","@value":"Dict"}]},{"urn":"urn:cts:latinLit:phi0022.phi0004","title":[{"@lang":"lat","@value":"epistulae"}],"abbreviations":[{"@lang":"lat","@value":"Ep"}]},{"urn":"urn:cts:latinLit:phi0022.phi0005","title":[{"@lang":"lat","@value":"De Medicina"}],"abbreviations":[{"@lang":"lat","@value":"Med"}]},{"urn":"urn:cts:latinLit:phi0022.phi0006","title":[{"@lang":"lat","@value":"incertorum librorum fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"inc"}]},{"urn":"urn:cts:latinLit:phi0022.phi0007","title":[{"@lang":"lat","@value":"iurisprudentia"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]},{"urn":"urn:cts:latinLit:phi0022.phi0008","title":[{"@lang":"lat","@value":"De Re Militari"}],"abbreviations":[{"@lang":"lat","@value":"Mil"}]},{"urn":"urn:cts:latinLit:phi0022.phi0009","title":[{"@lang":"lat","@value":"Carmen De Moribus"}],"abbreviations":[{"@lang":"lat","@value":"Mor"}]},{"urn":"urn:cts:latinLit:phi0022.phi0010","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]},{"urn":"urn:cts:latinLit:phi0022.phi0011","title":[{"@lang":"lat","@value":"Origines"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0022.phi0012","title":[{"@lang":"lat","@value":"De Rhetorica"}],"abbreviations":[{"@lang":"lat","@value":"Rhet"}]}]},{"urn":"urn:cts:latinLit:phi0518","title":[{"@lang":"lat","@value":"Aulus Furius Antias"}],"abbreviations":[{"@lang":"lat","@value":"FurAnt"}],"works":[{"urn":"urn:cts:latinLit:phi0518.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi2150","title":[{"@lang":"lat","@value":"Zeno of Verona"}],"abbreviations":[{"@lang":"lat","@value":"Zeno"}],"works":[{"urn":"urn:cts:latinLit:phi2150.phi0001","title":[{"@lang":"lat","@value":"Tractatus"}],"abbreviations":[{"@lang":"lat","@value":"Tract"}]}]},{"urn":"urn:cts:latinLit:phi0684","title":[{"@lang":"lat","@value":"Marcus Terentius Varro"}],"abbreviations":[{"@lang":"lat","@value":"Var"}],"works":[{"urn":"urn:cts:latinLit:phi0684.phi0001","title":[{"@lang":"lat","@value":"De Lingua Latina"}],"abbreviations":[{"@lang":"lat","@value":"L"}]},{"urn":"urn:cts:latinLit:phi0684.phi0002","title":[{"@lang":"lat","@value":"Res Rusticae"}],"abbreviations":[{"@lang":"lat","@value":"R"}]},{"urn":"urn:cts:latinLit:phi0684.phi0003","title":[{"@lang":"lat","@value":"Antiquitates Rerum Humanarum"}],"abbreviations":[{"@lang":"lat","@value":"AntiqHum"}]},{"urn":"urn:cts:latinLit:phi0684.phi0004","title":[{"@lang":"lat","@value":"Antiquitates Rerum Divinarum"}],"abbreviations":[{"@lang":"lat","@value":"AntiqDiv"}]},{"urn":"urn:cts:latinLit:phi0684.phi0005","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"Ann"}]},{"urn":"urn:cts:latinLit:phi0684.phi0006","title":[{"@lang":"lat","@value":"De Gente Populi Romani"}],"abbreviations":[{"@lang":"lat","@value":"GentPopRom"}]},{"urn":"urn:cts:latinLit:phi0684.phi0007","title":[{"@lang":"lat","@value":"De Vita Populi Romani"}],"abbreviations":[{"@lang":"lat","@value":"VitaPopRom"}]},{"urn":"urn:cts:latinLit:phi0684.phi0008","title":[{"@lang":"lat","@value":"Res Urbanae"}],"abbreviations":[{"@lang":"lat","@value":"ResUrb"}]},{"urn":"urn:cts:latinLit:phi0684.phi0009","title":[{"@lang":"lat","@value":"Logistorici"}],"abbreviations":[{"@lang":"lat","@value":"Log"}]},{"urn":"urn:cts:latinLit:phi0684.phi0010","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"carm"}]},{"urn":"urn:cts:latinLit:phi0684.phi0011","title":[{"@lang":"lat","@value":"Menippeae"}],"abbreviations":[{"@lang":"lat","@value":"Men"}]},{"urn":"urn:cts:latinLit:phi0684.phi0012","title":[{"@lang":"lat","@value":"epistulae"}],"abbreviations":[{"@lang":"lat","@value":"epist"}]},{"urn":"urn:cts:latinLit:phi0684.phi0013","title":[{"@lang":"lat","@value":"epistulae Latinae"}],"abbreviations":[{"@lang":"lat","@value":"epistLat"}]},{"urn":"urn:cts:latinLit:phi0684.phi0014","title":[{"@lang":"lat","@value":"fragmenta grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]},{"urn":"urn:cts:latinLit:phi0684.phi0015","title":[{"@lang":"lat","@value":"frr. de historia litterarum"}],"abbreviations":[{"@lang":"lat","@value":"litt"}]},{"urn":"urn:cts:latinLit:phi0684.phi0016","title":[{"@lang":"lat","@value":"fragmenta varia"}],"abbreviations":[{"@lang":"lat","@value":"var"}]},{"urn":"urn:cts:latinLit:phi0684.phi0017","title":[{"@lang":"lat","@value":"incertae sedis fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"inc"}]}]},{"urn":"urn:cts:latinLit:phi0680","title":[{"@lang":"lat","@value":"Gaius Valgius Rufus"}],"abbreviations":[{"@lang":"lat","@value":"Valg"}],"works":[{"urn":"urn:cts:latinLit:phi0680.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0884","title":[{"@lang":"lat","@value":"Gracchus"}],"abbreviations":[{"@lang":"lat","@value":"GracchTrag"}],"works":[{"urn":"urn:cts:latinLit:phi0884.phi0001","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]}]},{"urn":"urn:cts:latinLit:phi2302","title":[{"@lang":"lat","@value":"L. Aurel. Avianius Symmachus"}],"abbreviations":[{"@lang":"lat","@value":"LSymm"}],"works":[{"urn":"urn:cts:latinLit:phi2302.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0966","title":[{"@lang":"lat","@value":"Passienus Crispus"}],"abbreviations":[{"@lang":"lat","@value":"Passien"}],"works":[{"urn":"urn:cts:latinLit:phi0966.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0016","title":[{"@lang":"lat","@value":"Lucius Calpurnius Piso Frugi"}],"abbreviations":[{"@lang":"lat","@value":"CalpPis"}],"works":[{"urn":"urn:cts:latinLit:phi0016.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0097","title":[{"@lang":"lat","@value":"Gaius Lucilius"}],"abbreviations":[{"@lang":"lat","@value":"Lucil"}],"works":[{"urn":"urn:cts:latinLit:phi0097.phi0001","title":[{"@lang":"lat","@value":"Saturae, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"Sat"}]}]},{"urn":"urn:cts:latinLit:phi2301","title":[{"@lang":"lat","@value":"Q. Aurelius Symmachus"}],"abbreviations":[{"@lang":"lat","@value":"QSymm"}],"works":[{"urn":"urn:cts:latinLit:phi2301.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0908","title":[{"@lang":"lat","@value":"Attius Labeo"}],"abbreviations":[{"@lang":"lat","@value":"AttLabeo"}],"works":[{"urn":"urn:cts:latinLit:phi0908.phi0001","title":[{"@lang":"lat","@value":"versio Latina Iliados"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0460","title":[{"@lang":"lat","@value":"Gaius Papirius Carbo Arvina"}],"abbreviations":[{"@lang":"lat","@value":"CarboArv"}],"works":[{"urn":"urn:cts:latinLit:phi0460.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0975","title":[{"@lang":"lat","@value":"Phaedrus"}],"abbreviations":[{"@lang":"lat","@value":"Phaed"}],"works":[{"urn":"urn:cts:latinLit:phi0975.phi0001","title":[{"@lang":"lat","@value":"Fabulae Aesopiae"}],"abbreviations":[{"@lang":"lat","@value":"Fab"}]},{"urn":"urn:cts:latinLit:phi0975.phi0002","title":[{"@lang":"lat","@value":"Fabularum Appendix"}],"abbreviations":[{"@lang":"lat","@value":"App"}]}]},{"urn":"urn:cts:latinLit:phi1500","title":[{"@lang":"lat","@value":"Altercatio Hadr. et Epicteti"}],"abbreviations":[{"@lang":"lat","@value":"Altercat"}],"works":[{"urn":"urn:cts:latinLit:phi1500.phi0001","title":[{"@lang":"lat","@value":"Altercatio Hadr. et Epicteti"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0824","title":[{"@lang":"lat","@value":"Cn. Arulenus Caelius Sabinus"}],"abbreviations":[{"@lang":"lat","@value":"CaelSab"}],"works":[{"urn":"urn:cts:latinLit:phi0824.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0854","title":[{"@lang":"lat","@value":"Cornificius Gallus"}],"abbreviations":[{"@lang":"lat","@value":"CornifGal"}],"works":[{"urn":"urn:cts:latinLit:phi0854.phi0001","title":[{"@lang":"lat","@value":"versus in Vergilium"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0140","title":[{"@lang":"lat","@value":"Gaius Titius"}],"abbreviations":[{"@lang":"lat","@value":"Tit"}],"works":[{"urn":"urn:cts:latinLit:phi0140.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0592","title":[{"@lang":"lat","@value":"Novius"}],"abbreviations":[{"@lang":"lat","@value":"Nov"}],"works":[{"urn":"urn:cts:latinLit:phi0592.phi0001","title":[{"@lang":"lat","@value":"Atellanae"}],"abbreviations":[{"@lang":"lat","@value":"atell"}]}]},{"urn":"urn:cts:latinLit:phi0842","title":[{"@lang":"lat","@value":"Gaius Clodius Licinus"}],"abbreviations":[{"@lang":"lat","@value":"ClodLic"}],"works":[{"urn":"urn:cts:latinLit:phi0842.phi0001","title":[{"@lang":"lat","@value":"Libri Rerum Romanarum"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0446","title":[{"@lang":"lat","@value":"Quintus Servilius Caepio"}],"abbreviations":[{"@lang":"lat","@value":"Caep"}],"works":[{"urn":"urn:cts:latinLit:phi0446.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0620","title":[{"@lang":"lat","@value":"Sextus Propertius"}],"abbreviations":[{"@lang":"lat","@value":"Prop"}],"works":[{"urn":"urn:cts:latinLit:phi0620.phi0001","title":[{"@lang":"lat","@value":"Elegiae"}],"abbreviations":[{"@lang":"lat","@value":"Eleg"}]}]},{"urn":"urn:cts:latinLit:phi0515","title":[{"@lang":"lat","@value":"Sextus (vel Spurius) Ennius"}],"abbreviations":[{"@lang":"lat","@value":"SexEnn"}],"works":[{"urn":"urn:cts:latinLit:phi0515.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0116","title":[{"@lang":"lat","@value":"Marcus Pacuvius"}],"abbreviations":[{"@lang":"lat","@value":"Pac"}],"works":[{"urn":"urn:cts:latinLit:phi0116.phi0001","title":[{"@lang":"lat","@value":"praetextae"}],"abbreviations":[{"@lang":"lat","@value":"praet"}]},{"urn":"urn:cts:latinLit:phi0116.phi0002","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]}]},{"urn":"urn:cts:latinLit:phi0502","title":[{"@lang":"lat","@value":"Aulus Cremutius Cordus"}],"abbreviations":[{"@lang":"lat","@value":"Crem"}],"works":[{"urn":"urn:cts:latinLit:phi0502.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0122","title":[{"@lang":"lat","@value":"Aulus Postumius Albinus"}],"abbreviations":[{"@lang":"lat","@value":"Post"}],"works":[{"urn":"urn:cts:latinLit:phi0122.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi2349","title":[{"@lang":"lat","@value":"Maurus Servius Honoratus"}],"abbreviations":[{"@lang":"lat","@value":"Serv"}],"works":[{"urn":"urn:cts:latinLit:phi2349.phi0001","title":[{"@lang":"lat","@value":"De Centum Metris"}],"abbreviations":[{"@lang":"lat","@value":"CentMetr"}]},{"urn":"urn:cts:latinLit:phi2349.phi0002","title":[{"@lang":"lat","@value":"Commentarius in Artem Donati"}],"abbreviations":[{"@lang":"lat","@value":"CommDon"}]},{"urn":"urn:cts:latinLit:phi2349.phi0003","title":[{"@lang":"lat","@value":"De Finalibus"}],"abbreviations":[{"@lang":"lat","@value":"Final"}]},{"urn":"urn:cts:latinLit:phi2349.phi0004","title":[{"@lang":"lat","@value":"De Metris Horatianis"}],"abbreviations":[{"@lang":"lat","@value":"MetrHor"}]},{"urn":"urn:cts:latinLit:phi2349.phi0005","title":[{"@lang":"lat","@value":"In Vergilii Aeneidos Libros"}],"abbreviations":[{"@lang":"lat","@value":"A"}]},{"urn":"urn:cts:latinLit:phi2349.phi0006","title":[{"@lang":"lat","@value":"In Vergilii Bucolicon Librum"}],"abbreviations":[{"@lang":"lat","@value":"Ecl"}]},{"urn":"urn:cts:latinLit:phi2349.phi0007","title":[{"@lang":"lat","@value":"In Vergilii Georgicon Libros"}],"abbreviations":[{"@lang":"lat","@value":"G"}]}]},{"urn":"urn:cts:latinLit:phi0472","title":[{"@lang":"lat","@value":"Gaius Valerius Catullus"}],"abbreviations":[{"@lang":"lat","@value":"Catul"}],"works":[{"urn":"urn:cts:latinLit:phi0472.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"Carm"}]},{"urn":"urn:cts:latinLit:phi0472.phi0002","title":[{"@lang":"lat","@value":"carminum fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi1351","title":[{"@lang":"lat","@value":"Cornelius Tacitus"}],"abbreviations":[{"@lang":"lat","@value":"Tac"}],"works":[{"urn":"urn:cts:latinLit:phi1351.phi0001","title":[{"@lang":"lat","@value":"De Vita Iulii Agricolae"}],"abbreviations":[{"@lang":"lat","@value":"Ag"}]},{"urn":"urn:cts:latinLit:phi1351.phi0002","title":[{"@lang":"lat","@value":"De Origine et Situ Germanorum"}],"abbreviations":[{"@lang":"lat","@value":"Ger"}]},{"urn":"urn:cts:latinLit:phi1351.phi0003","title":[{"@lang":"lat","@value":"Dialogus de Oratoribus"}],"abbreviations":[{"@lang":"lat","@value":"Dial"}]},{"urn":"urn:cts:latinLit:phi1351.phi0004","title":[{"@lang":"lat","@value":"Historiae"}],"abbreviations":[{"@lang":"lat","@value":"Hist"}]},{"urn":"urn:cts:latinLit:phi1351.phi0005","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"Ann"}]}]},{"urn":"urn:cts:latinLit:phi1672","title":[{"@lang":"lat","@value":"Iulius Valerius"}],"abbreviations":[{"@lang":"lat","@value":"IulVal"}],"works":[{"urn":"urn:cts:latinLit:phi1672.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi2028","title":[{"@lang":"lat","@value":"Chalcidius"}],"abbreviations":[{"@lang":"lat","@value":"Chalc"}],"works":[{"urn":"urn:cts:latinLit:phi2028.phi0001","title":[{"@lang":"lat","@value":"Ex Graecis Conversiones"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi2097","title":[{"@lang":"lat","@value":"Sextus Paconianus"}],"abbreviations":[{"@lang":"lat","@value":"Pacon"}],"works":[{"urn":"urn:cts:latinLit:phi2097.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0512","title":[{"@lang":"lat","@value":"Marcus Duronius"}],"abbreviations":[{"@lang":"lat","@value":"Duron"}],"works":[{"urn":"urn:cts:latinLit:phi0512.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi2000","title":[{"@lang":"lat","@value":"Ablabius"}],"abbreviations":[{"@lang":"lat","@value":"Ablab"}],"works":[{"urn":"urn:cts:latinLit:phi2000.phi0001","title":[{"@lang":"lat","@value":"epigramma"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi2335","title":[{"@lang":"lat","@value":"Anonymi de Differentiis [Fronto]"}],"abbreviations":[{"@lang":"lat","@value":"Diff"}],"works":[{"urn":"urn:cts:latinLit:phi2335.phi0001","title":[{"@lang":"lat","@value":"De Differentiis"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0426","title":[{"@lang":"lat","@value":"Bellum Africum [Anonymous]"}],"abbreviations":[{"@lang":"lat","@value":"BAfr"}],"works":[{"urn":"urn:cts:latinLit:phi0426.phi0001","title":[{"@lang":"lat","@value":"Bellum Africum"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0514","title":[{"@lang":"lat","@value":"Egnatius"}],"abbreviations":[{"@lang":"lat","@value":"Egn"}],"works":[{"urn":"urn:cts:latinLit:phi0514.phi0001","title":[{"@lang":"lat","@value":"De Rerum Natura"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0815","title":[{"@lang":"lat","@value":"Bruttedius Niger"}],"abbreviations":[{"@lang":"lat","@value":"Brutted"}],"works":[{"urn":"urn:cts:latinLit:phi0815.phi0001","title":[{"@lang":"lat","@value":"historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1348","title":[{"@lang":"lat","@value":"Gaius Suetonius Tranquillus"}],"abbreviations":[{"@lang":"lat","@value":"Suet"}],"works":[{"urn":"urn:cts:latinLit:phi1348.phi0001","title":[{"@lang":"lat","@value":"De Vita Caesarum"}],"abbreviations":[{"@lang":"lat","@value":"VC"}]},{"urn":"urn:cts:latinLit:phi1348.phi0002","title":[{"@lang":"lat","@value":"De Poetis"}],"abbreviations":[{"@lang":"lat","@value":"Poet"}]},{"urn":"urn:cts:latinLit:phi1348.phi0003","title":[{"@lang":"lat","@value":"De Historicis"}],"abbreviations":[{"@lang":"lat","@value":"Hist"}]},{"urn":"urn:cts:latinLit:phi1348.phi0004","title":[{"@lang":"lat","@value":"De Grammaticis et Rhetoribus"}],"abbreviations":[{"@lang":"lat","@value":"GramRhet"}]},{"urn":"urn:cts:latinLit:phi1348.phi0005","title":[{"@lang":"lat","@value":"Prata"}],"abbreviations":[{"@lang":"lat","@value":"Prat"}]},{"urn":"urn:cts:latinLit:phi1348.phi0006","title":[{"@lang":"lat","@value":"fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0402","title":[{"@lang":"lat","@value":"Valerius Aedituus"}],"abbreviations":[{"@lang":"lat","@value":"Aed"}],"works":[{"urn":"urn:cts:latinLit:phi0402.phi0001","title":[{"@lang":"lat","@value":"epigrammata"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0025","title":[{"@lang":"lat","@value":"Marcus Porcius Cato M.f.M.n."}],"abbreviations":[{"@lang":"lat","@value":"CatoNep"}],"works":[{"urn":"urn:cts:latinLit:phi0025.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1515","title":[{"@lang":"lat","@value":"Quintus Serenus (Sammonicus)"}],"abbreviations":[{"@lang":"lat","@value":"SerSamm"}],"works":[{"urn":"urn:cts:latinLit:phi1515.phi0001","title":[{"@lang":"lat","@value":"Liber Medicinalis"}],"abbreviations":[{"@lang":"lat","@value":"Med"}]},{"urn":"urn:cts:latinLit:phi1515.phi0002","title":[{"@lang":"lat","@value":"Liber Medicinalis, capitula"}],"abbreviations":[{"@lang":"lat","@value":"MedCap"}]}]},{"urn":"urn:cts:latinLit:phi1518","title":[{"@lang":"lat","@value":"Terentianus Maurus"}],"abbreviations":[{"@lang":"lat","@value":"Maur"}],"works":[{"urn":"urn:cts:latinLit:phi1518.phi0001","title":[{"@lang":"lat","@value":"De Litt., De Syll., De Metr."}],"abbreviations":[{"@lang":"lat","@value":"LittSyllMetr"}]}]},{"urn":"urn:cts:latinLit:phi9254","title":[{"@lang":"lat","@value":"Titius"}],"abbreviations":[{"@lang":"lat","@value":"Titius"}],"works":[{"urn":"urn:cts:latinLit:phi9254.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0409","title":[{"@lang":"lat","@value":"Quintus Cornificius"}],"abbreviations":[{"@lang":"lat","@value":"QCornif"}],"works":[{"urn":"urn:cts:latinLit:phi0409.phi0001","title":[{"@lang":"lat","@value":"carmina, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0857","title":[{"@lang":"lat","@value":"Lucius Annaeus Cornutus"}],"abbreviations":[{"@lang":"lat","@value":"Cornut"}],"works":[{"urn":"urn:cts:latinLit:phi0857.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0309","title":[{"@lang":"lat","@value":"Carmen Evocationis"}],"abbreviations":[{"@lang":"lat","@value":"CarmEvoc"}],"works":[{"urn":"urn:cts:latinLit:phi0309.phi0001","title":[{"@lang":"lat","@value":"Carmen Evocationis"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi1380","title":[{"@lang":"lat","@value":"Philumenus medicus"}],"abbreviations":[{"@lang":"lat","@value":"Philum"}],"works":[{"urn":"urn:cts:latinLit:phi1380.phi0001","title":[{"@lang":"lat","@value":"De medicina, versio Latina"}],"abbreviations":[{"@lang":"lat","@value":"Med"}]}]},{"urn":"urn:cts:latinLit:phi0564","title":[{"@lang":"lat","@value":"Manius Manilius"}],"abbreviations":[{"@lang":"lat","@value":"ManIur"}],"works":[{"urn":"urn:cts:latinLit:phi0564.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0963","title":[{"@lang":"lat","@value":"Quintus Remmius Palaemon"}],"abbreviations":[{"@lang":"lat","@value":"Palaem"}],"works":[{"urn":"urn:cts:latinLit:phi0963.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]},{"urn":"urn:cts:latinLit:phi0963.phi0002","title":[{"@lang":"lat","@value":"Ars [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Ars"}]}]},{"urn":"urn:cts:latinLit:phi0537","title":[{"@lang":"lat","@value":"Titus Labienus"}],"abbreviations":[{"@lang":"lat","@value":"Labienus"}],"works":[{"urn":"urn:cts:latinLit:phi0537.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0470","title":[{"@lang":"lat","@value":"Marcus Porcius Cato Uticensis"}],"abbreviations":[{"@lang":"lat","@value":"CatoUtic"}],"works":[{"urn":"urn:cts:latinLit:phi0470.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0806","title":[{"@lang":"lat","@value":"Gaius Ateius Capito"}],"abbreviations":[{"@lang":"lat","@value":"Cap"}],"works":[{"urn":"urn:cts:latinLit:phi0806.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0616","title":[{"@lang":"lat","@value":"Pompilius"}],"abbreviations":[{"@lang":"lat","@value":"Pompil"}],"works":[{"urn":"urn:cts:latinLit:phi0616.phi0001","title":[{"@lang":"lat","@value":"epigramma"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0616.phi0002","title":[{"@lang":"lat","@value":"tragoedia"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]}]},{"urn":"urn:cts:latinLit:phi0878","title":[{"@lang":"lat","@value":"Gaius Asinius Gallus"}],"abbreviations":[{"@lang":"lat","@value":"AsGal"}],"works":[{"urn":"urn:cts:latinLit:phi0878.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0878.phi0002","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi1345","title":[{"@lang":"lat","@value":"Silius Italicus"}],"abbreviations":[{"@lang":"lat","@value":"Sil"}],"works":[{"urn":"urn:cts:latinLit:phi1345.phi0001","title":[{"@lang":"lat","@value":"Punica"}],"abbreviations":[{"@lang":"lat","@value":"Pun"}]}]},{"urn":"urn:cts:latinLit:phi0404","title":[{"@lang":"lat","@value":"Lucius Afranius"}],"abbreviations":[{"@lang":"lat","@value":"Afran"}],"works":[{"urn":"urn:cts:latinLit:phi0404.phi0001","title":[{"@lang":"lat","@value":"togatae"}],"abbreviations":[{"@lang":"lat","@value":"tog"}]}]},{"urn":"urn:cts:latinLit:phi0914","title":[{"@lang":"lat","@value":"Titus Livius"}],"abbreviations":[{"@lang":"lat","@value":"Liv"}],"works":[{"urn":"urn:cts:latinLit:phi0914.phi0001","title":[{"@lang":"lat","@value":"Ab Urbe Condita"}],"abbreviations":[{"@lang":"lat","@value":"AUC"}]},{"urn":"urn:cts:latinLit:phi0914.phi0002","title":[{"@lang":"lat","@value":"Periochae Librorum A. U. C."}],"abbreviations":[{"@lang":"lat","@value":"Perioch"}]},{"urn":"urn:cts:latinLit:phi0914.phi0003","title":[{"@lang":"lat","@value":"fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]},{"urn":"urn:cts:latinLit:phi0914.phi0004","title":[{"@lang":"lat","@value":"A.U.C. Perioch. ex P.Oxy.668"}],"abbreviations":[{"@lang":"lat","@value":"PeriochOxy"}]}]},{"urn":"urn:cts:latinLit:phi1011","title":[{"@lang":"lat","@value":"Scribonius Largus"}],"abbreviations":[{"@lang":"lat","@value":"Larg"}],"works":[{"urn":"urn:cts:latinLit:phi1011.phi0001","title":[{"@lang":"lat","@value":"Compositiones"}],"abbreviations":[{"@lang":"lat","@value":"Comp"}]}]},{"urn":"urn:cts:latinLit:phi0469","title":[{"@lang":"lat","@value":"Lucius Cassius Longinus"}],"abbreviations":[{"@lang":"lat","@value":"LCassius"}],"works":[{"urn":"urn:cts:latinLit:phi0469.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0800","title":[{"@lang":"lat","@value":"Albinovanus Pedo"}],"abbreviations":[{"@lang":"lat","@value":"Pedo"}],"works":[{"urn":"urn:cts:latinLit:phi0800.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0875","title":[{"@lang":"lat","@value":"Cn. Cornel. Lentulus Gaetulicus"}],"abbreviations":[{"@lang":"lat","@value":"Gaet"}],"works":[{"urn":"urn:cts:latinLit:phi0875.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0106","title":[{"@lang":"lat","@value":"Caecilius Metellus"}],"abbreviations":[{"@lang":"lat","@value":"Met"}],"works":[{"urn":"urn:cts:latinLit:phi0106.phi0001","title":[{"@lang":"lat","@value":"versus in Naevium"}],"abbreviations":[{"@lang":"lat","@value":"MetVers"}]}]},{"urn":"urn:cts:latinLit:phi2305","title":[{"@lang":"lat","@value":"Caelius Aurelianus"}],"abbreviations":[{"@lang":"lat","@value":"CaelAur"}],"works":[{"urn":"urn:cts:latinLit:phi2305.phi0001","title":[{"@lang":"lat","@value":"E Parmenide de natura"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1245","title":[{"@lang":"lat","@value":"Sextus Iulius Frontinus"}],"abbreviations":[{"@lang":"lat","@value":"Fron"}],"works":[{"urn":"urn:cts:latinLit:phi1245.phi0001","title":[{"@lang":"lat","@value":"Strategemata"}],"abbreviations":[{"@lang":"lat","@value":"Str"}]},{"urn":"urn:cts:latinLit:phi1245.phi0002","title":[{"@lang":"lat","@value":"De Aquis Urbis Romae"}],"abbreviations":[{"@lang":"lat","@value":"Aq"}]},{"urn":"urn:cts:latinLit:phi1245.phi0003","title":[{"@lang":"lat","@value":"De Agrorum Qualitate"}],"abbreviations":[{"@lang":"lat","@value":"Agr"}]},{"urn":"urn:cts:latinLit:phi1245.phi0004","title":[{"@lang":"lat","@value":"De Controversiis"}],"abbreviations":[{"@lang":"lat","@value":"Contr"}]},{"urn":"urn:cts:latinLit:phi1245.phi0005","title":[{"@lang":"lat","@value":"De Limitibus"}],"abbreviations":[{"@lang":"lat","@value":"Lim"}]},{"urn":"urn:cts:latinLit:phi1245.phi0006","title":[{"@lang":"lat","@value":"De Arte Mensoria"}],"abbreviations":[{"@lang":"lat","@value":"Men"}]}]},{"urn":"urn:cts:latinLit:phi0430","title":[{"@lang":"lat","@value":"Bellum Hispaniense [Anonymous]"}],"abbreviations":[{"@lang":"lat","@value":"BHisp"}],"works":[{"urn":"urn:cts:latinLit:phi0430.phi0001","title":[{"@lang":"lat","@value":"Bellum Hispaniense"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0413","title":[{"@lang":"lat","@value":"Gavius Bassus"}],"abbreviations":[{"@lang":"lat","@value":"GavBas"}],"works":[{"urn":"urn:cts:latinLit:phi0413.phi0001","title":[{"@lang":"lat","@value":"De Origine Vocabulorum, frr."}],"abbreviations":[{"@lang":"lat","@value":"gram"}]},{"urn":"urn:cts:latinLit:phi0413.phi0002","title":[{"@lang":"lat","@value":"fragmentum"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0070","title":[{"@lang":"lat","@value":"Gnaeus Gellius"}],"abbreviations":[{"@lang":"lat","@value":"CnGel"}],"works":[{"urn":"urn:cts:latinLit:phi0070.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0628","title":[{"@lang":"lat","@value":"Publius Rutilius Rufus"}],"abbreviations":[{"@lang":"lat","@value":"RutRuf"}],"works":[{"urn":"urn:cts:latinLit:phi0628.phi0001","title":[{"@lang":"lat","@value":"De Vita Sua"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0562","title":[{"@lang":"lat","@value":"Manilius"}],"abbreviations":[{"@lang":"lat","@value":"ManPoet"}],"works":[{"urn":"urn:cts:latinLit:phi0562.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0100","title":[{"@lang":"lat","@value":"Luscius Lanuvinus"}],"abbreviations":[{"@lang":"lat","@value":"Lanuv"}],"works":[{"urn":"urn:cts:latinLit:phi0100.phi0001","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi0969","title":[{"@lang":"lat","@value":"Aulus Persius Flaccus"}],"abbreviations":[{"@lang":"lat","@value":"Pers"}],"works":[{"urn":"urn:cts:latinLit:phi0969.phi0001","title":[{"@lang":"lat","@value":"Saturae"}],"abbreviations":[{"@lang":"lat","@value":"S"}]}]},{"urn":"urn:cts:latinLit:phi0625","title":[{"@lang":"lat","@value":"Lucius Quinctius"}],"abbreviations":[{"@lang":"lat","@value":"Quinctius"}],"works":[{"urn":"urn:cts:latinLit:phi0625.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0568","title":[{"@lang":"lat","@value":"Gnaeus Matius"}],"abbreviations":[{"@lang":"lat","@value":"CnMat"}],"works":[{"urn":"urn:cts:latinLit:phi0568.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0576","title":[{"@lang":"lat","@value":"M. Valerius Messalla Rufus"}],"abbreviations":[{"@lang":"lat","@value":"MesRuf"}],"works":[{"urn":"urn:cts:latinLit:phi0576.phi0001","title":[{"@lang":"lat","@value":"De Familiis Romanis"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0576.phi0002","title":[{"@lang":"lat","@value":"De Auspiciis"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0428","title":[{"@lang":"lat","@value":"Bellum Alexandrinum [Anonymous]"}],"abbreviations":[{"@lang":"lat","@value":"BAlex"}],"works":[{"urn":"urn:cts:latinLit:phi0428.phi0001","title":[{"@lang":"lat","@value":"Bellum Alexandrinum"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi1023","title":[{"@lang":"lat","@value":"Sulpicia"}],"abbreviations":[{"@lang":"lat","@value":"Sulpicia"}],"works":[{"urn":"urn:cts:latinLit:phi1023.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi1023.phi0002","title":[{"@lang":"lat","@value":"De Statu Rei Publicae [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Conquaest"}]}]},{"urn":"urn:cts:latinLit:phi0088","title":[{"@lang":"lat","@value":"M. Aemilius Lepidus Porcina"}],"abbreviations":[{"@lang":"lat","@value":"Lep"}],"works":[{"urn":"urn:cts:latinLit:phi0088.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0993","title":[{"@lang":"lat","@value":"Precatio Terrae"}],"abbreviations":[{"@lang":"lat","@value":"PrecTer"}],"works":[{"urn":"urn:cts:latinLit:phi0993.phi0001","title":[{"@lang":"lat","@value":"Precatio Terrae"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0300","title":[{"@lang":"lat","@value":"Sempronius Asellio"}],"abbreviations":[{"@lang":"lat","@value":"Asel"}],"works":[{"urn":"urn:cts:latinLit:phi0300.phi0001","title":[{"@lang":"lat","@value":"Rerum Gestarum Libri"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1506","title":[{"@lang":"lat","@value":"Anonymi Fragmenta de Iure Fisci"}],"abbreviations":[{"@lang":"lat","@value":"FrIurFisc"}],"works":[{"urn":"urn:cts:latinLit:phi1506.phi0001","title":[{"@lang":"lat","@value":"fragmenta de iure fisci"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi1014","title":[{"@lang":"lat","@value":"Lucius Annaeus Seneca senior"}],"abbreviations":[{"@lang":"lat","@value":"SenRhet"}],"works":[{"urn":"urn:cts:latinLit:phi1014.phi0001","title":[{"@lang":"lat","@value":"Controversiae"}],"abbreviations":[{"@lang":"lat","@value":"Con"}]},{"urn":"urn:cts:latinLit:phi1014.phi0002","title":[{"@lang":"lat","@value":"Controversiae, excerpta"}],"abbreviations":[{"@lang":"lat","@value":"ConExc"}]},{"urn":"urn:cts:latinLit:phi1014.phi0003","title":[{"@lang":"lat","@value":"Suasoriae"}],"abbreviations":[{"@lang":"lat","@value":"Suas"}]},{"urn":"urn:cts:latinLit:phi1014.phi0004","title":[{"@lang":"lat","@value":"Fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0128","title":[{"@lang":"lat","@value":"P. Cornel. Scipio Aem. Afr."}],"abbreviations":[{"@lang":"lat","@value":"ScipMin"}],"works":[{"urn":"urn:cts:latinLit:phi0128.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1047","title":[{"@lang":"lat","@value":"Veranius"}],"abbreviations":[{"@lang":"lat","@value":"Veran"}],"works":[{"urn":"urn:cts:latinLit:phi1047.phi0001","title":[{"@lang":"lat","@value":"libri de rebus sacris"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0614","title":[{"@lang":"lat","@value":"Q. Pompeius Q.f.A.n. Rufus"}],"abbreviations":[{"@lang":"lat","@value":"PompRuf"}],"works":[{"urn":"urn:cts:latinLit:phi0614.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0007","title":[{"@lang":"lat","@value":"Atilius"}],"abbreviations":[{"@lang":"lat","@value":"Atil"}],"works":[{"urn":"urn:cts:latinLit:phi0007.phi0001","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi0303","title":[{"@lang":"lat","@value":"Aurelius Opillus"}],"abbreviations":[{"@lang":"lat","@value":"AurOp"}],"works":[{"urn":"urn:cts:latinLit:phi0303.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0137","title":[{"@lang":"lat","@value":"Titinius"}],"abbreviations":[{"@lang":"lat","@value":"Titin"}],"works":[{"urn":"urn:cts:latinLit:phi0137.phi0001","title":[{"@lang":"lat","@value":"togatae"}],"abbreviations":[{"@lang":"lat","@value":"tog"}]}]},{"urn":"urn:cts:latinLit:phi9510","title":[{"@lang":"lat","@value":"Anonymi Grammatici"}],"abbreviations":[{"@lang":"lat","@value":"AnonGram"}],"works":[{"urn":"urn:cts:latinLit:phi9510.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"inc"}]}]},{"urn":"urn:cts:latinLit:phi0635","title":[{"@lang":"lat","@value":"Publius Saturius"}],"abbreviations":[{"@lang":"lat","@value":"Saturius"}],"works":[{"urn":"urn:cts:latinLit:phi0635.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0031","title":[{"@lang":"lat","@value":"Cornelia"}],"abbreviations":[{"@lang":"lat","@value":"Cornelia"}],"works":[{"urn":"urn:cts:latinLit:phi0031.phi0001","title":[{"@lang":"lat","@value":"epistula, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"Epist"}]}]},{"urn":"urn:cts:latinLit:phi0419","title":[{"@lang":"lat","@value":"Lucius Orbilius Pupillus"}],"abbreviations":[{"@lang":"lat","@value":"Orb"}],"works":[{"urn":"urn:cts:latinLit:phi0419.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0103","title":[{"@lang":"lat","@value":"Gnaeus Marcius vates"}],"abbreviations":[{"@lang":"lat","@value":"Marcius"}],"works":[{"urn":"urn:cts:latinLit:phi0103.phi0001","title":[{"@lang":"lat","@value":"praecepta"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0932","title":[{"@lang":"lat","@value":"M. Valerius Messalla Corvinus"}],"abbreviations":[{"@lang":"lat","@value":"MesCor"}],"works":[{"urn":"urn:cts:latinLit:phi0932.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]},{"urn":"urn:cts:latinLit:phi0932.phi0002","title":[{"@lang":"lat","@value":"Commentarii de Bello Civili"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1236","title":[{"@lang":"lat","@value":"Sextus Pompeius Festus"}],"abbreviations":[{"@lang":"lat","@value":"Fest"}],"works":[{"urn":"urn:cts:latinLit:phi1236.phi0001","title":[{"@lang":"lat","@value":"De Verborum Significatione"}],"abbreviations":[{"@lang":"lat","@value":"Verb"}]}]},{"urn":"urn:cts:latinLit:phi0400","title":[{"@lang":"lat","@value":"Lucius Accius"}],"abbreviations":[{"@lang":"lat","@value":"Acc"}],"works":[{"urn":"urn:cts:latinLit:phi0400.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0400.phi0002","title":[{"@lang":"lat","@value":"praetextae"}],"abbreviations":[{"@lang":"lat","@value":"praet"}]},{"urn":"urn:cts:latinLit:phi0400.phi0003","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]}]},{"urn":"urn:cts:latinLit:phi0674","title":[{"@lang":"lat","@value":"Valerius"}],"abbreviations":[{"@lang":"lat","@value":"Val"}],"works":[{"urn":"urn:cts:latinLit:phi0674.phi0001","title":[{"@lang":"lat","@value":"comoedia"}],"abbreviations":[{"@lang":"lat","@value":"mim"}]}]},{"urn":"urn:cts:latinLit:phi0536","title":[{"@lang":"lat","@value":"Decimus Laberius"}],"abbreviations":[{"@lang":"lat","@value":"Laber"}],"works":[{"urn":"urn:cts:latinLit:phi0536.phi0001","title":[{"@lang":"lat","@value":"mimi"}],"abbreviations":[{"@lang":"lat","@value":"mim"}]}]},{"urn":"urn:cts:latinLit:phi0091","title":[{"@lang":"lat","@value":"Licinius Imbrex"}],"abbreviations":[{"@lang":"lat","@value":"Imbr"}],"works":[{"urn":"urn:cts:latinLit:phi0091.phi0001","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi0730","title":[{"@lang":"lat","@value":"Tarquitius Priscus"}],"abbreviations":[{"@lang":"lat","@value":"Tarquit"}],"works":[{"urn":"urn:cts:latinLit:phi0730.phi0001","title":[{"@lang":"lat","@value":"De Disciplina Etrusca, frr."}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0990","title":[{"@lang":"lat","@value":"Precatio Omnium Herbarum"}],"abbreviations":[{"@lang":"lat","@value":"PrecHerb"}],"works":[{"urn":"urn:cts:latinLit:phi0990.phi0001","title":[{"@lang":"lat","@value":"Precatio Omnium Herbarum"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0458","title":[{"@lang":"lat","@value":"Publius Cannutius"}],"abbreviations":[{"@lang":"lat","@value":"Can"}],"works":[{"urn":"urn:cts:latinLit:phi0458.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1604","title":[{"@lang":"lat","@value":"Iulius Atherianus"}],"abbreviations":[{"@lang":"lat","@value":"IulAth"}],"works":[{"urn":"urn:cts:latinLit:phi1604.phi0001","title":[{"@lang":"lat","@value":"historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1103","title":[{"@lang":"lat","@value":"Priapea"}],"abbreviations":[{"@lang":"lat","@value":"Priap"}],"works":[{"urn":"urn:cts:latinLit:phi1103.phi0001","title":[{"@lang":"lat","@value":"Priapea"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0456","title":[{"@lang":"lat","@value":"Gaius Licinius Macer Calvus"}],"abbreviations":[{"@lang":"lat","@value":"Calv"}],"works":[{"urn":"urn:cts:latinLit:phi0456.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0456.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1000","title":[{"@lang":"lat","@value":"Pupius (?)"}],"abbreviations":[{"@lang":"lat","@value":"Pup"}],"works":[{"urn":"urn:cts:latinLit:phi1000.phi0001","title":[{"@lang":"lat","@value":"versus Pupio attributi"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi2331","title":[{"@lang":"lat","@value":"Scriptores Historiae Augustae"}],"abbreviations":[{"@lang":"lat","@value":"SHA"}],"works":[{"urn":"urn:cts:latinLit:phi2331.phi0001","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Hadr"}]},{"urn":"urn:cts:latinLit:phi2331.phi0002","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Ael"}]},{"urn":"urn:cts:latinLit:phi2331.phi0003","title":[{"@lang":"lat","@value":"Iuli Capitolini Antoninus Pius"}],"abbreviations":[{"@lang":"lat","@value":"Pius"}]},{"urn":"urn:cts:latinLit:phi2331.phi0004","title":[{"@lang":"lat","@value":"Vita Marci Antonini Philosophi Iuli Capitolini"}],"abbreviations":[{"@lang":"lat","@value":"AntPhil"}]},{"urn":"urn:cts:latinLit:phi2331.phi0005","title":[{"@lang":"lat","@value":"Iuli Capitolini Verus"}],"abbreviations":[{"@lang":"lat","@value":"Ver"}]},{"urn":"urn:cts:latinLit:phi2331.phi0006","title":[{"@lang":"lat","@value":"Avidius "}],"abbreviations":[{"@lang":"lat","@value":"Avid"}]},{"urn":"urn:cts:latinLit:phi2331.phi0007","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"CommAnt"}]},{"urn":"urn:cts:latinLit:phi2331.phi0008","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Pert"}]},{"urn":"urn:cts:latinLit:phi2331.phi0009","title":[{"@lang":"lat","@value":"Didius Iulianus Aeli Spartiani"}],"abbreviations":[{"@lang":"lat","@value":"DidIul"}]},{"urn":"urn:cts:latinLit:phi2331.phi0010","title":[{"@lang":"lat","@value":"Aeli Spartiani Severus"}],"abbreviations":[{"@lang":"lat","@value":"Sev"}]},{"urn":"urn:cts:latinLit:phi2331.phi0011","title":[{"@lang":"lat","@value":"Pescennius Niger "}],"abbreviations":[{"@lang":"lat","@value":"PescNig"}]},{"urn":"urn:cts:latinLit:phi2331.phi0012","title":[{"@lang":"lat","@value":"Vita Clodii Albini Iulii Capitolini"}],"abbreviations":[{"@lang":"lat","@value":"ClodAlb"}]},{"urn":"urn:cts:latinLit:phi2331.phi0013","title":[{"@lang":"lat","@value":"Antoninus Caracallus "}],"abbreviations":[{"@lang":"lat","@value":"AntCar"}]},{"urn":"urn:cts:latinLit:phi2331.phi0014","title":[{"@lang":"lat","@value":"Antoninus Geta "}],"abbreviations":[{"@lang":"lat","@value":"AntGeta"}]},{"urn":"urn:cts:latinLit:phi2331.phi0015","title":[{"@lang":"lat","@value":"Opilius Macrinus Iuli Capitolini"}],"abbreviations":[{"@lang":"lat","@value":"OpilMacr"}]},{"urn":"urn:cts:latinLit:phi2331.phi0016","title":[{"@lang":"lat","@value":"Diadumenus Antoninus "}],"abbreviations":[{"@lang":"lat","@value":"AntDiad"}]},{"urn":"urn:cts:latinLit:phi2331.phi0017","title":[{"@lang":"lat","@value":"Aeli Lampridii Antoninus Heliogabalus"}],"abbreviations":[{"@lang":"lat","@value":"AntHeliog"}]},{"urn":"urn:cts:latinLit:phi2331.phi0018","title":[{"@lang":"lat","@value":"Alexander Severus Aeli Lampridii"}],"abbreviations":[{"@lang":"lat","@value":"AlexSev"}]},{"urn":"urn:cts:latinLit:phi2331.phi0019","title":[{"@lang":"lat","@value":"Maximini Duo Iuli Capitolini"}],"abbreviations":[{"@lang":"lat","@value":"Maxim"}]},{"urn":"urn:cts:latinLit:phi2331.phi0020","title":[{"@lang":"lat","@value":"Gordian"}],"abbreviations":[{"@lang":"lat","@value":"Gord"}]},{"urn":"urn:cts:latinLit:phi2331.phi0021","title":[{"@lang":"lat","@value":"Maximus "}],"abbreviations":[{"@lang":"lat","@value":"MaxBalb"}]},{"urn":"urn:cts:latinLit:phi2331.phi0022","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Valer"}]},{"urn":"urn:cts:latinLit:phi2331.phi0023","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Gall"}]},{"urn":"urn:cts:latinLit:phi2331.phi0024","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"TyrTrig"}]},{"urn":"urn:cts:latinLit:phi2331.phi0025","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Claud"}]},{"urn":"urn:cts:latinLit:phi2331.phi0026","title":[{"@lang":"lat","@value":"Flavi Vopisci Syracusii Divus Aurelianus"}],"abbreviations":[{"@lang":"lat","@value":"Aurel"}]},{"urn":"urn:cts:latinLit:phi2331.phi0027","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Tac"}]},{"urn":"urn:cts:latinLit:phi2331.phi0028","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Prob"}]},{"urn":"urn:cts:latinLit:phi2331.phi0029","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"QuadTyr"}]},{"urn":"urn:cts:latinLit:phi2331.phi0030","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Car"}]}]},{"urn":"urn:cts:latinLit:phi0929","title":[{"@lang":"lat","@value":"Pomponius Mela"}],"abbreviations":[{"@lang":"lat","@value":"Mela"}],"works":[{"urn":"urn:cts:latinLit:phi0929.phi0001","title":[{"@lang":"lat","@value":"De Chorographia"}],"abbreviations":[{"@lang":"lat","@value":"Chor"}]}]},{"urn":"urn:cts:latinLit:phi0724","title":[{"@lang":"lat","@value":"Cloatius Verus"}],"abbreviations":[{"@lang":"lat","@value":"Cloat"}],"works":[{"urn":"urn:cts:latinLit:phi0724.phi0001","title":[{"@lang":"lat","@value":"grammatica fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0487","title":[{"@lang":"lat","@value":"Publius Clodius Pulcher"}],"abbreviations":[{"@lang":"lat","@value":"Clodius"}],"works":[{"urn":"urn:cts:latinLit:phi0487.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0064","title":[{"@lang":"lat","@value":"Gaius Fannius"}],"abbreviations":[{"@lang":"lat","@value":"Fan"}],"works":[{"urn":"urn:cts:latinLit:phi0064.phi0001","title":[{"@lang":"lat","@value":"historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0064.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0010","title":[{"@lang":"lat","@value":"Marcus Iunius Brutus [iur.]"}],"abbreviations":[{"@lang":"lat","@value":"BrutIur"}],"works":[{"urn":"urn:cts:latinLit:phi0010.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0532","title":[{"@lang":"lat","@value":"Quintus Hortensius Hortalus"}],"abbreviations":[{"@lang":"lat","@value":"Hort"}],"works":[{"urn":"urn:cts:latinLit:phi0532.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0532.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0528","title":[{"@lang":"lat","@value":"Granius Flaccus"}],"abbreviations":[{"@lang":"lat","@value":"GranFl"}],"works":[{"urn":"urn:cts:latinLit:phi0528.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0690","title":[{"@lang":"lat","@value":"Publius Vergilius Maro"}],"abbreviations":[{"@lang":"lat","@value":"Verg"}],"works":[{"urn":"urn:cts:latinLit:phi0690.phi0001","title":[{"@lang":"lat","@value":"Eclogae"}],"abbreviations":[{"@lang":"lat","@value":"Ecl"}]},{"urn":"urn:cts:latinLit:phi0690.phi0002","title":[{"@lang":"lat","@value":"Georgica"}],"abbreviations":[{"@lang":"lat","@value":"G"}]},{"urn":"urn:cts:latinLit:phi0690.phi0003","title":[{"@lang":"lat","@value":"Aeneis"}],"abbreviations":[{"@lang":"lat","@value":"A"}]}]},{"urn":"urn:cts:latinLit:phi0672","title":[{"@lang":"lat","@value":"Turranius Niger"}],"abbreviations":[{"@lang":"lat","@value":"Turran"}],"works":[{"urn":"urn:cts:latinLit:phi0672.phi0001","title":[{"@lang":"lat","@value":"de re rustica scripta"}],"abbreviations":[{"@lang":"lat","@value":"agr"}]}]},{"urn":"urn:cts:latinLit:phi1209","title":[{"@lang":"lat","@value":"Annianus"}],"abbreviations":[{"@lang":"lat","@value":"Annian"}],"works":[{"urn":"urn:cts:latinLit:phi1209.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0312","title":[{"@lang":"lat","@value":"Fabius Dossennus"}],"abbreviations":[{"@lang":"lat","@value":"Dossenn"}],"works":[{"urn":"urn:cts:latinLit:phi0312.phi0001","title":[{"@lang":"lat","@value":"carmina, fragmentum"}],"abbreviations":[{"@lang":"lat","@value":"Carm"}]}]},{"urn":"urn:cts:latinLit:phi1248","title":[{"@lang":"lat","@value":"Marcus Cornelius Fronto"}],"abbreviations":[{"@lang":"lat","@value":"Fro"}],"works":[{"urn":"urn:cts:latinLit:phi1248.phi0001","title":[{"@lang":"lat","@value":"Ad M. Caesarem et Invicem"}],"abbreviations":[{"@lang":"lat","@value":"AurCaes"}]},{"urn":"urn:cts:latinLit:phi1248.phi0002","title":[{"@lang":"lat","@value":"Ad M. Antoninum Imp. Epist."}],"abbreviations":[{"@lang":"lat","@value":"AurImp"}]},{"urn":"urn:cts:latinLit:phi1248.phi0003","title":[{"@lang":"lat","@value":"Ad Verum Imp. Epistulae"}],"abbreviations":[{"@lang":"lat","@value":"Ver"}]},{"urn":"urn:cts:latinLit:phi1248.phi0004","title":[{"@lang":"lat","@value":"De Eloquentia"}],"abbreviations":[{"@lang":"lat","@value":"AurEloq"}]},{"urn":"urn:cts:latinLit:phi1248.phi0005","title":[{"@lang":"lat","@value":"De Orationibus"}],"abbreviations":[{"@lang":"lat","@value":"AurOrat"}]},{"urn":"urn:cts:latinLit:phi1248.phi0006","title":[{"@lang":"lat","@value":"Ad Antoninum Pium Epistulae"}],"abbreviations":[{"@lang":"lat","@value":"AdPium"}]},{"urn":"urn:cts:latinLit:phi1248.phi0007","title":[{"@lang":"lat","@value":"Ad Amicos Epistulae"}],"abbreviations":[{"@lang":"lat","@value":"Amic"}]},{"urn":"urn:cts:latinLit:phi1248.phi0008","title":[{"@lang":"lat","@value":"Principia Historiae"}],"abbreviations":[{"@lang":"lat","@value":"Princ"}]},{"urn":"urn:cts:latinLit:phi1248.phi0009","title":[{"@lang":"lat","@value":"Laudes Fumi et Pulveris"}],"abbreviations":[{"@lang":"lat","@value":"LaudFumPulv"}]},{"urn":"urn:cts:latinLit:phi1248.phi0010","title":[{"@lang":"lat","@value":"Laudes Neglegentiae"}],"abbreviations":[{"@lang":"lat","@value":"LaudNegl"}]},{"urn":"urn:cts:latinLit:phi1248.phi0011","title":[{"@lang":"lat","@value":"De Bello Parthico"}],"abbreviations":[{"@lang":"lat","@value":"Parth"}]},{"urn":"urn:cts:latinLit:phi1248.phi0012","title":[{"@lang":"lat","@value":"De Feriis Alsiensibus"}],"abbreviations":[{"@lang":"lat","@value":"FerAls"}]},{"urn":"urn:cts:latinLit:phi1248.phi0013","title":[{"@lang":"lat","@value":"De Nepote Amisso"}],"abbreviations":[{"@lang":"lat","@value":"Nep"}]},{"urn":"urn:cts:latinLit:phi1248.phi0014","title":[{"@lang":"lat","@value":"Arion"}],"abbreviations":[{"@lang":"lat","@value":"Ar"}]},{"urn":"urn:cts:latinLit:phi1248.phi0015","title":[{"@lang":"lat","@value":"Additamentum Epist. Aceph."}],"abbreviations":[{"@lang":"lat","@value":"Add"}]},{"urn":"urn:cts:latinLit:phi1248.phi0016","title":[{"@lang":"lat","@value":"fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]},{"urn":"urn:cts:latinLit:phi1248.phi0017","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi9969","title":[{"@lang":"lat","@value":"Vita Iuvenalis"}],"abbreviations":[{"@lang":"lat","@value":"VitIuv"}],"works":[{"urn":"urn:cts:latinLit:phi9969.phi0001","title":[{"@lang":"lat","@value":"Vita Iuvenalis"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0887","title":[{"@lang":"lat","@value":"Grattius"}],"abbreviations":[{"@lang":"lat","@value":"Grat"}],"works":[{"urn":"urn:cts:latinLit:phi0887.phi0001","title":[{"@lang":"lat","@value":"Cynegetica"}],"abbreviations":[{"@lang":"lat","@value":"Cyneg"}]}]},{"urn":"urn:cts:latinLit:phi0104","title":[{"@lang":"lat","@value":"Gaius Memmius"}],"abbreviations":[{"@lang":"lat","@value":"Memmius"}],"works":[{"urn":"urn:cts:latinLit:phi0104.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0606","title":[{"@lang":"lat","@value":"Lucius Marcius Philippus"}],"abbreviations":[{"@lang":"lat","@value":"Philipp"}],"works":[{"urn":"urn:cts:latinLit:phi0606.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0631","title":[{"@lang":"lat","@value":"Gaius Sallustius Crispus"}],"abbreviations":[{"@lang":"lat","@value":"Sal"}],"works":[{"urn":"urn:cts:latinLit:phi0631.phi0001","title":[{"@lang":"lat","@value":"Catilinae Coniuratio"}],"abbreviations":[{"@lang":"lat","@value":"Cat"}]},{"urn":"urn:cts:latinLit:phi0631.phi0002","title":[{"@lang":"lat","@value":"Bellum Iugurthinum"}],"abbreviations":[{"@lang":"lat","@value":"Iug"}]},{"urn":"urn:cts:latinLit:phi0631.phi0003","title":[{"@lang":"lat","@value":"Historiae"}],"abbreviations":[{"@lang":"lat","@value":"HistFr"}]},{"urn":"urn:cts:latinLit:phi0631.phi0004","title":[{"@lang":"lat","@value":"Historiarum frr. ampliora"}],"abbreviations":[{"@lang":"lat","@value":"HistFrAmp"}]},{"urn":"urn:cts:latinLit:phi0631.phi0005","title":[{"@lang":"lat","@value":"Historiarum frr. e codicibus"}],"abbreviations":[{"@lang":"lat","@value":"HistFrCod"}]},{"urn":"urn:cts:latinLit:phi0631.phi0006","title":[{"@lang":"lat","@value":"Historiarum frr. e papyris"}],"abbreviations":[{"@lang":"lat","@value":"HistFrPap"}]},{"urn":"urn:cts:latinLit:phi0631.phi0007","title":[{"@lang":"lat","@value":"Ad Caesarem de Re Publ. [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Rep"}]},{"urn":"urn:cts:latinLit:phi0631.phi0008","title":[{"@lang":"lat","@value":"In M. Tullium Ciceronem [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Cic"}]}]},{"urn":"urn:cts:latinLit:phi1041","title":[{"@lang":"lat","@value":"Pseudo-Varro"}],"abbreviations":[{"@lang":"lat","@value":"PsVar"}],"works":[{"urn":"urn:cts:latinLit:phi1041.phi0001","title":[{"@lang":"lat","@value":"Sententiae"}],"abbreviations":[{"@lang":"lat","@value":"Sent"}]}]},{"urn":"urn:cts:latinLit:phi1020","title":[{"@lang":"lat","@value":"Publius Papinius Statius"}],"abbreviations":[{"@lang":"lat","@value":"Stat"}],"works":[{"urn":"urn:cts:latinLit:phi1020.phi0001","title":[{"@lang":"lat","@value":"Thebais"}],"abbreviations":[{"@lang":"lat","@value":"Theb"}]},{"urn":"urn:cts:latinLit:phi1020.phi0002","title":[{"@lang":"lat","@value":"Silvae"}],"abbreviations":[{"@lang":"lat","@value":"Silv"}]},{"urn":"urn:cts:latinLit:phi1020.phi0003","title":[{"@lang":"lat","@value":"Achilleis"}],"abbreviations":[{"@lang":"lat","@value":"Ach"}]},{"urn":"urn:cts:latinLit:phi1020.phi0004","title":[{"@lang":"lat","@value":"De Bello Germanico (fragment)"}],"abbreviations":[{"@lang":"lat","@value":"Germ"}]}]},{"urn":"urn:cts:latinLit:phi0004","title":[{"@lang":"lat","@value":"Appius Claudius Caecus"}],"abbreviations":[{"@lang":"lat","@value":"App"}],"works":[{"urn":"urn:cts:latinLit:phi0004.phi0001","title":[{"@lang":"lat","@value":"sententiae"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1212","title":[{"@lang":"lat","@value":"Apuleius Madaurensis"}],"abbreviations":[{"@lang":"lat","@value":"Apul"}],"works":[{"urn":"urn:cts:latinLit:phi1212.phi0001","title":[{"@lang":"lat","@value":"Apologia"}],"abbreviations":[{"@lang":"lat","@value":"Apol"}]},{"urn":"urn:cts:latinLit:phi1212.phi0002","title":[{"@lang":"lat","@value":"Metamorphoses"}],"abbreviations":[{"@lang":"lat","@value":"Met"}]},{"urn":"urn:cts:latinLit:phi1212.phi0003","title":[{"@lang":"lat","@value":"Florida"}],"abbreviations":[{"@lang":"lat","@value":"Fl"}]},{"urn":"urn:cts:latinLit:phi1212.phi0004","title":[{"@lang":"lat","@value":"De Deo Socratis"}],"abbreviations":[{"@lang":"lat","@value":"Soc"}]},{"urn":"urn:cts:latinLit:phi1212.phi0005","title":[{"@lang":"lat","@value":"Anechomenos"}],"abbreviations":[{"@lang":"lat","@value":"Anech"}]},{"urn":"urn:cts:latinLit:phi1212.phi0006","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi1212.phi0007","title":[{"@lang":"lat","@value":"fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]},{"urn":"urn:cts:latinLit:phi1212.phi0008","title":[{"@lang":"lat","@value":"De Mundo"}],"abbreviations":[{"@lang":"lat","@value":"Mun"}]},{"urn":"urn:cts:latinLit:phi1212.phi0009","title":[{"@lang":"lat","@value":"De Platone et Eius Dogmate"}],"abbreviations":[{"@lang":"lat","@value":"Pl"}]},{"urn":"urn:cts:latinLit:phi1212.phi0010","title":[{"@lang":"lat","@value":"De Deo Socratis, Praef. [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"SocPr"}]}]},{"urn":"urn:cts:latinLit:phi1029","title":[{"@lang":"lat","@value":"Turnus"}],"abbreviations":[{"@lang":"lat","@value":"Turn"}],"works":[{"urn":"urn:cts:latinLit:phi1029.phi0001","title":[{"@lang":"lat","@value":"satura"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1100","title":[{"@lang":"lat","@value":"Calpurnius Flaccus"}],"abbreviations":[{"@lang":"lat","@value":"CalpFlac"}],"works":[{"urn":"urn:cts:latinLit:phi1100.phi0001","title":[{"@lang":"lat","@value":"Declamationes, excerpta"}],"abbreviations":[{"@lang":"lat","@value":"Decl"}]}]},{"urn":"urn:cts:latinLit:phi0452","title":[{"@lang":"lat","@value":"Gaius Iulius Caesar Strabo"}],"abbreviations":[{"@lang":"lat","@value":"Strab"}],"works":[{"urn":"urn:cts:latinLit:phi0452.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]},{"urn":"urn:cts:latinLit:phi0452.phi0002","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]}]},{"urn":"urn:cts:latinLit:phi0416","title":[{"@lang":"lat","@value":"Lucius Ateius Praetextatus"}],"abbreviations":[{"@lang":"lat","@value":"Ateius"}],"works":[{"urn":"urn:cts:latinLit:phi0416.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi1294","title":[{"@lang":"lat","@value":"Marcus Valerius Martialis"}],"abbreviations":[{"@lang":"lat","@value":"Mart"}],"works":[{"urn":"urn:cts:latinLit:phi1294.phi0001","title":[{"@lang":"lat","@value":"Spectacula"}],"abbreviations":[{"@lang":"lat","@value":"Sp"}]},{"urn":"urn:cts:latinLit:phi1294.phi0002","title":[{"@lang":"lat","@value":"Epigrammata"}],"abbreviations":[{"@lang":"lat","@value":"Ep"}]}]},{"urn":"urn:cts:latinLit:phi0466","title":[{"@lang":"lat","@value":"Aulus Cascellius"}],"abbreviations":[{"@lang":"lat","@value":"Casc"}],"works":[{"urn":"urn:cts:latinLit:phi0466.phi0001","title":[{"@lang":"lat","@value":"Liber Bene Dictorum, frr. duo"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0486","title":[{"@lang":"lat","@value":"Gaius Helvius Cinna"}],"abbreviations":[{"@lang":"lat","@value":"Cinna"}],"works":[{"urn":"urn:cts:latinLit:phi0486.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1336","title":[{"@lang":"lat","@value":"Scaevus Memor"}],"abbreviations":[{"@lang":"lat","@value":"ScaevMem"}],"works":[{"urn":"urn:cts:latinLit:phi1336.phi0001","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]}]},{"urn":"urn:cts:latinLit:phi0109","title":[{"@lang":"lat","@value":"Q. Caecilius Metellus Maced."}],"abbreviations":[{"@lang":"lat","@value":"MetMac"}],"works":[{"urn":"urn:cts:latinLit:phi0109.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1374","title":[{"@lang":"lat","@value":"Velius Longus"}],"abbreviations":[{"@lang":"lat","@value":"Vel"}],"works":[{"urn":"urn:cts:latinLit:phi1374.phi0001","title":[{"@lang":"lat","@value":"De Orthographia"}],"abbreviations":[{"@lang":"lat","@value":"Orth"}]}]},{"urn":"urn:cts:latinLit:phi0586","title":[{"@lang":"lat","@value":"Mummius"}],"abbreviations":[{"@lang":"lat","@value":"Mum"}],"works":[{"urn":"urn:cts:latinLit:phi0586.phi0001","title":[{"@lang":"lat","@value":"Atellanae"}],"abbreviations":[{"@lang":"lat","@value":"atell"}]}]},{"urn":"urn:cts:latinLit:phi0149","title":[{"@lang":"lat","@value":"Carmen Arvale"}],"abbreviations":[{"@lang":"lat","@value":"CarmArv"}],"works":[{"urn":"urn:cts:latinLit:phi0149.phi0001","title":[{"@lang":"lat","@value":"Carmen Arvale"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0410","title":[{"@lang":"lat","@value":"Aprissius (?)"}],"abbreviations":[{"@lang":"lat","@value":"Apris"}],"works":[{"urn":"urn:cts:latinLit:phi0410.phi0001","title":[{"@lang":"lat","@value":"frg."}],"abbreviations":[{"@lang":"lat","@value":"atell"}]}]},{"urn":"urn:cts:latinLit:phi0420","title":[{"@lang":"lat","@value":"Publius Aufidius Namusa"}],"abbreviations":[{"@lang":"lat","@value":"Nam"}],"works":[{"urn":"urn:cts:latinLit:phi0420.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0058","title":[{"@lang":"lat","@value":"Q. Fabius Maximus Servilianus"}],"abbreviations":[{"@lang":"lat","@value":"FabMax"}],"works":[{"urn":"urn:cts:latinLit:phi0058.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1235","title":[{"@lang":"lat","@value":"Didascaliae et Per. in Terentium"}],"abbreviations":[{"@lang":"lat","@value":"DPTer"}],"works":[{"urn":"urn:cts:latinLit:phi1235.phi0001","title":[{"@lang":"lat","@value":"Andria"}],"abbreviations":[{"@lang":"lat","@value":"An"}]},{"urn":"urn:cts:latinLit:phi1235.phi0002","title":[{"@lang":"lat","@value":"Heauton Timorumenos"}],"abbreviations":[{"@lang":"lat","@value":"Hau"}]},{"urn":"urn:cts:latinLit:phi1235.phi0003","title":[{"@lang":"lat","@value":"Eunuchus"}],"abbreviations":[{"@lang":"lat","@value":"Eu"}]},{"urn":"urn:cts:latinLit:phi1235.phi0004","title":[{"@lang":"lat","@value":"Phormio"}],"abbreviations":[{"@lang":"lat","@value":"Ph"}]},{"urn":"urn:cts:latinLit:phi1235.phi0005","title":[{"@lang":"lat","@value":"Hecyra"}],"abbreviations":[{"@lang":"lat","@value":"Hec"}]},{"urn":"urn:cts:latinLit:phi1235.phi0006","title":[{"@lang":"lat","@value":"Adelphoe"}],"abbreviations":[{"@lang":"lat","@value":"Ad"}]}]},{"urn":"urn:cts:latinLit:phi0432","title":[{"@lang":"lat","@value":"Marcus Furius Bibaculus"}],"abbreviations":[{"@lang":"lat","@value":"Bib"}],"works":[{"urn":"urn:cts:latinLit:phi0432.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0686","title":[{"@lang":"lat","@value":"P. Terentius Varro Atacinus"}],"abbreviations":[{"@lang":"lat","@value":"VarAt"}],"works":[{"urn":"urn:cts:latinLit:phi0686.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1512","title":[{"@lang":"lat","@value":"Pomponius Porphyrio"}],"abbreviations":[{"@lang":"lat","@value":"Porph"}],"works":[{"urn":"urn:cts:latinLit:phi1512.phi0001","title":[{"@lang":"lat","@value":"Commentum in Horati Carmina"}],"abbreviations":[{"@lang":"lat","@value":"Carm"}]},{"urn":"urn:cts:latinLit:phi1512.phi0002","title":[{"@lang":"lat","@value":"Comment. in Hor. Artem Poet."}],"abbreviations":[{"@lang":"lat","@value":"Ars"}]},{"urn":"urn:cts:latinLit:phi1512.phi0003","title":[{"@lang":"lat","@value":"Comment. in Hor. Carm. Saec."}],"abbreviations":[{"@lang":"lat","@value":"Saec"}]},{"urn":"urn:cts:latinLit:phi1512.phi0004","title":[{"@lang":"lat","@value":"Commentum in Horati Epodos"}],"abbreviations":[{"@lang":"lat","@value":"Epod"}]},{"urn":"urn:cts:latinLit:phi1512.phi0005","title":[{"@lang":"lat","@value":"Commentum in Horati Sermones"}],"abbreviations":[{"@lang":"lat","@value":"S"}]},{"urn":"urn:cts:latinLit:phi1512.phi0006","title":[{"@lang":"lat","@value":"Commentum in Horati Epistulas"}],"abbreviations":[{"@lang":"lat","@value":"Ep"}]},{"urn":"urn:cts:latinLit:phi1512.phi0007","title":[{"@lang":"lat","@value":"Vita Horati"}],"abbreviations":[{"@lang":"lat","@value":"VitHor"}]}]},{"urn":"urn:cts:latinLit:phi0510","title":[{"@lang":"lat","@value":"Publius Cornelius Dolabella"}],"abbreviations":[{"@lang":"lat","@value":"Dolab"}],"works":[{"urn":"urn:cts:latinLit:phi0510.phi0002","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0935","title":[{"@lang":"lat","@value":"Iulius Modestus"}],"abbreviations":[{"@lang":"lat","@value":"Modest"}],"works":[{"urn":"urn:cts:latinLit:phi0935.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi1291","title":[{"@lang":"lat","@value":"Marianus"}],"abbreviations":[{"@lang":"lat","@value":"Marian"}],"works":[{"urn":"urn:cts:latinLit:phi1291.phi0001","title":[{"@lang":"lat","@value":"Lupercalia"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1234","title":[{"@lang":"lat","@value":"Didascaliae et Argum. in Plautum"}],"abbreviations":[{"@lang":"lat","@value":"DAPl"}],"works":[{"urn":"urn:cts:latinLit:phi1234.phi0001","title":[{"@lang":"lat","@value":"Amphitruo"}],"abbreviations":[{"@lang":"lat","@value":"Am"}]},{"urn":"urn:cts:latinLit:phi1234.phi0002","title":[{"@lang":"lat","@value":"Asinaria"}],"abbreviations":[{"@lang":"lat","@value":"As"}]},{"urn":"urn:cts:latinLit:phi1234.phi0003","title":[{"@lang":"lat","@value":"Aulularia"}],"abbreviations":[{"@lang":"lat","@value":"Aul"}]},{"urn":"urn:cts:latinLit:phi1234.phi0004","title":[{"@lang":"lat","@value":"Captivi"}],"abbreviations":[{"@lang":"lat","@value":"Capt"}]},{"urn":"urn:cts:latinLit:phi1234.phi0005","title":[{"@lang":"lat","@value":"Casina"}],"abbreviations":[{"@lang":"lat","@value":"Cas"}]},{"urn":"urn:cts:latinLit:phi1234.phi0006","title":[{"@lang":"lat","@value":"Cistellaria"}],"abbreviations":[{"@lang":"lat","@value":"Cist"}]},{"urn":"urn:cts:latinLit:phi1234.phi0007","title":[{"@lang":"lat","@value":"Curculio"}],"abbreviations":[{"@lang":"lat","@value":"Cur"}]},{"urn":"urn:cts:latinLit:phi1234.phi0008","title":[{"@lang":"lat","@value":"Epidicus"}],"abbreviations":[{"@lang":"lat","@value":"Epid"}]},{"urn":"urn:cts:latinLit:phi1234.phi0009","title":[{"@lang":"lat","@value":"Menaechmi"}],"abbreviations":[{"@lang":"lat","@value":"Men"}]},{"urn":"urn:cts:latinLit:phi1234.phi0010","title":[{"@lang":"lat","@value":"Mercator"}],"abbreviations":[{"@lang":"lat","@value":"Mer"}]},{"urn":"urn:cts:latinLit:phi1234.phi0011","title":[{"@lang":"lat","@value":"Miles Gloriosus"}],"abbreviations":[{"@lang":"lat","@value":"Mil"}]},{"urn":"urn:cts:latinLit:phi1234.phi0012","title":[{"@lang":"lat","@value":"Mostellaria"}],"abbreviations":[{"@lang":"lat","@value":"Mos"}]},{"urn":"urn:cts:latinLit:phi1234.phi0013","title":[{"@lang":"lat","@value":"Persa"}],"abbreviations":[{"@lang":"lat","@value":"Per"}]},{"urn":"urn:cts:latinLit:phi1234.phi0014","title":[{"@lang":"lat","@value":"Poenulus"}],"abbreviations":[{"@lang":"lat","@value":"Poen"}]},{"urn":"urn:cts:latinLit:phi1234.phi0015","title":[{"@lang":"lat","@value":"Pseudolus"}],"abbreviations":[{"@lang":"lat","@value":"Ps"}]},{"urn":"urn:cts:latinLit:phi1234.phi0016","title":[{"@lang":"lat","@value":"Rudens"}],"abbreviations":[{"@lang":"lat","@value":"Rud"}]},{"urn":"urn:cts:latinLit:phi1234.phi0017","title":[{"@lang":"lat","@value":"Stichus"}],"abbreviations":[{"@lang":"lat","@value":"St"}]},{"urn":"urn:cts:latinLit:phi1234.phi0018","title":[{"@lang":"lat","@value":"Trinummus"}],"abbreviations":[{"@lang":"lat","@value":"Trin"}]},{"urn":"urn:cts:latinLit:phi1234.phi0019","title":[{"@lang":"lat","@value":"Truculentus"}],"abbreviations":[{"@lang":"lat","@value":"Truc"}]}]},{"urn":"urn:cts:latinLit:phi0591","title":[{"@lang":"lat","@value":"Ninnius Crassus"}],"abbreviations":[{"@lang":"lat","@value":"Nin"}],"works":[{"urn":"urn:cts:latinLit:phi0591.phi0001","title":[{"@lang":"lat","@value":"Ilias"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0414","title":[{"@lang":"lat","@value":"Lucius Arruntius"}],"abbreviations":[{"@lang":"lat","@value":"Arr"}],"works":[{"urn":"urn:cts:latinLit:phi0414.phi0001","title":[{"@lang":"lat","@value":"Historiae Belli Punici"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0902","title":[{"@lang":"lat","@value":"Iulius Africanus"}],"abbreviations":[{"@lang":"lat","@value":"IulAfr"}],"works":[{"urn":"urn:cts:latinLit:phi0902.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0541","title":[{"@lang":"lat","@value":"Cn. Cornel. Lentulus Marcell."}],"abbreviations":[{"@lang":"lat","@value":"LentMarc"}],"works":[{"urn":"urn:cts:latinLit:phi0541.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0527","title":[{"@lang":"lat","@value":"Gannius"}],"abbreviations":[{"@lang":"lat","@value":"Gan"}],"works":[{"urn":"urn:cts:latinLit:phi0527.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0830","title":[{"@lang":"lat","@value":"Titus Calpurnius Siculus"}],"abbreviations":[{"@lang":"lat","@value":"CalpSic"}],"works":[{"urn":"urn:cts:latinLit:phi0830.phi0001","title":[{"@lang":"lat","@value":"Eclogae"}],"abbreviations":[{"@lang":"lat","@value":"Ecl"}]}]},{"urn":"urn:cts:latinLit:phi0034","title":[{"@lang":"lat","@value":"Gaius Scribonius Curio avus"}],"abbreviations":[{"@lang":"lat","@value":"CurioAv"}],"works":[{"urn":"urn:cts:latinLit:phi0034.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0526","title":[{"@lang":"lat","@value":"Gaius Servilius Glaucia"}],"abbreviations":[{"@lang":"lat","@value":"Glauc"}],"works":[{"urn":"urn:cts:latinLit:phi0526.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1221","title":[{"@lang":"lat","@value":"C. Iul. Caes. Augustus Octavianus"}],"abbreviations":[{"@lang":"lat","@value":"Aug"}],"works":[{"urn":"urn:cts:latinLit:phi1221.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"carm"}]},{"urn":"urn:cts:latinLit:phi1221.phi0002","title":[{"@lang":"lat","@value":"dicta et apophthegmata"}],"abbreviations":[{"@lang":"lat","@value":"Dict"}]},{"urn":"urn:cts:latinLit:phi1221.phi0003","title":[{"@lang":"lat","@value":"edicta"}],"abbreviations":[{"@lang":"lat","@value":"edicta"}]},{"urn":"urn:cts:latinLit:phi1221.phi0004","title":[{"@lang":"lat","@value":"epistulae"}],"abbreviations":[{"@lang":"lat","@value":"epist"}]},{"urn":"urn:cts:latinLit:phi1221.phi0005","title":[{"@lang":"lat","@value":"fragmenta incertae sedis"}],"abbreviations":[{"@lang":"lat","@value":"frginc"}]},{"urn":"urn:cts:latinLit:phi1221.phi0006","title":[{"@lang":"lat","@value":"opera historica"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi1221.phi0007","title":[{"@lang":"lat","@value":"Res Gestae"}],"abbreviations":[{"@lang":"lat","@value":"Anc"}]},{"urn":"urn:cts:latinLit:phi1221.phi0008","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1254","title":[{"@lang":"lat","@value":"Aulus Gellius"}],"abbreviations":[{"@lang":"lat","@value":"AulGel"}],"works":[{"urn":"urn:cts:latinLit:phi1254.phi0001","title":[{"@lang":"lat","@value":"Noctes Atticae"}],"abbreviations":[{"@lang":"lat","@value":"NA"}]}]},{"urn":"urn:cts:latinLit:phi0455","title":[{"@lang":"lat","@value":"Gaius Calpurnius Piso"}],"abbreviations":[{"@lang":"lat","@value":"Piso"}],"works":[{"urn":"urn:cts:latinLit:phi0455.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0703","title":[{"@lang":"lat","@value":"Arbonius Silo"}],"abbreviations":[{"@lang":"lat","@value":"Arb"}],"works":[{"urn":"urn:cts:latinLit:phi0703.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0494","title":[{"@lang":"lat","@value":"Commentarii Consulares"}],"abbreviations":[{"@lang":"lat","@value":"CommentCons"}],"works":[{"urn":"urn:cts:latinLit:phi0494.phi0001","title":[{"@lang":"lat","@value":"Commentarii Consulares"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0556","title":[{"@lang":"lat","@value":"Gaius Licinius Macer"}],"abbreviations":[{"@lang":"lat","@value":"LicMacer"}],"works":[{"urn":"urn:cts:latinLit:phi0556.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0556.phi0002","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0812","title":[{"@lang":"lat","@value":"Gaius Caesius Bassus"}],"abbreviations":[{"@lang":"lat","@value":"CBas"}],"works":[{"urn":"urn:cts:latinLit:phi0812.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0812.phi0002","title":[{"@lang":"lat","@value":"De Metris, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"Metr"}]},{"urn":"urn:cts:latinLit:phi0812.phi0003","title":[{"@lang":"lat","@value":"De Metris Horatii [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"MetHor"}]},{"urn":"urn:cts:latinLit:phi0812.phi0004","title":[{"@lang":"lat","@value":"Breviatio Pedum [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"BrevPed"}]},{"urn":"urn:cts:latinLit:phi0812.phi0005","title":[{"@lang":"lat","@value":"De Compositionibus [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Comp"}]},{"urn":"urn:cts:latinLit:phi0812.phi0006","title":[{"@lang":"lat","@value":"Genera Versuum [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Vers"}]},{"urn":"urn:cts:latinLit:phi0812.phi0007","title":[{"@lang":"lat","@value":"Poeticae Species Lat. [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Poet"}]}]},{"urn":"urn:cts:latinLit:phi0640","title":[{"@lang":"lat","@value":"Marcus Aemilius Scaurus"}],"abbreviations":[{"@lang":"lat","@value":"AemScaur"}],"works":[{"urn":"urn:cts:latinLit:phi0640.phi0001","title":[{"@lang":"lat","@value":"De Vita Sua"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0640.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0893","title":[{"@lang":"lat","@value":"Quintus Horatius Flaccus"}],"abbreviations":[{"@lang":"lat","@value":"Hor"}],"works":[{"urn":"urn:cts:latinLit:phi0893.phi0001","title":[{"@lang":"lat","@value":"Carmina"}],"abbreviations":[{"@lang":"lat","@value":"Carm"}]},{"urn":"urn:cts:latinLit:phi0893.phi0002","title":[{"@lang":"lat","@value":"Carmen Saeculare"}],"abbreviations":[{"@lang":"lat","@value":"Saec"}]},{"urn":"urn:cts:latinLit:phi0893.phi0003","title":[{"@lang":"lat","@value":"Epodi"}],"abbreviations":[{"@lang":"lat","@value":"Epod"}]},{"urn":"urn:cts:latinLit:phi0893.phi0004","title":[{"@lang":"lat","@value":"Sermones"}],"abbreviations":[{"@lang":"lat","@value":"S"}]},{"urn":"urn:cts:latinLit:phi0893.phi0005","title":[{"@lang":"lat","@value":"Epistulae"}],"abbreviations":[{"@lang":"lat","@value":"Ep"}]},{"urn":"urn:cts:latinLit:phi0893.phi0006","title":[{"@lang":"lat","@value":"Ars Poetica"}],"abbreviations":[{"@lang":"lat","@value":"Ars"}]}]},{"urn":"urn:cts:latinLit:phi0405","title":[{"@lang":"lat","@value":"Clodius Tuscus"}],"abbreviations":[{"@lang":"lat","@value":"ClodTusc"}],"works":[{"urn":"urn:cts:latinLit:phi0405.phi0001","title":[{"@lang":"lat","@value":"grammatica, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0652","title":[{"@lang":"lat","@value":"Lucius Cornelius Sulla"}],"abbreviations":[{"@lang":"lat","@value":"Sulla"}],"works":[{"urn":"urn:cts:latinLit:phi0652.phi0001","title":[{"@lang":"lat","@value":"Commentarii Rerum Gestarum"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0418","title":[{"@lang":"lat","@value":"Titus Quinctius Atta"}],"abbreviations":[{"@lang":"lat","@value":"Atta"}],"works":[{"urn":"urn:cts:latinLit:phi0418.phi0001","title":[{"@lang":"lat","@value":"epigramma"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0418.phi0002","title":[{"@lang":"lat","@value":"togatae"}],"abbreviations":[{"@lang":"lat","@value":"tog"}]}]},{"urn":"urn:cts:latinLit:phi1044","title":[{"@lang":"lat","@value":"Velleius Paterculus"}],"abbreviations":[{"@lang":"lat","@value":"Vell"}],"works":[{"urn":"urn:cts:latinLit:phi1044.phi0001","title":[{"@lang":"lat","@value":"Historia Romana"}],"abbreviations":[{"@lang":"lat","@value":"Hist"}]}]},{"urn":"urn:cts:latinLit:phi0996","title":[{"@lang":"lat","@value":"Marcus Valerius Probus"}],"abbreviations":[{"@lang":"lat","@value":"Prob"}],"works":[{"urn":"urn:cts:latinLit:phi0996.phi0001","title":[{"@lang":"lat","@value":"Vita Persii"}],"abbreviations":[{"@lang":"lat","@value":"VitPers"}]},{"urn":"urn:cts:latinLit:phi0996.phi0002","title":[{"@lang":"lat","@value":"De Notis Iuris"}],"abbreviations":[{"@lang":"lat","@value":"IurNot"}]},{"urn":"urn:cts:latinLit:phi0996.phi0003","title":[{"@lang":"lat","@value":"fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0600","title":[{"@lang":"lat","@value":"Gaius Oppius"}],"abbreviations":[{"@lang":"lat","@value":"Opp"}],"works":[{"urn":"urn:cts:latinLit:phi0600.phi0001","title":[{"@lang":"lat","@value":"De Silvestribus Arboribus"}],"abbreviations":[{"@lang":"lat","@value":"agr"}]},{"urn":"urn:cts:latinLit:phi0600.phi0002","title":[{"@lang":"lat","@value":"vitae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi2806","title":[{"@lang":"lat","@value":"Iustinianus"}],"abbreviations":[{"@lang":"lat","@value":"Just"}],"works":[{"urn":"urn:cts:latinLit:phi2806.phi0002","title":[{"@lang":"lat","@value":"Digesta Iustiniani"}],"abbreviations":[{"@lang":"lat","@value":"Dig"}]}]},{"urn":"urn:cts:latinLit:phi0082","title":[{"@lang":"lat","@value":"Decimus Iunius Silanus"}],"abbreviations":[{"@lang":"lat","@value":"IunSil"}],"works":[{"urn":"urn:cts:latinLit:phi0082.phi0001","title":[{"@lang":"lat","@value":"versio Latina Magonis"}],"abbreviations":[{"@lang":"lat","@value":"agr"}]}]},{"urn":"urn:cts:latinLit:phi0644","title":[{"@lang":"lat","@value":"Sextilius Ena"}],"abbreviations":[{"@lang":"lat","@value":"Sextil"}],"works":[{"urn":"urn:cts:latinLit:phi0644.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1279","title":[{"@lang":"lat","@value":"Laelius Felix"}],"abbreviations":[{"@lang":"lat","@value":"LaelFel"}],"works":[{"urn":"urn:cts:latinLit:phi1279.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0596","title":[{"@lang":"lat","@value":"Numitorius"}],"abbreviations":[{"@lang":"lat","@value":"Num"}],"works":[{"urn":"urn:cts:latinLit:phi0596.phi0001","title":[{"@lang":"lat","@value":"Antibucolica"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1357","title":[{"@lang":"lat","@value":"Imp. Marcus Ulpius Traianus"}],"abbreviations":[{"@lang":"lat","@value":"Tra"}],"works":[{"urn":"urn:cts:latinLit:phi1357.phi0002","title":[{"@lang":"lat","@value":"Dacica"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0484","title":[{"@lang":"lat","@value":"Lucius Cincius"}],"abbreviations":[{"@lang":"lat","@value":"Cinc"}],"works":[{"urn":"urn:cts:latinLit:phi0484.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]},{"urn":"urn:cts:latinLit:phi0484.phi0002","title":[{"@lang":"lat","@value":"iurisprudentia"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0656","title":[{"@lang":"lat","@value":"Servius Sulpicius Rufus"}],"abbreviations":[{"@lang":"lat","@value":"SulpRuf"}],"works":[{"urn":"urn:cts:latinLit:phi0656.phi0002","title":[{"@lang":"lat","@value":"iurisprudentia"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]},{"urn":"urn:cts:latinLit:phi0656.phi0003","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0005","title":[{"@lang":"lat","@value":"Aquilius"}],"abbreviations":[{"@lang":"lat","@value":"Aquil"}],"works":[{"urn":"urn:cts:latinLit:phi0005.phi0001","title":[{"@lang":"lat","@value":"palliata, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi1339","title":[{"@lang":"lat","@value":"Septimius Serenus"}],"abbreviations":[{"@lang":"lat","@value":"Sept"}],"works":[{"urn":"urn:cts:latinLit:phi1339.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0615","title":[{"@lang":"lat","@value":"Q. Pompeius Q.f.Q.n. Rufus"}],"abbreviations":[{"@lang":"lat","@value":"QPompeius"}],"works":[{"urn":"urn:cts:latinLit:phi0615.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0327","title":[{"@lang":"lat","@value":"L. Aelius Praeconinus Stilo"}],"abbreviations":[{"@lang":"lat","@value":"Stilo"}],"works":[{"urn":"urn:cts:latinLit:phi0327.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0117","title":[{"@lang":"lat","@value":"Papinius"}],"abbreviations":[{"@lang":"lat","@value":"Pap"}],"works":[{"urn":"urn:cts:latinLit:phi0117.phi0001","title":[{"@lang":"lat","@value":"epigrammation"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0436","title":[{"@lang":"lat","@value":"Marcus Iunius Brutus [tyr.]"}],"abbreviations":[{"@lang":"lat","@value":"Brutus"}],"works":[{"urn":"urn:cts:latinLit:phi0436.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0516","title":[{"@lang":"lat","@value":"Gaius Erucius"}],"abbreviations":[{"@lang":"lat","@value":"Erucius"}],"works":[{"urn":"urn:cts:latinLit:phi0516.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0450","title":[{"@lang":"lat","@value":"Lucius Iulius Caesar"}],"abbreviations":[{"@lang":"lat","@value":"LCaes"}],"works":[{"urn":"urn:cts:latinLit:phi0450.phi0001","title":[{"@lang":"lat","@value":"Auspiciorum Liber, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0860","title":[{"@lang":"lat","@value":"Quintus Curtius Rufus"}],"abbreviations":[{"@lang":"lat","@value":"Curt"}],"works":[{"urn":"urn:cts:latinLit:phi0860.phi0001","title":[{"@lang":"lat","@value":"Historiae Alexandri Magni"}],"abbreviations":[{"@lang":"lat","@value":"Alex"}]}]},{"urn":"urn:cts:latinLit:phi0552","title":[{"@lang":"lat","@value":"Quintus Lutatius Catulus"}],"abbreviations":[{"@lang":"lat","@value":"Lutat"}],"works":[{"urn":"urn:cts:latinLit:phi0552.phi0001","title":[{"@lang":"lat","@value":"epigrammata"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0552.phi0002","title":[{"@lang":"lat","@value":"Communes Historiae"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi1327","title":[{"@lang":"lat","@value":"Sabidius"}],"abbreviations":[{"@lang":"lat","@value":"Sabid"}],"works":[{"urn":"urn:cts:latinLit:phi1327.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0401","title":[{"@lang":"lat","@value":"Aufustius"}],"abbreviations":[{"@lang":"lat","@value":"Aufust"}],"works":[{"urn":"urn:cts:latinLit:phi0401.phi0001","title":[{"@lang":"lat","@value":"grammatica, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0043","title":[{"@lang":"lat","@value":"Quintus Ennius"}],"abbreviations":[{"@lang":"lat","@value":"Enn"}],"works":[{"urn":"urn:cts:latinLit:phi0043.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"Ann"}]},{"urn":"urn:cts:latinLit:phi0043.phi0002","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]},{"urn":"urn:cts:latinLit:phi0043.phi0003","title":[{"@lang":"lat","@value":"praetextae"}],"abbreviations":[{"@lang":"lat","@value":"praet"}]},{"urn":"urn:cts:latinLit:phi0043.phi0004","title":[{"@lang":"lat","@value":"Saturae"}],"abbreviations":[{"@lang":"lat","@value":"Sat"}]},{"urn":"urn:cts:latinLit:phi0043.phi0005","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]},{"urn":"urn:cts:latinLit:phi0043.phi0006","title":[{"@lang":"lat","@value":"varia"}],"abbreviations":[{"@lang":"lat","@value":"var"}]},{"urn":"urn:cts:latinLit:phi0043.phi0007","title":[{"@lang":"lat","@value":"incerta"}],"abbreviations":[{"@lang":"lat","@value":"inc"}]}]},{"urn":"urn:cts:latinLit:phi0851","title":[{"@lang":"lat","@value":"Cornelius Severus"}],"abbreviations":[{"@lang":"lat","@value":"CornSev"}],"works":[{"urn":"urn:cts:latinLit:phi0851.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0851.phi0002","title":[{"@lang":"lat","@value":"fragmenta a Morel omissa"}],"abbreviations":[{"@lang":"lat","@value":"poetB"}]}]},{"urn":"urn:cts:latinLit:phi0836","title":[{"@lang":"lat","@value":"Aulus Cornelius Celsus"}],"abbreviations":[{"@lang":"lat","@value":"Cels"}],"works":[{"urn":"urn:cts:latinLit:phi0836.phi0001","title":[{"@lang":"lat","@value":"De Agricultura"}],"abbreviations":[{"@lang":"lat","@value":"Agr"}]},{"urn":"urn:cts:latinLit:phi0836.phi0002","title":[{"@lang":"lat","@value":"De Medicina"}],"abbreviations":[{"@lang":"lat","@value":"Med"}]},{"urn":"urn:cts:latinLit:phi0836.phi0003","title":[{"@lang":"lat","@value":"De Rhetorica"}],"abbreviations":[{"@lang":"lat","@value":"Rhet"}]}]},{"urn":"urn:cts:latinLit:phi1318","title":[{"@lang":"lat","@value":"C. Plinius Caecilius Secundus"}],"abbreviations":[{"@lang":"lat","@value":"PlinIun"}],"works":[{"urn":"urn:cts:latinLit:phi1318.phi0001","title":[{"@lang":"lat","@value":"Epistulae"}],"abbreviations":[{"@lang":"lat","@value":"Ep"}]},{"urn":"urn:cts:latinLit:phi1318.phi0002","title":[{"@lang":"lat","@value":"Panegyricus"}],"abbreviations":[{"@lang":"lat","@value":"Pan"}]},{"urn":"urn:cts:latinLit:phi1318.phi0003","title":[{"@lang":"lat","@value":"versus"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0978","title":[{"@lang":"lat","@value":"Gaius Plinius Secundus"}],"abbreviations":[{"@lang":"lat","@value":"PlinSen"}],"works":[{"urn":"urn:cts:latinLit:phi0978.phi0001","title":[{"@lang":"lat","@value":"Naturalis Historia"}],"abbreviations":[{"@lang":"lat","@value":"Nat"}]},{"urn":"urn:cts:latinLit:phi0978.phi0002","title":[{"@lang":"lat","@value":"Dubius Sermo"}],"abbreviations":[{"@lang":"lat","@value":"DubSerm"}]}]},{"urn":"urn:cts:latinLit:phi0425","title":[{"@lang":"lat","@value":"Publius Rutilius Lupus"}],"abbreviations":[{"@lang":"lat","@value":"RutLup"}],"works":[{"urn":"urn:cts:latinLit:phi0425.phi0001","title":[{"@lang":"lat","@value":"Schemata Lexeos"}],"abbreviations":[{"@lang":"lat","@value":"Schem"}]}]},{"urn":"urn:cts:latinLit:phi0134","title":[{"@lang":"lat","@value":"Publius Terentius Afer"}],"abbreviations":[{"@lang":"lat","@value":"Ter"}],"works":[{"urn":"urn:cts:latinLit:phi0134.phi0001","title":[{"@lang":"lat","@value":"Andria"}],"abbreviations":[{"@lang":"lat","@value":"An"}]},{"urn":"urn:cts:latinLit:phi0134.phi0002","title":[{"@lang":"lat","@value":"Heauton Timorumenos"}],"abbreviations":[{"@lang":"lat","@value":"Hau"}]},{"urn":"urn:cts:latinLit:phi0134.phi0003","title":[{"@lang":"lat","@value":"Eunuchus"}],"abbreviations":[{"@lang":"lat","@value":"Eu"}]},{"urn":"urn:cts:latinLit:phi0134.phi0004","title":[{"@lang":"lat","@value":"Phormio"}],"abbreviations":[{"@lang":"lat","@value":"Ph"}]},{"urn":"urn:cts:latinLit:phi0134.phi0005","title":[{"@lang":"lat","@value":"Hecyra"}],"abbreviations":[{"@lang":"lat","@value":"Hec"}]},{"urn":"urn:cts:latinLit:phi0134.phi0006","title":[{"@lang":"lat","@value":"Adelphoe"}],"abbreviations":[{"@lang":"lat","@value":"Ad"}]}]},{"urn":"urn:cts:latinLit:phi0002","title":[{"@lang":"lat","@value":"Titus Annius Luscus"}],"abbreviations":[{"@lang":"lat","@value":"Annius"}],"works":[{"urn":"urn:cts:latinLit:phi0002.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0315","title":[{"@lang":"lat","@value":"Marcus Iunius Gracchanus"}],"abbreviations":[{"@lang":"lat","@value":"Gracchan"}],"works":[{"urn":"urn:cts:latinLit:phi0315.phi0001","title":[{"@lang":"lat","@value":"commentarii"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0972","title":[{"@lang":"lat","@value":"Petronius"}],"abbreviations":[{"@lang":"lat","@value":"Petr"}],"works":[{"urn":"urn:cts:latinLit:phi0972.phi0001","title":[{"@lang":"lat","@value":"Satyrica"}],"abbreviations":[{"@lang":"lat","@value":"Sat"}]},{"urn":"urn:cts:latinLit:phi0972.phi0002","title":[{"@lang":"lat","@value":"Satyrica, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0905","title":[{"@lang":"lat","@value":"Marcus Antistius Labeo"}],"abbreviations":[{"@lang":"lat","@value":"AntLabeo"}],"works":[{"urn":"urn:cts:latinLit:phi0905.phi0002","title":[{"@lang":"lat","@value":"iurisprudentia, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0488","title":[{"@lang":"lat","@value":"Servius Clodius"}],"abbreviations":[{"@lang":"lat","@value":"SerClod"}],"works":[{"urn":"urn:cts:latinLit:phi0488.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi1032","title":[{"@lang":"lat","@value":"Vagellius"}],"abbreviations":[{"@lang":"lat","@value":"Vag"}],"works":[{"urn":"urn:cts:latinLit:phi1032.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0496","title":[{"@lang":"lat","@value":"Commentarius Anquisit. Sergii"}],"abbreviations":[{"@lang":"lat","@value":"CommentQuaestor"}],"works":[{"urn":"urn:cts:latinLit:phi0496.phi0001","title":[{"@lang":"lat","@value":"Comment. Anquisit. Sergii"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0899","title":[{"@lang":"lat","@value":"Hyginus Astronomus"}],"abbreviations":[{"@lang":"lat","@value":"HygAstr"}],"works":[{"urn":"urn:cts:latinLit:phi0899.phi0001","title":[{"@lang":"lat","@value":"Astronomica"}],"abbreviations":[{"@lang":"lat","@value":"Astr"}]}]},{"urn":"urn:cts:latinLit:phi2123","title":[{"@lang":"lat","@value":"Publilius Optatianus Porfyrius"}],"abbreviations":[{"@lang":"lat","@value":"POptat"}],"works":[{"urn":"urn:cts:latinLit:phi2123.phi0003","title":[{"@lang":"lat","@value":"Epigrammata"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0530","title":[{"@lang":"lat","@value":"Aulus Hirtius"}],"abbreviations":[{"@lang":"lat","@value":"Hirt"}],"works":[{"urn":"urn:cts:latinLit:phi0530.phi0001","title":[{"@lang":"lat","@value":"De Bello Gallico Liber VIII"}],"abbreviations":[{"@lang":"lat","@value":"Gal"}]},{"urn":"urn:cts:latinLit:phi0530.phi0002","title":[{"@lang":"lat","@value":"epistulae"}],"abbreviations":[{"@lang":"lat","@value":"Ep"}]}]},{"urn":"urn:cts:latinLit:phi0094","title":[{"@lang":"lat","@value":"Lucius Livius Andronicus"}],"abbreviations":[{"@lang":"lat","@value":"Andr"}],"works":[{"urn":"urn:cts:latinLit:phi0094.phi0001","title":[{"@lang":"lat","@value":"Odyssia"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0094.phi0002","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]},{"urn":"urn:cts:latinLit:phi0094.phi0003","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi0866","title":[{"@lang":"lat","@value":"Fenestella"}],"abbreviations":[{"@lang":"lat","@value":"Fen"}],"works":[{"urn":"urn:cts:latinLit:phi0866.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0727","title":[{"@lang":"lat","@value":"Cornificius Longus"}],"abbreviations":[{"@lang":"lat","@value":"CornifLong"}],"works":[{"urn":"urn:cts:latinLit:phi0727.phi0001","title":[{"@lang":"lat","@value":"grammatica, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0618","title":[{"@lang":"lat","@value":"Lucius Pomponius Bononiensis"}],"abbreviations":[{"@lang":"lat","@value":"PomponBon"}],"works":[{"urn":"urn:cts:latinLit:phi0618.phi0001","title":[{"@lang":"lat","@value":"Atellanae"}],"abbreviations":[{"@lang":"lat","@value":"atell"}]}]},{"urn":"urn:cts:latinLit:phi0118","title":[{"@lang":"lat","@value":"L. Aemilius L.f.M.n. Paulus"}],"abbreviations":[{"@lang":"lat","@value":"AemPaul"}],"works":[{"urn":"urn:cts:latinLit:phi0118.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi2002","title":[{"@lang":"lat","@value":"Albinus"}],"abbreviations":[{"@lang":"lat","@value":"Alb"}],"works":[{"urn":"urn:cts:latinLit:phi2002.phi0001","title":[{"@lang":"lat","@value":"Rerum Romanarum Liber I"}],"abbreviations":[{"@lang":"lat","@value":"ResRom"}]},{"urn":"urn:cts:latinLit:phi2002.phi0002","title":[{"@lang":"lat","@value":"De Metris"}],"abbreviations":[{"@lang":"lat","@value":"DeMetr"}]}]},{"urn":"urn:cts:latinLit:phi0408","title":[{"@lang":"lat","@value":"Marcus Antonius triumvir"}],"abbreviations":[{"@lang":"lat","@value":"Ant"}],"works":[{"urn":"urn:cts:latinLit:phi0408.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0959","title":[{"@lang":"lat","@value":"Publius Ovidius Naso"}],"abbreviations":[{"@lang":"lat","@value":"Ov"}],"works":[{"urn":"urn:cts:latinLit:phi0959.phi0001","title":[{"@lang":"lat","@value":"Amores"}],"abbreviations":[{"@lang":"lat","@value":"Am"}]},{"urn":"urn:cts:latinLit:phi0959.phi0002","title":[{"@lang":"lat","@value":"Epistulae (vel Heroides)"}],"abbreviations":[{"@lang":"lat","@value":"Her"}]},{"urn":"urn:cts:latinLit:phi0959.phi0003","title":[{"@lang":"lat","@value":"Medicamina Faciei Femineae"}],"abbreviations":[{"@lang":"lat","@value":"Med"}]},{"urn":"urn:cts:latinLit:phi0959.phi0004","title":[{"@lang":"lat","@value":"Ars Amatoria"}],"abbreviations":[{"@lang":"lat","@value":"Ars"}]},{"urn":"urn:cts:latinLit:phi0959.phi0005","title":[{"@lang":"lat","@value":"Remedia Amoris"}],"abbreviations":[{"@lang":"lat","@value":"Rem"}]},{"urn":"urn:cts:latinLit:phi0959.phi0006","title":[{"@lang":"lat","@value":"Metamorphoses"}],"abbreviations":[{"@lang":"lat","@value":"Met"}]},{"urn":"urn:cts:latinLit:phi0959.phi0007","title":[{"@lang":"lat","@value":"Fasti"}],"abbreviations":[{"@lang":"lat","@value":"Fast"}]},{"urn":"urn:cts:latinLit:phi0959.phi0008","title":[{"@lang":"lat","@value":"Tristia"}],"abbreviations":[{"@lang":"lat","@value":"Tr"}]},{"urn":"urn:cts:latinLit:phi0959.phi0009","title":[{"@lang":"lat","@value":"Epistulae ex Ponto"}],"abbreviations":[{"@lang":"lat","@value":"Pont"}]},{"urn":"urn:cts:latinLit:phi0959.phi0010","title":[{"@lang":"lat","@value":"Ibis"}],"abbreviations":[{"@lang":"lat","@value":"Ib"}]},{"urn":"urn:cts:latinLit:phi0959.phi0011","title":[{"@lang":"lat","@value":"Medea"}],"abbreviations":[{"@lang":"lat","@value":"Medea"}]},{"urn":"urn:cts:latinLit:phi0959.phi0012","title":[{"@lang":"lat","@value":"carmina, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0959.phi0013","title":[{"@lang":"lat","@value":"Nux [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Nux"}]},{"urn":"urn:cts:latinLit:phi0959.phi0014","title":[{"@lang":"lat","@value":"Halieutica [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Hal"}]},{"urn":"urn:cts:latinLit:phi0959.phi0015","title":[{"@lang":"lat","@value":"Epicedion Drusi [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"EpicDrusi"}]}]},{"urn":"urn:cts:latinLit:phi1276","title":[{"@lang":"lat","@value":"Decimus Iunius Iuvenalis"}],"abbreviations":[{"@lang":"lat","@value":"Juv"}],"works":[{"urn":"urn:cts:latinLit:phi1276.phi0001","title":[{"@lang":"lat","@value":"Saturae"}],"abbreviations":[{"@lang":"lat","@value":"S"}]}]},{"urn":"urn:cts:latinLit:phi0146","title":[{"@lang":"lat","@value":"Sextus Turpilius"}],"abbreviations":[{"@lang":"lat","@value":"Turp"}],"works":[{"urn":"urn:cts:latinLit:phi0146.phi0001","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi1285","title":[{"@lang":"lat","@value":"Lucius Volusius Maecianus"}],"abbreviations":[{"@lang":"lat","@value":"Maecian"}],"works":[{"urn":"urn:cts:latinLit:phi1285.phi0001","title":[{"@lang":"lat","@value":"Assis Distributio ..."}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0490","title":[{"@lang":"lat","@value":"Publius Cominius"}],"abbreviations":[{"@lang":"lat","@value":"Comin"}],"works":[{"urn":"urn:cts:latinLit:phi0490.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0650","title":[{"@lang":"lat","@value":"Sueius"}],"abbreviations":[{"@lang":"lat","@value":"Sueius"}],"works":[{"urn":"urn:cts:latinLit:phi0650.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0533","title":[{"@lang":"lat","@value":"Gaius Iulius Hyginus"}],"abbreviations":[{"@lang":"lat","@value":"HygGram"}],"works":[{"urn":"urn:cts:latinLit:phi0533.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]},{"urn":"urn:cts:latinLit:phi0533.phi0002","title":[{"@lang":"lat","@value":"historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1056","title":[{"@lang":"lat","@value":"Vitruvius"}],"abbreviations":[{"@lang":"lat","@value":"Vitr"}],"works":[{"urn":"urn:cts:latinLit:phi1056.phi0001","title":[{"@lang":"lat","@value":"De Architectura"}],"abbreviations":[{"@lang":"lat","@value":"Arch"}]}]},{"urn":"urn:cts:latinLit:phi0594","title":[{"@lang":"lat","@value":"Lucius Novius"}],"abbreviations":[{"@lang":"lat","@value":"LNov"}],"works":[{"urn":"urn:cts:latinLit:phi0594.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0646","title":[{"@lang":"lat","@value":"Lucius Cornelius Sisenna"}],"abbreviations":[{"@lang":"lat","@value":"Sis"}],"works":[{"urn":"urn:cts:latinLit:phi0646.phi0001","title":[{"@lang":"lat","@value":"Historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0646.phi0002","title":[{"@lang":"lat","@value":"Milesiae"}],"abbreviations":[{"@lang":"lat","@value":"Mil"}]}]},{"urn":"urn:cts:latinLit:phi0112","title":[{"@lang":"lat","@value":"Gnaeus Naevius"}],"abbreviations":[{"@lang":"lat","@value":"CnNaev"}],"works":[{"urn":"urn:cts:latinLit:phi0112.phi0001","title":[{"@lang":"lat","@value":"Bellum Punicum"}],"abbreviations":[{"@lang":"lat","@value":"Pun"}]},{"urn":"urn:cts:latinLit:phi0112.phi0002","title":[{"@lang":"lat","@value":"alia carmina epica"}],"abbreviations":[{"@lang":"lat","@value":"carm"}]},{"urn":"urn:cts:latinLit:phi0112.phi0003","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]},{"urn":"urn:cts:latinLit:phi0112.phi0004","title":[{"@lang":"lat","@value":"praetextae"}],"abbreviations":[{"@lang":"lat","@value":"praet"}]},{"urn":"urn:cts:latinLit:phi0112.phi0005","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]},{"urn":"urn:cts:latinLit:phi0112.phi0006","title":[{"@lang":"lat","@value":"carmina, frr. a Morel omissa"}],"abbreviations":[{"@lang":"lat","@value":"poetB"}]},{"urn":"urn:cts:latinLit:phi0112.phi0007","title":[{"@lang":"lat","@value":"versus in Metellos [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"InMet"}]}]},{"urn":"urn:cts:latinLit:phi1266","title":[{"@lang":"lat","@value":"Hyginus Gromaticus"}],"abbreviations":[{"@lang":"lat","@value":"HygGr"}],"works":[{"urn":"urn:cts:latinLit:phi1266.phi0001","title":[{"@lang":"lat","@value":"De Limitibus"}],"abbreviations":[{"@lang":"lat","@value":"Lim"}]},{"urn":"urn:cts:latinLit:phi1266.phi0002","title":[{"@lang":"lat","@value":"De Condicionibus Agrorum"}],"abbreviations":[{"@lang":"lat","@value":"Agr"}]},{"urn":"urn:cts:latinLit:phi1266.phi0003","title":[{"@lang":"lat","@value":"De Generibus Controversiarum"}],"abbreviations":[{"@lang":"lat","@value":"Contr"}]},{"urn":"urn:cts:latinLit:phi1266.phi0004","title":[{"@lang":"lat","@value":"Constitutio Limitum [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Const"}]},{"urn":"urn:cts:latinLit:phi1266.phi0005","title":[{"@lang":"lat","@value":"De Munition. Castrorum [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Munit"}]}]},{"urn":"urn:cts:latinLit:phi0076","title":[{"@lang":"lat","@value":"Gaius Cassius Hemina"}],"abbreviations":[{"@lang":"lat","@value":"Hem"}],"works":[{"urn":"urn:cts:latinLit:phi0076.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0478","title":[{"@lang":"lat","@value":"Quintus Tullius Cicero"}],"abbreviations":[{"@lang":"lat","@value":"QCic"}],"works":[{"urn":"urn:cts:latinLit:phi0478.phi0002","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0478.phi0003","title":[{"@lang":"lat","@value":"Commentar. Petitionis [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Pet"}]}]},{"urn":"urn:cts:latinLit:phi0624","title":[{"@lang":"lat","@value":"Quintus Claudius Quadrigarius"}],"abbreviations":[{"@lang":"lat","@value":"Quad"}],"works":[{"urn":"urn:cts:latinLit:phi0624.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0085","title":[{"@lang":"lat","@value":"Gaius Laelius Sapiens"}],"abbreviations":[{"@lang":"lat","@value":"Lael"}],"works":[{"urn":"urn:cts:latinLit:phi0085.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0938","title":[{"@lang":"lat","@value":"Iulius Montanus"}],"abbreviations":[{"@lang":"lat","@value":"Mont"}],"works":[{"urn":"urn:cts:latinLit:phi0938.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0926","title":[{"@lang":"lat","@value":"Marcus Manilius"}],"abbreviations":[{"@lang":"lat","@value":"ManAstr"}],"works":[{"urn":"urn:cts:latinLit:phi0926.phi0001","title":[{"@lang":"lat","@value":"Astronomica"}],"abbreviations":[{"@lang":"lat","@value":"Astr"}]}]},{"urn":"urn:cts:latinLit:phi0522","title":[{"@lang":"lat","@value":"Gaius Aelius Gallus"}],"abbreviations":[{"@lang":"lat","@value":"AelGal"}],"works":[{"urn":"urn:cts:latinLit:phi0522.phi0001","title":[{"@lang":"lat","@value":"De Verbis ad Ius Civile"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]},{"urn":"urn:cts:latinLit:phi0522.phi0002","title":[{"@lang":"lat","@value":"iurisprudentia, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"iurfrg"}]}]},{"urn":"urn:cts:latinLit:phi0582","title":[{"@lang":"lat","@value":"Q. Caecilius Metellus Numid."}],"abbreviations":[{"@lang":"lat","@value":"MetNum"}],"works":[{"urn":"urn:cts:latinLit:phi0582.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0451","title":[{"@lang":"lat","@value":"Sinnius Capito"}],"abbreviations":[{"@lang":"lat","@value":"Sinn"}],"works":[{"urn":"urn:cts:latinLit:phi0451.phi0001","title":[{"@lang":"lat","@value":"grammatica, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0638","title":[{"@lang":"lat","@value":"Q. Mucius Scaevola [pontifex]"}],"abbreviations":[{"@lang":"lat","@value":"QScaev"}],"works":[{"urn":"urn:cts:latinLit:phi0638.phi0002","title":[{"@lang":"lat","@value":"iurisprudentia, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0560","title":[{"@lang":"lat","@value":"Helvius Mancia"}],"abbreviations":[{"@lang":"lat","@value":"Manc"}],"works":[{"urn":"urn:cts:latinLit:phi0560.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1227","title":[{"@lang":"lat","@value":"Balbus"}],"abbreviations":[{"@lang":"lat","@value":"Balb"}],"works":[{"urn":"urn:cts:latinLit:phi1227.phi0001","title":[{"@lang":"lat","@value":"Expos. et Ratio Omn. Formarum"}],"abbreviations":[{"@lang":"lat","@value":"grom"}]}]},{"urn":"urn:cts:latinLit:phi1363","title":[{"@lang":"lat","@value":"Aemilius Asper"}],"abbreviations":[{"@lang":"lat","@value":"Asper"}],"works":[{"urn":"urn:cts:latinLit:phi1363.phi0001","title":[{"@lang":"lat","@value":"comment. in Ter. Sall. Verg."}],"abbreviations":[{"@lang":"lat","@value":"frg"}]},{"urn":"urn:cts:latinLit:phi1363.phi0002","title":[{"@lang":"lat","@value":"Vergilius"}],"abbreviations":[{"@lang":"lat","@value":"Verg"}]}]},{"urn":"urn:cts:latinLit:phi0809","title":[{"@lang":"lat","@value":"Aufidius Bassus"}],"abbreviations":[{"@lang":"lat","@value":"Aufid"}],"works":[{"urn":"urn:cts:latinLit:phi0809.phi0001","title":[{"@lang":"lat","@value":"historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1038","title":[{"@lang":"lat","@value":"Valerius Maximus"}],"abbreviations":[{"@lang":"lat","@value":"VMax"}],"works":[{"urn":"urn:cts:latinLit:phi1038.phi0001","title":[{"@lang":"lat","@value":"Facta et Dicta Memorabilia"}],"abbreviations":[{"@lang":"lat","@value":"Mem"}]}]},{"urn":"urn:cts:latinLit:phi0661","title":[{"@lang":"lat","@value":"Ticidas"}],"abbreviations":[{"@lang":"lat","@value":"Tic"}],"works":[{"urn":"urn:cts:latinLit:phi0661.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0538","title":[{"@lang":"lat","@value":"Laevius"}],"abbreviations":[{"@lang":"lat","@value":"Laev"}],"works":[{"urn":"urn:cts:latinLit:phi0538.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0538.phi0002","title":[{"@lang":"lat","@value":"fr. dubium a Morel omissum"}],"abbreviations":[{"@lang":"lat","@value":"poetB"}]}]},{"urn":"urn:cts:latinLit:phi0660","title":[{"@lang":"lat","@value":"Albius Tibullus"}],"abbreviations":[{"@lang":"lat","@value":"Tib"}],"works":[{"urn":"urn:cts:latinLit:phi0660.phi0001","title":[{"@lang":"lat","@value":"Elegiae"}],"abbreviations":[{"@lang":"lat","@value":"Eleg"}]},{"urn":"urn:cts:latinLit:phi0660.phi0002","title":[{"@lang":"lat","@value":"carmina Tibulliana [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"CarmTib"}]}]},{"urn":"urn:cts:latinLit:phi0670","title":[{"@lang":"lat","@value":"Quintus Aelius Tubero"}],"abbreviations":[{"@lang":"lat","@value":"Tub"}],"works":[{"urn":"urn:cts:latinLit:phi0670.phi0001","title":[{"@lang":"lat","@value":"Historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0670.phi0002","title":[{"@lang":"lat","@value":"liber ad C. Oppium, fr."}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0127","title":[{"@lang":"lat","@value":"P. Cornel. Scipio Afr. ma."}],"abbreviations":[{"@lang":"lat","@value":"ScipioMaior"}],"works":[{"urn":"urn:cts:latinLit:phi0127.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0330","title":[{"@lang":"lat","@value":"Volcacius Sedigitus"}],"abbreviations":[{"@lang":"lat","@value":"Volc"}],"works":[{"urn":"urn:cts:latinLit:phi0330.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0027","title":[{"@lang":"lat","@value":"Lucius Cincius Alimentus"}],"abbreviations":[{"@lang":"lat","@value":"Cincius"}],"works":[{"urn":"urn:cts:latinLit:phi0027.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0306","title":[{"@lang":"lat","@value":"Carmen Devotionis"}],"abbreviations":[{"@lang":"lat","@value":"CarmDevot"}],"works":[{"urn":"urn:cts:latinLit:phi0306.phi0001","title":[{"@lang":"lat","@value":"Carmen Devotionis"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0454","title":[{"@lang":"lat","@value":"Marcus Calidius"}],"abbreviations":[{"@lang":"lat","@value":"Calid"}],"works":[{"urn":"urn:cts:latinLit:phi0454.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0869","title":[{"@lang":"lat","@value":"Marcus Verrius Flaccus"}],"abbreviations":[{"@lang":"lat","@value":"VerFl"}],"works":[{"urn":"urn:cts:latinLit:phi0869.phi0001","title":[{"@lang":"lat","@value":"Etruscarum Rerum Libri"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0869.phi0002","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi9505","title":[{"@lang":"lat","@value":"Anonymi Comici et Tragici"}],"abbreviations":[{"@lang":"lat","@value":"AnonComTrag"}],"works":[{"urn":"urn:cts:latinLit:phi9505.phi0001","title":[{"@lang":"lat","@value":"Togatae Poetarum Incertorum"}],"abbreviations":[{"@lang":"lat","@value":"tog"}]},{"urn":"urn:cts:latinLit:phi9505.phi0002","title":[{"@lang":"lat","@value":"Atellanae Poetarum Incertorum"}],"abbreviations":[{"@lang":"lat","@value":"atell"}]},{"urn":"urn:cts:latinLit:phi9505.phi0003","title":[{"@lang":"lat","@value":"Palliatae Poetarum Incertorum"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]},{"urn":"urn:cts:latinLit:phi9505.phi0004","title":[{"@lang":"lat","@value":"Tragoediae Poetarum Incertorum"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]}]},{"urn":"urn:cts:latinLit:phi0534","title":[{"@lang":"lat","@value":"Iuventius"}],"abbreviations":[{"@lang":"lat","@value":"Iuvent"}],"works":[{"urn":"urn:cts:latinLit:phi0534.phi0001","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi0423","title":[{"@lang":"lat","@value":"Lucius Herennius Balbus"}],"abbreviations":[{"@lang":"lat","@value":"Balbus"}],"works":[{"urn":"urn:cts:latinLit:phi0423.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0890","title":[{"@lang":"lat","@value":"Homerus Latinus"}],"abbreviations":[{"@lang":"lat","@value":"HomLat"}],"works":[{"urn":"urn:cts:latinLit:phi0890.phi0001","title":[{"@lang":"lat","@value":"Ilias Latina"}],"abbreviations":[{"@lang":"lat","@value":"Ilias"}]}]},{"urn":"urn:cts:latinLit:phi0574","title":[{"@lang":"lat","@value":"Gaius Memmius L. f."}],"abbreviations":[{"@lang":"lat","@value":"Mem"}],"works":[{"urn":"urn:cts:latinLit:phi0574.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0574.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1229","title":[{"@lang":"lat","@value":"Flavius Caper"}],"abbreviations":[{"@lang":"lat","@value":"Caper"}],"works":[{"urn":"urn:cts:latinLit:phi1229.phi0001","title":[{"@lang":"lat","@value":"De Orthographia"}],"abbreviations":[{"@lang":"lat","@value":"Orth"}]},{"urn":"urn:cts:latinLit:phi1229.phi0002","title":[{"@lang":"lat","@value":"De Verbis Dubiis"}],"abbreviations":[{"@lang":"lat","@value":"VerbDub"}]}]},{"urn":"urn:cts:latinLit:phi0587","title":[{"@lang":"lat","@value":"Naevius"}],"abbreviations":[{"@lang":"lat","@value":"NaevIun"}],"works":[{"urn":"urn:cts:latinLit:phi0587.phi0001","title":[{"@lang":"lat","@value":"Ilias"}],"abbreviations":[{"@lang":"lat","@value":"CypIl"}]}]},{"urn":"urn:cts:latinLit:phi0019","title":[{"@lang":"lat","@value":"Gaius Papirius Carbo"}],"abbreviations":[{"@lang":"lat","@value":"Carbo"}],"works":[{"urn":"urn:cts:latinLit:phi0019.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0622","title":[{"@lang":"lat","@value":"Publilius Syrus"}],"abbreviations":[{"@lang":"lat","@value":"Pub"}],"works":[{"urn":"urn:cts:latinLit:phi0622.phi0001","title":[{"@lang":"lat","@value":"Sententiae"}],"abbreviations":[{"@lang":"lat","@value":"Sent"}]},{"urn":"urn:cts:latinLit:phi0622.phi0002","title":[{"@lang":"lat","@value":"mimi"}],"abbreviations":[{"@lang":"lat","@value":"mim"}]}]},{"urn":"urn:cts:latinLit:phi0923","title":[{"@lang":"lat","@value":"Aemilius Macer"}],"abbreviations":[{"@lang":"lat","@value":"AemMacer"}],"works":[{"urn":"urn:cts:latinLit:phi0923.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0923.phi0002","title":[{"@lang":"lat","@value":"fragmentum a Morel omissum"}],"abbreviations":[{"@lang":"lat","@value":"poetB"}]}]},{"urn":"urn:cts:latinLit:phi0073","title":[{"@lang":"lat","@value":"Gaius Sempronius Gracchus"}],"abbreviations":[{"@lang":"lat","@value":"CGracch"}],"works":[{"urn":"urn:cts:latinLit:phi0073.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0803","title":[{"@lang":"lat","@value":"Quintus Asconius Pedianus"}],"abbreviations":[{"@lang":"lat","@value":"Asc"}],"works":[{"urn":"urn:cts:latinLit:phi0803.phi0001","title":[{"@lang":"lat","@value":"In Senatu Contra L. Pisonem"}],"abbreviations":[{"@lang":"lat","@value":"Pis"}]},{"urn":"urn:cts:latinLit:phi0803.phi0002","title":[{"@lang":"lat","@value":"Pro Scauro"}],"abbreviations":[{"@lang":"lat","@value":"Scaur"}]},{"urn":"urn:cts:latinLit:phi0803.phi0003","title":[{"@lang":"lat","@value":"Pro Milone"}],"abbreviations":[{"@lang":"lat","@value":"Mil"}]},{"urn":"urn:cts:latinLit:phi0803.phi0004","title":[{"@lang":"lat","@value":"Pro Cornelio"}],"abbreviations":[{"@lang":"lat","@value":"Corn"}]},{"urn":"urn:cts:latinLit:phi0803.phi0005","title":[{"@lang":"lat","@value":"In Toga Candida"}],"abbreviations":[{"@lang":"lat","@value":"TogCand"}]}]},{"urn":"urn:cts:latinLit:phi0444","title":[{"@lang":"lat","@value":"Marcus Caelius Rufus"}],"abbreviations":[{"@lang":"lat","@value":"CaelRuf"}],"works":[{"urn":"urn:cts:latinLit:phi0444.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1206","title":[{"@lang":"lat","@value":"Lucius Ampelius"}],"abbreviations":[{"@lang":"lat","@value":"Amp"}],"works":[{"urn":"urn:cts:latinLit:phi1206.phi0001","title":[{"@lang":"lat","@value":"Liber Memorialis"}],"abbreviations":[{"@lang":"lat","@value":"Mem"}]}]},{"urn":"urn:cts:latinLit:phi0448","title":[{"@lang":"lat","@value":"Gaius Iulius Caesar"}],"abbreviations":[{"@lang":"lat","@value":"Caes"}],"works":[{"urn":"urn:cts:latinLit:phi0448.phi0001","title":[{"@lang":"lat","@value":"De Bello Gallico"}],"abbreviations":[{"@lang":"lat","@value":"Gal"}]},{"urn":"urn:cts:latinLit:phi0448.phi0002","title":[{"@lang":"lat","@value":"Bellum Civile"}],"abbreviations":[{"@lang":"lat","@value":"Civ"}]},{"urn":"urn:cts:latinLit:phi0448.phi0003","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]},{"urn":"urn:cts:latinLit:phi0448.phi0004","title":[{"@lang":"lat","@value":"De Analogia"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]},{"urn":"urn:cts:latinLit:phi0448.phi0005","title":[{"@lang":"lat","@value":"Anticato"}],"abbreviations":[{"@lang":"lat","@value":"Anticat"}]},{"urn":"urn:cts:latinLit:phi0448.phi0006","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"carm"}]},{"urn":"urn:cts:latinLit:phi0448.phi0007","title":[{"@lang":"lat","@value":"epistulae ad Ciceronem"}],"abbreviations":[{"@lang":"lat","@value":"EpCic"}]},{"urn":"urn:cts:latinLit:phi0448.phi0008","title":[{"@lang":"lat","@value":"epistulae ad familiares"}],"abbreviations":[{"@lang":"lat","@value":"EpFam"}]}]},{"urn":"urn:cts:latinLit:phi1218","title":[{"@lang":"lat","@value":"Sentius Augurinus"}],"abbreviations":[{"@lang":"lat","@value":"Augur"}],"works":[{"urn":"urn:cts:latinLit:phi1218.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0492","title":[{"@lang":"lat","@value":"Commentarii Augurum"}],"abbreviations":[{"@lang":"lat","@value":"CommentAugur"}],"works":[{"urn":"urn:cts:latinLit:phi0492.phi0001","title":[{"@lang":"lat","@value":"Commentarii Augurum"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0709","title":[{"@lang":"lat","@value":"Domitius Marsus"}],"abbreviations":[{"@lang":"lat","@value":"DomMars"}],"works":[{"urn":"urn:cts:latinLit:phi0709.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0709.phi0002","title":[{"@lang":"lat","@value":"epigrammata ex Bobiensibus"}],"abbreviations":[{"@lang":"lat","@value":"EpigrBob"}]}]},{"urn":"urn:cts:latinLit:phi1053","title":[{"@lang":"lat","@value":"Vibius Crispus"}],"abbreviations":[{"@lang":"lat","@value":"VibCrisp"}],"works":[{"urn":"urn:cts:latinLit:phi1053.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1005","title":[{"@lang":"lat","@value":"Rabirius"}],"abbreviations":[{"@lang":"lat","@value":"Rab"}],"works":[{"urn":"urn:cts:latinLit:phi1005.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0324","title":[{"@lang":"lat","@value":"Saserna"}],"abbreviations":[{"@lang":"lat","@value":"Saserna"}],"works":[{"urn":"urn:cts:latinLit:phi0324.phi0001","title":[{"@lang":"lat","@value":"De Agri Cultura"}],"abbreviations":[{"@lang":"lat","@value":"agr"}]}]},{"urn":"urn:cts:latinLit:phi0445","title":[{"@lang":"lat","@value":"Gaius vel Lucius Caepasius"}],"abbreviations":[{"@lang":"lat","@value":"Caepasius"}],"works":[{"urn":"urn:cts:latinLit:phi0445.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0981","title":[{"@lang":"lat","@value":"Gaius Asinius Pollio"}],"abbreviations":[{"@lang":"lat","@value":"Pol"}],"works":[{"urn":"urn:cts:latinLit:phi0981.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0981.phi0003","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]},{"urn":"urn:cts:latinLit:phi0981.phi0004","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]},{"urn":"urn:cts:latinLit:phi0981.phi0005","title":[{"@lang":"lat","@value":"historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0046","title":[{"@lang":"lat","@value":"Cornelius Epicadus"}],"abbreviations":[{"@lang":"lat","@value":"Epicad"}],"works":[{"urn":"urn:cts:latinLit:phi0046.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi1035","title":[{"@lang":"lat","@value":"Gaius Valerius Flaccus"}],"abbreviations":[{"@lang":"lat","@value":"VFl"}],"works":[{"urn":"urn:cts:latinLit:phi1035.phi0001","title":[{"@lang":"lat","@value":"Argonautica"}],"abbreviations":[{"@lang":"lat","@value":"Arg"}]}]},{"urn":"urn:cts:latinLit:phi2300","title":[{"@lang":"lat","@value":"Aemilius Sura"}],"abbreviations":[{"@lang":"lat","@value":"AemSura"}],"works":[{"urn":"urn:cts:latinLit:phi2300.phi0001","title":[{"@lang":"lat","@value":"De Annis Populi Romani"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi9221","title":[{"@lang":"lat","@value":"Paulus Quaestor"}],"abbreviations":[{"@lang":"lat","@value":"PaulQuaest"}],"works":[{"urn":"urn:cts:latinLit:phi9221.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0682","title":[{"@lang":"lat","@value":"Lucius Varius Rufus"}],"abbreviations":[{"@lang":"lat","@value":"VRuf"}],"works":[{"urn":"urn:cts:latinLit:phi0682.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0682.phi0002","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]}]},{"urn":"urn:cts:latinLit:phi1342","title":[{"@lang":"lat","@value":"Siculus Flaccus"}],"abbreviations":[{"@lang":"lat","@value":"SicFl"}],"works":[{"urn":"urn:cts:latinLit:phi1342.phi0001","title":[{"@lang":"lat","@value":"De Condicionibus Agrorum"}],"abbreviations":[{"@lang":"lat","@value":"CondAgr"}]}]},{"urn":"urn:cts:latinLit:phi0920","title":[{"@lang":"lat","@value":"Lucilius iunior"}],"abbreviations":[{"@lang":"lat","@value":"LucilIun"}],"works":[{"urn":"urn:cts:latinLit:phi0920.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1017","title":[{"@lang":"lat","@value":"Lucius Annaeus Seneca iunior"}],"abbreviations":[{"@lang":"lat","@value":"SenPhil"}],"works":[{"urn":"urn:cts:latinLit:phi1017.phi0001","title":[{"@lang":"lat","@value":"Hercules Furens"}],"abbreviations":[{"@lang":"lat","@value":"HerF"}]},{"urn":"urn:cts:latinLit:phi1017.phi0002","title":[{"@lang":"lat","@value":"Troades"}],"abbreviations":[{"@lang":"lat","@value":"Tro"}]},{"urn":"urn:cts:latinLit:phi1017.phi0003","title":[{"@lang":"lat","@value":"Phoenissae"}],"abbreviations":[{"@lang":"lat","@value":"Phoen"}]},{"urn":"urn:cts:latinLit:phi1017.phi0004","title":[{"@lang":"lat","@value":"Medea"}],"abbreviations":[{"@lang":"lat","@value":"Med"}]},{"urn":"urn:cts:latinLit:phi1017.phi0005","title":[{"@lang":"lat","@value":"Phaedra"}],"abbreviations":[{"@lang":"lat","@value":"Phaed"}]},{"urn":"urn:cts:latinLit:phi1017.phi0006","title":[{"@lang":"lat","@value":"Oedipus"}],"abbreviations":[{"@lang":"lat","@value":"Oed"}]},{"urn":"urn:cts:latinLit:phi1017.phi0007","title":[{"@lang":"lat","@value":"Agamemnon"}],"abbreviations":[{"@lang":"lat","@value":"Ag"}]},{"urn":"urn:cts:latinLit:phi1017.phi0008","title":[{"@lang":"lat","@value":"Thyestes"}],"abbreviations":[{"@lang":"lat","@value":"Thy"}]},{"urn":"urn:cts:latinLit:phi1017.phi0009","title":[{"@lang":"lat","@value":"Hercules Oetaeus"}],"abbreviations":[{"@lang":"lat","@value":"HerO"}]},{"urn":"urn:cts:latinLit:phi1017.phi0010","title":[{"@lang":"lat","@value":"Octavia [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Oct"}]},{"urn":"urn:cts:latinLit:phi1017.phi0011","title":[{"@lang":"lat","@value":"Apocolocyntosis"}],"abbreviations":[{"@lang":"lat","@value":"Apoc"}]},{"urn":"urn:cts:latinLit:phi1017.phi0012","title":[{"@lang":"lat","@value":"Dialogi"}],"abbreviations":[{"@lang":"lat","@value":"Dial"}]},{"urn":"urn:cts:latinLit:phi1017.phi0013","title":[{"@lang":"lat","@value":"De Beneficiis"}],"abbreviations":[{"@lang":"lat","@value":"Ben"}]},{"urn":"urn:cts:latinLit:phi1017.phi0014","title":[{"@lang":"lat","@value":"De Clementia"}],"abbreviations":[{"@lang":"lat","@value":"Cl"}]},{"urn":"urn:cts:latinLit:phi1017.phi0015","title":[{"@lang":"lat","@value":"Epistulae Morales ad Lucilium"}],"abbreviations":[{"@lang":"lat","@value":"Ep"}]},{"urn":"urn:cts:latinLit:phi1017.phi0016","title":[{"@lang":"lat","@value":"Naturales Quaestiones"}],"abbreviations":[{"@lang":"lat","@value":"Nat"}]},{"urn":"urn:cts:latinLit:phi1017.phi0017","title":[{"@lang":"lat","@value":"e Cleanthe versus"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi1017.phi0018","title":[{"@lang":"lat","@value":"De Vita Patris"}],"abbreviations":[{"@lang":"lat","@value":"VitPatr"}]}]},{"urn":"urn:cts:latinLit:phi0125","title":[{"@lang":"lat","@value":"Publius Mucius Scaevola"}],"abbreviations":[{"@lang":"lat","@value":"PScaev"}],"works":[{"urn":"urn:cts:latinLit:phi0125.phi0001","title":[{"@lang":"lat","@value":"fragmentum"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0642","title":[{"@lang":"lat","@value":"Sevius Nicanor"}],"abbreviations":[{"@lang":"lat","@value":"Sev"}],"works":[{"urn":"urn:cts:latinLit:phi0642.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1377","title":[{"@lang":"lat","@value":"Fragmenta Bobiensia"}],"abbreviations":[{"@lang":"lat","@value":"FrgBob"}],"works":[{"urn":"urn:cts:latinLit:phi1377.phi0001","title":[{"@lang":"lat","@value":"De Littera"}],"abbreviations":[{"@lang":"lat","@value":"Litt"}]},{"urn":"urn:cts:latinLit:phi1377.phi0002","title":[{"@lang":"lat","@value":"De Accentibus"}],"abbreviations":[{"@lang":"lat","@value":"Acc"}]},{"urn":"urn:cts:latinLit:phi1377.phi0003","title":[{"@lang":"lat","@value":"De Propriis Nominibus"}],"abbreviations":[{"@lang":"lat","@value":"PropNom"}]},{"urn":"urn:cts:latinLit:phi1377.phi0004","title":[{"@lang":"lat","@value":"De Nomine"}],"abbreviations":[{"@lang":"lat","@value":"Nom"}]},{"urn":"urn:cts:latinLit:phi1377.phi0005","title":[{"@lang":"lat","@value":"De Versibus"}],"abbreviations":[{"@lang":"lat","@value":"Vers"}]},{"urn":"urn:cts:latinLit:phi1377.phi0006","title":[{"@lang":"lat","@value":"De Finalibus Syllabis"}],"abbreviations":[{"@lang":"lat","@value":"FinSyll"}]},{"urn":"urn:cts:latinLit:phi1377.phi0007","title":[{"@lang":"lat","@value":"De Structuris"}],"abbreviations":[{"@lang":"lat","@value":"Struct"}]},{"urn":"urn:cts:latinLit:phi1377.phi0008","title":[{"@lang":"lat","@value":"De Metris"}],"abbreviations":[{"@lang":"lat","@value":"Metr"}]}]},{"urn":"urn:cts:latinLit:phi3211","title":[{"@lang":"lat","@value":"Argum. Aen. et Tetrast."}],"abbreviations":[{"@lang":"lat","@value":"Arg"}],"works":[{"urn":"urn:cts:latinLit:phi3211.phi0001","title":[{"@lang":"lat","@value":"Argumenta Aeneidis, Decasticha"}],"abbreviations":[{"@lang":"lat","@value":"Deca"}]},{"urn":"urn:cts:latinLit:phi3211.phi0002","title":[{"@lang":"lat","@value":"Argumenta Aeneidis, Monosticha"}],"abbreviations":[{"@lang":"lat","@value":"Mono"}]},{"urn":"urn:cts:latinLit:phi3211.phi0003","title":[{"@lang":"lat","@value":"Tetrasticha in Vergilii Bucolica et Georgica"}],"abbreviations":[{"@lang":"lat","@value":"Tetr"}]},{"urn":"urn:cts:latinLit:phi3211.phi0004","title":[{"@lang":"lat","@value":"Tetrasticha in Vergilii Aeneida"}],"abbreviations":[{"@lang":"lat","@value":"TetrAen"}]}]},{"urn":"urn:cts:latinLit:phi0630","title":[{"@lang":"lat","@value":"Sacra Argeorum"}],"abbreviations":[{"@lang":"lat","@value":"SacrArg"}],"works":[{"urn":"urn:cts:latinLit:phi0630.phi0001","title":[{"@lang":"lat","@value":"Sacra Argeorum"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0588","title":[{"@lang":"lat","@value":"Cornelius Nepos"}],"abbreviations":[{"@lang":"lat","@value":"Nep"}],"works":[{"urn":"urn:cts:latinLit:phi0588.phi0001","title":[{"@lang":"lat","@value":"Vitae"}],"abbreviations":[{"@lang":"lat","@value":"Vit"}]},{"urn":"urn:cts:latinLit:phi0588.phi0002","title":[{"@lang":"lat","@value":"fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0676","title":[{"@lang":"lat","@value":"Valerius Antias"}],"abbreviations":[{"@lang":"lat","@value":"ValAnt"}],"works":[{"urn":"urn:cts:latinLit:phi0676.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1002","title":[{"@lang":"lat","@value":"Marcus Fabius Quintilianus"}],"abbreviations":[{"@lang":"lat","@value":"Quint"}],"works":[{"urn":"urn:cts:latinLit:phi1002.phi0001","title":[{"@lang":"lat","@value":"Institutio Oratoria"}],"abbreviations":[{"@lang":"lat","@value":"Inst"}]},{"urn":"urn:cts:latinLit:phi1002.phi0002","title":[{"@lang":"lat","@value":"Declamationes Minores"}],"abbreviations":[{"@lang":"lat","@value":"Decl"}]},{"urn":"urn:cts:latinLit:phi1002.phi0003","title":[{"@lang":"lat","@value":"Declamationes Maiores [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"DeclMaior"}]}]},{"urn":"urn:cts:latinLit:phi0540","title":[{"@lang":"lat","@value":"Tullius Laurea"}],"abbreviations":[{"@lang":"lat","@value":"Laurea"}],"works":[{"urn":"urn:cts:latinLit:phi0540.phi0001","title":[{"@lang":"lat","@value":"epigramma in Ciceronis obitum"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0013","title":[{"@lang":"lat","@value":"Caecilius Statius"}],"abbreviations":[{"@lang":"lat","@value":"Caecil"}],"works":[{"urn":"urn:cts:latinLit:phi0013.phi0001","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi9500","title":[{"@lang":"lat","@value":"Anonymi Epici et Lyrici"}],"abbreviations":[{"@lang":"lat","@value":"AnonEpLyr"}],"works":[{"urn":"urn:cts:latinLit:phi9500.phi0001","title":[{"@lang":"lat","@value":"carmen Saliare"}],"abbreviations":[{"@lang":"lat","@value":"CarmSal"}]},{"urn":"urn:cts:latinLit:phi9500.phi0002","title":[{"@lang":"lat","@value":"versus sacrorum"}],"abbreviations":[{"@lang":"lat","@value":"VersSacr"}]},{"urn":"urn:cts:latinLit:phi9500.phi0003","title":[{"@lang":"lat","@value":"sententia"}],"abbreviations":[{"@lang":"lat","@value":"Sent"}]},{"urn":"urn:cts:latinLit:phi9500.phi0004","title":[{"@lang":"lat","@value":"A. Atilii Calatini elogium"}],"abbreviations":[{"@lang":"lat","@value":"CalElog"}]},{"urn":"urn:cts:latinLit:phi9500.phi0005","title":[{"@lang":"lat","@value":"carmen Priami"}],"abbreviations":[{"@lang":"lat","@value":"CarmPriam"}]},{"urn":"urn:cts:latinLit:phi9500.phi0006","title":[{"@lang":"lat","@value":"saturnius(?)"}],"abbreviations":[{"@lang":"lat","@value":"IncSat"}]},{"urn":"urn:cts:latinLit:phi9500.phi0007","title":[{"@lang":"lat","@value":"Acilii Glabrionis tabula"}],"abbreviations":[{"@lang":"lat","@value":"GlabTab"}]},{"urn":"urn:cts:latinLit:phi9500.phi0008","title":[{"@lang":"lat","@value":"M. Aemilii cos. a. 179 tabula"}],"abbreviations":[{"@lang":"lat","@value":"AemTab"}]},{"urn":"urn:cts:latinLit:phi9500.phi0009","title":[{"@lang":"lat","@value":"versiculi populares et pueriles"}],"abbreviations":[{"@lang":"lat","@value":"VersicPop"}]},{"urn":"urn:cts:latinLit:phi9500.phi0010","title":[{"@lang":"lat","@value":"praecepta rustica et medica"}],"abbreviations":[{"@lang":"lat","@value":"Praec"}]},{"urn":"urn:cts:latinLit:phi9500.phi0011","title":[{"@lang":"lat","@value":"epigramma a Varrone Plauto attributum"}],"abbreviations":[{"@lang":"lat","@value":"EpigrPlaut"}]},{"urn":"urn:cts:latinLit:phi9500.phi0012","title":[{"@lang":"lat","@value":"epigramma Pacuvi"}],"abbreviations":[{"@lang":"lat","@value":"EpigrPac"}]},{"urn":"urn:cts:latinLit:phi9500.phi0013","title":[{"@lang":"lat","@value":"Ardeatis templi inscriptio"}],"abbreviations":[{"@lang":"lat","@value":"ArdInscr"}]},{"urn":"urn:cts:latinLit:phi9500.phi0014","title":[{"@lang":"lat","@value":"templi Tarracinensis inscriptio"}],"abbreviations":[{"@lang":"lat","@value":"TarInscr"}]},{"urn":"urn:cts:latinLit:phi9500.phi0015","title":[{"@lang":"lat","@value":"in Carbonem versus popularis"}],"abbreviations":[{"@lang":"lat","@value":"CarbVers"}]},{"urn":"urn:cts:latinLit:phi9500.phi0016","title":[{"@lang":"lat","@value":"carmina Marciana et similia"}],"abbreviations":[{"@lang":"lat","@value":"CarmMarc"}]},{"urn":"urn:cts:latinLit:phi9500.phi0017","title":[{"@lang":"lat","@value":"versus populares in Caesarem et similia"}],"abbreviations":[{"@lang":"lat","@value":"InCaes"}]},{"urn":"urn:cts:latinLit:phi9500.phi0018","title":[{"@lang":"lat","@value":"epigrammata et populares versus in Augustum"}],"abbreviations":[{"@lang":"lat","@value":"InAug"}]},{"urn":"urn:cts:latinLit:phi9500.phi0019","title":[{"@lang":"lat","@value":"obtrectatoris Vergilii versiculus"}],"abbreviations":[{"@lang":"lat","@value":"ObtrVerg"}]},{"urn":"urn:cts:latinLit:phi9500.phi0020","title":[{"@lang":"lat","@value":"de Crassitio epigramma"}],"abbreviations":[{"@lang":"lat","@value":"CrassEpigr"}]},{"urn":"urn:cts:latinLit:phi9500.phi0021","title":[{"@lang":"lat","@value":"populares versus in Sarmentum"}],"abbreviations":[{"@lang":"lat","@value":"InSarm"}]},{"urn":"urn:cts:latinLit:phi9500.phi0022","title":[{"@lang":"lat","@value":"versus populares in Tiberium et Germanicum"}],"abbreviations":[{"@lang":"lat","@value":"InTib"}]},{"urn":"urn:cts:latinLit:phi9500.phi0023","title":[{"@lang":"lat","@value":"populares versus in Caligulam"}],"abbreviations":[{"@lang":"lat","@value":"InCal"}]},{"urn":"urn:cts:latinLit:phi9500.phi0024","title":[{"@lang":"lat","@value":"artificia metrica"}],"abbreviations":[{"@lang":"lat","@value":"Artif"}]},{"urn":"urn:cts:latinLit:phi9500.phi0025","title":[{"@lang":"lat","@value":"versus populares in Neronem et eiusque successores"}],"abbreviations":[{"@lang":"lat","@value":"InNer"}]},{"urn":"urn:cts:latinLit:phi9500.phi0026","title":[{"@lang":"lat","@value":"versus Hor. Sat. I 10 praemissi"}],"abbreviations":[{"@lang":"lat","@value":"VersHor"}]},{"urn":"urn:cts:latinLit:phi9500.phi0027","title":[{"@lang":"lat","@value":"versus de VII sapientibus"}],"abbreviations":[{"@lang":"lat","@value":"VersSap"}]},{"urn":"urn:cts:latinLit:phi9500.phi0028","title":[{"@lang":"lat","@value":"odarium"}],"abbreviations":[{"@lang":"lat","@value":"Odar"}]},{"urn":"urn:cts:latinLit:phi9500.phi0029","title":[{"@lang":"lat","@value":"versus fortasse Clementis(?)"}],"abbreviations":[{"@lang":"lat","@value":"PoetEp"}]},{"urn":"urn:cts:latinLit:phi9500.phi0030","title":[{"@lang":"lat","@value":"versus in Caesares Romanos ex Historia Augusta"}],"abbreviations":[{"@lang":"lat","@value":"HistAug"}]},{"urn":"urn:cts:latinLit:phi9500.phi0031","title":[{"@lang":"lat","@value":"versus Orphici ab Arnobio conversi"}],"abbreviations":[{"@lang":"lat","@value":"VersOrph"}]},{"urn":"urn:cts:latinLit:phi9500.phi0032","title":[{"@lang":"lat","@value":"Tarentinus senarius"}],"abbreviations":[{"@lang":"lat","@value":"TarSen"}]},{"urn":"urn:cts:latinLit:phi9500.phi0033","title":[{"@lang":"lat","@value":"De Venere et Amoribus"}],"abbreviations":[{"@lang":"lat","@value":"VenAmor"}]},{"urn":"urn:cts:latinLit:phi9500.phi0034","title":[{"@lang":"lat","@value":"De Metris"}],"abbreviations":[{"@lang":"lat","@value":"Metr"}]},{"urn":"urn:cts:latinLit:phi9500.phi0035","title":[{"@lang":"lat","@value":"versus fortasse Enniani"}],"abbreviations":[{"@lang":"lat","@value":"VersEnn"}]},{"urn":"urn:cts:latinLit:phi9500.phi0036","title":[{"@lang":"lat","@value":"versus fortasse Luciliani"}],"abbreviations":[{"@lang":"lat","@value":"VersLucil"}]},{"urn":"urn:cts:latinLit:phi9500.phi0037","title":[{"@lang":"lat","@value":"versus aevi Catulliani"}],"abbreviations":[{"@lang":"lat","@value":"AevCatul"}]},{"urn":"urn:cts:latinLit:phi9500.phi0038","title":[{"@lang":"lat","@value":"versus aevi Catulliani a Morel omissi"}],"abbreviations":[{"@lang":"lat","@value":"AevCatul2"}]},{"urn":"urn:cts:latinLit:phi9500.phi0039","title":[{"@lang":"lat","@value":"versus aevi Augustei"}],"abbreviations":[{"@lang":"lat","@value":"AevAug"}]},{"urn":"urn:cts:latinLit:phi9500.phi0040","title":[{"@lang":"lat","@value":"serioris aetatis versus"}],"abbreviations":[{"@lang":"lat","@value":"SerAet"}]},{"urn":"urn:cts:latinLit:phi9500.phi0041","title":[{"@lang":"lat","@value":"versus reciproci"}],"abbreviations":[{"@lang":"lat","@value":"VersRecip"}]}]},{"urn":"urn:cts:latinLit:phi0584","title":[{"@lang":"lat","@value":"Mimi Poetarum Incertorum"}],"abbreviations":[{"@lang":"lat","@value":"MimInc"}],"works":[{"urn":"urn:cts:latinLit:phi0584.phi0001","title":[{"@lang":"lat","@value":"Mimi Poetarum Incertorum"}],"abbreviations":[{"@lang":"lat","@value":""}]},{"urn":"urn:cts:latinLit:phi0584.phi0002","title":[{"@lang":"lat","@value":"fragmenta dubia"}],"abbreviations":[{"@lang":"lat","@value":"dub"}]}]},{"urn":"urn:cts:latinLit:phi0067","title":[{"@lang":"lat","@value":"Favorinus"}],"abbreviations":[{"@lang":"lat","@value":"Fav"}],"works":[{"urn":"urn:cts:latinLit:phi0067.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0498","title":[{"@lang":"lat","@value":"Gaius Aurelius Cotta"}],"abbreviations":[{"@lang":"lat","@value":"Cotta"}],"works":[{"urn":"urn:cts:latinLit:phi0498.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0321","title":[{"@lang":"lat","@value":"Porcius Licinus"}],"abbreviations":[{"@lang":"lat","@value":"Porc"}],"works":[{"urn":"urn:cts:latinLit:phi0321.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0130","title":[{"@lang":"lat","@value":"P. Cornel. Scipio Nasica Ser."}],"abbreviations":[{"@lang":"lat","@value":"Nasica"}],"works":[{"urn":"urn:cts:latinLit:phi0130.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0406","title":[{"@lang":"lat","@value":"Publius Alfenus Varus"}],"abbreviations":[{"@lang":"lat","@value":"Alf"}],"works":[{"urn":"urn:cts:latinLit:phi0406.phi0002","title":[{"@lang":"lat","@value":"iurisprudentia, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi1321","title":[{"@lang":"lat","@value":"Sextus Pomponius"}],"abbreviations":[{"@lang":"lat","@value":"Pompon"}],"works":[{"urn":"urn:cts:latinLit:phi1321.phi0002","title":[{"@lang":"lat","@value":"Liber Regularum, fragmentum"}],"abbreviations":[{"@lang":"lat","@value":"Reg"}]}]},{"urn":"urn:cts:latinLit:phi0668","title":[{"@lang":"lat","@value":"Gnaeus Tremelius Scrofa"}],"abbreviations":[{"@lang":"lat","@value":"Tremel"}],"works":[{"urn":"urn:cts:latinLit:phi0668.phi0001","title":[{"@lang":"lat","@value":"de re rustica"}],"abbreviations":[{"@lang":"lat","@value":"agr"}]}]},{"urn":"urn:cts:latinLit:phi0079","title":[{"@lang":"lat","@value":"Hostius"}],"abbreviations":[{"@lang":"lat","@value":"Host"}],"works":[{"urn":"urn:cts:latinLit:phi0079.phi0001","title":[{"@lang":"lat","@value":"Bellum Histricum"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi2434","title":[{"@lang":"lat","@value":"Hilarius Arelatensis"}],"abbreviations":[{"@lang":"lat","@value":"Hil"}],"works":[{"urn":"urn:cts:latinLit:phi2434.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0473","title":[{"@lang":"lat","@value":"Q. Lutatius Catulus iunior"}],"abbreviations":[{"@lang":"lat","@value":"LutatIun"}],"works":[{"urn":"urn:cts:latinLit:phi0473.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0061","title":[{"@lang":"lat","@value":"Fabius Pictor"}],"abbreviations":[{"@lang":"lat","@value":"FabPict"}],"works":[{"urn":"urn:cts:latinLit:phi0061.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0061.phi0002","title":[{"@lang":"lat","@value":"Iuris Pontificis Libri"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0550","title":[{"@lang":"lat","@value":"Titus Lucretius Carus"}],"abbreviations":[{"@lang":"lat","@value":"Lucr"}],"works":[{"urn":"urn:cts:latinLit:phi0550.phi0001","title":[{"@lang":"lat","@value":"De Rerum Natura"}],"abbreviations":[{"@lang":"lat","@value":"DRN"}]},{"urn":"urn:cts:latinLit:phi0550.phi0002","title":[{"@lang":"lat","@value":"fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]},{"urn":"urn:cts:latinLit:phi0550.phi0003","title":[{"@lang":"lat","@value":"Capitula"}],"abbreviations":[{"@lang":"lat","@value":"Cap"}]}]}]};
+module.exports = {"authors":[{"urn":"urn:cts:latinLit:phi2456","title":[{"@lang":"lat","@value":"Parthenius, of Constantinople"}],"abbreviations":[{"@lang":"lat","@value":"Parth"}],"works":[{"urn":"urn:cts:latinLit:phi2456.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0119","title":[{"@lang":"lat","@value":"Plautus, Titus Maccius"}],"abbreviations":[{"@lang":"lat","@value":"Pl"}],"works":[{"urn":"urn:cts:latinLit:phi0119.phi0001","title":[{"@lang":"lat","@value":"Amphitruo"}],"abbreviations":[{"@lang":"lat","@value":"Am"}]},{"urn":"urn:cts:latinLit:phi0119.phi0002","title":[{"@lang":"lat","@value":"Asinaria"}],"abbreviations":[{"@lang":"lat","@value":"As"}]},{"urn":"urn:cts:latinLit:phi0119.phi0003","title":[{"@lang":"lat","@value":"Aulularia"}],"abbreviations":[{"@lang":"lat","@value":"Aul"}]},{"urn":"urn:cts:latinLit:phi0119.phi0004","title":[{"@lang":"lat","@value":"Bacchides"}],"abbreviations":[{"@lang":"lat","@value":"Bac"}]},{"urn":"urn:cts:latinLit:phi0119.phi0005","title":[{"@lang":"lat","@value":"Captivi"}],"abbreviations":[{"@lang":"lat","@value":"Capt"}]},{"urn":"urn:cts:latinLit:phi0119.phi0006","title":[{"@lang":"lat","@value":"Casina"}],"abbreviations":[{"@lang":"lat","@value":"Cas"}]},{"urn":"urn:cts:latinLit:phi0119.phi0007","title":[{"@lang":"lat","@value":"Cistellaria"}],"abbreviations":[{"@lang":"lat","@value":"Cist"}]},{"urn":"urn:cts:latinLit:phi0119.phi0008","title":[{"@lang":"lat","@value":"Curculio"}],"abbreviations":[{"@lang":"lat","@value":"Cur"}]},{"urn":"urn:cts:latinLit:phi0119.phi0009","title":[{"@lang":"lat","@value":"Epidicus"}],"abbreviations":[{"@lang":"lat","@value":"Epid"}]},{"urn":"urn:cts:latinLit:phi0119.phi0010","title":[{"@lang":"lat","@value":"Menaechmi"}],"abbreviations":[{"@lang":"lat","@value":"Men"}]},{"urn":"urn:cts:latinLit:phi0119.phi0011","title":[{"@lang":"lat","@value":"Mercator"}],"abbreviations":[{"@lang":"lat","@value":"Mer"}]},{"urn":"urn:cts:latinLit:phi0119.phi0012","title":[{"@lang":"lat","@value":"Miles Gloriosus"}],"abbreviations":[{"@lang":"lat","@value":"Mil"}]},{"urn":"urn:cts:latinLit:phi0119.phi0013","title":[{"@lang":"lat","@value":"Mostellaria"}],"abbreviations":[{"@lang":"lat","@value":"Mos"}]},{"urn":"urn:cts:latinLit:phi0119.phi0014","title":[{"@lang":"lat","@value":"Persa"}],"abbreviations":[{"@lang":"lat","@value":"Per"}]},{"urn":"urn:cts:latinLit:phi0119.phi0015","title":[{"@lang":"lat","@value":"Poenulus"}],"abbreviations":[{"@lang":"lat","@value":"Poen"}]},{"urn":"urn:cts:latinLit:phi0119.phi0016","title":[{"@lang":"lat","@value":"Pseudolus"}],"abbreviations":[{"@lang":"lat","@value":"Ps"}]},{"urn":"urn:cts:latinLit:phi0119.phi0017","title":[{"@lang":"lat","@value":"Rudens"}],"abbreviations":[{"@lang":"lat","@value":"Rud"}]},{"urn":"urn:cts:latinLit:phi0119.phi0018","title":[{"@lang":"lat","@value":"Stichus"}],"abbreviations":[{"@lang":"lat","@value":"St"}]},{"urn":"urn:cts:latinLit:phi0119.phi0019","title":[{"@lang":"lat","@value":"Trinummus"}],"abbreviations":[{"@lang":"lat","@value":"Trin"}]},{"urn":"urn:cts:latinLit:phi0119.phi0020","title":[{"@lang":"lat","@value":"Truculentus"}],"abbreviations":[{"@lang":"lat","@value":"Truc"}]},{"urn":"urn:cts:latinLit:phi0119.phi0021","title":[{"@lang":"lat","@value":"Vidularia"}],"abbreviations":[{"@lang":"lat","@value":"Vid"}]},{"urn":"urn:cts:latinLit:phi0119.phi0022","title":[{"@lang":"lat","@value":"Fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"Fr"}]}]},{"urn":"urn:cts:latinLit:phi0881","title":[{"@lang":"lat","@value":"Germanicus, Claudius Caesar"}],"abbreviations":[{"@lang":"lat","@value":"Germ"}],"works":[{"urn":"urn:cts:latinLit:phi0881.phi0001","title":[{"@lang":"lat","@value":"Aratea"}],"abbreviations":[{"@lang":"lat","@value":"Arat"}]},{"urn":"urn:cts:latinLit:phi0881.phi0002","title":[{"@lang":"lat","@value":"fragmenta Aratea"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]},{"urn":"urn:cts:latinLit:phi0881.phi0003","title":[{"@lang":"lat","@value":"epigrammata"}],"abbreviations":[{"@lang":"lat","@value":"Epig"}]}]},{"urn":"urn:cts:latinLit:phi0821","title":[{"@lang":"lat","@value":"Anonymous (Bucolica Einsidlensia)"}],"abbreviations":[{"@lang":"lat","@value":"BucEins"}],"works":[{"urn":"urn:cts:latinLit:phi0821.phi0001","title":[{"@lang":"lat","@value":"Bucolica Einsidlensia"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0845","title":[{"@lang":"lat","@value":"Columella, L. Iunius Moderatus"}],"abbreviations":[{"@lang":"lat","@value":"Col"}],"works":[{"urn":"urn:cts:latinLit:phi0845.phi0001","title":[{"@lang":"lat","@value":"De Arboribus"}],"abbreviations":[{"@lang":"lat","@value":"Arb"}]},{"urn":"urn:cts:latinLit:phi0845.phi0002","title":[{"@lang":"lat","@value":"De Re Rustica"}],"abbreviations":[{"@lang":"lat","@value":"RR"}]}]},{"urn":"urn:cts:latinLit:phi0984","title":[{"@lang":"lat","@value":"Trogus, Pompeius"}],"abbreviations":[{"@lang":"lat","@value":"Trog"}],"works":[{"urn":"urn:cts:latinLit:phi0984.phi0001","title":[{"@lang":"lat","@value":"De Animalibus"}],"abbreviations":[{"@lang":"lat","@value":"Anim"}]},{"urn":"urn:cts:latinLit:phi0984.phi0002","title":[{"@lang":"lat","@value":"Historiae Philippicae"}],"abbreviations":[{"@lang":"lat","@value":"Hist"}]}]},{"urn":"urn:cts:latinLit:phi0558","title":[{"@lang":"lat","@value":"Maecenas, Gaius Cilnius"}],"abbreviations":[{"@lang":"lat","@value":"Maec"}],"works":[{"urn":"urn:cts:latinLit:phi0558.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0558.phi0002","title":[{"@lang":"lat","@value":"fragmentum a Morel omissum"}],"abbreviations":[{"@lang":"lat","@value":"poetB"}]}]},{"urn":"urn:cts:latinLit:phi1297","title":[{"@lang":"lat","@value":"Marullus"}],"abbreviations":[{"@lang":"lat","@value":"Marull"}],"works":[{"urn":"urn:cts:latinLit:phi1297.phi0001","title":[{"@lang":"lat","@value":"mimi"}],"abbreviations":[{"@lang":"lat","@value":"mim"}]}]},{"urn":"urn:cts:latinLit:phi1251","title":[{"@lang":"lat","@value":"Gaius"}],"abbreviations":[{"@lang":"lat","@value":"Gaius"}],"works":[{"urn":"urn:cts:latinLit:phi1251.phi0001","title":[{"@lang":"lat","@value":"Institutiones"}],"abbreviations":[{"@lang":"lat","@value":"Inst"}]},{"urn":"urn:cts:latinLit:phi1251.phi0002","title":[{"@lang":"lat","@value":"Institut., frr. Aeg. et Oxyrh."}],"abbreviations":[{"@lang":"lat","@value":"Instfrg"}]},{"urn":"urn:cts:latinLit:phi1251.phi0004","title":[{"@lang":"lat","@value":"Gai Institutionum epitome"}],"abbreviations":[{"@lang":"lat","@value":"Epit"}]}]},{"urn":"urn:cts:latinLit:phi0412","title":[{"@lang":"lat","@value":"Aquilius Gallus, Gaius"}],"abbreviations":[{"@lang":"lat","@value":"AquilGall"}],"works":[{"urn":"urn:cts:latinLit:phi0412.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi1282","title":[{"@lang":"lat","@value":"Lentulus"}],"abbreviations":[{"@lang":"lat","@value":"Lentul"}],"works":[{"urn":"urn:cts:latinLit:phi1282.phi0001","title":[{"@lang":"lat","@value":"mimus"}],"abbreviations":[{"@lang":"lat","@value":"mim"}]}]},{"urn":"urn:cts:latinLit:phi0863","title":[{"@lang":"lat","@value":"Dorcatius"}],"abbreviations":[{"@lang":"lat","@value":"Dorc"}],"works":[{"urn":"urn:cts:latinLit:phi0863.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0028","title":[{"@lang":"lat","@value":"Coelius Antipater, Lucius"}],"abbreviations":[{"@lang":"lat","@value":"Coel"}],"works":[{"urn":"urn:cts:latinLit:phi0028.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0500","title":[{"@lang":"lat","@value":"Crassus, Lucius Licinius"}],"abbreviations":[{"@lang":"lat","@value":"Cras"}],"works":[{"urn":"urn:cts:latinLit:phi0500.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0706","title":[{"@lang":"lat","@value":"Anonymous (Carmen de Bello Aegyptiaco)"}],"abbreviations":[{"@lang":"lat","@value":"CarmBellAeg"}],"works":[{"urn":"urn:cts:latinLit:phi0706.phi0001","title":[{"@lang":"lat","@value":"Carmen de Bello Aegyptiaco"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0037","title":[{"@lang":"lat","@value":"Curio, Gaius Scribonius (pater)"}],"abbreviations":[{"@lang":"lat","@value":"CurPat"}],"works":[{"urn":"urn:cts:latinLit:phi0037.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0917","title":[{"@lang":"lat","@value":"Lucanus, Marcus Annaeus"}],"abbreviations":[{"@lang":"lat","@value":"Luc"}],"works":[{"urn":"urn:cts:latinLit:phi0917.phi0001","title":[{"@lang":"lat","@value":"Bellum Civile"}],"abbreviations":[{"@lang":"lat","@value":"BC"}]},{"urn":"urn:cts:latinLit:phi0917.phi0002","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0590","title":[{"@lang":"lat","@value":"Nigidius Figulus, Publius"}],"abbreviations":[{"@lang":"lat","@value":"Nigid"}],"works":[{"urn":"urn:cts:latinLit:phi0590.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0662","title":[{"@lang":"lat","@value":"Tiro, Marcus Tullius"}],"abbreviations":[{"@lang":"lat","@value":"Tiro"}],"works":[{"urn":"urn:cts:latinLit:phi0662.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi2003","title":[{"@lang":"lat","@value":"Apicius, Caelius"}],"abbreviations":[{"@lang":"lat","@value":"Apic"}],"works":[{"urn":"urn:cts:latinLit:phi2003.phi0001","title":[{"@lang":"lat","@value":"De Re Coquinaria"}],"abbreviations":[{"@lang":"lat","@value":"Coqu"}]},{"urn":"urn:cts:latinLit:phi2003.phi0002","title":[{"@lang":"lat","@value":"Brevis Ciborum, excerpta"}],"abbreviations":[{"@lang":"lat","@value":"ExcCib"}]},{"urn":"urn:cts:latinLit:phi2003.phi0003","title":[{"@lang":"lat","@value":"Brevis Pimentorum, excerpta"}],"abbreviations":[{"@lang":"lat","@value":"ExcPim"}]}]},{"urn":"urn:cts:latinLit:phi0911","title":[{"@lang":"lat","@value":"Anonymous (Laus Pisonis)"}],"abbreviations":[{"@lang":"lat","@value":"LausPis"}],"works":[{"urn":"urn:cts:latinLit:phi0911.phi0001","title":[{"@lang":"lat","@value":"Laus Pisonis"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0678","title":[{"@lang":"lat","@value":"Valerius Soranus, Quintus"}],"abbreviations":[{"@lang":"lat","@value":"VSor"}],"works":[{"urn":"urn:cts:latinLit:phi0678.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1050","title":[{"@lang":"lat","@value":"Verginius Rufus, Lucius"}],"abbreviations":[{"@lang":"lat","@value":"Vergin"}],"works":[{"urn":"urn:cts:latinLit:phi1050.phi0001","title":[{"@lang":"lat","@value":"epigramma"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0524","title":[{"@lang":"lat","@value":"Gallus, Gaius Cornelius"}],"abbreviations":[{"@lang":"lat","@value":"CGal"}],"works":[{"urn":"urn:cts:latinLit:phi0524.phi0001","title":[{"@lang":"lat","@value":"elegia"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0524.phi0002","title":[{"@lang":"lat","@value":"elegia in pap. Qas1r Ibrîm"}],"abbreviations":[{"@lang":"lat","@value":"CarmPap"}]}]},{"urn":"urn:cts:latinLit:phi0301","title":[{"@lang":"lat","@value":"Domitius Ahenobarbus, Gnaeus"}],"abbreviations":[{"@lang":"lat","@value":"Ahenobarbus"}],"works":[{"urn":"urn:cts:latinLit:phi0301.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1370","title":[{"@lang":"lat","@value":"Terentius Scaurus, Qunitus"}],"abbreviations":[{"@lang":"lat","@value":"TerScaur"}],"works":[{"urn":"urn:cts:latinLit:phi1370.phi0001","title":[{"@lang":"lat","@value":"De Orthographia"}],"abbreviations":[{"@lang":"lat","@value":"Orth"}]},{"urn":"urn:cts:latinLit:phi1370.phi0002","title":[{"@lang":"lat","@value":"De Adverbio et Praeposit."}],"abbreviations":[{"@lang":"lat","@value":"AdPr"}]},{"urn":"urn:cts:latinLit:phi1370.phi0003","title":[{"@lang":"lat","@value":"fr. in codice Parisino 7520"}],"abbreviations":[{"@lang":"lat","@value":"frgParis"}]},{"urn":"urn:cts:latinLit:phi1370.phi0004","title":[{"@lang":"lat","@value":"De ordinat. part. orat. [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"frgOrd"}]}]},{"urn":"urn:cts:latinLit:phi1260","title":[{"@lang":"lat","@value":"Hadrianus"}],"abbreviations":[{"@lang":"lat","@value":"Hadr"}],"works":[{"urn":"urn:cts:latinLit:phi1260.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi1260.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0474","title":[{"@lang":"lat","@value":"Cicero, Marcus Tullius"}],"abbreviations":[{"@lang":"lat","@value":"Cic"}],"works":[{"urn":"urn:cts:latinLit:phi0474.phi0001","title":[{"@lang":"lat","@value":"Pro Quinctio"}],"abbreviations":[{"@lang":"lat","@value":"Quinct"}]},{"urn":"urn:cts:latinLit:phi0474.phi0002","title":[{"@lang":"lat","@value":"Pro S. Roscio Amerino"}],"abbreviations":[{"@lang":"lat","@value":"SRosc"}]},{"urn":"urn:cts:latinLit:phi0474.phi0003","title":[{"@lang":"lat","@value":"Pro Q. Roscio Comoedo"}],"abbreviations":[{"@lang":"lat","@value":"QRosc"}]},{"urn":"urn:cts:latinLit:phi0474.phi0004","title":[{"@lang":"lat","@value":"In Q. Caecilium"}],"abbreviations":[{"@lang":"lat","@value":"DivCaec"}]},{"urn":"urn:cts:latinLit:phi0474.phi0005","title":[{"@lang":"lat","@value":"In Verrem"}],"abbreviations":[{"@lang":"lat","@value":"Ver"}]},{"urn":"urn:cts:latinLit:phi0474.phi0006","title":[{"@lang":"lat","@value":"Pro Tullio"}],"abbreviations":[{"@lang":"lat","@value":"Tul"}]},{"urn":"urn:cts:latinLit:phi0474.phi0007","title":[{"@lang":"lat","@value":"Pro Fonteio"}],"abbreviations":[{"@lang":"lat","@value":"Font"}]},{"urn":"urn:cts:latinLit:phi0474.phi0008","title":[{"@lang":"lat","@value":"Pro Caecina"}],"abbreviations":[{"@lang":"lat","@value":"Caec"}]},{"urn":"urn:cts:latinLit:phi0474.phi0009","title":[{"@lang":"lat","@value":"Pro Lege Manilia"}],"abbreviations":[{"@lang":"lat","@value":"Man"}]},{"urn":"urn:cts:latinLit:phi0474.phi0010","title":[{"@lang":"lat","@value":"Pro Cluentio"}],"abbreviations":[{"@lang":"lat","@value":"Clu"}]},{"urn":"urn:cts:latinLit:phi0474.phi0011","title":[{"@lang":"lat","@value":"De Lege Agraria"}],"abbreviations":[{"@lang":"lat","@value":"Agr"}]},{"urn":"urn:cts:latinLit:phi0474.phi0012","title":[{"@lang":"lat","@value":"Pro Rabirio Perduellionis Reo"}],"abbreviations":[{"@lang":"lat","@value":"RabPerd"}]},{"urn":"urn:cts:latinLit:phi0474.phi0013","title":[{"@lang":"lat","@value":"In Catilinam"}],"abbreviations":[{"@lang":"lat","@value":"Catil"}]},{"urn":"urn:cts:latinLit:phi0474.phi0014","title":[{"@lang":"lat","@value":"Pro Murena"}],"abbreviations":[{"@lang":"lat","@value":"Mur"}]},{"urn":"urn:cts:latinLit:phi0474.phi0015","title":[{"@lang":"lat","@value":"Pro Sulla"}],"abbreviations":[{"@lang":"lat","@value":"Sul"}]},{"urn":"urn:cts:latinLit:phi0474.phi0016","title":[{"@lang":"lat","@value":"Pro Archia"}],"abbreviations":[{"@lang":"lat","@value":"Arch"}]},{"urn":"urn:cts:latinLit:phi0474.phi0017","title":[{"@lang":"lat","@value":"Pro Flacco"}],"abbreviations":[{"@lang":"lat","@value":"Flac"}]},{"urn":"urn:cts:latinLit:phi0474.phi0018","title":[{"@lang":"lat","@value":"Post Reditum ad Populum"}],"abbreviations":[{"@lang":"lat","@value":"RedPop"}]},{"urn":"urn:cts:latinLit:phi0474.phi0019","title":[{"@lang":"lat","@value":"Post Reditum in Senatu"}],"abbreviations":[{"@lang":"lat","@value":"RedSen"}]},{"urn":"urn:cts:latinLit:phi0474.phi0020","title":[{"@lang":"lat","@value":"De Domo Sua"}],"abbreviations":[{"@lang":"lat","@value":"Dom"}]},{"urn":"urn:cts:latinLit:phi0474.phi0021","title":[{"@lang":"lat","@value":"De Haruspicum Responso"}],"abbreviations":[{"@lang":"lat","@value":"Har"}]},{"urn":"urn:cts:latinLit:phi0474.phi0022","title":[{"@lang":"lat","@value":"Pro Sestio"}],"abbreviations":[{"@lang":"lat","@value":"Sest"}]},{"urn":"urn:cts:latinLit:phi0474.phi0023","title":[{"@lang":"lat","@value":"In Vatinium"}],"abbreviations":[{"@lang":"lat","@value":"Vat"}]},{"urn":"urn:cts:latinLit:phi0474.phi0024","title":[{"@lang":"lat","@value":"Pro Caelio"}],"abbreviations":[{"@lang":"lat","@value":"Cael"}]},{"urn":"urn:cts:latinLit:phi0474.phi0025","title":[{"@lang":"lat","@value":"De Provinciis Consularibus"}],"abbreviations":[{"@lang":"lat","@value":"Prov"}]},{"urn":"urn:cts:latinLit:phi0474.phi0026","title":[{"@lang":"lat","@value":"Pro Balbo"}],"abbreviations":[{"@lang":"lat","@value":"Balb"}]},{"urn":"urn:cts:latinLit:phi0474.phi0027","title":[{"@lang":"lat","@value":"In Pisonem"}],"abbreviations":[{"@lang":"lat","@value":"Pis"}]},{"urn":"urn:cts:latinLit:phi0474.phi0028","title":[{"@lang":"lat","@value":"Pro Plancio"}],"abbreviations":[{"@lang":"lat","@value":"Planc"}]},{"urn":"urn:cts:latinLit:phi0474.phi0029","title":[{"@lang":"lat","@value":"Pro Scauro"}],"abbreviations":[{"@lang":"lat","@value":"Scaur"}]},{"urn":"urn:cts:latinLit:phi0474.phi0030","title":[{"@lang":"lat","@value":"Pro Rabirio Postumo"}],"abbreviations":[{"@lang":"lat","@value":"RabPost"}]},{"urn":"urn:cts:latinLit:phi0474.phi0031","title":[{"@lang":"lat","@value":"Pro Milone"}],"abbreviations":[{"@lang":"lat","@value":"Mil"}]},{"urn":"urn:cts:latinLit:phi0474.phi0032","title":[{"@lang":"lat","@value":"Pro Marcello"}],"abbreviations":[{"@lang":"lat","@value":"Marc"}]},{"urn":"urn:cts:latinLit:phi0474.phi0033","title":[{"@lang":"lat","@value":"Pro Ligario"}],"abbreviations":[{"@lang":"lat","@value":"Lig"}]},{"urn":"urn:cts:latinLit:phi0474.phi0034","title":[{"@lang":"lat","@value":"Pro Rege Deiotaro"}],"abbreviations":[{"@lang":"lat","@value":"Deiot"}]},{"urn":"urn:cts:latinLit:phi0474.phi0035","title":[{"@lang":"lat","@value":"Philippicae"}],"abbreviations":[{"@lang":"lat","@value":"Phil"}]},{"urn":"urn:cts:latinLit:phi0474.phi0036","title":[{"@lang":"lat","@value":"De Inventione"}],"abbreviations":[{"@lang":"lat","@value":"Inv"}]},{"urn":"urn:cts:latinLit:phi0474.phi0037","title":[{"@lang":"lat","@value":"De Oratore"}],"abbreviations":[{"@lang":"lat","@value":"deOrat"}]},{"urn":"urn:cts:latinLit:phi0474.phi0038","title":[{"@lang":"lat","@value":"De Partitione Oratoria"}],"abbreviations":[{"@lang":"lat","@value":"Part"}]},{"urn":"urn:cts:latinLit:phi0474.phi0039","title":[{"@lang":"lat","@value":"Brutus"}],"abbreviations":[{"@lang":"lat","@value":"Brut"}]},{"urn":"urn:cts:latinLit:phi0474.phi0040","title":[{"@lang":"lat","@value":"Orator"}],"abbreviations":[{"@lang":"lat","@value":"Orat"}]},{"urn":"urn:cts:latinLit:phi0474.phi0041","title":[{"@lang":"lat","@value":"De Optimo Genere Oratorum"}],"abbreviations":[{"@lang":"lat","@value":"OptGen"}]},{"urn":"urn:cts:latinLit:phi0474.phi0042","title":[{"@lang":"lat","@value":"Topica"}],"abbreviations":[{"@lang":"lat","@value":"Top"}]},{"urn":"urn:cts:latinLit:phi0474.phi0043","title":[{"@lang":"lat","@value":"De Republica"}],"abbreviations":[{"@lang":"lat","@value":"Rep"}]},{"urn":"urn:cts:latinLit:phi0474.phi0044","title":[{"@lang":"lat","@value":"De Legibus"}],"abbreviations":[{"@lang":"lat","@value":"Leg"}]},{"urn":"urn:cts:latinLit:phi0474.phi0045","title":[{"@lang":"lat","@value":"Academica"}],"abbreviations":[{"@lang":"lat","@value":"Ac"}]},{"urn":"urn:cts:latinLit:phi0474.phi0046","title":[{"@lang":"lat","@value":"Lucullus"}],"abbreviations":[{"@lang":"lat","@value":"Luc"}]},{"urn":"urn:cts:latinLit:phi0474.phi0047","title":[{"@lang":"lat","@value":"Paradoxa Stoicorum"}],"abbreviations":[{"@lang":"lat","@value":"Parad"}]},{"urn":"urn:cts:latinLit:phi0474.phi0048","title":[{"@lang":"lat","@value":"De Finibus"}],"abbreviations":[{"@lang":"lat","@value":"Fin"}]},{"urn":"urn:cts:latinLit:phi0474.phi0049","title":[{"@lang":"lat","@value":"Tusculanae Disputationes"}],"abbreviations":[{"@lang":"lat","@value":"Tusc"}]},{"urn":"urn:cts:latinLit:phi0474.phi0050","title":[{"@lang":"lat","@value":"De Natura Deorum"}],"abbreviations":[{"@lang":"lat","@value":"ND"}]},{"urn":"urn:cts:latinLit:phi0474.phi0051","title":[{"@lang":"lat","@value":"Cato Maior de Senectute"}],"abbreviations":[{"@lang":"lat","@value":"Sen"}]},{"urn":"urn:cts:latinLit:phi0474.phi0052","title":[{"@lang":"lat","@value":"Laelius de Amicitia"}],"abbreviations":[{"@lang":"lat","@value":"Amic"}]},{"urn":"urn:cts:latinLit:phi0474.phi0053","title":[{"@lang":"lat","@value":"De Divinatione"}],"abbreviations":[{"@lang":"lat","@value":"Div"}]},{"urn":"urn:cts:latinLit:phi0474.phi0054","title":[{"@lang":"lat","@value":"De Fato"}],"abbreviations":[{"@lang":"lat","@value":"Fat"}]},{"urn":"urn:cts:latinLit:phi0474.phi0055","title":[{"@lang":"lat","@value":"De Officiis"}],"abbreviations":[{"@lang":"lat","@value":"Off"}]},{"urn":"urn:cts:latinLit:phi0474.phi0056","title":[{"@lang":"lat","@value":"Epistulae ad Familiares"}],"abbreviations":[{"@lang":"lat","@value":"Fam"}]},{"urn":"urn:cts:latinLit:phi0474.phi0057","title":[{"@lang":"lat","@value":"Epistulae ad Atticum"}],"abbreviations":[{"@lang":"lat","@value":"Att"}]},{"urn":"urn:cts:latinLit:phi0474.phi0058","title":[{"@lang":"lat","@value":"Epistulae ad Quintum Fratrem"}],"abbreviations":[{"@lang":"lat","@value":"Qfr"}]},{"urn":"urn:cts:latinLit:phi0474.phi0059","title":[{"@lang":"lat","@value":"Epistulae ad Brutum"}],"abbreviations":[{"@lang":"lat","@value":"adBrut"}]},{"urn":"urn:cts:latinLit:phi0474.phi0060","title":[{"@lang":"lat","@value":"Arati Phaenomena"}],"abbreviations":[{"@lang":"lat","@value":"AratPhaen"}]},{"urn":"urn:cts:latinLit:phi0474.phi0061","title":[{"@lang":"lat","@value":"Facete Dicta"}],"abbreviations":[{"@lang":"lat","@value":"Facet"}]},{"urn":"urn:cts:latinLit:phi0474.phi0062","title":[{"@lang":"lat","@value":"carmina, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0474.phi0063","title":[{"@lang":"lat","@value":"Commentarii Causarum"}],"abbreviations":[{"@lang":"lat","@value":"CommCaus"}]},{"urn":"urn:cts:latinLit:phi0474.phi0064","title":[{"@lang":"lat","@value":"epistulae, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"epfrg"}]},{"urn":"urn:cts:latinLit:phi0474.phi0065","title":[{"@lang":"lat","@value":"Hortensius"}],"abbreviations":[{"@lang":"lat","@value":"Hort"}]},{"urn":"urn:cts:latinLit:phi0474.phi0066","title":[{"@lang":"lat","@value":"incertorum librorum fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"libinc"}]},{"urn":"urn:cts:latinLit:phi0474.phi0067","title":[{"@lang":"lat","@value":"De Iure Civ. in Artem Redig."}],"abbreviations":[{"@lang":"lat","@value":"IurCiv"}]},{"urn":"urn:cts:latinLit:phi0474.phi0068","title":[{"@lang":"lat","@value":"orationum deperditarum frr."}],"abbreviations":[{"@lang":"lat","@value":"oratdep"}]},{"urn":"urn:cts:latinLit:phi0474.phi0069","title":[{"@lang":"lat","@value":"orationum incertarum frr."}],"abbreviations":[{"@lang":"lat","@value":"incorat"}]},{"urn":"urn:cts:latinLit:phi0474.phi0070","title":[{"@lang":"lat","@value":"philosophicorum librorum frr."}],"abbreviations":[{"@lang":"lat","@value":"philfrg"}]},{"urn":"urn:cts:latinLit:phi0474.phi0071","title":[{"@lang":"lat","@value":"Arati Prognostica"}],"abbreviations":[{"@lang":"lat","@value":"AratProgn"}]},{"urn":"urn:cts:latinLit:phi0474.phi0072","title":[{"@lang":"lat","@value":"Timaeus"}],"abbreviations":[{"@lang":"lat","@value":"Tim"}]},{"urn":"urn:cts:latinLit:phi0474.phi0073","title":[{"@lang":"lat","@value":"Rhetorica ad Herennium [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"RhetHer"}]},{"urn":"urn:cts:latinLit:phi0474.phi0074","title":[{"@lang":"lat","@value":"In Sallustium [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Sal"}]},{"urn":"urn:cts:latinLit:phi0474.phi0075","title":[{"@lang":"lat","@value":"epistula ad Octavianum [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"EpOct"}]}]},{"urn":"urn:cts:latinLit:phi0535","title":[{"@lang":"lat","@value":"Iuventius Laterensis, Marcus"}],"abbreviations":[{"@lang":"lat","@value":"Iuventius"}],"works":[{"urn":"urn:cts:latinLit:phi0535.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0721","title":[{"@lang":"lat","@value":"Panurgus, Antonius"}],"abbreviations":[{"@lang":"lat","@value":"AntPan"}],"works":[{"urn":"urn:cts:latinLit:phi0721.phi0001","title":[{"@lang":"lat","@value":"grammatica, fragmentum"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi1263","title":[{"@lang":"lat","@value":"Hyginus"}],"abbreviations":[{"@lang":"lat","@value":"HygFab"}],"works":[{"urn":"urn:cts:latinLit:phi1263.phi0001","title":[{"@lang":"lat","@value":"Fabulae"}],"abbreviations":[{"@lang":"lat","@value":"Fab"}]}]},{"urn":"urn:cts:latinLit:phi2468","title":[{"@lang":"lat","@value":"Augustinus, Aurelius"}],"abbreviations":[{"@lang":"lat","@value":"August"}],"works":[{"urn":"urn:cts:latinLit:phi2468.phi0001","title":[{"@lang":"lat","@value":"Laus Cerei"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1257","title":[{"@lang":"lat","@value":"Licinianus, Granius"}],"abbreviations":[{"@lang":"lat","@value":"GranLic"}],"works":[{"urn":"urn:cts:latinLit:phi1257.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"Ann"}]}]},{"urn":"urn:cts:latinLit:phi0944","title":[{"@lang":"lat","@value":"Nero, Imperator"}],"abbreviations":[{"@lang":"lat","@value":"Nero"}],"works":[{"urn":"urn:cts:latinLit:phi0944.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1242","title":[{"@lang":"lat","@value":"Florus, Annius"}],"abbreviations":[{"@lang":"lat","@value":"Flor"}],"works":[{"urn":"urn:cts:latinLit:phi1242.phi0001","title":[{"@lang":"lat","@value":"Epitome Bell. Omn. Ann. DCC"}],"abbreviations":[{"@lang":"lat","@value":"Epit"}]},{"urn":"urn:cts:latinLit:phi1242.phi0002","title":[{"@lang":"lat","@value":"Vergilius Orator an Poeta"}],"abbreviations":[{"@lang":"lat","@value":"Verg"}]},{"urn":"urn:cts:latinLit:phi1242.phi0003","title":[{"@lang":"lat","@value":"carmina in Anthologia Latina"}],"abbreviations":[{"@lang":"lat","@value":"anth"}]},{"urn":"urn:cts:latinLit:phi1242.phi0004","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi1242.phi0005","title":[{"@lang":"lat","@value":"epist. ad imperat. Hadrianum"}],"abbreviations":[{"@lang":"lat","@value":"Epist"}]}]},{"urn":"urn:cts:latinLit:phi0634","title":[{"@lang":"lat","@value":"Santra"}],"abbreviations":[{"@lang":"lat","@value":"San"}],"works":[{"urn":"urn:cts:latinLit:phi0634.phi0001","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]},{"urn":"urn:cts:latinLit:phi0634.phi0002","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0143","title":[{"@lang":"lat","@value":"Trabea"}],"abbreviations":[{"@lang":"lat","@value":"Trab"}],"works":[{"urn":"urn:cts:latinLit:phi0143.phi0001","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi0546","title":[{"@lang":"lat","@value":"Mucianus, Gaius Licinius"}],"abbreviations":[{"@lang":"lat","@value":"Muc"}],"works":[{"urn":"urn:cts:latinLit:phi0546.phi0001","title":[{"@lang":"lat","@value":"historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1908","title":[{"@lang":"lat","@value":"Antipater, Gallus"}],"abbreviations":[{"@lang":"lat","@value":"GalAnt"}],"works":[{"urn":"urn:cts:latinLit:phi1908.phi0001","title":[{"@lang":"lat","@value":"historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0694","title":[{"@lang":"lat","@value":"Volumnius"}],"abbreviations":[{"@lang":"lat","@value":"Vol"}],"works":[{"urn":"urn:cts:latinLit:phi0694.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0827","title":[{"@lang":"lat","@value":"Caesellius Vindex"}],"abbreviations":[{"@lang":"lat","@value":"Caesel"}],"works":[{"urn":"urn:cts:latinLit:phi0827.phi0001","title":[{"@lang":"lat","@value":"grammatica, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi1224","title":[{"@lang":"lat","@value":"Aurelius, Marcus"}],"abbreviations":[{"@lang":"lat","@value":"Aur"}],"works":[{"urn":"urn:cts:latinLit:phi1224.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0692","title":[{"@lang":"lat","@value":"Appendix Vergiliana"}],"abbreviations":[{"@lang":"lat","@value":"AppVerg"}],"works":[{"urn":"urn:cts:latinLit:phi0692.phi0001","title":[{"@lang":"lat","@value":"Dirae"}],"abbreviations":[{"@lang":"lat","@value":"Dirae"}]},{"urn":"urn:cts:latinLit:phi0692.phi0002","title":[{"@lang":"lat","@value":"Lydia"}],"abbreviations":[{"@lang":"lat","@value":"Lydia"}]},{"urn":"urn:cts:latinLit:phi0692.phi0003","title":[{"@lang":"lat","@value":"Culex"}],"abbreviations":[{"@lang":"lat","@value":"Culex"}]},{"urn":"urn:cts:latinLit:phi0692.phi0004","title":[{"@lang":"lat","@value":"Aetna"}],"abbreviations":[{"@lang":"lat","@value":"Aetna"}]},{"urn":"urn:cts:latinLit:phi0692.phi0005","title":[{"@lang":"lat","@value":"Copa"}],"abbreviations":[{"@lang":"lat","@value":"Copa"}]},{"urn":"urn:cts:latinLit:phi0692.phi0006","title":[{"@lang":"lat","@value":"Elegiae in Maecenatem"}],"abbreviations":[{"@lang":"lat","@value":"ElegMaec"}]},{"urn":"urn:cts:latinLit:phi0692.phi0007","title":[{"@lang":"lat","@value":"Ciris"}],"abbreviations":[{"@lang":"lat","@value":"Ciris"}]},{"urn":"urn:cts:latinLit:phi0692.phi0008","title":[{"@lang":"lat","@value":"Priapea"}],"abbreviations":[{"@lang":"lat","@value":"Priapea"}]},{"urn":"urn:cts:latinLit:phi0692.phi0009","title":[{"@lang":"lat","@value":"Catalepton"}],"abbreviations":[{"@lang":"lat","@value":"Catal"}]},{"urn":"urn:cts:latinLit:phi0692.phi0010","title":[{"@lang":"lat","@value":"Priapeum 'Quid Hoc Novi Est?'"}],"abbreviations":[{"@lang":"lat","@value":"Priapeum"}]},{"urn":"urn:cts:latinLit:phi0692.phi0011","title":[{"@lang":"lat","@value":"Moretum"}],"abbreviations":[{"@lang":"lat","@value":"Mor"}]},{"urn":"urn:cts:latinLit:phi0692.phi0012","title":[{"@lang":"lat","@value":"De Institutione Viri Boni"}],"abbreviations":[{"@lang":"lat","@value":"InstVir"}]},{"urn":"urn:cts:latinLit:phi0692.phi0013","title":[{"@lang":"lat","@value":"De Est et Non"}],"abbreviations":[{"@lang":"lat","@value":"DeEst"}]},{"urn":"urn:cts:latinLit:phi0692.phi0014","title":[{"@lang":"lat","@value":"De Rosis Nascentibus"}],"abbreviations":[{"@lang":"lat","@value":"Rosis"}]}]},{"urn":"urn:cts:latinLit:phi1306","title":[{"@lang":"lat","@value":"Lucius Neratius Priscus"}],"abbreviations":[{"@lang":"lat","@value":"Nerat"}],"works":[{"urn":"urn:cts:latinLit:phi1306.phi0002","title":[{"@lang":"lat","@value":"fr. in fragmentis Vaticanis"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0636","title":[{"@lang":"lat","@value":"Quintus Mucius Scaevola"}],"abbreviations":[{"@lang":"lat","@value":"Scaev"}],"works":[{"urn":"urn:cts:latinLit:phi0636.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0648","title":[{"@lang":"lat","@value":"Staberius Eros"}],"abbreviations":[{"@lang":"lat","@value":"Staber"}],"works":[{"urn":"urn:cts:latinLit:phi0648.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0442","title":[{"@lang":"lat","@value":"Aulus Caecina"}],"abbreviations":[{"@lang":"lat","@value":"Caecin"}],"works":[{"urn":"urn:cts:latinLit:phi0442.phi0002","title":[{"@lang":"lat","@value":"fragmentum"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0658","title":[{"@lang":"lat","@value":"Tabulae Censoriae"}],"abbreviations":[{"@lang":"lat","@value":"TabCens"}],"works":[{"urn":"urn:cts:latinLit:phi0658.phi0001","title":[{"@lang":"lat","@value":"Tabulae Censoriae"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0987","title":[{"@lang":"lat","@value":"Pomponius Secundus, Publius"}],"abbreviations":[{"@lang":"lat","@value":"PPompon"}],"works":[{"urn":"urn:cts:latinLit:phi0987.phi0001","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]},{"urn":"urn:cts:latinLit:phi0987.phi0002","title":[{"@lang":"lat","@value":"praetextae"}],"abbreviations":[{"@lang":"lat","@value":"praet"}]}]},{"urn":"urn:cts:latinLit:phi1203","title":[{"@lang":"lat","@value":"Alfius Avitus"}],"abbreviations":[{"@lang":"lat","@value":"Avit"}],"works":[{"urn":"urn:cts:latinLit:phi1203.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0664","title":[{"@lang":"lat","@value":"Trebatius Testa, Gaius"}],"abbreviations":[{"@lang":"lat","@value":"Treb"}],"works":[{"urn":"urn:cts:latinLit:phi0664.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia et al."}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0302","title":[{"@lang":"lat","@value":"Antonius, Marcus"}],"abbreviations":[{"@lang":"lat","@value":"Antonius"}],"works":[{"urn":"urn:cts:latinLit:phi0302.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0022","title":[{"@lang":"lat","@value":"Cato, Marcus Porcius"}],"abbreviations":[{"@lang":"lat","@value":"CatoCens"}],"works":[{"urn":"urn:cts:latinLit:phi0022.phi0001","title":[{"@lang":"lat","@value":"De Agri Cultura"}],"abbreviations":[{"@lang":"lat","@value":"Agr"}]},{"urn":"urn:cts:latinLit:phi0022.phi0002","title":[{"@lang":"lat","@value":"De Agri Cultura, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"Agrfr"}]},{"urn":"urn:cts:latinLit:phi0022.phi0003","title":[{"@lang":"lat","@value":"Dicta Memorabilia"}],"abbreviations":[{"@lang":"lat","@value":"Dict"}]},{"urn":"urn:cts:latinLit:phi0022.phi0004","title":[{"@lang":"lat","@value":"epistulae"}],"abbreviations":[{"@lang":"lat","@value":"Ep"}]},{"urn":"urn:cts:latinLit:phi0022.phi0005","title":[{"@lang":"lat","@value":"De Medicina"}],"abbreviations":[{"@lang":"lat","@value":"Med"}]},{"urn":"urn:cts:latinLit:phi0022.phi0006","title":[{"@lang":"lat","@value":"incertorum librorum fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"inc"}]},{"urn":"urn:cts:latinLit:phi0022.phi0007","title":[{"@lang":"lat","@value":"iurisprudentia"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]},{"urn":"urn:cts:latinLit:phi0022.phi0008","title":[{"@lang":"lat","@value":"De Re Militari"}],"abbreviations":[{"@lang":"lat","@value":"Mil"}]},{"urn":"urn:cts:latinLit:phi0022.phi0009","title":[{"@lang":"lat","@value":"Carmen De Moribus"}],"abbreviations":[{"@lang":"lat","@value":"Mor"}]},{"urn":"urn:cts:latinLit:phi0022.phi0010","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]},{"urn":"urn:cts:latinLit:phi0022.phi0011","title":[{"@lang":"lat","@value":"Origines"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0022.phi0012","title":[{"@lang":"lat","@value":"De Rhetorica"}],"abbreviations":[{"@lang":"lat","@value":"Rhet"}]}]},{"urn":"urn:cts:latinLit:phi0518","title":[{"@lang":"lat","@value":"Furius Antias, Aulus"}],"abbreviations":[{"@lang":"lat","@value":"FurAnt"}],"works":[{"urn":"urn:cts:latinLit:phi0518.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi2150","title":[{"@lang":"lat","@value":"Zeno of Verona"}],"abbreviations":[{"@lang":"lat","@value":"Zeno"}],"works":[{"urn":"urn:cts:latinLit:phi2150.phi0001","title":[{"@lang":"lat","@value":"Tractatus"}],"abbreviations":[{"@lang":"lat","@value":"Tract"}]}]},{"urn":"urn:cts:latinLit:phi0684","title":[{"@lang":"lat","@value":"Varro, Marcus Terentius"}],"abbreviations":[{"@lang":"lat","@value":"Var"}],"works":[{"urn":"urn:cts:latinLit:phi0684.phi0001","title":[{"@lang":"lat","@value":"De Lingua Latina"}],"abbreviations":[{"@lang":"lat","@value":"L"}]},{"urn":"urn:cts:latinLit:phi0684.phi0002","title":[{"@lang":"lat","@value":"Res Rusticae"}],"abbreviations":[{"@lang":"lat","@value":"R"}]},{"urn":"urn:cts:latinLit:phi0684.phi0003","title":[{"@lang":"lat","@value":"Antiquitates Rerum Humanarum"}],"abbreviations":[{"@lang":"lat","@value":"AntiqHum"}]},{"urn":"urn:cts:latinLit:phi0684.phi0004","title":[{"@lang":"lat","@value":"Antiquitates Rerum Divinarum"}],"abbreviations":[{"@lang":"lat","@value":"AntiqDiv"}]},{"urn":"urn:cts:latinLit:phi0684.phi0005","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"Ann"}]},{"urn":"urn:cts:latinLit:phi0684.phi0006","title":[{"@lang":"lat","@value":"De Gente Populi Romani"}],"abbreviations":[{"@lang":"lat","@value":"GentPopRom"}]},{"urn":"urn:cts:latinLit:phi0684.phi0007","title":[{"@lang":"lat","@value":"De Vita Populi Romani"}],"abbreviations":[{"@lang":"lat","@value":"VitaPopRom"}]},{"urn":"urn:cts:latinLit:phi0684.phi0008","title":[{"@lang":"lat","@value":"Res Urbanae"}],"abbreviations":[{"@lang":"lat","@value":"ResUrb"}]},{"urn":"urn:cts:latinLit:phi0684.phi0009","title":[{"@lang":"lat","@value":"Logistorici"}],"abbreviations":[{"@lang":"lat","@value":"Log"}]},{"urn":"urn:cts:latinLit:phi0684.phi0010","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"carm"}]},{"urn":"urn:cts:latinLit:phi0684.phi0011","title":[{"@lang":"lat","@value":"Menippeae"}],"abbreviations":[{"@lang":"lat","@value":"Men"}]},{"urn":"urn:cts:latinLit:phi0684.phi0012","title":[{"@lang":"lat","@value":"epistulae"}],"abbreviations":[{"@lang":"lat","@value":"epist"}]},{"urn":"urn:cts:latinLit:phi0684.phi0013","title":[{"@lang":"lat","@value":"epistulae Latinae"}],"abbreviations":[{"@lang":"lat","@value":"epistLat"}]},{"urn":"urn:cts:latinLit:phi0684.phi0014","title":[{"@lang":"lat","@value":"fragmenta grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]},{"urn":"urn:cts:latinLit:phi0684.phi0015","title":[{"@lang":"lat","@value":"frr. de historia litterarum"}],"abbreviations":[{"@lang":"lat","@value":"litt"}]},{"urn":"urn:cts:latinLit:phi0684.phi0016","title":[{"@lang":"lat","@value":"fragmenta varia"}],"abbreviations":[{"@lang":"lat","@value":"var"}]},{"urn":"urn:cts:latinLit:phi0684.phi0017","title":[{"@lang":"lat","@value":"incertae sedis fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"inc"}]}]},{"urn":"urn:cts:latinLit:phi0680","title":[{"@lang":"lat","@value":"Valgius Rufus, Gaius"}],"abbreviations":[{"@lang":"lat","@value":"Valg"}],"works":[{"urn":"urn:cts:latinLit:phi0680.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0884","title":[{"@lang":"lat","@value":"Gracchus"}],"abbreviations":[{"@lang":"lat","@value":"GracchTrag"}],"works":[{"urn":"urn:cts:latinLit:phi0884.phi0001","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]}]},{"urn":"urn:cts:latinLit:phi2302","title":[{"@lang":"lat","@value":"Symmachus, L. Aurel. Avianius"}],"abbreviations":[{"@lang":"lat","@value":"LSymm"}],"works":[{"urn":"urn:cts:latinLit:phi2302.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0966","title":[{"@lang":"lat","@value":"Passienus Crispus"}],"abbreviations":[{"@lang":"lat","@value":"Passien"}],"works":[{"urn":"urn:cts:latinLit:phi0966.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0016","title":[{"@lang":"lat","@value":"Piso Frugi, Lucius Calpurnius"}],"abbreviations":[{"@lang":"lat","@value":"CalpPis"}],"works":[{"urn":"urn:cts:latinLit:phi0016.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0097","title":[{"@lang":"lat","@value":"Lucilius, Gaius"}],"abbreviations":[{"@lang":"lat","@value":"Lucil"}],"works":[{"urn":"urn:cts:latinLit:phi0097.phi0001","title":[{"@lang":"lat","@value":"Saturae, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"Sat"}]}]},{"urn":"urn:cts:latinLit:phi2301","title":[{"@lang":"lat","@value":"Symmachus, Q. Aurelius"}],"abbreviations":[{"@lang":"lat","@value":"QSymm"}],"works":[{"urn":"urn:cts:latinLit:phi2301.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0908","title":[{"@lang":"lat","@value":"Labeo, Attius"}],"abbreviations":[{"@lang":"lat","@value":"AttLabeo"}],"works":[{"urn":"urn:cts:latinLit:phi0908.phi0001","title":[{"@lang":"lat","@value":"versio Latina Iliados"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0460","title":[{"@lang":"lat","@value":"Carbo Arvina, Gaius Papirius"}],"abbreviations":[{"@lang":"lat","@value":"CarboArv"}],"works":[{"urn":"urn:cts:latinLit:phi0460.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0975","title":[{"@lang":"lat","@value":"Phaedrus"}],"abbreviations":[{"@lang":"lat","@value":"Phaed"}],"works":[{"urn":"urn:cts:latinLit:phi0975.phi0001","title":[{"@lang":"lat","@value":"Fabulae Aesopiae"}],"abbreviations":[{"@lang":"lat","@value":"Fab"}]},{"urn":"urn:cts:latinLit:phi0975.phi0002","title":[{"@lang":"lat","@value":"Fabularum Appendix"}],"abbreviations":[{"@lang":"lat","@value":"App"}]}]},{"urn":"urn:cts:latinLit:phi1500","title":[{"@lang":"lat","@value":"Altercatio Hadr. et Epicteti"}],"abbreviations":[{"@lang":"lat","@value":"Altercat"}],"works":[{"urn":"urn:cts:latinLit:phi1500.phi0001","title":[{"@lang":"lat","@value":"Altercatio Hadr. et Epicteti"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0824","title":[{"@lang":"lat","@value":"Caelius Sabinus, Cn. Arulenus"}],"abbreviations":[{"@lang":"lat","@value":"CaelSab"}],"works":[{"urn":"urn:cts:latinLit:phi0824.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0854","title":[{"@lang":"lat","@value":"Cornificius Gallus"}],"abbreviations":[{"@lang":"lat","@value":"CornifGal"}],"works":[{"urn":"urn:cts:latinLit:phi0854.phi0001","title":[{"@lang":"lat","@value":"versus in Vergilium"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0140","title":[{"@lang":"lat","@value":"Titius, Gaius"}],"abbreviations":[{"@lang":"lat","@value":"Tit"}],"works":[{"urn":"urn:cts:latinLit:phi0140.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0592","title":[{"@lang":"lat","@value":"Novius"}],"abbreviations":[{"@lang":"lat","@value":"Nov"}],"works":[{"urn":"urn:cts:latinLit:phi0592.phi0001","title":[{"@lang":"lat","@value":"Atellanae"}],"abbreviations":[{"@lang":"lat","@value":"atell"}]}]},{"urn":"urn:cts:latinLit:phi0842","title":[{"@lang":"lat","@value":"Clodius Licinus, Gaius"}],"abbreviations":[{"@lang":"lat","@value":"ClodLic"}],"works":[{"urn":"urn:cts:latinLit:phi0842.phi0001","title":[{"@lang":"lat","@value":"Libri Rerum Romanarum"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0446","title":[{"@lang":"lat","@value":"Caepio, Quintus Servilius"}],"abbreviations":[{"@lang":"lat","@value":"Caep"}],"works":[{"urn":"urn:cts:latinLit:phi0446.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0620","title":[{"@lang":"lat","@value":"Propertius, Sextus"}],"abbreviations":[{"@lang":"lat","@value":"Prop"}],"works":[{"urn":"urn:cts:latinLit:phi0620.phi0001","title":[{"@lang":"lat","@value":"Elegiae"}],"abbreviations":[{"@lang":"lat","@value":"Eleg"}]}]},{"urn":"urn:cts:latinLit:phi0515","title":[{"@lang":"lat","@value":"Ennius, Sextus (vel Spurius)"}],"abbreviations":[{"@lang":"lat","@value":"SexEnn"}],"works":[{"urn":"urn:cts:latinLit:phi0515.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0116","title":[{"@lang":"lat","@value":"Pacuvius, Marcus"}],"abbreviations":[{"@lang":"lat","@value":"Pac"}],"works":[{"urn":"urn:cts:latinLit:phi0116.phi0001","title":[{"@lang":"lat","@value":"praetextae"}],"abbreviations":[{"@lang":"lat","@value":"praet"}]},{"urn":"urn:cts:latinLit:phi0116.phi0002","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]}]},{"urn":"urn:cts:latinLit:phi0502","title":[{"@lang":"lat","@value":"Cremutius Cordus, Aulus"}],"abbreviations":[{"@lang":"lat","@value":"Crem"}],"works":[{"urn":"urn:cts:latinLit:phi0502.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0122","title":[{"@lang":"lat","@value":"Postumius Albinus, Aulus"}],"abbreviations":[{"@lang":"lat","@value":"Post"}],"works":[{"urn":"urn:cts:latinLit:phi0122.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi2349","title":[{"@lang":"lat","@value":"Servius, active 4th century"}],"abbreviations":[{"@lang":"lat","@value":"Serv"}],"works":[{"urn":"urn:cts:latinLit:phi2349.phi0001","title":[{"@lang":"lat","@value":"De Centum Metris"}],"abbreviations":[{"@lang":"lat","@value":"CentMetr"}]},{"urn":"urn:cts:latinLit:phi2349.phi0002","title":[{"@lang":"lat","@value":"Commentarius in Artem Donati"}],"abbreviations":[{"@lang":"lat","@value":"CommDon"}]},{"urn":"urn:cts:latinLit:phi2349.phi0003","title":[{"@lang":"lat","@value":"De Finalibus"}],"abbreviations":[{"@lang":"lat","@value":"Final"}]},{"urn":"urn:cts:latinLit:phi2349.phi0004","title":[{"@lang":"lat","@value":"De Metris Horatianis"}],"abbreviations":[{"@lang":"lat","@value":"MetrHor"}]},{"urn":"urn:cts:latinLit:phi2349.phi0005","title":[{"@lang":"lat","@value":"In Vergilii Aeneidos Libros"}],"abbreviations":[{"@lang":"lat","@value":"A"}]},{"urn":"urn:cts:latinLit:phi2349.phi0006","title":[{"@lang":"lat","@value":"In Vergilii Bucolicon Librum"}],"abbreviations":[{"@lang":"lat","@value":"Ecl"}]},{"urn":"urn:cts:latinLit:phi2349.phi0007","title":[{"@lang":"lat","@value":"In Vergilii Georgicon Libros"}],"abbreviations":[{"@lang":"lat","@value":"G"}]}]},{"urn":"urn:cts:latinLit:phi0472","title":[{"@lang":"lat","@value":"Catullus, Gaius Valerius"}],"abbreviations":[{"@lang":"lat","@value":"Catul"}],"works":[{"urn":"urn:cts:latinLit:phi0472.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"Carm"}]},{"urn":"urn:cts:latinLit:phi0472.phi0002","title":[{"@lang":"lat","@value":"carminum fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi1351","title":[{"@lang":"lat","@value":"Tacitus, Cornelius"}],"abbreviations":[{"@lang":"lat","@value":"Tac"}],"works":[{"urn":"urn:cts:latinLit:phi1351.phi0001","title":[{"@lang":"lat","@value":"De Vita Iulii Agricolae"}],"abbreviations":[{"@lang":"lat","@value":"Ag"}]},{"urn":"urn:cts:latinLit:phi1351.phi0002","title":[{"@lang":"lat","@value":"De Origine et Situ Germanorum"}],"abbreviations":[{"@lang":"lat","@value":"Ger"}]},{"urn":"urn:cts:latinLit:phi1351.phi0003","title":[{"@lang":"lat","@value":"Dialogus de Oratoribus"}],"abbreviations":[{"@lang":"lat","@value":"Dial"}]},{"urn":"urn:cts:latinLit:phi1351.phi0004","title":[{"@lang":"lat","@value":"Historiae"}],"abbreviations":[{"@lang":"lat","@value":"Hist"}]},{"urn":"urn:cts:latinLit:phi1351.phi0005","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"Ann"}]}]},{"urn":"urn:cts:latinLit:phi1672","title":[{"@lang":"lat","@value":"Valerius, Iulius"}],"abbreviations":[{"@lang":"lat","@value":"IulVal"}],"works":[{"urn":"urn:cts:latinLit:phi1672.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi2028","title":[{"@lang":"lat","@value":"Chalcidius"}],"abbreviations":[{"@lang":"lat","@value":"Chalc"}],"works":[{"urn":"urn:cts:latinLit:phi2028.phi0001","title":[{"@lang":"lat","@value":"Ex Graecis Conversiones"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi2097","title":[{"@lang":"lat","@value":"Paconianus, Sextus"}],"abbreviations":[{"@lang":"lat","@value":"Pacon"}],"works":[{"urn":"urn:cts:latinLit:phi2097.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0512","title":[{"@lang":"lat","@value":"Duronius, Marcus"}],"abbreviations":[{"@lang":"lat","@value":"Duron"}],"works":[{"urn":"urn:cts:latinLit:phi0512.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi2000","title":[{"@lang":"lat","@value":"Ablabius"}],"abbreviations":[{"@lang":"lat","@value":"Ablab"}],"works":[{"urn":"urn:cts:latinLit:phi2000.phi0001","title":[{"@lang":"lat","@value":"epigramma"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi2335","title":[{"@lang":"lat","@value":"Anonymi de Differentiis [Fronto]"}],"abbreviations":[{"@lang":"lat","@value":"Diff"}],"works":[{"urn":"urn:cts:latinLit:phi2335.phi0001","title":[{"@lang":"lat","@value":"De Differentiis"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0426","title":[{"@lang":"lat","@value":"Pseudo-Caesar (Bellum Africum)"}],"abbreviations":[{"@lang":"lat","@value":"BAfr"}],"works":[{"urn":"urn:cts:latinLit:phi0426.phi0001","title":[{"@lang":"lat","@value":"Bellum Africum"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0514","title":[{"@lang":"lat","@value":"Egnatius"}],"abbreviations":[{"@lang":"lat","@value":"Egn"}],"works":[{"urn":"urn:cts:latinLit:phi0514.phi0001","title":[{"@lang":"lat","@value":"De Rerum Natura"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0815","title":[{"@lang":"lat","@value":"Niger, Bruttedius"}],"abbreviations":[{"@lang":"lat","@value":"Brutted"}],"works":[{"urn":"urn:cts:latinLit:phi0815.phi0001","title":[{"@lang":"lat","@value":"historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1348","title":[{"@lang":"lat","@value":"Suetonius Tranquillus, Gaius"}],"abbreviations":[{"@lang":"lat","@value":"Suet"}],"works":[{"urn":"urn:cts:latinLit:phi1348.phi0001","title":[{"@lang":"lat","@value":"De Vita Caesarum"}],"abbreviations":[{"@lang":"lat","@value":"VC"}]},{"urn":"urn:cts:latinLit:phi1348.phi0002","title":[{"@lang":"lat","@value":"De Poetis"}],"abbreviations":[{"@lang":"lat","@value":"Poet"}]},{"urn":"urn:cts:latinLit:phi1348.phi0003","title":[{"@lang":"lat","@value":"De Historicis"}],"abbreviations":[{"@lang":"lat","@value":"Hist"}]},{"urn":"urn:cts:latinLit:phi1348.phi0004","title":[{"@lang":"lat","@value":"De Grammaticis et Rhetoribus"}],"abbreviations":[{"@lang":"lat","@value":"GramRhet"}]},{"urn":"urn:cts:latinLit:phi1348.phi0005","title":[{"@lang":"lat","@value":"Prata"}],"abbreviations":[{"@lang":"lat","@value":"Prat"}]},{"urn":"urn:cts:latinLit:phi1348.phi0006","title":[{"@lang":"lat","@value":"fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0402","title":[{"@lang":"lat","@value":"Aedituus, Valerius"}],"abbreviations":[{"@lang":"lat","@value":"Aed"}],"works":[{"urn":"urn:cts:latinLit:phi0402.phi0001","title":[{"@lang":"lat","@value":"epigrammata"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0025","title":[{"@lang":"lat","@value":"Cato Salonianus, Marcus Portius M.f.M.n."}],"abbreviations":[{"@lang":"lat","@value":"CatoNep"}],"works":[{"urn":"urn:cts:latinLit:phi0025.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1515","title":[{"@lang":"lat","@value":"Serenus Sammonicus, Quintus"}],"abbreviations":[{"@lang":"lat","@value":"SerSamm"}],"works":[{"urn":"urn:cts:latinLit:phi1515.phi0001","title":[{"@lang":"lat","@value":"Liber Medicinalis"}],"abbreviations":[{"@lang":"lat","@value":"Med"}]},{"urn":"urn:cts:latinLit:phi1515.phi0002","title":[{"@lang":"lat","@value":"Liber Medicinalis, capitula"}],"abbreviations":[{"@lang":"lat","@value":"MedCap"}]}]},{"urn":"urn:cts:latinLit:phi1518","title":[{"@lang":"lat","@value":"Terentianus Maurus"}],"abbreviations":[{"@lang":"lat","@value":"Maur"}],"works":[{"urn":"urn:cts:latinLit:phi1518.phi0001","title":[{"@lang":"lat","@value":"De Litt., De Syll., De Metr."}],"abbreviations":[{"@lang":"lat","@value":"LittSyllMetr"}]}]},{"urn":"urn:cts:latinLit:phi9254","title":[{"@lang":"lat","@value":"Titius"}],"abbreviations":[{"@lang":"lat","@value":"Titius"}],"works":[{"urn":"urn:cts:latinLit:phi9254.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0409","title":[{"@lang":"lat","@value":"Cornificius, Quintus"}],"abbreviations":[{"@lang":"lat","@value":"QCornif"}],"works":[{"urn":"urn:cts:latinLit:phi0409.phi0001","title":[{"@lang":"lat","@value":"carmina, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0857","title":[{"@lang":"lat","@value":"Cornutus, Lucius Annaeus"}],"abbreviations":[{"@lang":"lat","@value":"Cornut"}],"works":[{"urn":"urn:cts:latinLit:phi0857.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0309","title":[{"@lang":"lat","@value":"Anonymous (Carmen Evocationis)"}],"abbreviations":[{"@lang":"lat","@value":"CarmEvoc"}],"works":[{"urn":"urn:cts:latinLit:phi0309.phi0001","title":[{"@lang":"lat","@value":"Carmen Evocationis"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi1380","title":[{"@lang":"lat","@value":"Philumenus medicus"}],"abbreviations":[{"@lang":"lat","@value":"Philum"}],"works":[{"urn":"urn:cts:latinLit:phi1380.phi0001","title":[{"@lang":"lat","@value":"De medicina, versio Latina"}],"abbreviations":[{"@lang":"lat","@value":"Med"}]}]},{"urn":"urn:cts:latinLit:phi0564","title":[{"@lang":"lat","@value":"Manilius, Manius"}],"abbreviations":[{"@lang":"lat","@value":"ManIur"}],"works":[{"urn":"urn:cts:latinLit:phi0564.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0963","title":[{"@lang":"lat","@value":"Palaemon, Quintus Remmius"}],"abbreviations":[{"@lang":"lat","@value":"Palaem"}],"works":[{"urn":"urn:cts:latinLit:phi0963.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]},{"urn":"urn:cts:latinLit:phi0963.phi0002","title":[{"@lang":"lat","@value":"Ars [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Ars"}]}]},{"urn":"urn:cts:latinLit:phi0537","title":[{"@lang":"lat","@value":"Labienus, Titus"}],"abbreviations":[{"@lang":"lat","@value":"Labienus"}],"works":[{"urn":"urn:cts:latinLit:phi0537.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0470","title":[{"@lang":"lat","@value":"Cato Uticensis, Marcus Porcius"}],"abbreviations":[{"@lang":"lat","@value":"CatoUtic"}],"works":[{"urn":"urn:cts:latinLit:phi0470.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0806","title":[{"@lang":"lat","@value":"Capito, Gaius Ateius"}],"abbreviations":[{"@lang":"lat","@value":"Cap"}],"works":[{"urn":"urn:cts:latinLit:phi0806.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0616","title":[{"@lang":"lat","@value":"Pompilius"}],"abbreviations":[{"@lang":"lat","@value":"Pompil"}],"works":[{"urn":"urn:cts:latinLit:phi0616.phi0001","title":[{"@lang":"lat","@value":"epigramma"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0616.phi0002","title":[{"@lang":"lat","@value":"tragoedia"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]}]},{"urn":"urn:cts:latinLit:phi0878","title":[{"@lang":"lat","@value":"Gallus, Gaius Asinius"}],"abbreviations":[{"@lang":"lat","@value":"AsGal"}],"works":[{"urn":"urn:cts:latinLit:phi0878.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0878.phi0002","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi1345","title":[{"@lang":"lat","@value":"Silius Italicus"}],"abbreviations":[{"@lang":"lat","@value":"Sil"}],"works":[{"urn":"urn:cts:latinLit:phi1345.phi0001","title":[{"@lang":"lat","@value":"Punica"}],"abbreviations":[{"@lang":"lat","@value":"Pun"}]}]},{"urn":"urn:cts:latinLit:phi0404","title":[{"@lang":"lat","@value":"Afranius, Lucius"}],"abbreviations":[{"@lang":"lat","@value":"Afran"}],"works":[{"urn":"urn:cts:latinLit:phi0404.phi0001","title":[{"@lang":"lat","@value":"togatae"}],"abbreviations":[{"@lang":"lat","@value":"tog"}]}]},{"urn":"urn:cts:latinLit:phi0914","title":[{"@lang":"lat","@value":"Livius, Titus"}],"abbreviations":[{"@lang":"lat","@value":"Liv"}],"works":[{"urn":"urn:cts:latinLit:phi0914.phi0001","title":[{"@lang":"lat","@value":"Ab Urbe Condita"}],"abbreviations":[{"@lang":"lat","@value":"AUC"}]},{"urn":"urn:cts:latinLit:phi0914.phi0002","title":[{"@lang":"lat","@value":"Periochae Librorum A. U. C."}],"abbreviations":[{"@lang":"lat","@value":"Perioch"}]},{"urn":"urn:cts:latinLit:phi0914.phi0003","title":[{"@lang":"lat","@value":"fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]},{"urn":"urn:cts:latinLit:phi0914.phi0004","title":[{"@lang":"lat","@value":"A.U.C. Perioch. ex P.Oxy.668"}],"abbreviations":[{"@lang":"lat","@value":"PeriochOxy"}]}]},{"urn":"urn:cts:latinLit:phi1011","title":[{"@lang":"lat","@value":"Scribonius Largus"}],"abbreviations":[{"@lang":"lat","@value":"Larg"}],"works":[{"urn":"urn:cts:latinLit:phi1011.phi0001","title":[{"@lang":"lat","@value":"Compositiones"}],"abbreviations":[{"@lang":"lat","@value":"Comp"}]}]},{"urn":"urn:cts:latinLit:phi0469","title":[{"@lang":"lat","@value":"Cassius Longinus, Lucius"}],"abbreviations":[{"@lang":"lat","@value":"LCassius"}],"works":[{"urn":"urn:cts:latinLit:phi0469.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0800","title":[{"@lang":"lat","@value":"Albinovanus Pedo"}],"abbreviations":[{"@lang":"lat","@value":"Pedo"}],"works":[{"urn":"urn:cts:latinLit:phi0800.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0875","title":[{"@lang":"lat","@value":"Lentulus Gaetulicus, Cn. Cornel."}],"abbreviations":[{"@lang":"lat","@value":"Gaet"}],"works":[{"urn":"urn:cts:latinLit:phi0875.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0106","title":[{"@lang":"lat","@value":"Metellus, Caecilius"}],"abbreviations":[{"@lang":"lat","@value":"Met"}],"works":[{"urn":"urn:cts:latinLit:phi0106.phi0001","title":[{"@lang":"lat","@value":"versus in Naevium"}],"abbreviations":[{"@lang":"lat","@value":"MetVers"}]}]},{"urn":"urn:cts:latinLit:phi2305","title":[{"@lang":"lat","@value":"Aurelianus, Caelius"}],"abbreviations":[{"@lang":"lat","@value":"CaelAur"}],"works":[{"urn":"urn:cts:latinLit:phi2305.phi0001","title":[{"@lang":"lat","@value":"E Parmenide de natura"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1245","title":[{"@lang":"lat","@value":"Frontinus, Sextus Iulius"}],"abbreviations":[{"@lang":"lat","@value":"Fron"}],"works":[{"urn":"urn:cts:latinLit:phi1245.phi0001","title":[{"@lang":"lat","@value":"Strategemata"}],"abbreviations":[{"@lang":"lat","@value":"Str"}]},{"urn":"urn:cts:latinLit:phi1245.phi0002","title":[{"@lang":"lat","@value":"De Aquis Urbis Romae"}],"abbreviations":[{"@lang":"lat","@value":"Aq"}]},{"urn":"urn:cts:latinLit:phi1245.phi0003","title":[{"@lang":"lat","@value":"De Agrorum Qualitate"}],"abbreviations":[{"@lang":"lat","@value":"Agr"}]},{"urn":"urn:cts:latinLit:phi1245.phi0004","title":[{"@lang":"lat","@value":"De Controversiis"}],"abbreviations":[{"@lang":"lat","@value":"Contr"}]},{"urn":"urn:cts:latinLit:phi1245.phi0005","title":[{"@lang":"lat","@value":"De Limitibus"}],"abbreviations":[{"@lang":"lat","@value":"Lim"}]},{"urn":"urn:cts:latinLit:phi1245.phi0006","title":[{"@lang":"lat","@value":"De Arte Mensoria"}],"abbreviations":[{"@lang":"lat","@value":"Men"}]}]},{"urn":"urn:cts:latinLit:phi0430","title":[{"@lang":"lat","@value":"Pseudo-Caesar (Bellum Hispaniense)"}],"abbreviations":[{"@lang":"lat","@value":"BHisp"}],"works":[{"urn":"urn:cts:latinLit:phi0430.phi0001","title":[{"@lang":"lat","@value":"Bellum Hispaniense"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0413","title":[{"@lang":"lat","@value":"Gavius Bassus"}],"abbreviations":[{"@lang":"lat","@value":"GavBas"}],"works":[{"urn":"urn:cts:latinLit:phi0413.phi0001","title":[{"@lang":"lat","@value":"De Origine Vocabulorum, frr."}],"abbreviations":[{"@lang":"lat","@value":"gram"}]},{"urn":"urn:cts:latinLit:phi0413.phi0002","title":[{"@lang":"lat","@value":"fragmentum"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0070","title":[{"@lang":"lat","@value":"Gellius, Gnaeus"}],"abbreviations":[{"@lang":"lat","@value":"CnGel"}],"works":[{"urn":"urn:cts:latinLit:phi0070.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0628","title":[{"@lang":"lat","@value":"Rutilius Rufus, Publius"}],"abbreviations":[{"@lang":"lat","@value":"RutRuf"}],"works":[{"urn":"urn:cts:latinLit:phi0628.phi0001","title":[{"@lang":"lat","@value":"De Vita Sua"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0562","title":[{"@lang":"lat","@value":"Manilius"}],"abbreviations":[{"@lang":"lat","@value":"ManPoet"}],"works":[{"urn":"urn:cts:latinLit:phi0562.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0100","title":[{"@lang":"lat","@value":"Luscius Lanuvinus"}],"abbreviations":[{"@lang":"lat","@value":"Lanuv"}],"works":[{"urn":"urn:cts:latinLit:phi0100.phi0001","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi0969","title":[{"@lang":"lat","@value":"Persius"}],"abbreviations":[{"@lang":"lat","@value":"Pers"}],"works":[{"urn":"urn:cts:latinLit:phi0969.phi0001","title":[{"@lang":"lat","@value":"Saturae"}],"abbreviations":[{"@lang":"lat","@value":"S"}]}]},{"urn":"urn:cts:latinLit:phi0625","title":[{"@lang":"lat","@value":"Quinctius, Lucius"}],"abbreviations":[{"@lang":"lat","@value":"Quinctius"}],"works":[{"urn":"urn:cts:latinLit:phi0625.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0568","title":[{"@lang":"lat","@value":"Matius, Gnaeus"}],"abbreviations":[{"@lang":"lat","@value":"CnMat"}],"works":[{"urn":"urn:cts:latinLit:phi0568.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0576","title":[{"@lang":"lat","@value":"Messalla Rufus, M. Valerius"}],"abbreviations":[{"@lang":"lat","@value":"MesRuf"}],"works":[{"urn":"urn:cts:latinLit:phi0576.phi0001","title":[{"@lang":"lat","@value":"De Familiis Romanis"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0576.phi0002","title":[{"@lang":"lat","@value":"De Auspiciis"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0428","title":[{"@lang":"lat","@value":"Pseudo-Caesar (Bellum Alexandrinum)"}],"abbreviations":[{"@lang":"lat","@value":"BAlex"}],"works":[{"urn":"urn:cts:latinLit:phi0428.phi0001","title":[{"@lang":"lat","@value":"Bellum Alexandrinum"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi1023","title":[{"@lang":"lat","@value":"Sulpicia"}],"abbreviations":[{"@lang":"lat","@value":"Sulpicia"}],"works":[{"urn":"urn:cts:latinLit:phi1023.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi1023.phi0002","title":[{"@lang":"lat","@value":"De Statu Rei Publicae [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Conquaest"}]}]},{"urn":"urn:cts:latinLit:phi0088","title":[{"@lang":"lat","@value":"Lepidus Porcina, M. Aemilius"}],"abbreviations":[{"@lang":"lat","@value":"Lep"}],"works":[{"urn":"urn:cts:latinLit:phi0088.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0993","title":[{"@lang":"lat","@value":"Anonymous (Precatio Terrae)"}],"abbreviations":[{"@lang":"lat","@value":"PrecTer"}],"works":[{"urn":"urn:cts:latinLit:phi0993.phi0001","title":[{"@lang":"lat","@value":"Precatio Terrae"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0300","title":[{"@lang":"lat","@value":"Asellio, Sempronius"}],"abbreviations":[{"@lang":"lat","@value":"Asel"}],"works":[{"urn":"urn:cts:latinLit:phi0300.phi0001","title":[{"@lang":"lat","@value":"Rerum Gestarum Libri"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1506","title":[{"@lang":"lat","@value":"Anonymi Fragmenta de Iure Fisci"}],"abbreviations":[{"@lang":"lat","@value":"FrIurFisc"}],"works":[{"urn":"urn:cts:latinLit:phi1506.phi0001","title":[{"@lang":"lat","@value":"fragmenta de iure fisci"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi1014","title":[{"@lang":"lat","@value":"Seneca, Lucius Annaeus (senior)"}],"abbreviations":[{"@lang":"lat","@value":"SenRhet"}],"works":[{"urn":"urn:cts:latinLit:phi1014.phi0001","title":[{"@lang":"lat","@value":"Controversiae"}],"abbreviations":[{"@lang":"lat","@value":"Con"}]},{"urn":"urn:cts:latinLit:phi1014.phi0002","title":[{"@lang":"lat","@value":"Controversiae, excerpta"}],"abbreviations":[{"@lang":"lat","@value":"ConExc"}]},{"urn":"urn:cts:latinLit:phi1014.phi0003","title":[{"@lang":"lat","@value":"Suasoriae"}],"abbreviations":[{"@lang":"lat","@value":"Suas"}]},{"urn":"urn:cts:latinLit:phi1014.phi0004","title":[{"@lang":"lat","@value":"Fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0128","title":[{"@lang":"lat","@value":"Scipio Aemilianus, P. Cornelius, Africanus minor"}],"abbreviations":[{"@lang":"lat","@value":"ScipMin"}],"works":[{"urn":"urn:cts:latinLit:phi0128.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1047","title":[{"@lang":"lat","@value":"Veranius"}],"abbreviations":[{"@lang":"lat","@value":"Veran"}],"works":[{"urn":"urn:cts:latinLit:phi1047.phi0001","title":[{"@lang":"lat","@value":"libri de rebus sacris"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0614","title":[{"@lang":"lat","@value":"Pompeius Q.f.A.n. Rufus, Q."}],"abbreviations":[{"@lang":"lat","@value":"PompRuf"}],"works":[{"urn":"urn:cts:latinLit:phi0614.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0007","title":[{"@lang":"lat","@value":"Atilius"}],"abbreviations":[{"@lang":"lat","@value":"Atil"}],"works":[{"urn":"urn:cts:latinLit:phi0007.phi0001","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi0303","title":[{"@lang":"lat","@value":"Opillus, Aurelius"}],"abbreviations":[{"@lang":"lat","@value":"AurOp"}],"works":[{"urn":"urn:cts:latinLit:phi0303.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0137","title":[{"@lang":"lat","@value":"Titinius"}],"abbreviations":[{"@lang":"lat","@value":"Titin"}],"works":[{"urn":"urn:cts:latinLit:phi0137.phi0001","title":[{"@lang":"lat","@value":"togatae"}],"abbreviations":[{"@lang":"lat","@value":"tog"}]}]},{"urn":"urn:cts:latinLit:phi9510","title":[{"@lang":"lat","@value":"Anonymi Grammatici"}],"abbreviations":[{"@lang":"lat","@value":"AnonGram"}],"works":[{"urn":"urn:cts:latinLit:phi9510.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"inc"}]}]},{"urn":"urn:cts:latinLit:phi0635","title":[{"@lang":"lat","@value":"Saturius, Publius"}],"abbreviations":[{"@lang":"lat","@value":"Saturius"}],"works":[{"urn":"urn:cts:latinLit:phi0635.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0031","title":[{"@lang":"lat","@value":"Cornelia"}],"abbreviations":[{"@lang":"lat","@value":"Cornelia"}],"works":[{"urn":"urn:cts:latinLit:phi0031.phi0001","title":[{"@lang":"lat","@value":"epistula, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"Epist"}]}]},{"urn":"urn:cts:latinLit:phi0419","title":[{"@lang":"lat","@value":"Orbilius Pupillus, Lucius"}],"abbreviations":[{"@lang":"lat","@value":"Orb"}],"works":[{"urn":"urn:cts:latinLit:phi0419.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0103","title":[{"@lang":"lat","@value":"Marcius, Gnaeus vates"}],"abbreviations":[{"@lang":"lat","@value":"Marcius"}],"works":[{"urn":"urn:cts:latinLit:phi0103.phi0001","title":[{"@lang":"lat","@value":"praecepta"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0932","title":[{"@lang":"lat","@value":"Messalla Corvinus, M. Valerius"}],"abbreviations":[{"@lang":"lat","@value":"MesCor"}],"works":[{"urn":"urn:cts:latinLit:phi0932.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]},{"urn":"urn:cts:latinLit:phi0932.phi0002","title":[{"@lang":"lat","@value":"Commentarii de Bello Civili"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1236","title":[{"@lang":"lat","@value":"Festus, Sextus Pompeius"}],"abbreviations":[{"@lang":"lat","@value":"Fest"}],"works":[{"urn":"urn:cts:latinLit:phi1236.phi0001","title":[{"@lang":"lat","@value":"De Verborum Significatione"}],"abbreviations":[{"@lang":"lat","@value":"Verb"}]}]},{"urn":"urn:cts:latinLit:phi0400","title":[{"@lang":"lat","@value":"Accius, Lucius"}],"abbreviations":[{"@lang":"lat","@value":"Acc"}],"works":[{"urn":"urn:cts:latinLit:phi0400.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0400.phi0002","title":[{"@lang":"lat","@value":"praetextae"}],"abbreviations":[{"@lang":"lat","@value":"praet"}]},{"urn":"urn:cts:latinLit:phi0400.phi0003","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]}]},{"urn":"urn:cts:latinLit:phi0674","title":[{"@lang":"lat","@value":"Valerius"}],"abbreviations":[{"@lang":"lat","@value":"Val"}],"works":[{"urn":"urn:cts:latinLit:phi0674.phi0001","title":[{"@lang":"lat","@value":"comoedia"}],"abbreviations":[{"@lang":"lat","@value":"mim"}]}]},{"urn":"urn:cts:latinLit:phi0536","title":[{"@lang":"lat","@value":"Laberius, Decimus"}],"abbreviations":[{"@lang":"lat","@value":"Laber"}],"works":[{"urn":"urn:cts:latinLit:phi0536.phi0001","title":[{"@lang":"lat","@value":"mimi"}],"abbreviations":[{"@lang":"lat","@value":"mim"}]}]},{"urn":"urn:cts:latinLit:phi0091","title":[{"@lang":"lat","@value":"Licinius Imbrex"}],"abbreviations":[{"@lang":"lat","@value":"Imbr"}],"works":[{"urn":"urn:cts:latinLit:phi0091.phi0001","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi0730","title":[{"@lang":"lat","@value":"Tarquitius Priscus"}],"abbreviations":[{"@lang":"lat","@value":"Tarquit"}],"works":[{"urn":"urn:cts:latinLit:phi0730.phi0001","title":[{"@lang":"lat","@value":"De Disciplina Etrusca, frr."}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0990","title":[{"@lang":"lat","@value":"Anonymous (Precatio Omnium Herbarum)"}],"abbreviations":[{"@lang":"lat","@value":"PrecHerb"}],"works":[{"urn":"urn:cts:latinLit:phi0990.phi0001","title":[{"@lang":"lat","@value":"Precatio Omnium Herbarum"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0458","title":[{"@lang":"lat","@value":"Cannutius, Publius"}],"abbreviations":[{"@lang":"lat","@value":"Can"}],"works":[{"urn":"urn:cts:latinLit:phi0458.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1604","title":[{"@lang":"lat","@value":"Atherianus, Iulius"}],"abbreviations":[{"@lang":"lat","@value":"IulAth"}],"works":[{"urn":"urn:cts:latinLit:phi1604.phi0001","title":[{"@lang":"lat","@value":"historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1103","title":[{"@lang":"lat","@value":"Priapea"}],"abbreviations":[{"@lang":"lat","@value":"Priap"}],"works":[{"urn":"urn:cts:latinLit:phi1103.phi0001","title":[{"@lang":"lat","@value":"Priapea"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0456","title":[{"@lang":"lat","@value":"Calvus, Gaius Licinius Macer"}],"abbreviations":[{"@lang":"lat","@value":"Calv"}],"works":[{"urn":"urn:cts:latinLit:phi0456.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0456.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1000","title":[{"@lang":"lat","@value":"Pupius 1st century B.C."}],"abbreviations":[{"@lang":"lat","@value":"Pup"}],"works":[{"urn":"urn:cts:latinLit:phi1000.phi0001","title":[{"@lang":"lat","@value":"versus Pupio attributi"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi2331","title":[{"@lang":"lat","@value":"Scriptores Historiae Augustae"}],"abbreviations":[{"@lang":"lat","@value":"SHA"}],"works":[{"urn":"urn:cts:latinLit:phi2331.phi0001","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Hadr"}]},{"urn":"urn:cts:latinLit:phi2331.phi0002","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Ael"}]},{"urn":"urn:cts:latinLit:phi2331.phi0003","title":[{"@lang":"lat","@value":"Iuli Capitolini Antoninus Pius"}],"abbreviations":[{"@lang":"lat","@value":"Pius"}]},{"urn":"urn:cts:latinLit:phi2331.phi0004","title":[{"@lang":"lat","@value":"Vita Marci Antonini Philosophi Iuli Capitolini"}],"abbreviations":[{"@lang":"lat","@value":"AntPhil"}]},{"urn":"urn:cts:latinLit:phi2331.phi0005","title":[{"@lang":"lat","@value":"Iuli Capitolini Verus"}],"abbreviations":[{"@lang":"lat","@value":"Ver"}]},{"urn":"urn:cts:latinLit:phi2331.phi0006","title":[{"@lang":"lat","@value":"Avidius "}],"abbreviations":[{"@lang":"lat","@value":"Avid"}]},{"urn":"urn:cts:latinLit:phi2331.phi0007","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"CommAnt"}]},{"urn":"urn:cts:latinLit:phi2331.phi0008","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Pert"}]},{"urn":"urn:cts:latinLit:phi2331.phi0009","title":[{"@lang":"lat","@value":"Didius Iulianus Aeli Spartiani"}],"abbreviations":[{"@lang":"lat","@value":"DidIul"}]},{"urn":"urn:cts:latinLit:phi2331.phi0010","title":[{"@lang":"lat","@value":"Aeli Spartiani Severus"}],"abbreviations":[{"@lang":"lat","@value":"Sev"}]},{"urn":"urn:cts:latinLit:phi2331.phi0011","title":[{"@lang":"lat","@value":"Pescennius Niger "}],"abbreviations":[{"@lang":"lat","@value":"PescNig"}]},{"urn":"urn:cts:latinLit:phi2331.phi0012","title":[{"@lang":"lat","@value":"Vita Clodii Albini Iulii Capitolini"}],"abbreviations":[{"@lang":"lat","@value":"ClodAlb"}]},{"urn":"urn:cts:latinLit:phi2331.phi0013","title":[{"@lang":"lat","@value":"Antoninus Caracallus "}],"abbreviations":[{"@lang":"lat","@value":"AntCar"}]},{"urn":"urn:cts:latinLit:phi2331.phi0014","title":[{"@lang":"lat","@value":"Antoninus Geta "}],"abbreviations":[{"@lang":"lat","@value":"AntGeta"}]},{"urn":"urn:cts:latinLit:phi2331.phi0015","title":[{"@lang":"lat","@value":"Opilius Macrinus Iuli Capitolini"}],"abbreviations":[{"@lang":"lat","@value":"OpilMacr"}]},{"urn":"urn:cts:latinLit:phi2331.phi0016","title":[{"@lang":"lat","@value":"Diadumenus Antoninus "}],"abbreviations":[{"@lang":"lat","@value":"AntDiad"}]},{"urn":"urn:cts:latinLit:phi2331.phi0017","title":[{"@lang":"lat","@value":"Aeli Lampridii Antoninus Heliogabalus"}],"abbreviations":[{"@lang":"lat","@value":"AntHeliog"}]},{"urn":"urn:cts:latinLit:phi2331.phi0018","title":[{"@lang":"lat","@value":"Alexander Severus Aeli Lampridii"}],"abbreviations":[{"@lang":"lat","@value":"AlexSev"}]},{"urn":"urn:cts:latinLit:phi2331.phi0019","title":[{"@lang":"lat","@value":"Maximini Duo Iuli Capitolini"}],"abbreviations":[{"@lang":"lat","@value":"Maxim"}]},{"urn":"urn:cts:latinLit:phi2331.phi0020","title":[{"@lang":"lat","@value":"Gordian"}],"abbreviations":[{"@lang":"lat","@value":"Gord"}]},{"urn":"urn:cts:latinLit:phi2331.phi0021","title":[{"@lang":"lat","@value":"Maximus "}],"abbreviations":[{"@lang":"lat","@value":"MaxBalb"}]},{"urn":"urn:cts:latinLit:phi2331.phi0022","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Valer"}]},{"urn":"urn:cts:latinLit:phi2331.phi0023","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Gall"}]},{"urn":"urn:cts:latinLit:phi2331.phi0024","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"TyrTrig"}]},{"urn":"urn:cts:latinLit:phi2331.phi0025","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Claud"}]},{"urn":"urn:cts:latinLit:phi2331.phi0026","title":[{"@lang":"lat","@value":"Flavi Vopisci Syracusii Divus Aurelianus"}],"abbreviations":[{"@lang":"lat","@value":"Aurel"}]},{"urn":"urn:cts:latinLit:phi2331.phi0027","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Tac"}]},{"urn":"urn:cts:latinLit:phi2331.phi0028","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Prob"}]},{"urn":"urn:cts:latinLit:phi2331.phi0029","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"QuadTyr"}]},{"urn":"urn:cts:latinLit:phi2331.phi0030","title":[{"@lang":"lat","@value":""}],"abbreviations":[{"@lang":"lat","@value":"Car"}]}]},{"urn":"urn:cts:latinLit:phi0929","title":[{"@lang":"lat","@value":"Mela, Pomponius"}],"abbreviations":[{"@lang":"lat","@value":"Mela"}],"works":[{"urn":"urn:cts:latinLit:phi0929.phi0001","title":[{"@lang":"lat","@value":"De Chorographia"}],"abbreviations":[{"@lang":"lat","@value":"Chor"}]}]},{"urn":"urn:cts:latinLit:phi0724","title":[{"@lang":"lat","@value":"Cloatius Verus"}],"abbreviations":[{"@lang":"lat","@value":"Cloat"}],"works":[{"urn":"urn:cts:latinLit:phi0724.phi0001","title":[{"@lang":"lat","@value":"grammatica fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0487","title":[{"@lang":"lat","@value":"Clodius Pulcher, Publius"}],"abbreviations":[{"@lang":"lat","@value":"Clodius"}],"works":[{"urn":"urn:cts:latinLit:phi0487.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0064","title":[{"@lang":"lat","@value":"Fannius, Gaius"}],"abbreviations":[{"@lang":"lat","@value":"Fan"}],"works":[{"urn":"urn:cts:latinLit:phi0064.phi0001","title":[{"@lang":"lat","@value":"historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0064.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0010","title":[{"@lang":"lat","@value":"Brutus, Marcus Iunius [iur.]"}],"abbreviations":[{"@lang":"lat","@value":"BrutIur"}],"works":[{"urn":"urn:cts:latinLit:phi0010.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0532","title":[{"@lang":"lat","@value":"Hortensius Hortalus, Quintus"}],"abbreviations":[{"@lang":"lat","@value":"Hort"}],"works":[{"urn":"urn:cts:latinLit:phi0532.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0532.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0528","title":[{"@lang":"lat","@value":"Granius Flaccus"}],"abbreviations":[{"@lang":"lat","@value":"GranFl"}],"works":[{"urn":"urn:cts:latinLit:phi0528.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0690","title":[{"@lang":"lat","@value":"Virgil"}],"abbreviations":[{"@lang":"lat","@value":"Verg"}],"works":[{"urn":"urn:cts:latinLit:phi0690.phi0001","title":[{"@lang":"lat","@value":"Eclogae"}],"abbreviations":[{"@lang":"lat","@value":"Ecl"}]},{"urn":"urn:cts:latinLit:phi0690.phi0002","title":[{"@lang":"lat","@value":"Georgica"}],"abbreviations":[{"@lang":"lat","@value":"G"}]},{"urn":"urn:cts:latinLit:phi0690.phi0003","title":[{"@lang":"lat","@value":"Aeneis"}],"abbreviations":[{"@lang":"lat","@value":"A"}]}]},{"urn":"urn:cts:latinLit:phi0672","title":[{"@lang":"lat","@value":"Turranius Niger"}],"abbreviations":[{"@lang":"lat","@value":"Turran"}],"works":[{"urn":"urn:cts:latinLit:phi0672.phi0001","title":[{"@lang":"lat","@value":"de re rustica scripta"}],"abbreviations":[{"@lang":"lat","@value":"agr"}]}]},{"urn":"urn:cts:latinLit:phi1209","title":[{"@lang":"lat","@value":"Annianus"}],"abbreviations":[{"@lang":"lat","@value":"Annian"}],"works":[{"urn":"urn:cts:latinLit:phi1209.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0312","title":[{"@lang":"lat","@value":"Fabius Dossennus"}],"abbreviations":[{"@lang":"lat","@value":"Dossenn"}],"works":[{"urn":"urn:cts:latinLit:phi0312.phi0001","title":[{"@lang":"lat","@value":"carmina, fragmentum"}],"abbreviations":[{"@lang":"lat","@value":"Carm"}]}]},{"urn":"urn:cts:latinLit:phi1248","title":[{"@lang":"lat","@value":"Fronto, Marcus Cornelius"}],"abbreviations":[{"@lang":"lat","@value":"Fro"}],"works":[{"urn":"urn:cts:latinLit:phi1248.phi0001","title":[{"@lang":"lat","@value":"Ad M. Caesarem et Invicem"}],"abbreviations":[{"@lang":"lat","@value":"AurCaes"}]},{"urn":"urn:cts:latinLit:phi1248.phi0002","title":[{"@lang":"lat","@value":"Ad M. Antoninum Imp. Epist."}],"abbreviations":[{"@lang":"lat","@value":"AurImp"}]},{"urn":"urn:cts:latinLit:phi1248.phi0003","title":[{"@lang":"lat","@value":"Ad Verum Imp. Epistulae"}],"abbreviations":[{"@lang":"lat","@value":"Ver"}]},{"urn":"urn:cts:latinLit:phi1248.phi0004","title":[{"@lang":"lat","@value":"De Eloquentia"}],"abbreviations":[{"@lang":"lat","@value":"AurEloq"}]},{"urn":"urn:cts:latinLit:phi1248.phi0005","title":[{"@lang":"lat","@value":"De Orationibus"}],"abbreviations":[{"@lang":"lat","@value":"AurOrat"}]},{"urn":"urn:cts:latinLit:phi1248.phi0006","title":[{"@lang":"lat","@value":"Ad Antoninum Pium Epistulae"}],"abbreviations":[{"@lang":"lat","@value":"AdPium"}]},{"urn":"urn:cts:latinLit:phi1248.phi0007","title":[{"@lang":"lat","@value":"Ad Amicos Epistulae"}],"abbreviations":[{"@lang":"lat","@value":"Amic"}]},{"urn":"urn:cts:latinLit:phi1248.phi0008","title":[{"@lang":"lat","@value":"Principia Historiae"}],"abbreviations":[{"@lang":"lat","@value":"Princ"}]},{"urn":"urn:cts:latinLit:phi1248.phi0009","title":[{"@lang":"lat","@value":"Laudes Fumi et Pulveris"}],"abbreviations":[{"@lang":"lat","@value":"LaudFumPulv"}]},{"urn":"urn:cts:latinLit:phi1248.phi0010","title":[{"@lang":"lat","@value":"Laudes Neglegentiae"}],"abbreviations":[{"@lang":"lat","@value":"LaudNegl"}]},{"urn":"urn:cts:latinLit:phi1248.phi0011","title":[{"@lang":"lat","@value":"De Bello Parthico"}],"abbreviations":[{"@lang":"lat","@value":"Parth"}]},{"urn":"urn:cts:latinLit:phi1248.phi0012","title":[{"@lang":"lat","@value":"De Feriis Alsiensibus"}],"abbreviations":[{"@lang":"lat","@value":"FerAls"}]},{"urn":"urn:cts:latinLit:phi1248.phi0013","title":[{"@lang":"lat","@value":"De Nepote Amisso"}],"abbreviations":[{"@lang":"lat","@value":"Nep"}]},{"urn":"urn:cts:latinLit:phi1248.phi0014","title":[{"@lang":"lat","@value":"Arion"}],"abbreviations":[{"@lang":"lat","@value":"Ar"}]},{"urn":"urn:cts:latinLit:phi1248.phi0015","title":[{"@lang":"lat","@value":"Additamentum Epist. Aceph."}],"abbreviations":[{"@lang":"lat","@value":"Add"}]},{"urn":"urn:cts:latinLit:phi1248.phi0016","title":[{"@lang":"lat","@value":"fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]},{"urn":"urn:cts:latinLit:phi1248.phi0017","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi9969","title":[{"@lang":"lat","@value":"Anonymous (Vita Iuvenalis)"}],"abbreviations":[{"@lang":"lat","@value":"VitIuv"}],"works":[{"urn":"urn:cts:latinLit:phi9969.phi0001","title":[{"@lang":"lat","@value":"Vita Iuvenalis"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0887","title":[{"@lang":"lat","@value":"Grattius"}],"abbreviations":[{"@lang":"lat","@value":"Grat"}],"works":[{"urn":"urn:cts:latinLit:phi0887.phi0001","title":[{"@lang":"lat","@value":"Cynegetica"}],"abbreviations":[{"@lang":"lat","@value":"Cyneg"}]}]},{"urn":"urn:cts:latinLit:phi0104","title":[{"@lang":"lat","@value":"Memmius, Gaius"}],"abbreviations":[{"@lang":"lat","@value":"Memmius"}],"works":[{"urn":"urn:cts:latinLit:phi0104.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0606","title":[{"@lang":"lat","@value":"Marcius Philippus, Lucius"}],"abbreviations":[{"@lang":"lat","@value":"Philipp"}],"works":[{"urn":"urn:cts:latinLit:phi0606.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0631","title":[{"@lang":"lat","@value":"Sallust"}],"abbreviations":[{"@lang":"lat","@value":"Sal"}],"works":[{"urn":"urn:cts:latinLit:phi0631.phi0001","title":[{"@lang":"lat","@value":"Catilinae Coniuratio"}],"abbreviations":[{"@lang":"lat","@value":"Cat"}]},{"urn":"urn:cts:latinLit:phi0631.phi0002","title":[{"@lang":"lat","@value":"Bellum Iugurthinum"}],"abbreviations":[{"@lang":"lat","@value":"Iug"}]},{"urn":"urn:cts:latinLit:phi0631.phi0003","title":[{"@lang":"lat","@value":"Historiae"}],"abbreviations":[{"@lang":"lat","@value":"HistFr"}]},{"urn":"urn:cts:latinLit:phi0631.phi0004","title":[{"@lang":"lat","@value":"Historiarum frr. ampliora"}],"abbreviations":[{"@lang":"lat","@value":"HistFrAmp"}]},{"urn":"urn:cts:latinLit:phi0631.phi0005","title":[{"@lang":"lat","@value":"Historiarum frr. e codicibus"}],"abbreviations":[{"@lang":"lat","@value":"HistFrCod"}]},{"urn":"urn:cts:latinLit:phi0631.phi0006","title":[{"@lang":"lat","@value":"Historiarum frr. e papyris"}],"abbreviations":[{"@lang":"lat","@value":"HistFrPap"}]},{"urn":"urn:cts:latinLit:phi0631.phi0007","title":[{"@lang":"lat","@value":"Ad Caesarem de Re Publ. [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Rep"}]},{"urn":"urn:cts:latinLit:phi0631.phi0008","title":[{"@lang":"lat","@value":"In M. Tullium Ciceronem [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Cic"}]}]},{"urn":"urn:cts:latinLit:phi1041","title":[{"@lang":"lat","@value":"Pseudo-Varro"}],"abbreviations":[{"@lang":"lat","@value":"PsVar"}],"works":[{"urn":"urn:cts:latinLit:phi1041.phi0001","title":[{"@lang":"lat","@value":"Sententiae"}],"abbreviations":[{"@lang":"lat","@value":"Sent"}]}]},{"urn":"urn:cts:latinLit:phi1020","title":[{"@lang":"lat","@value":"Statius, Publius Papinius"}],"abbreviations":[{"@lang":"lat","@value":"Stat"}],"works":[{"urn":"urn:cts:latinLit:phi1020.phi0001","title":[{"@lang":"lat","@value":"Thebais"}],"abbreviations":[{"@lang":"lat","@value":"Theb"}]},{"urn":"urn:cts:latinLit:phi1020.phi0002","title":[{"@lang":"lat","@value":"Silvae"}],"abbreviations":[{"@lang":"lat","@value":"Silv"}]},{"urn":"urn:cts:latinLit:phi1020.phi0003","title":[{"@lang":"lat","@value":"Achilleis"}],"abbreviations":[{"@lang":"lat","@value":"Ach"}]},{"urn":"urn:cts:latinLit:phi1020.phi0004","title":[{"@lang":"lat","@value":"De Bello Germanico (fragment)"}],"abbreviations":[{"@lang":"lat","@value":"Germ"}]}]},{"urn":"urn:cts:latinLit:phi0004","title":[{"@lang":"lat","@value":"Claudius Caecus, Appius"}],"abbreviations":[{"@lang":"lat","@value":"App"}],"works":[{"urn":"urn:cts:latinLit:phi0004.phi0001","title":[{"@lang":"lat","@value":"sententiae"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1212","title":[{"@lang":"lat","@value":"Apuleius"}],"abbreviations":[{"@lang":"lat","@value":"Apul"}],"works":[{"urn":"urn:cts:latinLit:phi1212.phi0001","title":[{"@lang":"lat","@value":"Apologia"}],"abbreviations":[{"@lang":"lat","@value":"Apol"}]},{"urn":"urn:cts:latinLit:phi1212.phi0002","title":[{"@lang":"lat","@value":"Metamorphoses"}],"abbreviations":[{"@lang":"lat","@value":"Met"}]},{"urn":"urn:cts:latinLit:phi1212.phi0003","title":[{"@lang":"lat","@value":"Florida"}],"abbreviations":[{"@lang":"lat","@value":"Fl"}]},{"urn":"urn:cts:latinLit:phi1212.phi0004","title":[{"@lang":"lat","@value":"De Deo Socratis"}],"abbreviations":[{"@lang":"lat","@value":"Soc"}]},{"urn":"urn:cts:latinLit:phi1212.phi0005","title":[{"@lang":"lat","@value":"Anechomenos"}],"abbreviations":[{"@lang":"lat","@value":"Anech"}]},{"urn":"urn:cts:latinLit:phi1212.phi0006","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi1212.phi0007","title":[{"@lang":"lat","@value":"fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]},{"urn":"urn:cts:latinLit:phi1212.phi0008","title":[{"@lang":"lat","@value":"De Mundo"}],"abbreviations":[{"@lang":"lat","@value":"Mun"}]},{"urn":"urn:cts:latinLit:phi1212.phi0009","title":[{"@lang":"lat","@value":"De Platone et Eius Dogmate"}],"abbreviations":[{"@lang":"lat","@value":"Pl"}]},{"urn":"urn:cts:latinLit:phi1212.phi0010","title":[{"@lang":"lat","@value":"De Deo Socratis, Praef. [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"SocPr"}]}]},{"urn":"urn:cts:latinLit:phi1029","title":[{"@lang":"lat","@value":"Turnus"}],"abbreviations":[{"@lang":"lat","@value":"Turn"}],"works":[{"urn":"urn:cts:latinLit:phi1029.phi0001","title":[{"@lang":"lat","@value":"satura"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1100","title":[{"@lang":"lat","@value":"Calpurnius Flaccus"}],"abbreviations":[{"@lang":"lat","@value":"CalpFlac"}],"works":[{"urn":"urn:cts:latinLit:phi1100.phi0001","title":[{"@lang":"lat","@value":"Declamationes, excerpta"}],"abbreviations":[{"@lang":"lat","@value":"Decl"}]}]},{"urn":"urn:cts:latinLit:phi0452","title":[{"@lang":"lat","@value":"Caesar Strabo, Gaius Iulius"}],"abbreviations":[{"@lang":"lat","@value":"Strab"}],"works":[{"urn":"urn:cts:latinLit:phi0452.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]},{"urn":"urn:cts:latinLit:phi0452.phi0002","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]}]},{"urn":"urn:cts:latinLit:phi0416","title":[{"@lang":"lat","@value":"Ateius Praetextatus, Lucius"}],"abbreviations":[{"@lang":"lat","@value":"Ateius"}],"works":[{"urn":"urn:cts:latinLit:phi0416.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi1294","title":[{"@lang":"lat","@value":"Martial"}],"abbreviations":[{"@lang":"lat","@value":"Mart"}],"works":[{"urn":"urn:cts:latinLit:phi1294.phi0001","title":[{"@lang":"lat","@value":"Spectacula"}],"abbreviations":[{"@lang":"lat","@value":"Sp"}]},{"urn":"urn:cts:latinLit:phi1294.phi0002","title":[{"@lang":"lat","@value":"Epigrammata"}],"abbreviations":[{"@lang":"lat","@value":"Ep"}]}]},{"urn":"urn:cts:latinLit:phi0466","title":[{"@lang":"lat","@value":"Cascellius, Aulus"}],"abbreviations":[{"@lang":"lat","@value":"Casc"}],"works":[{"urn":"urn:cts:latinLit:phi0466.phi0001","title":[{"@lang":"lat","@value":"Liber Bene Dictorum, frr. duo"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0486","title":[{"@lang":"lat","@value":"Cinna, Gaius Helvius"}],"abbreviations":[{"@lang":"lat","@value":"Cinna"}],"works":[{"urn":"urn:cts:latinLit:phi0486.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1336","title":[{"@lang":"lat","@value":"Scaevus Memor"}],"abbreviations":[{"@lang":"lat","@value":"ScaevMem"}],"works":[{"urn":"urn:cts:latinLit:phi1336.phi0001","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]}]},{"urn":"urn:cts:latinLit:phi0109","title":[{"@lang":"lat","@value":"Metellus Macedonicus, Q. Caecilius"}],"abbreviations":[{"@lang":"lat","@value":"MetMac"}],"works":[{"urn":"urn:cts:latinLit:phi0109.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1374","title":[{"@lang":"lat","@value":"Velius Longus"}],"abbreviations":[{"@lang":"lat","@value":"Vel"}],"works":[{"urn":"urn:cts:latinLit:phi1374.phi0001","title":[{"@lang":"lat","@value":"De Orthographia"}],"abbreviations":[{"@lang":"lat","@value":"Orth"}]}]},{"urn":"urn:cts:latinLit:phi0586","title":[{"@lang":"lat","@value":"Mummius"}],"abbreviations":[{"@lang":"lat","@value":"Mum"}],"works":[{"urn":"urn:cts:latinLit:phi0586.phi0001","title":[{"@lang":"lat","@value":"Atellanae"}],"abbreviations":[{"@lang":"lat","@value":"atell"}]}]},{"urn":"urn:cts:latinLit:phi0149","title":[{"@lang":"lat","@value":"Arvales, Fratres"}],"abbreviations":[{"@lang":"lat","@value":"CarmArv"}],"works":[{"urn":"urn:cts:latinLit:phi0149.phi0001","title":[{"@lang":"lat","@value":"Carmen Arvale"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0410","title":[{"@lang":"lat","@value":"Aprissius"}],"abbreviations":[{"@lang":"lat","@value":"Apris"}],"works":[{"urn":"urn:cts:latinLit:phi0410.phi0001","title":[{"@lang":"lat","@value":"Fragmentum"}],"abbreviations":[{"@lang":"lat","@value":"atell"}]}]},{"urn":"urn:cts:latinLit:phi0420","title":[{"@lang":"lat","@value":"Namusa, Publius Aufidius"}],"abbreviations":[{"@lang":"lat","@value":"Nam"}],"works":[{"urn":"urn:cts:latinLit:phi0420.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0058","title":[{"@lang":"lat","@value":"Fabius Maximus Servilianus, Q."}],"abbreviations":[{"@lang":"lat","@value":"FabMax"}],"works":[{"urn":"urn:cts:latinLit:phi0058.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1235","title":[{"@lang":"lat","@value":"Sulpicius Apollinaris, Gaius"}],"abbreviations":[{"@lang":"lat","@value":"DPTer"}],"works":[{"urn":"urn:cts:latinLit:phi1235.phi0001","title":[{"@lang":"lat","@value":"Andria"}],"abbreviations":[{"@lang":"lat","@value":"An"}]},{"urn":"urn:cts:latinLit:phi1235.phi0002","title":[{"@lang":"lat","@value":"Heauton Timorumenos"}],"abbreviations":[{"@lang":"lat","@value":"Hau"}]},{"urn":"urn:cts:latinLit:phi1235.phi0003","title":[{"@lang":"lat","@value":"Eunuchus"}],"abbreviations":[{"@lang":"lat","@value":"Eu"}]},{"urn":"urn:cts:latinLit:phi1235.phi0004","title":[{"@lang":"lat","@value":"Phormio"}],"abbreviations":[{"@lang":"lat","@value":"Ph"}]},{"urn":"urn:cts:latinLit:phi1235.phi0005","title":[{"@lang":"lat","@value":"Hecyra"}],"abbreviations":[{"@lang":"lat","@value":"Hec"}]},{"urn":"urn:cts:latinLit:phi1235.phi0006","title":[{"@lang":"lat","@value":"Adelphoe"}],"abbreviations":[{"@lang":"lat","@value":"Ad"}]}]},{"urn":"urn:cts:latinLit:phi0432","title":[{"@lang":"lat","@value":"Bibaculus, Marcus Furius"}],"abbreviations":[{"@lang":"lat","@value":"Bib"}],"works":[{"urn":"urn:cts:latinLit:phi0432.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0686","title":[{"@lang":"lat","@value":"Varro Atacinus, P. Terentius"}],"abbreviations":[{"@lang":"lat","@value":"VarAt"}],"works":[{"urn":"urn:cts:latinLit:phi0686.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1512","title":[{"@lang":"lat","@value":"Pomponius Porphyrio"}],"abbreviations":[{"@lang":"lat","@value":"Porph"}],"works":[{"urn":"urn:cts:latinLit:phi1512.phi0001","title":[{"@lang":"lat","@value":"Commentum in Horati Carmina"}],"abbreviations":[{"@lang":"lat","@value":"Carm"}]},{"urn":"urn:cts:latinLit:phi1512.phi0002","title":[{"@lang":"lat","@value":"Comment. in Hor. Artem Poet."}],"abbreviations":[{"@lang":"lat","@value":"Ars"}]},{"urn":"urn:cts:latinLit:phi1512.phi0003","title":[{"@lang":"lat","@value":"Comment. in Hor. Carm. Saec."}],"abbreviations":[{"@lang":"lat","@value":"Saec"}]},{"urn":"urn:cts:latinLit:phi1512.phi0004","title":[{"@lang":"lat","@value":"Commentum in Horati Epodos"}],"abbreviations":[{"@lang":"lat","@value":"Epod"}]},{"urn":"urn:cts:latinLit:phi1512.phi0005","title":[{"@lang":"lat","@value":"Commentum in Horati Sermones"}],"abbreviations":[{"@lang":"lat","@value":"S"}]},{"urn":"urn:cts:latinLit:phi1512.phi0006","title":[{"@lang":"lat","@value":"Commentum in Horati Epistulas"}],"abbreviations":[{"@lang":"lat","@value":"Ep"}]},{"urn":"urn:cts:latinLit:phi1512.phi0007","title":[{"@lang":"lat","@value":"Vita Horati"}],"abbreviations":[{"@lang":"lat","@value":"VitHor"}]}]},{"urn":"urn:cts:latinLit:phi0510","title":[{"@lang":"lat","@value":"Dolabella, Publius Cornelius"}],"abbreviations":[{"@lang":"lat","@value":"Dolab"}],"works":[{"urn":"urn:cts:latinLit:phi0510.phi0002","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0935","title":[{"@lang":"lat","@value":"Iulius Modestus"}],"abbreviations":[{"@lang":"lat","@value":"Modest"}],"works":[{"urn":"urn:cts:latinLit:phi0935.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi1291","title":[{"@lang":"lat","@value":"Marianus"}],"abbreviations":[{"@lang":"lat","@value":"Marian"}],"works":[{"urn":"urn:cts:latinLit:phi1291.phi0001","title":[{"@lang":"lat","@value":"Lupercalia"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1234","title":[{"@lang":"lat","@value":"Didascaliae et Argum. in Plautum"}],"abbreviations":[{"@lang":"lat","@value":"DAPl"}],"works":[{"urn":"urn:cts:latinLit:phi1234.phi0001","title":[{"@lang":"lat","@value":"Amphitruo"}],"abbreviations":[{"@lang":"lat","@value":"Am"}]},{"urn":"urn:cts:latinLit:phi1234.phi0002","title":[{"@lang":"lat","@value":"Asinaria"}],"abbreviations":[{"@lang":"lat","@value":"As"}]},{"urn":"urn:cts:latinLit:phi1234.phi0003","title":[{"@lang":"lat","@value":"Aulularia"}],"abbreviations":[{"@lang":"lat","@value":"Aul"}]},{"urn":"urn:cts:latinLit:phi1234.phi0004","title":[{"@lang":"lat","@value":"Captivi"}],"abbreviations":[{"@lang":"lat","@value":"Capt"}]},{"urn":"urn:cts:latinLit:phi1234.phi0005","title":[{"@lang":"lat","@value":"Casina"}],"abbreviations":[{"@lang":"lat","@value":"Cas"}]},{"urn":"urn:cts:latinLit:phi1234.phi0006","title":[{"@lang":"lat","@value":"Cistellaria"}],"abbreviations":[{"@lang":"lat","@value":"Cist"}]},{"urn":"urn:cts:latinLit:phi1234.phi0007","title":[{"@lang":"lat","@value":"Curculio"}],"abbreviations":[{"@lang":"lat","@value":"Cur"}]},{"urn":"urn:cts:latinLit:phi1234.phi0008","title":[{"@lang":"lat","@value":"Epidicus"}],"abbreviations":[{"@lang":"lat","@value":"Epid"}]},{"urn":"urn:cts:latinLit:phi1234.phi0009","title":[{"@lang":"lat","@value":"Menaechmi"}],"abbreviations":[{"@lang":"lat","@value":"Men"}]},{"urn":"urn:cts:latinLit:phi1234.phi0010","title":[{"@lang":"lat","@value":"Mercator"}],"abbreviations":[{"@lang":"lat","@value":"Mer"}]},{"urn":"urn:cts:latinLit:phi1234.phi0011","title":[{"@lang":"lat","@value":"Miles Gloriosus"}],"abbreviations":[{"@lang":"lat","@value":"Mil"}]},{"urn":"urn:cts:latinLit:phi1234.phi0012","title":[{"@lang":"lat","@value":"Mostellaria"}],"abbreviations":[{"@lang":"lat","@value":"Mos"}]},{"urn":"urn:cts:latinLit:phi1234.phi0013","title":[{"@lang":"lat","@value":"Persa"}],"abbreviations":[{"@lang":"lat","@value":"Per"}]},{"urn":"urn:cts:latinLit:phi1234.phi0014","title":[{"@lang":"lat","@value":"Poenulus"}],"abbreviations":[{"@lang":"lat","@value":"Poen"}]},{"urn":"urn:cts:latinLit:phi1234.phi0015","title":[{"@lang":"lat","@value":"Pseudolus"}],"abbreviations":[{"@lang":"lat","@value":"Ps"}]},{"urn":"urn:cts:latinLit:phi1234.phi0016","title":[{"@lang":"lat","@value":"Rudens"}],"abbreviations":[{"@lang":"lat","@value":"Rud"}]},{"urn":"urn:cts:latinLit:phi1234.phi0017","title":[{"@lang":"lat","@value":"Stichus"}],"abbreviations":[{"@lang":"lat","@value":"St"}]},{"urn":"urn:cts:latinLit:phi1234.phi0018","title":[{"@lang":"lat","@value":"Trinummus"}],"abbreviations":[{"@lang":"lat","@value":"Trin"}]},{"urn":"urn:cts:latinLit:phi1234.phi0019","title":[{"@lang":"lat","@value":"Truculentus"}],"abbreviations":[{"@lang":"lat","@value":"Truc"}]}]},{"urn":"urn:cts:latinLit:phi0591","title":[{"@lang":"lat","@value":"Ninnius, Crassus"}],"abbreviations":[{"@lang":"lat","@value":"Nin"}],"works":[{"urn":"urn:cts:latinLit:phi0591.phi0001","title":[{"@lang":"lat","@value":"Ilias"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0414","title":[{"@lang":"lat","@value":"Arruntius, Lucius"}],"abbreviations":[{"@lang":"lat","@value":"Arr"}],"works":[{"urn":"urn:cts:latinLit:phi0414.phi0001","title":[{"@lang":"lat","@value":"Historiae Belli Punici"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0902","title":[{"@lang":"lat","@value":"Africanus, Sextus Iulius"}],"abbreviations":[{"@lang":"lat","@value":"IulAfr"}],"works":[{"urn":"urn:cts:latinLit:phi0902.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0541","title":[{"@lang":"lat","@value":"Lentulus Marcellinus, Cn. Cornel."}],"abbreviations":[{"@lang":"lat","@value":"LentMarc"}],"works":[{"urn":"urn:cts:latinLit:phi0541.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0527","title":[{"@lang":"lat","@value":"Gannius"}],"abbreviations":[{"@lang":"lat","@value":"Gan"}],"works":[{"urn":"urn:cts:latinLit:phi0527.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0830","title":[{"@lang":"lat","@value":"Calpurnius Siculus, Titus"}],"abbreviations":[{"@lang":"lat","@value":"CalpSic"}],"works":[{"urn":"urn:cts:latinLit:phi0830.phi0001","title":[{"@lang":"lat","@value":"Eclogae"}],"abbreviations":[{"@lang":"lat","@value":"Ecl"}]}]},{"urn":"urn:cts:latinLit:phi0034","title":[{"@lang":"lat","@value":"Curio, Gaius Scribonius"}],"abbreviations":[{"@lang":"lat","@value":"CurioAv"}],"works":[{"urn":"urn:cts:latinLit:phi0034.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0526","title":[{"@lang":"lat","@value":"Glaucia, Gaius Servilius"}],"abbreviations":[{"@lang":"lat","@value":"Glauc"}],"works":[{"urn":"urn:cts:latinLit:phi0526.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1221","title":[{"@lang":"lat","@value":"Augustus, Emperor of Rome"}],"abbreviations":[{"@lang":"lat","@value":"Aug"}],"works":[{"urn":"urn:cts:latinLit:phi1221.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"carm"}]},{"urn":"urn:cts:latinLit:phi1221.phi0002","title":[{"@lang":"lat","@value":"dicta et apophthegmata"}],"abbreviations":[{"@lang":"lat","@value":"Dict"}]},{"urn":"urn:cts:latinLit:phi1221.phi0003","title":[{"@lang":"lat","@value":"edicta"}],"abbreviations":[{"@lang":"lat","@value":"edicta"}]},{"urn":"urn:cts:latinLit:phi1221.phi0004","title":[{"@lang":"lat","@value":"epistulae"}],"abbreviations":[{"@lang":"lat","@value":"epist"}]},{"urn":"urn:cts:latinLit:phi1221.phi0005","title":[{"@lang":"lat","@value":"fragmenta incertae sedis"}],"abbreviations":[{"@lang":"lat","@value":"frginc"}]},{"urn":"urn:cts:latinLit:phi1221.phi0006","title":[{"@lang":"lat","@value":"opera historica"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi1221.phi0007","title":[{"@lang":"lat","@value":"Res Gestae"}],"abbreviations":[{"@lang":"lat","@value":"Anc"}]},{"urn":"urn:cts:latinLit:phi1221.phi0008","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1254","title":[{"@lang":"lat","@value":"Gellius, Aulus"}],"abbreviations":[{"@lang":"lat","@value":"AulGel"}],"works":[{"urn":"urn:cts:latinLit:phi1254.phi0001","title":[{"@lang":"lat","@value":"Noctes Atticae"}],"abbreviations":[{"@lang":"lat","@value":"NA"}]}]},{"urn":"urn:cts:latinLit:phi0455","title":[{"@lang":"lat","@value":"Piso, Gaius Calpurnius"}],"abbreviations":[{"@lang":"lat","@value":"Piso"}],"works":[{"urn":"urn:cts:latinLit:phi0455.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0703","title":[{"@lang":"lat","@value":"Arbonius Silo"}],"abbreviations":[{"@lang":"lat","@value":"Arb"}],"works":[{"urn":"urn:cts:latinLit:phi0703.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0494","title":[{"@lang":"lat","@value":"Commentarii Consulares"}],"abbreviations":[{"@lang":"lat","@value":"CommentCons"}],"works":[{"urn":"urn:cts:latinLit:phi0494.phi0001","title":[{"@lang":"lat","@value":"Commentarii Consulares"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0556","title":[{"@lang":"lat","@value":"Macer, Gaius Licinius"}],"abbreviations":[{"@lang":"lat","@value":"LicMacer"}],"works":[{"urn":"urn:cts:latinLit:phi0556.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0556.phi0002","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0812","title":[{"@lang":"lat","@value":"Caesius Bassus"}],"abbreviations":[{"@lang":"lat","@value":"CBas"}],"works":[{"urn":"urn:cts:latinLit:phi0812.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0812.phi0002","title":[{"@lang":"lat","@value":"De Metris, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"Metr"}]},{"urn":"urn:cts:latinLit:phi0812.phi0003","title":[{"@lang":"lat","@value":"De Metris Horatii [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"MetHor"}]},{"urn":"urn:cts:latinLit:phi0812.phi0004","title":[{"@lang":"lat","@value":"Breviatio Pedum [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"BrevPed"}]},{"urn":"urn:cts:latinLit:phi0812.phi0005","title":[{"@lang":"lat","@value":"De Compositionibus [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Comp"}]},{"urn":"urn:cts:latinLit:phi0812.phi0006","title":[{"@lang":"lat","@value":"Genera Versuum [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Vers"}]},{"urn":"urn:cts:latinLit:phi0812.phi0007","title":[{"@lang":"lat","@value":"Poeticae Species Lat. [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Poet"}]}]},{"urn":"urn:cts:latinLit:phi0640","title":[{"@lang":"lat","@value":"Scarus, Marcus Aemilius"}],"abbreviations":[{"@lang":"lat","@value":"AemScaur"}],"works":[{"urn":"urn:cts:latinLit:phi0640.phi0001","title":[{"@lang":"lat","@value":"De Vita Sua"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0640.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0893","title":[{"@lang":"lat","@value":"Horace"}],"abbreviations":[{"@lang":"lat","@value":"Hor"}],"works":[{"urn":"urn:cts:latinLit:phi0893.phi0001","title":[{"@lang":"lat","@value":"Carmina"}],"abbreviations":[{"@lang":"lat","@value":"Carm"}]},{"urn":"urn:cts:latinLit:phi0893.phi0002","title":[{"@lang":"lat","@value":"Carmen Saeculare"}],"abbreviations":[{"@lang":"lat","@value":"Saec"}]},{"urn":"urn:cts:latinLit:phi0893.phi0003","title":[{"@lang":"lat","@value":"Epodi"}],"abbreviations":[{"@lang":"lat","@value":"Epod"}]},{"urn":"urn:cts:latinLit:phi0893.phi0004","title":[{"@lang":"lat","@value":"Sermones"}],"abbreviations":[{"@lang":"lat","@value":"S"}]},{"urn":"urn:cts:latinLit:phi0893.phi0005","title":[{"@lang":"lat","@value":"Epistulae"}],"abbreviations":[{"@lang":"lat","@value":"Ep"}]},{"urn":"urn:cts:latinLit:phi0893.phi0006","title":[{"@lang":"lat","@value":"Ars Poetica"}],"abbreviations":[{"@lang":"lat","@value":"Ars"}]}]},{"urn":"urn:cts:latinLit:phi0405","title":[{"@lang":"lat","@value":"Clodius Tuscus"}],"abbreviations":[{"@lang":"lat","@value":"ClodTusc"}],"works":[{"urn":"urn:cts:latinLit:phi0405.phi0001","title":[{"@lang":"lat","@value":"grammatica, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0652","title":[{"@lang":"lat","@value":"Sulla, Lucius Cornelius"}],"abbreviations":[{"@lang":"lat","@value":"Sulla"}],"works":[{"urn":"urn:cts:latinLit:phi0652.phi0001","title":[{"@lang":"lat","@value":"Commentarii Rerum Gestarum"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0418","title":[{"@lang":"lat","@value":"Atta, Titus Quinctius"}],"abbreviations":[{"@lang":"lat","@value":"Atta"}],"works":[{"urn":"urn:cts:latinLit:phi0418.phi0001","title":[{"@lang":"lat","@value":"epigramma"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0418.phi0002","title":[{"@lang":"lat","@value":"togatae"}],"abbreviations":[{"@lang":"lat","@value":"tog"}]}]},{"urn":"urn:cts:latinLit:phi1044","title":[{"@lang":"lat","@value":"Velleius Paterculus"}],"abbreviations":[{"@lang":"lat","@value":"Vell"}],"works":[{"urn":"urn:cts:latinLit:phi1044.phi0001","title":[{"@lang":"lat","@value":"Historia Romana"}],"abbreviations":[{"@lang":"lat","@value":"Hist"}]}]},{"urn":"urn:cts:latinLit:phi0996","title":[{"@lang":"lat","@value":"Probus, Marcus Valerius"}],"abbreviations":[{"@lang":"lat","@value":"Prob"}],"works":[{"urn":"urn:cts:latinLit:phi0996.phi0001","title":[{"@lang":"lat","@value":"Vita Persii"}],"abbreviations":[{"@lang":"lat","@value":"VitPers"}]},{"urn":"urn:cts:latinLit:phi0996.phi0002","title":[{"@lang":"lat","@value":"De Notis Iuris"}],"abbreviations":[{"@lang":"lat","@value":"IurNot"}]},{"urn":"urn:cts:latinLit:phi0996.phi0003","title":[{"@lang":"lat","@value":"fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0600","title":[{"@lang":"lat","@value":"Oppius, Gaius"}],"abbreviations":[{"@lang":"lat","@value":"Opp"}],"works":[{"urn":"urn:cts:latinLit:phi0600.phi0001","title":[{"@lang":"lat","@value":"De Silvestribus Arboribus"}],"abbreviations":[{"@lang":"lat","@value":"agr"}]},{"urn":"urn:cts:latinLit:phi0600.phi0002","title":[{"@lang":"lat","@value":"vitae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi2806","title":[{"@lang":"lat","@value":"Justinian I, Emperor of the East"}],"abbreviations":[{"@lang":"lat","@value":"Just"}],"works":[{"urn":"urn:cts:latinLit:phi2806.phi0002","title":[{"@lang":"lat","@value":"Digesta Iustiniani"}],"abbreviations":[{"@lang":"lat","@value":"Dig"}]}]},{"urn":"urn:cts:latinLit:phi0082","title":[{"@lang":"lat","@value":"Silanus, Decimus Iunius"}],"abbreviations":[{"@lang":"lat","@value":"IunSil"}],"works":[{"urn":"urn:cts:latinLit:phi0082.phi0001","title":[{"@lang":"lat","@value":"versio Latina Magonis"}],"abbreviations":[{"@lang":"lat","@value":"agr"}]}]},{"urn":"urn:cts:latinLit:phi0644","title":[{"@lang":"lat","@value":"Ena, Sextilius"}],"abbreviations":[{"@lang":"lat","@value":"Sextil"}],"works":[{"urn":"urn:cts:latinLit:phi0644.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1279","title":[{"@lang":"lat","@value":"Laelius Felix"}],"abbreviations":[{"@lang":"lat","@value":"LaelFel"}],"works":[{"urn":"urn:cts:latinLit:phi1279.phi0001","title":[{"@lang":"lat","@value":"iurisprudentia, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0596","title":[{"@lang":"lat","@value":"Numitorius"}],"abbreviations":[{"@lang":"lat","@value":"Num"}],"works":[{"urn":"urn:cts:latinLit:phi0596.phi0001","title":[{"@lang":"lat","@value":"Antibucolica"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1357","title":[{"@lang":"lat","@value":"Trajan, Emperor of Rome"}],"abbreviations":[{"@lang":"lat","@value":"Tra"}],"works":[{"urn":"urn:cts:latinLit:phi1357.phi0002","title":[{"@lang":"lat","@value":"Dacica"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0484","title":[{"@lang":"lat","@value":"Cincius, Lucius"}],"abbreviations":[{"@lang":"lat","@value":"Cinc"}],"works":[{"urn":"urn:cts:latinLit:phi0484.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]},{"urn":"urn:cts:latinLit:phi0484.phi0002","title":[{"@lang":"lat","@value":"iurisprudentia"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0656","title":[{"@lang":"lat","@value":"Sulpicius Rufus, Servius"}],"abbreviations":[{"@lang":"lat","@value":"SulpRuf"}],"works":[{"urn":"urn:cts:latinLit:phi0656.phi0002","title":[{"@lang":"lat","@value":"iurisprudentia"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]},{"urn":"urn:cts:latinLit:phi0656.phi0003","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0005","title":[{"@lang":"lat","@value":"Aquilius"}],"abbreviations":[{"@lang":"lat","@value":"Aquil"}],"works":[{"urn":"urn:cts:latinLit:phi0005.phi0001","title":[{"@lang":"lat","@value":"palliata, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi1339","title":[{"@lang":"lat","@value":"Septimius Serenus"}],"abbreviations":[{"@lang":"lat","@value":"Sept"}],"works":[{"urn":"urn:cts:latinLit:phi1339.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0615","title":[{"@lang":"lat","@value":"Pompeius Rufus, Q."}],"abbreviations":[{"@lang":"lat","@value":"QPompeius"}],"works":[{"urn":"urn:cts:latinLit:phi0615.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0327","title":[{"@lang":"lat","@value":"Praeconinus Stilo, L. Aelius"}],"abbreviations":[{"@lang":"lat","@value":"Stilo"}],"works":[{"urn":"urn:cts:latinLit:phi0327.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0117","title":[{"@lang":"lat","@value":"Papinius"}],"abbreviations":[{"@lang":"lat","@value":"Pap"}],"works":[{"urn":"urn:cts:latinLit:phi0117.phi0001","title":[{"@lang":"lat","@value":"epigrammation"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0436","title":[{"@lang":"lat","@value":"Brutus, Marcus Iunius [tyr.]"}],"abbreviations":[{"@lang":"lat","@value":"Brutus"}],"works":[{"urn":"urn:cts:latinLit:phi0436.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0516","title":[{"@lang":"lat","@value":"Erucius, Gaius"}],"abbreviations":[{"@lang":"lat","@value":"Erucius"}],"works":[{"urn":"urn:cts:latinLit:phi0516.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0450","title":[{"@lang":"lat","@value":"Caesar, Lucius Iulius"}],"abbreviations":[{"@lang":"lat","@value":"LCaes"}],"works":[{"urn":"urn:cts:latinLit:phi0450.phi0001","title":[{"@lang":"lat","@value":"Auspiciorum Liber, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0860","title":[{"@lang":"lat","@value":"Curtius Rufus, Quintus"}],"abbreviations":[{"@lang":"lat","@value":"Curt"}],"works":[{"urn":"urn:cts:latinLit:phi0860.phi0001","title":[{"@lang":"lat","@value":"Historiae Alexandri Magni"}],"abbreviations":[{"@lang":"lat","@value":"Alex"}]}]},{"urn":"urn:cts:latinLit:phi0552","title":[{"@lang":"lat","@value":"Lutatius Catulus, Qunitus"}],"abbreviations":[{"@lang":"lat","@value":"Lutat"}],"works":[{"urn":"urn:cts:latinLit:phi0552.phi0001","title":[{"@lang":"lat","@value":"epigrammata"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0552.phi0002","title":[{"@lang":"lat","@value":"Communes Historiae"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi1327","title":[{"@lang":"lat","@value":"Sabidius"}],"abbreviations":[{"@lang":"lat","@value":"Sabid"}],"works":[{"urn":"urn:cts:latinLit:phi1327.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0401","title":[{"@lang":"lat","@value":"Aufustius"}],"abbreviations":[{"@lang":"lat","@value":"Aufust"}],"works":[{"urn":"urn:cts:latinLit:phi0401.phi0001","title":[{"@lang":"lat","@value":"grammatica, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0043","title":[{"@lang":"lat","@value":"Ennius, Quintus"}],"abbreviations":[{"@lang":"lat","@value":"Enn"}],"works":[{"urn":"urn:cts:latinLit:phi0043.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"Ann"}]},{"urn":"urn:cts:latinLit:phi0043.phi0002","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]},{"urn":"urn:cts:latinLit:phi0043.phi0003","title":[{"@lang":"lat","@value":"praetextae"}],"abbreviations":[{"@lang":"lat","@value":"praet"}]},{"urn":"urn:cts:latinLit:phi0043.phi0004","title":[{"@lang":"lat","@value":"Saturae"}],"abbreviations":[{"@lang":"lat","@value":"Sat"}]},{"urn":"urn:cts:latinLit:phi0043.phi0005","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]},{"urn":"urn:cts:latinLit:phi0043.phi0006","title":[{"@lang":"lat","@value":"varia"}],"abbreviations":[{"@lang":"lat","@value":"var"}]},{"urn":"urn:cts:latinLit:phi0043.phi0007","title":[{"@lang":"lat","@value":"incerta"}],"abbreviations":[{"@lang":"lat","@value":"inc"}]}]},{"urn":"urn:cts:latinLit:phi0851","title":[{"@lang":"lat","@value":"Severus, Cornelius"}],"abbreviations":[{"@lang":"lat","@value":"CornSev"}],"works":[{"urn":"urn:cts:latinLit:phi0851.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0851.phi0002","title":[{"@lang":"lat","@value":"fragmenta a Morel omissa"}],"abbreviations":[{"@lang":"lat","@value":"poetB"}]}]},{"urn":"urn:cts:latinLit:phi0836","title":[{"@lang":"lat","@value":"Celsus, Aulus Cornelius"}],"abbreviations":[{"@lang":"lat","@value":"Cels"}],"works":[{"urn":"urn:cts:latinLit:phi0836.phi0001","title":[{"@lang":"lat","@value":"De Agricultura"}],"abbreviations":[{"@lang":"lat","@value":"Agr"}]},{"urn":"urn:cts:latinLit:phi0836.phi0002","title":[{"@lang":"lat","@value":"De Medicina"}],"abbreviations":[{"@lang":"lat","@value":"Med"}]},{"urn":"urn:cts:latinLit:phi0836.phi0003","title":[{"@lang":"lat","@value":"De Rhetorica"}],"abbreviations":[{"@lang":"lat","@value":"Rhet"}]}]},{"urn":"urn:cts:latinLit:phi1318","title":[{"@lang":"lat","@value":"Pliny, the Younger"}],"abbreviations":[{"@lang":"lat","@value":"PlinIun"}],"works":[{"urn":"urn:cts:latinLit:phi1318.phi0001","title":[{"@lang":"lat","@value":"Epistulae"}],"abbreviations":[{"@lang":"lat","@value":"Ep"}]},{"urn":"urn:cts:latinLit:phi1318.phi0002","title":[{"@lang":"lat","@value":"Panegyricus"}],"abbreviations":[{"@lang":"lat","@value":"Pan"}]},{"urn":"urn:cts:latinLit:phi1318.phi0003","title":[{"@lang":"lat","@value":"versus"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0978","title":[{"@lang":"lat","@value":"Pliny, the Elder"}],"abbreviations":[{"@lang":"lat","@value":"PlinSen"}],"works":[{"urn":"urn:cts:latinLit:phi0978.phi0001","title":[{"@lang":"lat","@value":"Naturalis Historia"}],"abbreviations":[{"@lang":"lat","@value":"Nat"}]},{"urn":"urn:cts:latinLit:phi0978.phi0002","title":[{"@lang":"lat","@value":"Dubius Sermo"}],"abbreviations":[{"@lang":"lat","@value":"DubSerm"}]}]},{"urn":"urn:cts:latinLit:phi0425","title":[{"@lang":"lat","@value":"Rutilius Lupus, Publius"}],"abbreviations":[{"@lang":"lat","@value":"RutLup"}],"works":[{"urn":"urn:cts:latinLit:phi0425.phi0001","title":[{"@lang":"lat","@value":"Schemata Lexeos"}],"abbreviations":[{"@lang":"lat","@value":"Schem"}]}]},{"urn":"urn:cts:latinLit:phi0134","title":[{"@lang":"lat","@value":"Terence"}],"abbreviations":[{"@lang":"lat","@value":"Ter"}],"works":[{"urn":"urn:cts:latinLit:phi0134.phi0001","title":[{"@lang":"lat","@value":"Andria"}],"abbreviations":[{"@lang":"lat","@value":"An"}]},{"urn":"urn:cts:latinLit:phi0134.phi0002","title":[{"@lang":"lat","@value":"Heauton Timorumenos"}],"abbreviations":[{"@lang":"lat","@value":"Hau"}]},{"urn":"urn:cts:latinLit:phi0134.phi0003","title":[{"@lang":"lat","@value":"Eunuchus"}],"abbreviations":[{"@lang":"lat","@value":"Eu"}]},{"urn":"urn:cts:latinLit:phi0134.phi0004","title":[{"@lang":"lat","@value":"Phormio"}],"abbreviations":[{"@lang":"lat","@value":"Ph"}]},{"urn":"urn:cts:latinLit:phi0134.phi0005","title":[{"@lang":"lat","@value":"Hecyra"}],"abbreviations":[{"@lang":"lat","@value":"Hec"}]},{"urn":"urn:cts:latinLit:phi0134.phi0006","title":[{"@lang":"lat","@value":"Adelphoe"}],"abbreviations":[{"@lang":"lat","@value":"Ad"}]}]},{"urn":"urn:cts:latinLit:phi0002","title":[{"@lang":"lat","@value":"Annius Luscus, Titus"}],"abbreviations":[{"@lang":"lat","@value":"Annius"}],"works":[{"urn":"urn:cts:latinLit:phi0002.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0315","title":[{"@lang":"lat","@value":"Gracchanus, Marcus Iunius"}],"abbreviations":[{"@lang":"lat","@value":"Gracchan"}],"works":[{"urn":"urn:cts:latinLit:phi0315.phi0001","title":[{"@lang":"lat","@value":"commentarii"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0972","title":[{"@lang":"lat","@value":"Petronius"}],"abbreviations":[{"@lang":"lat","@value":"Petr"}],"works":[{"urn":"urn:cts:latinLit:phi0972.phi0001","title":[{"@lang":"lat","@value":"Satyrica"}],"abbreviations":[{"@lang":"lat","@value":"Sat"}]},{"urn":"urn:cts:latinLit:phi0972.phi0002","title":[{"@lang":"lat","@value":"Satyrica, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0905","title":[{"@lang":"lat","@value":"Labeo, Marcus Antistius"}],"abbreviations":[{"@lang":"lat","@value":"AntLabeo"}],"works":[{"urn":"urn:cts:latinLit:phi0905.phi0002","title":[{"@lang":"lat","@value":"iurisprudentia, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0488","title":[{"@lang":"lat","@value":"Clodius, Servius"}],"abbreviations":[{"@lang":"lat","@value":"SerClod"}],"works":[{"urn":"urn:cts:latinLit:phi0488.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi1032","title":[{"@lang":"lat","@value":"Vagellius"}],"abbreviations":[{"@lang":"lat","@value":"Vag"}],"works":[{"urn":"urn:cts:latinLit:phi1032.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0496","title":[{"@lang":"lat","@value":"Commentarius Anquisit. Sergii"}],"abbreviations":[{"@lang":"lat","@value":"CommentQuaestor"}],"works":[{"urn":"urn:cts:latinLit:phi0496.phi0001","title":[{"@lang":"lat","@value":"Comment. Anquisit. Sergii"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0899","title":[{"@lang":"lat","@value":"Hyginus Astronomus"}],"abbreviations":[{"@lang":"lat","@value":"HygAstr"}],"works":[{"urn":"urn:cts:latinLit:phi0899.phi0001","title":[{"@lang":"lat","@value":"Astronomica"}],"abbreviations":[{"@lang":"lat","@value":"Astr"}]}]},{"urn":"urn:cts:latinLit:phi2123","title":[{"@lang":"lat","@value":"Porfyrius, Publilius Optatianus"}],"abbreviations":[{"@lang":"lat","@value":"POptat"}],"works":[{"urn":"urn:cts:latinLit:phi2123.phi0003","title":[{"@lang":"lat","@value":"Epigrammata"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0530","title":[{"@lang":"lat","@value":"Hirtius, Aulus"}],"abbreviations":[{"@lang":"lat","@value":"Hirt"}],"works":[{"urn":"urn:cts:latinLit:phi0530.phi0001","title":[{"@lang":"lat","@value":"De Bello Gallico Liber VIII"}],"abbreviations":[{"@lang":"lat","@value":"Gal"}]},{"urn":"urn:cts:latinLit:phi0530.phi0002","title":[{"@lang":"lat","@value":"epistulae"}],"abbreviations":[{"@lang":"lat","@value":"Ep"}]}]},{"urn":"urn:cts:latinLit:phi0094","title":[{"@lang":"lat","@value":"Andronicus, Lucius Livius"}],"abbreviations":[{"@lang":"lat","@value":"Andr"}],"works":[{"urn":"urn:cts:latinLit:phi0094.phi0001","title":[{"@lang":"lat","@value":"Odyssia"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0094.phi0002","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]},{"urn":"urn:cts:latinLit:phi0094.phi0003","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi0866","title":[{"@lang":"lat","@value":"Fenestella"}],"abbreviations":[{"@lang":"lat","@value":"Fen"}],"works":[{"urn":"urn:cts:latinLit:phi0866.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0727","title":[{"@lang":"lat","@value":"Cornificius Longus"}],"abbreviations":[{"@lang":"lat","@value":"CornifLong"}],"works":[{"urn":"urn:cts:latinLit:phi0727.phi0001","title":[{"@lang":"lat","@value":"grammatica, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0618","title":[{"@lang":"lat","@value":"Pomponius, Lucius, Bononiensis"}],"abbreviations":[{"@lang":"lat","@value":"PomponBon"}],"works":[{"urn":"urn:cts:latinLit:phi0618.phi0001","title":[{"@lang":"lat","@value":"Atellanae"}],"abbreviations":[{"@lang":"lat","@value":"atell"}]}]},{"urn":"urn:cts:latinLit:phi0118","title":[{"@lang":"lat","@value":"Paullus, Lucius Aemilius"}],"abbreviations":[{"@lang":"lat","@value":"AemPaul"}],"works":[{"urn":"urn:cts:latinLit:phi0118.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi2002","title":[{"@lang":"lat","@value":"Albinus"}],"abbreviations":[{"@lang":"lat","@value":"Alb"}],"works":[{"urn":"urn:cts:latinLit:phi2002.phi0001","title":[{"@lang":"lat","@value":"Rerum Romanarum Liber I"}],"abbreviations":[{"@lang":"lat","@value":"ResRom"}]},{"urn":"urn:cts:latinLit:phi2002.phi0002","title":[{"@lang":"lat","@value":"De Metris"}],"abbreviations":[{"@lang":"lat","@value":"DeMetr"}]}]},{"urn":"urn:cts:latinLit:phi0408","title":[{"@lang":"lat","@value":"Antonius, Marcus"}],"abbreviations":[{"@lang":"lat","@value":"Ant"}],"works":[{"urn":"urn:cts:latinLit:phi0408.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0959","title":[{"@lang":"lat","@value":"Ovid"}],"abbreviations":[{"@lang":"lat","@value":"Ov"}],"works":[{"urn":"urn:cts:latinLit:phi0959.phi0001","title":[{"@lang":"lat","@value":"Amores"}],"abbreviations":[{"@lang":"lat","@value":"Am"}]},{"urn":"urn:cts:latinLit:phi0959.phi0002","title":[{"@lang":"lat","@value":"Epistulae (vel Heroides)"}],"abbreviations":[{"@lang":"lat","@value":"Her"}]},{"urn":"urn:cts:latinLit:phi0959.phi0003","title":[{"@lang":"lat","@value":"Medicamina Faciei Femineae"}],"abbreviations":[{"@lang":"lat","@value":"Med"}]},{"urn":"urn:cts:latinLit:phi0959.phi0004","title":[{"@lang":"lat","@value":"Ars Amatoria"}],"abbreviations":[{"@lang":"lat","@value":"Ars"}]},{"urn":"urn:cts:latinLit:phi0959.phi0005","title":[{"@lang":"lat","@value":"Remedia Amoris"}],"abbreviations":[{"@lang":"lat","@value":"Rem"}]},{"urn":"urn:cts:latinLit:phi0959.phi0006","title":[{"@lang":"lat","@value":"Metamorphoses"}],"abbreviations":[{"@lang":"lat","@value":"Met"}]},{"urn":"urn:cts:latinLit:phi0959.phi0007","title":[{"@lang":"lat","@value":"Fasti"}],"abbreviations":[{"@lang":"lat","@value":"Fast"}]},{"urn":"urn:cts:latinLit:phi0959.phi0008","title":[{"@lang":"lat","@value":"Tristia"}],"abbreviations":[{"@lang":"lat","@value":"Tr"}]},{"urn":"urn:cts:latinLit:phi0959.phi0009","title":[{"@lang":"lat","@value":"Epistulae ex Ponto"}],"abbreviations":[{"@lang":"lat","@value":"Pont"}]},{"urn":"urn:cts:latinLit:phi0959.phi0010","title":[{"@lang":"lat","@value":"Ibis"}],"abbreviations":[{"@lang":"lat","@value":"Ib"}]},{"urn":"urn:cts:latinLit:phi0959.phi0011","title":[{"@lang":"lat","@value":"Medea"}],"abbreviations":[{"@lang":"lat","@value":"Medea"}]},{"urn":"urn:cts:latinLit:phi0959.phi0012","title":[{"@lang":"lat","@value":"carmina, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0959.phi0013","title":[{"@lang":"lat","@value":"Nux [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Nux"}]},{"urn":"urn:cts:latinLit:phi0959.phi0014","title":[{"@lang":"lat","@value":"Halieutica [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Hal"}]},{"urn":"urn:cts:latinLit:phi0959.phi0015","title":[{"@lang":"lat","@value":"Epicedion Drusi [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"EpicDrusi"}]}]},{"urn":"urn:cts:latinLit:phi1276","title":[{"@lang":"lat","@value":"Juvenal"}],"abbreviations":[{"@lang":"lat","@value":"Juv"}],"works":[{"urn":"urn:cts:latinLit:phi1276.phi0001","title":[{"@lang":"lat","@value":"Saturae"}],"abbreviations":[{"@lang":"lat","@value":"S"}]}]},{"urn":"urn:cts:latinLit:phi0146","title":[{"@lang":"lat","@value":"Turpilius, Sextus"}],"abbreviations":[{"@lang":"lat","@value":"Turp"}],"works":[{"urn":"urn:cts:latinLit:phi0146.phi0001","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi1285","title":[{"@lang":"lat","@value":"Maecianus, Lucius Volusius"}],"abbreviations":[{"@lang":"lat","@value":"Maecian"}],"works":[{"urn":"urn:cts:latinLit:phi1285.phi0001","title":[{"@lang":"lat","@value":"Assis Distributio ..."}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0490","title":[{"@lang":"lat","@value":"Cominius, Publius"}],"abbreviations":[{"@lang":"lat","@value":"Comin"}],"works":[{"urn":"urn:cts:latinLit:phi0490.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0650","title":[{"@lang":"lat","@value":"Sueius"}],"abbreviations":[{"@lang":"lat","@value":"Sueius"}],"works":[{"urn":"urn:cts:latinLit:phi0650.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0533","title":[{"@lang":"lat","@value":"Hyginus, Gaius Iulius"}],"abbreviations":[{"@lang":"lat","@value":"HygGram"}],"works":[{"urn":"urn:cts:latinLit:phi0533.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]},{"urn":"urn:cts:latinLit:phi0533.phi0002","title":[{"@lang":"lat","@value":"historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1056","title":[{"@lang":"lat","@value":"Vitruvius"}],"abbreviations":[{"@lang":"lat","@value":"Vitr"}],"works":[{"urn":"urn:cts:latinLit:phi1056.phi0001","title":[{"@lang":"lat","@value":"De Architectura"}],"abbreviations":[{"@lang":"lat","@value":"Arch"}]}]},{"urn":"urn:cts:latinLit:phi0594","title":[{"@lang":"lat","@value":"Novius, Lucius"}],"abbreviations":[{"@lang":"lat","@value":"LNov"}],"works":[{"urn":"urn:cts:latinLit:phi0594.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0646","title":[{"@lang":"lat","@value":"Sisenna, Lucius Cornelius"}],"abbreviations":[{"@lang":"lat","@value":"Sis"}],"works":[{"urn":"urn:cts:latinLit:phi0646.phi0001","title":[{"@lang":"lat","@value":"Historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0646.phi0002","title":[{"@lang":"lat","@value":"Milesiae"}],"abbreviations":[{"@lang":"lat","@value":"Mil"}]}]},{"urn":"urn:cts:latinLit:phi0112","title":[{"@lang":"lat","@value":"Naevius, Gnaeus"}],"abbreviations":[{"@lang":"lat","@value":"CnNaev"}],"works":[{"urn":"urn:cts:latinLit:phi0112.phi0001","title":[{"@lang":"lat","@value":"Bellum Punicum"}],"abbreviations":[{"@lang":"lat","@value":"Pun"}]},{"urn":"urn:cts:latinLit:phi0112.phi0002","title":[{"@lang":"lat","@value":"alia carmina epica"}],"abbreviations":[{"@lang":"lat","@value":"carm"}]},{"urn":"urn:cts:latinLit:phi0112.phi0003","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]},{"urn":"urn:cts:latinLit:phi0112.phi0004","title":[{"@lang":"lat","@value":"praetextae"}],"abbreviations":[{"@lang":"lat","@value":"praet"}]},{"urn":"urn:cts:latinLit:phi0112.phi0005","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]},{"urn":"urn:cts:latinLit:phi0112.phi0006","title":[{"@lang":"lat","@value":"carmina, frr. a Morel omissa"}],"abbreviations":[{"@lang":"lat","@value":"poetB"}]},{"urn":"urn:cts:latinLit:phi0112.phi0007","title":[{"@lang":"lat","@value":"versus in Metellos [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"InMet"}]}]},{"urn":"urn:cts:latinLit:phi1266","title":[{"@lang":"lat","@value":"Hyginus Gromaticus"}],"abbreviations":[{"@lang":"lat","@value":"HygGr"}],"works":[{"urn":"urn:cts:latinLit:phi1266.phi0001","title":[{"@lang":"lat","@value":"De Limitibus"}],"abbreviations":[{"@lang":"lat","@value":"Lim"}]},{"urn":"urn:cts:latinLit:phi1266.phi0002","title":[{"@lang":"lat","@value":"De Condicionibus Agrorum"}],"abbreviations":[{"@lang":"lat","@value":"Agr"}]},{"urn":"urn:cts:latinLit:phi1266.phi0003","title":[{"@lang":"lat","@value":"De Generibus Controversiarum"}],"abbreviations":[{"@lang":"lat","@value":"Contr"}]},{"urn":"urn:cts:latinLit:phi1266.phi0004","title":[{"@lang":"lat","@value":"Constitutio Limitum [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Const"}]},{"urn":"urn:cts:latinLit:phi1266.phi0005","title":[{"@lang":"lat","@value":"De Munition. Castrorum [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Munit"}]}]},{"urn":"urn:cts:latinLit:phi0076","title":[{"@lang":"lat","@value":"Cassius Hemina, Gaius"}],"abbreviations":[{"@lang":"lat","@value":"Hem"}],"works":[{"urn":"urn:cts:latinLit:phi0076.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0478","title":[{"@lang":"lat","@value":"Cicero, Quintus Tullius"}],"abbreviations":[{"@lang":"lat","@value":"QCic"}],"works":[{"urn":"urn:cts:latinLit:phi0478.phi0002","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0478.phi0003","title":[{"@lang":"lat","@value":"Commentar. Petitionis [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Pet"}]}]},{"urn":"urn:cts:latinLit:phi0624","title":[{"@lang":"lat","@value":"Claudius Quadrigarius, Quintus"}],"abbreviations":[{"@lang":"lat","@value":"Quad"}],"works":[{"urn":"urn:cts:latinLit:phi0624.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0085","title":[{"@lang":"lat","@value":"Laelius, Gaius, Sapiens"}],"abbreviations":[{"@lang":"lat","@value":"Lael"}],"works":[{"urn":"urn:cts:latinLit:phi0085.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0938","title":[{"@lang":"lat","@value":"Montanus, Iulius"}],"abbreviations":[{"@lang":"lat","@value":"Mont"}],"works":[{"urn":"urn:cts:latinLit:phi0938.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0926","title":[{"@lang":"lat","@value":"Manilius, Marcus"}],"abbreviations":[{"@lang":"lat","@value":"ManAstr"}],"works":[{"urn":"urn:cts:latinLit:phi0926.phi0001","title":[{"@lang":"lat","@value":"Astronomica"}],"abbreviations":[{"@lang":"lat","@value":"Astr"}]}]},{"urn":"urn:cts:latinLit:phi0522","title":[{"@lang":"lat","@value":"Gallus, Gaius Aelius"}],"abbreviations":[{"@lang":"lat","@value":"AelGal"}],"works":[{"urn":"urn:cts:latinLit:phi0522.phi0001","title":[{"@lang":"lat","@value":"De Verbis ad Ius Civile"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]},{"urn":"urn:cts:latinLit:phi0522.phi0002","title":[{"@lang":"lat","@value":"iurisprudentia, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"iurfrg"}]}]},{"urn":"urn:cts:latinLit:phi0582","title":[{"@lang":"lat","@value":"Metellus Numidicus, Q. Caecilius"}],"abbreviations":[{"@lang":"lat","@value":"MetNum"}],"works":[{"urn":"urn:cts:latinLit:phi0582.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0451","title":[{"@lang":"lat","@value":"Sinnius Capito"}],"abbreviations":[{"@lang":"lat","@value":"Sinn"}],"works":[{"urn":"urn:cts:latinLit:phi0451.phi0001","title":[{"@lang":"lat","@value":"grammatica, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0638","title":[{"@lang":"lat","@value":"Scaevola, Q. Mucius [pontifex]"}],"abbreviations":[{"@lang":"lat","@value":"QScaev"}],"works":[{"urn":"urn:cts:latinLit:phi0638.phi0002","title":[{"@lang":"lat","@value":"iurisprudentia, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0560","title":[{"@lang":"lat","@value":"Helvius Mancia"}],"abbreviations":[{"@lang":"lat","@value":"Manc"}],"works":[{"urn":"urn:cts:latinLit:phi0560.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1227","title":[{"@lang":"lat","@value":"Balbus"}],"abbreviations":[{"@lang":"lat","@value":"Balb"}],"works":[{"urn":"urn:cts:latinLit:phi1227.phi0001","title":[{"@lang":"lat","@value":"Expos. et Ratio Omn. Formarum"}],"abbreviations":[{"@lang":"lat","@value":"grom"}]}]},{"urn":"urn:cts:latinLit:phi1363","title":[{"@lang":"lat","@value":"Aemilius Asper"}],"abbreviations":[{"@lang":"lat","@value":"Asper"}],"works":[{"urn":"urn:cts:latinLit:phi1363.phi0001","title":[{"@lang":"lat","@value":"comment. in Ter. Sall. Verg."}],"abbreviations":[{"@lang":"lat","@value":"frg"}]},{"urn":"urn:cts:latinLit:phi1363.phi0002","title":[{"@lang":"lat","@value":"Vergilius"}],"abbreviations":[{"@lang":"lat","@value":"Verg"}]}]},{"urn":"urn:cts:latinLit:phi0809","title":[{"@lang":"lat","@value":"Aufidius Bassus"}],"abbreviations":[{"@lang":"lat","@value":"Aufid"}],"works":[{"urn":"urn:cts:latinLit:phi0809.phi0001","title":[{"@lang":"lat","@value":"historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1038","title":[{"@lang":"lat","@value":"Valerius Maximus"}],"abbreviations":[{"@lang":"lat","@value":"VMax"}],"works":[{"urn":"urn:cts:latinLit:phi1038.phi0001","title":[{"@lang":"lat","@value":"Facta et Dicta Memorabilia"}],"abbreviations":[{"@lang":"lat","@value":"Mem"}]}]},{"urn":"urn:cts:latinLit:phi0661","title":[{"@lang":"lat","@value":"Ticidas"}],"abbreviations":[{"@lang":"lat","@value":"Tic"}],"works":[{"urn":"urn:cts:latinLit:phi0661.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0538","title":[{"@lang":"lat","@value":"Laevius"}],"abbreviations":[{"@lang":"lat","@value":"Laev"}],"works":[{"urn":"urn:cts:latinLit:phi0538.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0538.phi0002","title":[{"@lang":"lat","@value":"fr. dubium a Morel omissum"}],"abbreviations":[{"@lang":"lat","@value":"poetB"}]}]},{"urn":"urn:cts:latinLit:phi0660","title":[{"@lang":"lat","@value":"Tibullus, Albius"}],"abbreviations":[{"@lang":"lat","@value":"Tib"}],"works":[{"urn":"urn:cts:latinLit:phi0660.phi0001","title":[{"@lang":"lat","@value":"Elegiae"}],"abbreviations":[{"@lang":"lat","@value":"Eleg"}]},{"urn":"urn:cts:latinLit:phi0660.phi0002","title":[{"@lang":"lat","@value":"carmina Tibulliana [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"CarmTib"}]}]},{"urn":"urn:cts:latinLit:phi0670","title":[{"@lang":"lat","@value":"Aelius Tubero, Qunitus"}],"abbreviations":[{"@lang":"lat","@value":"Tub"}],"works":[{"urn":"urn:cts:latinLit:phi0670.phi0001","title":[{"@lang":"lat","@value":"Historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0670.phi0002","title":[{"@lang":"lat","@value":"liber ad C. Oppium, fr."}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0127","title":[{"@lang":"lat","@value":"Scipio, Africanus"}],"abbreviations":[{"@lang":"lat","@value":"ScipioMaior"}],"works":[{"urn":"urn:cts:latinLit:phi0127.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0330","title":[{"@lang":"lat","@value":"Volcacius Sedigitus"}],"abbreviations":[{"@lang":"lat","@value":"Volc"}],"works":[{"urn":"urn:cts:latinLit:phi0330.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0027","title":[{"@lang":"lat","@value":"Cincius Alimentus, Lucius"}],"abbreviations":[{"@lang":"lat","@value":"Cincius"}],"works":[{"urn":"urn:cts:latinLit:phi0027.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi0306","title":[{"@lang":"lat","@value":"Anonymous (Carmen Devotionis)"}],"abbreviations":[{"@lang":"lat","@value":"CarmDevot"}],"works":[{"urn":"urn:cts:latinLit:phi0306.phi0001","title":[{"@lang":"lat","@value":"Carmen Devotionis"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0454","title":[{"@lang":"lat","@value":"Calidius, Marcus"}],"abbreviations":[{"@lang":"lat","@value":"Calid"}],"works":[{"urn":"urn:cts:latinLit:phi0454.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0869","title":[{"@lang":"lat","@value":"Verrius Flaccus, Marcus"}],"abbreviations":[{"@lang":"lat","@value":"VerFl"}],"works":[{"urn":"urn:cts:latinLit:phi0869.phi0001","title":[{"@lang":"lat","@value":"Etruscarum Rerum Libri"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0869.phi0002","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi9505","title":[{"@lang":"lat","@value":"Anonymi Comici et Tragici"}],"abbreviations":[{"@lang":"lat","@value":"AnonComTrag"}],"works":[{"urn":"urn:cts:latinLit:phi9505.phi0001","title":[{"@lang":"lat","@value":"Togatae Poetarum Incertorum"}],"abbreviations":[{"@lang":"lat","@value":"tog"}]},{"urn":"urn:cts:latinLit:phi9505.phi0002","title":[{"@lang":"lat","@value":"Atellanae Poetarum Incertorum"}],"abbreviations":[{"@lang":"lat","@value":"atell"}]},{"urn":"urn:cts:latinLit:phi9505.phi0003","title":[{"@lang":"lat","@value":"Palliatae Poetarum Incertorum"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]},{"urn":"urn:cts:latinLit:phi9505.phi0004","title":[{"@lang":"lat","@value":"Tragoediae Poetarum Incertorum"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]}]},{"urn":"urn:cts:latinLit:phi0534","title":[{"@lang":"lat","@value":"Iuventius, comicus"}],"abbreviations":[{"@lang":"lat","@value":"Iuvent"}],"works":[{"urn":"urn:cts:latinLit:phi0534.phi0001","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi0423","title":[{"@lang":"lat","@value":"Herennius Balbus, Lucius"}],"abbreviations":[{"@lang":"lat","@value":"Balbus"}],"works":[{"urn":"urn:cts:latinLit:phi0423.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0890","title":[{"@lang":"lat","@value":"Homerus Latinus"}],"abbreviations":[{"@lang":"lat","@value":"HomLat"}],"works":[{"urn":"urn:cts:latinLit:phi0890.phi0001","title":[{"@lang":"lat","@value":"Ilias Latina"}],"abbreviations":[{"@lang":"lat","@value":"Ilias"}]}]},{"urn":"urn:cts:latinLit:phi0574","title":[{"@lang":"lat","@value":"Memmius L. f., Gaius"}],"abbreviations":[{"@lang":"lat","@value":"Mem"}],"works":[{"urn":"urn:cts:latinLit:phi0574.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0574.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1229","title":[{"@lang":"lat","@value":"Caper, Flavius"}],"abbreviations":[{"@lang":"lat","@value":"Caper"}],"works":[{"urn":"urn:cts:latinLit:phi1229.phi0001","title":[{"@lang":"lat","@value":"De Orthographia"}],"abbreviations":[{"@lang":"lat","@value":"Orth"}]},{"urn":"urn:cts:latinLit:phi1229.phi0002","title":[{"@lang":"lat","@value":"De Verbis Dubiis"}],"abbreviations":[{"@lang":"lat","@value":"VerbDub"}]}]},{"urn":"urn:cts:latinLit:phi0587","title":[{"@lang":"lat","@value":"Naevius"}],"abbreviations":[{"@lang":"lat","@value":"NaevIun"}],"works":[{"urn":"urn:cts:latinLit:phi0587.phi0001","title":[{"@lang":"lat","@value":"Ilias"}],"abbreviations":[{"@lang":"lat","@value":"CypIl"}]}]},{"urn":"urn:cts:latinLit:phi0019","title":[{"@lang":"lat","@value":"Carbo, Gaius Papirius"}],"abbreviations":[{"@lang":"lat","@value":"Carbo"}],"works":[{"urn":"urn:cts:latinLit:phi0019.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0622","title":[{"@lang":"lat","@value":"Publilius, Syrus"}],"abbreviations":[{"@lang":"lat","@value":"Pub"}],"works":[{"urn":"urn:cts:latinLit:phi0622.phi0001","title":[{"@lang":"lat","@value":"Sententiae"}],"abbreviations":[{"@lang":"lat","@value":"Sent"}]},{"urn":"urn:cts:latinLit:phi0622.phi0002","title":[{"@lang":"lat","@value":"mimi"}],"abbreviations":[{"@lang":"lat","@value":"mim"}]}]},{"urn":"urn:cts:latinLit:phi0923","title":[{"@lang":"lat","@value":"Macer, Aemilius"}],"abbreviations":[{"@lang":"lat","@value":"AemMacer"}],"works":[{"urn":"urn:cts:latinLit:phi0923.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0923.phi0002","title":[{"@lang":"lat","@value":"fragmentum a Morel omissum"}],"abbreviations":[{"@lang":"lat","@value":"poetB"}]}]},{"urn":"urn:cts:latinLit:phi0073","title":[{"@lang":"lat","@value":"Gracchus, Gaius Sempronius"}],"abbreviations":[{"@lang":"lat","@value":"CGracch"}],"works":[{"urn":"urn:cts:latinLit:phi0073.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0803","title":[{"@lang":"lat","@value":"Asconius Pedianus, Quintus"}],"abbreviations":[{"@lang":"lat","@value":"Asc"}],"works":[{"urn":"urn:cts:latinLit:phi0803.phi0001","title":[{"@lang":"lat","@value":"In Senatu Contra L. Pisonem"}],"abbreviations":[{"@lang":"lat","@value":"Pis"}]},{"urn":"urn:cts:latinLit:phi0803.phi0002","title":[{"@lang":"lat","@value":"Pro Scauro"}],"abbreviations":[{"@lang":"lat","@value":"Scaur"}]},{"urn":"urn:cts:latinLit:phi0803.phi0003","title":[{"@lang":"lat","@value":"Pro Milone"}],"abbreviations":[{"@lang":"lat","@value":"Mil"}]},{"urn":"urn:cts:latinLit:phi0803.phi0004","title":[{"@lang":"lat","@value":"Pro Cornelio"}],"abbreviations":[{"@lang":"lat","@value":"Corn"}]},{"urn":"urn:cts:latinLit:phi0803.phi0005","title":[{"@lang":"lat","@value":"In Toga Candida"}],"abbreviations":[{"@lang":"lat","@value":"TogCand"}]}]},{"urn":"urn:cts:latinLit:phi0444","title":[{"@lang":"lat","@value":"Caelius Rufus, Marcus"}],"abbreviations":[{"@lang":"lat","@value":"CaelRuf"}],"works":[{"urn":"urn:cts:latinLit:phi0444.phi0002","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1206","title":[{"@lang":"lat","@value":"Ampelius, Lucius"}],"abbreviations":[{"@lang":"lat","@value":"Amp"}],"works":[{"urn":"urn:cts:latinLit:phi1206.phi0001","title":[{"@lang":"lat","@value":"Liber Memorialis"}],"abbreviations":[{"@lang":"lat","@value":"Mem"}]}]},{"urn":"urn:cts:latinLit:phi0448","title":[{"@lang":"lat","@value":"Caesar, Julius"}],"abbreviations":[{"@lang":"lat","@value":"Caes"}],"works":[{"urn":"urn:cts:latinLit:phi0448.phi0001","title":[{"@lang":"lat","@value":"De Bello Gallico"}],"abbreviations":[{"@lang":"lat","@value":"Gal"}]},{"urn":"urn:cts:latinLit:phi0448.phi0002","title":[{"@lang":"lat","@value":"Bellum Civile"}],"abbreviations":[{"@lang":"lat","@value":"Civ"}]},{"urn":"urn:cts:latinLit:phi0448.phi0003","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]},{"urn":"urn:cts:latinLit:phi0448.phi0004","title":[{"@lang":"lat","@value":"De Analogia"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]},{"urn":"urn:cts:latinLit:phi0448.phi0005","title":[{"@lang":"lat","@value":"Anticato"}],"abbreviations":[{"@lang":"lat","@value":"Anticat"}]},{"urn":"urn:cts:latinLit:phi0448.phi0006","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"carm"}]},{"urn":"urn:cts:latinLit:phi0448.phi0007","title":[{"@lang":"lat","@value":"epistulae ad Ciceronem"}],"abbreviations":[{"@lang":"lat","@value":"EpCic"}]},{"urn":"urn:cts:latinLit:phi0448.phi0008","title":[{"@lang":"lat","@value":"epistulae ad familiares"}],"abbreviations":[{"@lang":"lat","@value":"EpFam"}]}]},{"urn":"urn:cts:latinLit:phi1218","title":[{"@lang":"lat","@value":"Augurinus, Sentius"}],"abbreviations":[{"@lang":"lat","@value":"Augur"}],"works":[{"urn":"urn:cts:latinLit:phi1218.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0492","title":[{"@lang":"lat","@value":"Commentarii Augurum"}],"abbreviations":[{"@lang":"lat","@value":"CommentAugur"}],"works":[{"urn":"urn:cts:latinLit:phi0492.phi0001","title":[{"@lang":"lat","@value":"Commentarii Augurum"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0709","title":[{"@lang":"lat","@value":"Marsus, Domitius"}],"abbreviations":[{"@lang":"lat","@value":"DomMars"}],"works":[{"urn":"urn:cts:latinLit:phi0709.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0709.phi0002","title":[{"@lang":"lat","@value":"epigrammata ex Bobiensibus"}],"abbreviations":[{"@lang":"lat","@value":"EpigrBob"}]}]},{"urn":"urn:cts:latinLit:phi1053","title":[{"@lang":"lat","@value":"Vibius Crispus"}],"abbreviations":[{"@lang":"lat","@value":"VibCrisp"}],"works":[{"urn":"urn:cts:latinLit:phi1053.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi1005","title":[{"@lang":"lat","@value":"Rabirius"}],"abbreviations":[{"@lang":"lat","@value":"Rab"}],"works":[{"urn":"urn:cts:latinLit:phi1005.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0324","title":[{"@lang":"lat","@value":"Saserna"}],"abbreviations":[{"@lang":"lat","@value":"Saserna"}],"works":[{"urn":"urn:cts:latinLit:phi0324.phi0001","title":[{"@lang":"lat","@value":"De Agri Cultura"}],"abbreviations":[{"@lang":"lat","@value":"agr"}]}]},{"urn":"urn:cts:latinLit:phi0445","title":[{"@lang":"lat","@value":"Caepasius, Gaius vel Lucius"}],"abbreviations":[{"@lang":"lat","@value":"Caepasius"}],"works":[{"urn":"urn:cts:latinLit:phi0445.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0981","title":[{"@lang":"lat","@value":"Pollio, Gaius Asinius"}],"abbreviations":[{"@lang":"lat","@value":"Pol"}],"works":[{"urn":"urn:cts:latinLit:phi0981.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0981.phi0003","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]},{"urn":"urn:cts:latinLit:phi0981.phi0004","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]},{"urn":"urn:cts:latinLit:phi0981.phi0005","title":[{"@lang":"lat","@value":"historiae"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi0046","title":[{"@lang":"lat","@value":"Cornelius Epicadus"}],"abbreviations":[{"@lang":"lat","@value":"Epicad"}],"works":[{"urn":"urn:cts:latinLit:phi0046.phi0001","title":[{"@lang":"lat","@value":"grammatica"}],"abbreviations":[{"@lang":"lat","@value":"gram"}]}]},{"urn":"urn:cts:latinLit:phi1035","title":[{"@lang":"lat","@value":"Valerius Flaccus, Gaius"}],"abbreviations":[{"@lang":"lat","@value":"VFl"}],"works":[{"urn":"urn:cts:latinLit:phi1035.phi0001","title":[{"@lang":"lat","@value":"Argonautica"}],"abbreviations":[{"@lang":"lat","@value":"Arg"}]}]},{"urn":"urn:cts:latinLit:phi2300","title":[{"@lang":"lat","@value":"Aemilius Sura"}],"abbreviations":[{"@lang":"lat","@value":"AemSura"}],"works":[{"urn":"urn:cts:latinLit:phi2300.phi0001","title":[{"@lang":"lat","@value":"De Annis Populi Romani"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi9221","title":[{"@lang":"lat","@value":"Paulus, Quaestor"}],"abbreviations":[{"@lang":"lat","@value":"PaulQuaest"}],"works":[{"urn":"urn:cts:latinLit:phi9221.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0682","title":[{"@lang":"lat","@value":"Varius Rufus, Lucius"}],"abbreviations":[{"@lang":"lat","@value":"VRuf"}],"works":[{"urn":"urn:cts:latinLit:phi0682.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi0682.phi0002","title":[{"@lang":"lat","@value":"tragoediae"}],"abbreviations":[{"@lang":"lat","@value":"trag"}]}]},{"urn":"urn:cts:latinLit:phi1342","title":[{"@lang":"lat","@value":"Siculus Flaccus"}],"abbreviations":[{"@lang":"lat","@value":"SicFl"}],"works":[{"urn":"urn:cts:latinLit:phi1342.phi0001","title":[{"@lang":"lat","@value":"De Condicionibus Agrorum"}],"abbreviations":[{"@lang":"lat","@value":"CondAgr"}]}]},{"urn":"urn:cts:latinLit:phi0920","title":[{"@lang":"lat","@value":"Lucilius Iunior"}],"abbreviations":[{"@lang":"lat","@value":"LucilIun"}],"works":[{"urn":"urn:cts:latinLit:phi0920.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1017","title":[{"@lang":"lat","@value":"Seneca, Lucius Annaeus (the younger)"}],"abbreviations":[{"@lang":"lat","@value":"SenPhil"}],"works":[{"urn":"urn:cts:latinLit:phi1017.phi0001","title":[{"@lang":"lat","@value":"Hercules Furens"}],"abbreviations":[{"@lang":"lat","@value":"HerF"}]},{"urn":"urn:cts:latinLit:phi1017.phi0002","title":[{"@lang":"lat","@value":"Troades"}],"abbreviations":[{"@lang":"lat","@value":"Tro"}]},{"urn":"urn:cts:latinLit:phi1017.phi0003","title":[{"@lang":"lat","@value":"Phoenissae"}],"abbreviations":[{"@lang":"lat","@value":"Phoen"}]},{"urn":"urn:cts:latinLit:phi1017.phi0004","title":[{"@lang":"lat","@value":"Medea"}],"abbreviations":[{"@lang":"lat","@value":"Med"}]},{"urn":"urn:cts:latinLit:phi1017.phi0005","title":[{"@lang":"lat","@value":"Phaedra"}],"abbreviations":[{"@lang":"lat","@value":"Phaed"}]},{"urn":"urn:cts:latinLit:phi1017.phi0006","title":[{"@lang":"lat","@value":"Oedipus"}],"abbreviations":[{"@lang":"lat","@value":"Oed"}]},{"urn":"urn:cts:latinLit:phi1017.phi0007","title":[{"@lang":"lat","@value":"Agamemnon"}],"abbreviations":[{"@lang":"lat","@value":"Ag"}]},{"urn":"urn:cts:latinLit:phi1017.phi0008","title":[{"@lang":"lat","@value":"Thyestes"}],"abbreviations":[{"@lang":"lat","@value":"Thy"}]},{"urn":"urn:cts:latinLit:phi1017.phi0009","title":[{"@lang":"lat","@value":"Hercules Oetaeus"}],"abbreviations":[{"@lang":"lat","@value":"HerO"}]},{"urn":"urn:cts:latinLit:phi1017.phi0010","title":[{"@lang":"lat","@value":"Octavia [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"Oct"}]},{"urn":"urn:cts:latinLit:phi1017.phi0011","title":[{"@lang":"lat","@value":"Apocolocyntosis"}],"abbreviations":[{"@lang":"lat","@value":"Apoc"}]},{"urn":"urn:cts:latinLit:phi1017.phi0012","title":[{"@lang":"lat","@value":"Dialogi"}],"abbreviations":[{"@lang":"lat","@value":"Dial"}]},{"urn":"urn:cts:latinLit:phi1017.phi0013","title":[{"@lang":"lat","@value":"De Beneficiis"}],"abbreviations":[{"@lang":"lat","@value":"Ben"}]},{"urn":"urn:cts:latinLit:phi1017.phi0014","title":[{"@lang":"lat","@value":"De Clementia"}],"abbreviations":[{"@lang":"lat","@value":"Cl"}]},{"urn":"urn:cts:latinLit:phi1017.phi0015","title":[{"@lang":"lat","@value":"Epistulae Morales ad Lucilium"}],"abbreviations":[{"@lang":"lat","@value":"Ep"}]},{"urn":"urn:cts:latinLit:phi1017.phi0016","title":[{"@lang":"lat","@value":"Naturales Quaestiones"}],"abbreviations":[{"@lang":"lat","@value":"Nat"}]},{"urn":"urn:cts:latinLit:phi1017.phi0017","title":[{"@lang":"lat","@value":"e Cleanthe versus"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]},{"urn":"urn:cts:latinLit:phi1017.phi0018","title":[{"@lang":"lat","@value":"De Vita Patris"}],"abbreviations":[{"@lang":"lat","@value":"VitPatr"}]}]},{"urn":"urn:cts:latinLit:phi0125","title":[{"@lang":"lat","@value":"Scaevola, Publius Mucius"}],"abbreviations":[{"@lang":"lat","@value":"PScaev"}],"works":[{"urn":"urn:cts:latinLit:phi0125.phi0001","title":[{"@lang":"lat","@value":"fragmentum"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0642","title":[{"@lang":"lat","@value":"Sevius Nicanor"}],"abbreviations":[{"@lang":"lat","@value":"Sev"}],"works":[{"urn":"urn:cts:latinLit:phi0642.phi0001","title":[{"@lang":"lat","@value":"carmen"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi1377","title":[{"@lang":"lat","@value":"Fragmenta Bobiensia"}],"abbreviations":[{"@lang":"lat","@value":"FrgBob"}],"works":[{"urn":"urn:cts:latinLit:phi1377.phi0001","title":[{"@lang":"lat","@value":"De Littera"}],"abbreviations":[{"@lang":"lat","@value":"Litt"}]},{"urn":"urn:cts:latinLit:phi1377.phi0002","title":[{"@lang":"lat","@value":"De Accentibus"}],"abbreviations":[{"@lang":"lat","@value":"Acc"}]},{"urn":"urn:cts:latinLit:phi1377.phi0003","title":[{"@lang":"lat","@value":"De Propriis Nominibus"}],"abbreviations":[{"@lang":"lat","@value":"PropNom"}]},{"urn":"urn:cts:latinLit:phi1377.phi0004","title":[{"@lang":"lat","@value":"De Nomine"}],"abbreviations":[{"@lang":"lat","@value":"Nom"}]},{"urn":"urn:cts:latinLit:phi1377.phi0005","title":[{"@lang":"lat","@value":"De Versibus"}],"abbreviations":[{"@lang":"lat","@value":"Vers"}]},{"urn":"urn:cts:latinLit:phi1377.phi0006","title":[{"@lang":"lat","@value":"De Finalibus Syllabis"}],"abbreviations":[{"@lang":"lat","@value":"FinSyll"}]},{"urn":"urn:cts:latinLit:phi1377.phi0007","title":[{"@lang":"lat","@value":"De Structuris"}],"abbreviations":[{"@lang":"lat","@value":"Struct"}]},{"urn":"urn:cts:latinLit:phi1377.phi0008","title":[{"@lang":"lat","@value":"De Metris"}],"abbreviations":[{"@lang":"lat","@value":"Metr"}]}]},{"urn":"urn:cts:latinLit:phi3211","title":[{"@lang":"lat","@value":"Argum. Aen. et Tetrast."}],"abbreviations":[{"@lang":"lat","@value":"Arg"}],"works":[{"urn":"urn:cts:latinLit:phi3211.phi0001","title":[{"@lang":"lat","@value":"Argumenta Aeneidis, Decasticha"}],"abbreviations":[{"@lang":"lat","@value":"Deca"}]},{"urn":"urn:cts:latinLit:phi3211.phi0002","title":[{"@lang":"lat","@value":"Argumenta Aeneidis, Monosticha"}],"abbreviations":[{"@lang":"lat","@value":"Mono"}]},{"urn":"urn:cts:latinLit:phi3211.phi0003","title":[{"@lang":"lat","@value":"Tetrasticha in Vergilii Bucolica et Georgica"}],"abbreviations":[{"@lang":"lat","@value":"Tetr"}]},{"urn":"urn:cts:latinLit:phi3211.phi0004","title":[{"@lang":"lat","@value":"Tetrasticha in Vergilii Aeneida"}],"abbreviations":[{"@lang":"lat","@value":"TetrAen"}]}]},{"urn":"urn:cts:latinLit:phi0630","title":[{"@lang":"lat","@value":"Sacra Argeorum"}],"abbreviations":[{"@lang":"lat","@value":"SacrArg"}],"works":[{"urn":"urn:cts:latinLit:phi0630.phi0001","title":[{"@lang":"lat","@value":"Sacra Argeorum"}],"abbreviations":[{"@lang":"lat","@value":""}]}]},{"urn":"urn:cts:latinLit:phi0588","title":[{"@lang":"lat","@value":"Nepos, Cornelius"}],"abbreviations":[{"@lang":"lat","@value":"Nep"}],"works":[{"urn":"urn:cts:latinLit:phi0588.phi0001","title":[{"@lang":"lat","@value":"Vitae"}],"abbreviations":[{"@lang":"lat","@value":"Vit"}]},{"urn":"urn:cts:latinLit:phi0588.phi0002","title":[{"@lang":"lat","@value":"fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]}]},{"urn":"urn:cts:latinLit:phi0676","title":[{"@lang":"lat","@value":"Valerius Antias"}],"abbreviations":[{"@lang":"lat","@value":"ValAnt"}],"works":[{"urn":"urn:cts:latinLit:phi0676.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]}]},{"urn":"urn:cts:latinLit:phi1002","title":[{"@lang":"lat","@value":"Quintillian"}],"abbreviations":[{"@lang":"lat","@value":"Quint"}],"works":[{"urn":"urn:cts:latinLit:phi1002.phi0001","title":[{"@lang":"lat","@value":"Institutio Oratoria"}],"abbreviations":[{"@lang":"lat","@value":"Inst"}]},{"urn":"urn:cts:latinLit:phi1002.phi0002","title":[{"@lang":"lat","@value":"Declamationes Minores"}],"abbreviations":[{"@lang":"lat","@value":"Decl"}]},{"urn":"urn:cts:latinLit:phi1002.phi0003","title":[{"@lang":"lat","@value":"Declamationes Maiores [sp.]"}],"abbreviations":[{"@lang":"lat","@value":"DeclMaior"}]}]},{"urn":"urn:cts:latinLit:phi0540","title":[{"@lang":"lat","@value":"Laurea, Tullius"}],"abbreviations":[{"@lang":"lat","@value":"Laurea"}],"works":[{"urn":"urn:cts:latinLit:phi0540.phi0001","title":[{"@lang":"lat","@value":"epigramma in Ciceronis obitum"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0013","title":[{"@lang":"lat","@value":"Caecilius Statius"}],"abbreviations":[{"@lang":"lat","@value":"Caecil"}],"works":[{"urn":"urn:cts:latinLit:phi0013.phi0001","title":[{"@lang":"lat","@value":"palliatae"}],"abbreviations":[{"@lang":"lat","@value":"pall"}]}]},{"urn":"urn:cts:latinLit:phi9500","title":[{"@lang":"lat","@value":"Anonymi Epici et Lyrici"}],"abbreviations":[{"@lang":"lat","@value":"AnonEpLyr"}],"works":[{"urn":"urn:cts:latinLit:phi9500.phi0001","title":[{"@lang":"lat","@value":"carmen Saliare"}],"abbreviations":[{"@lang":"lat","@value":"CarmSal"}]},{"urn":"urn:cts:latinLit:phi9500.phi0002","title":[{"@lang":"lat","@value":"versus sacrorum"}],"abbreviations":[{"@lang":"lat","@value":"VersSacr"}]},{"urn":"urn:cts:latinLit:phi9500.phi0003","title":[{"@lang":"lat","@value":"sententia"}],"abbreviations":[{"@lang":"lat","@value":"Sent"}]},{"urn":"urn:cts:latinLit:phi9500.phi0004","title":[{"@lang":"lat","@value":"A. Atilii Calatini elogium"}],"abbreviations":[{"@lang":"lat","@value":"CalElog"}]},{"urn":"urn:cts:latinLit:phi9500.phi0005","title":[{"@lang":"lat","@value":"carmen Priami"}],"abbreviations":[{"@lang":"lat","@value":"CarmPriam"}]},{"urn":"urn:cts:latinLit:phi9500.phi0006","title":[{"@lang":"lat","@value":"saturnius(?)"}],"abbreviations":[{"@lang":"lat","@value":"IncSat"}]},{"urn":"urn:cts:latinLit:phi9500.phi0007","title":[{"@lang":"lat","@value":"Acilii Glabrionis tabula"}],"abbreviations":[{"@lang":"lat","@value":"GlabTab"}]},{"urn":"urn:cts:latinLit:phi9500.phi0008","title":[{"@lang":"lat","@value":"M. Aemilii cos. a. 179 tabula"}],"abbreviations":[{"@lang":"lat","@value":"AemTab"}]},{"urn":"urn:cts:latinLit:phi9500.phi0009","title":[{"@lang":"lat","@value":"versiculi populares et pueriles"}],"abbreviations":[{"@lang":"lat","@value":"VersicPop"}]},{"urn":"urn:cts:latinLit:phi9500.phi0010","title":[{"@lang":"lat","@value":"praecepta rustica et medica"}],"abbreviations":[{"@lang":"lat","@value":"Praec"}]},{"urn":"urn:cts:latinLit:phi9500.phi0011","title":[{"@lang":"lat","@value":"epigramma a Varrone Plauto attributum"}],"abbreviations":[{"@lang":"lat","@value":"EpigrPlaut"}]},{"urn":"urn:cts:latinLit:phi9500.phi0012","title":[{"@lang":"lat","@value":"epigramma Pacuvi"}],"abbreviations":[{"@lang":"lat","@value":"EpigrPac"}]},{"urn":"urn:cts:latinLit:phi9500.phi0013","title":[{"@lang":"lat","@value":"Ardeatis templi inscriptio"}],"abbreviations":[{"@lang":"lat","@value":"ArdInscr"}]},{"urn":"urn:cts:latinLit:phi9500.phi0014","title":[{"@lang":"lat","@value":"templi Tarracinensis inscriptio"}],"abbreviations":[{"@lang":"lat","@value":"TarInscr"}]},{"urn":"urn:cts:latinLit:phi9500.phi0015","title":[{"@lang":"lat","@value":"in Carbonem versus popularis"}],"abbreviations":[{"@lang":"lat","@value":"CarbVers"}]},{"urn":"urn:cts:latinLit:phi9500.phi0016","title":[{"@lang":"lat","@value":"carmina Marciana et similia"}],"abbreviations":[{"@lang":"lat","@value":"CarmMarc"}]},{"urn":"urn:cts:latinLit:phi9500.phi0017","title":[{"@lang":"lat","@value":"versus populares in Caesarem et similia"}],"abbreviations":[{"@lang":"lat","@value":"InCaes"}]},{"urn":"urn:cts:latinLit:phi9500.phi0018","title":[{"@lang":"lat","@value":"epigrammata et populares versus in Augustum"}],"abbreviations":[{"@lang":"lat","@value":"InAug"}]},{"urn":"urn:cts:latinLit:phi9500.phi0019","title":[{"@lang":"lat","@value":"obtrectatoris Vergilii versiculus"}],"abbreviations":[{"@lang":"lat","@value":"ObtrVerg"}]},{"urn":"urn:cts:latinLit:phi9500.phi0020","title":[{"@lang":"lat","@value":"de Crassitio epigramma"}],"abbreviations":[{"@lang":"lat","@value":"CrassEpigr"}]},{"urn":"urn:cts:latinLit:phi9500.phi0021","title":[{"@lang":"lat","@value":"populares versus in Sarmentum"}],"abbreviations":[{"@lang":"lat","@value":"InSarm"}]},{"urn":"urn:cts:latinLit:phi9500.phi0022","title":[{"@lang":"lat","@value":"versus populares in Tiberium et Germanicum"}],"abbreviations":[{"@lang":"lat","@value":"InTib"}]},{"urn":"urn:cts:latinLit:phi9500.phi0023","title":[{"@lang":"lat","@value":"populares versus in Caligulam"}],"abbreviations":[{"@lang":"lat","@value":"InCal"}]},{"urn":"urn:cts:latinLit:phi9500.phi0024","title":[{"@lang":"lat","@value":"artificia metrica"}],"abbreviations":[{"@lang":"lat","@value":"Artif"}]},{"urn":"urn:cts:latinLit:phi9500.phi0025","title":[{"@lang":"lat","@value":"versus populares in Neronem et eiusque successores"}],"abbreviations":[{"@lang":"lat","@value":"InNer"}]},{"urn":"urn:cts:latinLit:phi9500.phi0026","title":[{"@lang":"lat","@value":"versus Hor. Sat. I 10 praemissi"}],"abbreviations":[{"@lang":"lat","@value":"VersHor"}]},{"urn":"urn:cts:latinLit:phi9500.phi0027","title":[{"@lang":"lat","@value":"versus de VII sapientibus"}],"abbreviations":[{"@lang":"lat","@value":"VersSap"}]},{"urn":"urn:cts:latinLit:phi9500.phi0028","title":[{"@lang":"lat","@value":"odarium"}],"abbreviations":[{"@lang":"lat","@value":"Odar"}]},{"urn":"urn:cts:latinLit:phi9500.phi0029","title":[{"@lang":"lat","@value":"versus fortasse Clementis(?)"}],"abbreviations":[{"@lang":"lat","@value":"PoetEp"}]},{"urn":"urn:cts:latinLit:phi9500.phi0030","title":[{"@lang":"lat","@value":"versus in Caesares Romanos ex Historia Augusta"}],"abbreviations":[{"@lang":"lat","@value":"HistAug"}]},{"urn":"urn:cts:latinLit:phi9500.phi0031","title":[{"@lang":"lat","@value":"versus Orphici ab Arnobio conversi"}],"abbreviations":[{"@lang":"lat","@value":"VersOrph"}]},{"urn":"urn:cts:latinLit:phi9500.phi0032","title":[{"@lang":"lat","@value":"Tarentinus senarius"}],"abbreviations":[{"@lang":"lat","@value":"TarSen"}]},{"urn":"urn:cts:latinLit:phi9500.phi0033","title":[{"@lang":"lat","@value":"De Venere et Amoribus"}],"abbreviations":[{"@lang":"lat","@value":"VenAmor"}]},{"urn":"urn:cts:latinLit:phi9500.phi0034","title":[{"@lang":"lat","@value":"De Metris"}],"abbreviations":[{"@lang":"lat","@value":"Metr"}]},{"urn":"urn:cts:latinLit:phi9500.phi0035","title":[{"@lang":"lat","@value":"versus fortasse Enniani"}],"abbreviations":[{"@lang":"lat","@value":"VersEnn"}]},{"urn":"urn:cts:latinLit:phi9500.phi0036","title":[{"@lang":"lat","@value":"versus fortasse Luciliani"}],"abbreviations":[{"@lang":"lat","@value":"VersLucil"}]},{"urn":"urn:cts:latinLit:phi9500.phi0037","title":[{"@lang":"lat","@value":"versus aevi Catulliani"}],"abbreviations":[{"@lang":"lat","@value":"AevCatul"}]},{"urn":"urn:cts:latinLit:phi9500.phi0038","title":[{"@lang":"lat","@value":"versus aevi Catulliani a Morel omissi"}],"abbreviations":[{"@lang":"lat","@value":"AevCatul2"}]},{"urn":"urn:cts:latinLit:phi9500.phi0039","title":[{"@lang":"lat","@value":"versus aevi Augustei"}],"abbreviations":[{"@lang":"lat","@value":"AevAug"}]},{"urn":"urn:cts:latinLit:phi9500.phi0040","title":[{"@lang":"lat","@value":"serioris aetatis versus"}],"abbreviations":[{"@lang":"lat","@value":"SerAet"}]},{"urn":"urn:cts:latinLit:phi9500.phi0041","title":[{"@lang":"lat","@value":"versus reciproci"}],"abbreviations":[{"@lang":"lat","@value":"VersRecip"}]}]},{"urn":"urn:cts:latinLit:phi0584","title":[{"@lang":"lat","@value":"Mimi Poetarum Incertorum"}],"abbreviations":[{"@lang":"lat","@value":"MimInc"}],"works":[{"urn":"urn:cts:latinLit:phi0584.phi0001","title":[{"@lang":"lat","@value":"Mimi Poetarum Incertorum"}],"abbreviations":[{"@lang":"lat","@value":""}]},{"urn":"urn:cts:latinLit:phi0584.phi0002","title":[{"@lang":"lat","@value":"fragmenta dubia"}],"abbreviations":[{"@lang":"lat","@value":"dub"}]}]},{"urn":"urn:cts:latinLit:phi0067","title":[{"@lang":"lat","@value":"Favorinus"}],"abbreviations":[{"@lang":"lat","@value":"Fav"}],"works":[{"urn":"urn:cts:latinLit:phi0067.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0498","title":[{"@lang":"lat","@value":"Cotta, Gaius Aurelius"}],"abbreviations":[{"@lang":"lat","@value":"Cotta"}],"works":[{"urn":"urn:cts:latinLit:phi0498.phi0001","title":[{"@lang":"lat","@value":"oratio"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0321","title":[{"@lang":"lat","@value":"Porcius Licinus"}],"abbreviations":[{"@lang":"lat","@value":"Porc"}],"works":[{"urn":"urn:cts:latinLit:phi0321.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0130","title":[{"@lang":"lat","@value":"Scipio Nascia Serapio, P. Cornelius"}],"abbreviations":[{"@lang":"lat","@value":"Nasica"}],"works":[{"urn":"urn:cts:latinLit:phi0130.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0406","title":[{"@lang":"lat","@value":"Alfenus Varus, Publius"}],"abbreviations":[{"@lang":"lat","@value":"Alf"}],"works":[{"urn":"urn:cts:latinLit:phi0406.phi0002","title":[{"@lang":"lat","@value":"iurisprudentia, fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi1321","title":[{"@lang":"lat","@value":"Pomponius, Sextus"}],"abbreviations":[{"@lang":"lat","@value":"Pompon"}],"works":[{"urn":"urn:cts:latinLit:phi1321.phi0002","title":[{"@lang":"lat","@value":"Liber Regularum, fragmentum"}],"abbreviations":[{"@lang":"lat","@value":"Reg"}]}]},{"urn":"urn:cts:latinLit:phi0668","title":[{"@lang":"lat","@value":"Scrofa, Gnaeus Tremelius"}],"abbreviations":[{"@lang":"lat","@value":"Tremel"}],"works":[{"urn":"urn:cts:latinLit:phi0668.phi0001","title":[{"@lang":"lat","@value":"de re rustica"}],"abbreviations":[{"@lang":"lat","@value":"agr"}]}]},{"urn":"urn:cts:latinLit:phi0079","title":[{"@lang":"lat","@value":"Hostius"}],"abbreviations":[{"@lang":"lat","@value":"Host"}],"works":[{"urn":"urn:cts:latinLit:phi0079.phi0001","title":[{"@lang":"lat","@value":"Bellum Histricum"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi2434","title":[{"@lang":"lat","@value":"Hilary, Saint, Archbishop of Arles"}],"abbreviations":[{"@lang":"lat","@value":"Hil"}],"works":[{"urn":"urn:cts:latinLit:phi2434.phi0001","title":[{"@lang":"lat","@value":"carmina"}],"abbreviations":[{"@lang":"lat","@value":"poet"}]}]},{"urn":"urn:cts:latinLit:phi0473","title":[{"@lang":"lat","@value":"Lutatius Catulus, Q., Iunior"}],"abbreviations":[{"@lang":"lat","@value":"LutatIun"}],"works":[{"urn":"urn:cts:latinLit:phi0473.phi0001","title":[{"@lang":"lat","@value":"orationes"}],"abbreviations":[{"@lang":"lat","@value":"orat"}]}]},{"urn":"urn:cts:latinLit:phi0061","title":[{"@lang":"lat","@value":"Fabius Pictor"}],"abbreviations":[{"@lang":"lat","@value":"FabPict"}],"works":[{"urn":"urn:cts:latinLit:phi0061.phi0001","title":[{"@lang":"lat","@value":"Annales"}],"abbreviations":[{"@lang":"lat","@value":"hist"}]},{"urn":"urn:cts:latinLit:phi0061.phi0002","title":[{"@lang":"lat","@value":"Iuris Pontificis Libri"}],"abbreviations":[{"@lang":"lat","@value":"iur"}]}]},{"urn":"urn:cts:latinLit:phi0550","title":[{"@lang":"lat","@value":"Lucretius Carus, Titus"}],"abbreviations":[{"@lang":"lat","@value":"Lucr"}],"works":[{"urn":"urn:cts:latinLit:phi0550.phi0001","title":[{"@lang":"lat","@value":"De Rerum Natura"}],"abbreviations":[{"@lang":"lat","@value":"DRN"}]},{"urn":"urn:cts:latinLit:phi0550.phi0002","title":[{"@lang":"lat","@value":"fragmenta"}],"abbreviations":[{"@lang":"lat","@value":"frg"}]},{"urn":"urn:cts:latinLit:phi0550.phi0003","title":[{"@lang":"lat","@value":"Capitula"}],"abbreviations":[{"@lang":"lat","@value":"Cap"}]}]}]};
 
 /***/ }),
 

@@ -3,7 +3,7 @@
         "urn": "urn:cts:latinLit:phi2456",
         "title": [{
             "@lang": "lat",
-            "@value": "Parthenius Presbyter"
+            "@value": "Parthenius, of Constantinople"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -25,7 +25,7 @@
         "urn": "urn:cts:latinLit:phi0119",
         "title": [{
             "@lang": "lat",
-            "@value": "Titus Maccius Plautus"
+            "@value": "Plautus, Titus Maccius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -281,7 +281,7 @@
         "urn": "urn:cts:latinLit:phi0881",
         "title": [{
             "@lang": "lat",
-            "@value": "Claudius Caesar Germanicus"
+            "@value": "Germanicus, Claudius Caesar"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -328,7 +328,7 @@
         "urn": "urn:cts:latinLit:phi0821",
         "title": [{
             "@lang": "lat",
-            "@value": "Bucolica Einsidlensia"
+            "@value": "Anonymous (Bucolica Einsidlensia)"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -351,7 +351,7 @@
         "urn": "urn:cts:latinLit:phi0845",
         "title": [{
             "@lang": "lat",
-            "@value": "L. Iunius Moderatus Columella"
+            "@value": "Columella, L. Iunius Moderatus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -387,7 +387,7 @@
         "urn": "urn:cts:latinLit:phi0984",
         "title": [{
             "@lang": "lat",
-            "@value": "Pompeius Trogus"
+            "@value": "Trogus, Pompeius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -423,7 +423,7 @@
         "urn": "urn:cts:latinLit:phi0558",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Cilnius Maecenas"
+            "@value": "Maecenas, Gaius Cilnius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -529,7 +529,7 @@
         "urn": "urn:cts:latinLit:phi0412",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Aquilius Gallus"
+            "@value": "Aquilius Gallus, Gaius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -598,7 +598,7 @@
         "urn": "urn:cts:latinLit:phi0028",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Coelius Antipater"
+            "@value": "Coelius Antipater, Lucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -621,7 +621,7 @@
         "urn": "urn:cts:latinLit:phi0500",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Licinius Crassus"
+            "@value": "Crassus, Lucius Licinius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -644,7 +644,7 @@
         "urn": "urn:cts:latinLit:phi0706",
         "title": [{
             "@lang": "lat",
-            "@value": "Carmen de Bello Aegyptiaco"
+            "@value": "Anonymous (Carmen de Bello Aegyptiaco)"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -667,7 +667,7 @@
         "urn": "urn:cts:latinLit:phi0037",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Scribonius Curio pater"
+            "@value": "Curio, Gaius Scribonius (pater)"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -690,7 +690,7 @@
         "urn": "urn:cts:latinLit:phi0917",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Annaeus Lucanus"
+            "@value": "Lucanus, Marcus Annaeus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -726,7 +726,7 @@
         "urn": "urn:cts:latinLit:phi0590",
         "title": [{
             "@lang": "lat",
-            "@value": "Publius Nigidius Figulus"
+            "@value": "Nigidius Figulus, Publius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -749,7 +749,7 @@
         "urn": "urn:cts:latinLit:phi0662",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Tullius Tiro"
+            "@value": "Tiro, Marcus Tullius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -772,7 +772,7 @@
         "urn": "urn:cts:latinLit:phi2003",
         "title": [{
             "@lang": "lat",
-            "@value": "Caelius Apicius"
+            "@value": "Apicius, Caelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -819,7 +819,7 @@
         "urn": "urn:cts:latinLit:phi0911",
         "title": [{
             "@lang": "lat",
-            "@value": "Laus Pisonis"
+            "@value": "Anonymous (Laus Pisonis)"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -842,7 +842,7 @@
         "urn": "urn:cts:latinLit:phi0678",
         "title": [{
             "@lang": "lat",
-            "@value": "Quintus Valerius Soranus"
+            "@value": "Valerius Soranus, Quintus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -865,7 +865,7 @@
         "urn": "urn:cts:latinLit:phi1050",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Verginius Rufus"
+            "@value": "Verginius Rufus, Lucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -888,7 +888,7 @@
         "urn": "urn:cts:latinLit:phi0524",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Cornelius Gallus"
+            "@value": "Gallus, Gaius Cornelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -924,7 +924,7 @@
         "urn": "urn:cts:latinLit:phi0301",
         "title": [{
             "@lang": "lat",
-            "@value": "Gnaeus Domitius Ahenobarbus"
+            "@value": "Domitius Ahenobarbus, Gnaeus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -947,7 +947,7 @@
         "urn": "urn:cts:latinLit:phi1370",
         "title": [{
             "@lang": "lat",
-            "@value": "Quintus Terentius Scaurus"
+            "@value": "Terentius Scaurus, Qunitus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -1041,7 +1041,7 @@
         "urn": "urn:cts:latinLit:phi0474",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Tullius Cicero"
+            "@value": "Cicero, Marcus Tullius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -1880,7 +1880,7 @@
         "urn": "urn:cts:latinLit:phi0535",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Iuventius Laterensis"
+            "@value": "Iuventius Laterensis, Marcus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -1903,7 +1903,7 @@
         "urn": "urn:cts:latinLit:phi0721",
         "title": [{
             "@lang": "lat",
-            "@value": "Antonius Panurgus"
+            "@value": "Panurgus, Antonius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -1949,7 +1949,7 @@
         "urn": "urn:cts:latinLit:phi2468",
         "title": [{
             "@lang": "lat",
-            "@value": "Aurelius Augustinus"
+            "@value": "Augustinus, Aurelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -1972,7 +1972,7 @@
         "urn": "urn:cts:latinLit:phi1257",
         "title": [{
             "@lang": "lat",
-            "@value": "Granius Licinianus"
+            "@value": "Licinianus, Granius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -1995,7 +1995,7 @@
         "urn": "urn:cts:latinLit:phi0944",
         "title": [{
             "@lang": "lat",
-            "@value": "Imperator Nero"
+            "@value": "Nero, Imperator"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -2018,7 +2018,7 @@
         "urn": "urn:cts:latinLit:phi1242",
         "title": [{
             "@lang": "lat",
-            "@value": "Annius Florus"
+            "@value": "Florus, Annius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -2146,7 +2146,7 @@
         "urn": "urn:cts:latinLit:phi0546",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Licinius Mucianus"
+            "@value": "Mucianus, Gaius Licinius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -2169,7 +2169,7 @@
         "urn": "urn:cts:latinLit:phi1908",
         "title": [{
             "@lang": "lat",
-            "@value": "Gallus Antipater"
+            "@value": "Antipater, Gallus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -2238,7 +2238,7 @@
         "urn": "urn:cts:latinLit:phi1224",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Aurelius"
+            "@value": "Aurelius, Marcus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -2544,7 +2544,7 @@
         "urn": "urn:cts:latinLit:phi0987",
         "title": [{
             "@lang": "lat",
-            "@value": "Publius Pomponius Secundus"
+            "@value": "Pomponius Secundus, Publius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -2603,7 +2603,7 @@
         "urn": "urn:cts:latinLit:phi0664",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Trebatius Testa"
+            "@value": "Trebatius Testa, Gaius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -2626,7 +2626,7 @@
         "urn": "urn:cts:latinLit:phi0302",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Antonius"
+            "@value": "Antonius, Marcus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -2649,7 +2649,7 @@
         "urn": "urn:cts:latinLit:phi0022",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Porcius Cato"
+            "@value": "Cato, Marcus Porcius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -2795,7 +2795,7 @@
         "urn": "urn:cts:latinLit:phi0518",
         "title": [{
             "@lang": "lat",
-            "@value": "Aulus Furius Antias"
+            "@value": "Furius Antias, Aulus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -2841,7 +2841,7 @@
         "urn": "urn:cts:latinLit:phi0684",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Terentius Varro"
+            "@value": "Varro, Marcus Terentius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3042,7 +3042,7 @@
         "urn": "urn:cts:latinLit:phi0680",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Valgius Rufus"
+            "@value": "Valgius Rufus, Gaius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3088,7 +3088,7 @@
         "urn": "urn:cts:latinLit:phi2302",
         "title": [{
             "@lang": "lat",
-            "@value": "L. Aurel. Avianius Symmachus"
+            "@value": "Symmachus, L. Aurel. Avianius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3134,7 +3134,7 @@
         "urn": "urn:cts:latinLit:phi0016",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Calpurnius Piso Frugi"
+            "@value": "Piso Frugi, Lucius Calpurnius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3157,7 +3157,7 @@
         "urn": "urn:cts:latinLit:phi0097",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Lucilius"
+            "@value": "Lucilius, Gaius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3180,7 +3180,7 @@
         "urn": "urn:cts:latinLit:phi2301",
         "title": [{
             "@lang": "lat",
-            "@value": "Q. Aurelius Symmachus"
+            "@value": "Symmachus, Q. Aurelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3203,7 +3203,7 @@
         "urn": "urn:cts:latinLit:phi0908",
         "title": [{
             "@lang": "lat",
-            "@value": "Attius Labeo"
+            "@value": "Labeo, Attius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3226,7 +3226,7 @@
         "urn": "urn:cts:latinLit:phi0460",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Papirius Carbo Arvina"
+            "@value": "Carbo Arvina, Gaius Papirius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3308,7 +3308,7 @@
         "urn": "urn:cts:latinLit:phi0824",
         "title": [{
             "@lang": "lat",
-            "@value": "Cn. Arulenus Caelius Sabinus"
+            "@value": "Caelius Sabinus, Cn. Arulenus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3354,7 +3354,7 @@
         "urn": "urn:cts:latinLit:phi0140",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Titius"
+            "@value": "Titius, Gaius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3400,7 +3400,7 @@
         "urn": "urn:cts:latinLit:phi0842",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Clodius Licinus"
+            "@value": "Clodius Licinus, Gaius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3423,7 +3423,7 @@
         "urn": "urn:cts:latinLit:phi0446",
         "title": [{
             "@lang": "lat",
-            "@value": "Quintus Servilius Caepio"
+            "@value": "Caepio, Quintus Servilius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3446,7 +3446,7 @@
         "urn": "urn:cts:latinLit:phi0620",
         "title": [{
             "@lang": "lat",
-            "@value": "Sextus Propertius"
+            "@value": "Propertius, Sextus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3469,7 +3469,7 @@
         "urn": "urn:cts:latinLit:phi0515",
         "title": [{
             "@lang": "lat",
-            "@value": "Sextus (vel Spurius) Ennius"
+            "@value": "Ennius, Sextus (vel Spurius)"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3492,7 +3492,7 @@
         "urn": "urn:cts:latinLit:phi0116",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Pacuvius"
+            "@value": "Pacuvius, Marcus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3528,7 +3528,7 @@
         "urn": "urn:cts:latinLit:phi0502",
         "title": [{
             "@lang": "lat",
-            "@value": "Aulus Cremutius Cordus"
+            "@value": "Cremutius Cordus, Aulus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3551,7 +3551,7 @@
         "urn": "urn:cts:latinLit:phi0122",
         "title": [{
             "@lang": "lat",
-            "@value": "Aulus Postumius Albinus"
+            "@value": "Postumius Albinus, Aulus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3574,7 +3574,7 @@
         "urn": "urn:cts:latinLit:phi2349",
         "title": [{
             "@lang": "lat",
-            "@value": "Maurus Servius Honoratus"
+            "@value": "Servius, active 4th century"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3665,7 +3665,7 @@
         "urn": "urn:cts:latinLit:phi0472",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Valerius Catullus"
+            "@value": "Catullus, Gaius Valerius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3701,7 +3701,7 @@
         "urn": "urn:cts:latinLit:phi1351",
         "title": [{
             "@lang": "lat",
-            "@value": "Cornelius Tacitus"
+            "@value": "Tacitus, Cornelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3770,7 +3770,7 @@
         "urn": "urn:cts:latinLit:phi1672",
         "title": [{
             "@lang": "lat",
-            "@value": "Iulius Valerius"
+            "@value": "Valerius, Iulius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3816,7 +3816,7 @@
         "urn": "urn:cts:latinLit:phi2097",
         "title": [{
             "@lang": "lat",
-            "@value": "Sextus Paconianus"
+            "@value": "Paconianus, Sextus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3839,7 +3839,7 @@
         "urn": "urn:cts:latinLit:phi0512",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Duronius"
+            "@value": "Duronius, Marcus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3908,7 +3908,7 @@
         "urn": "urn:cts:latinLit:phi0426",
         "title": [{
             "@lang": "lat",
-            "@value": "Bellum Africum [Anonymous]"
+            "@value": "Pseudo-Caesar (Bellum Africum)"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3954,7 +3954,7 @@
         "urn": "urn:cts:latinLit:phi0815",
         "title": [{
             "@lang": "lat",
-            "@value": "Bruttedius Niger"
+            "@value": "Niger, Bruttedius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -3977,7 +3977,7 @@
         "urn": "urn:cts:latinLit:phi1348",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Suetonius Tranquillus"
+            "@value": "Suetonius Tranquillus, Gaius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4057,7 +4057,7 @@
         "urn": "urn:cts:latinLit:phi0402",
         "title": [{
             "@lang": "lat",
-            "@value": "Valerius Aedituus"
+            "@value": "Aedituus, Valerius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4080,7 +4080,7 @@
         "urn": "urn:cts:latinLit:phi0025",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Porcius Cato M.f.M.n."
+            "@value": "Cato Salonianus, Marcus Portius M.f.M.n."
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4103,7 +4103,7 @@
         "urn": "urn:cts:latinLit:phi1515",
         "title": [{
             "@lang": "lat",
-            "@value": "Quintus Serenus (Sammonicus)"
+            "@value": "Serenus Sammonicus, Quintus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4185,7 +4185,7 @@
         "urn": "urn:cts:latinLit:phi0409",
         "title": [{
             "@lang": "lat",
-            "@value": "Quintus Cornificius"
+            "@value": "Cornificius, Quintus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4208,7 +4208,7 @@
         "urn": "urn:cts:latinLit:phi0857",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Annaeus Cornutus"
+            "@value": "Cornutus, Lucius Annaeus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4231,7 +4231,7 @@
         "urn": "urn:cts:latinLit:phi0309",
         "title": [{
             "@lang": "lat",
-            "@value": "Carmen Evocationis"
+            "@value": "Anonymous (Carmen Evocationis)"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4277,7 +4277,7 @@
         "urn": "urn:cts:latinLit:phi0564",
         "title": [{
             "@lang": "lat",
-            "@value": "Manius Manilius"
+            "@value": "Manilius, Manius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4300,7 +4300,7 @@
         "urn": "urn:cts:latinLit:phi0963",
         "title": [{
             "@lang": "lat",
-            "@value": "Quintus Remmius Palaemon"
+            "@value": "Palaemon, Quintus Remmius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4336,7 +4336,7 @@
         "urn": "urn:cts:latinLit:phi0537",
         "title": [{
             "@lang": "lat",
-            "@value": "Titus Labienus"
+            "@value": "Labienus, Titus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4359,7 +4359,7 @@
         "urn": "urn:cts:latinLit:phi0470",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Porcius Cato Uticensis"
+            "@value": "Cato Uticensis, Marcus Porcius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4382,7 +4382,7 @@
         "urn": "urn:cts:latinLit:phi0806",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Ateius Capito"
+            "@value": "Capito, Gaius Ateius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4441,7 +4441,7 @@
         "urn": "urn:cts:latinLit:phi0878",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Asinius Gallus"
+            "@value": "Gallus, Gaius Asinius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4500,7 +4500,7 @@
         "urn": "urn:cts:latinLit:phi0404",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Afranius"
+            "@value": "Afranius, Lucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4523,7 +4523,7 @@
         "urn": "urn:cts:latinLit:phi0914",
         "title": [{
             "@lang": "lat",
-            "@value": "Titus Livius"
+            "@value": "Livius, Titus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4604,7 +4604,7 @@
         "urn": "urn:cts:latinLit:phi0469",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Cassius Longinus"
+            "@value": "Cassius Longinus, Lucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4650,7 +4650,7 @@
         "urn": "urn:cts:latinLit:phi0875",
         "title": [{
             "@lang": "lat",
-            "@value": "Cn. Cornel. Lentulus Gaetulicus"
+            "@value": "Lentulus Gaetulicus, Cn. Cornel."
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4673,7 +4673,7 @@
         "urn": "urn:cts:latinLit:phi0106",
         "title": [{
             "@lang": "lat",
-            "@value": "Caecilius Metellus"
+            "@value": "Metellus, Caecilius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4696,7 +4696,7 @@
         "urn": "urn:cts:latinLit:phi2305",
         "title": [{
             "@lang": "lat",
-            "@value": "Caelius Aurelianus"
+            "@value": "Aurelianus, Caelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4719,7 +4719,7 @@
         "urn": "urn:cts:latinLit:phi1245",
         "title": [{
             "@lang": "lat",
-            "@value": "Sextus Iulius Frontinus"
+            "@value": "Frontinus, Sextus Iulius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4799,7 +4799,7 @@
         "urn": "urn:cts:latinLit:phi0430",
         "title": [{
             "@lang": "lat",
-            "@value": "Bellum Hispaniense [Anonymous]"
+            "@value": "Pseudo-Caesar (Bellum Hispaniense)"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4858,7 +4858,7 @@
         "urn": "urn:cts:latinLit:phi0070",
         "title": [{
             "@lang": "lat",
-            "@value": "Gnaeus Gellius"
+            "@value": "Gellius, Gnaeus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4881,7 +4881,7 @@
         "urn": "urn:cts:latinLit:phi0628",
         "title": [{
             "@lang": "lat",
-            "@value": "Publius Rutilius Rufus"
+            "@value": "Rutilius Rufus, Publius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4950,7 +4950,7 @@
         "urn": "urn:cts:latinLit:phi0969",
         "title": [{
             "@lang": "lat",
-            "@value": "Aulus Persius Flaccus"
+            "@value": "Persius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4973,7 +4973,7 @@
         "urn": "urn:cts:latinLit:phi0625",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Quinctius"
+            "@value": "Quinctius, Lucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -4996,7 +4996,7 @@
         "urn": "urn:cts:latinLit:phi0568",
         "title": [{
             "@lang": "lat",
-            "@value": "Gnaeus Matius"
+            "@value": "Matius, Gnaeus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5019,7 +5019,7 @@
         "urn": "urn:cts:latinLit:phi0576",
         "title": [{
             "@lang": "lat",
-            "@value": "M. Valerius Messalla Rufus"
+            "@value": "Messalla Rufus, M. Valerius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5055,7 +5055,7 @@
         "urn": "urn:cts:latinLit:phi0428",
         "title": [{
             "@lang": "lat",
-            "@value": "Bellum Alexandrinum [Anonymous]"
+            "@value": "Pseudo-Caesar (Bellum Alexandrinum)"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5114,7 +5114,7 @@
         "urn": "urn:cts:latinLit:phi0088",
         "title": [{
             "@lang": "lat",
-            "@value": "M. Aemilius Lepidus Porcina"
+            "@value": "Lepidus Porcina, M. Aemilius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5137,7 +5137,7 @@
         "urn": "urn:cts:latinLit:phi0993",
         "title": [{
             "@lang": "lat",
-            "@value": "Precatio Terrae"
+            "@value": "Anonymous (Precatio Terrae)"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5160,7 +5160,7 @@
         "urn": "urn:cts:latinLit:phi0300",
         "title": [{
             "@lang": "lat",
-            "@value": "Sempronius Asellio"
+            "@value": "Asellio, Sempronius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5206,7 +5206,7 @@
         "urn": "urn:cts:latinLit:phi1014",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Annaeus Seneca senior"
+            "@value": "Seneca, Lucius Annaeus (senior)"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5264,7 +5264,7 @@
         "urn": "urn:cts:latinLit:phi0128",
         "title": [{
             "@lang": "lat",
-            "@value": "P. Cornel. Scipio Aem. Afr."
+            "@value": "Scipio Aemilianus, P. Cornelius, Africanus minor"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5310,7 +5310,7 @@
         "urn": "urn:cts:latinLit:phi0614",
         "title": [{
             "@lang": "lat",
-            "@value": "Q. Pompeius Q.f.A.n. Rufus"
+            "@value": "Pompeius Q.f.A.n. Rufus, Q."
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5356,7 +5356,7 @@
         "urn": "urn:cts:latinLit:phi0303",
         "title": [{
             "@lang": "lat",
-            "@value": "Aurelius Opillus"
+            "@value": "Opillus, Aurelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5425,7 +5425,7 @@
         "urn": "urn:cts:latinLit:phi0635",
         "title": [{
             "@lang": "lat",
-            "@value": "Publius Saturius"
+            "@value": "Saturius, Publius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5471,7 +5471,7 @@
         "urn": "urn:cts:latinLit:phi0419",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Orbilius Pupillus"
+            "@value": "Orbilius Pupillus, Lucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5494,7 +5494,7 @@
         "urn": "urn:cts:latinLit:phi0103",
         "title": [{
             "@lang": "lat",
-            "@value": "Gnaeus Marcius vates"
+            "@value": "Marcius, Gnaeus vates"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5517,7 +5517,7 @@
         "urn": "urn:cts:latinLit:phi0932",
         "title": [{
             "@lang": "lat",
-            "@value": "M. Valerius Messalla Corvinus"
+            "@value": "Messalla Corvinus, M. Valerius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5553,7 +5553,7 @@
         "urn": "urn:cts:latinLit:phi1236",
         "title": [{
             "@lang": "lat",
-            "@value": "Sextus Pompeius Festus"
+            "@value": "Festus, Sextus Pompeius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5576,7 +5576,7 @@
         "urn": "urn:cts:latinLit:phi0400",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Accius"
+            "@value": "Accius, Lucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5646,7 +5646,7 @@
         "urn": "urn:cts:latinLit:phi0536",
         "title": [{
             "@lang": "lat",
-            "@value": "Decimus Laberius"
+            "@value": "Laberius, Decimus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5715,7 +5715,7 @@
         "urn": "urn:cts:latinLit:phi0990",
         "title": [{
             "@lang": "lat",
-            "@value": "Precatio Omnium Herbarum"
+            "@value": "Anonymous (Precatio Omnium Herbarum)"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5738,7 +5738,7 @@
         "urn": "urn:cts:latinLit:phi0458",
         "title": [{
             "@lang": "lat",
-            "@value": "Publius Cannutius"
+            "@value": "Cannutius, Publius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5761,7 +5761,7 @@
         "urn": "urn:cts:latinLit:phi1604",
         "title": [{
             "@lang": "lat",
-            "@value": "Iulius Atherianus"
+            "@value": "Atherianus, Iulius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5807,7 +5807,7 @@
         "urn": "urn:cts:latinLit:phi0456",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Licinius Macer Calvus"
+            "@value": "Calvus, Gaius Licinius Macer"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -5843,7 +5843,7 @@
         "urn": "urn:cts:latinLit:phi1000",
         "title": [{
             "@lang": "lat",
-            "@value": "Pupius (?)"
+            "@value": "Pupius 1st century B.C."
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -6210,7 +6210,7 @@
         "urn": "urn:cts:latinLit:phi0929",
         "title": [{
             "@lang": "lat",
-            "@value": "Pomponius Mela"
+            "@value": "Mela, Pomponius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -6256,7 +6256,7 @@
         "urn": "urn:cts:latinLit:phi0487",
         "title": [{
             "@lang": "lat",
-            "@value": "Publius Clodius Pulcher"
+            "@value": "Clodius Pulcher, Publius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -6279,7 +6279,7 @@
         "urn": "urn:cts:latinLit:phi0064",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Fannius"
+            "@value": "Fannius, Gaius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -6315,7 +6315,7 @@
         "urn": "urn:cts:latinLit:phi0010",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Iunius Brutus [iur.]"
+            "@value": "Brutus, Marcus Iunius [iur.]"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -6338,7 +6338,7 @@
         "urn": "urn:cts:latinLit:phi0532",
         "title": [{
             "@lang": "lat",
-            "@value": "Quintus Hortensius Hortalus"
+            "@value": "Hortensius Hortalus, Quintus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -6397,7 +6397,7 @@
         "urn": "urn:cts:latinLit:phi0690",
         "title": [{
             "@lang": "lat",
-            "@value": "Publius Vergilius Maro"
+            "@value": "Virgil"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -6513,7 +6513,7 @@
         "urn": "urn:cts:latinLit:phi1248",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Cornelius Fronto"
+            "@value": "Fronto, Marcus Cornelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -6714,7 +6714,7 @@
         "urn": "urn:cts:latinLit:phi9969",
         "title": [{
             "@lang": "lat",
-            "@value": "Vita Iuvenalis"
+            "@value": "Anonymous (Vita Iuvenalis)"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -6760,7 +6760,7 @@
         "urn": "urn:cts:latinLit:phi0104",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Memmius"
+            "@value": "Memmius, Gaius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -6783,7 +6783,7 @@
         "urn": "urn:cts:latinLit:phi0606",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Marcius Philippus"
+            "@value": "Marcius Philippus, Lucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -6806,7 +6806,7 @@
         "urn": "urn:cts:latinLit:phi0631",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Sallustius Crispus"
+            "@value": "Sallust"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -6931,7 +6931,7 @@
         "urn": "urn:cts:latinLit:phi1020",
         "title": [{
             "@lang": "lat",
-            "@value": "Publius Papinius Statius"
+            "@value": "Statius, Publius Papinius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -6989,7 +6989,7 @@
         "urn": "urn:cts:latinLit:phi0004",
         "title": [{
             "@lang": "lat",
-            "@value": "Appius Claudius Caecus"
+            "@value": "Claudius Caecus, Appius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -7012,7 +7012,7 @@
         "urn": "urn:cts:latinLit:phi1212",
         "title": [{
             "@lang": "lat",
-            "@value": "Apuleius Madaurensis"
+            "@value": "Apuleius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -7182,7 +7182,7 @@
         "urn": "urn:cts:latinLit:phi0452",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Iulius Caesar Strabo"
+            "@value": "Caesar Strabo, Gaius Iulius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -7218,7 +7218,7 @@
         "urn": "urn:cts:latinLit:phi0416",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Ateius Praetextatus"
+            "@value": "Ateius Praetextatus, Lucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -7241,7 +7241,7 @@
         "urn": "urn:cts:latinLit:phi1294",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Valerius Martialis"
+            "@value": "Martial"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -7277,7 +7277,7 @@
         "urn": "urn:cts:latinLit:phi0466",
         "title": [{
             "@lang": "lat",
-            "@value": "Aulus Cascellius"
+            "@value": "Cascellius, Aulus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -7300,7 +7300,7 @@
         "urn": "urn:cts:latinLit:phi0486",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Helvius Cinna"
+            "@value": "Cinna, Gaius Helvius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -7346,7 +7346,7 @@
         "urn": "urn:cts:latinLit:phi0109",
         "title": [{
             "@lang": "lat",
-            "@value": "Q. Caecilius Metellus Maced."
+            "@value": "Metellus Macedonicus, Q. Caecilius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -7415,7 +7415,7 @@
         "urn": "urn:cts:latinLit:phi0149",
         "title": [{
             "@lang": "lat",
-            "@value": "Carmen Arvale"
+            "@value": "Arvales, Fratres"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -7438,7 +7438,7 @@
         "urn": "urn:cts:latinLit:phi0410",
         "title": [{
             "@lang": "lat",
-            "@value": "Aprissius (?)"
+            "@value": "Aprissius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -7448,7 +7448,7 @@
             "urn": "urn:cts:latinLit:phi0410.phi0001",
             "title": [{
                 "@lang": "lat",
-                "@value": "frg."
+                "@value": "Fragmentum"
             }],
             "abbreviations": [{
                 "@lang": "lat",
@@ -7461,7 +7461,7 @@
         "urn": "urn:cts:latinLit:phi0420",
         "title": [{
             "@lang": "lat",
-            "@value": "Publius Aufidius Namusa"
+            "@value": "Namusa, Publius Aufidius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -7484,7 +7484,7 @@
         "urn": "urn:cts:latinLit:phi0058",
         "title": [{
             "@lang": "lat",
-            "@value": "Q. Fabius Maximus Servilianus"
+            "@value": "Fabius Maximus Servilianus, Q."
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -7507,7 +7507,7 @@
         "urn": "urn:cts:latinLit:phi1235",
         "title": [{
             "@lang": "lat",
-            "@value": "Didascaliae et Per. in Terentium"
+            "@value": "Sulpicius Apollinaris, Gaius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -7587,7 +7587,7 @@
         "urn": "urn:cts:latinLit:phi0432",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Furius Bibaculus"
+            "@value": "Bibaculus, Marcus Furius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -7610,7 +7610,7 @@
         "urn": "urn:cts:latinLit:phi0686",
         "title": [{
             "@lang": "lat",
-            "@value": "P. Terentius Varro Atacinus"
+            "@value": "Varro Atacinus, P. Terentius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -7724,7 +7724,7 @@
         "urn": "urn:cts:latinLit:phi0510",
         "title": [{
             "@lang": "lat",
-            "@value": "Publius Cornelius Dolabella"
+            "@value": "Dolabella, Publius Cornelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8016,7 +8016,7 @@
         "urn": "urn:cts:latinLit:phi0591",
         "title": [{
             "@lang": "lat",
-            "@value": "Ninnius Crassus"
+            "@value": "Ninnius, Crassus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8039,7 +8039,7 @@
         "urn": "urn:cts:latinLit:phi0414",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Arruntius"
+            "@value": "Arruntius, Lucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8062,7 +8062,7 @@
         "urn": "urn:cts:latinLit:phi0902",
         "title": [{
             "@lang": "lat",
-            "@value": "Iulius Africanus"
+            "@value": "Africanus, Sextus Iulius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8085,7 +8085,7 @@
         "urn": "urn:cts:latinLit:phi0541",
         "title": [{
             "@lang": "lat",
-            "@value": "Cn. Cornel. Lentulus Marcell."
+            "@value": "Lentulus Marcellinus, Cn. Cornel."
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8131,7 +8131,7 @@
         "urn": "urn:cts:latinLit:phi0830",
         "title": [{
             "@lang": "lat",
-            "@value": "Titus Calpurnius Siculus"
+            "@value": "Calpurnius Siculus, Titus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8154,7 +8154,7 @@
         "urn": "urn:cts:latinLit:phi0034",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Scribonius Curio avus"
+            "@value": "Curio, Gaius Scribonius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8177,7 +8177,7 @@
         "urn": "urn:cts:latinLit:phi0526",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Servilius Glaucia"
+            "@value": "Glaucia, Gaius Servilius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8200,7 +8200,7 @@
         "urn": "urn:cts:latinLit:phi1221",
         "title": [{
             "@lang": "lat",
-            "@value": "C. Iul. Caes. Augustus Octavianus"
+            "@value": "Augustus, Emperor of Rome"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8302,7 +8302,7 @@
         "urn": "urn:cts:latinLit:phi1254",
         "title": [{
             "@lang": "lat",
-            "@value": "Aulus Gellius"
+            "@value": "Gellius, Aulus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8325,7 +8325,7 @@
         "urn": "urn:cts:latinLit:phi0455",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Calpurnius Piso"
+            "@value": "Piso, Gaius Calpurnius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8394,7 +8394,7 @@
         "urn": "urn:cts:latinLit:phi0556",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Licinius Macer"
+            "@value": "Macer, Gaius Licinius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8430,7 +8430,7 @@
         "urn": "urn:cts:latinLit:phi0812",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Caesius Bassus"
+            "@value": "Caesius Bassus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8521,7 +8521,7 @@
         "urn": "urn:cts:latinLit:phi0640",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Aemilius Scaurus"
+            "@value": "Scarus, Marcus Aemilius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8557,7 +8557,7 @@
         "urn": "urn:cts:latinLit:phi0893",
         "title": [{
             "@lang": "lat",
-            "@value": "Quintus Horatius Flaccus"
+            "@value": "Horace"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8660,7 +8660,7 @@
         "urn": "urn:cts:latinLit:phi0652",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Cornelius Sulla"
+            "@value": "Sulla, Lucius Cornelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8683,7 +8683,7 @@
         "urn": "urn:cts:latinLit:phi0418",
         "title": [{
             "@lang": "lat",
-            "@value": "Titus Quinctius Atta"
+            "@value": "Atta, Titus Quinctius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8742,7 +8742,7 @@
         "urn": "urn:cts:latinLit:phi0996",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Valerius Probus"
+            "@value": "Probus, Marcus Valerius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8789,7 +8789,7 @@
         "urn": "urn:cts:latinLit:phi0600",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Oppius"
+            "@value": "Oppius, Gaius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8825,7 +8825,7 @@
         "urn": "urn:cts:latinLit:phi2806",
         "title": [{
             "@lang": "lat",
-            "@value": "Iustinianus"
+            "@value": "Justinian I, Emperor of the East"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8848,7 +8848,7 @@
         "urn": "urn:cts:latinLit:phi0082",
         "title": [{
             "@lang": "lat",
-            "@value": "Decimus Iunius Silanus"
+            "@value": "Silanus, Decimus Iunius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8871,7 +8871,7 @@
         "urn": "urn:cts:latinLit:phi0644",
         "title": [{
             "@lang": "lat",
-            "@value": "Sextilius Ena"
+            "@value": "Ena, Sextilius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8940,7 +8940,7 @@
         "urn": "urn:cts:latinLit:phi1357",
         "title": [{
             "@lang": "lat",
-            "@value": "Imp. Marcus Ulpius Traianus"
+            "@value": "Trajan, Emperor of Rome"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8963,7 +8963,7 @@
         "urn": "urn:cts:latinLit:phi0484",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Cincius"
+            "@value": "Cincius, Lucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -8999,7 +8999,7 @@
         "urn": "urn:cts:latinLit:phi0656",
         "title": [{
             "@lang": "lat",
-            "@value": "Servius Sulpicius Rufus"
+            "@value": "Sulpicius Rufus, Servius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9081,7 +9081,7 @@
         "urn": "urn:cts:latinLit:phi0615",
         "title": [{
             "@lang": "lat",
-            "@value": "Q. Pompeius Q.f.Q.n. Rufus"
+            "@value": "Pompeius Rufus, Q."
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9104,7 +9104,7 @@
         "urn": "urn:cts:latinLit:phi0327",
         "title": [{
             "@lang": "lat",
-            "@value": "L. Aelius Praeconinus Stilo"
+            "@value": "Praeconinus Stilo, L. Aelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9150,7 +9150,7 @@
         "urn": "urn:cts:latinLit:phi0436",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Iunius Brutus [tyr.]"
+            "@value": "Brutus, Marcus Iunius [tyr.]"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9173,7 +9173,7 @@
         "urn": "urn:cts:latinLit:phi0516",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Erucius"
+            "@value": "Erucius, Gaius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9196,7 +9196,7 @@
         "urn": "urn:cts:latinLit:phi0450",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Iulius Caesar"
+            "@value": "Caesar, Lucius Iulius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9219,7 +9219,7 @@
         "urn": "urn:cts:latinLit:phi0860",
         "title": [{
             "@lang": "lat",
-            "@value": "Quintus Curtius Rufus"
+            "@value": "Curtius Rufus, Quintus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9242,7 +9242,7 @@
         "urn": "urn:cts:latinLit:phi0552",
         "title": [{
             "@lang": "lat",
-            "@value": "Quintus Lutatius Catulus"
+            "@value": "Lutatius Catulus, Qunitus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9324,7 +9324,7 @@
         "urn": "urn:cts:latinLit:phi0043",
         "title": [{
             "@lang": "lat",
-            "@value": "Quintus Ennius"
+            "@value": "Ennius, Quintus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9415,7 +9415,7 @@
         "urn": "urn:cts:latinLit:phi0851",
         "title": [{
             "@lang": "lat",
-            "@value": "Cornelius Severus"
+            "@value": "Severus, Cornelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9451,7 +9451,7 @@
         "urn": "urn:cts:latinLit:phi0836",
         "title": [{
             "@lang": "lat",
-            "@value": "Aulus Cornelius Celsus"
+            "@value": "Celsus, Aulus Cornelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9498,7 +9498,7 @@
         "urn": "urn:cts:latinLit:phi1318",
         "title": [{
             "@lang": "lat",
-            "@value": "C. Plinius Caecilius Secundus"
+            "@value": "Pliny, the Younger"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9545,7 +9545,7 @@
         "urn": "urn:cts:latinLit:phi0978",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Plinius Secundus"
+            "@value": "Pliny, the Elder"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9581,7 +9581,7 @@
         "urn": "urn:cts:latinLit:phi0425",
         "title": [{
             "@lang": "lat",
-            "@value": "Publius Rutilius Lupus"
+            "@value": "Rutilius Lupus, Publius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9604,7 +9604,7 @@
         "urn": "urn:cts:latinLit:phi0134",
         "title": [{
             "@lang": "lat",
-            "@value": "Publius Terentius Afer"
+            "@value": "Terence"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9684,7 +9684,7 @@
         "urn": "urn:cts:latinLit:phi0002",
         "title": [{
             "@lang": "lat",
-            "@value": "Titus Annius Luscus"
+            "@value": "Annius Luscus, Titus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9707,7 +9707,7 @@
         "urn": "urn:cts:latinLit:phi0315",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Iunius Gracchanus"
+            "@value": "Gracchanus, Marcus Iunius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9766,7 +9766,7 @@
         "urn": "urn:cts:latinLit:phi0905",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Antistius Labeo"
+            "@value": "Labeo, Marcus Antistius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9789,7 +9789,7 @@
         "urn": "urn:cts:latinLit:phi0488",
         "title": [{
             "@lang": "lat",
-            "@value": "Servius Clodius"
+            "@value": "Clodius, Servius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9881,7 +9881,7 @@
         "urn": "urn:cts:latinLit:phi2123",
         "title": [{
             "@lang": "lat",
-            "@value": "Publilius Optatianus Porfyrius"
+            "@value": "Porfyrius, Publilius Optatianus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9904,7 +9904,7 @@
         "urn": "urn:cts:latinLit:phi0530",
         "title": [{
             "@lang": "lat",
-            "@value": "Aulus Hirtius"
+            "@value": "Hirtius, Aulus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -9940,7 +9940,7 @@
         "urn": "urn:cts:latinLit:phi0094",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Livius Andronicus"
+            "@value": "Andronicus, Lucius Livius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10033,7 +10033,7 @@
         "urn": "urn:cts:latinLit:phi0618",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Pomponius Bononiensis"
+            "@value": "Pomponius, Lucius, Bononiensis"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10056,7 +10056,7 @@
         "urn": "urn:cts:latinLit:phi0118",
         "title": [{
             "@lang": "lat",
-            "@value": "L. Aemilius L.f.M.n. Paulus"
+            "@value": "Paullus, Lucius Aemilius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10115,7 +10115,7 @@
         "urn": "urn:cts:latinLit:phi0408",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Antonius triumvir"
+            "@value": "Antonius, Marcus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10138,7 +10138,7 @@
         "urn": "urn:cts:latinLit:phi0959",
         "title": [{
             "@lang": "lat",
-            "@value": "Publius Ovidius Naso"
+            "@value": "Ovid"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10317,7 +10317,7 @@
         "urn": "urn:cts:latinLit:phi1276",
         "title": [{
             "@lang": "lat",
-            "@value": "Decimus Iunius Iuvenalis"
+            "@value": "Juvenal"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10340,7 +10340,7 @@
         "urn": "urn:cts:latinLit:phi0146",
         "title": [{
             "@lang": "lat",
-            "@value": "Sextus Turpilius"
+            "@value": "Turpilius, Sextus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10363,7 +10363,7 @@
         "urn": "urn:cts:latinLit:phi1285",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Volusius Maecianus"
+            "@value": "Maecianus, Lucius Volusius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10386,7 +10386,7 @@
         "urn": "urn:cts:latinLit:phi0490",
         "title": [{
             "@lang": "lat",
-            "@value": "Publius Cominius"
+            "@value": "Cominius, Publius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10432,7 +10432,7 @@
         "urn": "urn:cts:latinLit:phi0533",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Iulius Hyginus"
+            "@value": "Hyginus, Gaius Iulius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10491,7 +10491,7 @@
         "urn": "urn:cts:latinLit:phi0594",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Novius"
+            "@value": "Novius, Lucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10514,7 +10514,7 @@
         "urn": "urn:cts:latinLit:phi0646",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Cornelius Sisenna"
+            "@value": "Sisenna, Lucius Cornelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10550,7 +10550,7 @@
         "urn": "urn:cts:latinLit:phi0112",
         "title": [{
             "@lang": "lat",
-            "@value": "Gnaeus Naevius"
+            "@value": "Naevius, Gnaeus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10710,7 +10710,7 @@
         "urn": "urn:cts:latinLit:phi0076",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Cassius Hemina"
+            "@value": "Cassius Hemina, Gaius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10733,7 +10733,7 @@
         "urn": "urn:cts:latinLit:phi0478",
         "title": [{
             "@lang": "lat",
-            "@value": "Quintus Tullius Cicero"
+            "@value": "Cicero, Quintus Tullius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10769,7 +10769,7 @@
         "urn": "urn:cts:latinLit:phi0624",
         "title": [{
             "@lang": "lat",
-            "@value": "Quintus Claudius Quadrigarius"
+            "@value": "Claudius Quadrigarius, Quintus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10792,7 +10792,7 @@
         "urn": "urn:cts:latinLit:phi0085",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Laelius Sapiens"
+            "@value": "Laelius, Gaius, Sapiens"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10815,7 +10815,7 @@
         "urn": "urn:cts:latinLit:phi0938",
         "title": [{
             "@lang": "lat",
-            "@value": "Iulius Montanus"
+            "@value": "Montanus, Iulius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10838,7 +10838,7 @@
         "urn": "urn:cts:latinLit:phi0926",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Manilius"
+            "@value": "Manilius, Marcus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10861,7 +10861,7 @@
         "urn": "urn:cts:latinLit:phi0522",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Aelius Gallus"
+            "@value": "Gallus, Gaius Aelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10897,7 +10897,7 @@
         "urn": "urn:cts:latinLit:phi0582",
         "title": [{
             "@lang": "lat",
-            "@value": "Q. Caecilius Metellus Numid."
+            "@value": "Metellus Numidicus, Q. Caecilius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -10943,7 +10943,7 @@
         "urn": "urn:cts:latinLit:phi0638",
         "title": [{
             "@lang": "lat",
-            "@value": "Q. Mucius Scaevola [pontifex]"
+            "@value": "Scaevola, Q. Mucius [pontifex]"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11153,7 +11153,7 @@
         "urn": "urn:cts:latinLit:phi0660",
         "title": [{
             "@lang": "lat",
-            "@value": "Albius Tibullus"
+            "@value": "Tibullus, Albius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11189,7 +11189,7 @@
         "urn": "urn:cts:latinLit:phi0670",
         "title": [{
             "@lang": "lat",
-            "@value": "Quintus Aelius Tubero"
+            "@value": "Aelius Tubero, Qunitus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11225,7 +11225,7 @@
         "urn": "urn:cts:latinLit:phi0127",
         "title": [{
             "@lang": "lat",
-            "@value": "P. Cornel. Scipio Afr. ma."
+            "@value": "Scipio, Africanus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11271,7 +11271,7 @@
         "urn": "urn:cts:latinLit:phi0027",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Cincius Alimentus"
+            "@value": "Cincius Alimentus, Lucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11294,7 +11294,7 @@
         "urn": "urn:cts:latinLit:phi0306",
         "title": [{
             "@lang": "lat",
-            "@value": "Carmen Devotionis"
+            "@value": "Anonymous (Carmen Devotionis)"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11317,7 +11317,7 @@
         "urn": "urn:cts:latinLit:phi0454",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Calidius"
+            "@value": "Calidius, Marcus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11340,7 +11340,7 @@
         "urn": "urn:cts:latinLit:phi0869",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Verrius Flaccus"
+            "@value": "Verrius Flaccus, Marcus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11434,7 +11434,7 @@
         "urn": "urn:cts:latinLit:phi0534",
         "title": [{
             "@lang": "lat",
-            "@value": "Iuventius"
+            "@value": "Iuventius, comicus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11457,7 +11457,7 @@
         "urn": "urn:cts:latinLit:phi0423",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Herennius Balbus"
+            "@value": "Herennius Balbus, Lucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11503,7 +11503,7 @@
         "urn": "urn:cts:latinLit:phi0574",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Memmius L. f."
+            "@value": "Memmius L. f., Gaius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11539,7 +11539,7 @@
         "urn": "urn:cts:latinLit:phi1229",
         "title": [{
             "@lang": "lat",
-            "@value": "Flavius Caper"
+            "@value": "Caper, Flavius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11598,7 +11598,7 @@
         "urn": "urn:cts:latinLit:phi0019",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Papirius Carbo"
+            "@value": "Carbo, Gaius Papirius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11621,7 +11621,7 @@
         "urn": "urn:cts:latinLit:phi0622",
         "title": [{
             "@lang": "lat",
-            "@value": "Publilius Syrus"
+            "@value": "Publilius, Syrus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11657,7 +11657,7 @@
         "urn": "urn:cts:latinLit:phi0923",
         "title": [{
             "@lang": "lat",
-            "@value": "Aemilius Macer"
+            "@value": "Macer, Aemilius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11693,7 +11693,7 @@
         "urn": "urn:cts:latinLit:phi0073",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Sempronius Gracchus"
+            "@value": "Gracchus, Gaius Sempronius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11716,7 +11716,7 @@
         "urn": "urn:cts:latinLit:phi0803",
         "title": [{
             "@lang": "lat",
-            "@value": "Quintus Asconius Pedianus"
+            "@value": "Asconius Pedianus, Quintus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11785,7 +11785,7 @@
         "urn": "urn:cts:latinLit:phi0444",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Caelius Rufus"
+            "@value": "Caelius Rufus, Marcus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11808,7 +11808,7 @@
         "urn": "urn:cts:latinLit:phi1206",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Ampelius"
+            "@value": "Ampelius, Lucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11831,7 +11831,7 @@
         "urn": "urn:cts:latinLit:phi0448",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Iulius Caesar"
+            "@value": "Caesar, Julius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11933,7 +11933,7 @@
         "urn": "urn:cts:latinLit:phi1218",
         "title": [{
             "@lang": "lat",
-            "@value": "Sentius Augurinus"
+            "@value": "Augurinus, Sentius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -11979,7 +11979,7 @@
         "urn": "urn:cts:latinLit:phi0709",
         "title": [{
             "@lang": "lat",
-            "@value": "Domitius Marsus"
+            "@value": "Marsus, Domitius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -12084,7 +12084,7 @@
         "urn": "urn:cts:latinLit:phi0445",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius vel Lucius Caepasius"
+            "@value": "Caepasius, Gaius vel Lucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -12107,7 +12107,7 @@
         "urn": "urn:cts:latinLit:phi0981",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Asinius Pollio"
+            "@value": "Pollio, Gaius Asinius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -12188,7 +12188,7 @@
         "urn": "urn:cts:latinLit:phi1035",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Valerius Flaccus"
+            "@value": "Valerius Flaccus, Gaius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -12234,7 +12234,7 @@
         "urn": "urn:cts:latinLit:phi9221",
         "title": [{
             "@lang": "lat",
-            "@value": "Paulus Quaestor"
+            "@value": "Paulus, Quaestor"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -12257,7 +12257,7 @@
         "urn": "urn:cts:latinLit:phi0682",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Varius Rufus"
+            "@value": "Varius Rufus, Lucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -12316,7 +12316,7 @@
         "urn": "urn:cts:latinLit:phi0920",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucilius iunior"
+            "@value": "Lucilius Iunior"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -12339,7 +12339,7 @@
         "urn": "urn:cts:latinLit:phi1017",
         "title": [{
             "@lang": "lat",
-            "@value": "Lucius Annaeus Seneca iunior"
+            "@value": "Seneca, Lucius Annaeus (the younger)"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -12551,7 +12551,7 @@
         "urn": "urn:cts:latinLit:phi0125",
         "title": [{
             "@lang": "lat",
-            "@value": "Publius Mucius Scaevola"
+            "@value": "Scaevola, Publius Mucius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -12780,7 +12780,7 @@
         "urn": "urn:cts:latinLit:phi0588",
         "title": [{
             "@lang": "lat",
-            "@value": "Cornelius Nepos"
+            "@value": "Nepos, Cornelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -12839,7 +12839,7 @@
         "urn": "urn:cts:latinLit:phi1002",
         "title": [{
             "@lang": "lat",
-            "@value": "Marcus Fabius Quintilianus"
+            "@value": "Quintillian"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -12886,7 +12886,7 @@
         "urn": "urn:cts:latinLit:phi0540",
         "title": [{
             "@lang": "lat",
-            "@value": "Tullius Laurea"
+            "@value": "Laurea, Tullius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -13456,7 +13456,7 @@
         "urn": "urn:cts:latinLit:phi0498",
         "title": [{
             "@lang": "lat",
-            "@value": "Gaius Aurelius Cotta"
+            "@value": "Cotta, Gaius Aurelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -13502,7 +13502,7 @@
         "urn": "urn:cts:latinLit:phi0130",
         "title": [{
             "@lang": "lat",
-            "@value": "P. Cornel. Scipio Nasica Ser."
+            "@value": "Scipio Nascia Serapio, P. Cornelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -13525,7 +13525,7 @@
         "urn": "urn:cts:latinLit:phi0406",
         "title": [{
             "@lang": "lat",
-            "@value": "Publius Alfenus Varus"
+            "@value": "Alfenus Varus, Publius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -13548,7 +13548,7 @@
         "urn": "urn:cts:latinLit:phi1321",
         "title": [{
             "@lang": "lat",
-            "@value": "Sextus Pomponius"
+            "@value": "Pomponius, Sextus"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -13571,7 +13571,7 @@
         "urn": "urn:cts:latinLit:phi0668",
         "title": [{
             "@lang": "lat",
-            "@value": "Gnaeus Tremelius Scrofa"
+            "@value": "Scrofa, Gnaeus Tremelius"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -13617,7 +13617,7 @@
         "urn": "urn:cts:latinLit:phi2434",
         "title": [{
             "@lang": "lat",
-            "@value": "Hilarius Arelatensis"
+            "@value": "Hilary, Saint, Archbishop of Arles"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -13640,7 +13640,7 @@
         "urn": "urn:cts:latinLit:phi0473",
         "title": [{
             "@lang": "lat",
-            "@value": "Q. Lutatius Catulus iunior"
+            "@value": "Lutatius Catulus, Q., Iunior"
         }],
         "abbreviations": [{
             "@lang": "lat",
@@ -13699,7 +13699,7 @@
         "urn": "urn:cts:latinLit:phi0550",
         "title": [{
             "@lang": "lat",
-            "@value": "Titus Lucretius Carus"
+            "@value": "Lucretius Carus, Titus"
         }],
         "abbreviations": [{
             "@lang": "lat",
