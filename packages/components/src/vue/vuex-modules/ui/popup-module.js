@@ -1,7 +1,7 @@
-import Vue from '@vue-runtime'
-import Module from '@comp-src/vue/vuex-modules/module.js'
-import Popup from '@comp-src/vue/components/popup.vue'
-import Platform from '@comp-src/lib/utility/platform.js'
+import Vue from '@vue-runtime' // Vue in a runtime + compiler configuration
+import Module from '@/vue/vuex-modules/module.js'
+import Popup from '@/vue/components/popup.vue'
+import Platform from '@/lib/utility/platform.js'
 
 // TODO: Add a check for required modules
 export default class PopupModule extends Module {

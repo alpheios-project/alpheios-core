@@ -1400,6 +1400,21 @@ select.alpheios-setting__control,
   border-style: solid;
   border-color: transparent transparent var(--alpheios-border-color) transparent;
 }
+.alph_tooltip-bottom-left {
+  top: 135%;
+  right: 0;
+  left: auto;
+}
+.alph_tooltip-bottom-left::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  right: 15%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent var(--alpheios-border-color) transparent;
+}
 .alpheios-panel--right .alph_tooltip-bottom-right {
   top: 135%;
   right: auto;
@@ -1515,13 +1530,38 @@ select.alpheios-setting__control,
   width: calc(var(--alpheios-base-ui-size) * 1.75);
   height: auto;
 }
-.alpheios-popup__close-btn {
+.alpheios-popup__toolbar-top__btn {
   width: calc(var(--alpheios-base-ui-size) * 3.5);
   height: 100%;
   cursor: pointer;
   fill: var(--alpheios-icon-color);
   stroke: var(--alpheios-icon-color);
   stroke-width: 0;
+}
+.alpheios-popup__toolbar-top__btn svg {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  left: calc(var(--alpheios-base-ui-size) * 1);
+  width: calc(var(--alpheios-base-ui-size) * 2);
+  height: auto;
+}
+.alpheios-popup__toolbar-top__btn:hover, .alpheios-popup__toolbar-top__btn:focus {
+  fill: var(--alpheios-icon-color-hover);
+  stroke: var(--alpheios-icon-color-hover);
+  background: var(--alpheios-icon-bg-color-hover);
+}
+.alpheios-popup__toolbar-top__btn:active {
+  fill: var(--alpheios-icon-color-active);
+  stroke: var(--alpheios-icon-color-active);
+  background: var(--alpheios-icon-bg-color-active);
+}
+.alpheios-popup__close-btn {
+  width: calc(var(--alpheios-base-ui-size) * 3.5);
+  height: 100%;
+  cursor: pointer;
+  fill: var(--alpheios-icon-color);
+  stroke: var(--alpheios-icon-color);
 }
 .alpheios-popup__close-btn svg {
   position: relative;
@@ -1766,6 +1806,10 @@ a:not([href]):not([tabindex]).alpheios-popup__providers-link:hover {
   justify-content: flex-end;
   position: absolute;
   top: calc(var(--alpheios-base-text-size) * -3.125);
+}
+.alpheios-inflections__table-ctrl-cell--btn {
+  display: inline-block;
+  margin: 0 0 15px 20px;
 }
 .alpheios-inflections__table-ctrl-cell {
   flex-grow: 1;
@@ -2123,6 +2167,23 @@ h3.alpheios-inflections__credits-title {
   padding: 0;
   overflow: scroll;
 }
+.alpheios-grammar__button--back-block {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  z-index: 1000;
+}
+.alpheios-svg-index {
+  display: block;
+  padding: 4px;
+  border-radius: 15px;
+  opacity: 0.5;
+}
+.alpheios-svg-index svg {
+  width: 22px;
+  height: auto;
+  fill: var(--alpheios-btn-primary-font-color);
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2134,9 +2195,17 @@ h3.alpheios-inflections__credits-title {
 .alpheios-treebank {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 .alpheios-treebank__frame {
+  /*
+  A minimal height of the treebank's iframe, shall be no less than 43em,
+  but no more than that because max width of panel's content is 800px and
+  treebank frame will not if in if too wide
+  */
+  width: 690px;
   flex: 1 1 100vh;
+  height: 100%;
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -2263,6 +2332,42 @@ h3.alpheios-inflections__credits-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-resource-options__cont {
+  display: flex;
+  flex-direction: column;
+}
+.alpheios-resource-options__item {
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
+  display: flex;
+  align-items: flex-start;
+  flex: 1 1 auto;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
+.alpheios-feature-options__cont {
+  display: flex;
+  flex-direction: column;
+}
+.alpheios-feature-options__item {
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
+  display: flex;
+  align-items: flex-start;
+  flex: 1 1 auto;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
 .alpheios-setting__button-group {
   color: var(--alpheios-text-color-vivid);
   border: 1px solid var(--alpheios-text-color-vivid);
@@ -2288,6 +2393,24 @@ h3.alpheios-inflections__credits-title {
   color: var(--alpheios-color-neutral-lightest);
   background: var(--alpheios-text-color-vivid);
   box-shadow: inset 0 calc(var(--alpheios-base-text-size) * 0.25) calc(var(--alpheios-base-text-size) * 0.25) rgba(0, 0, 0, 0.1);
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
+.alpheios-ui-options__cont {
+  display: flex;
+  flex-direction: column;
+}
+.alpheios-ui-options__item {
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
+  display: flex;
+  align-items: flex-start;
+  flex: 1 1 auto;
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -2357,12 +2480,6 @@ h3.alpheios-inflections__credits-title {
 .alpheios-word-usage-header .alpheios-word-usage-header-select-textwork {
   margin-top: 10px;
 }
-.alpheios-word-usage-header-actions {
-  margin-top: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-top: 1px solid var(--alpheios-border-color);
-}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2376,6 +2493,8 @@ h3.alpheios-inflections__credits-title {
 }
 .alpheios-word-usage-header-sorting {
   padding-bottom: 10px;
+  margin-top: 10px;
+  border-bottom: 1px solid var(--alpheios-border-color);
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -2407,9 +2526,6 @@ h3.alpheios-inflections__credits-title {
   font-weight: normal;
   padding: 10px 0;
   font-size: 80%;
-}
-.alpheios-word-usage .alpheios-word-usage-header {
-  border-bottom: 1px solid var(--alpheios-border-color);
 }
 .alpheios-word-usage .alpheios-word-usage-header-select-author,
 .alpheios-word-usage .alpheios-word-usage-header-select-textwork,
@@ -2531,15 +2647,15 @@ h3.alpheios-inflections__credits-title {
  */
 .alpheios-wordlist-language__worditem {
   border-bottom: 1px solid var(--alpheios-border-color);
-  padding: 2px 0;
+  padding: 7px 0;
 }
 .alpheios-worditem__data {
   display: inline-block;
   vertical-align: middle;
 }
 .alpheios-wordlist-language__worditem .alpheios-worditem__icon {
-  width: 15px;
-  height: 15px;
+  width: 25px;
+  height: 25px;
   text-align: center;
   cursor: pointer;
   fill: var(--alpheios-link-color-on-dark);
@@ -2547,8 +2663,8 @@ h3.alpheios-inflections__credits-title {
   margin: 5px;
 }
 .alpheios-wordlist-language__worditem .alpheios-worditem__icon svg {
-  width: 15px;
-  height: 15px;
+  width: 25px;
+  height: 25px;
   display: inline-block;
   vertical-align: top;
 }
@@ -2575,7 +2691,7 @@ h3.alpheios-inflections__credits-title {
   cursor: pointer;
 }
 .alpheios-worditem__lemmasList {
-  width: 34%;
+  width: 29%;
 }
 .alpheios-visibility__hidden {
   visibility: hidden;
@@ -2700,8 +2816,8 @@ h3.alpheios-inflections__credits-title {
   border-bottom: 1px solid var(--alpheios-border-color);
 }
 .alpheios-wordlist-commands .alpheios-wordlist-commands__item {
-  width: 15px;
-  height: 15px;
+  width: 25px;
+  height: 25px;
   display: inline-block;
   vertical-align: middle;
   text-align: center;
@@ -2709,8 +2825,8 @@ h3.alpheios-inflections__credits-title {
   margin: 0 5px 10px;
 }
 .alpheios-wordlist-commands .alpheios-wordlist-commands__item svg {
-  width: 15px;
-  height: 15px;
+  width: 25px;
+  height: 25px;
   display: inline-block;
   vertical-align: top;
 }
@@ -2763,38 +2879,13 @@ h3.alpheios-inflections__credits-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-wordlist-commands {
-  border-bottom: 1px solid var(--alpheios-border-color);
-}
-.alpheios-wordlist-commands .alpheios-wordlist-commands__item {
-  width: 15px;
-  height: 15px;
-  display: inline-block;
-  text-align: center;
-  cursor: pointer;
-  margin: 0 5px 10px;
-}
-.alpheios-wordlist-commands .alpheios-wordlist-commands__item svg {
-  width: 15px;
-  height: 15px;
-  display: inline-block;
-  vertical-align: top;
-}
-/*
- Calculates a size of text elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
- */
-/*
- Calculates a size of UI elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
- */
 .alpheios-wordlist-language {
   padding-bottom: 5px;
   margin-bottom: 10px;
 }
 .alpheios-wordlist-language__title {
   font-weight: bold;
-  font-size: 110%;
+  font-size: 120%;
   display: inline-block;
   vertical-align: middle;
 }
@@ -2957,6 +3048,10 @@ h3.alpheios-inflections__credits-title {
 .alpheios-panel__tab-panel--options {
   display: block;
 }
+.alpheios-panel__tab__treebank {
+  width: 100%;
+  height: 100%;
+}
 .alpheios-panel__tab-panel-options-cont {
   display: flex;
   flex-direction: column;
@@ -3042,6 +3137,12 @@ h3.alpheios-inflections__credits-title {
 }
 .alpheios-panel--compact .alpheios-panel__close-btn {
   margin-left: calc(var(--alpheios-base-ui-size) * 0.75);
+}
+@media screen and (max-width: 360px) {
+.alpheios-panel__header-btn--infl-data,
+.alpheios-panel__header-btn--treebank-data {
+    display: none;
+}
 }
 /*
  Calculates a size of text elements relative to the base size.

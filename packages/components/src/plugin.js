@@ -18,7 +18,7 @@ import LexicalQuery from './lib/queries/lexical-query.js'
 import ResourceQuery from './lib/queries/resource-query.js'
 import LocalStorageArea from './lib/options/local-storage-area.js'
 import ExtensionSyncStorage from './lib/options/extension-sync-storage.js'
-import ContentOptionDefaults from './settings/content-options-defaults.json'
+import FeatureOptionDefaults from './settings/feature-options-defaults.json'
 import LanguageOptionDefaults from './settings/language-options-defaults.json'
 import UIOptionDefaults from './settings/ui-options-defaults.json'
 import DefaultsLoader from './lib/options/defaults-loader.js'
@@ -42,6 +42,6 @@ import ActionPanelModule from '@comp-src/vue/vuex-modules/ui/action-panel-module
 
 export { Popup, Panel, L10n, Locales, enUS, enGB, UIController, UIEventController,
   Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery,
-  LocalStorageArea, ExtensionSyncStorage, ContentOptionDefaults, LanguageOptionDefaults, UIOptionDefaults,
+  LocalStorageArea, ExtensionSyncStorage, FeatureOptionDefaults, LanguageOptionDefaults, UIOptionDefaults,
   DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector,
   HTMLPage, Tab, TabScript, L10nModule, AuthModule, PanelModule, PopupModule, ToolbarModule, ActionPanelModule }

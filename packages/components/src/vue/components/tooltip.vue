@@ -1,10 +1,11 @@
 <template>
   <div class="alph_tooltip">
     <slot></slot>
-    <span class="tooltiptext alpheios-text__smaller"
-          v-bind:class="directionClass"
-          v-bind:style="additionalStyles"
-          v-show="tooltipText"
+    <span class = "tooltiptext alpheios-text__smaller"
+          v-bind:class = "directionClass"
+          v-bind:style = "additionalStyles"
+          v-show = "tooltipText"
+          v-if = "renderTooltip"
     >
       {{ tooltipText }}
     </span>
@@ -13,6 +14,7 @@
 <script>
 export default {
   name: 'tooltip',
+  inject: ['app'],
   props: {
     tooltipDirection: {
       type: String,
@@ -29,7 +31,10 @@ export default {
     }
   },
   computed: {
-    directionClass: function () {
+    renderTooltip () {
+      return !this.app || (this.app && this.app.platform && !this.app.platform.isMobile)
+    },
+    directionClass () {
       const tooltipDirection = this.tooltipDirection.toLowerCase()
 
       switch (tooltipDirection) {
@@ -49,6 +54,8 @@ export default {
           return { 'alph_tooltip-right': true }
         case 'bottom-right':
           return { 'alph_tooltip-bottom-right': true }
+        case 'bottom-left':
+          return { 'alph_tooltip-bottom-left': true }
         case 'top-right':
           return { 'alph_tooltip-top-right': true }
         case 'top-left':
@@ -201,6 +208,23 @@ export default {
   }
 
   .alph_tooltip-bottom-right::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    right: 15%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent var(--alpheios-border-color) transparent;
+  }
+
+  .alph_tooltip-bottom-left {
+    top: 135%;
+    right: 0;
+    left: auto;
+  }
+
+  .alph_tooltip-bottom-left::after {
     content: "";
     position: absolute;
     bottom: 100%;

@@ -19,7 +19,8 @@ import enGB from '@/locales/en-gb/messages.json'
 
 import Options from '@/lib/options/options.js'
 import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
-import ContentOptionDefaults from '@/settings/content-options-defaults.json'
+import FeatureOptionDefaults from '@/settings/feature-options-defaults.json'
+import UIOptionDefaults from '@/settings/ui-options-defaults.json'
 import LocalStorageArea from '@/lib/options/local-storage-area.js'
 import TempStorageArea from '@/lib/options/temp-storage-area.js'
 
@@ -28,8 +29,9 @@ describe('popup.test.js', () => {
   localVue.use(Vuex)
   let store
   let api = {}
-  let contentOptions
+  let featureOptions
   let resourceOptions
+  let uiOptions
   let l10nModule
   let authModule
   const uiAPI = {
@@ -45,8 +47,9 @@ describe('popup.test.js', () => {
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
 
-    contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
+    featureOptions = new Options(FeatureOptionDefaults, TempStorageArea)
     resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
+    uiOptions = new Options(UIOptionDefaults, TempStorageArea)
 
     store = new Vuex.Store({
       modules: {
@@ -86,8 +89,9 @@ describe('popup.test.js', () => {
       ui: uiAPI,
       auth:authModule,
       settings: {
-        contentOptions,
-        resourceOptions
+        featureOptions,
+        resourceOptions,
+        uiOptions
       }
     }
 
@@ -132,7 +136,7 @@ describe('popup.test.js', () => {
   })
 
   it.skip('2 Popup - render with children components (min requirements)', async () => {
-    let contentOptions = new Options(ContentOptionDefaults, LocalStorageArea)
+    let featureOptions = new Options(FeatureOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
     let cmp = mount(Popup, {
@@ -147,7 +151,7 @@ describe('popup.test.js', () => {
       computed: {
         'uiController': function () {
           return {
-            contentOptions: contentOptions,
+            featureOptions: featureOptions,
             resourceOptions: resourceOptions
           }
         }
@@ -519,12 +523,12 @@ describe('popup.test.js', () => {
     curProps.data.left = '10vw'
     curProps.data.top = '10vh'
 
-    let contentOptions = new Options(ContentOptionDefaults, LocalStorageArea)
+    let featureOptions = new Options(FeatureOptionDefaults, LocalStorageArea)
 
     curProps.data.settings = {}
-    curProps.data.settings.popupPosition = contentOptions.items.popupPosition
+    curProps.data.settings.popupPosition = featureOptions.items.popupPosition
     curProps.data.settings.popupPosition.currentValue = 'fixed'
-    curProps.data.settings.preferredLanguage = contentOptions.items.preferredLanguage
+    curProps.data.settings.preferredLanguage = featureOptions.items.preferredLanguage
 
     let cmp = mount(Popup, {
       propsData: curProps
@@ -555,12 +559,12 @@ describe('popup.test.js', () => {
     curProps.data.left = '10vw'
     curProps.data.top = '10vh'
 
-    let contentOptions = new Options(ContentOptionDefaults, LocalStorageArea)
+    let featureOptions = new Options(FeatureOptionDefaults, LocalStorageArea)
 
     curProps.data.settings = {}
-    curProps.data.settings.popupPosition = contentOptions.items.popupPosition
+    curProps.data.settings.popupPosition = featureOptions.items.popupPosition
     curProps.data.settings.popupPosition.currentValue = 'fixed'
-    curProps.data.settings.preferredLanguage = contentOptions.items.preferredLanguage
+    curProps.data.settings.preferredLanguage = featureOptions.items.preferredLanguage
 
     let cmp = mount(Popup, {
       propsData: curProps

@@ -64,7 +64,7 @@ export default {
 
     .alpheios-wordlist-language__title {
         font-weight: bold;
-        font-size: 110%;
+        font-size: 120%;
         display: inline-block;
         vertical-align: middle;
     }

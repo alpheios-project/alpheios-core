@@ -38,11 +38,18 @@ describe('treebank.test.js', () => {
     store = new Vuex.Store({
       modules: {
         app: {
+          namespaced: true,
           state: {
             treebankData: {
               word: {},
               page: {}
             }
+          }
+        },
+        ui: {
+          namespaced: true,
+          getters: {
+            isActiveTab: () => (tabName) => tabName === 'treebank'
           }
         }
       }
@@ -67,6 +74,7 @@ describe('treebank.test.js', () => {
     store = new Vuex.Store({
       modules: {
         app: {
+          namespaced: true,
           state: {
             treebankData: {
               word: {
@@ -75,6 +83,12 @@ describe('treebank.test.js', () => {
               },
               page: {}
             }
+          }
+        },
+        ui: {
+          namespaced: true,
+          getters: {
+            isActiveTab: () => (tabName) => tabName === 'treebank'
           }
         }
       }
@@ -99,12 +113,19 @@ describe('treebank.test.js', () => {
     store = new Vuex.Store({
       modules: {
         app: {
+          namespaced: true,
           state: {
             treebankData: {
               page: {
                 src: 'http/example.com/foo3/foo4'
               }
             }
+          }
+        },
+        ui: {
+          namespaced: true,
+          getters: {
+            isActiveTab: () => (tabName) => tabName === 'treebank'
           }
         }
       }

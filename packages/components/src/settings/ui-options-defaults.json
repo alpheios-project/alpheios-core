@@ -1,45 +1,6 @@
 {
   "domain": "alpheios-ui-options",
   "items": {
-    "skin": {
-      "defaultValue": "default",
-      "labelText": "Skin",
-      "values": [
-        {
-          "value": "default",
-          "text": "Alpheios Default Skin"
-        }
-      ]
-    },
-    "panel": {
-      "defaultValue": "panel",
-      "labelText": "Panel layout",
-      "values": [
-        {
-          "value": "panel",
-          "text": "Normal panel layout"
-        },
-        {
-          "value": "compactPanel",
-          "text": "Compact panel layout"
-        }
-      ]
-    },
-    "panelOnActivate": {
-      "defaultValue": false,
-      "labelText": "Panel on activate",
-      "boolean": true,
-      "values": [
-        {
-          "value": true,
-          "text": "Open"
-        },
-        {
-          "value": false,
-          "text": "Close"
-        }
-      ]
-    },
     "fontSize": {
       "defaultValue": "medium",
       "labelText": "Font size",
@@ -55,6 +16,72 @@
         {
           "value": "large",
           "text": "Large font size"
+        }
+      ]
+    },
+    "panelPosition": {
+      "defaultValue": "left",
+      "labelText": "Panel position:",
+      "values": [
+        {
+          "value": "left",
+          "text": "Left"
+        },
+        {
+          "value": "right",
+          "text": "Right"
+        }
+      ]
+    },
+    "popupPosition": {
+      "defaultValue": "fixed",
+      "labelText": "Popup position:",
+      "values": [
+        {
+          "value": "flexible",
+          "text": "Flexible"
+        },
+        {
+          "value": "fixed",
+          "text": "Fixed"
+        }
+      ]
+    },
+    "popupShiftX": {
+      "defaultValue": 0,
+      "labelText": "Popup shift, x axe:",
+      "number": true,
+      "values": []
+    },
+    "popupShiftY": {
+      "defaultValue": 0,
+      "labelText": "Popup shift, y axe:",
+      "number": true,
+      "values": []
+    },
+    "toolbarShiftX": {
+      "defaultValue": 0,
+      "labelText": "Toolbar shift, x axe:",
+      "number": true,
+      "values": []
+    },
+    "toolbarShiftY": {
+      "defaultValue": 0,
+      "labelText": "Toolbar shift, y axe:",
+      "number": true,
+      "values": []
+    },
+   "verboseMode": {
+      "defaultValue": "normal",
+      "labelText": "Log Level",
+      "values": [
+        {
+          "value": "verbose",
+          "text": "Verbose"
+        },
+        {
+          "value": "normal",
+          "text": "Normal"
         }
       ]
     }

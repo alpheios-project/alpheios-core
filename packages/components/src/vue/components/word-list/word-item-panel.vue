@@ -111,7 +111,7 @@ export default {
 
   .alpheios-wordlist-language__worditem {
       border-bottom: 1px solid var(--alpheios-border-color);
-      padding: 2px 0;
+      padding: 7px 0;
   }
 
   .alpheios-worditem__data {
@@ -119,18 +119,20 @@ export default {
       vertical-align: middle;
   }
 
+  $iconsize: 25px;
+
   .alpheios-wordlist-language__worditem {
     .alpheios-worditem__icon {
-        width: 15px;
-        height: 15px;
+        width: $iconsize;
+        height: $iconsize;
         text-align: center;
         cursor: pointer;
         fill: var(--alpheios-link-color-on-dark);
         stroke: var(--alpheios-link-color-on-dark);
         margin: 5px;
         svg {
-          width: 15px;
-          height: 15px;
+          width: $iconsize;
+          height: $iconsize;
           display: inline-block;
           vertical-align: top;
         }
@@ -164,7 +166,7 @@ export default {
       cursor: pointer;
   }
   .alpheios-worditem__lemmasList {
-      width: 34%;
+      width: 29%;
   }
 
   .alpheios-visibility__hidden {

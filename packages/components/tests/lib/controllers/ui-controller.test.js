@@ -8,7 +8,7 @@ import ResourceQuery from '@/lib/queries/resource-query'
 
 import Options from '@/lib/options/options.js'
 import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
-import ContentOptionDefaults from '@/settings/content-options-defaults.json'
+import FeatureOptionDefaults from '@/settings/feature-options-defaults.json'
 import UIOptionDefaults from '@/settings/ui-options-defaults.json'
 import LocalStorageArea from '@/lib/options/local-storage-area.js'
 import HTMLPage from '@/lib/utility/html-page.js'
@@ -28,7 +28,7 @@ describe.skip('ui-controller.test.js', () => {
   console.log = function () {}
   console.warn = function () {}
 
-  let uiC, contentOptions, resourceOptions, state
+  let uiC, featureOptions, resourceOptions, state
 
   beforeEach(async (done) => {
     jest.spyOn(console, 'error')
@@ -37,12 +37,12 @@ describe.skip('ui-controller.test.js', () => {
     jest.spyOn(Options, 'initItems')
 
     state = new State()
-    contentOptions = new Options(ContentOptionDefaults, LocalStorageArea)
+    featureOptions = new Options(FeatureOptionDefaults, LocalStorageArea)
     resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
     let uiOptions = new Options(UIOptionDefaults, LocalStorageArea)
 
     uiC = new UIController(state, LocalStorageArea, {})
-    uiC.contentOptions = contentOptions
+    uiC.featureOptions = featureOptions
     uiC.resourceOptions = resourceOptions
     uiC.uiOptions = uiOptions
 
@@ -526,8 +526,8 @@ describe.skip('ui-controller.test.js', () => {
     uiC.panel.visible = false
     uiC.popup.vi.visible = false
 
-    uiC.contentOptions.items.uiType.setValue('popup')
-    uiC.contentOptions.uiTypePanel = 'panel'
+    uiC.featureOptions.items.uiType.setValue('popup')
+    uiC.featureOptions.uiTypePanel = 'panel'
 
     uiC.open()
     expect(uiC.panel.panelData.isOpen).toBeFalsy()
@@ -541,7 +541,7 @@ describe.skip('ui-controller.test.js', () => {
     expect(uiC.popup.vi.visible).toBeTruthy()
 
     //* **********************************************
-    uiC.contentOptions.items.uiType.setValue('panel')
+    uiC.featureOptions.items.uiType.setValue('panel')
 
     uiC.open()
     expect(uiC.panel.panelData.isOpen).toBeTruthy()
@@ -550,7 +550,7 @@ describe.skip('ui-controller.test.js', () => {
 
   it.skip('21 UIController - setRootComponentClasses', () => {
     let emptyPromise = () => { return new Promise((resolve, reject) => {}) }
-    let stAdapter = { domain: 'alpheios-content-options', set: emptyPromise }
+    let stAdapter = { domain: 'alpheios-feature-options', set: emptyPromise }
 
     document.querySelector('html').style['font-size'] = '16px'
 
@@ -559,7 +559,7 @@ describe.skip('ui-controller.test.js', () => {
     uiOptions1.items.fontSize = undefined
     uiOptions1.items.colorSchema = undefined
 
-    let uiC1 = new UIController(state, contentOptions, resourceOptions, uiOptions1)
+    let uiC1 = new UIController(state, featureOptions, resourceOptions, uiOptions1)
     uiC1.setRootComponentClasses()
     let resClasses = ['alpheios-irregular-base-font-size', 'auk--default']
     expect(uiC1.popup.vi.popupData.classes).toEqual(resClasses)
@@ -568,7 +568,7 @@ describe.skip('ui-controller.test.js', () => {
     //* ****************************************************************
     uiOptions1.items.skin = new OptionItem({ defaultValue: 'fooskin' }, 'skin', stAdapter)
 
-    let uiC2 = new UIController(state, contentOptions, resourceOptions, uiOptions1)
+    let uiC2 = new UIController(state, featureOptions, resourceOptions, uiOptions1)
     uiC2.setRootComponentClasses()
     resClasses.push('auk--fooskin')
 

@@ -13,8 +13,8 @@
       />
       <setting
           :classes="['alpheios-notification-area__control']"
-          :data="settings.contentOptions.items.preferredLanguage"
-          :show-title="false" @change="contentOptionChanged"
+          :data="settings.featureOptions.items.preferredLanguage"
+          :show-title="false" @change="featureOptionChanged"
           v-show="$store.state.ui.notification.showLanguageSwitcher"
       />
       <div
@@ -92,8 +92,8 @@ export default {
   },
 
   methods: {
-    contentOptionChanged: function (name, value) {
-      this.app.contentOptionChange(name, value)
+    featureOptionChanged: function (name, value) {
+      this.app.featureOptionChange(name, value)
     }
   }
 }

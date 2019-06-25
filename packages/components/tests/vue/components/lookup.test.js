@@ -13,7 +13,7 @@ import enUSInfl from '@/locales/en-us/messages-inflections.json'
 import enGB from '@/locales/en-gb/messages.json'
 
 import Options from '@/lib/options/options.js'
-import ContentOptionDefaults from '@/settings/content-options-defaults.json'
+import FeatureOptionDefaults from '@/settings/feature-options-defaults.json'
 import TempStorageArea from '@/lib/options/temp-storage-area.js'
 import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
 
@@ -23,7 +23,7 @@ describe('lookup.test.js', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   const nameBase = 'LookupNameBase'
-  let contentOptions
+  let featureOptions
   let resourceOptions
   let lookupResourceOptions
   let store
@@ -48,10 +48,10 @@ describe('lookup.test.js', () => {
     })
 
     // Modify defaults to provide more precise test results
-    ContentOptionDefaults.items.preferredLanguage.defaultValue = 'grc'
-    ContentOptionDefaults.items.lookupLanguage.defaultValue = 'ara'
+    FeatureOptionDefaults.items.preferredLanguage.defaultValue = 'grc'
+    FeatureOptionDefaults.items.lookupLanguage.defaultValue = 'ara'
 
-    contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
+    featureOptions = new Options(FeatureOptionDefaults, TempStorageArea)
     resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
     lookupResourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
 
@@ -64,7 +64,7 @@ describe('lookup.test.js', () => {
         enableWordUsageExamples: () => true
       },
       settings: {
-        contentOptions,
+        featureOptions,
         resourceOptions,
         lookupResourceOptions
       }
@@ -97,7 +97,7 @@ describe('lookup.test.js', () => {
     expect(cmp.isVueInstance()).toBeTruthy()
     expect(cmp.props().nameBase).toBe(nameBase)
     expect(cmp.props().usePageLangPrefs).toBeFalsy()
-    expect(cmp.vm.settings.contentOptions).toBeDefined()
+    expect(cmp.vm.settings.featureOptions).toBeDefined()
     expect(cmp.vm.settings.resourceOptions).toBeDefined()
     expect(cmp.vm.settings.lookupResourceOptions).toBeDefined()
   })
@@ -112,7 +112,7 @@ describe('lookup.test.js', () => {
     })
 
     expect(cmp.props().usePageLangPrefs).toBeFalsy()
-    expect(cmp.vm.$options.lookupLanguage).toBe(contentOptions.items.lookupLanguage)
+    expect(cmp.vm.$options.lookupLanguage).toBe(featureOptions.items.lookupLanguage)
     expect(cmp.vm.$options.resourceOptions).toBe(lookupResourceOptions)
   })
 
@@ -127,7 +127,7 @@ describe('lookup.test.js', () => {
     })
 
     expect(cmp.props().usePageLangPrefs).toBeTruthy()
-    expect(cmp.vm.$options.lookupLanguage).toBe(contentOptions.items.preferredLanguage)
+    expect(cmp.vm.$options.lookupLanguage).toBe(featureOptions.items.preferredLanguage)
     expect(cmp.vm.$options.resourceOptions).toBe(resourceOptions)
   })
 

@@ -1,6 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { mount } from '@vue/test-utils'
+import Vuex from 'vuex'
+import { mount, createLocalVue } from '@vue/test-utils'
 import Tooltip from '@/vue/components/tooltip.vue'
 
 describe('tooltip.test.js', () => {
@@ -8,10 +9,37 @@ describe('tooltip.test.js', () => {
   console.log = function () {}
   console.warn = function () {}
 
+  const localVue = createLocalVue()
+  localVue.use(Vuex)
+  let store
+  let api = {}
+
   beforeEach(() => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
+
+    store = new Vuex.Store({
+      modules: {
+        ui: {
+          namespaced: true,
+          state: {}
+        },
+        app: {
+          platform: {
+            isMobile: false
+          }
+        }
+      }
+    })
+
+    api = {
+      app: {
+        homonymDataReady: false,
+        homonym: {}
+      }
+    }
+
   })
   afterEach(() => {
     jest.resetModules()
@@ -30,7 +58,26 @@ describe('tooltip.test.js', () => {
   })
 
   it('2 Tooltip - renders a vue instance (min requirements)', () => {
+    let storeLocal = new Vuex.Store({
+      modules: {
+        app: {
+          platform: {
+            isMobile: false
+          }
+        }
+      }
+    })
+
     let cmp = mount(Tooltip, {
+      store: storeLocal,
+      localVue,
+      mocks: {
+        app: {
+          platform: {
+            isMobile: false
+          }
+        }
+      },
       propsData: {
         tooltipText: 'foo tooltip'
       }
@@ -109,5 +156,63 @@ describe('tooltip.test.js', () => {
     let cmp = mount(Tooltip)
 
     expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "tooltipText"'))
+  })
+
+  it('4 Tooltip - if is not mobile, renderTooltip = true', () => {
+    let storeLocal = new Vuex.Store({
+      modules: {
+        app: {
+          platform: {
+            isMobile: false
+          }
+        }
+      }
+    })
+
+    let cmp = mount(Tooltip, {
+      store: storeLocal,
+      localVue,
+      mocks: {
+        app: {
+          platform: {
+            isMobile: false
+          }
+        }
+      },
+      propsData: {
+        tooltipText: 'foo tooltip'
+      }
+    })
+
+    expect(cmp.vm.renderTooltip).toBeTruthy()
+  })
+
+  it('5 Tooltip - if is mobile, renderTooltip = false', () => {
+    let storeLocal = new Vuex.Store({
+      modules: {
+        app: {
+          platform: {
+            isMobile: true
+          }
+        }
+      }
+    })
+
+    let cmp = mount(Tooltip, {
+      store: storeLocal,
+      localVue,
+      mocks: {
+        app: {
+          platform: {
+            isMobile: true
+          }
+        }
+      },
+      propsData: {
+        tooltipText: 'foo tooltip'
+      }
+    })
+
+    expect(cmp.vm.renderTooltip).toBeFalsy()
   })
 })

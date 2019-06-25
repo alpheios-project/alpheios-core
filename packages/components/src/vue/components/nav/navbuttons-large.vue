@@ -80,7 +80,7 @@
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_STATUS')" tooltipDirection="bottom-narrow">
       <div @click="ui.changeTab('status')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('status') }"
-            v-show="this.settings.contentOptions.items.verboseMode.currentValue === `verbose`">
+            v-show="this.settings.uiOptions.items.verboseMode.currentValue === `verbose`">
         <status-icon></status-icon>
       </div>
     </alph-tooltip>

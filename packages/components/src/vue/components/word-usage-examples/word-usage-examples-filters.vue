@@ -1,8 +1,9 @@
 <template>
-    <div class="alpheios-word-usage-header-filters">
+    <div class="alpheios-word-usage-header-filters" v-show="!collapsedHeader">
         <div class="alpheios-word-usage-header-select-type-filters-block" >
         <div class="alpheios-word-usage-header-select-type-filter"
-            v-for="typeFilterItem of typeFiltersList" v-bind:key="typeFilterItem.value"
+            v-for="typeFilterItem of typeFiltersList" 
+            v-bind:key="typeFilterItem.value"
             :class="{ 'alpheios-word-usage-header-select-type-filter-disabled': typeFilterItem.disabled === true }"
             v-if="checkVisibilityFilterOption(typeFilterItem)"
         >
@@ -11,7 +12,7 @@
         </div>
       </div>
 
-      <div v-show="authorsList && typeFilter !== 'noFilters' && !collapsedHeader" class="alpheios-word-usage-filters-select">
+      <div v-show="authorsList && typeFilter !== 'noFilters'" class="alpheios-word-usage-filters-select">
         <select class="alpheios-select alpheios-word-usage-header-select-author" v-model="selectedAuthor">
             <option
                 v-for="(authorItem, authorIndex) in lastAuthorsList" v-bind:key="authorIndex"
@@ -30,7 +31,7 @@
         </alph-tooltip>
       </div>
 
-      <div v-if="this.selectedAuthor && typeFilter !== 'noFilters' && !collapsedHeader" class="alpheios-word-usage-filters-select">
+      <div v-if="this.selectedAuthor && typeFilter !== 'noFilters'" class="alpheios-word-usage-filters-select">
         <select class="alpheios-select alpheios-word-usage-header-select-textwork"
                 v-model="selectedTextWork">
           <option
@@ -50,11 +51,6 @@
         </alph-tooltip>
       </div>
 
-      <div class="alpheios-word-usage-header-actions">
-          <button @click="getResults" class="alpheios-button-primary" :disabled="disabledButton">
-              {{ l10n.getText('WORDUSAGE_GET_RESULTS') }}
-          </button>
-      </div>
     </div>
 </template>
 <script>
@@ -85,12 +81,25 @@ export default {
       lastAuthorsList: [],
       lastTextWorksList: [],
       typeFiltersList: [
-        { value: 'noFilters', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_NO_FILTERS') },
+        { value: 'noFilters', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_NO_FILTERS'), skip: true },
         { value: 'moreResults', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_MORE_RESULTS'), disabled: true, skip: true },
         { value: 'filterCurrentResults', label: this.l10n.getText('WORDUSAGE_FILTERS_TYPE_FILTER_CURRENT_RESULTS'), disabled: true }
-      ],
-      disabledButton: false,
-      noMoreResults: true
+      ]
+    }
+  },
+  watch: {
+    '$store.state.ui.activeTab' (activeTab) {
+      if (activeTab === 'wordUsage') {
+        if (!this.$store.state.app.wordUsageExamplesReady && this.homonym) {
+          this.getResults()
+        }
+      }
+    },
+    selectedAuthor (value) {
+      this.getResults()
+    },
+    selectedTextWork (value) {
+      this.getResults()
     }
   },
   computed: {
@@ -98,8 +107,9 @@ export default {
       return this.$store.state.app.homonymDataReady ? this.app.homonym : null
     },
     authorsList () {
-      if (this.$store.state.app.wordUsageExamplesReady && (!this.lastTargetWord || this.lastTargetWord !== this.app.homonym.targetWord)) {
-        this.lastTargetWord = this.app.homonym.targetWord
+      if (this.$store.state.app.wordUsageExamplesReady && (!this.lastTargetWord || this.lastTargetWord !== this.homonym.targetWord)) {
+        this.lastTargetWord = this.homonym.targetWord
+
         if (!this.app.wordUsageExamples.wordUsageExamples) {
           this.lastAuthorsList = []
           this.lastTextWorksList = []
@@ -123,18 +133,20 @@ export default {
 
           this.typeFilter = 'filterCurrentResults'
         }
-      } else if (!this.$store.state.app.wordUsageExamplesReady && !this.app.homonym) {
+      } else if (!this.$store.state.app.wordUsageExamplesReady || !this.homonym) {
         this.typeFilter = 'noFilters'
         this.setDisabledToType(['moreResults', 'filterCurrentResults'])
         this.selectedAuthor = null
         this.selectedTextWork = null
         this.lastAuthorsList = []
         this.lastTextWorksList = []
+        this.lastTargetWord = null
+        this.lastAuthorID = null
       }
       return true
     },
     filteredWorkList () {
-      if (this.selectedAuthor) {
+      if (this.selectedAuthor) {        
         this.selectedTextWork = null
         let resArray = this.lastTextWorksList.filter(textwork => textwork && textwork.author && (textwork.author.ID === this.selectedAuthor.ID))
         if (resArray.length > 0) {
@@ -150,9 +162,6 @@ export default {
       if (typeFilterItem.skip) {
         return false
       }
-      if (typeFilterItem.value !== this.typeFilter && this.collapsedHeader) {
-        return false
-      }
       return true
     },
     setDisabledToType (typeValues) {
@@ -166,31 +175,21 @@ export default {
     },
     async getResults () {
       if (this.typeFilter === 'noFilters') {
-        this.disabledButton = true
-
-        if (this.noMoreResults && this.lastAuthorsList.length > 0) {
-          this.removeFiltersFromResults()
-        } else {
-          await this.getResultsNoFilters()
-        }
+        await this.getResultsNoFilters()
+        
         this.$emit('getAllResults')
         this.clearFilter('author')
         this.lastAuthorID = null
         this.typeFilter = 'filterCurrentResults'
         this.setDisabledToType([])
-
-        this.disabledButton = false
         
       } else if (this.typeFilter === 'moreResults') {
-        this.disabledButton = true
         this.$emit('getMoreResults', this.selectedAuthor, this.selectedTextWork)
         await this.getResultsWithFilters()
 
         this.setDisabledToType(['filterCurrentResults'])
-        this.lastAuthorID = this.selectedAuthor ? this.selectedAuthor.ID : null
 
-        this.disabledButton = false
-        
+        this.lastAuthorID = this.selectedAuthor ? this.selectedAuthor.ID : null        
       } else if (this.typeFilter === 'filterCurrentResults') {
         this.$emit('filterCurrentByAuthor', this.selectedAuthor, this.selectedTextWork)
         this.lastAuthorID = this.selectedAuthor ? this.selectedAuthor.ID : null
@@ -286,11 +285,5 @@ export default {
     margin-top: 10px;
   }
 
-  .alpheios-word-usage-header-actions {
-    margin-top: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-top: 1px solid var(--alpheios-border-color);
-  }
 
 </style>

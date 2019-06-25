@@ -3,93 +3,93 @@
   <div>
     <div @click="collapse"
         class="alpheios-inflections__title alpheios-clickable">
-      {{view.title}}
+      {{title}}
       <span v-show="state.collapsed">[+]</span>
-      <span v-show="!state.collapsed">[-]</span>
+      <span v-show="!state.collapsed">[-]</span>     
     </div>
-
-    <template v-if="!state.collapsed">
-      <h4
-          v-show="view.additionalTitle"
-          class="alpheios-inflections__additional_title"
-      >
-        {{ view.additionalTitle }}
-      </h4>
-
-      <div
-          v-if="isAvailable"
-          class="alpheios-inflections__wide-view"
-      >
-        <div
-            v-if="!view.hasPrerenderedTables && !inflBrowserTable"
-            class="alpheios-inflections__table-ctrl-cont"
+    <div
+            v-if="hasInflectionTables && state.view.canCollapse && state.noSuffixGroupsHidden"
+            v-show="!state.collapsed"
+            class="alpheios-inflections__table-ctrl-cell--btn"
         >
-          <div
-              v-if="view.canCollapse && state.noSuffixGroupsHidden"
-              class="alpheios-inflections__table-ctrl-cell--btn"
-          >
-            <alph-tooltip :tooltipText="l10n.getMsg('TOOLTIP_INFLECT_SHOWFULL')"
-                          tooltipDirection="bottom-right">
-              <button
-                  @click="showNoSuffixGroups"
-                  class="alpheios-button-secondary alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
-                {{l10n.getMsg('LABEL_INFLECT_SHOWFULL')}}
-              </button>
-            </alph-tooltip>
-          </div>
+          <alph-tooltip :tooltipText="l10n.getMsg('TOOLTIP_INFLECT_SHOWFULL')"
+                        tooltipDirection="bottom-right" >
+            <button
+                @click="showNoSuffixGroups"
+                class="alpheios-button-secondary alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
+              {{l10n.getMsg('LABEL_INFLECT_SHOWFULL')}}
+            </button>
+          </alph-tooltip>
+      </div>
 
-          <div class="alpheios-inflections__table-ctrl-cell--btn"
-               v-show="view.canCollapse && !state.noSuffixGroupsHidden">
-            <alph-tooltip :tooltipText="l10n.getMsg('TOOLTIP_INFLECT_COLLAPSE')"
-                          tooltipDirection="bottom-right">
-              <button
-                  @click="hideNoSuffixGroups"
-                  class="alpheios-button-secondary alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
-                {{l10n.getMsg('LABEL_INFLECT_COLLAPSE')}}
-              </button>
-            </alph-tooltip>
-          </div>
-        </div>
+      <div class="alpheios-inflections__table-ctrl-cell--btn"
+            v-if="hasInflectionTables && !state.standardFormTable"
+            v-show="!state.collapsed && state.view.canCollapse && !state.noSuffixGroupsHidden">
+        <alph-tooltip :tooltipText="l10n.getMsg('TOOLTIP_INFLECT_COLLAPSE')"
+                      tooltipDirection="bottom-right">
+          <button
+              @click="hideNoSuffixGroups"
+              class="alpheios-button-secondary alpheios-inflections__control-btn alpheios-inflections__control-btn--right">
+            {{l10n.getMsg('LABEL_INFLECT_COLLAPSE')}}
+          </button>
+        </alph-tooltip>
+      </div>
 
-        <div class="infl-prdgm-tbl" v-if="view.hasPrerenderedTables">
-          <div class="infl-prdgm-tbl__row" v-for="row in view.wideTable.rows">
-            <div :class="prerenderedCellClasses(cell)" class="infl-prdgm-tbl__cell" v-for="cell in row.cells">
-              {{cell.value}}
-            </div>
-          </div>
-        </div>
+    <h4
+        v-show="!state.collapsed && additionalTitle"
+        class="alpheios-inflections__additional_title"
+    >
+      {{ additionalTitle }}
+    </h4>
 
-        <div :style="tableStyles" class="infl-table infl-table--wide" id="alpheios-wide-vue-table" v-if="!view.hasPrerenderedTables">
-          <template v-for="row in view.wideView.rows">
-            <div :class="cellClasses(cell)" @mouseleave.stop.prevent="cellMouseLeave(cell)"
-                 @mouseover.stop.prevent="cellMouseOver(cell)" v-for="cell in row.cells">
-              <template v-if="cell.isDataCell">
-                <template v-for="(morpheme, index) in cell.morphemes">
+    <div
+        v-show="!state.collapsed"
+        class="alpheios-inflections__wide-view"
+    >
+      <div
+          :style="tableStyles"
+          class="infl-table infl-table--wide"
+          id="alpheios-wide-vue-table"
+          v-if="hasInflectionTables">
+        <template v-for="row in state.view.wideView.rows">
+          <div :class="cellClasses(cell)" @mouseleave.stop.prevent="cellMouseLeave(cell)"
+               @mouseover.stop.prevent="cellMouseOver(cell)" v-for="cell in row.cells">
+            <template v-if="cell.isDataCell">
+              <template v-for="(morpheme, index) in cell.morphemes">
                                     <span :class="morphemeClasses(morpheme)">
                                         <template v-if="morpheme.value">{{morpheme.value}}</template>
                                         <template v-else>-</template>
                                     </span>
-                  <infl-footnote :footnotes="morpheme.footnotes" v-if="morpheme.hasFootnotes"></infl-footnote>
-                  <template v-if="index < cell.morphemes.length-1">,</template>
-                </template>
+                <infl-footnote :footnotes="morpheme.footnotes" v-if="morpheme.hasFootnotes"></infl-footnote>
+                <template v-if="index < cell.morphemes.length-1">,</template>
               </template>
-              <span v-else v-html="l10n.getText(cell.value)"></span>
-            </div>
-          </template>
+            </template>
+            <span v-else v-html="l10n.getText(cell.value)"></span>
+          </div>
+        </template>
+      </div>
+
+      <div class="infl-prdgm-tbl" v-if="hasPrerenderedTables">
+        <div class="infl-prdgm-tbl__row" v-for="row in state.view.wideTable.rows">
+          <div :class="prerenderedCellClasses(cell)" class="infl-prdgm-tbl__cell" v-for="cell in row.cells">
+            {{cell.value}}
+          </div>
         </div>
-
       </div>
 
-      <div
-          class="alpheios-inflections__not-impl-msg"
-          v-show="!isAvailable"
-      >
-        {{l10n.getMsg('INFLECT_MSG_TABLE_NOT_IMPLEMENTED')}}
-      </div>
-    </template>
+    </div>
+
+    <div
+        class="alpheios-inflections__not-impl-msg"
+        v-show="!state.collapsed && !isAvailable"
+    >
+      {{l10n.getMsg('INFLECT_MSG_TABLE_NOT_IMPLEMENTED')}}
+    </div>
   </div>
 </template>
 <script>
+import { ViewSetFactory } from 'alpheios-inflection-tables'
+
 import InflFootnote from './infl-footnote.vue'
 import Tooltip from './tooltip.vue'
 
@@ -101,74 +101,112 @@ export default {
     alphTooltip: Tooltip
   },
   props: {
-    // An inflection table view
+    /*
+    This component shall receive either a fully initialized (but not necessarily rendered) view prop
+    or a standard form data object, which will be used later to construct a standard form view.
+    If none is provided, a component will fail to render an inflection table.
+     */
     view: {
       type: [Object, Boolean],
-      required: true
+      default: false,
+      required: false
     },
+    standardFormData: {
+      type: [Object, Boolean],
+      default: false,
+      required: false
+    },
+
+    // Initial state of the component: collapsed or expanded.
     collapsed: {
       type: [Boolean],
       default: true,
-      required: false
-    },
-    // Indicate if this is a table for the inflection browser
-    inflBrowserTable: {
-      type: [Boolean],
-      default: false,
       required: false
     }
   },
 
   data: function () {
     return {
+      standardFormView: null,
       state: {
+        view: null,
+        standardFormTable: false,
         collapsed: true,
         noSuffixGroupsHidden: true
       },
       classes: {
         fullMorphologyMatch: 'infl-cell--morph-match'
-      },
-      options: {
-        emptyColumnsHidden: true,
-        noSuffixMatchesHidden: true
       }
     }
   },
 
   computed: {
+    title: function () {
+      return this.view.title || this.standardFormData.title || ''
+    },
+
+    additionalTitle: function () {
+      return this.view.additionalTitle || this.standardFormData.additionalTitle || ''
+    },
+
+    hasInflectionTables: function () {
+      return this.isAvailable && !this.state.view.hasPrerenderedTables
+    },
+
+    hasPrerenderedTables: function () {
+      return this.isAvailable && this.state.view.hasPrerenderedTables
+    },
+
     tableStyles: function () {
       return {
-        gridTemplateColumns: `repeat(${this.view.wideView.visibleColumnQty + this.view.wideView.titleColumnQty}, 1fr)`
+        gridTemplateColumns: `repeat(${this.state.view.wideView.visibleColumnQty + this.state.view.wideView.titleColumnQty}, 1fr)`
       }
     },
 
     isAvailable: function () {
       return (
-        this.view.isImplemented &&
-        this.view.wideView &&
-        this.view.wideView.rows.length > 0
+        this.state.view &&
+        this.state.view.isImplemented &&
+        this.state.view.wideView &&
+        this.state.view.wideView.rows.length > 0
       )
     }
   },
 
   methods: {
-    collapse: function () {
-      if (!this.view.isRendered) {
-        this.view.render(this.options)
+    getRenderedView: function () {
+      if (this.view) {
+        // This component has an instance of an initialized view supplied
+        return this.view.render()
+      } else if (this.standardFormData) {
+        // A standard form data is provided. It will be used to create, initialize, and render the corresponding view.
+        this.state.standardFormTable = true
+        return ViewSetFactory.getStandardForm(this.standardFormData).render()
+      } else {
+        console.error(`There is neither view nor standard form data is provided. A view will not be rendered`)
       }
+    },
+    collapse: function () {
       this.state.collapsed = !this.state.collapsed
-      if (this.view.isImplemented) {
-        this.view.wideView.collapsed = this.state.collapsed
+      if (!this.state.collapsed) {
+        // A view has been expanded, we need to check if it needs to be rendered.
+        if (!this.state.view || !this.state.view.isRendered) {
+          this.state.view = this.getRenderedView()
+        }
+      }
+
+      if (this.state.view.isImplemented) {
+        this.state.view.wideView.collapsed = this.state.collapsed
       }
     },
 
     hideNoSuffixGroups: function () {
-      this.view.noSuffixMatchesGroupsHidden(true)
+      this.state.view.noSuffixMatchesGroupsHidden(true)
       this.state.noSuffixGroupsHidden = true
     },
 
     showNoSuffixGroups: function () {
-      this.view.noSuffixMatchesGroupsHidden(false)
+      this.state.view.noSuffixMatchesGroupsHidden(false)
       this.state.noSuffixGroupsHidden = false
     },
 
@@ -196,7 +234,7 @@ export default {
         }
       }
 
-      if (this.inflBrowserTable) {
+      if (this.state.standardFormTable) {
         // Do not show full morphology matches in an inflection browser
         classes['infl-cell--morph-match'] = false
       }
@@ -216,7 +254,7 @@ export default {
     },
 
     morphemeClasses: function (morpheme) {
-      if (this.inflBrowserTable) {
+      if (this.state.standardFormTable) {
         return {
           'infl-suff': true
         }
@@ -243,8 +281,9 @@ export default {
   },
 
   watch: {
-    view: function () {
-      this.state.noSuffixGroupsHidden = this.view.isNoSuffixMatchesGroupsHidden
+    'view.id': function () {
+      this.state.view = this.view
+      this.state.noSuffixGroupsHidden = this.state.view.isNoSuffixMatchesGroupsHidden
     },
 
     collapsed: function (state) {
@@ -255,10 +294,6 @@ export default {
   },
 
   mounted: function () {
-    if (this.inflBrowserTable) {
-      this.options.noSuffixMatchesHidden = false
-    }
-
     // Set a default value by the parent component
     if (this.collapsed !== null) {
       this.state.collapsed = this.collapsed
@@ -296,6 +331,11 @@ export default {
     justify-content: flex-end;
     position: absolute;
     top: textsize(-50px);
+  }
+
+  .alpheios-inflections__table-ctrl-cell--btn {
+    display: inline-block;
+    margin: 0 0 15px 20px;
   }
 
   .alpheios-inflections__table-ctrl-cell {

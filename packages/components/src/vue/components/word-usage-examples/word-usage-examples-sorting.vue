@@ -44,28 +44,18 @@ export default {
     return {
       selectedSortBy: null,
       typeSortingList: [
-        { value: null, title: this.l10n.getText('WORDUSAGE_SORT_BY_PLACEHOLDER'), disabled: true },
-        { value: 'byAuthor', title: this.l10n.getText('WORDUSAGE_SORT_BY_AUTHOR') },
-        { value: 'byTextWork', title: this.l10n.getText('WORDUSAGE_SORT_BY_TEXTWORK') }
-        /**
-         { value: 'byPrefix', title: this.l10n.getText('WORDUSAGE_SORT_BY_PREFIX') },
-         { value: 'bySuffix', title: this.l10n.getText('WORDUSAGE_SORT_BY_SUFFIX') }
-        **/
+        { value: null, title: this.l10n.getText('WORDUSAGE_SORT_BY_PLACEHOLDER') },
+        { value: 'byPrefix', title: this.l10n.getText('WORDUSAGE_SORT_BY_PREFIX') },
+        { value: 'bySuffix', title: this.l10n.getText('WORDUSAGE_SORT_BY_SUFFIX') }
       ]
     }
   },
   computed: {
     availableSortBy () {
       return this.$store.state.app.wordUsageExamplesReady && this.app.wordUsageExamples.wordUsageExamples && this.app.wordUsageExamples.wordUsageExamples.length > 0
-    },
-    showHideTitleSort () {
-      return this.visibleSortBy ? this.l10n.getText('WORDUSAGE_FILTERS_HIDE') : this.l10n.getText('WORDUSAGE_FILTERS_SHOW')
     }
   },
   methods: {
-    showHideSort () {
-      this.visibleSortBy = !this.visibleSortBy
-    },
     changedSortBy () {
       this.$emit('changedSortBy', this.selectedSortBy)
     },
@@ -87,5 +77,7 @@ export default {
 
   .alpheios-word-usage-header-sorting {
     padding-bottom: 10px;
+    margin-top: 10px;
+    border-bottom: 1px solid var(--alpheios-border-color);
   }
 </style>

@@ -138,7 +138,7 @@
       <alph-tooltip
           :tooltip-text="l10n.getText('TOOLTIP_STATUS')"
           :tooltip-direction="tooltipDirection"
-          v-show="settings.contentOptions.items.verboseMode.currentValue === `verbose`"
+          v-show="settings.uiOptions.items.verboseMode.currentValue === `verbose`"
       >
         <span
             :class="{ active: $store.getters['ui/isActiveTab']('status') }"
@@ -300,8 +300,8 @@ export default {
     },
 
     dragEndListener () {
-      this.settings.contentOptions.items.toolbarShiftX.setValue(this.shift.x)
-      this.settings.contentOptions.items.toolbarShiftY.setValue(this.shift.y)
+      this.settings.uiOptions.items.toolbarShiftX.setValue(this.shift.x)
+      this.settings.uiOptions.items.toolbarShiftY.setValue(this.shift.y)
       // Recalculate the new position of a toolbar center
       this.xCenter = this.getXCenter()
     },

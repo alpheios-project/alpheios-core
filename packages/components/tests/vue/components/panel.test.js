@@ -24,7 +24,7 @@ import Vuex from 'vuex'
 
 import Options from '@/lib/options/options.js'
 import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
-import ContentOptionDefaults from '@/settings/content-options-defaults.json'
+import FeatureOptionDefaults from '@/settings/feature-options-defaults.json'
 import UIOptionDefaults from '@/settings/ui-options-defaults.json'
 import LocalStorageArea from '@/lib/options/local-storage-area.js'
 import TempStorageArea from '@/lib/options/temp-storage-area.js'
@@ -34,7 +34,7 @@ describe('panel.test.js', () => {
   localVue.use(Vuex)
   let store
   let api = {}
-  let contentOptions
+  let featureOptions
   let uiOptions
   let resourceOptions
   let l10nModule
@@ -55,7 +55,7 @@ describe('panel.test.js', () => {
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
 
-    contentOptions = new Options(ContentOptionDefaults, TempStorageArea)
+    featureOptions = new Options(FeatureOptionDefaults, TempStorageArea)
     uiOptions = new Options(UIOptionDefaults, LocalStorageArea)
     resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
 
@@ -125,7 +125,7 @@ describe('panel.test.js', () => {
       ui: uiAPI,
       auth: authAPI,
       settings: {
-        contentOptions,
+        featureOptions,
         uiOptions,
         resourceOptions
       }
@@ -166,7 +166,7 @@ describe('panel.test.js', () => {
   })
 
   it.skip('2 Panel - render with children components (min requirements)', () => {
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let options = new Options(FeatureOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
     const l10nModule = new L10nModule(...options)
     const store = {
@@ -263,7 +263,7 @@ describe('panel.test.js', () => {
   })
 
   it.skip('3 Panel - header tabs buttons', async () => {
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let options = new Options(FeatureOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
     let cmp = mount(Panel, {
       propsData: {
@@ -351,7 +351,7 @@ describe('panel.test.js', () => {
   })
 
   it.skip('4 Panel - header action buttons', () => {
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let options = new Options(FeatureOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
     let data = {
       tabs: {
@@ -435,7 +435,7 @@ describe('panel.test.js', () => {
   })
 
   it.skip('5 Panel - active info tab', () => {
-    let contentOptions = new Options(ContentOptionDefaults, LocalStorageArea)
+    let featureOptions = new Options(FeatureOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
     let cmp = mount(Panel, {
@@ -468,14 +468,14 @@ describe('panel.test.js', () => {
             languageCode: 'lat'
           },
 
-          settings: contentOptions.items,
+          settings: featureOptions.items,
           resourceSettings: resourceOptions.items
         }
       },
       computed: {
         'uiController': function () {
           return {
-            contentOptions: contentOptions,
+            featureOptions: featureOptions,
             resourceOptions: resourceOptions
           }
         }
@@ -504,7 +504,7 @@ describe('panel.test.js', () => {
   })
 
   it.skip('6 Panel - active definitions tab', () => {
-    let contentOptions = new Options(ContentOptionDefaults, LocalStorageArea)
+    let featureOptions = new Options(FeatureOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
     let cmp = mount(Panel, {
@@ -535,14 +535,14 @@ describe('panel.test.js', () => {
             languageCode: 'lat'
           },
 
-          settings: contentOptions.items,
+          settings: featureOptions.items,
           resourceSettings: resourceOptions.items
         }
       },
       computed: {
         'uiController': function () {
           return {
-            contentOptions: contentOptions,
+            featureOptions: featureOptions,
             resourceOptions: resourceOptions
           }
         }
@@ -562,7 +562,7 @@ describe('panel.test.js', () => {
 
   // TODO: update after inflection table changes are finalized
   it.skip('7 Panel - active inflections tab - no data', async () => {
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let options = new Options(FeatureOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
     let cmp = mount(Panel, {
@@ -627,7 +627,7 @@ describe('panel.test.js', () => {
 
   // TODO: update after inflection table changes are finalized
   it.skip('8 Panel - active inflections tab - has data', () => {
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let options = new Options(FeatureOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
     let cmp = mount(Panel, {
@@ -678,7 +678,7 @@ describe('panel.test.js', () => {
   })
 
   it.skip('9 Panel - active options tab', async () => {
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let options = new Options(FeatureOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
     let uiOptions = new Options(UIOptionDefaults, LocalStorageArea)
 
@@ -761,7 +761,7 @@ describe('panel.test.js', () => {
   })
 
   it.skip('10 Panel - active status tab', async () => {
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let options = new Options(FeatureOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
     let cmp = mount(Panel, {
@@ -802,7 +802,7 @@ describe('panel.test.js', () => {
   })
 
   it.skip('11 Panel - active treebank tab (no data)', async () => {
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let options = new Options(FeatureOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
     let cmp = mount(Panel, {
@@ -841,7 +841,7 @@ describe('panel.test.js', () => {
   })
 
   it.skip('12 Panel - active treebank tab (has data)', async () => {
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let options = new Options(FeatureOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
     let cmp = mount(Panel, {
@@ -912,7 +912,7 @@ describe('panel.test.js', () => {
   })
 
   it.skip('13 Panel - active grammar tab (has data)', async () => {
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let options = new Options(FeatureOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
     let data = {
       tabs: {
@@ -960,7 +960,7 @@ describe('panel.test.js', () => {
   })
 
   it.skip('14 Panel - notifications part (no data)', () => {
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let options = new Options(FeatureOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
     let cmp = mount(Panel, {
@@ -997,7 +997,7 @@ describe('panel.test.js', () => {
   })
 
   it.skip('15 Panel - notifications part (has data)', async () => {
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let options = new Options(FeatureOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
     let cmp = mount(Panel, {
@@ -1042,7 +1042,7 @@ describe('panel.test.js', () => {
   })
 
   it.skip('16 Panel - notifications part (has data)', async () => {
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let options = new Options(FeatureOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
     let cmp = mount(Panel, {
@@ -1106,7 +1106,7 @@ describe('panel.test.js', () => {
   })
 
   it.skip('18 Panel - check ln10Messages', () => {
-    let options = new Options(ContentOptionDefaults, LocalStorageArea)
+    let options = new Options(FeatureOptionDefaults, LocalStorageArea)
     let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
     let cmp = mount(Panel, {

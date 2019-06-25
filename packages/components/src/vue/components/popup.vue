@@ -12,9 +12,42 @@
       <div class="alpheios-popup__logo">
         <logo-icon class="alpheios-logo-on-dark"/>
       </div>
-      <div @click="ui.closePopup" class="alpheios-popup__close-btn">
-        <close-icon></close-icon>
+
+      <div class="alpheios-popup__toolbar-buttons" v-show="moduleData">
+          <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
+                        v-show="$store.getters['app/defDataReady']">
+              <div class="alpheios-popup__toolbar-top__btn">
+                <definitions-icon @click="ui.showPanelTab('definitions')" class="alpheios-navbuttons__icon" />
+              </div>
+          </alph-tooltip>
+
+          <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_INFLECTIONS')" tooltipDirection="bottom-wide"
+                        v-show="$store.state.app.hasInflData">
+            <div class="alpheios-popup__toolbar-top__btn">
+               <inflections-icon @click="ui.showPanelTab('inflections')" class="alpheios-navbuttons__icon" />
+            </div>
+          </alph-tooltip>
+
+          <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_USAGEEXAMPLES')" tooltipDirection="bottom-wide"
+                        v-show="$store.state.app.wordUsageExampleEnabled">
+                <div class="alpheios-popup__toolbar-top__btn">
+                  <word-usage-icon @click="ui.showPanelTab('wordUsage')" class="alpheios-navbuttons__icon" />
+                </div>
+          </alph-tooltip>
+
+          <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
+                        v-show="$store.getters['app/hasTreebankData']">
+                <div class="alpheios-popup__toolbar-top__btn">
+                  <treebank-icon @click="ui.showPanelTab('treebank')" class="alpheios-navbuttons__icon" />
+                </div>
+          </alph-tooltip>
+
+          <div @click="ui.closePopup" class="alpheios-popup__close-btn">
+            <close-icon></close-icon>
+          </div>
       </div>
+
+
     </div>
 
     <div class="alpheios-popup__body">
@@ -37,40 +70,6 @@
           >
             ({{$store.state.app.languageName}})
           </span>
-        </div>
-
-        <div class="alpheios-popup__toolbar-buttons">
-          <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
-                        v-show="$store.getters['app/defDataReady']">
-            <button @click="ui.showPanelTab('definitions')"
-                    class="alpheios-button-primary alpheios-popup__toolbar-button">
-              {{ l10n.getText('LABEL_POPUP_DEFINE') }}
-            </button>
-          </alph-tooltip>
-
-          <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_INFLECTIONS')" tooltipDirection="bottom-wide"
-                        v-show="$store.state.app.hasInflData">
-            <button @click="ui.showPanelTab('inflections')"
-                    class="alpheios-button-primary alpheios-popup__toolbar-button">
-              {{ l10n.getText('LABEL_POPUP_INFLECT') }}
-            </button>
-          </alph-tooltip>
-
-          <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_USAGEEXAMPLES')" tooltipDirection="bottom-wide"
-                        v-show="$store.state.app.wordUsageExampleEnabled">
-            <button @click="ui.showPanelTab('wordUsage')"
-                    class="alpheios-button-primary alpheios-popup__toolbar-button">
-              {{ l10n.getText('LABEL_POPUP_USAGEEXAMPLES') }}
-            </button>
-          </alph-tooltip>
-
-          <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
-                        v-show="$store.getters['app/hasTreebankData']">
-            <button @click="ui.showPanelTab('treebank')"
-                    class="alpheios-button-primary alpheios-popup__toolbar-button">
-              {{ l10n.getText('LABEL_POPUP_TREEBANK') }}
-            </button>
-          </alph-tooltip>
         </div>
       </div>
 
@@ -122,17 +121,21 @@
 import Morph from './morph.vue'
 import NotificationArea from './notification-area.vue'
 import interact from 'interactjs'
-import Logger from '@comp-src/lib/log/logger'
+import Logger from '@/lib/log/logger'
 
 import Tooltip from './tooltip.vue'
 import ProgressBar from './progress-bar.vue'
 // Embeddable SVG icons
-import LogoIcon from '@comp-src/images/alpheios/logo.svg'
-import CloseIcon from '@comp-src/images/inline-icons/x-close.svg'
+import LogoIcon from '@/images/alpheios/logo.svg'
+import CloseIcon from '@/images/inline-icons/x-close.svg'
+import DefinitionsIcon from '@/images/inline-icons/definitions.svg'
+import WordUsageIcon from '@/images/inline-icons/usage-examples-icon1.svg'
+import InflectionsIcon from '@/images/inline-icons/inflections.svg'
+import TreebankIcon from '@/images/inline-icons/sitemap.svg'
 
 import { directive as onClickaway } from '../directives/clickaway.js'
 // Modules support
-import DependencyCheck from '@comp-src/vue/vuex-modules/support/dependency-check.js'
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'Popup',
@@ -145,7 +148,11 @@ export default {
     closeIcon: CloseIcon,
     alphTooltip: Tooltip,
     progressBar: ProgressBar,
-    notificationArea: NotificationArea
+    notificationArea: NotificationArea,
+    definitionsIcon: DefinitionsIcon,
+    wordUsageIcon: WordUsageIcon,
+    inflectionsIcon: InflectionsIcon,
+    treebankIcon: TreebankIcon
   },
   directives: {
     onClickaway: onClickaway
@@ -182,8 +189,8 @@ export default {
 
       // How much a popup has been dragged from its initial position, in pixels
       shift: {
-        x: 0,
-        y: 0
+        x: this.moduleConfig.initialShift.x || 0,
+        y: this.moduleConfig.initialShift.y || 0
       },
 
       updateDimensionsTimeout: null,
@@ -191,12 +198,13 @@ export default {
       showProviders: false
     }
   },
-
+  props: {
+    moduleData: {
+      type: Object,
+      required: true
+    }
+  },
   created () {
-    // This is the earliest moment when data props are available
-    this.shift.x = this.moduleConfig.initialShift.x
-    this.shift.y = this.moduleConfig.initialShift.y
-
     let vm = this
     this.$on('updatePopupDimensions', function () {
       vm.updatePopupDimensions()
@@ -228,7 +236,7 @@ export default {
       }
 
       if (this.$store.getters['popup/isFixedPositioned']) {
-        return this.moduleConfig.initialPos.left
+        return this.moduleConfig.left
       }
 
       let left = this.positionLeftValue
@@ -353,7 +361,7 @@ export default {
     },
 
     verboseMode () {
-      return this.settings.contentOptions.items.verboseMode.currentValue === `verbose`
+      return this.settings.uiOptions.items.verboseMode.currentValue === `verbose`
     }
   },
 
@@ -442,8 +450,8 @@ export default {
     dragEndListener () {
       if (this.$store.getters['popup/isFixedPositioned']) {
         // Do not store shift values for flexible positioning as they will be erased after each lexical query
-        this.settings.contentOptions.items.popupShiftX.setValue(this.shift.x)
-        this.settings.contentOptions.items.popupShiftY.setValue(this.shift.y)
+        this.settings.uiOptions.items.popupShiftX.setValue(this.shift.x)
+        this.settings.uiOptions.items.popupShiftY.setValue(this.shift.y)
       }
     },
 
@@ -531,8 +539,8 @@ export default {
         this.shift = { x: 0, y: 0 }
       } else if (this.$store.getters['popup/isFixedPositioned']) {
         this.shift = {
-          x: this.settings.contentOptions.items.popupShiftX.currentValue,
-          y: this.settings.contentOptions.items.popupShiftY.currentValue
+          x: this.settings.uiOptions.items.popupShiftX.currentValue,
+          y: this.settings.uiOptions.items.popupShiftY.currentValue
         }
       }
     })
@@ -603,13 +611,43 @@ export default {
     }
   }
 
-  .alpheios-popup__close-btn {
+  .alpheios-popup__toolbar-top__btn {
     width: uisize(56px);
     height: 100%;
     cursor: pointer;
     fill: var(--alpheios-icon-color);
     stroke: var(--alpheios-icon-color);
     stroke-width: 0;
+
+    svg {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      left: uisize(16px);
+      width: uisize(32px);
+      height: auto;
+    }
+
+    &:hover,
+    &:focus {
+      fill: var(--alpheios-icon-color-hover);
+      stroke: var(--alpheios-icon-color-hover);
+      background: var(--alpheios-icon-bg-color-hover);
+    }
+
+    &:active {
+      fill: var(--alpheios-icon-color-active);
+      stroke: var(--alpheios-icon-color-active);
+      background: var(--alpheios-icon-bg-color-active);
+    }
+  }
+
+  .alpheios-popup__close-btn {
+    width: uisize(56px);
+    height: 100%;
+    cursor: pointer;
+    fill: var(--alpheios-icon-color);
+    stroke: var(--alpheios-icon-color);
 
     svg {
       position: relative;

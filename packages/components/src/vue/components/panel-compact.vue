@@ -13,7 +13,7 @@
       <div class="alpheios-panel__header-btn-group--start" >
         <div class="alpheios-panel__header-btn" :class="{ 'alpheios-navbuttons__icon-active': currentTab === 'morphology' }">
           <morphology-icon @click="changeTab('morphology')" class="alpheios-navbuttons__icon"
-            v-show="$store.state.app.morphDataReady && app.hasMorphData() && showMainTabIcons"
+            v-show="showMorphologyIcon"
           />
         </div>
         <div class="alpheios-panel__header-btn"
@@ -22,7 +22,7 @@
         >
           <definitions-icon @click="changeTab('definitions')" class="alpheios-navbuttons__icon" />
         </div>
-        <div class="alpheios-panel__header-btn"
+        <div class="alpheios-panel__header-btn alpheios-panel__header-btn--infl-data"
            v-show="$store.state.app.hasInflData && showMainTabIcons"
            :class="{ 'alpheios-navbuttons__icon-active': currentTab === 'inflections' }"
         >
@@ -34,7 +34,7 @@
         >
           <word-usage-icon @click="changeTab('wordUsage')" class="alpheios-navbuttons__icon"/>
         </div>
-        <div class="alpheios-panel__header-btn"
+        <div class="alpheios-panel__header-btn alpheios-panel__header-btn--treebank-data"
            v-show="$store.getters['app/hasTreebankData'] && showMainTabIcons"
            :class="{ 'alpheios-navbuttons__icon-active': currentTab === 'treebank' }"
         >
@@ -244,117 +244,9 @@
            v-show="$store.getters['ui/isActiveTab']('options')"
            data-alpheios-ignore="all"
       >
-        <!-- This extra container element is required for iOS browsers so that the flex option items will have height to match their content -->
-        <div class="alpheios-panel__tab-panel-options-cont">
-          <reskin-font-color></reskin-font-color>
-          <setting
-              :classes="['alpheios-panel__options-item']"
-              :data="settings.contentOptions.items.preferredLanguage"
-              @change="contentOptionChanged"
-          >
-          </setting>
-          <setting
-              :classes="['alpheios-panel__options-item']"
-              :data="settings.contentOptions.items.panelPosition"
-              @change="contentOptionChanged"
-          >
-          </setting>
-          <setting
-              :classes="['alpheios-panel__options-item']"
-              :data="settings.contentOptions.items.popupPosition"
-              @change="contentOptionChanged"
-          >
-          </setting>
-          <setting
-              :classes="['alpheios-panel__options-item']"
-              :data="settings.contentOptions.items.uiType"
-              @change="contentOptionChanged"
-          >
-          </setting>
-          <setting
-              :classes="['alpheios-panel__options-item']"
-              :data="settings.contentOptions.items.verboseMode"
-              @change="contentOptionChanged"
-          >
-          </setting>
-          <setting
-              :classes="['alpheios-panel__options-item']"
-              :data="settings.uiOptions.items.skin"
-              @change="uiOptionChanged"
-          >
-          </setting>
-          <setting
-              :classes="['alpheios-panel__options-item']"
-              :data="settings.uiOptions.items.panel"
-              @change="uiOptionChanged"
-              v-show="app.isDevMode()"
-          >
-          </setting>
-          <setting
-              :classes="['alpheios-panel__options-item']"
-              :data="settings.uiOptions.items.panelOnActivate"
-              @change="uiOptionChanged"
-          >
-          </setting>
-          <setting
-              :classes="['alpheios-panel__options-item']"
-              :data="languageSetting"
-              :key="languageSetting.name"
-              @change="resourceSettingChanged"
-              v-for="languageSetting in resourceSettingsLexicons"
-          >
-          </setting>
-          <setting
-              :classes="['alpheios-panel__options-item']"
-              :data="languageSetting"
-              :key="languageSetting.name"
-              @change="resourceSettingChanged"
-              v-for="languageSetting in resourceSettingsLexiconsShort"
-          >
-          </setting>
-
-          <setting
-              :classes="['alpheios-panel__options-item']"
-              :data="settings.contentOptions.items.enableWordUsageExamples"
-              @change="contentOptionChanged"
-          >
-          </setting>
-
-          <setting
-              :classes="['alpheios-panel__options-item']"
-              :data="settings.contentOptions.items.wordUsageExamplesON"
-              @change="contentOptionChanged"
-          >
-          </setting>
-
-          <setting
-              :classes="['alpheios-panel__options-item']"
-              :data="settings.contentOptions.items.wordUsageExamplesAuthMax"
-              @change="contentOptionChanged"
-          >
-          </setting>
-
-          <setting
-              :classes="['alpheios-panel__options-item']"
-              :data="settings.contentOptions.items.wordUsageExamplesMax"
-              @change="contentOptionChanged"
-          >
-          </setting>
-
-          <setting
-              :classes="['alpheios-panel__options-item']"
-              :data="settings.contentOptions.items.enableLemmaTranslations"
-              @change="contentOptionChanged"
-          >
-          </setting>
-
-          <setting
-              :classes="['alpheios-panel__options-item']"
-              :data="settings.contentOptions.items.locale"
-              @change="contentOptionChanged"
-          >
-          </setting>
-        </div>
+        <ui-settings></ui-settings>
+        <feature-settings></feature-settings>
+        <resource-settings></resource-settings>
         <div>
           <button @click="resetAllOptions"
               class="alpheios-button-primary">{{l10n.getText('LABEL_RESET_OPTIONS')}}
@@ -380,46 +272,46 @@
 // JS imports
 import interact from 'interactjs'
 // Support libraries
-import Platform from '@comp-src/lib/utility/platform.js'
+import Platform from '@/lib/utility/platform.js'
 // Vue components
-import NotificationArea from '@comp-src/vue/components//notification-area.vue'
+import NotificationArea from '@/vue/components//notification-area.vue'
 import Inflections from './inflections.vue'
-import Setting from './setting.vue'
 import ShortDef from './shortdef.vue'
 import Grammar from './grammar.vue'
 import Morph from './morph.vue'
 import Treebank from './treebank.vue'
 import InflectionBrowser from './inflections-browser.vue'
 import Lookup from './lookup.vue'
-import ReskinFontColor from './font-size.vue'
+import ResourceSettings from './resource-settings.vue'
+import FeatureSettings from './feature-settings.vue'
+import UISettings from './ui-settings.vue'
 import UserAuth from './user-auth.vue'
-import WordUsageExamples from '@comp-src/vue/components/word-usage-examples/word-usage-examples.vue'
+import WordUsageExamples from '@/vue/components/word-usage-examples/word-usage-examples.vue'
 import { Definition } from 'alpheios-data-models'
-import WordListPanel from '@comp-src/vue/components/word-list/word-list-panel.vue'
-import ProgressBar from '@comp-src/vue/components/progress-bar.vue'
+import WordListPanel from '@/vue/components/word-list/word-list-panel.vue'
+import ProgressBar from '@/vue/components/progress-bar.vue'
 // Embeddable SVG icons
-import CloseIcon from '@comp-src/images/inline-icons/x-close.svg'
-import UpIcon from '@comp-src/images/inline-icons/chevron-up.svg'
-import DownIcon from '@comp-src/images/inline-icons/chevron-down.svg'
-import LeftIcon from '@comp-src/images/inline-icons/chevron-left.svg'
-import RightIcon from '@comp-src/images/inline-icons/chevron-right.svg'
-
-import MorphologyIcon from '@comp-src/images/inline-icons/language.svg'
-import DefinitionsIcon from '@comp-src/images/inline-icons/definitions.svg'
-import InflectionsIcon from '@comp-src/images/inline-icons/inflections.svg'
-import WordUsageIcon from '@comp-src/images/inline-icons/usage-examples-icon1.svg'
-import InflectionsBrowserIcon from '@comp-src/images/inline-icons/inflections-browser.svg'
-import UserIcon from '@comp-src/images/inline-icons/user.svg'
-import OptionsIcon from '@comp-src/images/inline-icons/options.svg'
-import GrammarIcon from '@comp-src/images/inline-icons/resources.svg'
-import WordlistIcon from '@comp-src/images/inline-icons/wordlist-icon.svg'
-import TreebankIcon from '@comp-src/images/inline-icons/sitemap.svg'
+import CloseIcon from '@/images/inline-icons/x-close.svg'
+import UpIcon from '@/images/inline-icons/chevron-up.svg'
+import DownIcon from '@/images/inline-icons/chevron-down.svg'
+import LeftIcon from '@/images/inline-icons/chevron-left.svg'
+import RightIcon from '@/images/inline-icons/chevron-right.svg'
+import MorphologyIcon from '@/images/inline-icons/language.svg'
+import DefinitionsIcon from '@/images/inline-icons/definitions.svg'
+import InflectionsIcon from '@/images/inline-icons/inflections.svg'
+import WordUsageIcon from '@/images/inline-icons/usage-examples-icon1.svg'
+import InflectionsBrowserIcon from '@/images/inline-icons/inflections-browser.svg'
+import UserIcon from '@/images/inline-icons/user.svg'
+import OptionsIcon from '@/images/inline-icons/options.svg'
+import GrammarIcon from '@/images/inline-icons/resources.svg'
+import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
+import TreebankIcon from '@/images/inline-icons/sitemap.svg'
 
 // Vue directives
 import { directive as onClickaway } from '../directives/clickaway.js'
 
 // Modules support
-import DependencyCheck from '@comp-src/vue/vuex-modules/support/dependency-check.js'
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'PanelCompact',
@@ -439,7 +331,6 @@ export default {
     notificationArea: NotificationArea,
     inflections: Inflections,
     inflectionBrowser: InflectionBrowser,
-    setting: Setting,
     shortdef: ShortDef,
     grammar: Grammar,
     morph: Morph,
@@ -447,14 +338,15 @@ export default {
     userAuth: UserAuth,
     closeIcon: CloseIcon,
     lookup: Lookup,
-    reskinFontColor: ReskinFontColor,
+    uiSettings: UISettings,
+    resourceSettings: ResourceSettings,
+    featureSettings: FeatureSettings,
     wordListPanel: WordListPanel,
     wordUsageExamples: WordUsageExamples,
     upIcon: UpIcon,
     downIcon: DownIcon,
     leftIcon: LeftIcon,
     rightIcon: RightIcon,
-
     morphologyIcon: MorphologyIcon,
     definitionsIcon: DefinitionsIcon,
     inflectionsIcon: InflectionsIcon,
@@ -511,6 +403,9 @@ export default {
       let mainTabArray = ['morphology', 'definitions', 'inflections', 'wordUsage', 'treebank']
       return mainTabArray.includes(this.currentTab)
     },
+    showMorphologyIcon () {
+      return this.$store.state.app.morphDataReady && this.app.hasMorphData() && (this.showMainTabIcons || this.currentTab === 'grammar')
+    },
     rootClasses () {
       let classes = []
 
@@ -561,17 +456,6 @@ export default {
       return this.$store.state.app.morphDataReady && this.app.hasMorphData()
     },
 
-    resourceSettingsLexicons: function () {
-      return this.settings.resourceOptions.items && this.settings.resourceOptions.items.lexicons
-        ? this.settings.resourceOptions.items.lexicons.filter(item => item.values.length > 0)
-        : []
-    },
-    resourceSettingsLexiconsShort: function () {
-      return this.settings.resourceOptions.items && this.settings.resourceOptions.items.lexiconsShort
-        ? this.settings.resourceOptions.items.lexiconsShort.filter(item => item.values.length > 0)
-        : []
-    },
-
     additionalStylesTootipCloseIcon: function () {
       return {
         top: '2px',
@@ -580,7 +464,7 @@ export default {
     },
 
     verboseMode () {
-      return this.settings.contentOptions.items.verboseMode.currentValue === `verbose`
+      return this.settings.uiOptions.items.verboseMode.currentValue === `verbose`
     },
 
     formattedShortDefinitions () {
@@ -620,7 +504,7 @@ export default {
     },
 
     setPosition (position) {
-      this.settings.contentOptions.items.panelPosition.setValue(position)
+      this.settings.uiOptions.items.panelPosition.setValue(position)
       this.$store.commit('panel/setPosition', position)
     },
 
@@ -642,14 +526,6 @@ export default {
 
     resetAllOptions: function () {
       this.app.resetAllOptions()
-    },
-
-    resourceSettingChanged: function (name, value) {
-      this.language.resourceSettingChange(name, value)
-    },
-
-    uiOptionChanged: function (name, value) {
-      this.ui.optionChange(name, value)
     },
 
     expand () {
@@ -930,6 +806,11 @@ export default {
     display: block;
   }
 
+  .alpheios-panel__tab__treebank {
+    width: 100%;
+    height: 100%;
+  }
+
   .alpheios-panel__tab-panel-options-cont {
     display: flex;
     flex-direction: column;
@@ -1044,6 +925,13 @@ export default {
 
     .alpheios-panel__close-btn {
       margin-left: calc(var(--alpheios-base-ui-size) * 0.75);
+    }
+  }
+
+  @media screen and (max-width: 360px) {
+    .alpheios-panel__header-btn--infl-data,
+    .alpheios-panel__header-btn--treebank-data {
+      display: none;
     }
   }
 

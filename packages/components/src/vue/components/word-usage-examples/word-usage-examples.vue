@@ -5,16 +5,19 @@
     </div>
 
     <div class="alpheios-word-usage-header" data-alpheios-ignore="all" v-show="showHeader">
+      
       <word-usage-examples-filters
         :collapsedHeader = "collapsedHeader"
         @filterCurrentByAuthor = "filterCurrentByAuthor"
         @getMoreResults = "getMoreResults"
         @getAllResults = "getAllResults"
       ></word-usage-examples-filters>
+
       <word-usage-examples-sorting
         @changedSortBy = "changedSortBy"
         :collapsedHeader = "collapsedHeader"
       ></word-usage-examples-sorting>
+
     </div>
 
     <div class="alpheios_word_usage_list_mainblock" v-if="showWordUsageExampleItems">
@@ -119,8 +122,7 @@ export default {
     },
     showHeader () {
       return Boolean(this.selectedAuthor) ||
-             this.showWordUsageExampleItems && this.wordUsageListSorted.length > 0 ||
-             !this.$store.state.app.wordUsageExamplesReady
+             this.showWordUsageExampleItems && this.wordUsageListSorted.length > 0 
     },
     showWordUsageExampleItems () {
       if (!this.$store.state.app.wordUsageExamplesReady) {
@@ -153,7 +155,7 @@ export default {
       // eventually sorting should also take language into account but
       // for now we will probably only show Latin author and work names anyway
       if (this.showWordUsageExampleItems && this.wordUsageExamples) {
-        return this.sortWordUSageExamplesBy()
+        return this.sortWordUsageExamplesBy()
       }
       return []
     },
@@ -179,8 +181,7 @@ export default {
       this.needInnerFilter = false
     },
     getAllResults () {
-      this.selectedAuthor = null
-      this.selectedTextWork = null
+      this.setAuthorTextWork(null, null)
       this.needInnerFilter = false
       this.collapsedHeader = true
     },
@@ -198,7 +199,7 @@ export default {
           return a.fullCit().toUpperCase()
       }
     },
-    sortWordUSageExamplesBy () {
+    sortWordUsageExamplesBy () {
       return this.wordUsageExamples.sort((a, b) => {
         let aU = this.getPropertyBySortBy(a, this.sortBy)
         let bU = this.getPropertyBySortBy(b, this.sortBy)
@@ -249,10 +250,6 @@ export default {
 
       padding: 10px 0;
       font-size: 80%;
-    }
-
-    .alpheios-word-usage-header  {
-      border-bottom: 1px solid var(--alpheios-border-color);
     }
 
     .alpheios-word-usage-header-select-author,

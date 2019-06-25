@@ -1,5 +1,5 @@
 {
-  "domain": "alpheios-content-options",
+  "domain": "alpheios-feature-options",
   "items": {
     "enableLemmaTranslations": {
       "defaultValue": false,
@@ -96,72 +96,6 @@
       "maxValue": 1000,
       "values": []
     },
-    "panelPosition": {
-      "defaultValue": "left",
-      "labelText": "Panel position:",
-      "values": [
-        {
-          "value": "left",
-          "text": "Left"
-        },
-        {
-          "value": "right",
-          "text": "Right"
-        }
-      ]
-    },
-    "popupPosition": {
-      "defaultValue": "fixed",
-      "labelText": "Popup position:",
-      "values": [
-        {
-          "value": "flexible",
-          "text": "Flexible"
-        },
-        {
-          "value": "fixed",
-          "text": "Fixed"
-        }
-      ]
-    },
-    "popupShiftX": {
-      "defaultValue": 0,
-      "labelText": "Popup shift, x axe:",
-      "number": true,
-      "values": []
-    },
-    "popupShiftY": {
-      "defaultValue": 0,
-      "labelText": "Popup shift, y axe:",
-      "number": true,
-      "values": []
-    },
-    "toolbarShiftX": {
-      "defaultValue": 0,
-      "labelText": "Toolbar shift, x axe:",
-      "number": true,
-      "values": []
-    },
-    "toolbarShiftY": {
-      "defaultValue": 0,
-      "labelText": "Toolbar shift, y axe:",
-      "number": true,
-      "values": []
-    },
-    "uiType": {
-      "defaultValue": "popup",
-      "labelText": "UI type:",
-      "values": [
-        {
-          "value": "popup",
-          "text": "Pop-up"
-        },
-        {
-          "value": "panel",
-          "text": "Panel"
-        }
-      ]
-    },
     "preferredLanguage": {
       "defaultValue": "lat",
       "labelText": "Page language:",
@@ -217,20 +151,6 @@
           "value": "gez",
           "text": "Ancient Ethiopic (Ge'ez - Experimental)"
 
-        }
-      ]
-    },
-    "verboseMode": {
-      "defaultValue": "normal",
-      "labelText": "Log Level",
-      "values": [
-        {
-          "value": "verbose",
-          "text": "Verbose"
-        },
-        {
-          "value": "normal",
-          "text": "Normal"
         }
       ]
     }

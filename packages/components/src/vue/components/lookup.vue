@@ -63,6 +63,7 @@ import Setting from './setting.vue'
 export default {
   name: 'Lookup',
   inject: ['app', 'ui', 'l10n', 'settings'],
+  storeModules: ['app'],
   components: {
     alphSetting: Setting,
     lookupIcon: LookupIcon
@@ -103,26 +104,26 @@ export default {
   created: function () {
     if (this.usePageLangPrefs) {
       // Use language settings of a page
-      this.$options.lookupLanguage = this.settings.contentOptions.items.preferredLanguage
+      this.$options.lookupLanguage = this.settings.featureOptions.items.preferredLanguage
       this.$options.resourceOptions = this.settings.resourceOptions
     } else {
       // Use lookup language settings
-      this.$options.lookupLanguage = this.settings.contentOptions.items.lookupLanguage
+      this.$options.lookupLanguage = this.settings.featureOptions.items.lookupLanguage
       this.$options.resourceOptions = this.settings.lookupResourceOptions
     }
   },
 
   computed: {
-    currentLanguage: function () {
+    currentLanguage () {
       const selectedValue = this.$options.lookupLanguage.currentTextValue()
       // langUpdated is included into the condition to force Vue to recalculate value
       // every time language settings are updated
       return (this.langUpdated && selectedValue === 'Default')
-        ? this.settings.contentOptions.items.preferredLanguage.currentItem()
+        ? this.settings.featureOptions.items.preferredLanguage.currentItem()
         : this.$options.lookupLanguage.currentItem()
     },
 
-    lexiconsFiltered: function () {
+    lexiconsFiltered () {
       let lang = this.$options.lookupLanguage.values.filter(v => v.text === this.currentLanguage.text)
       let settingName
       if (lang.length > 0) {
@@ -132,7 +133,13 @@ export default {
       return this.$options.resourceOptions.items.lexiconsShort.filter((item) => item.name === settingName)
     }
   },
-
+  watch: {
+    '$store.state.app.morphDataReady' (morphDataReady) {
+      if (morphDataReady && this.app.hasMorphData()) {
+        this.lookuptext = ''
+      }
+    }
+  },
   methods: {
     lookup: function () {
       if (this.lookuptext.length === 0) {
@@ -153,8 +160,8 @@ export default {
       const lemmaTranslationLang = this.app.state.lemmaTranslationLang
 
       const wordUsageExamples = this.app.enableWordUsageExamples(textSelector, 'onLexicalQuery')
-        ? { paginationMax: this.settings.contentOptions.items.wordUsageExamplesMax.currentValue,
-          paginationAuthMax: this.settings.contentOptions.items.wordUsageExamplesAuthMax.currentValue }
+        ? { paginationMax: this.settings.featureOptions.items.wordUsageExamplesMax.currentValue,
+          paginationAuthMax: this.settings.featureOptions.items.wordUsageExamplesAuthMax.currentValue }
         : null
 
       let lexQuery = LexicalQueryLookup
@@ -176,9 +183,6 @@ export default {
         default:
           console.warn(`Unknown afterLookupAction value: ${this.showResultsIn}`)
       }
-
-      // Clear the lookup text when the lookup started
-      this.lookuptext = ''
     },
 
     settingChange: function (name, value) {

@@ -54,23 +54,4 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../../styles/variables";
-
-  .alpheios-wordlist-commands {
-    border-bottom: 1px solid var(--alpheios-border-color);
-  }
-  .alpheios-wordlist-commands .alpheios-wordlist-commands__item {
-    width: 15px;
-    height: 15px;
-    display: inline-block;
-    text-align: center;
-    cursor: pointer;
-    margin: 0 5px 10px;
-    svg {
-      width: 15px;
-      height: 15px;
-      display: inline-block;
-      vertical-align: top;
-    }
-  }
 </style>

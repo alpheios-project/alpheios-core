@@ -204,17 +204,20 @@ export default {
     .alpheios-wordlist-commands {
       border-bottom: 1px solid var(--alpheios-border-color);
     }
+
+    $iconsize: 25px;
+
     .alpheios-wordlist-commands .alpheios-wordlist-commands__item {
-      width: 15px;
-      height: 15px;
+      width: $iconsize;
+      height: $iconsize;
       display: inline-block;
       vertical-align: middle;
       text-align: center;
       cursor: pointer;
       margin: 0 5px 10px;
       svg {
-        width: 15px;
-        height: 15px;
+        width: $iconsize;
+        height: $iconsize;
         display: inline-block;
         vertical-align: top;
       }
