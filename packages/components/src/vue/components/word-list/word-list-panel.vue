@@ -17,8 +17,8 @@
   </div>
 </template>
 <script>
-import WordLanguagePanel from '@comp-src/vue/components/word-list/word-language-panel.vue'
-import WordContextPanel from '@comp-src/vue/components/word-list/word-context-panel.vue'
+import WordLanguagePanel from '@/vue/components/word-list/word-language-panel.vue'
+import WordContextPanel from '@/vue/components/word-list/word-context-panel.vue'
 
 export default {
   name: 'WordListPanel',

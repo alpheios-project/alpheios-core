@@ -1,5 +1,5 @@
-import UIStateAPI from '@comp-src/lib/state/ui-state-api.js'
-import Tab from '@comp-src/lib/state/tab.js'
+import UIStateAPI from '@/lib/state/ui-state-api.js'
+import Tab from '@/lib/state/tab.js'
 /**
  * Contains a state of a tab (page) content script.
  * @property {Number} tabID - An ID of a tab where the content script is loaded

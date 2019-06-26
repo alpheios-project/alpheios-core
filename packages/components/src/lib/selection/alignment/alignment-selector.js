@@ -1,4 +1,4 @@
-import PointerEvt from '@comp-src/lib/custom-pointer-events/pointer-evt'
+import PointerEvt from '@/lib/custom-pointer-events/pointer-evt'
 import jump from 'jump.js'
 
 /**

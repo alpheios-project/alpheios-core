@@ -20,7 +20,7 @@ const webpack = {
         'alpheios-wordlist': path.join(projectRoot, 'node_modules/alpheios-wordlist/dist/alpheios-wordlist.js'),
         'vue-multiselect-css': path.join(projectRoot, 'node_modules/vue-multiselect/dist/vue-multiselect.min.css'),
         '@vue-runtime': path.join(projectRoot, 'node_modules/vue/dist/vue.runtime.esm.js'),
-        '@comp-src': path.join(projectRoot, 'src')
+        '@': path.join(projectRoot, 'src')
       }
     },
     externals: {

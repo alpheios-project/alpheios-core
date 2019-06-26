@@ -75,9 +75,9 @@
     </div>
 </template>
 <script>
-  import ClearFilters from '@comp-src/images/inline-icons/clear-filters.svg'
-  import GoIcon from '@comp-src/images/inline-icons/go-icon.svg'
-  import Tooltip from '@comp-src/vue/components/tooltip.vue'
+  import ClearFilters from '@/images/inline-icons/clear-filters.svg'
+  import GoIcon from '@/images/inline-icons/go-icon.svg'
+  import Tooltip from '@/vue/components/tooltip.vue'
 
   export default {
     name: 'WordFilterPanel',

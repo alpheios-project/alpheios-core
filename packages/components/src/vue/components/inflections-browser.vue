@@ -533,7 +533,7 @@ import { Constants } from 'alpheios-data-models'
 
 import WideTable from './inflections-table-wide.vue'
 // Modules support
-import DependencyCheck from '@comp-src/vue/vuex-modules/support/dependency-check.js'
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'InflectionStandardForms',

@@ -53,10 +53,10 @@
   </div>
 </template>
 <script>
-import TextSelector from '@comp-src/lib/selection/text-selector'
-import LexicalQueryLookup from '@comp-src/lib/queries/lexical-query-lookup'
+import TextSelector from '@/lib/selection/text-selector'
+import LexicalQueryLookup from '@/lib/queries/lexical-query-lookup'
 import { LanguageModelFactory } from 'alpheios-data-models'
-import LookupIcon from '@comp-src/images/inline-icons/lookup.svg'
+import LookupIcon from '@/images/inline-icons/lookup.svg'
 
 import Setting from './setting.vue'
 

@@ -40,7 +40,7 @@
     "alpheios-data-models": "github:alpheios-project/data-models",
     "alpheios-experience": "github:alpheios-project/experience",
     "alpheios-inflection-tables": "github:alpheios-project/inflection-tables",
-    "alpheios-node-build": "file:../node-build",
+    "alpheios-node-build": "github:alpheios-project/node-build",
     "alpheios-res-client": "github:alpheios-project/res-client",
     "alpheios-wordlist": "github:alpheios-project/wordlist",
     "autoprefixer": "^9.6.0",
@@ -55,7 +55,7 @@
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-node": "^9.1.0",
-    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^5.2.3",
     "espree": "^5.0.1",
@@ -146,6 +146,6 @@
     "vue-svg-loader": "^0.12.0",
     "vue-template-compiler": "^2.6.10",
     "vue-template-loader": "^1.0.0",
-    "webpack": "^4.32.2"
+    "webpack": "^4.35.0"
   }
 }

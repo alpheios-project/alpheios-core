@@ -15,7 +15,7 @@
 </template>
 <script>
 import Login from './login.vue'
-import CloseIcon from '@comp-src/images/inline-icons/x-close.svg'
+import CloseIcon from '@/images/inline-icons/x-close.svg'
 
 export default {
   name: 'UserAuth',

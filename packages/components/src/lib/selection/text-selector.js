@@ -1,6 +1,6 @@
 import { LanguageModelFactory, TextQuoteSelector } from 'alpheios-data-models'
 
-import HTMLSelector from '@comp-src/lib/selection/media/html-selector'
+import HTMLSelector from '@/lib/selection/media/html-selector'
 /**
  * This is a general-purpose, media abstract selector.
  * @property {string} selectedText - Selected text (usually a single word)

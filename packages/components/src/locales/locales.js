@@ -4,7 +4,7 @@ import EnUsInflectons from './en-us/messages-inflections.json'
 import EnUsWordList from './en-us/messages-word-list.json'
 import EnUsWordUsage from './en-us/messages-word-usage.json'
 import EnGb from './en-gb/messages.json'
-import MessageBundle from '@comp-src/lib/l10n/message-bundle.js'
+import MessageBundle from '@/lib/l10n/message-bundle.js'
 
 const localeEnUs = 'en-US'
 const localeEnGb = 'en-GB'

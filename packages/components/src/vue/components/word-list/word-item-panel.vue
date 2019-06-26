@@ -41,11 +41,11 @@
     </div>
 </template>
 <script>
-import CheckIcon from '@comp-src/images/inline-icons/check.svg'
-import DeleteIcon from '@comp-src/images/inline-icons/delete.svg'
-import TextQuoteIcon from '@comp-src/images/inline-icons/text-quote.svg'
-import CurrentSessionIcon from '@comp-src/images/inline-icons/current-session.svg'
-import Tooltip from '@comp-src/vue/components/tooltip.vue'
+import CheckIcon from '@/images/inline-icons/check.svg'
+import DeleteIcon from '@/images/inline-icons/delete.svg'
+import TextQuoteIcon from '@/images/inline-icons/text-quote.svg'
+import CurrentSessionIcon from '@/images/inline-icons/current-session.svg'
+import Tooltip from '@/vue/components/tooltip.vue'
 
 export default {
   name: 'WordItemBlock',

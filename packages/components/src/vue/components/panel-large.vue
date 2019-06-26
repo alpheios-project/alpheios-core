@@ -173,14 +173,14 @@
 // JS imports
 import interact from 'interactjs'
 // UI components
-import NavbuttonsLarge from '@comp-src/vue/components/nav/navbuttons-large.vue'
+import NavbuttonsLarge from '@/vue/components/nav/navbuttons-large.vue'
 // SVG icons
-import LogoIcon from '@comp-src/images/alpheios/logo.svg'
-import SwapPosition from '@comp-src/images/inline-icons/swap-horizontally.svg'
+import LogoIcon from '@/images/alpheios/logo.svg'
+import SwapPosition from '@/images/inline-icons/swap-horizontally.svg'
 // Vue components
-import CompactPanel from '@comp-src/vue/components/panel-compact.vue'
-import Tooltip from '@comp-src/vue/components/tooltip.vue'
-import Info from '@comp-src/vue/components/info.vue'
+import CompactPanel from '@/vue/components/panel-compact.vue'
+import Tooltip from '@/vue/components/tooltip.vue'
+import Info from '@/vue/components/info.vue'
 
 export default {
   name: 'PanelLarge',

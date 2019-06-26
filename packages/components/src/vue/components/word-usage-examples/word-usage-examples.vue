@@ -85,10 +85,10 @@
   </div>
 </template>
 <script>
-import WordUsageExamplesFilters from '@comp-src/vue/components/word-usage-examples/word-usage-examples-filters.vue'
-import WordUsageExamplesSorting from '@comp-src/vue/components/word-usage-examples/word-usage-examples-sorting.vue'
+import WordUsageExamplesFilters from '@/vue/components/word-usage-examples/word-usage-examples-filters.vue'
+import WordUsageExamplesSorting from '@/vue/components/word-usage-examples/word-usage-examples-sorting.vue'
 
-import DependencyCheck from '@comp-src/vue/vuex-modules/support/dependency-check.js'
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'WordUsageExamples',

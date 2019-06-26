@@ -45,13 +45,13 @@
 </template>
 <script>
 // Vue components
-import Tooltip from '@comp-src/vue/components/tooltip.vue'
+import Tooltip from '@/vue/components/tooltip.vue'
 // Embeddable SVG icons
-import MorphologyIcon from '@comp-src/images/inline-icons/language.svg'
-import DefinitionsIcon from '@comp-src/images/inline-icons/definitions.svg'
-import InflectionsIcon from '@comp-src/images/inline-icons/inflections.svg'
+import MorphologyIcon from '@/images/inline-icons/language.svg'
+import DefinitionsIcon from '@/images/inline-icons/definitions.svg'
+import InflectionsIcon from '@/images/inline-icons/inflections.svg'
 // Modules support
-import DependencyCheck from '@comp-src/vue/vuex-modules/support/dependency-check.js'
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'NavbuttonsCompact',

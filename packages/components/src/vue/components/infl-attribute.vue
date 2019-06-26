@@ -4,7 +4,7 @@
 </template>
 <script>
 // Modules support
-import DependencyCheck from '@comp-src/vue/vuex-modules/support/dependency-check.js'
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'InflectionAttribute',
