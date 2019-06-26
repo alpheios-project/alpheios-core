@@ -13,7 +13,7 @@
         <logo-icon class="alpheios-logo-on-dark"/>
       </div>
 
-      <div class="alpheios-popup__toolbar-buttons" v-show="moduleData">
+      <div class="alpheios-popup__toolbar-buttons">
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
                         v-show="$store.getters['app/defDataReady']">
               <div class="alpheios-popup__toolbar-top__btn">
@@ -189,8 +189,8 @@ export default {
 
       // How much a popup has been dragged from its initial position, in pixels
       shift: {
-        x: this.moduleConfig.initialShift.x || 0,
-        y: this.moduleConfig.initialShift.y || 0
+        x: 0,
+        y: 0
       },
 
       updateDimensionsTimeout: null,
@@ -198,13 +198,12 @@ export default {
       showProviders: false
     }
   },
-  props: {
-    moduleData: {
-      type: Object,
-      required: true
-    }
-  },
+
   created () {
+    // This is the earliest moment when data props are available
+    this.shift.x = this.moduleConfig.initialShift.x
+    this.shift.y = this.moduleConfig.initialShift.y
+
     let vm = this
     this.$on('updatePopupDimensions', function () {
       vm.updatePopupDimensions()
@@ -236,7 +235,7 @@ export default {
       }
 
       if (this.$store.getters['popup/isFixedPositioned']) {
-        return this.moduleConfig.left
+        return this.moduleConfig.initialPos.left
       }
 
       let left = this.positionLeftValue

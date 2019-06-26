@@ -200,8 +200,8 @@ export default {
 
       // How much an action panel has been dragged from its initial position, in pixels
       shift: {
-        x: 0, // this.moduleData.initialShift.x,
-        y: 0 // this.moduleData.initialShift.y
+        x: 0, // this.moduleConfig.initialShift.x,
+        y: 0 // this.moduleConfig.initialShift.y
       },
 
       tooltipDirection: 'top'
