@@ -1,4 +1,3 @@
-/* global Node */
 /**
  * An auxiliary utility class to provide HTML page, window, and document related functionality.
  */

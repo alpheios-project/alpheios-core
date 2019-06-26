@@ -1,4 +1,4 @@
-import Vue from '@vue-runtime' // Vue in a runtime + compiler configuration
+import Vue from '@vue-runtime'
 import Module from '@/vue/vuex-modules/module.js'
 import Popup from '@/vue/components/popup.vue'
 import Platform from '@/lib/utility/platform.js'

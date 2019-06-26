@@ -44245,7 +44245,6 @@ class UIStateAPI {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return HTMLPage; });
-/* global Node */
 /**
  * An auxiliary utility class to provide HTML page, window, and document related functionality.
  */
@@ -49550,7 +49549,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/vuex-modules/module.js */ "./vue/vuex-modules/module.js");
 /* harmony import */ var _vue_components_popup_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/components/popup.vue */ "./vue/components/popup.vue");
 /* harmony import */ var _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/lib/utility/platform.js */ "./lib/utility/platform.js");
- // Vue in a runtime + compiler configuration
+
 
 
 
