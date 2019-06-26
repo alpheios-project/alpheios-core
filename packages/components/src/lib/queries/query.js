@@ -38,7 +38,6 @@ export default class Query {
 
     let query = new constructor(constructor.name, selector, options)
     queries[query.name].set(query.ID, query)
-    // console.log(`An instance of ${query.name} has been created`)
     return query
   }
 
@@ -47,7 +46,6 @@ export default class Query {
    * @param {Query} query - A query to be destroyed.
    */
   static destroy (query) {
-    // console.log(`Destroying a ${query.name} instance`)
     queries[query.name].delete(query.ID)
   }
 

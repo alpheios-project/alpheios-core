@@ -29,6 +29,7 @@ import GenericEvt from '@/lib/custom-pointer-events/generic-evt.js'
 import Options from '@/lib/options/options.js'
 import LocalStorage from '@/lib/options/local-storage-area.js'
 import UIEventController from '@/lib/controllers/ui-event-controller.js'
+import QueryParams from '@/lib/utility/query-params.js'
 
 const languageNames = new Map([
   [Constants.LANG_LATIN, 'Latin'],
@@ -328,6 +329,8 @@ export default class UIController {
 
   async init () {
     if (this.isInitialized) { return `Already initialized` }
+    // Get query parameters from the URL
+    this.queryParams = QueryParams.parse()
     // Start loading options as early as possible
     this.featureOptions = new Options(this.featureOptionsDefaults, this.options.storageAdapter)
     this.resourceOptions = new Options(this.resourceOptionsDefaults, this.options.storageAdapter)
@@ -370,6 +373,8 @@ export default class UIController {
       inflectionsViewSet: null,
       wordUsageExamples: null,
       wordUsageAuthors: [],
+      // Exposes parsed query parameters to other components
+      queryParams: this.queryParams,
 
       isDevMode: () => {
         return this.options.mode === 'development'

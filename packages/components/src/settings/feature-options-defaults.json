@@ -89,7 +89,7 @@
       "values": []
     },
     "wordUsageExamplesMax": {
-      "defaultValue": 500,
+      "defaultValue": 5000,
       "labelText": "Word Usage Examples - max results for single author request",
       "number": true,
       "minValue": 1,

@@ -19,7 +19,6 @@ export default {
     */
     srcURL: function () {
       if (this.$store.getters['ui/isActiveTab']('treebank')) {
-        console.log(this.$store.getters['ui/isActiveTab'])
         /*
         The arethusa application can't initialize itself properly
         if it's not visible, so we wait to update the src url of the

@@ -13,7 +13,10 @@
       </div>
 
       <div v-show="authorsList && typeFilter !== 'noFilters'" class="alpheios-word-usage-filters-select">
-        <select class="alpheios-select alpheios-word-usage-header-select-author" v-model="selectedAuthor">
+        <select class="alpheios-select alpheios-word-usage-header-select-author" 
+                v-model="selectedAuthor"
+                @change = "getResults"
+        >
             <option
                 v-for="(authorItem, authorIndex) in lastAuthorsList" v-bind:key="authorIndex"
                 v-bind:value="authorItem"
@@ -33,7 +36,9 @@
 
       <div v-if="this.selectedAuthor && typeFilter !== 'noFilters'" class="alpheios-word-usage-filters-select">
         <select class="alpheios-select alpheios-word-usage-header-select-textwork"
-                v-model="selectedTextWork">
+                v-model="selectedTextWork"
+                @change = "getResults"
+        >
           <option
               v-for="(workItem, workIndex) in filteredWorkList" v-bind:key="workIndex"
               v-bind:value="workItem"
@@ -94,12 +99,6 @@ export default {
           this.getResults()
         }
       }
-    },
-    selectedAuthor (value) {
-      this.getResults()
-    },
-    selectedTextWork (value) {
-      this.getResults()
     }
   },
   computed: {

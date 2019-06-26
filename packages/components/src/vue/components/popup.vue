@@ -626,6 +626,7 @@ export default {
       left: uisize(16px);
       width: uisize(32px);
       height: auto;
+      stroke-width: 1;
     }
 
     &:hover,

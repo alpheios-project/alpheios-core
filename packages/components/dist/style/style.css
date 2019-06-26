@@ -1545,6 +1545,7 @@ select.alpheios-setting__control,
   left: calc(var(--alpheios-base-ui-size) * 1);
   width: calc(var(--alpheios-base-ui-size) * 2);
   height: auto;
+  stroke-width: 1;
 }
 .alpheios-popup__toolbar-top__btn:hover, .alpheios-popup__toolbar-top__btn:focus {
   fill: var(--alpheios-icon-color-hover);
@@ -2559,9 +2560,6 @@ h3.alpheios-inflections__credits-title {
 .alpheios-word-usage__examples-show-sources-btn {
   margin: 40px 0 20px;
 }
-.alpheios-panel--large .alpheios-word-usage__examples-show-sources-btn {
-  display: none;
-}
 .alpheios-word-usage a.alpheios-word-usage__examples-source-link-large {
   grid-column: 1/4;
   color: var(--alpheios-link-color-on-light);
@@ -2576,6 +2574,11 @@ h3.alpheios-inflections__credits-title {
 }
 .alpheios-word-usage a.alpheios-word-usage__examples-source-link-compact-text {
   color: var(--alpheios-link-color-on-light);
+}
+.alpheios-word-usage__examples-pre, .alpheios-word-usage__examples-target-word, .alpheios-word-usage__examples-post {
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--alpheios-border-color);
+  white-space: nowrap;
 }
 .alpheios-word-usage__examples-pre {
   grid-column: 1;
@@ -2595,18 +2598,6 @@ h3.alpheios-inflections__credits-title {
   text-align: left;
   border-bottom: 1px solid var(--alpheios-border-color);
 }
-.alpheios-word-usage__examples-pre, .alpheios-word-usage__examples-target-word, .alpheios-word-usage__examples-post {
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--alpheios-border-color);
-  white-space: nowrap;
-}
-.alpheios-word-usage__examples--sources-visible .alpheios-word-usage__examples-pre, .alpheios-word-usage__examples--sources-visible .alpheios-word-usage__examples-target-word, .alpheios-word-usage__examples--sources-visible .alpheios-word-usage__examples-post {
-  padding-bottom: 5px;
-  border-bottom: none;
-}
-.alpheios-panel--compact .alpheios-word-usage__examples-source-link-large {
-  display: none;
-}
 .alpheios-word-usage .alpheios-word-usage-header-show-link {
   cursor: pointer;
   color: var(--alpheios-color-vivid);
@@ -2614,6 +2605,9 @@ h3.alpheios-inflections__credits-title {
 .alpheios-word-usage .alpheios-word-usage-header-show-link:hover {
   text-decoration: underline;
   color: var(--alpheios-color-vivid-hover);
+}
+.alpheios-word-usage__examples-show-sources-btn {
+  display: none;
 }
 .alpheios-layout-compact .alpheios-word-usage-header-select-type-filters-block .alpheios-word-usage-header-select-type-filter {
   display: inline-block;
@@ -2636,6 +2630,15 @@ h3.alpheios-inflections__credits-title {
 }
 .alpheios-layout-compact .alpheios-word-usage__examples-show-sources-btn {
   margin: 20px 0;
+}
+.alpheios-layout-compact .alpheios-word-usage__examples-source-link-large {
+  display: none;
+}
+.alpheios-layout-compact .alpheios-word-usage__examples-show-sources-btn {
+  display: inline-block;
+}
+.alpheios-layout-compact .alpheios-word-usage__examples--sources-visible .alpheios-word-usage__examples-source-link-large {
+  display: block;
 }
 /*
  Calculates a size of text elements relative to the base size.
