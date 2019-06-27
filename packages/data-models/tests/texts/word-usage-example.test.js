@@ -71,7 +71,39 @@ describe('word-usage-example.test.js', () => {
     expect(wordUsageExample.fullCit()).toEqual('Virgil Aeneid. 484') // gets from cit
 
     wordUsageExample.author = undefined
-    expect(wordUsageExample.fullCit()).toEqual('Virgil.Aeneid.484')
+    expect(wordUsageExample.fullCit()).toEqual('Virgil. Aeneid. 484')
+  })
+
+  it('3.1 WordUsageExample - fullCit constructs full description of author + textWork + citNumber - long cit name', () => {
+  // PlinSen.Nat.34.26.5 Gaius Plinius Secundus Naturalis Historia 34
+    let testAuthor = new Author('foourn', { eng: 'Gaius Plinius Secundus' }, { eng: 'PlinSen.' })
+    let testTextWork = new TextWork(testAuthor, 'foourn', { eng: 'Naturalis Historia' }, { eng: 'Nat.' })
+
+    let wordUsageExample = new WordUsageExample('usque', 'lat')
+    wordUsageExample.author = testAuthor
+    wordUsageExample.textWork = testTextWork
+    wordUsageExample.cit = 'PlinSen.Nat.34.26.5'
+
+    expect(wordUsageExample.fullCit()).toEqual('Gaius Plinius Secundus Naturalis Historia 34.26.5')
+  })
+
+  it('3.2 WordUsageExample - fullCit constructs full description of author + textWork + citNumber - no author', () => {
+    // PlinSen.Nat.34.26.5 Gaius Plinius Secundus Naturalis Historia 34
+    let wordUsageExample = new WordUsageExample('usque', 'lat')
+    wordUsageExample.cit = 'PlinSen.Nat.34.26.5'
+
+    expect(wordUsageExample.fullCit()).toEqual('PlinSen. Nat. 34.26.5')
+  })
+
+  it('3.3 WordUsageExample - fullCit constructs full description of author + textWork + citNumber - no text work', () => {
+    // PlinSen.Nat.34.26.5 Gaius Plinius Secundus Naturalis Historia 34
+    let testAuthor = new Author('foourn', { eng: 'Gaius Plinius Secundus' }, { eng: 'PlinSen.' })
+
+    let wordUsageExample = new WordUsageExample('usque', 'lat')
+    wordUsageExample.author = testAuthor
+    wordUsageExample.cit = 'PlinSen.Nat.34.26.5'
+
+    expect(wordUsageExample.fullCit()).toEqual('Gaius Plinius Secundus Nat. 34.26.5')
   })
 
   it('4 WordUsageExample - authorForSort returns author title in upper case, and the first part of the cit otherwise', () => {

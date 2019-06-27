@@ -5085,24 +5085,46 @@ class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MOD
   * @returns {String}
   */
   fullCit (lang) {
-    let res = ''
-    if (this.author) {
-      res = this.author.title(lang)
-      if (this.textWork) {
-        res = res + ' ' + this.textWork.title(lang)
-      } else {
-        if (this.cit && this.cit.split('.') && this.cit.split('.').length >= 2) {
-          res = res + ' ' + this.cit.split('.')[1] + '.'
-        }
-      }
-
-      if (this.cit && this.cit.split('.') && this.cit.split('.').length >= 3) {
-        res = res + ' ' + this.cit.split('.')[2]
-      }
-    } else {
-      res = this.cit
+    if (!this.cit) {
+      return ''
     }
-    return res
+
+    let citSplitArr = this.cit.split('.')
+    let finalFullCit = ''
+
+    if (!lang) {
+      finalFullCit = this.formattedAuthor + ' ' + this.formattedTextWork + ' ' + this.formattedPassage
+    } else {
+      finalFullCit = this.author ? this.author.title(lang) : citSplitArr[0] + '.'
+      finalFullCit = finalFullCit + ' ' + (this.textWork ? this.textWork.title(lang) : citSplitArr[1] + '.')
+      finalFullCit = finalFullCit + ' ' + this.formattedPassage
+    }
+
+    return finalFullCit.trim()
+  }
+
+  get formattedAuthor () {
+    if (!this.cit) {
+      return ''
+    }
+    let citSplitArr = this.cit.split('.')
+    return this.author ? this.author.title() : citSplitArr[0] + '.'
+  }
+
+  get formattedTextWork () {
+    if (!this.cit) {
+      return ''
+    }
+    let citSplitArr = this.cit.split('.')
+    return this.textWork ? this.textWork.title() : citSplitArr[1] + '.'
+  }
+
+  get formattedPassage () {
+    if (!this.cit) {
+      return ''
+    }
+    let citSplitArr = this.cit.split('.')
+    return citSplitArr.slice(2).join('.')
   }
 
   authorForSort (lang) {
