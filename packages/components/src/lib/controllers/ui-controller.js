@@ -31,6 +31,8 @@ import LocalStorage from '@/lib/options/local-storage-area.js'
 import UIEventController from '@/lib/controllers/ui-event-controller.js'
 import QueryParams from '@/lib/utility/query-params.js'
 
+console.info(`UI controller's module is loaded`)
+
 const languageNames = new Map([
   [Constants.LANG_LATIN, 'Latin'],
   [Constants.LANG_GREEK, 'Greek'],

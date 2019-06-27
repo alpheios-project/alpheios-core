@@ -23,7 +23,7 @@ const webpack = {
         '@': path.join(projectRoot, 'src')
       }
     },
-    externals: {
+    /*externals: {
       'alpheios-client-adapters': 'alpheios-client-adapters',
       'alpheios-wordlist': 'alpheios-wordlist',
       'alpheios-data-models': 'alpheios-data-models',
@@ -31,7 +31,7 @@ const webpack = {
       'alpheios-experience': 'alpheios-experience',
       'alpheios-res-client': 'alpheios-res-client',
       'intl-messageformat': 'intl-messageformat'
-    },
+    },*/
     plugins: [
       new VueLoaderPlugin()
     ]
@@ -44,7 +44,10 @@ const webpack = {
 
   development: {
     mode: 'development',
-    output: { filename: 'alpheios-components.js' }
+    output: {
+      filename: 'alpheios-components.js',
+      library: 'AlpheiosComponents'
+    }
   }
 }
 
