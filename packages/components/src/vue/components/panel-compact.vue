@@ -841,10 +841,6 @@ export default {
       grid-template-columns: auto;
     }
 
-    & .alpheios-panel__close-btn {
-      margin-left: uisize(20px);
-    }
-
     &.alpheios-panel--left {
       height: 100%;
       width: 50vw;
@@ -922,13 +918,9 @@ export default {
         margin-bottom: 0;
       }
     }
-
-    .alpheios-panel__close-btn {
-      margin-left: calc(var(--alpheios-base-ui-size) * 0.75);
-    }
   }
 
-  @media screen and (max-width: 360px) {
+  @media screen and (max-width: 359px) {
     .alpheios-panel__header-btn--infl-data,
     .alpheios-panel__header-btn--treebank-data {
       display: none;

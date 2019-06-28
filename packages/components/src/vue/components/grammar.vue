@@ -2,7 +2,7 @@
   <div class="alpheios-grammar">
     <div class="alpheios-grammar__button--back-block">
       <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_BACK_TO_INDEX')" tooltipDirection="bottom-left">
-        <button @click="returnToIndex" class="alpheios-button-primary alpheios-svg-index"><home-icon /></button>
+        <button @click="returnToIndex" class="alpheios-button-primary alpheios-svg-index"><back-icon /></button>
       </alph-tooltip>
     </div>
     <div class="alpheios-grammar__frame-cont" v-if="this.hasGrammarResUrl">
@@ -13,7 +13,7 @@
 </template>
 <script>
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
-import HomeIcon from '@/images/inline-icons/home.svg'
+import BackIcon from '@/images/inline-icons/back.svg'
 import Tooltip from './tooltip.vue'
 
 export default {
@@ -22,7 +22,7 @@ export default {
   storeModules: ['app'],
   mixins: [DependencyCheck],
   components: {
-    homeIcon: HomeIcon,
+    backIcon: BackIcon,
     alphTooltip: Tooltip
   },
   computed: {

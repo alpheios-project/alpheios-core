@@ -3080,9 +3080,6 @@ h3.alpheios-inflections__credits-title {
 .alpheios-panel--compact.alpheios-panel {
   grid-template-columns: auto;
 }
-.alpheios-panel--compact .alpheios-panel__close-btn {
-  margin-left: calc(var(--alpheios-base-ui-size) * 1.25);
-}
 .alpheios-panel--compact.alpheios-panel--left {
   height: 100%;
   width: 50vw;
@@ -3138,10 +3135,7 @@ h3.alpheios-inflections__credits-title {
 .alpheios-panel--compact .alpheios-panel__tab__inflections .alpheios-inflections__forms-cont {
   margin-bottom: 0;
 }
-.alpheios-panel--compact .alpheios-panel__close-btn {
-  margin-left: calc(var(--alpheios-base-ui-size) * 0.75);
-}
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 359px) {
 .alpheios-panel__header-btn--infl-data,
 .alpheios-panel__header-btn--treebank-data {
     display: none;

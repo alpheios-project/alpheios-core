@@ -115,17 +115,6 @@ PopupModule._configDefaults = {
     left: '10vw'
   },
 
-  // Default popup dimensions, in pixels, without units. These values will override CSS rules.
-  // Can be scaled down on small screens automatically.
-  // width: 210,
-  /*
-  `fixedElementsHeight` is a sum of heights of all elements of a popup, including a top bar, a button area,
-  and a bottom bar. A height of all variable elements (i.e. morphological data container) will be
-  a height of a popup less this value.
-   */
-  // fixedElementsHeight: 120,
-  // heightMin: 150, // Initially, popup height will be set to this value
-  // heightMax: 400, // If a morphological content height is greater than `contentHeightLimit`, a popup height will be increased to this value
   // A margin between a popup and a selection
   placementMargin: 15,
   // A minimal margin between a popup and a viewport border, in pixels. In effect when popup is scaled down.

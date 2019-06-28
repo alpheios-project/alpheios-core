@@ -23385,7 +23385,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
-/* harmony import */ var _images_inline_icons_home_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/images/inline-icons/home.svg */ "./images/inline-icons/home.svg");
+/* harmony import */ var _images_inline_icons_back_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/images/inline-icons/back.svg */ "./images/inline-icons/back.svg");
 /* harmony import */ var _tooltip_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tooltip.vue */ "./vue/components/tooltip.vue");
 //
 //
@@ -23411,7 +23411,7 @@ __webpack_require__.r(__webpack_exports__);
   storeModules: ['app'],
   mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_0__["default"]],
   components: {
-    homeIcon: _images_inline_icons_home_svg__WEBPACK_IMPORTED_MODULE_1__["default"],
+    backIcon: _images_inline_icons_back_svg__WEBPACK_IMPORTED_MODULE_1__["default"],
     alphTooltip: _tooltip_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   computed: {
@@ -30805,7 +30805,7 @@ var render = function() {
                 staticClass: "alpheios-button-primary alpheios-svg-index",
                 on: { click: _vm.returnToIndex }
               },
-              [_c("home-icon")],
+              [_c("back-icon")],
               1
             )
           ]
@@ -35024,7 +35024,7 @@ var render = function() {
             }
           ],
           attrs: {
-            tooltipText: _vm.l10n.getText("TOOLTIP_DEFINITIONS"),
+            tooltipText: _vm.l10n.getText("TOOLTIP_SHOW_DEFINITIONS"),
             tooltipDirection: "bottom-narrow"
           }
         },
@@ -35060,7 +35060,7 @@ var render = function() {
             }
           ],
           attrs: {
-            tooltipText: _vm.l10n.getText("TOOLTIP_INFLECT"),
+            tooltipText: _vm.l10n.getText("TOOLTIP_SHOW_INFLECTIONS"),
             tooltipDirection: "bottom-narrow"
           }
         },
@@ -35132,7 +35132,7 @@ var render = function() {
             }
           ],
           attrs: {
-            tooltipText: _vm.l10n.getText("TOOLTIP_WORD_USAGE"),
+            tooltipText: _vm.l10n.getText("TOOLTIP_SHOW_USAGEEXAMPLES"),
             tooltipDirection: "bottom-narrow"
           }
         },
@@ -49486,7 +49486,7 @@ __webpack_require__.r(__webpack_exports__);
             {
               class: [classNames,staticClass],
               style: [style,staticStyle],
-              attrs: Object.assign({"viewBox":"0 0 459 459"}, attrs),
+              attrs: Object.assign({"viewBox":"0 0 459 459","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
             children.concat([_c('path',{attrs:{"d":"M178.5 140.25v-102L0 216.75l178.5 178.5V290.7c127.5 0 216.75 40.8 280.5 130.05-25.5-127.5-102-255-280.5-280.5z"}})])
@@ -49970,46 +49970,6 @@ __webpack_require__.r(__webpack_exports__);
               ...rest,
             },
             children.concat([_c('path',{attrs:{"d":"M10 500c0 270.6 219.4 490 490 490s490-219.4 490-490c0-270.7-219.4-490-490-490S10 229.3 10 500zm61.3 0c0-236.8 192-428.8 428.8-428.8 236.9 0 428.8 192 428.8 428.8 0 236.7-191.9 428.8-428.8 428.8-236.8 0-428.8-192.1-428.8-428.8z"}}),_c('path',{attrs:{"d":"M211 454.1h490V546H211v-91.9z"}}),_c('path',{attrs:{"d":"M452.2 285.6h122.5l214.4 219-214.4 209.8H452.2l214.4-209.8-214.4-219z"}})])
-          )
-        }
-      });
-    
-
-/***/ }),
-
-/***/ "./images/inline-icons/home.svg":
-/*!**************************************!*\
-  !*** ./images/inline-icons/home.svg ***!
-  \**************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-      /* harmony default export */ __webpack_exports__["default"] = ({
-        functional: true,
-        render(_h, _vm) {
-          const { _c, _v, data, children = [] } = _vm;
-
-          const {
-            class: classNames,
-            staticClass,
-            style,
-            staticStyle,
-            attrs = {},
-            ...rest
-          } = data;
-
-          return _c(
-            'svg',
-            {
-              class: [classNames,staticClass],
-              style: [style,staticStyle],
-              attrs: Object.assign({"width":"1644","height":"1706.7","version":"1.0","viewBox":"0 0 1233 1280","xmlns":"http://www.w3.org/2000/svg"}, attrs),
-              ...rest,
-            },
-            children.concat([_c('path',{attrs:{"d":"M613 19.7c-12.4 9.8-96.3 74.8-186.5 144.7C135.1 390 8.3 489.1 3.1 495.4c-1.1 1.3-.9 2 .8 4.4 5.9 8.3 8.1 18.8 8.1 38.8.1 15 1.7 27 4.5 32.5 3 5.9 3.4 6.1 6.9 3.7 3.1-2.2 48.8-38.8 76.4-61.2 7.9-6.4 14.7-11.4 15.3-11.1.5.4.9 72.5.9 189.3 0 191.9 1.3 358 3 388.7.5 9.3 1.5 19 2.3 21.5l1.3 4.5 97.4-.3c124.7-.3 421.1-2 584-3.2 69.6-.5 168-1 218.8-1h92.2V796.5c0-266 .2-305.6 1.4-306.1 1-.4 12.3 8.6 30.8 24.3 35 29.8 59.2 50.1 67.2 56.6 5.5 4.5 6 4.7 7.7 3.1 6.2-5.6 7.5-16.2 4.3-35.4-2.1-12.2-2.4-31.7-.6-37.5l1.3-4-8.3-7.9c-14.7-14.1-95.5-82.7-192.5-163.5L997 301.8v-21.2c0-11.6.7-51.9 1.5-89.6s1.8-89.8 2.2-115.9c.6-43.6.5-47.4-1-46.8-4.3 1.6-42.2 2.9-69.7 2.3-28.5-.7-61.5.5-63.2 2.2-.4.4.5 9.8 2.1 20.8 5.8 39.6 6.3 64.6 2 102.9-3.2 28.3-4.2 34-6.2 34-1.8 0-2.2-.4-111.2-91-73.2-60.9-101.1-84.4-110.3-92.7-3-2.6-5.9-4.8-6.5-4.8-.7.1-11.3 8-23.7 17.7z"}})])
           )
         }
       });
@@ -61704,17 +61664,6 @@ PopupModule._configDefaults = {
     left: '10vw'
   },
 
-  // Default popup dimensions, in pixels, without units. These values will override CSS rules.
-  // Can be scaled down on small screens automatically.
-  // width: 210,
-  /*
-  `fixedElementsHeight` is a sum of heights of all elements of a popup, including a top bar, a button area,
-  and a bottom bar. A height of all variable elements (i.e. morphological data container) will be
-  a height of a popup less this value.
-   */
-  // fixedElementsHeight: 120,
-  // heightMin: 150, // Initially, popup height will be set to this value
-  // heightMax: 400, // If a morphological content height is greater than `contentHeightLimit`, a popup height will be increased to this value
   // A margin between a popup and a selection
   placementMargin: 15,
   // A minimal margin between a popup and a viewport border, in pixels. In effect when popup is scaled down.
