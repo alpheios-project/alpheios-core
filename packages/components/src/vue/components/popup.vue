@@ -623,7 +623,7 @@ export default {
       top: 50%;
       transform: translateY(-50%);
       left: uisize(16px);
-      width: uisize(32px);
+      width: uisize(22px);
       height: auto;
       stroke-width: 1;
     }

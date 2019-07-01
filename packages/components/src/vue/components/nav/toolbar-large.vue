@@ -66,7 +66,7 @@
             class="alpheios-navbuttons__btn"
             :class="{ active: $store.getters['ui/isActiveTab']('info') }"
         >
-          <info-icon/>
+          <help-icon/>
         </span>
       </alph-tooltip>
 
@@ -161,7 +161,8 @@ import StatusIcon from '@/images/inline-icons/status.svg'
 import UserIcon from '@/images/inline-icons/user.svg'
 import OptionsIcon from '@/images/inline-icons/options.svg'
 import GrammarIcon from '@/images/inline-icons/resources.svg'
-import InfoIcon from '@/images/inline-icons/info.svg'
+// import InfoIcon from '@/images/inline-icons/info.svg'
+import HelpIcon from '@/images/inline-icons/help-icon.svg'
 import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
 import CollapsedIcon from '@/images/inline-icons/collapsed.svg'
 import ExpandedIcon from '@/images/inline-icons/expanded.svg'
@@ -192,7 +193,7 @@ export default {
     statusIcon: StatusIcon,
     userIcon: UserIcon,
     optionsIcon: OptionsIcon,
-    infoIcon: InfoIcon,
+    helpIcon: HelpIcon,
     grammarIcon: GrammarIcon,
     wordlistIcon: WordlistIcon,
     collapsedIcon: CollapsedIcon,
@@ -425,7 +426,7 @@ export default {
   }
 
   .alpheios-toolbar__header-icon {
-    width: uisize(24px);
+    width: uisize(22px);
     height: auto;
     position: relative;
     top: uisize(4px);

@@ -1,24 +1,16 @@
 <template>
-    <div v-show="availableSortBy && !collapsedHeader" class="alpheios-word-usage-header-sorting">
+    <div v-show="showHeader && availableSortBy && !collapsedHeader" class="alpheios-word-usage-header-sorting">
       <p class="alpheios-word-usage-header-title">
         {{ l10n.getText('WORDUSAGE_SORT_BY') }}
       </p>
       <div class="alpheios-word-usage-sorting-select">
         <select class="alpheios-select alpheios-word-usage-header-select-sortBy"
                 v-model="selectedSortBy" @change="changedSortBy">
-          <option v-for="typeSorting in typeSortingList" v-bind:key="typeSorting.value"
-                  v-bind:value="typeSorting.value" v-bind:disabled="typeSorting.disabled"
-                  :class='{ "alpheios-select-disabled-option": typeSorting.disabled }'
+          <option v-for="typeSorting in finalTypeSortingList" 
+          v-bind:key="typeSorting.value"
+                  v-bind:value="typeSorting.value"
                   >{{ typeSorting.title }}</option>
         </select>
-        <alph-tooltip :tooltipText="l10n.getMsg('WORDUSAGE_SORTING_AUTHOR_CLEAR')" tooltipDirection="top-right">
-          <span class="alpheios-word-usage-header-clear-icon"
-                @click="clearSorting"
-                :class = '{ "alpheios-word-usage-header-clear-disabled": selectedSortBy === null }'
-                >
-            <clear-filters-icon></clear-filters-icon>
-          </span>
-        </alph-tooltip>
       </div>
     </div>
 </template>
@@ -38,6 +30,26 @@ export default {
       type: Boolean,
       required: false,
       default: true
+    },
+    showHeader: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+    hasSelectedAuthor: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    hasSelectedTextWork: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    reloadSorting: {
+      type: Number,
+      required: false,
+      default: 0
     }
   },
   data () {
@@ -45,14 +57,41 @@ export default {
       selectedSortBy: null,
       typeSortingList: [
         { value: null, title: this.l10n.getText('WORDUSAGE_SORT_BY_PLACEHOLDER') },
+        { value: 'byTextWork', title: this.l10n.getText('WORDUSAGE_SORT_BY_TEXTWORK') },
         { value: 'byPrefix', title: this.l10n.getText('WORDUSAGE_SORT_BY_PREFIX') },
         { value: 'bySuffix', title: this.l10n.getText('WORDUSAGE_SORT_BY_SUFFIX') }
-      ]
+      ],
+      calctypeSortingList: null
+    }
+  },
+
+  watch: {
+    reloadSorting (value) {
+      if (this.availableSortBy) {
+        if (this.hasSelectedTextWork) {
+          this.selectedSortBy = this.typeSortingList[2].value
+          this.calctypeSortingList = this.typeSortingList.slice(2, 4)
+        } else if (this.hasSelectedAuthor) {
+          this.selectedSortBy = this.typeSortingList[1].value
+          this.calctypeSortingList = this.typeSortingList.slice(1, 4)
+        } else {
+          let result = this.typeSortingList.slice(2, 4)
+          result.unshift(this.typeSortingList[0])
+          this.selectedSortBy = this.typeSortingList[0].value
+          this.calctypeSortingList = result
+        }
+      } else {
+        this.selectedSortBy = null
+      }
+      this.changedSortBy()
     }
   },
   computed: {
     availableSortBy () {
-      return this.$store.state.app.wordUsageExamplesReady && this.app.wordUsageExamples.wordUsageExamples && this.app.wordUsageExamples.wordUsageExamples.length > 0
+      return this.$store.state.app.wordUsageExamplesReady && this.app.wordUsageExamples.wordUsageExamples && this.app.wordUsageExamples.wordUsageExamples.length > 1
+    },
+    finalTypeSortingList () {
+      return this.reloadSorting ? this.calctypeSortingList : null
     }
   },
   methods: {

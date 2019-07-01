@@ -22,7 +22,7 @@ describe('word-usage-examples.test.js', () => {
 
   let testAuthor, testTextWork
   let api = {}
-  
+
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
@@ -74,7 +74,7 @@ describe('word-usage-examples.test.js', () => {
     jest.spyOn(console, 'warn')
 
     store = new Vuex.Store({
-      
+
       modules: {
         app: {
           namespaced: true,
@@ -153,7 +153,7 @@ describe('word-usage-examples.test.js', () => {
       }
     })
     expect(cmp.isVueInstance()).toBeTruthy()
-    
+
     expect(cmp.vm.targetWord).toEqual('cepit')
     expect(cmp.vm.language).toEqual('lat')
     expect(cmp.vm.wordUsageExamples).toEqual([])
@@ -161,7 +161,7 @@ describe('word-usage-examples.test.js', () => {
     expect(cmp.vm.providerRights).toEqual([])
     expect(cmp.vm.wordUsageListSorted).toEqual([])
     expect(cmp.vm.showWordUsageExampleItems).toBeFalsy()
-    
+
   })
 
   it('2 WordUsageExamples - checks if a component mounts properly with word usage examples ready', async () => {
@@ -220,7 +220,7 @@ describe('word-usage-examples.test.js', () => {
     let homonym = { targetWord: 'cepit', language: 'lat' }
     api.app.homonym = homonym
     store.commit('app/setHomonym')
-    
+
     expect(cmp.vm.targetWord).toEqual('cepit')
   })
 
@@ -236,7 +236,7 @@ describe('word-usage-examples.test.js', () => {
     let homonym = { targetWord: 'cepit', language: 'lat' }
     api.app.homonym = homonym
     store.commit('app/setHomonym')
-    
+
     expect(cmp.vm.language).toEqual('lat')
   })
 
@@ -314,7 +314,7 @@ describe('word-usage-examples.test.js', () => {
 
     expect(cmp.vm.wordUsageExamples.length).toBeGreaterThan(0)
     expect(cmp.vm.wordUsageExamples.length).toEqual(testWordUsageList.wordUsageExamples.length)
-    
+
     cmp.vm.selectedAuthor = testAuthor
     cmp.vm.needInnerFilter = false
 
@@ -332,7 +332,7 @@ describe('word-usage-examples.test.js', () => {
     api.app.wordUsageExamples = testWordUsageList
 
     expect(cmp.vm.wordUsageExamples.length).toEqual(testWordUsageList.wordUsageExamples.length)
-    
+
     cmp.vm.selectedAuthor = testAuthor
     cmp.vm.needInnerFilter = true
 
@@ -401,10 +401,10 @@ describe('word-usage-examples.test.js', () => {
       mocks: api
     })
     cmp.vm.collapsedHeader = true
-    expect(cmp.vm.collapsedHeaderTitle).toEqual(expect.stringContaining('show'))
+    expect(cmp.vm.collapsedHeaderTitle).toEqual(expect.stringContaining('Show'))
 
     cmp.vm.collapsedHeader = false
-    expect(cmp.vm.collapsedHeaderTitle).toEqual(expect.stringContaining('hide'))
+    expect(cmp.vm.collapsedHeaderTitle).toEqual(expect.stringContaining('Hide'))
   })
 
   it('17 WordUsageExamples - method changedSortBy sets the value of the property - sortBy', () => {
@@ -590,9 +590,9 @@ describe('word-usage-examples.test.js', () => {
     // 3  'CORNELIUS TACITUS ANNALES 13',
     // 4  'CORNELIUS TACITUS HISTORIAE 1'
     // ]
-    
-    
-    
+
+
+
     sortedRes = cmp.vm.sortWordUsageExamplesBy().map(item => cmp.vm.getPropertyBySortBy(item))
     expect(sortedRes[0]).toEqual('CORNELIUS TACITUS ANNALES 13')
     expect(sortedRes[1]).toEqual('CORNELIUS TACITUS ANNALES 3')
@@ -611,9 +611,9 @@ describe('word-usage-examples.test.js', () => {
 
     store.commit('app/setWordUsageExamplesReady')
     api.app.wordUsageExamples = testWordUsageList2
-   
+
     //byPrefix
-    cmp.vm.sortBy = 'byPrefix'   
+    cmp.vm.sortBy = 'byPrefix'
     //
     // [ 'DOMINATIONIS', 'FORTUNA', 'LUXU', 'LONGA', 'PRAVIS' ]
     //
@@ -632,12 +632,12 @@ describe('word-usage-examples.test.js', () => {
     store.commit('app/setWordUsageExamplesReady')
     api.app.wordUsageExamples = testWordUsageList
     cmp.vm.showDataSource = false
-    
+
     cmp.vm.changeShowDataSource()
     expect(cmp.vm.showDataSource).toBeTruthy()
 
     cmp.vm.changeShowDataSource()
     expect(cmp.vm.showDataSource).toBeFalsy()
   })
-  
+
 })

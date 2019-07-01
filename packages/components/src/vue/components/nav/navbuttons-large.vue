@@ -3,7 +3,7 @@
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_HELP')" tooltipDirection="bottom-narrow">
       <div @click="ui.changeTab('info')" class="alpheios-navbuttons__btn"
             :class="{ active: $store.getters['ui/isActiveTab']('info') }">
-        <info-icon></info-icon>
+        <help-icon />
       </div>
     </alph-tooltip>
 
@@ -96,7 +96,7 @@ import UserIcon from '@/images/inline-icons/user.svg'
 import OptionsIcon from '@/images/inline-icons/options.svg'
 import GrammarIcon from '@/images/inline-icons/resources.svg'
 import TreebankIcon from '@/images/inline-icons/sitemap.svg'
-import InfoIcon from '@/images/inline-icons/info.svg'
+import HelpIcon from '@/images/inline-icons/help-icon.svg'
 import WordlistIcon from '@/images/inline-icons/wordlist-icon.svg'
 import WordUsageIcon from '@/images/inline-icons/usage-examples-icon1.svg'
 // Modules support
@@ -119,7 +119,7 @@ export default {
     statusIcon: StatusIcon,
     userIcon: UserIcon,
     optionsIcon: OptionsIcon,
-    infoIcon: InfoIcon,
+    helpIcon: HelpIcon,
     grammarIcon: GrammarIcon,
     treebankIcon: TreebankIcon,
     wordUsageIcon: WordUsageIcon,

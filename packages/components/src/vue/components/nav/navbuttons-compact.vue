@@ -97,7 +97,7 @@ export default {
     background-color: var(--alpheios-icon-bg-color);
 
     svg {
-      width: 60%;
+      width: 52%;
       height: auto;
       position: relative;
       top: 50%;

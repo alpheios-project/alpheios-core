@@ -12,58 +12,78 @@
     <div class="alpheios-panel__header" :data-tab="currentTab">
       <div class="alpheios-panel__header-btn-group--start" >
         <div class="alpheios-panel__header-btn" :class="{ 'alpheios-navbuttons__icon-active': currentTab === 'morphology' }">
-          <morphology-icon @click="changeTab('morphology')" class="alpheios-navbuttons__icon"
-            v-show="showMorphologyIcon"
-          />
+          <span @click="changeTab('morphology')" class="alpheios-navbuttons__icon-span">
+            <morphology-icon class="alpheios-navbuttons__icon"
+              v-show="showMorphologyIcon"
+            />
+          </span>
         </div>
         <div class="alpheios-panel__header-btn"
           v-show="$store.getters['app/defDataReady'] && showMainTabIcons"
           :class="{ 'alpheios-navbuttons__icon-active': currentTab === 'definitions' }"
         >
-          <definitions-icon @click="changeTab('definitions')" class="alpheios-navbuttons__icon" />
+          <span @click="changeTab('definitions')" class="alpheios-navbuttons__icon-span">
+            <definitions-icon class="alpheios-navbuttons__icon" />
+          </span>
         </div>
         <div class="alpheios-panel__header-btn alpheios-panel__header-btn--infl-data"
            v-show="$store.state.app.hasInflData && showMainTabIcons"
            :class="{ 'alpheios-navbuttons__icon-active': currentTab === 'inflections' }"
         >
-          <inflections-icon @click="changeTab('inflections')" class="alpheios-navbuttons__icon"/>
+          <span @click="changeTab('inflections')" class="alpheios-navbuttons__icon-span">
+            <inflections-icon class="alpheios-navbuttons__icon"/>
+          </span>
         </div>
         <div class="alpheios-panel__header-btn"
            v-show="$store.state.app.wordUsageExampleEnabled && showMainTabIcons"
            :class="{ 'alpheios-navbuttons__icon-active': currentTab === 'wordUsage' }"
         >
-          <word-usage-icon @click="changeTab('wordUsage')" class="alpheios-navbuttons__icon"/>
+          <span @click="changeTab('wordUsage')" class="alpheios-navbuttons__icon-span">
+            <word-usage-icon class="alpheios-navbuttons__icon"/>
+          </span>
         </div>
         <div class="alpheios-panel__header-btn alpheios-panel__header-btn--treebank-data"
            v-show="$store.getters['app/hasTreebankData'] && showMainTabIcons"
            :class="{ 'alpheios-navbuttons__icon-active': currentTab === 'treebank' }"
         >
-          <treebank-icon @click="changeTab('treebank')" class="alpheios-navbuttons__icon"/>
+          <span @click="changeTab('treebank')" class="alpheios-navbuttons__icon-span">
+            <treebank-icon @click="changeTab('treebank')" class="alpheios-navbuttons__icon"/>
+          </span>
         </div>
         <div class="alpheios-panel__header-btn alpheios-navbuttons__icon-active"
           v-show="currentTab === 'inflectionsbrowser'"
         >
-          <inflections-browser-icon class="alpheios-navbuttons__icon"/>
+          <span class="alpheios-navbuttons__icon-span">
+            <inflections-browser-icon class="alpheios-navbuttons__icon"/>
+          </span>
         </div>
         <div class="alpheios-panel__header-btn  alpheios-navbuttons__icon-active"
           v-show="currentTab === 'grammar'"
         >
-          <grammar-icon class="alpheios-navbuttons__icon"/>
+          <span class="alpheios-navbuttons__icon-span">
+            <grammar-icon class="alpheios-navbuttons__icon"/>
+          </span>
         </div>
         <div class="alpheios-panel__header-btn  alpheios-navbuttons__icon-active"
           v-show="currentTab === 'wordlist'"
         >
-          <wordlist-icon class="alpheios-navbuttons__icon"/>
+          <span class="alpheios-navbuttons__icon-span">
+            <wordlist-icon class="alpheios-navbuttons__icon"/>
+          </span>
         </div>
         <div class="alpheios-panel__header-btn alpheios-navbuttons__icon-active"
           v-show="currentTab === 'user'"
         >
-          <user-icon class="alpheios-navbuttons__icon"/>
+          <span class="alpheios-navbuttons__icon-span">
+            <user-icon class="alpheios-navbuttons__icon"/>
+          </span>
         </div>
         <div class="alpheios-panel__header-btn alpheios-navbuttons__icon-active"
           v-show="currentTab === 'options'"
         >
-          <options-icon class="alpheios-navbuttons__icon"/>
+          <span class="alpheios-navbuttons__icon-span">
+            <options-icon class="alpheios-navbuttons__icon"/>
+          </span>
         </div>
       </div>
       <div class="alpheios-panel__header-btn-group--end">
@@ -688,12 +708,17 @@ export default {
 
   .alpheios-panel__header-btn {
     padding: 0 0 0 10px;
+
+    .alpheios-navbuttons__icon-span {
+      display: inline-block;
+      padding: uisize(8px);
+      position: relative;
+    }
     & svg {
-      width: 40px;
-      height: 40px;
+      width: uisize(22px);
+      height: uisize(22px);
       top: 50%;
       position: relative;
-      transform: translateY(-50%);
     }
     fill: var(--alpheios-color-neutral-lightest);
     stroke: var(--alpheios-color-neutral-lightest);
@@ -710,6 +735,13 @@ export default {
     }
   }
 
+  .alpheios-panel__header-btn-group--end 
+  .alpheios-panel__header-btn {
+    & svg {
+      transform: translateY(-50%);
+    }
+  } 
+
   .alpheios-panel__close-btn {
     width: uisize(60px);
     height: $alpheios-toolbar-height;
@@ -721,7 +753,7 @@ export default {
     svg {
       position: relative;
       left: uisize(20px);
-      width: uisize(28px);
+      width: uisize(22px);
       height: auto;
       top: 50%;
       transform: translateY(-50%);

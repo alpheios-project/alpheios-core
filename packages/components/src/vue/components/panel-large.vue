@@ -258,7 +258,7 @@ export default {
 
     .alpheios-navbuttons__btn {
       svg {
-        width: uisize(28px);
+        width: uisize(22px);
       }
     }
 

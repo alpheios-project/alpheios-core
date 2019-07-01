@@ -30,7 +30,7 @@
         "component": "WordUsageExamples"
     },
     "WORDUSAGE_SORT_BY": {
-        "message": "Sort by",
+        "message": "Sort by:",
         "description": "Word Usage Examples Sort by Title",
         "component": "WordUsageExamplesHeader"
     },
@@ -90,12 +90,12 @@
         "component": "WordUsageExamples"
     },
     "WORDUSAGE_SHOW_FILTERS_TEXT": {
-        "message": "show limits",
+        "message": "Show Focus/Sort",
         "description": "Show filters/sorting block",
         "component": "WordUsageExamples"
     },
     "WORDUSAGE_HIDE_FILTERS_TEXT": {
-        "message": "hide limits",
+        "message": "Hide Focus/Sort",
         "description": "Hide filters/sorting block",
         "component": "WordUsageExamples"
     },
@@ -105,13 +105,33 @@
         "component": "WordUsageExamples"
     },
     "WORDUSAGE_FILTERS_TEXTWORK_PLACEHOLDER": {
-        "message": "Select a textwork",
+        "message": "Select a work",
         "description": "Placeholder for textwork selection",
         "component": "WordUsageExamples"
     },
     "WORDUSAGE_SORT_BY_PLACEHOLDER": {
         "message": "Author+Work",
         "description": "Placeholder for sorting selection",
+        "component": "WordUsageExamples"
+    },
+    "WORDUSAGE_SORT_BY_TEXTWORK": {
+        "message": "Work",
+        "description": "Placeholder for sorting selection",
+        "component": "WordUsageExamples"
+    },
+    "WORDUSAGE_GETTING_RESULT": {
+        "message": "Retrieving results ...",
+        "description": "Placeholder for getting data",
+        "component": "WordUsageExamples"
+    },
+    "WORDUSAGE_FOCUS_AUTHOR": {
+        "message": "Focus on Author:",
+        "description": "Title for the author's filter",
+        "component": "WordUsageExamples"
+    },
+    "WORDUSAGE_FOCUS_WORK": {
+        "message": "Focus on Work:",
+        "description": "Title for the textwork's filter",
         "component": "WordUsageExamples"
     }
 }

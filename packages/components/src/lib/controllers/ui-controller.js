@@ -373,6 +373,7 @@ export default class UIController {
       state: this.state, // An app-level state
       homonym: null,
       inflectionsViewSet: null,
+      wordUsageExamplesCached: null,
       wordUsageExamples: null,
       wordUsageAuthors: [],
       // Exposes parsed query parameters to other components
@@ -1142,6 +1143,10 @@ export default class UIController {
   async updateWordUsageExamples (wordUsageExamplesData) {
     this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_WORDUSAGE_READY'))
     this.api.app.wordUsageExamples = wordUsageExamplesData
+
+    if (!this.api.app.wordUsageExamplesCached || this.api.app.wordUsageExamplesCached.targetWord !== this.api.app.wordUsageExamples.targetWord) {
+      this.api.app.wordUsageExamplesCached = wordUsageExamplesData
+    }
     this.store.commit('app/setWordUsageExamplesReady')
   }
 
@@ -1291,6 +1296,13 @@ export default class UIController {
   }
 
   async getWordUsageData (homonym, params = {}) {
+    if (this.api.app.wordUsageExamplesCached && (this.api.app.wordUsageExamplesCached.targetWord === homonym.targetWord) && (Object.keys(params).length === 0)) {
+      this.store.commit('app/setWordUsageExamplesReady', false)
+      this.api.app.wordUsageExamples = this.api.app.wordUsageExamplesCached
+      this.store.commit('app/setWordUsageExamplesReady', true)
+      return
+    }
+
     this.store.commit('app/setWordUsageExamplesReady', false)
 
     let wordUsageExamples = this.enableWordUsageExamples({ languageID: homonym.languageID }, 'onDemand')
