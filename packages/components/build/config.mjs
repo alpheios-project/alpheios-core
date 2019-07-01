@@ -12,7 +12,10 @@ const imagemin = {
 const webpack = {
   common: {
     entry: './plugin.js',
-    // externals: ['alpheios-data-models', 'alpheios-inflection-tables'],
+    output: {
+      library: 'AlpheiosComponents',
+      libraryTarget: 'window'
+    },
     resolve: {
       alias: {
         // Below will force all imported modules with unresolved dependencies to use a single instance of that dependency
@@ -23,15 +26,6 @@ const webpack = {
         '@': path.join(projectRoot, 'src')
       }
     },
-    /*externals: {
-      'alpheios-client-adapters': 'alpheios-client-adapters',
-      'alpheios-wordlist': 'alpheios-wordlist',
-      'alpheios-data-models': 'alpheios-data-models',
-      'alpheios-inflection-tables': 'alpheios-inflection-tables',
-      'alpheios-experience': 'alpheios-experience',
-      'alpheios-res-client': 'alpheios-res-client',
-      'intl-messageformat': 'intl-messageformat'
-    },*/
     plugins: [
       new VueLoaderPlugin()
     ]
@@ -44,10 +38,7 @@ const webpack = {
 
   development: {
     mode: 'development',
-    output: {
-      filename: 'alpheios-components.js',
-      library: 'AlpheiosComponents'
-    }
+    output: { filename: 'alpheios-components.js' }
   }
 }
 
