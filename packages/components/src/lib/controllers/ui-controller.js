@@ -5,6 +5,7 @@ import { WordlistController, UserDataManager } from 'alpheios-wordlist'
 // import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
 import Vue from '@vue-runtime'
 import Vuex from 'vuex'
+import interact from 'interactjs'
 // Modules and their support dependencies
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
 import Locales from '@/locales/locales.js'
@@ -30,8 +31,6 @@ import Options from '@/lib/options/options.js'
 import LocalStorage from '@/lib/options/local-storage-area.js'
 import UIEventController from '@/lib/controllers/ui-event-controller.js'
 import QueryParams from '@/lib/utility/query-params.js'
-
-console.info(`UI controller's module is loaded`)
 
 const languageNames = new Map([
   [Constants.LANG_LATIN, 'Latin'],
@@ -845,6 +844,14 @@ export default class UIController {
     this.state.deactivate()
 
     return this
+  }
+
+  static initAlignedTranslation (documentObject, alignedTranslSelector, resizableOptions, resizemoveListener) {
+    let alignedTranslation = documentObject.querySelectorAll('.aligned-translation')
+    for (let a of alignedTranslation) {
+      interact(a).resizable(resizableOptions).on('resizemove', resizemoveListener)
+    }
+    return alignedTranslation
   }
 
   /**
