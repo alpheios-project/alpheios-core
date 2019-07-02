@@ -19,7 +19,7 @@
     "tlg0085.tlg007.alpheios-text-grc1",
     "tlg0086.tlg034.alpheios-text-ara2"
   ],
-  "url": "http://tools.alpheios.net/exist/rest/db/xq/treebank-getmorph.xq?f=r_TEXT&w=r_WORD&clientId=r_CLIENT",
+  "url": "https://tools.alpheios.net/exist/rest/db/xq/treebank-getmorph.xq?f=r_TEXT&w=r_WORD&clientId=r_CLIENT",
   "providerUri": "https://alpheios.net",
   "providerRights": "The Alpheios Treebank data is licenced under the Creative Commons 3.0 Share-Alike license.",
   "allowUnknownValues": true,
