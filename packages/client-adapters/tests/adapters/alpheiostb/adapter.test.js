@@ -100,7 +100,7 @@ describe('alpheiostb/adapter.test.js', () => {
   it('7 AlpheiosTreebankAdapter - prepareRequestUrl returns correct url', () => {
     let adapter = new AlpheiosTreebankAdapter({ clientId: 'fooClient' })
     let url = adapter.prepareRequestUrl('1999.02.0066#1-2')
-    expect(url).toEqual('http://tools.alpheios.net/exist/rest/db/xq/treebank-getmorph.xq?f=1999.02.0066&w=1-2&clientId=fooClient')
+    expect(url).toEqual('https://tools.alpheios.net/exist/rest/db/xq/treebank-getmorph.xq?f=1999.02.0066&w=1-2&clientId=fooClient')
   })
 
   it('8 AlpheiosTreebankAdapter - adapted a word properly', async () => {
