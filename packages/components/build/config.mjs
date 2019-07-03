@@ -15,7 +15,8 @@ const webpack = {
     entry: './plugin.js',
     output: {
       library: 'AlpheiosComponents',
-      libraryTarget: 'window'
+      libraryTarget: 'window',
+      chunkFilename: 'components.[name].js'
     },
     resolve: {
       alias: {

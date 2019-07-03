@@ -10,7 +10,7 @@
     "test-components": "eslint --fix src/**/*.js && jest tests/vue --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-c": "eslint --fix src/**/*.js && jest tests/vue/components/word-usage-examples/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test-a": "eslint --fix src/**/*.js && jest tests/lib/selection/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "build": "npm run build-regular && npm run build-safari",
+    "build": "npm run build-safari && npm run build-regular",
     "build-regular": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue config.mjs",
     "build-safari": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue-postcss config-safari.mjs",
     "build-prod": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue config.mjs",
@@ -45,6 +45,7 @@
     "alpheios-wordlist": "github:alpheios-project/wordlist",
     "autoprefixer": "^9.6.0",
     "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.2",
     "bytes": "^3.1.0",
     "chalk": "^2.4.2",
     "coveralls": "^3.0.4",
@@ -68,6 +69,7 @@
     "intl-messageformat": "^2.2.0",
     "jest": "^24.8.0",
     "jump.js": "^1.0.2",
+    "mini-css-extract-plugin": "^0.7.0",
     "raw-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
     "shelljs": "^0.8.3",
@@ -75,9 +77,16 @@
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
     "vue": "^2.6.10",
+    "vue-eslint-parser": "^6.0.4",
     "vue-jest": "^3.0.4",
+    "vue-loader": "^15.7.0",
     "vue-multiselect": "^2.1.6",
+    "vue-style-loader": "^4.1.2",
+    "vue-svg-loader": "^0.12.0",
+    "vue-template-compiler": "^2.6.10",
+    "vue-template-loader": "^1.0.0",
     "vuex": "^3.1.1",
+    "webpack": "^4.35.2",
     "whatwg-fetch": "^3.0.0",
     "wrap-range-text": "^1.0.1"
   },
@@ -132,21 +141,15 @@
       "node": true
     },
     "parserOptions": {
-      "ecmaVersion": 2018,
-      "sourceType": "module"
+      "parser": "babel-eslint",
+      "ecmaVersion": 2019,
+      "sourceType": "module",
+      "allowImportExportEverywhere": true
     }
   },
   "eslintIgnore": [
     "**/dist",
     "**/support"
   ],
-  "dependencies": {
-    "mini-css-extract-plugin": "^0.7.0",
-    "vue-loader": "^15.7.0",
-    "vue-style-loader": "^4.1.2",
-    "vue-svg-loader": "^0.12.0",
-    "vue-template-compiler": "^2.6.10",
-    "vue-template-loader": "^1.0.0",
-    "webpack": "^4.35.2"
-  }
+  "dependencies": {}
 }
