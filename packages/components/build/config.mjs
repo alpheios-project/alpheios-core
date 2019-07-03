@@ -1,4 +1,5 @@
 import VueLoaderPlugin from 'vue-loader/lib/plugin.js'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
 import path from 'path'
 const projectRoot = process.cwd()
@@ -33,12 +34,26 @@ const webpack = {
 
   production: {
     mode: 'production',
-    output: { filename: 'alpheios-components.min.js' }
+    output: {
+      filename: 'alpheios-components.min.js'
+    },
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: 'style/style-components.min.css'
+      })
+    ]
   },
 
   development: {
     mode: 'development',
-    output: { filename: 'alpheios-components.js' }
+    output: {
+      filename: 'alpheios-components.js'
+    },
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: 'style/style-components.css'
+      })
+    ]
   }
 }
 

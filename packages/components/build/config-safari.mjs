@@ -7,7 +7,10 @@ const projectRoot = process.cwd()
 const webpack = {
   common: {
     entry: './plugin.js',
-    // externals: ['alpheios-data-models', 'alpheios-inflection-tables'],
+    output: {
+      library: 'AlpheiosComponents',
+      libraryTarget: 'window'
+    },
     resolve: {
       alias: {
         // Below will force all imported modules with unresolved dependencies to use a single instance of that dependency
@@ -25,20 +28,24 @@ const webpack = {
 
   production: {
     mode: 'production',
-    output: { filename: 'alpheios-components.min.js' },
+    output: {
+      filename: 'alpheios-components.min.js'
+    },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: 'style/style-safari.min.css'
+        filename: 'style/style-components-safari.min.css'
       })
     ]
   },
 
   development: {
     mode: 'development',
-    output: { filename: 'alpheios-components.js' },
+    output: {
+      filename: 'alpheios-components.js'
+    },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: 'style/style-safari.css'
+        filename: 'style/style-components-safari.css'
       })
     ]
   }

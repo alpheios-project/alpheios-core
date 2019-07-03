@@ -11,11 +11,11 @@
     "test-c": "eslint --fix src/**/*.js && jest tests/vue/components/word-usage-examples/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test-a": "eslint --fix src/**/*.js && jest tests/lib/selection/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "build": "npm run build-regular && npm run build-safari",
-    "build-regular": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue config.mjs",
+    "build-regular": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue config.mjs",
     "build-safari": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue-postcss config-safari.mjs",
     "build-prod": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue config.mjs",
     "build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue config.mjs",
-    "code-analysis-prod": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue config.mjs --code-analysis",
+    "code-analysis-prod": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue config.mjs --code-analysis",
     "code-analysis-dev": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue config.mjs --code-analysis",
     "lint": "eslint --fix src/**/*.js && eslint --fix-dry-run src/**/*.vue"
   },
