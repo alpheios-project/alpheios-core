@@ -1,5 +1,14 @@
-window["AlpheiosComponents"] =
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["AlpheiosComponents"] = factory();
+	else
+		root["AlpheiosComponents"] = factory();
+})(window, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -61788,4 +61797,5 @@ ToolbarModule._configDefaults = {
 /***/ })
 
 /******/ });
+});
 //# sourceMappingURL=alpheios-components.js.map

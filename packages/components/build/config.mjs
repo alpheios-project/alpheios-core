@@ -15,7 +15,7 @@ const webpack = {
     entry: './plugin.js',
     output: {
       library: 'AlpheiosComponents',
-      libraryTarget: 'window',
+      libraryTarget: 'umd',
       chunkFilename: 'components.[name].js'
     },
     resolve: {
