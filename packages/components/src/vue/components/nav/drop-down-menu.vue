@@ -88,7 +88,7 @@
     </div>
 
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('status') }"
-         v-show="this.settings.uiOptions.items.verboseMode.currentValue === `verbose`"
+         v-show="this.settings.verboseMode()"
          @click="changeTab('status')">
       <div class="alpheios-navbuttons__icon-cont">
         <status-icon class="alpheios-navbuttons__icon"></status-icon>
@@ -139,7 +139,6 @@ export default {
     wordUsageIcon: WordUsageIcon,
     wordlistIcon: WordlistIcon
   },
-
   props: {
     visibility: {
       type: Boolean,

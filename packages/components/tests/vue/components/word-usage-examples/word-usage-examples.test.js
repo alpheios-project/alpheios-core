@@ -6,6 +6,9 @@ import { mount, createLocalVue, shallowMount } from '@vue/test-utils'
 import { Constants, Author, TextWork, ResourceProvider } from 'alpheios-data-models'
 import { ClientAdapters } from 'alpheios-client-adapters'
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
+import Options from '@/lib/options/options.js'
+import FeatureOptionDefaults from '@/settings/feature-options-defaults.json'
+import TempStorageArea from '@/lib/options/temp-storage-area.js'
 
 import Locales from '@/locales/locales.js'
 import enUS from '@/locales/en-us/messages.json'
@@ -72,6 +75,8 @@ describe('word-usage-examples.test.js', () => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
+    let ta = new TempStorageArea('alpheios-feature-settings')
+    let featureOptions = new Options(FeatureOptionDefaults, ta)
 
     store = new Vuex.Store({
 
@@ -79,6 +84,9 @@ describe('word-usage-examples.test.js', () => {
         app: {
           namespaced: true,
           homonym: null,
+          platform: {
+            isMobile: true
+          },
           state: {
             homonymDataReady: false,
             wordUsageExamplesReady: false
@@ -101,9 +109,15 @@ describe('word-usage-examples.test.js', () => {
         state: {
           homonymDataReady: false
         },
+        platform: {
+          isMobile: true
+        },
         homonym: null
       },
-      ui: {}
+      ui: {},
+      settings: {
+        getFeatureOptions: () => { return featureOptions },
+      },
     }
 
     l10nModule = new L10nModule(store, api, {
@@ -147,9 +161,13 @@ describe('word-usage-examples.test.js', () => {
         l10n: api.l10n,
         app: {
           homonymDataReady: true,
+          platform: {
+            isMobile: true
+          },
           homonym: { targetWord: 'cepit', language: 'lat' }
         },
-        ui: api.ui
+        ui: api.ui,
+        settings: api.settings
       }
     })
     expect(cmp.isVueInstance()).toBeTruthy()
@@ -191,9 +209,13 @@ describe('word-usage-examples.test.js', () => {
           homonymDataReady: true,
           homonym: { targetWord: 'cepit', language: 'lat' },
           wordUsageExamplesReady: true,
-          wordUsageExamples: testWordUsageList
+          wordUsageExamples: testWordUsageList,
+          platform: {
+            isMobile: true
+          }
         },
-        ui: api.ui
+        ui: api.ui,
+        settings: api.settings
       }
     })
     expect(cmp.isVueInstance()).toBeTruthy()
@@ -211,7 +233,9 @@ describe('word-usage-examples.test.js', () => {
       mocks: {
         l10n: api.l10n,
         ui: api.ui,
-        app: api.app
+        app: api.app,
+        settings: api.settings
+
       }
     })
 
@@ -621,23 +645,4 @@ describe('word-usage-examples.test.js', () => {
     let sortedRes = cmp.vm.sortWordUsageExamplesBy().map(item => cmp.vm.getPropertyBySortBy(item, 'byPrefix'))
     expect(sortedRes).toEqual([ 'DOMINATIONIS', 'FORTUNA', 'LONGA', 'LUXU', 'PRAVIS' ])
   })
-
-  it('30 WordUsageExamples - method changeShowDataSource reverses showDataSource property', () => {
-    let cmp = shallowMount(WordUsageExamples, {
-      store: store,
-      localVue,
-      mocks: api
-    })
-
-    store.commit('app/setWordUsageExamplesReady')
-    api.app.wordUsageExamples = testWordUsageList
-    cmp.vm.showDataSource = false
-
-    cmp.vm.changeShowDataSource()
-    expect(cmp.vm.showDataSource).toBeTruthy()
-
-    cmp.vm.changeShowDataSource()
-    expect(cmp.vm.showDataSource).toBeFalsy()
-  })
-
 })

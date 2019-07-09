@@ -16,29 +16,29 @@
       <div class="alpheios-popup__toolbar-buttons">
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
                         v-show="$store.getters['app/defDataReady']">
-              <div class="alpheios-popup__toolbar-top__btn">
-                <definitions-icon @click="ui.showPanelTab('definitions')" class="alpheios-navbuttons__icon" />
+              <div class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('definitions')">
+                <definitions-icon  class="alpheios-navbuttons__icon" />
               </div>
           </alph-tooltip>
 
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_INFLECTIONS')" tooltipDirection="bottom-wide"
                         v-show="$store.state.app.hasInflData">
-            <div class="alpheios-popup__toolbar-top__btn">
-               <inflections-icon @click="ui.showPanelTab('inflections')" class="alpheios-navbuttons__icon" />
+            <div class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('inflections')">
+               <inflections-icon class="alpheios-navbuttons__icon" />
             </div>
           </alph-tooltip>
 
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_USAGEEXAMPLES')" tooltipDirection="bottom-wide"
                         v-show="$store.state.app.wordUsageExampleEnabled">
-                <div class="alpheios-popup__toolbar-top__btn">
-                  <word-usage-icon @click="ui.showPanelTab('wordUsage')" class="alpheios-navbuttons__icon" />
+                <div class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('wordUsage')">
+                  <word-usage-icon class="alpheios-navbuttons__icon" />
                 </div>
           </alph-tooltip>
 
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
-                        v-show="$store.getters['app/hasTreebankData']">
+                        v-show="$store.getters['app/hasTreebankData']" @click="ui.showPanelTab('treebank')">
                 <div class="alpheios-popup__toolbar-top__btn">
-                  <treebank-icon @click="ui.showPanelTab('treebank')" class="alpheios-navbuttons__icon" />
+                  <treebank-icon class="alpheios-navbuttons__icon" />
                 </div>
           </alph-tooltip>
 
@@ -75,7 +75,8 @@
 
       <div class="alpheios-popup__content">
         <div class="alpheios-popup__definitions--placeholder"
-             v-if="$store.getters['app/lexicalRequestInProgress'] && !noLanguage">
+             v-show="$store.getters['app/lexicalRequestInProgress'] && !noLanguage"
+             >
           <progress-bar :text="l10n.getText('PLACEHOLDER_LEX_DATA_LOADING')"></progress-bar>
         </div>
 
@@ -160,7 +161,6 @@ export default {
   // Custom props to store unwatch functions
   visibleUnwatch: null,
   lexrqStartedUnwatch: null,
-  positioningUnwatch: null,
 
   data: function () {
     return {
@@ -234,32 +234,7 @@ export default {
         return '0px'
       }
 
-      if (this.$store.getters['popup/isFixedPositioned']) {
-        return this.moduleConfig.initialPos.left
-      }
-
-      let left = this.positionLeftValue
-      let placementTargetX = this.$store.state.app.selectionTarget.x
-      let viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
-      let verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth
-      let leftSide = placementTargetX - this.exactWidth / 2
-      let rightSide = placementTargetX + this.exactWidth / 2
-      if (this.widthDm !== 'auto') {
-        // Popup is too wide and was restricted in height
-        this.logger.log(`Setting position left for a set width`)
-        left = this.moduleConfig.viewportMargin
-      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.moduleConfig.viewportMargin &&
-          leftSide > this.moduleConfig.viewportMargin) {
-        // We can center it with the target
-        left = placementTargetX - Math.floor(this.exactWidth / 2)
-      } else if (leftSide > this.moduleConfig.viewportMargin) {
-        // There is space at the left, move it there
-        left = viewportWidth - verticalScrollbarWidth - this.moduleConfig.viewportMargin - this.exactWidth
-      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.moduleConfig.viewportMargin) {
-        // There is space at the right, move it there
-        left = this.moduleConfig.viewportMargin
-      }
-      return `${left}px`
+      return this.moduleConfig.initialPos.left
     },
 
     positionTopDm: function () {
@@ -268,39 +243,7 @@ export default {
         return '0px'
       }
 
-      if (this.$store.getters['popup/isFixedPositioned']) {
-        return this.moduleConfig.initialPos.top
-      }
-
-      let time = Date.now()
-      this.logger.log(`${time}: position top calculation, offsetHeight is ${this.exactHeight}`)
-      let top = this.positionTopValue
-      let placementTargetY = this.$store.state.app.selectionTarget.y
-      let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-      let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
-      if (this.heightDm !== 'auto') {
-        // Popup is too wide and was restricted in height
-        this.logger.log(`Setting position top for a set height`)
-        top = this.moduleConfig.viewportMargin
-      } else if (placementTargetY + this.moduleConfig.placementMargin + this.exactHeight < viewportHeight - this.moduleConfig.viewportMargin - horizontalScrollbarWidth) {
-        // Place it below a selection
-        top = placementTargetY + this.moduleConfig.placementMargin
-      } else if (placementTargetY - this.moduleConfig.placementMargin - this.exactHeight > this.moduleConfig.viewportMargin) {
-        // Place it above a selection
-        top = placementTargetY - this.moduleConfig.placementMargin - this.exactHeight
-      } else if (placementTargetY < viewportHeight - horizontalScrollbarWidth - placementTargetY) {
-        // There is no space neither above nor below. Word is shifted to the top. Place a popup at the bottom.
-        top = viewportHeight - horizontalScrollbarWidth - this.moduleConfig.viewportMargin - this.exactHeight
-      } else if (placementTargetY > viewportHeight - horizontalScrollbarWidth - placementTargetY) {
-        // There is no space neither above nor below. Word is shifted to the bottom. Place a popup at the top.
-        top = this.moduleConfig.viewportMargin
-      } else {
-        // There is no space neither above nor below. Center it vertically.
-        top = Math.round((viewportHeight - horizontalScrollbarWidth - this.exactHeight) / 2)
-      }
-      time = Date.now()
-      this.logger.log(`${time}: position top getter, return value is ${top}, offsetHeight is ${this.exactHeight}`)
-      return `${top}px`
+      return this.moduleConfig.initialPos.top
     },
 
     widthDm: {
@@ -360,7 +303,7 @@ export default {
     },
 
     verboseMode () {
-      return this.settings.uiOptions.items.verboseMode.currentValue === `verbose`
+      return this.settings.getUiOptions().items.verboseMode.currentValue === `verbose`
     }
   },
 
@@ -447,11 +390,9 @@ export default {
     },
 
     dragEndListener () {
-      if (this.$store.getters['popup/isFixedPositioned']) {
-        // Do not store shift values for flexible positioning as they will be erased after each lexical query
-        this.settings.uiOptions.items.popupShiftX.setValue(this.shift.x)
-        this.settings.uiOptions.items.popupShiftY.setValue(this.shift.y)
-      }
+      let uiOptions = this.settings.getUiOptions()
+      uiOptions.items.popupShiftX.setValue(this.shift.x)
+      uiOptions.items.popupShiftY.setValue(this.shift.y)
     },
 
     /**
@@ -505,11 +446,6 @@ export default {
       this.exactHeight = 0
       this.resizedWidth = null
       this.resizedHeight = null
-      if (this.$store.getters['popup/isFlexPositioned']) {
-        // Reset positioning shift for a `flexible` position of popup only. For a `fixed` position we must retain it
-        // so that the popup will open at its last position.
-        this.shift = { x: 0, y: 0 }
-      }
     },
 
     attachTrackingClick: function () {
@@ -532,24 +468,12 @@ export default {
       this.resetPopupDimensions()
       this.showProviders = false
     })
-
-    this.$options.positioningUnwatch = this.$store.watch((state) => state.popup.positioning, () => {
-      if (this.$store.getters['popup/isFlexPositioned']) {
-        this.shift = { x: 0, y: 0 }
-      } else if (this.$store.getters['popup/isFixedPositioned']) {
-        this.shift = {
-          x: this.settings.uiOptions.items.popupShiftX.currentValue,
-          y: this.settings.uiOptions.items.popupShiftY.currentValue
-        }
-      }
-    })
   },
 
   beforeDestroy () {
     // Teardown the watch function
     // this.$options.visibleUnwatch()
     this.$options.lexrqStartedUnwatch()
-    this.$options.positioningUnwatch()
   },
 
   updated () {
@@ -596,7 +520,7 @@ export default {
     display: flex;
     justify-content: space-between;
     height: uisize(44px);
-    background: var(--alpheios-toolbar-bg-color);
+    background: var(--alpheios-desktop-popup-header-bg);
   }
 
   .alpheios-popup__logo {
@@ -614,8 +538,8 @@ export default {
     width: uisize(56px);
     height: 100%;
     cursor: pointer;
-    fill: var(--alpheios-icon-color);
-    stroke: var(--alpheios-icon-color);
+    fill: var(--alpheios-desktop-popup-icon-color);
+    stroke: var(--alpheios-desktop-popup-icon-color);
     stroke-width: 0;
 
     svg {
@@ -630,15 +554,21 @@ export default {
 
     &:hover,
     &:focus {
-      fill: var(--alpheios-icon-color-hover);
-      stroke: var(--alpheios-icon-color-hover);
-      background: var(--alpheios-icon-bg-color-hover);
+      fill: var(--alpheios-desktop-popup-icon-color-hover);
+      stroke: var(--alpheios-desktop-popup-icon-color-hover);
+      background: var(--alpheios-desktop-popup-icon-bg-hover);
     }
 
     &:active {
-      fill: var(--alpheios-icon-color-active);
-      stroke: var(--alpheios-icon-color-active);
-      background: var(--alpheios-icon-bg-color-active);
+      fill: var(--alpheios-desktop-popup-icon-color-active);
+      stroke: var(--alpheios-desktop-popup-icon-color-active);
+      background: var(--alpheios-desktop-popup-icon-bg-hover);
+    }
+
+    &.disabled {
+      fill: var(--alpheios-desktop-popup-icon-color-disabled);
+      stroke: var(--alpheios-desktop-popup-icon-color-disabled);
+      background: var(--alpheios-desktop-popup-icon-bg-disabled);
     }
   }
 
@@ -646,8 +576,8 @@ export default {
     width: uisize(56px);
     height: 100%;
     cursor: pointer;
-    fill: var(--alpheios-icon-color);
-    stroke: var(--alpheios-icon-color);
+    fill: var(--alpheios-desktop-popup-icon-color);
+    stroke: var(--alpheios-desktop-popup-icon-color);
 
     svg {
       position: relative;
@@ -660,15 +590,21 @@ export default {
 
     &:hover,
     &:focus {
-      fill: var(--alpheios-icon-color-hover);
-      stroke: var(--alpheios-icon-color-hover);
-      background: var(--alpheios-icon-bg-color-hover);
+      fill: var(--alpheios-desktop-popup-icon-color-hover);
+      stroke: var(--alpheios-desktop-popup-icon-color-hover);
+      background: var(--alpheios-desktop-popup-header-icon-active-bg);
     }
 
     &:active {
-      fill: var(--alpheios-icon-color-active);
-      stroke: var(--alpheios-icon-color-active);
-      background: var(--alpheios-icon-bg-color-active);
+      fill: var(--alpheios-desktop-popup-icon-color-active);
+      stroke: var(--alpheios-desktop-popup-icon-color-active);
+      background: var(--alpheios-desktop-popup-header-icon-active-bg);
+    }
+
+    &.disabled {
+      fill: var(--alpheios-desktop-popup-icon-color-disabled);
+      stroke: var(--alpheios-desktop-popup-icon-color-disabled);
+      background: var(--alpheios-desktop-popup-header-icon-bg-disabled);
     }
   }
 
@@ -676,7 +612,7 @@ export default {
     display: flex;
     flex-direction: column;
     padding: textsize(16px);
-    background: var(--alpheios-text-bg-color);
+    background: var(--alpheios-desktop-popup-body-bg);
     overflow: auto;
     flex: 1 0;
   }
@@ -717,7 +653,7 @@ export default {
     padding: uisize(20px);
     // This is to solve a problem when part of content is transparent in Chrome.
     // However, this can be fixed with flex parameters
-    background: var(--alpheios-text-bg-color);
+    background: var(--alpheios-desktop-popup-content-bg);
 
     @include alpheios-ui-border;
   }
@@ -732,9 +668,9 @@ export default {
     display: inline-block;
     margin-bottom: textsize(6px);
     font-weight: 700;
-    color: var(--alpheios-color-vivid);
+    color: var(--alpheios-desktop-popup-credit-link-color);
     &:hover {
-      color: var(--alpheios-color-vivid-hover);
+      color: var(--alpheios-desktop-popup-credit-link-color-hover);
     }
   }
 
@@ -743,6 +679,6 @@ export default {
   }
 
   .alpheios-popup__providers-item {
-    color: var(--alpheios-color-neutral-dark);
+    color: var(--alpheios-desktop-popup-credit-providers-color);
   }
 </style>

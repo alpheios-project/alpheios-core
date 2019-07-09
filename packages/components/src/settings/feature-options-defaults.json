@@ -1,9 +1,10 @@
 {
   "domain": "alpheios-feature-options",
+  "version": 2,
   "items": {
     "enableLemmaTranslations": {
       "defaultValue": false,
-      "labelText": "Experimental: Enable Latin Lemma Translations",
+      "labelText": "Enable Latin Lemma Translations (Experimental)",
       "boolean": true,
       "values": [
         {
@@ -52,7 +53,7 @@
     },
     "enableWordUsageExamples": {
       "defaultValue": true,
-      "labelText": "Experimental: Enable Latin Word Usage Examples (Concordance)",
+      "labelText": "Enable",
       "boolean": true,
       "values": [
         {
@@ -67,7 +68,7 @@
     },
     "wordUsageExamplesON": {
       "defaultValue": "onDemand",
-      "labelText": "Get word usage examples:",
+      "labelText": "Mode:",
       "values": [
         {
           "value": "onDemand",
@@ -82,7 +83,7 @@
     },
     "wordUsageExamplesAuthMax": {
       "defaultValue": 3,
-      "labelText": "Word Usage Examples - max results per author",
+      "labelText": "Max results per author (initial search)",
       "number": true,
       "minValue": 1,
       "maxValue": 1000,
@@ -90,7 +91,7 @@
     },
     "wordUsageExamplesMax": {
       "defaultValue": 5000,
-      "labelText": "Word Usage Examples - max results for single author request",
+      "labelText": "Max total results ('Author/Work Focus' searches)",
       "number": true,
       "minValue": 1,
       "maxValue": 1000,

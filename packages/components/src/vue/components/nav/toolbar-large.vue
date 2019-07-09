@@ -138,7 +138,7 @@
       <alph-tooltip
           :tooltip-text="l10n.getText('TOOLTIP_STATUS')"
           :tooltip-direction="tooltipDirection"
-          v-show="settings.uiOptions.items.verboseMode.currentValue === `verbose`"
+          v-show="this.settings.verboseMode()"
       >
         <span
             :class="{ active: $store.getters['ui/isActiveTab']('status') }"
@@ -301,8 +301,9 @@ export default {
     },
 
     dragEndListener () {
-      this.settings.uiOptions.items.toolbarShiftX.setValue(this.shift.x)
-      this.settings.uiOptions.items.toolbarShiftY.setValue(this.shift.y)
+      let uiOptions = this.settings.getUiOptions()
+      uiOptions.items.toolbarShiftX.setValue(this.shift.x)
+      uiOptions.items.toolbarShiftY.setValue(this.shift.y)
       // Recalculate the new position of a toolbar center
       this.xCenter = this.getXCenter()
     },
@@ -381,9 +382,25 @@ export default {
       margin: uisize(8px) 0;
       box-sizing: border-box;
       position: relative;
-      background-color: var(--alpheios-toolbar-bg-color);
-      border: uisize(1px) solid var(--alpheios-border-color);
+      background-color: var(--alpheios-desktop-toolbar-bg);
+      border: uisize(1px) solid var(--alpheios-desktop-toolbar-border-color);
       border-radius: uisize(10px);
+
+      fill: var(--alpheios-desktop-toolbar-icon-color);
+      stroke: var(--alpheios-desktop-toolbar-icon-color);
+
+      &:hover,
+      &.active {
+        background-color: var(--alpheios-desktop-toolbar-bg);
+
+        fill: var(--alpheios-desktop-toolbar-icon-color-hover);
+        stroke: var(--alpheios-desktop-toolbar-icon-color-hover);
+      }
+
+      &.disabled {
+        fill: var(--alpheios-desktop-toolbar-icon-color-disabled);
+        stroke: var(--alpheios-desktop-toolbar-icon-color-disabled);
+      }
     }
   }
 
@@ -391,7 +408,7 @@ export default {
     width: uisize($alpheios-toolbar-base-width);
     height: uisize(24px);
     border-bottom: none;
-    background: var(--alpheios-toolbar-bg-color);
+    background: var(--alpheios-desktop-toolbar-bg);
     box-sizing: border-box;
     border-top-left-radius: uisize(10px);
     border-top-right-radius: uisize(10px);
@@ -415,7 +432,7 @@ export default {
     width: uisize($alpheios-toolbar-base-width);
     height: uisize(54px);
     border-bottom: none;
-    background: var(--alpheios-toolbar-bg-color);
+    background: var(--alpheios-desktop-toolbar-bg);
     box-sizing: border-box;
     text-align: center;
     border-bottom-left-radius: uisize(10px);
@@ -431,6 +448,8 @@ export default {
     position: relative;
     top: uisize(4px);
     left: 1px;
+    fill: var(--alpheios-desktop-toolbar-icon-color);
+    stroke: var( --alpheios-desktop-toolbar-icon-color);
   }
 
   .alpheios-toolbar__header-icon-collapsed,
@@ -440,18 +459,18 @@ export default {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    fill: var(--alpheios-color-neutral-lightest);
-    stroke: var(--alpheios-color-neutral-lightest);
+    fill: var(--alpheios-desktop-toolbar-icon-color);
+    stroke: var( --alpheios-desktop-toolbar-icon-color);
     cursor: pointer;
 
     &:hover {
-      fill: var(--alpheios-color-bright-hover);
-      stroke: var(--alpheios-color-bright-hover);
+      fill: var(--alpheios-desktop-toolbar-icon-color-hover);
+      stroke: var(--alpheios-desktop-toolbar-icon-color-hover);
     }
 
     .expanded & {
-      fill: var(--alpheios-color-bright);
-      stroke: var(--alpheios-color-bright);
+      fill: var(--alpheios-desktop-toolbar-icon-color-active);
+      stroke: var(--alpheios-desktop-toolbar-icon-color-active);
     }
   }
 
@@ -468,10 +487,10 @@ export default {
     position: absolute;
     width: uisize(330px);
     height: uisize(122px);
-    background: var(--alpheios-text-bg-color);
+    background: var(--alpheios-lookup-bg);
     left: uisize(-320px);
     top: 0;
-    border: uisize(1px) solid var(--alpheios-border-color);
+    border: uisize(1px) solid var(--alpheios-lookup-border-color);
     border-radius: uisize(10px) 0 0 uisize(10px);
     box-sizing: border-box;
     padding: uisize(10px) uisize(20px) uisize(10px) uisize(10px);
@@ -498,8 +517,10 @@ export default {
     flex-direction: column;
 
     .alpheios-navbuttons__btn.disabled {
-      fill: var(--alpheios-color-neutral-dark);
-      stroke: var(--alpheios-color-neutral-dark);
+      fill: var(--alpheios-desktop-toolbar-icon-color-disabled);
+      stroke: var(--alpheios-desktop-toolbar-icon-color-disabled);
+
+      background-color: var(--alpheios-desktop-toolbar-icon-bg-disabled);
       cursor: default;
     }
   }

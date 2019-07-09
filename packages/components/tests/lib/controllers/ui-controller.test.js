@@ -37,9 +37,12 @@ describe.skip('ui-controller.test.js', () => {
     jest.spyOn(Options, 'initItems')
 
     state = new State()
-    featureOptions = new Options(FeatureOptionDefaults, LocalStorageArea)
-    resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
-    let uiOptions = new Options(UIOptionDefaults, LocalStorageArea)
+    let sa1 = new LocalStorageArea('alpheios-feature-settings')
+    let sa2 = new LocalStorageArea('alpheios-resource-settings')
+    let sa3 = new LocalStorageArea('alpheios-ui-settings')
+    featureOptions = new Options(FeatureOptionDefaults, sa1)
+    resourceOptions = new Options(LanguageOptionDefaults, sa2)
+    let uiOptions = new Options(UIOptionDefaults, sa3)
 
     uiC = new UIController(state, LocalStorageArea, {})
     uiC.featureOptions = featureOptions

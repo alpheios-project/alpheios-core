@@ -2,6 +2,10 @@
   <div
       :id="config.rootElementId"
       class="alpheios-action-panel alpheios-content"
+      :class="{
+        'alpheios-action-panel--lookup-visible': $store.state.actionPanel.showLookup,
+        'alpheios-action-panel--nav-visible': $store.state.actionPanel.showNav
+        }"
       :style="componentStyles"
       v-show="showPanel"
   >
@@ -10,7 +14,10 @@
         @click.stop="$store.commit('actionPanel/close')"
     />
 
-    <div class="alpheios-action-panel__lookup-cont">
+    <div
+        class="alpheios-action-panel__lookup-cont"
+        v-show="$store.state.actionPanel.showLookup"
+    >
       <lookup
           class="alpheios-action-panel__lookup"
           :name-base="`action-panel`"
@@ -25,7 +32,10 @@
         />
     </div>
 
-    <div class="alpheios-action-panel__nav-cont">
+    <div
+        class="alpheios-action-panel__nav-cont"
+        v-show="$store.state.actionPanel.showNav"
+    >
       <alph-tooltip
           :tooltip-text="tooltipText('TOOLTIP_INFLECT_BROWSER')"
           :tooltip-direction="tooltipDirection"
@@ -217,12 +227,24 @@ export default {
 
   .alpheios-action-panel {
     width: 300px;
-    height: 190px;
+    height: auto;
     position: fixed;
-    padding: 10px 20px;
+    padding: 30px 20px 10px;
     @include alpheios-ui-border;
     background-color: var(--alpheios-text-bg-color);
     transition: display 0.4s;
+  }
+
+  .alpheios-action-panel.alpheios-action-panel--lookup-visible {
+    height: 130px;
+  }
+
+  .alpheios-action-panel.alpheios-action-panel--nav-visible {
+    height: 100px;
+  }
+
+  .alpheios-action-panel.alpheios-action-panel--lookup-visible.alpheios-action-panel--nav-visible {
+    height: 190px;
   }
 
   .alpheios-action-panel__close-icon {
@@ -232,20 +254,19 @@ export default {
     cursor: pointer;
     width: 20px;
     height: auto;
-    fill: var(--alpheios-color-vivid);
+    fill: var(--alpheios-compact-toolbar-icon-color);
 
     &:hover,
     &:focus {
-      fill: var(--alpheios-color-vivid-hover);
+      fill: var(--alpheios-compact-toolbar-icon-color-hover);
     }
 
     &:active {
-      fill: var(--alpheios-color-vivid-pressed);
+      fill: var(--alpheios-compact-toolbar-icon-color-active);
     }
   }
 
   .alpheios-action-panel__lookup-cont {
-    margin: 20px 0 10px;
     height: 90px;
     position: relative;
   }
@@ -265,11 +286,11 @@ export default {
 
     & .alpheios-popup-lexdataloading__progress-inner {
       height: 16px;
-      border-color: var(--alpheios-color-vivid);
+      border-color: var(--alpheios-compact-popup-progress-bar-line);
     }
 
     & .alpheios-popup-lexdataloading__progress-line {
-      background-color: var(--alpheios-color-vivid-hover);
+      background-color: var(--alpheios-compact-popup-progress-bar-line);
       left: 0.6%;
       top: 1px;
       height: 10px;
@@ -284,7 +305,7 @@ export default {
   .alpheios-action-panel__nav-cont {
     display: flex;
     justify-content: flex-start;
-    margin-bottom: 10px;
+    margin: 10px 0;
 
     & .alph_tooltip {
       margin-right: 8px;
@@ -296,14 +317,14 @@ export default {
     width: uisize(44px);
     height: uisize(44px);
     cursor: pointer;
-    fill: var(--alpheios-icon-color);
-    stroke: var(--alpheios-icon-color);
-    background-color: var(--alpheios-color-dark);
+    fill: var(--alpheios-compact-panel-icon-color);
+    stroke: var(--alpheios-compact-panel-icon-color);
+    background-color: var(--alpheios-compact-panel-icon-bg);
     border-radius: 50%;
 
     &.disabled {
-      fill: var(--alpheios-color-neutral-dark);
-      stroke: var(--alpheios-color-neutral-dark);
+      fill: var(--alpheios-compact-panel-icon-color-disabled);
+      stroke: var(--alpheios-compact-panel-icon-color-disabled);
       cursor: default;
     }
 
@@ -318,15 +339,15 @@ export default {
 
     &:hover:not(.disabled),
     &:focus:not(.disabled) {
-      fill: var(--alpheios-icon-color-hover);
-      stroke: var(--alpheios-icon-color-hover);
-      background-color: var(--alpheios-icon-bg-color-hover);
+      fill: var(--alpheios-compact-panel-icon-color-hover);
+      stroke: var(--alpheios-compact-panel-icon-color-hover);
+      background-color: var(--alpheios-compact-panel-icon-bg);
     }
 
     &.active {
-      fill: var(--alpheios-icon-color-active);
-      stroke: var(--alpheios-icon-color-active);
-      background-color: var(--alpheios-icon-bg-color-active);
+      fill: var(--alpheios-compact-panel-icon-color-active);
+      stroke: var(--alpheios-compact-panel-icon-color-active);
+      background-color: var(--alpheios-compact-panel-icon-bg);
     }
   }
 </style>

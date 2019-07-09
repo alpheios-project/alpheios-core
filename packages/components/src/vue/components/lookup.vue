@@ -55,6 +55,7 @@
 <script>
 import TextSelector from '@/lib/selection/text-selector'
 import LexicalQueryLookup from '@/lib/queries/lexical-query-lookup'
+import Options from '@/lib/options/options'
 import { LanguageModelFactory } from 'alpheios-data-models'
 import LookupIcon from '@/images/inline-icons/lookup.svg'
 
@@ -104,11 +105,11 @@ export default {
   created: function () {
     if (this.usePageLangPrefs) {
       // Use language settings of a page
-      this.$options.lookupLanguage = this.settings.featureOptions.items.preferredLanguage
-      this.$options.resourceOptions = this.settings.resourceOptions
+      this.$options.lookupLanguage = this.settings.getFeatureOptions().items.preferredLanguage
+      this.$options.resourceOptions = this.settings.getResourceOptions()
     } else {
       // Use lookup language settings
-      this.$options.lookupLanguage = this.settings.featureOptions.items.lookupLanguage
+      this.$options.lookupLanguage = this.settings.getFeatureOptions().items.lookupLanguage
       this.$options.resourceOptions = this.settings.lookupResourceOptions
     }
   },
@@ -119,18 +120,18 @@ export default {
       // langUpdated is included into the condition to force Vue to recalculate value
       // every time language settings are updated
       return (this.langUpdated && selectedValue === 'Default')
-        ? this.settings.featureOptions.items.preferredLanguage.currentItem()
+        ? this.settings.getFeatureOptions().items.preferredLanguage.currentItem()
         : this.$options.lookupLanguage.currentItem()
     },
 
     lexiconsFiltered () {
       let lang = this.$options.lookupLanguage.values.filter(v => v.text === this.currentLanguage.text)
-      let settingName
+      let settingGroup
       if (lang.length > 0) {
-        settingName = `lexiconsShort-${lang[0].value}`
+        settingGroup = lang[0].value
       }
 
-      return this.$options.resourceOptions.items.lexiconsShort.filter((item) => item.name === settingName)
+      return this.$options.resourceOptions.items.lexiconsShort.filter((item) => Options.parseKey(item.name).group === settingGroup)
     }
   },
   watch: {
@@ -158,10 +159,11 @@ export default {
 
       const resourceOptions = this.$options.resourceOptions
       const lemmaTranslationLang = this.app.state.lemmaTranslationLang
+      let featureOptions = this.settings.getFeatureOptions()
 
       const wordUsageExamples = this.app.enableWordUsageExamples(textSelector, 'onLexicalQuery')
-        ? { paginationMax: this.settings.featureOptions.items.wordUsageExamplesMax.currentValue,
-          paginationAuthMax: this.settings.featureOptions.items.wordUsageExamplesAuthMax.currentValue }
+        ? { paginationMax: featureOptions.items.wordUsageExamplesMax.currentValue,
+          paginationAuthMax: featureOptions.items.wordUsageExamplesAuthMax.currentValue }
         : null
 
       let lexQuery = LexicalQueryLookup
@@ -191,8 +193,8 @@ export default {
     },
 
     resourceSettingChange: function (name, value) {
-      let keyinfo = this.settings.lookupResourceOptions.parseKey(name)
-      this.settings.lookupResourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
+      let keyinfo = Options.parseKey(name)
+      this.settings.lookupResourceOptions.items[keyinfo.name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
     }
   }
 }
@@ -238,21 +240,40 @@ export default {
     justify-content: space-between;
   }
 
+  $fieldsetHeight: 40px;
+
   .alpheios-lookup__search-control {
     display: flex;
 
     // Double selector is used to prevent style leaks from host pages
+
     input.alpheios-input,
     input.alpheios-input:focus
     {
       width: 70%;
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
+      height: $fieldsetHeight;
+      min-width: 0;
+      border-color: var(--alpheios-lookup-input-border-color);
     }
 
     button {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
+      height: $fieldsetHeight;
+
+      background-color: var(--alpheios-lookup-button-bg);
+      color: var(--alpheios-lookup-button-color);
+      border-color: var(--alpheios-lookup-button-border-color);
+
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: var(--alpheios-lookup-button-bg-hover);
+        color: var(--alpheios-lookup-button-color-hover);
+        border-color: var(--alpheios-lookup-button-border-color-hover);
+      }
     }
   }
 

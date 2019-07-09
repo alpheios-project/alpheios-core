@@ -26,7 +26,7 @@
   }
 
   .multiselect__tag {
-    background-color: var(--alpheios-btn-primary-bg-color);
+    background-color: var(--alpheios-settings-font-multiselect-bg);
 
     display: inline-block;
     border-radius: textsize(5px);
@@ -40,7 +40,7 @@
     min-height: textsize(24px);
 
     span {
-      color: var(--alpheios-btn-primary-font-color);
+      color: var(--alpheios-settings-font-multiselect-font-color);
     }
   }
 
@@ -78,18 +78,18 @@
   .multiselect__tag,
   .multiselect__tag-icon:focus,
   .multiselect__tag-icon:hover {
-    background: var(--alpheios-btn-primary-bg-color);
+    background: var(--alpheios-settings-font-multiselect-bg);
   }
 
   .multiselect__option.multiselect__option--highlight {
-    background-color: var(--alpheios-btn-primary-bg-color);
+    background-color: var(--alpheios-settings-font-multiselect-bg);
 
     &:after {
       display: none;
     }
 
     span {
-      color: var(--alpheios-btn-primary-font-color);
+      color: var(--alpheios-settings-font-multiselect-font-color);
     }
   }
 
@@ -97,12 +97,12 @@
   .multiselect__tag span,
   .multiselect__tag-icon:focus span,
   .multiselect__tag-icon:hover span {
-    color: var(--alpheios-btn-primary-font-color);
+    color: var(--alpheios-settings-font-multiselect-font-color);
   }
 
   .multiselect__tag-icon:after {
     content: "\D7";
-    color: var(--alpheios-btn-primary-font-color);
+    color: var(--alpheios-settings-font-multiselect-font-color);
     font-size: textsize(24px);
   }
 
@@ -120,10 +120,10 @@
     top: 0;
     transition: all .2s ease;
     width: textsize(24px);
-    color: var(--alpheios-btn-primary-font-color);
+    color: var(--alpheios-settings-font-multiselect-font-color);
 
     &:hover {
-      background-color: var(--alpheios-btn-primary-bg-color);
+      background-color: var(--alpheios-settings-font-multiselect-bg);
     }
   }
 }

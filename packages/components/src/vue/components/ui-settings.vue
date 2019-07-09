@@ -3,19 +3,13 @@
     <font-size></font-size>
     <setting
         :classes="['alpheios-ui-options__item']"
-        :data="settings.uiOptions.items.panelPosition"
+        :data="uiOptions.items.panelPosition"
         @change="uiOptionChanged"
     >
     </setting>
     <setting
         :classes="['alpheios-ui-options__item']"
-        :data="settings.uiOptions.items.popupPosition"
-        @change="uiOptionChanged"
-    >
-    </setting>
-    <setting
-        :classes="['alpheios-ui-options__item']"
-        :data="settings.uiOptions.items.verboseMode"
+        :data="uiOptions.items.verboseMode"
         @change="uiOptionChanged"
     >
     </setting>
@@ -24,6 +18,7 @@
 <script>
   import FontSize from './font-size.vue'
   import Setting from './setting.vue'
+  import Options from '@/lib/options/options.js'
   import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
   export default {
     name: 'UISettings',
@@ -40,9 +35,15 @@
       setting: Setting,
       fontSize: FontSize
     },
+    computed: {
+      uiOptions: function() {
+        return this.settings.getUiOptions()
+      }
+    },
     methods: {
       uiOptionChanged: function (name, value) {
-        this.ui.optionChange(name, value)
+        let keyinfo = Options.parseKey(name)
+        this.ui.optionChange(keyinfo.name, value)
       }
     }
   }

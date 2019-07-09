@@ -6,7 +6,7 @@
       <div class="alpheios-word-usage-sorting-select">
         <select class="alpheios-select alpheios-word-usage-header-select-sortBy"
                 v-model="selectedSortBy" @change="changedSortBy">
-          <option v-for="typeSorting in finalTypeSortingList" 
+          <option v-for="typeSorting in finalTypeSortingList"
           v-bind:key="typeSorting.value"
                   v-bind:value="typeSorting.value"
                   >{{ typeSorting.title }}</option>
@@ -15,14 +15,12 @@
     </div>
 </template>
 <script>
-import ClearFilters from '@/images/inline-icons/clear-filters.svg'
 import Tooltip from '@/vue/components/tooltip.vue'
 
 export default {
   name: 'WordUsageExamplesSorting',
   inject: ['app', 'l10n'],
   components: {
-    clearFiltersIcon: ClearFilters,
     alphTooltip: Tooltip
   },
   props: {

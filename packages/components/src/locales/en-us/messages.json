@@ -553,5 +553,10 @@
     "message": "Back to index",
     "description": "Description of back to index button",
     "component": "Grammar Tab"
+  },
+  "LABEL_FIELDSET_USAGEEXAMPLES": {
+    "message": "Latin Word Usage Examples (Concordance)",
+    "description": "Legend for options fieldset",
+    "component": "Options Tab"
   }
 }

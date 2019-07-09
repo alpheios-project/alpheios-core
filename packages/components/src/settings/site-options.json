@@ -4,6 +4,7 @@
     "options": [
       {
         "domain": "alpheios-resource-options",
+        "version": 2,
         "items": {
           "treebanks": {
             "labelText": "Treebanks",

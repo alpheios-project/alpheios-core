@@ -3,20 +3,20 @@
     <label class="alpheios-setting__label">{{ l10n.getMsg('LABEL_RESKIN_SETTINGS') }}:</label>
     <div class="alpheios-setting__button-group alpheios-setting__control">
       <button
-          :class="{ active: activeButton === 12 }"
-          @click="changeFontSize(12)"
+          :class="{ active: activeButton === '12' }"
+          @click="changeFontSize('12')"
       >
         {{ l10n.getMsg('FONTSIZE_TEXT_SMALL') }}
       </button>
       <button
-          :class="{ active: activeButton === 16 }"
-          @click="changeFontSize(16)"
+          :class="{ active: activeButton === '16' }"
+          @click="changeFontSize('16')"
       >
         {{ l10n.getMsg('FONTSIZE_TEXT_MEDIUM') }}
       </button>
       <button
-          :class="{ active: activeButton === 20 }"
-          @click="changeFontSize(20)"
+          :class="{ active: activeButton === '20' }"
+          @click="changeFontSize('20')"
       >
         {{ l10n.getMsg('FONTSIZE_TEXT_LARGE') }}
       </button>
@@ -27,10 +27,10 @@
 
 export default {
   name: 'ReskinFontColor',
-  inject: ['ui', 'l10n'],
+  inject: ['ui', 'l10n', 'settings'],
   data () {
     return {
-      activeButton: 16
+      activeButton: this.settings.getUiOptions().items.fontSize.currentValue
     }
   },
   methods: {
@@ -45,8 +45,8 @@ export default {
   @import "../../styles/variables";
 
   .alpheios-setting__button-group {
-    color: var(--alpheios-text-color-vivid);
-    border: 1px solid var(--alpheios-text-color-vivid);
+    color: var(--alpheios-settings-font-size-dark-color);
+    border: 1px solid var(--alpheios-settings-font-size-dark-color);
     border-radius: textsize(10px);
     max-width: textsize(200px);
     display: flex;
@@ -55,7 +55,7 @@ export default {
 
     button {
       border: none;
-      border-right: 1px solid var(--alpheios-text-color-vivid);
+      border-right: 1px solid var(--alpheios-settings-font-size-dark-color);
       background: transparent;
       padding: textsize(6px) textsize(12px);
       font-size: textsize(8px);
@@ -70,8 +70,8 @@ export default {
     }
 
     button.active {
-      color: var(--alpheios-color-neutral-lightest);
-      background: var(--alpheios-text-color-vivid);
+      color: var(--alpheios-settings-font-size-light-color);
+      background: var(--alpheios-settings-font-size-dark-color);
       box-shadow: inset 0 textsize(4px) textsize(4px) rgba(0, 0, 0, 0.1);
     }
   }

@@ -29,15 +29,12 @@ describe('popup.test.js', () => {
   localVue.use(Vuex)
   let store
   let api = {}
-  let featureOptions
-  let resourceOptions
-  let uiOptions
+  let settingsAPI
   let l10nModule
   let authModule
   const uiAPI = {
     closePopup: () => {}
   }
-
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
@@ -47,9 +44,18 @@ describe('popup.test.js', () => {
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
 
-    featureOptions = new Options(FeatureOptionDefaults, TempStorageArea)
-    resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
-    uiOptions = new Options(UIOptionDefaults, TempStorageArea)
+    let ta1 = new TempStorageArea('alpheios-feature-settings')
+    let ta2 = new TempStorageArea('alpheios-resource-settings')
+    let ta3 = new TempStorageArea('alpheios-ui-settings')
+    let featureOptions = new Options(FeatureOptionDefaults, ta1)
+    let resourceOptions = new Options(LanguageOptionDefaults, ta2)
+    let uiOptions = new Options(UIOptionDefaults, ta3)
+    let settingsAPI = {
+      getFeatureOptions: () => { return featureOptions },
+      getResourceOptions: () => { return resourceOptions },
+      getUiOptions: () => { return uiOptions },
+      verboseMode: () => { return false }
+    }
 
     store = new Vuex.Store({
       modules: {
@@ -88,11 +94,7 @@ describe('popup.test.js', () => {
     api = {
       ui: uiAPI,
       auth:authModule,
-      settings: {
-        featureOptions,
-        resourceOptions,
-        uiOptions
-      }
+      settings: settingsAPI
     }
 
     l10nModule = new L10nModule(store, api, {

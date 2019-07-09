@@ -50,6 +50,10 @@ ActionPanelModule.store = (moduleInstance) => {
     state: {
       // Whether an action panel is shown or hidden
       visible: false,
+      // If a lookup input shall be shown when a panel is open
+      showLookup: moduleInstance.config.showLookup,
+      // If nav buttons shall be shown when a panel is open
+      showNav: moduleInstance.config.showNav,
       // Initial position of an action panel
       initialPos: moduleInstance.config.initialPos
     },
@@ -57,8 +61,12 @@ ActionPanelModule.store = (moduleInstance) => {
       /**
        * Opens an action panel
        * @param state
+       * @param {boolean} showLookup - Whether to show the lookup input
+       * @param {boolean} showNav - Whether to show navigational buttons
        */
-      open (state) {
+      open (state, { showLookup, showNav }) {
+        state.showLookup = typeof showLookup === 'undefined' ? moduleInstance.config.showLookup : showLookup
+        state.showNav = typeof showNav === 'undefined' ? moduleInstance.config.showNav : showNav
         state.visible = true
       },
 
@@ -68,6 +76,9 @@ ActionPanelModule.store = (moduleInstance) => {
        */
       close (state) {
         state.visible = false
+        // Set showLookup and showNav to their default values
+        state.showLookup = moduleInstance.config.showLookup
+        state.showNav = moduleInstance.config.showNav
       }
     }
   }
@@ -99,5 +110,9 @@ ActionPanelModule._configDefaults = {
   initialShift: {
     x: 0,
     y: 0
-  }
+  },
+  // Whether a lookup input will be shown when the panel is opened
+  showLookup: true,
+  // Whether to show nave buttons when the panel is opened
+  showNav: true
 }

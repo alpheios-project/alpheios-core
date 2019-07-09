@@ -41,14 +41,7 @@ PopupModule.store = (moduleInstance) => {
 
     state: {
       // Whether a popup is displayed
-      visible: false,
-
-      positioning: moduleInstance.config.positioning
-    },
-
-    getters: {
-      isFlexPositioned: state => state.positioning === 'flexible',
-      isFixedPositioned: state => state.positioning === 'fixed'
+      visible: false
     },
 
     mutations: {
@@ -66,16 +59,8 @@ PopupModule.store = (moduleInstance) => {
        */
       close (state) {
         state.visible = false
-      },
-
-      /**
-       * Changes a positioning schema of a popup
-       * @param state
-       * @param {string} positioning - A positioning rule for a popup, see defaults for details.
-       */
-      setPositioning (state, positioning) {
-        state.positioning = positioning
       }
+
     }
   }
 }
@@ -98,11 +83,6 @@ PopupModule._configDefaults = {
   // Whether a popup can be dragged and resized
   draggable: true,
   resizable: true,
-
-  // How the popup is positioned:
-  //     `fixed`: will remember its last position;
-  //     `flexible`: will try to adapt its position to appear near the selected word (experimental)
-  positioning: 'fixed',
 
   // How much a popup is shifted from its initial position.
   initialShift: {

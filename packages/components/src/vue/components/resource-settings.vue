@@ -20,6 +20,7 @@
 </template>
 <script>
   import Setting from './setting.vue'
+  import Options from '@/lib/options/options.js'
   import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
   export default {
     name: 'FeatureSettings',
@@ -35,19 +36,22 @@
     },
     computed: {
       resourceSettingsLexicons: function () {
-        return this.settings.resourceOptions.items && this.settings.resourceOptions.items.lexicons
-          ? this.settings.resourceOptions.items.lexicons.filter(item => item.values.length > 0)
+        let resourceOptions = this.settings.getResourceOptions()
+        return resourceOptions.items && resourceOptions.items.lexicons
+          ? resourceOptions.items.lexicons.filter(item => item.values.length > 0)
           : []
       },
       resourceSettingsLexiconsShort: function () {
-        return this.settings.resourceOptions.items && this.settings.resourceOptions.items.lexiconsShort
-          ? this.settings.resourceOptions.items.lexiconsShort.filter(item => item.values.length > 0)
+        let resourceOptions = this.settings.getResourceOptions()
+        return resourceOptions.items && resourceOptions.items.lexiconsShort
+          ? resourceOptions.items.lexiconsShort.filter(item => item.values.length > 0)
           : []
       }
     },
     methods: {
       resourceSettingChanged: function (name, value) {
-        this.language.resourceSettingChange(name, value)
+        let keyinfo = Options.parseKey(name)
+        this.language.resourceSettingChange(keyinfo.name, value)
       }
     }
   }

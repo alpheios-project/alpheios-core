@@ -69,7 +69,5 @@ export default {
         vertical-align: middle;
     }
 
-    .alpheios-wordlist-language__worditem.active {
-      color: var(--alpheios-color-light);
-    }
+
 </style>

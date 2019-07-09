@@ -119,7 +119,7 @@ export default {
       vertical-align: middle;
   }
 
-  $iconsize: 25px;
+  $iconsize: 22px;
 
   .alpheios-wordlist-language__worditem {
     .alpheios-worditem__icon {
@@ -127,36 +127,39 @@ export default {
         height: $iconsize;
         text-align: center;
         cursor: pointer;
-        fill: var(--alpheios-link-color-on-dark);
-        stroke: var(--alpheios-link-color-on-dark);
+
+        fill: var(--alpheios-word-list-default-item-color);
+        stroke: var(--alpheios-word-list-default-item-color);
+
         margin: 5px;
         svg {
           width: $iconsize;
           height: $iconsize;
           display: inline-block;
           vertical-align: top;
+          padding: 2px;
         }
 
         &.alpheios-worditem__delete_icon {
-          fill: var(--alpheios-color-dark);
-          stroke: var(--alpheios-color-dark);
+          fill: var(--alpheios-word-list-delete-item-color);
+          stroke: var(--alpheios-word-list-delete-item-color);
         }
 
         &.alpheios-worditem__current_session_icon {
-          stroke: var(--alpheios-color-bright-hover);
-          fill: var(--alpheios-color-bright-hover);
+          stroke: var(--alpheios-word-list-current-item-color);
+          fill: var(--alpheios-word-list-current-item-color);
         }
     }
   }
 
  .alpheios-wordlist-language__worditem__active .alpheios-worditem__data {
-    fill: var(--alpheios-color-light);
-    stroke: var(--alpheios-color-light);
-    color: var(--alpheios-color-light);
+    fill: var(--alpheios-word-list-important-item-color);
+    stroke: var(--alpheios-word-list-important-item-color);
+    color: var(--alpheios-word-list-important-item-color);
 
     &.alpheios-worditem__delete_icon {
-      fill: var(--alpheios-color-dark);
-      stroke: var(--alpheios-color-dark);
+      fill: var(--alpheios-word-list-delete-item-color);
+      stroke: var(--alpheios-word-list-delete-item-color);
     }
   }
 
@@ -166,7 +169,7 @@ export default {
       cursor: pointer;
   }
   .alpheios-worditem__lemmasList {
-      width: 29%;
+      width: 26%;
   }
 
   .alpheios-visibility__hidden {

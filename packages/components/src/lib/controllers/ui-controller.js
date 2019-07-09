@@ -30,6 +30,7 @@ import LongTap from '@/lib/custom-pointer-events/long-tap.js'
 import GenericEvt from '@/lib/custom-pointer-events/generic-evt.js'
 import Options from '@/lib/options/options.js'
 import LocalStorage from '@/lib/options/local-storage-area.js'
+import RemoteAuthStorageArea from '@/lib/options/remote-auth-storage-area.js'
 import UIEventController from '@/lib/controllers/ui-event-controller.js'
 import QueryParams from '@/lib/utility/query-params.js'
 
@@ -334,12 +335,11 @@ export default class UIController {
     // Get query parameters from the URL
     this.queryParams = QueryParams.parse()
     // Start loading options as early as possible
-    this.featureOptions = new Options(this.featureOptionsDefaults, this.options.storageAdapter)
-    this.resourceOptions = new Options(this.resourceOptionsDefaults, this.options.storageAdapter)
+    let optionLoadPromises = this.initOptions(this.options.storageAdapter)
     // Create a copy of resource options for the lookup UI component
-    this.lookupResourceOptions = new Options(this.resourceOptionsDefaults, this.options.storageAdapter)
-    this.uiOptions = new Options(this.uiOptionsDefaults, this.options.storageAdapter)
-    let optionLoadPromises = [this.featureOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
+    // this doesn't get reloaded from the storage adapter because
+    // we don't expose it to the user via preferences
+    this.lookupResourceOptions = new Options(this.resourceOptionsDefaults, new this.options.storageAdapter(this.resourceOptionsDefaults.domain))
     // TODO: Site options should probably be initialized the same way as other options objects
     this.siteOptions = this.loadSiteOptions(this.siteOptionsDefaults)
 
@@ -357,12 +357,42 @@ export default class UIController {
      * This is a settings API. It exposes different options to modules and UI components.
      */
     this.api.settings = {
-      featureOptions: this.featureOptions,
-      resourceOptions: this.resourceOptions,
+      getFeatureOptions: this.getFeatureOptions.bind(this),
+      getResourceOptions: this.getResourceOptions.bind(this),
+      getUiOptions: this.getUiOptions.bind(this),
+      verboseMode: this.verboseMode.bind(this),
+      // we don't offer UI to change to lookupResourceOptions or siteOptions
+      // so they remain out of dynamic state for now - should eventually
+      // refactor
       lookupResourceOptions: this.lookupResourceOptions,
-      uiOptions: this.uiOptions,
-      siteOptions: this.siteOptions
+      siteOptions: this.siteOptions,
     }
+    this.store.registerModule('settings', {
+      // All stores of modules are namespaced
+      namespaced: true,
+      state: {
+        // these counters are used to enable the settings ui components
+        // to redraw themselves when settings are reset or reloaded
+        // it might be better if all settings were made into
+        // state variables but for now state is monitored at the domain level
+        uiResetCounter: 0,
+        featureResetCounter: 0,
+        resourceResetCounter: 0
+      },
+      mutations: {
+        incrementUiResetCounter (state){
+          state.uiResetCounter += 1
+        },
+
+        incrementFeatureResetCounter (state){
+          state.featureResetCounter += 1
+        },
+
+        incrementResourceResetCounter (state){
+          state.resourceResetCounter += 1
+        }
+      }
+    })
 
     this.api.app = {
       name: this.options.app.name, // A name of an application
@@ -717,7 +747,6 @@ export default class UIController {
     // Set options of modules before modules are created
     if (this.hasModule('popup')) {
       let popupOptions = this.modules.get('popup').options
-      popupOptions.positioning = this.uiOptions.items.popupPosition.currentValue
       popupOptions.initialShift = {
         x: this.uiOptions.items.popupShiftX.currentValue,
         y: this.uiOptions.items.popupShiftY.currentValue
@@ -751,20 +780,40 @@ export default class UIController {
     return this
   }
 
+  /**
+   * initialize the options using the supplied storage adapter class
+   * @param {Function<StorageAdapter>} StorageAdapter the adapter class to instantiate
+   * @param {Object} authData optional authentication data if the adapter is one that requires it
+   * @return Promise[] an array of promises to load the options data from the adapter
+   */
+  initOptions(StorageAdapter,authData=null) {
+    this.featureOptions = new Options(this.featureOptionsDefaults, new StorageAdapter(this.featureOptionsDefaults.domain,authData))
+    this.resourceOptions = new Options(this.resourceOptionsDefaults, new StorageAdapter(this.resourceOptionsDefaults.domain,authData))
+    this.uiOptions = new Options(this.uiOptionsDefaults, new StorageAdapter(this.uiOptionsDefaults.domain,authData))
+    return [this.featureOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
+  }
+
   async initUserDataManager (isAuthenticated) {
     let wordLists
+    let optionLoadPromises
     if (isAuthenticated) {
       let authData = await this.api.auth.getUserData()
       this.userDataManager = new UserDataManager(authData, WordlistController.evt)
       wordLists = await this.wordlistC.initLists(this.userDataManager)
       this.store.commit('app/setWordLists', wordLists)
+      optionLoadPromises = this.initOptions(RemoteAuthStorageArea,authData)
     } else {
       // TODO we need to make the UserDataManager a singleton that can
       // handle switching users gracefully
       this.userDataManager.clear()
       this.userDataManager = null
       wordLists = await this.wordlistC.initLists()
+
+      // reload the user-configurable options
+      optionLoadPromises = this.initOptions(this.options.storageAdapter)
     }
+    await Promise.all(optionLoadPromises)
+    this.onOptionsReset()
     this.store.commit('app/setWordLists', wordLists)
   }
 
@@ -895,7 +944,7 @@ export default class UIController {
     let allSiteOptions = []
     for (let site of siteOptions) {
       for (let domain of site.options) {
-        let siteOpts = new Options(domain, this.options.storageAdapter)
+        let siteOpts = new Options(domain, new this.options.storageAdapter(domain.domain))
         allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
     }
@@ -970,7 +1019,7 @@ export default class UIController {
       grammar: () => this.store.getters['app/hasGrammarRes'],
       treebank: () => this.store.getters['app/hasTreebankData'],
       wordUsage: () => this.store.state.app.wordUsageExampleEnabled,
-      status: () => this.api.settings.uiOptions.items.verboseMode.currentValue === 'verbose',
+      status: () => this.api.settings.getUiOptions().items.verboseMode.currentValue === 'verbose',
       wordlist: () => this.store.state.app.hasWordListsData
     }
     return tabsCheck.hasOwnProperty(tabName) && !tabsCheck[tabName]()
@@ -1225,9 +1274,15 @@ export default class UIController {
     }
   }
 
-  openActionPanel () {
+  /**
+   * Opens an action panel.
+   * @param {object} panelOptions - An object that specifies parameters of an action panel (see below):
+   * @param {boolean} panelOptions.showLookup - Whether to show a lookup input when the action panel is opened.
+   * @param {boolean} panelOptions.showNav - Whether to show a nav toolbar when the action panel is opened.
+   */
+  openActionPanel (panelOptions = {}) {
     if (this.api.ui.hasModule('actionPanel')) {
-      this.store.commit('actionPanel/open')
+      this.store.commit('actionPanel/open', panelOptions)
     } else {
       console.warn(`Action panel cannot be opened because its module is not registered`)
     }
@@ -1245,7 +1300,7 @@ export default class UIController {
     if (this.api.ui.hasModule('actionPanel')) {
       this.store.state.actionPanel.visible
         ? this.store.commit('actionPanel/close')
-        : this.store.commit('actionPanel/open')
+        : this.store.commit('actionPanel/open', {})
     } else {
       console.warn(`Action panel cannot be toggled because its module is not registered`)
     }
@@ -1288,7 +1343,7 @@ export default class UIController {
 
         let lexQuery = LexicalQuery.create(textSelector, {
           htmlSelector: htmlSelector,
-          resourceOptions: this.resourceOptions,
+          resourceOptions: this.api.settings.getResourceOptions(),
           siteOptions: [],
           lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { locale: this.featureOptions.items.locale.currentValue } : null,
           wordUsageExamples: this.getWordUsageExamplesQueryParams(textSelector),
@@ -1301,6 +1356,22 @@ export default class UIController {
         this.closePopup() // because we open popup before any check, but selection could be incorrect
       }
     }
+  }
+
+  getFeatureOptions() {
+    return this.featureOptions
+  }
+
+  getResourceOptions() {
+    return this.resourceOptions
+  }
+
+  getUiOptions() {
+    return this.uiOptions
+  }
+
+  verboseMode() {
+    return this.uiOptions.items.verboseMode.currentValue === "verbose"
   }
 
   async getWordUsageData (homonym, params = {}) {
@@ -1506,33 +1577,66 @@ export default class UIController {
     }
   }
 
-  resetAllOptions () {
-    this.featureOptions.reset()
-    this.resourceOptions.reset()
-    this.uiOptions.reset()
-    // TODO this is a hack until we refactor settings to use the Vuex store
-    // what we really need to do here is make sure that any state handlers that need to be called
-    // in response to any setting change are called and that the ui components for the settings are redrawn
-    alert('Restart your browser now for setting reset to take affect')
+  /**
+   * Resets all configurable options to the defaults, replacing user preferences
+   */
+  async resetAllOptions () {
+    await this.featureOptions.reset()
+    await this.resourceOptions.reset()
+    await this.uiOptions.reset()
+    // we don't reload lookupResourceOptions or siteOptions
+    // because we don't currently allow user configuration of these
+    this.onOptionsReset()
   }
 
-  featureOptionChange (name, value) {
-    // TODO we need to refactor handling of boolean options
-    if (name === 'enableLemmaTranslations' || name === 'enableWordUsageExamples' || name === 'wordUsageExamplesMax' || name === 'wordUsageExamplesAuthMax') {
-      this.api.settings.featureOptions.items[name].setValue(value)
-    } else {
-      this.api.settings.featureOptions.items[name].setTextValue(value)
+  /**
+   * Updates the Application State after settings have been reset or reloaded
+   */
+  onOptionsReset() {
+    for (let name of this.featureOptions.names) {
+      this.featureOptionStateChange(name)
+      this.store.commit('settings/incrementFeatureResetCounter')
     }
-    switch (name) {
+    for (let name of this.resourceOptions.names) {
+      this.store.commit('settings/incrementResourceResetCounter')
+    }
+    for (let name of this.uiOptions.names) {
+      this.uiOptionStateChange(name)
+      this.store.commit('settings/incrementUiResetCounter')
+    }
+  }
+
+
+  /**
+   * Handle a change to a single feature option
+   * @param {String} name the setting name
+   * @param {String} value the new value
+   */
+  featureOptionChange (name, value) {
+    let featureOptions =  this.api.settings.getFeatureOptions()
+    // TODO we need to refactor handling of boolean options
+    if (name === 'enableLemmaTranslations' ||
+        name === 'enableWordUsageExamples' ||
+        name === 'wordUsageExamplesMax' ||
+        name === 'wordUsageExamplesAuthMax') {
+      featureOptions.items[name].setValue(value)
+    } else {
+      featureOptions.items[name].setTextValue(value)
+    }
+    this.featureOptionStateChange(name)
+  }
+
+  /**
+   * Updates the state of a feature to correspond to current options
+   * @param {String} settingName the name of the setting
+   */
+  featureOptionStateChange(settingName) {
+    switch (settingName) {
       case 'locale':
-        // TODO: It seems that presenter is never defined. Do we need it?
-        if (this.presenter) {
-          this.presenter.setLocale(this.api.settings.featureOptions.items.locale.currentValue)
-        }
         this.updateLemmaTranslations()
         break
       case 'preferredLanguage':
-        this.updateLanguage(this.api.settings.featureOptions.items.preferredLanguage.currentValue)
+        this.updateLanguage(this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue)
         break
       case 'enableLemmaTranslations':
         this.updateLemmaTranslations()
@@ -1541,48 +1645,52 @@ export default class UIController {
   }
 
   /**
-   * Handles a UI options in settings.
+   * Handle a change to a single ui option
    * @param {string} name - A name of an option.
    * @param {string | value} value - A new value of an options.
    */
   uiOptionChange (name, value) {
-    const FONT_SIZE_PROP = '--alpheios-base-text-size'
+    let uiOptions = this.api.settings.getUiOptions()
     // TODO this should really be handled within OptionsItem
     // the difference between value and textValues is a little confusing
     // see issue #73
     if (name === 'fontSize') {
-      this.api.settings.uiOptions.items[name].setValue(value)
+      uiOptions.items[name].setValue(value)
     } else {
-      this.api.settings.uiOptions.items[name].setTextValue(value)
+      uiOptions.items[name].setTextValue(value)
     }
+    this.uiOptionStateChange(name)
+  }
 
-    switch (name) {
-      case 'panel':
-        if (this.api.ui.hasModule('panel')) {
-          this.store.commit('panel/close')
-          this.store.commit('panel/setPanelLayout', this.api.settings.uiOptions.items[name].currentValue)
-          this.store.commit('panel/open')
-        }
-        break
+  /**
+   * Updates the state of a ui component to correspond to current options
+   * @param {String} settingName the name of the setting
+   */
+  uiOptionStateChange(settingName) {
+    let uiOptions = this.api.settings.getUiOptions()
+    const FONT_SIZE_PROP = '--alpheios-base-text-size'
+    switch (settingName) {
       case 'fontSize':
         try {
-          document.documentElement.style.setProperty(FONT_SIZE_PROP, `${value}px`)
+          document.documentElement.style.setProperty(FONT_SIZE_PROP,
+            `${uiOptions.items.fontSize.currentValue}px`)
         } catch (error) {
           console.error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
         }
         break
       case 'panelPosition':
-        this.store.commit('panel/setPosition', this.api.settings.uiOptions.items.panelPosition.currentValue)
-        break
-      case 'popupPosition':
-        this.store.commit('popup/setPositioning', this.api.settings.uiOptions.items.popupPosition.currentValue)
+        this.store.commit('panel/setPosition', uiOptions.items.panelPosition.currentValue)
         break
     }
   }
 
+  /**
+   * Handle a change to a single resource option
+   * @param {string} name - A name of an option.
+   * @param {string | value} value - A new value of an options.
+   */
   resourceSettingChange (name, value) {
-    let keyinfo = this.api.settings.resourceOptions.parseKey(name)
-    this.api.settings.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
+    this.api.settings.getResourceOptions().items[name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
   }
 
   registerGetSelectedText (listenerName, selector) {

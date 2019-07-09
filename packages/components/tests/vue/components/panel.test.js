@@ -70,6 +70,11 @@ describe('panel.test.js', () => {
           actions: {},
           getters: {}
         },
+        settings: {
+          uiResetCounter: 0,
+          featureResetCounter: 0,
+          resourceResetCounter: 0
+        },
         app: {
           namespaced: true,
           state: {

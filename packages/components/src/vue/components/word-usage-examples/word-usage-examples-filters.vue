@@ -2,10 +2,10 @@
     <div class="alpheios-word-usage-header-filters">
       <p class="alpheios-word-usage-get-data-progress" v-show="gettingResult">{{ l10n.getText('WORDUSAGE_GETTING_RESULT') }}</p>
 
-      <div v-show="showHeader && !collapsedHeader">      
+      <div v-show="showHeader && !collapsedHeader">
         <div class="alpheios-word-usage-filters-select" v-if="authorsList">
           <p class="alpheios-word-usage-filter-title">{{ l10n.getText('WORDUSAGE_FOCUS_AUTHOR') }}</p>
-          <select class="alpheios-select alpheios-word-usage-header-filter-select" 
+          <select class="alpheios-select alpheios-word-usage-header-filter-select"
                     v-model="selectedAuthor"
                     @change = "getResults('author')"
             >
@@ -18,7 +18,7 @@
         </div>
         <div class="alpheios-word-usage-filters-select" v-if="filteredWorkList">
           <p class="alpheios-word-usage-filter-title">{{ l10n.getText('WORDUSAGE_FOCUS_WORK') }}</p>
-          <select class="alpheios-select alpheios-word-usage-header-filter-select" 
+          <select class="alpheios-select alpheios-word-usage-header-filter-select"
                     v-model="selectedTextWork"
                     @change = "getResults('textWork')"
             >
@@ -34,14 +34,12 @@
     </div>
 </template>
 <script>
-import ClearFilters from '@/images/inline-icons/clear-filters.svg'
 import Tooltip from '@/vue/components/tooltip.vue'
 
 export default {
   name: 'WordUsageExamplesFilters',
   inject: ['app', 'l10n'],
   components: {
-    clearFiltersIcon: ClearFilters,
     alphTooltip: Tooltip
   },
   props: {
@@ -89,11 +87,11 @@ export default {
           .filter((item, pos, self) => self.indexOf(item) == pos)
           .slice()
         this.lastAuthorsList.unshift(null)
-      } 
+      }
       return true
     },
     filteredWorkList () {
-      if (this.selectedAuthor) {        
+      if (this.selectedAuthor) {
         this.selectedTextWork = null
         let resArray = this.selectedAuthor.works.slice()
         if (resArray.length > 1) {
@@ -117,7 +115,7 @@ export default {
         this.selectedTextWork = null
       }
       this.gettingResult = true
-      
+
       if (this.selectedAuthor) {
         await this.app.getWordUsageData(this.homonym, {
           author: this.selectedAuthor && this.selectedAuthor.ID !== 0 ? this.selectedAuthor : null,
@@ -206,15 +204,8 @@ export default {
     margin-top: 10px;
   }
 
-  @include keyframes(progresscolor) {
-    0% { color: var(--alpheios-color-vivid); }
-    30% { color: var(--alpheios-color-vivid-hover); }
-    60% { color: var(--alpheios-color-bright); }
-    90% { color: var(--alpheios-color-vivid-hover); }
-  }
-
-  .alpheios-word-usage-get-data-progress {
-    @include animation('progresscolor 4s infinite linear');
+  .alpheios-word-usage-header-filters .alpheios-word-usage-get-data-progress {
+    color: var(--alpheios-usage-progress-color);
     font-weight: bold;
   }
 

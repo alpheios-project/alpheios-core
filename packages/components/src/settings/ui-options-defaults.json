@@ -1,20 +1,21 @@
 {
   "domain": "alpheios-ui-options",
+  "version": 2,
   "items": {
     "fontSize": {
       "defaultValue": "medium",
       "labelText": "Font size",
       "values": [
         {
-          "value": "small",
+          "value": "12",
           "text": "Small font size"
         },
         {
-          "value": "medium",
+          "value": "16",
           "text": "Medium font size"
         },
         {
-          "value": "large",
+          "value": "20",
           "text": "Large font size"
         }
       ]
@@ -30,20 +31,6 @@
         {
           "value": "right",
           "text": "Right"
-        }
-      ]
-    },
-    "popupPosition": {
-      "defaultValue": "fixed",
-      "labelText": "Popup position:",
-      "values": [
-        {
-          "value": "flexible",
-          "text": "Flexible"
-        },
-        {
-          "value": "fixed",
-          "text": "Fixed"
         }
       ]
     },

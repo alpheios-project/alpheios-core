@@ -70,12 +70,12 @@
         "component": "WordUsageExamplesFilters"
     },
     "WORDUSAGE_FILTERS_AUTHOR_CLEAR": {
-        "message": "Clear author limit",
+        "message": "Clear author",
         "description": "Word Usage Examples Type filter",
         "component": "WordUsageExamplesFilters"
     },
     "WORDUSAGE_FILTERS_TEXTWORK_CLEAR": {
-        "message": "Clear work limit",
+        "message": "Clear work",
         "description": "Word Usage Examples Type filter",
         "component": "WordUsageExamplesFilters"
     },
@@ -85,7 +85,7 @@
         "component": "WordUsageExamplesSorting"
     },
     "WORDUSAGE_SHOW_SOURCE_LINKS": {
-        "message": "Show/hide source links",
+        "message": "Show source links",
         "description": "Message on a button that toggles source links on or off",
         "component": "WordUsageExamples"
     },
@@ -133,5 +133,20 @@
         "message": "Focus on Work:",
         "description": "Title for the textwork's filter",
         "component": "WordUsageExamples"
+    },
+    "WORDUSAGE_HINT_INITIAL_SEARCH": {
+        "message": "(up to {maxResults} usages per author - Focus to get more results by author)",
+        "description": "Hint for initial search results",
+        "params": ["maxResults"]
+    },
+    "WORDUSAGE_HINT_FOCUS_SEARCH": {
+        "message": "(results may be truncated - maximum {maxResults})",
+        "description": "Hint for focus author results",
+        "params": ["maxResults","author"]
+    },
+    "WORDUSAGE_HINT_AUTHOR_WORK_FOCUS_SEARCH_NONE": {
+        "message": "There are no usages of {word} by {author} in {work}.",
+        "description": "Hint for focus author work results",
+        "params": ["word","maxResults","author","work"]
     }
 }

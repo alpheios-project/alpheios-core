@@ -129,12 +129,12 @@
            v-show="$store.getters['ui/isActiveTab']('options')"
            data-alpheios-ignore="all"
       >
-        <ui-settings></ui-settings>
-        <feature-settings></feature-settings>
-        <resource-settings></resource-settings>
+        <ui-settings :key="uiSettingsKey"></ui-settings>
+        <feature-settings :key="featureSettingsKey"></feature-settings>
+        <resource-settings :key="resourceSettingsKey"></resource-settings>
         <div>
           <button @click="resetAllOptions"
-              class="alpheios-button-primary">{{l10n.getText('LABEL_RESET_OPTIONS')}}
+              class="alpheios-button-primary alpheios-reset-button">{{l10n.getText('LABEL_RESET_OPTIONS')}}
           </button>
         </div>
       </div>
@@ -196,6 +196,9 @@ export default {
   minWidth: 698,
   // Maximum allowed size of a panel, as percentage of the viewport width.
   maxWidthPct: 80,
+
+  // custom property for use in constructing keys on subcomponents
+  prefixName: 'panel-large',
 
   computed: {
     rootClasses () {
@@ -283,6 +286,45 @@ export default {
 
     .alpheios-panel__close-btn {
       width: uisize(80px);
+    }
+
+    .alpheios-panel__header {
+      background: var(--alpheios-desktop-panel-header-bg);
+    }
+
+    .alpheios-navbuttons__btn,
+    .alpheios-panel__close-btn {
+        fill: var(--alpheios-desktop-panel-icon-color);
+        stroke: var(--alpheios-desktop-panel-icon-color);
+        background: var(--alpheios-desktop-panel-icon-bg);
+
+        &:hover,
+        &:focus {
+          fill: var(--alpheios-desktop-panel-icon-color-hover);
+          stroke: var(--alpheios-desktop-panel-icon-color-hover);
+          background: var(--alpheios-desktop-panel-icon-bg-hover);
+        }
+
+        &:active,
+        &.active {
+          fill: var(--alpheios-desktop-panel-icon-color-pressed);
+          stroke: var(--alpheios-desktop-panel-icon-color-pressed);
+          background: var(--alpheios-desktop-panel-icon-bg-active);
+        }
+    }
+
+    .alpheios-reset-button {
+      color: var(--alpheios-settings-reset-button-color);
+      background-color: var(--alpheios-settings-reset-button-bg);
+      border-color: var(--alpheios-settings-reset-button-border-color);
+
+      &:hover,
+      &:focus,
+      &:active {
+        color: var(--alpheios-settings-reset-button-color-hover);
+        background-color: var(--alpheios-settings-reset-button-bg-hover);
+        border-color: var(--alpheios-settings-reset-button-border-color-hover);
+      }
     }
   }
 </style>

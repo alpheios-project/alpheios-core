@@ -620,7 +620,7 @@ export default {
   }
 
   .alpheios-ib__title {
-    color: var(--alpheios-text-color-vivid);
+    color: var(--alpheios-inflect-browser-title-color);
     font-size: textsize(24px);
     font-family: var(--alpheios-serif-font-face);
     font-weight: 700;
@@ -629,7 +629,7 @@ export default {
     display: inline-block;
 
     &.open {
-      border-bottom: textsize(2px) solid var(--alpheios-text-color-vivid);
+      border-bottom: textsize(2px) solid var(--alpheios-inflect-browser-title-color);
     }
   }
 

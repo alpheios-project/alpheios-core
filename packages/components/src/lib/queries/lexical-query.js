@@ -1,5 +1,6 @@
 import { LanguageModelFactory as LMF, Lexeme, Lemma, Homonym, PsEvent } from 'alpheios-data-models'
 import Query from './query.js'
+import Options from '@/lib/options/options.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
 
 export default class LexicalQuery extends Query {
@@ -295,7 +296,7 @@ export default class LexicalQuery extends Query {
     } else {
       allOptions = this.resourceOptions.items[lexiconKey] || []
     }
-    let lexiconOpts = allOptions.filter((l) => this.resourceOptions.parseKey(l.name).group === languageCode
+    let lexiconOpts = allOptions.filter((l) => Options.parseKey(l.name).group === languageCode
     ).map((l) => { return { allow: l.currentValue } }
     )
     if (lexiconOpts.length > 0) {

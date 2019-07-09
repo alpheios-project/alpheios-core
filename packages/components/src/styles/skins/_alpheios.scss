@@ -43,6 +43,7 @@ html {
   --alpheios-link-color-on-medium: var(--alpheios-color-muted);
   --alpheios-link-color-on-dark: var(--alpheios-color-bright);
   --alpheios-toolbar-bg-color: var(--alpheios-color-dark);
+  --alpheios-toolbar-bg-color-hover: var(--alpheios-color-dark-hover);
   --alpheios-border-color: var(--alpheios-color-neutral-dark);
   --alpheios-icon-color: var(--alpheios-color-neutral-lightest);
   --alpheios-icon-bg-color: transparent;
@@ -85,12 +86,191 @@ html {
   --alpheios-btn-tertiary-border-color-pressed: var(--alpheios-color-muted);
 
   // Notifications
-  --alpheios-notification-bg-color: rgba(255, 193, 77, 0.5);
-  --alpheios-notification-border-color: var(--alpheios-color-bright);
-  --alpheios-notification-important-bg-color: rgba(198, 73, 6, 0.31);
-  --alpheios-notification-important-border-color: var(--alpheios-color-vivid);
+
 
   // Those colors are not defined in a style guide
   --alpheios-highlight-color: #F6D918;
   --alpheios-highlight-dark-color: #E49A0D;
+
+
+  //SKIN
+  --alpheios-icon-color-disabled: var(--alpheios-color-neutral-dark);
+
+  --alpheios-link-color: var(--alpheios-color-muted);
+  --alpheios-link-color-hover: var(--alpheios-color-muted-hover);
+
+  --alpheios-link-special-color: var(--alpheios-color-vivid);
+  --alpheios-link-special-color-hover: var(--alpheios-color-vivid-hover);
+
+  --alpheios-notification-color: var(--alpheios-color-bright);
+  --alpheios-notification-color-hover: var(--alpheios-color-bright-hover);
+
+  --alpheios-important-notification-color: var(--alpheios-color-vivid);
+  --alpheios-important-notification-color-hover: var(--alpheios-color-vivid-hover);
+
+  --alpheios-highlight-border-color: var(--alpheios-color-light);
+  --alpheios-highlight-light-color: var(--alpheios-color-light);
+  --alpheios-highlight-dark-color: var(--alpheios-color-vivid);
+  --alpheios-highlight-dark-color-hover: var(--alpheios-color-vivid-hover);
+
+  //Floating toolbar
+  --alpheios-desktop-toolbar-bg: var(--alpheios-toolbar-bg-color);
+  --alpheios-desktop-toolbar-border-color: var(--alpheios-border-color);
+  --alpheios-compact-toolbar-bg: var(--alpheios-toolbar-bg-color);
+
+  --alpheios-desktop-toolbar-icon-color: var(--alpheios-icon-color);
+  --alpheios-compact-toolbar-icon-color: var(--alpheios-icon-color);
+
+  --alpheios-desktop-toolbar-icon-color-hover: var(--alpheios-icon-color-hover);
+  --alpheios-desktop-toolbar-icon-color-active: var(--alpheios-icon-color-active);
+  --alpheios-desktop-toolbar-icon-color-disabled: var(--alpheios-icon-color-disabled);
+  --alpheios-desktop-toolbar-icon-bg-disabled: var(--alpheios-toolbar-bg-color);
+  --alpheios-compact-popup-progress-bar-line: var(--alpheios-toolbar-bg-color);
+
+  //Popup
+  --alpheios-desktop-popup-header-bg: var(--alpheios-toolbar-bg-color);
+  --alpheios-desktop-popup-icon-bg-hover: var(--alpheios-toolbar-bg-color);
+
+  --alpheios-desktop-popup-icon-color: var(--alpheios-icon-color);
+  --alpheios-desktop-popup-icon-color-hover: var(--alpheios-icon-color-hover);
+  --alpheios-desktop-popup-icon-color-active: var(--alpheios-icon-color-active);
+  --alpheios-desktop-popup-icon-color-disabled: var(--alpheios-icon-color-disabled);
+  --alpheios-desktop-popup-icon-color-pressed: var(--alpheios-icon-color-disabled);
+  --alpheios-desktop-popup-icon-bg-disabled: var(--alpheios-toolbar-bg-color);
+
+  --alpheios-desktop-popup-progress-bar-line: var(--alpheios-toolbar-bg-color);
+
+  --alpheios-desktop-popup-link-color: var(--alpheios-link-color);
+  --alpheios-desktop-popup-link-color-hover: var(--alpheios-link-color-hover);
+
+  --alpheios-desktop-popup-credit-link-color: var(--alpheios-link-special-color);
+  --alpheios-desktop-popup-credit-link-color-hover: var(--alpheios-link-special-color-hover);
+  --alpheios-desktop-popup-credit-providers-color: var(--alpheios-text-color);
+
+  --alpheios-desktop-popup-body-bg: var(--alpheios-text-bg-color);
+  --alpheios-desktop-popup-content-bg: var(--alpheios-text-bg-color);
+
+
+  //Panel
+  --alpheios-desktop-panel-header-bg: var(--alpheios-toolbar-bg-color);
+
+  --alpheios-desktop-panel-icon-color: var(--alpheios-icon-color);
+  --alpheios-desktop-panel-icon-bg: var(--alpheios-toolbar-bg-color);
+  --alpheios-desktop-panel-icon-color-hover: var(--alpheios-icon-color-hover);
+  --alpheios-desktop-panel-icon-bg-hover: var(--alpheios-toolbar-bg-color-hover);
+  --alpheios-desktop-panel-icon-color-active: var(--alpheios-icon-color-active);
+  --alpheios-desktop-panel-icon-bg-active: var(--alpheios-toolbar-bg-color);
+  --alpheios-desktop-panel-icon-color-pressed: var(--alpheios-icon-color-pressed);
+  --alpheios-desktop-panel-icon-color-disabled: var(--alpheios-icon-color-disabled);
+
+  --alpheios-compact-panel-header-bg: var(--alpheios-toolbar-bg-color);
+  
+  --alpheios-compact-panel-icon-color: var(--alpheios-icon-color);
+  --alpheios-compact-panel-icon-bg: var(--alpheios-toolbar-bg-color);
+  --alpheios-compact-panel-icon-color-hover: var(--alpheios-icon-color-hover);
+  --alpheios-compact-panel-icon-bg-hover: var(--alpheios-toolbar-bg-color-hover);
+  --alpheios-compact-panel-icon-color-active: var(--alpheios-icon-color-active);
+  --alpheios-compact-panel-icon-bg-active: var(--alpheios-toolbar-bg-color);
+  --alpheios-compact-panel-icon-color-pressed: var(--alpheios-icon-color-pressed);
+  --alpheios-compact-panel-icon-color-disabled: var(--alpheios-icon-color-disabled);
+
+  --alpheios-compact-panel-content-bg: var(--alpheios-text-bg-color);
+
+
+  //Lookup
+  --alpheios-lookup-border-color: var(--alpheios-border-color);
+  --alpheios-lookup-bg: var(--alpheios-text-bg-color);
+
+  --alpheios-lookup-input-border-color: var(--alpheios-border-color);
+  --alpheios-lookup-button-color: var(--alpheios-btn-primary-font-color);
+  --alpheios-lookup-button-bg: var(--alpheios-btn-primary-bg-color);
+  --alpheios-lookup-button-border-color: var(--alpheios-btn-primary-border-color);
+
+  --alpheios-lookup-button-color-hover: var(--alpheios-btn-primary-font-color-hover);
+  --alpheios-lookup-button-bg-hover: var(--alpheios-btn-primary-bg-color-hover);
+  --alpheios-lookup-button-border-color-hover: var(--alpheios-btn-primary-border-color-hover);
+
+  //Inflections
+
+  --alpheios-inflect-browser-title-color: var(--alpheios-link-color-on-light);
+
+  --alpheios-inflect-button-control-color: var(--alpheios-btn-secondary-font-color);
+  --alpheios-inflect-button-control-bg: var(--alpheios-btn-secondary-bg-color);
+  --alpheios-inflect-button-control-border-color: var(--alpheios-btn-secondary-border-color);
+
+  --alpheios-inflect-button-control-color-hover: var(--alpheios-btn-secondary-font-color-hover);
+  --alpheios-inflect-button-control-bg-hover: var(--alpheios-btn-secondary-bg-color-hover);
+  --alpheios-inflect-button-control-border-color-hover: var(--alpheios-btn-secondary-border-color-hover);
+
+  --alpheios-inflect-match-cell-border-color: var(--alpheios-highlight-border-color);
+  --alpheios-inflect-match-suff-bg: var(--alpheios-highlight-light-color);
+  --alpheios-inflect-match-suff-color: var(--alpheios-text-color);
+
+  --alpheios-inflect-full-match-suff-bg: var(--alpheios-highlight-color);
+  --alpheios-inflect-full-match-suff-color: var(--alpheios-text-color);
+
+  //Word usage
+
+  --alpheios-usage-progress-color: var(--alpheios-highlight-dark-color);
+  --alpheios-usage-link-color: var(--alpheios-highlight-dark-color);
+  --alpheios-usage-link-color-hover: var(--alpheios-highlight-dark-color-hover);
+
+  --alpheios-usage-target-color: var(--alpheios-highlight-dark-color);
+
+  //Grammar
+
+  --alpheios-grammar-back-button-color: var(--alpheios-btn-primary-font-color);
+  --alpheios-grammar-back-button-bg: var(--alpheios-btn-primary-bg-color);
+  --alpheios-grammar-back-button-border-color: var(--alpheios-btn-primary-border-color);
+
+  --alpheios-grammar-back-button-color-hover: var(--alpheios-btn-primary-font-color-hover);
+  --alpheios-grammar-back-button-bg-hover: var(--alpheios-btn-primary-bg-color-hover);
+  --alpheios-grammar-back-button-border-color-hover: var(--alpheios-btn-primary-border-color-hover);
+
+  //Settings
+
+  --alpheios-settings-font-size-dark-color: var(--alpheios-btn-primary-bg-color);
+  --alpheios-settings-font-size-light-color: var(--alpheios-color-neutral-lightest);
+
+  --alpheios-settings-font-multiselect-bg: var(--alpheios-btn-primary-bg-color);
+  --alpheios-settings-font-multiselect-font-color: var(--alpheios-btn-primary-font-color);
+
+  --alpheios-settings-reset-button-color: var(--alpheios-btn-primary-font-color);
+  --alpheios-settings-reset-button-bg: var(--alpheios-btn-primary-bg-color);
+  --alpheios-settings-reset-button-border-color: var(--alpheios-btn-primary-border-color);
+
+  --alpheios-settings-reset-button-color-hover: var(--alpheios-btn-primary-font-color-hover);
+  --alpheios-settings-reset-button-bg-hover: var(--alpheios-btn-primary-bg-color-hover);
+  --alpheios-settings-reset-button-border-color-hover: var(--alpheios-btn-primary-border-color-hover);
+
+  //Wordlist
+
+  --alpheios-word-list-important-item-color: var(--alpheios-link-color);
+  --alpheios-word-list-delete-item-color: var(--alpheios-text-color);
+  --alpheios-word-list-current-item-color: var(--alpheios-highlight-color);
+  --alpheios-word-list-default-item-color: var(--alpheios-highlight-color);
+
+  --alpheios-word-list-select-item-bg: var(--alpheios-text-bg-color);
+  --alpheios-word-list-select-item-bg-hover: var(--alpheios-highlight-color);
+  --alpheios-word-list-select-item-input-part-color: var(--alpheios-link-special-color);
+
+  --alpheios-word-list-sorting-link-color: var(--alpheios-text-color);
+  --alpheios-word-list-sorting-link-color-hover: var(--alpheios-link-color);
+
+  --alpheios-word-list-context-back-link-color: var(--alpheios-link-color);
+
+  --alpheios-word-list-context-source-link-color: var(--alpheios-link-color);
+  --alpheios-word-list-context-source-link-color-hover: var(--alpheios-link-color-hover);
+
+  --alpheios-word-list-context-incontext-bg: var(--alpheios-highlight-color);
+
+  //Notifications
+
+  --alpheios-notification-color: var(--alpheios-text-color);
+  --alpheios-notification-bg: rgba(255, 193, 77, 0.5);
+  --alpheios-notification-border-color: var(--alpheios-notification-color);
+
+  --alpheios-notification-important-color: var(--alpheios-important-notification-color);
+  --alpheios-notification-important-bg: rgba(198, 73, 6, 0.31);
+  --alpheios-notification-important-border-color: var(--alpheios-important-notification-color);
 }

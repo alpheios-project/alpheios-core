@@ -1,5 +1,6 @@
 {
   "domain": "alpheios-resource-options",
+  "version": 2,
   "items": {
     "lexicons": {
       "labelText": "Lexicons (Full Definitions)",

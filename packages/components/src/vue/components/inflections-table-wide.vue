@@ -305,7 +305,7 @@ export default {
   @import "../../styles/variables";
 
   .alpheios-inflections__title {
-    color: var(--alpheios-text-color-vivid);
+    color: var(--alpheios-inflect-browser-title-color);
     font-size: textsize(22px);
     font-family: var(--alpheios-serif-font-face);
     line-height: 1;
@@ -459,7 +459,7 @@ export default {
   .infl-cell--morph-match,
   .infl-table .infl-cell.infl-cell--morph-match // To override a color schema
   {
-    border: 3px solid rgb(188, 230, 240);
+    border: 3px solid var(--alpheios-inflect-match-cell-border-color);
   }
 
   .infl-cell__conj-stem {
@@ -476,17 +476,31 @@ export default {
   }
 
   .infl-suff.infl-suff--suffix-match {
-    background-color: rgb(188, 230, 240);
+    background-color: var(--alpheios-inflect-match-suff-bg);
   }
 
   .infl-suff--full-match {
-    background-color: lightgray;
+    background-color: var(--alpheios-inflect-match-suff-bg);
+    color: var(--alpheios-inflect-match-suff-color);
   }
 
   .infl-suff.infl-suff--suffix-match.infl-suff--full-match {
-    background-color: var(--alpheios-highlight-color);
+    background-color: var(--alpheios-inflect-full-match-suff-bg);
+    color: var(--alpheios-inflect-full-match-suff-color);
     font-weight: 700;
   }
 
+  .alpheios-inflections__control-btn {
+    color: var(--alpheios-inflect-button-control-color);
+    background-color: var(--alpheios-inflect-button-control-bg);
+    border-color: var(--alpheios-inflect-button-control-border-color);
+
+    &:hover {
+      color: var(--alpheios-inflect-button-control-color-hover);
+      background-color: var(--alpheios-inflect-button-control-bg-hover);
+      border-color: var(--alpheios-inflect-button-control-border-color-hover);
+    
+    }
+  }
   // endregion Tables
 </style>

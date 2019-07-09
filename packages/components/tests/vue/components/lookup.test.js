@@ -16,6 +16,7 @@ import Options from '@/lib/options/options.js'
 import FeatureOptionDefaults from '@/settings/feature-options-defaults.json'
 import TempStorageArea from '@/lib/options/temp-storage-area.js'
 import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
+import UIOptionDefaults from '@/settings/ui-options-defaults.json'
 
 import LexicalQueryLookup from '@/lib/queries/lexical-query-lookup.js'
 
@@ -23,11 +24,9 @@ describe('lookup.test.js', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   const nameBase = 'LookupNameBase'
-  let featureOptions
-  let resourceOptions
-  let lookupResourceOptions
   let store
   let api
+  let settingsAPI
   let l10nModule
 
   console.error = function () {}
@@ -51,9 +50,14 @@ describe('lookup.test.js', () => {
     FeatureOptionDefaults.items.preferredLanguage.defaultValue = 'grc'
     FeatureOptionDefaults.items.lookupLanguage.defaultValue = 'ara'
 
-    featureOptions = new Options(FeatureOptionDefaults, TempStorageArea)
-    resourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
-    lookupResourceOptions = new Options(LanguageOptionDefaults, TempStorageArea)
+    let ta1 = new TempStorageArea('alpheios-feature-settings')
+    let ta2 = new TempStorageArea('alpheios-resource-options')
+    let ta3 = new TempStorageArea('alpheios-ui-settings')
+
+    let featureOptions = new Options(FeatureOptionDefaults, ta1)
+    let resourceOptions = new Options(LanguageOptionDefaults, ta2)
+    let uiOptions = new Options(UIOptionDefaults,ta3)
+    let lookupResourceOptions = new Options(LanguageOptionDefaults, ta2)
 
     api = {
       app: {
@@ -64,9 +68,10 @@ describe('lookup.test.js', () => {
         enableWordUsageExamples: () => true
       },
       settings: {
-        featureOptions,
-        resourceOptions,
-        lookupResourceOptions
+        getFeatureOptions: () => { return featureOptions },
+        getResourceOptions: () => { return resourceOptions },
+        lookupResourceOptions: lookupResourceOptions,
+        verboseMode: () => { return false }
       }
     }
 
@@ -97,9 +102,6 @@ describe('lookup.test.js', () => {
     expect(cmp.isVueInstance()).toBeTruthy()
     expect(cmp.props().nameBase).toBe(nameBase)
     expect(cmp.props().usePageLangPrefs).toBeFalsy()
-    expect(cmp.vm.settings.featureOptions).toBeDefined()
-    expect(cmp.vm.settings.resourceOptions).toBeDefined()
-    expect(cmp.vm.settings.lookupResourceOptions).toBeDefined()
   })
 
   it('2 Lookup (with default parameters) shall be initialized properly', () => {
@@ -112,8 +114,8 @@ describe('lookup.test.js', () => {
     })
 
     expect(cmp.props().usePageLangPrefs).toBeFalsy()
-    expect(cmp.vm.$options.lookupLanguage).toBe(featureOptions.items.lookupLanguage)
-    expect(cmp.vm.$options.resourceOptions).toBe(lookupResourceOptions)
+    expect(cmp.vm.$options.lookupLanguage).toBe(api.settings.getFeatureOptions().items.lookupLanguage)
+    expect(cmp.vm.$options.resourceOptions).toStrictEqual(api.settings.lookupResourceOptions)
   })
 
   it('3 Lookup (set to use page language preferences) shall be initialized properly', () => {
@@ -127,8 +129,8 @@ describe('lookup.test.js', () => {
     })
 
     expect(cmp.props().usePageLangPrefs).toBeTruthy()
-    expect(cmp.vm.$options.lookupLanguage).toBe(featureOptions.items.preferredLanguage)
-    expect(cmp.vm.$options.resourceOptions).toBe(resourceOptions)
+    expect(cmp.vm.$options.lookupLanguage).toBe(api.settings.getFeatureOptions().items.preferredLanguage)
+    expect(cmp.vm.$options.resourceOptions).toStrictEqual(api.settings.lookupResourceOptions)
   })
 
   it('4 Lookup(with default parameters).currentLanguage shall return correct values', () => {
@@ -189,9 +191,9 @@ describe('lookup.test.js', () => {
       defaultValue: ['https://github.com/alpheios-project/lsj'],
       labelText: 'Greek Lexicons (short)',
       multiValue: true,
-      name: 'lexiconsShort-grc',
+      name: 'alpheios-resource-options__2__lexiconsShort__grc',
       storageAdapter: {
-        domain: 'alpheios-resource-options'
+        domain: 'alpheios-resource-options',
       },
       values: [
         {
@@ -335,9 +337,8 @@ describe('lookup.test.js', () => {
     cmp.vm.settingChange('', 'Greek')
     expect(cmp.vm.$options.lookupLanguage.currentTextValue()).toEqual('Greek')
 
-    cmp.vm.resourceSettingChange('lexiconsShort-grc', ['Liddell, Scott, Jones', 'Autenrieth Homeric Lexicon'])
-    let keyinfo = resourceOptions.parseKey('lexiconsShort-grc')
+    cmp.vm.resourceSettingChange('alpheios-resource-options__2__lexiconsShort__grc', ['Liddell, Scott, Jones', 'Autenrieth Homeric Lexicon'])
 
-    expect(cmp.vm.$options.resourceOptions.items[keyinfo.setting][0].currentTextValue()).toEqual(['Liddell, Scott, Jones', 'Autenrieth Homeric Lexicon'])
+    expect(cmp.vm.$options.resourceOptions.items.lexiconsShort[0].currentTextValue()).toEqual(['Liddell, Scott, Jones', 'Autenrieth Homeric Lexicon'])
   })
 })

@@ -47,7 +47,7 @@ export default {
 
     &.alpheios-toolbar--compact {
       cursor: pointer;
-      background-color: var(--alpheios-toolbar-bg-color);
+      background-color: var(--alpheios-compact-toolbar-bg);
       border-radius: 50%;
       right: 15px;
       bottom: 60px;
@@ -58,8 +58,8 @@ export default {
         width: uisize(20px);
         height: auto;
         position: relative;
-        fill: var(--alpheios-icon-color);
-        stroke: var(--alpheios-icon-color);
+        fill: var(--alpheios-compact-toolbar-icon-color);
+        stroke: var(--alpheios-compact-toolbar-icon-color);
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);

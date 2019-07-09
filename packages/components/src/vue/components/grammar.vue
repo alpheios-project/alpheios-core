@@ -101,4 +101,16 @@ export default {
     }
   }
 
+  .alpheios-grammar__button--back-block button {
+    color: var(--alpheios-grammar-back-button-color);
+    background-color: var(--alpheios-grammar-back-button-bg);
+    border-color: var(--alpheios-grammar-back-button-border-color);
+    
+    &:hover {
+      color: var(--alpheios-grammar-back-button-color-hover);
+      background-color: var(--alpheios-grammar-back-button-bg-hover);
+      border-color: var(--alpheios-grammar-back-button-border-color-hover);
+    }
+  }
+
 </style>

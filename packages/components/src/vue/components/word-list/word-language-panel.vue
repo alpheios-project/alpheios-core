@@ -48,12 +48,18 @@
             :wordExactForms = "wordExactForms"
             :wordLemmaForms = "wordLemmaForms"
             :clearFilters = "clearFilters"
-            v-show = "hasFilterPanel"
-          ></word-filter-panel>
+            v-show = "hasSeveralItems"
+          />
+        </div>
+        <div class="alpheios-wordlist-sorting-panel">
+          <word-sorting-panel 
+            v-show = "hasSeveralItems"
+            @changeSorting = "changeSorting"
+          />
         </div>
         <div
-                v-for="wordItem in wordItems"
-                v-bind:key="wordItem.targetWord">
+            v-for="wordItem in wordItems"
+            v-bind:key="wordItem.targetWord">
             <word-item
               :worditem="wordItem"
               @changeImportant = "changeImportant"
@@ -71,6 +77,7 @@ import DeleteIcon from '@/images/inline-icons/delete.svg'
 import CloseIcon from '@/images/inline-icons/x-close.svg'
 import WordItemPanel from '@/vue/components/word-list/word-item-panel.vue'
 import WordFilterPanel from '@/vue/components/word-list/word-filter-panel.vue'
+import WordSortingPanel from '@/vue/components/word-list/word-sorting-panel.vue'
 
 export default {
   name: 'WordLanguagePanel',
@@ -80,6 +87,7 @@ export default {
     deleteIcon: DeleteIcon,
     wordItem: WordItemPanel,
     wordFilterPanel: WordFilterPanel,
+    wordSortingPanel: WordSortingPanel,
     alphTooltip: Tooltip
   },
   inject: ['l10n', 'app'],
@@ -102,11 +110,14 @@ export default {
         'byExactForm': (wordItem) => wordItem.targetWord.toLowerCase() === this.textInput.toLowerCase(),
         'byLemma': (wordItem) => wordItem.lemmasList.split(', ').some(lemmaItem => lemmaItem.toLowerCase() === this.textInput.toLowerCase())
       }, 
-      clearFilters: 0
+      clearFilters: 0,
+      sortingState: {
+        'targetWord': null
+      }
     }
   },
   computed: {
-    hasFilterPanel () {
+    hasSeveralItems () {
       return this.wordlist && this.wordlist.values && this.wordlist.values.length > 1
     },
     wordlist () {
@@ -117,10 +128,15 @@ export default {
     wordItems () {
       if (this.$store.state.app.wordListUpdateTime && this.reloadList) {        
         if (!this.selectedFilterBy) {
-          return this.wordlist.values
+          let result = this.wordlist.values
+          this.applySorting(result)
+          return result
         }
         if (this.filterMethods[this.selectedFilterBy]) {
-          return this.wordlist.values.filter(this.filterMethods[this.selectedFilterBy])
+          let result = this.wordlist.values.filter(this.filterMethods[this.selectedFilterBy])
+          this.applySorting(result)
+          return result
+
         } else {
           console.warn(`The current filter method - ${this.selectedFilterBy} - is not defined, that's why empty result is returned!`)
         }
@@ -194,6 +210,25 @@ export default {
     },
     clearClickedLemma () {
       this.clickedLemma = null
+    },
+    changeSorting (part, type) {
+      this.sortingState[part] = type
+      this.reloadList = this.reloadList + 1
+    },
+    applySorting (items) {
+      let part = 'targetWord'
+      return items.sort( (item1, item2) => {
+        let formattedItem1 = item1[part].toUpperCase()
+        let formattedItem2 = item2[part].toUpperCase()
+
+        if (formattedItem1 < formattedItem2) { 
+          return this.sortingState[part] === 'asc' ? -1 : ( this.sortingState[part] === 'desc' ? 1 : 0 )
+        }
+        if (formattedItem1 > formattedItem2) { 
+          return this.sortingState[part] === 'asc' ? 1 : ( this.sortingState[part] === 'desc' ? -1 : 0 )
+        }
+        if (formattedItem1 === formattedItem2) { return 0 }
+      })
     }
   }
 }
@@ -205,7 +240,7 @@ export default {
       border-bottom: 1px solid var(--alpheios-border-color);
     }
 
-    $iconsize: 25px;
+    $iconsize: 22px;
 
     .alpheios-wordlist-commands .alpheios-wordlist-commands__item {
       width: $iconsize;
@@ -220,22 +255,23 @@ export default {
         height: $iconsize;
         display: inline-block;
         vertical-align: top;
+        padding: 2px;
       }
     }
 
     .alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-no-important {
-      fill: var(--alpheios-link-color-on-dark);
-      stroke: var(--alpheios-link-color-on-dark);
+      fill: var(--alpheios-word-list-default-item-color);
+      stroke: var(--alpheios-word-list-default-item-color);
     }
 
     .alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-all-important {
-      fill: var(--alpheios-color-light);
-      stroke: var(--alpheios-color-light);
+      fill: var(--alpheios-word-list-important-item-color);
+      stroke: var(--alpheios-word-list-important-item-color);
     }
 
     .alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-remove-all {
-      fill: var(--alpheios-color-dark);
-      stroke: var(--alpheios-color-dark);
+      fill: var(--alpheios-word-list-delete-item-color);
+      stroke: var(--alpheios-word-list-delete-item-color);
     }
 
     .alpheios-wordlist-delete-all-confirmation {
