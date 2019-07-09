@@ -1,7 +1,7 @@
 {
   "name": "alpheios-components",
   "version": "1.1.0",
-  "description": "Alpheios UI Components",
+  "description": "Alpheios Components",
   "main": "dist/alpheios-components.min.js",
   "module": "src/plugin.js",
   "scripts": {
@@ -11,12 +11,12 @@
     "test-c": "eslint --fix src/**/*.js && jest tests/vue/components/word-usage-examples/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test-a": "eslint --fix src/**/*.js && jest tests/lib/selection/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "build": "npm run build-safari && npm run build-regular",
-    "build-regular": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue config.mjs",
-    "build-safari": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue-postcss config-safari.mjs",
-    "build-prod": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue config.mjs",
-    "build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue config.mjs",
-    "code-analysis-prod": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue config.mjs --code-analysis",
-    "code-analysis-dev": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue config.mjs --code-analysis",
+    "build-regular": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue config.mjs",
+    "build-safari": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue-postcss config-safari.mjs",
+    "build-prod": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack production vue config.mjs",
+    "build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development vue config.mjs",
+    "code-analysis-prod": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue config.mjs --code-analysis",
+    "code-analysis-dev": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development vue config.mjs --code-analysis",
     "lint": "eslint --fix src/**/*.js && eslint --fix-dry-run src/**/*.vue"
   },
   "repository": {
@@ -40,7 +40,7 @@
     "alpheios-data-models": "github:alpheios-project/data-models",
     "alpheios-experience": "github:alpheios-project/experience",
     "alpheios-inflection-tables": "github:alpheios-project/inflection-tables",
-    "alpheios-node-build": "github:alpheios-project/node-build#code-optimization",
+    "alpheios-node-build": "github:alpheios-project/node-build",
     "alpheios-res-client": "github:alpheios-project/res-client",
     "alpheios-wordlist": "github:alpheios-project/wordlist",
     "autoprefixer": "^9.6.1",
@@ -70,6 +70,10 @@
     "jest": "^24.8.0",
     "jump.js": "^1.0.2",
     "mini-css-extract-plugin": "^0.7.0",
+    "postcss-import": "^12.0.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-safe-important": "^1.1.0",
+    "postcss-scss": "^2.0.0",
     "raw-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
     "shelljs": "^0.8.3",
@@ -117,6 +121,7 @@
     },
     "moduleFileExtensions": [
       "js",
+      "json",
       "vue"
     ]
   },

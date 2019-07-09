@@ -1,3 +1,4 @@
+import { version as packageVersion, description as packageDescription } from '../../../package'
 import { Constants, Feature, LanguageModelFactory, Lexeme } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
@@ -1616,6 +1617,16 @@ export default class UIController {
     this.evc.activateListener(listenerName)
   }
 }
+
+/**
+ * A name of a components library from a "description" field of package.json
+ */
+UIController.libName = packageDescription
+
+/**
+ * A version of a components library from a "version" field of package.json
+ */
+UIController.libVersion = packageVersion
 
 /**
  * An instance of a warning panel that is shown when UI controller is disabled
