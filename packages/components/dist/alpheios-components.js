@@ -10049,6 +10049,1630 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
 
 /***/ }),
 
+/***/ "../node_modules/axios/index.js":
+/*!**************************************!*\
+  !*** ../node_modules/axios/index.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! ./lib/axios */ "../node_modules/axios/lib/axios.js");
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/adapters/xhr.js":
+/*!*************************************************!*\
+  !*** ../node_modules/axios/lib/adapters/xhr.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+var settle = __webpack_require__(/*! ./../core/settle */ "../node_modules/axios/lib/core/settle.js");
+var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "../node_modules/axios/lib/helpers/buildURL.js");
+var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "../node_modules/axios/lib/helpers/parseHeaders.js");
+var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "../node_modules/axios/lib/helpers/isURLSameOrigin.js");
+var createError = __webpack_require__(/*! ../core/createError */ "../node_modules/axios/lib/core/createError.js");
+
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
+
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
+    var request = new XMLHttpRequest();
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password || '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    // Listen for ready state
+    request.onreadystatechange = function handleLoad() {
+      if (!request || request.readyState !== 4) {
+        return;
+      }
+
+      // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      }
+
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        status: request.status,
+        statusText: request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config, null, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
+        request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      var cookies = __webpack_require__(/*! ./../helpers/cookies */ "../node_modules/axios/lib/helpers/cookies.js");
+
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+          cookies.read(config.xsrfCookieName) :
+          undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
+        }
+      });
+    }
+
+    // Add withCredentials to request if needed
+    if (config.withCredentials) {
+      request.withCredentials = true;
+    }
+
+    // Add responseType to request if needed
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+        if (config.responseType !== 'json') {
+          throw e;
+        }
+      }
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
+
+    if (requestData === undefined) {
+      requestData = null;
+    }
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/axios.js":
+/*!******************************************!*\
+  !*** ../node_modules/axios/lib/axios.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./utils */ "../node_modules/axios/lib/utils.js");
+var bind = __webpack_require__(/*! ./helpers/bind */ "../node_modules/axios/lib/helpers/bind.js");
+var Axios = __webpack_require__(/*! ./core/Axios */ "../node_modules/axios/lib/core/Axios.js");
+var defaults = __webpack_require__(/*! ./defaults */ "../node_modules/axios/lib/defaults.js");
+
+/**
+ * Create an instance of Axios
+ *
+ * @param {Object} defaultConfig The default config for the instance
+ * @return {Axios} A new instance of Axios
+ */
+function createInstance(defaultConfig) {
+  var context = new Axios(defaultConfig);
+  var instance = bind(Axios.prototype.request, context);
+
+  // Copy axios.prototype to instance
+  utils.extend(instance, Axios.prototype, context);
+
+  // Copy context to instance
+  utils.extend(instance, context);
+
+  return instance;
+}
+
+// Create the default instance to be exported
+var axios = createInstance(defaults);
+
+// Expose Axios class to allow class inheritance
+axios.Axios = Axios;
+
+// Factory for creating new instances
+axios.create = function create(instanceConfig) {
+  return createInstance(utils.merge(defaults, instanceConfig));
+};
+
+// Expose Cancel & CancelToken
+axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ "../node_modules/axios/lib/cancel/Cancel.js");
+axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ "../node_modules/axios/lib/cancel/CancelToken.js");
+axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ "../node_modules/axios/lib/cancel/isCancel.js");
+
+// Expose all/spread
+axios.all = function all(promises) {
+  return Promise.all(promises);
+};
+axios.spread = __webpack_require__(/*! ./helpers/spread */ "../node_modules/axios/lib/helpers/spread.js");
+
+module.exports = axios;
+
+// Allow use of default import syntax in TypeScript
+module.exports.default = axios;
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/cancel/Cancel.js":
+/*!**************************************************!*\
+  !*** ../node_modules/axios/lib/cancel/Cancel.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+function Cancel(message) {
+  this.message = message;
+}
+
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
+
+Cancel.prototype.__CANCEL__ = true;
+
+module.exports = Cancel;
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/cancel/CancelToken.js":
+/*!*******************************************************!*\
+  !*** ../node_modules/axios/lib/cancel/CancelToken.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Cancel = __webpack_require__(/*! ./Cancel */ "../node_modules/axios/lib/cancel/Cancel.js");
+
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */
+function CancelToken(executor) {
+  if (typeof executor !== 'function') {
+    throw new TypeError('executor must be a function.');
+  }
+
+  var resolvePromise;
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+
+  var token = this;
+  executor(function cancel(message) {
+    if (token.reason) {
+      // Cancellation has already been requested
+      return;
+    }
+
+    token.reason = new Cancel(message);
+    resolvePromise(token.reason);
+  });
+}
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) {
+    throw this.reason;
+  }
+};
+
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */
+CancelToken.source = function source() {
+  var cancel;
+  var token = new CancelToken(function executor(c) {
+    cancel = c;
+  });
+  return {
+    token: token,
+    cancel: cancel
+  };
+};
+
+module.exports = CancelToken;
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/cancel/isCancel.js":
+/*!****************************************************!*\
+  !*** ../node_modules/axios/lib/cancel/isCancel.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/core/Axios.js":
+/*!***********************************************!*\
+  !*** ../node_modules/axios/lib/core/Axios.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var defaults = __webpack_require__(/*! ./../defaults */ "../node_modules/axios/lib/defaults.js");
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ "../node_modules/axios/lib/core/InterceptorManager.js");
+var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ "../node_modules/axios/lib/core/dispatchRequest.js");
+
+/**
+ * Create a new instance of Axios
+ *
+ * @param {Object} instanceConfig The default config for the instance
+ */
+function Axios(instanceConfig) {
+  this.defaults = instanceConfig;
+  this.interceptors = {
+    request: new InterceptorManager(),
+    response: new InterceptorManager()
+  };
+}
+
+/**
+ * Dispatch a request
+ *
+ * @param {Object} config The config specific for this request (merged with this.defaults)
+ */
+Axios.prototype.request = function request(config) {
+  /*eslint no-param-reassign:0*/
+  // Allow for axios('example/url'[, config]) a la fetch API
+  if (typeof config === 'string') {
+    config = utils.merge({
+      url: arguments[0]
+    }, arguments[1]);
+  }
+
+  config = utils.merge(defaults, {method: 'get'}, this.defaults, config);
+  config.method = config.method.toLowerCase();
+
+  // Hook up interceptors middleware
+  var chain = [dispatchRequest, undefined];
+  var promise = Promise.resolve(config);
+
+  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+    chain.unshift(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+    chain.push(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  while (chain.length) {
+    promise = promise.then(chain.shift(), chain.shift());
+  }
+
+  return promise;
+};
+
+// Provide aliases for supported request methods
+utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function(url, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url
+    }));
+  };
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function(url, data, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url,
+      data: data
+    }));
+  };
+});
+
+module.exports = Axios;
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/core/InterceptorManager.js":
+/*!************************************************************!*\
+  !*** ../node_modules/axios/lib/core/InterceptorManager.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+
+function InterceptorManager() {
+  this.handlers = [];
+}
+
+/**
+ * Add a new interceptor to the stack
+ *
+ * @param {Function} fulfilled The function to handle `then` for a `Promise`
+ * @param {Function} rejected The function to handle `reject` for a `Promise`
+ *
+ * @return {Number} An ID used to remove interceptor later
+ */
+InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+  this.handlers.push({
+    fulfilled: fulfilled,
+    rejected: rejected
+  });
+  return this.handlers.length - 1;
+};
+
+/**
+ * Remove an interceptor from the stack
+ *
+ * @param {Number} id The ID that was returned by `use`
+ */
+InterceptorManager.prototype.eject = function eject(id) {
+  if (this.handlers[id]) {
+    this.handlers[id] = null;
+  }
+};
+
+/**
+ * Iterate over all the registered interceptors
+ *
+ * This method is particularly useful for skipping over any
+ * interceptors that may have become `null` calling `eject`.
+ *
+ * @param {Function} fn The function to call for each interceptor
+ */
+InterceptorManager.prototype.forEach = function forEach(fn) {
+  utils.forEach(this.handlers, function forEachHandler(h) {
+    if (h !== null) {
+      fn(h);
+    }
+  });
+};
+
+module.exports = InterceptorManager;
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/core/createError.js":
+/*!*****************************************************!*\
+  !*** ../node_modules/axios/lib/core/createError.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var enhanceError = __webpack_require__(/*! ./enhanceError */ "../node_modules/axios/lib/core/enhanceError.js");
+
+/**
+ * Create an Error with the specified message, config, error code, request and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+module.exports = function createError(message, config, code, request, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, request, response);
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/core/dispatchRequest.js":
+/*!*********************************************************!*\
+  !*** ../node_modules/axios/lib/core/dispatchRequest.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+var transformData = __webpack_require__(/*! ./transformData */ "../node_modules/axios/lib/core/transformData.js");
+var isCancel = __webpack_require__(/*! ../cancel/isCancel */ "../node_modules/axios/lib/cancel/isCancel.js");
+var defaults = __webpack_require__(/*! ../defaults */ "../node_modules/axios/lib/defaults.js");
+var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ "../node_modules/axios/lib/helpers/isAbsoluteURL.js");
+var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ "../node_modules/axios/lib/helpers/combineURLs.js");
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+function throwIfCancellationRequested(config) {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested();
+  }
+}
+
+/**
+ * Dispatch a request to the server using the configured adapter.
+ *
+ * @param {object} config The config that is to be used for the request
+ * @returns {Promise} The Promise to be fulfilled
+ */
+module.exports = function dispatchRequest(config) {
+  throwIfCancellationRequested(config);
+
+  // Support baseURL config
+  if (config.baseURL && !isAbsoluteURL(config.url)) {
+    config.url = combineURLs(config.baseURL, config.url);
+  }
+
+  // Ensure headers exist
+  config.headers = config.headers || {};
+
+  // Transform request data
+  config.data = transformData(
+    config.data,
+    config.headers,
+    config.transformRequest
+  );
+
+  // Flatten headers
+  config.headers = utils.merge(
+    config.headers.common || {},
+    config.headers[config.method] || {},
+    config.headers || {}
+  );
+
+  utils.forEach(
+    ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],
+    function cleanHeaderConfig(method) {
+      delete config.headers[method];
+    }
+  );
+
+  var adapter = config.adapter || defaults.adapter;
+
+  return adapter(config).then(function onAdapterResolution(response) {
+    throwIfCancellationRequested(config);
+
+    // Transform response data
+    response.data = transformData(
+      response.data,
+      response.headers,
+      config.transformResponse
+    );
+
+    return response;
+  }, function onAdapterRejection(reason) {
+    if (!isCancel(reason)) {
+      throwIfCancellationRequested(config);
+
+      // Transform response data
+      if (reason && reason.response) {
+        reason.response.data = transformData(
+          reason.response.data,
+          reason.response.headers,
+          config.transformResponse
+        );
+      }
+    }
+
+    return Promise.reject(reason);
+  });
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/core/enhanceError.js":
+/*!******************************************************!*\
+  !*** ../node_modules/axios/lib/core/enhanceError.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Update an Error with the specified config, error code, and response.
+ *
+ * @param {Error} error The error to update.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The error.
+ */
+module.exports = function enhanceError(error, config, code, request, response) {
+  error.config = config;
+  if (code) {
+    error.code = code;
+  }
+  error.request = request;
+  error.response = response;
+  return error;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/core/settle.js":
+/*!************************************************!*\
+  !*** ../node_modules/axios/lib/core/settle.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var createError = __webpack_require__(/*! ./createError */ "../node_modules/axios/lib/core/createError.js");
+
+/**
+ * Resolve or reject a Promise based on response status.
+ *
+ * @param {Function} resolve A function that resolves the promise.
+ * @param {Function} reject A function that rejects the promise.
+ * @param {object} response The response.
+ */
+module.exports = function settle(resolve, reject, response) {
+  var validateStatus = response.config.validateStatus;
+  // Note: status is not exposed by XDomainRequest
+  if (!response.status || !validateStatus || validateStatus(response.status)) {
+    resolve(response);
+  } else {
+    reject(createError(
+      'Request failed with status code ' + response.status,
+      response.config,
+      null,
+      response.request,
+      response
+    ));
+  }
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/core/transformData.js":
+/*!*******************************************************!*\
+  !*** ../node_modules/axios/lib/core/transformData.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+
+/**
+ * Transform the data for a request or a response
+ *
+ * @param {Object|String} data The data to be transformed
+ * @param {Array} headers The headers for the request or response
+ * @param {Array|Function} fns A single function or Array of functions
+ * @returns {*} The resulting transformed data
+ */
+module.exports = function transformData(data, headers, fns) {
+  /*eslint no-param-reassign:0*/
+  utils.forEach(fns, function transform(fn) {
+    data = fn(data, headers);
+  });
+
+  return data;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/defaults.js":
+/*!*********************************************!*\
+  !*** ../node_modules/axios/lib/defaults.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(/*! ./utils */ "../node_modules/axios/lib/utils.js");
+var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ "../node_modules/axios/lib/helpers/normalizeHeaderName.js");
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(/*! ./adapters/xhr */ "../node_modules/axios/lib/adapters/xhr.js");
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(/*! ./adapters/http */ "../node_modules/axios/lib/adapters/xhr.js");
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "../node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/bind.js":
+/*!*************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/bind.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/buildURL.js":
+/*!*****************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/buildURL.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+
+function encode(val) {
+  return encodeURIComponent(val).
+    replace(/%40/gi, '@').
+    replace(/%3A/gi, ':').
+    replace(/%24/g, '$').
+    replace(/%2C/gi, ',').
+    replace(/%20/g, '+').
+    replace(/%5B/gi, '[').
+    replace(/%5D/gi, ']');
+}
+
+/**
+ * Build a URL by appending params to the end
+ *
+ * @param {string} url The base of the url (e.g., http://www.google.com)
+ * @param {object} [params] The params to be appended
+ * @returns {string} The formatted url
+ */
+module.exports = function buildURL(url, params, paramsSerializer) {
+  /*eslint no-param-reassign:0*/
+  if (!params) {
+    return url;
+  }
+
+  var serializedParams;
+  if (paramsSerializer) {
+    serializedParams = paramsSerializer(params);
+  } else if (utils.isURLSearchParams(params)) {
+    serializedParams = params.toString();
+  } else {
+    var parts = [];
+
+    utils.forEach(params, function serialize(val, key) {
+      if (val === null || typeof val === 'undefined') {
+        return;
+      }
+
+      if (utils.isArray(val)) {
+        key = key + '[]';
+      } else {
+        val = [val];
+      }
+
+      utils.forEach(val, function parseValue(v) {
+        if (utils.isDate(v)) {
+          v = v.toISOString();
+        } else if (utils.isObject(v)) {
+          v = JSON.stringify(v);
+        }
+        parts.push(encode(key) + '=' + encode(v));
+      });
+    });
+
+    serializedParams = parts.join('&');
+  }
+
+  if (serializedParams) {
+    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
+  }
+
+  return url;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/combineURLs.js":
+/*!********************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/combineURLs.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL
+    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+    : baseURL;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/cookies.js":
+/*!****************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/cookies.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+
+module.exports = (
+  utils.isStandardBrowserEnv() ?
+
+  // Standard browser envs support document.cookie
+  (function standardBrowserEnv() {
+    return {
+      write: function write(name, value, expires, path, domain, secure) {
+        var cookie = [];
+        cookie.push(name + '=' + encodeURIComponent(value));
+
+        if (utils.isNumber(expires)) {
+          cookie.push('expires=' + new Date(expires).toGMTString());
+        }
+
+        if (utils.isString(path)) {
+          cookie.push('path=' + path);
+        }
+
+        if (utils.isString(domain)) {
+          cookie.push('domain=' + domain);
+        }
+
+        if (secure === true) {
+          cookie.push('secure');
+        }
+
+        document.cookie = cookie.join('; ');
+      },
+
+      read: function read(name) {
+        var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+        return (match ? decodeURIComponent(match[3]) : null);
+      },
+
+      remove: function remove(name) {
+        this.write(name, '', Date.now() - 86400000);
+      }
+    };
+  })() :
+
+  // Non standard browser env (web workers, react-native) lack needed support.
+  (function nonStandardBrowserEnv() {
+    return {
+      write: function write() {},
+      read: function read() { return null; },
+      remove: function remove() {}
+    };
+  })()
+);
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/isAbsoluteURL.js":
+/*!**********************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Determines whether the specified URL is absolute
+ *
+ * @param {string} url The URL to test
+ * @returns {boolean} True if the specified URL is absolute, otherwise false
+ */
+module.exports = function isAbsoluteURL(url) {
+  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+  // by any combination of letters, digits, plus, period, or hyphen.
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/isURLSameOrigin.js":
+/*!************************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+
+module.exports = (
+  utils.isStandardBrowserEnv() ?
+
+  // Standard browser envs have full support of the APIs needed to test
+  // whether the request URL is of the same origin as current location.
+  (function standardBrowserEnv() {
+    var msie = /(msie|trident)/i.test(navigator.userAgent);
+    var urlParsingNode = document.createElement('a');
+    var originURL;
+
+    /**
+    * Parse a URL to discover it's components
+    *
+    * @param {String} url The URL to be parsed
+    * @returns {Object}
+    */
+    function resolveURL(url) {
+      var href = url;
+
+      if (msie) {
+        // IE needs attribute set twice to normalize properties
+        urlParsingNode.setAttribute('href', href);
+        href = urlParsingNode.href;
+      }
+
+      urlParsingNode.setAttribute('href', href);
+
+      // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
+      return {
+        href: urlParsingNode.href,
+        protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+        host: urlParsingNode.host,
+        search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+        hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+        hostname: urlParsingNode.hostname,
+        port: urlParsingNode.port,
+        pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
+                  urlParsingNode.pathname :
+                  '/' + urlParsingNode.pathname
+      };
+    }
+
+    originURL = resolveURL(window.location.href);
+
+    /**
+    * Determine if a URL shares the same origin as the current location
+    *
+    * @param {String} requestURL The URL to test
+    * @returns {boolean} True if URL shares the same origin, otherwise false
+    */
+    return function isURLSameOrigin(requestURL) {
+      var parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
+      return (parsed.protocol === originURL.protocol &&
+            parsed.host === originURL.host);
+    };
+  })() :
+
+  // Non standard browser envs (web workers, react-native) lack needed support.
+  (function nonStandardBrowserEnv() {
+    return function isURLSameOrigin() {
+      return true;
+    };
+  })()
+);
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/normalizeHeaderName.js":
+/*!****************************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ../utils */ "../node_modules/axios/lib/utils.js");
+
+module.exports = function normalizeHeaderName(headers, normalizedName) {
+  utils.forEach(headers, function processHeader(value, name) {
+    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
+      headers[normalizedName] = value;
+      delete headers[name];
+    }
+  });
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/parseHeaders.js":
+/*!*********************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/parseHeaders.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+
+// Headers whose duplicates are ignored by node
+// c.f. https://nodejs.org/api/http.html#http_message_headers
+var ignoreDuplicateOf = [
+  'age', 'authorization', 'content-length', 'content-type', 'etag',
+  'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since',
+  'last-modified', 'location', 'max-forwards', 'proxy-authorization',
+  'referer', 'retry-after', 'user-agent'
+];
+
+/**
+ * Parse headers into an object
+ *
+ * ```
+ * Date: Wed, 27 Aug 2014 08:58:49 GMT
+ * Content-Type: application/json
+ * Connection: keep-alive
+ * Transfer-Encoding: chunked
+ * ```
+ *
+ * @param {String} headers Headers needing to be parsed
+ * @returns {Object} Headers parsed into an object
+ */
+module.exports = function parseHeaders(headers) {
+  var parsed = {};
+  var key;
+  var val;
+  var i;
+
+  if (!headers) { return parsed; }
+
+  utils.forEach(headers.split('\n'), function parser(line) {
+    i = line.indexOf(':');
+    key = utils.trim(line.substr(0, i)).toLowerCase();
+    val = utils.trim(line.substr(i + 1));
+
+    if (key) {
+      if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
+        return;
+      }
+      if (key === 'set-cookie') {
+        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
+      } else {
+        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+      }
+    }
+  });
+
+  return parsed;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/helpers/spread.js":
+/*!***************************************************!*\
+  !*** ../node_modules/axios/lib/helpers/spread.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Syntactic sugar for invoking a function and expanding an array for arguments.
+ *
+ * Common use case would be to use `Function.prototype.apply`.
+ *
+ *  ```js
+ *  function f(x, y, z) {}
+ *  var args = [1, 2, 3];
+ *  f.apply(null, args);
+ *  ```
+ *
+ * With `spread` this example can be re-written.
+ *
+ *  ```js
+ *  spread(function(x, y, z) {})([1, 2, 3]);
+ *  ```
+ *
+ * @param {Function} callback
+ * @returns {Function}
+ */
+module.exports = function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr);
+  };
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/lib/utils.js":
+/*!******************************************!*\
+  !*** ../node_modules/axios/lib/utils.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var bind = __webpack_require__(/*! ./helpers/bind */ "../node_modules/axios/lib/helpers/bind.js");
+var isBuffer = __webpack_require__(/*! is-buffer */ "../node_modules/axios/node_modules/is-buffer/index.js");
+
+/*global toString:true*/
+
+// utils is a library of generic helper functions non-specific to axios
+
+var toString = Object.prototype.toString;
+
+/**
+ * Determine if a value is an Array
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Array, otherwise false
+ */
+function isArray(val) {
+  return toString.call(val) === '[object Array]';
+}
+
+/**
+ * Determine if a value is an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+ */
+function isArrayBuffer(val) {
+  return toString.call(val) === '[object ArrayBuffer]';
+}
+
+/**
+ * Determine if a value is a FormData
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an FormData, otherwise false
+ */
+function isFormData(val) {
+  return (typeof FormData !== 'undefined') && (val instanceof FormData);
+}
+
+/**
+ * Determine if a value is a view on an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+ */
+function isArrayBufferView(val) {
+  var result;
+  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
+    result = ArrayBuffer.isView(val);
+  } else {
+    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
+  }
+  return result;
+}
+
+/**
+ * Determine if a value is a String
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a String, otherwise false
+ */
+function isString(val) {
+  return typeof val === 'string';
+}
+
+/**
+ * Determine if a value is a Number
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Number, otherwise false
+ */
+function isNumber(val) {
+  return typeof val === 'number';
+}
+
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/**
+ * Determine if a value is an Object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Object, otherwise false
+ */
+function isObject(val) {
+  return val !== null && typeof val === 'object';
+}
+
+/**
+ * Determine if a value is a Date
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Date, otherwise false
+ */
+function isDate(val) {
+  return toString.call(val) === '[object Date]';
+}
+
+/**
+ * Determine if a value is a File
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */
+function isFile(val) {
+  return toString.call(val) === '[object File]';
+}
+
+/**
+ * Determine if a value is a Blob
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Blob, otherwise false
+ */
+function isBlob(val) {
+  return toString.call(val) === '[object Blob]';
+}
+
+/**
+ * Determine if a value is a Function
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Function, otherwise false
+ */
+function isFunction(val) {
+  return toString.call(val) === '[object Function]';
+}
+
+/**
+ * Determine if a value is a Stream
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Stream, otherwise false
+ */
+function isStream(val) {
+  return isObject(val) && isFunction(val.pipe);
+}
+
+/**
+ * Determine if a value is a URLSearchParams object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+ */
+function isURLSearchParams(val) {
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+}
+
+/**
+ * Trim excess whitespace off the beginning and end of a string
+ *
+ * @param {String} str The String to trim
+ * @returns {String} The String freed of excess whitespace
+ */
+function trim(str) {
+  return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+
+/**
+ * Determine if we're running in a standard browser environment
+ *
+ * This allows axios to run in a web worker, and react-native.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
+ *
+ * web workers:
+ *  typeof window -> undefined
+ *  typeof document -> undefined
+ *
+ * react-native:
+ *  navigator.product -> 'ReactNative'
+ */
+function isStandardBrowserEnv() {
+  if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
+    return false;
+  }
+  return (
+    typeof window !== 'undefined' &&
+    typeof document !== 'undefined'
+  );
+}
+
+/**
+ * Iterate over an Array or an Object invoking a function for each item.
+ *
+ * If `obj` is an Array callback will be called passing
+ * the value, index, and complete array for each item.
+ *
+ * If 'obj' is an Object callback will be called passing
+ * the value, key, and complete object for each property.
+ *
+ * @param {Object|Array} obj The object to iterate
+ * @param {Function} fn The callback to invoke for each item
+ */
+function forEach(obj, fn) {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined') {
+    return;
+  }
+
+  // Force an array if not already something iterable
+  if (typeof obj !== 'object') {
+    /*eslint no-param-reassign:0*/
+    obj = [obj];
+  }
+
+  if (isArray(obj)) {
+    // Iterate over array values
+    for (var i = 0, l = obj.length; i < l; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    // Iterate over object keys
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        fn.call(null, obj[key], key, obj);
+      }
+    }
+  }
+}
+
+/**
+ * Accepts varargs expecting each argument to be an object, then
+ * immutably merges the properties of each object and returns result.
+ *
+ * When multiple objects contain the same key the later object in
+ * the arguments list will take precedence.
+ *
+ * Example:
+ *
+ * ```js
+ * var result = merge({foo: 123}, {foo: 456});
+ * console.log(result.foo); // outputs 456
+ * ```
+ *
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+function merge(/* obj1, obj2, obj3, ... */) {
+  var result = {};
+  function assignValue(val, key) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
+      result[key] = merge(result[key], val);
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+/**
+ * Extends object a by mutably adding to it the properties of object b.
+ *
+ * @param {Object} a The object to be extended
+ * @param {Object} b The object to copy properties from
+ * @param {Object} thisArg The object to bind function to
+ * @return {Object} The resulting value of object a
+ */
+function extend(a, b, thisArg) {
+  forEach(b, function assignValue(val, key) {
+    if (thisArg && typeof val === 'function') {
+      a[key] = bind(val, thisArg);
+    } else {
+      a[key] = val;
+    }
+  });
+  return a;
+}
+
+module.exports = {
+  isArray: isArray,
+  isArrayBuffer: isArrayBuffer,
+  isBuffer: isBuffer,
+  isFormData: isFormData,
+  isArrayBufferView: isArrayBufferView,
+  isString: isString,
+  isNumber: isNumber,
+  isObject: isObject,
+  isUndefined: isUndefined,
+  isDate: isDate,
+  isFile: isFile,
+  isBlob: isBlob,
+  isFunction: isFunction,
+  isStream: isStream,
+  isURLSearchParams: isURLSearchParams,
+  isStandardBrowserEnv: isStandardBrowserEnv,
+  forEach: forEach,
+  merge: merge,
+  extend: extend,
+  trim: trim
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/axios/node_modules/is-buffer/index.js":
+/*!*************************************************************!*\
+  !*** ../node_modules/axios/node_modules/is-buffer/index.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+module.exports = function isBuffer (obj) {
+  return obj != null && obj.constructor != null &&
+    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+
+/***/ }),
+
 /***/ "../node_modules/element-closest/index.mjs":
 /*!*************************************************!*\
   !*** ../node_modules/element-closest/index.mjs ***!
@@ -22542,6 +24166,17 @@ var singleton = jumper();
 
 /***/ }),
 
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-list/word-context-panel.vue?vue&type=style&index=0&lang=scss&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/word-list/word-context-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-list/word-filter-panel.vue?vue&type=style&index=0&lang=scss&":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/word-list/word-filter-panel.vue?vue&type=style&index=0&lang=scss& ***!
@@ -22579,6 +24214,17 @@ var singleton = jumper();
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/word-list/word-list-panel.vue?vue&type=style&index=0&lang=scss& ***!
   \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-list/word-sorting-panel.vue?vue&type=style&index=0&lang=scss&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/word-list/word-sorting-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23281,7 +24927,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
 //
@@ -23327,6 +24974,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -23339,13 +24996,19 @@ __webpack_require__.r(__webpack_exports__);
     settings: 'settings'
   },
   storeModules: ['app'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_2__["default"]],
   components: {
     setting: _setting_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
   },
+  computed: {
+    featureOptions: function() {
+      return this.settings.getFeatureOptions()
+    }
+  },
   methods: {
     featureOptionChanged: function (name, value) {
-      this.app.featureOptionChange(name, value)
+      let keyinfo = _lib_options_options_js__WEBPACK_IMPORTED_MODULE_1__["default"].parseKey(name)
+      this.app.featureOptionChange(keyinfo.name, value)
     }
   }
 });
@@ -23391,10 +25054,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ReskinFontColor',
-  inject: ['ui', 'l10n'],
+  inject: ['ui', 'l10n', 'settings'],
   data () {
     return {
-      activeButton: 16
+      activeButton: this.settings.getUiOptions().items.fontSize.currentValue
     }
   },
   methods: {
@@ -25296,6 +26959,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -25441,10 +27108,11 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/lib/selection/text-selector */ "./lib/selection/text-selector.js");
 /* harmony import */ var _lib_queries_lexical_query_lookup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/queries/lexical-query-lookup */ "./lib/queries/lexical-query-lookup.js");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-data-models */ "../node_modules/alpheios-data-models/dist/alpheios-data-models.js");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/images/inline-icons/lookup.svg */ "./images/inline-icons/lookup.svg");
-/* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
+/* harmony import */ var _lib_options_options__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/options/options */ "./lib/options/options.js");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alpheios-data-models */ "../node_modules/alpheios-data-models/dist/alpheios-data-models.js");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/images/inline-icons/lookup.svg */ "./images/inline-icons/lookup.svg");
+/* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
 //
 //
 //
@@ -25499,6 +27167,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -25512,8 +27181,8 @@ __webpack_require__.r(__webpack_exports__);
   inject: ['app', 'ui', 'l10n', 'settings'],
   storeModules: ['app'],
   components: {
-    alphSetting: _setting_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    lookupIcon: _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_3__["default"]
+    alphSetting: _setting_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    lookupIcon: _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data () {
     return {
@@ -25551,11 +27220,11 @@ __webpack_require__.r(__webpack_exports__);
   created: function () {
     if (this.usePageLangPrefs) {
       // Use language settings of a page
-      this.$options.lookupLanguage = this.settings.featureOptions.items.preferredLanguage
-      this.$options.resourceOptions = this.settings.resourceOptions
+      this.$options.lookupLanguage = this.settings.getFeatureOptions().items.preferredLanguage
+      this.$options.resourceOptions = this.settings.getResourceOptions()
     } else {
       // Use lookup language settings
-      this.$options.lookupLanguage = this.settings.featureOptions.items.lookupLanguage
+      this.$options.lookupLanguage = this.settings.getFeatureOptions().items.lookupLanguage
       this.$options.resourceOptions = this.settings.lookupResourceOptions
     }
   },
@@ -25566,18 +27235,18 @@ __webpack_require__.r(__webpack_exports__);
       // langUpdated is included into the condition to force Vue to recalculate value
       // every time language settings are updated
       return (this.langUpdated && selectedValue === 'Default')
-        ? this.settings.featureOptions.items.preferredLanguage.currentItem()
+        ? this.settings.getFeatureOptions().items.preferredLanguage.currentItem()
         : this.$options.lookupLanguage.currentItem()
     },
 
     lexiconsFiltered () {
       let lang = this.$options.lookupLanguage.values.filter(v => v.text === this.currentLanguage.text)
-      let settingName
+      let settingGroup
       if (lang.length > 0) {
-        settingName = `lexiconsShort-${lang[0].value}`
+        settingGroup = lang[0].value
       }
 
-      return this.$options.resourceOptions.items.lexiconsShort.filter((item) => item.name === settingName)
+      return this.$options.resourceOptions.items.lexiconsShort.filter((item) => _lib_options_options__WEBPACK_IMPORTED_MODULE_2__["default"].parseKey(item.name).group === settingGroup)
     }
   },
   watch: {
@@ -25597,7 +27266,7 @@ __webpack_require__.r(__webpack_exports__);
       If we override the language, then the lookup language must be a current value of our `lookupLanguage` prop,
       otherwise it must be a value of panel's options `preferredLanguage` options item
        */
-      const languageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageIdFromCode(this.currentLanguage.value)
+      const languageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_3__["LanguageModelFactory"].getLanguageIdFromCode(this.currentLanguage.value)
 
       let textSelector = _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_0__["default"].createObjectFromText(this.lookuptext, languageID)
 
@@ -25605,10 +27274,11 @@ __webpack_require__.r(__webpack_exports__);
 
       const resourceOptions = this.$options.resourceOptions
       const lemmaTranslationLang = this.app.state.lemmaTranslationLang
+      let featureOptions = this.settings.getFeatureOptions()
 
       const wordUsageExamples = this.app.enableWordUsageExamples(textSelector, 'onLexicalQuery')
-        ? { paginationMax: this.settings.featureOptions.items.wordUsageExamplesMax.currentValue,
-          paginationAuthMax: this.settings.featureOptions.items.wordUsageExamplesAuthMax.currentValue }
+        ? { paginationMax: featureOptions.items.wordUsageExamplesMax.currentValue,
+          paginationAuthMax: featureOptions.items.wordUsageExamplesAuthMax.currentValue }
         : null
 
       let lexQuery = _lib_queries_lexical_query_lookup__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -25638,8 +27308,8 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     resourceSettingChange: function (name, value) {
-      let keyinfo = this.settings.lookupResourceOptions.parseKey(name)
-      this.settings.lookupResourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
+      let keyinfo = _lib_options_options__WEBPACK_IMPORTED_MODULE_2__["default"].parseKey(name)
+      this.settings.lookupResourceOptions.items[keyinfo.name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
     }
   }
 });
@@ -26070,6 +27740,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/images/inline-icons/x-close.svg */ "./images/inline-icons/x-close.svg");
 /* harmony import */ var _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/vue/components/lookup.vue */ "./vue/components/lookup.vue");
 /* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -26921,8 +28601,9 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     dragEndListener () {
-      this.settings.uiOptions.items.toolbarShiftX.setValue(this.shift.x)
-      this.settings.uiOptions.items.toolbarShiftY.setValue(this.shift.y)
+      let uiOptions = this.settings.getUiOptions()
+      uiOptions.items.toolbarShiftX.setValue(this.shift.x)
+      uiOptions.items.toolbarShiftY.setValue(this.shift.y)
       // Recalculate the new position of a toolbar center
       this.xCenter = this.getXCenter()
     },
@@ -27569,6 +29250,9 @@ __webpack_require__.r(__webpack_exports__);
     right: 'alpheios-panel--right'
   },
 
+  // custom property for use in constructing keys on subcomponents
+  prefixName: 'panel-compact',
+
   computed: {
     currentTab () {
       return this.$store.state.ui.activeTab
@@ -27596,6 +29280,18 @@ __webpack_require__.r(__webpack_exports__);
         classes.push('alpheios-panel--expanded')
       }
       return classes
+    },
+
+    uiSettingsKey() {
+      return `${this.$options.prefixName}-settings-ui-${this.$store.state.settings.uiResetCounter}`
+    },
+
+    resourceSettingsKey() {
+      return `${this.$options.prefixName}-settings-resource-${this.$store.state.settings.resourceResetCounter}`
+    },
+
+    featureSettingsKey() {
+      return `${this.$options.prefixName}-settings-feature-${this.$store.state.settings.featureResetCounter}`
     },
 
     componentStyles: function () {
@@ -27637,10 +29333,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
 
-    verboseMode () {
-      return this.settings.uiOptions.items.verboseMode.currentValue === `verbose`
-    },
-
     formattedShortDefinitions () {
       let definitions = []
       if (this.$store.getters['app/defDataReady'] && this.$store.state.app.homonymDataReady) {
@@ -27678,7 +29370,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     setPosition (position) {
-      this.settings.uiOptions.items.panelPosition.setValue(position)
+      this.settings.getUiOptions().items.panelPosition.setValue(position)
       this.$store.commit('panel/setPosition', position)
     },
 
@@ -28013,6 +29705,9 @@ __webpack_require__.r(__webpack_exports__);
   // Maximum allowed size of a panel, as percentage of the viewport width.
   maxWidthPct: 80,
 
+  // custom property for use in constructing keys on subcomponents
+  prefixName: 'panel-large',
+
   computed: {
     rootClasses () {
       return this.$options.positionClassVariants[this.$store.state.panel.position]
@@ -28207,6 +29902,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -28250,7 +29946,6 @@ __webpack_require__.r(__webpack_exports__);
   // Custom props to store unwatch functions
   visibleUnwatch: null,
   lexrqStartedUnwatch: null,
-  positioningUnwatch: null,
 
   data: function () {
     return {
@@ -28324,32 +30019,7 @@ __webpack_require__.r(__webpack_exports__);
         return '0px'
       }
 
-      if (this.$store.getters['popup/isFixedPositioned']) {
-        return this.moduleConfig.initialPos.left
-      }
-
-      let left = this.positionLeftValue
-      let placementTargetX = this.$store.state.app.selectionTarget.x
-      let viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
-      let verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth
-      let leftSide = placementTargetX - this.exactWidth / 2
-      let rightSide = placementTargetX + this.exactWidth / 2
-      if (this.widthDm !== 'auto') {
-        // Popup is too wide and was restricted in height
-        this.logger.log(`Setting position left for a set width`)
-        left = this.moduleConfig.viewportMargin
-      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.moduleConfig.viewportMargin &&
-          leftSide > this.moduleConfig.viewportMargin) {
-        // We can center it with the target
-        left = placementTargetX - Math.floor(this.exactWidth / 2)
-      } else if (leftSide > this.moduleConfig.viewportMargin) {
-        // There is space at the left, move it there
-        left = viewportWidth - verticalScrollbarWidth - this.moduleConfig.viewportMargin - this.exactWidth
-      } else if (rightSide < viewportWidth - verticalScrollbarWidth - this.moduleConfig.viewportMargin) {
-        // There is space at the right, move it there
-        left = this.moduleConfig.viewportMargin
-      }
-      return `${left}px`
+      return this.moduleConfig.initialPos.left
     },
 
     positionTopDm: function () {
@@ -28358,39 +30028,7 @@ __webpack_require__.r(__webpack_exports__);
         return '0px'
       }
 
-      if (this.$store.getters['popup/isFixedPositioned']) {
-        return this.moduleConfig.initialPos.top
-      }
-
-      let time = Date.now()
-      this.logger.log(`${time}: position top calculation, offsetHeight is ${this.exactHeight}`)
-      let top = this.positionTopValue
-      let placementTargetY = this.$store.state.app.selectionTarget.y
-      let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-      let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
-      if (this.heightDm !== 'auto') {
-        // Popup is too wide and was restricted in height
-        this.logger.log(`Setting position top for a set height`)
-        top = this.moduleConfig.viewportMargin
-      } else if (placementTargetY + this.moduleConfig.placementMargin + this.exactHeight < viewportHeight - this.moduleConfig.viewportMargin - horizontalScrollbarWidth) {
-        // Place it below a selection
-        top = placementTargetY + this.moduleConfig.placementMargin
-      } else if (placementTargetY - this.moduleConfig.placementMargin - this.exactHeight > this.moduleConfig.viewportMargin) {
-        // Place it above a selection
-        top = placementTargetY - this.moduleConfig.placementMargin - this.exactHeight
-      } else if (placementTargetY < viewportHeight - horizontalScrollbarWidth - placementTargetY) {
-        // There is no space neither above nor below. Word is shifted to the top. Place a popup at the bottom.
-        top = viewportHeight - horizontalScrollbarWidth - this.moduleConfig.viewportMargin - this.exactHeight
-      } else if (placementTargetY > viewportHeight - horizontalScrollbarWidth - placementTargetY) {
-        // There is no space neither above nor below. Word is shifted to the bottom. Place a popup at the top.
-        top = this.moduleConfig.viewportMargin
-      } else {
-        // There is no space neither above nor below. Center it vertically.
-        top = Math.round((viewportHeight - horizontalScrollbarWidth - this.exactHeight) / 2)
-      }
-      time = Date.now()
-      this.logger.log(`${time}: position top getter, return value is ${top}, offsetHeight is ${this.exactHeight}`)
-      return `${top}px`
+      return this.moduleConfig.initialPos.top
     },
 
     widthDm: {
@@ -28450,7 +30088,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     verboseMode () {
-      return this.settings.uiOptions.items.verboseMode.currentValue === `verbose`
+      return this.settings.getUiOptions().items.verboseMode.currentValue === `verbose`
     }
   },
 
@@ -28537,11 +30175,9 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     dragEndListener () {
-      if (this.$store.getters['popup/isFixedPositioned']) {
-        // Do not store shift values for flexible positioning as they will be erased after each lexical query
-        this.settings.uiOptions.items.popupShiftX.setValue(this.shift.x)
-        this.settings.uiOptions.items.popupShiftY.setValue(this.shift.y)
-      }
+      let uiOptions = this.settings.getUiOptions()
+      uiOptions.items.popupShiftX.setValue(this.shift.x)
+      uiOptions.items.popupShiftY.setValue(this.shift.y)
     },
 
     /**
@@ -28595,11 +30231,6 @@ __webpack_require__.r(__webpack_exports__);
       this.exactHeight = 0
       this.resizedWidth = null
       this.resizedHeight = null
-      if (this.$store.getters['popup/isFlexPositioned']) {
-        // Reset positioning shift for a `flexible` position of popup only. For a `fixed` position we must retain it
-        // so that the popup will open at its last position.
-        this.shift = { x: 0, y: 0 }
-      }
     },
 
     attachTrackingClick: function () {
@@ -28622,24 +30253,12 @@ __webpack_require__.r(__webpack_exports__);
       this.resetPopupDimensions()
       this.showProviders = false
     })
-
-    this.$options.positioningUnwatch = this.$store.watch((state) => state.popup.positioning, () => {
-      if (this.$store.getters['popup/isFlexPositioned']) {
-        this.shift = { x: 0, y: 0 }
-      } else if (this.$store.getters['popup/isFixedPositioned']) {
-        this.shift = {
-          x: this.settings.uiOptions.items.popupShiftX.currentValue,
-          y: this.settings.uiOptions.items.popupShiftY.currentValue
-        }
-      }
-    })
   },
 
   beforeDestroy () {
     // Teardown the watch function
     // this.$options.visibleUnwatch()
     this.$options.lexrqStartedUnwatch()
-    this.$options.positioningUnwatch()
   },
 
   updated () {
@@ -28712,7 +30331,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
 //
@@ -28733,6 +30353,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -28744,25 +30365,28 @@ __webpack_require__.r(__webpack_exports__);
     l10n: 'l10n',
     settings: 'settings'
   },
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_2__["default"]],
   components: {
     setting: _setting_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
   },
   computed: {
     resourceSettingsLexicons: function () {
-      return this.settings.resourceOptions.items && this.settings.resourceOptions.items.lexicons
-        ? this.settings.resourceOptions.items.lexicons.filter(item => item.values.length > 0)
+      let resourceOptions = this.settings.getResourceOptions()
+      return resourceOptions.items && resourceOptions.items.lexicons
+        ? resourceOptions.items.lexicons.filter(item => item.values.length > 0)
         : []
     },
     resourceSettingsLexiconsShort: function () {
-      return this.settings.resourceOptions.items && this.settings.resourceOptions.items.lexiconsShort
-        ? this.settings.resourceOptions.items.lexiconsShort.filter(item => item.values.length > 0)
+      let resourceOptions = this.settings.getResourceOptions()
+      return resourceOptions.items && resourceOptions.items.lexiconsShort
+        ? resourceOptions.items.lexiconsShort.filter(item => item.values.length > 0)
         : []
     }
   },
   methods: {
     resourceSettingChanged: function (name, value) {
-      this.language.resourceSettingChange(name, value)
+      let keyinfo = _lib_options_options_js__WEBPACK_IMPORTED_MODULE_1__["default"].parseKey(name)
+      this.language.resourceSettingChange(keyinfo.name, value)
     }
   }
 });
@@ -29089,7 +30713,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _font_size_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./font-size.vue */ "./vue/components/font-size.vue");
 /* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
 //
@@ -29107,12 +30732,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -29127,14 +30747,20 @@ __webpack_require__.r(__webpack_exports__);
     settings: 'settings'
   },
   storeModules: ['app','ui'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_3__["default"]],
   components: {
     setting: _setting_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     fontSize: _font_size_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  computed: {
+    uiOptions: function() {
+      return this.settings.getUiOptions()
+    }
+  },
   methods: {
     uiOptionChanged: function (name, value) {
-      this.ui.optionChange(name, value)
+      let keyinfo = _lib_options_options_js__WEBPACK_IMPORTED_MODULE_2__["default"].parseKey(name)
+      this.ui.optionChange(keyinfo.name, value)
     }
   }
 });
@@ -29657,6 +31283,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/images/inline-icons/x-close.svg */ "./images/inline-icons/x-close.svg");
 /* harmony import */ var _vue_components_word_list_word_item_panel_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/vue/components/word-list/word-item-panel.vue */ "./vue/components/word-list/word-item-panel.vue");
 /* harmony import */ var _vue_components_word_list_word_filter_panel_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/components/word-list/word-filter-panel.vue */ "./vue/components/word-list/word-filter-panel.vue");
+/* harmony import */ var _vue_components_word_list_word_sorting_panel_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/vue/components/word-list/word-sorting-panel.vue */ "./vue/components/word-list/word-sorting-panel.vue");
 //
 //
 //
@@ -29723,6 +31350,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -29739,6 +31373,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteIcon: _images_inline_icons_delete_svg__WEBPACK_IMPORTED_MODULE_2__["default"],
     wordItem: _vue_components_word_list_word_item_panel_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     wordFilterPanel: _vue_components_word_list_word_filter_panel_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    wordSortingPanel: _vue_components_word_list_word_sorting_panel_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
     alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   inject: ['l10n', 'app'],
@@ -29761,11 +31396,14 @@ __webpack_require__.r(__webpack_exports__);
         'byExactForm': (wordItem) => wordItem.targetWord.toLowerCase() === this.textInput.toLowerCase(),
         'byLemma': (wordItem) => wordItem.lemmasList.split(', ').some(lemmaItem => lemmaItem.toLowerCase() === this.textInput.toLowerCase())
       }, 
-      clearFilters: 0
+      clearFilters: 0,
+      sortingState: {
+        'targetWord': null
+      }
     }
   },
   computed: {
-    hasFilterPanel () {
+    hasSeveralItems () {
       return this.wordlist && this.wordlist.values && this.wordlist.values.length > 1
     },
     wordlist () {
@@ -29776,10 +31414,15 @@ __webpack_require__.r(__webpack_exports__);
     wordItems () {
       if (this.$store.state.app.wordListUpdateTime && this.reloadList) {        
         if (!this.selectedFilterBy) {
-          return this.wordlist.values
+          let result = this.wordlist.values
+          this.applySorting(result)
+          return result
         }
         if (this.filterMethods[this.selectedFilterBy]) {
-          return this.wordlist.values.filter(this.filterMethods[this.selectedFilterBy])
+          let result = this.wordlist.values.filter(this.filterMethods[this.selectedFilterBy])
+          this.applySorting(result)
+          return result
+
         } else {
           console.warn(`The current filter method - ${this.selectedFilterBy} - is not defined, that's why empty result is returned!`)
         }
@@ -29853,6 +31496,25 @@ __webpack_require__.r(__webpack_exports__);
     },
     clearClickedLemma () {
       this.clickedLemma = null
+    },
+    changeSorting (part, type) {
+      this.sortingState[part] = type
+      this.reloadList = this.reloadList + 1
+    },
+    applySorting (items) {
+      let part = 'targetWord'
+      return items.sort( (item1, item2) => {
+        let formattedItem1 = item1[part].toUpperCase()
+        let formattedItem2 = item2[part].toUpperCase()
+
+        if (formattedItem1 < formattedItem2) { 
+          return this.sortingState[part] === 'asc' ? -1 : ( this.sortingState[part] === 'desc' ? 1 : 0 )
+        }
+        if (formattedItem1 > formattedItem2) { 
+          return this.sortingState[part] === 'asc' ? 1 : ( this.sortingState[part] === 'desc' ? -1 : 0 )
+        }
+        if (formattedItem1 === formattedItem2) { return 0 }
+      })
     }
   }
 });
@@ -29930,6 +31592,82 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/word-list/word-sorting-panel.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/word-list/word-sorting-panel.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _images_inline_icons_sort_asc_icon_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/images/inline-icons/sort-asc-icon.svg */ "./images/inline-icons/sort-asc-icon.svg");
+/* harmony import */ var _images_inline_icons_sort_desc_icon_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/images/inline-icons/sort-desc-icon.svg */ "./images/inline-icons/sort-desc-icon.svg");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'WordSortingPanel',
+  inject: ['app', 'l10n'],
+  components: {
+    sortAscIcon: _images_inline_icons_sort_asc_icon_svg__WEBPACK_IMPORTED_MODULE_0__["default"],
+    sortDescIcon: _images_inline_icons_sort_desc_icon_svg__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data () {
+    return {
+        sortingState: {
+          'targetWord': null
+        }
+    }
+  },
+  computed: {
+  },
+  methods: {
+    changeSort (part, type) {
+      this.sortingState[part] = this.sortingState[part] !== type ? type : null
+      this.$emit('changeSorting', part, this.sortingState[part])
+    }
+  }
+});
+
+
+/***/ }),
+
 /***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/word-list/word-tq-source-block.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************!*\
   !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/word-list/word-tq-source-block.vue?vue&type=script&lang=js& ***!
@@ -29980,8 +31718,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _images_inline_icons_clear_filters_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/images/inline-icons/clear-filters.svg */ "./images/inline-icons/clear-filters.svg");
-/* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
+/* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
 //
 //
 //
@@ -30017,7 +31754,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 
 
 
@@ -30025,8 +31761,7 @@ __webpack_require__.r(__webpack_exports__);
   name: 'WordUsageExamplesFilters',
   inject: ['app', 'l10n'],
   components: {
-    clearFiltersIcon: _images_inline_icons_clear_filters_svg__WEBPACK_IMPORTED_MODULE_0__["default"],
-    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
     collapsedHeader: {
@@ -30073,11 +31808,11 @@ __webpack_require__.r(__webpack_exports__);
           .filter((item, pos, self) => self.indexOf(item) == pos)
           .slice()
         this.lastAuthorsList.unshift(null)
-      } 
+      }
       return true
     },
     filteredWorkList () {
-      if (this.selectedAuthor) {        
+      if (this.selectedAuthor) {
         this.selectedTextWork = null
         let resArray = this.selectedAuthor.works.slice()
         if (resArray.length > 1) {
@@ -30101,7 +31836,7 @@ __webpack_require__.r(__webpack_exports__);
         this.selectedTextWork = null
       }
       this.gettingResult = true
-      
+
       if (this.selectedAuthor) {
         await this.app.getWordUsageData(this.homonym, {
           author: this.selectedAuthor && this.selectedAuthor.ID !== 0 ? this.selectedAuthor : null,
@@ -30158,8 +31893,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _images_inline_icons_clear_filters_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/images/inline-icons/clear-filters.svg */ "./images/inline-icons/clear-filters.svg");
-/* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
+/* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
 //
 //
 //
@@ -30176,7 +31910,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 
 
 
@@ -30184,8 +31917,7 @@ __webpack_require__.r(__webpack_exports__);
   name: 'WordUsageExamplesSorting',
   inject: ['app', 'l10n'],
   components: {
-    clearFiltersIcon: _images_inline_icons_clear_filters_svg__WEBPACK_IMPORTED_MODULE_0__["default"],
-    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
     collapsedHeader: {
@@ -30361,6 +32093,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -30369,7 +32121,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'WordUsageExamples',
-  inject: ['ui', 'app', 'l10n'],
+  inject: ['ui', 'app', 'l10n','settings'],
   storeModules: ['ui'],
   mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_2__["default"]],
   components: {
@@ -30391,6 +32143,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
+    finalCollapsedHeader () {
+      return this.app.platform.isMobile && this.collapsedHeader
+    },
     targetWord () {
       return this.$store.state.app.homonymDataReady && this.app.homonym ? this.app.homonym.targetWord : null
     },
@@ -30398,7 +32153,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.$store.state.app.homonymDataReady && this.app.homonym ? this.app.homonym.language : null
     },
     showHeaderFilters () {
-      return this.$store.state.app.wordUsageExamplesReady
+      return this.$store.state.app.wordUsageExamplesReady && this.app.platform.isMobile
     },
     showHeader () {
       return Boolean(this.selectedAuthor) ||
@@ -30496,9 +32251,6 @@ __webpack_require__.r(__webpack_exports__);
         }
         return 0
       })
-    },
-    changeShowDataSource () {
-      this.showDataSource = !this.showDataSource
     },
     formattedFullCit (wordUsageItem) {
       return wordUsageItem.formattedAuthor + ' <i>' + wordUsageItem.formattedTextWork + '</i> ' + wordUsageItem.formattedPassage
@@ -30653,7 +32405,57 @@ var render = function() {
       _c("setting", {
         attrs: {
           classes: ["alpheios-feature-options-item"],
-          data: _vm.settings.featureOptions.items.enableWordUsageExamples
+          data: _vm.featureOptions.items.preferredLanguage
+        },
+        on: { change: _vm.featureOptionChanged }
+      }),
+      _vm._v(" "),
+      _c(
+        "fieldset",
+        [
+          _c("legend", [
+            _vm._v(_vm._s(_vm.l10n.getText("LABEL_FIELDSET_USAGEEXAMPLES")))
+          ]),
+          _vm._v(" "),
+          _c("setting", {
+            attrs: {
+              classes: ["alpheios-feature-options-item"],
+              data: _vm.featureOptions.items.enableWordUsageExamples
+            },
+            on: { change: _vm.featureOptionChanged }
+          }),
+          _vm._v(" "),
+          _c("setting", {
+            attrs: {
+              classes: ["alpheios-feature-options-item"],
+              data: _vm.featureOptions.items.wordUsageExamplesON
+            },
+            on: { change: _vm.featureOptionChanged }
+          }),
+          _vm._v(" "),
+          _c("setting", {
+            attrs: {
+              classes: ["alpheios-feature-options-item"],
+              data: _vm.featureOptions.items.wordUsageExamplesAuthMax
+            },
+            on: { change: _vm.featureOptionChanged }
+          }),
+          _vm._v(" "),
+          _c("setting", {
+            attrs: {
+              classes: ["alpheios-feature-options-item"],
+              data: _vm.featureOptions.items.wordUsageExamplesMax
+            },
+            on: { change: _vm.featureOptionChanged }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("setting", {
+        attrs: {
+          classes: ["alpheios-feature-options-item"],
+          data: _vm.featureOptions.items.enableLemmaTranslations
         },
         on: { change: _vm.featureOptionChanged }
       }),
@@ -30661,39 +32463,7 @@ var render = function() {
       _c("setting", {
         attrs: {
           classes: ["alpheios-feature-options-item"],
-          data: _vm.settings.featureOptions.items.wordUsageExamplesON
-        },
-        on: { change: _vm.featureOptionChanged }
-      }),
-      _vm._v(" "),
-      _c("setting", {
-        attrs: {
-          classes: ["alpheios-feature-options-item"],
-          data: _vm.settings.featureOptions.items.wordUsageExamplesAuthMax
-        },
-        on: { change: _vm.featureOptionChanged }
-      }),
-      _vm._v(" "),
-      _c("setting", {
-        attrs: {
-          classes: ["alpheios-feature-options-item"],
-          data: _vm.settings.featureOptions.items.wordUsageExamplesMax
-        },
-        on: { change: _vm.featureOptionChanged }
-      }),
-      _vm._v(" "),
-      _c("setting", {
-        attrs: {
-          classes: ["alpheios-feature-options-item"],
-          data: _vm.settings.featureOptions.items.enableLemmaTranslations
-        },
-        on: { change: _vm.featureOptionChanged }
-      }),
-      _vm._v(" "),
-      _c("setting", {
-        attrs: {
-          classes: ["alpheios-feature-options-item"],
-          data: _vm.settings.featureOptions.items.locale
+          data: _vm.featureOptions.items.locale
         },
         on: { change: _vm.featureOptionChanged }
       })
@@ -30737,10 +32507,10 @@ var render = function() {
         _c(
           "button",
           {
-            class: { active: _vm.activeButton === 12 },
+            class: { active: _vm.activeButton === "12" },
             on: {
               click: function($event) {
-                return _vm.changeFontSize(12)
+                return _vm.changeFontSize("12")
               }
             }
           },
@@ -30756,10 +32526,10 @@ var render = function() {
         _c(
           "button",
           {
-            class: { active: _vm.activeButton === 16 },
+            class: { active: _vm.activeButton === "16" },
             on: {
               click: function($event) {
-                return _vm.changeFontSize(16)
+                return _vm.changeFontSize("16")
               }
             }
           },
@@ -30775,10 +32545,10 @@ var render = function() {
         _c(
           "button",
           {
-            class: { active: _vm.activeButton === 20 },
+            class: { active: _vm.activeButton === "20" },
             on: {
               click: function($event) {
-                return _vm.changeFontSize(20)
+                return _vm.changeFontSize("20")
               }
             }
           },
@@ -33551,7 +35321,29 @@ var render = function() {
     _c(
       "div",
       { staticClass: "alpheios-info__versiontext alpheios-text__smallest" },
-      [_vm._v(_vm._s(_vm.app.name) + " " + _vm._s(_vm.app.version) + "\n  ")]
+      [
+        _vm._v(
+          "\n    " +
+            _vm._s(_vm.app.name) +
+            " " +
+            _vm._s(_vm.app.version) +
+            "\n  "
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "alpheios-info__versiontext alpheios-text__smallest" },
+      [
+        _vm._v(
+          "\n    " +
+            _vm._s(_vm.app.libName) +
+            " " +
+            _vm._s(_vm.app.libVersion) +
+            "\n  "
+        )
+      ]
     ),
     _vm._v(" "),
     _c(
@@ -34658,6 +36450,12 @@ var render = function() {
         }
       ],
       staticClass: "alpheios-action-panel alpheios-content",
+      class: {
+        "alpheios-action-panel--lookup-visible":
+          _vm.$store.state.actionPanel.showLookup,
+        "alpheios-action-panel--nav-visible":
+          _vm.$store.state.actionPanel.showNav
+      },
       style: _vm.componentStyles,
       attrs: { id: _vm.config.rootElementId }
     },
@@ -34674,7 +36472,17 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "alpheios-action-panel__lookup-cont" },
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.$store.state.actionPanel.showLookup,
+              expression: "$store.state.actionPanel.showLookup"
+            }
+          ],
+          staticClass: "alpheios-action-panel__lookup-cont"
+        },
         [
           _c("lookup", {
             staticClass: "alpheios-action-panel__lookup",
@@ -34698,7 +36506,17 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "alpheios-action-panel__nav-cont" },
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.$store.state.actionPanel.showNav,
+              expression: "$store.state.actionPanel.showNav"
+            }
+          ],
+          staticClass: "alpheios-action-panel__nav-cont"
+        },
         [
           _c(
             "alph-tooltip",
@@ -35367,11 +37185,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value:
-                    this.settings.uiOptions.items.verboseMode.currentValue ===
-                    "verbose",
-                  expression:
-                    "this.settings.uiOptions.items.verboseMode.currentValue === `verbose`"
+                  value: this.settings.verboseMode(),
+                  expression: "this.settings.verboseMode()"
                 }
               ],
               staticClass: "alpheios-navbuttons__btn",
@@ -35775,11 +37590,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value:
-                    _vm.settings.uiOptions.items.verboseMode.currentValue ===
-                    "verbose",
-                  expression:
-                    "settings.uiOptions.items.verboseMode.currentValue === `verbose`"
+                  value: this.settings.verboseMode(),
+                  expression: "this.settings.verboseMode()"
                 }
               ],
               attrs: {
@@ -35866,7 +37678,7 @@ var render = function() {
           ],
           attrs: {
             classes: ["alpheios-notification-area__control"],
-            data: _vm.settings.featureOptions.items.preferredLanguage,
+            data: _vm.settings.getFeatureOptions().items.preferredLanguage,
             "show-title": false
           },
           on: { change: _vm.featureOptionChanged }
@@ -36858,11 +38670,11 @@ var render = function() {
             attrs: { "data-alpheios-ignore": "all" }
           },
           [
-            _c("ui-settings"),
+            _c("ui-settings", { key: _vm.uiSettingsKey }),
             _vm._v(" "),
-            _c("feature-settings"),
+            _c("feature-settings", { key: _vm.featureSettingsKey }),
             _vm._v(" "),
-            _c("resource-settings"),
+            _c("resource-settings", { key: _vm.resourceSettingsKey }),
             _vm._v(" "),
             _c("div", [
               _c(
@@ -37267,17 +39079,17 @@ var render = function() {
             attrs: { "data-alpheios-ignore": "all" }
           },
           [
-            _c("ui-settings"),
+            _c("ui-settings", { key: _vm.uiSettingsKey }),
             _vm._v(" "),
-            _c("feature-settings"),
+            _c("feature-settings", { key: _vm.featureSettingsKey }),
             _vm._v(" "),
-            _c("resource-settings"),
+            _c("resource-settings", { key: _vm.resourceSettingsKey }),
             _vm._v(" "),
             _c("div", [
               _c(
                 "button",
                 {
-                  staticClass: "alpheios-button-primary",
+                  staticClass: "alpheios-button-primary alpheios-reset-button",
                   on: { click: _vm.resetAllOptions }
                 },
                 [
@@ -37428,15 +39240,17 @@ var render = function() {
               [
                 _c(
                   "div",
-                  { staticClass: "alpheios-popup__toolbar-top__btn" },
+                  {
+                    staticClass: "alpheios-popup__toolbar-top__btn",
+                    on: {
+                      click: function($event) {
+                        return _vm.ui.showPanelTab("definitions")
+                      }
+                    }
+                  },
                   [
                     _c("definitions-icon", {
-                      staticClass: "alpheios-navbuttons__icon",
-                      on: {
-                        click: function($event) {
-                          return _vm.ui.showPanelTab("definitions")
-                        }
-                      }
+                      staticClass: "alpheios-navbuttons__icon"
                     })
                   ],
                   1
@@ -37463,15 +39277,17 @@ var render = function() {
               [
                 _c(
                   "div",
-                  { staticClass: "alpheios-popup__toolbar-top__btn" },
+                  {
+                    staticClass: "alpheios-popup__toolbar-top__btn",
+                    on: {
+                      click: function($event) {
+                        return _vm.ui.showPanelTab("inflections")
+                      }
+                    }
+                  },
                   [
                     _c("inflections-icon", {
-                      staticClass: "alpheios-navbuttons__icon",
-                      on: {
-                        click: function($event) {
-                          return _vm.ui.showPanelTab("inflections")
-                        }
-                      }
+                      staticClass: "alpheios-navbuttons__icon"
                     })
                   ],
                   1
@@ -37498,15 +39314,17 @@ var render = function() {
               [
                 _c(
                   "div",
-                  { staticClass: "alpheios-popup__toolbar-top__btn" },
+                  {
+                    staticClass: "alpheios-popup__toolbar-top__btn",
+                    on: {
+                      click: function($event) {
+                        return _vm.ui.showPanelTab("wordUsage")
+                      }
+                    }
+                  },
                   [
                     _c("word-usage-icon", {
-                      staticClass: "alpheios-navbuttons__icon",
-                      on: {
-                        click: function($event) {
-                          return _vm.ui.showPanelTab("wordUsage")
-                        }
-                      }
+                      staticClass: "alpheios-navbuttons__icon"
                     })
                   ],
                   1
@@ -37528,6 +39346,11 @@ var render = function() {
                 attrs: {
                   tooltipText: _vm.l10n.getText("TOOLTIP_TREEBANK"),
                   tooltipDirection: "bottom-wide"
+                },
+                on: {
+                  click: function($event) {
+                    return _vm.ui.showPanelTab("treebank")
+                  }
                 }
               },
               [
@@ -37536,12 +39359,7 @@ var render = function() {
                   { staticClass: "alpheios-popup__toolbar-top__btn" },
                   [
                     _c("treebank-icon", {
-                      staticClass: "alpheios-navbuttons__icon",
-                      on: {
-                        click: function($event) {
-                          return _vm.ui.showPanelTab("treebank")
-                        }
-                      }
+                      staticClass: "alpheios-navbuttons__icon"
                     })
                   ],
                   1
@@ -37623,20 +39441,31 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "alpheios-popup__content" }, [
-          _vm.$store.getters["app/lexicalRequestInProgress"] && !_vm.noLanguage
-            ? _c(
-                "div",
-                { staticClass: "alpheios-popup__definitions--placeholder" },
-                [
-                  _c("progress-bar", {
-                    attrs: {
-                      text: _vm.l10n.getText("PLACEHOLDER_LEX_DATA_LOADING")
-                    }
-                  })
-                ],
-                1
-              )
-            : _vm._e(),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    _vm.$store.getters["app/lexicalRequestInProgress"] &&
+                    !_vm.noLanguage,
+                  expression:
+                    "$store.getters['app/lexicalRequestInProgress'] && !noLanguage"
+                }
+              ],
+              staticClass: "alpheios-popup__definitions--placeholder"
+            },
+            [
+              _c("progress-bar", {
+                attrs: {
+                  text: _vm.l10n.getText("PLACEHOLDER_LEX_DATA_LOADING")
+                }
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "div",
@@ -38216,7 +40045,7 @@ var render = function() {
       _c("setting", {
         attrs: {
           classes: ["alpheios-ui-options__item"],
-          data: _vm.settings.uiOptions.items.panelPosition
+          data: _vm.uiOptions.items.panelPosition
         },
         on: { change: _vm.uiOptionChanged }
       }),
@@ -38224,15 +40053,7 @@ var render = function() {
       _c("setting", {
         attrs: {
           classes: ["alpheios-ui-options__item"],
-          data: _vm.settings.uiOptions.items.popupPosition
-        },
-        on: { change: _vm.uiOptionChanged }
-      }),
-      _vm._v(" "),
-      _c("setting", {
-        attrs: {
-          classes: ["alpheios-ui-options__item"],
-          data: _vm.settings.uiOptions.items.verboseMode
+          data: _vm.uiOptions.items.verboseMode
         },
         on: { change: _vm.uiOptionChanged }
       })
@@ -39067,8 +40888,8 @@ var render = function() {
               {
                 name: "show",
                 rawName: "v-show",
-                value: _vm.hasFilterPanel,
-                expression: "hasFilterPanel"
+                value: _vm.hasSeveralItems,
+                expression: "hasSeveralItems"
               }
             ],
             attrs: {
@@ -39081,6 +40902,25 @@ var render = function() {
               changedFilterBy: _vm.changedFilterBy,
               clearClickedLemma: _vm.clearClickedLemma
             }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "alpheios-wordlist-sorting-panel" },
+        [
+          _c("word-sorting-panel", {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.hasSeveralItems,
+                expression: "hasSeveralItems"
+              }
+            ],
+            on: { changeSorting: _vm.changeSorting }
           })
         ],
         1
@@ -39165,6 +41005,75 @@ var render = function() {
           1
         )
       : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-list/word-sorting-panel.vue?vue&type=template&id=28fb43f8&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/word-list/word-sorting-panel.vue?vue&type=template&id=28fb43f8& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "alpheios-wordlist-sorting" }, [
+    _c("div", {
+      staticClass: "alpheios-worditem__data alpheios-worditem__icon"
+    }),
+    _vm._v(" "),
+    _c("div", {
+      staticClass: "alpheios-worditem__data alpheios-worditem__icon"
+    }),
+    _vm._v(" "),
+    _c("div", {
+      staticClass: "alpheios-worditem__data alpheios-worditem__icon"
+    }),
+    _vm._v(" "),
+    _c("div", {
+      staticClass: "alpheios-worditem__data alpheios-worditem__icon"
+    }),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "alpheios-worditem__data alpheios-worditem__targetWord" },
+      [
+        _c("sort-asc-icon", {
+          class: {
+            "alpheios-icon-active": _vm.sortingState["targetWord"] === "asc"
+          },
+          on: {
+            click: function($event) {
+              return _vm.changeSort("targetWord", "asc")
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("sort-desc-icon", {
+          class: {
+            "alpheios-icon-active": _vm.sortingState["targetWord"] === "desc"
+          },
+          on: {
+            click: function($event) {
+              return _vm.changeSort("targetWord", "desc")
+            }
+          }
+        })
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -39528,7 +41437,33 @@ var render = function() {
               },
               [_vm._v(" (" + _vm._s(_vm.collapsedHeaderTitle) + ")")]
             )
-          : _vm._e()
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.hasSelectedAuthor
+          ? _c("div", { staticClass: "alpheios_word_usage_hint" }, [
+              _vm._v(
+                "\n      " +
+                  _vm._s(
+                    _vm.l10n.getText("WORDUSAGE_HINT_FOCUS_SEARCH", {
+                      maxResults: _vm.settings.getFeatureOptions().items
+                        .wordUsageExamplesMax.currentValue
+                    })
+                  ) +
+                  "\n    "
+              )
+            ])
+          : _c("div", { staticClass: "alpheios_word_usage_hint" }, [
+              _vm._v(
+                "\n      " +
+                  _vm._s(
+                    _vm.l10n.getText("WORDUSAGE_HINT_INITIAL_SEARCH", {
+                      maxResults: _vm.settings.getFeatureOptions().items
+                        .wordUsageExamplesAuthMax.currentValue
+                    })
+                  ) +
+                  "\n    "
+              )
+            ])
       ]
     ),
     _vm._v(" "),
@@ -39541,7 +41476,7 @@ var render = function() {
       [
         _c("word-usage-examples-filters", {
           attrs: {
-            collapsedHeader: _vm.collapsedHeader,
+            collapsedHeader: _vm.finalCollapsedHeader,
             showHeader: _vm.showHeader
           },
           on: {
@@ -39554,7 +41489,7 @@ var render = function() {
         _c("word-usage-examples-sorting", {
           attrs: {
             showHeader: _vm.showHeader,
-            collapsedHeader: _vm.collapsedHeader,
+            collapsedHeader: _vm.finalCollapsedHeader,
             hasSelectedAuthor: _vm.hasSelectedAuthor,
             hasSelectedTextWork: _vm.hasSelectedTextWork,
             reloadSorting: _vm.reloadSorting
@@ -39576,17 +41511,70 @@ var render = function() {
                     "div",
                     {
                       staticClass:
-                        "alpheios-word-usage__examples-show-sources-btn alpheios-button-primary",
-                      attrs: { "data-alpheios-ignore": "all" },
-                      on: { click: _vm.changeShowDataSource }
+                        "alpheios-word-usage__examples-show-sources-cbx",
+                      attrs: { "data-alpheios-ignore": "all" }
                     },
                     [
-                      _vm._v(
-                        "\n        " +
-                          _vm._s(
-                            _vm.l10n.getText("WORDUSAGE_SHOW_SOURCE_LINKS")
-                          ) +
-                          "\n      "
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.showDataSource,
+                            expression: "showDataSource"
+                          }
+                        ],
+                        attrs: {
+                          id:
+                            "alpheios-word-usage-examples-show-sources-cbx-input",
+                          type: "checkbox"
+                        },
+                        domProps: {
+                          checked: Array.isArray(_vm.showDataSource)
+                            ? _vm._i(_vm.showDataSource, null) > -1
+                            : _vm.showDataSource
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.showDataSource,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  (_vm.showDataSource = $$a.concat([$$v]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.showDataSource = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.showDataSource = $$c
+                            }
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          attrs: {
+                            for:
+                              "alpheios-word-usage-examples-show-sources-cbx-input"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n          " +
+                              _vm._s(
+                                _vm.l10n.getText("WORDUSAGE_SHOW_SOURCE_LINKS")
+                              ) +
+                              "\n        "
+                          )
+                        ]
                       )
                     ]
                   ),
@@ -39659,10 +41647,46 @@ var render = function() {
                   )
                 ]
               : [
-                  _vm._v(
-                    "\n      " +
-                      _vm._s(_vm.l10n.getText("WORDUSAGE_NO_RESULTS")) +
-                      "\n    "
+                  _vm.selectedTextWork
+                    ? _c("div", [
+                        _vm._v(
+                          "\n        " +
+                            _vm._s(
+                              _vm.l10n.getText(
+                                "WORDUSAGE_HINT_AUTHOR_WORK_FOCUS_SEARCH_NONE",
+                                {
+                                  maxResults: _vm.settings.getFeatureOptions()
+                                    .items.wordUsageExamplesMax,
+                                  word: _vm.targetWord,
+                                  author: _vm.selectedAuthor.title(),
+                                  work: _vm.selectedTextWork.title()
+                                }
+                              )
+                            ) +
+                            "\n      "
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: !_vm.selectedTextWork,
+                          expression: "! selectedTextWork"
+                        }
+                      ]
+                    },
+                    [
+                      _vm._v(
+                        "\n      " +
+                          _vm._s(_vm.l10n.getText("WORDUSAGE_NO_RESULTS")) +
+                          "\n      "
+                      )
+                    ]
                   )
                 ]
           ],
@@ -49397,7 +51421,7 @@ module.exports = g;
 /*! exports provided: name, version, description, main, module, scripts, repository, author, license, bugs, homepage, devDependencies, peerDependencies, engines, jest, eslintConfig, eslintIgnore, dependencies, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"alpheios-components\",\"version\":\"1.1.0\",\"description\":\"Alpheios Components\",\"main\":\"dist/alpheios-components.min.js\",\"module\":\"src/plugin.js\",\"scripts\":{\"test\":\"eslint --fix src/**/*.js && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-lib\":\"eslint --fix src/**/*.js && jest tests/lib --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-components\":\"eslint --fix src/**/*.js && jest tests/vue --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-c\":\"eslint --fix src/**/*.js && jest tests/vue/components/word-usage-examples/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage\",\"test-a\":\"eslint --fix src/**/*.js && jest tests/lib/selection/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage\",\"build\":\"npm run build-safari && npm run build-regular\",\"build-regular\":\"eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue config.mjs\",\"build-safari\":\"eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue-postcss config-safari.mjs\",\"build-prod\":\"eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack production vue config.mjs\",\"build-dev\":\"eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development vue config.mjs\",\"code-analysis-prod\":\"node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue config.mjs --code-analysis\",\"code-analysis-dev\":\"node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development vue config.mjs --code-analysis\",\"lint\":\"eslint --fix src/**/*.js && eslint --fix-dry-run src/**/*.vue\"},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/alpheios-project/components.git\"},\"author\":\"The Alpheios Project, Ltd.\",\"license\":\"ISC\",\"bugs\":{\"url\":\"https://github.com/alpheios-project/components/issues\"},\"homepage\":\"https://github.com/alpheios-project/components#readme\",\"devDependencies\":{\"@babel/core\":\"^7.5.0\",\"@babel/plugin-proposal-object-rest-spread\":\"^7.5.1\",\"@babel/plugin-transform-runtime\":\"^7.5.0\",\"@babel/runtime\":\"^7.5.1\",\"@vue/test-utils\":\"^1.0.0-beta.29\",\"acorn\":\"^6.2.0\",\"alpheios-client-adapters\":\"github:alpheios-project/client-adapters\",\"alpheios-data-models\":\"github:alpheios-project/data-models\",\"alpheios-experience\":\"github:alpheios-project/experience\",\"alpheios-inflection-tables\":\"github:alpheios-project/inflection-tables\",\"alpheios-node-build\":\"github:alpheios-project/node-build\",\"alpheios-res-client\":\"github:alpheios-project/res-client\",\"alpheios-wordlist\":\"github:alpheios-project/wordlist\",\"autoprefixer\":\"^9.6.1\",\"babel-core\":\"^7.0.0-bridge.0\",\"babel-eslint\":\"^10.0.2\",\"bytes\":\"^3.1.0\",\"chalk\":\"^2.4.2\",\"coveralls\":\"^3.0.4\",\"css-loader\":\"^3.0.0\",\"dom-anchor-text-quote\":\"*\",\"element-closest\":\"^3.0.1\",\"eslint\":\"^6.0.1\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-plugin-import\":\"^2.18.0\",\"eslint-plugin-node\":\"^9.1.0\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"eslint-plugin-vue\":\"^5.2.3\",\"eslint-scope\":\"^4.0.3\",\"espree\":\"^6.0.0\",\"file-loader\":\"^4.0.0\",\"flush-promises\":\"^1.0.2\",\"html-loader\":\"^0.5.5\",\"html-loader-jest\":\"^0.2.1\",\"interactjs\":\"^1.4.12\",\"intl-messageformat\":\"^2.2.0\",\"jest\":\"^24.8.0\",\"jump.js\":\"^1.0.2\",\"mini-css-extract-plugin\":\"^0.7.0\",\"postcss-import\":\"^12.0.1\",\"postcss-loader\":\"^3.0.0\",\"postcss-safe-important\":\"^1.1.0\",\"postcss-scss\":\"^2.0.0\",\"raw-loader\":\"^3.0.0\",\"sass-loader\":\"^7.1.0\",\"shelljs\":\"^0.8.3\",\"sinon\":\"^7.3.2\",\"source-map-loader\":\"^0.2.4\",\"style-loader\":\"^0.23.1\",\"vue\":\"^2.6.10\",\"vue-eslint-parser\":\"^6.0.4\",\"vue-jest\":\"^3.0.4\",\"vue-loader\":\"^15.7.0\",\"vue-multiselect\":\"^2.1.6\",\"vue-style-loader\":\"^4.1.2\",\"vue-svg-loader\":\"^0.12.0\",\"vue-template-compiler\":\"^2.6.10\",\"vue-template-loader\":\"^1.0.0\",\"vuex\":\"^3.1.1\",\"webpack\":\"^4.35.3\",\"whatwg-fetch\":\"^3.0.0\",\"wrap-range-text\":\"^1.0.1\"},\"peerDependencies\":{},\"engines\":{\"node\":\">= 12.3.0\",\"npm\":\">= 6.9.0\"},\"jest\":{\"verbose\":true,\"testPathIgnorePatterns\":[\"<rootDir>/node_modules/\"],\"transform\":{\"^.+\\\\.htmlf$\":\"html-loader-jest\",\"^.+\\\\.jsx?$\":\"babel-jest\",\".*\\\\.(vue)$\":\"vue-jest\",\".*\\\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$\":\"<rootDir>/fileTransform.js\"},\"transformIgnorePatterns\":[\"!node_modules/alpheios-data-models/\"],\"moduleNameMapper\":{\"^@vue-runtime$\":\"vue/dist/vue.runtime.common.js\",\"^@[/](.+)\":\"<rootDir>/src/$1\",\"alpheios-morph-client\":\"<rootDir>/node_modules/alpheios-morph-client/dist/alpheios-morph-client.js\",\"alpheios-inflection-tables\":\"<rootDir>/node_modules/alpheios-inflection-tables/dist/alpheios-inflection-tables.js\"},\"moduleFileExtensions\":[\"js\",\"vue\"]},\"eslintConfig\":{\"extends\":[\"standard\",\"plugin:vue/essential\"],\"env\":{\"browser\":true,\"node\":true},\"parserOptions\":{\"parser\":\"babel-eslint\",\"ecmaVersion\":2019,\"sourceType\":\"module\",\"allowImportExportEverywhere\":true}},\"eslintIgnore\":[\"**/dist\",\"**/support\"],\"dependencies\":{}}");
+module.exports = JSON.parse("{\"name\":\"alpheios-components\",\"version\":\"1.2.0\",\"description\":\"Alpheios Components\",\"main\":\"dist/alpheios-components.min.js\",\"module\":\"src/plugin.js\",\"scripts\":{\"test\":\"eslint --fix src/**/*.js && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-lib\":\"eslint --fix src/**/*.js && jest tests/lib --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-components\":\"eslint --fix src/**/*.js && jest tests/vue --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-c\":\"eslint --fix src/**/*.js && jest tests/vue/components/word-usage-examples/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage\",\"test-a\":\"eslint --fix src/**/*.js && jest tests/lib/options/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage\",\"test-s\":\"eslint --fix src/**/*.js && AUTH_TOKEN=alpheiosMockUserIdlP0DWnmNxe ENDPOINT='https://8wkx9pxc55.execute-api.us-east-2.amazonaws.com/prod/settings' jest tests/lib/options --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"build\":\"npm run build-safari && npm run build-regular\",\"build-regular\":\"eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue config.mjs\",\"build-safari\":\"eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue-postcss config-safari.mjs\",\"build-prod\":\"eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack production vue config.mjs\",\"build-dev\":\"eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development vue config.mjs\",\"code-analysis-prod\":\"node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue config.mjs --code-analysis\",\"code-analysis-dev\":\"node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development vue config.mjs --code-analysis\",\"lint\":\"eslint --fix src/**/*.js && eslint --fix-dry-run src/**/*.vue\"},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/alpheios-project/components.git\"},\"author\":\"The Alpheios Project, Ltd.\",\"license\":\"ISC\",\"bugs\":{\"url\":\"https://github.com/alpheios-project/components/issues\"},\"homepage\":\"https://github.com/alpheios-project/components#readme\",\"devDependencies\":{\"@babel/core\":\"^7.5.0\",\"@babel/plugin-proposal-object-rest-spread\":\"^7.5.1\",\"@babel/plugin-transform-runtime\":\"^7.5.0\",\"@babel/runtime\":\"^7.5.1\",\"@vue/test-utils\":\"^1.0.0-beta.29\",\"acorn\":\"^6.2.0\",\"alpheios-client-adapters\":\"github:alpheios-project/client-adapters\",\"alpheios-data-models\":\"github:alpheios-project/data-models\",\"alpheios-experience\":\"github:alpheios-project/experience\",\"alpheios-inflection-tables\":\"github:alpheios-project/inflection-tables\",\"alpheios-node-build\":\"github:alpheios-project/node-build\",\"alpheios-res-client\":\"github:alpheios-project/res-client\",\"alpheios-wordlist\":\"github:alpheios-project/wordlist\",\"axios\":\"^0.18.0\",\"autoprefixer\":\"^9.6.1\",\"babel-core\":\"^7.0.0-bridge.0\",\"babel-eslint\":\"^10.0.2\",\"bytes\":\"^3.1.0\",\"chalk\":\"^2.4.2\",\"coveralls\":\"^3.0.4\",\"css-loader\":\"^3.0.0\",\"dom-anchor-text-quote\":\"*\",\"element-closest\":\"^3.0.1\",\"eslint\":\"^6.0.1\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-plugin-import\":\"^2.18.0\",\"eslint-plugin-node\":\"^9.1.0\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"eslint-plugin-vue\":\"^5.2.3\",\"eslint-scope\":\"^4.0.3\",\"espree\":\"^6.0.0\",\"file-loader\":\"^4.0.0\",\"flush-promises\":\"^1.0.2\",\"html-loader\":\"^0.5.5\",\"html-loader-jest\":\"^0.2.1\",\"interactjs\":\"^1.4.12\",\"intl-messageformat\":\"^2.2.0\",\"jest\":\"^24.8.0\",\"jump.js\":\"^1.0.2\",\"mini-css-extract-plugin\":\"^0.7.0\",\"postcss-import\":\"^12.0.1\",\"postcss-loader\":\"^3.0.0\",\"postcss-safe-important\":\"^1.1.0\",\"postcss-scss\":\"^2.0.0\",\"raw-loader\":\"^3.0.0\",\"sass-loader\":\"^7.1.0\",\"shelljs\":\"^0.8.3\",\"sinon\":\"^7.3.2\",\"source-map-loader\":\"^0.2.4\",\"style-loader\":\"^0.23.1\",\"vue\":\"^2.6.10\",\"vue-eslint-parser\":\"^6.0.4\",\"vue-jest\":\"^3.0.4\",\"vue-loader\":\"^15.7.0\",\"vue-multiselect\":\"^2.1.6\",\"vue-style-loader\":\"^4.1.2\",\"vue-svg-loader\":\"^0.12.0\",\"vue-template-compiler\":\"^2.6.10\",\"vue-template-loader\":\"^1.0.0\",\"vuex\":\"^3.1.1\",\"webpack\":\"^4.35.3\",\"whatwg-fetch\":\"^3.0.0\",\"wrap-range-text\":\"^1.0.1\"},\"peerDependencies\":{},\"engines\":{\"node\":\">= 12.3.0\",\"npm\":\">= 6.9.0\"},\"jest\":{\"verbose\":true,\"testPathIgnorePatterns\":[\"<rootDir>/node_modules/\"],\"transform\":{\"^.+\\\\.htmlf$\":\"html-loader-jest\",\"^.+\\\\.jsx?$\":\"babel-jest\",\".*\\\\.(vue)$\":\"vue-jest\",\".*\\\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$\":\"<rootDir>/fileTransform.js\"},\"transformIgnorePatterns\":[\"!node_modules/alpheios-data-models/\"],\"moduleNameMapper\":{\"^@vue-runtime$\":\"vue/dist/vue.runtime.common.js\",\"^@[/](.+)\":\"<rootDir>/src/$1\",\"alpheios-morph-client\":\"<rootDir>/node_modules/alpheios-morph-client/dist/alpheios-morph-client.js\",\"alpheios-inflection-tables\":\"<rootDir>/node_modules/alpheios-inflection-tables/dist/alpheios-inflection-tables.js\"},\"moduleFileExtensions\":[\"js\",\"json\",\"vue\"]},\"eslintConfig\":{\"extends\":[\"standard\",\"plugin:vue/essential\"],\"env\":{\"browser\":true,\"node\":true},\"parserOptions\":{\"parser\":\"babel-eslint\",\"ecmaVersion\":2019,\"sourceType\":\"module\",\"allowImportExportEverywhere\":true}},\"eslintIgnore\":[\"**/dist\",\"**/support\"],\"dependencies\":{}}");
 
 /***/ }),
 
@@ -50233,7 +52257,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"xmlns":"http://www.w3.org/2000/svg","viewBox":"0 0 92 100"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"d":"M73.1 6.1v88h-67v-88h67m1-6h-69c-2.8 0-5 2.2-5 5v90c0 2.8 2.2 5 5 5h69c2.8 0 5-2.2 5-5v-90c0-2.8-2.3-5-5-5zm18 28v-18c0-2.8-2.2-5-5-5h-5v28h5c2.7 0 5-2.3 5-5zm0 31v-18c0-2.8-2.2-5-5-5h-5v28h5c2.7 0 5-2.3 5-5zm0 31v-18c0-2.8-2.2-5-5-5h-5v28h5c2.7 0 5-2.3 5-5zM54.9 45.4c1-.4 1.9-.8 2.8-1.1 2.7-1.1 4.8-2 5.9-2.3.5-.1.8.2 1 .6.1.5-.2.8-.6 1-1 .2-3.2 1.1-5.7 2.2-1.1.5-2.3.9-3.4 1.4v-1.8zm-.4 5.3c-.1.6-.2 1.2-.4 1.8 4.2-1 8.4-2.2 11.3-4.1.4-.3.5-.8.2-1.1-.3-.4-.8-.5-1.1-.2-2.5 1.6-6.2 2.7-10 3.6zm-6.2 12.4l-.5.5c-.3.3-.6.5-.9.8.1.4.2.7.2 1.1.1.4.4.6.8.6h.2c.5-.2.7-.5.6-1-.1-.5-.3-1.2-.4-2zm2.8-3.6l-1.2 1.8c.2.9.4 1.7.6 2.4.1.4.4.6.8.6 0 0 .1 0 .1.2.5-.2.7-.5.6-1-.3-1.1-.6-2.5-.9-4zm17.2-8.6c-.3-.3-.8-.3-1.1 0-2.4 2.6-8.2 4-12.9 4.8l-.3-1.2c-.1-.2-.1-.5-.2-.7-.4 1.3-1 2.6-1.6 3.9.3 0 .6-.1.9-.1.3 1.4.7 2.6 1.1 3.6.2.3.5.5.8.5.1 0 .2 0 .3-.1.4-.2.6-.6.5-1-.4-1-.7-2.1-1-3.3 5-.8 11-2.3 13.7-5.3.1-.3.1-.8-.2-1.1zm-15.7 5c-.1-.4-.2-.7-.2-1.1-.2-.6-.3-1.3-.5-2-.6.1-1.2.2-1.7.4-.2 0-.3.1-.5.1.3.9.5 1.9.7 2.8.7 0 1.4-.1 2.2-.2zm-2.7-4.2c.5-.1 1.1-.2 1.6-.4-.2-.9-.5-1.7-.7-2.6-.7.3-1.4.5-2.1.8.2.7.5 1.5.7 2.2.1.1.3 0 .5 0zm-1.6 4.7h.6c-.2-.9-.4-1.8-.6-2.8-.6.1-1.3.3-1.9.4.2.8.4 1.7.5 2.5.5-.1 1-.1 1.4-.1zm5.1-3.8c.1.4.2.8.3 1.1.1-.4.3-.9.4-1.3-.2.1-.4.1-.7.2zm-5.5-.5c-.2-.7-.4-1.4-.6-2l-1.8.6c.2.6.3 1.2.5 1.9.6-.2 1.3-.4 1.9-.5zm-6.3-11.8c3.1.9 5.1 3.9 6.6 7.7.7-.3 1.4-.5 2.2-.8-1.3-4-3.1-7.4-5.9-8.5-1.5-.5-3.5-.8-5.7-.8-1.6 0-3.4.2-5.1.5-4.3.8-7.7 2.4-9 4.3-1.4 2.1-1.6 5.4-.6 8.6s2.9 5.6 5.3 6.5c3.1 1.2 8.9.2 13.6-.6.8-.2 1.6-.3 2.4-.4-.2-.8-.3-1.5-.5-2.3-6.4 1.7-14.2 3.6-17.4-4.3-1.3-3.3-.2-5.6.9-6.8 3-3.5 9.7-4 13.2-3.1zm-3.1 4.4c-1.5 0-3.2.5-4.2 1.4-1.2 1-1.3 2.2-.3 3.6 1.2 1.6 5.1 1.1 9.4-.2-.5-1.7-1.1-2.9-1.8-3.6-.7-.8-1.8-1.2-3.1-1.2zm2.7-3c-1.1-.2-2.1-.4-3.2-.4-3.7 0-7.2 1.5-8.5 2.9-1.2 1.4-1.4 3.1-.6 5.2 2.6 6.6 9.1 5 15.5 3.4-.2-.6-.3-1.2-.5-1.8-5.4 1.5-9.5 1.8-11.2-.5-1.5-2-1.4-4.2.5-5.7 2.4-2 7.3-2.5 9.6-.2.8.8 1.5 2.4 2.1 4.3.6-.2 1.2-.4 1.7-.6-1.2-3.2-2.9-5.9-5.4-6.6zm5 19.4c-.2-.8-.3-1.7-.5-2.6-.8.1-1.6.2-2.4.4-5.1.9-11 1.9-14.4.5-2.7-1.1-5.1-3.9-6.2-7.5-1.1-3.7-.8-7.5.8-10 1.5-2.3 5.1-4.2 10-5.1 4.5-.8 8.8-.6 11.6.5 3.3 1.3 5.3 5.1 6.8 9.4 1.1-.4 2.2-.8 3.2-1.2-.5-10.2-8.6-17.9-21.5-15.8-8.3 1.4-15.7 6.6-17.5 14.7C12.6 60 35.3 75.3 48 63.7c-.3.3-.6.5-.9.8-.4-1-.7-2.2-.9-3.4zm3.3-1.7c-.1-.5-.2-.9-.3-1.4-.3 0-.5.1-.8.1-.4 0-.8.1-1.2.1.2.9.3 1.8.5 2.6.2.9.3 1.7.5 2.4l-.5.5c.7-.7 1.5-1.5 2.1-2.3 0-.7-.2-1.3-.3-2zm1.2-1.6c.1.5.2.9.3 1.4 0 .1 0 .2.1.3-.1.1-.2.3-.3.4.4-.6.8-1.3 1.1-2 .1-.1.1-.2.2-.3-.5.1-.9.1-1.4.2zm1.6-9.6c.3.9.5 1.9.8 2.8l1.5-.3c.2-1.2.4-2.3.4-3.5-1 .3-1.9.7-2.7 1z","fill":"#fff"}})])
+            children.concat([_c('path',{attrs:{"d":"M73.1 6.1v88h-67v-88h67m1-6h-69c-2.8 0-5 2.2-5 5v90c0 2.8 2.2 5 5 5h69c2.8 0 5-2.2 5-5v-90c0-2.8-2.3-5-5-5zm18 28v-18c0-2.8-2.2-5-5-5h-5v28h5c2.7 0 5-2.3 5-5zm0 31v-18c0-2.8-2.2-5-5-5h-5v28h5c2.7 0 5-2.3 5-5zm0 31v-18c0-2.8-2.2-5-5-5h-5v28h5c2.7 0 5-2.3 5-5zM54.9 45.4c1-.4 1.9-.8 2.8-1.1 2.7-1.1 4.8-2 5.9-2.3.5-.1.8.2 1 .6.1.5-.2.8-.6 1-1 .2-3.2 1.1-5.7 2.2-1.1.5-2.3.9-3.4 1.4v-1.8zm-.4 5.3c-.1.6-.2 1.2-.4 1.8 4.2-1 8.4-2.2 11.3-4.1.4-.3.5-.8.2-1.1-.3-.4-.8-.5-1.1-.2-2.5 1.6-6.2 2.7-10 3.6zm-6.2 12.4l-.5.5c-.3.3-.6.5-.9.8.1.4.2.7.2 1.1.1.4.4.6.8.6h.2c.5-.2.7-.5.6-1-.1-.5-.3-1.2-.4-2zm2.8-3.6l-1.2 1.8c.2.9.4 1.7.6 2.4.1.4.4.6.8.6 0 0 .1 0 .1.2.5-.2.7-.5.6-1-.3-1.1-.6-2.5-.9-4zm17.2-8.6c-.3-.3-.8-.3-1.1 0-2.4 2.6-8.2 4-12.9 4.8l-.3-1.2c-.1-.2-.1-.5-.2-.7-.4 1.3-1 2.6-1.6 3.9.3 0 .6-.1.9-.1.3 1.4.7 2.6 1.1 3.6.2.3.5.5.8.5.1 0 .2 0 .3-.1.4-.2.6-.6.5-1-.4-1-.7-2.1-1-3.3 5-.8 11-2.3 13.7-5.3.1-.3.1-.8-.2-1.1zm-15.7 5c-.1-.4-.2-.7-.2-1.1-.2-.6-.3-1.3-.5-2-.6.1-1.2.2-1.7.4-.2 0-.3.1-.5.1.3.9.5 1.9.7 2.8.7 0 1.4-.1 2.2-.2zm-2.7-4.2c.5-.1 1.1-.2 1.6-.4-.2-.9-.5-1.7-.7-2.6-.7.3-1.4.5-2.1.8.2.7.5 1.5.7 2.2.1.1.3 0 .5 0zm-1.6 4.7h.6c-.2-.9-.4-1.8-.6-2.8-.6.1-1.3.3-1.9.4.2.8.4 1.7.5 2.5.5-.1 1-.1 1.4-.1zm5.1-3.8c.1.4.2.8.3 1.1.1-.4.3-.9.4-1.3-.2.1-.4.1-.7.2zm-5.5-.5c-.2-.7-.4-1.4-.6-2l-1.8.6c.2.6.3 1.2.5 1.9.6-.2 1.3-.4 1.9-.5zm-6.3-11.8c3.1.9 5.1 3.9 6.6 7.7.7-.3 1.4-.5 2.2-.8-1.3-4-3.1-7.4-5.9-8.5-1.5-.5-3.5-.8-5.7-.8-1.6 0-3.4.2-5.1.5-4.3.8-7.7 2.4-9 4.3-1.4 2.1-1.6 5.4-.6 8.6s2.9 5.6 5.3 6.5c3.1 1.2 8.9.2 13.6-.6.8-.2 1.6-.3 2.4-.4-.2-.8-.3-1.5-.5-2.3-6.4 1.7-14.2 3.6-17.4-4.3-1.3-3.3-.2-5.6.9-6.8 3-3.5 9.7-4 13.2-3.1zm-3.1 4.4c-1.5 0-3.2.5-4.2 1.4-1.2 1-1.3 2.2-.3 3.6 1.2 1.6 5.1 1.1 9.4-.2-.5-1.7-1.1-2.9-1.8-3.6-.7-.8-1.8-1.2-3.1-1.2zm2.7-3c-1.1-.2-2.1-.4-3.2-.4-3.7 0-7.2 1.5-8.5 2.9-1.2 1.4-1.4 3.1-.6 5.2 2.6 6.6 9.1 5 15.5 3.4-.2-.6-.3-1.2-.5-1.8-5.4 1.5-9.5 1.8-11.2-.5-1.5-2-1.4-4.2.5-5.7 2.4-2 7.3-2.5 9.6-.2.8.8 1.5 2.4 2.1 4.3.6-.2 1.2-.4 1.7-.6-1.2-3.2-2.9-5.9-5.4-6.6zm5 19.4c-.2-.8-.3-1.7-.5-2.6-.8.1-1.6.2-2.4.4-5.1.9-11 1.9-14.4.5-2.7-1.1-5.1-3.9-6.2-7.5-1.1-3.7-.8-7.5.8-10 1.5-2.3 5.1-4.2 10-5.1 4.5-.8 8.8-.6 11.6.5 3.3 1.3 5.3 5.1 6.8 9.4 1.1-.4 2.2-.8 3.2-1.2-.5-10.2-8.6-17.9-21.5-15.8-8.3 1.4-15.7 6.6-17.5 14.7C12.6 60 35.3 75.3 48 63.7c-.3.3-.6.5-.9.8-.4-1-.7-2.2-.9-3.4zm3.3-1.7c-.1-.5-.2-.9-.3-1.4-.3 0-.5.1-.8.1-.4 0-.8.1-1.2.1.2.9.3 1.8.5 2.6.2.9.3 1.7.5 2.4l-.5.5c.7-.7 1.5-1.5 2.1-2.3 0-.7-.2-1.3-.3-2zm1.2-1.6c.1.5.2.9.3 1.4 0 .1 0 .2.1.3-.1.1-.2.3-.3.4.4-.6.8-1.3 1.1-2 .1-.1.1-.2.2-.3-.5.1-.9.1-1.4.2zm1.6-9.6c.3.9.5 1.9.8 2.8l1.5-.3c.2-1.2.4-2.3.4-3.5-1 .3-1.9.7-2.7 1z"}})])
           )
         }
       });
@@ -50314,6 +52338,86 @@ __webpack_require__.r(__webpack_exports__);
               ...rest,
             },
             children.concat([_c('path',{attrs:{"d":"M1792 1248v320q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960H960v192h96q40 0 68 28t28 68v320q0 40-28 68t-68 28H736q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960H320v192h96q40 0 68 28t28 68v320q0 40-28 68t-68 28H96q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h96V960q0-52 38-90t90-38h512V640h-96q-40 0-68-28t-28-68V224q0-40 28-68t68-28h320q40 0 68 28t28 68v320q0 40-28 68t-68 28h-96v192h512q52 0 90 38t38 90v192h96q40 0 68 28t28 68z"}})])
+          )
+        }
+      });
+    
+
+/***/ }),
+
+/***/ "./images/inline-icons/sort-asc-icon.svg":
+/*!***********************************************!*\
+  !*** ./images/inline-icons/sort-asc-icon.svg ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+      /* harmony default export */ __webpack_exports__["default"] = ({
+        functional: true,
+        render(_h, _vm) {
+          const { _c, _v, data, children = [] } = _vm;
+
+          const {
+            class: classNames,
+            staticClass,
+            style,
+            staticStyle,
+            attrs = {},
+            ...rest
+          } = data;
+
+          return _c(
+            'svg',
+            {
+              class: [classNames,staticClass],
+              style: [style,staticStyle],
+              attrs: Object.assign({"viewBox":"0 0 16 22","xmlns":"http://www.w3.org/2000/svg"}, attrs),
+              ...rest,
+            },
+            children.concat([_c('path',{attrs:{"d":"M10.208 10.089H7.977L7.33 8.067H4.098l-.64 2.022h-2.22l3.31-9.09h2.427zM6.861 6.495L5.885 3.44q-.108-.342-.152-.818h-.05q-.032.4-.16.792l-.988 3.081zM9.383 21h-7.32v-1.179l4.658-6.244H2.398v-1.666h6.973v1.147l-4.558 6.281h4.57zM12.413 1.682V14.23L11.01 12.83l1.877 6.564 1.874-6.564-1.405 1.405V1.682z"}})])
+          )
+        }
+      });
+    
+
+/***/ }),
+
+/***/ "./images/inline-icons/sort-desc-icon.svg":
+/*!************************************************!*\
+  !*** ./images/inline-icons/sort-desc-icon.svg ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+      /* harmony default export */ __webpack_exports__["default"] = ({
+        functional: true,
+        render(_h, _vm) {
+          const { _c, _v, data, children = [] } = _vm;
+
+          const {
+            class: classNames,
+            staticClass,
+            style,
+            staticStyle,
+            attrs = {},
+            ...rest
+          } = data;
+
+          return _c(
+            'svg',
+            {
+              class: [classNames,staticClass],
+              style: [style,staticStyle],
+              attrs: Object.assign({"viewBox":"0 0 16 22","xmlns":"http://www.w3.org/2000/svg"}, attrs),
+              ...rest,
+            },
+            children.concat([_c('path',{attrs:{"d":"M10.148 21H7.909l-.648-2.029H4.017L3.374 21H1.148l3.32-9.12h2.436zM6.79 17.394l-.98-3.066q-.107-.343-.151-.82h-.052q-.037.4-.159.795l-.992 3.09zM9.147 10.121H1.801V8.938l4.675-6.265H2.138V1.001h6.996v1.15L4.561 8.456h4.586zM12.501 1.663v12.593l-1.414-1.412 1.414 4.946c-.248-.924.19.66.2.698l.27.943.268-.943c.65-2.423.027-.05.2-.7l1.413-4.944-1.412 1.412V1.663z"}})])
           )
         }
       });
@@ -50713,8 +52817,9 @@ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22___names
 /* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
 /* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
 /* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @/lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
-/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
-/* harmony import */ var _lib_utility_query_params_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @/lib/utility/query-params.js */ "./lib/utility/query-params.js");
+/* harmony import */ var _lib_options_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @/lib/options/remote-auth-storage-area.js */ "./lib/options/remote-auth-storage-area.js");
+/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
+/* harmony import */ var _lib_utility_query_params_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @/lib/utility/query-params.js */ "./lib/utility/query-params.js");
 
 
 
@@ -50725,6 +52830,7 @@ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22___names
 
 
 // Modules and their support dependencies
+
 
 
 
@@ -50885,7 +52991,7 @@ class UIController {
     */
 
     // Creates on configures an event listener
-    uiController.evc = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_28__["default"]()
+    uiController.evc = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_29__["default"]()
     uiController.registerGetSelectedText('GetSelectedText', uiController.options.textQuerySelector)
     uiController.evc.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__["default"], 'keydown')
     uiController.evc.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__["default"], 'Alpheios_Page_Load')
@@ -51049,14 +53155,13 @@ class UIController {
   async init () {
     if (this.isInitialized) { return `Already initialized` }
     // Get query parameters from the URL
-    this.queryParams = _lib_utility_query_params_js__WEBPACK_IMPORTED_MODULE_29__["default"].parse()
+    this.queryParams = _lib_utility_query_params_js__WEBPACK_IMPORTED_MODULE_30__["default"].parse()
     // Start loading options as early as possible
-    this.featureOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](this.featureOptionsDefaults, this.options.storageAdapter)
-    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](this.resourceOptionsDefaults, this.options.storageAdapter)
+    let optionLoadPromises = this.initOptions(this.options.storageAdapter)
     // Create a copy of resource options for the lookup UI component
-    this.lookupResourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](this.resourceOptionsDefaults, this.options.storageAdapter)
-    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](this.uiOptionsDefaults, this.options.storageAdapter)
-    let optionLoadPromises = [this.featureOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
+    // this doesn't get reloaded from the storage adapter because
+    // we don't expose it to the user via preferences
+    this.lookupResourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](this.resourceOptionsDefaults, new this.options.storageAdapter(this.resourceOptionsDefaults.domain)) // eslint-disable-line new-cap
     // TODO: Site options should probably be initialized the same way as other options objects
     this.siteOptions = this.loadSiteOptions(this.siteOptionsDefaults)
 
@@ -51074,16 +53179,48 @@ class UIController {
      * This is a settings API. It exposes different options to modules and UI components.
      */
     this.api.settings = {
-      featureOptions: this.featureOptions,
-      resourceOptions: this.resourceOptions,
+      getFeatureOptions: this.getFeatureOptions.bind(this),
+      getResourceOptions: this.getResourceOptions.bind(this),
+      getUiOptions: this.getUiOptions.bind(this),
+      verboseMode: this.verboseMode.bind(this),
+      // we don't offer UI to change to lookupResourceOptions or siteOptions
+      // so they remain out of dynamic state for now - should eventually
+      // refactor
       lookupResourceOptions: this.lookupResourceOptions,
-      uiOptions: this.uiOptions,
       siteOptions: this.siteOptions
     }
+    this.store.registerModule('settings', {
+      // All stores of modules are namespaced
+      namespaced: true,
+      state: {
+        // these counters are used to enable the settings ui components
+        // to redraw themselves when settings are reset or reloaded
+        // it might be better if all settings were made into
+        // state variables but for now state is monitored at the domain level
+        uiResetCounter: 0,
+        featureResetCounter: 0,
+        resourceResetCounter: 0
+      },
+      mutations: {
+        incrementUiResetCounter (state) {
+          state.uiResetCounter += 1
+        },
+
+        incrementFeatureResetCounter (state) {
+          state.featureResetCounter += 1
+        },
+
+        incrementResourceResetCounter (state) {
+          state.resourceResetCounter += 1
+        }
+      }
+    })
 
     this.api.app = {
-      name: this.options.app.name, // A name of an application
-      version: this.options.app.version, // An application's version
+      name: this.options.app.name, // A name of a host application (embed lib or webextension)
+      version: this.options.app.version, // An version of a host application (embed lib or webextension)
+      libName: UIController.libName, // A name of the components library
+      libVersion: UIController.libVersion, // A version of the components library
       platform: this.platform,
       mode: this.options.mode, // Mode of an application: `production` or `development`
       defaultTab: tabs.DEFAULT, // A name of a default tab (a string)
@@ -51434,7 +53571,6 @@ class UIController {
     // Set options of modules before modules are created
     if (this.hasModule('popup')) {
       let popupOptions = this.modules.get('popup').options
-      popupOptions.positioning = this.uiOptions.items.popupPosition.currentValue
       popupOptions.initialShift = {
         x: this.uiOptions.items.popupShiftX.currentValue,
         y: this.uiOptions.items.popupShiftY.currentValue
@@ -51468,20 +53604,40 @@ class UIController {
     return this
   }
 
+  /**
+   * initialize the options using the supplied storage adapter class
+   * @param {Function<StorageAdapter>} StorageAdapter the adapter class to instantiate
+   * @param {Object} authData optional authentication data if the adapter is one that requires it
+   * @return Promise[] an array of promises to load the options data from the adapter
+   */
+  initOptions (StorageAdapter, authData = null) {
+    this.featureOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](this.featureOptionsDefaults, new StorageAdapter(this.featureOptionsDefaults.domain, authData))
+    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](this.resourceOptionsDefaults, new StorageAdapter(this.resourceOptionsDefaults.domain, authData))
+    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](this.uiOptionsDefaults, new StorageAdapter(this.uiOptionsDefaults.domain, authData))
+    return [this.featureOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
+  }
+
   async initUserDataManager (isAuthenticated) {
     let wordLists
+    let optionLoadPromises
     if (isAuthenticated) {
       let authData = await this.api.auth.getUserData()
       this.userDataManager = new alpheios_wordlist__WEBPACK_IMPORTED_MODULE_4__["UserDataManager"](authData, alpheios_wordlist__WEBPACK_IMPORTED_MODULE_4__["WordlistController"].evt)
       wordLists = await this.wordlistC.initLists(this.userDataManager)
       this.store.commit('app/setWordLists', wordLists)
+      optionLoadPromises = this.initOptions(_lib_options_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_28__["default"], authData)
     } else {
       // TODO we need to make the UserDataManager a singleton that can
       // handle switching users gracefully
       this.userDataManager.clear()
       this.userDataManager = null
       wordLists = await this.wordlistC.initLists()
+
+      // reload the user-configurable options
+      optionLoadPromises = this.initOptions(this.options.storageAdapter)
     }
+    await Promise.all(optionLoadPromises)
+    this.onOptionsReset()
     this.store.commit('app/setWordLists', wordLists)
   }
 
@@ -51612,7 +53768,7 @@ class UIController {
     let allSiteOptions = []
     for (let site of siteOptions) {
       for (let domain of site.options) {
-        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](domain, this.options.storageAdapter)
+        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](domain, new this.options.storageAdapter(domain.domain)) // eslint-disable-line new-cap
         allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
     }
@@ -51687,7 +53843,7 @@ class UIController {
       grammar: () => this.store.getters['app/hasGrammarRes'],
       treebank: () => this.store.getters['app/hasTreebankData'],
       wordUsage: () => this.store.state.app.wordUsageExampleEnabled,
-      status: () => this.api.settings.uiOptions.items.verboseMode.currentValue === 'verbose',
+      status: () => this.api.settings.getUiOptions().items.verboseMode.currentValue === 'verbose',
       wordlist: () => this.store.state.app.hasWordListsData
     }
     return tabsCheck.hasOwnProperty(tabName) && !tabsCheck[tabName]()
@@ -51942,9 +54098,15 @@ class UIController {
     }
   }
 
-  openActionPanel () {
+  /**
+   * Opens an action panel.
+   * @param {object} panelOptions - An object that specifies parameters of an action panel (see below):
+   * @param {boolean} panelOptions.showLookup - Whether to show a lookup input when the action panel is opened.
+   * @param {boolean} panelOptions.showNav - Whether to show a nav toolbar when the action panel is opened.
+   */
+  openActionPanel (panelOptions = {}) {
     if (this.api.ui.hasModule('actionPanel')) {
-      this.store.commit('actionPanel/open')
+      this.store.commit('actionPanel/open', panelOptions)
     } else {
       console.warn(`Action panel cannot be opened because its module is not registered`)
     }
@@ -51962,7 +54124,7 @@ class UIController {
     if (this.api.ui.hasModule('actionPanel')) {
       this.store.state.actionPanel.visible
         ? this.store.commit('actionPanel/close')
-        : this.store.commit('actionPanel/open')
+        : this.store.commit('actionPanel/open', {})
     } else {
       console.warn(`Action panel cannot be toggled because its module is not registered`)
     }
@@ -52005,7 +54167,7 @@ class UIController {
 
         let lexQuery = _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].create(textSelector, {
           htmlSelector: htmlSelector,
-          resourceOptions: this.resourceOptions,
+          resourceOptions: this.api.settings.getResourceOptions(),
           siteOptions: [],
           lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { locale: this.featureOptions.items.locale.currentValue } : null,
           wordUsageExamples: this.getWordUsageExamplesQueryParams(textSelector),
@@ -52018,6 +54180,22 @@ class UIController {
         this.closePopup() // because we open popup before any check, but selection could be incorrect
       }
     }
+  }
+
+  getFeatureOptions () {
+    return this.featureOptions
+  }
+
+  getResourceOptions () {
+    return this.resourceOptions
+  }
+
+  getUiOptions () {
+    return this.uiOptions
+  }
+
+  verboseMode () {
+    return this.uiOptions.items.verboseMode.currentValue === 'verbose'
   }
 
   async getWordUsageData (homonym, params = {}) {
@@ -52223,33 +54401,65 @@ class UIController {
     }
   }
 
-  resetAllOptions () {
-    this.featureOptions.reset()
-    this.resourceOptions.reset()
-    this.uiOptions.reset()
-    // TODO this is a hack until we refactor settings to use the Vuex store
-    // what we really need to do here is make sure that any state handlers that need to be called
-    // in response to any setting change are called and that the ui components for the settings are redrawn
-    alert('Restart your browser now for setting reset to take affect')
+  /**
+   * Resets all configurable options to the defaults, replacing user preferences
+   */
+  async resetAllOptions () {
+    await this.featureOptions.reset()
+    await this.resourceOptions.reset()
+    await this.uiOptions.reset()
+    // we don't reload lookupResourceOptions or siteOptions
+    // because we don't currently allow user configuration of these
+    this.onOptionsReset()
   }
 
-  featureOptionChange (name, value) {
-    // TODO we need to refactor handling of boolean options
-    if (name === 'enableLemmaTranslations' || name === 'enableWordUsageExamples' || name === 'wordUsageExamplesMax' || name === 'wordUsageExamplesAuthMax') {
-      this.api.settings.featureOptions.items[name].setValue(value)
-    } else {
-      this.api.settings.featureOptions.items[name].setTextValue(value)
+  /**
+   * Updates the Application State after settings have been reset or reloaded
+   */
+  onOptionsReset () {
+    for (let name of this.featureOptions.names) {
+      this.featureOptionStateChange(name)
+      this.store.commit('settings/incrementFeatureResetCounter')
     }
-    switch (name) {
+    for (let name of this.resourceOptions.names) { // eslint-disable-line no-unused-vars
+      this.store.commit('settings/incrementResourceResetCounter')
+    }
+    for (let name of this.uiOptions.names) {
+      this.uiOptionStateChange(name)
+      this.store.commit('settings/incrementUiResetCounter')
+    }
+  }
+
+  /**
+   * Handle a change to a single feature option
+   * @param {String} name the setting name
+   * @param {String} value the new value
+   */
+  featureOptionChange (name, value) {
+    let featureOptions = this.api.settings.getFeatureOptions()
+    // TODO we need to refactor handling of boolean options
+    if (name === 'enableLemmaTranslations' ||
+        name === 'enableWordUsageExamples' ||
+        name === 'wordUsageExamplesMax' ||
+        name === 'wordUsageExamplesAuthMax') {
+      featureOptions.items[name].setValue(value)
+    } else {
+      featureOptions.items[name].setTextValue(value)
+    }
+    this.featureOptionStateChange(name)
+  }
+
+  /**
+   * Updates the state of a feature to correspond to current options
+   * @param {String} settingName the name of the setting
+   */
+  featureOptionStateChange (settingName) {
+    switch (settingName) {
       case 'locale':
-        // TODO: It seems that presenter is never defined. Do we need it?
-        if (this.presenter) {
-          this.presenter.setLocale(this.api.settings.featureOptions.items.locale.currentValue)
-        }
         this.updateLemmaTranslations()
         break
       case 'preferredLanguage':
-        this.updateLanguage(this.api.settings.featureOptions.items.preferredLanguage.currentValue)
+        this.updateLanguage(this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue)
         break
       case 'enableLemmaTranslations':
         this.updateLemmaTranslations()
@@ -52258,48 +54468,52 @@ class UIController {
   }
 
   /**
-   * Handles a UI options in settings.
+   * Handle a change to a single ui option
    * @param {string} name - A name of an option.
    * @param {string | value} value - A new value of an options.
    */
   uiOptionChange (name, value) {
-    const FONT_SIZE_PROP = '--alpheios-base-text-size'
+    let uiOptions = this.api.settings.getUiOptions()
     // TODO this should really be handled within OptionsItem
     // the difference between value and textValues is a little confusing
     // see issue #73
     if (name === 'fontSize') {
-      this.api.settings.uiOptions.items[name].setValue(value)
+      uiOptions.items[name].setValue(value)
     } else {
-      this.api.settings.uiOptions.items[name].setTextValue(value)
+      uiOptions.items[name].setTextValue(value)
     }
+    this.uiOptionStateChange(name)
+  }
 
-    switch (name) {
-      case 'panel':
-        if (this.api.ui.hasModule('panel')) {
-          this.store.commit('panel/close')
-          this.store.commit('panel/setPanelLayout', this.api.settings.uiOptions.items[name].currentValue)
-          this.store.commit('panel/open')
-        }
-        break
+  /**
+   * Updates the state of a ui component to correspond to current options
+   * @param {String} settingName the name of the setting
+   */
+  uiOptionStateChange (settingName) {
+    let uiOptions = this.api.settings.getUiOptions()
+    const FONT_SIZE_PROP = '--alpheios-base-text-size'
+    switch (settingName) {
       case 'fontSize':
         try {
-          document.documentElement.style.setProperty(FONT_SIZE_PROP, `${value}px`)
+          document.documentElement.style.setProperty(FONT_SIZE_PROP,
+            `${uiOptions.items.fontSize.currentValue}px`)
         } catch (error) {
           console.error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
         }
         break
       case 'panelPosition':
-        this.store.commit('panel/setPosition', this.api.settings.uiOptions.items.panelPosition.currentValue)
-        break
-      case 'popupPosition':
-        this.store.commit('popup/setPositioning', this.api.settings.uiOptions.items.popupPosition.currentValue)
+        this.store.commit('panel/setPosition', uiOptions.items.panelPosition.currentValue)
         break
     }
   }
 
+  /**
+   * Handle a change to a single resource option
+   * @param {string} name - A name of an option.
+   * @param {string | value} value - A new value of an options.
+   */
   resourceSettingChange (name, value) {
-    let keyinfo = this.api.settings.resourceOptions.parseKey(name)
-    this.api.settings.resourceOptions.items[keyinfo.setting].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
+    this.api.settings.getResourceOptions().items[name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
   }
 
   registerGetSelectedText (listenerName, selector) {
@@ -53885,22 +56099,6 @@ class OptionItem {
       }
     )
   }
-
-  /**
-   * Creates a copy of the current OptionItem with a different name, and, possibly,
-   * attached to a different storage adapter.
-   * @param {string} name - A name for the option clone.
-   * @param {string} labelText - A text for the label of the clone. If not specified,
-   * will be set to the same value as the one of the source.
-   * @param {StorageAdapter} storageAdapter - An instance of a storage adapter to attach to.
-   * If not specified, will use the a storage adapter from the source.
-   * @return {OptionItem} - A clone of the current option item.
-   */
-  clone (name, labelText = this.labelText, storageAdapter = this.storageAdapter) {
-    let clone = new OptionItem(JSON.parse(JSON.stringify(this)), name, storageAdapter)
-    clone.labelText = labelText
-    return clone
-  }
 }
 
 
@@ -53929,32 +56127,35 @@ class Options {
    * Mandatory fields:
    *    {string} domain - A domain name that defines options context
    *    {Object} items - An object that represents options that are exposed to the user. Each property is an option name.
-   * @param {Function<StorageAdapter>} StorageAdapter - A storage adapter implementation
+   * @param {StorageAdapter} storageAdapter - A storage adapter implementation
    */
-  constructor (defaults, StorageAdapter) {
-    if (!defaults || !defaults.domain || !defaults.items) {
-      throw new Error(`Defaults have no obligatory "domain" and "items" properties`)
+  constructor (defaults, storageAdapter) {
+    if (!defaults || !defaults.domain || !defaults.items || !defaults.version) {
+      throw new Error(`Defaults have no obligatory "domain", "version" and "items" properties`)
     }
-    if (!StorageAdapter) {
+    if (!storageAdapter) {
       throw new Error(`No storage adapter implementation provided`)
     }
 
     this.defaults = defaults
     this.domain = defaults.domain
-    this.storageAdapter = new StorageAdapter(defaults.domain)
-    this.items = Options.initItems(this.defaults.items, this.storageAdapter)
+    this.version = defaults.version
+    this.storageAdapter = storageAdapter
+    this.items = Options.initItems(this.defaults.items, this.storageAdapter, this.domain, this.version)
   }
 
-  static initItems (defaults, storageAdapter) {
+  static initItems (defaults, storageAdapter, domain, version) {
     let items = {}
     for (let [option, value] of Object.entries(defaults)) {
       if (value.group) {
         items[option] = []
-        for (let [key, item] of Object.entries(value.group)) {
-          items[option].push(new _options_item_js__WEBPACK_IMPORTED_MODULE_0__["default"](item, `${option}-${key}`, storageAdapter))
+        for (let [group, item] of Object.entries(value.group)) {
+          let key = Options.constructKey(domain, version, option, group)
+          items[option].push(new _options_item_js__WEBPACK_IMPORTED_MODULE_0__["default"](item, key, storageAdapter))
         }
       } else {
-        items[option] = new _options_item_js__WEBPACK_IMPORTED_MODULE_0__["default"](value, option, storageAdapter)
+        let key = Options.constructKey(domain, version, option)
+        items[option] = new _options_item_js__WEBPACK_IMPORTED_MODULE_0__["default"](value, key, storageAdapter)
       }
     }
     return items
@@ -53966,30 +56167,6 @@ class Options {
   async reset () {
     await this.storageAdapter.clearAll()
     this.items = Options.initItems(this.defaults.items, this.storageAdapter)
-  }
-
-  /**
-   * Clone an existing Options object applying a new StorageAdapter
-   * @param {Function<StorageAdapter>} StorageAdapter - A storage adapter implementation
-   * @return {Options} the cloned Options object
-   */
-  clone (StorageAdapter) {
-    let obj = new Options(this.defaults, StorageAdapter)
-    obj.storageAdapter = new StorageAdapter(this.domain)
-    obj.domain = this.domain
-    obj.items = {}
-
-    for (let item of this.names) {
-      if (Array.isArray(this.items[item])) {
-        obj.items[item] = []
-        for (let option of this.items[item]) {
-          obj.items[item].push(option.clone(option.name, option.labelText, obj.storageAdapter))
-        }
-      } else {
-        obj.items[item] = this.items[item].clone(item, this.items[item].labelText, obj.storageAdapter)
-      }
-    }
-    return obj
   }
 
   get names () {
@@ -54005,29 +56182,29 @@ class Options {
     try {
       let values = await this.storageAdapter.get()
       for (let key in values) {
-        if (this.items.hasOwnProperty(key)) {
-          let value
-          try {
-            value = JSON.parse(values[key])
-          } catch (e) {
-            // backwards compatibility
-            value = values[key]
-          }
-          this.items[key].currentValue = value
-        } else {
-          let keyinfo = this.parseKey(key)
-          if (this.items.hasOwnProperty(keyinfo.setting)) {
-            this.items[keyinfo.setting].forEach((f) => {
+        let parsedKey = Options.parseKey(key)
+        // TODO when we do increase the version we should handle conversion
+        if (this.items.hasOwnProperty(parsedKey.name) && this.version === parsedKey.version) {
+          if (parsedKey.group) {
+            this.items[parsedKey.name].forEach((f) => {
               if (f.name === key) {
                 try {
                   f.currentValue = JSON.parse(values[key])
                 } catch (e) {
-                  // backwards compatibility
-                  f.currentValue = values[key]
+                  console.warn(`Unable to parse option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e)
                 }
               }
             })
+          } else {
+            try {
+              this.items[parsedKey.name].currentValue = JSON.parse(values[key])
+            } catch (e) {
+              // invalid value
+              console.warn(`Unable to parse option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e)
+            }
           }
+        } else {
+          console.warn(`Unrecognized setting ${parsedKey.name} or version ${parsedKey.version}`)
         }
       }
       return this
@@ -54035,20 +56212,140 @@ class Options {
       let message = `Cannot retrieve options for Alpheios extension from a local storage: ${error}. Default values ` +
       `will be used instead`
       console.error(message)
-      throw new Error(message)
     }
   }
 
   /**
-  * Parse a stored setting name into its component parts
-  * (for simplicity of the data structure, setting names are stored under
-  * keys which combine the setting and the language)
+   * Construct a key for a stored setting
+   * To future proof the stored settings, we include domain and version
+   * in the key name. Grouped settings are also flattened.
+   * @param {String} domain - the setting domain
+   * @param {String} version - the setting version
+   * @param {String} name - the setting name
+   * @param {String} group - optional setting group
+   */
+  static constructKey (domain, version, name, group = null) {
+    let key = `${domain}__${version}__${name}`
+    if (group) {
+      key = `${key}__${group}`
+    }
+    return key
+  }
+
+  /**
+  * Parse a stored setting name into a semantically meaningful object
   */
-  parseKey (name) {
-    let [setting, group] = name.split('-', 2)
-    return {
-      setting: setting,
-      group: group
+  static parseKey (key) {
+    let [domain, version, name, group] = key.split('__', 4)
+    let parsed
+    try {
+      parsed = {
+        domain: domain,
+        version: parseInt(version),
+        name: name,
+        group: group
+      }
+    } catch (e) {
+      console.warn(`Unable to parse options key ${key}`)
+    }
+    return parsed
+  }
+}
+
+
+/***/ }),
+
+/***/ "./lib/options/remote-auth-storage-area.js":
+/*!*************************************************!*\
+  !*** ./lib/options/remote-auth-storage-area.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RemoteAuthStorageArea; });
+/* harmony import */ var _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage-adapter.js */ "./lib/options/storage-adapter.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "../node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+/**
+ * An implementation of the StorageAdapterinterface that retrieves
+ * data from an authentication-protected remote service implementing
+ * the Alpheios user-settings-api.
+ * @param {String} domain a string identifying the storage domain
+ * @param {Object} auth athentication details object adhering to:
+ *                      { endpoints: {settings: <baseUrl of settings api},
+ *                        accessToken: JWT token identying user and granting
+ *                                     access to the settings api
+ *                      }
+ *
+ */
+class RemoteAuthStorageArea extends _storage_adapter_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  constructor (domain = 'alpheios-storage-domain', auth = null) {
+    super(domain)
+    if (!auth ||
+        !auth.endpoints ||
+        !auth.endpoints.settings.match(/^https:\/\//) ||
+        !auth.accessToken) {
+      throw new Error('Authentication details missing or invalid')
+    }
+    this.baseURL = auth.endpoints.settings
+    this.requestContext = {
+      headers: {
+        common: {
+          Authorization: 'bearer ' + auth.accessToken,
+          'Content-Type': 'application/json'
+        }
+      }
+    }
+  }
+  /**
+   * A proxy for the Alpheios user-settings-api
+   * It allows for storing key/value pairs to the api with an authorized user account
+   * @param {object} keysObject - An object containing one or more key/value pairs to be stored in storage.
+   * If a particular item already exists, its value will be updated.
+   * @return {Promise} - A promise that is resolved with with a void value if all key/value pairs are stored
+   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
+   */
+  async set (keysObject) {
+    for (const [key, value] of Object.entries(keysObject)) {
+      let url = `${this.baseURL}/${key}`
+      let result = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(url, value, this.requestContext)
+      if (result.status !== 201) {
+        throw new Error(`Unexpected result status from settings api: ${result.status}`)
+      }
+    }
+  }
+
+  /**
+   * proxy for the Alpheios user-settings-api LIST operation
+   * Retrieves all data for the storage domain.
+   * @return {Promise} A Promise that will be fulfilled with a results object containing key-value pairs
+   * found in the storage area. If this operation failed, the promise will be rejected with an error message.
+   */
+  async get () {
+    let url = `${this.baseURL}?domain=${this.domain}`
+    let result = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(url, this.requestContext)
+    if (result.status === 200) {
+      return result.data
+    } else {
+      throw new Error(`Unexpected result status from settings api: ${result.status}`)
+    }
+  }
+
+  /**
+   * proxy for the Alpheios user-settings DELETE LIST operation
+   * deletes all settings for the domain from storage
+   * @return {Promise} A Promise that executes the operation.
+   */
+  async clearAll () {
+    let url = `${this.baseURL}?domain=${this.domain}`
+    let result = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.delete(url, this.requestContext)
+    if (result.status !== 200) {
+      throw new Error(`Unexpected result status from settings api: ${result.status}`)
     }
   }
 }
@@ -54271,8 +56568,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "../node_modules/alpheios-data-models/dist/alpheios-data-models.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _query_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./query.js */ "./lib/queries/query.js");
-/* harmony import */ var alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-client-adapters */ "../node_modules/alpheios-client-adapters/dist/alpheios-client-adapters.min.js");
-/* harmony import */ var alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
+/* harmony import */ var alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alpheios-client-adapters */ "../node_modules/alpheios-client-adapters/dist/alpheios-client-adapters.min.js");
+/* harmony import */ var alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 
@@ -54321,7 +56620,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
           }
         }
 
-        let adapterConcordanceRes = await alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_2__["ClientAdapters"].wordusageExamples.concordance({
+        let adapterConcordanceRes = await alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3__["ClientAdapters"].wordusageExamples.concordance({
           method: 'getWordUsageExamples',
           params: { homonym: homonym,
             pagination: paginationParams,
@@ -54345,7 +56644,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
 
   static async getAuthorsForWordUsage () {
     try {
-      let adapterConcordanceRes = await alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_2__["ClientAdapters"].wordusageExamples.concordance({
+      let adapterConcordanceRes = await alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3__["ClientAdapters"].wordusageExamples.concordance({
         method: 'getAuthorsWorks',
         params: {}
       })
@@ -54386,7 +56685,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
   * iterations () {
     let formLexeme = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lexeme"](new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"](this.selector.normalizedText, this.selector.languageID), [])
     if (this.selector.data.treebank && this.selector.data.treebank.word) {
-      let adapterTreebankRes = yield alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_2__["ClientAdapters"].morphology.alpheiosTreebank({
+      let adapterTreebankRes = yield alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3__["ClientAdapters"].morphology.alpheiosTreebank({
         method: 'getHomonym',
         params: {
           languageID: this.selector.languageID,
@@ -54404,7 +56703,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
 
     if (!this.canReset) {
       // if we can't reset, proceed with full lookup sequence
-      let adapterTuftsRes = yield alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_2__["ClientAdapters"].morphology.tufts({
+      let adapterTuftsRes = yield alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3__["ClientAdapters"].morphology.tufts({
         method: 'getHomonym',
         params: {
           languageID: this.selector.languageID,
@@ -54454,7 +56753,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
     LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
 
     if (this.lemmaTranslations) {
-      let adapterTranslationRes = yield alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_2__["ClientAdapters"].lemmatranslation.alpheios({
+      let adapterTranslationRes = yield alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3__["ClientAdapters"].lemmatranslation.alpheios({
         method: 'fetchTranslations',
         params: {
           homonym: this.homonym,
@@ -54474,7 +56773,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
       // per author applied. Total max across all authors will be enforced on the
       // client adapter side. Different pagination options may apply when working
       // directly with the usage examples display
-      let adapterConcordanceRes = yield alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_2__["ClientAdapters"].wordusageExamples.concordance({
+      let adapterConcordanceRes = yield alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3__["ClientAdapters"].wordusageExamples.concordance({
         method: 'getWordUsageExamples',
         params: { homonym: this.homonym,
           pagination: {
@@ -54493,7 +56792,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
 
     yield 'Retrieval of lemma translations completed'
 
-    let adapterLexiconResShort = yield alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_2__["ClientAdapters"].lexicon.alpheios({
+    let adapterLexiconResShort = yield alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3__["ClientAdapters"].lexicon.alpheios({
       method: 'fetchShortDefs',
       params: {
         opts: lexiconShortOpts,
@@ -54507,7 +56806,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
       adapterLexiconResShort.errors.forEach(error => console.error(error.message))
     }
 
-    let adapterLexiconResFull = yield alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_2__["ClientAdapters"].lexicon.alpheios({
+    let adapterLexiconResFull = yield alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3__["ClientAdapters"].lexicon.alpheios({
       method: 'fetchFullDefs',
       params: {
         opts: lexiconFullOpts,
@@ -54570,7 +56869,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
     } else {
       allOptions = this.resourceOptions.items[lexiconKey] || []
     }
-    let lexiconOpts = allOptions.filter((l) => this.resourceOptions.parseKey(l.name).group === languageCode
+    let lexiconOpts = allOptions.filter((l) => _lib_options_options_js__WEBPACK_IMPORTED_MODULE_2__["default"].parseKey(l.name).group === languageCode
     ).map((l) => { return { allow: l.currentValue } }
     )
     if (lexiconOpts.length > 0) {
@@ -56657,10 +58956,10 @@ module.exports = JSON.parse("{\"WORDLIST_TOOLTIP_ALL_IMPORTANT\":{\"message\":\"
 /*!************************************************!*\
   !*** ./locales/en-us/messages-word-usage.json ***!
   \************************************************/
-/*! exports provided: TEXT_NOTICE_WORDUSAGE_READY, TOOLTIP_WORD_USAGE, WORDUSAGE_FILTERS_HIDE, WORDUSAGE_FILTERS_SHOW, WORDUSAGE_GET_RESULTS, WORDUSAGE_NO_RESULTS, WORDUSAGE_SORT_BY, WORDUSAGE_SORT_BY_AUTHOR, WORDUSAGE_SORT_BY_TEXTWORK, WORDUSAGE_SORT_BY_PREFIX, WORDUSAGE_SORT_BY_SUFFIX, WORDUSAGE_FILTERS_TYPE_NO_FILTERS, WORDUSAGE_FILTERS_TYPE_MORE_RESULTS, WORDUSAGE_FILTERS_TYPE_FILTER_CURRENT_RESULTS, WORDUSAGE_FILTERS_AUTHOR_CLEAR, WORDUSAGE_FILTERS_TEXTWORK_CLEAR, WORDUSAGE_SORTING_AUTHOR_CLEAR, WORDUSAGE_SHOW_SOURCE_LINKS, WORDUSAGE_SHOW_FILTERS_TEXT, WORDUSAGE_HIDE_FILTERS_TEXT, WORDUSAGE_FILTERS_AUTHOR_PLACEHOLDER, WORDUSAGE_FILTERS_TEXTWORK_PLACEHOLDER, WORDUSAGE_SORT_BY_PLACEHOLDER, WORDUSAGE_GETTING_RESULT, WORDUSAGE_FOCUS_AUTHOR, WORDUSAGE_FOCUS_WORK, default */
+/*! exports provided: TEXT_NOTICE_WORDUSAGE_READY, TOOLTIP_WORD_USAGE, WORDUSAGE_FILTERS_HIDE, WORDUSAGE_FILTERS_SHOW, WORDUSAGE_GET_RESULTS, WORDUSAGE_NO_RESULTS, WORDUSAGE_SORT_BY, WORDUSAGE_SORT_BY_AUTHOR, WORDUSAGE_SORT_BY_TEXTWORK, WORDUSAGE_SORT_BY_PREFIX, WORDUSAGE_SORT_BY_SUFFIX, WORDUSAGE_FILTERS_TYPE_NO_FILTERS, WORDUSAGE_FILTERS_TYPE_MORE_RESULTS, WORDUSAGE_FILTERS_TYPE_FILTER_CURRENT_RESULTS, WORDUSAGE_FILTERS_AUTHOR_CLEAR, WORDUSAGE_FILTERS_TEXTWORK_CLEAR, WORDUSAGE_SORTING_AUTHOR_CLEAR, WORDUSAGE_SHOW_SOURCE_LINKS, WORDUSAGE_SHOW_FILTERS_TEXT, WORDUSAGE_HIDE_FILTERS_TEXT, WORDUSAGE_FILTERS_AUTHOR_PLACEHOLDER, WORDUSAGE_FILTERS_TEXTWORK_PLACEHOLDER, WORDUSAGE_SORT_BY_PLACEHOLDER, WORDUSAGE_GETTING_RESULT, WORDUSAGE_FOCUS_AUTHOR, WORDUSAGE_FOCUS_WORK, WORDUSAGE_HINT_INITIAL_SEARCH, WORDUSAGE_HINT_FOCUS_SEARCH, WORDUSAGE_HINT_AUTHOR_WORK_FOCUS_SEARCH_NONE, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"TEXT_NOTICE_WORDUSAGE_READY\":{\"message\":\"Word Usage Examples are recieved\",\"description\":\"Word Usage Examples recieved flag\",\"component\":\"UIController onWordUsageExamplesReady\"},\"TOOLTIP_WORD_USAGE\":{\"message\":\"Word Usage Examples\",\"description\":\"Word Usage Examples tooltip\",\"component\":\"Panel\"},\"WORDUSAGE_FILTERS_HIDE\":{\"message\":\"hide\",\"description\":\"Word Usage Examples Filters Hide link\",\"component\":\"WordUsageExamplesHeader\"},\"WORDUSAGE_FILTERS_SHOW\":{\"message\":\"show\",\"description\":\"Word Usage Examples Filters Show Link\",\"component\":\"WordUsageExamplesHeader\"},\"WORDUSAGE_GET_RESULTS\":{\"message\":\"Get results\",\"description\":\"Word Usage Examples Filters Get results button\",\"component\":\"WordUsageExamplesHeader\"},\"WORDUSAGE_NO_RESULTS\":{\"message\":\"There are no results.\",\"description\":\"Word Usage Examples No results text\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_SORT_BY\":{\"message\":\"Sort by:\",\"description\":\"Word Usage Examples Sort by Title\",\"component\":\"WordUsageExamplesHeader\"},\"WORDUSAGE_SORT_BY_AUTHOR\":{\"message\":\"Author\",\"description\":\"Word Usage Examples Sort by author\",\"component\":\"WordUsageExamplesFilters\"},\"WORDUSAGE_SORT_BY_TEXTWORK\":{\"message\":\"Work\",\"description\":\"Placeholder for sorting selection\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_SORT_BY_PREFIX\":{\"message\":\"Preceding word\",\"description\":\"Word Usage Examples Sort by prefix\",\"component\":\"WordUsageExamplesHeader\"},\"WORDUSAGE_SORT_BY_SUFFIX\":{\"message\":\"Following word\",\"description\":\"Word Usage Examples Sort by suffix\",\"component\":\"WordUsageExamplesHeader\"},\"WORDUSAGE_FILTERS_TYPE_NO_FILTERS\":{\"message\":\"Get results without limits\",\"description\":\"Word Usage Examples Type filter\",\"component\":\"WordUsageExamplesFilters\"},\"WORDUSAGE_FILTERS_TYPE_MORE_RESULTS\":{\"message\":\"See more results for a specific Author and/or Work\",\"description\":\"Word Usage Examples Type filter\",\"component\":\"WordUsageExamplesFilters\"},\"WORDUSAGE_FILTERS_TYPE_FILTER_CURRENT_RESULTS\":{\"message\":\"Limit these results by Author and/or Work\",\"description\":\"Word Usage Examples Type filter\",\"component\":\"WordUsageExamplesFilters\"},\"WORDUSAGE_FILTERS_AUTHOR_CLEAR\":{\"message\":\"Clear author limit\",\"description\":\"Word Usage Examples Type filter\",\"component\":\"WordUsageExamplesFilters\"},\"WORDUSAGE_FILTERS_TEXTWORK_CLEAR\":{\"message\":\"Clear work limit\",\"description\":\"Word Usage Examples Type filter\",\"component\":\"WordUsageExamplesFilters\"},\"WORDUSAGE_SORTING_AUTHOR_CLEAR\":{\"message\":\"Clear sorting\",\"description\":\"Word Usage Examples Sorting\",\"component\":\"WordUsageExamplesSorting\"},\"WORDUSAGE_SHOW_SOURCE_LINKS\":{\"message\":\"Show/hide source links\",\"description\":\"Message on a button that toggles source links on or off\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_SHOW_FILTERS_TEXT\":{\"message\":\"Show Focus/Sort\",\"description\":\"Show filters/sorting block\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_HIDE_FILTERS_TEXT\":{\"message\":\"Hide Focus/Sort\",\"description\":\"Hide filters/sorting block\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_FILTERS_AUTHOR_PLACEHOLDER\":{\"message\":\"Select an author\",\"description\":\"Placeholder for author selection\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_FILTERS_TEXTWORK_PLACEHOLDER\":{\"message\":\"Select a work\",\"description\":\"Placeholder for textwork selection\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_SORT_BY_PLACEHOLDER\":{\"message\":\"Author+Work\",\"description\":\"Placeholder for sorting selection\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_GETTING_RESULT\":{\"message\":\"Retrieving results ...\",\"description\":\"Placeholder for getting data\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_FOCUS_AUTHOR\":{\"message\":\"Focus on Author:\",\"description\":\"Title for the author's filter\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_FOCUS_WORK\":{\"message\":\"Focus on Work:\",\"description\":\"Title for the textwork's filter\",\"component\":\"WordUsageExamples\"}}");
+module.exports = JSON.parse("{\"TEXT_NOTICE_WORDUSAGE_READY\":{\"message\":\"Word Usage Examples are recieved\",\"description\":\"Word Usage Examples recieved flag\",\"component\":\"UIController onWordUsageExamplesReady\"},\"TOOLTIP_WORD_USAGE\":{\"message\":\"Word Usage Examples\",\"description\":\"Word Usage Examples tooltip\",\"component\":\"Panel\"},\"WORDUSAGE_FILTERS_HIDE\":{\"message\":\"hide\",\"description\":\"Word Usage Examples Filters Hide link\",\"component\":\"WordUsageExamplesHeader\"},\"WORDUSAGE_FILTERS_SHOW\":{\"message\":\"show\",\"description\":\"Word Usage Examples Filters Show Link\",\"component\":\"WordUsageExamplesHeader\"},\"WORDUSAGE_GET_RESULTS\":{\"message\":\"Get results\",\"description\":\"Word Usage Examples Filters Get results button\",\"component\":\"WordUsageExamplesHeader\"},\"WORDUSAGE_NO_RESULTS\":{\"message\":\"There are no results.\",\"description\":\"Word Usage Examples No results text\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_SORT_BY\":{\"message\":\"Sort by:\",\"description\":\"Word Usage Examples Sort by Title\",\"component\":\"WordUsageExamplesHeader\"},\"WORDUSAGE_SORT_BY_AUTHOR\":{\"message\":\"Author\",\"description\":\"Word Usage Examples Sort by author\",\"component\":\"WordUsageExamplesFilters\"},\"WORDUSAGE_SORT_BY_TEXTWORK\":{\"message\":\"Work\",\"description\":\"Placeholder for sorting selection\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_SORT_BY_PREFIX\":{\"message\":\"Preceding word\",\"description\":\"Word Usage Examples Sort by prefix\",\"component\":\"WordUsageExamplesHeader\"},\"WORDUSAGE_SORT_BY_SUFFIX\":{\"message\":\"Following word\",\"description\":\"Word Usage Examples Sort by suffix\",\"component\":\"WordUsageExamplesHeader\"},\"WORDUSAGE_FILTERS_TYPE_NO_FILTERS\":{\"message\":\"Get results without limits\",\"description\":\"Word Usage Examples Type filter\",\"component\":\"WordUsageExamplesFilters\"},\"WORDUSAGE_FILTERS_TYPE_MORE_RESULTS\":{\"message\":\"See more results for a specific Author and/or Work\",\"description\":\"Word Usage Examples Type filter\",\"component\":\"WordUsageExamplesFilters\"},\"WORDUSAGE_FILTERS_TYPE_FILTER_CURRENT_RESULTS\":{\"message\":\"Limit these results by Author and/or Work\",\"description\":\"Word Usage Examples Type filter\",\"component\":\"WordUsageExamplesFilters\"},\"WORDUSAGE_FILTERS_AUTHOR_CLEAR\":{\"message\":\"Clear author\",\"description\":\"Word Usage Examples Type filter\",\"component\":\"WordUsageExamplesFilters\"},\"WORDUSAGE_FILTERS_TEXTWORK_CLEAR\":{\"message\":\"Clear work\",\"description\":\"Word Usage Examples Type filter\",\"component\":\"WordUsageExamplesFilters\"},\"WORDUSAGE_SORTING_AUTHOR_CLEAR\":{\"message\":\"Clear sorting\",\"description\":\"Word Usage Examples Sorting\",\"component\":\"WordUsageExamplesSorting\"},\"WORDUSAGE_SHOW_SOURCE_LINKS\":{\"message\":\"Show source links\",\"description\":\"Message on a button that toggles source links on or off\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_SHOW_FILTERS_TEXT\":{\"message\":\"Show Focus/Sort\",\"description\":\"Show filters/sorting block\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_HIDE_FILTERS_TEXT\":{\"message\":\"Hide Focus/Sort\",\"description\":\"Hide filters/sorting block\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_FILTERS_AUTHOR_PLACEHOLDER\":{\"message\":\"Select an author\",\"description\":\"Placeholder for author selection\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_FILTERS_TEXTWORK_PLACEHOLDER\":{\"message\":\"Select a work\",\"description\":\"Placeholder for textwork selection\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_SORT_BY_PLACEHOLDER\":{\"message\":\"Author+Work\",\"description\":\"Placeholder for sorting selection\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_GETTING_RESULT\":{\"message\":\"Retrieving results ...\",\"description\":\"Placeholder for getting data\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_FOCUS_AUTHOR\":{\"message\":\"Focus on Author:\",\"description\":\"Title for the author's filter\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_FOCUS_WORK\":{\"message\":\"Focus on Work:\",\"description\":\"Title for the textwork's filter\",\"component\":\"WordUsageExamples\"},\"WORDUSAGE_HINT_INITIAL_SEARCH\":{\"message\":\"(up to {maxResults} usages per author - Focus to get more results by author)\",\"description\":\"Hint for initial search results\",\"params\":[\"maxResults\"]},\"WORDUSAGE_HINT_FOCUS_SEARCH\":{\"message\":\"(results may be truncated - maximum {maxResults})\",\"description\":\"Hint for focus author results\",\"params\":[\"maxResults\",\"author\"]},\"WORDUSAGE_HINT_AUTHOR_WORK_FOCUS_SEARCH_NONE\":{\"message\":\"There are no usages of {word} by {author} in {work}.\",\"description\":\"Hint for focus author work results\",\"params\":[\"word\",\"maxResults\",\"author\",\"work\"]}}");
 
 /***/ }),
 
@@ -56668,10 +58967,10 @@ module.exports = JSON.parse("{\"TEXT_NOTICE_WORDUSAGE_READY\":{\"message\":\"Wor
 /*!*************************************!*\
   !*** ./locales/en-us/messages.json ***!
   \*************************************/
-/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, TITLE_HELP_PANEL, TITLE_INFLECTIONS_PANEL, TITLE_INFLECTIONS_BROWSER_PANEL, TOOLTIP_MOVE_PANEL_LEFT, TOOLTIP_MOVE_PANEL_RIGHT, TOOLTIP_CLOSE_PANEL, TOOLTIP_HELP, TOOLTIP_INFLECT, TOOLTIP_INFLECT_BROWSER, TOOLTIP_DEFINITIONS, TOOLTIP_GRAMMAR, TOOLTIP_TREEBANK, TOOLTIP_OPTIONS, TOOLTIP_STATUS, TOOLTIP_WORDLIST, TOOLTIP_USER, TOOLTIP_SHOW_INFLECTIONS, TOOLTIP_SHOW_DEFINITIONS, TOOLTIP_SHOW_OPTIONS, TOOLTIP_SHOW_USAGEEXAMPLES, TOOLTIP_MORPHOLOGY, TOOLTIP_NOT_AVAIL_POSTFIX, PLACEHOLDER_DEFINITIONS, PLACEHOLDER_INFLECT_IN_PROGRESS, LABEL_INFLECT_SELECT_POFS, LABEL_INFLECT_SHOWFULL, LABEL_INFLECT_COLLAPSE, TOOLTIP_INFLECT_SHOWFULL, TOOLTIP_INFLECT_COLLAPSE, LABEL_INFLECT_HIDEEMPTY, LABEL_INFLECT_SHOWEMPTY, TOOLTIP_INFLECT_HIDEEMPTY, TOOLTIP_INFLECT_SHOWEMPTY, INFLECT_MSG_TABLE_NOT_IMPLEMENTED, TEXT_INFO_GETTINGSTARTED, TEXT_INFO_ACTIVATE, TEXT_INFO_CLICK, TEXT_INFO_LANGDETECT, LABEL_INFO_CURRENTLANGUAGE, TEXT_INFO_SETTINGS, TEXT_INFO_ARROW, TEXT_INFO_REOPEN, TEXT_INFO_DEACTIVATE, TOOLTIP_POPUP_CLOSE, LABEL_POPUP_TREEBANK, LABEL_POPUP_INFLECT, LABEL_POPUP_OPTIONS, LABEL_POPUP_DEFINE, LABEL_POPUP_USAGEEXAMPLES, PLACEHOLDER_LEX_DATA_LOADING, PLACEHOLDER_NO_LANGUAGE_DATA, PLACEHOLDER_NO_MORPH_DATA, LABEL_PROVIDERS_CREDITS, LABEL_POPUP_SHOWCREDITS, LABEL_POPUP_HIDECREDITS, TEXT_NOTICE_SUGGEST_LOGIN, TEXT_NOTICE_CHANGE_LANGUAGE, TEXT_NOTICE_LANGUAGE_UNKNOWN, TEXT_NOTICE_MORPHDATA_READY, TEXT_NOTICE_MORPHDATA_NOTFOUND, TEXT_NOTICE_INFLDATA_READY, TEXT_NOTICE_DEFSDATA_READY, TEXT_NOTICE_DEFSDATA_NOTFOUND, TEXT_NOTICE_NO_DEFS_FOUND, TEXT_NOTICE_LEXQUERY_COMPLETE, TEXT_NOTICE_GRAMMAR_READY, TEXT_NOTICE_GRAMMAR_COMPLETE, TEXT_NOTICE_RESQUERY_COMPLETE, TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS, TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS, LABEL_BROWSERACTION_DEACTIVATE, LABEL_BROWSERACTION_ACTIVATE, LABEL_BROWSERACTION_DISABLED, LABEL_CTXTMENU_DEACTIVATE, LABEL_CTXTMENU_ACTIVATE, LABEL_CTXTMENU_DISABLED, LABEL_CTXTMENU_OPENPANEL, LABEL_CTXTMENU_INFO, LABEL_CTXTMENU_SENDEXP, LABEL_LOOKUP_CONTROL, LABEL_LOOKUP_BUTTON, TOOLTIP_LOOKUP_BUTTON, LABEL_LOOKUP_SETTINGS, LABEL_RESKIN_SETTINGS, LABEL_RESET_OPTIONS, TOOLTIP_RESKIN_SMALLFONT, TOOLTIP_RESKIN_MEDIUMFONT, TOOLTIP_RESKIN_LARGEFONT, TOOLTIP_RESKIN_LIGHTBG, TOOLTIP_RESKIN_DARKBG, INFLECTIONS_CREDITS_TITLE, INFLECTIONS_PARADIGMS_EXPLANATORY_HINT, INFLECTIONS_MAIN_TABLE_LINK_TEXT, INFL_ATTRIBUTE_LINK_TEXT_SOURCE, EMBED_LIB_WARNING_TEXT, AUTH_LOGIN_BTN_LABEL, AUTH_LOGOUT_BTN_LABEL, AUTH_LOGIN_PROGRESS_MSG, AUTH_LOGIN_SUCCESS_MSG, AUTH_LOGIN_AUTH_FAILURE_MSG, AUTH_PROFILE_NICKNAME_LABEL, AUTH_PROFILE_NAME_LABEL, AUTH_LOGOUT_SUCCESS_MSG, FONTSIZE_TEXT_SMALL, FONTSIZE_TEXT_MEDIUM, FONTSIZE_TEXT_LARGE, TOOLTIP_BACK_TO_INDEX, default */
+/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, TITLE_HELP_PANEL, TITLE_INFLECTIONS_PANEL, TITLE_INFLECTIONS_BROWSER_PANEL, TOOLTIP_MOVE_PANEL_LEFT, TOOLTIP_MOVE_PANEL_RIGHT, TOOLTIP_CLOSE_PANEL, TOOLTIP_HELP, TOOLTIP_INFLECT, TOOLTIP_INFLECT_BROWSER, TOOLTIP_DEFINITIONS, TOOLTIP_GRAMMAR, TOOLTIP_TREEBANK, TOOLTIP_OPTIONS, TOOLTIP_STATUS, TOOLTIP_WORDLIST, TOOLTIP_USER, TOOLTIP_SHOW_INFLECTIONS, TOOLTIP_SHOW_DEFINITIONS, TOOLTIP_SHOW_OPTIONS, TOOLTIP_SHOW_USAGEEXAMPLES, TOOLTIP_MORPHOLOGY, TOOLTIP_NOT_AVAIL_POSTFIX, PLACEHOLDER_DEFINITIONS, PLACEHOLDER_INFLECT_IN_PROGRESS, LABEL_INFLECT_SELECT_POFS, LABEL_INFLECT_SHOWFULL, LABEL_INFLECT_COLLAPSE, TOOLTIP_INFLECT_SHOWFULL, TOOLTIP_INFLECT_COLLAPSE, LABEL_INFLECT_HIDEEMPTY, LABEL_INFLECT_SHOWEMPTY, TOOLTIP_INFLECT_HIDEEMPTY, TOOLTIP_INFLECT_SHOWEMPTY, INFLECT_MSG_TABLE_NOT_IMPLEMENTED, TEXT_INFO_GETTINGSTARTED, TEXT_INFO_ACTIVATE, TEXT_INFO_CLICK, TEXT_INFO_LANGDETECT, LABEL_INFO_CURRENTLANGUAGE, TEXT_INFO_SETTINGS, TEXT_INFO_ARROW, TEXT_INFO_REOPEN, TEXT_INFO_DEACTIVATE, TOOLTIP_POPUP_CLOSE, LABEL_POPUP_TREEBANK, LABEL_POPUP_INFLECT, LABEL_POPUP_OPTIONS, LABEL_POPUP_DEFINE, LABEL_POPUP_USAGEEXAMPLES, PLACEHOLDER_LEX_DATA_LOADING, PLACEHOLDER_NO_LANGUAGE_DATA, PLACEHOLDER_NO_MORPH_DATA, LABEL_PROVIDERS_CREDITS, LABEL_POPUP_SHOWCREDITS, LABEL_POPUP_HIDECREDITS, TEXT_NOTICE_SUGGEST_LOGIN, TEXT_NOTICE_CHANGE_LANGUAGE, TEXT_NOTICE_LANGUAGE_UNKNOWN, TEXT_NOTICE_MORPHDATA_READY, TEXT_NOTICE_MORPHDATA_NOTFOUND, TEXT_NOTICE_INFLDATA_READY, TEXT_NOTICE_DEFSDATA_READY, TEXT_NOTICE_DEFSDATA_NOTFOUND, TEXT_NOTICE_NO_DEFS_FOUND, TEXT_NOTICE_LEXQUERY_COMPLETE, TEXT_NOTICE_GRAMMAR_READY, TEXT_NOTICE_GRAMMAR_COMPLETE, TEXT_NOTICE_RESQUERY_COMPLETE, TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS, TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS, LABEL_BROWSERACTION_DEACTIVATE, LABEL_BROWSERACTION_ACTIVATE, LABEL_BROWSERACTION_DISABLED, LABEL_CTXTMENU_DEACTIVATE, LABEL_CTXTMENU_ACTIVATE, LABEL_CTXTMENU_DISABLED, LABEL_CTXTMENU_OPENPANEL, LABEL_CTXTMENU_INFO, LABEL_CTXTMENU_SENDEXP, LABEL_LOOKUP_CONTROL, LABEL_LOOKUP_BUTTON, TOOLTIP_LOOKUP_BUTTON, LABEL_LOOKUP_SETTINGS, LABEL_RESKIN_SETTINGS, LABEL_RESET_OPTIONS, TOOLTIP_RESKIN_SMALLFONT, TOOLTIP_RESKIN_MEDIUMFONT, TOOLTIP_RESKIN_LARGEFONT, TOOLTIP_RESKIN_LIGHTBG, TOOLTIP_RESKIN_DARKBG, INFLECTIONS_CREDITS_TITLE, INFLECTIONS_PARADIGMS_EXPLANATORY_HINT, INFLECTIONS_MAIN_TABLE_LINK_TEXT, INFL_ATTRIBUTE_LINK_TEXT_SOURCE, EMBED_LIB_WARNING_TEXT, AUTH_LOGIN_BTN_LABEL, AUTH_LOGOUT_BTN_LABEL, AUTH_LOGIN_PROGRESS_MSG, AUTH_LOGIN_SUCCESS_MSG, AUTH_LOGIN_AUTH_FAILURE_MSG, AUTH_PROFILE_NICKNAME_LABEL, AUTH_PROFILE_NAME_LABEL, AUTH_LOGOUT_SUCCESS_MSG, FONTSIZE_TEXT_SMALL, FONTSIZE_TEXT_MEDIUM, FONTSIZE_TEXT_LARGE, TOOLTIP_BACK_TO_INDEX, LABEL_FIELDSET_USAGEEXAMPLES, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a test message about a cookie.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\"},\"NUM_LINES_TEST_MESSAGE\":{\"message\":\"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\",\"params\":[\"numLines\"]},\"TITLE_HELP_PANEL\":{\"message\":\"Help\",\"description\":\"A title of a help panel\",\"component\":\"Panel\"},\"TITLE_INFLECTIONS_PANEL\":{\"message\":\"Inflection tables\",\"description\":\"A title of an inflections panel\",\"component\":\"Panel\"},\"TITLE_INFLECTIONS_BROWSER_PANEL\":{\"message\":\"Browse inflection tables\",\"description\":\"A title of an inflections browser panel\",\"component\":\"Panel\"},\"TOOLTIP_MOVE_PANEL_LEFT\":{\"message\":\"Move Panel to Left\",\"description\":\"tooltip for moving the panel to the left\",\"component\":\"Panel\"},\"TOOLTIP_MOVE_PANEL_RIGHT\":{\"message\":\"Move Panel to Right\",\"description\":\"tooltip for moving the panel to the right\",\"component\":\"Panel\"},\"TOOLTIP_CLOSE_PANEL\":{\"message\":\"Close Panel\",\"description\":\"tooltip for closing the panel\",\"component\":\"Panel\"},\"TOOLTIP_HELP\":{\"message\":\"Help\",\"description\":\"tooltip for help tab\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT\":{\"message\":\"Inflections\",\"description\":\"tooltip for inflections tab\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_BROWSER\":{\"message\":\"Browse Inflection Tables\",\"description\":\"tooltip for inflections browser tab\",\"component\":\"Panel\"},\"TOOLTIP_DEFINITIONS\":{\"message\":\"Definitions\",\"description\":\"tooltip for definitions tab\",\"component\":\"Panel\"},\"TOOLTIP_GRAMMAR\":{\"message\":\"Browse Grammar\",\"description\":\"tooltip for grammar tab\",\"component\":\"Panel\"},\"TOOLTIP_TREEBANK\":{\"message\":\"Diagram\",\"description\":\"tooltip for treebank tab\",\"component\":\"Panel\"},\"TOOLTIP_OPTIONS\":{\"message\":\"Options\",\"description\":\"tooltip for options tab\",\"component\":\"Panel\"},\"TOOLTIP_STATUS\":{\"message\":\"Status Messages\",\"description\":\"tooltip for status tab\",\"component\":\"Panel\"},\"TOOLTIP_WORDLIST\":{\"message\":\"User word list\",\"description\":\"tooltip for user word list tab\",\"component\":\"Panel\"},\"TOOLTIP_USER\":{\"message\":\"User info\",\"description\":\"tooltip for a user info tab\",\"component\":\"Panel\"},\"TOOLTIP_SHOW_INFLECTIONS\":{\"message\":\"Show inflections\",\"description\":\"tooltip for button inflections\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_DEFINITIONS\":{\"message\":\"Show definitions\",\"description\":\"tooltip for button definitions\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_OPTIONS\":{\"message\":\"Show options\",\"description\":\"tooltip for button options\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_USAGEEXAMPLES\":{\"message\":\"Show example usages of this word\",\"description\":\"tooltop for word usage examples button\",\"component\":\"Popup\"},\"TOOLTIP_MORPHOLOGY\":{\"message\":\"Lemma\",\"description\":\"tooltop for a morphology button\",\"component\":\"Panel\"},\"TOOLTIP_NOT_AVAIL_POSTFIX\":{\"message\":\"not available\",\"description\":\"A postix added to tooltips when they are not available\",\"component\":\"Any\"},\"PLACEHOLDER_DEFINITIONS\":{\"message\":\"Lookup a word to show definitions...\",\"description\":\"placeholder for definitions panel\",\"component\":\"Panel\"},\"PLACEHOLDER_INFLECT_IN_PROGRESS\":{\"message\":\"Lookup a word to show inflections...\",\"description\":\"placeholder for inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SELECT_POFS\":{\"message\":\"Part of speech:\",\"description\":\"label for part of speech selector on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SHOWFULL\":{\"message\":\"Expand\",\"description\":\"label for expand button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_COLLAPSE\":{\"message\":\"Collapse\",\"description\":\"label for collapse table button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_SHOWFULL\":{\"message\":\"This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table\",\"description\":\"tooltip for show full table button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_COLLAPSE\":{\"message\":\"This table shows all its columns. Click 'Collapse' to show the ones with matching endings only\",\"description\":\"tooltip for collapse table button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_HIDEEMPTY\":{\"message\":\"Hide empty columns\",\"description\":\"label for hide empty columns button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SHOWEMPTY\":{\"message\":\"Show empty columns\",\"description\":\"label for show empty columns button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_HIDEEMPTY\":{\"message\":\"Show table without empty columns\",\"description\":\"tooltip for hide empty columns button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_SHOWEMPTY\":{\"message\":\"Show table with empty columns\",\"description\":\"tooltip for show empty columns button on inflections panel\",\"component\":\"Panel\"},\"INFLECT_MSG_TABLE_NOT_IMPLEMENTED\":{\"message\":\"This table has not been implemented yet\",\"description\":\"tooltip to show instead of inflection table if the latter is not implemented\",\"component\":\"Panel\"},\"TEXT_INFO_GETTINGSTARTED\":{\"message\":\"Getting Started\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_ACTIVATE\":{\"message\":\"Activate on a page with Latin, Ancient Greek, Arabic or Persian text.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_CLICK\":{\"message\":\"Double-click on a word to retrieve morphology and short definitions.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_LANGDETECT\":{\"message\":\"Alpheios will try to detect the language of the word from the page markup. If it cannot it will use the default language.\",\"description\":\"info text\",\"component\":\"Panel\"},\"LABEL_INFO_CURRENTLANGUAGE\":{\"message\":\"Current language:\",\"description\":\"label for current language in info text\",\"component\":\"Panel\"},\"TEXT_INFO_SETTINGS\":{\"message\":\"Click the Options wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_ARROW\":{\"message\":\"Use the arrow at the top of this panel to move it from the right to left of your browser window.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_REOPEN\":{\"message\":\"You can reopen this panel at any time by selecting 'Info' from the Alpheios Reading Tools option in your browser's context menu.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_DEACTIVATE\":{\"message\":\"Deactivate Alpheios by clicking the toolbar icon or choosing 'Deactivate' from the Alpheios Reading Tools option in your browser's context menu.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TOOLTIP_POPUP_CLOSE\":{\"message\":\"Close Popup\",\"description\":\"tooltip for closing the popup\",\"component\":\"Popup\"},\"LABEL_POPUP_TREEBANK\":{\"message\":\"Diagram\",\"description\":\"label for treebank button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_INFLECT\":{\"message\":\"Inflect\",\"description\":\"label for inflect button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_OPTIONS\":{\"message\":\"Options\",\"description\":\"label for options button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_DEFINE\":{\"message\":\"Define\",\"description\":\"label for define button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_USAGEEXAMPLES\":{\"message\":\"Examples\",\"description\":\"label for usage examples button on popup\",\"component\":\"Popup\"},\"PLACEHOLDER_LEX_DATA_LOADING\":{\"message\":\"Lexical data is loading\",\"description\":\"placeholder text for popup data\",\"component\":\"Popup\"},\"PLACEHOLDER_NO_LANGUAGE_DATA\":{\"message\":\"Lexical data couldn't be populated because page language is not defined\",\"description\":\"placeholder text for popup data when language is not defined\",\"component\":\"Popup\"},\"PLACEHOLDER_NO_MORPH_DATA\":{\"message\":\"Lexical query produced no results\",\"description\":\"placeholder text for popup data\",\"component\":\"Popup\"},\"LABEL_PROVIDERS_CREDITS\":{\"message\":\"Credits\",\"description\":\"label for credits on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_SHOWCREDITS\":{\"message\":\"Show\",\"description\":\"label for show credits link on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_HIDECREDITS\":{\"message\":\"Hide\",\"description\":\"label for hide credits link on popup\",\"component\":\"Popup\"},\"TEXT_NOTICE_SUGGEST_LOGIN\":{\"message\":\"Login to save your words to your wordlist.\",\"description\":\"login notification\",\"component\":\"UI\"},\"TEXT_NOTICE_CHANGE_LANGUAGE\":{\"message\":\"Language: {languageName}<br>Wrong? Change to:\",\"description\":\"language notification\",\"component\":\"UI\",\"params\":[\"languageName\"]},\"TEXT_NOTICE_LANGUAGE_UNKNOWN\":{\"message\":\"unknown\",\"description\":\"unknown language notification\",\"component\":\"UI\"},\"TEXT_NOTICE_MORPHDATA_READY\":{\"message\":\"Morphological analyzer data is ready\",\"description\":\"morph data ready notice\",\"component\":\"UI\"},\"TEXT_NOTICE_MORPHDATA_NOTFOUND\":{\"message\":\"Morphological data not found. Definition queries pending.\",\"description\":\"morph data not found notice\",\"component\":\"UI\"},\"TEXT_NOTICE_INFLDATA_READY\":{\"message\":\"Inflection data is ready\",\"description\":\"inflection data ready notice\",\"component\":\"UI\"},\"TEXT_NOTICE_DEFSDATA_READY\":{\"message\":\"{requestType} request is completed successfully. Lemma: \\\"{lemma}\\\"\",\"description\":\"definition request success notice\",\"component\":\"UI\",\"params\":[\"requestType\",\"lemma\"]},\"TEXT_NOTICE_DEFSDATA_NOTFOUND\":{\"message\":\"{requestType} request failed. Lemma not found for: \\\"{word}\\\"\",\"description\":\"definition request success notice\",\"component\":\"UI\",\"params\":[\"requestType\",\"word\"]},\"TEXT_NOTICE_NO_DEFS_FOUND\":{\"message\":\"No definitions found\",\"description\":\"displayed by the morph compoennt when there are no definition data exist\",\"component\":\"UI\"},\"TEXT_NOTICE_LEXQUERY_COMPLETE\":{\"message\":\"All lexical queries complete.\",\"description\":\"lexical queries complete notice\",\"component\":\"UI\"},\"TEXT_NOTICE_GRAMMAR_READY\":{\"message\":\"Grammar resource retrieved\",\"description\":\"grammar retrieved notice\",\"component\":\"UI\"},\"TEXT_NOTICE_GRAMMAR_COMPLETE\":{\"message\":\"All grammar resource data retrieved\",\"description\":\"grammar retrieved notice\",\"component\":\"UI\"},\"TEXT_NOTICE_RESQUERY_COMPLETE\":{\"message\":\"All resource data retrieved\",\"description\":\"resource query complete notice\",\"component\":\"UI\"},\"TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS\":{\"message\":\"Please wait while data is retrieved ...\",\"description\":\"Data retrieval is in progress\",\"component\":\"UI\"},\"TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS\":{\"message\":\"Please wait while data is retrieved ...\",\"description\":\"Resource retrieval is in progress\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_DEACTIVATE\":{\"message\":\"Deactivate Alpheios\",\"description\":\"Deactivate browser action title\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_ACTIVATE\":{\"message\":\"Activate Alpheios\",\"description\":\"Activate browser action title\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_DISABLED\":{\"message\":\"(Alpheios Extension Disabled For Page)\",\"description\":\"Disabled browser action title\",\"component\":\"UI\"},\"LABEL_CTXTMENU_DEACTIVATE\":{\"message\":\"Deactivate\",\"description\":\"Deactivate context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_ACTIVATE\":{\"message\":\"Activate\",\"description\":\"Activate context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_DISABLED\":{\"message\":\"(Disabled)\",\"description\":\"Disabled context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_OPENPANEL\":{\"message\":\"Open Panel\",\"description\":\"Open Panel context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_INFO\":{\"message\":\"Info\",\"description\":\"Info context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_SENDEXP\":{\"message\":\"Send Experiences to remote server\",\"description\":\"send exp data context menu label\",\"component\":\"UI\"},\"LABEL_LOOKUP_CONTROL\":{\"message\":\"Show/Hide lookup\",\"description\":\"A tooltip for the button that turns the lookup panel on and off\",\"component\":\"Toolbar\"},\"LABEL_LOOKUP_BUTTON\":{\"message\":\"Lookup\",\"description\":\"lookup button in lookup.vue\",\"component\":\"Popup\"},\"TOOLTIP_LOOKUP_BUTTON\":{\"message\":\"Lookup word\",\"description\":\"Tooltip for the lookup button in lookup.vue\",\"component\":\"Lookup\"},\"LABEL_LOOKUP_SETTINGS\":{\"message\":\"Using Language...\",\"description\":\"Settings link-label in the lookup block in lookup.vue\",\"component\":\"Lookup\"},\"LABEL_RESKIN_SETTINGS\":{\"message\":\"Reskin options\",\"description\":\"Label for Reskin component\",\"component\":\"ReskinFontColor\"},\"LABEL_RESET_OPTIONS\":{\"message\":\"Reset All\",\"description\":\"Label for Reset button\",\"component\":\"Options\"},\"TOOLTIP_RESKIN_SMALLFONT\":{\"message\":\"Small font\",\"description\":\"Tooltip for small font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_MEDIUMFONT\":{\"message\":\"Medium font\",\"description\":\"Tooltip for medium font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_LARGEFONT\":{\"message\":\"Large font\",\"description\":\"Tooltip for large font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_LIGHTBG\":{\"message\":\"Light background\",\"description\":\"Tooltip for light colors schema icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_DARKBG\":{\"message\":\"Dark background\",\"description\":\"Tooltip for dark colors schema icon\",\"component\":\"ReskinFontColor\"},\"INFLECTIONS_CREDITS_TITLE\":{\"message\":\"Credits\",\"description\":\"Title of credits section on inflection tables panel\",\"component\":\"InflectionTables\"},\"INFLECTIONS_PARADIGMS_EXPLANATORY_HINT\":{\"message\":\"The following table(s) show conjugation patterns for verbs which are similar to those of <span>{word}</span>\",\"description\":\"A hint that indicates that the current table is representative pattern for verbs similar to the one chosen\",\"component\":\"InflectionTables\",\"params\":[\"word\"]},\"INFLECTIONS_MAIN_TABLE_LINK_TEXT\":{\"message\":\"Back to main\",\"description\":\"A link pointing to a main inflection table\",\"component\":\"InflectionTables\"},\"INFL_ATTRIBUTE_LINK_TEXT_SOURCE\":{\"message\":\"Source\",\"description\":\"A link pointing to the source of a lemma or inflection\",\"component\":\"InflAttribute\"},\"EMBED_LIB_WARNING_TEXT\":{\"message\":\"This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.\",\"description\":\"A message that is shown when an Alpheios extension is disabled due to embedded library presence\",\"component\":\"EmbedLibWarning\"},\"AUTH_LOGIN_BTN_LABEL\":{\"message\":\"Log In\",\"description\":\"A message shown on a log in button\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGOUT_BTN_LABEL\":{\"message\":\"Log Out\",\"description\":\"A message shown on a log out button\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_PROGRESS_MSG\":{\"message\":\"Please be patient while we are logging you in ...\",\"description\":\"A message shown to the user while he or she is waiting for an authentication to complete\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_SUCCESS_MSG\":{\"message\":\"Congratulations! You are logged in successfully.\",\"description\":\"A message shown to the user if he or she logged in successfully\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_AUTH_FAILURE_MSG\":{\"message\":\"Authentication failed\",\"description\":\"A message shown to the user if his or her authentication failed\",\"component\":\"UserAuth Vue Component\"},\"AUTH_PROFILE_NICKNAME_LABEL\":{\"message\":\"Nickname\",\"description\":\"A user's profile nickname filed label\",\"component\":\"UserAuth Vue Component\"},\"AUTH_PROFILE_NAME_LABEL\":{\"message\":\"Name\",\"description\":\"A user's profile name filed label\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGOUT_SUCCESS_MSG\":{\"message\":\"You have been logged out.\",\"description\":\"A message shown to the user if he or she logged out successfully\",\"component\":\"UserAuth Vue Component\"},\"FONTSIZE_TEXT_SMALL\":{\"message\":\"Small\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"FONTSIZE_TEXT_MEDIUM\":{\"message\":\"Medium\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"FONTSIZE_TEXT_LARGE\":{\"message\":\"Large\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"TOOLTIP_BACK_TO_INDEX\":{\"message\":\"Back to index\",\"description\":\"Description of back to index button\",\"component\":\"Grammar Tab\"}}");
+module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a test message about a cookie.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\"},\"NUM_LINES_TEST_MESSAGE\":{\"message\":\"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\",\"params\":[\"numLines\"]},\"TITLE_HELP_PANEL\":{\"message\":\"Help\",\"description\":\"A title of a help panel\",\"component\":\"Panel\"},\"TITLE_INFLECTIONS_PANEL\":{\"message\":\"Inflection tables\",\"description\":\"A title of an inflections panel\",\"component\":\"Panel\"},\"TITLE_INFLECTIONS_BROWSER_PANEL\":{\"message\":\"Browse inflection tables\",\"description\":\"A title of an inflections browser panel\",\"component\":\"Panel\"},\"TOOLTIP_MOVE_PANEL_LEFT\":{\"message\":\"Move Panel to Left\",\"description\":\"tooltip for moving the panel to the left\",\"component\":\"Panel\"},\"TOOLTIP_MOVE_PANEL_RIGHT\":{\"message\":\"Move Panel to Right\",\"description\":\"tooltip for moving the panel to the right\",\"component\":\"Panel\"},\"TOOLTIP_CLOSE_PANEL\":{\"message\":\"Close Panel\",\"description\":\"tooltip for closing the panel\",\"component\":\"Panel\"},\"TOOLTIP_HELP\":{\"message\":\"Help\",\"description\":\"tooltip for help tab\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT\":{\"message\":\"Inflections\",\"description\":\"tooltip for inflections tab\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_BROWSER\":{\"message\":\"Browse Inflection Tables\",\"description\":\"tooltip for inflections browser tab\",\"component\":\"Panel\"},\"TOOLTIP_DEFINITIONS\":{\"message\":\"Definitions\",\"description\":\"tooltip for definitions tab\",\"component\":\"Panel\"},\"TOOLTIP_GRAMMAR\":{\"message\":\"Browse Grammar\",\"description\":\"tooltip for grammar tab\",\"component\":\"Panel\"},\"TOOLTIP_TREEBANK\":{\"message\":\"Diagram\",\"description\":\"tooltip for treebank tab\",\"component\":\"Panel\"},\"TOOLTIP_OPTIONS\":{\"message\":\"Options\",\"description\":\"tooltip for options tab\",\"component\":\"Panel\"},\"TOOLTIP_STATUS\":{\"message\":\"Status Messages\",\"description\":\"tooltip for status tab\",\"component\":\"Panel\"},\"TOOLTIP_WORDLIST\":{\"message\":\"User word list\",\"description\":\"tooltip for user word list tab\",\"component\":\"Panel\"},\"TOOLTIP_USER\":{\"message\":\"User info\",\"description\":\"tooltip for a user info tab\",\"component\":\"Panel\"},\"TOOLTIP_SHOW_INFLECTIONS\":{\"message\":\"Show inflections\",\"description\":\"tooltip for button inflections\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_DEFINITIONS\":{\"message\":\"Show definitions\",\"description\":\"tooltip for button definitions\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_OPTIONS\":{\"message\":\"Show options\",\"description\":\"tooltip for button options\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_USAGEEXAMPLES\":{\"message\":\"Show example usages of this word\",\"description\":\"tooltop for word usage examples button\",\"component\":\"Popup\"},\"TOOLTIP_MORPHOLOGY\":{\"message\":\"Lemma\",\"description\":\"tooltop for a morphology button\",\"component\":\"Panel\"},\"TOOLTIP_NOT_AVAIL_POSTFIX\":{\"message\":\"not available\",\"description\":\"A postix added to tooltips when they are not available\",\"component\":\"Any\"},\"PLACEHOLDER_DEFINITIONS\":{\"message\":\"Lookup a word to show definitions...\",\"description\":\"placeholder for definitions panel\",\"component\":\"Panel\"},\"PLACEHOLDER_INFLECT_IN_PROGRESS\":{\"message\":\"Lookup a word to show inflections...\",\"description\":\"placeholder for inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SELECT_POFS\":{\"message\":\"Part of speech:\",\"description\":\"label for part of speech selector on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SHOWFULL\":{\"message\":\"Expand\",\"description\":\"label for expand button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_COLLAPSE\":{\"message\":\"Collapse\",\"description\":\"label for collapse table button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_SHOWFULL\":{\"message\":\"This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table\",\"description\":\"tooltip for show full table button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_COLLAPSE\":{\"message\":\"This table shows all its columns. Click 'Collapse' to show the ones with matching endings only\",\"description\":\"tooltip for collapse table button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_HIDEEMPTY\":{\"message\":\"Hide empty columns\",\"description\":\"label for hide empty columns button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SHOWEMPTY\":{\"message\":\"Show empty columns\",\"description\":\"label for show empty columns button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_HIDEEMPTY\":{\"message\":\"Show table without empty columns\",\"description\":\"tooltip for hide empty columns button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_SHOWEMPTY\":{\"message\":\"Show table with empty columns\",\"description\":\"tooltip for show empty columns button on inflections panel\",\"component\":\"Panel\"},\"INFLECT_MSG_TABLE_NOT_IMPLEMENTED\":{\"message\":\"This table has not been implemented yet\",\"description\":\"tooltip to show instead of inflection table if the latter is not implemented\",\"component\":\"Panel\"},\"TEXT_INFO_GETTINGSTARTED\":{\"message\":\"Getting Started\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_ACTIVATE\":{\"message\":\"Activate on a page with Latin, Ancient Greek, Arabic or Persian text.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_CLICK\":{\"message\":\"Double-click on a word to retrieve morphology and short definitions.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_LANGDETECT\":{\"message\":\"Alpheios will try to detect the language of the word from the page markup. If it cannot it will use the default language.\",\"description\":\"info text\",\"component\":\"Panel\"},\"LABEL_INFO_CURRENTLANGUAGE\":{\"message\":\"Current language:\",\"description\":\"label for current language in info text\",\"component\":\"Panel\"},\"TEXT_INFO_SETTINGS\":{\"message\":\"Click the Options wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_ARROW\":{\"message\":\"Use the arrow at the top of this panel to move it from the right to left of your browser window.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_REOPEN\":{\"message\":\"You can reopen this panel at any time by selecting 'Info' from the Alpheios Reading Tools option in your browser's context menu.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_DEACTIVATE\":{\"message\":\"Deactivate Alpheios by clicking the toolbar icon or choosing 'Deactivate' from the Alpheios Reading Tools option in your browser's context menu.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TOOLTIP_POPUP_CLOSE\":{\"message\":\"Close Popup\",\"description\":\"tooltip for closing the popup\",\"component\":\"Popup\"},\"LABEL_POPUP_TREEBANK\":{\"message\":\"Diagram\",\"description\":\"label for treebank button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_INFLECT\":{\"message\":\"Inflect\",\"description\":\"label for inflect button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_OPTIONS\":{\"message\":\"Options\",\"description\":\"label for options button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_DEFINE\":{\"message\":\"Define\",\"description\":\"label for define button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_USAGEEXAMPLES\":{\"message\":\"Examples\",\"description\":\"label for usage examples button on popup\",\"component\":\"Popup\"},\"PLACEHOLDER_LEX_DATA_LOADING\":{\"message\":\"Lexical data is loading\",\"description\":\"placeholder text for popup data\",\"component\":\"Popup\"},\"PLACEHOLDER_NO_LANGUAGE_DATA\":{\"message\":\"Lexical data couldn't be populated because page language is not defined\",\"description\":\"placeholder text for popup data when language is not defined\",\"component\":\"Popup\"},\"PLACEHOLDER_NO_MORPH_DATA\":{\"message\":\"Lexical query produced no results\",\"description\":\"placeholder text for popup data\",\"component\":\"Popup\"},\"LABEL_PROVIDERS_CREDITS\":{\"message\":\"Credits\",\"description\":\"label for credits on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_SHOWCREDITS\":{\"message\":\"Show\",\"description\":\"label for show credits link on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_HIDECREDITS\":{\"message\":\"Hide\",\"description\":\"label for hide credits link on popup\",\"component\":\"Popup\"},\"TEXT_NOTICE_SUGGEST_LOGIN\":{\"message\":\"Login to save your words to your wordlist.\",\"description\":\"login notification\",\"component\":\"UI\"},\"TEXT_NOTICE_CHANGE_LANGUAGE\":{\"message\":\"Language: {languageName}<br>Wrong? Change to:\",\"description\":\"language notification\",\"component\":\"UI\",\"params\":[\"languageName\"]},\"TEXT_NOTICE_LANGUAGE_UNKNOWN\":{\"message\":\"unknown\",\"description\":\"unknown language notification\",\"component\":\"UI\"},\"TEXT_NOTICE_MORPHDATA_READY\":{\"message\":\"Morphological analyzer data is ready\",\"description\":\"morph data ready notice\",\"component\":\"UI\"},\"TEXT_NOTICE_MORPHDATA_NOTFOUND\":{\"message\":\"Morphological data not found. Definition queries pending.\",\"description\":\"morph data not found notice\",\"component\":\"UI\"},\"TEXT_NOTICE_INFLDATA_READY\":{\"message\":\"Inflection data is ready\",\"description\":\"inflection data ready notice\",\"component\":\"UI\"},\"TEXT_NOTICE_DEFSDATA_READY\":{\"message\":\"{requestType} request is completed successfully. Lemma: \\\"{lemma}\\\"\",\"description\":\"definition request success notice\",\"component\":\"UI\",\"params\":[\"requestType\",\"lemma\"]},\"TEXT_NOTICE_DEFSDATA_NOTFOUND\":{\"message\":\"{requestType} request failed. Lemma not found for: \\\"{word}\\\"\",\"description\":\"definition request success notice\",\"component\":\"UI\",\"params\":[\"requestType\",\"word\"]},\"TEXT_NOTICE_NO_DEFS_FOUND\":{\"message\":\"No definitions found\",\"description\":\"displayed by the morph compoennt when there are no definition data exist\",\"component\":\"UI\"},\"TEXT_NOTICE_LEXQUERY_COMPLETE\":{\"message\":\"All lexical queries complete.\",\"description\":\"lexical queries complete notice\",\"component\":\"UI\"},\"TEXT_NOTICE_GRAMMAR_READY\":{\"message\":\"Grammar resource retrieved\",\"description\":\"grammar retrieved notice\",\"component\":\"UI\"},\"TEXT_NOTICE_GRAMMAR_COMPLETE\":{\"message\":\"All grammar resource data retrieved\",\"description\":\"grammar retrieved notice\",\"component\":\"UI\"},\"TEXT_NOTICE_RESQUERY_COMPLETE\":{\"message\":\"All resource data retrieved\",\"description\":\"resource query complete notice\",\"component\":\"UI\"},\"TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS\":{\"message\":\"Please wait while data is retrieved ...\",\"description\":\"Data retrieval is in progress\",\"component\":\"UI\"},\"TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS\":{\"message\":\"Please wait while data is retrieved ...\",\"description\":\"Resource retrieval is in progress\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_DEACTIVATE\":{\"message\":\"Deactivate Alpheios\",\"description\":\"Deactivate browser action title\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_ACTIVATE\":{\"message\":\"Activate Alpheios\",\"description\":\"Activate browser action title\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_DISABLED\":{\"message\":\"(Alpheios Extension Disabled For Page)\",\"description\":\"Disabled browser action title\",\"component\":\"UI\"},\"LABEL_CTXTMENU_DEACTIVATE\":{\"message\":\"Deactivate\",\"description\":\"Deactivate context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_ACTIVATE\":{\"message\":\"Activate\",\"description\":\"Activate context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_DISABLED\":{\"message\":\"(Disabled)\",\"description\":\"Disabled context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_OPENPANEL\":{\"message\":\"Open Panel\",\"description\":\"Open Panel context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_INFO\":{\"message\":\"Info\",\"description\":\"Info context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_SENDEXP\":{\"message\":\"Send Experiences to remote server\",\"description\":\"send exp data context menu label\",\"component\":\"UI\"},\"LABEL_LOOKUP_CONTROL\":{\"message\":\"Show/Hide lookup\",\"description\":\"A tooltip for the button that turns the lookup panel on and off\",\"component\":\"Toolbar\"},\"LABEL_LOOKUP_BUTTON\":{\"message\":\"Lookup\",\"description\":\"lookup button in lookup.vue\",\"component\":\"Popup\"},\"TOOLTIP_LOOKUP_BUTTON\":{\"message\":\"Lookup word\",\"description\":\"Tooltip for the lookup button in lookup.vue\",\"component\":\"Lookup\"},\"LABEL_LOOKUP_SETTINGS\":{\"message\":\"Using Language...\",\"description\":\"Settings link-label in the lookup block in lookup.vue\",\"component\":\"Lookup\"},\"LABEL_RESKIN_SETTINGS\":{\"message\":\"Reskin options\",\"description\":\"Label for Reskin component\",\"component\":\"ReskinFontColor\"},\"LABEL_RESET_OPTIONS\":{\"message\":\"Reset All\",\"description\":\"Label for Reset button\",\"component\":\"Options\"},\"TOOLTIP_RESKIN_SMALLFONT\":{\"message\":\"Small font\",\"description\":\"Tooltip for small font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_MEDIUMFONT\":{\"message\":\"Medium font\",\"description\":\"Tooltip for medium font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_LARGEFONT\":{\"message\":\"Large font\",\"description\":\"Tooltip for large font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_LIGHTBG\":{\"message\":\"Light background\",\"description\":\"Tooltip for light colors schema icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_DARKBG\":{\"message\":\"Dark background\",\"description\":\"Tooltip for dark colors schema icon\",\"component\":\"ReskinFontColor\"},\"INFLECTIONS_CREDITS_TITLE\":{\"message\":\"Credits\",\"description\":\"Title of credits section on inflection tables panel\",\"component\":\"InflectionTables\"},\"INFLECTIONS_PARADIGMS_EXPLANATORY_HINT\":{\"message\":\"The following table(s) show conjugation patterns for verbs which are similar to those of <span>{word}</span>\",\"description\":\"A hint that indicates that the current table is representative pattern for verbs similar to the one chosen\",\"component\":\"InflectionTables\",\"params\":[\"word\"]},\"INFLECTIONS_MAIN_TABLE_LINK_TEXT\":{\"message\":\"Back to main\",\"description\":\"A link pointing to a main inflection table\",\"component\":\"InflectionTables\"},\"INFL_ATTRIBUTE_LINK_TEXT_SOURCE\":{\"message\":\"Source\",\"description\":\"A link pointing to the source of a lemma or inflection\",\"component\":\"InflAttribute\"},\"EMBED_LIB_WARNING_TEXT\":{\"message\":\"This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.\",\"description\":\"A message that is shown when an Alpheios extension is disabled due to embedded library presence\",\"component\":\"EmbedLibWarning\"},\"AUTH_LOGIN_BTN_LABEL\":{\"message\":\"Log In\",\"description\":\"A message shown on a log in button\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGOUT_BTN_LABEL\":{\"message\":\"Log Out\",\"description\":\"A message shown on a log out button\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_PROGRESS_MSG\":{\"message\":\"Please be patient while we are logging you in ...\",\"description\":\"A message shown to the user while he or she is waiting for an authentication to complete\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_SUCCESS_MSG\":{\"message\":\"Congratulations! You are logged in successfully.\",\"description\":\"A message shown to the user if he or she logged in successfully\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_AUTH_FAILURE_MSG\":{\"message\":\"Authentication failed\",\"description\":\"A message shown to the user if his or her authentication failed\",\"component\":\"UserAuth Vue Component\"},\"AUTH_PROFILE_NICKNAME_LABEL\":{\"message\":\"Nickname\",\"description\":\"A user's profile nickname filed label\",\"component\":\"UserAuth Vue Component\"},\"AUTH_PROFILE_NAME_LABEL\":{\"message\":\"Name\",\"description\":\"A user's profile name filed label\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGOUT_SUCCESS_MSG\":{\"message\":\"You have been logged out.\",\"description\":\"A message shown to the user if he or she logged out successfully\",\"component\":\"UserAuth Vue Component\"},\"FONTSIZE_TEXT_SMALL\":{\"message\":\"Small\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"FONTSIZE_TEXT_MEDIUM\":{\"message\":\"Medium\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"FONTSIZE_TEXT_LARGE\":{\"message\":\"Large\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"TOOLTIP_BACK_TO_INDEX\":{\"message\":\"Back to index\",\"description\":\"Description of back to index button\",\"component\":\"Grammar Tab\"},\"LABEL_FIELDSET_USAGEEXAMPLES\":{\"message\":\"Latin Word Usage Examples (Concordance)\",\"description\":\"Legend for options fieldset\",\"component\":\"Options Tab\"}}");
 
 /***/ }),
 
@@ -56925,10 +59224,10 @@ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_19___namespace =
 /*!************************************************!*\
   !*** ./settings/feature-options-defaults.json ***!
   \************************************************/
-/*! exports provided: domain, items, default */
+/*! exports provided: domain, version, items, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"domain\":\"alpheios-feature-options\",\"items\":{\"enableLemmaTranslations\":{\"defaultValue\":false,\"labelText\":\"Experimental: Enable Latin Lemma Translations\",\"boolean\":true,\"values\":[{\"value\":true,\"text\":\"Yes\"},{\"value\":false,\"text\":\"No\"}]},\"locale\":{\"defaultValue\":\"en-US\",\"labelText\":\"UI Locale:\",\"values\":[{\"value\":\"en-US\",\"text\":\"English (US)\"},{\"value\":\"fr\",\"text\":\"French\"},{\"value\":\"de\",\"text\":\"German\"},{\"value\":\"it\",\"text\":\"Italian\"},{\"value\":\"pt\",\"text\":\"Portuguese\"},{\"value\":\"es\",\"text\":\"Spanish\"},{\"value\":\"ca\",\"text\":\"Catalonian\"}]},\"enableWordUsageExamples\":{\"defaultValue\":true,\"labelText\":\"Experimental: Enable Latin Word Usage Examples (Concordance)\",\"boolean\":true,\"values\":[{\"value\":true,\"text\":\"Yes\"},{\"value\":false,\"text\":\"No\"}]},\"wordUsageExamplesON\":{\"defaultValue\":\"onDemand\",\"labelText\":\"Get word usage examples:\",\"values\":[{\"value\":\"onDemand\",\"text\":\"On demand\"},{\"value\":\"onLexicalQuery\",\"text\":\"On LexicalQuery\"}],\"hidden\":true},\"wordUsageExamplesAuthMax\":{\"defaultValue\":3,\"labelText\":\"Word Usage Examples - max results per author\",\"number\":true,\"minValue\":1,\"maxValue\":1000,\"values\":[]},\"wordUsageExamplesMax\":{\"defaultValue\":5000,\"labelText\":\"Word Usage Examples - max results for single author request\",\"number\":true,\"minValue\":1,\"maxValue\":1000,\"values\":[]},\"preferredLanguage\":{\"defaultValue\":\"lat\",\"labelText\":\"Page language:\",\"values\":[{\"value\":\"lat\",\"text\":\"Latin\"},{\"value\":\"grc\",\"text\":\"Greek\"},{\"value\":\"ara\",\"text\":\"Arabic\"},{\"value\":\"per\",\"text\":\"Persian\"},{\"value\":\"gez\",\"text\":\"Ancient Ethiopic (Ge'ez - Experimental)\"}]},\"lookupLanguage\":{\"defaultValue\":\"default\",\"labelText\":\"Change language:\",\"values\":[{\"value\":\"default\",\"text\":\"Default\"},{\"value\":\"lat\",\"text\":\"Latin\"},{\"value\":\"grc\",\"text\":\"Greek\"},{\"value\":\"ara\",\"text\":\"Arabic\"},{\"value\":\"per\",\"text\":\"Persian\"},{\"value\":\"gez\",\"text\":\"Ancient Ethiopic (Ge'ez - Experimental)\"}]}}}");
+module.exports = JSON.parse("{\"domain\":\"alpheios-feature-options\",\"version\":2,\"items\":{\"enableLemmaTranslations\":{\"defaultValue\":false,\"labelText\":\"Enable Latin Lemma Translations (Experimental)\",\"boolean\":true,\"values\":[{\"value\":true,\"text\":\"Yes\"},{\"value\":false,\"text\":\"No\"}]},\"locale\":{\"defaultValue\":\"en-US\",\"labelText\":\"UI Locale:\",\"values\":[{\"value\":\"en-US\",\"text\":\"English (US)\"},{\"value\":\"fr\",\"text\":\"French\"},{\"value\":\"de\",\"text\":\"German\"},{\"value\":\"it\",\"text\":\"Italian\"},{\"value\":\"pt\",\"text\":\"Portuguese\"},{\"value\":\"es\",\"text\":\"Spanish\"},{\"value\":\"ca\",\"text\":\"Catalonian\"}]},\"enableWordUsageExamples\":{\"defaultValue\":true,\"labelText\":\"Enable\",\"boolean\":true,\"values\":[{\"value\":true,\"text\":\"Yes\"},{\"value\":false,\"text\":\"No\"}]},\"wordUsageExamplesON\":{\"defaultValue\":\"onDemand\",\"labelText\":\"Mode:\",\"values\":[{\"value\":\"onDemand\",\"text\":\"On demand\"},{\"value\":\"onLexicalQuery\",\"text\":\"On LexicalQuery\"}],\"hidden\":true},\"wordUsageExamplesAuthMax\":{\"defaultValue\":3,\"labelText\":\"Max results per author (initial search)\",\"number\":true,\"minValue\":1,\"maxValue\":1000,\"values\":[]},\"wordUsageExamplesMax\":{\"defaultValue\":5000,\"labelText\":\"Max total results ('Author/Work Focus' searches)\",\"number\":true,\"minValue\":1,\"maxValue\":1000,\"values\":[]},\"preferredLanguage\":{\"defaultValue\":\"lat\",\"labelText\":\"Page language:\",\"values\":[{\"value\":\"lat\",\"text\":\"Latin\"},{\"value\":\"grc\",\"text\":\"Greek\"},{\"value\":\"ara\",\"text\":\"Arabic\"},{\"value\":\"per\",\"text\":\"Persian\"},{\"value\":\"gez\",\"text\":\"Ancient Ethiopic (Ge'ez - Experimental)\"}]},\"lookupLanguage\":{\"defaultValue\":\"default\",\"labelText\":\"Change language:\",\"values\":[{\"value\":\"default\",\"text\":\"Default\"},{\"value\":\"lat\",\"text\":\"Latin\"},{\"value\":\"grc\",\"text\":\"Greek\"},{\"value\":\"ara\",\"text\":\"Arabic\"},{\"value\":\"per\",\"text\":\"Persian\"},{\"value\":\"gez\",\"text\":\"Ancient Ethiopic (Ge'ez - Experimental)\"}]}}}");
 
 /***/ }),
 
@@ -56936,10 +59235,10 @@ module.exports = JSON.parse("{\"domain\":\"alpheios-feature-options\",\"items\":
 /*!*************************************************!*\
   !*** ./settings/language-options-defaults.json ***!
   \*************************************************/
-/*! exports provided: domain, items, default */
+/*! exports provided: domain, version, items, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"domain\":\"alpheios-resource-options\",\"items\":{\"lexicons\":{\"labelText\":\"Lexicons (Full Definitions)\",\"group\":{\"grc\":{\"defaultValue\":[\"https://github.com/alpheios-project/lsj\"],\"labelText\":\"Greek Lexicons\",\"multiValue\":true,\"values\":[{\"value\":\"https://github.com/alpheios-project/ml\",\"text\":\"Middle Liddell\"},{\"value\":\"https://github.com/alpheios-project/lsj\",\"text\":\"Liddell, Scott, Jones\"},{\"value\":\"https://github.com/alpheios-project/aut\",\"text\":\"Autenrieth Homeric Lexicon\"},{\"value\":\"https://github.com/alpheios-project/dod\",\"text\":\"Dodson\"},{\"value\":\"https://github.com/alpheios-project/as\",\"text\":\"Abbott-Smith\"}]},\"lat\":{\"defaultValue\":[\"https://github.com/alpheios-project/ls\"],\"labelText\":\"Latin Lexicons\",\"multiValue\":true,\"values\":[{\"value\":\"https://github.com/alpheios-project/ls\",\"text\":\"Lewis & Short\"}]},\"ara\":{\"defaultValue\":[\"https://github.com/alpheios-project/lan\"],\"labelText\":\"Arabic Lexicons\",\"multiValue\":true,\"values\":[{\"value\":\"https://github.com/alpheios-project/lan\",\"text\":\"Lane\"},{\"value\":\"https://github.com/alpheios-project/sal\",\"text\":\"Salmone\"}]},\"per\":{\"defaultValue\":[\"https://github.com/alpheios-project/stg\"],\"labelText\":\"Persian Lexicons\",\"multiValue\":true,\"values\":[{\"value\":\"https://github.com/alpheios-project/stg\",\"text\":\"Steingass\"}]}}},\"lexiconsShort\":{\"labelText\":\"Lexicons (Short Definitions)\",\"group\":{\"grc\":{\"defaultValue\":[\"https://github.com/alpheios-project/lsj\"],\"labelText\":\"Greek Lexicons (short)\",\"multiValue\":true,\"values\":[{\"value\":\"https://github.com/alpheios-project/ml\",\"text\":\"Middle Liddell\"},{\"value\":\"https://github.com/alpheios-project/lsj\",\"text\":\"Liddell, Scott, Jones\"},{\"value\":\"https://github.com/alpheios-project/aut\",\"text\":\"Autenrieth Homeric Lexicon\"},{\"value\":\"https://github.com/alpheios-project/dod\",\"text\":\"Dodson\"},{\"value\":\"https://github.com/alpheios-project/as\",\"text\":\"Abbott-Smith\"}]},\"per\":{\"defaultValue\":[\"https://github.com/alpheios-project/stg\"],\"labelText\":\"Persian Lexicons (short)\",\"multiValue\":true,\"values\":[{\"value\":\"https://github.com/alpheios-project/stg\",\"text\":\"Steingass\"}]}}},\"treebanks\":{\"labelText\":\"Latin Treebanks\",\"defaultValue\":[],\"multiValue\":true,\"values\":[]}}}");
+module.exports = JSON.parse("{\"domain\":\"alpheios-resource-options\",\"version\":2,\"items\":{\"lexicons\":{\"labelText\":\"Lexicons (Full Definitions)\",\"group\":{\"grc\":{\"defaultValue\":[\"https://github.com/alpheios-project/lsj\"],\"labelText\":\"Greek Lexicons\",\"multiValue\":true,\"values\":[{\"value\":\"https://github.com/alpheios-project/ml\",\"text\":\"Middle Liddell\"},{\"value\":\"https://github.com/alpheios-project/lsj\",\"text\":\"Liddell, Scott, Jones\"},{\"value\":\"https://github.com/alpheios-project/aut\",\"text\":\"Autenrieth Homeric Lexicon\"},{\"value\":\"https://github.com/alpheios-project/dod\",\"text\":\"Dodson\"},{\"value\":\"https://github.com/alpheios-project/as\",\"text\":\"Abbott-Smith\"}]},\"lat\":{\"defaultValue\":[\"https://github.com/alpheios-project/ls\"],\"labelText\":\"Latin Lexicons\",\"multiValue\":true,\"values\":[{\"value\":\"https://github.com/alpheios-project/ls\",\"text\":\"Lewis & Short\"}]},\"ara\":{\"defaultValue\":[\"https://github.com/alpheios-project/lan\"],\"labelText\":\"Arabic Lexicons\",\"multiValue\":true,\"values\":[{\"value\":\"https://github.com/alpheios-project/lan\",\"text\":\"Lane\"},{\"value\":\"https://github.com/alpheios-project/sal\",\"text\":\"Salmone\"}]},\"per\":{\"defaultValue\":[\"https://github.com/alpheios-project/stg\"],\"labelText\":\"Persian Lexicons\",\"multiValue\":true,\"values\":[{\"value\":\"https://github.com/alpheios-project/stg\",\"text\":\"Steingass\"}]}}},\"lexiconsShort\":{\"labelText\":\"Lexicons (Short Definitions)\",\"group\":{\"grc\":{\"defaultValue\":[\"https://github.com/alpheios-project/lsj\"],\"labelText\":\"Greek Lexicons (short)\",\"multiValue\":true,\"values\":[{\"value\":\"https://github.com/alpheios-project/ml\",\"text\":\"Middle Liddell\"},{\"value\":\"https://github.com/alpheios-project/lsj\",\"text\":\"Liddell, Scott, Jones\"},{\"value\":\"https://github.com/alpheios-project/aut\",\"text\":\"Autenrieth Homeric Lexicon\"},{\"value\":\"https://github.com/alpheios-project/dod\",\"text\":\"Dodson\"},{\"value\":\"https://github.com/alpheios-project/as\",\"text\":\"Abbott-Smith\"}]},\"per\":{\"defaultValue\":[\"https://github.com/alpheios-project/stg\"],\"labelText\":\"Persian Lexicons (short)\",\"multiValue\":true,\"values\":[{\"value\":\"https://github.com/alpheios-project/stg\",\"text\":\"Steingass\"}]}}},\"treebanks\":{\"labelText\":\"Latin Treebanks\",\"defaultValue\":[],\"multiValue\":true,\"values\":[]}}}");
 
 /***/ }),
 
@@ -56950,7 +59249,7 @@ module.exports = JSON.parse("{\"domain\":\"alpheios-resource-options\",\"items\"
 /*! exports provided: 0, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("[{\"uriMatch\":\"https?://thelatinlibrary.com/caesar/gall1.shtml\",\"options\":[{\"domain\":\"alpheios-resource-options\",\"items\":{\"treebanks\":{\"labelText\":\"Treebanks\",\"defaultValue\":\"http://alpheios.net/alpheios-treebanks/tbext.html?owner=perseids-project&repos=harrington_trees&collid=lattb&objid=7229&doc=lattb.7229.1\",\"multiValue\":false,\"values\":[{\"value\":\"http://alpheios.net/alpheios-treebanks/tbext.html?owner=perseids-project&repos=harrington_trees&collid=lattb&objid=7229&doc=lattb.7229.1\",\"test\":\"Example Site Treebank\"}]}}}]}]");
+module.exports = JSON.parse("[{\"uriMatch\":\"https?://thelatinlibrary.com/caesar/gall1.shtml\",\"options\":[{\"domain\":\"alpheios-resource-options\",\"version\":2,\"items\":{\"treebanks\":{\"labelText\":\"Treebanks\",\"defaultValue\":\"http://alpheios.net/alpheios-treebanks/tbext.html?owner=perseids-project&repos=harrington_trees&collid=lattb&objid=7229&doc=lattb.7229.1\",\"multiValue\":false,\"values\":[{\"value\":\"http://alpheios.net/alpheios-treebanks/tbext.html?owner=perseids-project&repos=harrington_trees&collid=lattb&objid=7229&doc=lattb.7229.1\",\"test\":\"Example Site Treebank\"}]}}}]}]");
 
 /***/ }),
 
@@ -56958,10 +59257,10 @@ module.exports = JSON.parse("[{\"uriMatch\":\"https?://thelatinlibrary.com/caesa
 /*!*******************************************!*\
   !*** ./settings/ui-options-defaults.json ***!
   \*******************************************/
-/*! exports provided: domain, items, default */
+/*! exports provided: domain, version, items, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"domain\":\"alpheios-ui-options\",\"items\":{\"fontSize\":{\"defaultValue\":\"medium\",\"labelText\":\"Font size\",\"values\":[{\"value\":\"small\",\"text\":\"Small font size\"},{\"value\":\"medium\",\"text\":\"Medium font size\"},{\"value\":\"large\",\"text\":\"Large font size\"}]},\"panelPosition\":{\"defaultValue\":\"left\",\"labelText\":\"Panel position:\",\"values\":[{\"value\":\"left\",\"text\":\"Left\"},{\"value\":\"right\",\"text\":\"Right\"}]},\"popupPosition\":{\"defaultValue\":\"fixed\",\"labelText\":\"Popup position:\",\"values\":[{\"value\":\"flexible\",\"text\":\"Flexible\"},{\"value\":\"fixed\",\"text\":\"Fixed\"}]},\"popupShiftX\":{\"defaultValue\":0,\"labelText\":\"Popup shift, x axe:\",\"number\":true,\"values\":[]},\"popupShiftY\":{\"defaultValue\":0,\"labelText\":\"Popup shift, y axe:\",\"number\":true,\"values\":[]},\"toolbarShiftX\":{\"defaultValue\":0,\"labelText\":\"Toolbar shift, x axe:\",\"number\":true,\"values\":[]},\"toolbarShiftY\":{\"defaultValue\":0,\"labelText\":\"Toolbar shift, y axe:\",\"number\":true,\"values\":[]},\"verboseMode\":{\"defaultValue\":\"normal\",\"labelText\":\"Log Level\",\"values\":[{\"value\":\"verbose\",\"text\":\"Verbose\"},{\"value\":\"normal\",\"text\":\"Normal\"}]}}}");
+module.exports = JSON.parse("{\"domain\":\"alpheios-ui-options\",\"version\":2,\"items\":{\"fontSize\":{\"defaultValue\":\"medium\",\"labelText\":\"Font size\",\"values\":[{\"value\":\"12\",\"text\":\"Small font size\"},{\"value\":\"16\",\"text\":\"Medium font size\"},{\"value\":\"20\",\"text\":\"Large font size\"}]},\"panelPosition\":{\"defaultValue\":\"left\",\"labelText\":\"Panel position:\",\"values\":[{\"value\":\"left\",\"text\":\"Left\"},{\"value\":\"right\",\"text\":\"Right\"}]},\"popupShiftX\":{\"defaultValue\":0,\"labelText\":\"Popup shift, x axe:\",\"number\":true,\"values\":[]},\"popupShiftY\":{\"defaultValue\":0,\"labelText\":\"Popup shift, y axe:\",\"number\":true,\"values\":[]},\"toolbarShiftX\":{\"defaultValue\":0,\"labelText\":\"Toolbar shift, x axe:\",\"number\":true,\"values\":[]},\"toolbarShiftY\":{\"defaultValue\":0,\"labelText\":\"Toolbar shift, y axe:\",\"number\":true,\"values\":[]},\"verboseMode\":{\"defaultValue\":\"normal\",\"labelText\":\"Log Level\",\"values\":[{\"value\":\"verbose\",\"text\":\"Verbose\"},{\"value\":\"normal\",\"text\":\"Normal\"}]}}}");
 
 /***/ }),
 
@@ -59875,7 +62174,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _word_context_panel_vue_vue_type_template_id_4d1dab3a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-context-panel.vue?vue&type=template&id=4d1dab3a& */ "./vue/components/word-list/word-context-panel.vue?vue&type=template&id=4d1dab3a&");
 /* harmony import */ var _word_context_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./word-context-panel.vue?vue&type=script&lang=js& */ "./vue/components/word-list/word-context-panel.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _word_context_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./word-context-panel.vue?vue&type=style&index=0&lang=scss& */ "./vue/components/word-list/word-context-panel.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -59883,7 +62184,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _word_context_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _word_context_panel_vue_vue_type_template_id_4d1dab3a___WEBPACK_IMPORTED_MODULE_0__["render"],
   _word_context_panel_vue_vue_type_template_id_4d1dab3a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -59912,6 +62213,22 @@ component.options.__file = "vue/components/word-list/word-context-panel.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_context_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib??vue-loader-options!../../../../node_modules/source-map-loader!./word-context-panel.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/word-list/word-context-panel.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_context_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./vue/components/word-list/word-context-panel.vue?vue&type=style&index=0&lang=scss&":
+/*!*******************************************************************************************!*\
+  !*** ./vue/components/word-list/word-context-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \*******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./word-context-panel.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-list/word-context-panel.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_context_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -60276,6 +62593,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_panel_vue_vue_type_template_id_4aac1be8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_list_panel_vue_vue_type_template_id_4aac1be8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./vue/components/word-list/word-sorting-panel.vue":
+/*!*********************************************************!*\
+  !*** ./vue/components/word-list/word-sorting-panel.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _word_sorting_panel_vue_vue_type_template_id_28fb43f8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./word-sorting-panel.vue?vue&type=template&id=28fb43f8& */ "./vue/components/word-list/word-sorting-panel.vue?vue&type=template&id=28fb43f8&");
+/* harmony import */ var _word_sorting_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./word-sorting-panel.vue?vue&type=script&lang=js& */ "./vue/components/word-list/word-sorting-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _word_sorting_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./word-sorting-panel.vue?vue&type=style&index=0&lang=scss& */ "./vue/components/word-list/word-sorting-panel.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _word_sorting_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _word_sorting_panel_vue_vue_type_template_id_28fb43f8___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _word_sorting_panel_vue_vue_type_template_id_28fb43f8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "vue/components/word-list/word-sorting-panel.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./vue/components/word-list/word-sorting-panel.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./vue/components/word-list/word-sorting-panel.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_sorting_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib??vue-loader-options!../../../../node_modules/source-map-loader!./word-sorting-panel.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/word-list/word-sorting-panel.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_word_sorting_panel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./vue/components/word-list/word-sorting-panel.vue?vue&type=style&index=0&lang=scss&":
+/*!*******************************************************************************************!*\
+  !*** ./vue/components/word-list/word-sorting-panel.vue?vue&type=style&index=0&lang=scss& ***!
+  \*******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_sorting_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./word-sorting-panel.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-list/word-sorting-panel.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_sorting_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_sorting_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_sorting_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_sorting_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_word_sorting_panel_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./vue/components/word-list/word-sorting-panel.vue?vue&type=template&id=28fb43f8&":
+/*!****************************************************************************************!*\
+  !*** ./vue/components/word-list/word-sorting-panel.vue?vue&type=template&id=28fb43f8& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_sorting_panel_vue_vue_type_template_id_28fb43f8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./word-sorting-panel.vue?vue&type=template&id=28fb43f8& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/word-list/word-sorting-panel.vue?vue&type=template&id=28fb43f8&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_sorting_panel_vue_vue_type_template_id_28fb43f8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_word_sorting_panel_vue_vue_type_template_id_28fb43f8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -61375,6 +63779,10 @@ ActionPanelModule.store = (moduleInstance) => {
     state: {
       // Whether an action panel is shown or hidden
       visible: false,
+      // If a lookup input shall be shown when a panel is open
+      showLookup: moduleInstance.config.showLookup,
+      // If nav buttons shall be shown when a panel is open
+      showNav: moduleInstance.config.showNav,
       // Initial position of an action panel
       initialPos: moduleInstance.config.initialPos
     },
@@ -61382,8 +63790,12 @@ ActionPanelModule.store = (moduleInstance) => {
       /**
        * Opens an action panel
        * @param state
+       * @param {boolean} showLookup - Whether to show the lookup input
+       * @param {boolean} showNav - Whether to show navigational buttons
        */
-      open (state) {
+      open (state, { showLookup, showNav }) {
+        state.showLookup = typeof showLookup === 'undefined' ? moduleInstance.config.showLookup : showLookup
+        state.showNav = typeof showNav === 'undefined' ? moduleInstance.config.showNav : showNav
         state.visible = true
       },
 
@@ -61393,6 +63805,9 @@ ActionPanelModule.store = (moduleInstance) => {
        */
       close (state) {
         state.visible = false
+        // Set showLookup and showNav to their default values
+        state.showLookup = moduleInstance.config.showLookup
+        state.showNav = moduleInstance.config.showNav
       }
     }
   }
@@ -61424,7 +63839,11 @@ ActionPanelModule._configDefaults = {
   initialShift: {
     x: 0,
     y: 0
-  }
+  },
+  // Whether a lookup input will be shown when the panel is opened
+  showLookup: true,
+  // Whether to show nave buttons when the panel is opened
+  showNav: true
 }
 
 
@@ -61608,14 +64027,7 @@ PopupModule.store = (moduleInstance) => {
 
     state: {
       // Whether a popup is displayed
-      visible: false,
-
-      positioning: moduleInstance.config.positioning
-    },
-
-    getters: {
-      isFlexPositioned: state => state.positioning === 'flexible',
-      isFixedPositioned: state => state.positioning === 'fixed'
+      visible: false
     },
 
     mutations: {
@@ -61633,16 +64045,8 @@ PopupModule.store = (moduleInstance) => {
        */
       close (state) {
         state.visible = false
-      },
-
-      /**
-       * Changes a positioning schema of a popup
-       * @param state
-       * @param {string} positioning - A positioning rule for a popup, see defaults for details.
-       */
-      setPositioning (state, positioning) {
-        state.positioning = positioning
       }
+
     }
   }
 }
@@ -61665,11 +64069,6 @@ PopupModule._configDefaults = {
   // Whether a popup can be dragged and resized
   draggable: true,
   resizable: true,
-
-  // How the popup is positioned:
-  //     `fixed`: will remember its last position;
-  //     `flexible`: will try to adapt its position to appear near the selected word (experimental)
-  positioning: 'fixed',
 
   // How much a popup is shifted from its initial position.
   initialShift: {

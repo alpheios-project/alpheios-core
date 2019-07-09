@@ -339,7 +339,7 @@ export default class UIController {
     // Create a copy of resource options for the lookup UI component
     // this doesn't get reloaded from the storage adapter because
     // we don't expose it to the user via preferences
-    this.lookupResourceOptions = new Options(this.resourceOptionsDefaults, new this.options.storageAdapter(this.resourceOptionsDefaults.domain))
+    this.lookupResourceOptions = new Options(this.resourceOptionsDefaults, new this.options.storageAdapter(this.resourceOptionsDefaults.domain)) // eslint-disable-line new-cap
     // TODO: Site options should probably be initialized the same way as other options objects
     this.siteOptions = this.loadSiteOptions(this.siteOptionsDefaults)
 
@@ -365,7 +365,7 @@ export default class UIController {
       // so they remain out of dynamic state for now - should eventually
       // refactor
       lookupResourceOptions: this.lookupResourceOptions,
-      siteOptions: this.siteOptions,
+      siteOptions: this.siteOptions
     }
     this.store.registerModule('settings', {
       // All stores of modules are namespaced
@@ -380,23 +380,25 @@ export default class UIController {
         resourceResetCounter: 0
       },
       mutations: {
-        incrementUiResetCounter (state){
+        incrementUiResetCounter (state) {
           state.uiResetCounter += 1
         },
 
-        incrementFeatureResetCounter (state){
+        incrementFeatureResetCounter (state) {
           state.featureResetCounter += 1
         },
 
-        incrementResourceResetCounter (state){
+        incrementResourceResetCounter (state) {
           state.resourceResetCounter += 1
         }
       }
     })
 
     this.api.app = {
-      name: this.options.app.name, // A name of an application
-      version: this.options.app.version, // An application's version
+      name: this.options.app.name, // A name of a host application (embed lib or webextension)
+      version: this.options.app.version, // An version of a host application (embed lib or webextension)
+      libName: UIController.libName, // A name of the components library
+      libVersion: UIController.libVersion, // A version of the components library
       platform: this.platform,
       mode: this.options.mode, // Mode of an application: `production` or `development`
       defaultTab: tabs.DEFAULT, // A name of a default tab (a string)
@@ -786,10 +788,10 @@ export default class UIController {
    * @param {Object} authData optional authentication data if the adapter is one that requires it
    * @return Promise[] an array of promises to load the options data from the adapter
    */
-  initOptions(StorageAdapter,authData=null) {
-    this.featureOptions = new Options(this.featureOptionsDefaults, new StorageAdapter(this.featureOptionsDefaults.domain,authData))
-    this.resourceOptions = new Options(this.resourceOptionsDefaults, new StorageAdapter(this.resourceOptionsDefaults.domain,authData))
-    this.uiOptions = new Options(this.uiOptionsDefaults, new StorageAdapter(this.uiOptionsDefaults.domain,authData))
+  initOptions (StorageAdapter, authData = null) {
+    this.featureOptions = new Options(this.featureOptionsDefaults, new StorageAdapter(this.featureOptionsDefaults.domain, authData))
+    this.resourceOptions = new Options(this.resourceOptionsDefaults, new StorageAdapter(this.resourceOptionsDefaults.domain, authData))
+    this.uiOptions = new Options(this.uiOptionsDefaults, new StorageAdapter(this.uiOptionsDefaults.domain, authData))
     return [this.featureOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
   }
 
@@ -801,7 +803,7 @@ export default class UIController {
       this.userDataManager = new UserDataManager(authData, WordlistController.evt)
       wordLists = await this.wordlistC.initLists(this.userDataManager)
       this.store.commit('app/setWordLists', wordLists)
-      optionLoadPromises = this.initOptions(RemoteAuthStorageArea,authData)
+      optionLoadPromises = this.initOptions(RemoteAuthStorageArea, authData)
     } else {
       // TODO we need to make the UserDataManager a singleton that can
       // handle switching users gracefully
@@ -944,7 +946,7 @@ export default class UIController {
     let allSiteOptions = []
     for (let site of siteOptions) {
       for (let domain of site.options) {
-        let siteOpts = new Options(domain, new this.options.storageAdapter(domain.domain))
+        let siteOpts = new Options(domain, new this.options.storageAdapter(domain.domain)) // eslint-disable-line new-cap
         allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
     }
@@ -1358,20 +1360,20 @@ export default class UIController {
     }
   }
 
-  getFeatureOptions() {
+  getFeatureOptions () {
     return this.featureOptions
   }
 
-  getResourceOptions() {
+  getResourceOptions () {
     return this.resourceOptions
   }
 
-  getUiOptions() {
+  getUiOptions () {
     return this.uiOptions
   }
 
-  verboseMode() {
-    return this.uiOptions.items.verboseMode.currentValue === "verbose"
+  verboseMode () {
+    return this.uiOptions.items.verboseMode.currentValue === 'verbose'
   }
 
   async getWordUsageData (homonym, params = {}) {
@@ -1592,12 +1594,12 @@ export default class UIController {
   /**
    * Updates the Application State after settings have been reset or reloaded
    */
-  onOptionsReset() {
+  onOptionsReset () {
     for (let name of this.featureOptions.names) {
       this.featureOptionStateChange(name)
       this.store.commit('settings/incrementFeatureResetCounter')
     }
-    for (let name of this.resourceOptions.names) {
+    for (let name of this.resourceOptions.names) { // eslint-disable-line no-unused-vars
       this.store.commit('settings/incrementResourceResetCounter')
     }
     for (let name of this.uiOptions.names) {
@@ -1606,14 +1608,13 @@ export default class UIController {
     }
   }
 
-
   /**
    * Handle a change to a single feature option
    * @param {String} name the setting name
    * @param {String} value the new value
    */
   featureOptionChange (name, value) {
-    let featureOptions =  this.api.settings.getFeatureOptions()
+    let featureOptions = this.api.settings.getFeatureOptions()
     // TODO we need to refactor handling of boolean options
     if (name === 'enableLemmaTranslations' ||
         name === 'enableWordUsageExamples' ||
@@ -1630,7 +1631,7 @@ export default class UIController {
    * Updates the state of a feature to correspond to current options
    * @param {String} settingName the name of the setting
    */
-  featureOptionStateChange(settingName) {
+  featureOptionStateChange (settingName) {
     switch (settingName) {
       case 'locale':
         this.updateLemmaTranslations()
@@ -1666,7 +1667,7 @@ export default class UIController {
    * Updates the state of a ui component to correspond to current options
    * @param {String} settingName the name of the setting
    */
-  uiOptionStateChange(settingName) {
+  uiOptionStateChange (settingName) {
     let uiOptions = this.api.settings.getUiOptions()
     const FONT_SIZE_PROP = '--alpheios-base-text-size'
     switch (settingName) {

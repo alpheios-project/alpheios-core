@@ -14,15 +14,15 @@ import axios from 'axios'
  *
  */
 export default class RemoteAuthStorageArea extends StorageAdapter {
-  constructor (domain = 'alpheios-storage-domain', auth=null) {
+  constructor (domain = 'alpheios-storage-domain', auth = null) {
     super(domain)
     if (!auth ||
-        ! auth.endpoints ||
-        ! auth.endpoints.settings.match(/^https:\/\//) ||
-        ! auth.accessToken) {
-            throw new Error("Authentication details missing or invalid")
+        !auth.endpoints ||
+        !auth.endpoints.settings.match(/^https:\/\//) ||
+        !auth.accessToken) {
+      throw new Error('Authentication details missing or invalid')
     }
-    this.baseURL = auth.endpoints.settings,
+    this.baseURL = auth.endpoints.settings
     this.requestContext = {
       headers: {
         common: {
@@ -42,7 +42,7 @@ export default class RemoteAuthStorageArea extends StorageAdapter {
    */
   async set (keysObject) {
     for (const [key, value] of Object.entries(keysObject)) {
-      let url  = `${this.baseURL}/${key}`
+      let url = `${this.baseURL}/${key}`
       let result = await axios.post(url, value, this.requestContext)
       if (result.status !== 201) {
         throw new Error(`Unexpected result status from settings api: ${result.status}`)
@@ -57,7 +57,7 @@ export default class RemoteAuthStorageArea extends StorageAdapter {
    * found in the storage area. If this operation failed, the promise will be rejected with an error message.
    */
   async get () {
-    let url  = `${this.baseURL}?domain=${this.domain}`
+    let url = `${this.baseURL}?domain=${this.domain}`
     let result = await axios.get(url, this.requestContext)
     if (result.status === 200) {
       return result.data
@@ -72,8 +72,8 @@ export default class RemoteAuthStorageArea extends StorageAdapter {
    * @return {Promise} A Promise that executes the operation.
    */
   async clearAll () {
-    let url  = `${this.baseURL}?domain=${this.domain}`
-    let result = await axios.delete(url,this.requestContext)
+    let url = `${this.baseURL}?domain=${this.domain}`
+    let result = await axios.delete(url, this.requestContext)
     if (result.status !== 200) {
       throw new Error(`Unexpected result status from settings api: ${result.status}`)
     }

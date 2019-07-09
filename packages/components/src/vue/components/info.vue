@@ -1,6 +1,10 @@
 <template>
   <div class="alpheios-info">
-    <div class="alpheios-info__versiontext alpheios-text__smallest">{{ app.name }} {{ app.version }}
+    <div class="alpheios-info__versiontext alpheios-text__smallest">
+      {{ app.name }} {{ app.version }}
+    </div>
+    <div class="alpheios-info__versiontext alpheios-text__smallest">
+      {{ app.libName }} {{ app.libVersion }}
     </div>
     <div class="alpheios-info__currentlanguage alpheios-text__smallest">{{ l10n.getMsg('LABEL_INFO_CURRENTLANGUAGE') }}
       {{ $store.state.app.currentLanguageName }}

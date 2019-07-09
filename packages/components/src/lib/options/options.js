@@ -33,11 +33,11 @@ export default class Options {
       if (value.group) {
         items[option] = []
         for (let [group, item] of Object.entries(value.group)) {
-          let key = Options.constructKey(domain,version,option,group)
+          let key = Options.constructKey(domain, version, option, group)
           items[option].push(new OptionItem(item, key, storageAdapter))
         }
       } else {
-        let key = Options.constructKey(domain,version,option)
+        let key = Options.constructKey(domain, version, option)
         items[option] = new OptionItem(value, key, storageAdapter)
       }
     }
@@ -67,7 +67,7 @@ export default class Options {
       for (let key in values) {
         let parsedKey = Options.parseKey(key)
         // TODO when we do increase the version we should handle conversion
-        if (this.items.hasOwnProperty(parsedKey.name) && this.version == parsedKey.version) {
+        if (this.items.hasOwnProperty(parsedKey.name) && this.version === parsedKey.version) {
           if (parsedKey.group) {
             this.items[parsedKey.name].forEach((f) => {
               if (f.name === key) {
@@ -79,7 +79,6 @@ export default class Options {
               }
             })
           } else {
-            let value
             try {
               this.items[parsedKey.name].currentValue = JSON.parse(values[key])
             } catch (e) {
@@ -108,7 +107,7 @@ export default class Options {
    * @param {String} name - the setting name
    * @param {String} group - optional setting group
    */
-  static constructKey (domain, version, name, group=null) {
+  static constructKey (domain, version, name, group = null) {
     let key = `${domain}__${version}__${name}`
     if (group) {
       key = `${key}__${group}`
