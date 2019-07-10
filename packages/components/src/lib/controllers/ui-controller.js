@@ -1684,7 +1684,7 @@ export default class UIController {
         break
       case 'hideLoginPrompt':
         if (this.api.auth) {
-          this.store.commit(`auth/setHideLoginPrompt`,uiOptions.items.hideLoginPrompt.currentValue)
+          this.store.commit(`auth/setHideLoginPrompt`, uiOptions.items.hideLoginPrompt.currentValue)
         }
         break
     }

@@ -91,7 +91,7 @@ AuthModule.store = (moduleInstance) => {
        * @param {Boolean} data value for state.notification.hideLoginPrompt
        *                       true if login prompt is to be hidden, false if not
        */
-      setHideLoginPrompt (state,data) {
+      setHideLoginPrompt (state, data) {
         state.notification.hideLoginPrompt = data
         // if we are responding to a request to hide the login prompt
         // set any current login notification to invisible
