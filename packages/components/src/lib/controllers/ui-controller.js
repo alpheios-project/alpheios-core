@@ -1655,7 +1655,7 @@ export default class UIController {
     // TODO this should really be handled within OptionsItem
     // the difference between value and textValues is a little confusing
     // see issue #73
-    if (name === 'fontSize') {
+    if (name === 'fontSize' || name === 'hideLoginPrompt') {
       uiOptions.items[name].setValue(value)
     } else {
       uiOptions.items[name].setTextValue(value)
@@ -1681,6 +1681,11 @@ export default class UIController {
         break
       case 'panelPosition':
         this.store.commit('panel/setPosition', uiOptions.items.panelPosition.currentValue)
+        break
+      case 'hideLoginPrompt':
+        if (this.api.auth) {
+          this.store.commit(`auth/setHideLoginPrompt`,uiOptions.items.hideLoginPrompt.currentValue)
+        }
         break
     }
   }

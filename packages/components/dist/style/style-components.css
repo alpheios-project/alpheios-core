@@ -1387,8 +1387,14 @@ select.alpheios-setting__control,
   padding-right: calc(var(--alpheios-base-ui-size) * 0.625);
   flex: 1 1 auto;
 }
+.alpheios-notification-area__control {
+  display: inline;
+}
 .alpheios-notification-area__control .alpheios-setting__control {
   width: 140px;
+}
+.alpheios-notification-area__controlbox {
+  flex-flow: wrap;
 }
 /*
  Calculates a size of text elements relative to the base size.

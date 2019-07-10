@@ -9,6 +9,12 @@
     </setting>
     <setting
         :classes="['alpheios-ui-options__item']"
+        :data="uiOptions.items.hideLoginPrompt"
+        @change="uiOptionChanged"
+    >
+    </setting>
+    <setting
+        :classes="['alpheios-ui-options__item']"
         :data="uiOptions.items.verboseMode"
         @change="uiOptionChanged"
     >

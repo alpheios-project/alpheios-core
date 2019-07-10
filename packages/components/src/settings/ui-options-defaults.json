@@ -71,6 +71,21 @@
           "text": "Normal"
         }
       ]
+    },
+    "hideLoginPrompt": {
+      "defaultValue": false,
+      "labelText": "Hide Login Prompt",
+      "boolean": true,
+      "values": [
+        {
+          "value": true,
+          "text": "Yes"
+        },
+        {
+          "value": false,
+          "text": "No"
+        }
+      ]
     }
   }
 }

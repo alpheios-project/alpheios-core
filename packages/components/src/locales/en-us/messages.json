@@ -494,6 +494,11 @@
     "description": "A message that is shown when an Alpheios extension is disabled due to embedded library presence",
     "component": "EmbedLibWarning"
   },
+  "AUTH_HIDE_LOGIN_BTN_LABEL": {
+    "message": "Don't Ask Again",
+    "description": "button to hide login",
+    "component": "Notification Area Vue Component"
+  },
   "AUTH_LOGIN_BTN_LABEL": {
     "message": "Log In",
     "description": "A message shown on a log in button",

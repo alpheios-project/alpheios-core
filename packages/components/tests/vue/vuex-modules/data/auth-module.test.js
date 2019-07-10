@@ -114,6 +114,7 @@ describe('auth-module.test.js', () => {
     expect(store.state.auth.enableLogin).toEqual(true)
     expect(store.state.auth.notification.visible).toEqual(false)
     expect(store.state.auth.notification.showLogin).toEqual(false)
+    expect(store.state.auth.notification.hideLoginPrompt).toEqual(false)
     expect(store.state.auth.notification.count).toEqual(0)
     expect(store.state.auth.notification.text).toBeNull()
   })
@@ -164,6 +165,13 @@ describe('auth-module.test.js', () => {
     expect(store.state.auth.notification.showLogin).toBeTruthy()
     expect(store.state.auth.notification.count).toEqual(10)
     expect(store.state.auth.notification.text).toEqual(mockMessage.text)
+  })
+  it(`AuthModule's setNotification() store mutation should obey hideLoginPrompt`, () => {
+    const authModule = new AuthModule(store, api, { auth: mockAppAuth })
+    store.commit('auth/setHideLoginPrompt',true)
+    let mockMessage = { text: 'mockmessage', showLogin: true, count: 10}
+    store.commit(`auth/setNotification`, mockMessage)
+    expect(store.state.auth.notification.visible).toBeFalsy()
   })
   it(`AuthModule's resetNotification() store mutation should clear notification state`, () => {
     const authModule = new AuthModule(store, api, { auth: mockAppAuth })
@@ -259,5 +267,18 @@ describe('auth-module.test.js', () => {
     expect(result.accessToken).toEqual(mockToken)
     expect(result.userId).toEqual(mockProfile.sub)
     expect(result.endpoints).toEqual(mockEP)
+  })
+  
+  it('AuthModule APIs setHideLoginPrompt updates set and closes notification', () => {
+    const authModule = new AuthModule(store, api, { auth: mockAppAuth })
+    let mockMessage = { text: 'mockmessage', showLogin: true, count: 10}
+    store.commit(`auth/setNotification`, mockMessage)
+    expect(store.state.auth.notification.visible).toBeTruthy()
+    expect(store.state.auth.notification.showLogin).toBeTruthy()
+    expect(store.state.auth.notification.count).toEqual(10)
+    expect(store.state.auth.notification.text).toEqual(mockMessage.text)
+    store.commit(`auth/setHideLoginPrompt`, true)
+    expect(store.state.auth.notification.hideLoginPrompt).toBeTruthy()
+    expect(store.state.auth.notification.visible).toBeFalsy()
   })
 })

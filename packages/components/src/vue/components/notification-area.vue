@@ -26,17 +26,24 @@
     </div>
     <div
         class="alpheios-notification-area__notification alpheios-notification-area__notification--important alpheios-notification-area__login-notification"
-        :data-count="$store.state.auth.notification.count"
         v-show="showLoginNotification"
     >
       <div
           class="alpheios-notification-area__msg"
           v-html="l10n.getMsg($store.state.auth.notification.text)"
       />
-      <login
+      <div class="alpheios-notification-area__controlbox">
+        <login
           class="alpheios-notification-area__control"
           btn-class="alpheios-button-primary"
-      />
+        />
+        <button
+          @click="hideLoginPrompt"
+          class="alpheios-button-tertiary"
+          v-show="!$store.state.auth.hideLoginPrompt && $store.state.auth.notification.count >= 3">
+          {{ l10n.getMsg(`AUTH_HIDE_LOGIN_BTN_LABEL`) }}
+        </button>
+      </div>
       <div
           class="alpheios-notification-area__close-btn"
           @click="$store.commit(`auth/resetNotification`)"
@@ -52,12 +59,13 @@ import CloseIcon from '@/images/inline-icons/x-close.svg'
 // UI modules
 import Setting from '@/vue/components/setting.vue'
 import Login from '@/vue/components/login.vue'
+import Options from '@/lib/options/options.js'
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'NotificationArea',
-  inject: ['app', 'l10n', 'settings'],
+  inject: ['app', 'l10n', 'settings','ui'],
   storeModules: ['ui', 'auth'],
   mixins: [DependencyCheck],
   components: {
@@ -85,15 +93,18 @@ export default {
 
     showLoginNotification () {
       return Boolean(
-        this.$store.state.auth.notification.visible &&
-        (this.$store.state.auth.notification.count === 1 || this.$store.state.auth.notification.count % 10 === 0)
+        this.$store.state.auth.notification.visible
       )
     }
   },
 
   methods: {
     featureOptionChanged: function (name, value) {
-      this.app.featureOptionChange(name, value)
+      let keyinfo = Options.parseKey(name)
+      this.app.featureOptionChange(keyinfo.name, value)
+    },
+    hideLoginPrompt: function () {
+      this.ui.optionChange('hideLoginPrompt',true)
     }
   }
 }
@@ -179,9 +190,13 @@ export default {
     }
 
     &__control {
+      display: inline;
       .alpheios-setting__control {
         width: 140px;
       }
+    }
+    &__controlbox {
+      flex-flow: wrap;
     }
   }
 </style>
