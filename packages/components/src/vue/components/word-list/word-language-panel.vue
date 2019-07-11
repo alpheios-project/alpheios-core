@@ -41,7 +41,7 @@
         </div>
 
         <div class="alpheios-wordlist-filter-panel">
-          <word-filter-panel 
+          <word-filter-panel
             @changedFilterBy="changedFilterBy"
             @clearClickedLemma = "clearClickedLemma"
             :clickedLemma = "clickedLemma"
@@ -52,7 +52,7 @@
           />
         </div>
         <div class="alpheios-wordlist-sorting-panel">
-          <word-sorting-panel 
+          <word-sorting-panel
             v-show = "hasSeveralItems"
             @changeSorting = "changeSorting"
           />
@@ -109,7 +109,7 @@ export default {
         'byImportant': (wordItem) => wordItem.important,
         'byExactForm': (wordItem) => wordItem.targetWord.toLowerCase() === this.textInput.toLowerCase(),
         'byLemma': (wordItem) => wordItem.lemmasList.split(', ').some(lemmaItem => lemmaItem.toLowerCase() === this.textInput.toLowerCase())
-      }, 
+      },
       clearFilters: 0,
       sortingState: {
         'targetWord': null
@@ -123,10 +123,10 @@ export default {
     wordlist () {
       this.clearFilters = this.clearFilters + 1
       this.changedFilterBy(null, null)
-      return this.$store.state.app.wordListUpdateTime && this.reloadList ? this.app.getWordList(this.languageCode) : { items: {} }
+      return this.$store.state.app.wordListUpdateTime && this.reloadList ? this.app.getWordList(this.languageCode) : { items: {}, values: {} }
     },
     wordItems () {
-      if (this.$store.state.app.wordListUpdateTime && this.reloadList) {        
+      if (this.$store.state.app.wordListUpdateTime && this.reloadList) {
         if (!this.selectedFilterBy) {
           let result = this.wordlist.values
           this.applySorting(result)
@@ -140,7 +140,7 @@ export default {
         } else {
           console.warn(`The current filter method - ${this.selectedFilterBy} - is not defined, that's why empty result is returned!`)
         }
-      }      
+      }
       return []
     },
     wordExactForms () {
@@ -218,16 +218,14 @@ export default {
     applySorting (items) {
       let part = 'targetWord'
       return items.sort( (item1, item2) => {
-        let formattedItem1 = item1[part].toUpperCase()
-        let formattedItem2 = item2[part].toUpperCase()
-
-        if (formattedItem1 < formattedItem2) { 
-          return this.sortingState[part] === 'asc' ? -1 : ( this.sortingState[part] === 'desc' ? 1 : 0 )
+        let compared = item1[part].localeCompare(item2[part],this.languageCode,{sensitivity: 'accent'})
+        if (this.sortingState[part] === 'asc') {
+          return compared
+        } else if (this.sortingState[part] === 'desc') {
+          return -compared
+        } else {
+          return 0 // default state is unsorted
         }
-        if (formattedItem1 > formattedItem2) { 
-          return this.sortingState[part] === 'asc' ? 1 : ( this.sortingState[part] === 'desc' ? -1 : 0 )
-        }
-        if (formattedItem1 === formattedItem2) { return 0 }
       })
     }
   }
