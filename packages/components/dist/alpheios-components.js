@@ -11730,7 +11730,7 @@ function polyfill(window) {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * interact.js 1.4.12
+ * interact.js 1.4.14
  *
  * Copyright (c) 2012-2019 Taye Adeyemi <dev@taye.me>
  * Released under the MIT License.
@@ -14213,23 +14213,21 @@ function ___interopRequireWildcard_62(obj) { if (obj && obj.__esModule) { return
 function ___interopRequireDefault_62(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function getStringOptionResult(value, interactable, element) {
-  if (!__is_62.string(value)) {
-    return null;
-  }
-
   if (value === 'parent') {
-    value = (0, _$domUtils_50.parentNode)(element);
-  } else if (value === 'self') {
-    value = interactable.getRect(element);
-  } else {
-    value = (0, _$domUtils_50.closest)(element, value);
+    return (0, _$domUtils_50.parentNode)(element);
   }
 
-  return value;
+  if (value === 'self') {
+    return interactable.getRect(element);
+  }
+
+  return (0, _$domUtils_50.closest)(element, value);
 }
 
 function resolveRectLike(value, interactable, element, functionArgs) {
-  value = getStringOptionResult(value, interactable, element) || value;
+  if (__is_62.string(value)) {
+    value = getStringOptionResult(value, interactable, element);
+  }
 
   if (__is_62.func(value)) {
     value = value.apply(null, functionArgs);
@@ -18692,7 +18690,6 @@ function ___arrayWithHoles_30(arr) { if (Array.isArray(arr)) return arr; }
 function __install_30(scope) {
   var interactions = scope.interactions;
   scope.defaults.perAction.modifiers = [];
-  scope.modifiers = {};
   interactions.signals.on('new', function (_ref) {
     var interaction = _ref.interaction;
     interaction.modifiers = {
@@ -18710,11 +18707,11 @@ function __install_30(scope) {
     };
   });
   interactions.signals.on('before-action-start', function (arg) {
-    __start_30(arg, arg.interaction.coords.start.page, scope.modifiers);
+    __start_30(arg, arg.interaction.coords.start.page);
   });
   interactions.signals.on('action-resume', function (arg) {
     stop(arg);
-    __start_30(arg, arg.interaction.coords.cur.page, scope.modifiers);
+    __start_30(arg, arg.interaction.coords.cur.page);
     __beforeMove_30(arg);
   });
   interactions.signals.on('after-action-move', restoreCoords);
@@ -18725,12 +18722,12 @@ function __install_30(scope) {
   interactions.signals.on('stop', stop);
 }
 
-function __start_30(_ref2, pageCoords, registeredModifiers) {
+function __start_30(_ref2, pageCoords) {
   var interaction = _ref2.interaction,
       phase = _ref2.phase;
   var interactable = interaction.interactable,
       element = interaction.element;
-  var modifierList = getModifierList(interaction, registeredModifiers);
+  var modifierList = getModifierList(interaction);
   var states = prepareStates(modifierList);
   var rect = (0, ___extend_30["default"])({}, interaction.rect);
 
@@ -18941,19 +18938,13 @@ function stop(arg) {
   arg.interaction.modifiers.endPrevented = false;
 }
 
-function getModifierList(interaction, registeredModifiers) {
+function getModifierList(interaction) {
   var actionOptions = interaction.interactable.options[interaction.prepared.name];
   var actionModifiers = actionOptions.modifiers;
 
   if (actionModifiers && actionModifiers.length) {
     return actionModifiers.filter(function (modifier) {
       return !modifier.options || modifier.options.enabled !== false;
-    }).map(function (modifier) {
-      if (!modifier.methods && modifier.type) {
-        return registeredModifiers[modifier.type](modifier);
-      }
-
-      return modifier;
     });
   }
 
@@ -19100,14 +19091,15 @@ function makeModifier(module, name) {
       }
     }
 
-    return {
+    var m = {
       options: options,
       methods: methods,
       name: name
     };
+    return m;
   };
 
-  if (typeof name === 'string') {
+  if (name && typeof name === 'string') {
     // for backwrads compatibility
     modifier._defaults = defaults;
     modifier._methods = methods;
@@ -19696,8 +19688,8 @@ function __set_34(arg) {
 
   var rect = ___rect_34["default"].xywhToTlbr(interaction.resizeRects.inverted);
 
-  var minSize = ___rect_34["default"].tlbrToXywh(_edges["default"].getRestrictionRect(options.min, interaction)) || noMin;
-  var maxSize = ___rect_34["default"].tlbrToXywh(_edges["default"].getRestrictionRect(options.max, interaction)) || noMax;
+  var minSize = ___rect_34["default"].tlbrToXywh(_edges["default"].getRestrictionRect(options.min, interaction, arg.coords)) || noMin;
+  var maxSize = ___rect_34["default"].tlbrToXywh(_edges["default"].getRestrictionRect(options.max, interaction, arg.coords)) || noMax;
   state.options = {
     enabled: options.enabled,
     endOnly: options.endOnly,
@@ -21350,13 +21342,13 @@ function ___interopRequireWildcard_27(obj) { if (obj && obj.__esModule) { return
 function __init_27(window) {
   _interact.scope.init(window);
 
-  _interact["default"].use(_interactablePreventDefault["default"]); // inertia
+  _interact["default"].use(_interactablePreventDefault["default"]); // pointerEvents
 
 
-  _interact["default"].use(_inertia["default"]); // pointerEvents
+  _interact["default"].use(__pointerEvents_27); // inertia
 
 
-  _interact["default"].use(__pointerEvents_27); // autoStart, hold
+  _interact["default"].use(_inertia["default"]); // autoStart, hold
 
 
   _interact["default"].use(autoStart); // drag and drop, resize, gesture
@@ -21389,7 +21381,7 @@ function __init_27(window) {
 } // eslint-disable-next-line no-undef
 
 
-_interact["default"].version = "1.4.12";
+_interact["default"].version = "1.4.14";
 var ___default_27 = _interact["default"];
 _$interact_27["default"] = ___default_27;
 
@@ -21512,8 +21504,8 @@ function __init_29(win) {
   (0, ___interact_29.init)(win);
   return ___interact_29["default"].use({
     id: 'interactjs',
-    install: function install(scope) {
-      ___interact_29["default"].modifiers = (0, ___extend_29["default"])(scope.modifiers, __modifiers_29);
+    install: function install() {
+      ___interact_29["default"].modifiers = (0, ___extend_29["default"])({}, __modifiers_29);
       ___interact_29["default"].snappers = snappers;
       ___interact_29["default"].createSnapGrid = ___interact_29["default"].snappers.grid;
     }
@@ -51476,7 +51468,7 @@ module.exports = g;
 /*! exports provided: name, version, description, main, module, scripts, repository, author, license, bugs, homepage, devDependencies, peerDependencies, engines, jest, eslintConfig, eslintIgnore, dependencies, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"alpheios-components\",\"version\":\"1.2.2\",\"description\":\"Alpheios Components\",\"main\":\"dist/alpheios-components.min.js\",\"module\":\"src/plugin.js\",\"scripts\":{\"test\":\"eslint --fix src/**/*.js && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-lib\":\"eslint --fix src/**/*.js && jest tests/lib --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-components\":\"eslint --fix src/**/*.js && jest tests/vue --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-c\":\"eslint --fix src/**/*.js && jest tests/vue/components/word-usage-examples/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage\",\"test-a\":\"eslint --fix src/**/*.js && jest tests/lib/options/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage\",\"test-s\":\"eslint --fix src/**/*.js && AUTH_TOKEN=alpheiosMockUserIdlP0DWnmNxe ENDPOINT='https://8wkx9pxc55.execute-api.us-east-2.amazonaws.com/prod/settings' jest tests/lib/options --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"build\":\"npm run build-safari && npm run build-regular\",\"build-regular\":\"eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue config.mjs\",\"build-safari\":\"eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue-postcss config-safari.mjs\",\"build-prod\":\"eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack production vue config.mjs\",\"build-dev\":\"eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development vue config.mjs\",\"code-analysis-prod\":\"node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue config.mjs --code-analysis\",\"code-analysis-dev\":\"node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development vue config.mjs --code-analysis\",\"lint\":\"eslint --fix src/**/*.js && eslint --fix-dry-run src/**/*.vue\"},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/alpheios-project/components.git\"},\"author\":\"The Alpheios Project, Ltd.\",\"license\":\"ISC\",\"bugs\":{\"url\":\"https://github.com/alpheios-project/components/issues\"},\"homepage\":\"https://github.com/alpheios-project/components#readme\",\"devDependencies\":{\"@babel/core\":\"^7.5.0\",\"@babel/plugin-proposal-object-rest-spread\":\"^7.5.1\",\"@babel/plugin-transform-runtime\":\"^7.5.0\",\"@babel/runtime\":\"^7.5.1\",\"@vue/test-utils\":\"^1.0.0-beta.29\",\"acorn\":\"^6.2.0\",\"alpheios-client-adapters\":\"github:alpheios-project/client-adapters\",\"alpheios-data-models\":\"github:alpheios-project/data-models\",\"alpheios-experience\":\"github:alpheios-project/experience\",\"alpheios-inflection-tables\":\"github:alpheios-project/inflection-tables\",\"alpheios-node-build\":\"github:alpheios-project/node-build\",\"alpheios-res-client\":\"github:alpheios-project/res-client\",\"alpheios-wordlist\":\"github:alpheios-project/wordlist\",\"autoprefixer\":\"^9.6.1\",\"axios\":\"^0.18.0\",\"babel-core\":\"^7.0.0-bridge.0\",\"babel-eslint\":\"^10.0.2\",\"bytes\":\"^3.1.0\",\"chalk\":\"^2.4.2\",\"coveralls\":\"^3.0.4\",\"css-loader\":\"^3.0.0\",\"dom-anchor-text-quote\":\"*\",\"element-closest\":\"^3.0.1\",\"eslint\":\"^6.0.1\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-plugin-import\":\"^2.18.0\",\"eslint-plugin-node\":\"^9.1.0\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"eslint-plugin-vue\":\"^5.2.3\",\"eslint-scope\":\"^4.0.3\",\"espree\":\"^6.0.0\",\"file-loader\":\"^4.0.0\",\"flush-promises\":\"^1.0.2\",\"html-loader\":\"^0.5.5\",\"html-loader-jest\":\"^0.2.1\",\"interactjs\":\"^1.4.12\",\"intl-messageformat\":\"^2.2.0\",\"jest\":\"^24.8.0\",\"jump.js\":\"^1.0.2\",\"mini-css-extract-plugin\":\"^0.7.0\",\"postcss-import\":\"^12.0.1\",\"postcss-loader\":\"^3.0.0\",\"postcss-safe-important\":\"^1.1.0\",\"postcss-scss\":\"^2.0.0\",\"raw-loader\":\"^3.0.0\",\"sass-loader\":\"^7.1.0\",\"shelljs\":\"^0.8.3\",\"sinon\":\"^7.3.2\",\"source-map-loader\":\"^0.2.4\",\"style-loader\":\"^0.23.1\",\"vue\":\"^2.6.10\",\"vue-eslint-parser\":\"^6.0.4\",\"vue-jest\":\"^3.0.4\",\"vue-loader\":\"^15.7.0\",\"vue-multiselect\":\"^2.1.6\",\"vue-style-loader\":\"^4.1.2\",\"vue-svg-loader\":\"^0.12.0\",\"vue-template-compiler\":\"^2.6.10\",\"vue-template-loader\":\"^1.0.0\",\"vuex\":\"^3.1.1\",\"webpack\":\"^4.35.3\",\"whatwg-fetch\":\"^3.0.0\",\"wrap-range-text\":\"^1.0.1\"},\"peerDependencies\":{},\"engines\":{\"node\":\">= 12.3.0\",\"npm\":\">= 6.9.0\"},\"jest\":{\"verbose\":true,\"testPathIgnorePatterns\":[\"<rootDir>/node_modules/\"],\"transform\":{\"^.+\\\\.htmlf$\":\"html-loader-jest\",\"^.+\\\\.jsx?$\":\"babel-jest\",\".*\\\\.(vue)$\":\"vue-jest\",\".*\\\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$\":\"<rootDir>/fileTransform.js\"},\"transformIgnorePatterns\":[\"!node_modules/alpheios-data-models/\"],\"moduleNameMapper\":{\"^@vue-runtime$\":\"vue/dist/vue.runtime.common.js\",\"^@[/](.+)\":\"<rootDir>/src/$1\",\"alpheios-morph-client\":\"<rootDir>/node_modules/alpheios-morph-client/dist/alpheios-morph-client.js\",\"alpheios-inflection-tables\":\"<rootDir>/node_modules/alpheios-inflection-tables/dist/alpheios-inflection-tables.js\"},\"moduleFileExtensions\":[\"js\",\"json\",\"vue\"]},\"eslintConfig\":{\"extends\":[\"standard\",\"plugin:vue/essential\"],\"env\":{\"browser\":true,\"node\":true},\"parserOptions\":{\"parser\":\"babel-eslint\",\"ecmaVersion\":2019,\"sourceType\":\"module\",\"allowImportExportEverywhere\":true}},\"eslintIgnore\":[\"**/dist\",\"**/support\"],\"dependencies\":{}}");
+module.exports = JSON.parse("{\"name\":\"alpheios-components\",\"version\":\"1.2.2\",\"description\":\"Alpheios Components\",\"main\":\"dist/alpheios-components.min.js\",\"module\":\"src/plugin.js\",\"scripts\":{\"test\":\"eslint --fix src/**/*.js && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-lib\":\"eslint --fix src/**/*.js && jest tests/lib --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-components\":\"eslint --fix src/**/*.js && jest tests/vue --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-c\":\"eslint --fix src/**/*.js && jest tests/vue/components/word-usage-examples/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage\",\"test-a\":\"eslint --fix src/**/*.js && jest tests/lib/options/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage\",\"test-s\":\"eslint --fix src/**/*.js && AUTH_TOKEN=alpheiosMockUserIdlP0DWnmNxe ENDPOINT='https://8wkx9pxc55.execute-api.us-east-2.amazonaws.com/prod/settings' jest tests/lib/options --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"build\":\"npm run build-safari && npm run build-regular\",\"build-regular\":\"eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue config.mjs\",\"build-safari\":\"eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue-postcss config-safari.mjs\",\"build-prod\":\"eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack production vue config.mjs\",\"build-dev\":\"eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development vue config.mjs\",\"code-analysis-prod\":\"node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue config.mjs --code-analysis\",\"code-analysis-dev\":\"node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development vue config.mjs --code-analysis\",\"lint\":\"eslint --fix src/**/*.js && eslint --fix-dry-run src/**/*.vue\"},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/alpheios-project/components.git\"},\"author\":\"The Alpheios Project, Ltd.\",\"license\":\"ISC\",\"bugs\":{\"url\":\"https://github.com/alpheios-project/components/issues\"},\"homepage\":\"https://github.com/alpheios-project/components#readme\",\"devDependencies\":{\"@babel/core\":\"^7.5.4\",\"@babel/plugin-proposal-object-rest-spread\":\"^7.5.4\",\"@babel/plugin-transform-runtime\":\"^7.5.0\",\"@babel/runtime\":\"^7.5.4\",\"@vue/test-utils\":\"^1.0.0-beta.29\",\"acorn\":\"^6.2.0\",\"alpheios-client-adapters\":\"github:alpheios-project/client-adapters\",\"alpheios-data-models\":\"github:alpheios-project/data-models\",\"alpheios-experience\":\"github:alpheios-project/experience\",\"alpheios-inflection-tables\":\"github:alpheios-project/inflection-tables\",\"alpheios-node-build\":\"github:alpheios-project/node-build\",\"alpheios-res-client\":\"github:alpheios-project/res-client\",\"alpheios-wordlist\":\"github:alpheios-project/wordlist\",\"autoprefixer\":\"^9.6.1\",\"axios\":\"^0.18.0\",\"babel-core\":\"^7.0.0-bridge.0\",\"babel-eslint\":\"^10.0.2\",\"bytes\":\"^3.1.0\",\"chalk\":\"^2.4.2\",\"coveralls\":\"^3.0.4\",\"css-loader\":\"^3.0.0\",\"dom-anchor-text-quote\":\"*\",\"element-closest\":\"^3.0.1\",\"eslint\":\"^6.0.1\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-plugin-import\":\"^2.18.0\",\"eslint-plugin-node\":\"^9.1.0\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"eslint-plugin-vue\":\"^5.2.3\",\"eslint-scope\":\"^4.0.3\",\"espree\":\"^6.0.0\",\"file-loader\":\"^4.0.0\",\"flush-promises\":\"^1.0.2\",\"html-loader\":\"^0.5.5\",\"html-loader-jest\":\"^0.2.1\",\"interactjs\":\"^1.4.14\",\"intl-messageformat\":\"^2.2.0\",\"jest\":\"^24.8.0\",\"jump.js\":\"^1.0.2\",\"mini-css-extract-plugin\":\"^0.7.0\",\"postcss-import\":\"^12.0.1\",\"postcss-loader\":\"^3.0.0\",\"postcss-safe-important\":\"^1.1.0\",\"postcss-scss\":\"^2.0.0\",\"raw-loader\":\"^3.0.0\",\"sass-loader\":\"^7.1.0\",\"shelljs\":\"^0.8.3\",\"sinon\":\"^7.3.2\",\"source-map-loader\":\"^0.2.4\",\"style-loader\":\"^0.23.1\",\"vue\":\"^2.6.10\",\"vue-eslint-parser\":\"^6.0.4\",\"vue-jest\":\"^3.0.4\",\"vue-loader\":\"^15.7.0\",\"vue-multiselect\":\"^2.1.6\",\"vue-style-loader\":\"^4.1.2\",\"vue-svg-loader\":\"^0.12.0\",\"vue-template-compiler\":\"^2.6.10\",\"vue-template-loader\":\"^1.0.0\",\"vuex\":\"^3.1.1\",\"webpack\":\"^4.35.3\",\"whatwg-fetch\":\"^3.0.0\",\"wrap-range-text\":\"^1.0.1\"},\"peerDependencies\":{},\"engines\":{\"node\":\">= 12.3.0\",\"npm\":\">= 6.9.0\"},\"jest\":{\"verbose\":true,\"testPathIgnorePatterns\":[\"<rootDir>/node_modules/\"],\"transform\":{\"^.+\\\\.htmlf$\":\"html-loader-jest\",\"^.+\\\\.jsx?$\":\"babel-jest\",\".*\\\\.(vue)$\":\"vue-jest\",\".*\\\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$\":\"<rootDir>/fileTransform.js\"},\"transformIgnorePatterns\":[\"!node_modules/alpheios-data-models/\"],\"moduleNameMapper\":{\"^@vue-runtime$\":\"vue/dist/vue.runtime.common.js\",\"^@[/](.+)\":\"<rootDir>/src/$1\",\"alpheios-morph-client\":\"<rootDir>/node_modules/alpheios-morph-client/dist/alpheios-morph-client.js\",\"alpheios-inflection-tables\":\"<rootDir>/node_modules/alpheios-inflection-tables/dist/alpheios-inflection-tables.js\"},\"moduleFileExtensions\":[\"js\",\"json\",\"vue\"]},\"eslintConfig\":{\"extends\":[\"standard\",\"plugin:vue/essential\"],\"env\":{\"browser\":true,\"node\":true},\"parserOptions\":{\"parser\":\"babel-eslint\",\"ecmaVersion\":2019,\"sourceType\":\"module\",\"allowImportExportEverywhere\":true}},\"eslintIgnore\":[\"**/dist\",\"**/support\"],\"dependencies\":{}}");
 
 /***/ }),
 
