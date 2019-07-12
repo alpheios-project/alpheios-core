@@ -2,6 +2,7 @@ import { Feature, Inflection, Homonym, LanguageModelFactory } from 'alpheios-dat
 import LDF from '../../lib/language-dataset-factory.js'
 import WideView from './wide-view'
 import Form from '@lib/form.js'
+import uuidv4 from 'uuid/v4'
 
 /**
  * Represents a single view.
@@ -23,10 +24,18 @@ export default class View {
     // An HTML element where this view is rendered
     this.container = undefined
 
-    // Must be implemented in a descendant
+    /**
+     * A view ID that is unique not only for each view class, but also for each view instance.
+     * @type {string}
+     */
+    this.uid = uuidv4()
 
-    // A unique ID of a view instance. Can be used as a value in view selectors. Should consist of lowercase letters,
-    // numbers, and underscores only.
+    // The following three props must be implemented by descendant classes.
+    /**
+     * A unique ID of a view class. Can be used as a value in view selectors.
+     * Should consist of lowercase letters, numbers, and underscores only.
+     * @type {string}
+     */
     this.id = 'base_view'
     this.name = 'base view'
     this.title = 'Base View'
