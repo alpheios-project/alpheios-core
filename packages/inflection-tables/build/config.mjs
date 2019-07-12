@@ -7,7 +7,7 @@ const webpack = {
     externals: {
       'intl-messageformat': 'intl-messageformat',
       'alpheios-data-models': 'alpheios-data-models',
-      'uuid': 'uuid'
+      'uuid/v4': 'uuid/v4'
     },
     resolve: {
       alias: {
@@ -29,10 +29,10 @@ const webpack = {
   },
 
   production: {
-    output: {filename: 'alpheios-inflection-tables.min.js'}
+    output: { filename: 'alpheios-inflection-tables.min.js' }
   },
   development: {
-    output: {filename: 'alpheios-inflection-tables.js'}
+    output: { filename: 'alpheios-inflection-tables.js' }
   }
 }
 

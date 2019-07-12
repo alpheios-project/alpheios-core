@@ -9,9 +9,11 @@
   "scripts": {
     "test": "npm run lint && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-c": "npm run lint && jest tests/lib/lang/greek-language-dataset.test.js --no-cache --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "build": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all lib",
-    "build-prod": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production lib",
-    "build-dev": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development lib",
+    "build": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all lib config.mjs",
+    "build-prod": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack production lib config.mjs",
+    "build-dev": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development lib config.mjs",
+    "code-analysis-prod": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack production lib config.mjs --code-analysis",
+    "code-analysis-dev": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development lib config.mjs --code-analysis",
     "lint": "eslint --fix ./{lib,views}/**/*.js",
     "convert": "node ./tools/inflections-xml2csv/converter.js"
   },
@@ -46,6 +48,7 @@
     "jest": "^24.8.0",
     "papaparse": "^5.0.0",
     "raw-loader": "^3.0.0",
+    "source-map-loader": "^0.2.4",
     "uuid": "^3.3.2",
     "whatwg-fetch": "^3.0.0",
     "xmldom": "^0.1.27",
@@ -95,7 +98,6 @@
     ],
     "env": {
       "browser": true,
-      "node": true,
       "jest": true
     },
     "parserOptions": {
