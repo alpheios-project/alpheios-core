@@ -503,15 +503,20 @@ describe('language-dataset.test.js', () => {
   it('24 LanguageDataset - matcher - checks inflections with item - has all matches example', async () => {
     let maAdapter = new AlpheiosTuftsAdapter()
     let testHomonym = await maAdapter.getHomonym(languageIDGreek, 'ταῖν') // adjective
-
     let LD = LanguageDatasetFactory.getDataset(languageIDGreek)
+    const obligatoryMatchList = LD.constructor.getObligatoryMatchList(testHomonym.lexemes[0].inflections[0])
+    const optionalMatchList = LD.constructor.getOptionalMatchList(testHomonym.lexemes[0].inflections[0])
+    testHomonym.lexemes[0].inflections.forEach(i => {
+      i.constraints.obligatoryMatches = obligatoryMatchList
+      i.constraints.optionalMatches = optionalMatchList
+    })
 
     let formForCompare = new Form('ταῖν')
     formForCompare.features = {}
     formForCompare.features[Feature.types.part] = new Feature(Feature.types.part, 'article', languageIDGreek)
     formForCompare.features[Feature.types.gender] = new Feature(Feature.types.gender, 'feminine', languageIDGreek)
 
-    let res = LD.matcher(testHomonym.lexemes[0].inflections, formForCompare)
+    let res = LD.matcher(testHomonym.lexemes[0].inflections, formForCompare, { findMatches: true })
 
     expect(res.match.suffixMatch).toBeTruthy()
     expect(res.match.fullMatch).toBeTruthy()
@@ -520,8 +525,13 @@ describe('language-dataset.test.js', () => {
   it('25 LanguageDataset - matcher - checks inflections with item - has only partial match example', async () => {
     let maAdapter = new AlpheiosTuftsAdapter()
     let testHomonym = await maAdapter.getHomonym(languageIDGreek, 'ἐμαυτοῦ') // adjective
-
     let LD = LanguageDatasetFactory.getDataset(languageIDGreek)
+    const obligatoryMatchList = LD.constructor.getObligatoryMatchList(testHomonym.lexemes[0].inflections[0])
+    const optionalMatchList = LD.constructor.getOptionalMatchList(testHomonym.lexemes[0].inflections[0])
+    testHomonym.lexemes[0].inflections.forEach(i => {
+      i.constraints.obligatoryMatches = obligatoryMatchList
+      i.constraints.optionalMatches = optionalMatchList
+    })
 
     let formForCompare = new Form('ἐμαυτοῦ')
     formForCompare.features = {}
@@ -575,20 +585,30 @@ describe('language-dataset.test.js', () => {
   it('100 LanguageDataset - getObligatoryMatches executes checkMatches with list of features from an inflection', () => {
     LanguageDataset.checkMatches = jest.fn()
     LanguageDataset.getObligatoryMatchList = jest.fn(() => 'getObligatoryMatchList')
+    const obligatoryMatches = ['feature']
+    const dummyInflection = {
+      constraints: {
+        obligatoryMatches
+      }
+    }
 
-    LanguageDataset.getObligatoryMatches('fooInflection', 'fooItem')
+    LanguageDataset.getObligatoryMatches(dummyInflection, 'fooItem')
 
-    expect(LanguageDataset.getObligatoryMatchList).toHaveBeenCalledWith('fooInflection')
-    expect(LanguageDataset.checkMatches).toHaveBeenCalledWith('getObligatoryMatchList', 'fooInflection', 'fooItem', Morpheme.comparisonTypes.EXACT)
+    expect(LanguageDataset.checkMatches).toHaveBeenCalledWith(obligatoryMatches, dummyInflection, 'fooItem', Morpheme.comparisonTypes.EXACT)
   })
 
   it('101 LanguageDataset - getOptionalMatches executes checkMatches with getOptionalMatchList', () => {
     LanguageDataset.checkMatches = jest.fn()
     LanguageDataset.getOptionalMatchList = jest.fn(() => 'getOptionalMatchList')
+    const optionalMatches = ['feature']
+    const dummyInflection = {
+      constraints: {
+        optionalMatches
+      }
+    }
 
-    LanguageDataset.getOptionalMatches('fooInflection', 'fooItem')
+    LanguageDataset.getOptionalMatches(dummyInflection, 'fooItem')
 
-    expect(LanguageDataset.getOptionalMatchList).toHaveBeenCalledWith('fooInflection')
-    expect(LanguageDataset.checkMatches).toHaveBeenCalledWith('getOptionalMatchList', 'fooInflection', 'fooItem', Morpheme.comparisonTypes.EXACT)
+    expect(LanguageDataset.checkMatches).toHaveBeenCalledWith(optionalMatches, dummyInflection, 'fooItem', Morpheme.comparisonTypes.EXACT)
   })
 })

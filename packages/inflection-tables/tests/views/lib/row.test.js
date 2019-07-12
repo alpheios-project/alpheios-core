@@ -11,10 +11,9 @@ import Form from '@lib/form.js'
 import { Constants, Feature } from 'alpheios-data-models'
 import { AlpheiosTuftsAdapter } from 'alpheios-morph-client'
 import LanguageDatasetFactory from '@lib/language-dataset-factory.js'
-import GreekLanguageDatasetJSON from '@tests/lib/lang/greek-language-dataset-json.js'
-import GreekLanguageDataset from '@lib/lang/greek/greek-language-dataset.js'
 
 import GroupFeatureType from '@views/lib/group-feature-type.js'
+import GroupFeatureList from '@views/lib/group-feature-list.js'
 
 describe('row.test.js', () => {
   console.error = function () {}
@@ -22,16 +21,6 @@ describe('row.test.js', () => {
   console.warn = function () {}
 
   let testMorphemes, testFeatures, testCells, testTitleCell
-  const testLocale = 'en-US'
-
-  /*  Object.defineProperty(GreekLanguageDataset, 'verbParadigmTables', {
-    get: jest.fn(() => GreekLanguageDatasetJSON.verbParadigmTables),
-    set: jest.fn()
-  })
-  Object.defineProperty(GreekLanguageDataset, 'verbParticipleParadigmTables', {
-    get: jest.fn(() => GreekLanguageDatasetJSON.verbParticipleParadigmTables),
-    set: jest.fn()
-  }) */
 
   beforeAll(async () => {
     let maAdapter = new AlpheiosTuftsAdapter()
@@ -54,6 +43,7 @@ describe('row.test.js', () => {
 
     let testGroupingFeature = new Feature(Feature.types.case, 'nominative', Constants.LANG_GREEK)
     let testGroupFeatureType = new GroupFeatureType(Feature.types.case, Constants.LANG_GREEK, 'Case', [testGroupingFeature])
+    testGroupFeatureType.groupFeatureList = new GroupFeatureList([])
     testTitleCell = new RowTitleCell('nominative', testGroupFeatureType, 4)
   })
 

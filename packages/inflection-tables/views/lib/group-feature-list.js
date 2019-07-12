@@ -7,7 +7,7 @@ import GroupFeatureType from './group-feature-type.js'
 export default class GroupFeatureList extends FeatureList {
   /**
    * Initializes object with an array of grouping feature objects.
-   * @param {GroupFeatureType[]} features - An array of features that form a table.
+   * @param {Feature[]} features - An array of features that form a table.
    * An order of features defines in what order a table tree would be built.
    */
   constructor (features) {

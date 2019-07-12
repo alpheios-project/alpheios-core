@@ -2,11 +2,9 @@
 /* eslint-disable no-unused-vars */
 import RowTitleCell from '@views/lib/row-title-cell.js'
 
-import Row from '@views/lib/row.js'
-import Cell from '@views/lib/cell.js'
-
 import { Constants, Feature } from 'alpheios-data-models'
 import GroupFeatureType from '@views/lib/group-feature-type.js'
+import GroupFeatureList from '@views/lib/group-feature-list.js'
 
 describe('row-title-cell.test.js', () => {
   console.error = function () {}
@@ -18,9 +16,11 @@ describe('row-title-cell.test.js', () => {
   beforeAll(async () => {
     let testGroupingFeature = new Feature(Feature.types.case, 'nominative', Constants.LANG_GREEK)
     testGroupFeatureType = new GroupFeatureType(Feature.types.case, Constants.LANG_GREEK, 'Case', [testGroupingFeature])
+    testGroupFeatureType.groupFeatureList = new GroupFeatureList([])
 
     let testParentGroupingFeature = new Feature(Feature.types.number, 'singular', Constants.LANG_GREEK)
     testParentGroupFeatureType = new GroupFeatureType(Feature.types.number, Constants.LANG_GREEK, 'Number', [testParentGroupingFeature])
+    testParentGroupFeatureType.groupFeatureList = new GroupFeatureList([])
   })
   beforeEach(() => {
     jest.spyOn(console, 'error')

@@ -231,6 +231,8 @@ describe('greek-language-dataset.test.js', () => {
     expect(LLD.addInflectionData).toHaveBeenLastCalledWith(partOfSpeech.value, Suffix, suffixValue, features)
   })
 
+  // TODO: Make this and other tests operate on test data CSVs instead of "real" ones.
+  //       This will eliminate the need to change tests every time real data changes.
   it('8 LatinLanguageDataset - addVerbForms for verbs executes addInflectionData for each line from csv with specific arguments', () => {
     let LLD = new LatinLanguageDataset()
 
@@ -250,13 +252,138 @@ describe('greek-language-dataset.test.js', () => {
     let features = [partOfSpeech,
       LLD.features.get(Feature.types.word).createFromImporter(itemRow[0]),
       // Add...() function will not create Feature objects for items whose values are empty
-      // LLD.features.get(Feature.types.voice).createFromImporter(itemRow[3] ? itemRow[3] : '-'),
+      LLD.features.get(Feature.types.voice).createFromImporter(itemRow[3] ? itemRow[3] : '-'),
       LLD.features.get(Feature.types.mood).createFromImporter(itemRow[4]),
       LLD.features.get(Feature.types.tense).createFromImporter(itemRow[5]),
       LLD.features.get(Feature.types.number).createFromImporter(itemRow[6]),
       LLD.features.get(Feature.types.person).createFromImporter(itemRow[7])
     ]
 
+     /* [
+      {
+        "type": "part of speech",
+        "sortOrder": 1,
+        "allowedValues": [
+          "adverb",
+          "adverbial",
+          "adjective",
+          "article",
+          "conjunction",
+          "exclamation",
+          "interjection",
+          "noun",
+          "numeral",
+          "particle",
+          "prefix",
+          "preposition",
+          "pronoun",
+          "suffix",
+          "supine",
+          "verb",
+          "verb participle"
+        ],
+        "_data": [
+          {
+            "value": "verb",
+            "sortOrder": 1
+          }
+        ]
+      },
+        {
+          "type": "word",
+          "sortOrder": 1,
+          "allowedValues": [],
+          "_data": [
+            {
+              "value": "veneo",
+              "sortOrder": 1
+            }
+          ]
+        },
+        {
+          "type": "voice",
+          "sortOrder": 1,
+          "allowedValues": [
+            "active",
+            "passive"
+          ],
+          "_data": [
+            {
+              "value": "active",
+              "sortOrder": 1
+            }
+          ]
+        },
+        {
+          "type": "mood",
+          "sortOrder": 1,
+          "allowedValues": [
+            "indicative",
+            "subjunctive",
+            "imperative",
+            "participle",
+            "supine",
+            "gerundive",
+            "participle",
+            "infinitive"
+          ],
+          "_data": [
+            {
+              "value": "indicative",
+              "sortOrder": 1
+            }
+          ]
+        },
+        {
+          "type": "tense",
+          "sortOrder": 1,
+          "allowedValues": [
+            "present",
+            "imperfect",
+            "future",
+            "perfect",
+            "pluperfect",
+            "future perfect"
+          ],
+          "_data": [
+            {
+              "value": "future perfect",
+              "sortOrder": 1
+            }
+          ]
+        },
+        {
+          "type": "number",
+          "sortOrder": 1,
+          "allowedValues": [
+            "singular",
+            "plural"
+          ],
+          "_data": [
+            {
+              "value": "plural",
+              "sortOrder": 1
+            }
+          ]
+        },
+        {
+          "type": "person",
+          "sortOrder": 1,
+          "allowedValues": [
+            "1st",
+            "2nd",
+            "3rd"
+          ],
+          "_data": [
+            {
+              "value": "3rd",
+              "sortOrder": 1
+            }
+          ]
+        }
+      ]*/
+
+    // this.addInflectionData(partOfSpeech.value, Form, form, features, footnotes)
     expect(LLD.addInflectionData).toHaveBeenLastCalledWith(partOfSpeech.value, Form, formValue, features, [])
   })
 

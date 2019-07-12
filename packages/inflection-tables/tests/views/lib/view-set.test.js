@@ -11,8 +11,8 @@ import { Constants, Feature, LanguageModelFactory } from 'alpheios-data-models'
 import GreekLanguageDataset from '@lib/lang/greek/greek-language-dataset.js'
 import GreekLanguageDatasetJSON from '@tests/lib/lang/greek-language-dataset-json.js'
 
-import L10nJSON from '@tests/l10n/l10n-json.js'
-import L10n from '@l10n/l10n.js'
+// import L10nJSON from '@tests/l10n/l10n-json.js'
+// import L10n from '@l10n/l10n.js'
 
 /*
 It seems that `ViewSetFactory.create(testHomonym, testLocale)` behave in a strange way in Jest.
@@ -42,7 +42,7 @@ describe('view-set.test.js', () => {
     set: jest.fn()
   }) */
 
-  L10n.getMessages = jest.fn((locale) => L10nJSON.getMessages(locale))
+  //  L10n.getMessages = jest.fn((locale) => L10nJSON.getMessages(locale))
 
   beforeAll(async () => {
     maAdapter = new AlpheiosTuftsAdapter()
