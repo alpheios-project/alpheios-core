@@ -34,8 +34,8 @@ export default class LatinVerbParticipleIrregularView extends LatinVerbIrregular
 
   createTable () {
     this.table = new Table([this.features.voices, this.features.tenses])
-    let features = this.table.features
-    features.columns = [ this.features.voices ]
+    const features = this.table.features
+    features.columns = [this.features.voices]
     features.rows = [this.features.tenses]
     features.columnRowTitles = [this.features.tenses]
     features.fullWidthRowTitles = []

@@ -40,7 +40,7 @@ export default class ParadigmInflectionList extends InflectionList {
   getMatches (inflections) {
     // Select only those inflections that are paradigm based
     inflections = inflections.filter(i => i.constraints && i.constraints.paradigmBased)
-    let matchingParadigm = []
+    const matchingParadigm = []
     // Get all matching paradigms for all inflections
     for (const inflection of inflections) {
       let matchingParadigmInflection = []
@@ -64,7 +64,7 @@ export default class ParadigmInflectionList extends InflectionList {
           }
         }
       }
-      for (let pi of matchingParadigmInflection) {
+      for (const pi of matchingParadigmInflection) {
         // deduple paradigms across all inflections
         if (!matchingParadigm.find(p => p.id === pi.id)) {
           matchingParadigm.push(pi)

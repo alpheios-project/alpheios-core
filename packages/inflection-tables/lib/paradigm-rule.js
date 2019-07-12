@@ -23,7 +23,7 @@ export default class ParadigmRule {
   matches (inflection) {
     let match = true
     for (const feature of this.features) {
-      match = match && inflection.hasOwnProperty(feature.type) && feature.value === inflection[feature.type].value
+      match = match && inflection.hasOwnProperty(feature.type) && feature.value === inflection[feature.type].value // eslint-disable-line no-prototype-builtins
       if (!match) {
         return false
       }

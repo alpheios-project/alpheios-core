@@ -128,7 +128,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
     this.typeFeatures.set(Feature.types.dialect, new Feature(Feature.types.dialect, [], GreekLanguageDataset.languageID))
 
     // Create an importer with default values for every feature
-    for (let feature of this.typeFeatures.values()) {
+    for (const feature of this.typeFeatures.values()) {
       feature.addImporter(new FeatureImporter(feature.values, true))
     }
 
@@ -166,12 +166,12 @@ export default class GreekLanguageDataset extends LanguageDataset {
       footnote: 7
     }
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
-    let noSuffixValue = '-'
+    const noSuffixValue = '-'
     let footnotes = []
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
-      let item = data[i]
+      const item = data[i]
       let suffixValue = item[n.suffix]
       // Handle special suffix values
       if (suffixValue === noSuffixValue) {
@@ -179,7 +179,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
       }
 
       let primary = false
-      let features = [partOfSpeech,
+      const features = [partOfSpeech,
         this.typeFeatures.get(Feature.types.number).createFromImporter(item[n.number]),
         this.typeFeatures.get(Feature.types.grmCase).createFromImporter(item[n.grmCase]),
         this.typeFeatures.get(Feature.types.declension).createFromImporter(item[n.declension]),
@@ -190,14 +190,14 @@ export default class GreekLanguageDataset extends LanguageDataset {
       }
       if (item[n.footnote]) {
         // There can be multiple footnote indexes separated by spaces
-        let indexes = item[n.footnote].split(' ')
+        const indexes = item[n.footnote].split(' ')
         features.push(this.typeFeatures.get(Feature.types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
-      let extendedGreekData = new ExtendedGreekData()
+      const extendedGreekData = new ExtendedGreekData()
       extendedGreekData.primary = primary
-      let extendedLangData = {
+      const extendedLangData = {
         [Constants.STR_LANG_CODE_GRC]: extendedGreekData
       }
 
@@ -218,11 +218,11 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
-      let item = data[i]
-      let formValue = item[n.form]
+      const item = data[i]
+      const formValue = item[n.form]
 
       let primary = false
-      let features = [partOfSpeech,
+      const features = [partOfSpeech,
         this.typeFeatures.get(Feature.types.number).createFromImporter(item[n.number]),
         this.typeFeatures.get(Feature.types.grmCase).createFromImporter(item[n.grmCase]),
         this.typeFeatures.get(Feature.types.gender).createFromImporter(item[n.gender]),
@@ -231,9 +231,9 @@ export default class GreekLanguageDataset extends LanguageDataset {
         primary = true
       }
 
-      let extendedGreekData = new ExtendedGreekData()
+      const extendedGreekData = new ExtendedGreekData()
       extendedGreekData.primary = primary
-      let extendedLangData = {
+      const extendedLangData = {
         [Constants.STR_LANG_CODE_GRC]: extendedGreekData
       }
 
@@ -261,10 +261,10 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
-      let item = data[i]
-      let form = item[n.form]
+      const item = data[i]
+      const form = item[n.form]
 
-      let features = [
+      const features = [
         partOfSpeech,
         this.typeFeatures.get(Feature.types.fullForm).createFromImporter(form)
       ]
@@ -280,24 +280,24 @@ export default class GreekLanguageDataset extends LanguageDataset {
       if (item[n.gender]) { features.push(this.typeFeatures.get(Feature.types.gender).createFromImporter(item[n.gender])) }
       if (item[n.type]) { features.push(this.typeFeatures.get(Feature.types.type).createFromImporter(item[n.type])) }
 
-      let primary = (item[n.primary] === 'primary')
+      const primary = (item[n.primary] === 'primary')
 
       if (item[n.footnote]) {
         // There can be multiple footnote indexes separated by spaces
-        let indexes = item[n.footnote].split(' ')
+        const indexes = item[n.footnote].split(' ')
         features.push(this.typeFeatures.get(Feature.types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
-      let extendedGreekData = new ExtendedGreekData()
+      const extendedGreekData = new ExtendedGreekData()
       extendedGreekData.primary = primary
-      let extendedLangData = {
+      const extendedLangData = {
         [Constants.STR_LANG_CODE_GRC]: extendedGreekData
       }
 
       this.numeralGroupingLemmas.sort((a, b) => {
-        let aN = parseInt(a.match(/[0-9]+/g)[0])
-        let bN = parseInt(b.match(/[0-9]+/g)[0])
+        const aN = parseInt(a.match(/[0-9]+/g)[0])
+        const bN = parseInt(b.match(/[0-9]+/g)[0])
         return aN - bN
       })
 
@@ -329,10 +329,10 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
-      let item = data[i]
-      let form = item[n.form]
+      const item = data[i]
+      const form = item[n.form]
 
-      let features = [
+      const features = [
         partOfSpeech,
         this.typeFeatures.get(Feature.types.fullForm).createFromImporter(form)
       ]
@@ -347,10 +347,10 @@ export default class GreekLanguageDataset extends LanguageDataset {
       if (item[n.gender]) { features.push(this.typeFeatures.get(Feature.types.gender).createFromImporter(item[n.gender])) }
       if (item[n.type]) { features.push(this.typeFeatures.get(Feature.types.type).createFromImporter(item[n.type])) }
 
-      let primary = (item[n.primary] === 'primary')
+      const primary = (item[n.primary] === 'primary')
 
       // Dialects could have multiple values
-      let dialects = item[n.dialect].split(',')
+      const dialects = item[n.dialect].split(',')
       if (item[n.dialect] && dialects && dialects.length > 0) {
         features.push(this.typeFeatures.get(Feature.types.dialect).createFeatures(dialects))
       }
@@ -358,14 +358,14 @@ export default class GreekLanguageDataset extends LanguageDataset {
       // Footnotes. There can be multiple footnote indexes separated by commas
       if (item[n.footnote]) {
         // There can be multiple footnote indexes separated by spaces
-        let indexes = item[n.footnote].split(' ')
+        const indexes = item[n.footnote].split(' ')
         features.push(this.typeFeatures.get(Feature.types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
-      let extendedGreekData = new ExtendedGreekData()
+      const extendedGreekData = new ExtendedGreekData()
       extendedGreekData.primary = primary
-      let extendedLangData = {
+      const extendedLangData = {
         [Constants.STR_LANG_CODE_GRC]: extendedGreekData
       }
       this.addInflectionData(partOfSpeech.value, Form, form, features, footnotes, extendedLangData)
@@ -470,11 +470,11 @@ export default class GreekLanguageDataset extends LanguageDataset {
 
     // First row contains headers
     for (let i = 1; i < rulesData.length; i++) {
-      let item = rulesData[i]
-      let id = item[n.id]
-      let matchOrder = Number.parseInt(item[n.matchOrder])
+      const item = rulesData[i]
+      const id = item[n.id]
+      const matchOrder = Number.parseInt(item[n.matchOrder])
 
-      let features = [partOfSpeech]
+      const features = [partOfSpeech]
 
       if (item[n.stemtype]) { features.push(this.typeFeatures.get(Feature.types.stemtype).createFromImporter(item[n.stemtype])) }
       if (item[n.voice]) { features.push(this.typeFeatures.get(Feature.types.voice).createFromImporter(item[n.voice])) }
@@ -498,7 +498,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
         console.warn(`Cannot find a paradigm table for "${id}" index`)
       }
     }
-    for (let paradigm of paradigms.values()) {
+    for (const paradigm of paradigms.values()) {
       paradigm.sortRules()
       paradigm.addSuppTables(suppParadigmTables)
     }
@@ -506,7 +506,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
   }
 
   addFootnotes (partOfSpeech, classType, data) {
-    let footnotes = []
+    const footnotes = []
     // First row are headers
     for (let i = 1; i < data.length; i++) {
       const footnote = this.addFootnote(partOfSpeech.value, classType, data[i][0], data[i][1])

@@ -26,7 +26,7 @@ export default class ViewSet {
       this.enabled = LanguageModelFactory.getLanguageModel(homonym.languageID).canInflect()
 
       if (this.enabled) {
-        for (let lexeme of homonym.lexemes) {
+        for (const lexeme of homonym.lexemes) {
           for (let inflection of lexeme.inflections) {
             // Inflections are grouped by part of speech
             inflection = this.dataset.setInflectionData(inflection, lexeme.lemma)
@@ -39,6 +39,7 @@ export default class ViewSet {
       }
     }
   }
+
   /**
    * Returns a list of views available within a view set. Should be redefined in descendant classes.
    * @return {View[]} A list of views available within the view set.
@@ -60,7 +61,7 @@ export default class ViewSet {
       if (!this.matchingViewsMap.has(view.partOfSpeech)) {
         this.matchingViewsMap.set(view.partOfSpeech, [])
       }
-      let storedInstances = this.matchingViewsMap.get(view.partOfSpeech)
+      const storedInstances = this.matchingViewsMap.get(view.partOfSpeech)
       // Filter out instances that are already stored in a view set
       const isNew = !storedInstances.find(v => v.sameAs(view))
       if (isNew) {
@@ -96,7 +97,7 @@ export default class ViewSet {
     if (!options || !options.viewID) {
       throw new Error(`Obligatory options property, "viewID", is missing`)
     }
-    let view = this.getViewByID(options.viewID)
+    const view = this.getViewByID(options.viewID)
     return view ? view.getStandardFormInstance(options) : null
   }
 }

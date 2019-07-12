@@ -108,7 +108,7 @@ export default class Table {
    * @returns {NodeGroup} A top level group of morphemes that contain subgroups all way down to the last group.
    */
   groupByFeature (morphemes, ancestorFeatures = [], currentLevel = 0) {
-    let group = new NodeGroup()
+    const group = new NodeGroup()
     if (!this.features.hasColumnFeatures && !this.features.hasDataColumn) {
       /*
       Table has no column features and will have only one column with data values.
@@ -116,7 +116,7 @@ export default class Table {
       Set placeholder's group feature to fake a last column.
        */
       group.groupFeatureType = this.features.createDataColumn()
-      let subGroup = this.groupByFeature(morphemes, ancestorFeatures, currentLevel)
+      const subGroup = this.groupByFeature(morphemes, ancestorFeatures, currentLevel)
       group.subgroups.push(subGroup)
       group.cells = group.cells.concat(subGroup.cells)
     } else {
@@ -136,7 +136,7 @@ export default class Table {
 
         if (currentLevel < this.features.length - 1) {
           // Divide to further groups
-          let subGroup = this.groupByFeature(selectedMorphemes, ancestorFeatures, currentLevel + 1)
+          const subGroup = this.groupByFeature(selectedMorphemes, ancestorFeatures, currentLevel + 1)
           group.subgroups.push(subGroup)
           group.cells = group.cells.concat(subGroup.cells)
         } else {
@@ -150,7 +150,7 @@ export default class Table {
             selectedMorphemes = Suffix.combine(selectedMorphemes)
           }
 
-          let cell = new Cell(selectedMorphemes, ancestorFeatures.slice())
+          const cell = new Cell(selectedMorphemes, ancestorFeatures.slice())
           group.subgroups.push(cell)
           group.cells.push(cell)
           this.cells.push(cell)
@@ -172,14 +172,14 @@ export default class Table {
    * @returns {Array} An array of columns of suffix cells.
    */
   constructColumns (tree = this.tree, columns = [], currentLevel = 0) {
-    let currentFeature = this.features.getGroupingFeature(currentLevel)
-    let groups = []
-    for (let [index, feature] of currentFeature.getOrderedFeatures(tree.ancestorFeatures).entries()) {
-      let cellGroup = tree.subgroups[index]
+    const currentFeature = this.features.getGroupingFeature(currentLevel)
+    const groups = []
+    for (const [index, feature] of currentFeature.getOrderedFeatures(tree.ancestorFeatures).entries()) {
+      const cellGroup = tree.subgroups[index]
       // Iterate until it is the last row feature
 
       if (!this.features.isLastRowFeature(currentFeature)) {
-        let currentResult = this.constructColumns(cellGroup, columns, currentLevel + 1)
+        const currentResult = this.constructColumns(cellGroup, columns, currentLevel + 1)
         if (currentFeature.formsRow) {
           // TODO: Avoid creating extra cells
 
@@ -189,14 +189,14 @@ export default class Table {
            * will have the same parent values, they will be omitted and only the current row title be shown.
            * @type {{groups: Cell[], titleCell: RowTitleCell}}
            */
-          let group = {
+          const group = {
             groups: currentResult,
             titleCell: currentFeature.createRowTitleCell(feature.value, this.features.firstColumnFeature.size)
           }
           group.groups[0].titleCell.parent = group.titleCell
           groups.push(group)
         } else if (currentFeature.dataColumn || this.features.isLastColumnFeature(currentFeature)) {
-          let column = new Column(cellGroup.cells)
+          const column = new Column(cellGroup.cells)
           column.groups = currentResult
           column.header = feature.value
           column.index = columns.length
@@ -212,7 +212,7 @@ export default class Table {
           feature.value,
           this.features.firstColumnFeature && this.features.firstColumnFeature.size ? this.features.firstColumnFeature.size : 1
         )
-        let group = {
+        const group = {
           cell: cellGroup,
           titleCell: cellGroup.titleCell
         }
@@ -234,25 +234,25 @@ export default class Table {
    * @returns {Array} A two-dimensional array of header cell rows.
    */
   constructHeaders (tree = this.tree, headers = [], currentLevel = 0) {
-    let currentFeature = this.features.columnFeatures[currentLevel]
+    const currentFeature = this.features.columnFeatures[currentLevel]
 
-    let cells = []
-    for (let [index, feature] of currentFeature.getOrderedFeatures(tree.ancestorFeatures).entries()) {
-      let cellGroup = tree.subgroups[index]
+    const cells = []
+    for (const [index, feature] of currentFeature.getOrderedFeatures(tree.ancestorFeatures).entries()) {
+      const cellGroup = tree.subgroups[index]
 
       // Iterate over all column features (features that form columns)
       if (currentLevel < this.features.columnFeatures.length - 1) {
-        let subCells = this.constructHeaders(cellGroup, headers, currentLevel + 1)
+        const subCells = this.constructHeaders(cellGroup, headers, currentLevel + 1)
 
         let columnSpan = 0
-        for (let cell of subCells) {
+        for (const cell of subCells) {
           columnSpan += cell.span
         }
 
         // let headerCell = new HeaderCell(feature.value, currentFeature, columnSpan)
-        let headerCell = currentFeature.createHeaderCell(feature.value, columnSpan)
+        const headerCell = currentFeature.createHeaderCell(feature.value, columnSpan)
         headerCell.children = subCells
-        for (let cell of subCells) {
+        for (const cell of subCells) {
           cell.parent = headerCell
         }
 
@@ -266,7 +266,7 @@ export default class Table {
         cells.push(headerCell)
       } else {
         // Last level
-        let headerCell = currentFeature.createHeaderCell(feature.value)
+        const headerCell = currentFeature.createHeaderCell(feature.value)
 
         if (!headers[currentLevel]) {
           headers[currentLevel] = new Row()
@@ -290,7 +290,7 @@ export default class Table {
    * @returns {Row[]} An array of rows.
    */
   constructRows () {
-    let rows = []
+    const rows = []
     for (let rowIndex = 0; rowIndex < this.dataRowQty; rowIndex++) {
       rows[rowIndex] = new Row()
       rows[rowIndex].titleCell = this.columns[0].cells[rowIndex].titleCell
@@ -298,8 +298,8 @@ export default class Table {
         rows[rowIndex].add(this.columns[columnIndex].cells[rowIndex])
       }
     }
-    let filtered = []
-    for (let [index, row] of rows.entries()) {
+    const filtered = []
+    for (const [index, row] of rows.entries()) {
       if (!row.empty) {
         filtered.push(row)
       } else {
@@ -319,7 +319,7 @@ export default class Table {
    * Hides empty columns in a table.
    */
   hideEmptyColumns () {
-    for (let column of this.columns) {
+    for (const column of this.columns) {
       if (column.empty) {
         column.hide()
       }
@@ -331,7 +331,7 @@ export default class Table {
    * Show all empty columns that were previously hidden.
    */
   showEmptyColumns () {
-    for (let column of this.columns) {
+    for (const column of this.columns) {
       if (column.hidden) {
         column.show()
       }
@@ -348,7 +348,7 @@ export default class Table {
     let colsWithMatches = 0
     let nonEmptyColQty = 0
     if (this.headers.length > 0) {
-      for (let headerCell of this.headers[0].cells) {
+      for (const headerCell of this.headers[0].cells) {
         if (headerCell.columns.some(column => column.suffixMatches)) {
           colsWithMatches++
         }
@@ -365,10 +365,10 @@ export default class Table {
    * Hide groups that have no morpheme matches.
    */
   hideNoSuffixMatchesGroups () {
-    for (let headerCell of this.headers[0].cells) {
-      let matches = !!headerCell.columns.find(column => column.suffixMatches)
+    for (const headerCell of this.headers[0].cells) {
+      const matches = !!headerCell.columns.find(column => column.suffixMatches)
       if (!matches) {
-        for (let column of headerCell.columns) {
+        for (const column of headerCell.columns) {
           column.hide()
         }
       }
@@ -380,7 +380,7 @@ export default class Table {
    * Show groups that have no suffix matches.
    */
   showNoSuffixMatchesGroups () {
-    for (let column of this.columns) {
+    for (const column of this.columns) {
       column.show()
     }
     if (this.options.emptyColumnsHidden) {

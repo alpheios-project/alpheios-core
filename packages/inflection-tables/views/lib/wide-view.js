@@ -20,7 +20,7 @@ export default class WideView {
    */
   get visibleColumnQty () {
     let qty = 0
-    for (let column of this.table.columns) {
+    for (const column of this.table.columns) {
       if (!column.hidden) {
         qty++
       }
@@ -40,26 +40,26 @@ export default class WideView {
   render (table) {
     this.rows = []
     this.table = table
-    for (let row of table.headers) {
-      let cells = []
+    for (const row of table.headers) {
+      const cells = []
       cells.push(row.titleCell)
-      for (let cell of row.cells) {
+      for (const cell of row.cells) {
         cells.push(cell)
       }
       this.rows.push({ cells: cells })
     }
 
-    for (let row of table.rows) {
-      let cells = []
-      let titleCells = row.titleCell.hierarchyList
+    for (const row of table.rows) {
+      const cells = []
+      const titleCells = row.titleCell.hierarchyList
       if (titleCells.length < this.table.titleColumnQty) {
         cells.push(RowTitleCell.placeholder(this.titleColumnQty - titleCells.length))
       }
-      for (let titleCell of titleCells) {
+      for (const titleCell of titleCells) {
         cells.push(titleCell)
       }
 
-      for (let cell of row.cells) {
+      for (const cell of row.cells) {
         cells.push(cell)
       }
       this.rows.push({ cells: cells })

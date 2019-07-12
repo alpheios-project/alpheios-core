@@ -96,8 +96,8 @@ export default class GreekPronounView extends GreekView {
   static matchFilter (languageID, inflections, inflectionData) {
     if (this.languageID === languageID && inflections.some(i => i[Feature.types.part].value === this.mainPartOfSpeech)) {
       if (inflectionData.types.has(this.inflectionType)) {
-        let inflections = inflectionData.types.get(this.inflectionType)
-        let found = inflections.items.find(form => {
+        const inflections = inflectionData.types.get(this.inflectionType)
+        const found = inflections.items.find(form => {
           let match = false
           for (const value of form.features[Feature.types.grmClass].values) {
             match = match || this.classes.includes(value)
@@ -113,7 +113,7 @@ export default class GreekPronounView extends GreekView {
   }
 
   static getMatchingInstances (homonym) {
-    let inflectionData = this.getInflectionsData(homonym)
+    const inflectionData = this.getInflectionsData(homonym)
     if (this.matchFilter(homonym.languageID, homonym.inflections, inflectionData)) {
       return [new this(homonym, inflectionData).render()]
     }
@@ -122,7 +122,7 @@ export default class GreekPronounView extends GreekView {
 
   getMorphemes () {
     return this.inflectionData.types.get(this.constructor.inflectionType).items
-      .filter(item => item.features.hasOwnProperty(Feature.types.grmClass) &&
+      .filter(item => item.features.hasOwnProperty(Feature.types.grmClass) && // eslint-disable-line no-prototype-builtins
             item.features[Feature.types.grmClass].hasSomeValues(this.constructor.classes)
       )
   }
@@ -133,7 +133,7 @@ export default class GreekPronounView extends GreekView {
     }
     let inflection = new Inflection(options.form, this.languageID)
     inflection.addFeature(new Feature(Feature.types.part, this.mainPartOfSpeech, this.languageID))
-    let homonym = Homonym.createSimpleForm(options.form, this.languageID, [inflection])
+    const homonym = Homonym.createSimpleForm(options.form, this.languageID, [inflection])
     inflection = this.dataset.setInflectionData(inflection, homonym.lexemes[0].lemma)
     return homonym
   }

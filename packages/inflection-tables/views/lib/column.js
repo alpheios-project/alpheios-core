@@ -17,7 +17,7 @@ export default class Column {
     // TODO we should rename this to be cellMatches
     this.suffixMatches = !!this.cells.find(cell => cell.suffixMatches || cell.morphologyMatch)
 
-    for (let cell of this.cells) {
+    for (const cell of this.cells) {
       cell.column = this
     }
   }
@@ -46,7 +46,7 @@ export default class Column {
     if (!this.hidden) {
       this.hidden = true
 
-      for (let cell of this.cells) {
+      for (const cell of this.cells) {
         cell.hide()
       }
       if (this._headerCell) {
@@ -62,7 +62,7 @@ export default class Column {
     if (this.hidden) {
       this.hidden = false
 
-      for (let cell of this.cells) {
+      for (const cell of this.cells) {
         cell.show()
       }
       if (this._headerCell) {
@@ -75,7 +75,7 @@ export default class Column {
    * Highlights a column and its header.
    */
   highlight () {
-    for (let cell of this.cells) {
+    for (const cell of this.cells) {
       cell.highlight()
     }
     if (this._headerCell) {
@@ -87,7 +87,7 @@ export default class Column {
    * Removes highlighting from a column and its header.
    */
   clearHighlighting () {
-    for (let cell of this.cells) {
+    for (const cell of this.cells) {
       cell.clearHighlighting()
     }
     if (this._headerCell) {

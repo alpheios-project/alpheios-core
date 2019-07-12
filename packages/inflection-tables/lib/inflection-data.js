@@ -50,7 +50,7 @@ export default class InflectionData {
    */
   getMorphemes (partOfSpeech, inflectionType) {
     if (this.pos.has(partOfSpeech)) {
-      let inflectionSet = this.pos.get(partOfSpeech)
+      const inflectionSet = this.pos.get(partOfSpeech)
       if (inflectionSet.types.has(inflectionType)) {
         return inflectionSet.types.get(inflectionType).types
       }
@@ -66,7 +66,7 @@ export default class InflectionData {
    */
   getFootnotesMap (partOfSpeech, inflectionType) {
     if (this.pos.has(partOfSpeech)) {
-      let inflectionSet = this.pos.get(partOfSpeech)
+      const inflectionSet = this.pos.get(partOfSpeech)
       if (inflectionSet.types.has(inflectionType)) {
         return inflectionSet.types.get(inflectionType).footnotesMap
       }

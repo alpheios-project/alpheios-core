@@ -8,7 +8,7 @@ export default class ExtendedGreekData extends ExtendedLanguageData {
   }
 
   static readObject (jsonObject) {
-    let data = new ExtendedGreekData()
+    const data = new ExtendedGreekData()
     data.primary = jsonObject.primary
     return data
   }
@@ -17,7 +17,7 @@ export default class ExtendedGreekData extends ExtendedLanguageData {
     if (this.primary !== extendedGreekData.primary) {
       console.log('Mismatch', this.primary, extendedGreekData.primary)
     }
-    let merged = new ExtendedGreekData()
+    const merged = new ExtendedGreekData()
     merged.primary = this.primary
     return merged
   }

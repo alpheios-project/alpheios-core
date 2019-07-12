@@ -11,10 +11,10 @@ export default class MatchData {
   }
 
   static readObject (jsonObject) {
-    let matchData = new MatchData()
+    const matchData = new MatchData()
     matchData.suffixMatch = jsonObject.suffixMatch
     matchData.fullMatch = jsonObject.fullMatch
-    for (let feature of jsonObject.matchedFeatures) {
+    for (const feature of jsonObject.matchedFeatures) {
       matchData.matchedFeatures.push(feature)
     }
     return matchData

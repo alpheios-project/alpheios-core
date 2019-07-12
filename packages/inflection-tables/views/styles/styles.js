@@ -1,4 +1,4 @@
-let classNames = {
+const classNames = {
   highlight: 'infl-cell--hl',
   morphologyMatch: 'infl-cell--morph-match',
   hidden: 'hidden',
@@ -7,7 +7,7 @@ let classNames = {
   narrowView: 'infl-table--narrow'
 }
 
-let footnotes = {
+const footnotes = {
   id: 'inlection-table-footer'
 }
 

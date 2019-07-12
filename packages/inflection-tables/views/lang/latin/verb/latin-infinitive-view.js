@@ -19,7 +19,7 @@ export default class LatinInfinitiveView extends LatinVerbMoodView {
   createTable () {
     this.table = new Table([this.features.voices, this.features.conjugations,
       this.features.tenses])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [
       this.constructor.model.typeFeature(Feature.types.voice),
       this.constructor.model.typeFeature(Feature.types.conjugation)

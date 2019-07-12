@@ -24,11 +24,11 @@ export default class NarrowViewGroup {
     this.index = index
     this.columns = headers[0].cells[index].columns
     this.groupSize = this.columns.length
-    let columnsStartIndex = this.columns[0].index
-    let columnsEndIndex = this.columns[this.columns.length - 1].index
+    const columnsStartIndex = this.columns[0].index
+    const columnsEndIndex = this.columns[this.columns.length - 1].index
 
     this.rows = []
-    for (let row of rows) {
+    for (const row of rows) {
       this.rows.push(row.slice(columnsStartIndex, columnsEndIndex + 1))
     }
     this.headers = []
@@ -36,13 +36,13 @@ export default class NarrowViewGroup {
      * Since we group by the first column feature, there will be a single feature in a first header row,
      * its children in the second row, children of its children in a third row and so on.
      */
-    for (let [headerIndex, headerRow] of headers.entries()) {
-      let row = new Row()
+    for (const [headerIndex, headerRow] of headers.entries()) {
+      const row = new Row()
       row.titleCell = headerRow.titleCell
       if (headerIndex === 0) {
         row.cells.push(headerRow.cells[index])
       } else {
-        for (let headerCell of this.headers[headerIndex - 1].cells) {
+        for (const headerCell of this.headers[headerIndex - 1].cells) {
           row.cells = row.cells.concat(headerCell.children)
         }
       }
@@ -60,7 +60,7 @@ export default class NarrowViewGroup {
    */
   get visibleColumnQty () {
     let qty = 0
-    for (let column of this.columns) {
+    for (const column of this.columns) {
       if (!column.hidden) {
         qty++
       }
@@ -76,23 +76,23 @@ export default class NarrowViewGroup {
 
     if (this.visibleColumnQty) {
       // This group is visible
-      for (let headerRow of this.headers) {
+      for (const headerRow of this.headers) {
         this.nodes.appendChild(headerRow.titleCell.getNvNode(this.index))
-        for (let headerCell of headerRow.cells) {
+        for (const headerCell of headerRow.cells) {
           this.nodes.appendChild(headerCell.nvNode)
         }
       }
 
-      for (let row of this.rows) {
-        let titleCells = row.titleCell.hierarchyList
+      for (const row of this.rows) {
+        const titleCells = row.titleCell.hierarchyList
         if (titleCells.length < this.titleColumnQty) {
           this.nodes.appendChild(RowTitleCell.placeholder(this.titleColumnQty - titleCells.length))
         }
-        for (let titleCell of titleCells) {
+        for (const titleCell of titleCells) {
           this.nodes.appendChild(titleCell.getNvNode(this.index))
         }
 
-        for (let cell of row.cells) {
+        for (const cell of row.cells) {
           this.nodes.appendChild(cell.nvNode)
         }
       }

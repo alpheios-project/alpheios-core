@@ -74,8 +74,8 @@ export default class GroupFeatureType {
   }
 
   addFeature (key, values) {
-    let typeFeature = LanguageModelFactory.getLanguageModel(this.languageID).typeFeature(this.type)
-    let newFeature = typeFeature.createFeatures(values)
+    const typeFeature = LanguageModelFactory.getLanguageModel(this.languageID).typeFeature(this.type)
+    const newFeature = typeFeature.createFeatures(values)
     this.featureMap.set(key, newFeature)
   }
 

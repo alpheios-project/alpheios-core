@@ -40,7 +40,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
     this.features.set(Feature.types.word, new Feature(Feature.types.word, [], LatinLanguageDataset.languageID))
 
     // Create an importer with default values for every feature
-    for (let feature of this.features.values()) {
+    for (const feature of this.features.values()) {
       feature.addImporter(new FeatureImporter(feature.values, true))
     }
 
@@ -92,7 +92,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       footnote: 6
     }
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
-    let noSuffixValue = '-'
+    const noSuffixValue = '-'
     let footnotes = []
 
     // First row are headers
@@ -104,7 +104,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
         suffix = null
       }
 
-      let features = [partOfSpeech,
+      const features = [partOfSpeech,
         this.features.get(Feature.types.number).createFromImporter(item[n.number]),
         this.features.get(Feature.types.grmCase).createFromImporter(item[n.grmCase]),
         this.features.get(Feature.types.declension).createFromImporter(item[n.declension]),
@@ -112,7 +112,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
         this.features.get(Feature.types.type).createFromImporter(item[n.type])]
       if (item[n.footnote]) {
         // There can be multiple footnote indexes separated by spaces
-        let indexes = item[n.footnote].split(' ')
+        const indexes = item[n.footnote].split(' ')
         features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
@@ -138,7 +138,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
     // First row are headers
     for (let i = 1; i < data.length; i++) {
       const item = data[i]
-      let features = [partOfSpeech]
+      const features = [partOfSpeech]
       //    if (item[n.formSet]) {
       //      features.push(languageModel.features[Feature.types.formSet]createFromImporter(item[0]))
       //    }
@@ -159,12 +159,12 @@ export default class LatinLanguageDataset extends LanguageDataset {
       if (item[n.type]) {
         features.push(this.features.get(Feature.types.type).createFromImporter(item[n.type]))
       }
-      let form = item[n.form] ? item[n.form] : ''
+      const form = item[n.form] ? item[n.form] : ''
 
       // Footnotes
       if (item[n.footnote]) {
         // There can be multiple footnote indexes separated by spaces
-        let indexes = item[n.footnote].split(' ')
+        const indexes = item[n.footnote].split(' ')
         features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
@@ -175,7 +175,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
   // For verbs
   addVerbSuffixes (partOfSpeech, data, pofsFootnotes) {
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
-    let noSuffixValue = '-'
+    const noSuffixValue = '-'
     let footnotes = []
 
     // First row are headers
@@ -187,8 +187,8 @@ export default class LatinLanguageDataset extends LanguageDataset {
         suffix = null
       }
 
-      let features = [partOfSpeech]
-      let columns = [
+      const features = [partOfSpeech]
+      const columns = [
         Feature.types.conjugation,
         Feature.types.voice,
         Feature.types.mood,
@@ -208,7 +208,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
         }
       })
 
-      let grammartype = item[7]
+      const grammartype = item[7]
       // Type information can be empty if no ending is provided
       if (grammartype) {
         features.push(this.features.get(Feature.types.type).createFromImporter(grammartype))
@@ -216,7 +216,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       // Footnotes
       if (item[9]) {
         // There can be multiple footnote indexes separated by spaces
-        let indexes = item[9].split(' ')
+        const indexes = item[9].split(' ')
         features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
@@ -226,7 +226,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
 
   addVerbParticipleSuffixes (partOfSpeech, data) {
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
-    let noSuffixValue = '-'
+    const noSuffixValue = '-'
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
@@ -237,8 +237,8 @@ export default class LatinLanguageDataset extends LanguageDataset {
         suffix = null
       }
 
-      let features = [partOfSpeech]
-      let columns = [
+      const features = [partOfSpeech]
+      const columns = [
         Feature.types.conjugation,
         Feature.types.voice,
         Feature.types.mood,
@@ -258,7 +258,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
         }
       })
 
-      let grammartype = item[7]
+      const grammartype = item[7]
       // Type information can be empty if no ending is provided
       if (grammartype) {
         features.push(this.features.get(Feature.types.type).createFromImporter(grammartype))
@@ -269,7 +269,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
 
   addVerbSupineSuffixes (partOfSpeech, data) {
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
-    let noSuffixValue = '-'
+    const noSuffixValue = '-'
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
@@ -280,9 +280,9 @@ export default class LatinLanguageDataset extends LanguageDataset {
         suffix = null
       }
 
-      let features = [partOfSpeech]
+      const features = [partOfSpeech]
       // Ending,Conjugation,Voice,Mood,Tense,Number,Person,Case,Type,Footnote
-      let columns = [
+      const columns = [
         Feature.types.case
       ]
       columns.forEach((c, j) => {
@@ -305,14 +305,14 @@ export default class LatinLanguageDataset extends LanguageDataset {
     // First row are headers
     for (let i = 1; i < data.length; i++) {
       const item = data[i]
-      let hdwd = item[0]
-      let principalParts = item[1].split(/_/)
-      let lemma = new Lemma(hdwd, LatinLanguageDataset.languageID, principalParts)
+      const hdwd = item[0]
+      const principalParts = item[1].split(/_/)
+      const lemma = new Lemma(hdwd, LatinLanguageDataset.languageID, principalParts)
 
-      let form = item[2]
+      const form = item[2]
 
       // Lemma,PrincipalParts,Form,Voice,Mood,Tense,Number,Person,Footnote
-      let features = [
+      const features = [
         partOfSpeech
       ]
 
@@ -342,7 +342,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       // Footnotes
       if (item[8]) {
         // There can be multiple footnote indexes separated by spaces
-        let indexes = item[8].split(' ')
+        const indexes = item[8].split(' ')
         features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
 
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
@@ -357,18 +357,18 @@ export default class LatinLanguageDataset extends LanguageDataset {
     // First row are headers
     for (let i = 1; i < data.length; i++) {
       const item = data[i]
-      let lemmaWord = item[0]
-      let principalParts = item[1].split(/_/)
-      let form = item[2]
+      const lemmaWord = item[0]
+      const principalParts = item[1].split(/_/)
+      const form = item[2]
 
       // Lemma,PrincipalParts,Form,Voice,Mood,Tense,Number,Person,Footnote
-      let features = [
+      const features = [
         partOfSpeech/*,
         this.features.get(Feature.types.fullForm).createFromImporter(lemma.word) */
       ]
 
       if (lemmaWord) {
-        let lemma = new Lemma(lemmaWord, LatinLanguageDataset.languageID, principalParts)
+        const lemma = new Lemma(lemmaWord, LatinLanguageDataset.languageID, principalParts)
         features.push(this.features.get(Feature.types.word).createFromImporter(lemmaWord))
         if (!this.irregularLemmas.get(partOfSpeech.value).some(item => item.word === lemma.word)) {
           this.irregularLemmas.get(partOfSpeech.value).push(lemma)
@@ -382,7 +382,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       // Footnotes
       if (item[4]) {
         // There can be multiple footnote indexes separated by spaces
-        let indexes = item[4].split(' ')
+        const indexes = item[4].split(' ')
         features.push(this.features.get(Feature.types.footnote).createFeatures(indexes))
 
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
@@ -392,7 +392,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
   }
 
   addFootnotes (partOfSpeech, classType, data) {
-    let footnotes = []
+    const footnotes = []
     // First row are headers
     for (let i = 1; i < data.length; i++) {
       const footnote = this.addFootnote(partOfSpeech.value, classType, data[i][0], data[i][1])
@@ -510,11 +510,11 @@ export default class LatinLanguageDataset extends LanguageDataset {
    * @return {Lemma[] | []} Array of matching Lemma objects or an empty array if nothing is found.
    */
   getMatchingIrregularLemmas (inflections) {
-    let lemmas = []
+    const lemmas = []
     for (const inflection of inflections) {
       const pofs = inflection[Feature.types.part].value
       if (this.irregularLemmas.has(pofs)) {
-        let lemma = this.irregularLemmas.get(pofs).find(item => item.word === inflection[Feature.types.word].value)
+        const lemma = this.irregularLemmas.get(pofs).find(item => item.word === inflection[Feature.types.word].value)
         if (lemma) {
           lemmas.push(lemma)
         }

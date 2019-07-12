@@ -124,6 +124,7 @@ export default class View {
   static get datasetConsts () {
     return this.dataset.constructor.constants
   }
+
   /**
    * Defines an inflection type (Suffix/Form) of a view. Should be redefined in child classes.
    * @return {Suffix|Form|Paradigm|undefined}
@@ -337,6 +338,7 @@ export default class View {
     // Select inflections this view needs
     return this.dataset.createInflectionSet(this.mainPartOfSpeech, this.getRelatedInflections(homonym.inflections), options)
   }
+
   /**
    * Finds out what views match inflection data and return initialized instances of those views.
    * By default only one instance of the view is returned, by views can override this method
@@ -347,11 +349,11 @@ export default class View {
    */
   static getMatchingInstances (homonym) {
     if (this.matchFilter(homonym.languageID, homonym.inflections)) {
-      let inflectionData = this.getInflectionsData(homonym)
+      const inflectionData = this.getInflectionsData(homonym)
 
       if (inflectionData.types.has(this.inflectionType)) {
         // There is some inflection data found for the view's morpheme type
-        let view = new this(homonym, inflectionData)
+        const view = new this(homonym, inflectionData)
         return [view]
       }
     }
@@ -366,16 +368,16 @@ export default class View {
     const suffix = options.suffix ? options.suffix : 'suffix'
     let inflection = new Inflection(stem, this.languageID, suffix)
     inflection.addFeature(new Feature(Feature.types.part, this.mainPartOfSpeech, this.languageID))
-    let homonym = Homonym.createSimpleForm(stem, this.languageID, [inflection])
+    const homonym = Homonym.createSimpleForm(stem, this.languageID, [inflection])
     inflection = this.dataset.setInflectionData(inflection, homonym.lexemes[0].lemma)
     return homonym
   }
 
   static getStandardFormInstance (options) {
-    let homonym = this.createStandardFormHomonym(options)
-    let inflectionData = this.getInflectionsData(homonym, { findMatches: false })
+    const homonym = this.createStandardFormHomonym(options)
+    const inflectionData = this.getInflectionsData(homonym, { findMatches: false })
     // Standard form tables should have no suffix matches columns visible
-    let view = new this(homonym, inflectionData)
+    const view = new this(homonym, inflectionData)
     if (options.title) {
       view.setTitle(options.title)
     }

@@ -25,7 +25,7 @@ export default class LatinVerbGerundiveIrregularView extends LatinVerbIrregularB
 
   createTable () {
     this.table = new Table([this.features.cases])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = []
     features.rows = [this.features.cases]
     features.columnRowTitles = [this.features.cases]

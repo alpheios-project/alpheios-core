@@ -26,7 +26,7 @@ export default class LatinMoodVoiceConjugationView extends LatinVerbView {
   createTable () {
     this.table = new Table([this.features.moods, this.features.voices, this.features.conjugations,
       this.features.tenses, this.features.numbers, this.features.persons])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [
       this.constructor.model.typeFeature(Feature.types.mood),
       this.constructor.model.typeFeature(Feature.types.voice),

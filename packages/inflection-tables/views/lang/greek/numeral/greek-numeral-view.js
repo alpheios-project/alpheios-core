@@ -42,7 +42,7 @@ export default class GreekNumeralView extends GreekView {
 
   createTable () {
     this.table = new Table([this.features.lemmas, this.features.genders, this.features.types, this.features.numbers, this.features.cases])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [
       this.lemmaTypeFeature,
       this.constructor.model.typeFeature(Feature.types.gender),

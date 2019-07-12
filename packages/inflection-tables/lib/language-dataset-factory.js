@@ -15,7 +15,7 @@ export default class LanguageDatasetFactory {
    */
   constructor (languageData = [LatinDataset, GreekDataset]) {
     this.sets = new Map()
-    for (let Set of languageData) {
+    for (const Set of languageData) {
       this.sets.set(Set.languageID, new Set())
     }
   }
@@ -37,9 +37,9 @@ export default class LanguageDatasetFactory {
    * @return {LanguageDataset} An instance of a language dataset.
    */
   static getDataset (languageID) {
-    let instance = this.instance
+    const instance = this.instance
     if (instance.sets.has(languageID)) {
-      let dataset = instance.sets.get(languageID)
+      const dataset = instance.sets.get(languageID)
       if (!dataset.dataLoaded) {
         dataset.loadData()
       }
@@ -54,10 +54,10 @@ export default class LanguageDatasetFactory {
    * @return {InflectionData} A return value of an inflection query.
    */
   static getInflectionData (homonym) {
-    let instance = this.instance
+    const instance = this.instance
     if (instance.sets.has(homonym.languageID)) {
-      let dataset = this.getDataset(homonym.languageID)
-      for (let inflection of homonym.inflections) {
+      const dataset = this.getDataset(homonym.languageID)
+      for (const inflection of homonym.inflections) {
         // Set grammar rules for an inflection
         inflection.setConstraints()
         // dataset.setInflectionConstraints(inflection)

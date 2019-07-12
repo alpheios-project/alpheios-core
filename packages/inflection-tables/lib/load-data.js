@@ -5,7 +5,7 @@
  * file content (a string) in case of success of with a status message
  * in case of failure.
  */
-let loadData = function loadData (filePath) {
+const loadData = function loadData (filePath) {
   return new Promise((resolve, reject) => {
     const xhr = new window.XMLHttpRequest()
     xhr.open('GET', filePath)

@@ -35,8 +35,8 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
 
   createTable () {
     this.table = new Table([this.features.voices, this.features.moods, this.features.tenses, this.features.numbers, this.features.persons])
-    let features = this.table.features
-    features.columns = [ this.features.voices, this.features.moods ]
+    const features = this.table.features
+    features.columns = [this.features.voices, this.features.moods]
     features.rows = [this.features.tenses, this.features.numbers, this.features.persons]
     features.columnRowTitles = [this.features.numbers, this.features.persons]
     features.fullWidthRowTitles = [this.features.tenses]
@@ -66,7 +66,7 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
    */
   static getInflectionsData (homonym, options) {
     // Select only those inflections that are required for this view
-    let inflections = homonym.inflections.filter(
+    const inflections = homonym.inflections.filter(
       i => i[Feature.types.part].value === this.mainPartOfSpeech &&
         i.constraints && i.constraints.irregular
     )
@@ -78,23 +78,23 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
    * @return {View[]} - An array of linked views or an empty array if no linked views can be created.
    */
   createLinkedViews () {
-    let views = []
+    const views = []
     // we want to restrict the inflections for the linked views to irregular verbs for now because inflections from other verbs seem to corrupt the match data constraints
     // (e.g. sum, which has both an irregular and regular verb and one of the regular verbs has a different, non-matching lemma)
     // this will fail if we want to link tables for irregular and regular verbs together this way
-    let inflections = this.homonym.inflections.filter(infl => infl[Feature.types.part].value === this.constructor.mainPartOfSpeech && infl.constraints && infl.constraints.irregular)
-    for (let Constructor of this.constructor.linkedViewConstructors) {
-      let linkedViewInflections = []
-      for (let infl of inflections) {
+    const inflections = this.homonym.inflections.filter(infl => infl[Feature.types.part].value === this.constructor.mainPartOfSpeech && infl.constraints && infl.constraints.irregular)
+    for (const Constructor of this.constructor.linkedViewConstructors) {
+      const linkedViewInflections = []
+      for (const infl of inflections) {
         let clone = infl.clone()
         clone[Feature.types.part] = clone[Feature.types.part].createFeature(Constructor.mainPartOfSpeech)
         clone = this.constructor.dataset.setInflectionData(clone, infl.lemma)
         linkedViewInflections.push(clone)
       }
-      let inflectionData = this.constructor.dataset.createInflectionSet(Constructor.mainPartOfSpeech, linkedViewInflections, { findMorphologyMatches: false })
+      const inflectionData = this.constructor.dataset.createInflectionSet(Constructor.mainPartOfSpeech, linkedViewInflections, { findMorphologyMatches: false })
       if (Constructor.matchFilter(this.homonym.languageID, linkedViewInflections)) {
-        let view = new Constructor(this.homonym, inflectionData)
-        for (let infl of inflections) {
+        const view = new Constructor(this.homonym, inflectionData)
+        for (const infl of inflections) {
           infl[Feature.types.part] = infl[Feature.types.part].createFeature(this.constructor.mainPartOfSpeech)
         }
         views.push(view)
@@ -107,8 +107,8 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
   // See base view for description
   static getMatchingInstances (homonym) {
     if (this.matchFilter(homonym.languageID, homonym.inflections)) {
-      let inflectionData = this.getInflectionsData(homonym)
-      let view = new this(homonym, inflectionData)
+      const inflectionData = this.getInflectionsData(homonym)
+      const view = new this(homonym, inflectionData)
       view.createLinkedViews()
       return [view.render()]
     }

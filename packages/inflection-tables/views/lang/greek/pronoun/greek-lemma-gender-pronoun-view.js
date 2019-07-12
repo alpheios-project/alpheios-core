@@ -43,7 +43,7 @@ export default class GreekLemmaGenderPronounView extends GreekPronounView {
     in which a table tree will be built.
      */
     this.table = new Table([this.features.lemmas, this.features.genders, this.features.numbers, this.features.cases])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [this.features.lemmas, this.features.genders]
     features.rows = [this.features.numbers, this.features.cases]
     features.columnRowTitles = [this.features.cases]

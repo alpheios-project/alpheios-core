@@ -70,21 +70,21 @@ export default class Morpheme {
   }
 
   static readObject (jsonObject) {
-    let suffix = new this(jsonObject.value)
+    const suffix = new this(jsonObject.value)
 
     if (jsonObject.features) {
-      for (let key in jsonObject.features) {
-        if (jsonObject.features.hasOwnProperty(key)) {
+      for (const key in jsonObject.features) {
+        if (jsonObject.features.hasOwnProperty(key)) { // eslint-disable-line no-prototype-builtins
           suffix.features[key] = jsonObject.features[key]
         }
       }
     }
 
     if (jsonObject.featureGroups) {
-      for (let key in jsonObject.featureGroups) {
-        if (jsonObject.featureGroups.hasOwnProperty(key)) {
+      for (const key in jsonObject.featureGroups) {
+        if (jsonObject.featureGroups.hasOwnProperty(key)) { // eslint-disable-line no-prototype-builtins
           suffix.featureGroups[key] = []
-          for (let value of jsonObject.featureGroups[key]) {
+          for (const value of jsonObject.featureGroups[key]) {
             suffix.featureGroups[key].push(value)
           }
         }
@@ -93,7 +93,7 @@ export default class Morpheme {
 
     if (jsonObject[Feature.types.footnote]) {
       suffix[Feature.types.footnote] = []
-      for (let footnote of jsonObject[Feature.types.footnote]) {
+      for (const footnote of jsonObject[Feature.types.footnote]) {
         suffix[Feature.types.footnote].push(footnote)
       }
     }
@@ -103,7 +103,7 @@ export default class Morpheme {
     }
 
     for (const lang in jsonObject.extendedLangData) {
-      if (jsonObject.extendedLangData.hasOwnProperty(lang)) {
+      if (jsonObject.extendedLangData.hasOwnProperty(lang)) { // eslint-disable-line no-prototype-builtins
         suffix.extendedLangData[lang] = ExtendedLanguageData.readObject(jsonObject.extendedLangData[lang])
       }
     }
@@ -116,14 +116,14 @@ export default class Morpheme {
    */
   clone () {
     // TODO: do all-feature two-level cloning
-    let clone = new this.constructor(this.value)
+    const clone = new this.constructor(this.value)
     for (const key in this.features) {
-      if (this.features.hasOwnProperty(key)) {
+      if (this.features.hasOwnProperty(key)) { // eslint-disable-line no-prototype-builtins
         clone.features[key] = this.features[key]
       }
     }
     for (const key in this.featureGroups) {
-      if (this.featureGroups.hasOwnProperty(key)) {
+      if (this.featureGroups.hasOwnProperty(key)) { // eslint-disable-line no-prototype-builtins
         clone.featureGroups[key] = this.featureGroups[key]
       }
     }
@@ -139,7 +139,7 @@ export default class Morpheme {
     clone.footnotes.push(...this.footnotes)
 
     for (const lang in this.extendedLangData) {
-      if (this.extendedLangData.hasOwnProperty(lang)) {
+      if (this.extendedLangData.hasOwnProperty(lang)) { // eslint-disable-line no-prototype-builtins
         clone.extendedLangData[lang] = this.extendedLangData[lang]
       }
     }
@@ -169,9 +169,9 @@ export default class Morpheme {
    * @return {string[]} A list of matching feature values
    */
   matchingValues (comparisonFeature, comparisonType = Morpheme.comparisonTypes.EXACT) {
-    let matches = []
+    const matches = []
 
-    if (comparisonFeature && this.features.hasOwnProperty(comparisonFeature.type)) {
+    if (comparisonFeature && this.features.hasOwnProperty(comparisonFeature.type)) { // eslint-disable-line no-prototype-builtins
       const morphemeValue = this.features[comparisonFeature.type]
 
       if (comparisonType === Morpheme.comparisonTypes.EXACT) {
@@ -208,12 +208,12 @@ export default class Morpheme {
    * @param suffixes
    */
   static getCommonGroups (suffixes) {
-    let features = Object.keys(suffixes[0].featureGroups)
+    const features = Object.keys(suffixes[0].featureGroups)
 
-    let commonGroups = features.filter(feature => {
+    const commonGroups = features.filter(feature => {
       let result = true
       for (let i = 1; i < suffixes.length; i++) {
-        result = result && suffixes[i].features.hasOwnProperty(feature)
+        result = result && suffixes[i].features.hasOwnProperty(feature) // eslint-disable-line no-prototype-builtins
       }
       return result
     })
@@ -234,13 +234,13 @@ export default class Morpheme {
    * @returns {boolean} - True if both suffixes are in the same group, false otherwise.
    */
   isInSameGroupWith (suffix) {
-    let commonGroups = Morpheme.getCommonGroups([this, suffix])
+    const commonGroups = Morpheme.getCommonGroups([this, suffix])
     if (commonGroups.length < 1) {
       // If elements do not have common groups in Suffix.featureGroups then they are not in the same group
       return false
     }
 
-    let commonValues = {}
+    const commonValues = {}
     commonGroups.forEach((feature) => { commonValues[feature] = new Set([this.features[feature]]) })
 
     let result = true
@@ -251,7 +251,7 @@ export default class Morpheme {
     }
 
     // Check all features to be a match, except those that are possible group values
-    for (let feature of Object.keys(this.features)) {
+    for (const feature of Object.keys(this.features)) {
       if (commonGroups.indexOf(feature) >= 0) {
         commonValues[feature].add(suffix.features[feature])
         // Do not compare common groups
@@ -282,19 +282,19 @@ export default class Morpheme {
    */
   split (features, level = 0) {
     // TODO: Not tested for multiple features (as there were no such cases yet)
-    let morphemes = []
+    const morphemes = []
     const currentFeature = features[level]
     for (const value of currentFeature.values) {
       if (level < features.length - 1) {
-        let splitted = this.splitByFeature(features, level + 1)
-        for (let morpheme of splitted) {
+        const splitted = this.splitByFeature(features, level + 1)
+        for (const morpheme of splitted) {
           morpheme.features[currentFeature.type] = currentFeature.createFeature(value)
           morpheme.featureGroups[currentFeature.type] = currentFeature.values
           morphemes.push(morpheme)
         }
       } else {
         // The last level
-        let copy = this.clone()
+        const copy = this.clone()
         copy.features[currentFeature.type] = currentFeature.createFeature(value)
         copy.featureGroups[currentFeature.type] = currentFeature.values
         morphemes.push(copy)
@@ -353,8 +353,8 @@ export default class Morpheme {
    * @returns {Suffix} A modified value of ending A.
    */
   static merge (suffixA, suffixB) {
-    let commonGroups = Morpheme.getCommonGroups([suffixA, suffixB])
-    for (let type of commonGroups) {
+    const commonGroups = Morpheme.getCommonGroups([suffixA, suffixB])
+    for (const type of commonGroups) {
       // Combine values using a comma separator. Can do anything else if we need to.
       suffixA.features[type] = suffixA.features[type] + ', ' + suffixB.features[type]
     }

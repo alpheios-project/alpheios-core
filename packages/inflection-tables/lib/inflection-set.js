@@ -68,7 +68,7 @@ export default class InflectionSet {
    */
   addInflectionItems (items) {
     // We assume all inflection items have the same type
-    let classType = items[0].constructor
+    const classType = items[0].constructor
 
     if (!this.types.has(classType)) {
       this.types.set(classType, classType.createList())

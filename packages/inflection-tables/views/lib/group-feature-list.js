@@ -43,8 +43,8 @@ export default class GroupFeatureList extends FeatureList {
    * these columns would follow.
    */
   set columns (features) {
-    for (let feature of features) {
-      let matchingFeature = this.ofType(feature.type)
+    for (const feature of features) {
+      const matchingFeature = this.ofType(feature.type)
       if (!matchingFeature) {
         throw new Error(`Feature of ${feature.type} is not found.`)
       }
@@ -95,8 +95,8 @@ export default class GroupFeatureList extends FeatureList {
    * these rows would follow.
    */
   set rows (features) {
-    for (let feature of features) {
-      let matchingFeature = this.ofType(feature.type)
+    for (const feature of features) {
+      const matchingFeature = this.ofType(feature.type)
       if (!matchingFeature) {
         throw new Error(`Feature of ${feature.type} is not found.`)
       }
@@ -113,7 +113,7 @@ export default class GroupFeatureList extends FeatureList {
    */
   createDataColumn () {
     // Need to use a known type to pass a type check
-    let feature = new Feature('word', 'empty value', Symbol('data column language'))
+    const feature = new Feature('word', 'empty value', Symbol('data column language'))
     feature.type = 'data column type' // To bypass a type check
     this._dataColFeature = new GroupFeatureType('data column type', Symbol('data column language'), '', [feature])
     this._dataColFeature.dataColumn = true
@@ -195,8 +195,8 @@ export default class GroupFeatureList extends FeatureList {
    * @param {Feature | GroupFeatureType} features - What suffix row titles this table would have.
    */
   set columnRowTitles (features) {
-    for (let feature of features) {
-      let matchingFeature = this.ofType(feature.type)
+    for (const feature of features) {
+      const matchingFeature = this.ofType(feature.type)
       if (!matchingFeature) {
         throw new Error(`Feature of ${feature.type} is not found.`)
       }
@@ -211,8 +211,8 @@ export default class GroupFeatureList extends FeatureList {
    * @param {Feature | GroupingFeature} features - What feature titles would take a whole row
    */
   set fullWidthRowTitles (features) {
-    for (let feature of features) {
-      let matchingFeature = this.ofType(feature.type)
+    for (const feature of features) {
+      const matchingFeature = this.ofType(feature.type)
       if (!matchingFeature) {
         throw new Error(`Feature of ${feature.type} is not found.`)
       }
@@ -234,7 +234,7 @@ export default class GroupFeatureList extends FeatureList {
    */
   get titleColumnsQuantity () {
     let quantity = 0
-    for (let feature of this._features) {
+    for (const feature of this._features) {
       if (feature.hasColumnRowTitle) {
         quantity++
       }

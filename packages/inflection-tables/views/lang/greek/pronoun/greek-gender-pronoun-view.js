@@ -9,7 +9,7 @@ import Table from '../../../lib/table'
  */
 export default class GreekGenderPronounView extends GreekPronounView {
   constructor (homonym, inflectionData) {
-    let grammarClass = GreekPronounView.getClassesFromInflection(inflectionData.inflections).filter(c => GreekGenderPronounView.classes.includes(c))
+    const grammarClass = GreekPronounView.getClassesFromInflection(inflectionData.inflections).filter(c => GreekGenderPronounView.classes.includes(c))
     // we should only get 1 class here -- if we get more the view is likely to be wrong
     if (grammarClass.length > 0) {
       console.warn('more than one grammarClass found for homonym')
@@ -47,7 +47,7 @@ export default class GreekGenderPronounView extends GreekPronounView {
     in which a table tree will be built.
      */
     this.table = new Table([this.features.genders, this.features.numbers, this.features.cases])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [this.features.genders]
     features.rows = [this.features.numbers, this.features.cases]
     features.columnRowTitles = [this.features.cases]

@@ -152,7 +152,7 @@ class ExtendedGreekData extends _extended_language_data__WEBPACK_IMPORTED_MODULE
   }
 
   static readObject (jsonObject) {
-    let data = new ExtendedGreekData()
+    const data = new ExtendedGreekData()
     data.primary = jsonObject.primary
     return data
   }
@@ -161,7 +161,7 @@ class ExtendedGreekData extends _extended_language_data__WEBPACK_IMPORTED_MODULE
     if (this.primary !== extendedGreekData.primary) {
       console.log('Mismatch', this.primary, extendedGreekData.primary)
     }
-    let merged = new ExtendedGreekData()
+    const merged = new ExtendedGreekData()
     merged.primary = this.primary
     return merged
   }
@@ -318,7 +318,7 @@ class InflectionData {
    */
   getMorphemes (partOfSpeech, inflectionType) {
     if (this.pos.has(partOfSpeech)) {
-      let inflectionSet = this.pos.get(partOfSpeech)
+      const inflectionSet = this.pos.get(partOfSpeech)
       if (inflectionSet.types.has(inflectionType)) {
         return inflectionSet.types.get(inflectionType).types
       }
@@ -334,7 +334,7 @@ class InflectionData {
    */
   getFootnotesMap (partOfSpeech, inflectionType) {
     if (this.pos.has(partOfSpeech)) {
-      let inflectionSet = this.pos.get(partOfSpeech)
+      const inflectionSet = this.pos.get(partOfSpeech)
       if (inflectionSet.types.has(inflectionType)) {
         return inflectionSet.types.get(inflectionType).footnotesMap
       }
@@ -444,12 +444,12 @@ class InflectionList {
    * @return {number[]}
    */
   get footnotesInUse () {
-    let set = new Set()
+    const set = new Set()
     // Scan all selected morphemes to build a unique set of footnote indexes
     for (const item of this.items) {
-      if (item.hasOwnProperty(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote)) {
+      if (item.hasOwnProperty(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote)) { // eslint-disable-line no-prototype-builtins
         // Footnote indexes are stored in an array
-        for (let index of item[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote]) {
+        for (const index of item[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote]) {
           set.add(index)
         }
       }
@@ -542,7 +542,7 @@ class InflectionSet {
    */
   addInflectionItems (items) {
     // We assume all inflection items have the same type
-    let classType = items[0].constructor
+    const classType = items[0].constructor
 
     if (!this.types.has(classType)) {
       this.types.set(classType, classType.createList())
@@ -1800,7 +1800,7 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
     this.typeFeatures.set(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.dialect, new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.dialect, [], GreekLanguageDataset.languageID))
 
     // Create an importer with default values for every feature
-    for (let feature of this.typeFeatures.values()) {
+    for (const feature of this.typeFeatures.values()) {
       feature.addImporter(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["FeatureImporter"](feature.values, true))
     }
 
@@ -1838,12 +1838,12 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       footnote: 7
     }
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
-    let noSuffixValue = '-'
+    const noSuffixValue = '-'
     let footnotes = []
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
-      let item = data[i]
+      const item = data[i]
       let suffixValue = item[n.suffix]
       // Handle special suffix values
       if (suffixValue === noSuffixValue) {
@@ -1851,7 +1851,7 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       }
 
       let primary = false
-      let features = [partOfSpeech,
+      const features = [partOfSpeech,
         this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.number).createFromImporter(item[n.number]),
         this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmCase).createFromImporter(item[n.grmCase]),
         this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.declension).createFromImporter(item[n.declension]),
@@ -1862,14 +1862,14 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       }
       if (item[n.footnote]) {
         // There can be multiple footnote indexes separated by spaces
-        let indexes = item[n.footnote].split(' ')
+        const indexes = item[n.footnote].split(' ')
         features.push(this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
-      let extendedGreekData = new _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__["default"]()
+      const extendedGreekData = new _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__["default"]()
       extendedGreekData.primary = primary
-      let extendedLangData = {
+      const extendedLangData = {
         [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_GRC]: extendedGreekData
       }
 
@@ -1890,11 +1890,11 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
-      let item = data[i]
-      let formValue = item[n.form]
+      const item = data[i]
+      const formValue = item[n.form]
 
       let primary = false
-      let features = [partOfSpeech,
+      const features = [partOfSpeech,
         this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.number).createFromImporter(item[n.number]),
         this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmCase).createFromImporter(item[n.grmCase]),
         this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.gender).createFromImporter(item[n.gender]),
@@ -1903,9 +1903,9 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         primary = true
       }
 
-      let extendedGreekData = new _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__["default"]()
+      const extendedGreekData = new _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__["default"]()
       extendedGreekData.primary = primary
-      let extendedLangData = {
+      const extendedLangData = {
         [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_GRC]: extendedGreekData
       }
 
@@ -1933,10 +1933,10 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
-      let item = data[i]
-      let form = item[n.form]
+      const item = data[i]
+      const form = item[n.form]
 
-      let features = [
+      const features = [
         partOfSpeech,
         this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.fullForm).createFromImporter(form)
       ]
@@ -1952,24 +1952,24 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       if (item[n.gender]) { features.push(this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.gender).createFromImporter(item[n.gender])) }
       if (item[n.type]) { features.push(this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.type).createFromImporter(item[n.type])) }
 
-      let primary = (item[n.primary] === 'primary')
+      const primary = (item[n.primary] === 'primary')
 
       if (item[n.footnote]) {
         // There can be multiple footnote indexes separated by spaces
-        let indexes = item[n.footnote].split(' ')
+        const indexes = item[n.footnote].split(' ')
         features.push(this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
-      let extendedGreekData = new _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__["default"]()
+      const extendedGreekData = new _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__["default"]()
       extendedGreekData.primary = primary
-      let extendedLangData = {
+      const extendedLangData = {
         [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_GRC]: extendedGreekData
       }
 
       this.numeralGroupingLemmas.sort((a, b) => {
-        let aN = parseInt(a.match(/[0-9]+/g)[0])
-        let bN = parseInt(b.match(/[0-9]+/g)[0])
+        const aN = parseInt(a.match(/[0-9]+/g)[0])
+        const bN = parseInt(b.match(/[0-9]+/g)[0])
         return aN - bN
       })
 
@@ -2001,10 +2001,10 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
-      let item = data[i]
-      let form = item[n.form]
+      const item = data[i]
+      const form = item[n.form]
 
-      let features = [
+      const features = [
         partOfSpeech,
         this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.fullForm).createFromImporter(form)
       ]
@@ -2019,10 +2019,10 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       if (item[n.gender]) { features.push(this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.gender).createFromImporter(item[n.gender])) }
       if (item[n.type]) { features.push(this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.type).createFromImporter(item[n.type])) }
 
-      let primary = (item[n.primary] === 'primary')
+      const primary = (item[n.primary] === 'primary')
 
       // Dialects could have multiple values
-      let dialects = item[n.dialect].split(',')
+      const dialects = item[n.dialect].split(',')
       if (item[n.dialect] && dialects && dialects.length > 0) {
         features.push(this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.dialect).createFeatures(dialects))
       }
@@ -2030,14 +2030,14 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       // Footnotes. There can be multiple footnote indexes separated by commas
       if (item[n.footnote]) {
         // There can be multiple footnote indexes separated by spaces
-        let indexes = item[n.footnote].split(' ')
+        const indexes = item[n.footnote].split(' ')
         features.push(this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
-      let extendedGreekData = new _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__["default"]()
+      const extendedGreekData = new _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__["default"]()
       extendedGreekData.primary = primary
-      let extendedLangData = {
+      const extendedLangData = {
         [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_GRC]: extendedGreekData
       }
       this.addInflectionData(partOfSpeech.value, _lib_form_js__WEBPACK_IMPORTED_MODULE_4__["default"], form, features, footnotes, extendedLangData)
@@ -2142,11 +2142,11 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
 
     // First row contains headers
     for (let i = 1; i < rulesData.length; i++) {
-      let item = rulesData[i]
-      let id = item[n.id]
-      let matchOrder = Number.parseInt(item[n.matchOrder])
+      const item = rulesData[i]
+      const id = item[n.id]
+      const matchOrder = Number.parseInt(item[n.matchOrder])
 
-      let features = [partOfSpeech]
+      const features = [partOfSpeech]
 
       if (item[n.stemtype]) { features.push(this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.stemtype).createFromImporter(item[n.stemtype])) }
       if (item[n.voice]) { features.push(this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice).createFromImporter(item[n.voice])) }
@@ -2170,7 +2170,7 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         console.warn(`Cannot find a paradigm table for "${id}" index`)
       }
     }
-    for (let paradigm of paradigms.values()) {
+    for (const paradigm of paradigms.values()) {
       paradigm.sortRules()
       paradigm.addSuppTables(suppParadigmTables)
     }
@@ -2178,7 +2178,7 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
   }
 
   addFootnotes (partOfSpeech, classType, data) {
-    let footnotes = []
+    const footnotes = []
     // First row are headers
     for (let i = 1; i < data.length; i++) {
       const footnote = this.addFootnote(partOfSpeech.value, classType, data[i][0], data[i][1])
@@ -2682,7 +2682,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
     this.features.set(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.word, new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.word, [], LatinLanguageDataset.languageID))
 
     // Create an importer with default values for every feature
-    for (let feature of this.features.values()) {
+    for (const feature of this.features.values()) {
       feature.addImporter(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["FeatureImporter"](feature.values, true))
     }
 
@@ -2734,7 +2734,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       footnote: 6
     }
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
-    let noSuffixValue = '-'
+    const noSuffixValue = '-'
     let footnotes = []
 
     // First row are headers
@@ -2746,7 +2746,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         suffix = null
       }
 
-      let features = [partOfSpeech,
+      const features = [partOfSpeech,
         this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.number).createFromImporter(item[n.number]),
         this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmCase).createFromImporter(item[n.grmCase]),
         this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.declension).createFromImporter(item[n.declension]),
@@ -2754,7 +2754,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.type).createFromImporter(item[n.type])]
       if (item[n.footnote]) {
         // There can be multiple footnote indexes separated by spaces
-        let indexes = item[n.footnote].split(' ')
+        const indexes = item[n.footnote].split(' ')
         features.push(this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
@@ -2780,7 +2780,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
     // First row are headers
     for (let i = 1; i < data.length; i++) {
       const item = data[i]
-      let features = [partOfSpeech]
+      const features = [partOfSpeech]
       //    if (item[n.formSet]) {
       //      features.push(languageModel.features[Feature.types.formSet]createFromImporter(item[0]))
       //    }
@@ -2801,12 +2801,12 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       if (item[n.type]) {
         features.push(this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.type).createFromImporter(item[n.type]))
       }
-      let form = item[n.form] ? item[n.form] : ''
+      const form = item[n.form] ? item[n.form] : ''
 
       // Footnotes
       if (item[n.footnote]) {
         // There can be multiple footnote indexes separated by spaces
-        let indexes = item[n.footnote].split(' ')
+        const indexes = item[n.footnote].split(' ')
         features.push(this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
@@ -2817,7 +2817,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
   // For verbs
   addVerbSuffixes (partOfSpeech, data, pofsFootnotes) {
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
-    let noSuffixValue = '-'
+    const noSuffixValue = '-'
     let footnotes = []
 
     // First row are headers
@@ -2829,8 +2829,8 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         suffix = null
       }
 
-      let features = [partOfSpeech]
-      let columns = [
+      const features = [partOfSpeech]
+      const columns = [
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation,
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice,
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.mood,
@@ -2850,7 +2850,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         }
       })
 
-      let grammartype = item[7]
+      const grammartype = item[7]
       // Type information can be empty if no ending is provided
       if (grammartype) {
         features.push(this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.type).createFromImporter(grammartype))
@@ -2858,7 +2858,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       // Footnotes
       if (item[9]) {
         // There can be multiple footnote indexes separated by spaces
-        let indexes = item[9].split(' ')
+        const indexes = item[9].split(' ')
         features.push(this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote).createFeatures(indexes))
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
@@ -2868,7 +2868,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
 
   addVerbParticipleSuffixes (partOfSpeech, data) {
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
-    let noSuffixValue = '-'
+    const noSuffixValue = '-'
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
@@ -2879,8 +2879,8 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         suffix = null
       }
 
-      let features = [partOfSpeech]
-      let columns = [
+      const features = [partOfSpeech]
+      const columns = [
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation,
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice,
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.mood,
@@ -2900,7 +2900,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         }
       })
 
-      let grammartype = item[7]
+      const grammartype = item[7]
       // Type information can be empty if no ending is provided
       if (grammartype) {
         features.push(this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.type).createFromImporter(grammartype))
@@ -2911,7 +2911,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
 
   addVerbSupineSuffixes (partOfSpeech, data) {
     // Some suffix values will mean a lack of suffix, they will be mapped to a null
-    let noSuffixValue = '-'
+    const noSuffixValue = '-'
 
     // First row are headers
     for (let i = 1; i < data.length; i++) {
@@ -2922,9 +2922,9 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         suffix = null
       }
 
-      let features = [partOfSpeech]
+      const features = [partOfSpeech]
       // Ending,Conjugation,Voice,Mood,Tense,Number,Person,Case,Type,Footnote
-      let columns = [
+      const columns = [
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.case
       ]
       columns.forEach((c, j) => {
@@ -2947,14 +2947,14 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
     // First row are headers
     for (let i = 1; i < data.length; i++) {
       const item = data[i]
-      let hdwd = item[0]
-      let principalParts = item[1].split(/_/)
-      let lemma = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"](hdwd, LatinLanguageDataset.languageID, principalParts)
+      const hdwd = item[0]
+      const principalParts = item[1].split(/_/)
+      const lemma = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"](hdwd, LatinLanguageDataset.languageID, principalParts)
 
-      let form = item[2]
+      const form = item[2]
 
       // Lemma,PrincipalParts,Form,Voice,Mood,Tense,Number,Person,Footnote
-      let features = [
+      const features = [
         partOfSpeech
       ]
 
@@ -2984,7 +2984,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       // Footnotes
       if (item[8]) {
         // There can be multiple footnote indexes separated by spaces
-        let indexes = item[8].split(' ')
+        const indexes = item[8].split(' ')
         features.push(this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote).createFeatures(indexes))
 
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
@@ -2999,18 +2999,18 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
     // First row are headers
     for (let i = 1; i < data.length; i++) {
       const item = data[i]
-      let lemmaWord = item[0]
-      let principalParts = item[1].split(/_/)
-      let form = item[2]
+      const lemmaWord = item[0]
+      const principalParts = item[1].split(/_/)
+      const form = item[2]
 
       // Lemma,PrincipalParts,Form,Voice,Mood,Tense,Number,Person,Footnote
-      let features = [
+      const features = [
         partOfSpeech/*,
         this.features.get(Feature.types.fullForm).createFromImporter(lemma.word) */
       ]
 
       if (lemmaWord) {
-        let lemma = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"](lemmaWord, LatinLanguageDataset.languageID, principalParts)
+        const lemma = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"](lemmaWord, LatinLanguageDataset.languageID, principalParts)
         features.push(this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.word).createFromImporter(lemmaWord))
         if (!this.irregularLemmas.get(partOfSpeech.value).some(item => item.word === lemma.word)) {
           this.irregularLemmas.get(partOfSpeech.value).push(lemma)
@@ -3024,7 +3024,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       // Footnotes
       if (item[4]) {
         // There can be multiple footnote indexes separated by spaces
-        let indexes = item[4].split(' ')
+        const indexes = item[4].split(' ')
         features.push(this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote).createFeatures(indexes))
 
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
@@ -3034,7 +3034,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
   }
 
   addFootnotes (partOfSpeech, classType, data) {
-    let footnotes = []
+    const footnotes = []
     // First row are headers
     for (let i = 1; i < data.length; i++) {
       const footnote = this.addFootnote(partOfSpeech.value, classType, data[i][0], data[i][1])
@@ -3152,11 +3152,11 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
    * @return {Lemma[] | []} Array of matching Lemma objects or an empty array if nothing is found.
    */
   getMatchingIrregularLemmas (inflections) {
-    let lemmas = []
+    const lemmas = []
     for (const inflection of inflections) {
       const pofs = inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value
       if (this.irregularLemmas.has(pofs)) {
-        let lemma = this.irregularLemmas.get(pofs).find(item => item.word === inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.word].value)
+        const lemma = this.irregularLemmas.get(pofs).find(item => item.word === inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.word].value)
         if (lemma) {
           lemmas.push(lemma)
         }
@@ -3275,7 +3275,7 @@ class LanguageDatasetFactory {
    */
   constructor (languageData = [_lang_latin_latin_language_dataset_js__WEBPACK_IMPORTED_MODULE_1__["default"], _lang_greek_greek_language_dataset_js__WEBPACK_IMPORTED_MODULE_2__["default"]]) {
     this.sets = new Map()
-    for (let Set of languageData) {
+    for (const Set of languageData) {
       this.sets.set(Set.languageID, new Set())
     }
   }
@@ -3297,9 +3297,9 @@ class LanguageDatasetFactory {
    * @return {LanguageDataset} An instance of a language dataset.
    */
   static getDataset (languageID) {
-    let instance = this.instance
+    const instance = this.instance
     if (instance.sets.has(languageID)) {
-      let dataset = instance.sets.get(languageID)
+      const dataset = instance.sets.get(languageID)
       if (!dataset.dataLoaded) {
         dataset.loadData()
       }
@@ -3314,10 +3314,10 @@ class LanguageDatasetFactory {
    * @return {InflectionData} A return value of an inflection query.
    */
   static getInflectionData (homonym) {
-    let instance = this.instance
+    const instance = this.instance
     if (instance.sets.has(homonym.languageID)) {
-      let dataset = this.getDataset(homonym.languageID)
-      for (let inflection of homonym.inflections) {
+      const dataset = this.getDataset(homonym.languageID)
+      for (const inflection of homonym.inflections) {
         // Set grammar rules for an inflection
         inflection.setConstraints()
         // dataset.setInflectionConstraints(inflection)
@@ -3405,11 +3405,11 @@ class LanguageDataset {
    * @param {ExtendedLanguageData} extendedLangData
    */
   addInflectionData (partOfSpeech, ClassType, itemValue, features, footnotes = [], extendedLangData = undefined) {
-    let item = new ClassType(itemValue)
+    const item = new ClassType(itemValue)
     item.extendedLangData = extendedLangData
 
     // Go through all features provided
-    for (let feature of features) {
+    for (const feature of features) {
       /*
       Footnotes are special because they are stored as both single or multi-value feature and
       as an array of Footnote objects into a `footnote` prop (so they can be iterated over during table construction)
@@ -3454,7 +3454,7 @@ class LanguageDataset {
       throw new Error('Footnote text data should not be empty.')
     }
 
-    let footnote = new _footnote_js__WEBPACK_IMPORTED_MODULE_5__["default"](index, text, partOfSpeech)
+    const footnote = new _footnote_js__WEBPACK_IMPORTED_MODULE_5__["default"](index, text, partOfSpeech)
 
     // this.footnotes.push(footnote)
 
@@ -3510,10 +3510,10 @@ class LanguageDataset {
    */
   static checkMatches (featureList, inflection, item, comparisonType = _morpheme_js__WEBPACK_IMPORTED_MODULE_1__["default"].comparisonTypes.EXACT) {
     let fullMatchQty = featureList.length
-    let matches = featureList.reduce((acc, f) => {
-      if (inflection.hasOwnProperty(f) && item.features.hasOwnProperty(f) && item.featureMatch(inflection[f], comparisonType)) {
+    const matches = featureList.reduce((acc, f) => {
+      if (inflection.hasOwnProperty(f) && item.features.hasOwnProperty(f) && item.featureMatch(inflection[f], comparisonType)) { // eslint-disable-line no-prototype-builtins
         acc.push(f)
-      } else if (!inflection.hasOwnProperty(f) || !item.features.hasOwnProperty(f)) {
+      } else if (!inflection.hasOwnProperty(f) || !item.features.hasOwnProperty(f)) { // eslint-disable-line no-prototype-builtins
         /*
         If either inflection or item does not have a certain feature,
         this feature is excluded from a comparison
@@ -3526,7 +3526,7 @@ class LanguageDataset {
     // we can't consider it a match if there were NO common features
     // so we have to test to make sure there is at least one matching feature
     // required and found
-    let result = (matches.length > 0 && matches.length === fullMatchQty)
+    const result = (matches.length > 0 && matches.length === fullMatchQty)
     return { fullMatch: result, matchedItems: matches }
   }
 
@@ -3573,7 +3573,7 @@ class LanguageDataset {
       The value found will then be attached to an Inflection object.
        */
       // Get a class this inflection belongs to
-      let grmClasses = this.model.getPronounClasses(this.pos.get(partOfSpeech).types.get(_form_js__WEBPACK_IMPORTED_MODULE_3__["default"]).items, inflection.getForm())
+      const grmClasses = this.model.getPronounClasses(this.pos.get(partOfSpeech).types.get(_form_js__WEBPACK_IMPORTED_MODULE_3__["default"]).items, inflection.getForm())
       if (!grmClasses) {
         console.warn(`Cannot determine a grammar class for a ${inflection.form} pronoun.
               Table construction will probably fail`)
@@ -3654,12 +3654,12 @@ class LanguageDataset {
    * @return {Map<{string}, {Inflection[]}>} Maps on array of inflections to a part of speech
    */
   groupInflections (homonym) {
-    let inflections = new Map()
-    for (let lexeme of homonym.lexemes) {
+    const inflections = new Map()
+    for (const lexeme of homonym.lexemes) {
       for (let inflection of lexeme.inflections) {
         // Inflections are grouped by part of speech
         inflection = this.setInflectionData(inflection, lexeme.lemma)
-        let pofsValue = inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value
+        const pofsValue = inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value
         if (!inflections.has(pofsValue)) { inflections.set(pofsValue, []) }
         inflections.get(pofsValue).push(inflection)
       }
@@ -3677,9 +3677,9 @@ class LanguageDataset {
    * @return {Suffix[]|Form[]|Paradigm[]} An array of morphemes where all features have single values
    */
   static splitMultiValMorphems (morphemes) {
-    let result = []
+    const result = []
     for (const morpheme of morphemes) {
-      let multivalFeatures = []
+      const multivalFeatures = []
       for (const featureName of Object.keys(morpheme.features)) {
         if (morpheme.features[featureName].isMultiple) {
           multivalFeatures.push(morpheme.features[featureName])
@@ -3703,12 +3703,12 @@ class LanguageDataset {
    * @return {InflectionSet} Constructed inflection set.
    */
   createInflectionSet (pofsValue, inflections, options) {
-    let inflectionSet = new _inflection_set_js__WEBPACK_IMPORTED_MODULE_6__["default"](pofsValue, this.languageID)
+    const inflectionSet = new _inflection_set_js__WEBPACK_IMPORTED_MODULE_6__["default"](pofsValue, this.languageID)
     inflectionSet.inflections = inflections.filter(i => i.constraints.implemented === true)
     inflectionSet.isImplemented = inflectionSet.inflections.length > 0
 
     if (inflectionSet.isImplemented) {
-      let sourceSet = this.pos.get(pofsValue)
+      const sourceSet = this.pos.get(pofsValue)
       if (!sourceSet) {
         // There is no source data for this part of speech
         console.warn(`There is no source data for the following part of speech: ${pofsValue}`)
@@ -3722,14 +3722,14 @@ class LanguageDataset {
       */
 
       // If at least one inflection in a group has a constraint, we'll search for data based on that criteria
-      let suffixBased = inflections.some(i => i.constraints.suffixBased)
-      let formBased = inflections.some(i => i.constraints.fullFormBased)
-      let paradigmBased = inflections.some(i => i.constraints.paradigmBased)
+      const suffixBased = inflections.some(i => i.constraints.suffixBased)
+      const formBased = inflections.some(i => i.constraints.fullFormBased)
+      const paradigmBased = inflections.some(i => i.constraints.paradigmBased)
 
       // Check for suffix matches
       if (suffixBased) {
         if (sourceSet.types.has(_suffix_js__WEBPACK_IMPORTED_MODULE_2__["default"])) {
-          let items = sourceSet.types.get(_suffix_js__WEBPACK_IMPORTED_MODULE_2__["default"]).items.reduce(this.reducerGen(inflectionSet.inflections, options), [])
+          const items = sourceSet.types.get(_suffix_js__WEBPACK_IMPORTED_MODULE_2__["default"]).items.reduce(this.reducerGen(inflectionSet.inflections, options), [])
           if (items.length > 0) {
             inflectionSet.addInflectionItems(items)
           }
@@ -3740,7 +3740,7 @@ class LanguageDataset {
       if (formBased) {
         // Match against form based inflection only
         const formInflections = inflectionSet.inflections.filter(i => i.constraints.fullFormBased)
-        let items = sourceSet.types.get(_form_js__WEBPACK_IMPORTED_MODULE_3__["default"]).items.reduce(this.reducerGen(formInflections, options), [])
+        const items = sourceSet.types.get(_form_js__WEBPACK_IMPORTED_MODULE_3__["default"]).items.reduce(this.reducerGen(formInflections, options), [])
         if (items.length > 0) {
           inflectionSet.addInflectionItems(items)
         }
@@ -3748,16 +3748,16 @@ class LanguageDataset {
 
       // Get paradigm matches
       if (paradigmBased) {
-        let paradigms = sourceSet.getMatchingItems(_paradigm_js__WEBPACK_IMPORTED_MODULE_4__["default"], inflections)
+        const paradigms = sourceSet.getMatchingItems(_paradigm_js__WEBPACK_IMPORTED_MODULE_4__["default"], inflections)
         inflectionSet.addInflectionItems(paradigms)
       }
 
       // Add footnotes
       if (inflectionSet.hasTypes) {
         for (const inflectionType of inflectionSet.inflectionTypes) {
-          let footnotesSource = sourceSet.types.get(inflectionType).footnotesMap
+          const footnotesSource = sourceSet.types.get(inflectionType).footnotesMap
           const footnotesInUse = inflectionSet.types.get(inflectionType).footnotesInUse
-          for (let footnote of footnotesSource.values()) {
+          for (const footnote of footnotesSource.values()) {
             if (footnotesInUse.includes(footnote.index)) {
               inflectionSet.addFootnote(inflectionType, footnote.index, footnote)
             }
@@ -3776,12 +3776,12 @@ class LanguageDataset {
    */
   getInflectionData (homonym) {
     // Add support for languages
-    let result = new _inflection_data_js__WEBPACK_IMPORTED_MODULE_7__["default"](homonym)
-    let inflections = this.groupInflections(homonym)
+    const result = new _inflection_data_js__WEBPACK_IMPORTED_MODULE_7__["default"](homonym)
+    const inflections = this.groupInflections(homonym)
 
     // Scan for matches for all parts of speech separately
     for (const [pofsValue, inflectionsGroup] of inflections.entries()) {
-      let inflectionSet = this.createInflectionSet(pofsValue, inflectionsGroup)
+      const inflectionSet = this.createInflectionSet(pofsValue, inflectionsGroup)
       result.addInflectionSet(inflectionSet)
     }
     return result
@@ -3789,7 +3789,7 @@ class LanguageDataset {
 
   hasMatchingForms (partOfSpeech, inflection) {
     if (this.pos.has(partOfSpeech)) {
-      let inflectionSet = this.pos.get(partOfSpeech)
+      const inflectionSet = this.pos.get(partOfSpeech)
 
       if (inflectionSet.types.has(_form_js__WEBPACK_IMPORTED_MODULE_3__["default"])) {
         return inflectionSet.types.get(_form_js__WEBPACK_IMPORTED_MODULE_3__["default"]).items.find(item => this.matcher([inflection], item, { findMatches: false })) !== undefined
@@ -3801,7 +3801,7 @@ class LanguageDataset {
   reducerGen (inflections, options) {
     const instance = this
     function reducerFn (accumulator, item) {
-      let result = instance['matcher'](inflections, item, options)
+      const result = instance['matcher'](inflections, item, options)
       if (result) {
         accumulator.push(result)
       }
@@ -3821,10 +3821,10 @@ class LanguageDataset {
    * additional information about a match. if no matches found, returns null.
    */
   matcher (inflections, item, options = {}) {
-    if (!options.hasOwnProperty('findMatches')) {
+    if (!options.hasOwnProperty('findMatches')) { // eslint-disable-line no-prototype-builtins
       options.findMatches = true // Default value
     }
-    if (!options.hasOwnProperty('findMorphologyMatches')) {
+    if (!options.hasOwnProperty('findMorphologyMatches')) { // eslint-disable-line no-prototype-builtins
       // If not specified explicitly, will be controlled by `findMatches` value
       options.findMorphologyMatches = options.findMatches // Default value
     }
@@ -3837,8 +3837,8 @@ class LanguageDataset {
      a fullFeature match is when one of inflections has all grammatical features fully matching those of a suffix
      */
 
-    for (let inflection of inflections) {
-      let matchData = new _match_data_js__WEBPACK_IMPORTED_MODULE_8__["default"]() // Create a match profile
+    for (const inflection of inflections) {
+      const matchData = new _match_data_js__WEBPACK_IMPORTED_MODULE_8__["default"]() // Create a match profile
       if (options.findMatches) {
         matchData.suffixMatch = inflection.smartWordCompare(item.value, item.constructor.name, { fuzzySuffix: true })
       }
@@ -3960,10 +3960,10 @@ class MatchData {
   }
 
   static readObject (jsonObject) {
-    let matchData = new MatchData()
+    const matchData = new MatchData()
     matchData.suffixMatch = jsonObject.suffixMatch
     matchData.fullMatch = jsonObject.fullMatch
-    for (let feature of jsonObject.matchedFeatures) {
+    for (const feature of jsonObject.matchedFeatures) {
       matchData.matchedFeatures.push(feature)
     }
     return matchData
@@ -4067,21 +4067,21 @@ class Morpheme {
   }
 
   static readObject (jsonObject) {
-    let suffix = new this(jsonObject.value)
+    const suffix = new this(jsonObject.value)
 
     if (jsonObject.features) {
-      for (let key in jsonObject.features) {
-        if (jsonObject.features.hasOwnProperty(key)) {
+      for (const key in jsonObject.features) {
+        if (jsonObject.features.hasOwnProperty(key)) { // eslint-disable-line no-prototype-builtins
           suffix.features[key] = jsonObject.features[key]
         }
       }
     }
 
     if (jsonObject.featureGroups) {
-      for (let key in jsonObject.featureGroups) {
-        if (jsonObject.featureGroups.hasOwnProperty(key)) {
+      for (const key in jsonObject.featureGroups) {
+        if (jsonObject.featureGroups.hasOwnProperty(key)) { // eslint-disable-line no-prototype-builtins
           suffix.featureGroups[key] = []
-          for (let value of jsonObject.featureGroups[key]) {
+          for (const value of jsonObject.featureGroups[key]) {
             suffix.featureGroups[key].push(value)
           }
         }
@@ -4090,7 +4090,7 @@ class Morpheme {
 
     if (jsonObject[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote]) {
       suffix[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote] = []
-      for (let footnote of jsonObject[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote]) {
+      for (const footnote of jsonObject[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote]) {
         suffix[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote].push(footnote)
       }
     }
@@ -4100,7 +4100,7 @@ class Morpheme {
     }
 
     for (const lang in jsonObject.extendedLangData) {
-      if (jsonObject.extendedLangData.hasOwnProperty(lang)) {
+      if (jsonObject.extendedLangData.hasOwnProperty(lang)) { // eslint-disable-line no-prototype-builtins
         suffix.extendedLangData[lang] = _extended_language_data__WEBPACK_IMPORTED_MODULE_3__["default"].readObject(jsonObject.extendedLangData[lang])
       }
     }
@@ -4113,14 +4113,14 @@ class Morpheme {
    */
   clone () {
     // TODO: do all-feature two-level cloning
-    let clone = new this.constructor(this.value)
+    const clone = new this.constructor(this.value)
     for (const key in this.features) {
-      if (this.features.hasOwnProperty(key)) {
+      if (this.features.hasOwnProperty(key)) { // eslint-disable-line no-prototype-builtins
         clone.features[key] = this.features[key]
       }
     }
     for (const key in this.featureGroups) {
-      if (this.featureGroups.hasOwnProperty(key)) {
+      if (this.featureGroups.hasOwnProperty(key)) { // eslint-disable-line no-prototype-builtins
         clone.featureGroups[key] = this.featureGroups[key]
       }
     }
@@ -4136,7 +4136,7 @@ class Morpheme {
     clone.footnotes.push(...this.footnotes)
 
     for (const lang in this.extendedLangData) {
-      if (this.extendedLangData.hasOwnProperty(lang)) {
+      if (this.extendedLangData.hasOwnProperty(lang)) { // eslint-disable-line no-prototype-builtins
         clone.extendedLangData[lang] = this.extendedLangData[lang]
       }
     }
@@ -4166,9 +4166,9 @@ class Morpheme {
    * @return {string[]} A list of matching feature values
    */
   matchingValues (comparisonFeature, comparisonType = Morpheme.comparisonTypes.EXACT) {
-    let matches = []
+    const matches = []
 
-    if (comparisonFeature && this.features.hasOwnProperty(comparisonFeature.type)) {
+    if (comparisonFeature && this.features.hasOwnProperty(comparisonFeature.type)) { // eslint-disable-line no-prototype-builtins
       const morphemeValue = this.features[comparisonFeature.type]
 
       if (comparisonType === Morpheme.comparisonTypes.EXACT) {
@@ -4205,12 +4205,12 @@ class Morpheme {
    * @param suffixes
    */
   static getCommonGroups (suffixes) {
-    let features = Object.keys(suffixes[0].featureGroups)
+    const features = Object.keys(suffixes[0].featureGroups)
 
-    let commonGroups = features.filter(feature => {
+    const commonGroups = features.filter(feature => {
       let result = true
       for (let i = 1; i < suffixes.length; i++) {
-        result = result && suffixes[i].features.hasOwnProperty(feature)
+        result = result && suffixes[i].features.hasOwnProperty(feature) // eslint-disable-line no-prototype-builtins
       }
       return result
     })
@@ -4231,13 +4231,13 @@ class Morpheme {
    * @returns {boolean} - True if both suffixes are in the same group, false otherwise.
    */
   isInSameGroupWith (suffix) {
-    let commonGroups = Morpheme.getCommonGroups([this, suffix])
+    const commonGroups = Morpheme.getCommonGroups([this, suffix])
     if (commonGroups.length < 1) {
       // If elements do not have common groups in Suffix.featureGroups then they are not in the same group
       return false
     }
 
-    let commonValues = {}
+    const commonValues = {}
     commonGroups.forEach((feature) => { commonValues[feature] = new Set([this.features[feature]]) })
 
     let result = true
@@ -4248,7 +4248,7 @@ class Morpheme {
     }
 
     // Check all features to be a match, except those that are possible group values
-    for (let feature of Object.keys(this.features)) {
+    for (const feature of Object.keys(this.features)) {
       if (commonGroups.indexOf(feature) >= 0) {
         commonValues[feature].add(suffix.features[feature])
         // Do not compare common groups
@@ -4279,19 +4279,19 @@ class Morpheme {
    */
   split (features, level = 0) {
     // TODO: Not tested for multiple features (as there were no such cases yet)
-    let morphemes = []
+    const morphemes = []
     const currentFeature = features[level]
     for (const value of currentFeature.values) {
       if (level < features.length - 1) {
-        let splitted = this.splitByFeature(features, level + 1)
-        for (let morpheme of splitted) {
+        const splitted = this.splitByFeature(features, level + 1)
+        for (const morpheme of splitted) {
           morpheme.features[currentFeature.type] = currentFeature.createFeature(value)
           morpheme.featureGroups[currentFeature.type] = currentFeature.values
           morphemes.push(morpheme)
         }
       } else {
         // The last level
-        let copy = this.clone()
+        const copy = this.clone()
         copy.features[currentFeature.type] = currentFeature.createFeature(value)
         copy.featureGroups[currentFeature.type] = currentFeature.values
         morphemes.push(copy)
@@ -4350,8 +4350,8 @@ class Morpheme {
    * @returns {Suffix} A modified value of ending A.
    */
   static merge (suffixA, suffixB) {
-    let commonGroups = Morpheme.getCommonGroups([suffixA, suffixB])
-    for (let type of commonGroups) {
+    const commonGroups = Morpheme.getCommonGroups([suffixA, suffixB])
+    for (const type of commonGroups) {
       // Combine values using a comma separator. Can do anything else if we need to.
       suffixA.features[type] = suffixA.features[type] + ', ' + suffixB.features[type]
     }
@@ -4424,7 +4424,7 @@ class ParadigmInflectionList extends _inflection_list_js__WEBPACK_IMPORTED_MODUL
   getMatches (inflections) {
     // Select only those inflections that are paradigm based
     inflections = inflections.filter(i => i.constraints && i.constraints.paradigmBased)
-    let matchingParadigm = []
+    const matchingParadigm = []
     // Get all matching paradigms for all inflections
     for (const inflection of inflections) {
       let matchingParadigmInflection = []
@@ -4448,7 +4448,7 @@ class ParadigmInflectionList extends _inflection_list_js__WEBPACK_IMPORTED_MODUL
           }
         }
       }
-      for (let pi of matchingParadigmInflection) {
+      for (const pi of matchingParadigmInflection) {
         // deduple paradigms across all inflections
         if (!matchingParadigm.find(p => p.id === pi.id)) {
           matchingParadigm.push(pi)
@@ -4497,7 +4497,7 @@ class ParadigmRule {
   matches (inflection) {
     let match = true
     for (const feature of this.features) {
-      match = match && inflection.hasOwnProperty(feature.type) && feature.value === inflection[feature.type].value
+      match = match && inflection.hasOwnProperty(feature.type) && feature.value === inflection[feature.type].value // eslint-disable-line no-prototype-builtins
       if (!match) {
         return false
       }
@@ -4545,7 +4545,7 @@ class Paradigm {
     // this.table = paradigm.table
     this.table = { rows: [] }
     paradigm.table.rows.forEach(row => {
-      let newRow = { cells: [] }
+      const newRow = { cells: [] }
       row.cells.forEach(cell => { newRow.cells.push(Object.assign({}, cell)) })
       this.table.rows.push(newRow)
     })
@@ -4558,7 +4558,7 @@ class Paradigm {
     // Convert string feature values to Feature objects for later comparison
     this.tableCellValuesToFeatures(this.table)
     if (this.subTables) {
-      for (let table of this.subTables) {
+      for (const table of this.subTables) {
         this.tableCellValuesToFeatures(table)
       }
     }
@@ -4574,10 +4574,10 @@ class Paradigm {
 
   // Convert string feature values of a table to Feature objects for later comparison
   tableCellValuesToFeatures (table) {
-    for (let row of table.rows) {
-      for (let cell of row.cells) {
+    for (const row of table.rows) {
+      for (const cell of row.cells) {
         if (cell.role === 'data') {
-          let cellFeatures = []
+          const cellFeatures = []
           for (const prop of Object.keys(cell)) {
             // Eliminate "non-feature" keys
             if (prop !== 'role' && prop !== 'value') {
@@ -4636,7 +4636,7 @@ class Paradigm {
     for (const subTable of this.subTables) {
       for (const row of subTable.rows) {
         for (const cell of row.cells) {
-          if (cell.hasOwnProperty('reflink')) {
+          if (cell.hasOwnProperty('reflink')) { // eslint-disable-line no-prototype-builtins
             if (paradigmMap.has(cell.reflink.id)) {
               this._suppParadigms.set(cell.reflink.id, paradigmMap.get(cell.reflink.id))
             } else {
@@ -8151,19 +8151,10 @@ exports.callbackify = callbackify;
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* @license
 Papa Parse
-v4.6.3
+v5.0.0
 https://github.com/mholt/PapaParse
 License: MIT
 */
-
-// Polyfills
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray#Polyfill
-if (!Array.isArray)
-{
-	Array.isArray = function(arg) {
-		return Object.prototype.toString.call(arg) === '[object Array]';
-	};
-}
 
 (function(root, factory)
 {
@@ -8177,7 +8168,10 @@ if (!Array.isArray)
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	}
 	else {}
-}(this, function()
+	// in strict mode we cannot access arguments.callee, so we need a named reference to
+	// stringify the factory method for the blob worker
+	// eslint-disable-next-line func-name
+}(this, function moduleFactory()
 {
 	'use strict';
 
@@ -8194,9 +8188,15 @@ if (!Array.isArray)
 		return {};
 	})();
 
+
+	function getWorkerBlob() {
+		var URL = global.URL || global.webkitURL || null;
+		var code = moduleFactory.toString();
+		return Papa.BLOB_URL || (Papa.BLOB_URL = URL.createObjectURL(new Blob(['(', code, ')();'], {type: 'text/javascript'})));
+	}
+
 	var IS_WORKER = !global.document && !!global.postMessage,
-		IS_PAPA_WORKER = IS_WORKER && /(\?|&)papaworker(=|&|$)/.test(global.location.search),
-		LOADED_SYNC = false, AUTO_SCRIPT_PATH;
+		IS_PAPA_WORKER = IS_WORKER && /blob:/i.test((global.location || {}).protocol);
 	var workers = {}, workerIdCounter = 0;
 
 	var Papa = {};
@@ -8209,7 +8209,6 @@ if (!Array.isArray)
 	Papa.BYTE_ORDER_MARK = '\ufeff';
 	Papa.BAD_DELIMITERS = ['\r', '\n', '"', Papa.BYTE_ORDER_MARK];
 	Papa.WORKERS_SUPPORTED = !IS_WORKER && !!global.Worker;
-	Papa.SCRIPT_PATH = null;	// Must be set by your code if you use workers and this lib is loaded asynchronously
 	Papa.NODE_STREAM_INPUT = 1;
 
 	// Configurable chunk sizes for local and remote files, respectively
@@ -8327,23 +8326,6 @@ if (!Array.isArray)
 	{
 		global.onmessage = workerThreadReceivedMessage;
 	}
-	else if (Papa.WORKERS_SUPPORTED)
-	{
-		AUTO_SCRIPT_PATH = getScriptPath();
-
-		// Check if the script was loaded synchronously
-		if (!document.body)
-		{
-			// Body doesn't exist yet, must be synchronous
-			LOADED_SYNC = true;
-		}
-		else
-		{
-			document.addEventListener('DOMContentLoaded', function() {
-				LOADED_SYNC = true;
-			}, true);
-		}
-	}
 
 
 
@@ -8434,8 +8416,14 @@ if (!Array.isArray)
 		/** quote character */
 		var _quoteChar = '"';
 
+		/** escaped quote character, either "" or <config.escapeChar>" */
+		var _escapedQuote = _quoteChar + _quoteChar;
+
 		/** whether to skip empty lines */
 		var _skipEmptyLines = false;
+
+		/** the columns (keys) we expect when we unparse objects */
+		var _columns = null;
 
 		unpackConfig();
 
@@ -8449,7 +8437,7 @@ if (!Array.isArray)
 			if (!_input.length || Array.isArray(_input[0]))
 				return serialize(null, _input, _skipEmptyLines);
 			else if (typeof _input[0] === 'object')
-				return serialize(objectKeys(_input[0]), _input, _skipEmptyLines);
+				return serialize(_columns || objectKeys(_input[0]), _input, _skipEmptyLines);
 		}
 		else if (typeof _input === 'object')
 		{
@@ -8474,7 +8462,7 @@ if (!Array.isArray)
 		}
 
 		// Default (any valid paths should return before this)
-		throw 'exception: Unable to serialize unrecognized input';
+		throw new Error('Unable to serialize unrecognized input');
 
 
 		function unpackConfig()
@@ -8504,6 +8492,17 @@ if (!Array.isArray)
 
 			if (typeof _config.header === 'boolean')
 				_writeHeader = _config.header;
+
+			if (Array.isArray(_config.columns)) {
+
+				if (_config.columns.length === 0) throw new Error('Option columns is empty');
+
+				_columns = _config.columns;
+			}
+
+			if (_config.escapeChar !== undefined) {
+				_escapedQuote = _config.escapeChar + _quoteChar;
+			}
 		}
 
 
@@ -8590,7 +8589,7 @@ if (!Array.isArray)
 			if (str.constructor === Date)
 				return JSON.stringify(str).slice(1, 25);
 
-			str = str.toString().replace(quoteCharRegex, _quoteChar + _quoteChar);
+			str = str.toString().replace(quoteCharRegex, _escapedQuote);
 
 			var needsQuotes = (typeof _quotes === 'boolean' && _quotes)
 							|| (Array.isArray(_quotes) && _quotes[col])
@@ -8617,6 +8616,7 @@ if (!Array.isArray)
 		this._handle = null;
 		this._finished = false;
 		this._completed = false;
+		this._halted = false;
 		this._input = null;
 		this._baseIndex = 0;
 		this._partialLine = '';
@@ -8641,6 +8641,7 @@ if (!Array.isArray)
 					chunk = modifiedChunk;
 			}
 			this.isFirstChunk = false;
+			this._halted = false;
 
 			// Rejoin the line we likely just split in two by chunking the file
 			var aggregate = this._partialLine + chunk;
@@ -8648,8 +8649,10 @@ if (!Array.isArray)
 
 			var results = this._handle.parse(aggregate, this._baseIndex, !this._finished);
 
-			if (this._handle.paused() || this._handle.aborted())
+			if (this._handle.paused() || this._handle.aborted()) {
+				this._halted = true;
 				return;
+			}
 
 			var lastIndex = results.meta.cursor;
 
@@ -8675,8 +8678,10 @@ if (!Array.isArray)
 			else if (isFunction(this._config.chunk) && !isFakeChunk)
 			{
 				this._config.chunk(results, this._handle);
-				if (this._handle.paused() || this._handle.aborted())
+				if (this._handle.paused() || this._handle.aborted()) {
+					this._halted = true;
 					return;
+				}
 				results = undefined;
 				this._completeResults = undefined;
 			}
@@ -8794,7 +8799,6 @@ if (!Array.isArray)
 			{
 				var end = this._start + this._config.chunkSize - 1;	// minus one because byte range is inclusive
 				xhr.setRequestHeader('Range', 'bytes=' + this._start + '-' + end);
-				xhr.setRequestHeader('If-None-Match', 'webkit-no-cache'); // https://bugs.webkit.org/show_bug.cgi?id=82672
 			}
 
 			try {
@@ -9041,13 +9045,11 @@ if (!Array.isArray)
 		this._onCsvData = function(results)
 		{
 			var data = results.data;
-			for (var i = 0; i < data.length; i++) {
-				if (!stream.push(data[i]) && !this._handle.paused()) {
-					// the writeable consumer buffer has filled up
-					// so we need to pause until more items
-					// can be processed
-					this._handle.pause();
-				}
+			if (!stream.push(data) && !this._handle.paused()) {
+				// the writeable consumer buffer has filled up
+				// so we need to pause until more items
+				// can be processed
+				this._handle.pause();
 			}
 		};
 
@@ -9139,7 +9141,6 @@ if (!Array.isArray)
 		// One goal is to minimize the use of regular expressions...
 		var FLOAT = /^\s*-?(\d*\.?\d+|\d+\.?\d*)(e[-+]?\d+)?\s*$/i;
 		var ISO_DATE = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))/;
-
 		var self = this;
 		var _stepCounter = 0;	// Number of times step was called (number of rows parsed)
 		var _rowCounter = 0;	// Number of rows that have been parsed so far
@@ -9195,7 +9196,7 @@ if (!Array.isArray)
 			_delimiterError = false;
 			if (!_config.delimiter)
 			{
-				var delimGuess = guessDelimiter(input, _config.newline, _config.skipEmptyLines, _config.comments);
+				var delimGuess = guessDelimiter(input, _config.newline, _config.skipEmptyLines, _config.comments, _config.delimitersToGuess);
 				if (delimGuess.successful)
 					_config.delimiter = delimGuess.bestDelimiter;
 				else
@@ -9236,8 +9237,14 @@ if (!Array.isArray)
 
 		this.resume = function()
 		{
-			_paused = false;
-			self.streamer.parseChunk(_input, true);
+			if(self.streamer._halted) {
+				_paused = false;
+				self.streamer.parseChunk(_input, true);
+			} else {
+				// Bugfix: #636 In case the processing hasn't halted yet
+				// wait for it to halt in order to resume
+				setTimeout(this.resume, 3);
+			}
 		};
 
 		this.aborted = function()
@@ -9289,18 +9296,25 @@ if (!Array.isArray)
 		{
 			if (!_results)
 				return;
-			for (var i = 0; needsHeaderRow() && i < _results.data.length; i++)
-				for (var j = 0; j < _results.data[i].length; j++)
-				{
-					var header = _results.data[i][j];
 
-					if (_config.trimHeaders) {
-						header = header.trim();
-					}
+			function addHeder(header)
+			{
+				if (isFunction(_config.transformHeader))
+					header = _config.transformHeader(header);
 
-					_fields.push(header);
-				}
-			_results.data.splice(0, 1);
+				_fields.push(header);
+			}
+
+			if (Array.isArray(_results.data[0]))
+			{
+				for (var i = 0; needsHeaderRow() && i < _results.data.length; i++)
+					_results.data[i].forEach(addHeder);
+
+				_results.data.splice(0, 1);
+			}
+			// if _results.data[0] is not an array, we are in a step where _results.data is the row.
+			else
+				_results.data.forEach(addHeder);
 		}
 
 		function shouldApplyDynamicTyping(field) {
@@ -9334,15 +9348,15 @@ if (!Array.isArray)
 			if (!_results || (!_config.header && !_config.dynamicTyping && !_config.transform))
 				return _results;
 
-			for (var i = 0; i < _results.data.length; i++)
+			function processRow(rowSource, i)
 			{
 				var row = _config.header ? {} : [];
 
 				var j;
-				for (j = 0; j < _results.data[i].length; j++)
+				for (j = 0; j < rowSource.length; j++)
 				{
 					var field = j;
-					var value = _results.data[i][j];
+					var value = rowSource[j];
 
 					if (_config.header)
 						field = j >= _fields.length ? '__parsed_extra' : _fields[j];
@@ -9361,7 +9375,6 @@ if (!Array.isArray)
 						row[field] = value;
 				}
 
-				_results.data[i] = row;
 
 				if (_config.header)
 				{
@@ -9370,23 +9383,36 @@ if (!Array.isArray)
 					else if (j < _fields.length)
 						addError('FieldMismatch', 'TooFewFields', 'Too few fields: expected ' + _fields.length + ' fields but parsed ' + j, _rowCounter + i);
 				}
+
+				return row;
 			}
+
+			var incrementBy = 1;
+			if (!_results.data[0] || Array.isArray(_results.data[0]))
+			{
+				_results.data = _results.data.map(processRow);
+				incrementBy = _results.data.length;
+			}
+			else
+				_results.data = processRow(_results.data, 0);
+
 
 			if (_config.header && _results.meta)
 				_results.meta.fields = _fields;
 
-			_rowCounter += _results.data.length;
+			_rowCounter += incrementBy;
 			return _results;
 		}
 
-		function guessDelimiter(input, newline, skipEmptyLines, comments)
+		function guessDelimiter(input, newline, skipEmptyLines, comments, delimitersToGuess)
 		{
-			var delimChoices = [',', '\t', '|', ';', Papa.RECORD_SEP, Papa.UNIT_SEP];
 			var bestDelim, bestDelta, fieldCountPrevRow;
 
-			for (var i = 0; i < delimChoices.length; i++)
+			delimitersToGuess = delimitersToGuess || [',', '\t', '|', ';', Papa.RECORD_SEP, Papa.UNIT_SEP];
+
+			for (var i = 0; i < delimitersToGuess.length; i++)
 			{
-				var delim = delimChoices[i];
+				var delim = delimitersToGuess[i];
 				var delta = 0, avgFieldCount = 0, emptyLinesCount = 0;
 				fieldCountPrevRow = undefined;
 
@@ -9511,7 +9537,7 @@ if (!Array.isArray)
 
 		// Comment character must be valid
 		if (comments === delim)
-			throw 'Comment character same as delimiter';
+			throw new Error('Comment character same as delimiter');
 		else if (comments === true)
 			comments = '#';
 		else if (typeof comments !== 'string'
@@ -9530,7 +9556,7 @@ if (!Array.isArray)
 		{
 			// For some reason, in Chrome, this speeds things up (!?)
 			if (typeof input !== 'string')
-				throw 'Input must be a string';
+				throw new Error('Input must be a string');
 
 			// We don't need to compute some of these every time parse() is called,
 			// but having them in a more local scope seems to perform better
@@ -9582,7 +9608,7 @@ if (!Array.isArray)
 			var nextDelim = input.indexOf(delim, cursor);
 			var nextNewline = input.indexOf(newline, cursor);
 			var quoteCharRegex = new RegExp(escapeRegExp(escapeChar) + escapeRegExp(quoteChar), 'g');
-			var quoteSearch;
+			var quoteSearch = input.indexOf(quoteChar, cursor);
 
 			// Parser loop
 			for (;;)
@@ -9647,6 +9673,12 @@ if (!Array.isArray)
 						{
 							row.push(input.substring(cursor, quoteSearch).replace(quoteCharRegex, quoteChar));
 							cursor = quoteSearch + 1 + spacesBetweenQuoteAndDelimiter + delimLen;
+
+							// If char after following delimiter is not quoteChar, we find next quote char position
+							if (input[quoteSearch + 1 + spacesBetweenQuoteAndDelimiter + delimLen] !== quoteChar)
+							{
+								quoteSearch = input.indexOf(quoteChar, cursor);
+							}
 							nextDelim = input.indexOf(delim, cursor);
 							nextNewline = input.indexOf(newline, cursor);
 							break;
@@ -9660,6 +9692,7 @@ if (!Array.isArray)
 							row.push(input.substring(cursor, quoteSearch).replace(quoteCharRegex, quoteChar));
 							saveRow(quoteSearch + 1 + spacesBetweenQuoteAndNewLine + newlineLen);
 							nextDelim = input.indexOf(delim, cursor);	// because we may have skipped the nextDelim in the quoted field
+							quoteSearch = input.indexOf(quoteChar, cursor);	// we search for first quote in next line
 
 							if (stepIsFunction)
 							{
@@ -9706,10 +9739,27 @@ if (!Array.isArray)
 				// Next delimiter comes before next newline, so we've reached end of field
 				if (nextDelim !== -1 && (nextDelim < nextNewline || nextNewline === -1))
 				{
-					row.push(input.substring(cursor, nextDelim));
-					cursor = nextDelim + delimLen;
-					nextDelim = input.indexOf(delim, cursor);
-					continue;
+					// we check, if we have quotes, because delimiter char may be part of field enclosed in quotes
+					if (quoteSearch !== -1) {
+						// we have quotes, so we try to find the next delimiter not enclosed in quotes and also next starting quote char
+						var nextDelimObj = getNextUnqotedDelimiter(nextDelim, quoteSearch, nextNewline);
+
+						// if we have next delimiter char which is not enclosed in quotes
+						if (nextDelimObj && nextDelimObj.nextDelim) {
+							nextDelim = nextDelimObj.nextDelim;
+							quoteSearch = nextDelimObj.quoteSearch;
+							row.push(input.substring(cursor, nextDelim));
+							cursor = nextDelim + delimLen;
+							// we look for next delimiter char
+							nextDelim = input.indexOf(delim, cursor);
+							continue;
+						}
+					} else {
+						row.push(input.substring(cursor, nextDelim));
+						cursor = nextDelim + delimLen;
+						nextDelim = input.indexOf(delim, cursor);
+						continue;
+					}
 				}
 
 				// End of row
@@ -9792,10 +9842,11 @@ if (!Array.isArray)
 			}
 
 			/** Returns an object with the results, errors, and meta. */
-			function returnable(stopped)
+			function returnable(stopped, step)
 			{
+				var isStep = step || false;
 				return {
-					data: data,
+					data: isStep ? data[0]  : data,
 					errors: errors,
 					meta: {
 						delimiter: delim,
@@ -9810,9 +9861,43 @@ if (!Array.isArray)
 			/** Executes the user's step function and resets data & errors. */
 			function doStep()
 			{
-				step(returnable());
+				step(returnable(undefined, true));
 				data = [];
 				errors = [];
+			}
+
+			/** Gets the delimiter character, which is not inside the quoted field */
+			function getNextUnqotedDelimiter(nextDelim, quoteSearch, newLine) {
+				var result = {
+					nextDelim: undefined,
+					quoteSearch: undefined
+				};
+				// get the next closing quote character
+				var nextQuoteSearch = input.indexOf(quoteChar, quoteSearch + 1);
+
+				// if next delimiter is part of a field enclosed in quotes
+				if (nextDelim > quoteSearch && nextDelim < nextQuoteSearch && (nextQuoteSearch < newLine || newLine === -1)) {
+					// get the next delimiter character after this one
+					var nextNextDelim = input.indexOf(delim, nextQuoteSearch);
+
+					// if there is no next delimiter, return default result
+					if (nextNextDelim === -1) {
+						return result;
+					}
+					// find the next opening quote char position
+					if (nextNextDelim > nextQuoteSearch) {
+						nextQuoteSearch = input.indexOf(quoteChar, nextQuoteSearch + 1);
+					}
+					// try to get the next delimiter position
+					result = getNextUnqotedDelimiter(nextNextDelim, nextQuoteSearch, newLine);
+				} else {
+					result = {
+						nextDelim: nextDelim,
+						quoteSearch: quoteSearch
+					};
+				}
+
+				return result;
 			}
 		};
 
@@ -9830,26 +9915,12 @@ if (!Array.isArray)
 	}
 
 
-	// If you need to load Papa Parse asynchronously and you also need worker threads, hard-code
-	// the script path here. See: https://github.com/mholt/PapaParse/issues/87#issuecomment-57885358
-	function getScriptPath()
-	{
-		var scripts = document.getElementsByTagName('script');
-		return scripts.length ? scripts[scripts.length - 1].src : '';
-	}
-
 	function newWorker()
 	{
 		if (!Papa.WORKERS_SUPPORTED)
 			return false;
-		if (!LOADED_SYNC && Papa.SCRIPT_PATH === null)
-			throw new Error(
-				'Script path cannot be determined automatically when Papa Parse is loaded asynchronously. ' +
-				'You need to set Papa.SCRIPT_PATH manually.'
-			);
-		var workerUrl = Papa.SCRIPT_PATH || AUTO_SCRIPT_PATH;
-		// Append 'papaworker' to the search string to tell papaparse that this is our worker.
-		workerUrl += (workerUrl.indexOf('?') !== -1 ? '&' : '?') + 'papaworker';
+
+		var workerUrl = getWorkerBlob();
 		var w = new global.Worker(workerUrl);
 		w.onmessage = mainThreadReceivedMessage;
 		w.id = workerIdCounter++;
@@ -9884,7 +9955,7 @@ if (!Array.isArray)
 				for (var i = 0; i < msg.results.data.length; i++)
 				{
 					worker.userStep({
-						data: [msg.results.data[i]],
+						data: msg.results.data[i],
 						errors: msg.results.errors,
 						meta: msg.results.meta
 					}, handle);
@@ -9913,7 +9984,7 @@ if (!Array.isArray)
 	}
 
 	function notImplemented() {
-		throw 'Not implemented.';
+		throw new Error('Not implemented.');
 	}
 
 	/** Callback when worker thread receives a message */
@@ -13761,8 +13832,8 @@ class GreekArticleView extends _greek_view_js__WEBPACK_IMPORTED_MODULE_2__["defa
 
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.genders, this.features.types, this.features.numbers, this.features.cases])
-    let features = this.table.features
-    features.columns = [ this.features.genders ]
+    const features = this.table.features
+    features.columns = [this.features.genders]
 
     features.rows = [this.features.numbers, this.features.cases]
     features.columnRowTitles = [this.features.cases]
@@ -13901,7 +13972,7 @@ class GreekView extends _lib_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
     this.table = new _lib_table_js__WEBPACK_IMPORTED_MODULE_1__["default"]([this.features.declensions, this.features.genders,
       this.features.types, this.features.numbers, this.features.cases])
 
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.declension),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.gender),
@@ -14181,7 +14252,7 @@ class GreekNumeralView extends _greek_view_js__WEBPACK_IMPORTED_MODULE_4__["defa
 
   createTable () {
     this.table = new _views_lib_table_js__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.lemmas, this.features.genders, this.features.types, this.features.numbers, this.features.cases])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [
       this.lemmaTypeFeature,
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.gender),
@@ -14271,7 +14342,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 class GreekGenderPronounView extends _greek_pronoun_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor (homonym, inflectionData) {
-    let grammarClass = _greek_pronoun_view_js__WEBPACK_IMPORTED_MODULE_2__["default"].getClassesFromInflection(inflectionData.inflections).filter(c => GreekGenderPronounView.classes.includes(c))
+    const grammarClass = _greek_pronoun_view_js__WEBPACK_IMPORTED_MODULE_2__["default"].getClassesFromInflection(inflectionData.inflections).filter(c => GreekGenderPronounView.classes.includes(c))
     // we should only get 1 class here -- if we get more the view is likely to be wrong
     if (grammarClass.length > 0) {
       console.warn('more than one grammarClass found for homonym')
@@ -14309,7 +14380,7 @@ class GreekGenderPronounView extends _greek_pronoun_view_js__WEBPACK_IMPORTED_MO
     in which a table tree will be built.
      */
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.genders, this.features.numbers, this.features.cases])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [this.features.genders]
     features.rows = [this.features.numbers, this.features.cases]
     features.columnRowTitles = [this.features.cases]
@@ -14390,7 +14461,7 @@ class GreekLemmaGenderPronounView extends _greek_pronoun_view_js__WEBPACK_IMPORT
     in which a table tree will be built.
      */
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.lemmas, this.features.genders, this.features.numbers, this.features.cases])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [this.features.lemmas, this.features.genders]
     features.rows = [this.features.numbers, this.features.cases]
     features.columnRowTitles = [this.features.cases]
@@ -14451,7 +14522,7 @@ class GreekPersonGenderPronounView extends _greek_pronoun_view_js__WEBPACK_IMPOR
     in which a table tree will be built.
      */
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_2__["default"]([this.features.persons, this.features.genders, this.features.numbers, this.features.cases])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [this.features.persons, this.features.genders]
     features.rows = [this.features.numbers, this.features.cases]
     features.columnRowTitles = [this.features.cases]
@@ -14519,7 +14590,7 @@ class GreekPersonPronounView extends _greek_pronoun_view_js__WEBPACK_IMPORTED_MO
     in which a table tree will be built.
      */
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_2__["default"]([this.features.persons, this.features.numbers, this.features.cases])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [this.features.persons]
     features.rows = [this.features.numbers, this.features.cases]
     features.columnRowTitles = [this.features.cases]
@@ -14652,8 +14723,8 @@ class GreekPronounView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED
   static matchFilter (languageID, inflections, inflectionData) {
     if (this.languageID === languageID && inflections.some(i => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.mainPartOfSpeech)) {
       if (inflectionData.types.has(this.inflectionType)) {
-        let inflections = inflectionData.types.get(this.inflectionType)
-        let found = inflections.items.find(form => {
+        const inflections = inflectionData.types.get(this.inflectionType)
+        const found = inflections.items.find(form => {
           let match = false
           for (const value of form.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmClass].values) {
             match = match || this.classes.includes(value)
@@ -14669,7 +14740,7 @@ class GreekPronounView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED
   }
 
   static getMatchingInstances (homonym) {
-    let inflectionData = this.getInflectionsData(homonym)
+    const inflectionData = this.getInflectionsData(homonym)
     if (this.matchFilter(homonym.languageID, homonym.inflections, inflectionData)) {
       return [new this(homonym, inflectionData).render()]
     }
@@ -14678,7 +14749,7 @@ class GreekPronounView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED
 
   getMorphemes () {
     return this.inflectionData.types.get(this.constructor.inflectionType).items
-      .filter(item => item.features.hasOwnProperty(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmClass) &&
+      .filter(item => item.features.hasOwnProperty(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmClass) && // eslint-disable-line no-prototype-builtins
             item.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmClass].hasSomeValues(this.constructor.classes)
       )
   }
@@ -14689,7 +14760,7 @@ class GreekPronounView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED
     }
     let inflection = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Inflection"](options.form, this.languageID)
     inflection.addFeature(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part, this.mainPartOfSpeech, this.languageID))
-    let homonym = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"].createSimpleForm(options.form, this.languageID, [inflection])
+    const homonym = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"].createSimpleForm(options.form, this.languageID, [inflection])
     inflection = this.dataset.setInflectionData(inflection, homonym.lexemes[0].lemma)
     return homonym
   }
@@ -14806,6 +14877,7 @@ class GreekVerbParadigmView extends _views_lang_greek_greek_view_js__WEBPACK_IMP
   static get hasPrerenderedTables () {
     return true
   }
+
   /**
    * What classes of pronouns this view should be used with.
    * Should be defined in descendants.
@@ -14852,9 +14924,9 @@ class GreekVerbParadigmView extends _views_lang_greek_greek_view_js__WEBPACK_IMP
   }
 
   static getMatchingInstances (homonym) {
-    let inflectionData = this.getInflectionsData(homonym)
+    const inflectionData = this.getInflectionsData(homonym)
     if (this.matchFilter(homonym.languageID, homonym.inflections, inflectionData)) {
-      let paradigms = inflectionData.types.get(this.inflectionType).items
+      const paradigms = inflectionData.types.get(this.inflectionType).items
       return paradigms.map(paradigm => new this(paradigm, homonym, inflectionData))
     }
     return []
@@ -14889,7 +14961,7 @@ class GreekVerbParadigmView extends _views_lang_greek_greek_view_js__WEBPACK_IMP
     if (!options || !options.paradigmID) {
       throw new Error(`Obligatory options property, "paradigmID", is missing`)
     }
-    let paradigm = this.dataset.pos.get(this.mainPartOfSpeech).types.get(_lib_paradigm_js__WEBPACK_IMPORTED_MODULE_1__["default"]).getByID(options.paradigmID)
+    const paradigm = this.dataset.pos.get(this.mainPartOfSpeech).types.get(_lib_paradigm_js__WEBPACK_IMPORTED_MODULE_1__["default"]).getByID(options.paradigmID)
     if (paradigm) {
       return new this(paradigm, null, null).render().noSuffixMatchesGroupsHidden(false)
     }
@@ -15113,7 +15185,7 @@ class LatinView extends _views_lib_view_js__WEBPACK_IMPORTED_MODULE_1__["default
   createTable () {
     this.table = new _views_lib_table_js__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.declensions, this.features.genders,
       this.features.types, this.features.numbers, this.features.cases])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.declension),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.gender),
@@ -15324,7 +15396,7 @@ class LatinSupineView extends _latin_view_js__WEBPACK_IMPORTED_MODULE_2__["defau
 
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.cases])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = []
     features.rows = [this.features.cases]
     features.columnRowTitles = [this.features.cases]
@@ -15387,8 +15459,8 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_latin_view_js__WEBPA
 
   createTable () {
     this.table = new _views_lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.voices, this.features.moods, this.features.tenses, this.features.numbers, this.features.persons])
-    let features = this.table.features
-    features.columns = [ this.features.voices, this.features.moods ]
+    const features = this.table.features
+    features.columns = [this.features.voices, this.features.moods]
     features.rows = [this.features.tenses, this.features.numbers, this.features.persons]
     features.columnRowTitles = [this.features.numbers, this.features.persons]
     features.fullWidthRowTitles = [this.features.tenses]
@@ -15418,7 +15490,7 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_latin_view_js__WEBPA
    */
   static getInflectionsData (homonym, options) {
     // Select only those inflections that are required for this view
-    let inflections = homonym.inflections.filter(
+    const inflections = homonym.inflections.filter(
       i => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.mainPartOfSpeech &&
         i.constraints && i.constraints.irregular
     )
@@ -15430,23 +15502,23 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_latin_view_js__WEBPA
    * @return {View[]} - An array of linked views or an empty array if no linked views can be created.
    */
   createLinkedViews () {
-    let views = []
+    const views = []
     // we want to restrict the inflections for the linked views to irregular verbs for now because inflections from other verbs seem to corrupt the match data constraints
     // (e.g. sum, which has both an irregular and regular verb and one of the regular verbs has a different, non-matching lemma)
     // this will fail if we want to link tables for irregular and regular verbs together this way
-    let inflections = this.homonym.inflections.filter(infl => infl[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.constructor.mainPartOfSpeech && infl.constraints && infl.constraints.irregular)
-    for (let Constructor of this.constructor.linkedViewConstructors) {
-      let linkedViewInflections = []
-      for (let infl of inflections) {
+    const inflections = this.homonym.inflections.filter(infl => infl[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.constructor.mainPartOfSpeech && infl.constraints && infl.constraints.irregular)
+    for (const Constructor of this.constructor.linkedViewConstructors) {
+      const linkedViewInflections = []
+      for (const infl of inflections) {
         let clone = infl.clone()
         clone[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part] = clone[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].createFeature(Constructor.mainPartOfSpeech)
         clone = this.constructor.dataset.setInflectionData(clone, infl.lemma)
         linkedViewInflections.push(clone)
       }
-      let inflectionData = this.constructor.dataset.createInflectionSet(Constructor.mainPartOfSpeech, linkedViewInflections, { findMorphologyMatches: false })
+      const inflectionData = this.constructor.dataset.createInflectionSet(Constructor.mainPartOfSpeech, linkedViewInflections, { findMorphologyMatches: false })
       if (Constructor.matchFilter(this.homonym.languageID, linkedViewInflections)) {
-        let view = new Constructor(this.homonym, inflectionData)
-        for (let infl of inflections) {
+        const view = new Constructor(this.homonym, inflectionData)
+        for (const infl of inflections) {
           infl[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part] = infl[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].createFeature(this.constructor.mainPartOfSpeech)
         }
         views.push(view)
@@ -15459,8 +15531,8 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_latin_view_js__WEBPA
   // See base view for description
   static getMatchingInstances (homonym) {
     if (this.matchFilter(homonym.languageID, homonym.inflections)) {
-      let inflectionData = this.getInflectionsData(homonym)
-      let view = new this(homonym, inflectionData)
+      const inflectionData = this.getInflectionsData(homonym)
+      const view = new this(homonym, inflectionData)
       view.createLinkedViews()
       return [view.render()]
     }
@@ -15509,7 +15581,7 @@ class LatinVerbIrregularView extends _views_lang_latin_verb_irregular_latin_verb
 
     if (this.isImplemented) {
       const inflections = this.homonym.inflections.filter(item => item.constraints.implemented)
-      let lemmas = this.constructor.dataset.getMatchingIrregularLemmas(inflections)
+      const lemmas = this.constructor.dataset.getMatchingIrregularLemmas(inflections)
       this.additionalTitle = lemmas.length > 0 ? `${lemmas[0].word}, ${lemmas[0].principalParts}` : ``
       this.createTable()
     }
@@ -15521,8 +15593,8 @@ class LatinVerbIrregularView extends _views_lang_latin_verb_irregular_latin_verb
 
   createTable () {
     this.table = new _views_lib_table__WEBPACK_IMPORTED_MODULE_4__["default"]([this.features.moods, this.features.tenses, this.features.numbers, this.features.persons])
-    let features = this.table.features
-    features.columns = [ this.features.moods ]
+    const features = this.table.features
+    features.columns = [this.features.moods]
     features.rows = [this.features.tenses, this.features.numbers, this.features.persons]
     features.columnRowTitles = [this.features.numbers, this.features.persons]
     features.fullWidthRowTitles = [this.features.tenses]
@@ -15604,7 +15676,7 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_verb_irregular_latin
     const inflections = this.homonym.inflections.filter(item => item.constraints.implemented)
     this.isImplemented = inflections.length > 0
     if (this.isImplemented) {
-      let lemmas = this.constructor.dataset.getMatchingIrregularLemmas(inflections)
+      const lemmas = this.constructor.dataset.getMatchingIrregularLemmas(inflections)
       this.additionalTitle = lemmas.length > 0 ? `${lemmas[0].word}, ${lemmas[0].principalParts}` : ``
       this.createTable()
     }
@@ -15616,8 +15688,8 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_verb_irregular_latin
 
   createTable () {
     this.table = new _views_lib_table__WEBPACK_IMPORTED_MODULE_4__["default"]([this.features.voices, this.features.moods, this.features.tenses, this.features.numbers, this.features.persons])
-    let features = this.table.features
-    features.columns = [ this.features.voices, this.features.moods ]
+    const features = this.table.features
+    features.columns = [this.features.voices, this.features.moods]
     features.rows = [this.features.tenses, this.features.numbers, this.features.persons]
     features.columnRowTitles = [this.features.numbers, this.features.persons]
     features.fullWidthRowTitles = [this.features.tenses]
@@ -15710,8 +15782,8 @@ class LatinVerbParticipleIrregularView extends _views_lang_latin_verb_irregular_
 
   createTable () {
     this.table = new _views_lib_table__WEBPACK_IMPORTED_MODULE_6__["default"]([this.features.voices, this.features.tenses])
-    let features = this.table.features
-    features.columns = [ this.features.voices ]
+    const features = this.table.features
+    features.columns = [this.features.voices]
     features.rows = [this.features.tenses]
     features.columnRowTitles = [this.features.tenses]
     features.fullWidthRowTitles = []
@@ -15782,7 +15854,7 @@ class LatinVerbSupineIrregularView extends _views_lang_latin_verb_irregular_lati
 
   createTable () {
     this.table = new _views_lib_table__WEBPACK_IMPORTED_MODULE_5__["default"]([this.features.cases])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = []
     features.rows = [this.features.cases]
     features.columnRowTitles = [this.features.cases]
@@ -15803,7 +15875,7 @@ class LatinVerbSupineIrregularView extends _views_lang_latin_verb_irregular_lati
    */
   static getInflectionsData (homonym, options) {
     // Select only those inflections that are required for this view
-    let inflections = homonym.inflections.filter(
+    const inflections = homonym.inflections.filter(
       i => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.mainPartOfSpeech &&
         i.constraints && i.constraints.irregular
     )
@@ -15865,7 +15937,7 @@ class LatinConjugationMoodVoiceView extends _latin_verb_view_js__WEBPACK_IMPORTE
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.conjugations, this.features.moods, this.features.voices,
       this.features.tenses, this.features.numbers, this.features.persons])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.mood),
@@ -15930,7 +16002,7 @@ class LatinConjugationVoiceMoodView extends _latin_verb_view_js__WEBPACK_IMPORTE
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.conjugations, this.features.voices, this.features.moods,
       this.features.tenses, this.features.numbers, this.features.persons])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice),
@@ -15987,7 +16059,7 @@ class LatinImperativeView extends _latin_verb_mood_view_js__WEBPACK_IMPORTED_MOD
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_2__["default"]([this.features.voices, this.features.conjugations,
       this.features.tenses, this.features.numbers, this.features.persons])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation)
@@ -16072,7 +16144,7 @@ class LatinInfinitiveView extends _latin_verb_mood_view_js__WEBPACK_IMPORTED_MOD
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_2__["default"]([this.features.voices, this.features.conjugations,
       this.features.tenses])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation)
@@ -16158,7 +16230,7 @@ class LatinMoodConjugationVoiceView extends _latin_verb_view_js__WEBPACK_IMPORTE
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.moods, this.features.conjugations, this.features.voices,
       this.features.tenses, this.features.numbers, this.features.persons])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.mood),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation),
@@ -16223,7 +16295,7 @@ class LatinMoodVoiceConjugationView extends _latin_verb_view_js__WEBPACK_IMPORTE
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.moods, this.features.voices, this.features.conjugations,
       this.features.tenses, this.features.numbers, this.features.persons])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.mood),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice),
@@ -16324,7 +16396,7 @@ class LatinVerbParticipleView extends _latin_view_js__WEBPACK_IMPORTED_MODULE_2_
 
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_4__["default"]([this.features.voices, this.features.conjugations, this.features.tenses])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation)
@@ -16406,7 +16478,7 @@ class LatinVoiceConjugationMoodView extends _latin_verb_view_js__WEBPACK_IMPORTE
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.voices, this.features.conjugations, this.features.moods,
       this.features.tenses, this.features.numbers, this.features.persons])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation),
@@ -16471,7 +16543,7 @@ class LatinVoiceMoodConjugationView extends _latin_verb_view_js__WEBPACK_IMPORTE
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.voices, this.features.moods, this.features.conjugations,
       this.features.tenses, this.features.numbers, this.features.persons])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.mood),
@@ -16632,7 +16704,7 @@ class Column {
     // TODO we should rename this to be cellMatches
     this.suffixMatches = !!this.cells.find(cell => cell.suffixMatches || cell.morphologyMatch)
 
-    for (let cell of this.cells) {
+    for (const cell of this.cells) {
       cell.column = this
     }
   }
@@ -16661,7 +16733,7 @@ class Column {
     if (!this.hidden) {
       this.hidden = true
 
-      for (let cell of this.cells) {
+      for (const cell of this.cells) {
         cell.hide()
       }
       if (this._headerCell) {
@@ -16677,7 +16749,7 @@ class Column {
     if (this.hidden) {
       this.hidden = false
 
-      for (let cell of this.cells) {
+      for (const cell of this.cells) {
         cell.show()
       }
       if (this._headerCell) {
@@ -16690,7 +16762,7 @@ class Column {
    * Highlights a column and its header.
    */
   highlight () {
-    for (let cell of this.cells) {
+    for (const cell of this.cells) {
       cell.highlight()
     }
     if (this._headerCell) {
@@ -16702,7 +16774,7 @@ class Column {
    * Removes highlighting from a column and its header.
    */
   clearHighlighting () {
-    for (let cell of this.cells) {
+    for (const cell of this.cells) {
       cell.clearHighlighting()
     }
     if (this._headerCell) {
@@ -16736,7 +16808,7 @@ __webpack_require__.r(__webpack_exports__);
 class GroupFeatureList extends alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["FeatureList"] {
   /**
    * Initializes object with an array of grouping feature objects.
-   * @param {GroupFeatureType[]} features - An array of features that form a table.
+   * @param {Feature[]} features - An array of features that form a table.
    * An order of features defines in what order a table tree would be built.
    */
   constructor (features) {
@@ -16772,8 +16844,8 @@ class GroupFeatureList extends alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__
    * these columns would follow.
    */
   set columns (features) {
-    for (let feature of features) {
-      let matchingFeature = this.ofType(feature.type)
+    for (const feature of features) {
+      const matchingFeature = this.ofType(feature.type)
       if (!matchingFeature) {
         throw new Error(`Feature of ${feature.type} is not found.`)
       }
@@ -16824,8 +16896,8 @@ class GroupFeatureList extends alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__
    * these rows would follow.
    */
   set rows (features) {
-    for (let feature of features) {
-      let matchingFeature = this.ofType(feature.type)
+    for (const feature of features) {
+      const matchingFeature = this.ofType(feature.type)
       if (!matchingFeature) {
         throw new Error(`Feature of ${feature.type} is not found.`)
       }
@@ -16842,7 +16914,7 @@ class GroupFeatureList extends alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__
    */
   createDataColumn () {
     // Need to use a known type to pass a type check
-    let feature = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"]('word', 'empty value', Symbol('data column language'))
+    const feature = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"]('word', 'empty value', Symbol('data column language'))
     feature.type = 'data column type' // To bypass a type check
     this._dataColFeature = new _group_feature_type_js__WEBPACK_IMPORTED_MODULE_1__["default"]('data column type', Symbol('data column language'), '', [feature])
     this._dataColFeature.dataColumn = true
@@ -16924,8 +16996,8 @@ class GroupFeatureList extends alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__
    * @param {Feature | GroupFeatureType} features - What suffix row titles this table would have.
    */
   set columnRowTitles (features) {
-    for (let feature of features) {
-      let matchingFeature = this.ofType(feature.type)
+    for (const feature of features) {
+      const matchingFeature = this.ofType(feature.type)
       if (!matchingFeature) {
         throw new Error(`Feature of ${feature.type} is not found.`)
       }
@@ -16940,8 +17012,8 @@ class GroupFeatureList extends alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__
    * @param {Feature | GroupingFeature} features - What feature titles would take a whole row
    */
   set fullWidthRowTitles (features) {
-    for (let feature of features) {
-      let matchingFeature = this.ofType(feature.type)
+    for (const feature of features) {
+      const matchingFeature = this.ofType(feature.type)
       if (!matchingFeature) {
         throw new Error(`Feature of ${feature.type} is not found.`)
       }
@@ -16963,7 +17035,7 @@ class GroupFeatureList extends alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__
    */
   get titleColumnsQuantity () {
     let quantity = 0
-    for (let feature of this._features) {
+    for (const feature of this._features) {
       if (feature.hasColumnRowTitle) {
         quantity++
       }
@@ -17067,8 +17139,8 @@ class GroupFeatureType {
   }
 
   addFeature (key, values) {
-    let typeFeature = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(this.languageID).typeFeature(this.type)
-    let newFeature = typeFeature.createFeatures(values)
+    const typeFeature = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(this.languageID).typeFeature(this.type)
+    const newFeature = typeFeature.createFeatures(values)
     this.featureMap.set(key, newFeature)
   }
 
@@ -17238,19 +17310,19 @@ class HeaderCell {
    */
   columnStateChange () {
     let visibleColumns = 0
-    for (let column of this.columns) {
+    for (const column of this.columns) {
       if (!column.hidden) {
         visibleColumns++
       }
     }
     if (this.span !== visibleColumns) {
       // Number of visible columns has been changed
-      let change = visibleColumns - this.span
+      const change = visibleColumns - this.span
       this.changeSpan(change)
 
       // Notify parents and children
       if (this.children.length) {
-        for (let child of this.children) {
+        for (const child of this.children) {
           child.columnStateChange()
         }
       }
@@ -17435,7 +17507,7 @@ class Row {
     }
     this.titleCell = undefined
 
-    for (let cell of this.cells) {
+    for (const cell of this.cells) {
       cell.row = this
     }
   }
@@ -17492,7 +17564,7 @@ class Row {
    * @param {number} upto
    */
   slice (from, upto) {
-    let slice = new Row()
+    const slice = new Row()
     if (from < 0 && from > this.cells.length) {
       throw new Error('"from" parameter is out of range.')
     }
@@ -17510,7 +17582,7 @@ class Row {
    * Highlights all cells in a row, and a title cells
    */
   highlight () {
-    for (let cell of this.cells) {
+    for (const cell of this.cells) {
       cell.highlight()
     }
     if (this.titleCell) {
@@ -17522,7 +17594,7 @@ class Row {
    * Removes highlighting from all cells in a row, and from a title cell
    */
   clearHighlighting () {
-    for (let cell of this.cells) {
+    for (const cell of this.cells) {
       cell.clearHighlighting()
     }
     if (this.titleCell) {
@@ -17660,7 +17732,7 @@ class Table {
    * @returns {NodeGroup} A top level group of morphemes that contain subgroups all way down to the last group.
    */
   groupByFeature (morphemes, ancestorFeatures = [], currentLevel = 0) {
-    let group = new _node_group_js__WEBPACK_IMPORTED_MODULE_5__["default"]()
+    const group = new _node_group_js__WEBPACK_IMPORTED_MODULE_5__["default"]()
     if (!this.features.hasColumnFeatures && !this.features.hasDataColumn) {
       /*
       Table has no column features and will have only one column with data values.
@@ -17668,7 +17740,7 @@ class Table {
       Set placeholder's group feature to fake a last column.
        */
       group.groupFeatureType = this.features.createDataColumn()
-      let subGroup = this.groupByFeature(morphemes, ancestorFeatures, currentLevel)
+      const subGroup = this.groupByFeature(morphemes, ancestorFeatures, currentLevel)
       group.subgroups.push(subGroup)
       group.cells = group.cells.concat(subGroup.cells)
     } else {
@@ -17688,7 +17760,7 @@ class Table {
 
         if (currentLevel < this.features.length - 1) {
           // Divide to further groups
-          let subGroup = this.groupByFeature(selectedMorphemes, ancestorFeatures, currentLevel + 1)
+          const subGroup = this.groupByFeature(selectedMorphemes, ancestorFeatures, currentLevel + 1)
           group.subgroups.push(subGroup)
           group.cells = group.cells.concat(subGroup.cells)
         } else {
@@ -17702,7 +17774,7 @@ class Table {
             selectedMorphemes = _lib_suffix_js__WEBPACK_IMPORTED_MODULE_0__["default"].combine(selectedMorphemes)
           }
 
-          let cell = new _cell_js__WEBPACK_IMPORTED_MODULE_1__["default"](selectedMorphemes, ancestorFeatures.slice())
+          const cell = new _cell_js__WEBPACK_IMPORTED_MODULE_1__["default"](selectedMorphemes, ancestorFeatures.slice())
           group.subgroups.push(cell)
           group.cells.push(cell)
           this.cells.push(cell)
@@ -17724,14 +17796,14 @@ class Table {
    * @returns {Array} An array of columns of suffix cells.
    */
   constructColumns (tree = this.tree, columns = [], currentLevel = 0) {
-    let currentFeature = this.features.getGroupingFeature(currentLevel)
-    let groups = []
-    for (let [index, feature] of currentFeature.getOrderedFeatures(tree.ancestorFeatures).entries()) {
-      let cellGroup = tree.subgroups[index]
+    const currentFeature = this.features.getGroupingFeature(currentLevel)
+    const groups = []
+    for (const [index, feature] of currentFeature.getOrderedFeatures(tree.ancestorFeatures).entries()) {
+      const cellGroup = tree.subgroups[index]
       // Iterate until it is the last row feature
 
       if (!this.features.isLastRowFeature(currentFeature)) {
-        let currentResult = this.constructColumns(cellGroup, columns, currentLevel + 1)
+        const currentResult = this.constructColumns(cellGroup, columns, currentLevel + 1)
         if (currentFeature.formsRow) {
           // TODO: Avoid creating extra cells
 
@@ -17741,14 +17813,14 @@ class Table {
            * will have the same parent values, they will be omitted and only the current row title be shown.
            * @type {{groups: Cell[], titleCell: RowTitleCell}}
            */
-          let group = {
+          const group = {
             groups: currentResult,
             titleCell: currentFeature.createRowTitleCell(feature.value, this.features.firstColumnFeature.size)
           }
           group.groups[0].titleCell.parent = group.titleCell
           groups.push(group)
         } else if (currentFeature.dataColumn || this.features.isLastColumnFeature(currentFeature)) {
-          let column = new _column_js__WEBPACK_IMPORTED_MODULE_2__["default"](cellGroup.cells)
+          const column = new _column_js__WEBPACK_IMPORTED_MODULE_2__["default"](cellGroup.cells)
           column.groups = currentResult
           column.header = feature.value
           column.index = columns.length
@@ -17764,7 +17836,7 @@ class Table {
           feature.value,
           this.features.firstColumnFeature && this.features.firstColumnFeature.size ? this.features.firstColumnFeature.size : 1
         )
-        let group = {
+        const group = {
           cell: cellGroup,
           titleCell: cellGroup.titleCell
         }
@@ -17786,25 +17858,25 @@ class Table {
    * @returns {Array} A two-dimensional array of header cell rows.
    */
   constructHeaders (tree = this.tree, headers = [], currentLevel = 0) {
-    let currentFeature = this.features.columnFeatures[currentLevel]
+    const currentFeature = this.features.columnFeatures[currentLevel]
 
-    let cells = []
-    for (let [index, feature] of currentFeature.getOrderedFeatures(tree.ancestorFeatures).entries()) {
-      let cellGroup = tree.subgroups[index]
+    const cells = []
+    for (const [index, feature] of currentFeature.getOrderedFeatures(tree.ancestorFeatures).entries()) {
+      const cellGroup = tree.subgroups[index]
 
       // Iterate over all column features (features that form columns)
       if (currentLevel < this.features.columnFeatures.length - 1) {
-        let subCells = this.constructHeaders(cellGroup, headers, currentLevel + 1)
+        const subCells = this.constructHeaders(cellGroup, headers, currentLevel + 1)
 
         let columnSpan = 0
-        for (let cell of subCells) {
+        for (const cell of subCells) {
           columnSpan += cell.span
         }
 
         // let headerCell = new HeaderCell(feature.value, currentFeature, columnSpan)
-        let headerCell = currentFeature.createHeaderCell(feature.value, columnSpan)
+        const headerCell = currentFeature.createHeaderCell(feature.value, columnSpan)
         headerCell.children = subCells
-        for (let cell of subCells) {
+        for (const cell of subCells) {
           cell.parent = headerCell
         }
 
@@ -17818,7 +17890,7 @@ class Table {
         cells.push(headerCell)
       } else {
         // Last level
-        let headerCell = currentFeature.createHeaderCell(feature.value)
+        const headerCell = currentFeature.createHeaderCell(feature.value)
 
         if (!headers[currentLevel]) {
           headers[currentLevel] = new _row_js__WEBPACK_IMPORTED_MODULE_3__["default"]()
@@ -17842,7 +17914,7 @@ class Table {
    * @returns {Row[]} An array of rows.
    */
   constructRows () {
-    let rows = []
+    const rows = []
     for (let rowIndex = 0; rowIndex < this.dataRowQty; rowIndex++) {
       rows[rowIndex] = new _row_js__WEBPACK_IMPORTED_MODULE_3__["default"]()
       rows[rowIndex].titleCell = this.columns[0].cells[rowIndex].titleCell
@@ -17850,8 +17922,8 @@ class Table {
         rows[rowIndex].add(this.columns[columnIndex].cells[rowIndex])
       }
     }
-    let filtered = []
-    for (let [index, row] of rows.entries()) {
+    const filtered = []
+    for (const [index, row] of rows.entries()) {
       if (!row.empty) {
         filtered.push(row)
       } else {
@@ -17871,7 +17943,7 @@ class Table {
    * Hides empty columns in a table.
    */
   hideEmptyColumns () {
-    for (let column of this.columns) {
+    for (const column of this.columns) {
       if (column.empty) {
         column.hide()
       }
@@ -17883,7 +17955,7 @@ class Table {
    * Show all empty columns that were previously hidden.
    */
   showEmptyColumns () {
-    for (let column of this.columns) {
+    for (const column of this.columns) {
       if (column.hidden) {
         column.show()
       }
@@ -17900,7 +17972,7 @@ class Table {
     let colsWithMatches = 0
     let nonEmptyColQty = 0
     if (this.headers.length > 0) {
-      for (let headerCell of this.headers[0].cells) {
+      for (const headerCell of this.headers[0].cells) {
         if (headerCell.columns.some(column => column.suffixMatches)) {
           colsWithMatches++
         }
@@ -17917,10 +17989,10 @@ class Table {
    * Hide groups that have no morpheme matches.
    */
   hideNoSuffixMatchesGroups () {
-    for (let headerCell of this.headers[0].cells) {
-      let matches = !!headerCell.columns.find(column => column.suffixMatches)
+    for (const headerCell of this.headers[0].cells) {
+      const matches = !!headerCell.columns.find(column => column.suffixMatches)
       if (!matches) {
-        for (let column of headerCell.columns) {
+        for (const column of headerCell.columns) {
           column.hide()
         }
       }
@@ -17932,7 +18004,7 @@ class Table {
    * Show groups that have no suffix matches.
    */
   showNoSuffixMatchesGroups () {
-    for (let column of this.columns) {
+    for (const column of this.columns) {
       column.show()
     }
     if (this.options.emptyColumnsHidden) {
@@ -17969,7 +18041,7 @@ class ViewSetFactory {
   static create (homonym) {
     let viewSet
     try {
-      let Constructor = this.getConstructor(homonym.languageID)
+      const Constructor = this.getConstructor(homonym.languageID)
       viewSet = new Constructor(homonym)
     } catch (e) {
       console.error(`Cannot build inflection tables: ${e}`)
@@ -18055,7 +18127,7 @@ class ViewSet {
       this.enabled = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageModel(homonym.languageID).canInflect()
 
       if (this.enabled) {
-        for (let lexeme of homonym.lexemes) {
+        for (const lexeme of homonym.lexemes) {
           for (let inflection of lexeme.inflections) {
             // Inflections are grouped by part of speech
             inflection = this.dataset.setInflectionData(inflection, lexeme.lemma)
@@ -18068,6 +18140,7 @@ class ViewSet {
       }
     }
   }
+
   /**
    * Returns a list of views available within a view set. Should be redefined in descendant classes.
    * @return {View[]} A list of views available within the view set.
@@ -18089,7 +18162,7 @@ class ViewSet {
       if (!this.matchingViewsMap.has(view.partOfSpeech)) {
         this.matchingViewsMap.set(view.partOfSpeech, [])
       }
-      let storedInstances = this.matchingViewsMap.get(view.partOfSpeech)
+      const storedInstances = this.matchingViewsMap.get(view.partOfSpeech)
       // Filter out instances that are already stored in a view set
       const isNew = !storedInstances.find(v => v.sameAs(view))
       if (isNew) {
@@ -18125,7 +18198,7 @@ class ViewSet {
     if (!options || !options.viewID) {
       throw new Error(`Obligatory options property, "viewID", is missing`)
     }
-    let view = this.getViewByID(options.viewID)
+    const view = this.getViewByID(options.viewID)
     return view ? view.getStandardFormInstance(options) : null
   }
 }
@@ -18276,6 +18349,7 @@ class View {
   static get datasetConsts () {
     return this.dataset.constructor.constants
   }
+
   /**
    * Defines an inflection type (Suffix/Form) of a view. Should be redefined in child classes.
    * @return {Suffix|Form|Paradigm|undefined}
@@ -18489,6 +18563,7 @@ class View {
     // Select inflections this view needs
     return this.dataset.createInflectionSet(this.mainPartOfSpeech, this.getRelatedInflections(homonym.inflections), options)
   }
+
   /**
    * Finds out what views match inflection data and return initialized instances of those views.
    * By default only one instance of the view is returned, by views can override this method
@@ -18499,11 +18574,11 @@ class View {
    */
   static getMatchingInstances (homonym) {
     if (this.matchFilter(homonym.languageID, homonym.inflections)) {
-      let inflectionData = this.getInflectionsData(homonym)
+      const inflectionData = this.getInflectionsData(homonym)
 
       if (inflectionData.types.has(this.inflectionType)) {
         // There is some inflection data found for the view's morpheme type
-        let view = new this(homonym, inflectionData)
+        const view = new this(homonym, inflectionData)
         return [view]
       }
     }
@@ -18518,16 +18593,16 @@ class View {
     const suffix = options.suffix ? options.suffix : 'suffix'
     let inflection = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Inflection"](stem, this.languageID, suffix)
     inflection.addFeature(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part, this.mainPartOfSpeech, this.languageID))
-    let homonym = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"].createSimpleForm(stem, this.languageID, [inflection])
+    const homonym = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"].createSimpleForm(stem, this.languageID, [inflection])
     inflection = this.dataset.setInflectionData(inflection, homonym.lexemes[0].lemma)
     return homonym
   }
 
   static getStandardFormInstance (options) {
-    let homonym = this.createStandardFormHomonym(options)
-    let inflectionData = this.getInflectionsData(homonym, { findMatches: false })
+    const homonym = this.createStandardFormHomonym(options)
+    const inflectionData = this.getInflectionsData(homonym, { findMatches: false })
     // Standard form tables should have no suffix matches columns visible
-    let view = new this(homonym, inflectionData)
+    const view = new this(homonym, inflectionData)
     if (options.title) {
       view.setTitle(options.title)
     }
@@ -18571,7 +18646,7 @@ class WideView {
    */
   get visibleColumnQty () {
     let qty = 0
-    for (let column of this.table.columns) {
+    for (const column of this.table.columns) {
       if (!column.hidden) {
         qty++
       }
@@ -18591,26 +18666,26 @@ class WideView {
   render (table) {
     this.rows = []
     this.table = table
-    for (let row of table.headers) {
-      let cells = []
+    for (const row of table.headers) {
+      const cells = []
       cells.push(row.titleCell)
-      for (let cell of row.cells) {
+      for (const cell of row.cells) {
         cells.push(cell)
       }
       this.rows.push({ cells: cells })
     }
 
-    for (let row of table.rows) {
-      let cells = []
-      let titleCells = row.titleCell.hierarchyList
+    for (const row of table.rows) {
+      const cells = []
+      const titleCells = row.titleCell.hierarchyList
       if (titleCells.length < this.table.titleColumnQty) {
         cells.push(_row_title_cell__WEBPACK_IMPORTED_MODULE_0__["default"].placeholder(this.titleColumnQty - titleCells.length))
       }
-      for (let titleCell of titleCells) {
+      for (const titleCell of titleCells) {
         cells.push(titleCell)
       }
 
-      for (let cell of row.cells) {
+      for (const cell of row.cells) {
         cells.push(cell)
       }
       this.rows.push({ cells: cells })

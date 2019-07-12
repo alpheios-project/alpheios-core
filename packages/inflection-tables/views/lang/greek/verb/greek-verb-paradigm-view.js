@@ -62,6 +62,7 @@ export default class GreekVerbParadigmView extends GreekView {
   static get hasPrerenderedTables () {
     return true
   }
+
   /**
    * What classes of pronouns this view should be used with.
    * Should be defined in descendants.
@@ -108,9 +109,9 @@ export default class GreekVerbParadigmView extends GreekView {
   }
 
   static getMatchingInstances (homonym) {
-    let inflectionData = this.getInflectionsData(homonym)
+    const inflectionData = this.getInflectionsData(homonym)
     if (this.matchFilter(homonym.languageID, homonym.inflections, inflectionData)) {
-      let paradigms = inflectionData.types.get(this.inflectionType).items
+      const paradigms = inflectionData.types.get(this.inflectionType).items
       return paradigms.map(paradigm => new this(paradigm, homonym, inflectionData))
     }
     return []
@@ -145,7 +146,7 @@ export default class GreekVerbParadigmView extends GreekView {
     if (!options || !options.paradigmID) {
       throw new Error(`Obligatory options property, "paradigmID", is missing`)
     }
-    let paradigm = this.dataset.pos.get(this.mainPartOfSpeech).types.get(Paradigm).getByID(options.paradigmID)
+    const paradigm = this.dataset.pos.get(this.mainPartOfSpeech).types.get(Paradigm).getByID(options.paradigmID)
     if (paradigm) {
       return new this(paradigm, null, null).render().noSuffixMatchesGroupsHidden(false)
     }

@@ -30,8 +30,8 @@ export default class GreekArticleView extends GreekView {
 
   createTable () {
     this.table = new Table([this.features.genders, this.features.types, this.features.numbers, this.features.cases])
-    let features = this.table.features
-    features.columns = [ this.features.genders ]
+    const features = this.table.features
+    features.columns = [this.features.genders]
 
     features.rows = [this.features.numbers, this.features.cases]
     features.columnRowTitles = [this.features.cases]

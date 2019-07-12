@@ -14,7 +14,7 @@ export default class Paradigm {
     // this.table = paradigm.table
     this.table = { rows: [] }
     paradigm.table.rows.forEach(row => {
-      let newRow = { cells: [] }
+      const newRow = { cells: [] }
       row.cells.forEach(cell => { newRow.cells.push(Object.assign({}, cell)) })
       this.table.rows.push(newRow)
     })
@@ -27,7 +27,7 @@ export default class Paradigm {
     // Convert string feature values to Feature objects for later comparison
     this.tableCellValuesToFeatures(this.table)
     if (this.subTables) {
-      for (let table of this.subTables) {
+      for (const table of this.subTables) {
         this.tableCellValuesToFeatures(table)
       }
     }
@@ -43,10 +43,10 @@ export default class Paradigm {
 
   // Convert string feature values of a table to Feature objects for later comparison
   tableCellValuesToFeatures (table) {
-    for (let row of table.rows) {
-      for (let cell of row.cells) {
+    for (const row of table.rows) {
+      for (const cell of row.cells) {
         if (cell.role === 'data') {
-          let cellFeatures = []
+          const cellFeatures = []
           for (const prop of Object.keys(cell)) {
             // Eliminate "non-feature" keys
             if (prop !== 'role' && prop !== 'value') {
@@ -105,7 +105,7 @@ export default class Paradigm {
     for (const subTable of this.subTables) {
       for (const row of subTable.rows) {
         for (const cell of row.cells) {
-          if (cell.hasOwnProperty('reflink')) {
+          if (cell.hasOwnProperty('reflink')) { // eslint-disable-line no-prototype-builtins
             if (paradigmMap.has(cell.reflink.id)) {
               this._suppParadigms.set(cell.reflink.id, paradigmMap.get(cell.reflink.id))
             } else {

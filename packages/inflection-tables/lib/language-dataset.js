@@ -51,11 +51,11 @@ export default class LanguageDataset {
    * @param {ExtendedLanguageData} extendedLangData
    */
   addInflectionData (partOfSpeech, ClassType, itemValue, features, footnotes = [], extendedLangData = undefined) {
-    let item = new ClassType(itemValue)
+    const item = new ClassType(itemValue)
     item.extendedLangData = extendedLangData
 
     // Go through all features provided
-    for (let feature of features) {
+    for (const feature of features) {
       /*
       Footnotes are special because they are stored as both single or multi-value feature and
       as an array of Footnote objects into a `footnote` prop (so they can be iterated over during table construction)
@@ -100,7 +100,7 @@ export default class LanguageDataset {
       throw new Error('Footnote text data should not be empty.')
     }
 
-    let footnote = new Footnote(index, text, partOfSpeech)
+    const footnote = new Footnote(index, text, partOfSpeech)
 
     // this.footnotes.push(footnote)
 
@@ -156,10 +156,10 @@ export default class LanguageDataset {
    */
   static checkMatches (featureList, inflection, item, comparisonType = Morpheme.comparisonTypes.EXACT) {
     let fullMatchQty = featureList.length
-    let matches = featureList.reduce((acc, f) => {
-      if (inflection.hasOwnProperty(f) && item.features.hasOwnProperty(f) && item.featureMatch(inflection[f], comparisonType)) {
+    const matches = featureList.reduce((acc, f) => {
+      if (inflection.hasOwnProperty(f) && item.features.hasOwnProperty(f) && item.featureMatch(inflection[f], comparisonType)) { // eslint-disable-line no-prototype-builtins
         acc.push(f)
-      } else if (!inflection.hasOwnProperty(f) || !item.features.hasOwnProperty(f)) {
+      } else if (!inflection.hasOwnProperty(f) || !item.features.hasOwnProperty(f)) { // eslint-disable-line no-prototype-builtins
         /*
         If either inflection or item does not have a certain feature,
         this feature is excluded from a comparison
@@ -172,7 +172,7 @@ export default class LanguageDataset {
     // we can't consider it a match if there were NO common features
     // so we have to test to make sure there is at least one matching feature
     // required and found
-    let result = (matches.length > 0 && matches.length === fullMatchQty)
+    const result = (matches.length > 0 && matches.length === fullMatchQty)
     return { fullMatch: result, matchedItems: matches }
   }
 
@@ -219,7 +219,7 @@ export default class LanguageDataset {
       The value found will then be attached to an Inflection object.
        */
       // Get a class this inflection belongs to
-      let grmClasses = this.model.getPronounClasses(this.pos.get(partOfSpeech).types.get(Form).items, inflection.getForm())
+      const grmClasses = this.model.getPronounClasses(this.pos.get(partOfSpeech).types.get(Form).items, inflection.getForm())
       if (!grmClasses) {
         console.warn(`Cannot determine a grammar class for a ${inflection.form} pronoun.
               Table construction will probably fail`)
@@ -300,12 +300,12 @@ export default class LanguageDataset {
    * @return {Map<{string}, {Inflection[]}>} Maps on array of inflections to a part of speech
    */
   groupInflections (homonym) {
-    let inflections = new Map()
-    for (let lexeme of homonym.lexemes) {
+    const inflections = new Map()
+    for (const lexeme of homonym.lexemes) {
       for (let inflection of lexeme.inflections) {
         // Inflections are grouped by part of speech
         inflection = this.setInflectionData(inflection, lexeme.lemma)
-        let pofsValue = inflection[Feature.types.part].value
+        const pofsValue = inflection[Feature.types.part].value
         if (!inflections.has(pofsValue)) { inflections.set(pofsValue, []) }
         inflections.get(pofsValue).push(inflection)
       }
@@ -323,9 +323,9 @@ export default class LanguageDataset {
    * @return {Suffix[]|Form[]|Paradigm[]} An array of morphemes where all features have single values
    */
   static splitMultiValMorphems (morphemes) {
-    let result = []
+    const result = []
     for (const morpheme of morphemes) {
-      let multivalFeatures = []
+      const multivalFeatures = []
       for (const featureName of Object.keys(morpheme.features)) {
         if (morpheme.features[featureName].isMultiple) {
           multivalFeatures.push(morpheme.features[featureName])
@@ -349,12 +349,12 @@ export default class LanguageDataset {
    * @return {InflectionSet} Constructed inflection set.
    */
   createInflectionSet (pofsValue, inflections, options) {
-    let inflectionSet = new InflectionSet(pofsValue, this.languageID)
+    const inflectionSet = new InflectionSet(pofsValue, this.languageID)
     inflectionSet.inflections = inflections.filter(i => i.constraints.implemented === true)
     inflectionSet.isImplemented = inflectionSet.inflections.length > 0
 
     if (inflectionSet.isImplemented) {
-      let sourceSet = this.pos.get(pofsValue)
+      const sourceSet = this.pos.get(pofsValue)
       if (!sourceSet) {
         // There is no source data for this part of speech
         console.warn(`There is no source data for the following part of speech: ${pofsValue}`)
@@ -368,14 +368,14 @@ export default class LanguageDataset {
       */
 
       // If at least one inflection in a group has a constraint, we'll search for data based on that criteria
-      let suffixBased = inflections.some(i => i.constraints.suffixBased)
-      let formBased = inflections.some(i => i.constraints.fullFormBased)
-      let paradigmBased = inflections.some(i => i.constraints.paradigmBased)
+      const suffixBased = inflections.some(i => i.constraints.suffixBased)
+      const formBased = inflections.some(i => i.constraints.fullFormBased)
+      const paradigmBased = inflections.some(i => i.constraints.paradigmBased)
 
       // Check for suffix matches
       if (suffixBased) {
         if (sourceSet.types.has(Suffix)) {
-          let items = sourceSet.types.get(Suffix).items.reduce(this.reducerGen(inflectionSet.inflections, options), [])
+          const items = sourceSet.types.get(Suffix).items.reduce(this.reducerGen(inflectionSet.inflections, options), [])
           if (items.length > 0) {
             inflectionSet.addInflectionItems(items)
           }
@@ -386,7 +386,7 @@ export default class LanguageDataset {
       if (formBased) {
         // Match against form based inflection only
         const formInflections = inflectionSet.inflections.filter(i => i.constraints.fullFormBased)
-        let items = sourceSet.types.get(Form).items.reduce(this.reducerGen(formInflections, options), [])
+        const items = sourceSet.types.get(Form).items.reduce(this.reducerGen(formInflections, options), [])
         if (items.length > 0) {
           inflectionSet.addInflectionItems(items)
         }
@@ -394,16 +394,16 @@ export default class LanguageDataset {
 
       // Get paradigm matches
       if (paradigmBased) {
-        let paradigms = sourceSet.getMatchingItems(Paradigm, inflections)
+        const paradigms = sourceSet.getMatchingItems(Paradigm, inflections)
         inflectionSet.addInflectionItems(paradigms)
       }
 
       // Add footnotes
       if (inflectionSet.hasTypes) {
         for (const inflectionType of inflectionSet.inflectionTypes) {
-          let footnotesSource = sourceSet.types.get(inflectionType).footnotesMap
+          const footnotesSource = sourceSet.types.get(inflectionType).footnotesMap
           const footnotesInUse = inflectionSet.types.get(inflectionType).footnotesInUse
-          for (let footnote of footnotesSource.values()) {
+          for (const footnote of footnotesSource.values()) {
             if (footnotesInUse.includes(footnote.index)) {
               inflectionSet.addFootnote(inflectionType, footnote.index, footnote)
             }
@@ -422,12 +422,12 @@ export default class LanguageDataset {
    */
   getInflectionData (homonym) {
     // Add support for languages
-    let result = new InflectionData(homonym)
-    let inflections = this.groupInflections(homonym)
+    const result = new InflectionData(homonym)
+    const inflections = this.groupInflections(homonym)
 
     // Scan for matches for all parts of speech separately
     for (const [pofsValue, inflectionsGroup] of inflections.entries()) {
-      let inflectionSet = this.createInflectionSet(pofsValue, inflectionsGroup)
+      const inflectionSet = this.createInflectionSet(pofsValue, inflectionsGroup)
       result.addInflectionSet(inflectionSet)
     }
     return result
@@ -435,7 +435,7 @@ export default class LanguageDataset {
 
   hasMatchingForms (partOfSpeech, inflection) {
     if (this.pos.has(partOfSpeech)) {
-      let inflectionSet = this.pos.get(partOfSpeech)
+      const inflectionSet = this.pos.get(partOfSpeech)
 
       if (inflectionSet.types.has(Form)) {
         return inflectionSet.types.get(Form).items.find(item => this.matcher([inflection], item, { findMatches: false })) !== undefined
@@ -447,7 +447,7 @@ export default class LanguageDataset {
   reducerGen (inflections, options) {
     const instance = this
     function reducerFn (accumulator, item) {
-      let result = instance['matcher'](inflections, item, options)
+      const result = instance['matcher'](inflections, item, options)
       if (result) {
         accumulator.push(result)
       }
@@ -467,10 +467,10 @@ export default class LanguageDataset {
    * additional information about a match. if no matches found, returns null.
    */
   matcher (inflections, item, options = {}) {
-    if (!options.hasOwnProperty('findMatches')) {
+    if (!options.hasOwnProperty('findMatches')) { // eslint-disable-line no-prototype-builtins
       options.findMatches = true // Default value
     }
-    if (!options.hasOwnProperty('findMorphologyMatches')) {
+    if (!options.hasOwnProperty('findMorphologyMatches')) { // eslint-disable-line no-prototype-builtins
       // If not specified explicitly, will be controlled by `findMatches` value
       options.findMorphologyMatches = options.findMatches // Default value
     }
@@ -483,8 +483,8 @@ export default class LanguageDataset {
      a fullFeature match is when one of inflections has all grammatical features fully matching those of a suffix
      */
 
-    for (let inflection of inflections) {
-      let matchData = new MatchData() // Create a match profile
+    for (const inflection of inflections) {
+      const matchData = new MatchData() // Create a match profile
       if (options.findMatches) {
         matchData.suffixMatch = inflection.smartWordCompare(item.value, item.constructor.name, { fuzzySuffix: true })
       }

@@ -28,7 +28,7 @@ export default class LatinVerbSupineIrregularView extends LatinVerbIrregularBase
 
   createTable () {
     this.table = new Table([this.features.cases])
-    let features = this.table.features
+    const features = this.table.features
     features.columns = []
     features.rows = [this.features.cases]
     features.columnRowTitles = [this.features.cases]
@@ -49,7 +49,7 @@ export default class LatinVerbSupineIrregularView extends LatinVerbIrregularBase
    */
   static getInflectionsData (homonym, options) {
     // Select only those inflections that are required for this view
-    let inflections = homonym.inflections.filter(
+    const inflections = homonym.inflections.filter(
       i => i[Feature.types.part].value === this.mainPartOfSpeech &&
         i.constraints && i.constraints.irregular
     )

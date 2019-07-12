@@ -48,19 +48,19 @@ export default class HeaderCell {
    */
   columnStateChange () {
     let visibleColumns = 0
-    for (let column of this.columns) {
+    for (const column of this.columns) {
       if (!column.hidden) {
         visibleColumns++
       }
     }
     if (this.span !== visibleColumns) {
       // Number of visible columns has been changed
-      let change = visibleColumns - this.span
+      const change = visibleColumns - this.span
       this.changeSpan(change)
 
       // Notify parents and children
       if (this.children.length) {
-        for (let child of this.children) {
+        for (const child of this.children) {
           child.columnStateChange()
         }
       }

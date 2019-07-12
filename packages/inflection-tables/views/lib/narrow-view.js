@@ -26,7 +26,7 @@ export default class NarrowView {
     this.nodes = document.createElement('div')
     this.nodes.classList.add(Styles.classNames.narrowViewsContainer)
 
-    for (let [index, headerCell] of this.table.headers[0].cells.entries()) {
+    for (const [index, headerCell] of this.table.headers[0].cells.entries()) {
       this.createGroup(index, headerCell)
     }
   }
@@ -36,7 +36,7 @@ export default class NarrowView {
    * @returns {NarrowViewGroup} A newly created group.
    */
   createGroup (index) {
-    let group = new NarrowViewGroup(index, this.table.headers, this.table.rows, this.table.titleColumnQty)
+    const group = new NarrowViewGroup(index, this.table.headers, this.table.rows, this.table.titleColumnQty)
     this.nodes.appendChild(group.nodes)
     this.groups.push(group)
   }
@@ -46,7 +46,7 @@ export default class NarrowView {
    * @returns {HTMLElement} - HTML representation of a view.
    */
   render () {
-    for (let group of this.groups) {
+    for (const group of this.groups) {
       group.render()
     }
     return this.nodes

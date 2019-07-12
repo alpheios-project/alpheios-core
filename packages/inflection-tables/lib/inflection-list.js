@@ -84,12 +84,12 @@ export default class InflectionList {
    * @return {number[]}
    */
   get footnotesInUse () {
-    let set = new Set()
+    const set = new Set()
     // Scan all selected morphemes to build a unique set of footnote indexes
     for (const item of this.items) {
-      if (item.hasOwnProperty(Feature.types.footnote)) {
+      if (item.hasOwnProperty(Feature.types.footnote)) { // eslint-disable-line no-prototype-builtins
         // Footnote indexes are stored in an array
-        for (let index of item[Feature.types.footnote]) {
+        for (const index of item[Feature.types.footnote]) {
           set.add(index)
         }
       }
