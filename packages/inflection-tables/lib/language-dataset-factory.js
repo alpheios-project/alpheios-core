@@ -15,8 +15,8 @@ export default class LanguageDatasetFactory {
    */
   constructor (languageData = [LatinDataset, GreekDataset]) {
     this.sets = new Map()
-    for (const Set of languageData) {
-      this.sets.set(Set.languageID, new Set())
+    for (const LngDataset of languageData) {
+      this.sets.set(LngDataset.languageID, new LngDataset())
     }
   }
 

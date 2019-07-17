@@ -3275,8 +3275,8 @@ class LanguageDatasetFactory {
    */
   constructor (languageData = [_lang_latin_latin_language_dataset_js__WEBPACK_IMPORTED_MODULE_1__["default"], _lang_greek_greek_language_dataset_js__WEBPACK_IMPORTED_MODULE_2__["default"]]) {
     this.sets = new Map()
-    for (const Set of languageData) {
-      this.sets.set(Set.languageID, new Set())
+    for (const LngDataset of languageData) {
+      this.sets.set(LngDataset.languageID, new LngDataset())
     }
   }
 
