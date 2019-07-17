@@ -27210,29 +27210,65 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function () {
+    console.info(`created ${this.nameBase}, lookupLanguage is`, this.$options.lookupLanguage)
     if (this.usePageLangPrefs) {
       // Use language settings of a page
+      // Do we want to change a preferredLanguage every time lookup language is changed? Probably not.
       this.$options.lookupLanguage = this.settings.getFeatureOptions().items.preferredLanguage
+      // This causes preferredLanguage to be updated
+      // this.$options.lookupLanguage.setValue(LanguageModelFactory.getLanguageCodeFromId(this.$store.state.app.currentLanguageID))
+      console.info(`Setting lookupLanguage in ${this.nameBase} to pageLangPrefs ${this.$options.lookupLanguage.currentValue}`)
+      console.info(`"Created" in ${this.nameBase}, preferredLanguage is ${this.settings.getFeatureOptions().items.preferredLanguage.currentValue}`)
       this.$options.resourceOptions = this.settings.getResourceOptions()
     } else {
       // Use lookup language settings
       this.$options.lookupLanguage = this.settings.getFeatureOptions().items.lookupLanguage
+      console.info(`Setting lookupLanguage in ${this.nameBase} to featureOptions lookup language ${this.$options.lookupLanguage.currentValue}`)
       this.$options.resourceOptions = this.settings.lookupResourceOptions
     }
   },
 
   computed: {
-    currentLanguage () {
+    /* currentLanguage () {
       const selectedValue = this.$options.lookupLanguage.currentTextValue()
       // langUpdated is included into the condition to force Vue to recalculate value
       // every time language settings are updated
-      return (this.langUpdated && selectedValue === 'Default')
-        ? this.settings.getFeatureOptions().items.preferredLanguage.currentItem()
+      // TODO: Change to get current language from the store
+      const value = (this.langUpdated && selectedValue === 'Default')
+        ? { value: LanguageModelFactory.getLanguageCodeFromId(this.$store.state.app.currentLanguageID), text: this.$store.state.app.currentLanguageName }
         : this.$options.lookupLanguage.currentItem()
+      console.info('Preferred language is', this.settings.getFeatureOptions().items.preferredLanguage.currentItem())
+      let storeLangCode = LanguageModelFactory.getLanguageCodeFromId(this.$store.state.app.currentLanguageID)
+      console.info(`Store lang code is ${storeLangCode}, name is ${this.$store.state.app.currentLanguageName}`)
+      console.info('Current language called, value is', value)
+      return value
+    }, */
+
+    useCurrentLanguage () {
+      console.info(`useCurrentLanguage: ${!this.showLanguageSettingsGroup || (this.langUpdated && this.$options.lookupLanguage.currentTextValue() === 'Default')}`)
+      return !this.showLanguageSettingsGroup || (this.langUpdated && this.$options.lookupLanguage.currentTextValue() === 'Default')
+    },
+
+    currentLanguageID () {
+      console.info(`currentLanguageID, ${this.nameBase}`)
+      console.info('Store:', this.$store.state.app.currentLanguageID)
+      console.info('Selected:', alpheios_data_models__WEBPACK_IMPORTED_MODULE_3__["LanguageModelFactory"].getLanguageIdFromCode(this.$options.lookupLanguage.currentValue))
+      return this.useCurrentLanguage
+        ? this.$store.state.app.currentLanguageID
+        : alpheios_data_models__WEBPACK_IMPORTED_MODULE_3__["LanguageModelFactory"].getLanguageIdFromCode(this.$options.lookupLanguage.currentValue)
+    },
+
+    currentLanguageName () {
+      console.info(`currentLanguageName, ${this.nameBase}`)
+      console.info('Store:', this.$store.state.app.currentLanguageName)
+      console.info('Selected:', this.$options.lookupLanguage.currentTextValue())
+      return this.useCurrentLanguage
+        ? this.$store.state.app.currentLanguageName
+        : this.$options.lookupLanguage.currentTextValue()
     },
 
     lexiconsFiltered () {
-      let lang = this.$options.lookupLanguage.values.filter(v => v.text === this.currentLanguage.text)
+      let lang = this.$options.lookupLanguage.values.filter(v => v.text === this.currentLanguageName)
       let settingGroup
       if (lang.length > 0) {
         settingGroup = lang[0].value
@@ -27258,11 +27294,20 @@ __webpack_require__.r(__webpack_exports__);
       If we override the language, then the lookup language must be a current value of our `lookupLanguage` prop,
       otherwise it must be a value of panel's options `preferredLanguage` options item
        */
-      const languageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_3__["LanguageModelFactory"].getLanguageIdFromCode(this.currentLanguage.value)
+      const languageID = this.currentLanguageID
 
       let textSelector = _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_0__["default"].createObjectFromText(this.lookuptext, languageID)
 
-      this.app.updateLanguage(this.$options.lookupLanguage.currentValue)
+      console.info(`Lookup in ${this.nameBase}, current language is ${this.currentLanguageID.toString()}`)
+
+      /* if (this.showLanguageSettingsGroup && this.currentLanguageID !== this.$store.state.app.currentLanguageID) {
+        // Update the current language value with the value selected in the language drop-down.
+        // We need to update current language only if the lookup has the language selector visible
+        this.app.updateLanguage(this.$options.lookupLanguage.currentValue)
+        console.info(`Lookup in ${this.nameBase} is updating current language to `, this.$options.lookupLanguage.currentValue)
+      } else {
+        console.info(`Lookup in ${this.nameBase}, current language was not changed`)
+      } */
 
       const resourceOptions = this.$options.resourceOptions
       const lemmaTranslationLang = this.app.state.lemmaTranslationLang
@@ -27276,6 +27321,7 @@ __webpack_require__.r(__webpack_exports__);
       let lexQuery = _lib_queries_lexical_query_lookup__WEBPACK_IMPORTED_MODULE_1__["default"]
         .create(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples)
 
+      // A newLexicalRequest will call app.updateLanguage(languageID)
       this.app.newLexicalRequest(this.lookuptext, languageID)
       lexQuery.getData()
       // Notify parent that the lookup has been started so that the parent can close itself if necessary
@@ -27295,6 +27341,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     settingChange: function (name, value) {
+      console.info(`Settings in ${this.nameBase} have been changed to`, value)
       this.$options.lookupLanguage.setTextValue(value)
       this.langUpdated = Date.now()
     },
@@ -51904,7 +51951,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"stroke-width":"0","d":"M6 18.71V14H1V1h18v13h-8.29L6 18.71zM2 13h5v3.29L10.29 13H18V2H2v11z"}})])
+            children.concat([_c('path',{attrs:{"d":"M6 18.71V14H1V1h18v13h-8.29L6 18.71zM2 13h5v3.29L10.29 13H18V2H2v11z"}})])
           )
         }
       });
@@ -52064,7 +52111,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"d":"M9.93 4.65c-.712 0-1.399.209-2.063.625v1.147c.538-.577 1.173-.865 1.906-.865.204 0 .398.027.58.084.183.052.344.131.483.24.139.108.246.244.324.404.083.16.125.345.125.553 0 .243-.057.468-.17.672-.108.2-.245.391-.41.578a9.134 9.134 0 0 1-.541.547c-.195.178-.374.365-.539.56s-.305.406-.418.631a1.684 1.684 0 0 0-.162.75 3.266 3.266 0 0 0 .15.977h1.047a3.988 3.988 0 0 1-.142-.41 1.962 1.962 0 0 1-.073-.547c0-.235.057-.45.17-.645.113-.195.255-.382.424-.56.174-.183.359-.365.559-.547.2-.183.385-.378.554-.586a3.11 3.11 0 0 0 .43-.697 2.08 2.08 0 0 0 .168-.86c0-.338-.062-.634-.187-.89-.126-.257-.3-.47-.522-.64a2.222 2.222 0 0 0-.762-.39 3.244 3.244 0 0 0-.931-.13zm-.149 8.172a.694.694 0 0 0-.508.215.667.667 0 0 0-.214.508c0 .2.071.369.214.508.148.139.317.207.508.207s.36-.068.508-.207a.68.68 0 0 0 .215-.508.667.667 0 0 0-.215-.508.694.694 0 0 0-.508-.215z"}}),_c('circle',{attrs:{"cx":"10","cy":"10","r":"9","fill":"none","stroke-width":"1.1"}})])
+            children.concat([_c('path',{attrs:{"d":"M9.93 4.65c-.712 0-1.399.209-2.063.625v1.147c.538-.577 1.173-.865 1.906-.865.204 0 .398.027.58.084.183.052.344.131.483.24.139.108.246.244.324.404.083.16.125.345.125.553 0 .243-.057.468-.17.672-.108.2-.245.391-.41.578a9.134 9.134 0 0 1-.541.547c-.195.178-.374.365-.539.56s-.305.406-.418.631a1.684 1.684 0 0 0-.162.75 3.266 3.266 0 0 0 .15.977h1.047a3.988 3.988 0 0 1-.142-.41 1.962 1.962 0 0 1-.073-.547c0-.235.057-.45.17-.645.113-.195.255-.382.424-.56.174-.183.359-.365.559-.547.2-.183.385-.378.554-.586a3.11 3.11 0 0 0 .43-.697 2.08 2.08 0 0 0 .168-.86c0-.338-.062-.634-.187-.89-.126-.257-.3-.47-.522-.64a2.222 2.222 0 0 0-.762-.39 3.244 3.244 0 0 0-.931-.13zm-.149 8.172a.694.694 0 0 0-.508.215.667.667 0 0 0-.214.508c0 .2.071.369.214.508.148.139.317.207.508.207s.36-.068.508-.207a.68.68 0 0 0 .215-.508.667.667 0 0 0-.215-.508.694.694 0 0 0-.508-.215z"}}),_c('circle',{attrs:{"cx":"10","cy":"10","r":"9","fill":"none"}})])
           )
         }
       });
@@ -52504,7 +52551,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('circle',{attrs:{"fill":"none","stroke-width":"1.1","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"stroke-width":"0","d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","stroke-width":"1.1","d":"M13.018 14.197l-3.573-3.572"}})])
+            children.concat([_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","d":"M13.018 14.197l-3.573-3.572"}})])
           )
         }
       });
@@ -53106,7 +53153,18 @@ class UIController {
       enableLemmaTranslations: false,
       irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size',
       // Whether to disable text selection on mobile devices
-      disableTextSelection: false
+      disableTextSelection: false,
+      /*
+      textLangCode is a language of a text that is set by the host app during a creation of a UI controller.
+      It has a higher priority than a `preferredLanguage` (a language that is set as default on
+      the UI settings page). However, textLangCode has a lower priority than the language
+      set by the surrounding context of the word on the HTML page (i.e. the language that is set
+      for the word's HTML element or for its parent HTML elements).
+      The value of the textLangCode must be in an ISO 639-3 format.
+      A host application may not necessarily set the current language. In that case
+      it's value (which will be null by default) will be ignored.
+       */
+      textLangCode: null
     }
   }
 
@@ -53125,7 +53183,9 @@ class UIController {
   static setOptions (options, defaultOptions) {
     let result = {}
     for (const [key, defaultValue] of Object.entries(defaultOptions)) {
-      if (typeof defaultValue === 'object' && defaultValue.constructor.name === 'Object') {
+      // Due to the bug in JS typeof null is `object` and they do not have a `constructor` prop
+      // so we have to filter those null values out
+      if (typeof defaultValue === 'object' && defaultValue !== null && defaultValue.constructor.name === 'Object') {
         // This is an options group
         const optionsValue = options.hasOwnProperty(key) ? options[key] : {}
         result[key] = this.setOptions(optionsValue, defaultValue)
@@ -53169,14 +53229,22 @@ class UIController {
     return Array.from(this.modules.values()).filter(m => m.ModuleClass.isUiModule)
   }
 
-  createModules () {
-    // Create data modules fist, UI modules after that because UI modules are dependent on data ones
+  createDataModules () {
     this.dataModules.forEach((m) => {
       m.instance = new m.ModuleClass(this.store, this.api, m.options)
     })
+  }
+
+  createUiModules () {
     this.uiModules.forEach((m) => {
       m.instance = new m.ModuleClass(this.store, this.api, m.options)
     })
+  }
+
+  createModules () {
+    // Create data modules fist, UI modules after that because UI modules are dependent on data ones
+    this.createDataModules()
+    this.createUiModules()
   }
 
   activateModules () {
@@ -53632,16 +53700,23 @@ class UIController {
       }
     }
 
-    // Create all registered modules
-    this.createModules()
+    // Create registered data modules
+    this.createDataModules()
+
+    // The current language must be set after data modules are created (because it uses an L10n module)
+    // but before the UI modules are created (because UI modules use current language during rendering).
+    const currentLangCode = this.options.textLangCode || this.featureOptions.items.preferredLanguage.currentValue
+    const currentLangID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].getLanguageIdFromCode(currentLangCode)
+    this.updateLanguage(currentLangID)
+
+    // Create registered UI modules
+    this.createUiModules()
 
     // Adjust configuration of modules according to feature options
     if (this.hasModule('panel')) {
       this.store.commit('panel/setPosition', this.uiOptions.items.panelPosition.currentValue)
     }
 
-    const currentLanguageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].getLanguageIdFromCode(this.featureOptions.items.preferredLanguage.currentValue)
-    this.updateLanguage(currentLanguageID)
     this.updateLemmaTranslations()
 
     this.state.setWatcher('uiActive', this.updateAnnotations.bind(this))
@@ -54039,6 +54114,7 @@ class UIController {
   }
 
   updateLanguage (currentLanguageID) {
+    console.info(`updateLanguage has been called with `, currentLanguageID)
     // the code which follows assumes we have been passed a languageID symbol
     // we can try to recover gracefully if we accidentally get passed a string value
     if (typeof currentLanguageID !== 'symbol') {
@@ -54186,7 +54262,8 @@ class UIController {
       HTMLSelector conveys page-specific information, such as location of a selection on a page.
       It's probably better to keep them separated in order to follow a more abstract model.
        */
-      let htmlSelector = new _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_19__["default"](event, this.featureOptions.items.preferredLanguage.currentValue)
+      let currentLangCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].getLanguageCodeFromId(this.store.state.app.currentLanguageID)
+      let htmlSelector = new _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_19__["default"](event, currentLangCode)
       this.store.commit('app/setHtmlSelector', htmlSelector)
       let textSelector = htmlSelector.createTextSelector()
 
@@ -54506,6 +54583,7 @@ class UIController {
         this.updateLemmaTranslations()
         break
       case 'preferredLanguage':
+        console.info(`preferredLanguage option has been changed to ${this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue}`)
         this.updateLanguage(this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue)
         break
       case 'enableLemmaTranslations':
@@ -56150,6 +56228,22 @@ class OptionItem {
         console.error(`Storage of an option value failed: ${errorMessage}`)
       }
     )
+  }
+
+  /**
+   * Creates a copy of the current OptionItem with a different name, and, possibly,
+   * attached to a different storage adapter.
+   * @param {string} name - A name for the option clone.
+   * @param {string} labelText - A text for the label of the clone. If not specified,
+   * will be set to the same value as the one of the source.
+   * @param {StorageAdapter} storageAdapter - An instance of a storage adapter to attach to.
+   * If not specified, will use the a storage adapter from the source.
+   * @return {OptionItem} - A clone of the current option item.
+   */
+  clone (name, labelText = this.labelText, storageAdapter = this.storageAdapter) {
+    let clone = new OptionItem(JSON.parse(JSON.stringify(this)), name, storageAdapter)
+    clone.labelText = labelText
+    return clone
   }
 }
 

@@ -237,7 +237,18 @@ export default class UIController {
       enableLemmaTranslations: false,
       irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size',
       // Whether to disable text selection on mobile devices
-      disableTextSelection: false
+      disableTextSelection: false,
+      /*
+      textLangCode is a language of a text that is set by the host app during a creation of a UI controller.
+      It has a higher priority than a `preferredLanguage` (a language that is set as default on
+      the UI settings page). However, textLangCode has a lower priority than the language
+      set by the surrounding context of the word on the HTML page (i.e. the language that is set
+      for the word's HTML element or for its parent HTML elements).
+      The value of the textLangCode must be in an ISO 639-3 format.
+      A host application may not necessarily set the current language. In that case
+      it's value (which will be null by default) will be ignored.
+       */
+      textLangCode: null
     }
   }
 
@@ -256,7 +267,9 @@ export default class UIController {
   static setOptions (options, defaultOptions) {
     let result = {}
     for (const [key, defaultValue] of Object.entries(defaultOptions)) {
-      if (typeof defaultValue === 'object' && defaultValue.constructor.name === 'Object') {
+      // Due to the bug in JS typeof null is `object` and they do not have a `constructor` prop
+      // so we have to filter those null values out
+      if (typeof defaultValue === 'object' && defaultValue !== null && defaultValue.constructor.name === 'Object') {
         // This is an options group
         const optionsValue = options.hasOwnProperty(key) ? options[key] : {}
         result[key] = this.setOptions(optionsValue, defaultValue)
@@ -300,14 +313,22 @@ export default class UIController {
     return Array.from(this.modules.values()).filter(m => m.ModuleClass.isUiModule)
   }
 
-  createModules () {
-    // Create data modules fist, UI modules after that because UI modules are dependent on data ones
+  createDataModules () {
     this.dataModules.forEach((m) => {
       m.instance = new m.ModuleClass(this.store, this.api, m.options)
     })
+  }
+
+  createUiModules () {
     this.uiModules.forEach((m) => {
       m.instance = new m.ModuleClass(this.store, this.api, m.options)
     })
+  }
+
+  createModules () {
+    // Create data modules fist, UI modules after that because UI modules are dependent on data ones
+    this.createDataModules()
+    this.createUiModules()
   }
 
   activateModules () {
@@ -763,16 +784,23 @@ export default class UIController {
       }
     }
 
-    // Create all registered modules
-    this.createModules()
+    // Create registered data modules
+    this.createDataModules()
+
+    // The current language must be set after data modules are created (because it uses an L10n module)
+    // but before the UI modules are created (because UI modules use current language during rendering).
+    const currentLangCode = this.options.textLangCode || this.featureOptions.items.preferredLanguage.currentValue
+    const currentLangID = LanguageModelFactory.getLanguageIdFromCode(currentLangCode)
+    this.updateLanguage(currentLangID)
+
+    // Create registered UI modules
+    this.createUiModules()
 
     // Adjust configuration of modules according to feature options
     if (this.hasModule('panel')) {
       this.store.commit('panel/setPosition', this.uiOptions.items.panelPosition.currentValue)
     }
 
-    const currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(this.featureOptions.items.preferredLanguage.currentValue)
-    this.updateLanguage(currentLanguageID)
     this.updateLemmaTranslations()
 
     this.state.setWatcher('uiActive', this.updateAnnotations.bind(this))
@@ -1170,6 +1198,7 @@ export default class UIController {
   }
 
   updateLanguage (currentLanguageID) {
+    console.info(`updateLanguage has been called with `, currentLanguageID)
     // the code which follows assumes we have been passed a languageID symbol
     // we can try to recover gracefully if we accidentally get passed a string value
     if (typeof currentLanguageID !== 'symbol') {
@@ -1317,7 +1346,8 @@ export default class UIController {
       HTMLSelector conveys page-specific information, such as location of a selection on a page.
       It's probably better to keep them separated in order to follow a more abstract model.
        */
-      let htmlSelector = new HTMLSelector(event, this.featureOptions.items.preferredLanguage.currentValue)
+      let currentLangCode = LanguageModelFactory.getLanguageCodeFromId(this.store.state.app.currentLanguageID)
+      let htmlSelector = new HTMLSelector(event, currentLangCode)
       this.store.commit('app/setHtmlSelector', htmlSelector)
       let textSelector = htmlSelector.createTextSelector()
 
@@ -1637,6 +1667,7 @@ export default class UIController {
         this.updateLemmaTranslations()
         break
       case 'preferredLanguage':
+        console.info(`preferredLanguage option has been changed to ${this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue}`)
         this.updateLanguage(this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue)
         break
       case 'enableLemmaTranslations':

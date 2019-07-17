@@ -109,4 +109,20 @@ export default class OptionItem {
       }
     )
   }
+
+  /**
+   * Creates a copy of the current OptionItem with a different name, and, possibly,
+   * attached to a different storage adapter.
+   * @param {string} name - A name for the option clone.
+   * @param {string} labelText - A text for the label of the clone. If not specified,
+   * will be set to the same value as the one of the source.
+   * @param {StorageAdapter} storageAdapter - An instance of a storage adapter to attach to.
+   * If not specified, will use the a storage adapter from the source.
+   * @return {OptionItem} - A clone of the current option item.
+   */
+  clone (name, labelText = this.labelText, storageAdapter = this.storageAdapter) {
+    let clone = new OptionItem(JSON.parse(JSON.stringify(this)), name, storageAdapter)
+    clone.labelText = labelText
+    return clone
+  }
 }
