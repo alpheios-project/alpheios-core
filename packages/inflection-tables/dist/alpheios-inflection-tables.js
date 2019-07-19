@@ -152,7 +152,7 @@ class ExtendedGreekData extends _extended_language_data__WEBPACK_IMPORTED_MODULE
   }
 
   static readObject (jsonObject) {
-    const data = new ExtendedGreekData()
+    let data = new ExtendedGreekData() // eslint-disable-line prefer-const
     data.primary = jsonObject.primary
     return data
   }
@@ -161,7 +161,7 @@ class ExtendedGreekData extends _extended_language_data__WEBPACK_IMPORTED_MODULE
     if (this.primary !== extendedGreekData.primary) {
       console.log('Mismatch', this.primary, extendedGreekData.primary)
     }
-    const merged = new ExtendedGreekData()
+    let merged = new ExtendedGreekData() // eslint-disable-line prefer-const
     merged.primary = this.primary
     return merged
   }
@@ -444,7 +444,7 @@ class InflectionList {
    * @return {number[]}
    */
   get footnotesInUse () {
-    const set = new Set()
+    let set = new Set() // eslint-disable-line prefer-const
     // Scan all selected morphemes to build a unique set of footnote indexes
     for (const item of this.items) {
       if (item.hasOwnProperty(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.footnote)) { // eslint-disable-line no-prototype-builtins
@@ -1800,7 +1800,7 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
     this.typeFeatures.set(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.dialect, new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.dialect, [], GreekLanguageDataset.languageID))
 
     // Create an importer with default values for every feature
-    for (const feature of this.typeFeatures.values()) {
+    for (let feature of this.typeFeatures.values()) { // eslint-disable-line prefer-const
       feature.addImporter(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["FeatureImporter"](feature.values, true))
     }
 
@@ -1867,7 +1867,7 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
-      const extendedGreekData = new _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__["default"]()
+      let extendedGreekData = new _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__["default"]() // eslint-disable-line prefer-const
       extendedGreekData.primary = primary
       const extendedLangData = {
         [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_GRC]: extendedGreekData
@@ -1903,7 +1903,7 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         primary = true
       }
 
-      const extendedGreekData = new _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__["default"]()
+      let extendedGreekData = new _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__["default"]() // eslint-disable-line prefer-const
       extendedGreekData.primary = primary
       const extendedLangData = {
         [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_GRC]: extendedGreekData
@@ -1936,7 +1936,7 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       const item = data[i]
       const form = item[n.form]
 
-      const features = [
+      let features = [ // eslint-disable-line prefer-const
         partOfSpeech,
         this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.fullForm).createFromImporter(form)
       ]
@@ -1961,7 +1961,7 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
-      const extendedGreekData = new _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__["default"]()
+      let extendedGreekData = new _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__["default"]() // eslint-disable-line prefer-const
       extendedGreekData.primary = primary
       const extendedLangData = {
         [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_GRC]: extendedGreekData
@@ -2004,7 +2004,7 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       const item = data[i]
       const form = item[n.form]
 
-      const features = [
+      let features = [ // eslint-disable-line prefer-const
         partOfSpeech,
         this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.fullForm).createFromImporter(form)
       ]
@@ -2035,7 +2035,7 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
-      const extendedGreekData = new _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__["default"]()
+      let extendedGreekData = new _lib_extended_greek_data__WEBPACK_IMPORTED_MODULE_2__["default"]() // eslint-disable-line prefer-const
       extendedGreekData.primary = primary
       const extendedLangData = {
         [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_GRC]: extendedGreekData
@@ -2146,7 +2146,7 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       const id = item[n.id]
       const matchOrder = Number.parseInt(item[n.matchOrder])
 
-      const features = [partOfSpeech]
+      let features = [partOfSpeech] // eslint-disable-line prefer-const
 
       if (item[n.stemtype]) { features.push(this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.stemtype).createFromImporter(item[n.stemtype])) }
       if (item[n.voice]) { features.push(this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice).createFromImporter(item[n.voice])) }
@@ -2170,7 +2170,7 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         console.warn(`Cannot find a paradigm table for "${id}" index`)
       }
     }
-    for (const paradigm of paradigms.values()) {
+    for (let paradigm of paradigms.values()) { // eslint-disable-line prefer-const
       paradigm.sortRules()
       paradigm.addSuppTables(suppParadigmTables)
     }
@@ -2178,7 +2178,7 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
   }
 
   addFootnotes (partOfSpeech, classType, data) {
-    const footnotes = []
+    let footnotes = [] // eslint-disable-line prefer-const
     // First row are headers
     for (let i = 1; i < data.length; i++) {
       const footnote = this.addFootnote(partOfSpeech.value, classType, data[i][0], data[i][1])
@@ -2682,7 +2682,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
     this.features.set(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.word, new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.word, [], LatinLanguageDataset.languageID))
 
     // Create an importer with default values for every feature
-    for (const feature of this.features.values()) {
+    for (let feature of this.features.values()) { // eslint-disable-line prefer-const
       feature.addImporter(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["FeatureImporter"](feature.values, true))
     }
 
@@ -2746,7 +2746,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         suffix = null
       }
 
-      const features = [partOfSpeech,
+      let features = [partOfSpeech, // eslint-disable-line prefer-const
         this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.number).createFromImporter(item[n.number]),
         this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmCase).createFromImporter(item[n.grmCase]),
         this.features.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.declension).createFromImporter(item[n.declension]),
@@ -2780,7 +2780,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
     // First row are headers
     for (let i = 1; i < data.length; i++) {
       const item = data[i]
-      const features = [partOfSpeech]
+      let features = [partOfSpeech] // eslint-disable-line prefer-const
       //    if (item[n.formSet]) {
       //      features.push(languageModel.features[Feature.types.formSet]createFromImporter(item[0]))
       //    }
@@ -2829,7 +2829,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         suffix = null
       }
 
-      const features = [partOfSpeech]
+      let features = [partOfSpeech] // eslint-disable-line prefer-const
       const columns = [
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation,
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice,
@@ -2879,7 +2879,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         suffix = null
       }
 
-      const features = [partOfSpeech]
+      let features = [partOfSpeech] // eslint-disable-line prefer-const
       const columns = [
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation,
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice,
@@ -2922,7 +2922,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
         suffix = null
       }
 
-      const features = [partOfSpeech]
+      let features = [partOfSpeech] // eslint-disable-line prefer-const
       // Ending,Conjugation,Voice,Mood,Tense,Number,Person,Case,Type,Footnote
       const columns = [
         alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.case
@@ -2954,7 +2954,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       const form = item[2]
 
       // Lemma,PrincipalParts,Form,Voice,Mood,Tense,Number,Person,Footnote
-      const features = [
+      let features = [ // eslint-disable-line prefer-const
         partOfSpeech
       ]
 
@@ -3004,7 +3004,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
       const form = item[2]
 
       // Lemma,PrincipalParts,Form,Voice,Mood,Tense,Number,Person,Footnote
-      const features = [
+      let features = [ // eslint-disable-line prefer-const
         partOfSpeech/*,
         this.features.get(Feature.types.fullForm).createFromImporter(lemma.word) */
       ]
@@ -3034,7 +3034,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
   }
 
   addFootnotes (partOfSpeech, classType, data) {
-    const footnotes = []
+    let footnotes = [] // eslint-disable-line prefer-const
     // First row are headers
     for (let i = 1; i < data.length; i++) {
       const footnote = this.addFootnote(partOfSpeech.value, classType, data[i][0], data[i][1])
@@ -3152,7 +3152,7 @@ class LatinLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
    * @return {Lemma[] | []} Array of matching Lemma objects or an empty array if nothing is found.
    */
   getMatchingIrregularLemmas (inflections) {
-    const lemmas = []
+    let lemmas = [] // eslint-disable-line prefer-const
     for (const inflection of inflections) {
       const pofs = inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value
       if (this.irregularLemmas.has(pofs)) {
@@ -3299,7 +3299,7 @@ class LanguageDatasetFactory {
   static getDataset (languageID) {
     const instance = this.instance
     if (instance.sets.has(languageID)) {
-      const dataset = instance.sets.get(languageID)
+      let dataset = instance.sets.get(languageID) // eslint-disable-line prefer-const
       if (!dataset.dataLoaded) {
         dataset.loadData()
       }
@@ -3317,7 +3317,7 @@ class LanguageDatasetFactory {
     const instance = this.instance
     if (instance.sets.has(homonym.languageID)) {
       const dataset = this.getDataset(homonym.languageID)
-      for (const inflection of homonym.inflections) {
+      for (let inflection of homonym.inflections) { // eslint-disable-line prefer-const
         // Set grammar rules for an inflection
         inflection.setConstraints()
         // dataset.setInflectionConstraints(inflection)
@@ -3405,7 +3405,7 @@ class LanguageDataset {
    * @param {ExtendedLanguageData} extendedLangData
    */
   addInflectionData (partOfSpeech, ClassType, itemValue, features, footnotes = [], extendedLangData = undefined) {
-    const item = new ClassType(itemValue)
+    let item = new ClassType(itemValue) // eslint-disable-line prefer-const
     item.extendedLangData = extendedLangData
 
     // Go through all features provided
@@ -3654,7 +3654,7 @@ class LanguageDataset {
    * @return {Map<{string}, {Inflection[]}>} Maps on array of inflections to a part of speech
    */
   groupInflections (homonym) {
-    const inflections = new Map()
+    let inflections = new Map() // eslint-disable-line prefer-const
     for (const lexeme of homonym.lexemes) {
       for (let inflection of lexeme.inflections) {
         // Inflections are grouped by part of speech
@@ -3677,9 +3677,9 @@ class LanguageDataset {
    * @return {Suffix[]|Form[]|Paradigm[]} An array of morphemes where all features have single values
    */
   static splitMultiValMorphems (morphemes) {
-    const result = []
+    let result = [] // eslint-disable-line prefer-const
     for (const morpheme of morphemes) {
-      const multivalFeatures = []
+      let multivalFeatures = [] // eslint-disable-line prefer-const
       for (const featureName of Object.keys(morpheme.features)) {
         if (morpheme.features[featureName].isMultiple) {
           multivalFeatures.push(morpheme.features[featureName])
@@ -3703,7 +3703,7 @@ class LanguageDataset {
    * @return {InflectionSet} Constructed inflection set.
    */
   createInflectionSet (pofsValue, inflections, options) {
-    const inflectionSet = new _inflection_set_js__WEBPACK_IMPORTED_MODULE_6__["default"](pofsValue, this.languageID)
+    let inflectionSet = new _inflection_set_js__WEBPACK_IMPORTED_MODULE_6__["default"](pofsValue, this.languageID) // eslint-disable-line prefer-const
     inflectionSet.inflections = inflections.filter(i => i.constraints.implemented === true)
     inflectionSet.isImplemented = inflectionSet.inflections.length > 0
 
@@ -3776,7 +3776,7 @@ class LanguageDataset {
    */
   getInflectionData (homonym) {
     // Add support for languages
-    const result = new _inflection_data_js__WEBPACK_IMPORTED_MODULE_7__["default"](homonym)
+    let result = new _inflection_data_js__WEBPACK_IMPORTED_MODULE_7__["default"](homonym) // eslint-disable-line prefer-const
     const inflections = this.groupInflections(homonym)
 
     // Scan for matches for all parts of speech separately
@@ -3838,7 +3838,8 @@ class LanguageDataset {
      */
 
     for (const inflection of inflections) {
-      const matchData = new _match_data_js__WEBPACK_IMPORTED_MODULE_8__["default"]() // Create a match profile
+      // Create a match profile
+      let matchData = new _match_data_js__WEBPACK_IMPORTED_MODULE_8__["default"]() // eslint-disable-line prefer-const
       if (options.findMatches) {
         matchData.suffixMatch = inflection.smartWordCompare(item.value, item.constructor.name, { fuzzySuffix: true })
       }
@@ -3960,7 +3961,7 @@ class MatchData {
   }
 
   static readObject (jsonObject) {
-    const matchData = new MatchData()
+    let matchData = new MatchData() // eslint-disable-line prefer-const
     matchData.suffixMatch = jsonObject.suffixMatch
     matchData.fullMatch = jsonObject.fullMatch
     for (const feature of jsonObject.matchedFeatures) {
@@ -4067,7 +4068,7 @@ class Morpheme {
   }
 
   static readObject (jsonObject) {
-    const suffix = new this(jsonObject.value)
+    let suffix = new this(jsonObject.value) // eslint-disable-line prefer-const
 
     if (jsonObject.features) {
       for (const key in jsonObject.features) {
@@ -4113,7 +4114,7 @@ class Morpheme {
    */
   clone () {
     // TODO: do all-feature two-level cloning
-    const clone = new this.constructor(this.value)
+    let clone = new this.constructor(this.value) // eslint-disable-line prefer-const
     for (const key in this.features) {
       if (this.features.hasOwnProperty(key)) { // eslint-disable-line no-prototype-builtins
         clone.features[key] = this.features[key]
@@ -4166,7 +4167,7 @@ class Morpheme {
    * @return {string[]} A list of matching feature values
    */
   matchingValues (comparisonFeature, comparisonType = Morpheme.comparisonTypes.EXACT) {
-    const matches = []
+    let matches = [] // eslint-disable-line prefer-const
 
     if (comparisonFeature && this.features.hasOwnProperty(comparisonFeature.type)) { // eslint-disable-line no-prototype-builtins
       const morphemeValue = this.features[comparisonFeature.type]
@@ -4237,7 +4238,7 @@ class Morpheme {
       return false
     }
 
-    const commonValues = {}
+    let commonValues = {} // eslint-disable-line prefer-const
     commonGroups.forEach((feature) => { commonValues[feature] = new Set([this.features[feature]]) })
 
     let result = true
@@ -4279,19 +4280,19 @@ class Morpheme {
    */
   split (features, level = 0) {
     // TODO: Not tested for multiple features (as there were no such cases yet)
-    const morphemes = []
+    let morphemes = [] // eslint-disable-line prefer-const
     const currentFeature = features[level]
     for (const value of currentFeature.values) {
       if (level < features.length - 1) {
         const splitted = this.splitByFeature(features, level + 1)
-        for (const morpheme of splitted) {
+        for (let morpheme of splitted) { // eslint-disable-line prefer-const
           morpheme.features[currentFeature.type] = currentFeature.createFeature(value)
           morpheme.featureGroups[currentFeature.type] = currentFeature.values
           morphemes.push(morpheme)
         }
       } else {
         // The last level
-        const copy = this.clone()
+        let copy = this.clone() // eslint-disable-line prefer-const
         copy.features[currentFeature.type] = currentFeature.createFeature(value)
         copy.featureGroups[currentFeature.type] = currentFeature.values
         morphemes.push(copy)
@@ -4424,7 +4425,7 @@ class ParadigmInflectionList extends _inflection_list_js__WEBPACK_IMPORTED_MODUL
   getMatches (inflections) {
     // Select only those inflections that are paradigm based
     inflections = inflections.filter(i => i.constraints && i.constraints.paradigmBased)
-    const matchingParadigm = []
+    let matchingParadigm = [] // eslint-disable-line prefer-const
     // Get all matching paradigms for all inflections
     for (const inflection of inflections) {
       let matchingParadigmInflection = []
@@ -4575,9 +4576,9 @@ class Paradigm {
   // Convert string feature values of a table to Feature objects for later comparison
   tableCellValuesToFeatures (table) {
     for (const row of table.rows) {
-      for (const cell of row.cells) {
+      for (let cell of row.cells) { // eslint-disable-line prefer-const
         if (cell.role === 'data') {
-          const cellFeatures = []
+          let cellFeatures = [] // eslint-disable-line prefer-const
           for (const prop of Object.keys(cell)) {
             // Eliminate "non-feature" keys
             if (prop !== 'role' && prop !== 'value') {
@@ -13712,7 +13713,7 @@ class GreekArticleView extends _greek_view_js__WEBPACK_IMPORTED_MODULE_2__["defa
 
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.genders, this.features.types, this.features.numbers, this.features.cases])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [this.features.genders]
 
     features.rows = [this.features.numbers, this.features.cases]
@@ -13852,7 +13853,7 @@ class GreekView extends _lib_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
     this.table = new _lib_table_js__WEBPACK_IMPORTED_MODULE_1__["default"]([this.features.declensions, this.features.genders,
       this.features.types, this.features.numbers, this.features.cases])
 
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.declension),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.gender),
@@ -14132,7 +14133,7 @@ class GreekNumeralView extends _greek_view_js__WEBPACK_IMPORTED_MODULE_4__["defa
 
   createTable () {
     this.table = new _views_lib_table_js__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.lemmas, this.features.genders, this.features.types, this.features.numbers, this.features.cases])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [
       this.lemmaTypeFeature,
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.gender),
@@ -14260,7 +14261,7 @@ class GreekGenderPronounView extends _greek_pronoun_view_js__WEBPACK_IMPORTED_MO
     in which a table tree will be built.
      */
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.genders, this.features.numbers, this.features.cases])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [this.features.genders]
     features.rows = [this.features.numbers, this.features.cases]
     features.columnRowTitles = [this.features.cases]
@@ -14341,7 +14342,7 @@ class GreekLemmaGenderPronounView extends _greek_pronoun_view_js__WEBPACK_IMPORT
     in which a table tree will be built.
      */
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.lemmas, this.features.genders, this.features.numbers, this.features.cases])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [this.features.lemmas, this.features.genders]
     features.rows = [this.features.numbers, this.features.cases]
     features.columnRowTitles = [this.features.cases]
@@ -14402,7 +14403,7 @@ class GreekPersonGenderPronounView extends _greek_pronoun_view_js__WEBPACK_IMPOR
     in which a table tree will be built.
      */
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_2__["default"]([this.features.persons, this.features.genders, this.features.numbers, this.features.cases])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [this.features.persons, this.features.genders]
     features.rows = [this.features.numbers, this.features.cases]
     features.columnRowTitles = [this.features.cases]
@@ -14470,7 +14471,7 @@ class GreekPersonPronounView extends _greek_pronoun_view_js__WEBPACK_IMPORTED_MO
     in which a table tree will be built.
      */
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_2__["default"]([this.features.persons, this.features.numbers, this.features.cases])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [this.features.persons]
     features.rows = [this.features.numbers, this.features.cases]
     features.columnRowTitles = [this.features.cases]
@@ -15065,7 +15066,7 @@ class LatinView extends _views_lib_view_js__WEBPACK_IMPORTED_MODULE_1__["default
   createTable () {
     this.table = new _views_lib_table_js__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.declensions, this.features.genders,
       this.features.types, this.features.numbers, this.features.cases])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.declension),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.gender),
@@ -15276,7 +15277,7 @@ class LatinSupineView extends _latin_view_js__WEBPACK_IMPORTED_MODULE_2__["defau
 
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.cases])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = []
     features.rows = [this.features.cases]
     features.columnRowTitles = [this.features.cases]
@@ -15339,7 +15340,7 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_latin_view_js__WEBPA
 
   createTable () {
     this.table = new _views_lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.voices, this.features.moods, this.features.tenses, this.features.numbers, this.features.persons])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [this.features.voices, this.features.moods]
     features.rows = [this.features.tenses, this.features.numbers, this.features.persons]
     features.columnRowTitles = [this.features.numbers, this.features.persons]
@@ -15382,13 +15383,13 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_latin_view_js__WEBPA
    * @return {View[]} - An array of linked views or an empty array if no linked views can be created.
    */
   createLinkedViews () {
-    const views = []
+    let views = [] // eslint-disable-line prefer-const
     // we want to restrict the inflections for the linked views to irregular verbs for now because inflections from other verbs seem to corrupt the match data constraints
     // (e.g. sum, which has both an irregular and regular verb and one of the regular verbs has a different, non-matching lemma)
     // this will fail if we want to link tables for irregular and regular verbs together this way
     const inflections = this.homonym.inflections.filter(infl => infl[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.constructor.mainPartOfSpeech && infl.constraints && infl.constraints.irregular)
     for (const Constructor of this.constructor.linkedViewConstructors) {
-      const linkedViewInflections = []
+      let linkedViewInflections = [] // eslint-disable-line prefer-const
       for (const infl of inflections) {
         let clone = infl.clone()
         clone[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part] = clone[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].createFeature(Constructor.mainPartOfSpeech)
@@ -15398,7 +15399,7 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_latin_view_js__WEBPA
       const inflectionData = this.constructor.dataset.createInflectionSet(Constructor.mainPartOfSpeech, linkedViewInflections, { findMorphologyMatches: false })
       if (Constructor.matchFilter(this.homonym.languageID, linkedViewInflections)) {
         const view = new Constructor(this.homonym, inflectionData)
-        for (const infl of inflections) {
+        for (let infl of inflections) { // eslint-disable-line prefer-const
           infl[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part] = infl[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].createFeature(this.constructor.mainPartOfSpeech)
         }
         views.push(view)
@@ -15412,7 +15413,7 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_latin_view_js__WEBPA
   static getMatchingInstances (homonym) {
     if (this.matchFilter(homonym.languageID, homonym.inflections)) {
       const inflectionData = this.getInflectionsData(homonym)
-      const view = new this(homonym, inflectionData)
+      let view = new this(homonym, inflectionData) // eslint-disable-line prefer-const
       view.createLinkedViews()
       return [view.render()]
     }
@@ -15473,7 +15474,7 @@ class LatinVerbIrregularView extends _views_lang_latin_verb_irregular_latin_verb
 
   createTable () {
     this.table = new _views_lib_table__WEBPACK_IMPORTED_MODULE_4__["default"]([this.features.moods, this.features.tenses, this.features.numbers, this.features.persons])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [this.features.moods]
     features.rows = [this.features.tenses, this.features.numbers, this.features.persons]
     features.columnRowTitles = [this.features.numbers, this.features.persons]
@@ -15568,7 +15569,7 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_verb_irregular_latin
 
   createTable () {
     this.table = new _views_lib_table__WEBPACK_IMPORTED_MODULE_4__["default"]([this.features.voices, this.features.moods, this.features.tenses, this.features.numbers, this.features.persons])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [this.features.voices, this.features.moods]
     features.rows = [this.features.tenses, this.features.numbers, this.features.persons]
     features.columnRowTitles = [this.features.numbers, this.features.persons]
@@ -15662,7 +15663,7 @@ class LatinVerbParticipleIrregularView extends _views_lang_latin_verb_irregular_
 
   createTable () {
     this.table = new _views_lib_table__WEBPACK_IMPORTED_MODULE_6__["default"]([this.features.voices, this.features.tenses])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [this.features.voices]
     features.rows = [this.features.tenses]
     features.columnRowTitles = [this.features.tenses]
@@ -15734,7 +15735,7 @@ class LatinVerbSupineIrregularView extends _views_lang_latin_verb_irregular_lati
 
   createTable () {
     this.table = new _views_lib_table__WEBPACK_IMPORTED_MODULE_5__["default"]([this.features.cases])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = []
     features.rows = [this.features.cases]
     features.columnRowTitles = [this.features.cases]
@@ -15817,7 +15818,7 @@ class LatinConjugationMoodVoiceView extends _latin_verb_view_js__WEBPACK_IMPORTE
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.conjugations, this.features.moods, this.features.voices,
       this.features.tenses, this.features.numbers, this.features.persons])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.mood),
@@ -15882,7 +15883,7 @@ class LatinConjugationVoiceMoodView extends _latin_verb_view_js__WEBPACK_IMPORTE
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.conjugations, this.features.voices, this.features.moods,
       this.features.tenses, this.features.numbers, this.features.persons])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice),
@@ -15939,7 +15940,7 @@ class LatinImperativeView extends _latin_verb_mood_view_js__WEBPACK_IMPORTED_MOD
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_2__["default"]([this.features.voices, this.features.conjugations,
       this.features.tenses, this.features.numbers, this.features.persons])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation)
@@ -16024,7 +16025,7 @@ class LatinInfinitiveView extends _latin_verb_mood_view_js__WEBPACK_IMPORTED_MOD
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_2__["default"]([this.features.voices, this.features.conjugations,
       this.features.tenses])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation)
@@ -16110,7 +16111,7 @@ class LatinMoodConjugationVoiceView extends _latin_verb_view_js__WEBPACK_IMPORTE
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.moods, this.features.conjugations, this.features.voices,
       this.features.tenses, this.features.numbers, this.features.persons])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.mood),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation),
@@ -16175,7 +16176,7 @@ class LatinMoodVoiceConjugationView extends _latin_verb_view_js__WEBPACK_IMPORTE
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.moods, this.features.voices, this.features.conjugations,
       this.features.tenses, this.features.numbers, this.features.persons])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.mood),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice),
@@ -16276,7 +16277,7 @@ class LatinVerbParticipleView extends _latin_view_js__WEBPACK_IMPORTED_MODULE_2_
 
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_4__["default"]([this.features.voices, this.features.conjugations, this.features.tenses])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation)
@@ -16358,7 +16359,7 @@ class LatinVoiceConjugationMoodView extends _latin_verb_view_js__WEBPACK_IMPORTE
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.voices, this.features.conjugations, this.features.moods,
       this.features.tenses, this.features.numbers, this.features.persons])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation),
@@ -16423,7 +16424,7 @@ class LatinVoiceMoodConjugationView extends _latin_verb_view_js__WEBPACK_IMPORTE
   createTable () {
     this.table = new _lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.voices, this.features.moods, this.features.conjugations,
       this.features.tenses, this.features.numbers, this.features.persons])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice),
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.mood),
@@ -16584,7 +16585,7 @@ class Column {
     // TODO we should rename this to be cellMatches
     this.suffixMatches = !!this.cells.find(cell => cell.suffixMatches || cell.morphologyMatch)
 
-    for (const cell of this.cells) {
+    for (let cell of this.cells) { // eslint-disable-line prefer-const
       cell.column = this
     }
   }
@@ -16613,7 +16614,7 @@ class Column {
     if (!this.hidden) {
       this.hidden = true
 
-      for (const cell of this.cells) {
+      for (let cell of this.cells) { // eslint-disable-line prefer-const
         cell.hide()
       }
       if (this._headerCell) {
@@ -16629,7 +16630,7 @@ class Column {
     if (this.hidden) {
       this.hidden = false
 
-      for (const cell of this.cells) {
+      for (let cell of this.cells) { // eslint-disable-line prefer-const
         cell.show()
       }
       if (this._headerCell) {
@@ -16642,7 +16643,7 @@ class Column {
    * Highlights a column and its header.
    */
   highlight () {
-    for (const cell of this.cells) {
+    for (let cell of this.cells) { // eslint-disable-line prefer-const
       cell.highlight()
     }
     if (this._headerCell) {
@@ -16654,7 +16655,7 @@ class Column {
    * Removes highlighting from a column and its header.
    */
   clearHighlighting () {
-    for (const cell of this.cells) {
+    for (let cell of this.cells) { // eslint-disable-line prefer-const
       cell.clearHighlighting()
     }
     if (this._headerCell) {
@@ -16725,7 +16726,7 @@ class GroupFeatureList extends alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__
    */
   set columns (features) {
     for (const feature of features) {
-      const matchingFeature = this.ofType(feature.type)
+      let matchingFeature = this.ofType(feature.type) // eslint-disable-line prefer-const
       if (!matchingFeature) {
         throw new Error(`Feature of ${feature.type} is not found.`)
       }
@@ -16777,7 +16778,7 @@ class GroupFeatureList extends alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__
    */
   set rows (features) {
     for (const feature of features) {
-      const matchingFeature = this.ofType(feature.type)
+      let matchingFeature = this.ofType(feature.type) // eslint-disable-line prefer-const
       if (!matchingFeature) {
         throw new Error(`Feature of ${feature.type} is not found.`)
       }
@@ -16794,7 +16795,7 @@ class GroupFeatureList extends alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__
    */
   createDataColumn () {
     // Need to use a known type to pass a type check
-    const feature = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"]('word', 'empty value', Symbol('data column language'))
+    let feature = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"]('word', 'empty value', Symbol('data column language')) // eslint-disable-line prefer-const
     feature.type = 'data column type' // To bypass a type check
     this._dataColFeature = new _group_feature_type_js__WEBPACK_IMPORTED_MODULE_1__["default"]('data column type', Symbol('data column language'), '', [feature])
     this._dataColFeature.dataColumn = true
@@ -16877,7 +16878,7 @@ class GroupFeatureList extends alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__
    */
   set columnRowTitles (features) {
     for (const feature of features) {
-      const matchingFeature = this.ofType(feature.type)
+      let matchingFeature = this.ofType(feature.type) // eslint-disable-line prefer-const
       if (!matchingFeature) {
         throw new Error(`Feature of ${feature.type} is not found.`)
       }
@@ -16893,7 +16894,7 @@ class GroupFeatureList extends alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__
    */
   set fullWidthRowTitles (features) {
     for (const feature of features) {
-      const matchingFeature = this.ofType(feature.type)
+      let matchingFeature = this.ofType(feature.type) // eslint-disable-line prefer-const
       if (!matchingFeature) {
         throw new Error(`Feature of ${feature.type} is not found.`)
       }
@@ -17202,7 +17203,7 @@ class HeaderCell {
 
       // Notify parents and children
       if (this.children.length) {
-        for (const child of this.children) {
+        for (let child of this.children) { // eslint-disable-line prefer-const
           child.columnStateChange()
         }
       }
@@ -17387,7 +17388,7 @@ class Row {
     }
     this.titleCell = undefined
 
-    for (const cell of this.cells) {
+    for (let cell of this.cells) { // eslint-disable-line prefer-const
       cell.row = this
     }
   }
@@ -17444,7 +17445,7 @@ class Row {
    * @param {number} upto
    */
   slice (from, upto) {
-    const slice = new Row()
+    let slice = new Row() // eslint-disable-line prefer-const
     if (from < 0 && from > this.cells.length) {
       throw new Error('"from" parameter is out of range.')
     }
@@ -17462,7 +17463,7 @@ class Row {
    * Highlights all cells in a row, and a title cells
    */
   highlight () {
-    for (const cell of this.cells) {
+    for (let cell of this.cells) { // eslint-disable-line prefer-const
       cell.highlight()
     }
     if (this.titleCell) {
@@ -17474,7 +17475,7 @@ class Row {
    * Removes highlighting from all cells in a row, and from a title cell
    */
   clearHighlighting () {
-    for (const cell of this.cells) {
+    for (let cell of this.cells) { // eslint-disable-line prefer-const
       cell.clearHighlighting()
     }
     if (this.titleCell) {
@@ -17612,7 +17613,7 @@ class Table {
    * @returns {NodeGroup} A top level group of morphemes that contain subgroups all way down to the last group.
    */
   groupByFeature (morphemes, ancestorFeatures = [], currentLevel = 0) {
-    const group = new _node_group_js__WEBPACK_IMPORTED_MODULE_5__["default"]()
+    let group = new _node_group_js__WEBPACK_IMPORTED_MODULE_5__["default"]() // eslint-disable-line prefer-const
     if (!this.features.hasColumnFeatures && !this.features.hasDataColumn) {
       /*
       Table has no column features and will have only one column with data values.
@@ -17654,7 +17655,7 @@ class Table {
             selectedMorphemes = _lib_suffix_js__WEBPACK_IMPORTED_MODULE_0__["default"].combine(selectedMorphemes)
           }
 
-          const cell = new _cell_js__WEBPACK_IMPORTED_MODULE_1__["default"](selectedMorphemes, ancestorFeatures.slice())
+          let cell = new _cell_js__WEBPACK_IMPORTED_MODULE_1__["default"](selectedMorphemes, ancestorFeatures.slice()) // eslint-disable-line prefer-const
           group.subgroups.push(cell)
           group.cells.push(cell)
           this.cells.push(cell)
@@ -17677,7 +17678,7 @@ class Table {
    */
   constructColumns (tree = this.tree, columns = [], currentLevel = 0) {
     const currentFeature = this.features.getGroupingFeature(currentLevel)
-    const groups = []
+    let groups = [] // eslint-disable-line prefer-const
     for (const [index, feature] of currentFeature.getOrderedFeatures(tree.ancestorFeatures).entries()) {
       const cellGroup = tree.subgroups[index]
       // Iterate until it is the last row feature
@@ -17693,14 +17694,14 @@ class Table {
            * will have the same parent values, they will be omitted and only the current row title be shown.
            * @type {{groups: Cell[], titleCell: RowTitleCell}}
            */
-          const group = {
+          let group = { // eslint-disable-line prefer-const
             groups: currentResult,
             titleCell: currentFeature.createRowTitleCell(feature.value, this.features.firstColumnFeature.size)
           }
           group.groups[0].titleCell.parent = group.titleCell
           groups.push(group)
         } else if (currentFeature.dataColumn || this.features.isLastColumnFeature(currentFeature)) {
-          const column = new _column_js__WEBPACK_IMPORTED_MODULE_2__["default"](cellGroup.cells)
+          let column = new _column_js__WEBPACK_IMPORTED_MODULE_2__["default"](cellGroup.cells) // eslint-disable-line prefer-const
           column.groups = currentResult
           column.header = feature.value
           column.index = columns.length
@@ -17740,7 +17741,7 @@ class Table {
   constructHeaders (tree = this.tree, headers = [], currentLevel = 0) {
     const currentFeature = this.features.columnFeatures[currentLevel]
 
-    const cells = []
+    let cells = [] // eslint-disable-line prefer-const
     for (const [index, feature] of currentFeature.getOrderedFeatures(tree.ancestorFeatures).entries()) {
       const cellGroup = tree.subgroups[index]
 
@@ -17753,10 +17754,9 @@ class Table {
           columnSpan += cell.span
         }
 
-        // let headerCell = new HeaderCell(feature.value, currentFeature, columnSpan)
-        const headerCell = currentFeature.createHeaderCell(feature.value, columnSpan)
+        let headerCell = currentFeature.createHeaderCell(feature.value, columnSpan) // eslint-disable-line prefer-const
         headerCell.children = subCells
-        for (const cell of subCells) {
+        for (let cell of subCells) { // eslint-disable-line prefer-const
           cell.parent = headerCell
         }
 
@@ -17794,7 +17794,7 @@ class Table {
    * @returns {Row[]} An array of rows.
    */
   constructRows () {
-    const rows = []
+    let rows = [] // eslint-disable-line prefer-const
     for (let rowIndex = 0; rowIndex < this.dataRowQty; rowIndex++) {
       rows[rowIndex] = new _row_js__WEBPACK_IMPORTED_MODULE_3__["default"]()
       rows[rowIndex].titleCell = this.columns[0].cells[rowIndex].titleCell
@@ -17802,7 +17802,7 @@ class Table {
         rows[rowIndex].add(this.columns[columnIndex].cells[rowIndex])
       }
     }
-    const filtered = []
+    let filtered = [] // eslint-disable-line prefer-const
     for (const [index, row] of rows.entries()) {
       if (!row.empty) {
         filtered.push(row)
@@ -17823,7 +17823,7 @@ class Table {
    * Hides empty columns in a table.
    */
   hideEmptyColumns () {
-    for (const column of this.columns) {
+    for (let column of this.columns) { // eslint-disable-line prefer-const
       if (column.empty) {
         column.hide()
       }
@@ -17835,7 +17835,7 @@ class Table {
    * Show all empty columns that were previously hidden.
    */
   showEmptyColumns () {
-    for (const column of this.columns) {
+    for (let column of this.columns) { // eslint-disable-line prefer-const
       if (column.hidden) {
         column.show()
       }
@@ -17872,7 +17872,7 @@ class Table {
     for (const headerCell of this.headers[0].cells) {
       const matches = !!headerCell.columns.find(column => column.suffixMatches)
       if (!matches) {
-        for (const column of headerCell.columns) {
+        for (let column of headerCell.columns) { // eslint-disable-line prefer-const
           column.hide()
         }
       }
@@ -17884,7 +17884,7 @@ class Table {
    * Show groups that have no suffix matches.
    */
   showNoSuffixMatchesGroups () {
-    for (const column of this.columns) {
+    for (let column of this.columns) { // eslint-disable-line prefer-const
       column.show()
     }
     if (this.options.emptyColumnsHidden) {
@@ -18042,7 +18042,7 @@ class ViewSet {
       if (!this.matchingViewsMap.has(view.partOfSpeech)) {
         this.matchingViewsMap.set(view.partOfSpeech, [])
       }
-      const storedInstances = this.matchingViewsMap.get(view.partOfSpeech)
+      let storedInstances = this.matchingViewsMap.get(view.partOfSpeech) // eslint-disable-line prefer-const
       // Filter out instances that are already stored in a view set
       const isNew = !storedInstances.find(v => v.sameAs(view))
       if (isNew) {
@@ -18482,7 +18482,7 @@ class View {
     const homonym = this.createStandardFormHomonym(options)
     const inflectionData = this.getInflectionsData(homonym, { findMatches: false })
     // Standard form tables should have no suffix matches columns visible
-    const view = new this(homonym, inflectionData)
+    let view = new this(homonym, inflectionData) // eslint-disable-line prefer-const
     if (options.title) {
       view.setTitle(options.title)
     }
@@ -18547,7 +18547,7 @@ class WideView {
     this.rows = []
     this.table = table
     for (const row of table.headers) {
-      const cells = []
+      let cells = [] // eslint-disable-line prefer-const
       cells.push(row.titleCell)
       for (const cell of row.cells) {
         cells.push(cell)
@@ -18556,7 +18556,7 @@ class WideView {
     }
 
     for (const row of table.rows) {
-      const cells = []
+      let cells = [] // eslint-disable-line prefer-const
       const titleCells = row.titleCell.hierarchyList
       if (titleCells.length < this.table.titleColumnQty) {
         cells.push(_row_title_cell__WEBPACK_IMPORTED_MODULE_0__["default"].placeholder(this.titleColumnQty - titleCells.length))

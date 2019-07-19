@@ -25,7 +25,7 @@ export default class LatinVerbGerundiveIrregularView extends LatinVerbIrregularB
 
   createTable () {
     this.table = new Table([this.features.cases])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = []
     features.rows = [this.features.cases]
     features.columnRowTitles = [this.features.cases]

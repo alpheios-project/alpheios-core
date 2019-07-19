@@ -84,7 +84,7 @@ export default class InflectionList {
    * @return {number[]}
    */
   get footnotesInUse () {
-    const set = new Set()
+    let set = new Set() // eslint-disable-line prefer-const
     // Scan all selected morphemes to build a unique set of footnote indexes
     for (const item of this.items) {
       if (item.hasOwnProperty(Feature.types.footnote)) { // eslint-disable-line no-prototype-builtins

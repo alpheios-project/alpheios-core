@@ -37,7 +37,7 @@ export default class NarrowViewGroup {
      * its children in the second row, children of its children in a third row and so on.
      */
     for (const [headerIndex, headerRow] of headers.entries()) {
-      const row = new Row()
+      let row = new Row() // eslint-disable-line prefer-const
       row.titleCell = headerRow.titleCell
       if (headerIndex === 0) {
         row.cells.push(headerRow.cells[index])

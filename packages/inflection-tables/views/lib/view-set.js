@@ -61,7 +61,7 @@ export default class ViewSet {
       if (!this.matchingViewsMap.has(view.partOfSpeech)) {
         this.matchingViewsMap.set(view.partOfSpeech, [])
       }
-      const storedInstances = this.matchingViewsMap.get(view.partOfSpeech)
+      let storedInstances = this.matchingViewsMap.get(view.partOfSpeech) // eslint-disable-line prefer-const
       // Filter out instances that are already stored in a view set
       const isNew = !storedInstances.find(v => v.sameAs(view))
       if (isNew) {

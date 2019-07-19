@@ -17,7 +17,7 @@ export default class Column {
     // TODO we should rename this to be cellMatches
     this.suffixMatches = !!this.cells.find(cell => cell.suffixMatches || cell.morphologyMatch)
 
-    for (const cell of this.cells) {
+    for (let cell of this.cells) { // eslint-disable-line prefer-const
       cell.column = this
     }
   }
@@ -46,7 +46,7 @@ export default class Column {
     if (!this.hidden) {
       this.hidden = true
 
-      for (const cell of this.cells) {
+      for (let cell of this.cells) { // eslint-disable-line prefer-const
         cell.hide()
       }
       if (this._headerCell) {
@@ -62,7 +62,7 @@ export default class Column {
     if (this.hidden) {
       this.hidden = false
 
-      for (const cell of this.cells) {
+      for (let cell of this.cells) { // eslint-disable-line prefer-const
         cell.show()
       }
       if (this._headerCell) {
@@ -75,7 +75,7 @@ export default class Column {
    * Highlights a column and its header.
    */
   highlight () {
-    for (const cell of this.cells) {
+    for (let cell of this.cells) { // eslint-disable-line prefer-const
       cell.highlight()
     }
     if (this._headerCell) {
@@ -87,7 +87,7 @@ export default class Column {
    * Removes highlighting from a column and its header.
    */
   clearHighlighting () {
-    for (const cell of this.cells) {
+    for (let cell of this.cells) { // eslint-disable-line prefer-const
       cell.clearHighlighting()
     }
     if (this._headerCell) {

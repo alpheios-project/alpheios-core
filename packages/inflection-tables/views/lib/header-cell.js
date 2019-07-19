@@ -60,7 +60,7 @@ export default class HeaderCell {
 
       // Notify parents and children
       if (this.children.length) {
-        for (const child of this.children) {
+        for (let child of this.children) { // eslint-disable-line prefer-const
           child.columnStateChange()
         }
       }

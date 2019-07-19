@@ -15,6 +15,7 @@
     "code-analysis-prod": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack production lib config.mjs --code-analysis",
     "code-analysis-dev": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development lib config.mjs --code-analysis",
     "lint": "eslint --fix ./{lib,views}/**/*.js",
+    "lint-nofix": "eslint ./{lib,views}/**/*.js",
     "convert": "node ./tools/inflections-xml2csv/converter.js"
   },
   "repository": {

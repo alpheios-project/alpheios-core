@@ -39,7 +39,7 @@ export default class LanguageDatasetFactory {
   static getDataset (languageID) {
     const instance = this.instance
     if (instance.sets.has(languageID)) {
-      const dataset = instance.sets.get(languageID)
+      let dataset = instance.sets.get(languageID) // eslint-disable-line prefer-const
       if (!dataset.dataLoaded) {
         dataset.loadData()
       }
@@ -57,7 +57,7 @@ export default class LanguageDatasetFactory {
     const instance = this.instance
     if (instance.sets.has(homonym.languageID)) {
       const dataset = this.getDataset(homonym.languageID)
-      for (const inflection of homonym.inflections) {
+      for (let inflection of homonym.inflections) { // eslint-disable-line prefer-const
         // Set grammar rules for an inflection
         inflection.setConstraints()
         // dataset.setInflectionConstraints(inflection)

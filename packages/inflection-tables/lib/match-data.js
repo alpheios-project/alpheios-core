@@ -11,7 +11,7 @@ export default class MatchData {
   }
 
   static readObject (jsonObject) {
-    const matchData = new MatchData()
+    let matchData = new MatchData() // eslint-disable-line prefer-const
     matchData.suffixMatch = jsonObject.suffixMatch
     matchData.fullMatch = jsonObject.fullMatch
     for (const feature of jsonObject.matchedFeatures) {

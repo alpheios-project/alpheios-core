@@ -40,7 +40,7 @@ export default class ParadigmInflectionList extends InflectionList {
   getMatches (inflections) {
     // Select only those inflections that are paradigm based
     inflections = inflections.filter(i => i.constraints && i.constraints.paradigmBased)
-    const matchingParadigm = []
+    let matchingParadigm = [] // eslint-disable-line prefer-const
     // Get all matching paradigms for all inflections
     for (const inflection of inflections) {
       let matchingParadigmInflection = []

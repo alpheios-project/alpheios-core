@@ -70,7 +70,7 @@ export default class Morpheme {
   }
 
   static readObject (jsonObject) {
-    const suffix = new this(jsonObject.value)
+    let suffix = new this(jsonObject.value) // eslint-disable-line prefer-const
 
     if (jsonObject.features) {
       for (const key in jsonObject.features) {
@@ -116,7 +116,7 @@ export default class Morpheme {
    */
   clone () {
     // TODO: do all-feature two-level cloning
-    const clone = new this.constructor(this.value)
+    let clone = new this.constructor(this.value) // eslint-disable-line prefer-const
     for (const key in this.features) {
       if (this.features.hasOwnProperty(key)) { // eslint-disable-line no-prototype-builtins
         clone.features[key] = this.features[key]
@@ -169,7 +169,7 @@ export default class Morpheme {
    * @return {string[]} A list of matching feature values
    */
   matchingValues (comparisonFeature, comparisonType = Morpheme.comparisonTypes.EXACT) {
-    const matches = []
+    let matches = [] // eslint-disable-line prefer-const
 
     if (comparisonFeature && this.features.hasOwnProperty(comparisonFeature.type)) { // eslint-disable-line no-prototype-builtins
       const morphemeValue = this.features[comparisonFeature.type]
@@ -240,7 +240,7 @@ export default class Morpheme {
       return false
     }
 
-    const commonValues = {}
+    let commonValues = {} // eslint-disable-line prefer-const
     commonGroups.forEach((feature) => { commonValues[feature] = new Set([this.features[feature]]) })
 
     let result = true
@@ -282,19 +282,19 @@ export default class Morpheme {
    */
   split (features, level = 0) {
     // TODO: Not tested for multiple features (as there were no such cases yet)
-    const morphemes = []
+    let morphemes = [] // eslint-disable-line prefer-const
     const currentFeature = features[level]
     for (const value of currentFeature.values) {
       if (level < features.length - 1) {
         const splitted = this.splitByFeature(features, level + 1)
-        for (const morpheme of splitted) {
+        for (let morpheme of splitted) { // eslint-disable-line prefer-const
           morpheme.features[currentFeature.type] = currentFeature.createFeature(value)
           morpheme.featureGroups[currentFeature.type] = currentFeature.values
           morphemes.push(morpheme)
         }
       } else {
         // The last level
-        const copy = this.clone()
+        let copy = this.clone() // eslint-disable-line prefer-const
         copy.features[currentFeature.type] = currentFeature.createFeature(value)
         copy.featureGroups[currentFeature.type] = currentFeature.values
         morphemes.push(copy)

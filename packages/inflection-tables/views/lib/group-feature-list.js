@@ -44,7 +44,7 @@ export default class GroupFeatureList extends FeatureList {
    */
   set columns (features) {
     for (const feature of features) {
-      const matchingFeature = this.ofType(feature.type)
+      let matchingFeature = this.ofType(feature.type) // eslint-disable-line prefer-const
       if (!matchingFeature) {
         throw new Error(`Feature of ${feature.type} is not found.`)
       }
@@ -96,7 +96,7 @@ export default class GroupFeatureList extends FeatureList {
    */
   set rows (features) {
     for (const feature of features) {
-      const matchingFeature = this.ofType(feature.type)
+      let matchingFeature = this.ofType(feature.type) // eslint-disable-line prefer-const
       if (!matchingFeature) {
         throw new Error(`Feature of ${feature.type} is not found.`)
       }
@@ -113,7 +113,7 @@ export default class GroupFeatureList extends FeatureList {
    */
   createDataColumn () {
     // Need to use a known type to pass a type check
-    const feature = new Feature('word', 'empty value', Symbol('data column language'))
+    let feature = new Feature('word', 'empty value', Symbol('data column language')) // eslint-disable-line prefer-const
     feature.type = 'data column type' // To bypass a type check
     this._dataColFeature = new GroupFeatureType('data column type', Symbol('data column language'), '', [feature])
     this._dataColFeature.dataColumn = true
@@ -196,7 +196,7 @@ export default class GroupFeatureList extends FeatureList {
    */
   set columnRowTitles (features) {
     for (const feature of features) {
-      const matchingFeature = this.ofType(feature.type)
+      let matchingFeature = this.ofType(feature.type) // eslint-disable-line prefer-const
       if (!matchingFeature) {
         throw new Error(`Feature of ${feature.type} is not found.`)
       }
@@ -212,7 +212,7 @@ export default class GroupFeatureList extends FeatureList {
    */
   set fullWidthRowTitles (features) {
     for (const feature of features) {
-      const matchingFeature = this.ofType(feature.type)
+      let matchingFeature = this.ofType(feature.type) // eslint-disable-line prefer-const
       if (!matchingFeature) {
         throw new Error(`Feature of ${feature.type} is not found.`)
       }

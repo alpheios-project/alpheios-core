@@ -41,7 +41,7 @@ export default class WideView {
     this.rows = []
     this.table = table
     for (const row of table.headers) {
-      const cells = []
+      let cells = [] // eslint-disable-line prefer-const
       cells.push(row.titleCell)
       for (const cell of row.cells) {
         cells.push(cell)
@@ -50,7 +50,7 @@ export default class WideView {
     }
 
     for (const row of table.rows) {
-      const cells = []
+      let cells = [] // eslint-disable-line prefer-const
       const titleCells = row.titleCell.hierarchyList
       if (titleCells.length < this.table.titleColumnQty) {
         cells.push(RowTitleCell.placeholder(this.titleColumnQty - titleCells.length))

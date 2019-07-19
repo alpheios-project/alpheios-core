@@ -8,7 +8,7 @@ export default class ExtendedGreekData extends ExtendedLanguageData {
   }
 
   static readObject (jsonObject) {
-    const data = new ExtendedGreekData()
+    let data = new ExtendedGreekData() // eslint-disable-line prefer-const
     data.primary = jsonObject.primary
     return data
   }
@@ -17,7 +17,7 @@ export default class ExtendedGreekData extends ExtendedLanguageData {
     if (this.primary !== extendedGreekData.primary) {
       console.log('Mismatch', this.primary, extendedGreekData.primary)
     }
-    const merged = new ExtendedGreekData()
+    let merged = new ExtendedGreekData() // eslint-disable-line prefer-const
     merged.primary = this.primary
     return merged
   }

@@ -13,7 +13,7 @@ export default class Row {
     }
     this.titleCell = undefined
 
-    for (const cell of this.cells) {
+    for (let cell of this.cells) { // eslint-disable-line prefer-const
       cell.row = this
     }
   }
@@ -70,7 +70,7 @@ export default class Row {
    * @param {number} upto
    */
   slice (from, upto) {
-    const slice = new Row()
+    let slice = new Row() // eslint-disable-line prefer-const
     if (from < 0 && from > this.cells.length) {
       throw new Error('"from" parameter is out of range.')
     }
@@ -88,7 +88,7 @@ export default class Row {
    * Highlights all cells in a row, and a title cells
    */
   highlight () {
-    for (const cell of this.cells) {
+    for (let cell of this.cells) { // eslint-disable-line prefer-const
       cell.highlight()
     }
     if (this.titleCell) {
@@ -100,7 +100,7 @@ export default class Row {
    * Removes highlighting from all cells in a row, and from a title cell
    */
   clearHighlighting () {
-    for (const cell of this.cells) {
+    for (let cell of this.cells) { // eslint-disable-line prefer-const
       cell.clearHighlighting()
     }
     if (this.titleCell) {

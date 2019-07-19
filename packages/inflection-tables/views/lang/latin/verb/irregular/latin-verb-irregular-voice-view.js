@@ -34,7 +34,7 @@ export default class LatinVerbIrregularVoiceView extends LatinVerbIrregularBaseV
 
   createTable () {
     this.table = new Table([this.features.voices, this.features.moods, this.features.tenses, this.features.numbers, this.features.persons])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [this.features.voices, this.features.moods]
     features.rows = [this.features.tenses, this.features.numbers, this.features.persons]
     features.columnRowTitles = [this.features.numbers, this.features.persons]

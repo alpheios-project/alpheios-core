@@ -44,9 +44,9 @@ export default class Paradigm {
   // Convert string feature values of a table to Feature objects for later comparison
   tableCellValuesToFeatures (table) {
     for (const row of table.rows) {
-      for (const cell of row.cells) {
+      for (let cell of row.cells) { // eslint-disable-line prefer-const
         if (cell.role === 'data') {
-          const cellFeatures = []
+          let cellFeatures = [] // eslint-disable-line prefer-const
           for (const prop of Object.keys(cell)) {
             // Eliminate "non-feature" keys
             if (prop !== 'role' && prop !== 'value') {

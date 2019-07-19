@@ -44,7 +44,7 @@ export default class LatinView extends View {
   createTable () {
     this.table = new Table([this.features.declensions, this.features.genders,
       this.features.types, this.features.numbers, this.features.cases])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [
       this.constructor.model.typeFeature(Feature.types.declension),
       this.constructor.model.typeFeature(Feature.types.gender),

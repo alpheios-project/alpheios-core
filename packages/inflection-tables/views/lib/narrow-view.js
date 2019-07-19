@@ -46,7 +46,7 @@ export default class NarrowView {
    * @returns {HTMLElement} - HTML representation of a view.
    */
   render () {
-    for (const group of this.groups) {
+    for (let group of this.groups) { // eslint-disable-line prefer-const
       group.render()
     }
     return this.nodes

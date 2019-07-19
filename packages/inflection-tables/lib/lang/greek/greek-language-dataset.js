@@ -128,7 +128,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
     this.typeFeatures.set(Feature.types.dialect, new Feature(Feature.types.dialect, [], GreekLanguageDataset.languageID))
 
     // Create an importer with default values for every feature
-    for (const feature of this.typeFeatures.values()) {
+    for (let feature of this.typeFeatures.values()) { // eslint-disable-line prefer-const
       feature.addImporter(new FeatureImporter(feature.values, true))
     }
 
@@ -195,7 +195,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
-      const extendedGreekData = new ExtendedGreekData()
+      let extendedGreekData = new ExtendedGreekData() // eslint-disable-line prefer-const
       extendedGreekData.primary = primary
       const extendedLangData = {
         [Constants.STR_LANG_CODE_GRC]: extendedGreekData
@@ -231,7 +231,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
         primary = true
       }
 
-      const extendedGreekData = new ExtendedGreekData()
+      let extendedGreekData = new ExtendedGreekData() // eslint-disable-line prefer-const
       extendedGreekData.primary = primary
       const extendedLangData = {
         [Constants.STR_LANG_CODE_GRC]: extendedGreekData
@@ -264,7 +264,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
       const item = data[i]
       const form = item[n.form]
 
-      const features = [
+      let features = [ // eslint-disable-line prefer-const
         partOfSpeech,
         this.typeFeatures.get(Feature.types.fullForm).createFromImporter(form)
       ]
@@ -289,7 +289,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
-      const extendedGreekData = new ExtendedGreekData()
+      let extendedGreekData = new ExtendedGreekData() // eslint-disable-line prefer-const
       extendedGreekData.primary = primary
       const extendedLangData = {
         [Constants.STR_LANG_CODE_GRC]: extendedGreekData
@@ -332,7 +332,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
       const item = data[i]
       const form = item[n.form]
 
-      const features = [
+      let features = [ // eslint-disable-line prefer-const
         partOfSpeech,
         this.typeFeatures.get(Feature.types.fullForm).createFromImporter(form)
       ]
@@ -363,7 +363,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
         footnotes = pofsFootnotes.filter(f => indexes.includes(f.index))
       }
 
-      const extendedGreekData = new ExtendedGreekData()
+      let extendedGreekData = new ExtendedGreekData() // eslint-disable-line prefer-const
       extendedGreekData.primary = primary
       const extendedLangData = {
         [Constants.STR_LANG_CODE_GRC]: extendedGreekData
@@ -474,7 +474,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
       const id = item[n.id]
       const matchOrder = Number.parseInt(item[n.matchOrder])
 
-      const features = [partOfSpeech]
+      let features = [partOfSpeech] // eslint-disable-line prefer-const
 
       if (item[n.stemtype]) { features.push(this.typeFeatures.get(Feature.types.stemtype).createFromImporter(item[n.stemtype])) }
       if (item[n.voice]) { features.push(this.typeFeatures.get(Feature.types.voice).createFromImporter(item[n.voice])) }
@@ -498,7 +498,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
         console.warn(`Cannot find a paradigm table for "${id}" index`)
       }
     }
-    for (const paradigm of paradigms.values()) {
+    for (let paradigm of paradigms.values()) { // eslint-disable-line prefer-const
       paradigm.sortRules()
       paradigm.addSuppTables(suppParadigmTables)
     }
@@ -506,7 +506,7 @@ export default class GreekLanguageDataset extends LanguageDataset {
   }
 
   addFootnotes (partOfSpeech, classType, data) {
-    const footnotes = []
+    let footnotes = [] // eslint-disable-line prefer-const
     // First row are headers
     for (let i = 1; i < data.length; i++) {
       const footnote = this.addFootnote(partOfSpeech.value, classType, data[i][0], data[i][1])

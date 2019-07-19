@@ -40,7 +40,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
     this.features.set(Feature.types.word, new Feature(Feature.types.word, [], LatinLanguageDataset.languageID))
 
     // Create an importer with default values for every feature
-    for (const feature of this.features.values()) {
+    for (let feature of this.features.values()) { // eslint-disable-line prefer-const
       feature.addImporter(new FeatureImporter(feature.values, true))
     }
 
@@ -104,7 +104,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
         suffix = null
       }
 
-      const features = [partOfSpeech,
+      let features = [partOfSpeech, // eslint-disable-line prefer-const
         this.features.get(Feature.types.number).createFromImporter(item[n.number]),
         this.features.get(Feature.types.grmCase).createFromImporter(item[n.grmCase]),
         this.features.get(Feature.types.declension).createFromImporter(item[n.declension]),
@@ -138,7 +138,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
     // First row are headers
     for (let i = 1; i < data.length; i++) {
       const item = data[i]
-      const features = [partOfSpeech]
+      let features = [partOfSpeech] // eslint-disable-line prefer-const
       //    if (item[n.formSet]) {
       //      features.push(languageModel.features[Feature.types.formSet]createFromImporter(item[0]))
       //    }
@@ -187,7 +187,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
         suffix = null
       }
 
-      const features = [partOfSpeech]
+      let features = [partOfSpeech] // eslint-disable-line prefer-const
       const columns = [
         Feature.types.conjugation,
         Feature.types.voice,
@@ -237,7 +237,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
         suffix = null
       }
 
-      const features = [partOfSpeech]
+      let features = [partOfSpeech] // eslint-disable-line prefer-const
       const columns = [
         Feature.types.conjugation,
         Feature.types.voice,
@@ -280,7 +280,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
         suffix = null
       }
 
-      const features = [partOfSpeech]
+      let features = [partOfSpeech] // eslint-disable-line prefer-const
       // Ending,Conjugation,Voice,Mood,Tense,Number,Person,Case,Type,Footnote
       const columns = [
         Feature.types.case
@@ -312,7 +312,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       const form = item[2]
 
       // Lemma,PrincipalParts,Form,Voice,Mood,Tense,Number,Person,Footnote
-      const features = [
+      let features = [ // eslint-disable-line prefer-const
         partOfSpeech
       ]
 
@@ -362,7 +362,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
       const form = item[2]
 
       // Lemma,PrincipalParts,Form,Voice,Mood,Tense,Number,Person,Footnote
-      const features = [
+      let features = [ // eslint-disable-line prefer-const
         partOfSpeech/*,
         this.features.get(Feature.types.fullForm).createFromImporter(lemma.word) */
       ]
@@ -392,7 +392,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
   }
 
   addFootnotes (partOfSpeech, classType, data) {
-    const footnotes = []
+    let footnotes = [] // eslint-disable-line prefer-const
     // First row are headers
     for (let i = 1; i < data.length; i++) {
       const footnote = this.addFootnote(partOfSpeech.value, classType, data[i][0], data[i][1])
@@ -510,7 +510,7 @@ export default class LatinLanguageDataset extends LanguageDataset {
    * @return {Lemma[] | []} Array of matching Lemma objects or an empty array if nothing is found.
    */
   getMatchingIrregularLemmas (inflections) {
-    const lemmas = []
+    let lemmas = [] // eslint-disable-line prefer-const
     for (const inflection of inflections) {
       const pofs = inflection[Feature.types.part].value
       if (this.irregularLemmas.has(pofs)) {

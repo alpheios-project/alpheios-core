@@ -108,7 +108,7 @@ export default class Table {
    * @returns {NodeGroup} A top level group of morphemes that contain subgroups all way down to the last group.
    */
   groupByFeature (morphemes, ancestorFeatures = [], currentLevel = 0) {
-    const group = new NodeGroup()
+    let group = new NodeGroup() // eslint-disable-line prefer-const
     if (!this.features.hasColumnFeatures && !this.features.hasDataColumn) {
       /*
       Table has no column features and will have only one column with data values.
@@ -150,7 +150,7 @@ export default class Table {
             selectedMorphemes = Suffix.combine(selectedMorphemes)
           }
 
-          const cell = new Cell(selectedMorphemes, ancestorFeatures.slice())
+          let cell = new Cell(selectedMorphemes, ancestorFeatures.slice()) // eslint-disable-line prefer-const
           group.subgroups.push(cell)
           group.cells.push(cell)
           this.cells.push(cell)
@@ -173,7 +173,7 @@ export default class Table {
    */
   constructColumns (tree = this.tree, columns = [], currentLevel = 0) {
     const currentFeature = this.features.getGroupingFeature(currentLevel)
-    const groups = []
+    let groups = [] // eslint-disable-line prefer-const
     for (const [index, feature] of currentFeature.getOrderedFeatures(tree.ancestorFeatures).entries()) {
       const cellGroup = tree.subgroups[index]
       // Iterate until it is the last row feature
@@ -189,14 +189,14 @@ export default class Table {
            * will have the same parent values, they will be omitted and only the current row title be shown.
            * @type {{groups: Cell[], titleCell: RowTitleCell}}
            */
-          const group = {
+          let group = { // eslint-disable-line prefer-const
             groups: currentResult,
             titleCell: currentFeature.createRowTitleCell(feature.value, this.features.firstColumnFeature.size)
           }
           group.groups[0].titleCell.parent = group.titleCell
           groups.push(group)
         } else if (currentFeature.dataColumn || this.features.isLastColumnFeature(currentFeature)) {
-          const column = new Column(cellGroup.cells)
+          let column = new Column(cellGroup.cells) // eslint-disable-line prefer-const
           column.groups = currentResult
           column.header = feature.value
           column.index = columns.length
@@ -236,7 +236,7 @@ export default class Table {
   constructHeaders (tree = this.tree, headers = [], currentLevel = 0) {
     const currentFeature = this.features.columnFeatures[currentLevel]
 
-    const cells = []
+    let cells = [] // eslint-disable-line prefer-const
     for (const [index, feature] of currentFeature.getOrderedFeatures(tree.ancestorFeatures).entries()) {
       const cellGroup = tree.subgroups[index]
 
@@ -249,10 +249,9 @@ export default class Table {
           columnSpan += cell.span
         }
 
-        // let headerCell = new HeaderCell(feature.value, currentFeature, columnSpan)
-        const headerCell = currentFeature.createHeaderCell(feature.value, columnSpan)
+        let headerCell = currentFeature.createHeaderCell(feature.value, columnSpan) // eslint-disable-line prefer-const
         headerCell.children = subCells
-        for (const cell of subCells) {
+        for (let cell of subCells) { // eslint-disable-line prefer-const
           cell.parent = headerCell
         }
 
@@ -290,7 +289,7 @@ export default class Table {
    * @returns {Row[]} An array of rows.
    */
   constructRows () {
-    const rows = []
+    let rows = [] // eslint-disable-line prefer-const
     for (let rowIndex = 0; rowIndex < this.dataRowQty; rowIndex++) {
       rows[rowIndex] = new Row()
       rows[rowIndex].titleCell = this.columns[0].cells[rowIndex].titleCell
@@ -298,7 +297,7 @@ export default class Table {
         rows[rowIndex].add(this.columns[columnIndex].cells[rowIndex])
       }
     }
-    const filtered = []
+    let filtered = [] // eslint-disable-line prefer-const
     for (const [index, row] of rows.entries()) {
       if (!row.empty) {
         filtered.push(row)
@@ -319,7 +318,7 @@ export default class Table {
    * Hides empty columns in a table.
    */
   hideEmptyColumns () {
-    for (const column of this.columns) {
+    for (let column of this.columns) { // eslint-disable-line prefer-const
       if (column.empty) {
         column.hide()
       }
@@ -331,7 +330,7 @@ export default class Table {
    * Show all empty columns that were previously hidden.
    */
   showEmptyColumns () {
-    for (const column of this.columns) {
+    for (let column of this.columns) { // eslint-disable-line prefer-const
       if (column.hidden) {
         column.show()
       }
@@ -368,7 +367,7 @@ export default class Table {
     for (const headerCell of this.headers[0].cells) {
       const matches = !!headerCell.columns.find(column => column.suffixMatches)
       if (!matches) {
-        for (const column of headerCell.columns) {
+        for (let column of headerCell.columns) { // eslint-disable-line prefer-const
           column.hide()
         }
       }
@@ -380,7 +379,7 @@ export default class Table {
    * Show groups that have no suffix matches.
    */
   showNoSuffixMatchesGroups () {
-    for (const column of this.columns) {
+    for (let column of this.columns) { // eslint-disable-line prefer-const
       column.show()
     }
     if (this.options.emptyColumnsHidden) {

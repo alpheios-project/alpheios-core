@@ -35,7 +35,7 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
 
   createTable () {
     this.table = new Table([this.features.voices, this.features.moods, this.features.tenses, this.features.numbers, this.features.persons])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [this.features.voices, this.features.moods]
     features.rows = [this.features.tenses, this.features.numbers, this.features.persons]
     features.columnRowTitles = [this.features.numbers, this.features.persons]
@@ -78,13 +78,13 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
    * @return {View[]} - An array of linked views or an empty array if no linked views can be created.
    */
   createLinkedViews () {
-    const views = []
+    let views = [] // eslint-disable-line prefer-const
     // we want to restrict the inflections for the linked views to irregular verbs for now because inflections from other verbs seem to corrupt the match data constraints
     // (e.g. sum, which has both an irregular and regular verb and one of the regular verbs has a different, non-matching lemma)
     // this will fail if we want to link tables for irregular and regular verbs together this way
     const inflections = this.homonym.inflections.filter(infl => infl[Feature.types.part].value === this.constructor.mainPartOfSpeech && infl.constraints && infl.constraints.irregular)
     for (const Constructor of this.constructor.linkedViewConstructors) {
-      const linkedViewInflections = []
+      let linkedViewInflections = [] // eslint-disable-line prefer-const
       for (const infl of inflections) {
         let clone = infl.clone()
         clone[Feature.types.part] = clone[Feature.types.part].createFeature(Constructor.mainPartOfSpeech)
@@ -94,7 +94,7 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
       const inflectionData = this.constructor.dataset.createInflectionSet(Constructor.mainPartOfSpeech, linkedViewInflections, { findMorphologyMatches: false })
       if (Constructor.matchFilter(this.homonym.languageID, linkedViewInflections)) {
         const view = new Constructor(this.homonym, inflectionData)
-        for (const infl of inflections) {
+        for (let infl of inflections) { // eslint-disable-line prefer-const
           infl[Feature.types.part] = infl[Feature.types.part].createFeature(this.constructor.mainPartOfSpeech)
         }
         views.push(view)
@@ -108,7 +108,7 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
   static getMatchingInstances (homonym) {
     if (this.matchFilter(homonym.languageID, homonym.inflections)) {
       const inflectionData = this.getInflectionsData(homonym)
-      const view = new this(homonym, inflectionData)
+      let view = new this(homonym, inflectionData) // eslint-disable-line prefer-const
       view.createLinkedViews()
       return [view.render()]
     }

@@ -51,7 +51,7 @@ export default class LanguageDataset {
    * @param {ExtendedLanguageData} extendedLangData
    */
   addInflectionData (partOfSpeech, ClassType, itemValue, features, footnotes = [], extendedLangData = undefined) {
-    const item = new ClassType(itemValue)
+    let item = new ClassType(itemValue) // eslint-disable-line prefer-const
     item.extendedLangData = extendedLangData
 
     // Go through all features provided
@@ -300,7 +300,7 @@ export default class LanguageDataset {
    * @return {Map<{string}, {Inflection[]}>} Maps on array of inflections to a part of speech
    */
   groupInflections (homonym) {
-    const inflections = new Map()
+    let inflections = new Map() // eslint-disable-line prefer-const
     for (const lexeme of homonym.lexemes) {
       for (let inflection of lexeme.inflections) {
         // Inflections are grouped by part of speech
@@ -323,9 +323,9 @@ export default class LanguageDataset {
    * @return {Suffix[]|Form[]|Paradigm[]} An array of morphemes where all features have single values
    */
   static splitMultiValMorphems (morphemes) {
-    const result = []
+    let result = [] // eslint-disable-line prefer-const
     for (const morpheme of morphemes) {
-      const multivalFeatures = []
+      let multivalFeatures = [] // eslint-disable-line prefer-const
       for (const featureName of Object.keys(morpheme.features)) {
         if (morpheme.features[featureName].isMultiple) {
           multivalFeatures.push(morpheme.features[featureName])
@@ -349,7 +349,7 @@ export default class LanguageDataset {
    * @return {InflectionSet} Constructed inflection set.
    */
   createInflectionSet (pofsValue, inflections, options) {
-    const inflectionSet = new InflectionSet(pofsValue, this.languageID)
+    let inflectionSet = new InflectionSet(pofsValue, this.languageID) // eslint-disable-line prefer-const
     inflectionSet.inflections = inflections.filter(i => i.constraints.implemented === true)
     inflectionSet.isImplemented = inflectionSet.inflections.length > 0
 
@@ -422,7 +422,7 @@ export default class LanguageDataset {
    */
   getInflectionData (homonym) {
     // Add support for languages
-    const result = new InflectionData(homonym)
+    let result = new InflectionData(homonym) // eslint-disable-line prefer-const
     const inflections = this.groupInflections(homonym)
 
     // Scan for matches for all parts of speech separately
@@ -484,7 +484,8 @@ export default class LanguageDataset {
      */
 
     for (const inflection of inflections) {
-      const matchData = new MatchData() // Create a match profile
+      // Create a match profile
+      let matchData = new MatchData() // eslint-disable-line prefer-const
       if (options.findMatches) {
         matchData.suffixMatch = inflection.smartWordCompare(item.value, item.constructor.name, { fuzzySuffix: true })
       }

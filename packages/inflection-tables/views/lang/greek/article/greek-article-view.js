@@ -30,7 +30,7 @@ export default class GreekArticleView extends GreekView {
 
   createTable () {
     this.table = new Table([this.features.genders, this.features.types, this.features.numbers, this.features.cases])
-    const features = this.table.features
+    let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [this.features.genders]
 
     features.rows = [this.features.numbers, this.features.cases]

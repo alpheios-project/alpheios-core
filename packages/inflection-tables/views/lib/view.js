@@ -377,7 +377,7 @@ export default class View {
     const homonym = this.createStandardFormHomonym(options)
     const inflectionData = this.getInflectionsData(homonym, { findMatches: false })
     // Standard form tables should have no suffix matches columns visible
-    const view = new this(homonym, inflectionData)
+    let view = new this(homonym, inflectionData) // eslint-disable-line prefer-const
     if (options.title) {
       view.setTitle(options.title)
     }
