@@ -248,7 +248,9 @@ export default class UIController {
       A host application may not necessarily set the current language. In that case
       it's value (which will be null by default) will be ignored.
        */
-      textLangCode: null
+      textLangCode: null,
+      // If set to true, will use the `textLangCode` over the `preferredLanguage`
+      useTextLang: false
     }
   }
 
@@ -437,6 +439,7 @@ export default class UIController {
       },
 
       // TODO: Some of the functions below should probably belong to other API groups.
+      getDefaultLangCode: this.getDefaultLangCode.bind(this),
       featureOptionChange: this.featureOptionChange.bind(this),
       resetAllOptions: this.resetAllOptions.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
@@ -484,6 +487,8 @@ export default class UIController {
         selectedText: '',
         languageName: '',
         languageCode: '',
+        // A language code that is selected in the language drop-down of a lookup component
+        selectedLookupLangCode: '',
         targetWord: '',
         // An object with x and y props that reflects integer coordinates of a selection target
         selectionTarget: {
@@ -551,6 +556,11 @@ export default class UIController {
           ({ id, name } = UIController.getLanguageName(languageCodeOrID))
           state.currentLanguageID = id
           state.currentLanguageName = name
+        },
+
+        setSelectedLookupLang (state, langCode) {
+          console.info(`setSelectedLookupLang mutation is setting lang to ${langCode}`)
+          state.selectedLookupLangCode = langCode
         },
 
         setTextData (state, data) {
@@ -763,6 +773,9 @@ export default class UIController {
       }
     })
 
+    // If `textLangCode` is set, use it over the `preferredLanguage`
+    this.options.useTextLang = Boolean(this.options.textLangCode)
+    this.store.commit('app/setSelectedLookupLang', this.getDefaultLangCode())
     this.api.language = {
       resourceSettingChange: this.resourceSettingChange.bind(this)
     }
@@ -789,9 +802,13 @@ export default class UIController {
 
     // The current language must be set after data modules are created (because it uses an L10n module)
     // but before the UI modules are created (because UI modules use current language during rendering).
-    const currentLangCode = this.options.textLangCode || this.featureOptions.items.preferredLanguage.currentValue
-    const currentLangID = LanguageModelFactory.getLanguageIdFromCode(currentLangCode)
-    this.updateLanguage(currentLangID)
+    const defaultLangCode = this.getDefaultLangCode()
+    const defaultLangID = LanguageModelFactory.getLanguageIdFromCode(defaultLangCode)
+    console.log(`Initializations: setting lookup language to ${defaultLangCode}`)
+    // Set the lookup
+    this.featureOptions.items.lookupLanguage.setValue(defaultLangCode)
+    console.log(`Initializations: calling updateLanguage with ${defaultLangCode}`)
+    this.updateLanguage(defaultLangID)
 
     // Create registered UI modules
     this.createUiModules()
@@ -896,6 +913,11 @@ export default class UIController {
       this.api.auth.session()
     }
     return this
+  }
+
+  getDefaultLangCode () {
+    console.info(`Get default lang code: ${this.options.useTextLang ? this.options.textLangCode : this.featureOptions.items.preferredLanguage.currentValue}`)
+    return this.options.useTextLang ? this.options.textLangCode : this.featureOptions.items.preferredLanguage.currentValue
   }
 
   /**
@@ -1669,6 +1691,8 @@ export default class UIController {
       case 'preferredLanguage':
         console.info(`preferredLanguage option has been changed to ${this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue}`)
         this.updateLanguage(this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue)
+        // If user manually sets the preferred language option then the language chosen must have priority over the `textLang`
+        this.options.useTextLang = false
         break
       case 'enableLemmaTranslations':
         this.updateLemmaTranslations()

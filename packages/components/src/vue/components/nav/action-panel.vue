@@ -23,6 +23,7 @@
           :name-base="`action-panel`"
           :use-page-lang-prefs="true"
           :show-language-settings-group="false"
+          :show-lang-selector="false"
           :show-results-in="config.lookupResultsIn"
           @lookup-started="lookupStarted"
       />

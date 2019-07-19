@@ -27179,6 +27179,8 @@ __webpack_require__.r(__webpack_exports__);
   data () {
     return {
       lookuptext: '',
+      // A name of a language currently selected in the language drop-down
+      selectedLangName: '',
       // The following variable is used to signal that language options has been updated
       langUpdated: Date.now()
     }
@@ -27203,6 +27205,15 @@ __webpack_require__.r(__webpack_exports__);
       default: false
     },
 
+    /*
+    Whether to show a language selector within this component.
+    */
+    showLangSelector: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+
     showResultsIn: {
       type: String,
       required: false,
@@ -27210,40 +27221,22 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function () {
-    console.info(`created ${this.nameBase}, lookupLanguage is`, this.$options.lookupLanguage)
-    if (this.usePageLangPrefs) {
-      // Use language settings of a page
-      // Do we want to change a preferredLanguage every time lookup language is changed? Probably not.
-      this.$options.lookupLanguage = this.settings.getFeatureOptions().items.preferredLanguage
-      // This causes preferredLanguage to be updated
-      // this.$options.lookupLanguage.setValue(LanguageModelFactory.getLanguageCodeFromId(this.$store.state.app.currentLanguageID))
-      console.info(`Setting lookupLanguage in ${this.nameBase} to pageLangPrefs ${this.$options.lookupLanguage.currentValue}`)
-      console.info(`"Created" in ${this.nameBase}, preferredLanguage is ${this.settings.getFeatureOptions().items.preferredLanguage.currentValue}`)
-      this.$options.resourceOptions = this.settings.getResourceOptions()
-    } else {
-      // Use lookup language settings
+    console.info(`Controller's resource options are`, this.$options.resourceOptions)
+    console.info(`Lookup resource options are`, this.settings.lookupResourceOptions)
+    /*
+    Lookup component uses its own version of resource options. This is because lookup component's resource
+    options might not necessarily be the same as the ones used within a UI controller.
+    */
+    if (this.showLangSelector) {
       this.$options.lookupLanguage = this.settings.getFeatureOptions().items.lookupLanguage
-      console.info(`Setting lookupLanguage in ${this.nameBase} to featureOptions lookup language ${this.$options.lookupLanguage.currentValue}`)
+      this.selectedLangName = this.$options.lookupLanguage.currentTextValue()
       this.$options.resourceOptions = this.settings.lookupResourceOptions
+    } else {
+      this.$options.resourceOptions = this.settings.getResourceOptions()
     }
   },
 
   computed: {
-    /* currentLanguage () {
-      const selectedValue = this.$options.lookupLanguage.currentTextValue()
-      // langUpdated is included into the condition to force Vue to recalculate value
-      // every time language settings are updated
-      // TODO: Change to get current language from the store
-      const value = (this.langUpdated && selectedValue === 'Default')
-        ? { value: LanguageModelFactory.getLanguageCodeFromId(this.$store.state.app.currentLanguageID), text: this.$store.state.app.currentLanguageName }
-        : this.$options.lookupLanguage.currentItem()
-      console.info('Preferred language is', this.settings.getFeatureOptions().items.preferredLanguage.currentItem())
-      let storeLangCode = LanguageModelFactory.getLanguageCodeFromId(this.$store.state.app.currentLanguageID)
-      console.info(`Store lang code is ${storeLangCode}, name is ${this.$store.state.app.currentLanguageName}`)
-      console.info('Current language called, value is', value)
-      return value
-    }, */
-
     useCurrentLanguage () {
       console.info(`useCurrentLanguage: ${!this.showLanguageSettingsGroup || (this.langUpdated && this.$options.lookupLanguage.currentTextValue() === 'Default')}`)
       return !this.showLanguageSettingsGroup || (this.langUpdated && this.$options.lookupLanguage.currentTextValue() === 'Default')
@@ -27258,17 +27251,9 @@ __webpack_require__.r(__webpack_exports__);
         : alpheios_data_models__WEBPACK_IMPORTED_MODULE_3__["LanguageModelFactory"].getLanguageIdFromCode(this.$options.lookupLanguage.currentValue)
     },
 
-    currentLanguageName () {
-      console.info(`currentLanguageName, ${this.nameBase}`)
-      console.info('Store:', this.$store.state.app.currentLanguageName)
-      console.info('Selected:', this.$options.lookupLanguage.currentTextValue())
-      return this.useCurrentLanguage
-        ? this.$store.state.app.currentLanguageName
-        : this.$options.lookupLanguage.currentTextValue()
-    },
-
     lexiconsFiltered () {
-      let lang = this.$options.lookupLanguage.values.filter(v => v.text === this.currentLanguageName)
+      console.info(`Lexicon filtered are called for ${this.selectedLangName} in ${this.nameBase}`)
+      let lang = this.$options.lookupLanguage.values.filter(v => v.text === this.selectedLangName)
       let settingGroup
       if (lang.length > 0) {
         settingGroup = lang[0].value
@@ -27278,6 +27263,15 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   watch: {
+    '$store.state.app.selectedLookupLangCode' (langCode) {
+      console.info(`Selected lookup lang code in the store has been changed to ${langCode}, in ${this.nameBase}`)
+      if (this.showLangSelector) {
+        console.info(`Changing lookup language to ${langCode} in ${this.nameBase}`)
+        this.$options.lookupLanguage.setValue(langCode)
+        this.selectedLangName = this.$options.lookupLanguage.currentTextValue()
+      }
+    },
+
     '$store.state.app.morphDataReady' (morphDataReady) {
       if (morphDataReady && this.app.hasMorphData()) {
         this.lookuptext = ''
@@ -27291,23 +27285,17 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       /*
-      If we override the language, then the lookup language must be a current value of our `lookupLanguage` prop,
+      If we override the language with the value selected, then the lookup language must be a current value of our `lookupLanguage` prop,
       otherwise it must be a value of panel's options `preferredLanguage` options item
        */
-      const languageID = this.currentLanguageID
 
-      let textSelector = _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_0__["default"].createObjectFromText(this.lookuptext, languageID)
+      const selectedLangCode = this.showLangSelector
+        ? this.$options.lookupLanguage.currentValue
+        : this.app.getDefaultLangCode()
+      const selectedLangID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_3__["LanguageModelFactory"].getLanguageIdFromCode(selectedLangCode)
+      console.info(`Lookup in ${this.nameBase}, selected lang code is ${selectedLangCode}`)
 
-      console.info(`Lookup in ${this.nameBase}, current language is ${this.currentLanguageID.toString()}`)
-
-      /* if (this.showLanguageSettingsGroup && this.currentLanguageID !== this.$store.state.app.currentLanguageID) {
-        // Update the current language value with the value selected in the language drop-down.
-        // We need to update current language only if the lookup has the language selector visible
-        this.app.updateLanguage(this.$options.lookupLanguage.currentValue)
-        console.info(`Lookup in ${this.nameBase} is updating current language to `, this.$options.lookupLanguage.currentValue)
-      } else {
-        console.info(`Lookup in ${this.nameBase}, current language was not changed`)
-      } */
+      let textSelector = _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_0__["default"].createObjectFromText(this.lookuptext, selectedLangID)
 
       const resourceOptions = this.$options.resourceOptions
       const lemmaTranslationLang = this.app.state.lemmaTranslationLang
@@ -27322,7 +27310,7 @@ __webpack_require__.r(__webpack_exports__);
         .create(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples)
 
       // A newLexicalRequest will call app.updateLanguage(languageID)
-      this.app.newLexicalRequest(this.lookuptext, languageID)
+      this.app.newLexicalRequest(this.lookuptext, selectedLangID)
       lexQuery.getData()
       // Notify parent that the lookup has been started so that the parent can close itself if necessary
       this.$emit('lookup-started')
@@ -27343,6 +27331,7 @@ __webpack_require__.r(__webpack_exports__);
     settingChange: function (name, value) {
       console.info(`Settings in ${this.nameBase} have been changed to`, value)
       this.$options.lookupLanguage.setTextValue(value)
+      this.$store.commit('app/setSelectedLookupLang', this.$options.lookupLanguage.currentValue)
       this.langUpdated = Date.now()
     },
 
@@ -27779,6 +27768,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/images/inline-icons/x-close.svg */ "./images/inline-icons/x-close.svg");
 /* harmony import */ var _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/vue/components/lookup.vue */ "./vue/components/lookup.vue");
 /* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+//
 //
 //
 //
@@ -28337,6 +28327,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_components_nav_toolbar_compact_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/vue/components/nav/toolbar-compact.vue */ "./vue/components/nav/toolbar-compact.vue");
 /* harmony import */ var _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/vue/components/lookup.vue */ "./vue/components/lookup.vue");
 /* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+//
 //
 //
 //
@@ -35673,7 +35664,7 @@ var render = function() {
         "div",
         { staticClass: "alpheios-lookup__form-row" },
         [
-          _vm.showLanguageSettingsGroup
+          _vm.showLangSelector
             ? _c("alph-setting", {
                 attrs: {
                   classes: [
@@ -35765,7 +35756,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _vm.showLanguageSettingsGroup
+      _vm.showLangSelector
         ? [
             _c(
               "div",
@@ -36545,6 +36536,7 @@ var render = function() {
               "name-base": "action-panel",
               "use-page-lang-prefs": true,
               "show-language-settings-group": false,
+              "show-lang-selector": false,
               "show-results-in": _vm.config.lookupResultsIn
             },
             on: { "lookup-started": _vm.lookupStarted }
@@ -37444,7 +37436,8 @@ var render = function() {
             attrs: {
               "name-base": "toolbar",
               "use-page-lang-prefs": true,
-              "show-language-settings-group": false
+              "show-language-settings-group": false,
+              "show-lang-selector": false
             }
           })
         ],
@@ -51951,7 +51944,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"d":"M6 18.71V14H1V1h18v13h-8.29L6 18.71zM2 13h5v3.29L10.29 13H18V2H2v11z"}})])
+            children.concat([_c('path',{attrs:{"stroke-width":"0","d":"M6 18.71V14H1V1h18v13h-8.29L6 18.71zM2 13h5v3.29L10.29 13H18V2H2v11z"}})])
           )
         }
       });
@@ -52111,7 +52104,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('path',{attrs:{"d":"M9.93 4.65c-.712 0-1.399.209-2.063.625v1.147c.538-.577 1.173-.865 1.906-.865.204 0 .398.027.58.084.183.052.344.131.483.24.139.108.246.244.324.404.083.16.125.345.125.553 0 .243-.057.468-.17.672-.108.2-.245.391-.41.578a9.134 9.134 0 0 1-.541.547c-.195.178-.374.365-.539.56s-.305.406-.418.631a1.684 1.684 0 0 0-.162.75 3.266 3.266 0 0 0 .15.977h1.047a3.988 3.988 0 0 1-.142-.41 1.962 1.962 0 0 1-.073-.547c0-.235.057-.45.17-.645.113-.195.255-.382.424-.56.174-.183.359-.365.559-.547.2-.183.385-.378.554-.586a3.11 3.11 0 0 0 .43-.697 2.08 2.08 0 0 0 .168-.86c0-.338-.062-.634-.187-.89-.126-.257-.3-.47-.522-.64a2.222 2.222 0 0 0-.762-.39 3.244 3.244 0 0 0-.931-.13zm-.149 8.172a.694.694 0 0 0-.508.215.667.667 0 0 0-.214.508c0 .2.071.369.214.508.148.139.317.207.508.207s.36-.068.508-.207a.68.68 0 0 0 .215-.508.667.667 0 0 0-.215-.508.694.694 0 0 0-.508-.215z"}}),_c('circle',{attrs:{"cx":"10","cy":"10","r":"9","fill":"none"}})])
+            children.concat([_c('path',{attrs:{"d":"M9.93 4.65c-.712 0-1.399.209-2.063.625v1.147c.538-.577 1.173-.865 1.906-.865.204 0 .398.027.58.084.183.052.344.131.483.24.139.108.246.244.324.404.083.16.125.345.125.553 0 .243-.057.468-.17.672-.108.2-.245.391-.41.578a9.134 9.134 0 0 1-.541.547c-.195.178-.374.365-.539.56s-.305.406-.418.631a1.684 1.684 0 0 0-.162.75 3.266 3.266 0 0 0 .15.977h1.047a3.988 3.988 0 0 1-.142-.41 1.962 1.962 0 0 1-.073-.547c0-.235.057-.45.17-.645.113-.195.255-.382.424-.56.174-.183.359-.365.559-.547.2-.183.385-.378.554-.586a3.11 3.11 0 0 0 .43-.697 2.08 2.08 0 0 0 .168-.86c0-.338-.062-.634-.187-.89-.126-.257-.3-.47-.522-.64a2.222 2.222 0 0 0-.762-.39 3.244 3.244 0 0 0-.931-.13zm-.149 8.172a.694.694 0 0 0-.508.215.667.667 0 0 0-.214.508c0 .2.071.369.214.508.148.139.317.207.508.207s.36-.068.508-.207a.68.68 0 0 0 .215-.508.667.667 0 0 0-.215-.508.694.694 0 0 0-.508-.215z"}}),_c('circle',{attrs:{"cx":"10","cy":"10","r":"9","fill":"none","stroke-width":"1.1"}})])
           )
         }
       });
@@ -52551,7 +52544,7 @@ __webpack_require__.r(__webpack_exports__);
               attrs: Object.assign({"viewBox":"0 0 20 20","xmlns":"http://www.w3.org/2000/svg"}, attrs),
               ...rest,
             },
-            children.concat([_c('circle',{attrs:{"fill":"none","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","d":"M13.018 14.197l-3.573-3.572"}})])
+            children.concat([_c('circle',{attrs:{"fill":"none","stroke-width":"1.1","cx":"10","cy":"10","r":"9"}}),_c('path',{attrs:{"stroke-width":"0","d":"M9 4h1v7H9z"}}),_c('path',{attrs:{"fill":"none","stroke-width":"1.1","d":"M13.018 14.197l-3.573-3.572"}})])
           )
         }
       });
@@ -53164,7 +53157,9 @@ class UIController {
       A host application may not necessarily set the current language. In that case
       it's value (which will be null by default) will be ignored.
        */
-      textLangCode: null
+      textLangCode: null,
+      // If set to true, will use the `textLangCode` over the `preferredLanguage`
+      useTextLang: false
     }
   }
 
@@ -53353,6 +53348,7 @@ class UIController {
       },
 
       // TODO: Some of the functions below should probably belong to other API groups.
+      getDefaultLangCode: this.getDefaultLangCode.bind(this),
       featureOptionChange: this.featureOptionChange.bind(this),
       resetAllOptions: this.resetAllOptions.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
@@ -53400,6 +53396,8 @@ class UIController {
         selectedText: '',
         languageName: '',
         languageCode: '',
+        // A language code that is selected in the language drop-down of a lookup component
+        selectedLookupLangCode: '',
         targetWord: '',
         // An object with x and y props that reflects integer coordinates of a selection target
         selectionTarget: {
@@ -53467,6 +53465,11 @@ class UIController {
           ({ id, name } = UIController.getLanguageName(languageCodeOrID))
           state.currentLanguageID = id
           state.currentLanguageName = name
+        },
+
+        setSelectedLookupLang (state, langCode) {
+          console.info(`setSelectedLookupLang mutation is setting lang to ${langCode}`)
+          state.selectedLookupLangCode = langCode
         },
 
         setTextData (state, data) {
@@ -53679,6 +53682,9 @@ class UIController {
       }
     })
 
+    // If `textLangCode` is set, use it over the `preferredLanguage`
+    this.options.useTextLang = Boolean(this.options.textLangCode)
+    this.store.commit('app/setSelectedLookupLang', this.getDefaultLangCode())
     this.api.language = {
       resourceSettingChange: this.resourceSettingChange.bind(this)
     }
@@ -53705,8 +53711,11 @@ class UIController {
 
     // The current language must be set after data modules are created (because it uses an L10n module)
     // but before the UI modules are created (because UI modules use current language during rendering).
-    const currentLangCode = this.options.textLangCode || this.featureOptions.items.preferredLanguage.currentValue
+    const currentLangCode = this.getDefaultLangCode()
     const currentLangID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].getLanguageIdFromCode(currentLangCode)
+    console.log(`Initializations: setting lookup language to ${currentLangCode}`)
+    this.featureOptions.items.lookupLanguage.setValue(currentLangCode)
+    console.log(`Initializations: calling updateLanguage with ${currentLangCode}`)
     this.updateLanguage(currentLangID)
 
     // Create registered UI modules
@@ -53812,6 +53821,11 @@ class UIController {
       this.api.auth.session()
     }
     return this
+  }
+
+  getDefaultLangCode () {
+    console.info(`Get default lang code: ${this.options.useTextLang ? this.options.textLangCode : this.featureOptions.items.preferredLanguage.currentValue}`)
+    return this.options.useTextLang ? this.options.textLangCode : this.featureOptions.items.preferredLanguage.currentValue
   }
 
   /**
@@ -54585,6 +54599,8 @@ class UIController {
       case 'preferredLanguage':
         console.info(`preferredLanguage option has been changed to ${this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue}`)
         this.updateLanguage(this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue)
+        // If user manually sets the preferred language option then the language chosen must have priority over the `textLang`
+        this.options.useTextLang = false
         break
       case 'enableLemmaTranslations':
         this.updateLemmaTranslations()

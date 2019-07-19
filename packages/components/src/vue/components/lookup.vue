@@ -5,7 +5,7 @@
           :classes="['alpheios-panel__options-item', 'alpheios-lookup__form-element', 'alpheios-lookup__lang-control']"
           :data="this.$options.lookupLanguage"
           @change="settingChange"
-          v-if="showLanguageSettingsGroup"
+          v-if="showLangSelector"
       >
       </alph-setting>
 
@@ -35,7 +35,7 @@
     </div>
 
     <template
-        v-if="showLanguageSettingsGroup"
+        v-if="showLangSelector"
     >
       <div
           class="alpheios-lookup__settings"
@@ -72,6 +72,8 @@ export default {
   data () {
     return {
       lookuptext: '',
+      // A name of a language currently selected in the language drop-down
+      selectedLangName: '',
       // The following variable is used to signal that language options has been updated
       langUpdated: Date.now()
     }
@@ -96,6 +98,15 @@ export default {
       default: false
     },
 
+    /*
+    Whether to show a language selector within this component.
+    */
+    showLangSelector: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+
     showResultsIn: {
       type: String,
       required: false,
@@ -103,65 +114,39 @@ export default {
     }
   },
   created: function () {
-    console.info(`created ${this.nameBase}, lookupLanguage is`, this.$options.lookupLanguage)
-    if (this.usePageLangPrefs) {
-      // Use language settings of a page
-      // Do we want to change a preferredLanguage every time lookup language is changed? Probably not.
-      this.$options.lookupLanguage = this.settings.getFeatureOptions().items.preferredLanguage
-      // This causes preferredLanguage to be updated
-      // this.$options.lookupLanguage.setValue(LanguageModelFactory.getLanguageCodeFromId(this.$store.state.app.currentLanguageID))
-      console.info(`Setting lookupLanguage in ${this.nameBase} to pageLangPrefs ${this.$options.lookupLanguage.currentValue}`)
-      console.info(`"Created" in ${this.nameBase}, preferredLanguage is ${this.settings.getFeatureOptions().items.preferredLanguage.currentValue}`)
-      this.$options.resourceOptions = this.settings.getResourceOptions()
-    } else {
-      // Use lookup language settings
+    console.info(`Controller's resource options are`, this.$options.resourceOptions)
+    console.info(`Lookup resource options are`, this.settings.lookupResourceOptions)
+    /*
+    Lookup component uses its own version of resource options. This is because lookup component's resource
+    options might not necessarily be the same as the ones used within a UI controller.
+    */
+    if (this.showLangSelector) {
       this.$options.lookupLanguage = this.settings.getFeatureOptions().items.lookupLanguage
-      console.info(`Setting lookupLanguage in ${this.nameBase} to featureOptions lookup language ${this.$options.lookupLanguage.currentValue}`)
+      this.selectedLangName = this.$options.lookupLanguage.currentTextValue()
       this.$options.resourceOptions = this.settings.lookupResourceOptions
+    } else {
+      this.$options.resourceOptions = this.settings.getResourceOptions()
     }
   },
 
   computed: {
-    /* currentLanguage () {
-      const selectedValue = this.$options.lookupLanguage.currentTextValue()
-      // langUpdated is included into the condition to force Vue to recalculate value
-      // every time language settings are updated
-      // TODO: Change to get current language from the store
-      const value = (this.langUpdated && selectedValue === 'Default')
-        ? { value: LanguageModelFactory.getLanguageCodeFromId(this.$store.state.app.currentLanguageID), text: this.$store.state.app.currentLanguageName }
-        : this.$options.lookupLanguage.currentItem()
-      console.info('Preferred language is', this.settings.getFeatureOptions().items.preferredLanguage.currentItem())
-      let storeLangCode = LanguageModelFactory.getLanguageCodeFromId(this.$store.state.app.currentLanguageID)
-      console.info(`Store lang code is ${storeLangCode}, name is ${this.$store.state.app.currentLanguageName}`)
-      console.info('Current language called, value is', value)
-      return value
-    }, */
-
-    useCurrentLanguage () {
+    /*useCurrentLanguage () {
       console.info(`useCurrentLanguage: ${!this.showLanguageSettingsGroup || (this.langUpdated && this.$options.lookupLanguage.currentTextValue() === 'Default')}`)
       return !this.showLanguageSettingsGroup || (this.langUpdated && this.$options.lookupLanguage.currentTextValue() === 'Default')
-    },
+    },*/
 
-    currentLanguageID () {
+    /*currentLanguageID () {
       console.info(`currentLanguageID, ${this.nameBase}`)
       console.info('Store:', this.$store.state.app.currentLanguageID)
       console.info('Selected:', LanguageModelFactory.getLanguageIdFromCode(this.$options.lookupLanguage.currentValue))
       return this.useCurrentLanguage
         ? this.$store.state.app.currentLanguageID
         : LanguageModelFactory.getLanguageIdFromCode(this.$options.lookupLanguage.currentValue)
-    },
-
-    currentLanguageName () {
-      console.info(`currentLanguageName, ${this.nameBase}`)
-      console.info('Store:', this.$store.state.app.currentLanguageName)
-      console.info('Selected:', this.$options.lookupLanguage.currentTextValue())
-      return this.useCurrentLanguage
-        ? this.$store.state.app.currentLanguageName
-        : this.$options.lookupLanguage.currentTextValue()
-    },
+    },*/
 
     lexiconsFiltered () {
-      let lang = this.$options.lookupLanguage.values.filter(v => v.text === this.currentLanguageName)
+      console.info(`Lexicon filtered are called for ${this.selectedLangName} in ${this.nameBase}`)
+      let lang = this.$options.lookupLanguage.values.filter(v => v.text === this.selectedLangName)
       let settingGroup
       if (lang.length > 0) {
         settingGroup = lang[0].value
@@ -171,6 +156,15 @@ export default {
     }
   },
   watch: {
+    '$store.state.app.selectedLookupLangCode' (langCode) {
+      console.info(`Selected lookup lang code in the store has been changed to ${langCode}, in ${this.nameBase}`)
+      if (this.showLangSelector) {
+        console.info(`Changing lookup language to ${langCode} in ${this.nameBase}`)
+        this.$options.lookupLanguage.setValue(langCode)
+        this.selectedLangName = this.$options.lookupLanguage.currentTextValue()
+      }
+    },
+
     '$store.state.app.morphDataReady' (morphDataReady) {
       if (morphDataReady && this.app.hasMorphData()) {
         this.lookuptext = ''
@@ -184,23 +178,17 @@ export default {
       }
 
       /*
-      If we override the language, then the lookup language must be a current value of our `lookupLanguage` prop,
+      If we override the language with the value selected, then the lookup language must be a current value of our `lookupLanguage` prop,
       otherwise it must be a value of panel's options `preferredLanguage` options item
        */
-      const languageID = this.currentLanguageID
 
-      let textSelector = TextSelector.createObjectFromText(this.lookuptext, languageID)
+      const selectedLangCode = this.showLangSelector
+        ? this.$options.lookupLanguage.currentValue
+        : this.app.getDefaultLangCode()
+      const selectedLangID = LanguageModelFactory.getLanguageIdFromCode(selectedLangCode)
+      console.info(`Lookup in ${this.nameBase}, selected lang code is ${selectedLangCode}`)
 
-      console.info(`Lookup in ${this.nameBase}, current language is ${this.currentLanguageID.toString()}`)
-
-      /* if (this.showLanguageSettingsGroup && this.currentLanguageID !== this.$store.state.app.currentLanguageID) {
-        // Update the current language value with the value selected in the language drop-down.
-        // We need to update current language only if the lookup has the language selector visible
-        this.app.updateLanguage(this.$options.lookupLanguage.currentValue)
-        console.info(`Lookup in ${this.nameBase} is updating current language to `, this.$options.lookupLanguage.currentValue)
-      } else {
-        console.info(`Lookup in ${this.nameBase}, current language was not changed`)
-      } */
+      let textSelector = TextSelector.createObjectFromText(this.lookuptext, selectedLangID)
 
       const resourceOptions = this.$options.resourceOptions
       const lemmaTranslationLang = this.app.state.lemmaTranslationLang
@@ -215,7 +203,7 @@ export default {
         .create(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples)
 
       // A newLexicalRequest will call app.updateLanguage(languageID)
-      this.app.newLexicalRequest(this.lookuptext, languageID)
+      this.app.newLexicalRequest(this.lookuptext, selectedLangID)
       lexQuery.getData()
       // Notify parent that the lookup has been started so that the parent can close itself if necessary
       this.$emit('lookup-started')
@@ -236,6 +224,7 @@ export default {
     settingChange: function (name, value) {
       console.info(`Settings in ${this.nameBase} have been changed to`, value)
       this.$options.lookupLanguage.setTextValue(value)
+      this.$store.commit('app/setSelectedLookupLang', this.$options.lookupLanguage.currentValue)
       this.langUpdated = Date.now()
     },
 
