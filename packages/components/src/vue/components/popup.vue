@@ -36,8 +36,8 @@
           </alph-tooltip>
 
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
-                        v-show="$store.getters['app/hasTreebankData']" @click="ui.showPanelTab('treebank')">
-                <div class="alpheios-popup__toolbar-top__btn">
+                        v-show="$store.getters['app/hasTreebankData']">
+                <div class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('treebank')">
                   <treebank-icon class="alpheios-navbuttons__icon" />
                 </div>
           </alph-tooltip>

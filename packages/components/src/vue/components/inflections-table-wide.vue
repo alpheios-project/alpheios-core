@@ -5,7 +5,7 @@
         class="alpheios-inflections__title alpheios-clickable">
       {{title}}
       <span v-show="state.collapsed">[+]</span>
-      <span v-show="!state.collapsed">[-]</span>     
+      <span v-show="!state.collapsed">[-]</span>
     </div>
     <div
             v-if="hasInflectionTables && state.view.canCollapse && state.noSuffixGroupsHidden"
@@ -281,7 +281,7 @@ export default {
   },
 
   watch: {
-    'view.id': function () {
+    'view.uid': function () {
       this.state.view = this.view
       this.state.noSuffixGroupsHidden = this.state.view.isNoSuffixMatchesGroupsHidden
     },
@@ -499,7 +499,7 @@ export default {
       color: var(--alpheios-inflect-button-control-color-hover);
       background-color: var(--alpheios-inflect-button-control-bg-hover);
       border-color: var(--alpheios-inflect-button-control-border-color-hover);
-    
+
     }
   }
   // endregion Tables
