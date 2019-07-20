@@ -125,13 +125,9 @@
       ]
     },
     "lookupLanguage": {
-      "defaultValue": "default",
+      "defaultValue": "lat",
       "labelText": "Change language:",
       "values": [
-        {
-          "value": "default",
-          "text": "Default"
-        },
         {
           "value": "lat",
           "text": "Latin"

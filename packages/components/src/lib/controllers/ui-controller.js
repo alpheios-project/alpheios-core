@@ -559,7 +559,6 @@ export default class UIController {
         },
 
         setSelectedLookupLang (state, langCode) {
-          console.info(`setSelectedLookupLang mutation is setting lang to ${langCode}`)
           state.selectedLookupLangCode = langCode
         },
 
@@ -804,10 +803,8 @@ export default class UIController {
     // but before the UI modules are created (because UI modules use current language during rendering).
     const defaultLangCode = this.getDefaultLangCode()
     const defaultLangID = LanguageModelFactory.getLanguageIdFromCode(defaultLangCode)
-    console.log(`Initializations: setting lookup language to ${defaultLangCode}`)
     // Set the lookup
     this.featureOptions.items.lookupLanguage.setValue(defaultLangCode)
-    console.log(`Initializations: calling updateLanguage with ${defaultLangCode}`)
     this.updateLanguage(defaultLangID)
 
     // Create registered UI modules
@@ -916,7 +913,6 @@ export default class UIController {
   }
 
   getDefaultLangCode () {
-    console.info(`Get default lang code: ${this.options.useTextLang ? this.options.textLangCode : this.featureOptions.items.preferredLanguage.currentValue}`)
     return this.options.useTextLang ? this.options.textLangCode : this.featureOptions.items.preferredLanguage.currentValue
   }
 
@@ -1220,7 +1216,6 @@ export default class UIController {
   }
 
   updateLanguage (currentLanguageID) {
-    console.info(`updateLanguage has been called with `, currentLanguageID)
     // the code which follows assumes we have been passed a languageID symbol
     // we can try to recover gracefully if we accidentally get passed a string value
     if (typeof currentLanguageID !== 'symbol') {
@@ -1689,7 +1684,6 @@ export default class UIController {
         this.updateLemmaTranslations()
         break
       case 'preferredLanguage':
-        console.info(`preferredLanguage option has been changed to ${this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue}`)
         this.updateLanguage(this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue)
         // If user manually sets the preferred language option then the language chosen must have priority over the `textLang`
         this.options.useTextLang = false

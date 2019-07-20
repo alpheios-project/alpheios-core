@@ -83,24 +83,8 @@ export default {
       type: String,
       required: true
     },
-    showLanguageSettingsGroup: {
-      type: Boolean,
-      required: false,
-      default: true
-    },
-    /*
-    If the following prop is set to true, a lookup component will use preferredLanguage and resourceOptions
-    as its data model. Otherwise, a lookup component will use lookupLanguage and lookupResourceOptions instead.
-     */
-    usePageLangPrefs: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
 
-    /*
-    Whether to show a language selector within this component.
-    */
+    // Whether to show a language selector within this component.
     showLangSelector: {
       type: Boolean,
       required: false,
@@ -114,11 +98,9 @@ export default {
     }
   },
   created: function () {
-    console.info(`Controller's resource options are`, this.$options.resourceOptions)
-    console.info(`Lookup resource options are`, this.settings.lookupResourceOptions)
     /*
-    Lookup component uses its own version of resource options. This is because lookup component's resource
-    options might not necessarily be the same as the ones used within a UI controller.
+    Lookup component uses its own version of resource options. This is because resource options
+    of lookup components might not necessarily be the same as the ones used within a UI controller.
     */
     if (this.showLangSelector) {
       this.$options.lookupLanguage = this.settings.getFeatureOptions().items.lookupLanguage
@@ -130,22 +112,7 @@ export default {
   },
 
   computed: {
-    /*useCurrentLanguage () {
-      console.info(`useCurrentLanguage: ${!this.showLanguageSettingsGroup || (this.langUpdated && this.$options.lookupLanguage.currentTextValue() === 'Default')}`)
-      return !this.showLanguageSettingsGroup || (this.langUpdated && this.$options.lookupLanguage.currentTextValue() === 'Default')
-    },*/
-
-    /*currentLanguageID () {
-      console.info(`currentLanguageID, ${this.nameBase}`)
-      console.info('Store:', this.$store.state.app.currentLanguageID)
-      console.info('Selected:', LanguageModelFactory.getLanguageIdFromCode(this.$options.lookupLanguage.currentValue))
-      return this.useCurrentLanguage
-        ? this.$store.state.app.currentLanguageID
-        : LanguageModelFactory.getLanguageIdFromCode(this.$options.lookupLanguage.currentValue)
-    },*/
-
     lexiconsFiltered () {
-      console.info(`Lexicon filtered are called for ${this.selectedLangName} in ${this.nameBase}`)
       let lang = this.$options.lookupLanguage.values.filter(v => v.text === this.selectedLangName)
       let settingGroup
       if (lang.length > 0) {
@@ -157,9 +124,7 @@ export default {
   },
   watch: {
     '$store.state.app.selectedLookupLangCode' (langCode) {
-      console.info(`Selected lookup lang code in the store has been changed to ${langCode}, in ${this.nameBase}`)
       if (this.showLangSelector) {
-        console.info(`Changing lookup language to ${langCode} in ${this.nameBase}`)
         this.$options.lookupLanguage.setValue(langCode)
         this.selectedLangName = this.$options.lookupLanguage.currentTextValue()
       }
@@ -186,8 +151,6 @@ export default {
         ? this.$options.lookupLanguage.currentValue
         : this.app.getDefaultLangCode()
       const selectedLangID = LanguageModelFactory.getLanguageIdFromCode(selectedLangCode)
-      console.info(`Lookup in ${this.nameBase}, selected lang code is ${selectedLangCode}`)
-
       let textSelector = TextSelector.createObjectFromText(this.lookuptext, selectedLangID)
 
       const resourceOptions = this.$options.resourceOptions
@@ -222,7 +185,6 @@ export default {
     },
 
     settingChange: function (name, value) {
-      console.info(`Settings in ${this.nameBase} have been changed to`, value)
       this.$options.lookupLanguage.setTextValue(value)
       this.$store.commit('app/setSelectedLookupLang', this.$options.lookupLanguage.currentValue)
       this.langUpdated = Date.now()

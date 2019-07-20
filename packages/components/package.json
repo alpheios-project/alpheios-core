@@ -18,7 +18,8 @@
     "build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development vue config.mjs",
     "code-analysis-prod": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack production vue config.mjs --code-analysis",
     "code-analysis-dev": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development vue config.mjs --code-analysis",
-    "lint": "eslint --fix src/**/*.js && eslint --fix-dry-run src/**/*.vue"
+    "lint": "eslint --fix src/**/*.js && eslint --fix-dry-run src/**/*.vue",
+    "lint-nofix": "eslint src/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -57,6 +58,7 @@
     "eslint": "^6.0.1",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.18.1",
+    "eslint-plugin-jsdoc": "^15.5.3",
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
@@ -130,6 +132,7 @@
   "eslintConfig": {
     "extends": [
       "standard",
+      "plugin:jsdoc/recommended",
       "plugin:vue/essential"
     ],
     "env": {
