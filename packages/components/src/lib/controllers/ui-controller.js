@@ -61,13 +61,14 @@ Vue.use(Vuex)
 
 export default class UIController {
   /**
-   * @constructor
    * The best way to create a configured instance of a UIController is to use its `create` method.
    * It configures and attaches all UIController's modules.
    * If you need a custom configuration of a UIController, replace its `create` method with your own.
    *
+   * @class
+   *
    * @param {UIStateAPI} state - An object to store a UI state.
-   * @param {Object} options - UI controller options object.
+   * @param {object} options - UI controller options object.
    * See `optionsDefaults` getter for detailed parameter description: @see {@link optionsDefaults}
    * If any options is not specified, it will be set to a default value.
    * If an options is not present in an `optionsDefaults` object, it will be ignored as an unknown option.
@@ -123,6 +124,7 @@ export default class UIController {
     /**
      * If an event controller be used with an instance of a UI Controller,
      * this prop will hold an event controller instance. It is usually initialized within a `build` method.
+     *
      * @type {UIEventController}
      */
     this.evc = null
@@ -133,6 +135,7 @@ export default class UIController {
   /**
    * Creates an instance of a UI controller with default options. Provide your own implementation of this method
    * if you want to create a different configuration of a UI controller.
+   *
    */
   static create (state, options) {
     let uiController = new UIController(state, options)
