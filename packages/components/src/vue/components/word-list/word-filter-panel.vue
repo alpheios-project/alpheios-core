@@ -6,18 +6,10 @@
           <select class="alpheios-select alpheios-wordlist-header-select-filterBy"
                   v-model="selectedFilterBy" @change="changedFilterBy">
             <option v-for="typeFiltering in typeFiltersList" v-bind:key="typeFiltering.value"
-                    v-bind:value="typeFiltering.value" v-bind:disabled="typeFiltering.disabled"
-                    :class='{ "alpheios-select-disabled-option": typeFiltering.disabled }'
-            >{{ typeFiltering.title }}</option>
+                    v-bind:value="typeFiltering.value"
+                    :class="{ 'alpheios-select-disabled-option': !typeFiltering.value }"
+            >{{ calcTitle(typeFiltering) }}</option>
           </select>
-          <alph-tooltip :tooltipText="l10n.getMsg('WORDLIST_FILTER_CLEAR')" tooltipDirection="top-right">
-            <span class="alpheios-wordlist-header-clear-icon"
-                  @click="clearFiltering"
-                  :class = '{ "alpheios-wordlist-header-clear-disabled": selectedFilterBy === null }'
-                  >
-              <clear-filters-icon></clear-filters-icon>
-            </span>
-          </alph-tooltip>
         </div>
         <div class="alpheios-wordlist-header-input-filterBy-block"
           v-if="currentClickedLemma && currentTypeFilter && currentTypeFilter.showTextInput"
@@ -113,7 +105,7 @@
         selectedExactForm: null,
         selectedLemma: null,
         typeFiltersList: [
-          { value: null, title: this.l10n.getText('WORDLIST_FILTER_PLACEHOLDER'), disabled: true },
+          { value: null },
           { value: 'byCurrentSession', title: this.l10n.getText('WORDLIST_FILTER_BYCURRENTSESSION'), onChange: true },
           { value: 'byImportant', title: this.l10n.getText('WORDLIST_FILTER_BYIMPORTANT'), onChange: true },
           { value: 'byExactForm',
@@ -181,7 +173,7 @@
     },
     methods: {
       changedFilterBy () {
-        if (this.currentTypeFilter.onChange) {
+        if (this.currentTypeFilter && this.currentTypeFilter.onChange) {
           this.$emit('changedFilterBy', this.selectedFilterBy)
         } else {
           this.clearFilteringText()
@@ -240,6 +232,17 @@
         setTimeout(() => {
           this.shownVariantsSelect = false
         }, 300)
+      },
+      calcTitle (typeFiltering) {
+        if (typeFiltering.value) {
+          return typeFiltering.title
+        } else {
+          if (this.selectedFilterBy) {
+            return this.l10n.getText('WORDLIST_FILTER_CLEAR')
+          } else {
+            return this.l10n.getText('WORDLIST_FILTER_PLACEHOLDER')
+          }
+        }        
       }
     }
   }
