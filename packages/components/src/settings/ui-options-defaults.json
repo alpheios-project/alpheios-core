@@ -3,7 +3,7 @@
   "version": 2,
   "items": {
     "fontSize": {
-      "defaultValue": "medium",
+      "defaultValue": "16",
       "labelText": "Font size",
       "values": [
         {
