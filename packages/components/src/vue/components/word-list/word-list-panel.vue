@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="alpheios-wordlist" v-if="!showContext">
+  <div data-alpheios-ignore="all">
+    <div class="alpheios-wordlist" v-if="!showContext" >
         <div class="alpheios-wordlist-language" v-for="(languageCode, langIndex) in languagesList" v-bind:key="langIndex">
           <word-language
             :languageCode = "languageCode"

@@ -666,7 +666,7 @@ export default class UIController {
 
         setWordLists (state, wordLists) {
           let checkWordLists = Array.isArray(wordLists) ? wordLists : Object.values(wordLists)
-          state.hasWordListsData = Boolean(checkWordLists.find(wordList => !wordList.isEmpty))
+          state.hasWordListsData = Boolean(checkWordLists.find(wordList => wordList && !wordList.isEmpty))
           state.wordListUpdateTime = Date.now()
         },
 

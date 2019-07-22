@@ -41029,7 +41029,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { attrs: { "data-alpheios-ignore": "all" } }, [
     !_vm.showContext
       ? _c(
           "div",
@@ -53547,7 +53547,7 @@ class UIController {
 
         setWordLists (state, wordLists) {
           let checkWordLists = Array.isArray(wordLists) ? wordLists : Object.values(wordLists)
-          state.hasWordListsData = Boolean(checkWordLists.find(wordList => !wordList.isEmpty))
+          state.hasWordListsData = Boolean(checkWordLists.find(wordList => wordList && !wordList.isEmpty))
           state.wordListUpdateTime = Date.now()
         },
 
@@ -56843,7 +56843,10 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
           LexicalQuery.evt.MORPH_DATA_READY.pub()
         } else {
           this.homonym = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"]([formLexeme], this.selector.normalizedText)
-          LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.pub()
+          LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.pub({
+            targetWord: this.selector.normalizedText,
+            languageId: this.selector.languageID
+          })
         }
       }
     } else {
@@ -56853,7 +56856,10 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
         LexicalQuery.evt.MORPH_DATA_READY.pub()
       } else {
         this.homonym = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"]([formLexeme], this.selector.normalizedText)
-        LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.pub()
+        LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.pub({
+          targetWord: this.selector.normalizedText,
+          languageId: this.selector.languageID
+        })
       }
     }
 

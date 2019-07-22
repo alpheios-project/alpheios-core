@@ -154,7 +154,10 @@ export default class LexicalQuery extends Query {
           LexicalQuery.evt.MORPH_DATA_READY.pub()
         } else {
           this.homonym = new Homonym([formLexeme], this.selector.normalizedText)
-          LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.pub()
+          LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.pub({
+            targetWord: this.selector.normalizedText,
+            languageId: this.selector.languageID
+          })
         }
       }
     } else {
@@ -164,7 +167,10 @@ export default class LexicalQuery extends Query {
         LexicalQuery.evt.MORPH_DATA_READY.pub()
       } else {
         this.homonym = new Homonym([formLexeme], this.selector.normalizedText)
-        LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.pub()
+        LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.pub({
+          targetWord: this.selector.normalizedText,
+          languageId: this.selector.languageID
+        })
       }
     }
 
