@@ -305,7 +305,7 @@ export default {
   @import "../../styles/variables";
 
   .alpheios-inflections__title {
-    color: var(--alpheios-inflect-browser-title-color);
+    color: var(--alpheios-inflect-title-color);
     font-size: textsize(22px);
     font-family: var(--alpheios-serif-font-face);
     line-height: 1;
@@ -459,7 +459,7 @@ export default {
   .infl-cell--morph-match,
   .infl-table .infl-cell.infl-cell--morph-match // To override a color schema
   {
-    border: 3px solid var(--alpheios-inflect-match-cell-border-color);
+    border: 3px solid var(--alpheios-inflect-morph-match-cell-border-color);
   }
 
   .infl-cell__conj-stem {

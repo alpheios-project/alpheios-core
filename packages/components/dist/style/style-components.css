@@ -421,14 +421,14 @@ html {
   --alpheios-lookup-button-color-hover: var(--alpheios-btn-primary-font-color-hover);
   --alpheios-lookup-button-bg-hover: var(--alpheios-btn-primary-bg-color-hover);
   --alpheios-lookup-button-border-color-hover: var(--alpheios-btn-primary-border-color-hover);
-  --alpheios-inflect-browser-title-color: var(--alpheios-link-color-on-light);
+  --alpheios-inflect-title-color: var(--alpheios-link-color-on-light);
   --alpheios-inflect-button-control-color: var(--alpheios-btn-secondary-font-color);
   --alpheios-inflect-button-control-bg: var(--alpheios-btn-secondary-bg-color);
   --alpheios-inflect-button-control-border-color: var(--alpheios-btn-secondary-border-color);
   --alpheios-inflect-button-control-color-hover: var(--alpheios-btn-secondary-font-color-hover);
   --alpheios-inflect-button-control-bg-hover: var(--alpheios-btn-secondary-bg-color-hover);
   --alpheios-inflect-button-control-border-color-hover: var(--alpheios-btn-secondary-border-color-hover);
-  --alpheios-inflect-match-cell-border-color: var(--alpheios-highlight-border-color);
+  --alpheios-inflect-morph-match-cell-border-color: var(--alpheios-highlight-border-color);
   --alpheios-inflect-match-suff-bg: var(--alpheios-highlight-light-color);
   --alpheios-inflect-match-suff-color: var(--alpheios-text-color);
   --alpheios-inflect-full-match-suff-bg: var(--alpheios-highlight-color);
@@ -1927,7 +1927,7 @@ a:not([href]):not([tabindex]).alpheios-popup__providers-link:hover {
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
 .alpheios-inflections__title {
-  color: var(--alpheios-inflect-browser-title-color);
+  color: var(--alpheios-inflect-title-color);
   font-size: calc(var(--alpheios-base-text-size) * 1.375);
   font-family: var(--alpheios-serif-font-face);
   line-height: 1;
@@ -2117,7 +2117,7 @@ div.alpheios-inflections__table-ctrl-cont div.alpheios-inflections__table-ctrl-c
 }
 .infl-cell--morph-match,
 .infl-table .infl-cell.infl-cell--morph-match {
-  border: 3px solid var(--alpheios-inflect-match-cell-border-color);
+  border: 3px solid var(--alpheios-inflect-morph-match-cell-border-color);
 }
 .infl-cell__conj-stem {
   text-transform: none;
@@ -2390,7 +2390,7 @@ h3.alpheios-inflections__credits-title {
   margin: 0 0 calc(var(--alpheios-base-text-size) * 1.25) calc(var(--alpheios-base-text-size) * 3);
 }
 .alpheios-ib__title {
-  color: var(--alpheios-inflect-browser-title-color);
+  color: var(--alpheios-inflect-title-color);
   font-size: calc(var(--alpheios-base-text-size) * 1.5);
   font-family: var(--alpheios-serif-font-face);
   font-weight: 700;
@@ -2398,7 +2398,7 @@ h3.alpheios-inflections__credits-title {
   display: inline-block;
 }
 .alpheios-ib__title.open {
-  border-bottom: calc(var(--alpheios-base-text-size) * 0.125) solid var(--alpheios-inflect-browser-title-color);
+  border-bottom: calc(var(--alpheios-base-text-size) * 0.125) solid var(--alpheios-inflect-title-color);
 }
 .alpheios-ib__pofs-title {
   font-weight: 700;
