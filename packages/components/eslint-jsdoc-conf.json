@@ -1,8 +1,7 @@
 {
   "extends": [
     "standard",
-    "plugin:jsdoc/recommended",
-    "plugin:vue/essential"
+    "plugin:jsdoc/recommended"
   ],
   "env": {
     "browser": true,
