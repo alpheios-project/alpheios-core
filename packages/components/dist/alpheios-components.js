@@ -53200,7 +53200,7 @@ class UIController {
        */
       textLangCode: null,
       // If set to true, will use the `textLangCode` over the `preferredLanguage`
-      useTextLang: false
+      overridePreferredLanguage: false
     }
   }
 
@@ -53723,7 +53723,7 @@ class UIController {
     })
 
     // If `textLangCode` is set, use it over the `preferredLanguage`
-    this.options.useTextLang = Boolean(this.options.textLangCode)
+    this.options.overridePreferredLanguage = Boolean(this.options.textLangCode)
     this.store.commit('app/setSelectedLookupLang', this.getDefaultLangCode())
     this.api.language = {
       resourceSettingChange: this.resourceSettingChange.bind(this)
@@ -53863,7 +53863,7 @@ class UIController {
   }
 
   getDefaultLangCode () {
-    return this.options.useTextLang ? this.options.textLangCode : this.featureOptions.items.preferredLanguage.currentValue
+    return this.options.overridePreferredLanguage ? this.options.textLangCode : this.featureOptions.items.preferredLanguage.currentValue
   }
 
   /**
@@ -54636,7 +54636,7 @@ class UIController {
       case 'preferredLanguage':
         this.updateLanguage(this.api.settings.getFeatureOptions().items.preferredLanguage.currentValue)
         // If user manually sets the preferred language option then the language chosen must have priority over the `textLang`
-        this.options.useTextLang = false
+        this.options.overridePreferredLanguage = false
         break
       case 'enableLemmaTranslations':
         this.updateLemmaTranslations()
