@@ -30,7 +30,8 @@
         </alph-tooltip>
         <div
           class="alpheios-worditem__data alpheios-worditem__targetWord"
-          @click="selectWordItem()"
+          @dblclick="selectWordItem()"
+          @click="selectWordItemMobile()"
         >{{ worditem.targetWord }}</div>
         <div class="alpheios-worditem__data alpheios-worditem__lemmasList">
           <span v-for="(lemma, lemmaIndex) in lemmasList" 
@@ -92,6 +93,11 @@ export default {
     },
     selectWordItem () {
       this.app.selectWordItem(this.worditem.languageCode, this.worditem.targetWord)
+    },
+    selectWordItemMobile () {
+      if (this.app.platform.isMobile) {
+        this.selectWordItem()
+      }
     },
     deleteItem () {
       this.$emit('deleteItem', this.worditem.targetWord)
