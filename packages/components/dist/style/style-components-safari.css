@@ -2598,6 +2598,12 @@ h3.alpheios-inflections__credits-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-user-auth {
+  display: flex;
+  flex-direction: column !important;
+  height: 100% !important;
+  justify-content: space-between !important;
+}
 .alpheios-user-auth__user-info-box {
   margin-top: calc(var(--alpheios-base-ui-size) * 1.25) !important;
   display: flex;
