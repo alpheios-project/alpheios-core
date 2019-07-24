@@ -2862,6 +2862,7 @@ p.alpheios-word-usage-filter-title {
 .alpheios-worditem__data {
   display: inline-block;
   vertical-align: middle !important;
+  padding: 7px 0 !important;
 }
 .alpheios-wordlist-language__worditem .alpheios-worditem__icon {
   width: 22px !important;

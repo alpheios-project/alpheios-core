@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { version as packageVersion, description as packageDescription } from '../../../package'
 import { Constants, Feature, LanguageModelFactory, Lexeme } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
@@ -1093,7 +1094,6 @@ export default class UIController {
     // This is for compatibility with watchers in webextension that track tab changes
     // and sends this into to a background script
     this.state.changeTab(tabName)
-
     return this
   }
 
@@ -1604,6 +1604,9 @@ export default class UIController {
       console.warn('UserDataManager is not defined, data couldn\'t be loaded from the storage')
       return
     }
+    const languageID = LanguageModelFactory.getLanguageIdFromCode(wordItem.languageCode)
+    this.newLexicalRequest(wordItem.targetWord, languageID)
+    this.open()
 
     let homonym
     if (this.userDataManager) {
@@ -1612,8 +1615,7 @@ export default class UIController {
     } else {
       homonym = wordItem.homonym
     }
-    this.open()
-    this.newLexicalRequest(homonym.targetWord, homonym.languageID)
+
     if (homonym.lexemes.length > 0 && homonym.lexemes.filter(l => l.isPopulated()).length === homonym.lexemes.length) {
       // if we were able to retrieve full homonym data then we can just display it
       this.onHomonymReady(homonym)

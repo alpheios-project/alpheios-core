@@ -123,6 +123,7 @@ export default {
   .alpheios-worditem__data {
       display: inline-block;
       vertical-align: middle;
+      padding: 7px 0;
   }
 
   $iconsize: 22px;
