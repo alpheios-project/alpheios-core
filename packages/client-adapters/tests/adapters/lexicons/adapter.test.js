@@ -456,12 +456,28 @@ describe('lexicons/adapter.test.js', () => {
 
     expect(testMeaning.fullDefs[0].text).toBeDefined()
     expect(testMeaning.fullDefs[0].text).toEqual(expect.stringContaining('however, refers these words to root'))
-    
+
     let testMeaning2 = homonymMare.lexemes[1].meaning
     expect(testMeaning2.fullDefs[0].text).toBeDefined()
     expect(testMeaning2.fullDefs[0].text).toEqual(expect.stringContaining('mare et femineum sexus,'))
 
     return timeoutRes
   }, 60000)
-  
+
+  it('22 AlpheiosLexiconsAdapter - get fullDefinitions fails on not found', async () => {
+    let adapter = new AlpheiosLexiconsAdapter({
+      category: 'lexicon',
+      adapterName: 'alpheios',
+      method: 'fetchFullDefs'
+    })
+
+    let formLexeme = new Lexeme(new Lemma('foo', Constants.LANG_LATIN), [])
+    let homonym = new Homonym([formLexeme], 'foo')
+    adapter.addError = jest.fn()
+    await adapter.fetchFullDefs(homonym, { allow: ['https://github.com/alpheios-project/ls'] })
+    let timeoutRes = await timeout(15000)
+    expect(adapter.addError).toHaveBeenCalledWith('There is a problem with catching data from lexicon source - No entries found.')
+    return timeoutRes
+  }, 60000)
+
 })

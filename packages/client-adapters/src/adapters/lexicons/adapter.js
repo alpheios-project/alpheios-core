@@ -32,7 +32,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @param {Object} options - options
   */
   async fetchFullDefs (homonym, options = {}) {
-    await this.fetchDefinitions(homonym, options, 'full')
+    await this.fetchDefinitions(homonym, options,'full')
   }
 
   /**
@@ -122,7 +122,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @param {Object} lookupFunction - type of definitions - short, full
   * @return {Boolean} - result of fetching
   */
-  async fetchDefinitions (homonym, options, lookupFunction) {
+  async fetchDefinitions (homonym, options,lookupFunction) {
     Object.assign(this.options, options)
     if (!this.options.allow || this.options.allow.length === 0) {
       this.addError(this.l10n.messages['LEXICONS_NO_ALLOWED_URL'])
@@ -236,10 +236,16 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
 
       fullDefDataRes.then(
         async (fullDefData) => {
-          let def = new Definition(fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
-          let definition = await ResourceProvider.getProxy(this.provider, def)
-          request.lexeme.meaning['appendFullDefs'](definition)
-          this.prepareSuccessCallback('fullDefs', homonym)
+          if (fullDefData && fullDefData.match(/alph:error|alpheios-lex-error/)) {
+            let error = fullDefData.match(/no entries found/i) ? 'No entries found.' : fullDefData
+            this.addError(this.l10n.messages['LEXICONS_FAILED_CACHED_DATA'].get(error))
+            this.prepareFailedCallback('fullDefs', homonym)
+          } else {
+            let def = new Definition(fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
+            let definition = await ResourceProvider.getProxy(this.provider, def)
+            request.lexeme.meaning['appendFullDefs'](definition)
+            this.prepareSuccessCallback('fullDefs', homonym)
+          }
         },
         error => {
           this.addError(this.l10n.messages['LEXICONS_FAILED_APPEND_DEFS'].get(error.message))
