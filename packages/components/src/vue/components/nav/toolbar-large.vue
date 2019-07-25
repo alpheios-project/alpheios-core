@@ -275,12 +275,12 @@ export default {
       let dx = event.dx
       let dy = event.dy
       /*
-          On some websites Interact.js is unable to determine correct clientX or clientY coordinates.
-          This will result in a popup moving abruptly beyond screen limits.
-          To fix this, we will filter out erroneous coordinates and chancel a move in the corresponding
-          direction as incorrect. This will allow us to keep the popup on screen by sacrificing its movement
-          in (usually) one direction. This is probably the best we can do with all the information we have.
-           */
+      On some websites Interact.js is unable to determine correct clientX or clientY coordinates.
+      This will result in a popup moving abruptly beyond screen limits.
+      To fix this, we will filter out erroneous coordinates and chancel a move in the corresponding
+      direction as incorrect. This will allow us to keep the popup on screen by sacrificing its movement
+      in (usually) one direction. This is probably the best we can do with all the information we have.
+       */
       if (Math.abs(dx) > this.$options.dragTreshold) {
         if (!this.$options.dragErrorX) {
           console.warn(`Calculated horizontal drag distance is out of bounds: ${dx}. This is probably an error. Dragging in horizontal direction will be disabled.`)
@@ -300,6 +300,11 @@ export default {
     },
 
     dragEndListener () {
+      let boundsCheck = this.isWithinBounds()
+      if (!boundsCheck.withinBounds) {
+        this.shift.x += boundsCheck.adjX
+        this.shift.y += boundsCheck.adjY
+      }
       let uiOptions = this.settings.getUiOptions()
       uiOptions.items.toolbarShiftX.setValue(this.shift.x)
       uiOptions.items.toolbarShiftY.setValue(this.shift.y)
@@ -307,17 +312,45 @@ export default {
       this.xCenter = this.getXCenter()
     },
 
-    isWithinViewport () {
+    /**
+     * @typedef {Object} BoundsCheckResult
+     * @property {boolean} withinBounds - If the toolbar is within the viewport bounds.
+     * @property {number} adjX - How much an X coordinate must be adjusted for the toolbar to fit into the viewport.
+     * @property {number} adjY - How much an Y coordinate must be adjusted for the toolbar to fit into the viewport.
+     */
+    /**
+     * Checks if the object is within the viewport bounds and if it is not,
+     * calculates how much a toolbar position must be adjusted so that it will fit into the viewport.
+     *
+     * @returns {BoundsCheckResult} A result of the bounds check
+     */
+    isWithinBounds () {
       const rect = this.$el.getBoundingClientRect()
-      return (
-        rect.x >= 0 && (rect.x + rect.width) <= this.app.platform.viewport.width &&
-        rect.y >= 0 && (rect.y + rect.height) <= this.app.platform.viewport.height
-      )
+      let xAdjustment = 0
+      let yAdjustment = 0
+      if (rect.x < 0) {
+        xAdjustment = -rect.x
+      }
+      if ((rect.x + rect.width) > this.app.platform.viewport.width) {
+        xAdjustment = -(rect.x + rect.width - this.app.platform.viewport.width)
+      }
+      if (rect.y < 0) {
+        yAdjustment = -rect.y
+      }
+      if ((rect.y + rect.height) > this.app.platform.viewport.height) {
+        yAdjustment = -(rect.y + rect.height - this.app.platform.viewport.height)
+      }
+      return {
+        withinBounds: xAdjustment === 0 && yAdjustment === 0,
+        adjX: xAdjustment,
+        adjY: yAdjustment
+      }
     },
 
     /**
-     * Return a x-coordinate of a central position of the toolbar
-     * @return {number}
+     * Returns a x-coordinate of a central position of the toolbar
+     *
+     * @returns {number} An x coordinate of a toolbar's center line
      */
     getXCenter () {
       const rect = this.$el.getBoundingClientRect()
@@ -332,31 +365,22 @@ export default {
     this.$options.visibleUnwatch = this.$store.watch((state) => state.toolbar.visible, (value) => {
       if (value) {
         // Check if the viewport is within the bounds of the viewport
-        if (!this.isWithinViewport()) {
-          // Reset the toolbar to its default position
-          this.shift.x = 0
-          this.shift.y = 0
-          console.warn(`Toolbar has been reset to its default position to stay within the viewport`)
+        let boundsCheck = this.isWithinBounds()
+        if (!boundsCheck.withinBounds) {
+          this.shift.x += boundsCheck.adjX
+          this.shift.y += boundsCheck.adjY
+          console.warn(`Toolbar position has been adjusted to stay within the viewport`)
         }
       }
     })
 
     this.$options.interactInstance = interact(this.$el.querySelector('#alpheios-toolbar-drag-handle'))
       .draggable({
+        // It seems that drag restrictions of interact.js are not working at the moment
+        // so we have to rely on our own mechanics for that.
         inertia: true,
         autoScroll: false,
-        modifiers: [
-          interact.modifiers.restrict({
-            restriction: {
-              x: 27,
-              y: 22,
-              width: this.app.platform.viewport.width - 54,
-              height: this.app.platform.viewport.height - 80
-            },
-            endOnly: true
-          })
-        ],
-        ignoreFrom: 'input, textarea, a[href], select, option'
+        reFrom: 'input, textarea, a[href], select, option'
       })
       .on('dragmove', this.dragMoveListener)
       .on('dragend', this.dragEndListener)

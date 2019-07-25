@@ -45,7 +45,8 @@ export default class Platform {
 
   /**
    * Determines what version of a UI shall be used.
-   * @return {string} - A name of one of the deviceTypes defined in {@link Platform@deviceTypes}.
+   *
+   * @returns {string} - A name of one of the deviceTypes defined in {@link Platform@deviceTypes}.
    */
   static getDeviceType () {
     // TODO: Probably need a more complex algorithm for the future
@@ -57,7 +58,8 @@ export default class Platform {
 
   /**
    * Determines a screen orientation of a device.
-   * @return {string} - A name of the screen orientation as defined in {@link Platform@orientations}.
+   *
+   * @returns {string} - A name of the screen orientation as defined in {@link Platform@orientations}.
    */
   static getOrientation () {
     if (typeof window.screen.orientation === 'object') {
@@ -109,7 +111,8 @@ export default class Platform {
   /**
    * Returns orientation in its simple form (either "portrait" or "landscape"), not taking into
    * consideration an exact rotation angle (as in "primary" or "secondary").
-   * @return {string} Orientation string which is either "portrait" or "landscape"
+   *
+   * @returns {string} Orientation string which is either "portrait" or "landscape"
    */
   get simpleOrientation () {
     return this.isLandscape ? this.constructor.orientations.LANDSCAPE : this.constructor.orientations.PORTRAIT
