@@ -195,7 +195,13 @@ class TransformAdapter {
         let suffix = inflectionJSON.term.suff ? inflectionJSON.term.suff.$ : null
         let prefix = inflectionJSON.term.pref ? inflectionJSON.term.pref.$ : null
         let xmpl = inflectionJSON.xmpl ? inflectionJSON.xmpl.$ : null
-        let inflection = new Inflection(stem, mappingData.model.languageID, suffix, prefix, xmpl)
+        let inflection
+        try {
+          inflection = new Inflection(stem, mappingData.model.languageID, suffix, prefix, xmpl)
+        } catch (e) {
+          this.adapter.addError(this.adapter.l10n.messages['MORPH_TRANSFORM_INFLECTION_ERROR'].get(e.message))
+          continue
+        }
         if (targetWord) {
           inflection.addFeature(new Feature(Feature.types.fullForm, targetWord, mappingData.model.languageID))
         }

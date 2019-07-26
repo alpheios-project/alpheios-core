@@ -50,6 +50,12 @@
     "component": "morphology.tufts",
     "params": ["language"]
   },
+  "MORPH_TRANSFORM_INFLECTION_ERROR": {
+    "message": "Error parsing inflection: {error}",
+    "description": "Error message for morph.tufts adapter - transform problem",
+    "component": "morphology.tufts",
+    "params": ["error"]
+  },
   "BASIC_ADAPTER_NO_DATA_FROM_URL": {
     "message": "Unable to get data from url - {url}",
     "description": "Error message for basic adapter - when no data was returned from the url",
@@ -135,7 +141,7 @@
     "description": "Error message for lexicon.alpheios adapter - no data from url",
     "component": "lexicon.alpheios",
     "params": ["url"]
-  }, 
+  },
   "CONCORDANCE_AUTHOR_UPLOAD_ERROR": {
     "message": "Some problems with retrieving from author/textWork config file - {message}",
     "description": "Error message for wordusageExamples.concordance adapter - problems with uploading data from author-work config file",
