@@ -59,19 +59,20 @@ describe('word-usage-example.test.js', () => {
     let testTextWork = new TextWork(testAuthor, 'urn:cts:latinLit:phi0690.phi003', { lat: 'LatAeneid', eng: 'EngAeneid' }, { eng: 'A.' })
 
     let wordUsageExample = new WordUsageExample('usque', 'lat')
+    wordUsageExample.cit = 'Virgil.Aeneid.484'
     wordUsageExample.author = testAuthor
     wordUsageExample.textWork = testTextWork
-    wordUsageExample.cit = 'Virgil.Aeneid.484'
+    wordUsageExample.passage = '484'
 
     expect(wordUsageExample.fullCit()).toEqual('Virgil EngAeneid 484')
     expect(wordUsageExample.fullCit('lat')).toEqual('Virgil LatAeneid 484')
     expect(wordUsageExample.fullCit('eng')).toEqual('Virgil EngAeneid 484')
 
     wordUsageExample.textWork = undefined
-    expect(wordUsageExample.fullCit()).toEqual('Virgil Aeneid. 484') // gets from cit
+    expect(wordUsageExample.fullCit()).toEqual('Virgil  484') // text work empty
 
     wordUsageExample.author = undefined
-    expect(wordUsageExample.fullCit()).toEqual('Virgil. Aeneid. 484')
+    expect(wordUsageExample.fullCit()).toEqual('484')
   })
 
   it('3.1 WordUsageExample - fullCit constructs full description of author + textWork + citNumber - long cit name', () => {
@@ -80,52 +81,53 @@ describe('word-usage-example.test.js', () => {
     let testTextWork = new TextWork(testAuthor, 'foourn', { eng: 'Naturalis Historia' }, { eng: 'Nat.' })
 
     let wordUsageExample = new WordUsageExample('usque', 'lat')
+    wordUsageExample.cit = 'PlinSen.Nat.34.26.5'
     wordUsageExample.author = testAuthor
     wordUsageExample.textWork = testTextWork
-    wordUsageExample.cit = 'PlinSen.Nat.34.26.5'
+    wordUsageExample.passage = '34.26.5'
 
     expect(wordUsageExample.fullCit()).toEqual('Gaius Plinius Secundus Naturalis Historia 34.26.5')
   })
 
-  it('3.2 WordUsageExample - fullCit constructs full description of author + textWork + citNumber - no author', () => {
+  it('3.2 WordUsageExample - fullCit empty when properties missing', () => {
     // PlinSen.Nat.34.26.5 Gaius Plinius Secundus Naturalis Historia 34
     let wordUsageExample = new WordUsageExample('usque', 'lat')
     wordUsageExample.cit = 'PlinSen.Nat.34.26.5'
 
-    expect(wordUsageExample.fullCit()).toEqual('PlinSen. Nat. 34.26.5')
+    expect(wordUsageExample.fullCit()).toEqual('PlinSen.Nat.34.26.5')
   })
 
-  it('3.3 WordUsageExample - fullCit constructs full description of author + textWork + citNumber - no text work', () => {
+  it('3.3 WordUsageExample - fullCit constructs full description of author + citNumber - no text work', () => {
     // PlinSen.Nat.34.26.5 Gaius Plinius Secundus Naturalis Historia 34
     let testAuthor = new Author('foourn', { eng: 'Gaius Plinius Secundus' }, { eng: 'PlinSen.' })
 
     let wordUsageExample = new WordUsageExample('usque', 'lat')
     wordUsageExample.author = testAuthor
-    wordUsageExample.cit = 'PlinSen.Nat.34.26.5'
+    wordUsageExample.passage = '34.26.5'
+    wordUsageExample.cit = 'PlinSen.34.26.5'
 
-    expect(wordUsageExample.fullCit()).toEqual('Gaius Plinius Secundus Nat. 34.26.5')
+    expect(wordUsageExample.fullCit()).toEqual('Gaius Plinius Secundus  34.26.5')
   })
 
-  it('4 WordUsageExample - authorForSort returns author title in upper case, and the first part of the cit otherwise', () => {
+  it('4 WordUsageExample - authorForSort returns author title in upper case, and the cit otherwise', () => {
     let wordUsageExample = new WordUsageExample('usque', 'lat')
     wordUsageExample.cit = 'Virgil.Aeneid.484'
-
-    expect(wordUsageExample.authorForSort()).toEqual('VIRGIL')
-
+    expect(wordUsageExample.authorForSort()).toEqual('VIRGIL.AENEID.484')
     wordUsageExample.author = new Author('urn:cts:latinLit:phi0690', { eng: 'Virgil' }, { eng: 'Verg.' })
     expect(wordUsageExample.authorForSort()).toEqual('VIRGIL')
   })
 
-  it('5 WordUsageExample - textWorkForSort returns textWork in upper case, and the second part of the cit otherwise', () => {
+  it('5 WordUsageExample - textWorkForSort returns textWork in upper case, and the author + passage otherwise', () => {
     let testAuthor = new Author('urn:cts:latinLit:phi0690', { eng: 'Virgil' }, { eng: 'Verg.' })
     let testTextWork = new TextWork(testAuthor, 'urn:cts:latinLit:phi0690.phi003', { lat: 'LatAeneid', eng: 'EngAeneid' }, { eng: 'A.' })
 
     let wordUsageExample = new WordUsageExample('usque', 'lat')
     wordUsageExample.author = testAuthor
+    wordUsageExample.passage = '484'
 
-    wordUsageExample.cit = 'Virgil.Aeneid.484'
+    wordUsageExample.cit = 'Virgil.484'
 
-    expect(wordUsageExample.textWorkForSort()).toEqual('AENEID')
+    expect(wordUsageExample.textWorkForSort()).toEqual('VIRGIL  484')
 
     wordUsageExample.textWork = testTextWork
     expect(wordUsageExample.textWorkForSort()).toEqual('ENGAENEID')

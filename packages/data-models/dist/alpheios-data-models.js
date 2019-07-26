@@ -5066,6 +5066,9 @@ class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MOD
     this.suffix = suffix
     this.source = source
     this.cit = cit
+    this.author = null
+    this.textWork = null
+    this.passage = null
   }
   createContext () {
     return null // not implemented in the current child-class
@@ -5085,18 +5088,15 @@ class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MOD
   * @returns {String}
   */
   fullCit (lang) {
-    if (!this.cit) {
-      return ''
+    if (!this.author && !this.textWork && !this.passage) {
+      return this.cit
     }
-
-    let citSplitArr = this.cit.split('.')
     let finalFullCit = ''
-
     if (!lang) {
       finalFullCit = this.formattedAuthor + ' ' + this.formattedTextWork + ' ' + this.formattedPassage
     } else {
-      finalFullCit = this.author ? this.author.title(lang) : citSplitArr[0] + '.'
-      finalFullCit = finalFullCit + ' ' + (this.textWork ? this.textWork.title(lang) : citSplitArr[1] + '.')
+      finalFullCit = this.author ? this.author.title(lang) : '.'
+      finalFullCit = finalFullCit + ' ' + (this.textWork ? this.textWork.title(lang) : '.')
       finalFullCit = finalFullCit + ' ' + this.formattedPassage
     }
 
@@ -5104,49 +5104,31 @@ class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MOD
   }
 
   get formattedAuthor () {
-    if (!this.cit) {
-      return ''
-    }
-    let citSplitArr = this.cit.split('.')
-    return this.author ? this.author.title() : citSplitArr[0] + '.'
+    return this.author ? this.author.title() : ''
   }
 
   get formattedTextWork () {
-    if (!this.cit) {
-      return ''
-    }
-    let citSplitArr = this.cit.split('.')
-    return this.textWork ? this.textWork.title() : citSplitArr[1] + '.'
+    return this.textWork ? this.textWork.title() : ''
   }
 
   get formattedPassage () {
-    if (!this.cit) {
-      return ''
-    }
-    let citSplitArr = this.cit.split('.')
-    return citSplitArr.slice(2).join('.')
+    return this.passage
   }
 
   authorForSort (lang) {
     if (this.author) {
       return this.author.title(lang).toUpperCase()
     } else {
-      if (this.cit && this.cit.split('.') && this.cit.split('.').length >= 2) {
-        return this.cit.split('.')[0].toUpperCase()
-      }
+      return this.fullCit(lang).toUpperCase()
     }
-    return this.fullCit(lang).toUpperCase()
   }
 
   textWorkForSort (lang) {
     if (this.textWork) {
       return this.textWork.title(lang).toUpperCase()
     } else {
-      if (this.cit && this.cit.split('.') && this.cit.split('.').length >= 2) {
-        return this.cit.split('.')[1].toUpperCase()
-      }
+      return this.fullCit(lang).toUpperCase()
     }
-    return this.fullCit(lang).toUpperCase()
   }
 
   get prefixForSort () {
