@@ -1,11 +1,11 @@
 {
   "name": "alpheios-client-adapters",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Alpheios Client Adapters Library",
   "main": "dist/alpheios-client-adapters.min.js",
   "scripts": {
     "test": "eslint --fix src/**/*.js && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-a": "eslint --fix src/**/*.js && jest tests/adapters/lexicons/adapter.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "test-a": "eslint --fix src/**/*.js && jest tests/adapters/alpheiostb/adapter.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "build": "npm run build-lib && npm run build-node",
     "build-lib": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue config.mjs",
     "build-node": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all node-lib config-node.mjs",

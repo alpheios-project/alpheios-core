@@ -24,30 +24,28 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
    *      - {undefined} - if failed
   */
   async getHomonym (languageID, wordref) {
-    let url = this.prepareRequestUrl(wordref)
-    if (!url) {
+    let server = this.prepareRequest(wordref)
+    if (!server.url) {
       this.addError(this.l10n.messages['MORPH_TREEBANK_NO_URL'].get(wordref))
       return
     }
     try {
-      if (url) {
-        let res = await this.fetch(url, { type: 'xml' })
+      let res = await this.fetch(server.url, { type: 'xml' })
 
-        if (res.constructor.name === 'AdapterError') {
-          return
-        }
+      if (res.constructor.name === 'AdapterError') {
+        return
+      }
 
-        if (res) {
-          let langCode = LMF.getLanguageCodeFromId(languageID)
+      if (res) {
+        let langCode = LMF.getLanguageCodeFromId(languageID)
 
-          let jsonObj = xmlToJSON.parseString(res)
-          jsonObj.words[0].word[0].entry[0].dict[0].hdwd[0]._attr = { lang: { _value: langCode } }
+        let jsonObj = xmlToJSON.parseString(res)
+        jsonObj.words[0].word[0].entry[0].dict[0].hdwd[0]._attr = { lang: { _value: langCode } }
 
-          let homonym = this.transform(jsonObj, jsonObj.words[0].word[0].form[0]._text)
-          return homonym
-        } else {
-          this.addError(this.l10n.messages['MORPH_TREEBANK_NO_ANSWER_FOR_WORD'].get(wordref))
-        }
+        let homonym = this.transform(jsonObj, jsonObj.words[0].word[0].form[0]._text, server.config)
+        return homonym
+      } else {
+        this.addError(this.l10n.messages['MORPH_TREEBANK_NO_ANSWER_FOR_WORD'].get(wordref))
       }
     } catch (error) {
       this.addError(this.l10n.messages['MORPH_TREEBANK_UNKNOWN_ERROR'].get(error.mesage))
@@ -55,31 +53,37 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
   }
 
   /**
-   * This method creates url with url from config and chosen engine
+   * This method prepares the request from the config
    * @param {String} wordref - a word reference for getting homonym
    * @return {String} - constructed url for getting data from Treebank
   */
-  prepareRequestUrl (wordref) {
+  prepareRequest (wordref) {
     let [text, fragment] = wordref.split(/#/)
-    let url
-
-    if (this.config.texts.includes(text)) {
-      url = this.config.url.replace('r_TEXT', text)
-      url = url.replace('r_WORD', fragment).replace('r_CLIENT', this.config.clientId)
+    let requestServer = {}
+    if (text && fragment) {
+      for (let serverConfig of this.config.servers) {
+        if (serverConfig.isDefault || serverConfig.texts.includes(text)) {
+          requestServer.config = serverConfig
+          requestServer.url = serverConfig.url.replace('r_TEXT', text)
+          requestServer.url = requestServer.url.replace('r_WORD', fragment).replace('r_CLIENT', serverConfig.clientId)
+          break
+        }
+      }
     }
-    return url
+    return requestServer
   }
 
   /**
    * This method transform data from adapter to Homonym
    * @param {Object} jsonObj - data from adapter
    * @param {String} targetWord - word
+   * @param {String} config - server config
    * @return {Homonym}
   */
-  transform (jsonObj, targetWord) {
+  transform (jsonObj, targetWord, config) {
     'use strict'
-    let providerUri = this.config.providerUri
-    let providerRights = this.config.providerRights
+    let providerUri = config.providerUri
+    let providerRights = config.providerRights
     let provider = new ResourceProvider(providerUri, providerRights)
 
     let hdwd = jsonObj.words[0].word[0].entry[0].dict[0].hdwd[0]
@@ -95,7 +99,7 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
     let infl = jsonObj.words[0].word[0].entry[0].infl[0]
     inflection.addFeature(new Feature(Feature.types.fullForm, targetWord, model.languageID))
 
-    let features = this.config.featuresArray
+    let features = config.featuresArray
     for (let feature of features) {
       let localName = feature[0]
       let featureType = feature[1]

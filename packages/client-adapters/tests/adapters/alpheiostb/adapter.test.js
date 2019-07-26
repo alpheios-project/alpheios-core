@@ -34,19 +34,20 @@ describe('alpheiostb/adapter.test.js', () => {
     expect(adapter.models).toBeDefined()
   })
 
-  it('2 AlpheiosTreebankAdapter - getHomonym executes prepareRequestUrl and if url could not be constructed return undefined and adds error', async () => {
+  it('2 AlpheiosTreebankAdapter - getHomonym executes prepareRequest and if url could not be constructed return undefined and adds error', async () => {
     let adapter = new AlpheiosTreebankAdapter({
       category: 'morphology',
       adapterName: 'alpheiosTreebank',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      servers: []
     })
 
     expect(adapter.errors.length).toEqual(0)
 
-    adapter.prepareRequestUrl = jest.fn()
+    jest.spyOn(adapter,'prepareRequest')
     let res = await adapter.getHomonym(Constants.LANG_LATIN, 'phi0959.phi006.alpheios-text-lat1#1-2')
 
-    expect(adapter.prepareRequestUrl).toHaveBeenCalled()
+    expect(adapter.prepareRequest).toHaveBeenCalled()
     expect(adapter.errors.length).toEqual(1)
     expect(res).toBeUndefined()
   })
@@ -82,8 +83,8 @@ describe('alpheiostb/adapter.test.js', () => {
       method: 'getHomonym'
     })
 
-    let res = adapter.prepareRequestUrl('1-2')
-    expect(res).toBeUndefined()
+    let res = adapter.prepareRequest('1-2')
+    expect(res).toEqual({})
   })
 
   it('6 AlpheiosTreebankAdapter - prepareRequestUrl returns url if wordref is defined correctly', () => {
@@ -93,20 +94,26 @@ describe('alpheiostb/adapter.test.js', () => {
       method: 'getHomonym'
     })
 
-    let res = adapter.prepareRequestUrl('phi0959.phi006.alpheios-text-lat1#1-2')
-    expect(res).toEqual(expect.stringMatching(/tools.alpheios.net\/exist/))
+    let res = adapter.prepareRequest('phi0959.phi006.alpheios-text-lat1#1-2')
+    expect(res.url).toEqual(expect.stringMatching(/tools.alpheios.net\/exist/))
   })
 
-  it('7 AlpheiosTreebankAdapter - prepareRequestUrl returns correct url', () => {
-    let adapter = new AlpheiosTreebankAdapter({ clientId: 'fooClient' })
-    let url = adapter.prepareRequestUrl('1999.02.0066#1-2')
-    expect(url).toEqual('https://tools.alpheios.net/exist/rest/db/xq/treebank-getmorph.xq?f=1999.02.0066&w=1-2&clientId=fooClient')
+  it('7 AlpheiosTreebankAdapter - prepareRequestUrl returns correct config', () => {
+    let adapter = new AlpheiosTreebankAdapter({
+      category: 'morphology',
+      adapterName: 'alpheiosTreebank',
+      method: 'getHomonym',
+      servers: [ {isDefault: true, clientId: 'fooClient', url: 'https://example.org/r_TEXT/r_WORD/r_CLIENT' }]
+    })
+    let res = adapter.prepareRequest('1999.02.0066#1-2')
+    expect(res.url).toEqual('https://example.org/1999.02.0066/1-2/fooClient')
+    expect(res.config.clientId).toEqual('fooClient')
   })
 
   it('8 AlpheiosTreebankAdapter - adapted a word properly', async () => {
     let adapter = new AlpheiosTreebankAdapter()
     let homonym = await adapter.getHomonym(Constants.LANG_LATIN, '1999.02.0066#1-2')
-    
+
     expect(homonym.lexemes.length).toEqual(1)
     expect(homonym.lexemes[0].lemma.word).toEqual('primus')
     expect(homonym.lexemes[0].lemma.features['part of speech'].value).toEqual('adjective')
@@ -114,5 +121,19 @@ describe('alpheiostb/adapter.test.js', () => {
     expect(homonym.lexemes[0].inflections[0]['case'].value).toEqual('nominative')
     expect(homonym.lexemes[0].inflections[0].gender.value).toEqual('feminine')
     expect(homonym.lexemes[0].inflections[0].number.value).toEqual('singular')
+  })
+
+  it('8 AlpheiosTreebankAdapter - prepareRequestUrl returns correct config for specific text', () => {
+    let adapter = new AlpheiosTreebankAdapter({
+      category: 'morphology',
+      adapterName: 'alpheiosTreebank',
+      method: 'getHomonym',
+      servers: [ {isDefault: false, texts: [ '1999.02.0066'], clientId: 'fooClient', url: 'https://example.org/r_TEXT/r_WORD/r_CLIENT' }]
+    })
+    let res = adapter.prepareRequest('1999.02.0066#1-2')
+    expect(res.url).toEqual('https://example.org/1999.02.0066/1-2/fooClient')
+    expect(res.config.clientId).toEqual('fooClient')
+    res = adapter.prepareRequest('abc#1-2')
+    expect(res.url).toBeUndefined()
   })
 })
