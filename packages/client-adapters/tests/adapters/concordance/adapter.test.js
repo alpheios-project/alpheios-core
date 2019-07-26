@@ -526,9 +526,10 @@ describe('concordance.test.js', () => {
     let testHomonym = { language: 'lat', targetWord: 'usque' }
     let testAuthor = 'fooAuthor'
     let testTextWork = 'fooTextWork'
+    let testPassage = '1.1.1'
     let testSourceLink = 'https://latin.packhum.org'
 
-    let wordUsageExample = adapter.createWordUsageExample(testJsonObj, testHomonym, testAuthor, testTextWork)
+    let wordUsageExample = adapter.createWordUsageExample(testJsonObj, testHomonym, testAuthor, testTextWork, testPassage)
 
     expect(wordUsageExample.languageCode).toEqual('lat')
     expect(wordUsageExample.prefix).toEqual(testJsonObj.left)
@@ -537,6 +538,7 @@ describe('concordance.test.js', () => {
     expect(wordUsageExample.cit).toEqual(testJsonObj.cit)
     expect(wordUsageExample.author).toEqual(testAuthor)
     expect(wordUsageExample.textWork).toEqual(testTextWork)
+    expect(wordUsageExample.passage).toEqual(testPassage)
 
     expect(wordUsageExample.provider).toBeDefined()
   })
@@ -550,5 +552,30 @@ describe('concordance.test.js', () => {
 
     let res3 = adapter.formatPagination({ property: 'authmax', value: 10 })
     expect(res3).toEqual(`?authmax=10&max=${adapter.config.maxResultsOverride}`)
+  })
+  it('18 AlpheiosConcordanceAdapter - getTextWorkByAbbr handles missing title', async () => {
+    let adapter = new AlpheiosConcordanceAdapter({
+      category: 'wordUsage',
+      adapterName: 'concordance',
+      method: 'getAuthorsWorks'
+    })
+
+    let authors = await adapter.getAuthorsWorks()
+
+    let testJsonObj = {
+      "link": "/loc/911/1/0/9671-9676",
+      "cit": "LausPis.213",
+      "left": "accipe nostri certus et hoc veri complectere pignus a",
+      "right": ". Quod si digna tua minus est mea pagina laude, at",
+      "target": "moris"
+    }
+
+    let methodAuthor = await adapter.getAuthorByAbbr(testJsonObj)
+    expect(methodAuthor).not.toBeNull()
+    expect(methodAuthor).not.toBeNull()
+
+    let methodTextWork = adapter.getTextWorkByAbbr(methodAuthor, testJsonObj)
+    expect(methodTextWork).toBeNull()
+    expect(adapter.getPassage(testJsonObj)).toEqual('213')
   })
 })

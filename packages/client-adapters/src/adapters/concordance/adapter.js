@@ -136,7 +136,7 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
   */
   async parseWordUsageResult (jsonObj, homonym) {
     let wordUsageExamples = []
-    let author, textWork
+    let author, textWork, passage
 
     if (this.authors.length === 0) {
       await this.getAuthorsWorks()
@@ -145,8 +145,10 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
     for (let jsonObjItem of jsonObj) {
       author = this.getAuthorByAbbr(jsonObjItem)
       textWork = this.getTextWorkByAbbr(author, jsonObjItem)
+      passage = this.getPassage(jsonObjItem)
 
-      let wordUsageExample = this.createWordUsageExample(jsonObjItem, homonym, author, textWork)
+
+      let wordUsageExample = this.createWordUsageExample(jsonObjItem, homonym, author, textWork, passage)
       wordUsageExamples.push(wordUsageExample)
     }
     return wordUsageExamples
@@ -162,10 +164,32 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
 
   getTextWorkByAbbr (author, jsonObj) {
     if (jsonObj.cit && author && author.works.length > 0) {
-      let textWorkAbbr = jsonObj.cit.split('.')[1]
-      return author.works.find(textWork => Object.values(textWork.abbreviations).includes(textWorkAbbr))
+      let parts = jsonObj.cit.split('.')
+      // if we have only 2 parts in the citation, it's probably an author without a work
+      // which in the phi data is really when the author and work are referenced as the same thing
+      // as in an anonymous work
+      if (parts.length > 2) {
+        let textWorkAbbr = parts[1]
+        return author.works.find(textWork => Object.values(textWork.abbreviations).includes(textWorkAbbr))
+      }
     }
     return null
+  }
+
+  getPassage (jsonObj) {
+    let passage = null
+    if (jsonObj.cit) {
+      let parts = jsonObj.cit.split('.')
+      // if we have only 2 parts in the citation, it's probably an author without a work
+      // which in the phi data is really when the author and work are referenced as the same thing
+      // as in an anonymous work
+      if (parts.length == 2) {
+        passage = parts.slice(1).join('.')
+      } else if (parts.length > 2) {
+        passage = parts.slice(2).join('.')
+      }
+    }
+    return passage
   }
 
   /**
@@ -260,14 +284,15 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
   * @param {Homonym} homonym - source homonym object
   * @param {Author} author - source author object, could be undefined
   * @param {TextWork} textWork - source textWork object, could be undefined
-  * @param {String} sourceLink - sourceTextUrl from the adapter config file
+  * @param {String} passage - passage string, could be null
   * @returns {WordUsageExample}
   */
-  createWordUsageExample (jsonObj, homonym, author, textWork) {
+  createWordUsageExample (jsonObj, homonym, author, textWork, passage) {
     let source = this.config.sourceTextUrl + jsonObj.link
     let wordUsageExample = new WordUsageExample(homonym.language, jsonObj.target, jsonObj.left, jsonObj.right, source, jsonObj.cit)
     wordUsageExample.author = author
     wordUsageExample.textWork = textWork
+    wordUsageExample.passage =  passage
     wordUsageExample.homonym = homonym
     wordUsageExample.provider = this.provider
 
