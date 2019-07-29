@@ -20,6 +20,11 @@
                 <delete-icon></delete-icon>
             </div>
             </alph-tooltip>
+            <alph-tooltip tooltipDirection="top-left" :tooltipText="l10n.getText('WORDLIST_TOOLTIP_DOWNLOAD', { lang: languageCode })">
+            <div class="alpheios-wordlist-commands__item alpheios-wordlist-commands__item-download" @click="downloadList()">
+                <download-icon></download-icon>
+            </div>
+            </alph-tooltip>
         </div>
 
         <div class="alpheios-wordlist-delete-all-confirmation alpheios-notification-area__notification alpheios-notification-area__notification--important" v-show="showDeleteAllBox">
@@ -75,9 +80,12 @@ import Tooltip from '@/vue/components/tooltip.vue'
 import CheckIcon from '@/images/inline-icons/check.svg'
 import DeleteIcon from '@/images/inline-icons/delete.svg'
 import CloseIcon from '@/images/inline-icons/x-close.svg'
+import DownloadIcon from '@/images/inline-icons/download.svg'
 import WordItemPanel from '@/vue/components/word-list/word-item-panel.vue'
 import WordFilterPanel from '@/vue/components/word-list/word-filter-panel.vue'
 import WordSortingPanel from '@/vue/components/word-list/word-sorting-panel.vue'
+
+import Download from '@/lib/utility/download.js'
 
 export default {
   name: 'WordLanguagePanel',
@@ -85,6 +93,7 @@ export default {
     closeIcon: CloseIcon,
     checkIcon: CheckIcon,
     deleteIcon: DeleteIcon,
+    downloadIcon: DownloadIcon,
     wordItem: WordItemPanel,
     wordFilterPanel: WordFilterPanel,
     wordSortingPanel: WordSortingPanel,
@@ -227,6 +236,21 @@ export default {
           return 0 // default state is unsorted
         }
       })
+    },
+    downloadList () {
+      const exportFields = [ 'targetWord', 'languageCode', 'important', 'currentSession', 'lemmasList', 'context' ]
+      const wordlistData = this.wordlist.values.map(wordItem => {
+        return { 
+          targetWord: wordItem.targetWord,
+          languageCode: wordItem.languageCode,
+          important: wordItem.important,
+          currentSession: wordItem.currentSession,
+          lemmasList: wordItem.lemmasList,
+          context: Object.keys(wordItem.formattedContext).join(' ')
+        }
+      })
+      const result = Download.collectionToCSV(';', exportFields)(wordlistData)
+      Download.downloadBlob(result, `wordlist-${this.languageCode}.csv`)
     }
   }
 }
@@ -267,7 +291,8 @@ export default {
       stroke: var(--alpheios-word-list-important-item-color);
     }
 
-    .alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-remove-all {
+    .alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-remove-all,
+    .alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-download {
       fill: var(--alpheios-word-list-delete-item-color);
       stroke: var(--alpheios-word-list-delete-item-color);
     }

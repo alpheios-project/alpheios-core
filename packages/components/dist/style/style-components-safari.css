@@ -3087,7 +3087,8 @@ p.alpheios-word-usage-filter-title {
   fill: var(--alpheios-word-list-important-item-color) !important;
   stroke: var(--alpheios-word-list-important-item-color) !important;
 }
-.alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-remove-all {
+.alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-remove-all,
+.alpheios-wordlist-commands__item.alpheios-wordlist-commands__item-download {
   fill: var(--alpheios-word-list-delete-item-color) !important;
   stroke: var(--alpheios-word-list-delete-item-color) !important;
 }

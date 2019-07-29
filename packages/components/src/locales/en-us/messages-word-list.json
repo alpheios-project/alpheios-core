@@ -118,5 +118,11 @@
         "message": "Select a limit",
         "description": "Placeholder for filter selection",
         "component": "WordFilterPanel"
+    },
+    "WORDLIST_TOOLTIP_DOWNLOAD": {
+        "message": "Download wordlist ({lang})",
+        "description": "Placeholder for filter selection",
+        "component": "WordFilterPanel",
+        "params": ["lang"]
     }
 }
