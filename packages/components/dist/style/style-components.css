@@ -3605,6 +3605,14 @@ p.alpheios-word-usage-filter-title {
   border-radius: 0;
   border: none;
 }
+.alpheios-toolbar__help-control {
+  background: var(--alpheios-text-bg-color);
+}
+.alpheios-toolbar__help-control .alpheios-navbuttons__btn {
+  margin: 0;
+  border-radius: 0;
+  border: none;
+}
 .alpheios-toolbar__header {
   width: calc(var(--alpheios-base-ui-size) * 2.75);
   height: calc(var(--alpheios-base-ui-size) * 3.375);
