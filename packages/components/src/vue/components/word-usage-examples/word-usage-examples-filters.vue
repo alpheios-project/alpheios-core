@@ -78,7 +78,13 @@ export default {
     homonym () {
       return this.$store.state.app.homonymDataReady ? this.app.homonym : null
     },
+    languageCode () {
+      return  this.homonym ? this.homonym.language : null
+    },
     authorsList () {
+      if (!this.$store.state.app.homonymDataReady) {
+        return false
+      }
       if (this.$store.state.app.wordUsageExamplesReady && (!this.lastTargetWord || this.lastTargetWord !== this.homonym.targetWord)) {
         this.lastTargetWord = this.homonym.targetWord
         this.lastAuthorsList = this.app.wordUsageExamples.wordUsageExamples
@@ -86,20 +92,23 @@ export default {
           .map(wordUsageExampleItem => wordUsageExampleItem.author)
           .filter((item, pos, self) => self.indexOf(item) == pos)
           .slice()
+        this.applySort('author', this.lastAuthorsList)
         this.lastAuthorsList.unshift(null)
+      }
+      if (!this.$store.state.app.wordUsageExamplesReady && !this.selectedAuthor) {
+        return false
       }
       return true
     },
     filteredWorkList () {
+      if (!this.$store.state.app.homonymDataReady) {
+        return false
+      }
       if (this.selectedAuthor) {
         this.selectedTextWork = null
         let resArray = this.selectedAuthor.works.slice()
-        if (resArray.length > 1) {
-          resArray.sort((a,b) => {
-            let aT = this.calcTitle(a, 'textwork')
-            let bT = this.calcTitle(b, 'textwork')
-            return (aT < bT) ? -1 : (aT > bT) ? 1 : 0
-          })
+        if (resArray.length > 1 && this.languageCode) {
+          resArray = this.applySort('textwork', resArray)
           resArray.unshift(null)
         } else if (resArray.length === 1) {
           this.selectedTextWork = resArray[0]
@@ -156,6 +165,13 @@ export default {
         }
       }
       return ''
+    },
+    applySort (typeSort, items) {
+      return items.sort((a,b) => {
+            let aT = this.calcTitle(a, typeSort)
+            let bT = this.calcTitle(b, typeSort)        
+            return aT.localeCompare(bT, this.languageCode, {sensitivity: 'accent'})
+          })
     }
   }
 }

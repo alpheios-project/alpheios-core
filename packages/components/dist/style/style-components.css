@@ -2755,13 +2755,14 @@ p.alpheios-word-usage-filter-title {
 .alpheios-word-usage__examples-show-sources-cbx {
   margin: 40px 0 20px;
 }
-.alpheios-word-usage a.alpheios-word-usage__examples-source-link-large {
+.alpheios-word-usage__examples-source-link-large {
   grid-column: 1/4;
   color: var(--alpheios-usage-link-color);
   padding-top: 10px;
   padding-bottom: 5px;
+  cursor: pointer;
 }
-.alpheios-word-usage a.alpheios-word-usage__examples-source-link-large:hover {
+.alpheios-word-usage__examples-source-link-large:hover {
   color: var(--alpheios-usage-link-color-hover);
 }
 .alpheios-word-usage__examples-source-link-compact-cont {

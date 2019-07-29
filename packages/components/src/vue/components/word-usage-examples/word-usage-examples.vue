@@ -52,12 +52,12 @@
               v-for="wordUsageItem in wordUsageListSorted"
               :wordUsageItem="wordUsageItem"
           >
-            <a
+            <div
                 class="alpheios-word-usage__examples-source-link-large"
-                :href="wordUsageItem.source"
-                target="_blank" v-html="formattedFullCit(wordUsageItem)"
+                v-html="formattedFullCit(wordUsageItem)"
+                @click="gotToTheSource(wordUsageItem)"
             >
-            </a>
+            </div>
             <div
                 class="alpheios-word-usage__examples-pre"
             >
@@ -238,6 +238,10 @@ export default {
     },
     formattedFullCit (wordUsageItem) {
       return wordUsageItem.formattedAuthor + ' <i>' + wordUsageItem.formattedTextWork + '</i> ' + wordUsageItem.formattedPassage
+    },
+    gotToTheSource (wordUsageItem) {
+      var tab = window.open(wordUsageItem.source, '_blank')
+      tab.focus()
     }
   },
   mounted () {
@@ -318,11 +322,13 @@ export default {
     }
 
 
-    a#{&}__examples-source-link-large {
+    &__examples-source-link-large {
       grid-column: 1/4;
       color: var(--alpheios-usage-link-color);
       padding-top: 10px;
       padding-bottom: 5px;
+
+      cursor: pointer;
 
       &:hover {
         color: var(--alpheios-usage-link-color-hover);
