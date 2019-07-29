@@ -2909,7 +2909,7 @@ p.alpheios-word-usage-filter-title {
 .alpheios-visibility__hidden {
   visibility: hidden;
 }
-.alpheios-worditem__lemmasList-lemmaitem {
+.alpheios-lemma-clickable .alpheios-worditem__lemmasList-lemmaitem {
   cursor: pointer;
 }
 .alpheios-layout-compact .alpheios-worditem__targetWord {

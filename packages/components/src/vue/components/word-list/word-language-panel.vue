@@ -64,7 +64,8 @@
         </div>
         <div
             v-for="wordItem in wordItems"
-            v-bind:key="wordItem.targetWord">
+            v-bind:key="wordItem.targetWord"
+            :class="{ 'alpheios-lemma-clickable': !clickedLemma }">
             <word-item
               :worditem="wordItem"
               @changeImportant = "changeImportant"
@@ -215,7 +216,9 @@ export default {
       this.textInput = textInput
     },
     setLemmaFilterByClick (lemma) {
-      this.clickedLemma = lemma
+      if (!this.clickedLemma && lemma) {
+        this.clickedLemma = lemma
+      }
     },
     clearClickedLemma () {
       this.clickedLemma = null

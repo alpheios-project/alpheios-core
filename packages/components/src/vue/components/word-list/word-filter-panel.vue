@@ -211,6 +211,7 @@
       clearFilteringText () {
         this.textInput = null
         this.clearFilterEvent()
+        this.$emit('clearClickedLemma')
       },
       clearFilterEvent () {
         this.$emit('changedFilterBy', null)
@@ -219,7 +220,7 @@
         this.selectedFilterBy = 'byLemma'
         this.textInput = this.clickedLemma.trim()
         this.clickFilterBy()
-        this.$emit('clearClickedLemma')
+        
       },
       filterVariants () {
         if (this.textInput && this.textInput.length > 0) {

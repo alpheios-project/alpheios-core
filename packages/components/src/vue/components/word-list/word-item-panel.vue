@@ -183,6 +183,7 @@ export default {
     visibility: hidden;
   }
 
+  .alpheios-lemma-clickable 
   .alpheios-worditem__lemmasList-lemmaitem {
     cursor: pointer;
   }
