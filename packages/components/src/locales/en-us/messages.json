@@ -191,42 +191,48 @@
     "component": "Panel"
   },
   "TEXT_INFO_ACTIVATE": {
-    "message": "Activate on a page with Latin, Ancient Greek, Arabic or Persian text.",
+    "message": "Click the Alpheios icon in the browser toolbar to activate on any page with Latin, Ancient Greek, Arabic or Persian text. Click again to deactivate.",
     "description": "info text",
     "component": "Panel"
   },
   "TEXT_INFO_CLICK": {
-    "message": "Double-click on a word to retrieve morphology and short definitions.",
+    "message": "Double-click on a word to retrieve lemmas, morphology, short definitions and usage examples.",
     "description": "info text",
     "component": "Panel"
   },
-  "TEXT_INFO_LANGDETECT": {
-    "message": "Alpheios will try to detect the language of the word from the page markup. If it cannot it will use the default language.",
+  "TEXT_INFO_LOOKUP": {
+    "message": "Use the lookup tool to enter any word for analysis.",
     "description": "info text",
     "component": "Panel"
+  },
+  "TEXT_INFO_TIPS": {
+    "message": "Usage Tips",
+    "description": "info tips text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_ABOUT": {
+    "message": "About Alpheios",
+    "description": "info tips text",
+    "component": "Panel"
+  },
+  "TEXT_INFO_LANGDETECT": {
+    "message": "When you lookup a word, if Alpheios cannot detect the language of the word from the page markup it will use its default language, currently set to <b>{languageName}</b>.  You can change the default language for word lookups in the application Options. You can also return to this pane to lookup a word in <em>any</em> of the supported languages.",
+    "description": "info text",
+    "component": "Panel",
+    "params": ["languageName"]
   },
   "LABEL_INFO_CURRENTLANGUAGE": {
     "message": "Current language:",
     "description": "label for current language in info text",
     "component": "Panel"
   },
-  "TEXT_INFO_SETTINGS": {
-    "message": "Click the Options wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').",
+  "TEXT_INFO_TOOLBAR": {
+    "message": "Click the tools icon on the Alpheios toolbar to access a tool in this panel, including your user account and wordlist, inflection table and grammar browsers and the application options.",
     "description": "info text",
     "component": "Panel"
   },
   "TEXT_INFO_ARROW": {
     "message": "Use the arrow at the top of this panel to move it from the right to left of your browser window.",
-    "description": "info text",
-    "component": "Panel"
-  },
-  "TEXT_INFO_REOPEN": {
-    "message": "You can reopen this panel at any time by selecting 'Info' from the Alpheios Reading Tools option in your browser's context menu.",
-    "description": "info text",
-    "component": "Panel"
-  },
-  "TEXT_INFO_DEACTIVATE": {
-    "message": "Deactivate Alpheios by clicking the toolbar icon or choosing 'Deactivate' from the Alpheios Reading Tools option in your browser's context menu.",
     "description": "info text",
     "component": "Panel"
   },

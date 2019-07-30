@@ -488,6 +488,7 @@ export default class UIController {
       state: {
         currentLanguageID: undefined,
         currentLanguageName: '',
+        embedLibActive: false,
         selectedText: '',
         languageName: '',
         languageCode: '',
@@ -554,6 +555,9 @@ export default class UIController {
       },
 
       mutations: {
+        setEmbedLibActive(state, status) {
+          state.embedLibActive = status
+        },
         setCurrentLanguage (state, languageCodeOrID) {
           let name
           let id
@@ -1166,6 +1170,10 @@ export default class UIController {
     this.updateWordAnnotationData(data)
     this.store.commit('app/lexicalRequestStarted', targetWord)
     return this
+  }
+
+  setEmbedLibActive () {
+    this.store.commit('app/setEmbedLibActive',true)
   }
 
   resetInflData () {

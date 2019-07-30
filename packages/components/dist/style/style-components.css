@@ -3472,6 +3472,36 @@ p.alpheios-word-usage-filter-title {
 .alpheios-info__helptext {
   margin-top: 1em;
 }
+.alpheios-info__helpitem {
+  display: flex;
+  column-count: 2;
+  align-items: center;
+  margin-bottom: 1em;
+}
+.alpheios-info__helpitem .alpheios-info__helpicon {
+  padding-right: 15px;
+  height: 44px;
+}
+.alpheios-info__helpitem .alpheios-info__helpicon svg {
+  width: calc(var(--alpheios-base-ui-size) * 1.25);
+  height: calc(var(--alpheios-base-ui-size) * 1.25);
+  position: relative;
+  fill: var(--alpheios-compact-toolbar-bg);
+  stroke: var(--alpheios-compact-toolbar-bg);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-block;
+}
+.alpheios-info__helpitem .alpheios-info__helpicon svg .svg-logo-bg {
+  fill: var(--alpheios-color-light);
+}
+.alpheios-info__helpitem .alpheios-info__helpicon svg .svg-logo-lines {
+  fill: var(--alpheios-compact-toolbar-bg);
+}
+.alpheios-info__languagenotification {
+  color: var(--alpheios-notification-important-color);
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
