@@ -191,7 +191,7 @@ export default class WordlistController {
       wordItem.addContext([data])
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'context'}})
       // emit a wordlist updated event too in case the wordlist was updated
-      WordlistController.evt.WORDLIST_UPDATED.pub(this.getWordList(wordItem.languageCode))
+      WordlistController.evt.WORDLIST_UPDATED.pub([this.getWordList(wordItem.languageCode)])
     } else {
       console.error("Unable to create or retrieve worditem")
     }
