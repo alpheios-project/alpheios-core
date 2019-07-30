@@ -53950,6 +53950,8 @@ class UIController {
       this.store.commit('panel/setPosition', this.uiOptions.items.panelPosition.currentValue)
     }
 
+    this.uiSetFontSize(this.uiOptions)
+
     this.updateLemmaTranslations()
 
     this.state.setWatcher('uiActive', this.updateAnnotations.bind(this))
@@ -54854,15 +54856,10 @@ class UIController {
    */
   uiOptionStateChange (settingName) {
     let uiOptions = this.api.settings.getUiOptions()
-    const FONT_SIZE_PROP = '--alpheios-base-text-size'
+
     switch (settingName) {
       case 'fontSize':
-        try {
-          document.documentElement.style.setProperty(FONT_SIZE_PROP,
-            `${uiOptions.items.fontSize.currentValue}px`)
-        } catch (error) {
-          console.error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
-        }
+        this.uiSetFontSize(uiOptions)
         break
       case 'panelPosition':
         this.store.commit('panel/setPosition', uiOptions.items.panelPosition.currentValue)
@@ -54872,6 +54869,16 @@ class UIController {
           this.store.commit(`auth/setHideLoginPrompt`, uiOptions.items.hideLoginPrompt.currentValue)
         }
         break
+    }
+  }
+
+  uiSetFontSize (uiOptions) {
+    const FONT_SIZE_PROP = '--alpheios-base-text-size'
+    try {
+      document.documentElement.style.setProperty(FONT_SIZE_PROP,
+        `${uiOptions.items.fontSize.currentValue}px`)
+    } catch (error) {
+      console.error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
     }
   }
 
