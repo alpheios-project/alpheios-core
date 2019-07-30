@@ -563,5 +563,27 @@
     "message": "Latin Word Usage Examples (Concordance)",
     "description": "Legend for options fieldset",
     "component": "Options Tab"
+  },
+  "OPTIONS_TAB_UI": {
+    "message": "User Interface Options",
+    "description": "Tooltip for the show UI options icon",
+    "component": "Options Tab"
+  },
+  "OPTIONS_TAB_FEATURE": {
+    "message": "Feature Options",
+    "description": "Tooltip for the show Feature options icon",
+    "component": "Options Tab"
+  },
+  "OPTIONS_TAB_RESOURCE": {
+    "message": "Resource Options",
+    "description": "Tooltip for the show Resource options icon",
+    "component": "Options Tab"
+  },
+  "OPTIONS_TAB_RESET_ALL_TITLE": {
+    "message": "Apply to all options - U, F, R",
+    "description": "Reset All description title",
+    "component": "Options Tab"
   }
+
+  
 }

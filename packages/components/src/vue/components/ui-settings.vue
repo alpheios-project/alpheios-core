@@ -61,7 +61,7 @@
     flex-direction: column;
   }
   .alpheios-ui-options__item {
-    margin-bottom: textsize(10px);
+    margin-bottom: textsize(15px);
     display: flex;
     align-items: flex-start;
     flex: 1 1 auto;

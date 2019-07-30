@@ -1,36 +1,36 @@
 <template>
   <div class="alpheios-feature-options__cont">
     <setting
-        :classes="['alpheios-feature-options-item']"
+        class="alpheios-feature-options__item"
         :data="featureOptions.items.preferredLanguage"
         @change="featureOptionChanged"
     >
     </setting>
-    <fieldset>
+    <fieldset class="alpheios-feature-options__cont-concord">
       <legend>{{l10n.getText("LABEL_FIELDSET_USAGEEXAMPLES")}}</legend>
       <setting
-          :classes="['alpheios-feature-options-item']"
+          class="alpheios-feature-options__item"
           :data="featureOptions.items.enableWordUsageExamples"
           @change="featureOptionChanged"
       >
       </setting>
 
       <setting
-          :classes="['alpheios-feature-options-item']"
+          class="alpheios-feature-options__item"
           :data="featureOptions.items.wordUsageExamplesON"
           @change="featureOptionChanged"
       >
       </setting>
 
       <setting
-          :classes="['alpheios-feature-options-item']"
+          class="alpheios-feature-options__item"
           :data="featureOptions.items.wordUsageExamplesAuthMax"
           @change="featureOptionChanged"
       >
       </setting>
 
       <setting
-          :classes="['alpheios-feature-options-item']"
+          class="alpheios-feature-options__item"
           :data="featureOptions.items.wordUsageExamplesMax"
           @change="featureOptionChanged"
       >
@@ -38,14 +38,14 @@
     </fieldset>
 
     <setting
-        :classes="['alpheios-feature-options-item']"
+        class="alpheios-feature-options__item"
         :data="featureOptions.items.enableLemmaTranslations"
         @change="featureOptionChanged"
     >
     </setting>
 
     <setting
-        :classes="['alpheios-feature-options-item']"
+        class="alpheios-feature-options__item"
         :data="featureOptions.items.locale"
         @change="featureOptionChanged"
     >
@@ -93,5 +93,9 @@
     display: flex;
     align-items: flex-start;
     flex: 1 1 auto;
+  }
+
+  .alpheios-feature-options__cont-concord {
+    margin: textsize(15px) 0;
   }
 </style>

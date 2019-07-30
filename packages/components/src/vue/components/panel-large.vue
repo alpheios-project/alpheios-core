@@ -129,14 +129,7 @@
            v-show="$store.getters['ui/isActiveTab']('options')"
            data-alpheios-ignore="all"
       >
-        <ui-settings :key="uiSettingsKey"></ui-settings>
-        <feature-settings :key="featureSettingsKey"></feature-settings>
-        <resource-settings :key="resourceSettingsKey"></resource-settings>
-        <div>
-          <button @click="resetAllOptions"
-              class="alpheios-button-primary alpheios-reset-button">{{l10n.getText('LABEL_RESET_OPTIONS')}}
-          </button>
-        </div>
+        <options-panel />
       </div>
 
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__info"

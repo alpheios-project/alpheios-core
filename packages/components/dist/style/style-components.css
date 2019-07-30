@@ -2510,94 +2510,6 @@ h3.alpheios-inflections__credits-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-resource-options__cont {
-  display: flex;
-  flex-direction: column;
-}
-.alpheios-resource-options__item {
-  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
-  display: flex;
-  align-items: flex-start;
-  flex: 1 1 auto;
-}
-/*
- Calculates a size of text elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
- */
-/*
- Calculates a size of UI elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
- */
-.alpheios-feature-options__cont {
-  display: flex;
-  flex-direction: column;
-}
-.alpheios-feature-options__item {
-  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
-  display: flex;
-  align-items: flex-start;
-  flex: 1 1 auto;
-}
-/*
- Calculates a size of text elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
- */
-/*
- Calculates a size of UI elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
- */
-.alpheios-setting__button-group {
-  color: var(--alpheios-settings-font-size-dark-color);
-  border: 1px solid var(--alpheios-settings-font-size-dark-color);
-  border-radius: calc(var(--alpheios-base-text-size) * 0.625);
-  max-width: calc(var(--alpheios-base-text-size) * 12.5);
-  display: flex;
-  overflow: hidden;
-}
-.alpheios-setting__button-group button {
-  border: none;
-  border-right: 1px solid var(--alpheios-settings-font-size-dark-color);
-  background: transparent;
-  padding: calc(var(--alpheios-base-text-size) * 0.375) calc(var(--alpheios-base-text-size) * 0.75);
-  font-size: calc(var(--alpheios-base-text-size) * 0.5);
-  cursor: pointer;
-  flex: 1;
-  margin: 0;
-}
-.alpheios-setting__button-group button:last-child {
-  border-right: none;
-}
-.alpheios-setting__button-group button.active {
-  color: var(--alpheios-settings-font-size-light-color);
-  background: var(--alpheios-settings-font-size-dark-color);
-  box-shadow: inset 0 calc(var(--alpheios-base-text-size) * 0.25) calc(var(--alpheios-base-text-size) * 0.25) rgba(0, 0, 0, 0.1);
-}
-/*
- Calculates a size of text elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
- */
-/*
- Calculates a size of UI elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
- */
-.alpheios-ui-options__cont {
-  display: flex;
-  flex-direction: column;
-}
-.alpheios-ui-options__item {
-  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
-  display: flex;
-  align-items: flex-start;
-  flex: 1 1 auto;
-}
-/*
- Calculates a size of text elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
- */
-/*
- Calculates a size of UI elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
- */
 .alpheios-user-auth {
   display: flex;
   flex-direction: column;
@@ -3154,6 +3066,139 @@ p.alpheios-word-usage-filter-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-resource-options__cont {
+  display: flex;
+  flex-direction: column;
+}
+.alpheios-resource-options__item {
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.9375);
+  display: flex;
+  align-items: flex-start;
+  flex: 1 1 auto;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
+.alpheios-feature-options__cont {
+  display: flex;
+  flex-direction: column;
+}
+.alpheios-feature-options__item {
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
+  display: flex;
+  align-items: flex-start;
+  flex: 1 1 auto;
+}
+.alpheios-feature-options__cont-concord {
+  margin: calc(var(--alpheios-base-text-size) * 0.9375) 0;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
+.alpheios-setting__button-group {
+  color: var(--alpheios-settings-font-size-dark-color);
+  border: 1px solid var(--alpheios-settings-font-size-dark-color);
+  border-radius: calc(var(--alpheios-base-text-size) * 0.625);
+  max-width: calc(var(--alpheios-base-text-size) * 12.5);
+  display: flex;
+  overflow: hidden;
+}
+.alpheios-setting__button-group button {
+  border: none;
+  border-right: 1px solid var(--alpheios-settings-font-size-dark-color);
+  background: transparent;
+  padding: calc(var(--alpheios-base-text-size) * 0.375) calc(var(--alpheios-base-text-size) * 0.75);
+  font-size: calc(var(--alpheios-base-text-size) * 0.625);
+  cursor: pointer;
+  flex: 1;
+  margin: 0;
+}
+.alpheios-setting__button-group button:last-child {
+  border-right: none;
+}
+.alpheios-setting__button-group button.active {
+  color: var(--alpheios-settings-font-size-light-color);
+  background: var(--alpheios-settings-font-size-dark-color);
+  box-shadow: inset 0 calc(var(--alpheios-base-text-size) * 0.25) calc(var(--alpheios-base-text-size) * 0.25) rgba(0, 0, 0, 0.1);
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
+.alpheios-ui-options__cont {
+  display: flex;
+  flex-direction: column;
+}
+.alpheios-ui-options__item {
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.9375);
+  display: flex;
+  align-items: flex-start;
+  flex: 1 1 auto;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
+.alpheios-tab-options-switch {
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.9375);
+  text-align: right;
+}
+.alpheios-tab-options-switch--item {
+  display: inline-block;
+  padding: 6.6666666667px 13px;
+  margin-left: 5px;
+  border-radius: 20px;
+  font-weight: bold;
+  background: var(--alpheios-desktop-panel-icon-bg);
+  color: var(--alpheios-desktop-panel-icon-color);
+  cursor: pointer;
+  font-size: 20px;
+}
+.alpheios-tab-options-switch--item:hover {
+  background: var(--alpheios-desktop-panel-icon-bg-hover);
+  color: var(--alpheios-desktop-panel-icon-color-hover);
+}
+.alpheios-tab-options-switch--item.alpheios-active {
+  background: var(--alpheios-desktop-panel-icon-bg-active);
+  color: var(--alpheios-desktop-panel-icon-color-active);
+}
+.alpheios-tab-options-reset-all-block {
+  border-top: 1px solid;
+  display: flex;
+  align-items: baseline;
+  flex: 1 1 auto;
+  padding-top: 10px;
+}
+.alpheios-tab-options-reset-all-block .alpheios-tab-options-reset-all-block--title {
+  font-weight: bold;
+  margin-left: 15px;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
 .alpheios-panel {
   z-index: 2000;
   position: fixed;
@@ -3320,7 +3365,7 @@ p.alpheios-word-usage-filter-title {
   flex-direction: column;
 }
 .alpheios-panel__options-item {
-  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.9375);
   display: flex;
   align-items: flex-start;
   flex: 1 1 auto;
@@ -3400,6 +3445,9 @@ p.alpheios-word-usage-filter-title {
 .alpheios-panel__header-btn--treebank-data {
     display: none;
 }
+}
+.alpheios-panel__tab-panel--options {
+  padding-top: 10px;
 }
 /*
  Calculates a size of text elements relative to the base size.

@@ -24105,6 +24105,17 @@ var singleton = jumper();
 
 /***/ }),
 
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/options.vue?vue&type=style&index=0&lang=scss&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/options.vue?vue&type=style&index=0&lang=scss& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/panel-compact.vue?vue&type=style&index=0&lang=scss&":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js??ref--5-1!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js??ref--5-2!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/panel-compact.vue?vue&type=style&index=0&lang=scss& ***!
@@ -28882,6 +28893,90 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/options.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/options.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _vue_components_resource_settings_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/components/resource-settings.vue */ "./vue/components/resource-settings.vue");
+/* harmony import */ var _vue_components_feature_settings_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/components/feature-settings.vue */ "./vue/components/feature-settings.vue");
+/* harmony import */ var _vue_components_ui_settings_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/components/ui-settings.vue */ "./vue/components/ui-settings.vue");
+/* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+  name: 'OptionsPanel',
+  components: {
+    uiSettings: _vue_components_ui_settings_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    resourceSettings: _vue_components_resource_settings_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    featureSettings: _vue_components_feature_settings_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
+  inject: ['l10n','app'],
+  data: function () {
+    return {
+        currentTab: 1
+    }
+  },
+  computed: {
+    uiSettingsKey() {
+      return `${this.$options.prefixName}-settings-ui-${this.$store.state.settings.uiResetCounter}`
+    },
+
+    resourceSettingsKey() {
+      return `${this.$options.prefixName}-settings-resource-${this.$store.state.settings.resourceResetCounter}`
+    },
+
+    featureSettingsKey() {
+      return `${this.$options.prefixName}-settings-feature-${this.$store.state.settings.featureResetCounter}`
+    },
+  },
+  methods: {
+    resetAllOptions: function () {
+      this.app.resetAllOptions()
+    }
+  }
+});
+
+
+/***/ }),
+
 /***/ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/panel-compact.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************!*\
   !*** ../node_modules/vue-loader/lib??vue-loader-options!../node_modules/source-map-loader!./vue/components/panel-compact.vue?vue&type=script&lang=js& ***!
@@ -28902,39 +28997,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _treebank_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./treebank.vue */ "./vue/components/treebank.vue");
 /* harmony import */ var _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./inflections-browser.vue */ "./vue/components/inflections-browser.vue");
 /* harmony import */ var _lookup_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./lookup.vue */ "./vue/components/lookup.vue");
-/* harmony import */ var _resource_settings_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./resource-settings.vue */ "./vue/components/resource-settings.vue");
-/* harmony import */ var _feature_settings_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./feature-settings.vue */ "./vue/components/feature-settings.vue");
-/* harmony import */ var _ui_settings_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./ui-settings.vue */ "./vue/components/ui-settings.vue");
-/* harmony import */ var _user_auth_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./user-auth.vue */ "./vue/components/user-auth.vue");
-/* harmony import */ var _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/vue/components/word-usage-examples/word-usage-examples.vue */ "./vue/components/word-usage-examples/word-usage-examples.vue");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! alpheios-data-models */ "../node_modules/alpheios-data-models/dist/alpheios-data-models.js");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/vue/components/word-list/word-list-panel.vue */ "./vue/components/word-list/word-list-panel.vue");
-/* harmony import */ var _vue_components_progress_bar_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/vue/components/progress-bar.vue */ "./vue/components/progress-bar.vue");
-/* harmony import */ var _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/images/inline-icons/x-close.svg */ "./images/inline-icons/x-close.svg");
-/* harmony import */ var _images_inline_icons_chevron_up_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/images/inline-icons/chevron-up.svg */ "./images/inline-icons/chevron-up.svg");
-/* harmony import */ var _images_inline_icons_chevron_down_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/images/inline-icons/chevron-down.svg */ "./images/inline-icons/chevron-down.svg");
-/* harmony import */ var _images_inline_icons_chevron_left_svg__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/images/inline-icons/chevron-left.svg */ "./images/inline-icons/chevron-left.svg");
-/* harmony import */ var _images_inline_icons_chevron_right_svg__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/images/inline-icons/chevron-right.svg */ "./images/inline-icons/chevron-right.svg");
-/* harmony import */ var _images_inline_icons_language_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/images/inline-icons/language.svg */ "./images/inline-icons/language.svg");
-/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/images/inline-icons/definitions.svg */ "./images/inline-icons/definitions.svg");
-/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/images/inline-icons/inflections.svg */ "./images/inline-icons/inflections.svg");
-/* harmony import */ var _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @/images/inline-icons/usage-examples-icon1.svg */ "./images/inline-icons/usage-examples-icon1.svg");
-/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @/images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
-/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @/images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
-/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @/images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
-/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @/images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
-/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
-/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! @/images/inline-icons/sitemap.svg */ "./images/inline-icons/sitemap.svg");
-/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _user_auth_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./user-auth.vue */ "./vue/components/user-auth.vue");
+/* harmony import */ var _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/vue/components/word-usage-examples/word-usage-examples.vue */ "./vue/components/word-usage-examples/word-usage-examples.vue");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! alpheios-data-models */ "../node_modules/alpheios-data-models/dist/alpheios-data-models.js");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/vue/components/word-list/word-list-panel.vue */ "./vue/components/word-list/word-list-panel.vue");
+/* harmony import */ var _vue_components_progress_bar_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/vue/components/progress-bar.vue */ "./vue/components/progress-bar.vue");
+/* harmony import */ var _vue_components_options_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/vue/components/options.vue */ "./vue/components/options.vue");
+/* harmony import */ var _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/images/inline-icons/x-close.svg */ "./images/inline-icons/x-close.svg");
+/* harmony import */ var _images_inline_icons_chevron_up_svg__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/images/inline-icons/chevron-up.svg */ "./images/inline-icons/chevron-up.svg");
+/* harmony import */ var _images_inline_icons_chevron_down_svg__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/images/inline-icons/chevron-down.svg */ "./images/inline-icons/chevron-down.svg");
+/* harmony import */ var _images_inline_icons_chevron_left_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/images/inline-icons/chevron-left.svg */ "./images/inline-icons/chevron-left.svg");
+/* harmony import */ var _images_inline_icons_chevron_right_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/images/inline-icons/chevron-right.svg */ "./images/inline-icons/chevron-right.svg");
+/* harmony import */ var _images_inline_icons_language_svg__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/images/inline-icons/language.svg */ "./images/inline-icons/language.svg");
+/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/images/inline-icons/definitions.svg */ "./images/inline-icons/definitions.svg");
+/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/images/inline-icons/inflections.svg */ "./images/inline-icons/inflections.svg");
+/* harmony import */ var _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/images/inline-icons/usage-examples-icon1.svg */ "./images/inline-icons/usage-examples-icon1.svg");
+/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
+/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @/images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
+/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @/images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
+/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @/images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
+/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
+/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @/images/inline-icons/sitemap.svg */ "./images/inline-icons/sitemap.svg");
+/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
 //
@@ -29275,9 +29361,9 @@ __webpack_require__.r(__webpack_exports__);
     auth: 'auth'
   },
   storeModules: ['app', 'ui', 'panel', 'auth'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_34__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_32__["default"]],
   components: {
-    progressBar: _vue_components_progress_bar_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
+    progressBar: _vue_components_progress_bar_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
     notificationArea: _vue_components_notification_area_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     inflectionBrowser: _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
@@ -29285,31 +29371,31 @@ __webpack_require__.r(__webpack_exports__);
     grammar: _grammar_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
     morph: _morph_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
     treebank: _treebank_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
-    userAuth: _user_auth_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
-    closeIcon: _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_18__["default"],
+    userAuth: _user_auth_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    closeIcon: _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_16__["default"],
     lookup: _lookup_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-    uiSettings: _ui_settings_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
-    resourceSettings: _resource_settings_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-    featureSettings: _feature_settings_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
-    wordListPanel: _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
-    wordUsageExamples: _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
-    upIcon: _images_inline_icons_chevron_up_svg__WEBPACK_IMPORTED_MODULE_19__["default"],
-    downIcon: _images_inline_icons_chevron_down_svg__WEBPACK_IMPORTED_MODULE_20__["default"],
-    leftIcon: _images_inline_icons_chevron_left_svg__WEBPACK_IMPORTED_MODULE_21__["default"],
-    rightIcon: _images_inline_icons_chevron_right_svg__WEBPACK_IMPORTED_MODULE_22__["default"],
-    morphologyIcon: _images_inline_icons_language_svg__WEBPACK_IMPORTED_MODULE_23__["default"],
-    definitionsIcon: _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_24__["default"],
-    inflectionsIcon: _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_25__["default"],
-    wordUsageIcon: _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_26__["default"],
-    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_27__["default"],
-    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_28__["default"],
-    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_29__["default"],
-    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_30__["default"],
-    wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_31__["default"],
-    treebankIcon: _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_32__["default"]
+    
+    wordListPanel: _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+    wordUsageExamples: _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
+    optionsPanel: _vue_components_options_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+
+    upIcon: _images_inline_icons_chevron_up_svg__WEBPACK_IMPORTED_MODULE_17__["default"],
+    downIcon: _images_inline_icons_chevron_down_svg__WEBPACK_IMPORTED_MODULE_18__["default"],
+    leftIcon: _images_inline_icons_chevron_left_svg__WEBPACK_IMPORTED_MODULE_19__["default"],
+    rightIcon: _images_inline_icons_chevron_right_svg__WEBPACK_IMPORTED_MODULE_20__["default"],
+    morphologyIcon: _images_inline_icons_language_svg__WEBPACK_IMPORTED_MODULE_21__["default"],
+    definitionsIcon: _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_22__["default"],
+    inflectionsIcon: _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_23__["default"],
+    wordUsageIcon: _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_24__["default"],
+    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_25__["default"],
+    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_26__["default"],
+    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_27__["default"],
+    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_28__["default"],
+    wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_29__["default"],
+    treebankIcon: _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_30__["default"]
   },
   directives: {
-    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_33__["directive"]
+    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_31__["directive"]
   },
   // Custom props
   // An HTML element that contains alpheios CSS custom props
@@ -29377,17 +29463,7 @@ __webpack_require__.r(__webpack_exports__);
       return classes
     },
 
-    uiSettingsKey() {
-      return `${this.$options.prefixName}-settings-ui-${this.$store.state.settings.uiResetCounter}`
-    },
-
-    resourceSettingsKey() {
-      return `${this.$options.prefixName}-settings-resource-${this.$store.state.settings.resourceResetCounter}`
-    },
-
-    featureSettingsKey() {
-      return `${this.$options.prefixName}-settings-feature-${this.$store.state.settings.featureResetCounter}`
-    },
+    
 
     componentStyles: function () {
       return {
@@ -29435,7 +29511,7 @@ __webpack_require__.r(__webpack_exports__);
           if (lexeme.meaning.shortDefs.length > 0) {
             definitions.push(...lexeme.meaning.shortDefs)
           } else if (Object.entries(lexeme.lemma.features).length > 0) {
-            definitions.push(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_15__["Definition"](this.l10n.getMsg('TEXT_NOTICE_NO_DEFS_FOUND'), 'en-US', 'text/plain', lexeme.lemma.word))
+            definitions.push(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_12__["Definition"](this.l10n.getMsg('TEXT_NOTICE_NO_DEFS_FOUND'), 'en-US', 'text/plain', lexeme.lemma.word))
           }
         }
       }
@@ -29483,10 +29559,6 @@ __webpack_require__.r(__webpack_exports__);
 
     contentOptionChanged: function (name, value) {
       this.app.contentOptionChange(name, value)
-    },
-
-    resetAllOptions: function () {
-      this.app.resetAllOptions()
     },
 
     expand () {
@@ -29601,13 +29673,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/vue/components/panel-compact.vue */ "./vue/components/panel-compact.vue");
 /* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
 /* harmony import */ var _vue_components_info_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/vue/components/info.vue */ "./vue/components/info.vue");
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -32568,49 +32633,40 @@ var render = function() {
     { staticClass: "alpheios-feature-options__cont" },
     [
       _c("setting", {
-        attrs: {
-          classes: ["alpheios-feature-options-item"],
-          data: _vm.featureOptions.items.preferredLanguage
-        },
+        staticClass: "alpheios-feature-options__item",
+        attrs: { data: _vm.featureOptions.items.preferredLanguage },
         on: { change: _vm.featureOptionChanged }
       }),
       _vm._v(" "),
       _c(
         "fieldset",
+        { staticClass: "alpheios-feature-options__cont-concord" },
         [
           _c("legend", [
             _vm._v(_vm._s(_vm.l10n.getText("LABEL_FIELDSET_USAGEEXAMPLES")))
           ]),
           _vm._v(" "),
           _c("setting", {
-            attrs: {
-              classes: ["alpheios-feature-options-item"],
-              data: _vm.featureOptions.items.enableWordUsageExamples
-            },
+            staticClass: "alpheios-feature-options__item",
+            attrs: { data: _vm.featureOptions.items.enableWordUsageExamples },
             on: { change: _vm.featureOptionChanged }
           }),
           _vm._v(" "),
           _c("setting", {
-            attrs: {
-              classes: ["alpheios-feature-options-item"],
-              data: _vm.featureOptions.items.wordUsageExamplesON
-            },
+            staticClass: "alpheios-feature-options__item",
+            attrs: { data: _vm.featureOptions.items.wordUsageExamplesON },
             on: { change: _vm.featureOptionChanged }
           }),
           _vm._v(" "),
           _c("setting", {
-            attrs: {
-              classes: ["alpheios-feature-options-item"],
-              data: _vm.featureOptions.items.wordUsageExamplesAuthMax
-            },
+            staticClass: "alpheios-feature-options__item",
+            attrs: { data: _vm.featureOptions.items.wordUsageExamplesAuthMax },
             on: { change: _vm.featureOptionChanged }
           }),
           _vm._v(" "),
           _c("setting", {
-            attrs: {
-              classes: ["alpheios-feature-options-item"],
-              data: _vm.featureOptions.items.wordUsageExamplesMax
-            },
+            staticClass: "alpheios-feature-options__item",
+            attrs: { data: _vm.featureOptions.items.wordUsageExamplesMax },
             on: { change: _vm.featureOptionChanged }
           })
         ],
@@ -32618,18 +32674,14 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("setting", {
-        attrs: {
-          classes: ["alpheios-feature-options-item"],
-          data: _vm.featureOptions.items.enableLemmaTranslations
-        },
+        staticClass: "alpheios-feature-options__item",
+        attrs: { data: _vm.featureOptions.items.enableLemmaTranslations },
         on: { change: _vm.featureOptionChanged }
       }),
       _vm._v(" "),
       _c("setting", {
-        attrs: {
-          classes: ["alpheios-feature-options-item"],
-          data: _vm.featureOptions.items.locale
-        },
+        staticClass: "alpheios-feature-options__item",
+        attrs: { data: _vm.featureOptions.items.locale },
         on: { change: _vm.featureOptionChanged }
       })
     ],
@@ -37967,6 +38019,176 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/options.vue?vue&type=template&id=af7ce048&":
+/*!***************************************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/options.vue?vue&type=template&id=af7ce048& ***!
+  \***************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { attrs: { "data-alpheios-ignore": "all" } },
+    [
+      _c(
+        "div",
+        { staticClass: "alpheios-tab-options-switch" },
+        [
+          _c(
+            "alph-tooltip",
+            {
+              attrs: {
+                tooltipText: _vm.l10n.getText("OPTIONS_TAB_UI"),
+                tooltipDirection: "bottom-left"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-tab-options-switch--item",
+                  class: { "alpheios-active": _vm.currentTab === 1 },
+                  on: {
+                    click: function($event) {
+                      _vm.currentTab = 1
+                    }
+                  }
+                },
+                [_vm._v("U")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "alph-tooltip",
+            {
+              attrs: {
+                tooltipText: _vm.l10n.getText("OPTIONS_TAB_FEATURE"),
+                tooltipDirection: "bottom-left"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-tab-options-switch--item",
+                  class: { "alpheios-active": _vm.currentTab === 2 },
+                  on: {
+                    click: function($event) {
+                      _vm.currentTab = 2
+                    }
+                  }
+                },
+                [_vm._v("F")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "alph-tooltip",
+            {
+              attrs: {
+                tooltipText: _vm.l10n.getText("OPTIONS_TAB_RESOURCE"),
+                tooltipDirection: "bottom-left"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "alpheios-tab-options-switch--item",
+                  class: { "alpheios-active": _vm.currentTab === 3 },
+                  on: {
+                    click: function($event) {
+                      _vm.currentTab = 3
+                    }
+                  }
+                },
+                [_vm._v("R")]
+              )
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("ui-settings", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.currentTab === 1,
+            expression: "currentTab === 1"
+          }
+        ],
+        key: _vm.uiSettingsKey
+      }),
+      _vm._v(" "),
+      _c("feature-settings", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.currentTab === 2,
+            expression: "currentTab === 2"
+          }
+        ],
+        key: _vm.featureSettingsKey
+      }),
+      _vm._v(" "),
+      _c("resource-settings", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.currentTab === 3,
+            expression: "currentTab === 3"
+          }
+        ],
+        key: _vm.resourceSettingsKey
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "alpheios-tab-options-reset-all-block" }, [
+        _c(
+          "button",
+          {
+            staticClass: "alpheios-button-primary",
+            on: { click: _vm.resetAllOptions }
+          },
+          [_vm._v(_vm._s(_vm.l10n.getText("LABEL_RESET_OPTIONS")) + "\n      ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "p",
+          { staticClass: "alpheios-tab-options-reset-all-block--title" },
+          [
+            _vm._v(
+              "(" +
+                _vm._s(_vm.l10n.getText("OPTIONS_TAB_RESET_ALL_TITLE")) +
+                ")"
+            )
+          ]
+        )
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/panel-compact.vue?vue&type=template&id=5c9f49d0&":
 /*!*********************************************************************************************************************************************************************************************************!*\
   !*** ../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../node_modules/vue-loader/lib??vue-loader-options!./vue/components/panel-compact.vue?vue&type=template&id=5c9f49d0& ***!
@@ -38880,29 +39102,7 @@ var render = function() {
               "alpheios-panel__tab-panel alpheios-panel__tab-panel--options",
             attrs: { "data-alpheios-ignore": "all" }
           },
-          [
-            _c("ui-settings", { key: _vm.uiSettingsKey }),
-            _vm._v(" "),
-            _c("feature-settings", { key: _vm.featureSettingsKey }),
-            _vm._v(" "),
-            _c("resource-settings", { key: _vm.resourceSettingsKey }),
-            _vm._v(" "),
-            _c("div", [
-              _c(
-                "button",
-                {
-                  staticClass: "alpheios-button-primary",
-                  on: { click: _vm.resetAllOptions }
-                },
-                [
-                  _vm._v(
-                    _vm._s(_vm.l10n.getText("LABEL_RESET_OPTIONS")) +
-                      "\n        "
-                  )
-                ]
-              )
-            ])
-          ],
+          [_c("options-panel")],
           1
         ),
         _vm._v(" "),
@@ -39289,29 +39489,7 @@ var render = function() {
               "alpheios-panel__tab-panel alpheios-panel__tab-panel--options",
             attrs: { "data-alpheios-ignore": "all" }
           },
-          [
-            _c("ui-settings", { key: _vm.uiSettingsKey }),
-            _vm._v(" "),
-            _c("feature-settings", { key: _vm.featureSettingsKey }),
-            _vm._v(" "),
-            _c("resource-settings", { key: _vm.resourceSettingsKey }),
-            _vm._v(" "),
-            _c("div", [
-              _c(
-                "button",
-                {
-                  staticClass: "alpheios-button-primary alpheios-reset-button",
-                  on: { click: _vm.resetAllOptions }
-                },
-                [
-                  _vm._v(
-                    _vm._s(_vm.l10n.getText("LABEL_RESET_OPTIONS")) +
-                      "\n        "
-                  )
-                ]
-              )
-            ])
-          ],
+          [_c("options-panel")],
           1
         ),
         _vm._v(" "),
@@ -59394,10 +59572,10 @@ module.exports = JSON.parse("{\"TEXT_NOTICE_WORDUSAGE_READY\":{\"message\":\"Wor
 /*!*************************************!*\
   !*** ./locales/en-us/messages.json ***!
   \*************************************/
-/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, TITLE_HELP_PANEL, TITLE_INFLECTIONS_PANEL, TITLE_INFLECTIONS_BROWSER_PANEL, TOOLTIP_MOVE_PANEL_LEFT, TOOLTIP_MOVE_PANEL_RIGHT, TOOLTIP_CLOSE_PANEL, TOOLTIP_HELP, TOOLTIP_INFLECT, TOOLTIP_INFLECT_BROWSER, TOOLTIP_DEFINITIONS, TOOLTIP_GRAMMAR, TOOLTIP_TREEBANK, TOOLTIP_OPTIONS, TOOLTIP_STATUS, TOOLTIP_WORDLIST, TOOLTIP_USER, TOOLTIP_SHOW_INFLECTIONS, TOOLTIP_SHOW_DEFINITIONS, TOOLTIP_SHOW_OPTIONS, TOOLTIP_SHOW_USAGEEXAMPLES, TOOLTIP_MORPHOLOGY, TOOLTIP_NOT_AVAIL_POSTFIX, PLACEHOLDER_DEFINITIONS, PLACEHOLDER_INFLECT_IN_PROGRESS, LABEL_INFLECT_SELECT_POFS, LABEL_INFLECT_SHOWFULL, LABEL_INFLECT_COLLAPSE, TOOLTIP_INFLECT_SHOWFULL, TOOLTIP_INFLECT_COLLAPSE, LABEL_INFLECT_HIDEEMPTY, LABEL_INFLECT_SHOWEMPTY, TOOLTIP_INFLECT_HIDEEMPTY, TOOLTIP_INFLECT_SHOWEMPTY, INFLECT_MSG_TABLE_NOT_IMPLEMENTED, TEXT_INFO_GETTINGSTARTED, TEXT_INFO_ACTIVATE, TEXT_INFO_CLICK, TEXT_INFO_LANGDETECT, LABEL_INFO_CURRENTLANGUAGE, TEXT_INFO_SETTINGS, TEXT_INFO_ARROW, TEXT_INFO_REOPEN, TEXT_INFO_DEACTIVATE, TOOLTIP_POPUP_CLOSE, LABEL_POPUP_TREEBANK, LABEL_POPUP_INFLECT, LABEL_POPUP_OPTIONS, LABEL_POPUP_DEFINE, LABEL_POPUP_USAGEEXAMPLES, PLACEHOLDER_LEX_DATA_LOADING, PLACEHOLDER_NO_LANGUAGE_DATA, PLACEHOLDER_NO_MORPH_DATA, LABEL_PROVIDERS_CREDITS, LABEL_POPUP_SHOWCREDITS, LABEL_POPUP_HIDECREDITS, TEXT_NOTICE_SUGGEST_LOGIN, TEXT_NOTICE_CHANGE_LANGUAGE, TEXT_NOTICE_LANGUAGE_UNKNOWN, TEXT_NOTICE_MORPHDATA_READY, TEXT_NOTICE_MORPHDATA_NOTFOUND, TEXT_NOTICE_INFLDATA_READY, TEXT_NOTICE_DEFSDATA_READY, TEXT_NOTICE_DEFSDATA_NOTFOUND, TEXT_NOTICE_NO_DEFS_FOUND, TEXT_NOTICE_LEXQUERY_COMPLETE, TEXT_NOTICE_GRAMMAR_READY, TEXT_NOTICE_GRAMMAR_COMPLETE, TEXT_NOTICE_RESQUERY_COMPLETE, TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS, TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS, LABEL_BROWSERACTION_DEACTIVATE, LABEL_BROWSERACTION_ACTIVATE, LABEL_BROWSERACTION_DISABLED, LABEL_CTXTMENU_DEACTIVATE, LABEL_CTXTMENU_ACTIVATE, LABEL_CTXTMENU_DISABLED, LABEL_CTXTMENU_OPENPANEL, LABEL_CTXTMENU_INFO, LABEL_CTXTMENU_SENDEXP, LABEL_LOOKUP_CONTROL, LABEL_LOOKUP_BUTTON, TOOLTIP_LOOKUP_BUTTON, LABEL_LOOKUP_SETTINGS, LABEL_RESKIN_SETTINGS, LABEL_RESET_OPTIONS, TOOLTIP_RESKIN_SMALLFONT, TOOLTIP_RESKIN_MEDIUMFONT, TOOLTIP_RESKIN_LARGEFONT, TOOLTIP_RESKIN_LIGHTBG, TOOLTIP_RESKIN_DARKBG, INFLECTIONS_CREDITS_TITLE, INFLECTIONS_PARADIGMS_EXPLANATORY_HINT, INFLECTIONS_MAIN_TABLE_LINK_TEXT, INFL_ATTRIBUTE_LINK_TEXT_SOURCE, EMBED_LIB_WARNING_TEXT, AUTH_HIDE_LOGIN_BTN_LABEL, AUTH_LOGIN_BTN_LABEL, AUTH_LOGOUT_BTN_LABEL, AUTH_LOGIN_PROGRESS_MSG, AUTH_LOGIN_SUCCESS_MSG, AUTH_LOGIN_AUTH_FAILURE_MSG, AUTH_PROFILE_NICKNAME_LABEL, AUTH_PROFILE_NAME_LABEL, AUTH_LOGOUT_SUCCESS_MSG, FONTSIZE_TEXT_SMALL, FONTSIZE_TEXT_MEDIUM, FONTSIZE_TEXT_LARGE, TOOLTIP_BACK_TO_INDEX, LABEL_FIELDSET_USAGEEXAMPLES, default */
+/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, TITLE_HELP_PANEL, TITLE_INFLECTIONS_PANEL, TITLE_INFLECTIONS_BROWSER_PANEL, TOOLTIP_MOVE_PANEL_LEFT, TOOLTIP_MOVE_PANEL_RIGHT, TOOLTIP_CLOSE_PANEL, TOOLTIP_HELP, TOOLTIP_INFLECT, TOOLTIP_INFLECT_BROWSER, TOOLTIP_DEFINITIONS, TOOLTIP_GRAMMAR, TOOLTIP_TREEBANK, TOOLTIP_OPTIONS, TOOLTIP_STATUS, TOOLTIP_WORDLIST, TOOLTIP_USER, TOOLTIP_SHOW_INFLECTIONS, TOOLTIP_SHOW_DEFINITIONS, TOOLTIP_SHOW_OPTIONS, TOOLTIP_SHOW_USAGEEXAMPLES, TOOLTIP_MORPHOLOGY, TOOLTIP_NOT_AVAIL_POSTFIX, PLACEHOLDER_DEFINITIONS, PLACEHOLDER_INFLECT_IN_PROGRESS, LABEL_INFLECT_SELECT_POFS, LABEL_INFLECT_SHOWFULL, LABEL_INFLECT_COLLAPSE, TOOLTIP_INFLECT_SHOWFULL, TOOLTIP_INFLECT_COLLAPSE, LABEL_INFLECT_HIDEEMPTY, LABEL_INFLECT_SHOWEMPTY, TOOLTIP_INFLECT_HIDEEMPTY, TOOLTIP_INFLECT_SHOWEMPTY, INFLECT_MSG_TABLE_NOT_IMPLEMENTED, TEXT_INFO_GETTINGSTARTED, TEXT_INFO_ACTIVATE, TEXT_INFO_CLICK, TEXT_INFO_LANGDETECT, LABEL_INFO_CURRENTLANGUAGE, TEXT_INFO_SETTINGS, TEXT_INFO_ARROW, TEXT_INFO_REOPEN, TEXT_INFO_DEACTIVATE, TOOLTIP_POPUP_CLOSE, LABEL_POPUP_TREEBANK, LABEL_POPUP_INFLECT, LABEL_POPUP_OPTIONS, LABEL_POPUP_DEFINE, LABEL_POPUP_USAGEEXAMPLES, PLACEHOLDER_LEX_DATA_LOADING, PLACEHOLDER_NO_LANGUAGE_DATA, PLACEHOLDER_NO_MORPH_DATA, LABEL_PROVIDERS_CREDITS, LABEL_POPUP_SHOWCREDITS, LABEL_POPUP_HIDECREDITS, TEXT_NOTICE_SUGGEST_LOGIN, TEXT_NOTICE_CHANGE_LANGUAGE, TEXT_NOTICE_LANGUAGE_UNKNOWN, TEXT_NOTICE_MORPHDATA_READY, TEXT_NOTICE_MORPHDATA_NOTFOUND, TEXT_NOTICE_INFLDATA_READY, TEXT_NOTICE_DEFSDATA_READY, TEXT_NOTICE_DEFSDATA_NOTFOUND, TEXT_NOTICE_NO_DEFS_FOUND, TEXT_NOTICE_LEXQUERY_COMPLETE, TEXT_NOTICE_GRAMMAR_READY, TEXT_NOTICE_GRAMMAR_COMPLETE, TEXT_NOTICE_RESQUERY_COMPLETE, TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS, TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS, LABEL_BROWSERACTION_DEACTIVATE, LABEL_BROWSERACTION_ACTIVATE, LABEL_BROWSERACTION_DISABLED, LABEL_CTXTMENU_DEACTIVATE, LABEL_CTXTMENU_ACTIVATE, LABEL_CTXTMENU_DISABLED, LABEL_CTXTMENU_OPENPANEL, LABEL_CTXTMENU_INFO, LABEL_CTXTMENU_SENDEXP, LABEL_LOOKUP_CONTROL, LABEL_LOOKUP_BUTTON, TOOLTIP_LOOKUP_BUTTON, LABEL_LOOKUP_SETTINGS, LABEL_RESKIN_SETTINGS, LABEL_RESET_OPTIONS, TOOLTIP_RESKIN_SMALLFONT, TOOLTIP_RESKIN_MEDIUMFONT, TOOLTIP_RESKIN_LARGEFONT, TOOLTIP_RESKIN_LIGHTBG, TOOLTIP_RESKIN_DARKBG, INFLECTIONS_CREDITS_TITLE, INFLECTIONS_PARADIGMS_EXPLANATORY_HINT, INFLECTIONS_MAIN_TABLE_LINK_TEXT, INFL_ATTRIBUTE_LINK_TEXT_SOURCE, EMBED_LIB_WARNING_TEXT, AUTH_HIDE_LOGIN_BTN_LABEL, AUTH_LOGIN_BTN_LABEL, AUTH_LOGOUT_BTN_LABEL, AUTH_LOGIN_PROGRESS_MSG, AUTH_LOGIN_SUCCESS_MSG, AUTH_LOGIN_AUTH_FAILURE_MSG, AUTH_PROFILE_NICKNAME_LABEL, AUTH_PROFILE_NAME_LABEL, AUTH_LOGOUT_SUCCESS_MSG, FONTSIZE_TEXT_SMALL, FONTSIZE_TEXT_MEDIUM, FONTSIZE_TEXT_LARGE, TOOLTIP_BACK_TO_INDEX, LABEL_FIELDSET_USAGEEXAMPLES, OPTIONS_TAB_UI, OPTIONS_TAB_FEATURE, OPTIONS_TAB_RESOURCE, OPTIONS_TAB_RESET_ALL_TITLE, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a test message about a cookie.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\"},\"NUM_LINES_TEST_MESSAGE\":{\"message\":\"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\",\"params\":[\"numLines\"]},\"TITLE_HELP_PANEL\":{\"message\":\"Help\",\"description\":\"A title of a help panel\",\"component\":\"Panel\"},\"TITLE_INFLECTIONS_PANEL\":{\"message\":\"Inflection tables\",\"description\":\"A title of an inflections panel\",\"component\":\"Panel\"},\"TITLE_INFLECTIONS_BROWSER_PANEL\":{\"message\":\"Browse inflection tables\",\"description\":\"A title of an inflections browser panel\",\"component\":\"Panel\"},\"TOOLTIP_MOVE_PANEL_LEFT\":{\"message\":\"Move Panel to Left\",\"description\":\"tooltip for moving the panel to the left\",\"component\":\"Panel\"},\"TOOLTIP_MOVE_PANEL_RIGHT\":{\"message\":\"Move Panel to Right\",\"description\":\"tooltip for moving the panel to the right\",\"component\":\"Panel\"},\"TOOLTIP_CLOSE_PANEL\":{\"message\":\"Close Panel\",\"description\":\"tooltip for closing the panel\",\"component\":\"Panel\"},\"TOOLTIP_HELP\":{\"message\":\"Help\",\"description\":\"tooltip for help tab\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT\":{\"message\":\"Inflections\",\"description\":\"tooltip for inflections tab\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_BROWSER\":{\"message\":\"Browse Inflection Tables\",\"description\":\"tooltip for inflections browser tab\",\"component\":\"Panel\"},\"TOOLTIP_DEFINITIONS\":{\"message\":\"Definitions\",\"description\":\"tooltip for definitions tab\",\"component\":\"Panel\"},\"TOOLTIP_GRAMMAR\":{\"message\":\"Browse Grammar\",\"description\":\"tooltip for grammar tab\",\"component\":\"Panel\"},\"TOOLTIP_TREEBANK\":{\"message\":\"Diagram\",\"description\":\"tooltip for treebank tab\",\"component\":\"Panel\"},\"TOOLTIP_OPTIONS\":{\"message\":\"Options\",\"description\":\"tooltip for options tab\",\"component\":\"Panel\"},\"TOOLTIP_STATUS\":{\"message\":\"Status Messages\",\"description\":\"tooltip for status tab\",\"component\":\"Panel\"},\"TOOLTIP_WORDLIST\":{\"message\":\"User word list\",\"description\":\"tooltip for user word list tab\",\"component\":\"Panel\"},\"TOOLTIP_USER\":{\"message\":\"User info\",\"description\":\"tooltip for a user info tab\",\"component\":\"Panel\"},\"TOOLTIP_SHOW_INFLECTIONS\":{\"message\":\"Show inflections\",\"description\":\"tooltip for button inflections\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_DEFINITIONS\":{\"message\":\"Show definitions\",\"description\":\"tooltip for button definitions\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_OPTIONS\":{\"message\":\"Show options\",\"description\":\"tooltip for button options\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_USAGEEXAMPLES\":{\"message\":\"Show example usages of this word\",\"description\":\"tooltop for word usage examples button\",\"component\":\"Popup\"},\"TOOLTIP_MORPHOLOGY\":{\"message\":\"Lemma\",\"description\":\"tooltop for a morphology button\",\"component\":\"Panel\"},\"TOOLTIP_NOT_AVAIL_POSTFIX\":{\"message\":\"not available\",\"description\":\"A postix added to tooltips when they are not available\",\"component\":\"Any\"},\"PLACEHOLDER_DEFINITIONS\":{\"message\":\"Lookup a word to show definitions...\",\"description\":\"placeholder for definitions panel\",\"component\":\"Panel\"},\"PLACEHOLDER_INFLECT_IN_PROGRESS\":{\"message\":\"Lookup a word to show inflections...\",\"description\":\"placeholder for inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SELECT_POFS\":{\"message\":\"Part of speech:\",\"description\":\"label for part of speech selector on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SHOWFULL\":{\"message\":\"Expand\",\"description\":\"label for expand button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_COLLAPSE\":{\"message\":\"Collapse\",\"description\":\"label for collapse table button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_SHOWFULL\":{\"message\":\"This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table\",\"description\":\"tooltip for show full table button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_COLLAPSE\":{\"message\":\"This table shows all its columns. Click 'Collapse' to show the ones with matching endings only\",\"description\":\"tooltip for collapse table button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_HIDEEMPTY\":{\"message\":\"Hide empty columns\",\"description\":\"label for hide empty columns button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SHOWEMPTY\":{\"message\":\"Show empty columns\",\"description\":\"label for show empty columns button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_HIDEEMPTY\":{\"message\":\"Show table without empty columns\",\"description\":\"tooltip for hide empty columns button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_SHOWEMPTY\":{\"message\":\"Show table with empty columns\",\"description\":\"tooltip for show empty columns button on inflections panel\",\"component\":\"Panel\"},\"INFLECT_MSG_TABLE_NOT_IMPLEMENTED\":{\"message\":\"This table has not been implemented yet\",\"description\":\"tooltip to show instead of inflection table if the latter is not implemented\",\"component\":\"Panel\"},\"TEXT_INFO_GETTINGSTARTED\":{\"message\":\"Getting Started\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_ACTIVATE\":{\"message\":\"Activate on a page with Latin, Ancient Greek, Arabic or Persian text.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_CLICK\":{\"message\":\"Double-click on a word to retrieve morphology and short definitions.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_LANGDETECT\":{\"message\":\"Alpheios will try to detect the language of the word from the page markup. If it cannot it will use the default language.\",\"description\":\"info text\",\"component\":\"Panel\"},\"LABEL_INFO_CURRENTLANGUAGE\":{\"message\":\"Current language:\",\"description\":\"label for current language in info text\",\"component\":\"Panel\"},\"TEXT_INFO_SETTINGS\":{\"message\":\"Click the Options wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_ARROW\":{\"message\":\"Use the arrow at the top of this panel to move it from the right to left of your browser window.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_REOPEN\":{\"message\":\"You can reopen this panel at any time by selecting 'Info' from the Alpheios Reading Tools option in your browser's context menu.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_DEACTIVATE\":{\"message\":\"Deactivate Alpheios by clicking the toolbar icon or choosing 'Deactivate' from the Alpheios Reading Tools option in your browser's context menu.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TOOLTIP_POPUP_CLOSE\":{\"message\":\"Close Popup\",\"description\":\"tooltip for closing the popup\",\"component\":\"Popup\"},\"LABEL_POPUP_TREEBANK\":{\"message\":\"Diagram\",\"description\":\"label for treebank button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_INFLECT\":{\"message\":\"Inflect\",\"description\":\"label for inflect button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_OPTIONS\":{\"message\":\"Options\",\"description\":\"label for options button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_DEFINE\":{\"message\":\"Define\",\"description\":\"label for define button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_USAGEEXAMPLES\":{\"message\":\"Examples\",\"description\":\"label for usage examples button on popup\",\"component\":\"Popup\"},\"PLACEHOLDER_LEX_DATA_LOADING\":{\"message\":\"Lexical data is loading\",\"description\":\"placeholder text for popup data\",\"component\":\"Popup\"},\"PLACEHOLDER_NO_LANGUAGE_DATA\":{\"message\":\"Lexical data couldn't be populated because page language is not defined\",\"description\":\"placeholder text for popup data when language is not defined\",\"component\":\"Popup\"},\"PLACEHOLDER_NO_MORPH_DATA\":{\"message\":\"Lexical query produced no results\",\"description\":\"placeholder text for popup data\",\"component\":\"Popup\"},\"LABEL_PROVIDERS_CREDITS\":{\"message\":\"Credits\",\"description\":\"label for credits on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_SHOWCREDITS\":{\"message\":\"Show\",\"description\":\"label for show credits link on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_HIDECREDITS\":{\"message\":\"Hide\",\"description\":\"label for hide credits link on popup\",\"component\":\"Popup\"},\"TEXT_NOTICE_SUGGEST_LOGIN\":{\"message\":\"Login to save your words to your wordlist.\",\"description\":\"login notification\",\"component\":\"UI\"},\"TEXT_NOTICE_CHANGE_LANGUAGE\":{\"message\":\"Language: {languageName}<br>Wrong? Change to:\",\"description\":\"language notification\",\"component\":\"UI\",\"params\":[\"languageName\"]},\"TEXT_NOTICE_LANGUAGE_UNKNOWN\":{\"message\":\"unknown\",\"description\":\"unknown language notification\",\"component\":\"UI\"},\"TEXT_NOTICE_MORPHDATA_READY\":{\"message\":\"Morphological analyzer data is ready\",\"description\":\"morph data ready notice\",\"component\":\"UI\"},\"TEXT_NOTICE_MORPHDATA_NOTFOUND\":{\"message\":\"Morphological data not found. Definition queries pending.\",\"description\":\"morph data not found notice\",\"component\":\"UI\"},\"TEXT_NOTICE_INFLDATA_READY\":{\"message\":\"Inflection data is ready\",\"description\":\"inflection data ready notice\",\"component\":\"UI\"},\"TEXT_NOTICE_DEFSDATA_READY\":{\"message\":\"{requestType} request is completed successfully. Lemma: \\\"{lemma}\\\"\",\"description\":\"definition request success notice\",\"component\":\"UI\",\"params\":[\"requestType\",\"lemma\"]},\"TEXT_NOTICE_DEFSDATA_NOTFOUND\":{\"message\":\"{requestType} request failed. Lemma not found for: \\\"{word}\\\"\",\"description\":\"definition request success notice\",\"component\":\"UI\",\"params\":[\"requestType\",\"word\"]},\"TEXT_NOTICE_NO_DEFS_FOUND\":{\"message\":\"No definitions found\",\"description\":\"displayed by the morph compoennt when there are no definition data exist\",\"component\":\"UI\"},\"TEXT_NOTICE_LEXQUERY_COMPLETE\":{\"message\":\"All lexical queries complete.\",\"description\":\"lexical queries complete notice\",\"component\":\"UI\"},\"TEXT_NOTICE_GRAMMAR_READY\":{\"message\":\"Grammar resource retrieved\",\"description\":\"grammar retrieved notice\",\"component\":\"UI\"},\"TEXT_NOTICE_GRAMMAR_COMPLETE\":{\"message\":\"All grammar resource data retrieved\",\"description\":\"grammar retrieved notice\",\"component\":\"UI\"},\"TEXT_NOTICE_RESQUERY_COMPLETE\":{\"message\":\"All resource data retrieved\",\"description\":\"resource query complete notice\",\"component\":\"UI\"},\"TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS\":{\"message\":\"Please wait while data is retrieved ...\",\"description\":\"Data retrieval is in progress\",\"component\":\"UI\"},\"TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS\":{\"message\":\"Please wait while data is retrieved ...\",\"description\":\"Resource retrieval is in progress\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_DEACTIVATE\":{\"message\":\"Deactivate Alpheios\",\"description\":\"Deactivate browser action title\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_ACTIVATE\":{\"message\":\"Activate Alpheios\",\"description\":\"Activate browser action title\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_DISABLED\":{\"message\":\"(Alpheios Extension Disabled For Page)\",\"description\":\"Disabled browser action title\",\"component\":\"UI\"},\"LABEL_CTXTMENU_DEACTIVATE\":{\"message\":\"Deactivate\",\"description\":\"Deactivate context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_ACTIVATE\":{\"message\":\"Activate\",\"description\":\"Activate context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_DISABLED\":{\"message\":\"(Disabled)\",\"description\":\"Disabled context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_OPENPANEL\":{\"message\":\"Open Panel\",\"description\":\"Open Panel context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_INFO\":{\"message\":\"Info\",\"description\":\"Info context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_SENDEXP\":{\"message\":\"Send Experiences to remote server\",\"description\":\"send exp data context menu label\",\"component\":\"UI\"},\"LABEL_LOOKUP_CONTROL\":{\"message\":\"Show/Hide lookup\",\"description\":\"A tooltip for the button that turns the lookup panel on and off\",\"component\":\"Toolbar\"},\"LABEL_LOOKUP_BUTTON\":{\"message\":\"Lookup\",\"description\":\"lookup button in lookup.vue\",\"component\":\"Popup\"},\"TOOLTIP_LOOKUP_BUTTON\":{\"message\":\"Lookup word\",\"description\":\"Tooltip for the lookup button in lookup.vue\",\"component\":\"Lookup\"},\"LABEL_LOOKUP_SETTINGS\":{\"message\":\"Using Language...\",\"description\":\"Settings link-label in the lookup block in lookup.vue\",\"component\":\"Lookup\"},\"LABEL_RESKIN_SETTINGS\":{\"message\":\"Reskin options\",\"description\":\"Label for Reskin component\",\"component\":\"ReskinFontColor\"},\"LABEL_RESET_OPTIONS\":{\"message\":\"Reset All\",\"description\":\"Label for Reset button\",\"component\":\"Options\"},\"TOOLTIP_RESKIN_SMALLFONT\":{\"message\":\"Small font\",\"description\":\"Tooltip for small font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_MEDIUMFONT\":{\"message\":\"Medium font\",\"description\":\"Tooltip for medium font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_LARGEFONT\":{\"message\":\"Large font\",\"description\":\"Tooltip for large font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_LIGHTBG\":{\"message\":\"Light background\",\"description\":\"Tooltip for light colors schema icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_DARKBG\":{\"message\":\"Dark background\",\"description\":\"Tooltip for dark colors schema icon\",\"component\":\"ReskinFontColor\"},\"INFLECTIONS_CREDITS_TITLE\":{\"message\":\"Credits\",\"description\":\"Title of credits section on inflection tables panel\",\"component\":\"InflectionTables\"},\"INFLECTIONS_PARADIGMS_EXPLANATORY_HINT\":{\"message\":\"The following table(s) show conjugation patterns for verbs which are similar to those of <span>{word}</span>\",\"description\":\"A hint that indicates that the current table is representative pattern for verbs similar to the one chosen\",\"component\":\"InflectionTables\",\"params\":[\"word\"]},\"INFLECTIONS_MAIN_TABLE_LINK_TEXT\":{\"message\":\"Back to main\",\"description\":\"A link pointing to a main inflection table\",\"component\":\"InflectionTables\"},\"INFL_ATTRIBUTE_LINK_TEXT_SOURCE\":{\"message\":\"Source\",\"description\":\"A link pointing to the source of a lemma or inflection\",\"component\":\"InflAttribute\"},\"EMBED_LIB_WARNING_TEXT\":{\"message\":\"This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.\",\"description\":\"A message that is shown when an Alpheios extension is disabled due to embedded library presence\",\"component\":\"EmbedLibWarning\"},\"AUTH_HIDE_LOGIN_BTN_LABEL\":{\"message\":\"Don't Ask Again\",\"description\":\"button to hide login\",\"component\":\"Notification Area Vue Component\"},\"AUTH_LOGIN_BTN_LABEL\":{\"message\":\"Log In\",\"description\":\"A message shown on a log in button\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGOUT_BTN_LABEL\":{\"message\":\"Log Out\",\"description\":\"A message shown on a log out button\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_PROGRESS_MSG\":{\"message\":\"Please be patient while we are logging you in ...\",\"description\":\"A message shown to the user while he or she is waiting for an authentication to complete\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_SUCCESS_MSG\":{\"message\":\"Congratulations! You are logged in successfully.\",\"description\":\"A message shown to the user if he or she logged in successfully\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_AUTH_FAILURE_MSG\":{\"message\":\"Authentication failed\",\"description\":\"A message shown to the user if his or her authentication failed\",\"component\":\"UserAuth Vue Component\"},\"AUTH_PROFILE_NICKNAME_LABEL\":{\"message\":\"Nickname\",\"description\":\"A user's profile nickname filed label\",\"component\":\"UserAuth Vue Component\"},\"AUTH_PROFILE_NAME_LABEL\":{\"message\":\"Name\",\"description\":\"A user's profile name filed label\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGOUT_SUCCESS_MSG\":{\"message\":\"You have been logged out.\",\"description\":\"A message shown to the user if he or she logged out successfully\",\"component\":\"UserAuth Vue Component\"},\"FONTSIZE_TEXT_SMALL\":{\"message\":\"Small\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"FONTSIZE_TEXT_MEDIUM\":{\"message\":\"Medium\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"FONTSIZE_TEXT_LARGE\":{\"message\":\"Large\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"TOOLTIP_BACK_TO_INDEX\":{\"message\":\"Back to index\",\"description\":\"Description of back to index button\",\"component\":\"Grammar Tab\"},\"LABEL_FIELDSET_USAGEEXAMPLES\":{\"message\":\"Latin Word Usage Examples (Concordance)\",\"description\":\"Legend for options fieldset\",\"component\":\"Options Tab\"}}");
+module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a test message about a cookie.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\"},\"NUM_LINES_TEST_MESSAGE\":{\"message\":\"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\",\"params\":[\"numLines\"]},\"TITLE_HELP_PANEL\":{\"message\":\"Help\",\"description\":\"A title of a help panel\",\"component\":\"Panel\"},\"TITLE_INFLECTIONS_PANEL\":{\"message\":\"Inflection tables\",\"description\":\"A title of an inflections panel\",\"component\":\"Panel\"},\"TITLE_INFLECTIONS_BROWSER_PANEL\":{\"message\":\"Browse inflection tables\",\"description\":\"A title of an inflections browser panel\",\"component\":\"Panel\"},\"TOOLTIP_MOVE_PANEL_LEFT\":{\"message\":\"Move Panel to Left\",\"description\":\"tooltip for moving the panel to the left\",\"component\":\"Panel\"},\"TOOLTIP_MOVE_PANEL_RIGHT\":{\"message\":\"Move Panel to Right\",\"description\":\"tooltip for moving the panel to the right\",\"component\":\"Panel\"},\"TOOLTIP_CLOSE_PANEL\":{\"message\":\"Close Panel\",\"description\":\"tooltip for closing the panel\",\"component\":\"Panel\"},\"TOOLTIP_HELP\":{\"message\":\"Help\",\"description\":\"tooltip for help tab\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT\":{\"message\":\"Inflections\",\"description\":\"tooltip for inflections tab\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_BROWSER\":{\"message\":\"Browse Inflection Tables\",\"description\":\"tooltip for inflections browser tab\",\"component\":\"Panel\"},\"TOOLTIP_DEFINITIONS\":{\"message\":\"Definitions\",\"description\":\"tooltip for definitions tab\",\"component\":\"Panel\"},\"TOOLTIP_GRAMMAR\":{\"message\":\"Browse Grammar\",\"description\":\"tooltip for grammar tab\",\"component\":\"Panel\"},\"TOOLTIP_TREEBANK\":{\"message\":\"Diagram\",\"description\":\"tooltip for treebank tab\",\"component\":\"Panel\"},\"TOOLTIP_OPTIONS\":{\"message\":\"Options\",\"description\":\"tooltip for options tab\",\"component\":\"Panel\"},\"TOOLTIP_STATUS\":{\"message\":\"Status Messages\",\"description\":\"tooltip for status tab\",\"component\":\"Panel\"},\"TOOLTIP_WORDLIST\":{\"message\":\"User word list\",\"description\":\"tooltip for user word list tab\",\"component\":\"Panel\"},\"TOOLTIP_USER\":{\"message\":\"User info\",\"description\":\"tooltip for a user info tab\",\"component\":\"Panel\"},\"TOOLTIP_SHOW_INFLECTIONS\":{\"message\":\"Show inflections\",\"description\":\"tooltip for button inflections\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_DEFINITIONS\":{\"message\":\"Show definitions\",\"description\":\"tooltip for button definitions\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_OPTIONS\":{\"message\":\"Show options\",\"description\":\"tooltip for button options\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_USAGEEXAMPLES\":{\"message\":\"Show example usages of this word\",\"description\":\"tooltop for word usage examples button\",\"component\":\"Popup\"},\"TOOLTIP_MORPHOLOGY\":{\"message\":\"Lemma\",\"description\":\"tooltop for a morphology button\",\"component\":\"Panel\"},\"TOOLTIP_NOT_AVAIL_POSTFIX\":{\"message\":\"not available\",\"description\":\"A postix added to tooltips when they are not available\",\"component\":\"Any\"},\"PLACEHOLDER_DEFINITIONS\":{\"message\":\"Lookup a word to show definitions...\",\"description\":\"placeholder for definitions panel\",\"component\":\"Panel\"},\"PLACEHOLDER_INFLECT_IN_PROGRESS\":{\"message\":\"Lookup a word to show inflections...\",\"description\":\"placeholder for inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SELECT_POFS\":{\"message\":\"Part of speech:\",\"description\":\"label for part of speech selector on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SHOWFULL\":{\"message\":\"Expand\",\"description\":\"label for expand button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_COLLAPSE\":{\"message\":\"Collapse\",\"description\":\"label for collapse table button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_SHOWFULL\":{\"message\":\"This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table\",\"description\":\"tooltip for show full table button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_COLLAPSE\":{\"message\":\"This table shows all its columns. Click 'Collapse' to show the ones with matching endings only\",\"description\":\"tooltip for collapse table button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_HIDEEMPTY\":{\"message\":\"Hide empty columns\",\"description\":\"label for hide empty columns button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SHOWEMPTY\":{\"message\":\"Show empty columns\",\"description\":\"label for show empty columns button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_HIDEEMPTY\":{\"message\":\"Show table without empty columns\",\"description\":\"tooltip for hide empty columns button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_SHOWEMPTY\":{\"message\":\"Show table with empty columns\",\"description\":\"tooltip for show empty columns button on inflections panel\",\"component\":\"Panel\"},\"INFLECT_MSG_TABLE_NOT_IMPLEMENTED\":{\"message\":\"This table has not been implemented yet\",\"description\":\"tooltip to show instead of inflection table if the latter is not implemented\",\"component\":\"Panel\"},\"TEXT_INFO_GETTINGSTARTED\":{\"message\":\"Getting Started\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_ACTIVATE\":{\"message\":\"Activate on a page with Latin, Ancient Greek, Arabic or Persian text.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_CLICK\":{\"message\":\"Double-click on a word to retrieve morphology and short definitions.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_LANGDETECT\":{\"message\":\"Alpheios will try to detect the language of the word from the page markup. If it cannot it will use the default language.\",\"description\":\"info text\",\"component\":\"Panel\"},\"LABEL_INFO_CURRENTLANGUAGE\":{\"message\":\"Current language:\",\"description\":\"label for current language in info text\",\"component\":\"Panel\"},\"TEXT_INFO_SETTINGS\":{\"message\":\"Click the Options wheel to change the default language, default dictionaries or to disable the popup (set UI Type to 'panel').\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_ARROW\":{\"message\":\"Use the arrow at the top of this panel to move it from the right to left of your browser window.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_REOPEN\":{\"message\":\"You can reopen this panel at any time by selecting 'Info' from the Alpheios Reading Tools option in your browser's context menu.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_DEACTIVATE\":{\"message\":\"Deactivate Alpheios by clicking the toolbar icon or choosing 'Deactivate' from the Alpheios Reading Tools option in your browser's context menu.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TOOLTIP_POPUP_CLOSE\":{\"message\":\"Close Popup\",\"description\":\"tooltip for closing the popup\",\"component\":\"Popup\"},\"LABEL_POPUP_TREEBANK\":{\"message\":\"Diagram\",\"description\":\"label for treebank button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_INFLECT\":{\"message\":\"Inflect\",\"description\":\"label for inflect button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_OPTIONS\":{\"message\":\"Options\",\"description\":\"label for options button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_DEFINE\":{\"message\":\"Define\",\"description\":\"label for define button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_USAGEEXAMPLES\":{\"message\":\"Examples\",\"description\":\"label for usage examples button on popup\",\"component\":\"Popup\"},\"PLACEHOLDER_LEX_DATA_LOADING\":{\"message\":\"Lexical data is loading\",\"description\":\"placeholder text for popup data\",\"component\":\"Popup\"},\"PLACEHOLDER_NO_LANGUAGE_DATA\":{\"message\":\"Lexical data couldn't be populated because page language is not defined\",\"description\":\"placeholder text for popup data when language is not defined\",\"component\":\"Popup\"},\"PLACEHOLDER_NO_MORPH_DATA\":{\"message\":\"Lexical query produced no results\",\"description\":\"placeholder text for popup data\",\"component\":\"Popup\"},\"LABEL_PROVIDERS_CREDITS\":{\"message\":\"Credits\",\"description\":\"label for credits on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_SHOWCREDITS\":{\"message\":\"Show\",\"description\":\"label for show credits link on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_HIDECREDITS\":{\"message\":\"Hide\",\"description\":\"label for hide credits link on popup\",\"component\":\"Popup\"},\"TEXT_NOTICE_SUGGEST_LOGIN\":{\"message\":\"Login to save your words to your wordlist.\",\"description\":\"login notification\",\"component\":\"UI\"},\"TEXT_NOTICE_CHANGE_LANGUAGE\":{\"message\":\"Language: {languageName}<br>Wrong? Change to:\",\"description\":\"language notification\",\"component\":\"UI\",\"params\":[\"languageName\"]},\"TEXT_NOTICE_LANGUAGE_UNKNOWN\":{\"message\":\"unknown\",\"description\":\"unknown language notification\",\"component\":\"UI\"},\"TEXT_NOTICE_MORPHDATA_READY\":{\"message\":\"Morphological analyzer data is ready\",\"description\":\"morph data ready notice\",\"component\":\"UI\"},\"TEXT_NOTICE_MORPHDATA_NOTFOUND\":{\"message\":\"Morphological data not found. Definition queries pending.\",\"description\":\"morph data not found notice\",\"component\":\"UI\"},\"TEXT_NOTICE_INFLDATA_READY\":{\"message\":\"Inflection data is ready\",\"description\":\"inflection data ready notice\",\"component\":\"UI\"},\"TEXT_NOTICE_DEFSDATA_READY\":{\"message\":\"{requestType} request is completed successfully. Lemma: \\\"{lemma}\\\"\",\"description\":\"definition request success notice\",\"component\":\"UI\",\"params\":[\"requestType\",\"lemma\"]},\"TEXT_NOTICE_DEFSDATA_NOTFOUND\":{\"message\":\"{requestType} request failed. Lemma not found for: \\\"{word}\\\"\",\"description\":\"definition request success notice\",\"component\":\"UI\",\"params\":[\"requestType\",\"word\"]},\"TEXT_NOTICE_NO_DEFS_FOUND\":{\"message\":\"No definitions found\",\"description\":\"displayed by the morph compoennt when there are no definition data exist\",\"component\":\"UI\"},\"TEXT_NOTICE_LEXQUERY_COMPLETE\":{\"message\":\"All lexical queries complete.\",\"description\":\"lexical queries complete notice\",\"component\":\"UI\"},\"TEXT_NOTICE_GRAMMAR_READY\":{\"message\":\"Grammar resource retrieved\",\"description\":\"grammar retrieved notice\",\"component\":\"UI\"},\"TEXT_NOTICE_GRAMMAR_COMPLETE\":{\"message\":\"All grammar resource data retrieved\",\"description\":\"grammar retrieved notice\",\"component\":\"UI\"},\"TEXT_NOTICE_RESQUERY_COMPLETE\":{\"message\":\"All resource data retrieved\",\"description\":\"resource query complete notice\",\"component\":\"UI\"},\"TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS\":{\"message\":\"Please wait while data is retrieved ...\",\"description\":\"Data retrieval is in progress\",\"component\":\"UI\"},\"TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS\":{\"message\":\"Please wait while data is retrieved ...\",\"description\":\"Resource retrieval is in progress\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_DEACTIVATE\":{\"message\":\"Deactivate Alpheios\",\"description\":\"Deactivate browser action title\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_ACTIVATE\":{\"message\":\"Activate Alpheios\",\"description\":\"Activate browser action title\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_DISABLED\":{\"message\":\"(Alpheios Extension Disabled For Page)\",\"description\":\"Disabled browser action title\",\"component\":\"UI\"},\"LABEL_CTXTMENU_DEACTIVATE\":{\"message\":\"Deactivate\",\"description\":\"Deactivate context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_ACTIVATE\":{\"message\":\"Activate\",\"description\":\"Activate context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_DISABLED\":{\"message\":\"(Disabled)\",\"description\":\"Disabled context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_OPENPANEL\":{\"message\":\"Open Panel\",\"description\":\"Open Panel context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_INFO\":{\"message\":\"Info\",\"description\":\"Info context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_SENDEXP\":{\"message\":\"Send Experiences to remote server\",\"description\":\"send exp data context menu label\",\"component\":\"UI\"},\"LABEL_LOOKUP_CONTROL\":{\"message\":\"Show/Hide lookup\",\"description\":\"A tooltip for the button that turns the lookup panel on and off\",\"component\":\"Toolbar\"},\"LABEL_LOOKUP_BUTTON\":{\"message\":\"Lookup\",\"description\":\"lookup button in lookup.vue\",\"component\":\"Popup\"},\"TOOLTIP_LOOKUP_BUTTON\":{\"message\":\"Lookup word\",\"description\":\"Tooltip for the lookup button in lookup.vue\",\"component\":\"Lookup\"},\"LABEL_LOOKUP_SETTINGS\":{\"message\":\"Using Language...\",\"description\":\"Settings link-label in the lookup block in lookup.vue\",\"component\":\"Lookup\"},\"LABEL_RESKIN_SETTINGS\":{\"message\":\"Reskin options\",\"description\":\"Label for Reskin component\",\"component\":\"ReskinFontColor\"},\"LABEL_RESET_OPTIONS\":{\"message\":\"Reset All\",\"description\":\"Label for Reset button\",\"component\":\"Options\"},\"TOOLTIP_RESKIN_SMALLFONT\":{\"message\":\"Small font\",\"description\":\"Tooltip for small font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_MEDIUMFONT\":{\"message\":\"Medium font\",\"description\":\"Tooltip for medium font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_LARGEFONT\":{\"message\":\"Large font\",\"description\":\"Tooltip for large font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_LIGHTBG\":{\"message\":\"Light background\",\"description\":\"Tooltip for light colors schema icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_DARKBG\":{\"message\":\"Dark background\",\"description\":\"Tooltip for dark colors schema icon\",\"component\":\"ReskinFontColor\"},\"INFLECTIONS_CREDITS_TITLE\":{\"message\":\"Credits\",\"description\":\"Title of credits section on inflection tables panel\",\"component\":\"InflectionTables\"},\"INFLECTIONS_PARADIGMS_EXPLANATORY_HINT\":{\"message\":\"The following table(s) show conjugation patterns for verbs which are similar to those of <span>{word}</span>\",\"description\":\"A hint that indicates that the current table is representative pattern for verbs similar to the one chosen\",\"component\":\"InflectionTables\",\"params\":[\"word\"]},\"INFLECTIONS_MAIN_TABLE_LINK_TEXT\":{\"message\":\"Back to main\",\"description\":\"A link pointing to a main inflection table\",\"component\":\"InflectionTables\"},\"INFL_ATTRIBUTE_LINK_TEXT_SOURCE\":{\"message\":\"Source\",\"description\":\"A link pointing to the source of a lemma or inflection\",\"component\":\"InflAttribute\"},\"EMBED_LIB_WARNING_TEXT\":{\"message\":\"This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.\",\"description\":\"A message that is shown when an Alpheios extension is disabled due to embedded library presence\",\"component\":\"EmbedLibWarning\"},\"AUTH_HIDE_LOGIN_BTN_LABEL\":{\"message\":\"Don't Ask Again\",\"description\":\"button to hide login\",\"component\":\"Notification Area Vue Component\"},\"AUTH_LOGIN_BTN_LABEL\":{\"message\":\"Log In\",\"description\":\"A message shown on a log in button\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGOUT_BTN_LABEL\":{\"message\":\"Log Out\",\"description\":\"A message shown on a log out button\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_PROGRESS_MSG\":{\"message\":\"Please be patient while we are logging you in ...\",\"description\":\"A message shown to the user while he or she is waiting for an authentication to complete\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_SUCCESS_MSG\":{\"message\":\"Congratulations! You are logged in successfully.\",\"description\":\"A message shown to the user if he or she logged in successfully\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_AUTH_FAILURE_MSG\":{\"message\":\"Authentication failed\",\"description\":\"A message shown to the user if his or her authentication failed\",\"component\":\"UserAuth Vue Component\"},\"AUTH_PROFILE_NICKNAME_LABEL\":{\"message\":\"Nickname\",\"description\":\"A user's profile nickname filed label\",\"component\":\"UserAuth Vue Component\"},\"AUTH_PROFILE_NAME_LABEL\":{\"message\":\"Name\",\"description\":\"A user's profile name filed label\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGOUT_SUCCESS_MSG\":{\"message\":\"You have been logged out.\",\"description\":\"A message shown to the user if he or she logged out successfully\",\"component\":\"UserAuth Vue Component\"},\"FONTSIZE_TEXT_SMALL\":{\"message\":\"Small\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"FONTSIZE_TEXT_MEDIUM\":{\"message\":\"Medium\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"FONTSIZE_TEXT_LARGE\":{\"message\":\"Large\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"TOOLTIP_BACK_TO_INDEX\":{\"message\":\"Back to index\",\"description\":\"Description of back to index button\",\"component\":\"Grammar Tab\"},\"LABEL_FIELDSET_USAGEEXAMPLES\":{\"message\":\"Latin Word Usage Examples (Concordance)\",\"description\":\"Legend for options fieldset\",\"component\":\"Options Tab\"},\"OPTIONS_TAB_UI\":{\"message\":\"User Interface Options\",\"description\":\"Tooltip for the show UI options icon\",\"component\":\"Options Tab\"},\"OPTIONS_TAB_FEATURE\":{\"message\":\"Feature Options\",\"description\":\"Tooltip for the show Feature options icon\",\"component\":\"Options Tab\"},\"OPTIONS_TAB_RESOURCE\":{\"message\":\"Resource Options\",\"description\":\"Tooltip for the show Resource options icon\",\"component\":\"Options Tab\"},\"OPTIONS_TAB_RESET_ALL_TITLE\":{\"message\":\"Apply to all options - U, F, R\",\"description\":\"Reset All description title\",\"component\":\"Options Tab\"}}");
 
 /***/ }),
 
@@ -61626,6 +61804,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_notification_area_vue_vue_type_template_id_2a9ac56d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_notification_area_vue_vue_type_template_id_2a9ac56d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./vue/components/options.vue":
+/*!************************************!*\
+  !*** ./vue/components/options.vue ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _options_vue_vue_type_template_id_af7ce048___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./options.vue?vue&type=template&id=af7ce048& */ "./vue/components/options.vue?vue&type=template&id=af7ce048&");
+/* harmony import */ var _options_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./options.vue?vue&type=script&lang=js& */ "./vue/components/options.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _options_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./options.vue?vue&type=style&index=0&lang=scss& */ "./vue/components/options.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _options_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _options_vue_vue_type_template_id_af7ce048___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _options_vue_vue_type_template_id_af7ce048___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "vue/components/options.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./vue/components/options.vue?vue&type=script&lang=js&":
+/*!*************************************************************!*\
+  !*** ./vue/components/options.vue?vue&type=script&lang=js& ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_options_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib??vue-loader-options!../../../node_modules/source-map-loader!./options.vue?vue&type=script&lang=js& */ "../node_modules/vue-loader/lib/index.js?!../node_modules/source-map-loader/index.js!./vue/components/options.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_node_modules_source_map_loader_index_js_options_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./vue/components/options.vue?vue&type=style&index=0&lang=scss&":
+/*!**********************************************************************!*\
+  !*** ./vue/components/options.vue?vue&type=style&index=0&lang=scss& ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_options_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./options.vue?vue&type=style&index=0&lang=scss& */ "../node_modules/mini-css-extract-plugin/dist/loader.js!../node_modules/css-loader/dist/cjs.js?!../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../node_modules/sass-loader/lib/loader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/options.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_options_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_options_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_options_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_options_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_options_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./vue/components/options.vue?vue&type=template&id=af7ce048&":
+/*!*******************************************************************!*\
+  !*** ./vue/components/options.vue?vue&type=template&id=af7ce048& ***!
+  \*******************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_options_vue_vue_type_template_id_af7ce048___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./options.vue?vue&type=template&id=af7ce048& */ "../node_modules/vue-loader/lib/loaders/templateLoader.js?!../node_modules/vue-loader/lib/index.js?!./vue/components/options.vue?vue&type=template&id=af7ce048&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_options_vue_vue_type_template_id_af7ce048___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_options_vue_vue_type_template_id_af7ce048___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -58,7 +58,7 @@ export default {
       border-right: 1px solid var(--alpheios-settings-font-size-dark-color);
       background: transparent;
       padding: textsize(6px) textsize(12px);
-      font-size: textsize(8px);
+      font-size: textsize(10px);
       cursor: pointer;
       flex: 1;
       // Need below to override default styles of Safari

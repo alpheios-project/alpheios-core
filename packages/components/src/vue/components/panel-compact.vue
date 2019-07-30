@@ -264,14 +264,7 @@
            v-show="$store.getters['ui/isActiveTab']('options')"
            data-alpheios-ignore="all"
       >
-        <ui-settings :key="uiSettingsKey"></ui-settings>
-        <feature-settings :key="featureSettingsKey"></feature-settings>
-        <resource-settings :key="resourceSettingsKey"></resource-settings>
-        <div>
-          <button @click="resetAllOptions"
-              class="alpheios-button-primary">{{l10n.getText('LABEL_RESET_OPTIONS')}}
-          </button>
-        </div>
+        <options-panel />
       </div>
 
       <div class="alpheios-panel__tab-panel alpheios-panel__tab__wordlist"
@@ -302,14 +295,14 @@ import Morph from './morph.vue'
 import Treebank from './treebank.vue'
 import InflectionBrowser from './inflections-browser.vue'
 import Lookup from './lookup.vue'
-import ResourceSettings from './resource-settings.vue'
-import FeatureSettings from './feature-settings.vue'
-import UISettings from './ui-settings.vue'
+
 import UserAuth from './user-auth.vue'
 import WordUsageExamples from '@/vue/components/word-usage-examples/word-usage-examples.vue'
 import { Definition } from 'alpheios-data-models'
 import WordListPanel from '@/vue/components/word-list/word-list-panel.vue'
 import ProgressBar from '@/vue/components/progress-bar.vue'
+import OptionsPanel from '@/vue/components/options.vue'
+
 // Embeddable SVG icons
 import CloseIcon from '@/images/inline-icons/x-close.svg'
 import UpIcon from '@/images/inline-icons/chevron-up.svg'
@@ -358,11 +351,11 @@ export default {
     userAuth: UserAuth,
     closeIcon: CloseIcon,
     lookup: Lookup,
-    uiSettings: UISettings,
-    resourceSettings: ResourceSettings,
-    featureSettings: FeatureSettings,
+    
     wordListPanel: WordListPanel,
     wordUsageExamples: WordUsageExamples,
+    optionsPanel: OptionsPanel,
+
     upIcon: UpIcon,
     downIcon: DownIcon,
     leftIcon: LeftIcon,
@@ -447,17 +440,7 @@ export default {
       return classes
     },
 
-    uiSettingsKey() {
-      return `${this.$options.prefixName}-settings-ui-${this.$store.state.settings.uiResetCounter}`
-    },
-
-    resourceSettingsKey() {
-      return `${this.$options.prefixName}-settings-resource-${this.$store.state.settings.resourceResetCounter}`
-    },
-
-    featureSettingsKey() {
-      return `${this.$options.prefixName}-settings-feature-${this.$store.state.settings.featureResetCounter}`
-    },
+    
 
     componentStyles: function () {
       return {
@@ -553,10 +536,6 @@ export default {
 
     contentOptionChanged: function (name, value) {
       this.app.contentOptionChange(name, value)
-    },
-
-    resetAllOptions: function () {
-      this.app.resetAllOptions()
     },
 
     expand () {
@@ -862,7 +841,7 @@ export default {
   }
 
   .alpheios-panel__options-item {
-    margin-bottom: textsize(10px);
+    margin-bottom: textsize(15px);
     display: flex;
     align-items: flex-start;
     flex: 1 1 auto;
@@ -970,6 +949,10 @@ export default {
     .alpheios-panel__header-btn--treebank-data {
       display: none;
     }
+  }
+
+  .alpheios-panel__tab-panel--options {
+    padding-top:10px;
   }
 
 </style>
