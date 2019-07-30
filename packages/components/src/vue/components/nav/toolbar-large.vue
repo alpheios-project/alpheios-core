@@ -12,20 +12,6 @@
     >
     </div>
     <div
-        class="alpheios-toolbar__lookup-control"
-        @click="lookupVisible = !lookupVisible"
-    >
-      <alph-tooltip
-          :tooltip-text="l10n.getText('LABEL_LOOKUP_CONTROL')"
-          :tooltip-direction="tooltipDirection"
-      >
-        <span class="alpheios-navbuttons__btn"
-              :class="{ active: lookupVisible }">
-          <lookup-icon></lookup-icon>
-        </span>
-      </alph-tooltip>
-    </div>
-    <div
         class="alpheios-toolbar__help-control">
       <alph-tooltip
           :tooltip-text="l10n.getText('TOOLTIP_HELP')"
@@ -41,13 +27,34 @@
       </alph-tooltip>
     </div>
     <div
+        class="alpheios-toolbar__lookup-control"
+        @click="lookupVisible = !lookupVisible"
+    >
+      <alph-tooltip
+          :tooltip-text="l10n.getText('LABEL_LOOKUP_CONTROL')"
+          :tooltip-direction="tooltipDirection"
+      >
+        <span class="alpheios-navbuttons__btn"
+              :class="{ active: lookupVisible }">
+          <lookup-icon></lookup-icon>
+        </span>
+      </alph-tooltip>
+    </div>
+    <div
         class="alpheios-toolbar__header"
         :class="{ expanded: contentVisible }"
         @click="contentVisible = !contentVisible"
     >
-      <reading-tools-icon
-        class="alpheios-toolbar__header-icon"
-      />
+      <alph-tooltip
+          :tooltip-text="l10n.getText('LABEL_TOOLS_CONTROL')"
+          :tooltip-direction="tooltipDirection"
+      >
+        <span class="alpheios-navbuttons__btn"
+            :class="{ active: contentVisible }">
+          <reading-tools-icon
+          />
+        </span>
+      </alph-tooltip>
       <collapsed-icon
           class="alpheios-toolbar__header-icon-collapsed"
           v-show="!contentVisible"
@@ -465,7 +472,6 @@ export default {
 
   .alpheios-toolbar__header {
     width: uisize($alpheios-toolbar-base-width);
-    height: uisize(54px);
     border-bottom: none;
     background: var(--alpheios-desktop-toolbar-bg);
     box-sizing: border-box;
@@ -475,6 +481,10 @@ export default {
     position: relative;
     // Need this for interact.js to work more reliably
     touch-action: none;
+    .alpheios-navbuttons__btn {
+      margin: 0 0 uisize(4px) 0;
+      border: none;
+    }
   }
 
   .alpheios-toolbar__header-icon {

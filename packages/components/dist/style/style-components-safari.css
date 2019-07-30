@@ -3663,7 +3663,6 @@ p.alpheios-word-usage-filter-title {
 }
 .alpheios-toolbar__header {
   width: calc(var(--alpheios-base-ui-size) * 2.75) !important;
-  height: calc(var(--alpheios-base-ui-size) * 3.375) !important;
   border-bottom: none !important;
   background: var(--alpheios-desktop-toolbar-bg) !important;
   box-sizing: border-box !important;
@@ -3672,6 +3671,10 @@ p.alpheios-word-usage-filter-title {
   border-bottom-right-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
   position: relative !important;
   touch-action: none !important;
+}
+.alpheios-toolbar__header .alpheios-navbuttons__btn {
+  margin: 0 0 calc(var(--alpheios-base-ui-size) * 0.25) 0 !important;
+  border: none !important;
 }
 .alpheios-toolbar__header-icon {
   width: calc(var(--alpheios-base-ui-size) * 1.375) !important;

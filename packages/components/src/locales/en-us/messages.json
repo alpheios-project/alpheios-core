@@ -413,6 +413,11 @@
     "description": "send exp data context menu label",
     "component": "UI"
   },
+  "LABEL_TOOLS_CONTROL": {
+    "message": "Show/Hide Reading Tools",
+    "description": "A tooltip for the reading tools icon on the toolbar",
+    "component": "Toolbar"
+  },
   "LABEL_LOOKUP_CONTROL": {
     "message": "Show/Hide lookup",
     "description": "A tooltip for the button that turns the lookup panel on and off",
@@ -585,5 +590,5 @@
     "component": "Options Tab"
   }
 
-  
+
 }
