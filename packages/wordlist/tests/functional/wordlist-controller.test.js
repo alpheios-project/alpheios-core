@@ -221,7 +221,7 @@ describe('wordlist-controller.test.js', () => {
     expect(item.context.length).toEqual(1)
     expect(item.context[0].normalizedText).toEqual(testTarget)
     expect(WordlistController.evt.WORDITEM_UPDATED.pub).toHaveBeenCalledWith({dataObj:item,params:{segment:'context'}})
-    expect(WordlistController.evt.WORDLIST_UPDATED.pub).toHaveBeenCalledWith(latList)
+    expect(WordlistController.evt.WORDLIST_UPDATED.pub).toHaveBeenCalledWith([latList])
   })
   it('18 WordlistController - onTextQuoteSelectorReceived adds new item to list and emits events',() => {
     let wc = new WordlistController([mockLClat,mockLCgrc],mockEvents)
