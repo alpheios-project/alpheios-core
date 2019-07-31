@@ -191,7 +191,7 @@
     "component": "Panel"
   },
   "TEXT_INFO_ACTIVATE": {
-    "message": "Click the Alpheios icon in the browser toolbar to activate on any page with Latin, Ancient Greek, Arabic or Persian text. Click again to deactivate.",
+    "message": "Click the Alpheios icon in the browser toolbar to activate on any page. Click again to deactivate.",
     "description": "info text",
     "component": "Panel"
   },
@@ -232,7 +232,7 @@
     "component": "Panel"
   },
   "TEXT_INFO_ARROW": {
-    "message": "Use the arrow at the top of this panel to move it from the right to left of your browser window.",
+    "message": "Use the arrow at the top of this panel to swap positions between the right and left side of your browser window.",
     "description": "info text",
     "component": "Panel"
   },
