@@ -1,7 +1,9 @@
 <template>
   <div data-alpheios-ignore="all">
     <div class="alpheios-wordlist" v-if="!showContext" >
-        <div class="alpheios-wordlist-language" v-for="(languageCode, langIndex) in languagesList" v-bind:key="langIndex">
+        <div class="alpheios-wordlist-language" 
+          :class="{ 'alpheios-rtl': defineDirection(languageCode)}"
+          v-for="(languageCode, langIndex) in languagesList" v-bind:key="langIndex">
           <word-language
             :languageCode = "languageCode"
             @showContexts = "showContexts"
@@ -19,6 +21,8 @@
 <script>
 import WordLanguagePanel from '@/vue/components/word-list/word-language-panel.vue'
 import WordContextPanel from '@/vue/components/word-list/word-context-panel.vue'
+
+import { LanguageModelFactory, Constants } from 'alpheios-data-models'
 
 export default {
   name: 'WordListPanel',
@@ -50,6 +54,10 @@ export default {
     },
     backToWordList () {
       this.showContextWordItem = null
+    },
+    defineDirection (languageCode) {
+      let model = LanguageModelFactory.getLanguageModelFromCode(languageCode)
+      return model.direction === Constants.LANG_DIR_RTL
     }
   }
 }
@@ -59,7 +67,7 @@ export default {
 
     .alpheios-wordlist-language {
         padding-bottom: 5px;
-        margin-bottom: 10px;
+        margin-bottom: 25px;
     }
 
     .alpheios-wordlist-language__title {

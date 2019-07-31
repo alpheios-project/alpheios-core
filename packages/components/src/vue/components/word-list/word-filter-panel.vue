@@ -347,4 +347,12 @@
     }
   }
 
+  .alpheios-rtl {
+    .alpheios-wordlist-header-input-filterBy-block,
+    .alpheios-select-list {
+      direction: rtl;   
+      text-align: right;
+    }
+  }
+
 </style>

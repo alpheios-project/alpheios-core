@@ -2812,11 +2812,11 @@ p.alpheios-word-usage-filter-title {
 }
 .alpheios-worditem__targetWord {
   font-weight: bold !important;
-  width: 28% !important;
+  width: calc((100% - 150px)/2) !important;
   cursor: pointer !important;
 }
 .alpheios-worditem__lemmasList {
-  width: 26% !important;
+  width: calc((100% - 150px)/2) !important;
 }
 .alpheios-visibility__hidden {
   visibility: hidden !important;
@@ -2824,8 +2824,10 @@ p.alpheios-word-usage-filter-title {
 .alpheios-lemma-clickable .alpheios-worditem__lemmasList-lemmaitem {
   cursor: pointer !important;
 }
-.alpheios-layout-compact .alpheios-worditem__targetWord {
-  width: 25% !important;
+.alpheios-rtl .alpheios-worditem__targetWord,
+.alpheios-rtl .alpheios-worditem__lemmasList {
+  direction: rtl !important;
+  text-align: right !important;
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -2928,6 +2930,11 @@ p.alpheios-word-usage-filter-title {
 }
 .alpheios-layout-compact .alpheios-select-input-group {
   width: 68% !important;
+}
+.alpheios-rtl .alpheios-wordlist-header-input-filterBy-block,
+.alpheios-rtl .alpheios-select-list {
+  direction: rtl !important;
+  text-align: right !important;
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -3050,7 +3057,7 @@ p.alpheios-word-usage-filter-title {
  */
 .alpheios-wordlist-language {
   padding-bottom: 5px !important;
-  margin-bottom: 10px !important;
+  margin-bottom: 25px !important;
 }
 .alpheios-wordlist-language__title {
   font-weight: bold !important;
@@ -3512,10 +3519,8 @@ p.alpheios-word-usage-filter-title {
  */
 .alpheios-panel--large {
   height: 100vh !important;
-  top: 0 !important;
-}
-.alpheios-panel--large .alpheios-panel__content {
   max-width: 80vw !important;
+  top: 0 !important;
 }
 .alpheios-panel--large .alpheios-navbuttons__btn svg {
   width: calc(var(--alpheios-base-ui-size) * 1.375) !important;

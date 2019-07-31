@@ -172,11 +172,11 @@ export default {
 
   .alpheios-worditem__targetWord {
       font-weight: bold;
-      width: 28%;
+      width: calc((100% - 150px)/2);
       cursor: pointer;
   }
   .alpheios-worditem__lemmasList {
-      width: 26%;
+      width: calc((100% - 150px)/2);
   }
 
   .alpheios-visibility__hidden {
@@ -188,9 +188,11 @@ export default {
     cursor: pointer;
   }
 
-  .alpheios-layout-compact { 
-    .alpheios-worditem__targetWord {
-      width: 25%;
+  .alpheios-rtl {
+    .alpheios-worditem__targetWord,
+    .alpheios-worditem__lemmasList {
+      direction: rtl;
+      text-align: right;
     }
   }
 </style>

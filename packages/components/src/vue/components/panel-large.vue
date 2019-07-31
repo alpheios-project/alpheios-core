@@ -246,11 +246,8 @@ export default {
 
   .alpheios-panel--large {
     height: 100vh;
+    max-width: 80vw;
     top: 0;
-
-    & .alpheios-panel__content {
-      max-width: 80vw;
-    }
 
     .alpheios-navbuttons__btn {
       svg {
