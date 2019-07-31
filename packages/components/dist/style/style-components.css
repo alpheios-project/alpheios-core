@@ -3791,38 +3791,50 @@ p.alpheios-word-usage-filter-title {
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
 .alpheios-action-panel {
-  width: 300px;
+  width: auto;
   height: auto;
   position: fixed;
-  padding: 30px 20px 10px;
+  padding: 10px;
   border: 1px solid var(--alpheios-border-color);
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
   background-color: var(--alpheios-text-bg-color);
   transition: display 0.4s;
 }
+.alpheios-action-panel__cont {
+  margin-top: calc(var(--alpheios-base-ui-size) * 1.875);
+  /* must allow for the close icon */
+}
 .alpheios-action-panel.alpheios-action-panel--lookup-visible {
   height: 130px;
+  width: 300px;
 }
 .alpheios-action-panel.alpheios-action-panel--nav-visible {
   height: 100px;
+  width: 280px;
 }
 .alpheios-action-panel.alpheios-action-panel--lookup-visible.alpheios-action-panel--nav-visible {
-  height: 190px;
+  height: 210px;
+  width: 300px;
 }
-.alpheios-action-panel__close-icon {
+.alpheios-action-panel__close-icon-span {
+  display: inline-block;
+  padding: calc(var(--alpheios-base-ui-size) * 0.5);
   position: absolute;
-  top: 10px;
-  right: 10px;
   cursor: pointer;
-  width: 20px;
-  height: auto;
-  fill: var(--alpheios-compact-toolbar-icon-color);
+  right: 10px;
 }
-.alpheios-action-panel__close-icon:hover, .alpheios-action-panel__close-icon:focus {
-  fill: var(--alpheios-compact-toolbar-icon-color-hover);
+.alpheios-action-panel__close-icon-span .alpheios-action-panel__close-icon {
+  width: calc(var(--alpheios-base-ui-size) * 1.375);
+  height: calc(var(--alpheios-base-ui-size) * 1.375);
+  top: 50%;
+  position: relative;
+  fill: var(--alpheios-btn-primary-bg-color);
 }
-.alpheios-action-panel__close-icon:active {
-  fill: var(--alpheios-compact-toolbar-icon-color-active);
+.alpheios-action-panel__close-icon-span .alpheios-action-panel__close-icon:hover, .alpheios-action-panel__close-icon-span .alpheios-action-panel__close-icon:focus {
+  fill: var(--alpheios-btn-primary-bg-color-hover);
+}
+.alpheios-action-panel__close-icon-span .alpheios-action-panel__close-icon:active {
+  fill: var(--alpheios-btn-primary-bg-color-pressed);
 }
 .alpheios-action-panel__lookup-cont {
   height: 90px;

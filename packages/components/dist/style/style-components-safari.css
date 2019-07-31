@@ -3791,38 +3791,50 @@ p.alpheios-word-usage-filter-title {
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
 .alpheios-action-panel {
-  width: 300px !important;
+  width: auto !important;
   height: auto !important;
   position: fixed !important;
-  padding: 30px 20px 10px !important;
+  padding: 10px !important;
   border: 1px solid var(--alpheios-border-color) !important;
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
   background-color: var(--alpheios-text-bg-color) !important;
   transition: display 0.4s !important;
 }
+.alpheios-action-panel__cont {
+  margin-top: calc(var(--alpheios-base-ui-size) * 1.875) !important;
+  /* must allow for the close icon */
+}
 .alpheios-action-panel.alpheios-action-panel--lookup-visible {
   height: 130px !important;
+  width: 300px !important;
 }
 .alpheios-action-panel.alpheios-action-panel--nav-visible {
   height: 100px !important;
+  width: 280px !important;
 }
 .alpheios-action-panel.alpheios-action-panel--lookup-visible.alpheios-action-panel--nav-visible {
-  height: 190px !important;
+  height: 210px !important;
+  width: 300px !important;
 }
-.alpheios-action-panel__close-icon {
+.alpheios-action-panel__close-icon-span {
+  display: inline-block;
+  padding: calc(var(--alpheios-base-ui-size) * 0.5) !important;
   position: absolute !important;
-  top: 10px !important;
-  right: 10px !important;
   cursor: pointer !important;
-  width: 20px !important;
-  height: auto !important;
-  fill: var(--alpheios-compact-toolbar-icon-color) !important;
+  right: 10px !important;
 }
-.alpheios-action-panel__close-icon:hover, .alpheios-action-panel__close-icon:focus {
-  fill: var(--alpheios-compact-toolbar-icon-color-hover) !important;
+.alpheios-action-panel__close-icon-span .alpheios-action-panel__close-icon {
+  width: calc(var(--alpheios-base-ui-size) * 1.375) !important;
+  height: calc(var(--alpheios-base-ui-size) * 1.375) !important;
+  top: 50% !important;
+  position: relative !important;
+  fill: var(--alpheios-btn-primary-bg-color) !important;
 }
-.alpheios-action-panel__close-icon:active {
-  fill: var(--alpheios-compact-toolbar-icon-color-active) !important;
+.alpheios-action-panel__close-icon-span .alpheios-action-panel__close-icon:hover, .alpheios-action-panel__close-icon-span .alpheios-action-panel__close-icon:focus {
+  fill: var(--alpheios-btn-primary-bg-color-hover) !important;
+}
+.alpheios-action-panel__close-icon-span .alpheios-action-panel__close-icon:active {
+  fill: var(--alpheios-btn-primary-bg-color-pressed) !important;
 }
 .alpheios-action-panel__lookup-cont {
   height: 90px !important;
