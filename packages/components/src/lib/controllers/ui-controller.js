@@ -555,7 +555,7 @@ export default class UIController {
       },
 
       mutations: {
-        setEmbedLibActive(state, status) {
+        setEmbedLibActive (state, status) {
           state.embedLibActive = status
         },
         setCurrentLanguage (state, languageCodeOrID) {
@@ -1173,7 +1173,7 @@ export default class UIController {
   }
 
   setEmbedLibActive () {
-    this.store.commit('app/setEmbedLibActive',true)
+    this.store.commit('app/setEmbedLibActive', true)
   }
 
   resetInflData () {

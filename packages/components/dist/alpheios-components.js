@@ -5818,7 +5818,6 @@ var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "../node_modules
 var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "../node_modules/axios/lib/helpers/parseHeaders.js");
 var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "../node_modules/axios/lib/helpers/isURLSameOrigin.js");
 var createError = __webpack_require__(/*! ../core/createError */ "../node_modules/axios/lib/core/createError.js");
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ "../node_modules/axios/lib/helpers/btoa.js");
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -5830,22 +5829,6 @@ module.exports = function xhrAdapter(config) {
     }
 
     var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if (  true &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
 
     // HTTP basic authentication
     if (config.auth) {
@@ -5860,8 +5843,8 @@ module.exports = function xhrAdapter(config) {
     request.timeout = config.timeout;
 
     // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
+    request.onreadystatechange = function handleLoad() {
+      if (!request || request.readyState !== 4) {
         return;
       }
 
@@ -5878,9 +5861,8 @@ module.exports = function xhrAdapter(config) {
       var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
       var response = {
         data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        status: request.status,
+        statusText: request.statusText,
         headers: responseHeaders,
         config: config,
         request: request
@@ -6693,54 +6675,6 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/helpers/btoa.js":
-/*!*************************************************!*\
-  !*** ../node_modules/axios/lib/helpers/btoa.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
-
-var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-
-function E() {
-  this.message = 'String contains an invalid character';
-}
-E.prototype = new Error;
-E.prototype.code = 5;
-E.prototype.name = 'InvalidCharacterError';
-
-function btoa(input) {
-  var str = String(input);
-  var output = '';
-  for (
-    // initialize result and counter
-    var block, charCode, idx = 0, map = chars;
-    // if the next str index does not exist:
-    //   change the mapping table to "="
-    //   check if d has no fractional digits
-    str.charAt(idx | 0) || (map = '=', idx % 1);
-    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
-    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
-  ) {
-    charCode = str.charCodeAt(idx += 3 / 4);
-    if (charCode > 0xFF) {
-      throw new E();
-    }
-    block = block << 8 | charCode;
-  }
-  return output;
-}
-
-module.exports = btoa;
-
-
-/***/ }),
-
 /***/ "../node_modules/axios/lib/helpers/buildURL.js":
 /*!*****************************************************!*\
   !*** ../node_modules/axios/lib/helpers/buildURL.js ***!
@@ -7155,7 +7089,7 @@ module.exports = function spread(callback) {
 
 
 var bind = __webpack_require__(/*! ./helpers/bind */ "../node_modules/axios/lib/helpers/bind.js");
-var isBuffer = __webpack_require__(/*! is-buffer */ "../node_modules/is-buffer/index.js");
+var isBuffer = __webpack_require__(/*! is-buffer */ "../node_modules/axios/node_modules/is-buffer/index.js");
 
 /*global toString:true*/
 
@@ -7459,10 +7393,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "../node_modules/is-buffer/index.js":
-/*!******************************************!*\
-  !*** ../node_modules/is-buffer/index.js ***!
-  \******************************************/
+/***/ "../node_modules/axios/node_modules/is-buffer/index.js":
+/*!*************************************************************!*\
+  !*** ../node_modules/axios/node_modules/is-buffer/index.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -7473,19 +7407,9 @@ module.exports = {
  * @license  MIT
  */
 
-// The _isBuffer check is for Safari 5-7 support, because it's missing
-// Object.prototype.constructor. Remove this eventually
-module.exports = function (obj) {
-  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
-}
-
-function isBuffer (obj) {
-  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-// For Node v0.10 support. Remove this eventually.
-function isSlowBuffer (obj) {
-  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
+module.exports = function isBuffer (obj) {
+  return obj != null && obj.constructor != null &&
+    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
 }
 
 
@@ -7737,6 +7661,7 @@ class UserDataManager {
     for (let unsub of this.subscriptions) {
       unsub()
     }
+    this.subscriptions = []
   }
 
   /**
@@ -8274,7 +8199,7 @@ class WordlistController {
       wordItem.addContext([data])
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'context'}})
       // emit a wordlist updated event too in case the wordlist was updated
-      WordlistController.evt.WORDLIST_UPDATED.pub(this.getWordList(wordItem.languageCode))
+      WordlistController.evt.WORDLIST_UPDATED.pub([this.getWordList(wordItem.languageCode)])
     } else {
       console.error("Unable to create or retrieve worditem")
     }
@@ -31112,9 +31037,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _images_inline_icons_clear_filters_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/images/inline-icons/clear-filters.svg */ "./images/inline-icons/clear-filters.svg");
-/* harmony import */ var _images_inline_icons_go_icon_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/images/inline-icons/go-icon.svg */ "./images/inline-icons/go-icon.svg");
-/* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
+/* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
 //
 //
 //
@@ -31166,25 +31089,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
 
 
 
@@ -31192,9 +31096,7 @@ __webpack_require__.r(__webpack_exports__);
   name: 'WordFilterPanel',
   inject: ['app', 'l10n'],
   components: {
-    clearFiltersIcon: _images_inline_icons_clear_filters_svg__WEBPACK_IMPORTED_MODULE_0__["default"],
-    goIcon: _images_inline_icons_go_icon_svg__WEBPACK_IMPORTED_MODULE_1__["default"],
-    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
     clickedLemma: {
@@ -40983,59 +40885,8 @@ var render = function() {
                       )
                     : _vm._e()
                 ]
-              ),
-              _vm._v(" "),
-              _c(
-                "alph-tooltip",
-                {
-                  attrs: {
-                    tooltipText: _vm.l10n.getMsg("WORDLIST_FILTER"),
-                    tooltipDirection: "top-right"
-                  }
-                },
-                [
-                  _c(
-                    "span",
-                    {
-                      staticClass: "alpheios-wordlist-header-clear-icon",
-                      class: {
-                        "alpheios-wordlist-header-clear-disabled":
-                          _vm.textInput === null
-                      },
-                      on: { click: _vm.clickFilterBy }
-                    },
-                    [_c("go-icon")],
-                    1
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "alph-tooltip",
-                {
-                  attrs: {
-                    tooltipText: _vm.l10n.getMsg("WORDLIST_FILTER_CLEAR"),
-                    tooltipDirection: "top-right"
-                  }
-                },
-                [
-                  _c(
-                    "span",
-                    {
-                      staticClass: "alpheios-wordlist-header-clear-icon",
-                      class: {
-                        "alpheios-wordlist-header-clear-disabled":
-                          _vm.textInput === null
-                      },
-                      on: { click: _vm.clearFilteringText }
-                    },
-                    [_c("clear-filters-icon")],
-                    1
-                  )
-                ]
               )
-            ],
-            1
+            ]
           )
         : _vm._e()
     ])
@@ -52269,46 +52120,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./images/inline-icons/clear-filters.svg":
-/*!***********************************************!*\
-  !*** ./images/inline-icons/clear-filters.svg ***!
-  \***********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-      /* harmony default export */ __webpack_exports__["default"] = ({
-        functional: true,
-        render(_h, _vm) {
-          const { _c, _v, data, children = [] } = _vm;
-
-          const {
-            class: classNames,
-            staticClass,
-            style,
-            staticStyle,
-            attrs = {},
-            ...rest
-          } = data;
-
-          return _c(
-            'svg',
-            {
-              class: [classNames,staticClass],
-              style: [style,staticStyle],
-              attrs: Object.assign({"viewBox":"0 0 50 50","xmlns":"http://www.w3.org/2000/svg"}, attrs),
-              ...rest,
-            },
-            children.concat([_c('path',{attrs:{"d":"M1 0a1 1 0 00-1 1v3c0 .255.106.501.281.688l14.406 15.311h14.625L43.718 4.687c.035-.037.066-.084.094-.125.043-.063.097-.115.125-.187.029-.074.02-.172.031-.25.007-.048.031-.076.031-.125V1a1 1 0 00-1-1H1zm15 22v17a.99.99 0 00.5.844l10 6A.967.967 0 0027 46c.17 0 .347-.038.5-.125A1 1 0 0028 45V22H16zm16.906 9.969a1 1 0 00-.125.031 1 1 0 00-.5 1.719L39.562 41l-7.281 7.281a1.016 1.016 0 101.438 1.438l7.28-7.281 7.282 7.28a1.016 1.016 0 101.437-1.437l-7.28-7.28 7.28-7.282A1 1 0 0048.875 32a1 1 0 00-.594.281L41 39.563l-7.282-7.282a1 1 0 00-.812-.312z"}})])
-          )
-        }
-      });
-    
-
-/***/ }),
-
 /***/ "./images/inline-icons/collapsed.svg":
 /*!*******************************************!*\
   !*** ./images/inline-icons/collapsed.svg ***!
@@ -52542,46 +52353,6 @@ __webpack_require__.r(__webpack_exports__);
               ...rest,
             },
             children.concat([_c('path',{attrs:{"d":"M1408 704q0 26-19 45t-45 19H448q-26 0-45-19t-19-45 19-45l448-448q19-19 45-19t45 19l448 448q19 19 19 45z"}})])
-          )
-        }
-      });
-    
-
-/***/ }),
-
-/***/ "./images/inline-icons/go-icon.svg":
-/*!*****************************************!*\
-  !*** ./images/inline-icons/go-icon.svg ***!
-  \*****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-      /* harmony default export */ __webpack_exports__["default"] = ({
-        functional: true,
-        render(_h, _vm) {
-          const { _c, _v, data, children = [] } = _vm;
-
-          const {
-            class: classNames,
-            staticClass,
-            style,
-            staticStyle,
-            attrs = {},
-            ...rest
-          } = data;
-
-          return _c(
-            'svg',
-            {
-              class: [classNames,staticClass],
-              style: [style,staticStyle],
-              attrs: Object.assign({"viewBox":"0 0 1000 1000"}, attrs),
-              ...rest,
-            },
-            children.concat([_c('path',{attrs:{"d":"M10 500c0 270.6 219.4 490 490 490s490-219.4 490-490c0-270.7-219.4-490-490-490S10 229.3 10 500zm61.3 0c0-236.8 192-428.8 428.8-428.8 236.9 0 428.8 192 428.8 428.8 0 236.7-191.9 428.8-428.8 428.8-236.8 0-428.8-192.1-428.8-428.8z"}}),_c('path',{attrs:{"d":"M211 454.1h490V546H211v-91.9z"}}),_c('path',{attrs:{"d":"M452.2 285.6h122.5l214.4 219-214.4 209.8H452.2l214.4-209.8-214.4-219z"}})])
           )
         }
       });
@@ -54021,7 +53792,7 @@ class UIController {
       },
 
       mutations: {
-        setEmbedLibActive(state, status) {
+        setEmbedLibActive (state, status) {
           state.embedLibActive = status
         },
         setCurrentLanguage (state, languageCodeOrID) {
@@ -54639,7 +54410,7 @@ class UIController {
   }
 
   setEmbedLibActive () {
-    this.store.commit('app/setEmbedLibActive',true)
+    this.store.commit('app/setEmbedLibActive', true)
   }
 
   resetInflData () {
