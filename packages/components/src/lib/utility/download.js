@@ -17,7 +17,9 @@ export default class Download {
 
     a.href = url
     a.download = filename || 'download'
+    document.body.appendChild(a)
     a.click()
-    return a
+    a.remove()
+    return true
   }
 }
