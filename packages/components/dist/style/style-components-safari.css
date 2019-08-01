@@ -3751,7 +3751,7 @@ p.alpheios-word-usage-filter-title {
   display: flex;
   position: absolute !important;
   width: calc(var(--alpheios-base-ui-size) * 20.625) !important;
-  height: calc(var(--alpheios-base-ui-size) * 7.625) !important;
+  height: calc(var(--alpheios-base-ui-size) * 10) !important;
   background: var(--alpheios-lookup-bg) !important;
   left: calc(var(--alpheios-base-ui-size) * -20) !important;
   top: 0 !important;

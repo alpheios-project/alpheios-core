@@ -531,7 +531,7 @@ export default {
     display: flex;
     position: absolute;
     width: uisize(330px);
-    height: uisize(122px);
+    height: uisize(160px);
     background: var(--alpheios-lookup-bg);
     left: uisize(-320px);
     top: 0;
