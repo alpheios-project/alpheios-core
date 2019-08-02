@@ -96,10 +96,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
-/***/ "../../client-adapters/dist/alpheios-client-adapters.min.js":
-/*!***********************************************************************************!*\
-  !*** /home/balmas/workspace/client-adapters/dist/alpheios-client-adapters.min.js ***!
-  \***********************************************************************************/
+/***/ "../node_modules/alpheios-client-adapters/dist/alpheios-client-adapters.min.js":
+/*!*************************************************************************************!*\
+  !*** ../node_modules/alpheios-client-adapters/dist/alpheios-client-adapters.min.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -27077,7 +27077,6 @@ __webpack_require__.r(__webpack_exports__);
   mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_0__["default"]],
   computed: {
     defaultLanguage () {
-      console.log("DEF",this.app.getLanguageName(this.app.getDefaultLangCode()).name)
       return this.app.getLanguageName(this.app.getDefaultLangCode()).name
     }
   }
@@ -27223,7 +27222,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alpheios-data-models */ "../node_modules/alpheios-data-models/dist/alpheios-data-models.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/images/inline-icons/lookup.svg */ "./images/inline-icons/lookup.svg");
-/* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+/* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
 //
 //
 //
@@ -27264,20 +27264,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -27290,16 +27277,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Lookup',
   inject: ['app', 'ui', 'l10n', 'settings'],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_5__["default"]],
   storeModules: ['app'],
   components: {
-    alphSetting: _setting_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    alphSetting: _setting_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
     lookupIcon: _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data () {
     return {
       lookuptext: '',
       // A name of a language currently selected in the language drop-down
-      selectedLangName: '',
       // The following variable is used to signal that language options has been updated
       langUpdated: Date.now()
     }
@@ -27314,7 +27301,7 @@ __webpack_require__.r(__webpack_exports__);
     showLangSelector: {
       type: Boolean,
       required: false,
-      default: true
+      default: false
     },
 
     showResultsIn: {
@@ -27324,36 +27311,17 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function () {
-    /*
-    Lookup component uses its own version of resource options. This is because resource options
-    of lookup components might not necessarily be the same as the ones used within a UI controller.
-    */
-    if (this.showLangSelector) {
-      this.$options.lookupLanguage = this.settings.getFeatureOptions().items.lookupLanguage
-      this.selectedLangName = this.$options.lookupLanguage.currentTextValue()
-      this.$options.resourceOptions = this.settings.lookupResourceOptions
-    } else {
-      this.$options.resourceOptions = this.settings.getResourceOptions()
-    }
+    this.$options.lookupLanguage = this.settings.getFeatureOptions().items.lookupLanguage
   },
 
   computed: {
-    lexiconsFiltered () {
-      let lang = this.$options.lookupLanguage.values.filter(v => v.text === this.selectedLangName)
-      let settingGroup
-      if (lang.length > 0) {
-        settingGroup = lang[0].value
-      }
-
-      return this.$options.resourceOptions.items.lexiconsShort.filter((item) => _lib_options_options__WEBPACK_IMPORTED_MODULE_2__["default"].parseKey(item.name).group === settingGroup)
+    lookupLangName () {
+      return this.app.getLanguageName(this.getLookupLanguage()).name
     }
   },
   watch: {
     '$store.state.app.selectedLookupLangCode' (langCode) {
-      if (this.showLangSelector) {
-        this.$options.lookupLanguage.setValue(langCode)
-        this.selectedLangName = this.$options.lookupLanguage.currentTextValue()
-      }
+      this.$options.lookupLanguage.setValue(langCode)
     },
 
     '$store.state.app.morphDataReady' (morphDataReady) {
@@ -27363,6 +27331,16 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    getLookupLanguage: function() {
+      return this.showLangSelector
+        ? this.$options.lookupLanguage.currentValue
+        : this.$store.state.app.selectedLookupLangCode
+    },
+
+    toggleLangSelector: function() {
+      this.showLangSelector = true
+    },
+
     lookup: function () {
       if (this.lookuptext.length === 0) {
         return null
@@ -27372,14 +27350,11 @@ __webpack_require__.r(__webpack_exports__);
       If we override the language with the value selected, then the lookup language must be a current value of our `lookupLanguage` prop,
       otherwise it must be a value of panel's options `preferredLanguage` options item
        */
-
-      const selectedLangCode = this.showLangSelector
-        ? this.$options.lookupLanguage.currentValue
-        : this.app.getDefaultLangCode()
+      const selectedLangCode = this.getLookupLanguage()
       const selectedLangID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_3__["LanguageModelFactory"].getLanguageIdFromCode(selectedLangCode)
       let textSelector = _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_0__["default"].createObjectFromText(this.lookuptext, selectedLangID)
 
-      const resourceOptions = this.$options.resourceOptions
+      const resourceOptions = this.settings.getResourceOptions()
       const lemmaTranslationLang = this.app.state.lemmaTranslationLang
       let featureOptions = this.settings.getFeatureOptions()
 
@@ -27391,8 +27366,9 @@ __webpack_require__.r(__webpack_exports__);
       let lexQuery = _lib_queries_lexical_query_lookup__WEBPACK_IMPORTED_MODULE_1__["default"]
         .create(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples)
 
+
       // A newLexicalRequest will call app.updateLanguage(languageID)
-      this.app.newLexicalRequest(this.lookuptext, selectedLangID)
+      this.app.newLexicalRequest(this.lookuptext, selectedLangID, null, 'lookup')
       lexQuery.getData()
       // Notify parent that the lookup has been started so that the parent can close itself if necessary
       this.$emit('lookup-started')
@@ -27414,11 +27390,6 @@ __webpack_require__.r(__webpack_exports__);
       this.$options.lookupLanguage.setTextValue(value)
       this.$store.commit('app/setSelectedLookupLang', this.$options.lookupLanguage.currentValue)
       this.langUpdated = Date.now()
-    },
-
-    resourceSettingChange: function (name, value) {
-      let keyinfo = _lib_options_options__WEBPACK_IMPORTED_MODULE_2__["default"].parseKey(name)
-      this.settings.lookupResourceOptions.items[keyinfo.name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
     }
   }
 });
@@ -29051,37 +29022,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _morph_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./morph.vue */ "./vue/components/morph.vue");
 /* harmony import */ var _treebank_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./treebank.vue */ "./vue/components/treebank.vue");
 /* harmony import */ var _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./inflections-browser.vue */ "./vue/components/inflections-browser.vue");
-/* harmony import */ var _lookup_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./lookup.vue */ "./vue/components/lookup.vue");
-/* harmony import */ var _user_auth_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./user-auth.vue */ "./vue/components/user-auth.vue");
-/* harmony import */ var _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/vue/components/word-usage-examples/word-usage-examples.vue */ "./vue/components/word-usage-examples/word-usage-examples.vue");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! alpheios-data-models */ "../node_modules/alpheios-data-models/dist/alpheios-data-models.js");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/vue/components/word-list/word-list-panel.vue */ "./vue/components/word-list/word-list-panel.vue");
-/* harmony import */ var _vue_components_progress_bar_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/vue/components/progress-bar.vue */ "./vue/components/progress-bar.vue");
-/* harmony import */ var _vue_components_options_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/vue/components/options.vue */ "./vue/components/options.vue");
-/* harmony import */ var _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/images/inline-icons/x-close.svg */ "./images/inline-icons/x-close.svg");
-/* harmony import */ var _images_inline_icons_chevron_up_svg__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/images/inline-icons/chevron-up.svg */ "./images/inline-icons/chevron-up.svg");
-/* harmony import */ var _images_inline_icons_chevron_down_svg__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/images/inline-icons/chevron-down.svg */ "./images/inline-icons/chevron-down.svg");
-/* harmony import */ var _images_inline_icons_chevron_left_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/images/inline-icons/chevron-left.svg */ "./images/inline-icons/chevron-left.svg");
-/* harmony import */ var _images_inline_icons_chevron_right_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/images/inline-icons/chevron-right.svg */ "./images/inline-icons/chevron-right.svg");
-/* harmony import */ var _images_inline_icons_language_svg__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/images/inline-icons/language.svg */ "./images/inline-icons/language.svg");
-/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/images/inline-icons/definitions.svg */ "./images/inline-icons/definitions.svg");
-/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/images/inline-icons/inflections.svg */ "./images/inline-icons/inflections.svg");
-/* harmony import */ var _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/images/inline-icons/usage-examples-icon1.svg */ "./images/inline-icons/usage-examples-icon1.svg");
-/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
-/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @/images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
-/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @/images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
-/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @/images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
-/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
-/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @/images/inline-icons/sitemap.svg */ "./images/inline-icons/sitemap.svg");
-/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _user_auth_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./user-auth.vue */ "./vue/components/user-auth.vue");
+/* harmony import */ var _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/vue/components/word-usage-examples/word-usage-examples.vue */ "./vue/components/word-usage-examples/word-usage-examples.vue");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! alpheios-data-models */ "../node_modules/alpheios-data-models/dist/alpheios-data-models.js");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/vue/components/word-list/word-list-panel.vue */ "./vue/components/word-list/word-list-panel.vue");
+/* harmony import */ var _vue_components_progress_bar_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/vue/components/progress-bar.vue */ "./vue/components/progress-bar.vue");
+/* harmony import */ var _vue_components_options_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/vue/components/options.vue */ "./vue/components/options.vue");
+/* harmony import */ var _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/images/inline-icons/x-close.svg */ "./images/inline-icons/x-close.svg");
+/* harmony import */ var _images_inline_icons_chevron_up_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/images/inline-icons/chevron-up.svg */ "./images/inline-icons/chevron-up.svg");
+/* harmony import */ var _images_inline_icons_chevron_down_svg__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/images/inline-icons/chevron-down.svg */ "./images/inline-icons/chevron-down.svg");
+/* harmony import */ var _images_inline_icons_chevron_left_svg__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/images/inline-icons/chevron-left.svg */ "./images/inline-icons/chevron-left.svg");
+/* harmony import */ var _images_inline_icons_chevron_right_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/images/inline-icons/chevron-right.svg */ "./images/inline-icons/chevron-right.svg");
+/* harmony import */ var _images_inline_icons_language_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/images/inline-icons/language.svg */ "./images/inline-icons/language.svg");
+/* harmony import */ var _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/images/inline-icons/definitions.svg */ "./images/inline-icons/definitions.svg");
+/* harmony import */ var _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/images/inline-icons/inflections.svg */ "./images/inline-icons/inflections.svg");
+/* harmony import */ var _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/images/inline-icons/usage-examples-icon1.svg */ "./images/inline-icons/usage-examples-icon1.svg");
+/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
+/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
+/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @/images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
+/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @/images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
+/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
+/* harmony import */ var _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @/images/inline-icons/sitemap.svg */ "./images/inline-icons/sitemap.svg");
+/* harmony import */ var _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../directives/clickaway.js */ "./vue/directives/clickaway.js");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
 //
@@ -29380,7 +29344,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 // Embeddable SVG icons
 
 
@@ -29416,9 +29379,9 @@ __webpack_require__.r(__webpack_exports__);
     auth: 'auth'
   },
   storeModules: ['app', 'ui', 'panel', 'auth'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_32__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_31__["default"]],
   components: {
-    progressBar: _vue_components_progress_bar_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+    progressBar: _vue_components_progress_bar_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
     notificationArea: _vue_components_notification_area_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     inflections: _inflections_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     inflectionBrowser: _inflections_browser_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
@@ -29426,31 +29389,28 @@ __webpack_require__.r(__webpack_exports__);
     grammar: _grammar_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
     morph: _morph_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
     treebank: _treebank_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
-    userAuth: _user_auth_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-    closeIcon: _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_16__["default"],
-    lookup: _lookup_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-    
-    wordListPanel: _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
-    wordUsageExamples: _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
-    optionsPanel: _vue_components_options_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
-
-    upIcon: _images_inline_icons_chevron_up_svg__WEBPACK_IMPORTED_MODULE_17__["default"],
-    downIcon: _images_inline_icons_chevron_down_svg__WEBPACK_IMPORTED_MODULE_18__["default"],
-    leftIcon: _images_inline_icons_chevron_left_svg__WEBPACK_IMPORTED_MODULE_19__["default"],
-    rightIcon: _images_inline_icons_chevron_right_svg__WEBPACK_IMPORTED_MODULE_20__["default"],
-    morphologyIcon: _images_inline_icons_language_svg__WEBPACK_IMPORTED_MODULE_21__["default"],
-    definitionsIcon: _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_22__["default"],
-    inflectionsIcon: _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_23__["default"],
-    wordUsageIcon: _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_24__["default"],
-    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_25__["default"],
-    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_26__["default"],
-    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_27__["default"],
-    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_28__["default"],
-    wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_29__["default"],
-    treebankIcon: _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_30__["default"]
+    userAuth: _user_auth_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    closeIcon: _images_inline_icons_x_close_svg__WEBPACK_IMPORTED_MODULE_15__["default"],
+    wordListPanel: _vue_components_word_list_word_list_panel_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+    wordUsageExamples: _vue_components_word_usage_examples_word_usage_examples_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    optionsPanel: _vue_components_options_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+    upIcon: _images_inline_icons_chevron_up_svg__WEBPACK_IMPORTED_MODULE_16__["default"],
+    downIcon: _images_inline_icons_chevron_down_svg__WEBPACK_IMPORTED_MODULE_17__["default"],
+    leftIcon: _images_inline_icons_chevron_left_svg__WEBPACK_IMPORTED_MODULE_18__["default"],
+    rightIcon: _images_inline_icons_chevron_right_svg__WEBPACK_IMPORTED_MODULE_19__["default"],
+    morphologyIcon: _images_inline_icons_language_svg__WEBPACK_IMPORTED_MODULE_20__["default"],
+    definitionsIcon: _images_inline_icons_definitions_svg__WEBPACK_IMPORTED_MODULE_21__["default"],
+    inflectionsIcon: _images_inline_icons_inflections_svg__WEBPACK_IMPORTED_MODULE_22__["default"],
+    wordUsageIcon: _images_inline_icons_usage_examples_icon1_svg__WEBPACK_IMPORTED_MODULE_23__["default"],
+    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_24__["default"],
+    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_25__["default"],
+    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_26__["default"],
+    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_27__["default"],
+    wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_28__["default"],
+    treebankIcon: _images_inline_icons_sitemap_svg__WEBPACK_IMPORTED_MODULE_29__["default"]
   },
   directives: {
-    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_31__["directive"]
+    onClickaway: _directives_clickaway_js__WEBPACK_IMPORTED_MODULE_30__["directive"]
   },
   // Custom props
   // An HTML element that contains alpheios CSS custom props
@@ -29518,7 +29478,7 @@ __webpack_require__.r(__webpack_exports__);
       return classes
     },
 
-    
+
 
     componentStyles: function () {
       return {
@@ -29566,7 +29526,7 @@ __webpack_require__.r(__webpack_exports__);
           if (lexeme.meaning.shortDefs.length > 0) {
             definitions.push(...lexeme.meaning.shortDefs)
           } else if (Object.entries(lexeme.lemma.features).length > 0) {
-            definitions.push(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_12__["Definition"](this.l10n.getMsg('TEXT_NOTICE_NO_DEFS_FOUND'), 'en-US', 'text/plain', lexeme.lemma.word))
+            definitions.push(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_11__["Definition"](this.l10n.getMsg('TEXT_NOTICE_NO_DEFS_FOUND'), 'en-US', 'text/plain', lexeme.lemma.word))
           }
         }
       }
@@ -29728,16 +29688,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_components_panel_compact_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/vue/components/panel-compact.vue */ "./vue/components/panel-compact.vue");
 /* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
 /* harmony import */ var _vue_components_info_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/vue/components/info.vue */ "./vue/components/info.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -35929,126 +35879,143 @@ var render = function() {
     "div",
     { staticClass: "alpheios-lookup__form" },
     [
-      _c(
-        "div",
-        { staticClass: "alpheios-lookup__form-row" },
-        [
-          _vm.showLangSelector
-            ? _c("alph-setting", {
-                attrs: {
-                  classes: [
-                    "alpheios-panel__options-item",
-                    "alpheios-lookup__form-element",
-                    "alpheios-lookup__lang-control"
-                  ],
-                  data: this.$options.lookupLanguage
-                },
-                on: { change: _vm.settingChange }
-              })
-            : _vm._e(),
+      _c("div", { staticClass: "alpheios-lookup__form-row" }, [
+        _c("div", { staticClass: "alpheios-lookup__form-element" }, [
+          _c("label", { staticClass: "alpheios-setting__label" }, [
+            _vm._v("Word lookup")
+          ]),
           _vm._v(" "),
-          _c("div", { staticClass: "alpheios-lookup__form-element" }, [
-            _c("label", { staticClass: "alpheios-setting__label" }, [
-              _vm._v("Word lookup")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "alpheios-lookup__search-control" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.lookuptext,
-                    expression: "lookuptext"
+          _c("div", { staticClass: "alpheios-lookup__search-control" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.lookuptext,
+                  expression: "lookuptext"
+                }
+              ],
+              staticClass: "alpheios-input",
+              attrs: {
+                placeholder: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
+                autocapitalize: "off",
+                autocorrect: "off",
+                type: "text"
+              },
+              domProps: { value: _vm.lookuptext },
+              on: {
+                keyup: function($event) {
+                  if (
+                    !$event.type.indexOf("key") &&
+                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                  ) {
+                    return null
                   }
-                ],
-                staticClass: "alpheios-input",
-                attrs: {
-                  placeholder: _vm.l10n.getMsg("LABEL_LOOKUP_BUTTON"),
-                  autocapitalize: "off",
-                  autocorrect: "off",
-                  type: "text"
+                  return _vm.lookup($event)
                 },
-                domProps: { value: _vm.lookuptext },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.lookuptext = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "alpheios-button-primary",
+                attrs: { tabindex: "-1", type: "button" },
                 on: {
-                  keyup: function($event) {
-                    if (
-                      !$event.type.indexOf("key") &&
-                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                    ) {
-                      return null
-                    }
+                  click: function($event) {
+                    $event.stopPropagation()
                     return _vm.lookup($event)
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.lookuptext = $event.target.value
                   }
                 }
-              }),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "alpheios-button-primary",
-                  attrs: { tabindex: "-1", type: "button" },
-                  on: {
-                    click: function($event) {
-                      $event.stopPropagation()
-                      return _vm.lookup($event)
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "span",
-                    { staticClass: "alpheios-lookup__search-control-label" },
-                    [_vm._v(_vm._s(_vm.l10n.getMsg("LABEL_LOOKUP_BUTTON")))]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      staticClass:
-                        "alpheios-lookup__search-control-icon alpheios-navbuttons__btn"
-                    },
-                    [_c("lookup-icon")],
-                    1
-                  )
-                ]
-              )
-            ])
+              },
+              [
+                _c(
+                  "span",
+                  { staticClass: "alpheios-lookup__search-control-label" },
+                  [_vm._v(_vm._s(_vm.l10n.getMsg("LABEL_LOOKUP_BUTTON")))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    staticClass:
+                      "alpheios-lookup__search-control-icon alpheios-navbuttons__btn"
+                  },
+                  [_c("lookup-icon")],
+                  1
+                )
+              ]
+            )
           ])
-        ],
-        1
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: !_vm.showLangSelector,
+              expression: "! showLangSelector"
+            }
+          ]
+        },
+        [
+          _c("span", { staticClass: "alpheios-lookup__lang-hint" }, [
+            _vm._v(
+              _vm._s(
+                _vm.l10n.getMsg("HINT_LOOKUP_LANGUAGE", {
+                  language: _vm.lookupLangName
+                })
+              )
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              staticClass: "alpheios-lookup__lang-change",
+              on: {
+                click: function($event) {
+                  $event.stopPropagation()
+                  return _vm.toggleLangSelector($event)
+                }
+              }
+            },
+            [_vm._v(_vm._s(_vm.l10n.getMsg("LABEL_LOOKUP_CHANGE_LANGUAGE")))]
+          )
+        ]
       ),
       _vm._v(" "),
-      _vm.showLangSelector
-        ? [
-            _c(
-              "div",
-              { staticClass: "alpheios-lookup__settings" },
-              _vm._l(_vm.lexiconsFiltered, function(lexicon) {
-                return _c("alph-setting", {
-                  key: lexicon.name,
-                  attrs: {
-                    classes: [
-                      "alpheios-panel__options-item",
-                      "alpheios-lookup__resource-control"
-                    ],
-                    data: lexicon
-                  },
-                  on: { change: _vm.resourceSettingChange }
-                })
-              }),
-              1
-            )
-          ]
-        : _vm._e()
+      _c("alph-setting", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.showLangSelector,
+            expression: "showLangSelector"
+          }
+        ],
+        attrs: {
+          classes: [
+            "alpheios-panel__options-item",
+            "alpheios-lookup__form-element",
+            "alpheios-lookup__lang-control"
+          ],
+          data: this.$options.lookupLanguage
+        },
+        on: { change: _vm.settingChange }
+      })
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []
@@ -38981,23 +38948,6 @@ var render = function() {
             attrs: { "data-alpheios-ignore": "all" }
           },
           [
-            _c(
-              "div",
-              {
-                staticClass: "alpheios-lookup__panel",
-                class: { "alpheios-landscape": _vm.isLandscape }
-              },
-              [
-                _c("lookup", {
-                  attrs: {
-                    "name-base": "panel-defs",
-                    "show-results-in": "panel"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
             _vm.$store.getters["app/defDataReady"]
               ? _c(
                   "div",
@@ -39378,13 +39328,6 @@ var render = function() {
             attrs: { "data-alpheios-ignore": "all" }
           },
           [
-            _c(
-              "div",
-              { staticClass: "alpheios-lookup__panel" },
-              [_c("lookup", { attrs: { "name-base": "panel-defs" } })],
-              1
-            ),
-            _vm._v(" "),
             _vm.$store.getters["app/defDataReady"]
               ? _c(
                   "div",
@@ -39640,13 +39583,6 @@ var render = function() {
                   "\n      "
               )
             ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "alpheios-lookup__panel" },
-              [_c("lookup", { attrs: { "name-base": "panel-info" } })],
-              1
-            ),
             _vm._v(" "),
             _c("info")
           ],
@@ -51946,7 +51882,7 @@ module.exports = g;
 /*! exports provided: name, version, description, main, module, scripts, repository, author, license, bugs, homepage, devDependencies, peerDependencies, engines, jest, eslintConfig, eslintIgnore, dependencies, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"alpheios-components\",\"version\":\"1.2.16\",\"description\":\"Alpheios Components\",\"main\":\"dist/alpheios-components.min.js\",\"module\":\"src/plugin.js\",\"scripts\":{\"test\":\"npm run lint && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-lib\":\"npm run lint && jest tests/lib --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-components\":\"npm run lint && jest tests/vue --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-c\":\"npm run lint && jest tests/vue/components/word-usage-examples/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage\",\"test-a\":\"npm run lint && jest tests/lib/options/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage\",\"test-s\":\"npm run lint && AUTH_TOKEN=alpheiosMockUserIdlP0DWnmNxe ENDPOINT='https://8wkx9pxc55.execute-api.us-east-2.amazonaws.com/prod/settings' jest tests/lib/options --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"build\":\"npm run build-safari && npm run build-regular\",\"build-regular\":\"npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue config.mjs\",\"build-safari\":\"npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue-postcss config-safari.mjs\",\"build-prod\":\"npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack production vue config.mjs\",\"build-dev\":\"npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development vue config.mjs\",\"code-analysis-prod\":\"node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack production vue config.mjs --code-analysis\",\"code-analysis-dev\":\"node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development vue config.mjs --code-analysis\",\"lint\":\"eslint --no-eslintrc -c eslint-standard-conf.json --fix src/**/*.js\",\"lint-jsdoc\":\"eslint --no-eslintrc -c eslint-jsdoc-conf.json src/**/*.js\",\"lint-vue\":\"eslint --no-eslintrc --fix-dry-run -c eslint-vue-conf.json src/**/*.vue\"},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/alpheios-project/components.git\"},\"author\":\"The Alpheios Project, Ltd.\",\"license\":\"ISC\",\"bugs\":{\"url\":\"https://github.com/alpheios-project/components/issues\"},\"homepage\":\"https://github.com/alpheios-project/components#readme\",\"devDependencies\":{\"@babel/core\":\"^7.5.5\",\"@babel/plugin-proposal-object-rest-spread\":\"^7.5.5\",\"@babel/plugin-transform-runtime\":\"^7.5.5\",\"@babel/runtime\":\"^7.5.5\",\"@vue/test-utils\":\"^1.0.0-beta.29\",\"acorn\":\"^6.2.1\",\"alpheios-client-adapters\":\"github:alpheios-project/client-adapters\",\"alpheios-data-models\":\"github:alpheios-project/data-models\",\"alpheios-experience\":\"github:alpheios-project/experience\",\"alpheios-inflection-tables\":\"github:alpheios-project/inflection-tables\",\"alpheios-node-build\":\"github:alpheios-project/node-build\",\"alpheios-res-client\":\"github:alpheios-project/res-client\",\"alpheios-wordlist\":\"github:alpheios-project/wordlist\",\"autoprefixer\":\"^9.6.1\",\"axios\":\"^0.18.0\",\"babel-core\":\"^7.0.0-bridge.0\",\"babel-eslint\":\"^10.0.2\",\"bytes\":\"^3.1.0\",\"chalk\":\"^2.4.2\",\"coveralls\":\"^3.0.5\",\"css-loader\":\"^3.1.0\",\"dom-anchor-text-quote\":\"*\",\"element-closest\":\"^3.0.1\",\"eslint\":\"^6.1.0\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-plugin-import\":\"^2.18.2\",\"eslint-plugin-jsdoc\":\"^15.8.0\",\"eslint-plugin-node\":\"^9.1.0\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"eslint-plugin-vue\":\"^5.2.3\",\"eslint-scope\":\"^4.0.3\",\"espree\":\"^6.0.0\",\"file-loader\":\"^4.1.0\",\"flush-promises\":\"^1.0.2\",\"html-loader\":\"^0.5.5\",\"html-loader-jest\":\"^0.2.1\",\"interactjs\":\"^1.5.4\",\"intl-messageformat\":\"^2.2.0\",\"jest\":\"^24.8.0\",\"jump.js\":\"^1.0.2\",\"mini-css-extract-plugin\":\"^0.7.0\",\"postcss-import\":\"^12.0.1\",\"postcss-loader\":\"^3.0.0\",\"postcss-safe-important\":\"^1.1.0\",\"postcss-scss\":\"^2.0.0\",\"raw-loader\":\"^3.1.0\",\"sass-loader\":\"^7.1.0\",\"shelljs\":\"^0.8.3\",\"sinon\":\"^7.3.2\",\"source-map-loader\":\"^0.2.4\",\"style-loader\":\"^0.23.1\",\"vue\":\"^2.6.10\",\"vue-eslint-parser\":\"^6.0.4\",\"vue-jest\":\"^3.0.4\",\"vue-loader\":\"^15.7.1\",\"vue-multiselect\":\"^2.1.6\",\"vue-style-loader\":\"^4.1.2\",\"vue-svg-loader\":\"^0.12.0\",\"vue-template-compiler\":\"^2.6.10\",\"vue-template-loader\":\"^1.0.0\",\"vuex\":\"^3.1.1\",\"webpack\":\"^4.38.0\",\"whatwg-fetch\":\"^3.0.0\",\"wrap-range-text\":\"^1.0.1\"},\"peerDependencies\":{},\"engines\":{\"node\":\">= 12.3.0\",\"npm\":\">= 6.9.0\"},\"jest\":{\"verbose\":true,\"testPathIgnorePatterns\":[\"<rootDir>/node_modules/\"],\"transform\":{\"^.+\\\\.htmlf$\":\"html-loader-jest\",\"^.+\\\\.jsx?$\":\"babel-jest\",\".*\\\\.(vue)$\":\"vue-jest\",\".*\\\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$\":\"<rootDir>/fileTransform.js\"},\"transformIgnorePatterns\":[\"!node_modules/alpheios-data-models/\"],\"moduleNameMapper\":{\"^@vue-runtime$\":\"vue/dist/vue.runtime.common.js\",\"^@[/](.+)\":\"<rootDir>/src/$1\",\"alpheios-morph-client\":\"<rootDir>/node_modules/alpheios-morph-client/dist/alpheios-morph-client.js\",\"alpheios-inflection-tables\":\"<rootDir>/node_modules/alpheios-inflection-tables/dist/alpheios-inflection-tables.js\"},\"moduleFileExtensions\":[\"js\",\"json\",\"vue\"]},\"eslintConfig\":{\"extends\":[\"standard\",\"plugin:jsdoc/recommended\",\"plugin:vue/essential\"],\"env\":{\"browser\":true,\"node\":true},\"parserOptions\":{\"parser\":\"babel-eslint\",\"ecmaVersion\":2019,\"sourceType\":\"module\",\"allowImportExportEverywhere\":true}},\"eslintIgnore\":[\"**/dist\",\"**/support\"],\"dependencies\":{}}");
+module.exports = JSON.parse("{\"name\":\"alpheios-components\",\"version\":\"1.2.17\",\"description\":\"Alpheios Components\",\"main\":\"dist/alpheios-components.min.js\",\"module\":\"src/plugin.js\",\"scripts\":{\"test\":\"npm run lint && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-lib\":\"npm run lint && jest tests/lib --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-components\":\"npm run lint && jest tests/vue --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"test-c\":\"npm run lint && jest tests/vue/components/lookup.test --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage\",\"test-a\":\"npm run lint && jest tests/lib/options/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage\",\"test-s\":\"npm run lint && AUTH_TOKEN=alpheiosMockUserIdlP0DWnmNxe ENDPOINT='https://8wkx9pxc55.execute-api.us-east-2.amazonaws.com/prod/settings' jest tests/lib/options --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"build\":\"npm run build-safari && npm run build-regular\",\"build-regular\":\"npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue config.mjs\",\"build-safari\":\"npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue-postcss config-safari.mjs\",\"build-prod\":\"npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack production vue config.mjs\",\"build-dev\":\"npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development vue config.mjs\",\"code-analysis-prod\":\"node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack production vue config.mjs --code-analysis\",\"code-analysis-dev\":\"node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development vue config.mjs --code-analysis\",\"lint\":\"eslint --no-eslintrc -c eslint-standard-conf.json --fix src/**/*.js\",\"lint-jsdoc\":\"eslint --no-eslintrc -c eslint-jsdoc-conf.json src/**/*.js\",\"lint-vue\":\"eslint --no-eslintrc --fix-dry-run -c eslint-vue-conf.json src/**/*.vue\"},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/alpheios-project/components.git\"},\"author\":\"The Alpheios Project, Ltd.\",\"license\":\"ISC\",\"bugs\":{\"url\":\"https://github.com/alpheios-project/components/issues\"},\"homepage\":\"https://github.com/alpheios-project/components#readme\",\"devDependencies\":{\"@babel/core\":\"^7.5.5\",\"@babel/plugin-proposal-object-rest-spread\":\"^7.5.5\",\"@babel/plugin-transform-runtime\":\"^7.5.5\",\"@babel/runtime\":\"^7.5.5\",\"@vue/test-utils\":\"^1.0.0-beta.29\",\"acorn\":\"^6.2.1\",\"alpheios-client-adapters\":\"github:alpheios-project/client-adapters\",\"alpheios-data-models\":\"github:alpheios-project/data-models\",\"alpheios-experience\":\"github:alpheios-project/experience\",\"alpheios-inflection-tables\":\"github:alpheios-project/inflection-tables\",\"alpheios-node-build\":\"github:alpheios-project/node-build\",\"alpheios-res-client\":\"github:alpheios-project/res-client\",\"alpheios-wordlist\":\"github:alpheios-project/wordlist\",\"autoprefixer\":\"^9.6.1\",\"axios\":\"^0.18.0\",\"babel-core\":\"^7.0.0-bridge.0\",\"babel-eslint\":\"^10.0.2\",\"bytes\":\"^3.1.0\",\"chalk\":\"^2.4.2\",\"coveralls\":\"^3.0.5\",\"css-loader\":\"^3.1.0\",\"dom-anchor-text-quote\":\"*\",\"element-closest\":\"^3.0.1\",\"eslint\":\"^6.1.0\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-plugin-import\":\"^2.18.2\",\"eslint-plugin-jsdoc\":\"^15.8.0\",\"eslint-plugin-node\":\"^9.1.0\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"eslint-plugin-vue\":\"^5.2.3\",\"eslint-scope\":\"^4.0.3\",\"espree\":\"^6.0.0\",\"file-loader\":\"^4.1.0\",\"flush-promises\":\"^1.0.2\",\"html-loader\":\"^0.5.5\",\"html-loader-jest\":\"^0.2.1\",\"interactjs\":\"^1.5.4\",\"intl-messageformat\":\"^2.2.0\",\"jest\":\"^24.8.0\",\"jump.js\":\"^1.0.2\",\"mini-css-extract-plugin\":\"^0.7.0\",\"postcss-import\":\"^12.0.1\",\"postcss-loader\":\"^3.0.0\",\"postcss-safe-important\":\"^1.1.0\",\"postcss-scss\":\"^2.0.0\",\"raw-loader\":\"^3.1.0\",\"sass-loader\":\"^7.1.0\",\"shelljs\":\"^0.8.3\",\"sinon\":\"^7.3.2\",\"source-map-loader\":\"^0.2.4\",\"style-loader\":\"^0.23.1\",\"vue\":\"^2.6.10\",\"vue-eslint-parser\":\"^6.0.4\",\"vue-jest\":\"^3.0.4\",\"vue-loader\":\"^15.7.1\",\"vue-multiselect\":\"^2.1.6\",\"vue-style-loader\":\"^4.1.2\",\"vue-svg-loader\":\"^0.12.0\",\"vue-template-compiler\":\"^2.6.10\",\"vue-template-loader\":\"^1.0.0\",\"vuex\":\"^3.1.1\",\"webpack\":\"^4.38.0\",\"whatwg-fetch\":\"^3.0.0\",\"wrap-range-text\":\"^1.0.1\"},\"peerDependencies\":{},\"engines\":{\"node\":\">= 12.3.0\",\"npm\":\">= 6.9.0\"},\"jest\":{\"verbose\":true,\"testPathIgnorePatterns\":[\"<rootDir>/node_modules/\"],\"transform\":{\"^.+\\\\.htmlf$\":\"html-loader-jest\",\"^.+\\\\.jsx?$\":\"babel-jest\",\".*\\\\.(vue)$\":\"vue-jest\",\".*\\\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$\":\"<rootDir>/fileTransform.js\"},\"transformIgnorePatterns\":[\"!node_modules/alpheios-data-models/\"],\"moduleNameMapper\":{\"^@vue-runtime$\":\"vue/dist/vue.runtime.common.js\",\"^@[/](.+)\":\"<rootDir>/src/$1\",\"alpheios-morph-client\":\"<rootDir>/node_modules/alpheios-morph-client/dist/alpheios-morph-client.js\",\"alpheios-inflection-tables\":\"<rootDir>/node_modules/alpheios-inflection-tables/dist/alpheios-inflection-tables.js\"},\"moduleFileExtensions\":[\"js\",\"json\",\"vue\"]},\"eslintConfig\":{\"extends\":[\"standard\",\"plugin:jsdoc/recommended\",\"plugin:vue/essential\"],\"env\":{\"browser\":true,\"node\":true},\"parserOptions\":{\"parser\":\"babel-eslint\",\"ecmaVersion\":2019,\"sourceType\":\"module\",\"allowImportExportEverywhere\":true}},\"eslintIgnore\":[\"**/dist\",\"**/support\"],\"dependencies\":{}}");
 
 /***/ }),
 
@@ -53852,6 +53788,7 @@ class UIController {
         linkedFeatures: [], // An array of linked features, updated with every new homonym value is written to the store
         defUpdateTime: 0, // A time of the last update of defintions, in ms. Needed to track changes in definitions.
         lexicalRequest: {
+          source: null, // the source of the request
           startTime: 0, // A time when the last lexical request is started, in ms
           endTime: 0, // A time when the last lexical request is started, in ms
           outcome: null // A result of the completed lexical request
@@ -53924,9 +53861,10 @@ class UIController {
           state.selectedText = data.text
         },
 
-        lexicalRequestStarted (state, targetWord) {
-          state.targetWord = targetWord
+        lexicalRequestStarted (state, data) {
+          state.targetWord = data.targetWord
           state.lexicalRequest.startTime = Date.now()
+          state.lexicalRequest.source = data.source
         },
 
         resetWordData (state) {
@@ -54398,8 +54336,18 @@ class UIController {
       } else {
         languageName = this.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN')
       }
-      const message = this.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE', { languageName: languageName })
-      this.store.commit(`ui/setNotification`, { text: message, important: true, showLanguageSwitcher: true })
+      if (this.store.state.app.lexicalRequest.source === 'page') {
+        // we offer change language here when the lookup was from the page because the language used for the
+        // lookup is deduced from the page and might be wrong
+        const message = this.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE', { languageName: languageName })
+        this.store.commit(`ui/setNotification`, { text: message, important: true, showLanguageSwitcher: true })
+      } else {
+        // if we are coming from e.g. the lookup or the wordlist, offering change language
+        // here creates some confusion and the language was explicit upon lookup so it is not necessary
+        const message = this.api.l10n.getMsg('TEXT_NOTICE_NOT_FOUND',
+          { targetWord: this.store.state.app.targetWord, languageName: languageName })
+        this.store.commit(`ui/setNotification`, { text: message, important: true, showLanguageSwitcher: false })
+      }
     }
   }
 
@@ -54501,7 +54449,15 @@ class UIController {
     return this
   }
 
-  newLexicalRequest (targetWord, languageID, data = null) {
+  /**
+   * Start a new lexical request
+   * @param {String} targetWord - the word to query
+   * @param {String} languageID - the language identifier for the query
+   * @param {Object} data - extra annotation data attributes from the selection, if any
+   * @param {String} source - source of the request. Possible values: 'page', 'lookup', or 'wordlist'
+   *                          default is 'page'
+   */
+  newLexicalRequest (targetWord, languageID, data = null, source = 'page') {
     // Reset old word-related data
     this.api.app.homonym = null
     this.store.commit('app/resetWordData')
@@ -54515,7 +54471,7 @@ class UIController {
     this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
     this.updateLanguage(languageID)
     this.updateWordAnnotationData(data)
-    this.store.commit('app/lexicalRequestStarted', targetWord)
+    this.store.commit('app/lexicalRequestStarted', { targetWord:targetWord, source:source })
     return this
   }
 
@@ -54968,7 +54924,7 @@ class UIController {
       return
     }
     const languageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].getLanguageIdFromCode(wordItem.languageCode)
-    this.newLexicalRequest(wordItem.targetWord, languageID)
+    this.newLexicalRequest(wordItem.targetWord, languageID, null, 'wordlist')
     this.open()
 
     let homonym
@@ -57180,7 +57136,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _query_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./query.js */ "./lib/queries/query.js");
 /* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
-/* harmony import */ var alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alpheios-client-adapters */ "../../client-adapters/dist/alpheios-client-adapters.min.js");
+/* harmony import */ var alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alpheios-client-adapters */ "../node_modules/alpheios-client-adapters/dist/alpheios-client-adapters.min.js");
 /* harmony import */ var alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3__);
 
 
@@ -59626,10 +59582,10 @@ module.exports = JSON.parse("{\"TEXT_NOTICE_WORDUSAGE_READY\":{\"message\":\"Wor
 /*!*************************************!*\
   !*** ./locales/en-us/messages.json ***!
   \*************************************/
-/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, TITLE_HELP_PANEL, TITLE_INFLECTIONS_PANEL, TITLE_INFLECTIONS_BROWSER_PANEL, TOOLTIP_MOVE_PANEL_LEFT, TOOLTIP_MOVE_PANEL_RIGHT, TOOLTIP_CLOSE_PANEL, TOOLTIP_HELP, TOOLTIP_INFLECT, TOOLTIP_INFLECT_BROWSER, TOOLTIP_DEFINITIONS, TOOLTIP_GRAMMAR, TOOLTIP_TREEBANK, TOOLTIP_OPTIONS, TOOLTIP_STATUS, TOOLTIP_WORDLIST, TOOLTIP_USER, TOOLTIP_SHOW_INFLECTIONS, TOOLTIP_SHOW_DEFINITIONS, TOOLTIP_SHOW_OPTIONS, TOOLTIP_SHOW_USAGEEXAMPLES, TOOLTIP_MORPHOLOGY, TOOLTIP_NOT_AVAIL_POSTFIX, PLACEHOLDER_DEFINITIONS, PLACEHOLDER_INFLECT_IN_PROGRESS, LABEL_INFLECT_SELECT_POFS, LABEL_INFLECT_SHOWFULL, LABEL_INFLECT_COLLAPSE, TOOLTIP_INFLECT_SHOWFULL, TOOLTIP_INFLECT_COLLAPSE, LABEL_INFLECT_HIDEEMPTY, LABEL_INFLECT_SHOWEMPTY, TOOLTIP_INFLECT_HIDEEMPTY, TOOLTIP_INFLECT_SHOWEMPTY, INFLECT_MSG_TABLE_NOT_IMPLEMENTED, TEXT_INFO_GETTINGSTARTED, TEXT_INFO_ACTIVATE, TEXT_INFO_CLICK, TEXT_INFO_LOOKUP, TEXT_INFO_TIPS, TEXT_INFO_ABOUT, TEXT_INFO_LANGDETECT, LABEL_INFO_CURRENTLANGUAGE, TEXT_INFO_TOOLBAR, TEXT_INFO_ARROW, TOOLTIP_POPUP_CLOSE, LABEL_POPUP_TREEBANK, LABEL_POPUP_INFLECT, LABEL_POPUP_OPTIONS, LABEL_POPUP_DEFINE, LABEL_POPUP_USAGEEXAMPLES, PLACEHOLDER_LEX_DATA_LOADING, PLACEHOLDER_NO_LANGUAGE_DATA, PLACEHOLDER_NO_MORPH_DATA, LABEL_PROVIDERS_CREDITS, LABEL_POPUP_SHOWCREDITS, LABEL_POPUP_HIDECREDITS, TEXT_NOTICE_SUGGEST_LOGIN, TEXT_NOTICE_CHANGE_LANGUAGE, TEXT_NOTICE_LANGUAGE_UNKNOWN, TEXT_NOTICE_MORPHDATA_READY, TEXT_NOTICE_MORPHDATA_NOTFOUND, TEXT_NOTICE_INFLDATA_READY, TEXT_NOTICE_DEFSDATA_READY, TEXT_NOTICE_DEFSDATA_NOTFOUND, TEXT_NOTICE_NO_DEFS_FOUND, TEXT_NOTICE_LEXQUERY_COMPLETE, TEXT_NOTICE_GRAMMAR_READY, TEXT_NOTICE_GRAMMAR_COMPLETE, TEXT_NOTICE_RESQUERY_COMPLETE, TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS, TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS, LABEL_BROWSERACTION_DEACTIVATE, LABEL_BROWSERACTION_ACTIVATE, LABEL_BROWSERACTION_DISABLED, LABEL_CTXTMENU_DEACTIVATE, LABEL_CTXTMENU_ACTIVATE, LABEL_CTXTMENU_DISABLED, LABEL_CTXTMENU_OPENPANEL, LABEL_CTXTMENU_INFO, LABEL_CTXTMENU_SENDEXP, LABEL_TOOLS_CONTROL, LABEL_LOOKUP_CONTROL, LABEL_LOOKUP_BUTTON, TOOLTIP_LOOKUP_BUTTON, LABEL_LOOKUP_SETTINGS, LABEL_RESKIN_SETTINGS, LABEL_RESET_OPTIONS, TOOLTIP_RESKIN_SMALLFONT, TOOLTIP_RESKIN_MEDIUMFONT, TOOLTIP_RESKIN_LARGEFONT, TOOLTIP_RESKIN_LIGHTBG, TOOLTIP_RESKIN_DARKBG, INFLECTIONS_CREDITS_TITLE, INFLECTIONS_PARADIGMS_EXPLANATORY_HINT, INFLECTIONS_MAIN_TABLE_LINK_TEXT, INFL_ATTRIBUTE_LINK_TEXT_SOURCE, EMBED_LIB_WARNING_TEXT, AUTH_HIDE_LOGIN_BTN_LABEL, AUTH_LOGIN_BTN_LABEL, AUTH_LOGOUT_BTN_LABEL, AUTH_LOGIN_PROGRESS_MSG, AUTH_LOGIN_SUCCESS_MSG, AUTH_LOGIN_AUTH_FAILURE_MSG, AUTH_PROFILE_NICKNAME_LABEL, AUTH_PROFILE_NAME_LABEL, AUTH_LOGOUT_SUCCESS_MSG, FONTSIZE_TEXT_SMALL, FONTSIZE_TEXT_MEDIUM, FONTSIZE_TEXT_LARGE, TOOLTIP_BACK_TO_INDEX, LABEL_FIELDSET_USAGEEXAMPLES, OPTIONS_TAB_UI, OPTIONS_TAB_FEATURE, OPTIONS_TAB_RESOURCE, OPTIONS_TAB_RESET_ALL_TITLE, default */
+/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, TITLE_HELP_PANEL, TITLE_INFLECTIONS_PANEL, TITLE_INFLECTIONS_BROWSER_PANEL, TOOLTIP_MOVE_PANEL_LEFT, TOOLTIP_MOVE_PANEL_RIGHT, TOOLTIP_CLOSE_PANEL, TOOLTIP_HELP, TOOLTIP_INFLECT, TOOLTIP_INFLECT_BROWSER, TOOLTIP_DEFINITIONS, TOOLTIP_GRAMMAR, TOOLTIP_TREEBANK, TOOLTIP_OPTIONS, TOOLTIP_STATUS, TOOLTIP_WORDLIST, TOOLTIP_USER, TOOLTIP_SHOW_INFLECTIONS, TOOLTIP_SHOW_DEFINITIONS, TOOLTIP_SHOW_OPTIONS, TOOLTIP_SHOW_USAGEEXAMPLES, TOOLTIP_MORPHOLOGY, TOOLTIP_NOT_AVAIL_POSTFIX, PLACEHOLDER_DEFINITIONS, PLACEHOLDER_INFLECT_IN_PROGRESS, LABEL_INFLECT_SELECT_POFS, LABEL_INFLECT_SHOWFULL, LABEL_INFLECT_COLLAPSE, TOOLTIP_INFLECT_SHOWFULL, TOOLTIP_INFLECT_COLLAPSE, LABEL_INFLECT_HIDEEMPTY, LABEL_INFLECT_SHOWEMPTY, TOOLTIP_INFLECT_HIDEEMPTY, TOOLTIP_INFLECT_SHOWEMPTY, INFLECT_MSG_TABLE_NOT_IMPLEMENTED, TEXT_INFO_GETTINGSTARTED, TEXT_INFO_ACTIVATE, TEXT_INFO_CLICK, TEXT_INFO_LOOKUP, TEXT_INFO_TIPS, TEXT_INFO_ABOUT, TEXT_INFO_LANGDETECT, LABEL_INFO_CURRENTLANGUAGE, TEXT_INFO_TOOLBAR, TEXT_INFO_ARROW, TOOLTIP_POPUP_CLOSE, LABEL_POPUP_TREEBANK, LABEL_POPUP_INFLECT, LABEL_POPUP_OPTIONS, LABEL_POPUP_DEFINE, LABEL_POPUP_USAGEEXAMPLES, PLACEHOLDER_LEX_DATA_LOADING, PLACEHOLDER_NO_LANGUAGE_DATA, PLACEHOLDER_NO_MORPH_DATA, LABEL_PROVIDERS_CREDITS, LABEL_POPUP_SHOWCREDITS, LABEL_POPUP_HIDECREDITS, TEXT_NOTICE_SUGGEST_LOGIN, TEXT_NOTICE_CHANGE_LANGUAGE, TEXT_NOTICE_NOT_FOUND, TEXT_NOTICE_LANGUAGE_UNKNOWN, TEXT_NOTICE_MORPHDATA_READY, TEXT_NOTICE_MORPHDATA_NOTFOUND, TEXT_NOTICE_INFLDATA_READY, TEXT_NOTICE_DEFSDATA_READY, TEXT_NOTICE_DEFSDATA_NOTFOUND, TEXT_NOTICE_NO_DEFS_FOUND, TEXT_NOTICE_LEXQUERY_COMPLETE, TEXT_NOTICE_GRAMMAR_READY, TEXT_NOTICE_GRAMMAR_COMPLETE, TEXT_NOTICE_RESQUERY_COMPLETE, TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS, TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS, LABEL_BROWSERACTION_DEACTIVATE, LABEL_BROWSERACTION_ACTIVATE, LABEL_BROWSERACTION_DISABLED, LABEL_CTXTMENU_DEACTIVATE, LABEL_CTXTMENU_ACTIVATE, LABEL_CTXTMENU_DISABLED, LABEL_CTXTMENU_OPENPANEL, LABEL_CTXTMENU_INFO, LABEL_CTXTMENU_SENDEXP, LABEL_TOOLS_CONTROL, LABEL_LOOKUP_CONTROL, LABEL_LOOKUP_BUTTON, HINT_LOOKUP_LANGUAGE, LABEL_LOOKUP_CHANGE_LANGUAGE, TOOLTIP_LOOKUP_BUTTON, LABEL_LOOKUP_SETTINGS, LABEL_RESKIN_SETTINGS, LABEL_RESET_OPTIONS, TOOLTIP_RESKIN_SMALLFONT, TOOLTIP_RESKIN_MEDIUMFONT, TOOLTIP_RESKIN_LARGEFONT, TOOLTIP_RESKIN_LIGHTBG, TOOLTIP_RESKIN_DARKBG, INFLECTIONS_CREDITS_TITLE, INFLECTIONS_PARADIGMS_EXPLANATORY_HINT, INFLECTIONS_MAIN_TABLE_LINK_TEXT, INFL_ATTRIBUTE_LINK_TEXT_SOURCE, EMBED_LIB_WARNING_TEXT, AUTH_HIDE_LOGIN_BTN_LABEL, AUTH_LOGIN_BTN_LABEL, AUTH_LOGOUT_BTN_LABEL, AUTH_LOGIN_PROGRESS_MSG, AUTH_LOGIN_SUCCESS_MSG, AUTH_LOGIN_AUTH_FAILURE_MSG, AUTH_PROFILE_NICKNAME_LABEL, AUTH_PROFILE_NAME_LABEL, AUTH_LOGOUT_SUCCESS_MSG, FONTSIZE_TEXT_SMALL, FONTSIZE_TEXT_MEDIUM, FONTSIZE_TEXT_LARGE, TOOLTIP_BACK_TO_INDEX, LABEL_FIELDSET_USAGEEXAMPLES, OPTIONS_TAB_UI, OPTIONS_TAB_FEATURE, OPTIONS_TAB_RESOURCE, OPTIONS_TAB_RESET_ALL_TITLE, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a test message about a cookie.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\"},\"NUM_LINES_TEST_MESSAGE\":{\"message\":\"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\",\"params\":[\"numLines\"]},\"TITLE_HELP_PANEL\":{\"message\":\"Help\",\"description\":\"A title of a help panel\",\"component\":\"Panel\"},\"TITLE_INFLECTIONS_PANEL\":{\"message\":\"Inflection tables\",\"description\":\"A title of an inflections panel\",\"component\":\"Panel\"},\"TITLE_INFLECTIONS_BROWSER_PANEL\":{\"message\":\"Browse inflection tables\",\"description\":\"A title of an inflections browser panel\",\"component\":\"Panel\"},\"TOOLTIP_MOVE_PANEL_LEFT\":{\"message\":\"Move Panel to Left\",\"description\":\"tooltip for moving the panel to the left\",\"component\":\"Panel\"},\"TOOLTIP_MOVE_PANEL_RIGHT\":{\"message\":\"Move Panel to Right\",\"description\":\"tooltip for moving the panel to the right\",\"component\":\"Panel\"},\"TOOLTIP_CLOSE_PANEL\":{\"message\":\"Close Panel\",\"description\":\"tooltip for closing the panel\",\"component\":\"Panel\"},\"TOOLTIP_HELP\":{\"message\":\"Help\",\"description\":\"tooltip for help tab\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT\":{\"message\":\"Inflections\",\"description\":\"tooltip for inflections tab\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_BROWSER\":{\"message\":\"Browse Inflection Tables\",\"description\":\"tooltip for inflections browser tab\",\"component\":\"Panel\"},\"TOOLTIP_DEFINITIONS\":{\"message\":\"Definitions\",\"description\":\"tooltip for definitions tab\",\"component\":\"Panel\"},\"TOOLTIP_GRAMMAR\":{\"message\":\"Browse Grammar\",\"description\":\"tooltip for grammar tab\",\"component\":\"Panel\"},\"TOOLTIP_TREEBANK\":{\"message\":\"Diagram\",\"description\":\"tooltip for treebank tab\",\"component\":\"Panel\"},\"TOOLTIP_OPTIONS\":{\"message\":\"Options\",\"description\":\"tooltip for options tab\",\"component\":\"Panel\"},\"TOOLTIP_STATUS\":{\"message\":\"Status Messages\",\"description\":\"tooltip for status tab\",\"component\":\"Panel\"},\"TOOLTIP_WORDLIST\":{\"message\":\"User word list\",\"description\":\"tooltip for user word list tab\",\"component\":\"Panel\"},\"TOOLTIP_USER\":{\"message\":\"User info\",\"description\":\"tooltip for a user info tab\",\"component\":\"Panel\"},\"TOOLTIP_SHOW_INFLECTIONS\":{\"message\":\"Show inflections\",\"description\":\"tooltip for button inflections\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_DEFINITIONS\":{\"message\":\"Show definitions\",\"description\":\"tooltip for button definitions\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_OPTIONS\":{\"message\":\"Show options\",\"description\":\"tooltip for button options\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_USAGEEXAMPLES\":{\"message\":\"Show example usages of this word\",\"description\":\"tooltop for word usage examples button\",\"component\":\"Popup\"},\"TOOLTIP_MORPHOLOGY\":{\"message\":\"Lemma\",\"description\":\"tooltop for a morphology button\",\"component\":\"Panel\"},\"TOOLTIP_NOT_AVAIL_POSTFIX\":{\"message\":\"not available\",\"description\":\"A postix added to tooltips when they are not available\",\"component\":\"Any\"},\"PLACEHOLDER_DEFINITIONS\":{\"message\":\"Lookup a word to show definitions...\",\"description\":\"placeholder for definitions panel\",\"component\":\"Panel\"},\"PLACEHOLDER_INFLECT_IN_PROGRESS\":{\"message\":\"Lookup a word to show inflections...\",\"description\":\"placeholder for inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SELECT_POFS\":{\"message\":\"Part of speech:\",\"description\":\"label for part of speech selector on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SHOWFULL\":{\"message\":\"Expand\",\"description\":\"label for expand button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_COLLAPSE\":{\"message\":\"Collapse\",\"description\":\"label for collapse table button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_SHOWFULL\":{\"message\":\"This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table\",\"description\":\"tooltip for show full table button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_COLLAPSE\":{\"message\":\"This table shows all its columns. Click 'Collapse' to show the ones with matching endings only\",\"description\":\"tooltip for collapse table button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_HIDEEMPTY\":{\"message\":\"Hide empty columns\",\"description\":\"label for hide empty columns button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SHOWEMPTY\":{\"message\":\"Show empty columns\",\"description\":\"label for show empty columns button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_HIDEEMPTY\":{\"message\":\"Show table without empty columns\",\"description\":\"tooltip for hide empty columns button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_SHOWEMPTY\":{\"message\":\"Show table with empty columns\",\"description\":\"tooltip for show empty columns button on inflections panel\",\"component\":\"Panel\"},\"INFLECT_MSG_TABLE_NOT_IMPLEMENTED\":{\"message\":\"This table has not been implemented yet\",\"description\":\"tooltip to show instead of inflection table if the latter is not implemented\",\"component\":\"Panel\"},\"TEXT_INFO_GETTINGSTARTED\":{\"message\":\"Getting Started\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_ACTIVATE\":{\"message\":\"Click the Alpheios icon in the browser toolbar to activate on any page. Click again to deactivate.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_CLICK\":{\"message\":\"Double-click on a word to retrieve lemmas, morphology, short definitions and Latin usage examples.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_LOOKUP\":{\"message\":\"Use the lookup tool to enter any word for analysis.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_TIPS\":{\"message\":\"Usage Tips\",\"description\":\"info tips text\",\"component\":\"Panel\"},\"TEXT_INFO_ABOUT\":{\"message\":\"About Alpheios\",\"description\":\"info tips text\",\"component\":\"Panel\"},\"TEXT_INFO_LANGDETECT\":{\"message\":\"When you lookup a word, if Alpheios cannot detect the language of the word from the page markup it will use its default language, currently set to <b>{languageName}</b>.  You can change the default language for word lookups in the application Options. You can also return to this pane to lookup a word in <em>any</em> of the supported languages.\",\"description\":\"info text\",\"component\":\"Panel\",\"params\":[\"languageName\"]},\"LABEL_INFO_CURRENTLANGUAGE\":{\"message\":\"Current language:\",\"description\":\"label for current language in info text\",\"component\":\"Panel\"},\"TEXT_INFO_TOOLBAR\":{\"message\":\"Click the tools icon on the Alpheios toolbar to access a tool in this panel, including your user account and wordlist, inflection table and grammar browsers and the application options.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_ARROW\":{\"message\":\"Use the arrow at the top of this panel to swap positions between the right and left side of your browser window.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TOOLTIP_POPUP_CLOSE\":{\"message\":\"Close Popup\",\"description\":\"tooltip for closing the popup\",\"component\":\"Popup\"},\"LABEL_POPUP_TREEBANK\":{\"message\":\"Diagram\",\"description\":\"label for treebank button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_INFLECT\":{\"message\":\"Inflect\",\"description\":\"label for inflect button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_OPTIONS\":{\"message\":\"Options\",\"description\":\"label for options button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_DEFINE\":{\"message\":\"Define\",\"description\":\"label for define button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_USAGEEXAMPLES\":{\"message\":\"Examples\",\"description\":\"label for usage examples button on popup\",\"component\":\"Popup\"},\"PLACEHOLDER_LEX_DATA_LOADING\":{\"message\":\"Lexical data is loading\",\"description\":\"placeholder text for popup data\",\"component\":\"Popup\"},\"PLACEHOLDER_NO_LANGUAGE_DATA\":{\"message\":\"Lexical data couldn't be populated because page language is not defined\",\"description\":\"placeholder text for popup data when language is not defined\",\"component\":\"Popup\"},\"PLACEHOLDER_NO_MORPH_DATA\":{\"message\":\"Lexical query produced no results\",\"description\":\"placeholder text for popup data\",\"component\":\"Popup\"},\"LABEL_PROVIDERS_CREDITS\":{\"message\":\"Credits\",\"description\":\"label for credits on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_SHOWCREDITS\":{\"message\":\"Show\",\"description\":\"label for show credits link on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_HIDECREDITS\":{\"message\":\"Hide\",\"description\":\"label for hide credits link on popup\",\"component\":\"Popup\"},\"TEXT_NOTICE_SUGGEST_LOGIN\":{\"message\":\"Login to save your words to your wordlist.\",\"description\":\"login notification\",\"component\":\"UI\"},\"TEXT_NOTICE_CHANGE_LANGUAGE\":{\"message\":\"Language: {languageName}<br>Wrong? Change to:\",\"description\":\"language notification\",\"component\":\"UI\",\"params\":[\"languageName\"]},\"TEXT_NOTICE_LANGUAGE_UNKNOWN\":{\"message\":\"unknown\",\"description\":\"unknown language notification\",\"component\":\"UI\"},\"TEXT_NOTICE_MORPHDATA_READY\":{\"message\":\"Morphological analyzer data is ready\",\"description\":\"morph data ready notice\",\"component\":\"UI\"},\"TEXT_NOTICE_MORPHDATA_NOTFOUND\":{\"message\":\"Morphological data not found. Definition queries pending.\",\"description\":\"morph data not found notice\",\"component\":\"UI\"},\"TEXT_NOTICE_INFLDATA_READY\":{\"message\":\"Inflection data is ready\",\"description\":\"inflection data ready notice\",\"component\":\"UI\"},\"TEXT_NOTICE_DEFSDATA_READY\":{\"message\":\"{requestType} request is completed successfully. Lemma: \\\"{lemma}\\\"\",\"description\":\"definition request success notice\",\"component\":\"UI\",\"params\":[\"requestType\",\"lemma\"]},\"TEXT_NOTICE_DEFSDATA_NOTFOUND\":{\"message\":\"{requestType} request failed. Lemma not found for: \\\"{word}\\\"\",\"description\":\"definition request success notice\",\"component\":\"UI\",\"params\":[\"requestType\",\"word\"]},\"TEXT_NOTICE_NO_DEFS_FOUND\":{\"message\":\"No definitions found\",\"description\":\"displayed by the morph compoennt when there are no definition data exist\",\"component\":\"UI\"},\"TEXT_NOTICE_LEXQUERY_COMPLETE\":{\"message\":\"All lexical queries complete.\",\"description\":\"lexical queries complete notice\",\"component\":\"UI\"},\"TEXT_NOTICE_GRAMMAR_READY\":{\"message\":\"Grammar resource retrieved\",\"description\":\"grammar retrieved notice\",\"component\":\"UI\"},\"TEXT_NOTICE_GRAMMAR_COMPLETE\":{\"message\":\"All grammar resource data retrieved\",\"description\":\"grammar retrieved notice\",\"component\":\"UI\"},\"TEXT_NOTICE_RESQUERY_COMPLETE\":{\"message\":\"All resource data retrieved\",\"description\":\"resource query complete notice\",\"component\":\"UI\"},\"TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS\":{\"message\":\"Please wait while data is retrieved ...\",\"description\":\"Data retrieval is in progress\",\"component\":\"UI\"},\"TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS\":{\"message\":\"Please wait while data is retrieved ...\",\"description\":\"Resource retrieval is in progress\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_DEACTIVATE\":{\"message\":\"Deactivate Alpheios\",\"description\":\"Deactivate browser action title\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_ACTIVATE\":{\"message\":\"Activate Alpheios\",\"description\":\"Activate browser action title\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_DISABLED\":{\"message\":\"(Alpheios Extension Disabled For Page)\",\"description\":\"Disabled browser action title\",\"component\":\"UI\"},\"LABEL_CTXTMENU_DEACTIVATE\":{\"message\":\"Deactivate\",\"description\":\"Deactivate context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_ACTIVATE\":{\"message\":\"Activate\",\"description\":\"Activate context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_DISABLED\":{\"message\":\"(Disabled)\",\"description\":\"Disabled context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_OPENPANEL\":{\"message\":\"Open Panel\",\"description\":\"Open Panel context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_INFO\":{\"message\":\"Info\",\"description\":\"Info context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_SENDEXP\":{\"message\":\"Send Experiences to remote server\",\"description\":\"send exp data context menu label\",\"component\":\"UI\"},\"LABEL_TOOLS_CONTROL\":{\"message\":\"Show/Hide Reading Tools\",\"description\":\"A tooltip for the reading tools icon on the toolbar\",\"component\":\"Toolbar\"},\"LABEL_LOOKUP_CONTROL\":{\"message\":\"Show/Hide lookup\",\"description\":\"A tooltip for the button that turns the lookup panel on and off\",\"component\":\"Toolbar\"},\"LABEL_LOOKUP_BUTTON\":{\"message\":\"Lookup\",\"description\":\"lookup button in lookup.vue\",\"component\":\"Popup\"},\"TOOLTIP_LOOKUP_BUTTON\":{\"message\":\"Lookup word\",\"description\":\"Tooltip for the lookup button in lookup.vue\",\"component\":\"Lookup\"},\"LABEL_LOOKUP_SETTINGS\":{\"message\":\"Using Language...\",\"description\":\"Settings link-label in the lookup block in lookup.vue\",\"component\":\"Lookup\"},\"LABEL_RESKIN_SETTINGS\":{\"message\":\"Reskin options\",\"description\":\"Label for Reskin component\",\"component\":\"ReskinFontColor\"},\"LABEL_RESET_OPTIONS\":{\"message\":\"Reset All\",\"description\":\"Label for Reset button\",\"component\":\"Options\"},\"TOOLTIP_RESKIN_SMALLFONT\":{\"message\":\"Small font\",\"description\":\"Tooltip for small font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_MEDIUMFONT\":{\"message\":\"Medium font\",\"description\":\"Tooltip for medium font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_LARGEFONT\":{\"message\":\"Large font\",\"description\":\"Tooltip for large font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_LIGHTBG\":{\"message\":\"Light background\",\"description\":\"Tooltip for light colors schema icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_DARKBG\":{\"message\":\"Dark background\",\"description\":\"Tooltip for dark colors schema icon\",\"component\":\"ReskinFontColor\"},\"INFLECTIONS_CREDITS_TITLE\":{\"message\":\"Credits\",\"description\":\"Title of credits section on inflection tables panel\",\"component\":\"InflectionTables\"},\"INFLECTIONS_PARADIGMS_EXPLANATORY_HINT\":{\"message\":\"The following table(s) show conjugation patterns for verbs which are similar to those of <span>{word}</span>\",\"description\":\"A hint that indicates that the current table is representative pattern for verbs similar to the one chosen\",\"component\":\"InflectionTables\",\"params\":[\"word\"]},\"INFLECTIONS_MAIN_TABLE_LINK_TEXT\":{\"message\":\"Back to main\",\"description\":\"A link pointing to a main inflection table\",\"component\":\"InflectionTables\"},\"INFL_ATTRIBUTE_LINK_TEXT_SOURCE\":{\"message\":\"Source\",\"description\":\"A link pointing to the source of a lemma or inflection\",\"component\":\"InflAttribute\"},\"EMBED_LIB_WARNING_TEXT\":{\"message\":\"This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.\",\"description\":\"A message that is shown when an Alpheios extension is disabled due to embedded library presence\",\"component\":\"EmbedLibWarning\"},\"AUTH_HIDE_LOGIN_BTN_LABEL\":{\"message\":\"Don't Ask Again\",\"description\":\"button to hide login\",\"component\":\"Notification Area Vue Component\"},\"AUTH_LOGIN_BTN_LABEL\":{\"message\":\"Log In\",\"description\":\"A message shown on a log in button\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGOUT_BTN_LABEL\":{\"message\":\"Log Out\",\"description\":\"A message shown on a log out button\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_PROGRESS_MSG\":{\"message\":\"Please be patient while we are logging you in ...\",\"description\":\"A message shown to the user while he or she is waiting for an authentication to complete\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_SUCCESS_MSG\":{\"message\":\"Congratulations! You are logged in successfully.\",\"description\":\"A message shown to the user if he or she logged in successfully\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_AUTH_FAILURE_MSG\":{\"message\":\"Authentication failed\",\"description\":\"A message shown to the user if his or her authentication failed\",\"component\":\"UserAuth Vue Component\"},\"AUTH_PROFILE_NICKNAME_LABEL\":{\"message\":\"Nickname\",\"description\":\"A user's profile nickname filed label\",\"component\":\"UserAuth Vue Component\"},\"AUTH_PROFILE_NAME_LABEL\":{\"message\":\"Name\",\"description\":\"A user's profile name filed label\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGOUT_SUCCESS_MSG\":{\"message\":\"You have been logged out.\",\"description\":\"A message shown to the user if he or she logged out successfully\",\"component\":\"UserAuth Vue Component\"},\"FONTSIZE_TEXT_SMALL\":{\"message\":\"Small\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"FONTSIZE_TEXT_MEDIUM\":{\"message\":\"Medium\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"FONTSIZE_TEXT_LARGE\":{\"message\":\"Large\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"TOOLTIP_BACK_TO_INDEX\":{\"message\":\"Back to index\",\"description\":\"Description of back to index button\",\"component\":\"Grammar Tab\"},\"LABEL_FIELDSET_USAGEEXAMPLES\":{\"message\":\"Latin Word Usage Examples (Concordance)\",\"description\":\"Legend for options fieldset\",\"component\":\"Options Tab\"},\"OPTIONS_TAB_UI\":{\"message\":\"User Interface Options\",\"description\":\"Tooltip for the show UI options icon\",\"component\":\"Options Tab\"},\"OPTIONS_TAB_FEATURE\":{\"message\":\"Feature Options\",\"description\":\"Tooltip for the show Feature options icon\",\"component\":\"Options Tab\"},\"OPTIONS_TAB_RESOURCE\":{\"message\":\"Resource Options\",\"description\":\"Tooltip for the show Resource options icon\",\"component\":\"Options Tab\"},\"OPTIONS_TAB_RESET_ALL_TITLE\":{\"message\":\"Apply to all options - U, F, R\",\"description\":\"Reset All description title\",\"component\":\"Options Tab\"}}");
+module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a test message about a cookie.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\"},\"NUM_LINES_TEST_MESSAGE\":{\"message\":\"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\",\"params\":[\"numLines\"]},\"TITLE_HELP_PANEL\":{\"message\":\"Help\",\"description\":\"A title of a help panel\",\"component\":\"Panel\"},\"TITLE_INFLECTIONS_PANEL\":{\"message\":\"Inflection tables\",\"description\":\"A title of an inflections panel\",\"component\":\"Panel\"},\"TITLE_INFLECTIONS_BROWSER_PANEL\":{\"message\":\"Browse inflection tables\",\"description\":\"A title of an inflections browser panel\",\"component\":\"Panel\"},\"TOOLTIP_MOVE_PANEL_LEFT\":{\"message\":\"Move Panel to Left\",\"description\":\"tooltip for moving the panel to the left\",\"component\":\"Panel\"},\"TOOLTIP_MOVE_PANEL_RIGHT\":{\"message\":\"Move Panel to Right\",\"description\":\"tooltip for moving the panel to the right\",\"component\":\"Panel\"},\"TOOLTIP_CLOSE_PANEL\":{\"message\":\"Close Panel\",\"description\":\"tooltip for closing the panel\",\"component\":\"Panel\"},\"TOOLTIP_HELP\":{\"message\":\"Help\",\"description\":\"tooltip for help tab\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT\":{\"message\":\"Inflections\",\"description\":\"tooltip for inflections tab\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_BROWSER\":{\"message\":\"Browse Inflection Tables\",\"description\":\"tooltip for inflections browser tab\",\"component\":\"Panel\"},\"TOOLTIP_DEFINITIONS\":{\"message\":\"Definitions\",\"description\":\"tooltip for definitions tab\",\"component\":\"Panel\"},\"TOOLTIP_GRAMMAR\":{\"message\":\"Browse Grammar\",\"description\":\"tooltip for grammar tab\",\"component\":\"Panel\"},\"TOOLTIP_TREEBANK\":{\"message\":\"Diagram\",\"description\":\"tooltip for treebank tab\",\"component\":\"Panel\"},\"TOOLTIP_OPTIONS\":{\"message\":\"Options\",\"description\":\"tooltip for options tab\",\"component\":\"Panel\"},\"TOOLTIP_STATUS\":{\"message\":\"Status Messages\",\"description\":\"tooltip for status tab\",\"component\":\"Panel\"},\"TOOLTIP_WORDLIST\":{\"message\":\"User word list\",\"description\":\"tooltip for user word list tab\",\"component\":\"Panel\"},\"TOOLTIP_USER\":{\"message\":\"User info\",\"description\":\"tooltip for a user info tab\",\"component\":\"Panel\"},\"TOOLTIP_SHOW_INFLECTIONS\":{\"message\":\"Show inflections\",\"description\":\"tooltip for button inflections\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_DEFINITIONS\":{\"message\":\"Show definitions\",\"description\":\"tooltip for button definitions\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_OPTIONS\":{\"message\":\"Show options\",\"description\":\"tooltip for button options\",\"component\":\"Popup\"},\"TOOLTIP_SHOW_USAGEEXAMPLES\":{\"message\":\"Show example usages of this word\",\"description\":\"tooltop for word usage examples button\",\"component\":\"Popup\"},\"TOOLTIP_MORPHOLOGY\":{\"message\":\"Lemma\",\"description\":\"tooltop for a morphology button\",\"component\":\"Panel\"},\"TOOLTIP_NOT_AVAIL_POSTFIX\":{\"message\":\"not available\",\"description\":\"A postix added to tooltips when they are not available\",\"component\":\"Any\"},\"PLACEHOLDER_DEFINITIONS\":{\"message\":\"Lookup a word to show definitions...\",\"description\":\"placeholder for definitions panel\",\"component\":\"Panel\"},\"PLACEHOLDER_INFLECT_IN_PROGRESS\":{\"message\":\"Lookup a word to show inflections...\",\"description\":\"placeholder for inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SELECT_POFS\":{\"message\":\"Part of speech:\",\"description\":\"label for part of speech selector on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SHOWFULL\":{\"message\":\"Expand\",\"description\":\"label for expand button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_COLLAPSE\":{\"message\":\"Collapse\",\"description\":\"label for collapse table button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_SHOWFULL\":{\"message\":\"This table has been collapsed to show only columns with matching endings. Click 'Expand' to see the full table\",\"description\":\"tooltip for show full table button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_COLLAPSE\":{\"message\":\"This table shows all its columns. Click 'Collapse' to show the ones with matching endings only\",\"description\":\"tooltip for collapse table button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_HIDEEMPTY\":{\"message\":\"Hide empty columns\",\"description\":\"label for hide empty columns button on inflections panel\",\"component\":\"Panel\"},\"LABEL_INFLECT_SHOWEMPTY\":{\"message\":\"Show empty columns\",\"description\":\"label for show empty columns button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_HIDEEMPTY\":{\"message\":\"Show table without empty columns\",\"description\":\"tooltip for hide empty columns button on inflections panel\",\"component\":\"Panel\"},\"TOOLTIP_INFLECT_SHOWEMPTY\":{\"message\":\"Show table with empty columns\",\"description\":\"tooltip for show empty columns button on inflections panel\",\"component\":\"Panel\"},\"INFLECT_MSG_TABLE_NOT_IMPLEMENTED\":{\"message\":\"This table has not been implemented yet\",\"description\":\"tooltip to show instead of inflection table if the latter is not implemented\",\"component\":\"Panel\"},\"TEXT_INFO_GETTINGSTARTED\":{\"message\":\"Getting Started\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_ACTIVATE\":{\"message\":\"Click the Alpheios icon in the browser toolbar to activate on any page. Click again to deactivate.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_CLICK\":{\"message\":\"Double-click on a word to retrieve lemmas, morphology, short definitions and Latin usage examples.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_LOOKUP\":{\"message\":\"Use the lookup tool to enter any word for analysis.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_TIPS\":{\"message\":\"Usage Tips\",\"description\":\"info tips text\",\"component\":\"Panel\"},\"TEXT_INFO_ABOUT\":{\"message\":\"About Alpheios\",\"description\":\"info tips text\",\"component\":\"Panel\"},\"TEXT_INFO_LANGDETECT\":{\"message\":\"When you lookup a word, if Alpheios cannot detect the language of the word from the page markup it will use its default language, currently set to <b>{languageName}</b>.  You can change the default language for word lookups in the application Options. You can also return to this pane to lookup a word in <em>any</em> of the supported languages.\",\"description\":\"info text\",\"component\":\"Panel\",\"params\":[\"languageName\"]},\"LABEL_INFO_CURRENTLANGUAGE\":{\"message\":\"Current language:\",\"description\":\"label for current language in info text\",\"component\":\"Panel\"},\"TEXT_INFO_TOOLBAR\":{\"message\":\"Click the tools icon on the Alpheios toolbar to access a tool in this panel, including your user account and wordlist, inflection table and grammar browsers and the application options.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TEXT_INFO_ARROW\":{\"message\":\"Use the arrow at the top of this panel to swap positions between the right and left side of your browser window.\",\"description\":\"info text\",\"component\":\"Panel\"},\"TOOLTIP_POPUP_CLOSE\":{\"message\":\"Close Popup\",\"description\":\"tooltip for closing the popup\",\"component\":\"Popup\"},\"LABEL_POPUP_TREEBANK\":{\"message\":\"Diagram\",\"description\":\"label for treebank button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_INFLECT\":{\"message\":\"Inflect\",\"description\":\"label for inflect button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_OPTIONS\":{\"message\":\"Options\",\"description\":\"label for options button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_DEFINE\":{\"message\":\"Define\",\"description\":\"label for define button on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_USAGEEXAMPLES\":{\"message\":\"Examples\",\"description\":\"label for usage examples button on popup\",\"component\":\"Popup\"},\"PLACEHOLDER_LEX_DATA_LOADING\":{\"message\":\"Lexical data is loading\",\"description\":\"placeholder text for popup data\",\"component\":\"Popup\"},\"PLACEHOLDER_NO_LANGUAGE_DATA\":{\"message\":\"Lexical data couldn't be populated because page language is not defined\",\"description\":\"placeholder text for popup data when language is not defined\",\"component\":\"Popup\"},\"PLACEHOLDER_NO_MORPH_DATA\":{\"message\":\"Lexical query produced no results\",\"description\":\"placeholder text for popup data\",\"component\":\"Popup\"},\"LABEL_PROVIDERS_CREDITS\":{\"message\":\"Credits\",\"description\":\"label for credits on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_SHOWCREDITS\":{\"message\":\"Show\",\"description\":\"label for show credits link on popup\",\"component\":\"Popup\"},\"LABEL_POPUP_HIDECREDITS\":{\"message\":\"Hide\",\"description\":\"label for hide credits link on popup\",\"component\":\"Popup\"},\"TEXT_NOTICE_SUGGEST_LOGIN\":{\"message\":\"Login to save your words to your wordlist.\",\"description\":\"login notification\",\"component\":\"UI\"},\"TEXT_NOTICE_CHANGE_LANGUAGE\":{\"message\":\"Language: {languageName}<br>Wrong? Change to:\",\"description\":\"language notification\",\"component\":\"UI\",\"params\":[\"languageName\"]},\"TEXT_NOTICE_NOT_FOUND\":{\"message\":\"'{targetWord}' was not found in our {languageName} resources.\",\"description\":\"language notification\",\"component\":\"UI\",\"params\":[\"targetWord\",\"languageName\"]},\"TEXT_NOTICE_LANGUAGE_UNKNOWN\":{\"message\":\"unknown\",\"description\":\"unknown language notification\",\"component\":\"UI\"},\"TEXT_NOTICE_MORPHDATA_READY\":{\"message\":\"Morphological analyzer data is ready\",\"description\":\"morph data ready notice\",\"component\":\"UI\"},\"TEXT_NOTICE_MORPHDATA_NOTFOUND\":{\"message\":\"Morphological data not found. Definition queries pending.\",\"description\":\"morph data not found notice\",\"component\":\"UI\"},\"TEXT_NOTICE_INFLDATA_READY\":{\"message\":\"Inflection data is ready\",\"description\":\"inflection data ready notice\",\"component\":\"UI\"},\"TEXT_NOTICE_DEFSDATA_READY\":{\"message\":\"{requestType} request is completed successfully. Lemma: \\\"{lemma}\\\"\",\"description\":\"definition request success notice\",\"component\":\"UI\",\"params\":[\"requestType\",\"lemma\"]},\"TEXT_NOTICE_DEFSDATA_NOTFOUND\":{\"message\":\"{requestType} request failed. Lemma not found for: \\\"{word}\\\"\",\"description\":\"definition request success notice\",\"component\":\"UI\",\"params\":[\"requestType\",\"word\"]},\"TEXT_NOTICE_NO_DEFS_FOUND\":{\"message\":\"No definitions found\",\"description\":\"displayed by the morph compoennt when there are no definition data exist\",\"component\":\"UI\"},\"TEXT_NOTICE_LEXQUERY_COMPLETE\":{\"message\":\"All lexical queries complete.\",\"description\":\"lexical queries complete notice\",\"component\":\"UI\"},\"TEXT_NOTICE_GRAMMAR_READY\":{\"message\":\"Grammar resource retrieved\",\"description\":\"grammar retrieved notice\",\"component\":\"UI\"},\"TEXT_NOTICE_GRAMMAR_COMPLETE\":{\"message\":\"All grammar resource data retrieved\",\"description\":\"grammar retrieved notice\",\"component\":\"UI\"},\"TEXT_NOTICE_RESQUERY_COMPLETE\":{\"message\":\"All resource data retrieved\",\"description\":\"resource query complete notice\",\"component\":\"UI\"},\"TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS\":{\"message\":\"Please wait while data is retrieved ...\",\"description\":\"Data retrieval is in progress\",\"component\":\"UI\"},\"TEXT_NOTICE_RESOURCE_RETRIEVAL_IN_PROGRESS\":{\"message\":\"Please wait while data is retrieved ...\",\"description\":\"Resource retrieval is in progress\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_DEACTIVATE\":{\"message\":\"Deactivate Alpheios\",\"description\":\"Deactivate browser action title\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_ACTIVATE\":{\"message\":\"Activate Alpheios\",\"description\":\"Activate browser action title\",\"component\":\"UI\"},\"LABEL_BROWSERACTION_DISABLED\":{\"message\":\"(Alpheios Extension Disabled For Page)\",\"description\":\"Disabled browser action title\",\"component\":\"UI\"},\"LABEL_CTXTMENU_DEACTIVATE\":{\"message\":\"Deactivate\",\"description\":\"Deactivate context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_ACTIVATE\":{\"message\":\"Activate\",\"description\":\"Activate context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_DISABLED\":{\"message\":\"(Disabled)\",\"description\":\"Disabled context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_OPENPANEL\":{\"message\":\"Open Panel\",\"description\":\"Open Panel context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_INFO\":{\"message\":\"Info\",\"description\":\"Info context menu label\",\"component\":\"UI\"},\"LABEL_CTXTMENU_SENDEXP\":{\"message\":\"Send Experiences to remote server\",\"description\":\"send exp data context menu label\",\"component\":\"UI\"},\"LABEL_TOOLS_CONTROL\":{\"message\":\"Show/Hide Reading Tools\",\"description\":\"A tooltip for the reading tools icon on the toolbar\",\"component\":\"Toolbar\"},\"LABEL_LOOKUP_CONTROL\":{\"message\":\"Show/Hide lookup\",\"description\":\"A tooltip for the button that turns the lookup panel on and off\",\"component\":\"Toolbar\"},\"LABEL_LOOKUP_BUTTON\":{\"message\":\"Lookup\",\"description\":\"lookup button in lookup.vue\",\"component\":\"Popup\"},\"HINT_LOOKUP_LANGUAGE\":{\"message\":\"(as {language})\",\"description\":\"lookup language hint in lookup.vue\",\"component\":\"Popup\",\"params\":[\"language\"]},\"LABEL_LOOKUP_CHANGE_LANGUAGE\":{\"message\":\"Change Language\",\"description\":\"change language link label in lookup.vue\",\"component\":\"Popup\"},\"TOOLTIP_LOOKUP_BUTTON\":{\"message\":\"Lookup word\",\"description\":\"Tooltip for the lookup button in lookup.vue\",\"component\":\"Lookup\"},\"LABEL_LOOKUP_SETTINGS\":{\"message\":\"Using Language...\",\"description\":\"Settings link-label in the lookup block in lookup.vue\",\"component\":\"Lookup\"},\"LABEL_RESKIN_SETTINGS\":{\"message\":\"Reskin options\",\"description\":\"Label for Reskin component\",\"component\":\"ReskinFontColor\"},\"LABEL_RESET_OPTIONS\":{\"message\":\"Reset All\",\"description\":\"Label for Reset button\",\"component\":\"Options\"},\"TOOLTIP_RESKIN_SMALLFONT\":{\"message\":\"Small font\",\"description\":\"Tooltip for small font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_MEDIUMFONT\":{\"message\":\"Medium font\",\"description\":\"Tooltip for medium font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_LARGEFONT\":{\"message\":\"Large font\",\"description\":\"Tooltip for large font icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_LIGHTBG\":{\"message\":\"Light background\",\"description\":\"Tooltip for light colors schema icon\",\"component\":\"ReskinFontColor\"},\"TOOLTIP_RESKIN_DARKBG\":{\"message\":\"Dark background\",\"description\":\"Tooltip for dark colors schema icon\",\"component\":\"ReskinFontColor\"},\"INFLECTIONS_CREDITS_TITLE\":{\"message\":\"Credits\",\"description\":\"Title of credits section on inflection tables panel\",\"component\":\"InflectionTables\"},\"INFLECTIONS_PARADIGMS_EXPLANATORY_HINT\":{\"message\":\"The following table(s) show conjugation patterns for verbs which are similar to those of <span>{word}</span>\",\"description\":\"A hint that indicates that the current table is representative pattern for verbs similar to the one chosen\",\"component\":\"InflectionTables\",\"params\":[\"word\"]},\"INFLECTIONS_MAIN_TABLE_LINK_TEXT\":{\"message\":\"Back to main\",\"description\":\"A link pointing to a main inflection table\",\"component\":\"InflectionTables\"},\"INFL_ATTRIBUTE_LINK_TEXT_SOURCE\":{\"message\":\"Source\",\"description\":\"A link pointing to the source of a lemma or inflection\",\"component\":\"InflAttribute\"},\"EMBED_LIB_WARNING_TEXT\":{\"message\":\"This pages embeds Alpheios directly. The Alpheios browser extension is not needed for it and will be deactivated until you navigate away from the page.\",\"description\":\"A message that is shown when an Alpheios extension is disabled due to embedded library presence\",\"component\":\"EmbedLibWarning\"},\"AUTH_HIDE_LOGIN_BTN_LABEL\":{\"message\":\"Don't Ask Again\",\"description\":\"button to hide login\",\"component\":\"Notification Area Vue Component\"},\"AUTH_LOGIN_BTN_LABEL\":{\"message\":\"Log In\",\"description\":\"A message shown on a log in button\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGOUT_BTN_LABEL\":{\"message\":\"Log Out\",\"description\":\"A message shown on a log out button\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_PROGRESS_MSG\":{\"message\":\"Please be patient while we are logging you in ...\",\"description\":\"A message shown to the user while he or she is waiting for an authentication to complete\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_SUCCESS_MSG\":{\"message\":\"Congratulations! You are logged in successfully.\",\"description\":\"A message shown to the user if he or she logged in successfully\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGIN_AUTH_FAILURE_MSG\":{\"message\":\"Authentication failed\",\"description\":\"A message shown to the user if his or her authentication failed\",\"component\":\"UserAuth Vue Component\"},\"AUTH_PROFILE_NICKNAME_LABEL\":{\"message\":\"Nickname\",\"description\":\"A user's profile nickname filed label\",\"component\":\"UserAuth Vue Component\"},\"AUTH_PROFILE_NAME_LABEL\":{\"message\":\"Name\",\"description\":\"A user's profile name filed label\",\"component\":\"UserAuth Vue Component\"},\"AUTH_LOGOUT_SUCCESS_MSG\":{\"message\":\"You have been logged out.\",\"description\":\"A message shown to the user if he or she logged out successfully\",\"component\":\"UserAuth Vue Component\"},\"FONTSIZE_TEXT_SMALL\":{\"message\":\"Small\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"FONTSIZE_TEXT_MEDIUM\":{\"message\":\"Medium\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"FONTSIZE_TEXT_LARGE\":{\"message\":\"Large\",\"description\":\"Description of a text size option within a button\",\"component\":\"Font size component\"},\"TOOLTIP_BACK_TO_INDEX\":{\"message\":\"Back to index\",\"description\":\"Description of back to index button\",\"component\":\"Grammar Tab\"},\"LABEL_FIELDSET_USAGEEXAMPLES\":{\"message\":\"Latin Word Usage Examples (Concordance)\",\"description\":\"Legend for options fieldset\",\"component\":\"Options Tab\"},\"OPTIONS_TAB_UI\":{\"message\":\"User Interface Options\",\"description\":\"Tooltip for the show UI options icon\",\"component\":\"Options Tab\"},\"OPTIONS_TAB_FEATURE\":{\"message\":\"Feature Options\",\"description\":\"Tooltip for the show Feature options icon\",\"component\":\"Options Tab\"},\"OPTIONS_TAB_RESOURCE\":{\"message\":\"Resource Options\",\"description\":\"Tooltip for the show Resource options icon\",\"component\":\"Options Tab\"},\"OPTIONS_TAB_RESET_ALL_TITLE\":{\"message\":\"Apply to all options - U, F, R\",\"description\":\"Reset All description title\",\"component\":\"Options Tab\"}}");
 
 /***/ }),
 

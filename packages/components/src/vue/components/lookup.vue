@@ -1,14 +1,6 @@
 <template>
   <div class="alpheios-lookup__form">
     <div class="alpheios-lookup__form-row">
-      <alph-setting
-          :classes="['alpheios-panel__options-item', 'alpheios-lookup__form-element', 'alpheios-lookup__lang-control']"
-          :data="this.$options.lookupLanguage"
-          @change="settingChange"
-          v-if="showLangSelector"
-      >
-      </alph-setting>
-
       <div class="alpheios-lookup__form-element">
         <label class="alpheios-setting__label">Word lookup</label>
         <div class="alpheios-lookup__search-control">
@@ -33,23 +25,17 @@
         </div>
       </div>
     </div>
-
-    <template
-        v-if="showLangSelector"
+    <div v-show="! showLangSelector">
+      <span class="alpheios-lookup__lang-hint">{{l10n.getMsg('HINT_LOOKUP_LANGUAGE',{language:lookupLangName})}}</span>
+      <span class="alpheios-lookup__lang-change" @click.stop="toggleLangSelector">{{l10n.getMsg('LABEL_LOOKUP_CHANGE_LANGUAGE')}}</span>
+    </div>
+    <alph-setting
+        :classes="['alpheios-panel__options-item', 'alpheios-lookup__form-element', 'alpheios-lookup__lang-control']"
+        :data="this.$options.lookupLanguage"
+        @change="settingChange"
+        v-show="showLangSelector"
     >
-      <div
-          class="alpheios-lookup__settings"
-      >
-        <alph-setting
-            :classes="['alpheios-panel__options-item', 'alpheios-lookup__resource-control']"
-            :data="lexicon"
-            :key="lexicon.name"
-            @change="resourceSettingChange"
-            v-for="lexicon in lexiconsFiltered"
-        >
-        </alph-setting>
-      </div>
-    </template>
+    </alph-setting>
   </div>
 </template>
 <script>
@@ -58,12 +44,14 @@ import LexicalQueryLookup from '@/lib/queries/lexical-query-lookup'
 import Options from '@/lib/options/options'
 import { LanguageModelFactory } from 'alpheios-data-models'
 import LookupIcon from '@/images/inline-icons/lookup.svg'
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 import Setting from './setting.vue'
 
 export default {
   name: 'Lookup',
   inject: ['app', 'ui', 'l10n', 'settings'],
+  mixins: [DependencyCheck],
   storeModules: ['app'],
   components: {
     alphSetting: Setting,
@@ -73,7 +61,6 @@ export default {
     return {
       lookuptext: '',
       // A name of a language currently selected in the language drop-down
-      selectedLangName: '',
       // The following variable is used to signal that language options has been updated
       langUpdated: Date.now()
     }
@@ -88,7 +75,7 @@ export default {
     showLangSelector: {
       type: Boolean,
       required: false,
-      default: true
+      default: false
     },
 
     showResultsIn: {
@@ -98,36 +85,17 @@ export default {
     }
   },
   created: function () {
-    /*
-    Lookup component uses its own version of resource options. This is because resource options
-    of lookup components might not necessarily be the same as the ones used within a UI controller.
-    */
-    if (this.showLangSelector) {
-      this.$options.lookupLanguage = this.settings.getFeatureOptions().items.lookupLanguage
-      this.selectedLangName = this.$options.lookupLanguage.currentTextValue()
-      this.$options.resourceOptions = this.settings.lookupResourceOptions
-    } else {
-      this.$options.resourceOptions = this.settings.getResourceOptions()
-    }
+    this.$options.lookupLanguage = this.settings.getFeatureOptions().items.lookupLanguage
   },
 
   computed: {
-    lexiconsFiltered () {
-      let lang = this.$options.lookupLanguage.values.filter(v => v.text === this.selectedLangName)
-      let settingGroup
-      if (lang.length > 0) {
-        settingGroup = lang[0].value
-      }
-
-      return this.$options.resourceOptions.items.lexiconsShort.filter((item) => Options.parseKey(item.name).group === settingGroup)
+    lookupLangName () {
+      return this.app.getLanguageName(this.getLookupLanguage()).name
     }
   },
   watch: {
     '$store.state.app.selectedLookupLangCode' (langCode) {
-      if (this.showLangSelector) {
-        this.$options.lookupLanguage.setValue(langCode)
-        this.selectedLangName = this.$options.lookupLanguage.currentTextValue()
-      }
+      this.$options.lookupLanguage.setValue(langCode)
     },
 
     '$store.state.app.morphDataReady' (morphDataReady) {
@@ -137,6 +105,16 @@ export default {
     }
   },
   methods: {
+    getLookupLanguage: function() {
+      return this.showLangSelector
+        ? this.$options.lookupLanguage.currentValue
+        : this.$store.state.app.selectedLookupLangCode
+    },
+
+    toggleLangSelector: function() {
+      this.showLangSelector = true
+    },
+
     lookup: function () {
       if (this.lookuptext.length === 0) {
         return null
@@ -146,14 +124,11 @@ export default {
       If we override the language with the value selected, then the lookup language must be a current value of our `lookupLanguage` prop,
       otherwise it must be a value of panel's options `preferredLanguage` options item
        */
-
-      const selectedLangCode = this.showLangSelector
-        ? this.$options.lookupLanguage.currentValue
-        : this.app.getDefaultLangCode()
+      const selectedLangCode = this.getLookupLanguage()
       const selectedLangID = LanguageModelFactory.getLanguageIdFromCode(selectedLangCode)
       let textSelector = TextSelector.createObjectFromText(this.lookuptext, selectedLangID)
 
-      const resourceOptions = this.$options.resourceOptions
+      const resourceOptions = this.settings.getResourceOptions()
       const lemmaTranslationLang = this.app.state.lemmaTranslationLang
       let featureOptions = this.settings.getFeatureOptions()
 
@@ -165,8 +140,9 @@ export default {
       let lexQuery = LexicalQueryLookup
         .create(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples)
 
+
       // A newLexicalRequest will call app.updateLanguage(languageID)
-      this.app.newLexicalRequest(this.lookuptext, selectedLangID)
+      this.app.newLexicalRequest(this.lookuptext, selectedLangID, null, 'lookup')
       lexQuery.getData()
       // Notify parent that the lookup has been started so that the parent can close itself if necessary
       this.$emit('lookup-started')
@@ -188,11 +164,6 @@ export default {
       this.$options.lookupLanguage.setTextValue(value)
       this.$store.commit('app/setSelectedLookupLang', this.$options.lookupLanguage.currentValue)
       this.langUpdated = Date.now()
-    },
-
-    resourceSettingChange: function (name, value) {
-      let keyinfo = Options.parseKey(name)
-      this.settings.lookupResourceOptions.items[keyinfo.name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
     }
   }
 }
@@ -224,6 +195,16 @@ export default {
       .alpheios-setting__control {
         width: textsize(120px);
       }
+    }
+  }
+
+  .alpheios-lookup__lang-hint {
+    font-size: uisize(12px);
+  }
+  span.alpheios-lookup__lang-change {
+    color: var(--alpheios-lookup-link-color);
+    &:hover {
+      color: var(--alpheios-lookup-link-color-hover);
     }
   }
 
@@ -272,15 +253,6 @@ export default {
         color: var(--alpheios-lookup-button-color-hover);
         border-color: var(--alpheios-lookup-button-border-color-hover);
       }
-    }
-  }
-
-  .alpheios-lookup__resource-control {
-    display: flex;
-    flex-direction: column;
-
-    .alpheios-setting__control {
-      width: 100%;
     }
   }
 

@@ -246,19 +246,19 @@ export default {
   }
 
   .alpheios-action-panel.alpheios-action-panel--lookup-visible {
-    height: 130px;
-    width: 300px;
+    height: ui-size(190px);
+    width: ui-size(300px);
   }
 
   .alpheios-action-panel.alpheios-action-panel--nav-visible {
-    height: 100px;
-    width: 280px;
+    height: ui-size(100px);
+    width: ui-size(280px);
   }
 
 
   .alpheios-action-panel.alpheios-action-panel--lookup-visible.alpheios-action-panel--nav-visible {
-    height: 210px;
-    width: 300px;
+    height: ui-size(270px);
+    width: ui-size(300px);
   }
 
   .alpheios-action-panel__close-icon-span {
@@ -285,7 +285,7 @@ export default {
   }
 
   .alpheios-action-panel__lookup-cont {
-    height: 90px;
+    height: ui-size(90px);
     position: relative;
   }
 
@@ -299,11 +299,11 @@ export default {
   .alpheios-action-panel__progress-bar {
     position: absolute;
     left: 0;
-    top: 70px;
+    top: ui-size(70px);
     width: 100%;
 
     & .alpheios-popup-lexdataloading__progress-inner {
-      height: 16px;
+      height: ui-size(16px);
       border-color: var(--alpheios-compact-popup-progress-bar-line);
     }
 

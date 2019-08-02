@@ -1,6 +1,6 @@
 {
   "name": "alpheios-components",
-  "version": "1.2.16",
+  "version": "1.2.17",
   "description": "Alpheios Components",
   "main": "dist/alpheios-components.min.js",
   "module": "src/plugin.js",
@@ -8,7 +8,7 @@
     "test": "npm run lint && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-lib": "npm run lint && jest tests/lib --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-components": "npm run lint && jest tests/vue --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-c": "npm run lint && jest tests/vue/components/word-usage-examples/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "test-c": "npm run lint && jest tests/vue/components/lookup.test --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test-a": "npm run lint && jest tests/lib/options/* --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test-s": "npm run lint && AUTH_TOKEN=alpheiosMockUserIdlP0DWnmNxe ENDPOINT='https://8wkx9pxc55.execute-api.us-east-2.amazonaws.com/prod/settings' jest tests/lib/options --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "build": "npm run build-safari && npm run build-regular",

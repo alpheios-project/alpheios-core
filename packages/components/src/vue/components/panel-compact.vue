@@ -175,12 +175,6 @@
           v-show="$store.getters['ui/isActiveTab']('definitions')"
           data-alpheios-ignore="all"
       >
-        <div class="alpheios-lookup__panel" :class="{ 'alpheios-landscape': isLandscape }">
-          <lookup
-              :name-base="`panel-defs`"
-              :show-results-in="`panel`"
-          />
-        </div>
         <div v-if="$store.getters['app/defDataReady']">
           <div :key="definition.ID"
                class="alpheios-panel__contentitem"
@@ -294,7 +288,6 @@ import Grammar from './grammar.vue'
 import Morph from './morph.vue'
 import Treebank from './treebank.vue'
 import InflectionBrowser from './inflections-browser.vue'
-import Lookup from './lookup.vue'
 
 import UserAuth from './user-auth.vue'
 import WordUsageExamples from '@/vue/components/word-usage-examples/word-usage-examples.vue'
@@ -350,12 +343,9 @@ export default {
     treebank: Treebank,
     userAuth: UserAuth,
     closeIcon: CloseIcon,
-    lookup: Lookup,
-    
     wordListPanel: WordListPanel,
     wordUsageExamples: WordUsageExamples,
     optionsPanel: OptionsPanel,
-
     upIcon: UpIcon,
     downIcon: DownIcon,
     leftIcon: LeftIcon,
@@ -440,7 +430,7 @@ export default {
       return classes
     },
 
-    
+
 
     componentStyles: function () {
       return {
@@ -784,12 +774,6 @@ export default {
 
   .alpheios-panel__title {
     text-transform: capitalize;
-  }
-
-  .alpheios-lookup__panel {
-    display: block;
-    border-bottom: 1px solid;
-    margin-bottom: 20px;
   }
 
   .alpheios-panel__tab-panel {

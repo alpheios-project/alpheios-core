@@ -307,6 +307,12 @@
     "component": "UI",
     "params": ["languageName"]
   },
+  "TEXT_NOTICE_NOT_FOUND": {
+    "message": "'{targetWord}' was not found in our {languageName} resources.",
+    "description": "language notification",
+    "component": "UI",
+    "params": ["targetWord", "languageName"]
+  },
   "TEXT_NOTICE_LANGUAGE_UNKNOWN": {
     "message": "unknown",
     "description": "unknown language notification",
@@ -432,6 +438,17 @@
   "LABEL_LOOKUP_BUTTON": {
     "message": "Lookup",
     "description": "lookup button in lookup.vue",
+    "component": "Popup"
+  },
+  "HINT_LOOKUP_LANGUAGE": {
+    "message": "(as {language})",
+    "description": "lookup language hint in lookup.vue",
+    "component": "Popup",
+    "params": ["language"]
+  },
+  "LABEL_LOOKUP_CHANGE_LANGUAGE": {
+    "message": "Change Language",
+    "description": "change language link label in lookup.vue",
     "component": "Popup"
   },
   "TOOLTIP_LOOKUP_BUTTON": {

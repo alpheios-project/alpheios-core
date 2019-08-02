@@ -58,7 +58,6 @@ export default {
   mixins: [DependencyCheck],
   computed: {
     defaultLanguage () {
-      console.log("DEF",this.app.getLanguageName(this.app.getDefaultLangCode()).name)
       return this.app.getLanguageName(this.app.getDefaultLangCode()).name
     }
   }
