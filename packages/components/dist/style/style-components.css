@@ -2926,7 +2926,8 @@ p.alpheios-word-usage-filter-title {
   fill: var(--alpheios-word-list-delete-item-color);
   stroke: var(--alpheios-word-list-delete-item-color);
 }
-.alpheios-wordlist-delete-all-confirmation {
+.alpheios-wordlist-delete-all-confirmation,
+.alpheios-wordlist-download-confirmation {
   margin-top: 10px;
 }
 /*

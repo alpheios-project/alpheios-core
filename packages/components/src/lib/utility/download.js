@@ -17,7 +17,7 @@ export default class Download {
 
     a.href = url
     a.download = filename || 'download'
-    document.body.appendChild(a)
+    document.getElementById('alpheios-panel-inner').appendChild(a)
     a.click()
     a.remove()
     return true

@@ -21,12 +21,13 @@
             </div>
             </alph-tooltip>
             <alph-tooltip tooltipDirection="top-left" :tooltipText="l10n.getText('WORDLIST_TOOLTIP_DOWNLOAD', { lang: languageCode })">
-            <div class="alpheios-wordlist-commands__item alpheios-wordlist-commands__item-download" @click="downloadList()">
+            <div class="alpheios-wordlist-commands__item alpheios-wordlist-commands__item-download" @click="showDownloadList()">
                 <download-icon></download-icon>
             </div>
             </alph-tooltip>
         </div>
 
+        <!-- delete all confirmation -->
         <div class="alpheios-wordlist-delete-all-confirmation alpheios-notification-area__notification alpheios-notification-area__notification--important" v-show="showDeleteAllBox">
           <div class="alpheios-notification-area__msg">{{l10n.getText('WORDLIST_DELETE_CONFIRM_MESSAGE')}}</div>
 
@@ -44,6 +45,28 @@
             <close-icon/>
           </div>
         </div>
+        <!-- end delete all confirmation -->
+
+        <!-- download confirmation -->
+        <div class="alpheios-wordlist-download-confirmation alpheios-notification-area__notification alpheios-notification-area__notification--important" 
+             v-show="showDownloadBox">
+          <div class="alpheios-notification-area__msg">{{ l10n.getText('WORDLIST_DOWNLOAD_NOTICE') }}</div>
+
+          <div class="alpheios-wordlist-download-confirmation__buttons alpheios-notification-area__control">
+            <alph-tooltip :tooltipText="l10n.getText('WORDLIST_TOOLTIP_DOWNLOAD', { lang: languageCode })" tooltipDirection="bottom-wide">
+              <button @click="downloadList()" class="alpheios-button-primary">
+                {{ l10n.getText('WORDLIST_DOWNLOAD_BUTTON') }}
+              </button>
+            </alph-tooltip>
+          </div>
+          <div
+              class="alpheios-notification-area__close-btn"
+              @click="cancelDownloadList()"
+          >
+            <close-icon/>
+          </div>
+        </div>
+        <!-- end download confirmation -->
 
         <div class="alpheios-wordlist-filter-panel">
           <word-filter-panel
@@ -111,6 +134,7 @@ export default {
     return {
       reloadList: 1,
       showDeleteAllBox: false,
+      showDownloadBox: false,
       selectedFilterBy: null,
       textInput: null,
       clickedLemma: null,
@@ -185,6 +209,9 @@ export default {
     showDeleteAll () {
       this.showDeleteAllBox = true
     },
+    showDownloadList () {
+      this.showDownloadBox = true
+    },
     async makeAllImportant () {
       await this.app.updateAllImportant(this.languageCode, true)
       this.$emit('eventChangeImportant')
@@ -207,6 +234,9 @@ export default {
     },
     cancelDeleteAll () {
       this.showDeleteAllBox = false
+    },
+    cancelDownloadList () {
+      this.showDownloadBox = false
     },
     showContexts (targetWord) {
       this.$emit('showContexts', targetWord, this.languageCode)
@@ -254,6 +284,7 @@ export default {
       })
       const result = Download.collectionToCSV(';', exportFields)(wordlistData)
       Download.downloadBlob(result, `wordlist-${this.languageCode}.csv`)
+      this.showDownloadBox = false
     }
   }
 }
@@ -300,7 +331,8 @@ export default {
       stroke: var(--alpheios-word-list-delete-item-color);
     }
 
-    .alpheios-wordlist-delete-all-confirmation {
+    .alpheios-wordlist-delete-all-confirmation,
+    .alpheios-wordlist-download-confirmation {
       margin-top: 10px;
     }
 </style>

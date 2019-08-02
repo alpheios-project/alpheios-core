@@ -7,7 +7,7 @@
       data-resizable="true"
       :data-resized="resized"
       id="alpheios-panel-inner"
-      v-on-clickaway="closePanel"
+      v-on-clickaway="ui.closePanel"
       v-show="$store.state.panel.visible"
   >
 
