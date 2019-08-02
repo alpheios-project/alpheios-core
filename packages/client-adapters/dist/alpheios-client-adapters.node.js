@@ -9097,8 +9097,9 @@ class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
       if (deftexts) {
         for (let d of deftexts) {
           try {
+            let provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](config.urls.short, config.rights)
             let def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](d, config.langs.target, 'text/plain', lexeme.lemma.word)
-            let definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(this.provider, def)
+            let definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, def)
             lexeme.meaning['appendShortDefs'](definition)
           } catch (error) {
             this.addError(this.l10n.messages['LEXICONS_FAILED_APPEND_DEFS'].get(error.message))
@@ -9161,8 +9162,9 @@ class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
             this.addError(this.l10n.messages['LEXICONS_FAILED_CACHED_DATA'].get(error))
             this.prepareFailedCallback('fullDefs', homonym)
           } else {
+            let provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](config.urls.full, config.rights)
             let def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
-            let definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(this.provider, def)
+            let definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, def)
             request.lexeme.meaning['appendFullDefs'](definition)
             this.prepareSuccessCallback('fullDefs', homonym)
           }

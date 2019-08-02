@@ -296,6 +296,7 @@ describe('lexicons/adapter.test.js', () => {
       expect(adapter.lookupInDataIndex).toHaveBeenCalledWith(cachedDefinitions.get(testURL), lexeme.lemma, model)
       let deftexts = adapter.lookupInDataIndex(data, lexeme.lemma, model)
       expect(lexeme.meaning.shortDefs[0].text).toEqual(deftexts[0])
+      expect(lexeme.meaning.shortDefs[0].provider.toString()).toEqual(expect.stringContaining('Liddell'))
     }
   }, 20000)
 

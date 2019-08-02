@@ -177,8 +177,9 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
       if (deftexts) {
         for (let d of deftexts) {
           try {
+            let provider = new ResourceProvider(config.urls.short, config.rights)
             let def = new Definition(d, config.langs.target, 'text/plain', lexeme.lemma.word)
-            let definition = await ResourceProvider.getProxy(this.provider, def)
+            let definition = await ResourceProvider.getProxy(provider, def)
             lexeme.meaning['appendShortDefs'](definition)
           } catch (error) {
             this.addError(this.l10n.messages['LEXICONS_FAILED_APPEND_DEFS'].get(error.message))
@@ -241,8 +242,9 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
             this.addError(this.l10n.messages['LEXICONS_FAILED_CACHED_DATA'].get(error))
             this.prepareFailedCallback('fullDefs', homonym)
           } else {
+            let provider = new ResourceProvider(config.urls.full, config.rights)
             let def = new Definition(fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
-            let definition = await ResourceProvider.getProxy(this.provider, def)
+            let definition = await ResourceProvider.getProxy(provider, def)
             request.lexeme.meaning['appendFullDefs'](definition)
             this.prepareSuccessCallback('fullDefs', homonym)
           }
