@@ -3102,6 +3102,10 @@ p.alpheios-word-usage-filter-title {
   background: var(--alpheios-desktop-panel-icon-bg-active) !important;
   color: var(--alpheios-desktop-panel-icon-color-active) !important;
 }
+.alpheios-tab-options-switch--item span.alpheios-tab-options-switch--item__smaller {
+  font-size: 80% !important;
+  color: inherit !important;
+}
 .alpheios-tab-options-reset-all-block {
   border-top: 1px solid !important;
   display: flex;

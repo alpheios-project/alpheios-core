@@ -608,7 +608,7 @@
     "component": "Options Tab"
   },
   "OPTIONS_TAB_RESET_ALL_TITLE": {
-    "message": "Apply to all options - U, F, R",
+    "message": "Applies to all options",
     "description": "Reset All description title",
     "component": "Options Tab"
   }

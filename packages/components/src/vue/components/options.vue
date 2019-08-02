@@ -2,13 +2,13 @@
   <div data-alpheios-ignore="all">
     <div class="alpheios-tab-options-switch">
         <alph-tooltip :tooltipText="l10n.getText('OPTIONS_TAB_UI')" tooltipDirection="bottom-left">
-          <div class="alpheios-tab-options-switch--item" :class="{ 'alpheios-active': currentTab === 1 }" @click="currentTab = 1">U</div>
+          <div class="alpheios-tab-options-switch--item" :class="{ 'alpheios-active': currentTab === 1 }" @click="currentTab = 1">UI</div>
         </alph-tooltip>
         <alph-tooltip :tooltipText="l10n.getText('OPTIONS_TAB_FEATURE')" tooltipDirection="bottom-left">
-          <div class="alpheios-tab-options-switch--item" :class="{ 'alpheios-active': currentTab === 2 }" @click="currentTab = 2">F</div>
+          <div class="alpheios-tab-options-switch--item" :class="{ 'alpheios-active': currentTab === 2 }" @click="currentTab = 2">F<span class="alpheios-tab-options-switch--item__smaller">eature</span></div>
         </alph-tooltip>
         <alph-tooltip :tooltipText="l10n.getText('OPTIONS_TAB_RESOURCE')" tooltipDirection="bottom-left">
-          <div class="alpheios-tab-options-switch--item" :class="{ 'alpheios-active': currentTab === 3 }" @click="currentTab = 3">R</div>
+          <div class="alpheios-tab-options-switch--item" :class="{ 'alpheios-active': currentTab === 3 }" @click="currentTab = 3">R<span class="alpheios-tab-options-switch--item__smaller">easource</span></div>
         </alph-tooltip>
     </div>
 
@@ -95,6 +95,11 @@
         &.alpheios-active {
             background: var(--alpheios-desktop-panel-icon-bg-active);
             color: var(--alpheios-desktop-panel-icon-color-active);
+        }
+
+        span.alpheios-tab-options-switch--item__smaller {
+          font-size: 80%;
+          color: inherit;
         }
     }
 
