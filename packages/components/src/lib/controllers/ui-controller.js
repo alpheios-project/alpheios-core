@@ -1771,7 +1771,13 @@ export default class UIController {
    * @param {string | value} value - A new value of an options.
    */
   resourceSettingChange (name, value) {
-    this.api.settings.getResourceOptions().items[name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
+    // grouped setting are referenced under Options object
+    // by the parsed name but each individual setting in a group is referenced
+    // by its fullname (with version and groupname appended)
+    // multivalued settings are handled in the Options.setTextValue method which can take
+    // an array or an individual text value
+    let baseKey = Options.parseKey(name)
+    this.api.settings.getResourceOptions().items[baseKey.name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
   }
 
   registerGetSelectedText (listenerName, selector) {

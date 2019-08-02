@@ -30600,8 +30600,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     resourceSettingChanged: function (name, value) {
-      let keyinfo = _lib_options_options_js__WEBPACK_IMPORTED_MODULE_1__["default"].parseKey(name)
-      this.language.resourceSettingChange(keyinfo.name, value)
+      // we have to send the full name here and parse it where we set it
+      // because grouped setting are referenced under Options object
+      // by the parsed name but each individual setting in a group is referenced
+      // by its fullname (with version and groupname appended)
+      this.language.resourceSettingChange(name, value)
     }
   }
 });
@@ -55115,7 +55118,13 @@ class UIController {
    * @param {string | value} value - A new value of an options.
    */
   resourceSettingChange (name, value) {
-    this.api.settings.getResourceOptions().items[name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
+    // grouped setting are referenced under Options object
+    // by the parsed name but each individual setting in a group is referenced
+    // by its fullname (with version and groupname appended)
+    // multivalued settings are handled in the Options.setTextValue method which can take
+    // an array or an individual text value
+    let baseKey = _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"].parseKey(name)
+    this.api.settings.getResourceOptions().items[baseKey.name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
   }
 
   registerGetSelectedText (listenerName, selector) {

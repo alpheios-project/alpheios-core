@@ -50,8 +50,11 @@
     },
     methods: {
       resourceSettingChanged: function (name, value) {
-        let keyinfo = Options.parseKey(name)
-        this.language.resourceSettingChange(keyinfo.name, value)
+        // we have to send the full name here and parse it where we set it
+        // because grouped setting are referenced under Options object
+        // by the parsed name but each individual setting in a group is referenced
+        // by its fullname (with version and groupname appended)
+        this.language.resourceSettingChange(name, value)
       }
     }
   }
