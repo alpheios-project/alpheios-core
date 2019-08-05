@@ -426,12 +426,12 @@
     "component": "UI"
   },
   "LABEL_TOOLS_CONTROL": {
-    "message": "Show/Hide Reading Tools",
+    "message": "Reading Tools",
     "description": "A tooltip for the reading tools icon on the toolbar",
     "component": "Toolbar"
   },
   "LABEL_LOOKUP_CONTROL": {
-    "message": "Show/Hide lookup",
+    "message": "Word Lookup",
     "description": "A tooltip for the button that turns the lookup panel on and off",
     "component": "Toolbar"
   },
@@ -441,7 +441,7 @@
     "component": "Popup"
   },
   "HINT_LOOKUP_LANGUAGE": {
-    "message": "(as {language})",
+    "message": "({language})",
     "description": "lookup language hint in lookup.vue",
     "component": "Popup",
     "params": ["language"]
@@ -608,7 +608,7 @@
     "component": "Options Tab"
   },
   "OPTIONS_TAB_RESET_ALL_TITLE": {
-    "message": "Applies to all options",
+    "message": "Apply to all options",
     "description": "Reset All description title",
     "component": "Options Tab"
   }

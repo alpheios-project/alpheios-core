@@ -8,7 +8,7 @@
           <div class="alpheios-tab-options-switch--item" :class="{ 'alpheios-active': currentTab === 2 }" @click="currentTab = 2">F<span class="alpheios-tab-options-switch--item__smaller">eature</span></div>
         </alph-tooltip>
         <alph-tooltip :tooltipText="l10n.getText('OPTIONS_TAB_RESOURCE')" tooltipDirection="bottom-left">
-          <div class="alpheios-tab-options-switch--item" :class="{ 'alpheios-active': currentTab === 3 }" @click="currentTab = 3">R<span class="alpheios-tab-options-switch--item__smaller">easource</span></div>
+          <div class="alpheios-tab-options-switch--item" :class="{ 'alpheios-active': currentTab === 3 }" @click="currentTab = 3">R<span class="alpheios-tab-options-switch--item__smaller">esource</span></div>
         </alph-tooltip>
     </div>
 
@@ -20,7 +20,7 @@
             class="alpheios-button-primary">{{l10n.getText('LABEL_RESET_OPTIONS')}}
         </button>
         <p class="alpheios-tab-options-reset-all-block--title">({{l10n.getText('OPTIONS_TAB_RESET_ALL_TITLE')}})</p>
-        
+
     </div>
   </div>
 </template>
@@ -73,7 +73,7 @@
         margin-bottom: textsize(15px);
         text-align: right;
     }
-    
+
     $iconSize: 20px;
 
     .alpheios-tab-options-switch--item {

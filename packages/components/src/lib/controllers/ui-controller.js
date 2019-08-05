@@ -1402,8 +1402,8 @@ export default class UIController {
       HTMLSelector conveys page-specific information, such as location of a selection on a page.
       It's probably better to keep them separated in order to follow a more abstract model.
        */
-      let currentLangCode = LanguageModelFactory.getLanguageCodeFromId(this.store.state.app.currentLanguageID)
-      let htmlSelector = new HTMLSelector(event, currentLangCode)
+      let defaultLangCode = this.getDefaultLangCode()
+      let htmlSelector = new HTMLSelector(event, defaultLangCode)
       this.store.commit('app/setHtmlSelector', htmlSelector)
       let textSelector = htmlSelector.createTextSelector()
 
