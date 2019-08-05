@@ -1188,7 +1188,7 @@ export default class UIController {
     this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
     this.updateLanguage(languageID)
     this.updateWordAnnotationData(data)
-    this.store.commit('app/lexicalRequestStarted', { targetWord:targetWord, source:source })
+    this.store.commit('app/lexicalRequestStarted', { targetWord: targetWord, source: source })
     return this
   }
 
@@ -1652,7 +1652,7 @@ export default class UIController {
       homonym = wordItem.homonym
     }
 
-    if (homonym.lexemes.length > 0 && homonym.lexemes.filter(l => l.isPopulated()).length === homonym.lexemes.length) {
+    if (homonym && homonym.lexemes && homonym.lexemes.length > 0 && homonym.lexemes.filter(l => l.isPopulated()).length === homonym.lexemes.length) {
       // if we were able to retrieve full homonym data then we can just display it
       this.onHomonymReady(homonym)
       this.updateDefinitions(homonym)
