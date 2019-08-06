@@ -7,6 +7,7 @@ export default class LexicalQuery extends Query {
   constructor (name, selector, options) {
     super(name)
     this.selector = selector
+    this.clientId = options.clientId
     this.langData = options.langData
     this.langOpts = options.langOpts || []
     this.resourceOptions = options.resourceOptions || []
@@ -49,6 +50,7 @@ export default class LexicalQuery extends Query {
 
         let adapterConcordanceRes = await ClientAdapters.wordusageExamples.concordance({
           method: 'getWordUsageExamples',
+          clientId: this.clientId,
           params: { homonym: homonym,
             pagination: paginationParams,
             filters: {
@@ -114,6 +116,7 @@ export default class LexicalQuery extends Query {
     if (this.selector.data.treebank && this.selector.data.treebank.word) {
       let adapterTreebankRes = yield ClientAdapters.morphology.alpheiosTreebank({
         method: 'getHomonym',
+        clientId: this.clientId,
         params: {
           languageID: this.selector.languageID,
           wordref: this.selector.data.treebank.word.ref
@@ -132,6 +135,7 @@ export default class LexicalQuery extends Query {
       // if we can't reset, proceed with full lookup sequence
       let adapterTuftsRes = yield ClientAdapters.morphology.tufts({
         method: 'getHomonym',
+        clientId: this.clientId,
         params: {
           languageID: this.selector.languageID,
           word: this.selector.normalizedText
@@ -188,6 +192,7 @@ export default class LexicalQuery extends Query {
     if (this.lemmaTranslations) {
       let adapterTranslationRes = yield ClientAdapters.lemmatranslation.alpheios({
         method: 'fetchTranslations',
+        clientId: this.clientId,
         params: {
           homonym: this.homonym,
           browserLang: this.lemmaTranslations.locale
@@ -208,6 +213,7 @@ export default class LexicalQuery extends Query {
       // directly with the usage examples display
       let adapterConcordanceRes = yield ClientAdapters.wordusageExamples.concordance({
         method: 'getWordUsageExamples',
+        clientId: this.clientId,
         params: { homonym: this.homonym,
           pagination: {
             property: 'authmax',
@@ -227,6 +233,7 @@ export default class LexicalQuery extends Query {
 
     let adapterLexiconResShort = yield ClientAdapters.lexicon.alpheios({
       method: 'fetchShortDefs',
+      clientId: this.clientId,
       params: {
         opts: lexiconShortOpts,
         homonym: this.homonym,
@@ -241,6 +248,7 @@ export default class LexicalQuery extends Query {
 
     let adapterLexiconResFull = yield ClientAdapters.lexicon.alpheios({
       method: 'fetchFullDefs',
+      clientId: this.clientId,
       params: {
         opts: lexiconFullOpts,
         homonym: this.homonym,

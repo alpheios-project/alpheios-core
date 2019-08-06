@@ -212,16 +212,10 @@ export default class UIController {
    *          {string} version - A version of an application.
    *     {Object} storageAdapter - A storage adapter for storing options (see `lib/options`). Is environment dependent.
    *     {boolean} openPanel - whether to open panel when UI controller is activated. Default: panelOnActivate of uiOptions.
-   *     {string} textQueryTrigger - what event will start a lexical query on a selected text. Possible values are
-   *     (see custom pointer events library for more details):
-   *         'dblClick' - MouseDblClick pointer event will be used;
-   *         'longTap' - LongTap pointer event will be used;
-   *         genericEvt - if trigger name other than above specified, it will be treated as a GenericEvt pointer event
-   *             with the name of the event being the value of this filed;
-   *             This name will be passed to the GenericEvt pointer event object;
-   *         'none' - do not register any trigger. This will allow a UIController owner to
-   *         register its own custom trigger and listener.
-   *         Default value: 'dblClick'.
+   *     {string} textQueryTriggerDesktop - what event will start a lexical query on a selected text on the desktop. If null,
+                                            the default 'dblClick' will be used.
+   *     {string} textQueryTriggerMobile - what event will start a lexical query on a selected text on mobile devices.  if null,
+   *                                       the default 'longTap' pointer event will be used.
    *     {string} textQuerySelector - an area(s) on a page where a trigger event will start a lexical query. This is
    *     a standard CSS selector. Default value: 'body'.
    *     {Object} template - object w ith the following properties:
@@ -234,9 +228,11 @@ export default class UIController {
         version: 'version'
       },
       mode: 'production', // Controls options available and output. Other possible values: `development`
+      clientId: 'alpheios-components',
       storageAdapter: LocalStorage,
       openPanel: true,
-      textQueryTrigger: 'dblClick',
+      textQueryTriggerMobile: 'longTap',
+      textQueryTriggerDesktop: 'dblClick',
       textQuerySelector: 'body',
       enableLemmaTranslations: false,
       irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size',
@@ -254,7 +250,9 @@ export default class UIController {
        */
       textLangCode: null,
       // If set to true, will use the `textLangCode` over the `preferredLanguage`
-      overridePreferredLanguage: false
+      overridePreferredLanguage: false,
+      // a callback to execute before the word selection handler
+      triggerPreCallback: null
     }
   }
 
@@ -424,6 +422,7 @@ export default class UIController {
     this.api.app = {
       name: this.options.app.name, // A name of a host application (embed lib or webextension)
       version: this.options.app.version, // An version of a host application (embed lib or webextension)
+      clientId: this.options.clientId, // alpheios api client identifier
       libName: UIController.libName, // A name of the components library
       libVersion: UIController.libVersion, // A version of the components library
       platform: this.platform,
@@ -1418,8 +1417,10 @@ export default class UIController {
     }
   }
 
-  getSelectedText (event) {
-    if (this.state.isActive() && this.state.uiIsActive()) {
+  getSelectedText (event, domEvent) {
+    if (this.state.isActive() &&
+        this.state.uiIsActive() &&
+        (! this.options.triggerPreCallback || this.options.triggerPreCallback(domEvent)) ) {
       // Open the UI immediately to reduce visual delays
       this.open()
       /*
@@ -1456,6 +1457,7 @@ export default class UIController {
 
         let lexQuery = LexicalQuery.create(textSelector, {
           htmlSelector: htmlSelector,
+          clientId: this.api.app.clientId,
           resourceOptions: this.api.settings.getResourceOptions(),
           siteOptions: [],
           lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { locale: this.featureOptions.items.locale.currentValue } : null,
@@ -1687,7 +1689,7 @@ export default class UIController {
       // otherwise we can query for it as usual
       let textSelector = TextSelector.createObjectFromText(homonym.targetWord, homonym.languageID)
       let wordUsageExamples = this.getWordUsageExamplesQueryParams(textSelector)
-      let lexQuery = LexicalQueryLookup.create(textSelector, this.resourceOptions, this.state.lemmaTranslationLang, wordUsageExamples)
+      let lexQuery = LexicalQueryLookup.create(textSelector, this.resourceOptions, this.state.lemmaTranslationLang, wordUsageExamples, this.api.app.clientId)
       lexQuery.getData()
     }
   }
@@ -1827,28 +1829,41 @@ export default class UIController {
 
   registerGetSelectedText (listenerName, selector) {
     let ev
+    let customEv
     if (this.platform.isMobile) {
-      ev = LongTap
+      switch (this.options.textQueryTriggerMobile) {
+        case 'longTap':
+          ev = LongTap
+          break
+        case 'longtap':
+          ev = LongTap
+          break
+        case null:
+          ev = LongTap
+          break
+        default:
+          customEv = this.options.textQueryTriggerMobile
+      }
     } else {
-      switch (this.options.textQueryTrigger) {
+      switch (this.options.textQueryTriggerDesktop) {
         case 'dblClick':
           ev = MouseDblClick
           break
         case 'dblclick':
           ev = MouseDblClick
           break
-        case 'longTap':
-          ev = LongTap
+        case null:
+          ev = MouseDblClick
           break
         default:
-          ev = null
+          customEv = this.options.textQueryTriggerDesktop
       }
     }
     if (ev) {
       this.evc.registerListener(listenerName, selector, this.getSelectedText.bind(this), ev)
     } else {
       this.evc.registerListener(
-        listenerName, selector, this.getSelectedText.bind(this), GenericEvt, this.options.textQueryTrigger)
+        listenerName, selector, this.getSelectedText.bind(this), GenericEvt, customEv)
     }
   }
 

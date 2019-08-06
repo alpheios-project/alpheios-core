@@ -7,7 +7,7 @@ describe('generic-evt.test.js', () => {
   // console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
-  
+
   beforeEach(() => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
@@ -36,10 +36,10 @@ describe('generic-evt.test.js', () => {
     let testElement = document.createElement("div")
     let node = document.createTextNode("Test new div")
     testElement.appendChild(node)
-    
+
     expect(GenericEvt.excludeCpeTest(testElement.dataset)).toBeFalsy()
     testElement.setAttribute('data-alph-exclude-generic-evt-cpe', 'yes')
-    
+
     expect(GenericEvt.excludeCpeTest(testElement.dataset)).toBeTruthy()
   })
 
@@ -47,7 +47,7 @@ describe('generic-evt.test.js', () => {
     let testElement = document.createElement("div")
     let eventEl = new GenericEvt(testElement, 'fooEvtHandler', 'fooEvtType')
 
-    let res = eventEl.setEndPoint(10, 20, testElement)  
+    let res = eventEl.setEndPoint(10, 20, testElement)
 
     expect(eventEl.end).toBeDefined()
     expect(res).toBeTruthy()
@@ -65,7 +65,7 @@ describe('generic-evt.test.js', () => {
 
     let eventEl = new GenericEvt(testElement, 'fooEvtHandler', 'fooEvtType')
 
-    let res = eventEl.setEndPoint(10, 20, testElement)  
+    let res = eventEl.setEndPoint(10, 20, testElement)
 
     expect(eventEl.end).toBeDefined()
     expect(res).toBeFalsy()
@@ -82,7 +82,7 @@ describe('generic-evt.test.js', () => {
 
     let eventEl = new GenericEvt(testElement, evtHandler, 'fooEvtType')
 
-    let domEvt = { clientX: 10, clientY: 120, target: testElement }
+    let domEvt = { clientX: 10, clientY: 120, target: testElement, stopPropagation: jest.fn(() => {}) }
     jest.spyOn(eventEl, 'setStartPoint')
     jest.spyOn(eventEl, 'setEndPoint')
 

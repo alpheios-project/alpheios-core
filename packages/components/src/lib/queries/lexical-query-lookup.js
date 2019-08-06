@@ -14,9 +14,10 @@ export default class LexicalQueryLookup extends LexicalQuery {
    * @param {TextSelector} textSelector - text selector containing the word for getting data from adapters and showing in the popup/panel
    * @param resourceOptions
    * @param {symbol} lemmaTranslationLang - A language ID, such as Constants.LANG_LATIN.
+   * @param {String} clientId - api client identifier
    */
 
-  static create (textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples) {
+  static create (textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, clientId) {
     // Check to see if Lemma Translations should be enabled for a query
     // Experimental
     let lemmaTranslations
@@ -25,6 +26,8 @@ export default class LexicalQueryLookup extends LexicalQuery {
     }
     let options = {
       htmlSelector: HTMLSelector.getDumpHTMLSelector(),
+
+      clientId: clientId,
 
       lemmaTranslations: lemmaTranslations,
 

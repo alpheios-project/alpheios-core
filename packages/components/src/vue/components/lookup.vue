@@ -138,7 +138,7 @@ export default {
         : null
 
       let lexQuery = LexicalQueryLookup
-        .create(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples)
+        .create(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, this.app.clientId)
 
 
       // A newLexicalRequest will call app.updateLanguage(languageID)
