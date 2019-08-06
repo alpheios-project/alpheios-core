@@ -110,4 +110,16 @@ describe('tufts/adapter.test.js', () => {
     let res = adapter.prepareRequestUrl(Constants.LANG_LATIN, 'placito')
     expect(res).toEqual(expect.stringMatching(/morph.alpheios.net\/api/))
   })
+
+  it('8 AlpheiosTuftsAdapter - prepareRequestUrl adds clientId to url', async () => {
+    let adapter = new AlpheiosTuftsAdapter({
+      category: 'morphology',
+      adapterName: 'tufts',
+      method: 'getHomonym',
+      clientId: 'abcdef'
+    })
+
+    let res = adapter.prepareRequestUrl(Constants.LANG_LATIN, 'placito')
+    expect(res).toEqual(expect.stringMatching(/&clientId=abcdef$/))
+  })
 })

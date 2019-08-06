@@ -10472,7 +10472,8 @@ class ClientAdapters {
     let localMaAdapter = new _adapters_tufts_adapter__WEBPACK_IMPORTED_MODULE_0__["default"]({
       category: 'morphology',
       adapterName: 'tufts',
-      method: options.method
+      method: options.method,
+      clientId: options.clientId
     })
 
     if (options.method === 'getHomonym') {
@@ -10500,7 +10501,8 @@ class ClientAdapters {
     let localTbAdapter = new _adapters_alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_1__["default"]({
       category: 'morphology',
       adapterName: 'alpheiosTreebank',
-      method: options.method
+      method: options.method,
+      clientId: options.clientId
     })
     if (options.method === 'getHomonym') {
       let homonym = await localTbAdapter.getHomonym(options.params.languageID, options.params.wordref)
@@ -10526,7 +10528,8 @@ class ClientAdapters {
     let localLemmasAdapter = new _adapters_translations_adapter__WEBPACK_IMPORTED_MODULE_2__["default"]({
       category: 'lemmatranslation',
       adapterName: 'alpheios',
-      method: options.method
+      method: options.method,
+      clientId: options.clientId
     })
 
     if (options.method === 'fetchTranslations') {
@@ -10542,7 +10545,8 @@ class ClientAdapters {
     let localLemmasAdapter = new _adapters_concordance_adapter__WEBPACK_IMPORTED_MODULE_4__["default"]({
       category: 'wordUsage',
       adapterName: 'concordance',
-      method: options.method
+      method: options.method,
+      clientId: options.clientId
     })
 
     if (options.method === 'getAuthorsWorks') {
@@ -10578,6 +10582,7 @@ class ClientAdapters {
       category: 'lexicon',
       adapterName: 'alpheios',
       method: options.method,
+      clientId: options.clientId,
       timeout: options.params.timeout ? options.params.timeout : 3000,
       callBackEvtSuccess: options.params.callBackEvtSuccess,
       callBackEvtFailed: options.params.callBackEvtFailed
