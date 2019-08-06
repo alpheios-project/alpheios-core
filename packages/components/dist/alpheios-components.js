@@ -5818,7 +5818,6 @@ var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "../node_modules
 var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "../node_modules/axios/lib/helpers/parseHeaders.js");
 var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "../node_modules/axios/lib/helpers/isURLSameOrigin.js");
 var createError = __webpack_require__(/*! ../core/createError */ "../node_modules/axios/lib/core/createError.js");
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ "../node_modules/axios/lib/helpers/btoa.js");
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -5830,22 +5829,6 @@ module.exports = function xhrAdapter(config) {
     }
 
     var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if (  true &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
 
     // HTTP basic authentication
     if (config.auth) {
@@ -5860,8 +5843,8 @@ module.exports = function xhrAdapter(config) {
     request.timeout = config.timeout;
 
     // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
+    request.onreadystatechange = function handleLoad() {
+      if (!request || request.readyState !== 4) {
         return;
       }
 
@@ -5878,9 +5861,8 @@ module.exports = function xhrAdapter(config) {
       var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
       var response = {
         data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        status: request.status,
+        statusText: request.statusText,
         headers: responseHeaders,
         config: config,
         request: request
@@ -6693,54 +6675,6 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/helpers/btoa.js":
-/*!*************************************************!*\
-  !*** ../node_modules/axios/lib/helpers/btoa.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
-
-var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-
-function E() {
-  this.message = 'String contains an invalid character';
-}
-E.prototype = new Error;
-E.prototype.code = 5;
-E.prototype.name = 'InvalidCharacterError';
-
-function btoa(input) {
-  var str = String(input);
-  var output = '';
-  for (
-    // initialize result and counter
-    var block, charCode, idx = 0, map = chars;
-    // if the next str index does not exist:
-    //   change the mapping table to "="
-    //   check if d has no fractional digits
-    str.charAt(idx | 0) || (map = '=', idx % 1);
-    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
-    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
-  ) {
-    charCode = str.charCodeAt(idx += 3 / 4);
-    if (charCode > 0xFF) {
-      throw new E();
-    }
-    block = block << 8 | charCode;
-  }
-  return output;
-}
-
-module.exports = btoa;
-
-
-/***/ }),
-
 /***/ "../node_modules/axios/lib/helpers/buildURL.js":
 /*!*****************************************************!*\
   !*** ../node_modules/axios/lib/helpers/buildURL.js ***!
@@ -7155,7 +7089,7 @@ module.exports = function spread(callback) {
 
 
 var bind = __webpack_require__(/*! ./helpers/bind */ "../node_modules/axios/lib/helpers/bind.js");
-var isBuffer = __webpack_require__(/*! is-buffer */ "../node_modules/is-buffer/index.js");
+var isBuffer = __webpack_require__(/*! is-buffer */ "../node_modules/axios/node_modules/is-buffer/index.js");
 
 /*global toString:true*/
 
@@ -7459,10 +7393,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "../node_modules/is-buffer/index.js":
-/*!******************************************!*\
-  !*** ../node_modules/is-buffer/index.js ***!
-  \******************************************/
+/***/ "../node_modules/axios/node_modules/is-buffer/index.js":
+/*!*************************************************************!*\
+  !*** ../node_modules/axios/node_modules/is-buffer/index.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -7473,19 +7407,9 @@ module.exports = {
  * @license  MIT
  */
 
-// The _isBuffer check is for Safari 5-7 support, because it's missing
-// Object.prototype.constructor. Remove this eventually
-module.exports = function (obj) {
-  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
-}
-
-function isBuffer (obj) {
-  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-// For Node v0.10 support. Remove this eventually.
-function isSlowBuffer (obj) {
-  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
+module.exports = function isBuffer (obj) {
+  return obj != null && obj.constructor != null &&
+    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
 }
 
 
@@ -7737,6 +7661,7 @@ class UserDataManager {
     for (let unsub of this.subscriptions) {
       unsub()
     }
+    this.subscriptions = []
   }
 
   /**
@@ -8274,7 +8199,7 @@ class WordlistController {
       wordItem.addContext([data])
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'context'}})
       // emit a wordlist updated event too in case the wordlist was updated
-      WordlistController.evt.WORDLIST_UPDATED.pub(this.getWordList(wordItem.languageCode))
+      WordlistController.evt.WORDLIST_UPDATED.pub([this.getWordList(wordItem.languageCode)])
     } else {
       console.error("Unable to create or retrieve worditem")
     }
@@ -28860,6 +28785,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 // Embeddable SVG icons
 
@@ -28880,7 +28821,12 @@ __webpack_require__.r(__webpack_exports__);
     setting: _vue_components_setting_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     login: _vue_components_login_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-
+  data () {
+    return {
+      hintWasShownForTabs: []
+    }
+  },
+   
   computed: {
     notificationClasses: function () {
       let classes = []
@@ -28892,6 +28838,15 @@ __webpack_require__.r(__webpack_exports__);
         classes.push(`alpheios-notification-area__notification--hidden`)
       }
       return classes
+    },
+
+    showHint () {
+      let showHintForTab = !this.hintWasShownForTabs.includes(this.$store.state.ui.activeTab)
+
+      if (showHintForTab) {
+        this.hintWasShownForTabs.push(this.$store.state.ui.activeTab)
+      }
+      return this.$store.state.ui.hint.visible && showHintForTab
     },
 
     showNotification () {
@@ -38002,6 +37957,41 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "alpheios-notification-area" }, [
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.showHint,
+            expression: "showHint"
+          }
+        ],
+        staticClass: "alpheios-notification-area__hint"
+      },
+      [
+        _c("div", {
+          staticClass: "alpheios-notification-area__msg",
+          domProps: { innerHTML: _vm._s(_vm.$store.state.ui.hint.text) }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "alpheios-notification-area__close-btn",
+            on: {
+              click: function($event) {
+                return _vm.$store.commit("ui/resetHint")
+              }
+            }
+          },
+          [_c("close-icon")],
+          1
+        )
+      ]
+    ),
+    _vm._v(" "),
     _c(
       "div",
       {
@@ -54154,6 +54144,11 @@ class UIController {
           important: false,
           showLanguageSwitcher: false,
           text: null
+        },
+
+        hint: {
+          visible: false,
+          text: null
         }
       },
 
@@ -54185,6 +54180,16 @@ class UIController {
           state.notification.important = false
           state.notification.showLanguageSwitcher = false
           state.notification.text = null
+        },
+
+        setHint (state, data) {
+          state.hint.visible = true
+          state.hint.text = data
+        },
+
+        resetHint (state) {
+          state.hint.visible = false
+          state.hint.text = null
         },
 
         addMessage (state, text) {
@@ -54527,6 +54532,15 @@ class UIController {
     // This is for compatibility with watchers in webextension that track tab changes
     // and sends this into to a background script
     this.state.changeTab(tabName)
+
+    let isPortrait = this.store.state.panel && (this.store.state.panel.orientation === _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_21__["default"].orientations.PORTRAIT)
+
+    if (['treebank', 'inflections', 'inflectionsbrowser'].includes(tabName) && this.platform.isMobile && isPortrait) {
+      let message = '🛈 This view is best in landscape mode with the panel expanded to full screen'
+      this.store.commit(`ui/setHint`, message, tabName)
+    } else {
+      this.store.commit(`ui/resetHint`)
+    }
     return this
   }
 
@@ -54538,6 +54552,7 @@ class UIController {
   showPanelTab (tabName) {
     this.api.ui.changeTab(tabName)
     this.api.ui.openPanel()
+
     return this
   }
 

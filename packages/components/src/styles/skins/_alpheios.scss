@@ -275,4 +275,10 @@ html {
   --alpheios-notification-important-color: var(--alpheios-important-notification-color);
   --alpheios-notification-important-bg: rgba(198, 73, 6, 0.31);
   --alpheios-notification-important-border-color: var(--alpheios-important-notification-color);
+
+  //Hint
+
+  --alpheios-hint-color: var(--alpheios-text-color);
+  --alpheios-hint-bg: var(--alpheios-color-light);
+  --alpheios-hint-border-color: var(--alpheios-hint-color);
 }

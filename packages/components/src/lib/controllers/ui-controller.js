@@ -745,6 +745,11 @@ export default class UIController {
           important: false,
           showLanguageSwitcher: false,
           text: null
+        },
+
+        hint: {
+          visible: false,
+          text: null
         }
       },
 
@@ -776,6 +781,16 @@ export default class UIController {
           state.notification.important = false
           state.notification.showLanguageSwitcher = false
           state.notification.text = null
+        },
+
+        setHint (state, data) {
+          state.hint.visible = true
+          state.hint.text = data
+        },
+
+        resetHint (state) {
+          state.hint.visible = false
+          state.hint.text = null
         },
 
         addMessage (state, text) {
@@ -1118,6 +1133,15 @@ export default class UIController {
     // This is for compatibility with watchers in webextension that track tab changes
     // and sends this into to a background script
     this.state.changeTab(tabName)
+
+    let isPortrait = this.store.state.panel && (this.store.state.panel.orientation === Platform.orientations.PORTRAIT)
+
+    if (['treebank', 'inflections', 'inflectionsbrowser'].includes(tabName) && this.platform.isMobile && isPortrait) {
+      let message = '🛈 This view is best in landscape mode with the panel expanded to full screen'
+      this.store.commit(`ui/setHint`, message, tabName)
+    } else {
+      this.store.commit(`ui/resetHint`)
+    }
     return this
   }
 
@@ -1129,6 +1153,7 @@ export default class UIController {
   showPanelTab (tabName) {
     this.api.ui.changeTab(tabName)
     this.api.ui.openPanel()
+
     return this
   }
 

@@ -474,6 +474,9 @@ html {
   --alpheios-notification-important-color: var(--alpheios-important-notification-color);
   --alpheios-notification-important-bg: rgba(198, 73, 6, 0.31);
   --alpheios-notification-important-border-color: var(--alpheios-important-notification-color);
+  --alpheios-hint-color: var(--alpheios-text-color);
+  --alpheios-hint-bg: var(--alpheios-color-light);
+  --alpheios-hint-border-color: var(--alpheios-hint-color);
 }
 
 /*
@@ -1334,7 +1337,7 @@ select.alpheios-setting__control,
   flex: 0 0 auto;
   background: var(--alpheios-color-neutral-lightest);
 }
-.alpheios-notification-area__notification {
+.alpheios-notification-area__notification, .alpheios-notification-area__hint {
   display: flex;
   padding: calc(var(--alpheios-base-ui-size) * 1) 0 calc(var(--alpheios-base-ui-size) * 1) calc(var(--alpheios-base-ui-size) * 1);
   flex: 0 0 auto;
@@ -1397,6 +1400,11 @@ select.alpheios-setting__control,
 }
 .alpheios-notification-area__controlbox {
   flex-flow: wrap;
+}
+.alpheios-notification-area__hint {
+  color: var(--alpheios-hint-color);
+  background: var(--alpheios-hint-bg);
+  border: 1px solid var(--alpheios-hint-border-color);
 }
 /*
  Calculates a size of text elements relative to the base size.

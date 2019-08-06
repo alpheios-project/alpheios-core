@@ -2,6 +2,22 @@
   <div
     class="alpheios-notification-area"
   >
+  <div
+        class="alpheios-notification-area__hint"
+        v-show="showHint"
+    >
+      <div
+          class="alpheios-notification-area__msg"
+          v-html="$store.state.ui.hint.text"
+      />
+      <div
+          class="alpheios-notification-area__close-btn"
+          @click="$store.commit(`ui/resetHint`)"
+      >
+          <close-icon/>
+      </div>
+    </div>
+
     <div
         class="alpheios-notification-area__notification"
         :class="notificationClasses"
@@ -73,7 +89,12 @@ export default {
     setting: Setting,
     login: Login
   },
-
+  data () {
+    return {
+      hintWasShownForTabs: []
+    }
+  },
+   
   computed: {
     notificationClasses: function () {
       let classes = []
@@ -85,6 +106,15 @@ export default {
         classes.push(`alpheios-notification-area__notification--hidden`)
       }
       return classes
+    },
+
+    showHint () {
+      let showHintForTab = !this.hintWasShownForTabs.includes(this.$store.state.ui.activeTab)
+
+      if (showHintForTab) {
+        this.hintWasShownForTabs.push(this.$store.state.ui.activeTab)
+      }
+      return this.$store.state.ui.hint.visible && showHintForTab
     },
 
     showNotification () {
@@ -119,7 +149,8 @@ export default {
     flex: 0 0 auto;
     background: var(--alpheios-color-neutral-lightest);
 
-    &__notification {
+    &__notification,
+    &__hint {
       display: flex;
       padding: uisize(16px) 0 uisize(16px) uisize(16px);
       flex: 0 0 auto;
@@ -198,5 +229,11 @@ export default {
     &__controlbox {
       flex-flow: wrap;
     }
+  }
+
+  .alpheios-notification-area__hint {
+    color: var(--alpheios-hint-color);
+    background: var(--alpheios-hint-bg);
+    border: 1px solid var(--alpheios-hint-border-color);
   }
 </style>
