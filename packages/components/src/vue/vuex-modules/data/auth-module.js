@@ -16,7 +16,7 @@ export default class AuthModule extends Module {
         this._externalLoginUrl = this._auth.loginUrl()
         this._externalLogoutUrl = this._auth.logoutUrl()
       } catch (e) {
-        console.warn('AuthModule is missing loginUrl/logoutUrl methods')
+        // console.warn('AuthModule is missing loginUrl/logoutUrl methods')
       }
     }
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
@@ -110,7 +110,7 @@ AuthModule.api = (moduleInstance, store) => {
   return {
     session: () => {
       if (!moduleInstance._auth) {
-        console.warn('Session unavailable - _auth is not defined')
+        // console.warn('Session unavailable - _auth is not defined')
         return
       }
       moduleInstance._auth.session().then((data) => {
@@ -118,12 +118,12 @@ AuthModule.api = (moduleInstance, store) => {
       }).catch((error) => {
         // a session being unavailable is not necessarily an error
         // user might not have authenticated or it might be client-side auth
-        console.warn('Session unavailable', error)
+        // console.warn('Session unavailable', error)
       })
     },
     authenticate: () => {
       if (!moduleInstance._auth) {
-        console.warn('Authenticate unavailable - _auth is not defined')
+        // console.warn('Authenticate unavailable - _auth is not defined')
         return
       }
       store.commit(`auth/setNotification`, { text: 'AUTH_LOGIN_PROGRESS_MSG' })
@@ -142,7 +142,6 @@ AuthModule.api = (moduleInstance, store) => {
     },
     logout: () => {
       if (!moduleInstance._auth) {
-        console.warn('Logout unavailable - _auth is not defined')
         return
       }
       moduleInstance._auth.logout().then(() => {

@@ -182,8 +182,6 @@ export default {
         // A standard form data is provided. It will be used to create, initialize, and render the corresponding view.
         this.state.standardFormTable = true
         return ViewSetFactory.getStandardForm(this.standardFormData).render()
-      } else {
-        console.error(`There is neither view nor standard form data is provided. A view will not be rendered`)
       }
     },
     collapse: function () {

@@ -2,6 +2,7 @@ import { LanguageModelFactory as LMF, Lexeme, Lemma, Homonym, PsEvent } from 'al
 import Query from './query.js'
 import Options from '@/lib/options/options.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
+import Logger from '@/lib/log/logger.js'
 
 export default class LexicalQuery extends Query {
   constructor (name, selector, options) {
@@ -20,6 +21,7 @@ export default class LexicalQuery extends Query {
     if (this.selector.textQuoteSelector) {
       LexicalQuery.evt.TEXT_QUOTE_SELECTOR_RECEIVED.pub(this.selector.textQuoteSelector)
     }
+    this.getLogger = () => { return Logger.getLogger(options.verboseMode) }
   }
 
   static create (selector, options) {
@@ -61,12 +63,12 @@ export default class LexicalQuery extends Query {
         })
 
         if (adapterConcordanceRes.errors.length > 0) {
-          adapterConcordanceRes.errors.forEach(error => console.error(error))
+          adapterConcordanceRes.errors.forEach(error => this.getLogger().log(error))
         }
 
         LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.pub(adapterConcordanceRes.result)
       } catch (error) {
-        console.error('Some strange eror inside getWordUsageData', error)
+        this.getLogger().log('Some strange eror inside getWordUsageData', error)
       }
     }
   }
@@ -79,12 +81,12 @@ export default class LexicalQuery extends Query {
       })
 
       if (adapterConcordanceRes.errors.length > 0) {
-        adapterConcordanceRes.errors.forEach(error => console.error(error))
+        adapterConcordanceRes.errors.forEach(error => this.getLogger().log(error))
       }
 
       return adapterConcordanceRes.result
     } catch (error) {
-      console.error('Some strange eror inside getAuthorsForWordUsage', error)
+      this.getLogger().log('Some strange eror inside getAuthorsForWordUsage', error)
     }
   }
 
@@ -127,7 +129,7 @@ export default class LexicalQuery extends Query {
       }
 
       if (adapterTreebankRes.errors.length > 0) {
-        adapterTreebankRes.errors.forEach(error => console.error(error.message))
+        adapterTreebankRes.errors.forEach(error => this.getLogger().log(error.message))
       }
     }
 
@@ -143,7 +145,7 @@ export default class LexicalQuery extends Query {
       })
 
       if (adapterTuftsRes.errors.length > 0) {
-        adapterTuftsRes.errors.forEach(error => console.error(error.message))
+        adapterTuftsRes.errors.forEach(error => this.getLogger().log(error.message))
       }
 
       if (adapterTuftsRes.result) {
@@ -199,7 +201,7 @@ export default class LexicalQuery extends Query {
         }
       })
       if (adapterTranslationRes.errors.length > 0) {
-        adapterTranslationRes.errors.forEach(error => console.error(error.message))
+        adapterTranslationRes.errors.forEach(error => this.getLogger().log(error.message))
       }
 
       LexicalQuery.evt.LEMMA_TRANSL_READY.pub(this.homonym)
@@ -223,7 +225,7 @@ export default class LexicalQuery extends Query {
       })
 
       if (adapterConcordanceRes.errors.length > 0) {
-        adapterConcordanceRes.errors.forEach(error => console.error(error))
+        adapterConcordanceRes.errors.forEach(error => this.getLogger().log(error))
       }
 
       LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.pub(adapterConcordanceRes.result)
@@ -243,7 +245,7 @@ export default class LexicalQuery extends Query {
     })
 
     if (adapterLexiconResShort.errors.length > 0) {
-      adapterLexiconResShort.errors.forEach(error => console.error(error.message))
+      adapterLexiconResShort.errors.forEach(error => this.getLogger().log(error.message))
     }
 
     let adapterLexiconResFull = yield ClientAdapters.lexicon.alpheios({
@@ -258,7 +260,7 @@ export default class LexicalQuery extends Query {
     })
 
     if (adapterLexiconResFull.errors.length > 0) {
-      adapterLexiconResFull.errors.forEach(error => console.error(error))
+      adapterLexiconResFull.errors.forEach(error => this.getLogger().log(error))
     }
 
     yield 'Finalizing'
@@ -286,7 +288,6 @@ export default class LexicalQuery extends Query {
       }
       if (typeof result === 'object' && result instanceof Error) {
         resultStatus = LexicalQuery.resultStatus.FAILED
-        console.error(`LexicalQuery failed: ${result.message}`)
       } else {
         resultStatus = LexicalQuery.resultStatus.SUCCEEDED
       }

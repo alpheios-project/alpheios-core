@@ -162,6 +162,7 @@
 </template>
 <script>
 import interact from 'interactjs'
+import Logger from '@/lib/log/logger'
 
 import Tooltip from '@/vue/components/tooltip.vue'
 // Embeddable SVG icons
@@ -240,6 +241,9 @@ export default {
   },
 
   computed: {
+    logger: function () {
+      return Logger.getLogger(this.settings.verboseMode())
+    },
     componentStyles: function () {
       let styles = {
         transform: `translate(${this.shift.x}px, ${this.shift.y}px)`,
@@ -293,14 +297,14 @@ export default {
        */
       if (Math.abs(dx) > this.$options.dragTreshold) {
         if (!this.$options.dragErrorX) {
-          console.warn(`Calculated horizontal drag distance is out of bounds: ${dx}. This is probably an error. Dragging in horizontal direction will be disabled.`)
+          this.logger.log(`Calculated horizontal drag distance is out of bounds: ${dx}. This is probably an error. Dragging in horizontal direction will be disabled.`)
           this.$options.dragErrorX = true
         }
         dx = 0
       }
       if (Math.abs(dy) > this.$options.dragTreshold) {
         if (!this.$options.dragErrorY) {
-          console.warn(`Calculated vertical drag distance is out of bounds: ${dy}. This is probably an error. Dragging in vertical direction will be disabled.`)
+          this.logger.log(`Calculated vertical drag distance is out of bounds: ${dy}. This is probably an error. Dragging in vertical direction will be disabled.`)
           this.$options.dragErrorY = true
         }
         dy = 0
@@ -379,7 +383,7 @@ export default {
         if (!boundsCheck.withinBounds) {
           this.shift.x += boundsCheck.adjX
           this.shift.y += boundsCheck.adjY
-          console.warn(`Toolbar position has been adjusted to stay within the viewport`)
+          this.logger.log(`Toolbar position has been adjusted to stay within the viewport`)
         }
       }
     })

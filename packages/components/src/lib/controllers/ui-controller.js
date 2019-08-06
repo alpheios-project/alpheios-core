@@ -8,6 +8,7 @@ import { WordlistController, UserDataManager } from 'alpheios-wordlist'
 import Vue from '@vue-runtime'
 import Vuex from 'vuex'
 import interact from 'interactjs'
+import Logger from '@/lib/log/logger.js'
 // Modules and their support dependencies
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
 import Locales from '@/locales/locales.js'
@@ -304,7 +305,7 @@ export default class UIController {
       options.platform = this.platform
       this.modules.set(moduleClass.moduleName, { ModuleClass: moduleClass, options, instance: null })
     } else {
-      console.warn(`Skipping registration of a ${moduleClass.moduleName} module because it does not support a ${this.platform.deviceType} type of devices`)
+      this.getLogger().warn(`Skipping registration of a ${moduleClass.moduleName} module because it does not support a ${this.platform.deviceType} type of devices`)
     }
     return this
   }
@@ -941,6 +942,7 @@ export default class UIController {
       // if we have an active session
       this.api.auth.session()
     }
+    this.getLogger().log("UI Activation Complete")
     return this
   }
 
@@ -1006,7 +1008,7 @@ export default class UIController {
       if (document && document.body) {
         document.body.classList.add(injectionClasses.DISABLE_TEXT_SELECTION)
       } else {
-        console.warn(`Cannot inject Alpheios CSS rules because either document or body do not exist`)
+        this.getLogger().warn(`Cannot inject Alpheios CSS rules because either document or body do not exist`)
       }
     }
   }
@@ -1125,7 +1127,7 @@ export default class UIController {
   changeTab (tabName) {
     // If tab is disabled, switch to a default one
     if (this.isDisabledTab(tabName)) {
-      console.warn(`Attempting to switch to a ${tabName} tab which is not available`)
+      this.getLogger().warn(`Attempting to switch to a ${tabName} tab which is not available`)
       tabName = tabs.DEFAULT
     }
     this.store.commit('ui/setActiveTab', tabName) // Reflect a tab change in a state
@@ -1282,7 +1284,7 @@ export default class UIController {
     // the code which follows assumes we have been passed a languageID symbol
     // we can try to recover gracefully if we accidentally get passed a string value
     if (typeof currentLanguageID !== 'symbol') {
-      console.warn('updateLanguage was called with a string value')
+      this.getLogger().warn('updateLanguage was called with a string value')
       currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(currentLanguageID)
     }
     this.store.commit('app/setCurrentLanguage', currentLanguageID)
@@ -1381,7 +1383,7 @@ export default class UIController {
     if (this.api.ui.hasModule('toolbar')) {
       this.store.commit('toolbar/open')
     } else {
-      console.warn(`Toolbar cannot be opened because its module is not registered`)
+      this.getLogger().warn(`Toolbar cannot be opened because its module is not registered`)
     }
   }
 
@@ -1395,7 +1397,7 @@ export default class UIController {
     if (this.api.ui.hasModule('actionPanel')) {
       this.store.commit('actionPanel/open', panelOptions)
     } else {
-      console.warn(`Action panel cannot be opened because its module is not registered`)
+      this.getLogger().warn(`Action panel cannot be opened because its module is not registered`)
     }
   }
 
@@ -1403,7 +1405,7 @@ export default class UIController {
     if (this.api.ui.hasModule('actionPanel')) {
       this.store.commit('actionPanel/close')
     } else {
-      console.warn(`Action panel cannot be closed because its module is not registered`)
+      this.getLogger().warn(`Action panel cannot be closed because its module is not registered`)
     }
   }
 
@@ -1413,7 +1415,7 @@ export default class UIController {
         ? this.store.commit('actionPanel/close')
         : this.store.commit('actionPanel/open', {})
     } else {
-      console.warn(`Action panel cannot be toggled because its module is not registered`)
+      this.getLogger().warn(`Action panel cannot be toggled because its module is not registered`)
     }
   }
 
@@ -1459,6 +1461,7 @@ export default class UIController {
           htmlSelector: htmlSelector,
           clientId: this.api.app.clientId,
           resourceOptions: this.api.settings.getResourceOptions(),
+          verboseMode: this.api.settings.verboseMode(),
           siteOptions: [],
           lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { locale: this.featureOptions.items.locale.currentValue } : null,
           wordUsageExamples: this.getWordUsageExamplesQueryParams(textSelector),
@@ -1664,7 +1667,7 @@ export default class UIController {
 
   async onWordItemSelected (wordItem) {
     if (!this.userDataManager && !wordItem.homonym) {
-      console.warn('UserDataManager is not defined, data couldn\'t be loaded from the storage')
+      this.getLogger().warn('UserDataManager is not defined, data couldn\'t be loaded from the storage')
       return
     }
     const languageID = LanguageModelFactory.getLanguageIdFromCode(wordItem.languageCode)
@@ -1808,7 +1811,7 @@ export default class UIController {
       document.documentElement.style.setProperty(FONT_SIZE_PROP,
         `${uiOptions.items.fontSize.currentValue}px`)
     } catch (error) {
-      console.error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
+      this.getLogger().error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
     }
   }
 
@@ -1870,6 +1873,12 @@ export default class UIController {
   registerAndActivateGetSelectedText (listenerName, selector) {
     this.registerGetSelectedText(listenerName, selector)
     this.evc.activateListener(listenerName)
+  }
+
+  getLogger() {
+    // make sure we don't fail if we get called before settings are initialized
+    let verbose = this.api && this.api.settings ? this.api.settings.verboseMode() : false
+    return Logger.getLogger(verbose)
   }
 }
 

@@ -372,14 +372,14 @@ export default {
         const dragTreshold = 100 // Drag distance values above this will be considered abnormal
         if (Math.abs(dx) > dragTreshold) {
           if (!this.dragErrorX) {
-            console.warn(`Calculated horizontal drag distance is out of bounds: ${dx}. This is probably an error. Dragging in horizontal direction will be disabled.`)
+            this.logger.warn(`Calculated horizontal drag distance is out of bounds: ${dx}. This is probably an error. Dragging in horizontal direction will be disabled.`)
             this.dragErrorX = true
           }
           dx = 0
         }
         if (Math.abs(dy) > dragTreshold) {
           if (!this.dragErrorY) {
-            console.warn(`Calculated vertical drag distance is out of bounds: ${dy}. This is probably an error. Dragging in vertical direction will be disabled.`)
+            this.logger.warn(`Calculated vertical drag distance is out of bounds: ${dy}. This is probably an error. Dragging in vertical direction will be disabled.`)
             this.dragErrorY = true
           }
           dy = 0

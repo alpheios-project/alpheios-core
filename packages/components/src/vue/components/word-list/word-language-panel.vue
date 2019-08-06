@@ -48,7 +48,7 @@
         <!-- end delete all confirmation -->
 
         <!-- download confirmation -->
-        <div class="alpheios-wordlist-download-confirmation alpheios-notification-area__notification alpheios-notification-area__notification--important" 
+        <div class="alpheios-wordlist-download-confirmation alpheios-notification-area__notification alpheios-notification-area__notification--important"
              v-show="showDownloadBox">
           <div class="alpheios-notification-area__msg">{{ l10n.getText('WORDLIST_DOWNLOAD_NOTICE') }}</div>
 
@@ -171,8 +171,6 @@ export default {
           this.applySorting(result)
           return result
 
-        } else {
-          console.warn(`The current filter method - ${this.selectedFilterBy} - is not defined, that's why empty result is returned!`)
         }
       }
       return []
@@ -273,7 +271,7 @@ export default {
     downloadList () {
       const exportFields = [ 'targetWord', 'languageCode', 'important', 'currentSession', 'lemmasList', 'context' ]
       const wordlistData = this.wordlist.values.map(wordItem => {
-        return { 
+        return {
           targetWord: wordItem.targetWord,
           languageCode: wordItem.languageCode,
           important: wordItem.important,

@@ -12,7 +12,6 @@ export default class PopupModule extends Module {
     let el = document.createElement('div')
     let mountEl = document.querySelector(this.config.mountInto)
     if (!mountEl) {
-      console.warn(`A ${this.config.mountInto} element for mounting ${this.constructor.moduleName} is not found. Will mount into the body instead`)
       mountEl = document.body
     }
     let viEl = mountEl.appendChild(el)

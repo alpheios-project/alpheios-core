@@ -26632,8 +26632,6 @@ __webpack_require__.r(__webpack_exports__);
         // A standard form data is provided. It will be used to create, initialize, and render the corresponding view.
         this.state.standardFormTable = true
         return alpheios_inflection_tables__WEBPACK_IMPORTED_MODULE_0__["ViewSetFactory"].getStandardForm(this.standardFormData).render()
-      } else {
-        console.error(`There is neither view nor standard form data is provided. A view will not be rendered`)
       }
     },
     collapse: function () {
@@ -26768,7 +26766,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inflections_subtables_wide_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./inflections-subtables-wide.vue */ "./vue/components/inflections-subtables-wide.vue");
 /* harmony import */ var _inflections_supp_table_wide_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./inflections-supp-table-wide.vue */ "./vue/components/inflections-supp-table-wide.vue");
 /* harmony import */ var _wordforms_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./wordforms.vue */ "./vue/components/wordforms.vue");
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+/* harmony import */ var _lib_log_logger__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/lib/log/logger */ "./lib/log/logger.js");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
 //
@@ -26847,14 +26846,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 // Modules support
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Inflections',
-  inject: ['app', 'l10n'],
+  inject: ['app', 'l10n', 'settings'],
   storeModules: ['app', 'ui'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_5__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_6__["default"]],
   components: {
     prerenderedTableWide: _inflections_table_prerendered_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     mainTableWideVue: _inflections_table_wide_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -26884,6 +26884,9 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   computed: {
+    logger: function () {
+      return _lib_log_logger__WEBPACK_IMPORTED_MODULE_5__["default"].getLogger(this.settings.verboseMode())
+    },
     partOfSpeechSelector: {
       get: function () {
         return this.selectedPartOfSpeech
@@ -26955,7 +26958,7 @@ __webpack_require__.r(__webpack_exports__);
     navigate (reflink) {
       let panel = document.querySelector(`#${this.elementIDs.panelInner}`)
       if (!panel) {
-        console.warn(`Cannot find panel's inner element #${this.elementIDs.panelInner}. Scroll is cancelled`)
+        this.logger.warn(`Cannot find panel's inner element #${this.elementIDs.panelInner}. Scroll is cancelled`)
       }
       if (reflink === 'top') {
         // Navigate to the top of the page
@@ -26968,7 +26971,7 @@ __webpack_require__.r(__webpack_exports__);
           const offset = Math.round(el.offsetTop)
           panel.scrollTop = offset - paddingTop
         } else {
-          console.warn(`Cannot find #${reflink} element. Navigation is cancelled`)
+          this.logger.warn(`Cannot find #${reflink} element. Navigation is cancelled`)
         }
       }
     }
@@ -27223,7 +27226,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/images/inline-icons/lookup.svg */ "./images/inline-icons/lookup.svg");
 /* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
-/* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
+/* harmony import */ var _lib_log_logger__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/lib/log/logger */ "./lib/log/logger.js");
+/* harmony import */ var _setting_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./setting.vue */ "./vue/components/setting.vue");
 //
 //
 //
@@ -27264,6 +27268,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -27280,7 +27285,7 @@ __webpack_require__.r(__webpack_exports__);
   mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_5__["default"]],
   storeModules: ['app'],
   components: {
-    alphSetting: _setting_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    alphSetting: _setting_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
     lookupIcon: _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data () {
@@ -27315,6 +27320,9 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   computed: {
+    logger: function () {
+      return _lib_log_logger__WEBPACK_IMPORTED_MODULE_6__["default"].getLogger(this.settings.verboseMode())
+    },
     lookupLangName () {
       return this.app.getLanguageName(this.getLookupLanguage()).name
     }
@@ -27364,7 +27372,7 @@ __webpack_require__.r(__webpack_exports__);
         : null
 
       let lexQuery = _lib_queries_lexical_query_lookup__WEBPACK_IMPORTED_MODULE_1__["default"]
-        .create(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, this.app.clientId)
+        .create(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, this.app.clientId, this.settings.verboseMode())
 
 
       // A newLexicalRequest will call app.updateLanguage(languageID)
@@ -27382,7 +27390,7 @@ __webpack_require__.r(__webpack_exports__);
           this.ui.showPanelTab('morphology')
           break
         default:
-          console.warn(`Unknown afterLookupAction value: ${this.showResultsIn}`)
+          this.logger.warn(`Unknown afterLookupAction value: ${this.showResultsIn}`)
       }
     },
 
@@ -28370,21 +28378,22 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
 /* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
-/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
-/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/images/inline-icons/status.svg */ "./images/inline-icons/status.svg");
-/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
-/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
-/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
-/* harmony import */ var _images_inline_icons_help_icon_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/images/inline-icons/help-icon.svg */ "./images/inline-icons/help-icon.svg");
-/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
-/* harmony import */ var _images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/images/inline-icons/collapsed.svg */ "./images/inline-icons/collapsed.svg");
-/* harmony import */ var _images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/images/inline-icons/expanded.svg */ "./images/inline-icons/expanded.svg");
-/* harmony import */ var _images_inline_icons_reading_tools_svg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/images/inline-icons/reading-tools.svg */ "./images/inline-icons/reading-tools.svg");
-/* harmony import */ var _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/images/inline-icons/lookup.svg */ "./images/inline-icons/lookup.svg");
-/* harmony import */ var _vue_components_nav_toolbar_compact_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/vue/components/nav/toolbar-compact.vue */ "./vue/components/nav/toolbar-compact.vue");
-/* harmony import */ var _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/vue/components/lookup.vue */ "./vue/components/lookup.vue");
-/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
+/* harmony import */ var _lib_log_logger__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/log/logger */ "./lib/log/logger.js");
+/* harmony import */ var _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/vue/components/tooltip.vue */ "./vue/components/tooltip.vue");
+/* harmony import */ var _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/images/inline-icons/inflections-browser.svg */ "./images/inline-icons/inflections-browser.svg");
+/* harmony import */ var _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/images/inline-icons/status.svg */ "./images/inline-icons/status.svg");
+/* harmony import */ var _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/images/inline-icons/user.svg */ "./images/inline-icons/user.svg");
+/* harmony import */ var _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/images/inline-icons/options.svg */ "./images/inline-icons/options.svg");
+/* harmony import */ var _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/images/inline-icons/resources.svg */ "./images/inline-icons/resources.svg");
+/* harmony import */ var _images_inline_icons_help_icon_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/images/inline-icons/help-icon.svg */ "./images/inline-icons/help-icon.svg");
+/* harmony import */ var _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/images/inline-icons/wordlist-icon.svg */ "./images/inline-icons/wordlist-icon.svg");
+/* harmony import */ var _images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/images/inline-icons/collapsed.svg */ "./images/inline-icons/collapsed.svg");
+/* harmony import */ var _images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/images/inline-icons/expanded.svg */ "./images/inline-icons/expanded.svg");
+/* harmony import */ var _images_inline_icons_reading_tools_svg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/images/inline-icons/reading-tools.svg */ "./images/inline-icons/reading-tools.svg");
+/* harmony import */ var _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/images/inline-icons/lookup.svg */ "./images/inline-icons/lookup.svg");
+/* harmony import */ var _vue_components_nav_toolbar_compact_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/vue/components/nav/toolbar-compact.vue */ "./vue/components/nav/toolbar-compact.vue");
+/* harmony import */ var _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/vue/components/lookup.vue */ "./vue/components/lookup.vue");
+/* harmony import */ var _vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/vue/vuex-modules/support/dependency-check.js */ "./vue/vuex-modules/support/dependency-check.js");
 //
 //
 //
@@ -28547,6 +28556,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -28572,7 +28582,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Toolbar',
-  extends: _vue_components_nav_toolbar_compact_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+  extends: _vue_components_nav_toolbar_compact_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
   // API modules that are required for this component
   inject: {
     app: 'app',
@@ -28581,21 +28591,21 @@ __webpack_require__.r(__webpack_exports__);
     settings: 'settings'
   },
   storeModules: ['toolbar', 'app', 'ui'], // Store modules that are required by this component
-  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_15__["default"]],
+  mixins: [_vue_vuex_modules_support_dependency_check_js__WEBPACK_IMPORTED_MODULE_16__["default"]],
   components: {
-    lookup: _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
-    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_2__["default"],
-    statusIcon: _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_3__["default"],
-    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_4__["default"],
-    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_5__["default"],
-    helpIcon: _images_inline_icons_help_icon_svg__WEBPACK_IMPORTED_MODULE_7__["default"],
-    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_6__["default"],
-    wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_8__["default"],
-    collapsedIcon: _images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_9__["default"],
-    expandedIcon: _images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_10__["default"],
-    readingToolsIcon: _images_inline_icons_reading_tools_svg__WEBPACK_IMPORTED_MODULE_11__["default"],
-    lookupIcon: _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_12__["default"]
+    lookup: _vue_components_lookup_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+    alphTooltip: _vue_components_tooltip_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    inflectionsBrowserIcon: _images_inline_icons_inflections_browser_svg__WEBPACK_IMPORTED_MODULE_3__["default"],
+    statusIcon: _images_inline_icons_status_svg__WEBPACK_IMPORTED_MODULE_4__["default"],
+    userIcon: _images_inline_icons_user_svg__WEBPACK_IMPORTED_MODULE_5__["default"],
+    optionsIcon: _images_inline_icons_options_svg__WEBPACK_IMPORTED_MODULE_6__["default"],
+    helpIcon: _images_inline_icons_help_icon_svg__WEBPACK_IMPORTED_MODULE_8__["default"],
+    grammarIcon: _images_inline_icons_resources_svg__WEBPACK_IMPORTED_MODULE_7__["default"],
+    wordlistIcon: _images_inline_icons_wordlist_icon_svg__WEBPACK_IMPORTED_MODULE_9__["default"],
+    collapsedIcon: _images_inline_icons_collapsed_svg__WEBPACK_IMPORTED_MODULE_10__["default"],
+    expandedIcon: _images_inline_icons_expanded_svg__WEBPACK_IMPORTED_MODULE_11__["default"],
+    readingToolsIcon: _images_inline_icons_reading_tools_svg__WEBPACK_IMPORTED_MODULE_12__["default"],
+    lookupIcon: _images_inline_icons_lookup_svg__WEBPACK_IMPORTED_MODULE_13__["default"]
   },
   interactInstance: null,
   dragTreshold: 100, // Drag distance values above this will be considered abnormal
@@ -28627,6 +28637,9 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   computed: {
+    logger: function () {
+      return _lib_log_logger__WEBPACK_IMPORTED_MODULE_1__["default"].getLogger(this.settings.verboseMode())
+    },
     componentStyles: function () {
       let styles = {
         transform: `translate(${this.shift.x}px, ${this.shift.y}px)`,
@@ -28680,14 +28693,14 @@ __webpack_require__.r(__webpack_exports__);
        */
       if (Math.abs(dx) > this.$options.dragTreshold) {
         if (!this.$options.dragErrorX) {
-          console.warn(`Calculated horizontal drag distance is out of bounds: ${dx}. This is probably an error. Dragging in horizontal direction will be disabled.`)
+          this.logger.log(`Calculated horizontal drag distance is out of bounds: ${dx}. This is probably an error. Dragging in horizontal direction will be disabled.`)
           this.$options.dragErrorX = true
         }
         dx = 0
       }
       if (Math.abs(dy) > this.$options.dragTreshold) {
         if (!this.$options.dragErrorY) {
-          console.warn(`Calculated vertical drag distance is out of bounds: ${dy}. This is probably an error. Dragging in vertical direction will be disabled.`)
+          this.logger.log(`Calculated vertical drag distance is out of bounds: ${dy}. This is probably an error. Dragging in vertical direction will be disabled.`)
           this.$options.dragErrorY = true
         }
         dy = 0
@@ -28766,7 +28779,7 @@ __webpack_require__.r(__webpack_exports__);
         if (!boundsCheck.withinBounds) {
           this.shift.x += boundsCheck.adjX
           this.shift.y += boundsCheck.adjY
-          console.warn(`Toolbar position has been adjusted to stay within the viewport`)
+          this.logger.log(`Toolbar position has been adjusted to stay within the viewport`)
         }
       }
     })
@@ -30352,14 +30365,14 @@ __webpack_require__.r(__webpack_exports__);
         const dragTreshold = 100 // Drag distance values above this will be considered abnormal
         if (Math.abs(dx) > dragTreshold) {
           if (!this.dragErrorX) {
-            console.warn(`Calculated horizontal drag distance is out of bounds: ${dx}. This is probably an error. Dragging in horizontal direction will be disabled.`)
+            this.logger.warn(`Calculated horizontal drag distance is out of bounds: ${dx}. This is probably an error. Dragging in horizontal direction will be disabled.`)
             this.dragErrorX = true
           }
           dx = 0
         }
         if (Math.abs(dy) > dragTreshold) {
           if (!this.dragErrorY) {
-            console.warn(`Calculated vertical drag distance is out of bounds: ${dy}. This is probably an error. Dragging in vertical direction will be disabled.`)
+            this.logger.warn(`Calculated vertical drag distance is out of bounds: ${dy}. This is probably an error. Dragging in vertical direction will be disabled.`)
             this.dragErrorY = true
           }
           dy = 0
@@ -31657,8 +31670,6 @@ __webpack_require__.r(__webpack_exports__);
           this.applySorting(result)
           return result
 
-        } else {
-          console.warn(`The current filter method - ${this.selectedFilterBy} - is not defined, that's why empty result is returned!`)
         }
       }
       return []
@@ -31759,7 +31770,7 @@ __webpack_require__.r(__webpack_exports__);
     downloadList () {
       const exportFields = [ 'targetWord', 'languageCode', 'important', 'currentSession', 'lemmasList', 'context' ]
       const wordlistData = this.wordlist.values.map(wordItem => {
-        return { 
+        return {
           targetWord: wordItem.targetWord,
           languageCode: wordItem.languageCode,
           important: wordItem.important,
@@ -53445,33 +53456,34 @@ var _package__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_req
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "../node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! interactjs */ "../node_modules/interactjs/dist/interact.js");
 /* harmony import */ var interactjs__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(interactjs__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/vue/vuex-modules/data/l10n-module.js */ "./vue/vuex-modules/data/l10n-module.js");
-/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
-/* harmony import */ var _vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/vue/components/embed-lib-warning.vue */ "./vue/components/embed-lib-warning.vue");
-/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
-/* harmony import */ var _lib_queries_lexical_query_lookup_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/lib/queries/lexical-query-lookup.js */ "./lib/queries/lexical-query-lookup.js");
-/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
-/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
-/* harmony import */ var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/settings/site-options.json */ "./settings/site-options.json");
-var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_15___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/site-options.json */ "./settings/site-options.json", 1);
-/* harmony import */ var _settings_feature_options_defaults_json__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/settings/feature-options-defaults.json */ "./settings/feature-options-defaults.json");
-var _settings_feature_options_defaults_json__WEBPACK_IMPORTED_MODULE_16___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/feature-options-defaults.json */ "./settings/feature-options-defaults.json", 1);
-/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
-var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_17___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
-/* harmony import */ var _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/lib/selection/text-selector */ "./lib/selection/text-selector.js");
-/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
-/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
-/* harmony import */ var _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/lib/utility/platform.js */ "./lib/utility/platform.js");
-/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
-var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
-/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
-/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
-/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
-/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
-/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @/lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
-/* harmony import */ var _lib_options_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @/lib/options/remote-auth-storage-area.js */ "./lib/options/remote-auth-storage-area.js");
-/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
-/* harmony import */ var _lib_utility_query_params_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @/lib/utility/query-params.js */ "./lib/utility/query-params.js");
+/* harmony import */ var _lib_log_logger_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/lib/log/logger.js */ "./lib/log/logger.js");
+/* harmony import */ var _vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/vue/vuex-modules/data/l10n-module.js */ "./vue/vuex-modules/data/l10n-module.js");
+/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/vue/components/embed-lib-warning.vue */ "./vue/components/embed-lib-warning.vue");
+/* harmony import */ var _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/lib/queries/lexical-query.js */ "./lib/queries/lexical-query.js");
+/* harmony import */ var _lib_queries_lexical_query_lookup_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/lib/queries/lexical-query-lookup.js */ "./lib/queries/lexical-query-lookup.js");
+/* harmony import */ var _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/lib/queries/resource-query.js */ "./lib/queries/resource-query.js");
+/* harmony import */ var _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/lib/queries/annotation-query.js */ "./lib/queries/annotation-query.js");
+/* harmony import */ var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/settings/site-options.json */ "./settings/site-options.json");
+var _settings_site_options_json__WEBPACK_IMPORTED_MODULE_16___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/site-options.json */ "./settings/site-options.json", 1);
+/* harmony import */ var _settings_feature_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/settings/feature-options-defaults.json */ "./settings/feature-options-defaults.json");
+var _settings_feature_options_defaults_json__WEBPACK_IMPORTED_MODULE_17___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/feature-options-defaults.json */ "./settings/feature-options-defaults.json", 1);
+/* harmony import */ var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json");
+var _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_18___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/ui-options-defaults.json */ "./settings/ui-options-defaults.json", 1);
+/* harmony import */ var _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/lib/selection/text-selector */ "./lib/selection/text-selector.js");
+/* harmony import */ var _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @/lib/selection/media/html-selector.js */ "./lib/selection/media/html-selector.js");
+/* harmony import */ var _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @/lib/utility/html-page.js */ "./lib/utility/html-page.js");
+/* harmony import */ var _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @/lib/utility/platform.js */ "./lib/utility/platform.js");
+/* harmony import */ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json");
+var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_23___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/settings/language-options-defaults.json */ "./settings/language-options-defaults.json", 1);
+/* harmony import */ var _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @/lib/custom-pointer-events/mouse-dbl-click.js */ "./lib/custom-pointer-events/mouse-dbl-click.js");
+/* harmony import */ var _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @/lib/custom-pointer-events/long-tap.js */ "./lib/custom-pointer-events/long-tap.js");
+/* harmony import */ var _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @/lib/custom-pointer-events/generic-evt.js */ "./lib/custom-pointer-events/generic-evt.js");
+/* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
+/* harmony import */ var _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @/lib/options/local-storage-area.js */ "./lib/options/local-storage-area.js");
+/* harmony import */ var _lib_options_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @/lib/options/remote-auth-storage-area.js */ "./lib/options/remote-auth-storage-area.js");
+/* harmony import */ var _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @/lib/controllers/ui-event-controller.js */ "./lib/controllers/ui-event-controller.js");
+/* harmony import */ var _lib_utility_query_params_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @/lib/utility/query-params.js */ "./lib/utility/query-params.js");
 /* eslint-disable no-unused-vars */
 
 
@@ -53479,6 +53491,7 @@ var _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22___names
 
 
 // import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
+
 
 
 
@@ -53557,10 +53570,10 @@ class UIController {
     Define defaults for resource options. If a UI controller creator
     needs to provide its own defaults, they shall be defined in a `create()` function.
      */
-    this.featureOptionsDefaults = _settings_feature_options_defaults_json__WEBPACK_IMPORTED_MODULE_16__
-    this.resourceOptionsDefaults = _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_22__
-    this.uiOptionsDefaults = _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__
-    this.siteOptionsDefaults = _settings_site_options_json__WEBPACK_IMPORTED_MODULE_15__
+    this.featureOptionsDefaults = _settings_feature_options_defaults_json__WEBPACK_IMPORTED_MODULE_17__
+    this.resourceOptionsDefaults = _settings_language_options_defaults_json__WEBPACK_IMPORTED_MODULE_23__
+    this.uiOptionsDefaults = _settings_ui_options_defaults_json__WEBPACK_IMPORTED_MODULE_18__
+    this.siteOptionsDefaults = _settings_site_options_json__WEBPACK_IMPORTED_MODULE_16__
     /*
     All following options will be created during an init phase.
     This will allow creators of UI controller to provide their own options defaults
@@ -53581,7 +53594,7 @@ class UIController {
      * Information about the platform an app is running upon.
      * @type {Platform} - A an object containing data about the platform.
      */
-    this.platform = new _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_21__["default"](true)
+    this.platform = new _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_22__["default"](true)
     // Assign a class that will specify what type of layout will be used
     const layoutClassName = (this.platform.isMobile)
       ? layoutClasses.COMPACT
@@ -53621,9 +53634,9 @@ class UIController {
      */
 
     // Register data modules
-    uiController.registerModule(_vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_8__["default"], {
-      defaultLocale: _locales_locales_js__WEBPACK_IMPORTED_MODULE_9__["default"].en_US,
-      messageBundles: _locales_locales_js__WEBPACK_IMPORTED_MODULE_9__["default"].bundleArr()
+    uiController.registerModule(_vue_vuex_modules_data_l10n_module_js__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      defaultLocale: _locales_locales_js__WEBPACK_IMPORTED_MODULE_10__["default"].en_US,
+      messageBundles: _locales_locales_js__WEBPACK_IMPORTED_MODULE_10__["default"].bundleArr()
     })
 
     /*
@@ -53647,30 +53660,30 @@ class UIController {
     */
 
     // Creates on configures an event listener
-    uiController.evc = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_29__["default"]()
+    uiController.evc = new _lib_controllers_ui_event_controller_js__WEBPACK_IMPORTED_MODULE_30__["default"]()
     uiController.registerGetSelectedText('GetSelectedText', uiController.options.textQuerySelector)
-    uiController.evc.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__["default"], 'keydown')
-    uiController.evc.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__["default"], 'Alpheios_Page_Load')
+    uiController.evc.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_26__["default"], 'keydown')
+    uiController.evc.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_26__["default"], 'Alpheios_Page_Load')
 
     // Subscribe to LexicalQuery events
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.MORPH_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.LEMMA_TRANSL_READY.sub(uiController.updateTranslations.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.WORD_USAGE_EXAMPLES_READY.sub(uiController.updateWordUsageExamples.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
-    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.MORPH_DATA_READY.sub(uiController.onMorphDataReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.MORPH_DATA_NOTAVAILABLE.sub(uiController.onMorphDataNotFound.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.LEMMA_TRANSL_READY.sub(uiController.updateTranslations.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.WORD_USAGE_EXAMPLES_READY.sub(uiController.updateWordUsageExamples.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
+    _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
 
     // Subscribe to ResourceQuery events
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.RESOURCE_QUERY_COMPLETE.sub(uiController.onResourceQueryComplete.bind(uiController))
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.GRAMMAR_AVAILABLE.sub(uiController.onGrammarAvailable.bind(uiController))
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].evt.GRAMMAR_NOT_FOUND.sub(uiController.onGrammarNotFound.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.RESOURCE_QUERY_COMPLETE.sub(uiController.onResourceQueryComplete.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.GRAMMAR_AVAILABLE.sub(uiController.onGrammarAvailable.bind(uiController))
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.GRAMMAR_NOT_FOUND.sub(uiController.onGrammarNotFound.bind(uiController))
 
     // Subscribe to AnnotationQuery events
-    _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].evt.ANNOTATIONS_AVAILABLE.sub(uiController.onAnnotationsAvailable.bind(uiController))
+    _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].evt.ANNOTATIONS_AVAILABLE.sub(uiController.onAnnotationsAvailable.bind(uiController))
 
-    uiController.wordlistC = new alpheios_wordlist__WEBPACK_IMPORTED_MODULE_4__["WordlistController"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].availableLanguages(), _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].evt)
+    uiController.wordlistC = new alpheios_wordlist__WEBPACK_IMPORTED_MODULE_4__["WordlistController"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].availableLanguages(), _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].evt)
     alpheios_wordlist__WEBPACK_IMPORTED_MODULE_4__["WordlistController"].evt.WORDLIST_UPDATED.sub(uiController.onWordListUpdated.bind(uiController))
     alpheios_wordlist__WEBPACK_IMPORTED_MODULE_4__["WordlistController"].evt.WORDITEM_SELECTED.sub(uiController.onWordItemSelected.bind(uiController))
 
@@ -53703,7 +53716,7 @@ class UIController {
       },
       mode: 'production', // Controls options available and output. Other possible values: `development`
       clientId: 'alpheios-components',
-      storageAdapter: _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_27__["default"],
+      storageAdapter: _lib_options_local_storage_area_js__WEBPACK_IMPORTED_MODULE_28__["default"],
       openPanel: true,
       textQueryTriggerMobile: 'longTap',
       textQueryTriggerDesktop: 'dblClick',
@@ -53778,7 +53791,7 @@ class UIController {
       options.platform = this.platform
       this.modules.set(moduleClass.moduleName, { ModuleClass: moduleClass, options, instance: null })
     } else {
-      console.warn(`Skipping registration of a ${moduleClass.moduleName} module because it does not support a ${this.platform.deviceType} type of devices`)
+      this.getLogger().warn(`Skipping registration of a ${moduleClass.moduleName} module because it does not support a ${this.platform.deviceType} type of devices`)
     }
     return this
   }
@@ -53832,17 +53845,17 @@ class UIController {
   async init () {
     if (this.isInitialized) { return `Already initialized` }
     // Get query parameters from the URL
-    this.queryParams = _lib_utility_query_params_js__WEBPACK_IMPORTED_MODULE_30__["default"].parse()
+    this.queryParams = _lib_utility_query_params_js__WEBPACK_IMPORTED_MODULE_31__["default"].parse()
     // Start loading options as early as possible
     let optionLoadPromises = this.initOptions(this.options.storageAdapter)
     // Create a copy of resource options for the lookup UI component
     // this doesn't get reloaded from the storage adapter because
     // we don't expose it to the user via preferences
-    this.lookupResourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](this.resourceOptionsDefaults, new this.options.storageAdapter(this.resourceOptionsDefaults.domain)) // eslint-disable-line new-cap
+    this.lookupResourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_27__["default"](this.resourceOptionsDefaults, new this.options.storageAdapter(this.resourceOptionsDefaults.domain)) // eslint-disable-line new-cap
     // TODO: Site options should probably be initialized the same way as other options objects
     this.siteOptions = this.loadSiteOptions(this.siteOptionsDefaults)
 
-    this.zIndex = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_20__["default"].getZIndexMax()
+    this.zIndex = _lib_utility_html_page_js__WEBPACK_IMPORTED_MODULE_21__["default"].getZIndexMax()
 
     // Will add morph adapter options to the `options` object of UI controller constructor as needed.
 
@@ -54337,9 +54350,9 @@ class UIController {
    * @return Promise[] an array of promises to load the options data from the adapter
    */
   initOptions (StorageAdapter, authData = null) {
-    this.featureOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](this.featureOptionsDefaults, new StorageAdapter(this.featureOptionsDefaults.domain, authData))
-    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](this.resourceOptionsDefaults, new StorageAdapter(this.resourceOptionsDefaults.domain, authData))
-    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](this.uiOptionsDefaults, new StorageAdapter(this.uiOptionsDefaults.domain, authData))
+    this.featureOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_27__["default"](this.featureOptionsDefaults, new StorageAdapter(this.featureOptionsDefaults.domain, authData))
+    this.resourceOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_27__["default"](this.resourceOptionsDefaults, new StorageAdapter(this.resourceOptionsDefaults.domain, authData))
+    this.uiOptions = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_27__["default"](this.uiOptionsDefaults, new StorageAdapter(this.uiOptionsDefaults.domain, authData))
     return [this.featureOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
   }
 
@@ -54351,7 +54364,7 @@ class UIController {
       this.userDataManager = new alpheios_wordlist__WEBPACK_IMPORTED_MODULE_4__["UserDataManager"](authData, alpheios_wordlist__WEBPACK_IMPORTED_MODULE_4__["WordlistController"].evt)
       wordLists = await this.wordlistC.initLists(this.userDataManager)
       this.store.commit('app/setWordLists', wordLists)
-      optionLoadPromises = this.initOptions(_lib_options_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_28__["default"], authData)
+      optionLoadPromises = this.initOptions(_lib_options_remote_auth_storage_area_js__WEBPACK_IMPORTED_MODULE_29__["default"], authData)
     } else {
       // TODO we need to make the UserDataManager a singleton that can
       // handle switching users gracefully
@@ -54415,6 +54428,7 @@ class UIController {
       // if we have an active session
       this.api.auth.session()
     }
+    this.getLogger().log("UI Activation Complete")
     return this
   }
 
@@ -54466,7 +54480,7 @@ class UIController {
    */
   static getEmbedLibWarning (message) {
     if (!UIController.embedLibWarningInstance) {
-      let EmbedLibWarningClass = _vue_runtime__WEBPACK_IMPORTED_MODULE_5__["default"].extend(_vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_10__["default"])
+      let EmbedLibWarningClass = _vue_runtime__WEBPACK_IMPORTED_MODULE_5__["default"].extend(_vue_components_embed_lib_warning_vue__WEBPACK_IMPORTED_MODULE_11__["default"])
       UIController.embedLibWarningInstance = new EmbedLibWarningClass({
         propsData: { text: message }
       })
@@ -54480,7 +54494,7 @@ class UIController {
       if (document && document.body) {
         document.body.classList.add(injectionClasses.DISABLE_TEXT_SELECTION)
       } else {
-        console.warn(`Cannot inject Alpheios CSS rules because either document or body do not exist`)
+        this.getLogger().warn(`Cannot inject Alpheios CSS rules because either document or body do not exist`)
       }
     }
   }
@@ -54498,7 +54512,7 @@ class UIController {
     let allSiteOptions = []
     for (let site of siteOptions) {
       for (let domain of site.options) {
-        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"](domain, new this.options.storageAdapter(domain.domain)) // eslint-disable-line new-cap
+        let siteOpts = new _lib_options_options_js__WEBPACK_IMPORTED_MODULE_27__["default"](domain, new this.options.storageAdapter(domain.domain)) // eslint-disable-line new-cap
         allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
     }
@@ -54599,7 +54613,7 @@ class UIController {
   changeTab (tabName) {
     // If tab is disabled, switch to a default one
     if (this.isDisabledTab(tabName)) {
-      console.warn(`Attempting to switch to a ${tabName} tab which is not available`)
+      this.getLogger().warn(`Attempting to switch to a ${tabName} tab which is not available`)
       tabName = tabs.DEFAULT
     }
     this.store.commit('ui/setActiveTab', tabName) // Reflect a tab change in a state
@@ -54607,7 +54621,7 @@ class UIController {
     // and sends this into to a background script
     this.state.changeTab(tabName)
 
-    let isPortrait = this.store.state.panel && (this.store.state.panel.orientation === _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_21__["default"].orientations.PORTRAIT)
+    let isPortrait = this.store.state.panel && (this.store.state.panel.orientation === _lib_utility_platform_js__WEBPACK_IMPORTED_MODULE_22__["default"].orientations.PORTRAIT)
 
     if (['treebank', 'inflections', 'inflectionsbrowser'].includes(tabName) && this.platform.isMobile && isPortrait) {
       let message = '🛈 This view is best in landscape mode with the panel expanded to full screen'
@@ -54756,7 +54770,7 @@ class UIController {
     // the code which follows assumes we have been passed a languageID symbol
     // we can try to recover gracefully if we accidentally get passed a string value
     if (typeof currentLanguageID !== 'symbol') {
-      console.warn('updateLanguage was called with a string value')
+      this.getLogger().warn('updateLanguage was called with a string value')
       currentLanguageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].getLanguageIdFromCode(currentLanguageID)
     }
     this.store.commit('app/setCurrentLanguage', currentLanguageID)
@@ -54855,7 +54869,7 @@ class UIController {
     if (this.api.ui.hasModule('toolbar')) {
       this.store.commit('toolbar/open')
     } else {
-      console.warn(`Toolbar cannot be opened because its module is not registered`)
+      this.getLogger().warn(`Toolbar cannot be opened because its module is not registered`)
     }
   }
 
@@ -54869,7 +54883,7 @@ class UIController {
     if (this.api.ui.hasModule('actionPanel')) {
       this.store.commit('actionPanel/open', panelOptions)
     } else {
-      console.warn(`Action panel cannot be opened because its module is not registered`)
+      this.getLogger().warn(`Action panel cannot be opened because its module is not registered`)
     }
   }
 
@@ -54877,7 +54891,7 @@ class UIController {
     if (this.api.ui.hasModule('actionPanel')) {
       this.store.commit('actionPanel/close')
     } else {
-      console.warn(`Action panel cannot be closed because its module is not registered`)
+      this.getLogger().warn(`Action panel cannot be closed because its module is not registered`)
     }
   }
 
@@ -54887,7 +54901,7 @@ class UIController {
         ? this.store.commit('actionPanel/close')
         : this.store.commit('actionPanel/open', {})
     } else {
-      console.warn(`Action panel cannot be toggled because its module is not registered`)
+      this.getLogger().warn(`Action panel cannot be toggled because its module is not registered`)
     }
   }
 
@@ -54903,7 +54917,7 @@ class UIController {
       It's probably better to keep them separated in order to follow a more abstract model.
        */
       let defaultLangCode = this.getDefaultLangCode()
-      let htmlSelector = new _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_19__["default"](event, defaultLangCode)
+      let htmlSelector = new _lib_selection_media_html_selector_js__WEBPACK_IMPORTED_MODULE_20__["default"](event, defaultLangCode)
       this.store.commit('app/setHtmlSelector', htmlSelector)
       let textSelector = htmlSelector.createTextSelector()
 
@@ -54929,10 +54943,11 @@ class UIController {
           })
           .getData() */
 
-        let lexQuery = _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].create(textSelector, {
+        let lexQuery = _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].create(textSelector, {
           htmlSelector: htmlSelector,
           clientId: this.api.app.clientId,
           resourceOptions: this.api.settings.getResourceOptions(),
+          verboseMode: this.api.settings.verboseMode(),
           siteOptions: [],
           lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { locale: this.featureOptions.items.locale.currentValue } : null,
           wordUsageExamples: this.getWordUsageExamplesQueryParams(textSelector),
@@ -54978,7 +54993,7 @@ class UIController {
         paginationAuthMax: this.featureOptions.items.wordUsageExamplesAuthMax.currentValue }
       : null
 
-    await _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].getWordUsageData(homonym, wordUsageExamples, params)
+    await _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].getWordUsageData(homonym, wordUsageExamples, params)
   }
 
   /**
@@ -55024,7 +55039,7 @@ class UIController {
    */
   updateAnnotations () {
     if (this.state.isActive() && this.state.uiIsActive()) {
-      _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].create({
+      _lib_queries_annotation_query_js__WEBPACK_IMPORTED_MODULE_15__["default"].create({
         document: document,
         siteOptions: this.siteOptions
       }).getData()
@@ -55033,7 +55048,7 @@ class UIController {
 
   startResourceQuery (feature) {
     // ExpObjMon.track(
-    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_13__["default"].create(feature, {
+    _lib_queries_resource_query_js__WEBPACK_IMPORTED_MODULE_14__["default"].create(feature, {
       grammars: alpheios_res_client__WEBPACK_IMPORTED_MODULE_2__["Grammars"]
     }).getData()
     //, {
@@ -55048,11 +55063,11 @@ class UIController {
 
   onLexicalQueryComplete (data) {
     switch (data.resultStatus) {
-      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].resultStatus.SUCCEEDED:
+      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].resultStatus.SUCCEEDED:
         this.showLanguageInfo(data.homonym)
         this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
         break
-      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_11__["default"].resultStatus.FAILED:
+      case _lib_queries_lexical_query_js__WEBPACK_IMPORTED_MODULE_12__["default"].resultStatus.FAILED:
         this.showLanguageInfo(data.homonym)
         this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_LEXQUERY_COMPLETE'))
     }
@@ -55138,7 +55153,7 @@ class UIController {
 
   async onWordItemSelected (wordItem) {
     if (!this.userDataManager && !wordItem.homonym) {
-      console.warn('UserDataManager is not defined, data couldn\'t be loaded from the storage')
+      this.getLogger().warn('UserDataManager is not defined, data couldn\'t be loaded from the storage')
       return
     }
     const languageID = alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LanguageModelFactory"].getLanguageIdFromCode(wordItem.languageCode)
@@ -55161,9 +55176,9 @@ class UIController {
       this.store.commit('app/lexicalRequestFinished')
     } else {
       // otherwise we can query for it as usual
-      let textSelector = _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_18__["default"].createObjectFromText(homonym.targetWord, homonym.languageID)
+      let textSelector = _lib_selection_text_selector__WEBPACK_IMPORTED_MODULE_19__["default"].createObjectFromText(homonym.targetWord, homonym.languageID)
       let wordUsageExamples = this.getWordUsageExamplesQueryParams(textSelector)
-      let lexQuery = _lib_queries_lexical_query_lookup_js__WEBPACK_IMPORTED_MODULE_12__["default"].create(textSelector, this.resourceOptions, this.state.lemmaTranslationLang, wordUsageExamples, this.api.app.clientId)
+      let lexQuery = _lib_queries_lexical_query_lookup_js__WEBPACK_IMPORTED_MODULE_13__["default"].create(textSelector, this.resourceOptions, this.state.lemmaTranslationLang, wordUsageExamples, this.api.app.clientId)
       lexQuery.getData()
     }
   }
@@ -55282,7 +55297,7 @@ class UIController {
       document.documentElement.style.setProperty(FONT_SIZE_PROP,
         `${uiOptions.items.fontSize.currentValue}px`)
     } catch (error) {
-      console.error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
+      this.getLogger().error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
     }
   }
 
@@ -55297,7 +55312,7 @@ class UIController {
     // by its fullname (with version and groupname appended)
     // multivalued settings are handled in the Options.setTextValue method which can take
     // an array or an individual text value
-    let baseKey = _lib_options_options_js__WEBPACK_IMPORTED_MODULE_26__["default"].parseKey(name)
+    let baseKey = _lib_options_options_js__WEBPACK_IMPORTED_MODULE_27__["default"].parseKey(name)
     this.api.settings.getResourceOptions().items[baseKey.name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
   }
 
@@ -55307,13 +55322,13 @@ class UIController {
     if (this.platform.isMobile) {
       switch (this.options.textQueryTriggerMobile) {
         case 'longTap':
-          ev = _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_24__["default"]
+          ev = _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_25__["default"]
           break
         case 'longtap':
-          ev = _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_24__["default"]
+          ev = _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_25__["default"]
           break
         case null:
-          ev = _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_24__["default"]
+          ev = _lib_custom_pointer_events_long_tap_js__WEBPACK_IMPORTED_MODULE_25__["default"]
           break
         default:
           customEv = this.options.textQueryTriggerMobile
@@ -55321,13 +55336,13 @@ class UIController {
     } else {
       switch (this.options.textQueryTriggerDesktop) {
         case 'dblClick':
-          ev = _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_23__["default"]
+          ev = _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_24__["default"]
           break
         case 'dblclick':
-          ev = _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_23__["default"]
+          ev = _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_24__["default"]
           break
         case null:
-          ev = _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_23__["default"]
+          ev = _lib_custom_pointer_events_mouse_dbl_click_js__WEBPACK_IMPORTED_MODULE_24__["default"]
           break
         default:
           customEv = this.options.textQueryTriggerDesktop
@@ -55337,13 +55352,19 @@ class UIController {
       this.evc.registerListener(listenerName, selector, this.getSelectedText.bind(this), ev)
     } else {
       this.evc.registerListener(
-        listenerName, selector, this.getSelectedText.bind(this), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_25__["default"], customEv)
+        listenerName, selector, this.getSelectedText.bind(this), _lib_custom_pointer_events_generic_evt_js__WEBPACK_IMPORTED_MODULE_26__["default"], customEv)
     }
   }
 
   registerAndActivateGetSelectedText (listenerName, selector) {
     this.registerGetSelectedText(listenerName, selector)
     this.evc.activateListener(listenerName)
+  }
+
+  getLogger() {
+    // make sure we don't fail if we get called before settings are initialized
+    let verbose = this.api && this.api.settings ? this.api.settings.verboseMode() : false
+    return _lib_log_logger_js__WEBPACK_IMPORTED_MODULE_8__["default"].getLogger(verbose)
   }
 }
 
@@ -57331,7 +57352,7 @@ class LexicalQueryLookup extends _lexical_query_js__WEBPACK_IMPORTED_MODULE_0__[
    * @param {String} clientId - api client identifier
    */
 
-  static create (textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, clientId) {
+  static create (textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, clientId, verboseMode) {
     // Check to see if Lemma Translations should be enabled for a query
     // Experimental
     let lemmaTranslations
@@ -57342,6 +57363,8 @@ class LexicalQueryLookup extends _lexical_query_js__WEBPACK_IMPORTED_MODULE_0__[
       htmlSelector: _selection_media_html_selector__WEBPACK_IMPORTED_MODULE_2__["default"].getDumpHTMLSelector(),
 
       clientId: clientId,
+
+      verboseMode: verboseMode,
 
       lemmaTranslations: lemmaTranslations,
 
@@ -57373,6 +57396,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_options_options_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/options/options.js */ "./lib/options/options.js");
 /* harmony import */ var alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alpheios-client-adapters */ "../node_modules/alpheios-client-adapters/dist/alpheios-client-adapters.min.js");
 /* harmony import */ var alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _lib_log_logger_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/lib/log/logger.js */ "./lib/log/logger.js");
+
 
 
 
@@ -57395,6 +57420,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
     if (this.selector.textQuoteSelector) {
       LexicalQuery.evt.TEXT_QUOTE_SELECTOR_RECEIVED.pub(this.selector.textQuoteSelector)
     }
+    this.getLogger = () => { return _lib_log_logger_js__WEBPACK_IMPORTED_MODULE_4__["default"].getLogger(options.verboseMode) }
   }
 
   static create (selector, options) {
@@ -57436,12 +57462,12 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
         })
 
         if (adapterConcordanceRes.errors.length > 0) {
-          adapterConcordanceRes.errors.forEach(error => console.error(error))
+          adapterConcordanceRes.errors.forEach(error => this.getLogger().log(error))
         }
 
         LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.pub(adapterConcordanceRes.result)
       } catch (error) {
-        console.error('Some strange eror inside getWordUsageData', error)
+        this.getLogger().log('Some strange eror inside getWordUsageData', error)
       }
     }
   }
@@ -57454,12 +57480,12 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
       })
 
       if (adapterConcordanceRes.errors.length > 0) {
-        adapterConcordanceRes.errors.forEach(error => console.error(error))
+        adapterConcordanceRes.errors.forEach(error => this.getLogger().log(error))
       }
 
       return adapterConcordanceRes.result
     } catch (error) {
-      console.error('Some strange eror inside getAuthorsForWordUsage', error)
+      this.getLogger().log('Some strange eror inside getAuthorsForWordUsage', error)
     }
   }
 
@@ -57502,7 +57528,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
       }
 
       if (adapterTreebankRes.errors.length > 0) {
-        adapterTreebankRes.errors.forEach(error => console.error(error.message))
+        adapterTreebankRes.errors.forEach(error => this.getLogger().log(error.message))
       }
     }
 
@@ -57518,7 +57544,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
       })
 
       if (adapterTuftsRes.errors.length > 0) {
-        adapterTuftsRes.errors.forEach(error => console.error(error.message))
+        adapterTuftsRes.errors.forEach(error => this.getLogger().log(error.message))
       }
 
       if (adapterTuftsRes.result) {
@@ -57574,7 +57600,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
         }
       })
       if (adapterTranslationRes.errors.length > 0) {
-        adapterTranslationRes.errors.forEach(error => console.error(error.message))
+        adapterTranslationRes.errors.forEach(error => this.getLogger().log(error.message))
       }
 
       LexicalQuery.evt.LEMMA_TRANSL_READY.pub(this.homonym)
@@ -57598,7 +57624,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
       })
 
       if (adapterConcordanceRes.errors.length > 0) {
-        adapterConcordanceRes.errors.forEach(error => console.error(error))
+        adapterConcordanceRes.errors.forEach(error => this.getLogger().log(error))
       }
 
       LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.pub(adapterConcordanceRes.result)
@@ -57618,7 +57644,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
     })
 
     if (adapterLexiconResShort.errors.length > 0) {
-      adapterLexiconResShort.errors.forEach(error => console.error(error.message))
+      adapterLexiconResShort.errors.forEach(error => this.getLogger().log(error.message))
     }
 
     let adapterLexiconResFull = yield alpheios_client_adapters__WEBPACK_IMPORTED_MODULE_3__["ClientAdapters"].lexicon.alpheios({
@@ -57633,7 +57659,7 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
     })
 
     if (adapterLexiconResFull.errors.length > 0) {
-      adapterLexiconResFull.errors.forEach(error => console.error(error))
+      adapterLexiconResFull.errors.forEach(error => this.getLogger().log(error))
     }
 
     yield 'Finalizing'
@@ -57661,7 +57687,6 @@ class LexicalQuery extends _query_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
       }
       if (typeof result === 'object' && result instanceof Error) {
         resultStatus = LexicalQuery.resultStatus.FAILED
-        console.error(`LexicalQuery failed: ${result.message}`)
       } else {
         resultStatus = LexicalQuery.resultStatus.SUCCEEDED
       }
@@ -64215,7 +64240,7 @@ class AuthModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_0_
         this._externalLoginUrl = this._auth.loginUrl()
         this._externalLogoutUrl = this._auth.logoutUrl()
       } catch (e) {
-        console.warn('AuthModule is missing loginUrl/logoutUrl methods')
+        // console.warn('AuthModule is missing loginUrl/logoutUrl methods')
       }
     }
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
@@ -64309,7 +64334,7 @@ AuthModule.api = (moduleInstance, store) => {
   return {
     session: () => {
       if (!moduleInstance._auth) {
-        console.warn('Session unavailable - _auth is not defined')
+        // console.warn('Session unavailable - _auth is not defined')
         return
       }
       moduleInstance._auth.session().then((data) => {
@@ -64317,12 +64342,12 @@ AuthModule.api = (moduleInstance, store) => {
       }).catch((error) => {
         // a session being unavailable is not necessarily an error
         // user might not have authenticated or it might be client-side auth
-        console.warn('Session unavailable', error)
+        // console.warn('Session unavailable', error)
       })
     },
     authenticate: () => {
       if (!moduleInstance._auth) {
-        console.warn('Authenticate unavailable - _auth is not defined')
+        // console.warn('Authenticate unavailable - _auth is not defined')
         return
       }
       store.commit(`auth/setNotification`, { text: 'AUTH_LOGIN_PROGRESS_MSG' })
@@ -64341,7 +64366,6 @@ AuthModule.api = (moduleInstance, store) => {
     },
     logout: () => {
       if (!moduleInstance._auth) {
-        console.warn('Logout unavailable - _auth is not defined')
         return
       }
       moduleInstance._auth.logout().then(() => {
@@ -64721,7 +64745,6 @@ class ActionPanelModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MO
     let el = document.createElement('div')
     let mountEl = document.querySelector(this.config.mountInto)
     if (!mountEl) {
-      console.warn(`A ${this.config.mountInto} element for mounting ${this.constructor.moduleName} is not found. Will mount into the body instead`)
       mountEl = document.body
     }
     let viEl = mountEl.appendChild(el)
@@ -64860,7 +64883,6 @@ class PanelModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1
     let el = document.createElement('div')
     let mountEl = document.querySelector(this.config.mountInto)
     if (!mountEl) {
-      console.warn(`A ${this.config.mountInto} element for mounting ${this.constructor.moduleName} is not found. Will mount into the body instead`)
       mountEl = document.body
     }
     let viEl = mountEl.appendChild(el)
@@ -64979,7 +65001,6 @@ class PopupModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE_1
     let el = document.createElement('div')
     let mountEl = document.querySelector(this.config.mountInto)
     if (!mountEl) {
-      console.warn(`A ${this.config.mountInto} element for mounting ${this.constructor.moduleName} is not found. Will mount into the body instead`)
       mountEl = document.body
     }
     let viEl = mountEl.appendChild(el)
@@ -65100,7 +65121,6 @@ class ToolbarModule extends _vue_vuex_modules_module_js__WEBPACK_IMPORTED_MODULE
     let el = document.createElement('div')
     let mountEl = document.querySelector(this.config.mountInto)
     if (!mountEl) {
-      console.warn(`A ${this.config.mountInto} element for mounting ${this.constructor.moduleName} is not found. Will mount into the body instead`)
       mountEl = document.body
     }
     let viEl = mountEl.appendChild(el)

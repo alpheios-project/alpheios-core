@@ -75,13 +75,14 @@ import WideTableVue from './inflections-table-wide.vue'
 import WideSubTables from './inflections-subtables-wide.vue'
 import WideSuppTable from './inflections-supp-table-wide.vue'
 import WordForms from './wordforms.vue'
+import Logger from '@/lib/log/logger'
 
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'Inflections',
-  inject: ['app', 'l10n'],
+  inject: ['app', 'l10n', 'settings'],
   storeModules: ['app', 'ui'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
@@ -113,6 +114,9 @@ export default {
   },
 
   computed: {
+    logger: function () {
+      return Logger.getLogger(this.settings.verboseMode())
+    },
     partOfSpeechSelector: {
       get: function () {
         return this.selectedPartOfSpeech
@@ -184,7 +188,7 @@ export default {
     navigate (reflink) {
       let panel = document.querySelector(`#${this.elementIDs.panelInner}`)
       if (!panel) {
-        console.warn(`Cannot find panel's inner element #${this.elementIDs.panelInner}. Scroll is cancelled`)
+        this.logger.warn(`Cannot find panel's inner element #${this.elementIDs.panelInner}. Scroll is cancelled`)
       }
       if (reflink === 'top') {
         // Navigate to the top of the page
@@ -197,7 +201,7 @@ export default {
           const offset = Math.round(el.offsetTop)
           panel.scrollTop = offset - paddingTop
         } else {
-          console.warn(`Cannot find #${reflink} element. Navigation is cancelled`)
+          this.logger.warn(`Cannot find #${reflink} element. Navigation is cancelled`)
         }
       }
     }

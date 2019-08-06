@@ -17,7 +17,7 @@ export default class LexicalQueryLookup extends LexicalQuery {
    * @param {String} clientId - api client identifier
    */
 
-  static create (textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, clientId) {
+  static create (textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, clientId, verboseMode) {
     // Check to see if Lemma Translations should be enabled for a query
     // Experimental
     let lemmaTranslations
@@ -28,6 +28,8 @@ export default class LexicalQueryLookup extends LexicalQuery {
       htmlSelector: HTMLSelector.getDumpHTMLSelector(),
 
       clientId: clientId,
+
+      verboseMode: verboseMode,
 
       lemmaTranslations: lemmaTranslations,
 
