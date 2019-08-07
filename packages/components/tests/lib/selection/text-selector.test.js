@@ -88,13 +88,13 @@ describe('text-selector.test.js', () => {
     expect(testTSelector.normalizedText).toEqual(testModel.normalizeWord('caelis'))
   })
 
-  it('9 TextSelector - createTextQuoteSelector creates textQuoteSelector from htmlSelector', () => {
+  it('9 TextSelector - createTextQuoteSelector creates textQuoteSelector from args', () => {
     let testModel = LMF.getLanguageModel(testLangId)
 
     let testTSelector = TextSelector.createObjectFromText('caelis', testLangId)
     testTSelector.start = 5
     testTSelector.end = 11
-    
+
     let testElement = document.createElement("p")
     let node = document.createTextNode("mare caelis cepit differ")
     testElement.appendChild(node)
@@ -108,7 +108,7 @@ describe('text-selector.test.js', () => {
       }
     }
 
-    testTSelector.createTextQuoteSelector(testElement)
+    testTSelector.createTextQuoteSelector('mare','cepit differ')
 
     expect(testTSelector.textQuoteSelector).toBeDefined()
     expect(testTSelector.textQuoteSelector.text).toEqual('caelis')

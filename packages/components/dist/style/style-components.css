@@ -3618,6 +3618,11 @@ span.alpheios-lookup__lang-change:hover {
   min-width: 0;
   border-color: var(--alpheios-lookup-input-border-color);
 }
+.alpheios-lookup__search-control input.alpheios-input.alpheios-rtl,
+.alpheios-lookup__search-control input.alpheios-input:focus.alpheios-rtl {
+  direction: rtl;
+  text-align: right;
+}
 .alpheios-lookup__search-control button {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;

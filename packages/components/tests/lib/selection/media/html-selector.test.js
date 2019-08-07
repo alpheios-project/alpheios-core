@@ -10,7 +10,7 @@ describe('html-selector.test.js', () => {
   // console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
-  
+
   let eventEl, testElement, parentElement
   beforeAll(() => {
     testElement = document.createElement("p")
@@ -117,7 +117,7 @@ describe('html-selector.test.js', () => {
 
   it('1 HTMLSelector - constructor creates an object with event, target, targetRect, location, languageID, wordSeparator', () => {
     let htmlSel = new HTMLSelector(eventEl, 'lat')
-    
+
     expect(htmlSel.event).toEqual(eventEl)
     expect(htmlSel.target).toEqual(eventEl.end.target)
     expect(htmlSel.targetRect).toEqual({
@@ -241,14 +241,14 @@ describe('html-selector.test.js', () => {
     let langCode = htmlSel.getLanguageCodeFromSource()
     expect(langCode).toEqual('gez')
   })
-  
+
   it('11 HTMLSelector - static getSelection method executes getSelection of the ownerDocument ', () => {
     HTMLSelector.getSelection(testElement)
     expect(testElement.ownerDocument.getSelection).toHaveBeenCalled()
   })
 
   it('12 HTMLSelector - doSpaceSeparatedWordSelection method fills given textSelector with data from htmlSelector - text, start, end, context, position and executes createTextQuoteSelector ', () => {
-    let eventEl2 = createEventWithSelection('mare cupidinibus cepit differ', 0) 
+    let eventEl2 = createEventWithSelection('mare cupidinibus cepit differ', 0)
 
     let htmlSel = new HTMLSelector(eventEl2, 'lat')
     let textSelector = new TextSelector(Constants.LANG_LATIN)
@@ -272,11 +272,14 @@ describe('html-selector.test.js', () => {
     expect(textSelector.context).toBeNull()
     expect(textSelector.position).toEqual(0)
 
-    expect(textSelector.createTextQuoteSelector).toHaveBeenCalledWith(eventEl2.element)
+    expect(textSelector.createTextQuoteSelector).toHaveBeenCalled()
+    expect(textSelector.textQuoteSelector.prefix).toEqual('')
+    expect(textSelector.textQuoteSelector.suffix).toEqual('cupidinibus cepit differ')
+    expect(textSelector.textQuoteSelector.source).toEqual(htmlSel.location)
   })
 
   it('13 HTMLSelector - doSpaceSeparatedWordSelection method fills given textSelector with data from htmlSelector - text, start, end, escapes punctuation ', () => {
-    let eventEl2 = createEventWithSelection('(mare[cupidinibus]cepit|differ)', 6) 
+    let eventEl2 = createEventWithSelection('(mare[cupidinibus]cepit|differ)', 6)
 
     let htmlSel = new HTMLSelector(eventEl2, 'lat')
     let textSelector = new TextSelector(Constants.LANG_LATIN)
@@ -301,7 +304,7 @@ describe('html-selector.test.js', () => {
   })
 
   it('14 HTMLSelector - doSpaceSeparatedWordSelection method fills given textSelector with data from htmlSelector - if selection is null, then textSelector is null too ', () => {
-    let eventEl2 = createEventWithSelection('', 0) 
+    let eventEl2 = createEventWithSelection('', 0)
 
     let htmlSel = new HTMLSelector(eventEl2, 'lat')
     let textSelector = new TextSelector(Constants.LANG_LATIN)
@@ -335,5 +338,39 @@ describe('html-selector.test.js', () => {
     expect(res.targetRect).toEqual({
       top: 0, left: 0
     })
+  })
+
+  it('17 HTMLSelector - uses alpheios-word-node as target', () => {
+    let testEl = document.createElement("span")
+    let testSub = document.createElement("b")
+    testSub.appendChild(document.createTextNode('p'))
+    testEl.setAttribute('data-alpheios-word-node','default')
+    testEl.appendChild(testSub)
+    testEl.appendChild(document.createTextNode('artial'))
+    document.body.appendChild(testEl)
+    let evtHandler = jest.fn(() => {})
+    let eventEl = new MouseDblClick(testEl, evtHandler)
+    eventEl.end.target = testEl
+    let htmlSel = HTMLSelector.getSelector(eventEl, 'lat')
+    expect(htmlSel.text).toEqual('partial')
+    expect(htmlSel.textQuoteSelector.prefix).toEqual('')
+    expect(htmlSel.textQuoteSelector.suffix).toEqual('')
+  })
+
+  it('18 HTMLSelector - alpheios-word-node=exact preserves puncutation in target', () => {
+    let testEl = document.createElement("span")
+    let testSub = document.createElement("b")
+    testSub.appendChild(document.createTextNode('p'))
+    testEl.setAttribute('data-alpheios-word-node','exact')
+    testEl.appendChild(testSub)
+    testEl.appendChild(document.createTextNode('[a]rtial'))
+    document.body.appendChild(testEl)
+    let evtHandler = jest.fn(() => {})
+    let eventEl = new MouseDblClick(testEl, evtHandler)
+    eventEl.end.target = testEl
+    let htmlSel = HTMLSelector.getSelector(eventEl, 'lat')
+    expect(htmlSel.text).toEqual('p[a]rtial')
+    expect(htmlSel.textQuoteSelector.prefix).toEqual('')
+    expect(htmlSel.textQuoteSelector.suffix).toEqual('')
   })
 })

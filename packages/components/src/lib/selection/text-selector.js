@@ -82,18 +82,7 @@ export default class TextSelector {
     return this.model.normalizeWord(this.text)
   }
 
-  /**
-   * Returns a language of a selection target. If language cannot be determined, defaultLanguageCode will be used instead.
-   * @param {string} languageCode - A default language code that will be used if language cannot be determined.
-   * @return {LanguageModel} Language model of a selection's language
-   */
-  /* static getLanguage (languageCode) {
-    return Models.LanguageModelFactory.getLanguageForCode(languageCode)
-  } */
-
-  createTextQuoteSelector (target) {
-    this.textQuoteSelector = new TextQuoteSelector(this.languageCode, this.normalizedText)
-    let selection = HTMLSelector.getSelection(target)
-    this.textQuoteSelector.createContext(selection, this)
+  createTextQuoteSelector (prefix,suffix) {
+    this.textQuoteSelector = new TextQuoteSelector(this.languageCode, this.normalizedText,prefix,suffix,window.location.href)
   }
 }

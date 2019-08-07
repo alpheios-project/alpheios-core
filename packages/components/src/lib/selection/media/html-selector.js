@@ -27,6 +27,7 @@ export default class HTMLSelector extends MediaSelector {
       left: this.event.end.client.x
     }
     this.location = this.target.ownerDocument.location.href
+    this.browserSelector = false
 
     // Determine a language ID based on an environment of a target
     this.languageID = this.getLanguageID(defaultLanguageCode)
@@ -37,7 +38,12 @@ export default class HTMLSelector extends MediaSelector {
      * So we don't care where an end selector positions would be and set it just to the same position as a start.
      * Selection methods (do...WordSelection) will determine exact word boundaries and will adjust the selection.
      */
-    HTMLSelector.createSelectionFromPoint(this.targetRect.left, this.targetRect.top)
+    if (this.target.dataset.alpheiosWordNode) {
+      //  let the browser select this word
+      this.browserSelector = true
+    } else {
+      HTMLSelector.createSelectionFromPoint(this.targetRect.left, this.targetRect.top)
+    }
     this.setDataAttributes()
     this.wordSeparator = new Map()
     // A word separator function, when called, will adjust a selection so it will match exact word boundaries
@@ -57,11 +63,15 @@ export default class HTMLSelector extends MediaSelector {
     textSelector.model = LanguageModelFactory.getLanguageModel(this.languageID)
     textSelector.location = this.location
     textSelector.data = this.data
-
-    if (this.wordSeparator.has(textSelector.model.baseUnit)) {
-      textSelector = this.wordSeparator.get(textSelector.model.baseUnit)(textSelector)
-    } else {
-      console.warn(`No word separator function found for a "${textSelector.model.baseUnit.toString()}" base unit`)
+    if (this.browserSelector) {
+      textSelector = this.doFromTargetWordSelection(textSelector)
+    }
+    if (textSelector.isEmpty()) {
+      if (this.wordSeparator.has(textSelector.model.baseUnit)) {
+        textSelector = this.wordSeparator.get(textSelector.model.baseUnit)(textSelector)
+      } else {
+        console.warn(`No word separator function found for a "${textSelector.model.baseUnit.toString()}" base unit`)
+      }
     }
     return textSelector
   }
@@ -165,6 +175,30 @@ export default class HTMLSelector extends MediaSelector {
   }
 
   /**
+   * Helper method for {@link #findSelection} which identifies the selected target
+   * word as being the contents of the actual browser selection target
+   * Used to allow a content provider to specify a node with child elements
+   * used to apply emphasis to specific characters as a complete word. Unless
+   * 'exact' is specified, punctuation will be removed from the text.
+   * e.g.<span alpheios-word-node="default"><b>f</b>ero</span> (word is evaluated as fero)
+   * e.g.<span alpheios-word-node="default">f{ero}</span> (word is evaluated as fero)
+   * e.g.<span alpheios-word-node="exact">f{ero}</span> (word is evaluated as f{ero})
+   * @see #findSelection
+   *
+   */
+  doFromTargetWordSelection (textSelector) {
+    let selection = HTMLSelector.getSelection(this.target)
+    textSelector.text = this.target.textContent
+    if (! this.target.dataset.alpheiosWordNode === 'exact' ){
+      textSelector.text = textSelector.text.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']', 'g'), '')
+    }
+    // for now, let's just create an empty context in this scenario
+    // until we fully support w3c annotation selectors
+    textSelector.createTextQuoteSelector('','')
+    return textSelector
+  }
+
+  /**
    * Helper method for {@link #findSelection} which identifies target word and
    * surrounding context for languages whose words are space-separated.
    * It does not use an end point of a selection. It takes a beginning of a selection
@@ -248,7 +282,7 @@ export default class HTMLSelector extends MediaSelector {
 
       // limit to the requested # of context words
       // prior to the selected word
-      // the selected word is the last item in the
+      // the select/ded word is the last item in the
       // preWordlist array
       if (preWordlist.length > textSelector.model.contextBackward + 1) {
         preWordlist = preWordlist.slice(preWordlist.length - (textSelector.model.contextBackward + 1))
@@ -285,7 +319,9 @@ export default class HTMLSelector extends MediaSelector {
       }
     }
 
-    textSelector.createTextQuoteSelector(this.target)
+    let prefix = selection.anchorNode.data.substr(0, textSelector.start).trim().replace(/\n/g, '')
+    let suffix = selection.anchorNode.data.substr(textSelector.end).trim().replace(/\n/g, '')
+    textSelector.createTextQuoteSelector(prefix,suffix)
     return textSelector
   }
 
