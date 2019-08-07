@@ -5223,14 +5223,6 @@ class TextQuoteSelector {
     return fullText
   }
 
-  createContext (selection, textSelector) {
-    this.prefix = selection.anchorNode.data.substr(0, textSelector.start).trim().replace(/\n/g, '')
-    this.suffix = selection.anchorNode.data.substr(textSelector.end).trim().replace(/\n/g, '')
-    this.text = textSelector.text
-    this.source = window.location.href
-    this.languageCode = textSelector.languageCode
-  }
-
   static readObject (jsonObject) {
     let tq = new TextQuoteSelector(jsonObject.languageCode, jsonObject.target.selector.exact)
     tq.prefix = jsonObject.target.selector.prefix
