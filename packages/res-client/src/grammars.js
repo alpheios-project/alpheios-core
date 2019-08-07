@@ -29,7 +29,6 @@ export default class Grammars {
       let adapters = Grammars.getGrammarAdapters(feature.languageID)
       if (!adapters || adapters.length === 0) { return [] } // No adapters found for this language
       requests = adapters.map(adapter => {
-        console.log(`Preparing a request to "${adapter.config.description}"`)
         return new Promise((resolve, reject) => {
           let timeout = 0
           if (options.timeout > 0) {
@@ -41,7 +40,6 @@ export default class Grammars {
           try {
             adapter.getResources(feature)
               .then(value => {
-                console.log(`A url has been returned from "${adapter.config.description}"`, value)
                 if (timeout) { window.clearTimeout(timeout) }
                 // value is a Definition object wrapped in a Proxy
                 resolve(value)
@@ -57,7 +55,6 @@ export default class Grammars {
 
       return requests
     } catch (error) {
-      console.log(`Unable to fetch resources due to: ${error}`)
       return []
     }
   }
