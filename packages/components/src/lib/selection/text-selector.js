@@ -15,9 +15,6 @@ export default class TextSelector {
   constructor (languageID) {
     this.text = '' // Calculated?
     this.languageID = languageID || null
-    if (!this.languageID) {
-      console.warn(`Creating a TextSelector without any language assigned`)
-    }
     this.model = undefined
     this.location = ''
     this.data = {}
@@ -70,7 +67,6 @@ export default class TextSelector {
   }
 
   get languageCode () {
-    console.warn(`Deprecated. Please use "languageID" instead of "languageCode"`)
     return (this.languageID) ? LanguageModelFactory.getLanguageCodeFromId(this.languageID) : ''
   }
 

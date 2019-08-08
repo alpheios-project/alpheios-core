@@ -23,7 +23,7 @@ export default class ResourceQuery extends Query {
           let resolvedValue = await result.value
           result = iterator.next(resolvedValue)
         } catch (error) {
-          console.error(error)
+          console.error("Unexpected error retrieving Alpheios grammar resource",error)
           iterator.return()
           break
         }
@@ -64,7 +64,7 @@ export default class ResourceQuery extends Query {
           }
         },
         error => {
-          console.log('Error retrieving Grammar resource', error)
+          console.log('Unexpected error retrieving Alpheios grammar resource', error)
           if (grammarRequests.every(request => request.complete)) {
             if (this.active) {
               ResourceQuery.evt.RESOURCE_QUERY_COMPLETE.pub({ resultStatus: ResourceQuery.resultStatus.SUCCEEDED })

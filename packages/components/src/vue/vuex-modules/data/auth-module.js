@@ -16,7 +16,7 @@ export default class AuthModule extends Module {
         this._externalLoginUrl = this._auth.loginUrl()
         this._externalLogoutUrl = this._auth.logoutUrl()
       } catch (e) {
-        // console.warn('AuthModule is missing loginUrl/logoutUrl methods')
+        // fail quietly
       }
     }
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
@@ -110,7 +110,7 @@ AuthModule.api = (moduleInstance, store) => {
   return {
     session: () => {
       if (!moduleInstance._auth) {
-        // console.warn('Session unavailable - _auth is not defined')
+        // fail quietly
         return
       }
       moduleInstance._auth.session().then((data) => {
@@ -118,12 +118,12 @@ AuthModule.api = (moduleInstance, store) => {
       }).catch((error) => {
         // a session being unavailable is not necessarily an error
         // user might not have authenticated or it might be client-side auth
-        // console.warn('Session unavailable', error)
+        // fail quietly
       })
     },
     authenticate: () => {
       if (!moduleInstance._auth) {
-        // console.warn('Authenticate unavailable - _auth is not defined')
+        // fail quietly
         return
       }
       store.commit(`auth/setNotification`, { text: 'AUTH_LOGIN_PROGRESS_MSG' })
@@ -136,7 +136,7 @@ AuthModule.api = (moduleInstance, store) => {
         store.commit('auth/setIsAuthenticated', data)
         store.commit(`auth/setNotification`, { text: 'AUTH_LOGIN_SUCCESS_MSG' })
       }).catch((error) => {
-        console.error('Authenticate failed', error)
+        console.error('Alpheios authentication failed', error)
         return store.commit(`auth/setNotification`, { text: 'AUTH_LOGIN_AUTH_FAILURE_MSG' })
       })
     },
@@ -148,7 +148,7 @@ AuthModule.api = (moduleInstance, store) => {
         store.commit('auth/setIsNotAuthenticated')
         return store.commit(`auth/setNotification`, { text: 'AUTH_LOGOUT_SUCCESS_MSG' })
       }).catch((error) => {
-        console.error('Logout failed', error)
+        console.error('Alpheios logout failed', error)
       })
     },
     getUserData: () => {
@@ -165,7 +165,7 @@ AuthModule.api = (moduleInstance, store) => {
               endpoints: endpoints
             })
           }).catch((error) => {
-            console.error('Error retrieving user data', error)
+            console.error('Unexpected error retrieving Alpheios user profile data', error)
           })
         } else {
           reject(new Error('Authentication is not enabled'))

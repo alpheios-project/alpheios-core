@@ -71,7 +71,6 @@ export default class Query {
    * @return {Promise<Error>}
    */
   async getData () {
-    console.warn(`getData() method of a Query object should not be called directly. It must be implemented in a subclass of a Query`)
     return new Error(`getData() method should be implemented in a subclass of a Query`)
   }
 
@@ -81,7 +80,6 @@ export default class Query {
    * @return {*}
    */
   finalize () {
-    console.warn(`finalize() method of a Query object should not be called directly. It must be implemented in a subclass of a Query`)
     throw new Error(`finalize() method should be implemented in a subclass of a Query`)
   }
 }

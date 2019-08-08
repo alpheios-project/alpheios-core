@@ -61,8 +61,6 @@ export default class LocalStorageArea extends StorageAdapter {
             resolve(true)
           } else {
             // Nothing to retrieve
-            console.log(`Unable to retrieve data for "${this.domain}" storage domain because no keys provided or no keys listed in local storage. ` +
-              `This might be normal for devices where no data is saved to the local storage yet`)
             resolve(result)
           }
         }
@@ -105,8 +103,6 @@ export default class LocalStorageArea extends StorageAdapter {
             keys = JSON.parse(keys)
           } else {
             // Nothing to retrieve
-            console.log(`Unable to retrieve data for "${this.domain}" storage domain because no keys provided or no keys listed in local storage. ` +
-              `This might be normal for devices where no data is saved to the local storage yet`)
             resolve(result)
           }
         }
@@ -136,8 +132,6 @@ export default class LocalStorageArea extends StorageAdapter {
           resolve(true)
         } else {
           // Nothing to retrieve
-          console.log(`Unable to retrieve data for "${this.domain}" storage domain because no keys provided or no keys listed in local storage. ` +
-            `This might be normal for devices where no data is saved to the local storage yet`)
           resolve(result)
         }
       } catch (e) {

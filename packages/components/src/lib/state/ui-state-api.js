@@ -76,7 +76,6 @@ export default class UIStateAPI {
    * @return {UIStateAPI} the updated state object
    */
   setPanelOpen () {
-    console.log('setPanelOpen is not implemented')
     return this
   }
 
@@ -85,7 +84,6 @@ export default class UIStateAPI {
    * @return {UIStateAPI} the updated state object
    */
   setPanelClosed () {
-    console.log('setPanelClosed is not implemented')
     return this
   }
 
@@ -102,7 +100,6 @@ export default class UIStateAPI {
    * @return {IState} the updated state object
    */
   activateUI () {
-    console.log('activateUI is not implemented')
     return this
   }
 
@@ -112,7 +109,6 @@ export default class UIStateAPI {
    * @return {UIStateAPI} the updated state object
    */
   changeTab (tabName) {
-    console.log('changeTab is not implemented')
     return this
   }
 }

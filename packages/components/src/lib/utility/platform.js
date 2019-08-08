@@ -70,7 +70,7 @@ export default class Platform {
       // We'll use the `orientation` property which returns an angole of rotation.
       return (Math.abs(parseInt(window.orientation, 10)) === 90) ? this.orientations.LANDSCAPE : this.orientations.PORTRAIT
     } else {
-      console.error(`Cannot determine orientation of a device, returning a default value of "portrait"`)
+      console.warn(`Alpheios cannot determine the orientation of this device, assuming "portrait"`)
       return this.orientations.PORTRAIT
     }
   }
@@ -83,7 +83,7 @@ export default class Platform {
       let bodyOrientationClass = this.isPortrait ? 'alpheios-layout-portrait' : 'alpheios-layout-landscape'
       document.body.classList.add(bodyOrientationClass)
     } else {
-      console.warn(`Cannot set platform attributes because either document or documentElement are not defined`)
+      console.warn(`Alpheios cannot determine what platform this is - either document or documentElement are not defined`)
     }
   }
 

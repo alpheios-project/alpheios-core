@@ -35,6 +35,7 @@
 </template>
 <script>
 import Tooltip from '@/vue/components/tooltip.vue'
+import { LanguageModelFactory } from 'alpheios-data-models'
 
 export default {
   name: 'WordUsageExamplesFilters',
@@ -79,7 +80,7 @@ export default {
       return this.$store.state.app.homonymDataReady ? this.app.homonym : null
     },
     languageCode () {
-      return  this.homonym ? this.homonym.language : null
+      return  this.homonym ? LanguageModelFactory.getLanguageCodeFromId(this.homonym.languageID) : null
     },
     authorsList () {
       if (!this.$store.state.app.homonymDataReady) {
@@ -169,7 +170,7 @@ export default {
     applySort (typeSort, items) {
       return items.sort((a,b) => {
             let aT = this.calcTitle(a, typeSort)
-            let bT = this.calcTitle(b, typeSort)        
+            let bT = this.calcTitle(b, typeSort)
             return aT.localeCompare(bT, this.languageCode, {sensitivity: 'accent'})
           })
     }

@@ -84,10 +84,9 @@ export default class OptionItem {
     this.storageAdapter.remove(this.name).then(
       () => {
         // Options storage succeeded
-        console.log(`Item "${this.name}" was removed from storage successfully`)
       },
       (errorMessage) => {
-        console.error(`Removeing an option failed: ${errorMessage}`)
+        console.error(`Unexpected error resetting Alpheios option ${this.name}: ${errorMessage}`)
       }
     )
   }
@@ -102,10 +101,9 @@ export default class OptionItem {
     this.storageAdapter.set(option).then(
       () => {
         // Options storage succeeded
-        // console.log(`Value "${this.currentValue}" of "${this.name}" option value was stored successfully`)
       },
       (errorMessage) => {
-        console.error(`Storage of an option value failed: ${errorMessage}`)
+        console.error(`Unexpected error storing Alpheios option ${this.name}: ${errorMessage}`)
       }
     )
   }

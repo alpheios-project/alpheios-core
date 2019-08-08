@@ -20,11 +20,13 @@ describe('inflections-table-wide.test.js', () => {
   beforeAll(async () => {
     let adapterTuftsRes = await ClientAdapters.morphology.tufts({
       method: 'getHomonym',
+      clientId: 'inflections-table-wide-test',
       params: {
         languageID: Constants.LANG_GREEK,
         word: 'συνδέει'
       }
     })
+
 
     let testHomonym = adapterTuftsRes.result
     let testInflectionData = await LanguageDatasetFactory.getInflectionData(testHomonym)

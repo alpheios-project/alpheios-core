@@ -334,8 +334,6 @@ export default class TabScript extends UIStateAPI {
             diff['_changedKeys'].push(key)
             diff['_changedEntries'].push([key, targetState[key]])
           }
-        } else {
-          console.warn(`TabScript has no property named "${key}"`)
         }
       }
     }

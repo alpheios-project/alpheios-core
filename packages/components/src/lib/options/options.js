@@ -74,7 +74,7 @@ export default class Options {
                 try {
                   f.currentValue = JSON.parse(values[key])
                 } catch (e) {
-                  console.warn(`Unable to parse option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e)
+                  console.warn(`Unable to parse Alpheios option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e)
                 }
               }
             })
@@ -83,16 +83,14 @@ export default class Options {
               this.items[parsedKey.name].currentValue = JSON.parse(values[key])
             } catch (e) {
               // invalid value
-              console.warn(`Unable to parse option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e)
+              console.warn(`Unable to parse Alpheios option value for  ${parsedKey.name} from ${values[parsedKey.name]}`, e)
             }
           }
-        } else {
-          console.warn(`Unrecognized setting ${parsedKey.name} or version ${parsedKey.version}`)
         }
       }
       return this
     } catch (error) {
-      let message = `Cannot retrieve options for Alpheios extension from a local storage: ${error}. Default values ` +
+      let message = `Unexpected error retrieving options for Alpheios from local storage: ${error}. Default values ` +
       `will be used instead`
       console.error(message)
     }
@@ -129,7 +127,7 @@ export default class Options {
         group: group
       }
     } catch (e) {
-      console.warn(`Unable to parse options key ${key}`)
+      console.warn(`Failed to parse stored Alpheios options key ${key}`)
     }
     return parsed
   }

@@ -70,7 +70,7 @@ export default class HTMLSelector extends MediaSelector {
       if (this.wordSeparator.has(textSelector.model.baseUnit)) {
         textSelector = this.wordSeparator.get(textSelector.model.baseUnit)(textSelector)
       } else {
-        console.warn(`No word separator function found for a "${textSelector.model.baseUnit.toString()}" base unit`)
+        console.warn(`Alpheios word selection error - no word separator function found for "${textSelector.model.baseUnit.toString()}" base unit`)
       }
     }
     return textSelector
@@ -120,7 +120,7 @@ export default class HTMLSelector extends MediaSelector {
       range.setEndPoint('EndToEnd', endRange)
       range.select()
     } else {
-      console.warn(`Cannot make a selection as neither getSelection() nor createTextRange() are supported`)
+      console.warn(`Browser does not support the Alpheios word selection code. Support for getSelection() or createTextRange() is required.`)
     }
     return range
   }
@@ -169,8 +169,6 @@ export default class HTMLSelector extends MediaSelector {
 
   static getSelection (target) {
     let selection = target.ownerDocument.getSelection()
-
-    if (!selection) { console.warn(`Cannot get selection from a document`) }
     return selection
   }
 
