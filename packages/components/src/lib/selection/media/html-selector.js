@@ -185,14 +185,13 @@ export default class HTMLSelector extends MediaSelector {
    *
    */
   doFromTargetWordSelection (textSelector) {
-    let selection = HTMLSelector.getSelection(this.target)
     textSelector.text = this.target.textContent
-    if (! this.target.dataset.alpheiosWordNode === 'exact' ){
+    if (!this.target.dataset.alpheiosWordNode === 'exact') {
       textSelector.text = textSelector.text.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']', 'g'), '')
     }
     // for now, let's just create an empty context in this scenario
     // until we fully support w3c annotation selectors
-    textSelector.createTextQuoteSelector('','')
+    textSelector.createTextQuoteSelector('', '')
     return textSelector
   }
 
@@ -319,7 +318,7 @@ export default class HTMLSelector extends MediaSelector {
 
     let prefix = selection.anchorNode.data.substr(0, textSelector.start).trim().replace(/\n/g, '')
     let suffix = selection.anchorNode.data.substr(textSelector.end).trim().replace(/\n/g, '')
-    textSelector.createTextQuoteSelector(prefix,suffix)
+    textSelector.createTextQuoteSelector(prefix, suffix)
     return textSelector
   }
 

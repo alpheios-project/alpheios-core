@@ -13,4 +13,12 @@ export default {
 </script>
 <style lang="scss">
   @import "../../styles/variables";
+
+  .alpheios-definition__short {
+    .alpheios-definition__text {
+      color: var(--alpheios-definition-short-color);
+      font-size: uisize(18px);
+      font-weight: bold;
+    }
+  }
 </style>

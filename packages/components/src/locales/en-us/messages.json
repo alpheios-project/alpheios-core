@@ -196,7 +196,7 @@
     "component": "Panel"
   },
   "TEXT_INFO_CLICK": {
-    "message": "Double-click on a word to retrieve lemmas, morphology, short definitions and Latin usage examples.",
+    "message": "Double-click on a word to retrieve lemmas, morphology, short definitions and access to additional word analysis tools.",
     "description": "info text",
     "component": "Panel"
   },
@@ -302,10 +302,10 @@
     "component": "UI"
   },
   "TEXT_NOTICE_CHANGE_LANGUAGE": {
-    "message": "Language: {languageName}<br>Wrong? Change to:",
+    "message": "'{targetWord}' was not found in our {languageName} resources. Wrong language? Change to:",
     "description": "language notification",
     "component": "UI",
-    "params": ["languageName"]
+    "params": ["targetWord", "languageName"]
   },
   "TEXT_NOTICE_NOT_FOUND": {
     "message": "'{targetWord}' was not found in our {languageName} resources.",
@@ -611,6 +611,11 @@
     "message": "Apply to all options",
     "description": "Reset All description title",
     "component": "Options Tab"
+  },
+  "HINT_LANDSCAPE_MODE": {
+    "message": "🛈 This view is best in landscape mode with the panel expanded to full screen",
+    "description": "hint to switch to landscape mode for a mobile view",
+    "component": "Compact Panel"
   }
 
 

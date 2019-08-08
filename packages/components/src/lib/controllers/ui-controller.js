@@ -1072,7 +1072,8 @@ export default class UIController {
       if (this.store.state.app.lexicalRequest.source === 'page') {
         // we offer change language here when the lookup was from the page because the language used for the
         // lookup is deduced from the page and might be wrong
-        const message = this.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE', { languageName: languageName })
+        const message = this.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE',
+          { targetWord: this.store.state.app.targetWord, languageName: languageName })
         this.store.commit(`ui/setNotification`, { text: message, important: true, showLanguageSwitcher: true })
       } else {
         // if we are coming from e.g. the lookup or the wordlist, offering change language
@@ -1137,8 +1138,8 @@ export default class UIController {
 
     let isPortrait = this.store.state.panel && (this.store.state.panel.orientation === Platform.orientations.PORTRAIT)
 
-    if (['treebank', 'inflections', 'inflectionsbrowser'].includes(tabName) && this.platform.isMobile && isPortrait) {
-      let message = '🛈 This view is best in landscape mode with the panel expanded to full screen'
+    if (['treebank', 'inflections', 'inflectionsbrowser', 'wordUsage'].includes(tabName) && this.platform.isMobile && isPortrait) {
+      let message = this.api.l10n.getMsg('HINT_LANDSCAPE_MODE')
       this.store.commit(`ui/setHint`, message, tabName)
     } else {
       this.store.commit(`ui/resetHint`)
@@ -1422,7 +1423,7 @@ export default class UIController {
   getSelectedText (event, domEvent) {
     if (this.state.isActive() &&
         this.state.uiIsActive() &&
-        (! this.options.triggerPreCallback || this.options.triggerPreCallback(domEvent)) ) {
+        (!this.options.triggerPreCallback || this.options.triggerPreCallback(domEvent))) {
       // Open the UI immediately to reduce visual delays
       this.open()
       /*

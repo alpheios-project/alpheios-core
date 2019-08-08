@@ -388,8 +388,8 @@ html {
   --alpheios-desktop-popup-progress-bar-line: var(--alpheios-toolbar-bg-color) !important;
   --alpheios-desktop-popup-link-color: var(--alpheios-link-color) !important;
   --alpheios-desktop-popup-link-color-hover: var(--alpheios-link-color-hover) !important;
-  --alpheios-desktop-popup-credit-link-color: var(--alpheios-link-special-color) !important;
-  --alpheios-desktop-popup-credit-link-color-hover: var(--alpheios-link-special-color-hover) !important;
+  --alpheios-desktop-popup-credit-link-color: var(--alpheios-color-bright) !important;
+  --alpheios-desktop-popup-credit-link-color-hover: var(--alpheios-color-bright-hover) !important;
   --alpheios-desktop-popup-credit-providers-color: var(--alpheios-text-color) !important;
   --alpheios-desktop-popup-body-bg: var(--alpheios-text-bg-color) !important;
   --alpheios-desktop-popup-content-bg: var(--alpheios-text-bg-color) !important;
@@ -423,6 +423,7 @@ html {
   --alpheios-lookup-button-border-color-hover: var(--alpheios-btn-primary-border-color-hover) !important;
   --alpheios-lookup-link-color: var(--alpheios-link-special-color) !important;
   --alpheios-lookup-link-color-hover: var(--alpheios-link-special-color-hover) !important;
+  --alpheios-definition-short-color: var(--alpheios-color-dark) !important;
   --alpheios-inflect-title-color: var(--alpheios-link-color-on-light) !important;
   --alpheios-inflect-button-control-color: var(--alpheios-btn-secondary-font-color) !important;
   --alpheios-inflect-button-control-bg: var(--alpheios-btn-secondary-bg-color) !important;
@@ -1115,6 +1116,11 @@ body {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-definition__short .alpheios-definition__text {
+  color: var(--alpheios-definition-short-color) !important;
+  font-size: calc(var(--alpheios-base-ui-size) * 1.125) !important;
+  font-weight: bold !important;
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.

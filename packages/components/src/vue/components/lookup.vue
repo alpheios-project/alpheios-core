@@ -125,6 +125,7 @@ export default {
     },
 
     lookup: function () {
+      this.lookuptext = this.lookuptext.trim()
       if (this.lookuptext.length === 0) {
         return null
       }

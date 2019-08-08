@@ -143,8 +143,8 @@ html {
   --alpheios-desktop-popup-link-color: var(--alpheios-link-color);
   --alpheios-desktop-popup-link-color-hover: var(--alpheios-link-color-hover);
 
-  --alpheios-desktop-popup-credit-link-color: var(--alpheios-link-special-color);
-  --alpheios-desktop-popup-credit-link-color-hover: var(--alpheios-link-special-color-hover);
+  --alpheios-desktop-popup-credit-link-color: var(--alpheios-color-bright);
+  --alpheios-desktop-popup-credit-link-color-hover: var(--alpheios-color-bright-hover);
   --alpheios-desktop-popup-credit-providers-color: var(--alpheios-text-color);
 
   --alpheios-desktop-popup-body-bg: var(--alpheios-text-bg-color);
@@ -191,6 +191,10 @@ html {
   --alpheios-lookup-button-border-color-hover: var(--alpheios-btn-primary-border-color-hover);
   --alpheios-lookup-link-color: var(--alpheios-link-special-color);
   --alpheios-lookup-link-color-hover: var(--alpheios-link-special-color-hover);
+
+  //Definitions
+
+  --alpheios-definition-short-color: var(--alpheios-color-dark);
 
   //Inflections
 
