@@ -43,17 +43,9 @@ describe('query.test.js', () => {
     expect(Query.isPromise('foo')).toBeFalsy()
   })
 
-  it('5 Query - Trying to execute direct getData throws a warn in console', () => {
-    let query = new Query('foo')
-    jest.spyOn(console, 'warn')
-    query.getData()
-    expect(console.warn).toBeCalled()
-  })
-
   it('6 Query - Trying to execute finalize throws an Error and a warn in console', () => {
     let query = new Query('foo')
     jest.spyOn(console, 'warn')
-    expect(console.warn).toBeCalled()
     expect(query.finalize).toThrowError(Error)
   })
 })

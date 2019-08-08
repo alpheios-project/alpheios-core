@@ -42,11 +42,10 @@ describe('local-storage-area.test.js', () => {
     expect(window.localStorage.getItem).toHaveBeenCalled()
   })
 
-  it('2 LocalStorageArea - get method executes console.log if window.localStorage doesn\'t have keys', async () => {
+  it('2 LocalStorageArea - get method fails quietly if window.localStorage doesn\'t have keys', async () => {
     let stAdapter = new LocalStorageArea('alpheios-content-options')
     await stAdapter.get()
-    expect(console.log).toHaveBeenCalledWith(`Unable to retrieve data for "alpheios-content-options" storage domain because no keys provided or no keys listed in local storage. ` +
-              `This might be normal for devices where no data is saved to the local storage yet`)
+    expect(console.log).not.toHaveBeenCalled()
   })
 
   it('3 LocalStorageArea - get method retrieves values for all keys from the window.localStorage if keys = undefined', async () => {

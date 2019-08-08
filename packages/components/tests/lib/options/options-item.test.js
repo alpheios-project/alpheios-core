@@ -138,6 +138,6 @@ describe('options-item.test.js', () => {
     let newOptionItem = new OptionItem(item, 'preferredLanguage', curStAdapter)
     await newOptionItem.save()
 
-    expect(console.error).toHaveBeenCalledWith(`Storage of an option value failed: ${testError}`)
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/storing/))
   })
 })

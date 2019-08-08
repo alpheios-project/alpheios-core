@@ -170,7 +170,7 @@ describe('options.test.js', () => {
     opt.storageAdapter.get = function () { return new Promise((resolve, reject) => { reject(testError) }) }
 
     await opt.load()
-    expect(console.error).toHaveBeenCalledWith(`Cannot retrieve options for Alpheios extension from a local storage: ${testError}. Default values will be used instead`)
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/retrieving/))
   })
 
   it('10 Options - parseKey parses a string to object', () => {

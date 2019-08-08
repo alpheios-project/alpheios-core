@@ -89,6 +89,6 @@ describe('l10n.test.js', () => {
     expect(testLn10.selectedLocale).toEqual(Locales.en_US)
 
     testLn10.setLocale(Locales.en_GB)
-    expect(console.error).toHaveBeenCalledWith(`Cannot set locale to "${Locales.en_GB}" because there is no message bundle for it`)
+    expect(testLn10.selectedLocale).toEqual(Locales.en_US)
   })
 })

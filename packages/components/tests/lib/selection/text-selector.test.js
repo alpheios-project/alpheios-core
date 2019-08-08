@@ -63,16 +63,6 @@ describe('text-selector.test.js', () => {
     expect(testTSelector.model).toEqual(LMF.getLanguageModel(testLangId))
   })
 
-  it('6 TextSelector - languageCode method prints warn to console about deprecated status and returns languageCode or empty string', () => {
-    let testTSelector1 = new TextSelector(testLangId)
-
-    expect(testTSelector1.languageCode).toEqual(LMF.getLanguageCodeFromId(testLangId))
-    expect(console.warn).toHaveBeenCalledWith('Deprecated. Please use "languageID" instead of "languageCode"')
-
-    let testTSelector2 = new TextSelector()
-    expect(testTSelector2.languageCode).toEqual('')
-  })
-
   it('7 TextSelector - isEmpty returns true if text property is empty', () => {
     let testTSelector1 = new TextSelector()
     expect(testTSelector1.isEmpty()).toBeTruthy()

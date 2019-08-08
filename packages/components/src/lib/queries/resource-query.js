@@ -64,7 +64,7 @@ export default class ResourceQuery extends Query {
           }
         },
         error => {
-          console.log('Unexpected error retrieving Alpheios grammar resource', error)
+          console.error('Unexpected error retrieving Alpheios grammar resource', error)
           if (grammarRequests.every(request => request.complete)) {
             if (this.active) {
               ResourceQuery.evt.RESOURCE_QUERY_COMPLETE.pub({ resultStatus: ResourceQuery.resultStatus.SUCCEEDED })

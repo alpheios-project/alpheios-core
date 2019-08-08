@@ -97,7 +97,7 @@ describe('resource-query.test.js', () => {
 
     await query.getData()
 
-    expect(console.log).toHaveBeenCalledWith('Error retrieving Grammar resource', testError)
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/retrieving/),testError)
   })
 
   it('5 ResourceQuery - On finalize Query.destroy executes', async () => {
