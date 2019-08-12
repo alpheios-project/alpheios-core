@@ -24,7 +24,7 @@ export default class LexicalQueryLookup extends LexicalQuery {
     if (textSelector.languageID === Constants.LANG_LATIN && lemmaTranslationLang) {
       lemmaTranslations = { locale: lemmaTranslationLang }
     }
-    let options = {
+    const options = {
       htmlSelector: HTMLSelector.getDumpHTMLSelector(),
 
       clientId: clientId,

@@ -34,7 +34,7 @@ export default class OptionItem {
    */
   currentItem (prop = undefined) {
     let item = []
-    for (let value of this.values) {
+    for (const value of this.values) {
       if (this.multiValue) {
         if (this.currentValue.includes(value.value)) {
           const itemValue = prop ? value[prop] : value
@@ -66,9 +66,9 @@ export default class OptionItem {
 
   setTextValue (textValue) {
     this.currentValue = this.multiValue ? [] : ''
-    for (let value of this.values) {
+    for (const value of this.values) {
       if (this.multiValue) {
-        for (let tv of textValue) {
+        for (const tv of textValue) {
           if (value.text === tv) { this.currentValue.push(value.value) }
         }
       } else {
@@ -95,7 +95,7 @@ export default class OptionItem {
    * Saves an option value to the local storage.
    */
   save () {
-    let option = {}
+    const option = {} // eslint-disable-line no-prototype-builtins
     option[this.name] = JSON.stringify(this.currentValue)
 
     this.storageAdapter.set(option).then(

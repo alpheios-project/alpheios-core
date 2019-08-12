@@ -13,7 +13,7 @@ export default class Swipe extends PointerEvt {
   }
 
   static excludeCpeTest (dataset) {
-    return dataset.hasOwnProperty('alphExcludeSwipeCpe')
+    return dataset.hasOwnProperty('alphExcludeSwipeCpe') // eslint-disable-line no-prototype-builtins
   }
 
   static get directions () {
@@ -68,7 +68,7 @@ export default class Swipe extends PointerEvt {
   }
 
   static listen (selector, evtHandler, mvmntThreshold, durationThreshold) {
-    let elements = document.querySelectorAll(selector)
+    const elements = document.querySelectorAll(selector)
     for (const element of elements) {
       this.addUpDownListeners(element, new this(element, evtHandler, mvmntThreshold, durationThreshold))
     }

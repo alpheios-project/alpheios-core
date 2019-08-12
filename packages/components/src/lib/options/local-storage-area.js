@@ -47,13 +47,13 @@ export default class LocalStorageArea extends StorageAdapter {
   remove (key) {
     return new Promise((resolve, reject) => {
       try {
-        let result = null
+        const result = null
         if (key) {
           let keys = window.localStorage.getItem(`${this.domain}-keys`)
           if (keys) {
             keys = JSON.parse(keys)
 
-            let index = keys.indexOf(key)
+            const index = keys.indexOf(key)
             if (index !== -1) { keys.splice(index, 1) }
 
             window.localStorage.setItem(`${this.domain}-keys`, JSON.stringify(keys))
@@ -95,7 +95,7 @@ export default class LocalStorageArea extends StorageAdapter {
           keys = []
         }
 
-        let result = {}
+        let result = {} // eslint-disable-line prefer-const
         if (keys.length === 0) {
           // If no keys specified, will retrieve all values
           keys = window.localStorage.getItem(`${this.domain}-keys`)
@@ -121,11 +121,11 @@ export default class LocalStorageArea extends StorageAdapter {
   clearAll () {
     return new Promise((resolve, reject) => {
       try {
-        let result = null
+        let result = null // eslint-disable-line prefer-const
         let keys = window.localStorage.getItem(`${this.domain}-keys`)
         if (keys) {
           keys = JSON.parse(keys)
-          for (let key of keys) {
+          for (const key of keys) {
             window.localStorage.removeItem(key)
           }
           window.localStorage.setItem(`${this.domain}-keys`, JSON.stringify([]))

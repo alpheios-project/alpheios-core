@@ -13,17 +13,17 @@ export default class ResourceQuery extends Query {
   }
 
   async getData () {
-    let iterator = this.iterations()
+    const iterator = this.iterations()
 
     let result = iterator.next()
     while (true) {
       if (!this.active) { this.finalize() }
       if (Query.isPromise(result.value)) {
         try {
-          let resolvedValue = await result.value
+          const resolvedValue = await result.value
           result = iterator.next(resolvedValue)
         } catch (error) {
-          console.error("Unexpected error retrieving Alpheios grammar resource",error)
+          console.error('Unexpected error retrieving Alpheios grammar resource', error)
           iterator.return()
           break
         }
@@ -49,7 +49,7 @@ export default class ResourceQuery extends Query {
       ResourceQuery.evt.GRAMMAR_NOT_FOUND.pub()
       this.finalize()
     }
-    for (let q of grammarRequests) {
+    for (let q of grammarRequests) { // eslint-disable-line prefer-const
       q.res.then(
         url => {
           q.complete = true

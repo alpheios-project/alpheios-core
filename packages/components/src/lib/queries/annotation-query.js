@@ -31,7 +31,7 @@ export default class AnnotationQuery extends Query {
   }
 
   async getTreebankOptions () {
-    let siteMatch = this.siteOptions.filter((s) => this.document.location.href.match(new RegExp(s.uriMatch)) && s.resourceOptions.items.treebanks)
+    const siteMatch = this.siteOptions.filter((s) => this.document.location.href.match(new RegExp(s.uriMatch)) && s.resourceOptions.items.treebanks)
     // TODO eventually this data should be probably be held in a formal data model object. Not sure what the best format
     // is right now so leaving that for later.
     if (siteMatch.length > 0) {

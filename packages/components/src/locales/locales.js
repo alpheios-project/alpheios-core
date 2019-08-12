@@ -41,7 +41,7 @@ export default {
    * @return {MessageBundle[]} An array of message bundles.
    */
   bundleArr: () => {
-    let msgArray = []
+    let msgArray = [] // eslint-disable-line prefer-const
     for (const [locale, messages] of Object.entries(availableMessages)) {
       msgArray.push(...messages.map(m => new MessageBundle(m, locale)))
     }

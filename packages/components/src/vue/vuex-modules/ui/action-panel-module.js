@@ -8,16 +8,16 @@ export default class ActionPanelModule extends Module {
     super(store, api, config)
 
     // Create the mount point as the last child of the page's body
-    let el = document.createElement('div')
+    const el = document.createElement('div')
     let mountEl = document.querySelector(this.config.mountInto)
     if (!mountEl) {
       mountEl = document.body
     }
-    let viEl = mountEl.appendChild(el)
+    const viEl = mountEl.appendChild(el)
 
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
 
-    let VueComponentClass = Vue.extend(ActionPanel)
+    const VueComponentClass = Vue.extend(ActionPanel)
     this._vi = new VueComponentClass({
       parent: this.constructor.rootVi,
       data: () => {

@@ -10,11 +10,11 @@ export default class PointerEvt {
   static alpheiosIgnoreAllTest (dataset) {
     const attrName = 'alpheiosIgnore'
     const attrValue = 'all'
-    return dataset.hasOwnProperty(attrName) && dataset[attrName] === attrValue
+    return dataset.hasOwnProperty(attrName) && dataset[attrName] === attrValue // eslint-disable-line no-prototype-builtins
   }
 
   static excludeAllCpeTest (dataset) {
-    return dataset.hasOwnProperty('alphExcludeAllCpe')
+    return dataset.hasOwnProperty('alphExcludeAllCpe') // eslint-disable-line no-prototype-builtins
   }
 
   static excludeCpeTest (dataset) {

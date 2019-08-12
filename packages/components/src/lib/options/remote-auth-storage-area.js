@@ -32,18 +32,20 @@ export default class RemoteAuthStorageArea extends StorageAdapter {
       }
     }
   }
+
   /**
    * A proxy for the Alpheios user-settings-api
    * It allows for storing key/value pairs to the api with an authorized user account
+   *
    * @param {object} keysObject - An object containing one or more key/value pairs to be stored in storage.
    * If a particular item already exists, its value will be updated.
-   * @return {Promise} - A promise that is resolved with with a void value if all key/value pairs are stored
+   * @returns {Promise} - A promise that is resolved with with a void value if all key/value pairs are stored
    * successfully. If at least on save operation fails, returns a rejected promise with an error information.
    */
   async set (keysObject) {
     for (const [key, value] of Object.entries(keysObject)) {
-      let url = `${this.baseURL}/${key}`
-      let result = await axios.post(url, value, this.requestContext)
+      const url = `${this.baseURL}/${key}`
+      const result = await axios.post(url, value, this.requestContext)
       if (result.status !== 201) {
         throw new Error(`Unexpected result status from settings api: ${result.status}`)
       }
@@ -53,12 +55,13 @@ export default class RemoteAuthStorageArea extends StorageAdapter {
   /**
    * proxy for the Alpheios user-settings-api LIST operation
    * Retrieves all data for the storage domain.
-   * @return {Promise} A Promise that will be fulfilled with a results object containing key-value pairs
+   *
+   * @returns {Promise} A Promise that will be fulfilled with a results object containing key-value pairs
    * found in the storage area. If this operation failed, the promise will be rejected with an error message.
    */
   async get () {
-    let url = `${this.baseURL}?domain=${this.domain}`
-    let result = await axios.get(url, this.requestContext)
+    const url = `${this.baseURL}?domain=${this.domain}`
+    const result = await axios.get(url, this.requestContext)
     if (result.status === 200) {
       return result.data
     } else {
@@ -69,11 +72,12 @@ export default class RemoteAuthStorageArea extends StorageAdapter {
   /**
    * proxy for the Alpheios user-settings DELETE LIST operation
    * deletes all settings for the domain from storage
-   * @return {Promise} A Promise that executes the operation.
+   *
+   * @returns {Promise} A Promise that executes the operation.
    */
   async clearAll () {
-    let url = `${this.baseURL}?domain=${this.domain}`
-    let result = await axios.delete(url, this.requestContext)
+    const url = `${this.baseURL}?domain=${this.domain}`
+    const result = await axios.delete(url, this.requestContext)
     if (result.status !== 200) {
       throw new Error(`Unexpected result status from settings api: ${result.status}`)
     }

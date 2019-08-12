@@ -20,7 +20,7 @@ export default class LongTap extends PointerEvt {
   }
 
   static excludeCpeTest (dataset) {
-    return dataset.hasOwnProperty('alphExcludeLongTapCpe')
+    return dataset.hasOwnProperty('alphExcludeLongTapCpe') // eslint-disable-line no-prototype-builtins
   }
 
   setEndPoint (clientX, clientY, target, path) {
@@ -55,9 +55,9 @@ export default class LongTap extends PointerEvt {
    * TODO: It is here for compatibility with older code. Remove if not used anywhere anymore.
    */
   static listen (selector, evtHandler, mvmntThreshold, durationThreshold) {
-    let elements = document.querySelectorAll(selector)
+    const elements = document.querySelectorAll(selector)
     for (const element of elements) {
-      let listener = new this(element, mvmntThreshold, durationThreshold)
+      let listener = new this(element, mvmntThreshold, durationThreshold) // eslint-disable-line prefer-const
       listener.set()
     }
   }

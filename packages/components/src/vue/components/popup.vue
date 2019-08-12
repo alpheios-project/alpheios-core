@@ -161,6 +161,7 @@ export default {
   // Custom props to store unwatch functions
   visibleUnwatch: null,
   lexrqStartedUnwatch: null,
+  logger: Logger.getInstance(),
 
   data: function () {
     return {
@@ -221,9 +222,6 @@ export default {
       }
     },
 
-    logger: function () {
-      return Logger.getLogger(this.verboseMode)
-    },
     noLanguage: function () {
       return Boolean(!this.$store.state.app.currentLanguageName)
     },
@@ -259,7 +257,7 @@ export default {
         let verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth
         let maxWidth = viewportWidth - 2 * this.moduleConfig.viewportMargin - verticalScrollbarWidth
         if (newWidth >= maxWidth) {
-          this.logger.log(`Popup is too wide, limiting its width to ${maxWidth}px`)
+          this.$options.logger.log(`Popup is too wide, limiting its width to ${maxWidth}px`)
           this.widthValue = maxWidth
           this.exactWidth = this.widthValue
         } else {
@@ -275,19 +273,19 @@ export default {
           // Popup has been resized manually
           return `${this.resizedHeight}px`
         }
-        this.logger.log(`${time}: height getter, return value is ${this.heightValue}`)
+        this.$options.logger.log(`${time}: height getter, return value is ${this.heightValue}`)
         return this.heightValue === 'auto' ? 'auto' : `${this.heightValue}px`
       },
       set: function (newHeight) {
         let time = Date.now()
-        this.logger.log(`${time}: height setter, offsetHeight is ${newHeight}`)
+        this.$options.logger.log(`${time}: height setter, offsetHeight is ${newHeight}`)
         /*
               let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
               let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
               let maxHeight = viewportHeight - 2*this.moduleConfig.viewportMargin - horizontalScrollbarWidth
               */
         if (newHeight >= this.maxHeight) {
-          this.logger.log(`Popup is too tall, limiting its height to ${this.maxHeight}px`)
+          this.$options.logger.log(`Popup is too tall, limiting its height to ${this.maxHeight}px`)
           this.heightValue = this.maxHeight
           this.exactHeight = this.heightValue
         } else {
@@ -372,14 +370,14 @@ export default {
         const dragTreshold = 100 // Drag distance values above this will be considered abnormal
         if (Math.abs(dx) > dragTreshold) {
           if (!this.dragErrorX) {
-            this.logger.warn(`Calculated horizontal drag distance is out of bounds: ${dx}. This is probably an error. Dragging in horizontal direction will be disabled.`)
+            this.$options.logger.warn(`Calculated horizontal drag distance is out of bounds: ${dx}. This is probably an error. Dragging in horizontal direction will be disabled.`)
             this.dragErrorX = true
           }
           dx = 0
         }
         if (Math.abs(dy) > dragTreshold) {
           if (!this.dragErrorY) {
-            this.logger.warn(`Calculated vertical drag distance is out of bounds: ${dy}. This is probably an error. Dragging in vertical direction will be disabled.`)
+            this.$options.logger.warn(`Calculated vertical drag distance is out of bounds: ${dy}. This is probably an error. Dragging in vertical direction will be disabled.`)
             this.dragErrorY = true
           }
           dy = 0
@@ -419,25 +417,25 @@ export default {
       // Update dimensions only if there was any significant change in a popup size
       if (this.$el.offsetWidth >= this.exactWidth + this.resizeDelta ||
           this.$el.offsetWidth <= this.exactWidth - this.resizeDelta) {
-        this.logger.log(`${time}: dimensions update, offsetWidth is ${this.$el.offsetWidth}, previous exactWidth is ${this.exactWidth}`)
+        this.$options.logger.log(`${time}: dimensions update, offsetWidth is ${this.$el.offsetWidth}, previous exactWidth is ${this.exactWidth}`)
         this.exactWidth = this.$el.offsetWidth
         this.widthDm = this.$el.offsetWidth
         this.resizeCount++
-        this.logger.log(`Resize counter value is ${this.resizeCount}`)
+        this.$options.logger.log(`Resize counter value is ${this.resizeCount}`)
       }
 
       if (this.$el.offsetHeight >= this.exactHeight + this.resizeDelta ||
           this.$el.offsetHeight <= this.exactHeight - this.resizeDelta) {
-        this.logger.log(`${time}: dimensions update, offsetHeight is ${this.$el.offsetHeight}, previous exactHeight is ${this.exactHeight}`)
+        this.$options.logger.log(`${time}: dimensions update, offsetHeight is ${this.$el.offsetHeight}, previous exactHeight is ${this.exactHeight}`)
         this.exactHeight = this.$el.offsetHeight
         this.heightDm = this.$el.offsetHeight
         this.resizeCount++
-        this.logger.log(`Resize counter value is ${this.resizeCount}`)
+        this.$options.logger.log(`Resize counter value is ${this.resizeCount}`)
       }
     },
 
     resetPopupDimensions () {
-      this.logger.log('Resetting popup dimensions')
+      this.$options.logger.log('Resetting popup dimensions')
       // this.contentHeight = 0
       this.resizeCount = 0
       this.widthValue = 0
@@ -479,7 +477,7 @@ export default {
   updated () {
     if (this.$store.state.popup.visible) {
       let time = Date.now()
-      this.logger.log(`${time}: component is updated`)
+      this.$options.logger.log(`${time}: component is updated`)
 
       let vm = this
       clearTimeout(this.updateDimensionsTimeout)

@@ -93,7 +93,7 @@ export default class HTMLPage {
    */
   static zIndexRecursion (element, zIndexMax) {
     if (element) {
-      let zIndexValues = [
+      const zIndexValues = [
         window.getComputedStyle(element).getPropertyValue('z-index'), // If z-index defined in CSS rules
         element.style.getPropertyValue('z-index') // If z-index is defined in an inline style
       ]
@@ -103,8 +103,8 @@ export default class HTMLPage {
           zIndexMax = Math.max(zIndexMax, zIndex)
         }
       }
-      for (let node of element.childNodes) {
-        let nodeType = node.nodeType
+      for (const node of element.childNodes) {
+        const nodeType = node.nodeType
         if (nodeType === Node.ELEMENT_NODE || nodeType === Node.DOCUMENT_NODE || nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
           zIndexMax = this.zIndexRecursion(node, zIndexMax)
         }

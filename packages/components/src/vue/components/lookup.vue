@@ -42,7 +42,6 @@
 <script>
 import TextSelector from '@/lib/selection/text-selector'
 import LexicalQueryLookup from '@/lib/queries/lexical-query-lookup'
-import Options from '@/lib/options/options'
 import { LanguageModelFactory, Constants } from 'alpheios-data-models'
 import LookupIcon from '@/images/inline-icons/lookup.svg'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
@@ -59,6 +58,7 @@ export default {
     alphSetting: Setting,
     lookupIcon: LookupIcon
   },
+  logger: Logger.getInstance(),
   data () {
     return {
       lookuptext: '',
@@ -91,9 +91,6 @@ export default {
   },
 
   computed: {
-    logger: function () {
-      return Logger.getLogger(this.settings.verboseMode())
-    },
     lookupLangName () {
       return this.app.getLanguageName(this.getLookupLanguage()).name
     },
@@ -150,7 +147,6 @@ export default {
       let lexQuery = LexicalQueryLookup
         .create(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, this.app.clientId, this.settings.verboseMode())
 
-
       // A newLexicalRequest will call app.updateLanguage(languageID)
       this.app.newLexicalRequest(this.lookuptext, selectedLangID, null, 'lookup')
       lexQuery.getData()
@@ -166,7 +162,7 @@ export default {
           this.ui.showPanelTab('morphology')
           break
         default:
-          this.logger.warn(`Unknown afterLookupAction value: ${this.showResultsIn}`)
+          this.$options.logger.warn(`Unknown afterLookupAction value: ${this.showResultsIn}`)
       }
     },
 

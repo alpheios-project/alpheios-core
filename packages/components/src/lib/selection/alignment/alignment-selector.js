@@ -41,8 +41,8 @@ export default class AlignmentSelector {
    * Activate the Alignment event handling
    */
   activate () {
-    let alignments = this.doc.querySelectorAll('[data-alpheios_align_ref]')
-    for (let a of alignments) {
+    const alignments = this.doc.querySelectorAll('[data-alpheios_align_ref]')
+    for (let a of alignments) { // eslint-disable-line prefer-const
       a.addEventListener(this.settings.focusEvent, event => { this.focus(event) })
       a.addEventListener(this.settings.blurEvent, event => { this.blur(event) })
 
@@ -53,7 +53,7 @@ export default class AlignmentSelector {
   }
 
   focus (event) {
-    let firstAligned = this.highlightWords(event.target, this.settings.highlightClass)
+    const firstAligned = this.highlightWords(event.target, this.settings.highlightClass)
 
     if (firstAligned && !this.isElementInViewport(firstAligned)) {
       this.scrollToElement(firstAligned)
@@ -86,7 +86,7 @@ export default class AlignmentSelector {
   }
 
   isElementInViewport (elem) {
-    let bounding = elem.getBoundingClientRect()
+    const bounding = elem.getBoundingClientRect()
     return (
       bounding.top >= 0 &&
         bounding.left >= 0 &&
@@ -100,7 +100,7 @@ export default class AlignmentSelector {
   }
 
   highlightWords (elem, highlightClass, setFixedValue = null) {
-    let alignedWithElem = this.getAlignedListByRef(elem, true)
+    const alignedWithElem = this.getAlignedListByRef(elem, true)
 
     if (alignedWithElem.length > 0) {
       this.addClass(elem, highlightClass)
@@ -111,7 +111,7 @@ export default class AlignmentSelector {
 
       if (setFixedValue !== null) { this.setFixedAttribute(alignedWithElem, true) }
 
-      let reversedAlignedObj = this.getAllAlignedObjects(alignedWithElem)
+      const reversedAlignedObj = this.getAllAlignedObjects(alignedWithElem)
       this.addClass(reversedAlignedObj, highlightClass)
 
       if (setFixedValue !== null) { this.setFixedAttribute(reversedAlignedObj, true) }
@@ -121,7 +121,7 @@ export default class AlignmentSelector {
   }
 
   removeHighlightWords (elem, highlightClass, setFixedValue = null) {
-    let alignedWithElem = this.getAlignedListByRef(elem, true)
+    const alignedWithElem = this.getAlignedListByRef(elem, true)
 
     if (alignedWithElem.length > 0) {
       this.removeClass(elem, highlightClass)
@@ -130,7 +130,7 @@ export default class AlignmentSelector {
       this.removeClass(alignedWithElem, highlightClass)
       if (setFixedValue !== null) { this.setFixedAttribute(alignedWithElem, false) }
 
-      let reversedAlignedObj = this.getAllAlignedObjects(alignedWithElem)
+      const reversedAlignedObj = this.getAllAlignedObjects(alignedWithElem)
       this.removeClass(reversedAlignedObj, highlightClass)
       if (setFixedValue !== null) { this.setFixedAttribute(reversedAlignedObj, false) }
     }
@@ -139,10 +139,10 @@ export default class AlignmentSelector {
   }
 
   getAlignedListByRef (target, checkDisabled = false) {
-    let ref = target.dataset.alpheios_align_ref
-    let res = []
+    const ref = target.dataset.alpheios_align_ref
+    let res = [] // eslint-disable-line prefer-const
     if (ref) {
-      for (let r of ref.split(/,/)) {
+      for (const r of ref.split(/,/)) {
         let aligned = this.doc.querySelectorAll(r)
 
         if (checkDisabled) {
@@ -156,17 +156,17 @@ export default class AlignmentSelector {
   }
 
   getAllAlignedObjects (targetArr) {
-    let res = []
-    for (let a of targetArr) {
-      let aligned = this.getAlignedListByRef(a)
+    let res = [] // eslint-disable-line prefer-const
+    for (const a of targetArr) {
+      const aligned = this.getAlignedListByRef(a)
       aligned.forEach(el => { res.push(el) })
     }
     return res
   }
 
   isDisabled (elem) {
-    let path = PointerEvt.buildPath(elem)
-    for (let p of path) {
+    const path = PointerEvt.buildPath(elem)
+    for (const p of path) {
       if (p.classList.contains(this.settings.disableClass)) {
         return true
       }
@@ -176,7 +176,7 @@ export default class AlignmentSelector {
 
   setFixedAttribute (elem, value) {
     if (elem.constructor.name === 'NodeList' || Array.isArray(elem)) {
-      for (let el of Array.from(elem)) {
+      for (let el of Array.from(elem)) { // eslint-disable-line prefer-const
         el.dataset.highlight_fixed = value
       }
     } else {
@@ -186,7 +186,7 @@ export default class AlignmentSelector {
 
   addClass (elem, className) {
     if (elem.constructor.name === 'NodeList' || Array.isArray(elem)) {
-      for (let el of Array.from(elem)) {
+      for (let el of Array.from(elem)) { // eslint-disable-line prefer-const
         if (!el.classList.contains(className)) {
           el.classList.add(className)
         }
@@ -200,7 +200,7 @@ export default class AlignmentSelector {
 
   removeClass (elem, className) {
     if (elem.constructor.name === 'NodeList' || Array.isArray(elem)) {
-      for (let el of Array.from(elem)) {
+      for (let el of Array.from(elem)) { // eslint-disable-line prefer-const
         if (el.classList.contains(className)) {
           el.classList.remove(className)
         }

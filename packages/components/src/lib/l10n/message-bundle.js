@@ -30,7 +30,7 @@ export default class MessageBundle {
 
     this._missingTranslationMsgFn = missingTranslationMsgFn
 
-    let messages = (typeof messagesJSONorObj === 'string') ? JSON.parse(messagesJSONorObj) : messagesJSONorObj
+    const messages = (typeof messagesJSONorObj === 'string') ? JSON.parse(messagesJSONorObj) : messagesJSONorObj
     this.append(messages)
   }
 
@@ -51,7 +51,7 @@ export default class MessageBundle {
    * @param {string} messagesJSON - Messages as a JSON string or as a parsed JSON object
    */
   appendFromJSON (messagesJSON) {
-    let messages = (typeof messagesJSON === 'string') ? JSON.parse(messagesJSON) : messagesJSON
+    const messages = (typeof messagesJSON === 'string') ? JSON.parse(messagesJSON) : messagesJSON
     this.append(messages)
   }
 

@@ -18,7 +18,7 @@ export default class GenericEvt extends PointerEvt {
   }
 
   static excludeCpeTest (dataset) {
-    return dataset.hasOwnProperty('alphExcludeGenericEvtCpe')
+    return dataset.hasOwnProperty('alphExcludeGenericEvtCpe') // eslint-disable-line no-prototype-builtins
   }
 
   setEndPoint (clientX, clientY, target, path) {
@@ -65,10 +65,10 @@ export default class GenericEvt extends PointerEvt {
    * @param {string} evtType - A type of an event, such as 'click', 'dblclick', etc.
    */
   static listen (selector, evtHandler, evtType) {
-    let elements = document.querySelectorAll(selector)
+    const elements = document.querySelectorAll(selector)
 
     for (const element of elements) {
-      let listener = new this(element, evtHandler, evtType)
+      let listener = new this(element, evtHandler, evtType) // eslint-disable-line prefer-const
       listener.set()
     }
   }

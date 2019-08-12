@@ -46,8 +46,8 @@ export default class HTMLConsole {
   }
 
   clear () {
-    let records = this.node.querySelectorAll(`.${this.constructor.defs.entryClNm}, ${this.constructor.defs.separatorClNm}`)
-    for (let record of records) {
+    const records = this.node.querySelectorAll(`.${this.constructor.defs.entryClNm}, ${this.constructor.defs.separatorClNm}`)
+    for (const record of records) {
       this.node.removeChild(record)
     }
   }

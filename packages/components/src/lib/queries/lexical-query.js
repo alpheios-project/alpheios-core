@@ -21,7 +21,7 @@ export default class LexicalQuery extends Query {
     if (this.selector.textQuoteSelector) {
       LexicalQuery.evt.TEXT_QUOTE_SELECTOR_RECEIVED.pub(this.selector.textQuoteSelector)
     }
-    this.getLogger = () => { return Logger.getLogger(options.verboseMode) }
+    this.logger = Logger.getInstance()
   }
 
   static create (selector, options) {
@@ -50,7 +50,7 @@ export default class LexicalQuery extends Query {
           }
         }
 
-        let adapterConcordanceRes = await ClientAdapters.wordusageExamples.concordance({
+        const adapterConcordanceRes = await ClientAdapters.wordusageExamples.concordance({
           method: 'getWordUsageExamples',
           clientId: this.clientId,
           params: { homonym: homonym,
@@ -63,43 +63,43 @@ export default class LexicalQuery extends Query {
         })
 
         if (adapterConcordanceRes.errors.length > 0) {
-          adapterConcordanceRes.errors.forEach(error => this.getLogger().log(error))
+          adapterConcordanceRes.errors.forEach(error => this.logger.log(error))
         }
 
         LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.pub(adapterConcordanceRes.result)
       } catch (error) {
-        this.getLogger().log('Some strange eror inside getWordUsageData', error)
+        this.logger.log('Some strange eror inside getWordUsageData', error)
       }
     }
   }
 
   static async getAuthorsForWordUsage () {
     try {
-      let adapterConcordanceRes = await ClientAdapters.wordusageExamples.concordance({
+      const adapterConcordanceRes = await ClientAdapters.wordusageExamples.concordance({
         method: 'getAuthorsWorks',
         params: {}
       })
 
       if (adapterConcordanceRes.errors.length > 0) {
-        adapterConcordanceRes.errors.forEach(error => this.getLogger().log(error))
+        adapterConcordanceRes.errors.forEach(error => this.logger.log(error))
       }
 
       return adapterConcordanceRes.result
     } catch (error) {
-      this.getLogger().log('Some strange eror inside getAuthorsForWordUsage', error)
+      this.logger.log('Some strange eror inside getAuthorsForWordUsage', error)
     }
   }
 
   async getData () {
     this.languageID = this.selector.languageID
-    let iterator = this.iterations()
+    const iterator = this.iterations()
 
     let result = iterator.next()
     while (true) {
       if (!this.active) { this.finalize() }
       if (Query.isPromise(result.value)) {
         try {
-          let resolvedValue = await result.value
+          const resolvedValue = await result.value
           result = iterator.next(resolvedValue)
         } catch (error) {
           iterator.return()
@@ -114,9 +114,9 @@ export default class LexicalQuery extends Query {
   }
 
   * iterations () {
-    let formLexeme = new Lexeme(new Lemma(this.selector.normalizedText, this.selector.languageID), [])
+    const formLexeme = new Lexeme(new Lemma(this.selector.normalizedText, this.selector.languageID), [])
     if (this.selector.data.treebank && this.selector.data.treebank.word) {
-      let adapterTreebankRes = yield ClientAdapters.morphology.alpheiosTreebank({
+      const adapterTreebankRes = yield ClientAdapters.morphology.alpheiosTreebank({
         method: 'getHomonym',
         clientId: this.clientId,
         params: {
@@ -129,13 +129,13 @@ export default class LexicalQuery extends Query {
       }
 
       if (adapterTreebankRes.errors.length > 0) {
-        adapterTreebankRes.errors.forEach(error => this.getLogger().log(error.message))
+        adapterTreebankRes.errors.forEach(error => this.logger.log(error.message))
       }
     }
 
     if (!this.canReset) {
       // if we can't reset, proceed with full lookup sequence
-      let adapterTuftsRes = yield ClientAdapters.morphology.tufts({
+      const adapterTuftsRes = yield ClientAdapters.morphology.tufts({
         method: 'getHomonym',
         clientId: this.clientId,
         params: {
@@ -145,7 +145,7 @@ export default class LexicalQuery extends Query {
       })
 
       if (adapterTuftsRes.errors.length > 0) {
-        adapterTuftsRes.errors.forEach(error => this.getLogger().log(error.message))
+        adapterTuftsRes.errors.forEach(error => this.logger.log(error.message))
       }
 
       if (adapterTuftsRes.result) {
@@ -180,8 +180,8 @@ export default class LexicalQuery extends Query {
       }
     }
 
-    let lexiconFullOpts = this.getLexiconOptions('lexicons')
-    let lexiconShortOpts = this.getLexiconOptions('lexiconsShort')
+    const lexiconFullOpts = this.getLexiconOptions('lexicons')
+    const lexiconShortOpts = this.getLexiconOptions('lexiconsShort')
 
     // if lexicon options are set for short definitions, we want to override any
     // short definitions provided by the maAdapter
@@ -192,7 +192,7 @@ export default class LexicalQuery extends Query {
     LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
 
     if (this.lemmaTranslations) {
-      let adapterTranslationRes = yield ClientAdapters.lemmatranslation.alpheios({
+      const adapterTranslationRes = yield ClientAdapters.lemmatranslation.alpheios({
         method: 'fetchTranslations',
         clientId: this.clientId,
         params: {
@@ -201,7 +201,7 @@ export default class LexicalQuery extends Query {
         }
       })
       if (adapterTranslationRes.errors.length > 0) {
-        adapterTranslationRes.errors.forEach(error => this.getLogger().log(error.message))
+        adapterTranslationRes.errors.forEach(error => this.logger.log(error.message))
       }
 
       LexicalQuery.evt.LEMMA_TRANSL_READY.pub(this.homonym)
@@ -213,7 +213,7 @@ export default class LexicalQuery extends Query {
       // per author applied. Total max across all authors will be enforced on the
       // client adapter side. Different pagination options may apply when working
       // directly with the usage examples display
-      let adapterConcordanceRes = yield ClientAdapters.wordusageExamples.concordance({
+      const adapterConcordanceRes = yield ClientAdapters.wordusageExamples.concordance({
         method: 'getWordUsageExamples',
         clientId: this.clientId,
         params: { homonym: this.homonym,
@@ -225,7 +225,7 @@ export default class LexicalQuery extends Query {
       })
 
       if (adapterConcordanceRes.errors.length > 0) {
-        adapterConcordanceRes.errors.forEach(error => this.getLogger().log(error))
+        adapterConcordanceRes.errors.forEach(error => this.logger.log(error))
       }
 
       LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.pub(adapterConcordanceRes.result)
@@ -233,7 +233,7 @@ export default class LexicalQuery extends Query {
 
     yield 'Retrieval of lemma translations completed'
 
-    let adapterLexiconResShort = yield ClientAdapters.lexicon.alpheios({
+    const adapterLexiconResShort = yield ClientAdapters.lexicon.alpheios({
       method: 'fetchShortDefs',
       clientId: this.clientId,
       params: {
@@ -245,10 +245,10 @@ export default class LexicalQuery extends Query {
     })
 
     if (adapterLexiconResShort.errors.length > 0) {
-      adapterLexiconResShort.errors.forEach(error => this.getLogger().log(error.message))
+      adapterLexiconResShort.errors.forEach(error => this.logger.log(error.message))
     }
 
-    let adapterLexiconResFull = yield ClientAdapters.lexicon.alpheios({
+    const adapterLexiconResFull = yield ClientAdapters.lexicon.alpheios({
       method: 'fetchFullDefs',
       clientId: this.clientId,
       params: {
@@ -260,7 +260,7 @@ export default class LexicalQuery extends Query {
     })
 
     if (adapterLexiconResFull.errors.length > 0) {
-      adapterLexiconResFull.errors.forEach(error => this.getLogger().log(error))
+      adapterLexiconResFull.errors.forEach(error => this.logger.log(error))
     }
 
     yield 'Finalizing'
@@ -305,7 +305,7 @@ export default class LexicalQuery extends Query {
   getLexiconOptions (lexiconKey) {
     let allOptions
     const languageCode = LMF.getLanguageCodeFromId(this.selector.languageID)
-    let siteMatch = this.siteOptions.filter((s) => this.selector.location.match(new RegExp(s.uriMatch)))
+    const siteMatch = this.siteOptions.filter((s) => this.selector.location.match(new RegExp(s.uriMatch)))
     if (siteMatch.length > 0 && siteMatch[0].resourceOptions.items[lexiconKey]) {
       allOptions = [...siteMatch[0].resourceOptions.items[lexiconKey], ...this.resourceOptions.items[lexiconKey]]
     } else {

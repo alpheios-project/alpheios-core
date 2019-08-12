@@ -16,7 +16,7 @@ export default class MouseDblClick extends PointerEvt {
   }
 
   static excludeCpeTest (dataset) {
-    return dataset.hasOwnProperty('alphExcludeDblClickCpe')
+    return dataset.hasOwnProperty('alphExcludeDblClickCpe') // eslint-disable-line no-prototype-builtins
   }
 
   setEndPoint (clientX, clientY, target, path) {
@@ -62,9 +62,9 @@ export default class MouseDblClick extends PointerEvt {
    * @param {Function} evtHandler
    */
   static listen (selector, evtHandler) {
-    let elements = document.querySelectorAll(selector)
+    const elements = document.querySelectorAll(selector)
     for (const element of elements) {
-      let listener = new this(element, evtHandler)
+      let listener = new this(element, evtHandler) // eslint-disable-line prefer-const
       listener.set()
     }
   }

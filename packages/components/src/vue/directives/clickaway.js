@@ -2,12 +2,12 @@
 // #taken from here https://github.com/simplesmiler/vue-clickaway
 import Vue from '@vue-runtime'
 
-let HANDLER = '_vue_clickaway_handler'
+const HANDLER = '_vue_clickaway_handler'
 
 function checkPassiveSupport () {
   let supportsPassive = false
   try {
-    let opts = Object.defineProperty({}, 'passive', {
+    const opts = Object.defineProperty({}, 'passive', {
       get: function () {
         supportsPassive = true
       }
@@ -22,9 +22,9 @@ function checkPassiveSupport () {
 function bind (el, binding, vnode) {
   unbind(el)
 
-  let vm = vnode.context
+  const vm = vnode.context
 
-  let callback = binding.value
+  const callback = binding.value
   if (typeof callback !== 'function') {
     if ('development' !== 'production') {
       Vue.util.warn(
@@ -54,11 +54,11 @@ function bind (el, binding, vnode) {
     //        the click, not whether it is there now, that the event has arrived
     //        to the top.
     // @NOTE: `.path` is non-standard, the standard way is `.composedPath()`
-    let panel = document.getElementById('alpheios-panel-inner') ? document.getElementById('alpheios-panel-inner') : null
-    let popup = document.getElementById('alpheios-popup-inner') ? document.getElementById('alpheios-popup-inner') : null
-    let overlayNav = document.getElementById('alpheios-toolbar-inner') ? document.getElementById('alpheios-toolbar-inner') : null
+    const panel = document.getElementById('alpheios-panel-inner') ? document.getElementById('alpheios-panel-inner') : null
+    const popup = document.getElementById('alpheios-popup-inner') ? document.getElementById('alpheios-popup-inner') : null
+    const overlayNav = document.getElementById('alpheios-toolbar-inner') ? document.getElementById('alpheios-toolbar-inner') : null
 
-    let visible = function (elem) {
+    const visible = function (elem) {
       return !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length)
     }
 
@@ -67,19 +67,19 @@ function bind (el, binding, vnode) {
       return
     }
 
-    let path = ev.path || (ev.composedPath ? ev.composedPath() : undefined)
+    const path = ev.path || (ev.composedPath ? ev.composedPath() : undefined)
 
     // checkStep1 checks if a click was not inside the component with v-on-clickaway event
-    let checkStep1 = initialMacrotaskEnded && (path ? path.indexOf(el) < 0 : !el.contains(ev.target))
+    const checkStep1 = initialMacrotaskEnded && (path ? path.indexOf(el) < 0 : !el.contains(ev.target))
 
     // checkStep2 checks if a click was not inside the inner panel
-    let checkStep2 = path ? path.indexOf(panel) < 0 : true
+    const checkStep2 = path ? path.indexOf(panel) < 0 : true
 
     // checkStep3 checks if a click was not inside the inner popup
-    let checkStep3 = path ? path.indexOf(popup) < 0 : true
+    const checkStep3 = path ? path.indexOf(popup) < 0 : true
 
     // checkStep3 checks if a click was not inside the overlay nav
-    let checkStep4 = path ? path.indexOf(overlayNav) < 0 : true
+    const checkStep4 = path ? path.indexOf(overlayNav) < 0 : true
 
     if (checkStep1 && checkStep2 && checkStep3 && checkStep4) {
       return callback.call(vm, ev)
@@ -95,7 +95,7 @@ function unbind (el) {
   delete el[HANDLER]
 }
 
-export let directive = {
+export const directive = {
   bind: bind,
   update: function (el, binding) {
     if (binding.value === binding.oldValue) return

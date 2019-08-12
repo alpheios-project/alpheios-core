@@ -86,7 +86,7 @@ export default class HTMLSelector extends MediaSelector {
    * @return {Range | null} A range if one is successfully created or null in case of failure.
    */
   static createSelectionFromPoint (startX, startY, endX = startX, endY = startY) {
-    let doc = window.document
+    const doc = window.document
     let start
     let end
     let range = null
@@ -109,13 +109,13 @@ export default class HTMLSelector extends MediaSelector {
     }
 
     if (range && typeof window.getSelection === 'function') {
-      let sel = window.getSelection()
+      let sel = window.getSelection() // eslint-disable-line prefer-const
       sel.removeAllRanges()
       sel.addRange(range)
     } else if (typeof doc.body.createTextRange === 'function') {
       range = doc.body.createTextRange()
       range.moveToPoint(startX, startY)
-      let endRange = range.duplicate()
+      let endRange = range.duplicate() // eslint-disable-line prefer-const
       endRange.moveToPoint(endX, endY)
       range.setEndPoint('EndToEnd', endRange)
       range.select()
@@ -129,10 +129,10 @@ export default class HTMLSelector extends MediaSelector {
    * Gather any alpheios specific data attributes from the target element
    */
   setDataAttributes () {
-    let tbSrcElem = this.target.ownerDocument.querySelector('[data-alpheios_tb_src]')
-    let tbRef = this.target.dataset.alpheios_tb_ref
-    let alignSrcElem = this.target.ownerDocument.querySelector('[data-alpheios_align_src]')
-    let alignRef = this.target.dataset.alpheios_align_ref
+    const tbSrcElem = this.target.ownerDocument.querySelector('[data-alpheios_tb_src]')
+    const tbRef = this.target.dataset.alpheios_tb_ref
+    const alignSrcElem = this.target.ownerDocument.querySelector('[data-alpheios_align_src]')
+    const alignRef = this.target.dataset.alpheios_align_ref
     this.data = {}
     if (tbSrcElem && tbRef) {
       this.data.treebank = {
@@ -159,7 +159,7 @@ export default class HTMLSelector extends MediaSelector {
     let languageCode = typeof this.target.getAttribute === 'function' ? this.target.getAttribute('lang') || this.target.getAttribute('xml:lang') : null
     if (!languageCode && (typeof this.target.getAttribute === 'function')) {
       // If no attribute of target element found, check its ancestors
-      let closestLangElement = this.target.closest('[lang]') || this.target.closest('[xml\\:lang]')
+      const closestLangElement = this.target.closest('[lang]') || this.target.closest('[xml\\:lang]')
       if (closestLangElement) {
         languageCode = closestLangElement.getAttribute('lang') || closestLangElement.getAttribute('xml:lang')
       }
@@ -168,8 +168,7 @@ export default class HTMLSelector extends MediaSelector {
   }
 
   static getSelection (target) {
-    let selection = target.ownerDocument.getSelection()
-    return selection
+    return target.ownerDocument.getSelection()
   }
 
   /**
@@ -204,7 +203,7 @@ export default class HTMLSelector extends MediaSelector {
    * @private
    */
   doSpaceSeparatedWordSelection (textSelector) {
-    let selection = HTMLSelector.getSelection(this.target)
+    const selection = HTMLSelector.getSelection(this.target)
 
     let anchor = selection.anchorNode // A node where is a beginning of a selection
     let focus = selection.focusNode // A node where the end of a selection
@@ -257,7 +256,7 @@ export default class HTMLSelector extends MediaSelector {
     }
 
     // extract word
-    let word = anchorText.substring(wordStart, wordEnd).trim()
+    const word = anchorText.substring(wordStart, wordEnd).trim()
     /* Identify the words preceeding and following the focus word
     * TODO - query the type of node in the selection to see if we are
     * dealing with something other than text nodes
@@ -268,12 +267,12 @@ export default class HTMLSelector extends MediaSelector {
     let contextStr = null
     let contextPos = 0
 
-    let contextForward = textSelector.model.contextForward
-    let contextBackward = textSelector.model.contextBackward
+    const contextForward = textSelector.model.contextForward
+    const contextBackward = textSelector.model.contextBackward
 
     if (contextForward || contextBackward) {
-      let startstr = anchorText.substring(0, wordEnd)
-      let endstr = anchorText.substring(wordEnd + 1, anchorText.length)
+      const startstr = anchorText.substring(0, wordEnd)
+      const endstr = anchorText.substring(wordEnd + 1, anchorText.length)
       let preWordlist = startstr.split(/\s+/)
       let postWordlist = endstr.split(/\s+/)
 
@@ -308,7 +307,7 @@ export default class HTMLSelector extends MediaSelector {
       // Reset a selection
       if (invalidAnchor) {
         selection.removeAllRanges()
-        let range = document.createRange()
+        let range = document.createRange() // eslint-disable-line prefer-const
         range.selectNode(anchor)
         selection.addRange(range)
       } else if (focus.data) {
@@ -316,8 +315,8 @@ export default class HTMLSelector extends MediaSelector {
       }
     }
 
-    let prefix = selection.anchorNode.data.substr(0, textSelector.start).trim().replace(/\n/g, '')
-    let suffix = selection.anchorNode.data.substr(textSelector.end).trim().replace(/\n/g, '')
+    const prefix = selection.anchorNode.data.substr(0, textSelector.start).trim().replace(/\n/g, '')
+    const suffix = selection.anchorNode.data.substr(textSelector.end).trim().replace(/\n/g, '')
     textSelector.createTextQuoteSelector(prefix, suffix)
     return textSelector
   }
@@ -352,16 +351,16 @@ export default class HTMLSelector extends MediaSelector {
   }
 
   selectTextRange (obj, start, stop) {
-    let startNode = obj.firstChild
-    let endNode = obj.firstChild
+    let startNode = obj.firstChild // eslint-disable-line prefer-const
+    const endNode = obj.firstChild
 
     startNode.nodeValue = startNode.nodeValue.trim()
 
-    let range = document.createRange()
+    const range = document.createRange()
     range.setStart(startNode, start)
     range.setEnd(endNode, stop + 1)
 
-    let sel = window.getSelection()
+    let sel = window.getSelection() // eslint-disable-line prefer-const
     sel.removeAllRanges()
     sel.addRange(range)
   }

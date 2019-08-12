@@ -9,17 +9,17 @@ export default class PopupModule extends Module {
     super(store, api, config)
 
     // Create the mount point as the last child of the page's body
-    let el = document.createElement('div')
+    const el = document.createElement('div')
     let mountEl = document.querySelector(this.config.mountInto)
     if (!mountEl) {
       mountEl = document.body
     }
-    let viEl = mountEl.appendChild(el)
+    const viEl = mountEl.appendChild(el)
 
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
 
-    let component = Popup
-    let VueComponentClass = Vue.extend(component)
+    const component = Popup
+    const VueComponentClass = Vue.extend(component)
     this._vi = new VueComponentClass({
       parent: this.constructor.rootVi,
       data: () => {

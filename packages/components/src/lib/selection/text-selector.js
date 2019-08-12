@@ -51,14 +51,14 @@ export default class TextSelector {
   // languageCodes
 
   static readObject (jsonObject) {
-    let textSelector = new TextSelector(LanguageModelFactory.getLanguageIdFromCode(jsonObject.languageCode))
+    let textSelector = new TextSelector(LanguageModelFactory.getLanguageIdFromCode(jsonObject.languageCode)) // eslint-disable-line prefer-const
     textSelector.text = jsonObject.text
     // textSelector.language = TextSelector.getLanguage(textSelector.languageCode)
     return textSelector
   }
 
   static createObjectFromText (text, languageID) {
-    let textSelector = new TextSelector(languageID)
+    let textSelector = new TextSelector(languageID) // eslint-disable-line prefer-const
     textSelector.text = text
 
     textSelector.model = LanguageModelFactory.getLanguageModel(textSelector.languageID)

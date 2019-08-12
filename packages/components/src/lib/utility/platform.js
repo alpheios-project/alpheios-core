@@ -80,7 +80,7 @@ export default class Platform {
       document.documentElement.dataset.apScreenOrientation = this.isPortrait ? 'portrait' : 'landscape'
       document.documentElement.dataset.apLayoutType = this.isDesktop ? 'large' : 'compact'
 
-      let bodyOrientationClass = this.isPortrait ? 'alpheios-layout-portrait' : 'alpheios-layout-landscape'
+      const bodyOrientationClass = this.isPortrait ? 'alpheios-layout-portrait' : 'alpheios-layout-landscape'
       document.body.classList.add(bodyOrientationClass)
     } else {
       console.warn(`Alpheios cannot determine what platform this is - either document or documentElement are not defined`)

@@ -94,6 +94,7 @@ export default {
   },
   visibilityUnwatch: null, // Will hold a function for removal of visibility watcher
   hasInflDataUnwatch: null,
+  logger: Logger.getInstance(),
 
   data: function () {
     return {
@@ -114,9 +115,6 @@ export default {
   },
 
   computed: {
-    logger: function () {
-      return Logger.getLogger(this.settings.verboseMode())
-    },
     partOfSpeechSelector: {
       get: function () {
         return this.selectedPartOfSpeech
@@ -188,7 +186,7 @@ export default {
     navigate (reflink) {
       let panel = document.querySelector(`#${this.elementIDs.panelInner}`)
       if (!panel) {
-        this.logger.warn(`Cannot find panel's inner element #${this.elementIDs.panelInner}. Scroll is cancelled`)
+        this.$options.logger.warn(`Cannot find panel's inner element #${this.elementIDs.panelInner}. Scroll is cancelled`)
       }
       if (reflink === 'top') {
         // Navigate to the top of the page
@@ -201,7 +199,7 @@ export default {
           const offset = Math.round(el.offsetTop)
           panel.scrollTop = offset - paddingTop
         } else {
-          this.logger.warn(`Cannot find #${reflink} element. Navigation is cancelled`)
+          this.$options.logger.warn(`Cannot find #${reflink} element. Navigation is cancelled`)
         }
       }
     }

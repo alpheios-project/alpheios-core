@@ -5,12 +5,12 @@ export default class QueryParams {
    * @return {Object} An object containing parsed parameters.
    */
   static parse () {
-    let params = {}
+    let params = {} // eslint-disable-line prefer-const
     const query = window.location.search.substring(1)
     if (query.length > 0) {
       const queryItems = query.split('&')
       queryItems.forEach((part) => {
-        let item = part.split('=')
+        const item = part.split('=')
         params[item[0]] = decodeURIComponent(item[1])
       })
     }

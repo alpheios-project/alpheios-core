@@ -119,8 +119,8 @@ export default class TabScript extends UIStateAPI {
    * @return {TabScript} A copy of a source object.
    */
   static create (source) {
-    let copy = new TabScript()
-    for (let key of Object.keys(source)) {
+    let copy = new TabScript() // eslint-disable-line prefer-const
+    for (const key of Object.keys(source)) {
       copy[key] = source[key]
     }
     return copy
@@ -296,7 +296,7 @@ export default class TabScript extends UIStateAPI {
   }
 
   update (source) {
-    for (let key of Object.keys(source)) {
+    for (const key of Object.keys(source)) {
       if (source[key]) {
         this[key] = source[key]
       }
@@ -312,7 +312,7 @@ export default class TabScript extends UIStateAPI {
    * @return {{_changedKeys: Array, _changedEntries: Array}}
    */
   diff (targetState) {
-    let diff = {
+    let diff = { // eslint-disable-line prefer-const
       _changedKeys: [],
       _changedEntries: []
     }
@@ -325,10 +325,10 @@ export default class TabScript extends UIStateAPI {
       diff['_changedEntries'].push(['tabID', targetState.tabID])
     }
 
-    for (let key of Object.keys(targetState)) {
+    for (const key of Object.keys(targetState)) {
       // Build diffs only for data properties
       if (TabScript.dataProps.includes(key)) {
-        if (this.hasOwnProperty(key)) {
+        if (this.hasOwnProperty(key)) { // eslint-disable-line no-prototype-builtins
           if (this[key] && targetState[key] && this[key] !== targetState[key]) {
             diff[key] = targetState[key]
             diff['_changedKeys'].push(key)
@@ -366,18 +366,18 @@ export default class TabScript extends UIStateAPI {
    * @return {Object} A serializable copy of a source.
    */
   static serializable (source) {
-    let serializable = {}
+    let serializable = {} // eslint-disable-line prefer-const
     serializable.tabID = (typeof source.tabID === 'symbol') ? Symbol.keyFor(source.tabID) : source.tabID
     serializable.tabObj = source.tabObj ? source.tabObj.clone() : undefined
 
-    for (let key of Object.keys(source)) {
+    for (const key of Object.keys(source)) {
       if (TabScript.dataProps.includes(key)) {
         /*
         Only certain features will be stored within a serialized version of a TabScript. This is done
         to prevent context-specific features (such as local event handlers) to be passed over the network
         to a different context where they would make no sense.
          */
-        let value = source[key]
+        const value = source[key]
         serializable[key] = (typeof value === 'symbol') ? Symbol.keyFor(value) : value
       }
     }
@@ -385,25 +385,25 @@ export default class TabScript extends UIStateAPI {
   }
 
   static readObject (jsonObject) {
-    let tabObj = (jsonObject.tabObj && jsonObject.tabObj.tabId && jsonObject.tabObj.windowId) ? new Tab(jsonObject.tabObj.tabId, jsonObject.tabObj.windowId, jsonObject.tabObj.status) : undefined
-    let tabScript = new TabScript(tabObj)
+    const tabObj = (jsonObject.tabObj && jsonObject.tabObj.tabId && jsonObject.tabObj.windowId) ? new Tab(jsonObject.tabObj.tabId, jsonObject.tabObj.windowId, jsonObject.tabObj.status) : undefined
+    let tabScript = new TabScript(tabObj) // eslint-disable-line prefer-const
 
-    for (let prop of TabScript.symbolProps) {
+    for (const prop of TabScript.symbolProps) {
       // Do not read empty or missing values
       if (jsonObject[prop]) {
         tabScript[prop] = Symbol.for(jsonObject[prop])
       }
     }
 
-    for (let prop of TabScript.stringProps) {
+    for (const prop of TabScript.stringProps) {
       // Do not read empty or missing values
       if (jsonObject[prop]) {
         tabScript[prop] = jsonObject[prop]
       }
     }
 
-    for (let prop of TabScript.booleanProps) {
-      if (jsonObject.hasOwnProperty(prop)) { tabScript[prop] = jsonObject[prop] }
+    for (const prop of TabScript.booleanProps) {
+      if (jsonObject.hasOwnProperty(prop)) { tabScript[prop] = jsonObject[prop] } // eslint-disable-line no-prototype-builtins
     }
     return tabScript
   }

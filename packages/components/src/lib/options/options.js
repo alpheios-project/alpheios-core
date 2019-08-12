@@ -28,16 +28,16 @@ export default class Options {
   }
 
   static initItems (defaults, storageAdapter, domain, version) {
-    let items = {}
-    for (let [option, value] of Object.entries(defaults)) {
+    let items = {} // eslint-disable-line prefer-const
+    for (const [option, value] of Object.entries(defaults)) {
       if (value.group) {
         items[option] = []
-        for (let [group, item] of Object.entries(value.group)) {
-          let key = Options.constructKey(domain, version, option, group)
+        for (const [group, item] of Object.entries(value.group)) {
+          const key = Options.constructKey(domain, version, option, group)
           items[option].push(new OptionItem(item, key, storageAdapter))
         }
       } else {
-        let key = Options.constructKey(domain, version, option)
+        const key = Options.constructKey(domain, version, option)
         items[option] = new OptionItem(value, key, storageAdapter)
       }
     }
@@ -63,11 +63,11 @@ export default class Options {
    */
   async load () {
     try {
-      let values = await this.storageAdapter.get()
-      for (let key in values) {
-        let parsedKey = Options.parseKey(key)
+      const values = await this.storageAdapter.get()
+      for (const key in values) {
+        const parsedKey = Options.parseKey(key)
         // TODO when we do increase the version we should handle conversion
-        if (this.items.hasOwnProperty(parsedKey.name) && this.version === parsedKey.version) {
+        if (this.items.hasOwnProperty(parsedKey.name) && this.version === parsedKey.version) { // eslint-disable-line no-prototype-builtins
           if (parsedKey.group) {
             this.items[parsedKey.name].forEach((f) => {
               if (f.name === key) {
@@ -90,7 +90,7 @@ export default class Options {
       }
       return this
     } catch (error) {
-      let message = `Unexpected error retrieving options for Alpheios from local storage: ${error}. Default values ` +
+      const message = `Unexpected error retrieving options for Alpheios from local storage: ${error}. Default values ` +
       `will be used instead`
       console.error(message)
     }
@@ -117,7 +117,7 @@ export default class Options {
   * Parse a stored setting name into a semantically meaningful object
   */
   static parseKey (key) {
-    let [domain, version, name, group] = key.split('__', 4)
+    const [domain, version, name, group] = key.split('__', 4)
     let parsed
     try {
       parsed = {

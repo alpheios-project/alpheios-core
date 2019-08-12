@@ -104,8 +104,12 @@ export default class UIController {
     this.isDeactivated = false
     this.userDataManager = null
 
+    // Obtain the logger instance
+    this.logger = Logger.getInstance()
+
     /**
      * Information about the platform an app is running upon.
+     *
      * @type {Platform} - A an object containing data about the platform.
      */
     this.platform = new Platform(true)
@@ -140,7 +144,7 @@ export default class UIController {
    *
    */
   static create (state, options) {
-    let uiController = new UIController(state, options)
+    let uiController = new UIController(state, options) // eslint-disable-line prefer-const
 
     /*
     If necessary override defaults of a UI controller's options objects here as:
@@ -270,17 +274,17 @@ export default class UIController {
    * @return {object} A resulting options object
    */
   static setOptions (options, defaultOptions) {
-    let result = {}
+    let result = {} // eslint-disable-line prefer-const
     for (const [key, defaultValue] of Object.entries(defaultOptions)) {
       // Due to the bug in JS typeof null is `object` and they do not have a `constructor` prop
       // so we have to filter those null values out
       if (typeof defaultValue === 'object' && defaultValue !== null && defaultValue.constructor.name === 'Object') {
         // This is an options group
-        const optionsValue = options.hasOwnProperty(key) ? options[key] : {}
+        const optionsValue = options.hasOwnProperty(key) ? options[key] : {} // eslint-disable-line no-prototype-builtins
         result[key] = this.setOptions(optionsValue, defaultValue)
       } else {
         // This is a primitive type, an array, or other object that is not an options group
-        result[key] = options.hasOwnProperty(key) ? options[key] : defaultOptions[key]
+        result[key] = options.hasOwnProperty(key) ? options[key] : defaultOptions[key] // eslint-disable-line no-prototype-builtins
       }
     }
     return result
@@ -295,9 +299,10 @@ export default class UIController {
   /**
    * Registers a module for use by UI controller and other modules.
    * It instantiates each module and adds them to the registered modules store.
+   *
    * @param {Module} moduleClass - A data module's class (i.e. the constructor function).
-   * @param options - Arbitrary number of values that will be passed to the module constructor.
-   * @return {UIController} - A self reference for chaining.
+   * @param {object} options - Arbitrary number of values that will be passed to the module constructor.
+   * @returns {UIController} - A self reference for chaining.
    */
   registerModule (moduleClass, options = {}) {
     if (moduleClass.isSupportedPlatform(this.platform)) {
@@ -305,7 +310,7 @@ export default class UIController {
       options.platform = this.platform
       this.modules.set(moduleClass.moduleName, { ModuleClass: moduleClass, options, instance: null })
     } else {
-      this.getLogger().warn(`Skipping registration of a ${moduleClass.moduleName} module because it does not support a ${this.platform.deviceType} type of devices`)
+      this.logger.warn(`Skipping registration of a ${moduleClass.moduleName} module because it does not support a ${this.platform.deviceType} type of devices`)
     }
     return this
   }
@@ -361,7 +366,7 @@ export default class UIController {
     // Get query parameters from the URL
     this.queryParams = QueryParams.parse()
     // Start loading options as early as possible
-    let optionLoadPromises = this.initOptions(this.options.storageAdapter)
+    const optionLoadPromises = this.initOptions(this.options.storageAdapter)
     // Create a copy of resource options for the lookup UI component
     // this doesn't get reloaded from the storage adapter because
     // we don't expose it to the user via preferences
@@ -379,6 +384,12 @@ export default class UIController {
     await Promise.all(optionLoadPromises)
     // All options has been loaded after this point
 
+    // The following options will be applied to all logging done via a single Logger instance
+    // Set the  logger verbose mode according to the settings
+    this.logger.setVerboseMode(this.verboseMode())
+    this.logger.prependModeOn() // Set a prepend mode that will add an Alpheios prefix to the printed statements
+    this.logger.traceModeOff() // Enable the log call stack tracing
+
     /**
      * This is a settings API. It exposes different options to modules and UI components.
      */
@@ -393,6 +404,7 @@ export default class UIController {
       lookupResourceOptions: this.lookupResourceOptions,
       siteOptions: this.siteOptions
     }
+
     this.store.registerModule('settings', {
       // All stores of modules are namespaced
       namespaced: true,
@@ -560,9 +572,7 @@ export default class UIController {
           state.embedLibActive = status
         },
         setCurrentLanguage (state, languageCodeOrID) {
-          let name
-          let id
-          ({ id, name } = UIController.getLanguageName(languageCodeOrID))
+          const { id, name } = UIController.getLanguageName(languageCodeOrID)
           state.currentLanguageID = id
           state.currentLanguageName = name
         },
@@ -572,7 +582,7 @@ export default class UIController {
         },
 
         setTextData (state, data) {
-          let langDetails = UIController.getLanguageName(data.languageID)
+          const langDetails = UIController.getLanguageName(data.languageID)
           state.languageName = langDetails.name
           state.languageCode = langDetails.code
           state.selectedText = data.text
@@ -812,7 +822,7 @@ export default class UIController {
 
     // Set options of modules before modules are created
     if (this.hasModule('popup')) {
-      let popupOptions = this.modules.get('popup').options
+      let popupOptions = this.modules.get('popup').options // eslint-disable-line prefer-const
       popupOptions.initialShift = {
         x: this.uiOptions.items.popupShiftX.currentValue,
         y: this.uiOptions.items.popupShiftY.currentValue
@@ -820,7 +830,7 @@ export default class UIController {
     }
 
     if (this.hasModule('toolbar')) {
-      let toolbarOptions = this.modules.get('toolbar').options
+      let toolbarOptions = this.modules.get('toolbar').options // eslint-disable-line prefer-const
       toolbarOptions.initialShift = {
         x: this.uiOptions.items.toolbarShiftX.currentValue,
         y: this.uiOptions.items.toolbarShiftY.currentValue
@@ -874,7 +884,7 @@ export default class UIController {
     let wordLists
     let optionLoadPromises
     if (isAuthenticated) {
-      let authData = await this.api.auth.getUserData()
+      const authData = await this.api.auth.getUserData()
       this.userDataManager = new UserDataManager(authData, WordlistController.evt)
       wordLists = await this.wordlistC.initLists(this.userDataManager)
       this.store.commit('app/setWordLists', wordLists)
@@ -942,7 +952,6 @@ export default class UIController {
       // if we have an active session
       this.api.auth.session()
     }
-    this.getLogger().log("UI Activation Complete")
     return this
   }
 
@@ -979,8 +988,8 @@ export default class UIController {
   }
 
   static initAlignedTranslation (documentObject, alignedTranslSelector, resizableOptions, resizemoveListener) {
-    let alignedTranslation = documentObject.querySelectorAll('.aligned-translation')
-    for (let a of alignedTranslation) {
+    const alignedTranslation = documentObject.querySelectorAll('.aligned-translation')
+    for (const a of alignedTranslation) {
       interact(a).resizable(resizableOptions).on('resizemove', resizemoveListener)
     }
     return alignedTranslation
@@ -994,7 +1003,7 @@ export default class UIController {
    */
   static getEmbedLibWarning (message) {
     if (!UIController.embedLibWarningInstance) {
-      let EmbedLibWarningClass = Vue.extend(EmbedLibWarning)
+      const EmbedLibWarningClass = Vue.extend(EmbedLibWarning)
       UIController.embedLibWarningInstance = new EmbedLibWarningClass({
         propsData: { text: message }
       })
@@ -1008,7 +1017,7 @@ export default class UIController {
       if (document && document.body) {
         document.body.classList.add(injectionClasses.DISABLE_TEXT_SELECTION)
       } else {
-        this.getLogger().warn(`Cannot inject Alpheios CSS rules because either document or body do not exist`)
+        this.logger.warn(`Cannot inject Alpheios CSS rules because either document or body do not exist`)
       }
     }
   }
@@ -1018,15 +1027,16 @@ export default class UIController {
       document.body.classList.add(injectionClasses.DISABLE_TEXT_SELECTION)
     }
   }
+
   /**
    * Load site-specific settings
    * @param {Object[]} siteOptions - An array of site options
    */
   loadSiteOptions (siteOptions) {
-    let allSiteOptions = []
-    for (let site of siteOptions) {
-      for (let domain of site.options) {
-        let siteOpts = new Options(domain, new this.options.storageAdapter(domain.domain)) // eslint-disable-line new-cap
+    let allSiteOptions = [] // eslint-disable-line prefer-const
+    for (const site of siteOptions) {
+      for (const domain of site.options) {
+        const siteOpts = new Options(domain, new this.options.storageAdapter(domain.domain)) // eslint-disable-line new-cap
         allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
     }
@@ -1034,7 +1044,7 @@ export default class UIController {
   }
 
   static hasRegularBaseFontSize () {
-    let htmlElement = document.querySelector('html')
+    const htmlElement = document.querySelector('html')
     return window.getComputedStyle(htmlElement, null).getPropertyValue('font-size') === '16px'
   }
 
@@ -1047,10 +1057,8 @@ export default class UIController {
    *     {symbol} id - Language ID
    */
   static getLanguageName (language) {
-    let langID
-    let langCode // eslint-disable-line
-      // Compatibility code in case method be called with languageCode instead of ID. Remove when not needed
-    ;({ languageID: langID, languageCode: langCode } = LanguageModelFactory.getLanguageAttrs(language))
+    // Compatibility code in case method be called with languageCode instead of ID. Remove when not needed
+    const { languageID: langID, languageCode: langCode } = LanguageModelFactory.getLanguageAttrs(language)
     return { name: languageNames.has(langID) ? languageNames.get(langID) : '', code: langCode, id: langID }
   }
 
@@ -1115,7 +1123,7 @@ export default class UIController {
       status: () => this.api.settings.getUiOptions().items.verboseMode.currentValue === 'verbose',
       wordlist: () => this.store.state.app.hasWordListsData
     }
-    return tabsCheck.hasOwnProperty(tabName) && !tabsCheck[tabName]()
+    return tabsCheck.hasOwnProperty(tabName) && !tabsCheck[tabName]() // eslint-disable-line no-prototype-builtins
   }
 
   /**
@@ -1128,7 +1136,7 @@ export default class UIController {
   changeTab (tabName) {
     // If tab is disabled, switch to a default one
     if (this.isDisabledTab(tabName)) {
-      this.getLogger().warn(`Attempting to switch to a ${tabName} tab which is not available`)
+      this.logger.warn(`Attempting to switch to a ${tabName} tab which is not available`)
       tabName = tabs.DEFAULT
     }
     this.store.commit('ui/setActiveTab', tabName) // Reflect a tab change in a state
@@ -1136,10 +1144,10 @@ export default class UIController {
     // and sends this into to a background script
     this.state.changeTab(tabName)
 
-    let isPortrait = this.store.state.panel && (this.store.state.panel.orientation === Platform.orientations.PORTRAIT)
+    const isPortrait = this.store.state.panel && (this.store.state.panel.orientation === Platform.orientations.PORTRAIT)
 
     if (['treebank', 'inflections', 'inflectionsbrowser', 'wordUsage'].includes(tabName) && this.platform.isMobile && isPortrait) {
-      let message = this.api.l10n.getMsg('HINT_LANDSCAPE_MODE')
+      const message = this.api.l10n.getMsg('HINT_LANDSCAPE_MODE')
       this.store.commit(`ui/setHint`, message, tabName)
     } else {
       this.store.commit(`ui/resetHint`)
@@ -1229,7 +1237,7 @@ export default class UIController {
   }
 
   updateProviders (homonym) {
-    let providers = new Map()
+    let providers = new Map() // eslint-disable-line prefer-const
     homonym.lexemes.forEach((l) => {
       if (l.provider) {
         providers.set(l.provider, 1)
@@ -1285,11 +1293,11 @@ export default class UIController {
     // the code which follows assumes we have been passed a languageID symbol
     // we can try to recover gracefully if we accidentally get passed a string value
     if (typeof currentLanguageID !== 'symbol') {
-      this.getLogger().warn('updateLanguage was called with a string value')
+      this.logger.warn('updateLanguage was called with a string value')
       currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(currentLanguageID)
     }
     this.store.commit('app/setCurrentLanguage', currentLanguageID)
-    let newLanguageCode = LanguageModelFactory.getLanguageCodeFromId(currentLanguageID)
+    const newLanguageCode = LanguageModelFactory.getLanguageCodeFromId(currentLanguageID)
     if (this.state.currentLanguage !== newLanguageCode) {
       this.store.commit('app/resetGrammarData')
       this.state.setItem('currentLanguage', newLanguageCode)
@@ -1299,7 +1307,7 @@ export default class UIController {
   }
 
   restoreGrammarIndex () {
-    let currentLanguageID = this.store.state.app.currentLanguageID
+    const currentLanguageID = this.store.state.app.currentLanguageID
     this.startResourceQuery({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
   }
 
@@ -1384,7 +1392,7 @@ export default class UIController {
     if (this.api.ui.hasModule('toolbar')) {
       this.store.commit('toolbar/open')
     } else {
-      this.getLogger().warn(`Toolbar cannot be opened because its module is not registered`)
+      this.logger.warn(`Toolbar cannot be opened because its module is not registered`)
     }
   }
 
@@ -1398,7 +1406,7 @@ export default class UIController {
     if (this.api.ui.hasModule('actionPanel')) {
       this.store.commit('actionPanel/open', panelOptions)
     } else {
-      this.getLogger().warn(`Action panel cannot be opened because its module is not registered`)
+      this.logger.warn(`Action panel cannot be opened because its module is not registered`)
     }
   }
 
@@ -1406,7 +1414,7 @@ export default class UIController {
     if (this.api.ui.hasModule('actionPanel')) {
       this.store.commit('actionPanel/close')
     } else {
-      this.getLogger().warn(`Action panel cannot be closed because its module is not registered`)
+      this.logger.warn(`Action panel cannot be closed because its module is not registered`)
     }
   }
 
@@ -1416,7 +1424,7 @@ export default class UIController {
         ? this.store.commit('actionPanel/close')
         : this.store.commit('actionPanel/open', {})
     } else {
-      this.getLogger().warn(`Action panel cannot be toggled because its module is not registered`)
+      this.logger.warn(`Action panel cannot be toggled because its module is not registered`)
     }
   }
 
@@ -1431,10 +1439,10 @@ export default class UIController {
       HTMLSelector conveys page-specific information, such as location of a selection on a page.
       It's probably better to keep them separated in order to follow a more abstract model.
        */
-      let defaultLangCode = this.getDefaultLangCode()
-      let htmlSelector = new HTMLSelector(event, defaultLangCode)
+      const defaultLangCode = this.getDefaultLangCode()
+      const htmlSelector = new HTMLSelector(event, defaultLangCode)
       this.store.commit('app/setHtmlSelector', htmlSelector)
-      let textSelector = htmlSelector.createTextSelector()
+      const textSelector = htmlSelector.createTextSelector()
 
       if (textSelector && !textSelector.isEmpty()) {
         // TODO: disable experience monitor as it might cause memory leaks
@@ -1458,7 +1466,7 @@ export default class UIController {
           })
           .getData() */
 
-        let lexQuery = LexicalQuery.create(textSelector, {
+        const lexQuery = LexicalQuery.create(textSelector, {
           htmlSelector: htmlSelector,
           clientId: this.api.app.clientId,
           resourceOptions: this.api.settings.getResourceOptions(),
@@ -1503,7 +1511,7 @@ export default class UIController {
 
     this.store.commit('app/setWordUsageExamplesReady', false)
 
-    let wordUsageExamples = this.enableWordUsageExamples({ languageID: homonym.languageID }, 'onDemand')
+    const wordUsageExamples = this.enableWordUsageExamples({ languageID: homonym.languageID }, 'onDemand')
       ? { paginationMax: this.featureOptions.items.wordUsageExamplesMax.currentValue,
         paginationAuthMax: this.featureOptions.items.wordUsageExamplesAuthMax.currentValue }
       : null
@@ -1522,7 +1530,7 @@ export default class UIController {
   }
 
   enableWordUsageExamples (textSelector, requestType) {
-    let checkType = requestType === 'onLexicalQuery' ? this.featureOptions.items.wordUsageExamplesON.currentValue === requestType : true
+    const checkType = requestType === 'onLexicalQuery' ? this.featureOptions.items.wordUsageExamplesON.currentValue === requestType : true
     return textSelector.languageID === Constants.LANG_LATIN &&
     this.featureOptions.items.enableWordUsageExamples.currentValue &&
     checkType
@@ -1549,6 +1557,7 @@ export default class UIController {
     }
     return true
   }
+
   /**
    * Issues an AnnotationQuery to find and apply annotations for the currently loaded document
    */
@@ -1604,12 +1613,12 @@ export default class UIController {
     this.store.commit(`app/setTextData`, { text: homonym.targetWord, languageID: homonym.languageID })
 
     // Update inflections data
-    let inflectionsViewSet = ViewSetFactory.create(homonym, this.featureOptions.items.locale.currentValue)
+    const inflectionsViewSet = ViewSetFactory.create(homonym, this.featureOptions.items.locale.currentValue)
     if (inflectionsViewSet.hasMatchingViews) {
       this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_INFLDATA_READY'))
     }
     this.api.app.homonym = homonym
-    let wordUsageExampleEnabled = this.enableWordUsageExamples({ languageID: homonym.languageID })
+    const wordUsageExampleEnabled = this.enableWordUsageExamples({ languageID: homonym.languageID })
 
     this.store.commit('app/setHomonym', homonym)
     this.store.commit('app/setWordUsageExampleEnabled', wordUsageExampleEnabled)
@@ -1668,7 +1677,7 @@ export default class UIController {
 
   async onWordItemSelected (wordItem) {
     if (!this.userDataManager && !wordItem.homonym) {
-      this.getLogger().warn('UserDataManager is not defined, data couldn\'t be loaded from the storage')
+      this.logger.warn('UserDataManager is not defined, data couldn\'t be loaded from the storage')
       return
     }
     const languageID = LanguageModelFactory.getLanguageIdFromCode(wordItem.languageCode)
@@ -1677,7 +1686,7 @@ export default class UIController {
 
     let homonym
     if (this.userDataManager) {
-      let wordItemFull = await this.userDataManager.query({ dataType: 'WordItem', params: { wordItem } }, { type: 'full' })
+      const wordItemFull = await this.userDataManager.query({ dataType: 'WordItem', params: { wordItem } }, { type: 'full' })
       homonym = wordItemFull[0].homonym
     } else {
       homonym = wordItem.homonym
@@ -1691,9 +1700,9 @@ export default class UIController {
       this.store.commit('app/lexicalRequestFinished')
     } else {
       // otherwise we can query for it as usual
-      let textSelector = TextSelector.createObjectFromText(homonym.targetWord, homonym.languageID)
-      let wordUsageExamples = this.getWordUsageExamplesQueryParams(textSelector)
-      let lexQuery = LexicalQueryLookup.create(textSelector, this.resourceOptions, this.state.lemmaTranslationLang, wordUsageExamples, this.api.app.clientId)
+      const textSelector = TextSelector.createObjectFromText(homonym.targetWord, homonym.languageID)
+      const wordUsageExamples = this.getWordUsageExamplesQueryParams(textSelector)
+      const lexQuery = LexicalQueryLookup.create(textSelector, this.resourceOptions, this.state.lemmaTranslationLang, wordUsageExamples, this.api.app.clientId)
       lexQuery.getData()
     }
   }
@@ -1714,14 +1723,14 @@ export default class UIController {
    * Updates the Application State after settings have been reset or reloaded
    */
   onOptionsReset () {
-    for (let name of this.featureOptions.names) {
+    for (const name of this.featureOptions.names) {
       this.featureOptionStateChange(name)
       this.store.commit('settings/incrementFeatureResetCounter')
     }
-    for (let name of this.resourceOptions.names) { // eslint-disable-line no-unused-vars
+    for (const name of this.resourceOptions.names) { // eslint-disable-line no-unused-vars
       this.store.commit('settings/incrementResourceResetCounter')
     }
-    for (let name of this.uiOptions.names) {
+    for (const name of this.uiOptions.names) {
       this.uiOptionStateChange(name)
       this.store.commit('settings/incrementUiResetCounter')
     }
@@ -1733,7 +1742,7 @@ export default class UIController {
    * @param {String} value the new value
    */
   featureOptionChange (name, value) {
-    let featureOptions = this.api.settings.getFeatureOptions()
+    let featureOptions = this.api.settings.getFeatureOptions() // eslint-disable-line prefer-const
     // TODO we need to refactor handling of boolean options
     if (name === 'enableLemmaTranslations' ||
         name === 'enableWordUsageExamples' ||
@@ -1772,7 +1781,7 @@ export default class UIController {
    * @param {string | value} value - A new value of an options.
    */
   uiOptionChange (name, value) {
-    let uiOptions = this.api.settings.getUiOptions()
+    let uiOptions = this.api.settings.getUiOptions() // eslint-disable-line prefer-const
     // TODO this should really be handled within OptionsItem
     // the difference between value and textValues is a little confusing
     // see issue #73
@@ -1789,7 +1798,7 @@ export default class UIController {
    * @param {String} settingName the name of the setting
    */
   uiOptionStateChange (settingName) {
-    let uiOptions = this.api.settings.getUiOptions()
+    const uiOptions = this.api.settings.getUiOptions()
 
     switch (settingName) {
       case 'fontSize':
@@ -1797,6 +1806,9 @@ export default class UIController {
         break
       case 'panelPosition':
         this.store.commit('panel/setPosition', uiOptions.items.panelPosition.currentValue)
+        break
+      case 'verboseMode':
+        this.logger.setVerboseMode(uiOptions.items.verboseMode.currentValue === 'verbose')
         break
       case 'hideLoginPrompt':
         if (this.api.auth) {
@@ -1812,7 +1824,7 @@ export default class UIController {
       document.documentElement.style.setProperty(FONT_SIZE_PROP,
         `${uiOptions.items.fontSize.currentValue}px`)
     } catch (error) {
-      this.getLogger().error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
+      this.logger.error(`Cannot change a ${FONT_SIZE_PROP} custom prop:`, error)
     }
   }
 
@@ -1827,7 +1839,7 @@ export default class UIController {
     // by its fullname (with version and groupname appended)
     // multivalued settings are handled in the Options.setTextValue method which can take
     // an array or an individual text value
-    let baseKey = Options.parseKey(name)
+    const baseKey = Options.parseKey(name)
     this.api.settings.getResourceOptions().items[baseKey.name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
   }
 
@@ -1874,12 +1886,6 @@ export default class UIController {
   registerAndActivateGetSelectedText (listenerName, selector) {
     this.registerGetSelectedText(listenerName, selector)
     this.evc.activateListener(listenerName)
-  }
-
-  getLogger() {
-    // make sure we don't fail if we get called before settings are initialized
-    let verbose = this.api && this.api.settings ? this.api.settings.verboseMode() : false
-    return Logger.getLogger(verbose)
   }
 }
 
