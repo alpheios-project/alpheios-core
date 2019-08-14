@@ -95,7 +95,7 @@ export default class OptionItem {
    * Saves an option value to the local storage.
    */
   save () {
-    const option = {} // eslint-disable-line no-prototype-builtins
+    let option = {} // eslint-disable-line prefer-const
     option[this.name] = JSON.stringify(this.currentValue)
 
     this.storageAdapter.set(option).then(

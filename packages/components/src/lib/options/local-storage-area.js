@@ -38,16 +38,17 @@ export default class LocalStorageArea extends StorageAdapter {
 
   /**
    * A wrapper around a local storage `removeItem()` function.
-   * It allows to remove one key-value pair from local storage.
-   * @param {String} key - key of the item to be removed.
-   * If a particular item exists, it will be removed.
-   * @return {Promise} - A promise that is resolved with with true if a key was removed
-   * successfully. If at least on save operation fails, returns a rejected promise with an error information.
+   * It allows to remove one key-value pair from the local storage.
+   *
+   * @param {string} key - a key of the item to be removed.
+   * If a pair with the key specified exists, it will be removed.
+   * @returns {Promise} - A promise that is resolved with with `true` if a key-value pair was removed
+   * successfully. If the pair for removal is not in the storage, a promise is resolved with the `null` value.
+   * If a removal operation fails for any reason, a promise is rejected with the error.
    */
   remove (key) {
     return new Promise((resolve, reject) => {
       try {
-        const result = null
         if (key) {
           let keys = window.localStorage.getItem(`${this.domain}-keys`)
           if (keys) {
@@ -58,10 +59,11 @@ export default class LocalStorageArea extends StorageAdapter {
 
             window.localStorage.setItem(`${this.domain}-keys`, JSON.stringify(keys))
             window.localStorage.removeItem(key)
+            // the key-value pair was removed successfully, resolving with `true`
             resolve(true)
           } else {
-            // Nothing to retrieve
-            resolve(result)
+            // Nothing to retrieve, resolve promise with `null`
+            resolve(null)
           }
         }
       } catch (e) {
