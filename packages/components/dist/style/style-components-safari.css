@@ -3013,6 +3013,16 @@ p.alpheios-word-usage-filter-title {
   align-items: flex-start !important;
   flex: 1 1 auto !important;
 }
+.alpheios-resource-options__cont-fieldset {
+  margin-bottom: 20px !important;
+  padding: 10px !important;
+}
+.alpheios-resource-options__item .alpheios-setting__label {
+  width: 30% !important;
+}
+.alpheios-resource-options__item .alpheios-setting__control {
+  width: 70% !important;
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3094,6 +3104,12 @@ p.alpheios-word-usage-filter-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-tab-options {
+  display: flex;
+  flex-direction: column !important;
+  height: 100% !important;
+  justify-content: space-between !important;
+}
 .alpheios-tab-options-switch {
   margin-bottom: calc(var(--alpheios-base-text-size) * 0.9375) !important;
   text-align: right !important;
@@ -3131,6 +3147,11 @@ p.alpheios-word-usage-filter-title {
 .alpheios-tab-options-reset-all-block .alpheios-tab-options-reset-all-block--title {
   font-weight: bold !important;
   margin-left: 15px !important;
+}
+.alpheios-tab-options__aboutcont {
+  border-top: 1px solid !important;
+  padding-top: 10px !important;
+  font-size: calc(var(--alpheios-base-ui-size) * 0.75) !important;
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -3398,9 +3419,6 @@ p.alpheios-word-usage-filter-title {
   margin-top: 10px !important;
   margin-bottom: 10px !important;
 }
-.alpheios-info .alpheios-info__versiontext {
-  font-size: calc(var(--alpheios-base-text-size) * 0.75) !important;
-}
 .alpheios-info__currentlanguage {
   font-size: calc(var(--alpheios-base-text-size) * 0.75) !important;
   font-weight: bold !important;
@@ -3437,6 +3455,11 @@ p.alpheios-word-usage-filter-title {
 }
 .alpheios-info__languagenotification {
   color: var(--alpheios-notification-important-color) !important;
+}
+.alpheios-info__faq {
+  display: flex;
+  flex-direction: row !important;
+  justify-content: flex-end !important;
 }
 /*
  Calculates a size of text elements relative to the base size.

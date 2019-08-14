@@ -1,0 +1,42 @@
+{
+  "LEXICONS_FULL_TITLE": {
+    "message": "Lexicons (Full Definitions)",
+    "description": "The label of the fieldset for full definitions on resource settings tab",
+    "component": "Settings Tab"
+  },
+  "LEXICONS_FULL_GREEK_TITLE": {
+    "message": "Greek",
+    "description": "The label of the setting for greek full definitions on resource settings tab",
+    "component": "Settings Tab"
+  },
+  "LEXICONS_FULL_LATIN_TITLE": {
+    "message": "Latin",
+    "description": "The label of the setting for latin full definitions on resource settings tab",
+    "component": "Settings Tab"
+  },
+  "LEXICONS_FULL_ARABIC_TITLE": {
+    "message": "Arabic",
+    "description": "The label of the setting for arabic full definitions on resource settings tab",
+    "component": "Settings Tab"
+  },
+  "LEXICONS_FULL_PERSIAN_TITLE": {
+    "message": "Persian",
+    "description": "The label of the setting for persian full definitions on resource settings tab",
+    "component": "Settings Tab"
+  },
+  "LEXICONS_SHORT_TITLE": {
+    "message": "Lexicons (Short Definitions)",
+    "description": "The label of thr fieldset for short definitions on resource settings tab",
+    "component": "Settings Tab"
+  },
+  "LEXICONS_SHORT_GREEK_TITLE": {
+    "message": "Greek",
+    "description": "The label of the setting for greek sort definitions on resource settings tab",
+    "component": "Settings Tab"
+  },
+  "LEXICONS_SHORT_PERSIAN_TITLE": {
+    "message": "Persian",
+    "description": "The label of the setting for persian short definitions on resource settings tab",
+    "component": "Settings Tab"
+  }
+}

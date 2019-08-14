@@ -3013,6 +3013,16 @@ p.alpheios-word-usage-filter-title {
   align-items: flex-start;
   flex: 1 1 auto;
 }
+.alpheios-resource-options__cont-fieldset {
+  margin-bottom: 20px;
+  padding: 10px;
+}
+.alpheios-resource-options__item .alpheios-setting__label {
+  width: 30%;
+}
+.alpheios-resource-options__item .alpheios-setting__control {
+  width: 70%;
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3094,6 +3104,12 @@ p.alpheios-word-usage-filter-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-tab-options {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
 .alpheios-tab-options-switch {
   margin-bottom: calc(var(--alpheios-base-text-size) * 0.9375);
   text-align: right;
@@ -3131,6 +3147,11 @@ p.alpheios-word-usage-filter-title {
 .alpheios-tab-options-reset-all-block .alpheios-tab-options-reset-all-block--title {
   font-weight: bold;
   margin-left: 15px;
+}
+.alpheios-tab-options__aboutcont {
+  border-top: 1px solid;
+  padding-top: 10px;
+  font-size: calc(var(--alpheios-base-ui-size) * 0.75);
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -3398,9 +3419,6 @@ p.alpheios-word-usage-filter-title {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.alpheios-info .alpheios-info__versiontext {
-  font-size: calc(var(--alpheios-base-text-size) * 0.75);
-}
 .alpheios-info__currentlanguage {
   font-size: calc(var(--alpheios-base-text-size) * 0.75);
   font-weight: bold;
@@ -3437,6 +3455,11 @@ p.alpheios-word-usage-filter-title {
 }
 .alpheios-info__languagenotification {
   color: var(--alpheios-notification-important-color);
+}
+.alpheios-info__faq {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 /*
  Calculates a size of text elements relative to the base size.

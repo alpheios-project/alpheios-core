@@ -5,7 +5,6 @@
         <label class="alpheios-setting__label">Word lookup</label>
         <div class="alpheios-lookup__search-control">
           <input
-              :placeholder="l10n.getMsg('LABEL_LOOKUP_BUTTON')"
               autocapitalize="off"
               autocorrect="off"
               @keyup.enter="lookup"

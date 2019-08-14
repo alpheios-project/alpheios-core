@@ -1,21 +1,17 @@
 <template>
   <div class="alpheios-resource-options__cont">
-    <setting
-        :classes="['alpheios-resource-options__item']"
-        :data="languageSetting"
-        :key="languageSetting.name"
-        @change="resourceSettingChanged"
-        v-for="languageSetting in resourceSettingsLexicons"
-    >
-    </setting>
-    <setting
-        :classes="['alpheios-resource-options__item']"
-        :data="languageSetting"
-        :key="languageSetting.name"
-        @change="resourceSettingChanged"
-        v-for="languageSetting in resourceSettingsLexiconsShort"
-    >
-    </setting>
+
+    <fieldset class="alpheios-resource-options__cont-fieldset" v-for="settingItem in settingsArray" v-bind:key="settingItem.typelex">
+      <legend>{{ resourceSettingsTitle(settingItem.typeLex) }}</legend>
+        <setting
+            :classes="['alpheios-resource-options__item']"
+            :data="languageSetting"
+            :key="languageSetting.name"
+            @change="resourceSettingChanged"
+            v-for="languageSetting in resourceSettingsLexicons(settingItem.typeLex)"
+        >
+        </setting>
+    </fieldset>
   </div>
 </template>
 <script>
@@ -34,21 +30,42 @@
     components: {
       setting: Setting,
     },
-    computed: {
-      resourceSettingsLexicons: function () {
-        let resourceOptions = this.settings.getResourceOptions()
-        return resourceOptions.items && resourceOptions.items.lexicons
-          ? resourceOptions.items.lexicons.filter(item => item.values.length > 0)
-          : []
-      },
-      resourceSettingsLexiconsShort: function () {
-        let resourceOptions = this.settings.getResourceOptions()
-        return resourceOptions.items && resourceOptions.items.lexiconsShort
-          ? resourceOptions.items.lexiconsShort.filter(item => item.values.length > 0)
-          : []
+    data () {
+      return {
+        settingsArray: [
+          {
+            typeLex: 'lexicons', // typeLex property should be uniqie
+            titleDefault: 'Lexicons (full)'
+          },
+          {
+            typeLex: 'lexiconsShort',
+            titleDefault: 'Lexicons (short)'
+          }
+        ]
       }
     },
     methods: {
+      resourceSettingsTitle (typeLex) {
+        let resourceOptions = this.settings.getResourceOptions()
+
+        if (resourceOptions.items && resourceOptions.items[typeLex]) {
+          if (resourceOptions.defaults.items[typeLex].labelL10n) {
+            return this.l10n.getText(resourceOptions.defaults.items[typeLex].labelL10n)
+          } else if (resourceOptions.defaults.items[typeLex].labelText) {
+            return resourceOptions.defaults.items[typeLex].labelText
+          }
+        }
+        return this.titleDefault[typeLex]
+        
+      },
+
+      resourceSettingsLexicons (typeLex) {
+        let resourceOptions = this.settings.getResourceOptions()
+        return resourceOptions.items && resourceOptions.items[typeLex]
+          ? resourceOptions.items[typeLex].filter(item => item.values.length > 0)
+          : []
+      },
+
       resourceSettingChanged: function (name, value) {
         // we have to send the full name here and parse it where we set it
         // because grouped setting are referenced under Options object
@@ -71,4 +88,19 @@
     align-items: flex-start;
     flex: 1 1 auto;
   }
+
+  .alpheios-resource-options__cont-fieldset {
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+
+  .alpheios-resource-options__item {
+    .alpheios-setting__label {
+      width: 30%;
+    }
+    .alpheios-setting__control {
+      width: 70%;
+    }
+  }
+
 </style>

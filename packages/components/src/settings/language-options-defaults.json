@@ -4,12 +4,14 @@
   "items": {
     "lexicons": {
       "labelText": "Lexicons (Full Definitions)",
+      "labelL10n": "LEXICONS_FULL_TITLE",
       "group": {
         "grc": {
           "defaultValue": [
             "https://github.com/alpheios-project/lsj"
           ],
-          "labelText": "Greek Lexicons",
+          "labelText": "Greek",
+          "labelL10n": "LEXICONS_FULL_GREEK_TITLE",
           "multiValue": true,
           "values": [
             {
@@ -38,7 +40,8 @@
           "defaultValue": [
             "https://github.com/alpheios-project/ls"
           ],
-          "labelText": "Latin Lexicons",
+          "labelText": "Latin",
+          "labelL10n": "LEXICONS_FULL_LATIN_TITLE",
           "multiValue": true,
           "values": [
             {
@@ -51,7 +54,8 @@
           "defaultValue": [
             "https://github.com/alpheios-project/lan"
           ],
-          "labelText": "Arabic Lexicons",
+          "labelText": "Arabic",
+          "labelL10n": "LEXICONS_FULL_ARABIC_TITLE",
           "multiValue": true,
           "values": [
             {
@@ -68,7 +72,8 @@
           "defaultValue": [
             "https://github.com/alpheios-project/stg"
           ],
-          "labelText": "Persian Lexicons",
+          "labelText": "Persian",
+          "labelL10n": "LEXICONS_FULL_PERSIAN_TITLE",
           "multiValue": true,
           "values": [
             {
@@ -81,12 +86,14 @@
     },
     "lexiconsShort": {
       "labelText": "Lexicons (Short Definitions)",
+      "labelL10n": "LEXICONS_SHORT_TITLE",
       "group": {
         "grc": {
           "defaultValue": [
             "https://github.com/alpheios-project/lsj"
           ],
-          "labelText": "Greek Lexicons (short)",
+          "labelText": "Greek",
+          "labelL10n": "LEXICONS_SHORT_GREEK_TITLE",
           "multiValue": true,
           "values": [
             {
@@ -115,7 +122,8 @@
           "defaultValue": [
             "https://github.com/alpheios-project/stg"
           ],
-          "labelText": "Persian Lexicons (short)",
+          "labelText": "Persian",
+          "labelL10n": "LEXICONS_SHORT_PERSIAN_TITLE",
           "multiValue": true,
           "values": [
             {

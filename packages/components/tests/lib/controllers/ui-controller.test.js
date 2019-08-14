@@ -816,4 +816,11 @@ describe.skip('ui-controller.test.js', () => {
     expect(uiC.popup.vi.open).toHaveBeenCalled()
   })
 
+  it('36 UIController -overrideHelp option affects default tab', () => {
+    let uiC = UIController.create(state, { overrideHelp: true})
+    expect(uiC.tabs.DEFAULT).toEqual('settings')
+    let uiC2 = UIController.create(state, { overrideHelp: false})
+    expect(uiC2.tabs.DEFAULT).toEqual('info')
+  })
+
 })

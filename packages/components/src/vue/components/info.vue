@@ -1,6 +1,15 @@
 <template>
   <div class="alpheios-info">
+    <div class="alpheios-info__faq">
+      <a :href="faqLink" target="_blank">
+        <button class="alpheios-button-tertiary">
+          {{ l10n.getMsg(`LABEL_INFO_FAQ`) }}
+        </button>
+      </a>
+    </div>
     <div class="alpheios-info__helptext">
+      <div
+          class="alpheios-notification-area__close-btn"
       <h3>{{ l10n.getMsg('TEXT_INFO_GETTINGSTARTED') }}</h3>
       <div class="alpheios-info__helpitem alpheios-info__helpitem__logo" v-show="! $store.state.app.embedLibActive">
         <span class="alpheios-info__helpicon"><logo-icon></logo-icon></span>
@@ -25,13 +34,6 @@
     </div>
     <h3>{{ l10n.getMsg('TEXT_INFO_TIPS') }}</h3>
     <p class="alpheios-text-small" v-html="l10n.getMsg('TEXT_INFO_LANGDETECT', {languageName: defaultLanguage})"></p>
-    <h3>{{ l10n.getMsg('TEXT_INFO_ABOUT') }}</h3>
-    <div class="alpheios-info__versiontext alpheios-text__smallest">
-      {{ app.name }} {{ app.version }}
-    </div>
-    <div class="alpheios-info__versiontext alpheios-text__smallest">
-      {{ app.libName }} {{ app.libVersion }}
-    </div>
   </div>
 </template>
 <script>
@@ -59,7 +61,15 @@ export default {
   computed: {
     defaultLanguage () {
       return this.app.getLanguageName(this.app.getDefaultLangCode()).name
+    },
+    faqLink() {
+      if (this.$store.state.app.embedLibActive) {
+        return "https://alpheios.net/pages/v3/faq-embedded"
+      } else {
+        return "https://alpheios.net/pages/v3/faq-extension"
+      }
     }
+
   }
 
 }
@@ -71,10 +81,6 @@ export default {
     color: var(--alpheios-text-color);
     margin-top: 10px;
     margin-bottom: 10px;
-  }
-
-  .alpheios-info .alpheios-info__versiontext {
-    font-size: textsize(12px);
   }
 
   .alpheios-info__currentlanguage {
@@ -117,6 +123,12 @@ export default {
   }
   .alpheios-info__languagenotification {
     color: var(--alpheios-notification-important-color);
+  }
+
+  .alpheios-info__faq {
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
   }
 
 </style>

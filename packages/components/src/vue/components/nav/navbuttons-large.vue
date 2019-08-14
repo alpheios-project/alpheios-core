@@ -1,6 +1,7 @@
 <template>
   <div class="alpheios-navbuttons alpheios-navbuttons--large">
-    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_HELP')" tooltipDirection="bottom-narrow">
+    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_HELP')" tooltipDirection="bottom-narrow"
+      v-show="! $store.state.ui.overrideHelp">
       <div @click="ui.changeTab('info')" class="alpheios-navbuttons__btn"
             :class="{ active: $store.getters['ui/isActiveTab']('info') }">
         <help-icon />

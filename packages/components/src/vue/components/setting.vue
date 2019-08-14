@@ -1,6 +1,6 @@
 <template>
   <div :class="classes" v-if="dataModel && Object.keys(dataModel).length > 0  && !dataModel.hidden">
-    <label class="alpheios-setting__label" v-show="showTitle">{{dataModel.labelText}}</label>
+    <label class="alpheios-setting__label" v-show="showTitle">{{ labelText}}</label>
 
     <multiselect
         class="alpheios-setting__control"
@@ -48,6 +48,9 @@ export default {
   name: 'Setting',
   components: {
     Multiselect
+  },
+  inject: {
+    l10n: 'l10n'
   },
   props: {
     data: {
@@ -100,6 +103,12 @@ export default {
     },
     checkboxLabel: function () {
       return (this.data && this.data.textValues) ? this.data.textValues()[0].text : ''
+    },
+    labelText () {
+      if (this.dataModel.labelL10n) {
+        return this.l10n.getText(this.dataModel.labelL10n)
+      }
+      return this.dataModel.labelText
     }
   },
   methods: {

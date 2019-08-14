@@ -53,11 +53,6 @@ const injectionClasses = {
   DISABLE_TEXT_SELECTION: 'alpheios-disable-user-selection'
 }
 
-const tabs = {
-  DEFAULT: 'info',
-  DISABLED: 'disabled'
-}
-
 // Enable Vuex
 Vue.use(Vuex)
 
@@ -80,6 +75,10 @@ export default class UIController {
     this.state = state
     this.options = UIController.setOptions(options, UIController.optionsDefaults)
 
+    this.tabs = {
+      DEFAULT: this.options.overrideHelp ? 'settings' : 'info',
+      DISABLED: 'disabled'
+    }
     /*
     Define defaults for resource options. If a UI controller creator
     needs to provide its own defaults, they shall be defined in a `create()` function.
@@ -257,7 +256,10 @@ export default class UIController {
       // If set to true, will use the `textLangCode` over the `preferredLanguage`
       overridePreferredLanguage: false,
       // a callback to execute before the word selection handler
-      triggerPreCallback: null
+      triggerPreCallback: null,
+      // if true, the help button on the toolbar can be controlled by the client, no click handler will
+      // be added by the components library
+      overrideHelp: false
     }
   }
 
@@ -440,7 +442,7 @@ export default class UIController {
       libVersion: UIController.libVersion, // A version of the components library
       platform: this.platform,
       mode: this.options.mode, // Mode of an application: `production` or `development`
-      defaultTab: tabs.DEFAULT, // A name of a default tab (a string)
+      defaultTab: this.tabs.DEFAULT, // A name of a default tab (a string)
       state: this.state, // An app-level state
       homonym: null,
       inflectionsViewSet: null,
@@ -746,7 +748,9 @@ export default class UIController {
       namespaced: true,
 
       state: {
-        activeTab: tabs.DEFAULT, // A currently selected panel's tab
+        activeTab: this.tabs.DEFAULT, // A currently selected panel's tab
+        disabledTab: this.tabs.DISABLED,
+        overrideHelp: this.options.overrideHelp,
 
         messages: [],
         // Panel and popup notifications
@@ -776,7 +780,7 @@ export default class UIController {
 
         // Set active tab name to `disabled` when panel is closed so that no selected tab be shown in a toolbar
         resetActiveTab (state) {
-          state.activeTab = tabs.DISABLED
+          state.activeTab = state.disabledTab
         },
 
         setNotification (state, data) {
@@ -938,7 +942,7 @@ export default class UIController {
 
     if (this.state.tab) {
       if (this.state.isTabStateDefault()) {
-        this.state.tab = tabs.DEFAULT
+        this.state.tab = this.tabs.DEFAULT
       }
       this.changeTab(this.state.tab)
     }
@@ -1137,7 +1141,7 @@ export default class UIController {
     // If tab is disabled, switch to a default one
     if (this.isDisabledTab(tabName)) {
       this.logger.warn(`Attempting to switch to a ${tabName} tab which is not available`)
-      tabName = tabs.DEFAULT
+      tabName = this.tabs.DEFAULT
     }
     this.store.commit('ui/setActiveTab', tabName) // Reflect a tab change in a state
     // This is for compatibility with watchers in webextension that track tab changes
@@ -1348,8 +1352,8 @@ export default class UIController {
     if (this.api.ui.hasModule('panel')) {
       if (forceOpen || !this.state.isPanelOpen()) {
         // If an active tab has been disabled previously, set it to a default one
-        if (this.store.getters['ui/isActiveTab'](tabs.DISABLED)) {
-          this.changeTab(tabs.DEFAULT)
+        if (this.store.getters['ui/isActiveTab'](this.tabs.DISABLED)) {
+          this.changeTab(this.tabs.DEFAULT)
         }
         this.store.commit('panel/open')
         this.state.setPanelOpen()

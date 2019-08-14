@@ -1,26 +1,37 @@
 <template>
-  <div data-alpheios-ignore="all">
-    <div class="alpheios-tab-options-switch">
-        <alph-tooltip :tooltipText="l10n.getText('OPTIONS_TAB_UI')" tooltipDirection="bottom-left">
-          <div class="alpheios-tab-options-switch--item" :class="{ 'alpheios-active': currentTab === 1 }" @click="currentTab = 1">UI</div>
-        </alph-tooltip>
-        <alph-tooltip :tooltipText="l10n.getText('OPTIONS_TAB_FEATURE')" tooltipDirection="bottom-left">
-          <div class="alpheios-tab-options-switch--item" :class="{ 'alpheios-active': currentTab === 2 }" @click="currentTab = 2">F<span class="alpheios-tab-options-switch--item__smaller">eature</span></div>
-        </alph-tooltip>
-        <alph-tooltip :tooltipText="l10n.getText('OPTIONS_TAB_RESOURCE')" tooltipDirection="bottom-left">
-          <div class="alpheios-tab-options-switch--item" :class="{ 'alpheios-active': currentTab === 3 }" @click="currentTab = 3">R<span class="alpheios-tab-options-switch--item__smaller">esource</span></div>
-        </alph-tooltip>
+  <div class="alpheios-tab-options" data-alpheios-ignore="all">
+    <div class="alpheios-tab-options__optionscont">
+      <div class="alpheios-tab-options-switch">
+          <alph-tooltip :tooltipText="l10n.getText('OPTIONS_TAB_UI')" tooltipDirection="bottom-left">
+            <div class="alpheios-tab-options-switch--item" :class="{ 'alpheios-active': currentTab === 1 }" @click="currentTab = 1">UI</div>
+          </alph-tooltip>
+          <alph-tooltip :tooltipText="l10n.getText('OPTIONS_TAB_FEATURE')" tooltipDirection="bottom-left">
+            <div class="alpheios-tab-options-switch--item" :class="{ 'alpheios-active': currentTab === 2 }" @click="currentTab = 2">F<span class="alpheios-tab-options-switch--item__smaller">eatures</span></div>
+          </alph-tooltip>
+          <alph-tooltip :tooltipText="l10n.getText('OPTIONS_TAB_RESOURCE')" tooltipDirection="bottom-left">
+            <div class="alpheios-tab-options-switch--item" :class="{ 'alpheios-active': currentTab === 3 }" @click="currentTab = 3">R<span class="alpheios-tab-options-switch--item__smaller">esources</span></div>
+          </alph-tooltip>
+      </div>
+
+          <ui-settings :key="uiSettingsKey" v-show="currentTab === 1"></ui-settings>
+          <feature-settings :key="featureSettingsKey" v-show="currentTab === 2"></feature-settings>
+          <resource-settings :key="resourceSettingsKey" v-show="currentTab === 3"></resource-settings>
+      <div class="alpheios-tab-options-reset-all-block">
+          <button @click="resetAllOptions"
+              class="alpheios-button-primary">{{l10n.getText('LABEL_RESET_OPTIONS')}}
+          </button>
+          <p class="alpheios-tab-options-reset-all-block--title">({{l10n.getText('OPTIONS_TAB_RESET_ALL_TITLE')}})</p>
+
+      </div>
     </div>
-
-        <ui-settings :key="uiSettingsKey" v-show="currentTab === 1"></ui-settings>
-        <feature-settings :key="featureSettingsKey" v-show="currentTab === 2"></feature-settings>
-        <resource-settings :key="resourceSettingsKey" v-show="currentTab === 3"></resource-settings>
-    <div class="alpheios-tab-options-reset-all-block">
-        <button @click="resetAllOptions"
-            class="alpheios-button-primary">{{l10n.getText('LABEL_RESET_OPTIONS')}}
-        </button>
-        <p class="alpheios-tab-options-reset-all-block--title">({{l10n.getText('OPTIONS_TAB_RESET_ALL_TITLE')}})</p>
-
+    <div class="alpheios-tab-options__aboutcont">
+      <h3>{{ l10n.getMsg('TEXT_INFO_ABOUT') }}</h3>
+      <div class="alpheios-info__versiontext alpheios-text__smallest">
+        {{ app.name }} {{ app.version }}
+      </div>
+      <div class="alpheios-info__versiontext alpheios-text__smallest">
+        {{ app.libName }} {{ app.libVersion }}
+      </div>
     </div>
   </div>
 </template>
@@ -69,6 +80,13 @@
 <style lang="scss">
     @import "../../styles/variables";
 
+    .alpheios-tab-options {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: space-between;
+    }
+
     .alpheios-tab-options-switch {
         margin-bottom: textsize(15px);
         text-align: right;
@@ -114,5 +132,11 @@
         font-weight: bold;
         margin-left: 15px;
       }
+    }
+
+    .alpheios-tab-options__aboutcont {
+      border-top: 1px solid;
+      padding-top: 10px;
+      font-size: uisize(12px);
     }
 </style>

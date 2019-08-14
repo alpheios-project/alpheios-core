@@ -18,7 +18,7 @@
           :tooltip-direction="tooltipDirection"
       >
         <span
-            @click="ui.togglePanelTab('info')"
+            @click="showHelp"
             class="alpheios-navbuttons__btn"
             :class="{ active: $store.getters['ui/isActiveTab']('info') && $store.state.panel.open }"
         >
@@ -283,6 +283,12 @@ export default {
   },
 
   methods: {
+    showHelp() {
+      if (! this.$store.state.ui.overrideHelp) {
+        this.ui.togglePanelTab('info')
+      }
+    },
+
     dragMoveListener (event) {
       let dx = event.dx
       let dy = event.dy

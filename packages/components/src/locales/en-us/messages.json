@@ -191,17 +191,17 @@
     "component": "Panel"
   },
   "TEXT_INFO_ACTIVATE": {
-    "message": "Click the Alpheios icon in the browser toolbar to activate on any page. Click again to deactivate.",
+    "message": "Click on the Alpheios icon in the browser toolbar to turn the Alpheios tools on and off.",
     "description": "info text",
     "component": "Panel"
   },
   "TEXT_INFO_CLICK": {
-    "message": "Double-click on a word to retrieve lemmas, morphology, short definitions and access to additional word analysis tools.",
+    "message": "Double-click on a word to retrieve lemmas, morphology, short definitions and icons for additional resources, such as long definitions, and, when available, inflection tables, usage examples, and sentence diagrams.",
     "description": "info text",
     "component": "Panel"
   },
   "TEXT_INFO_LOOKUP": {
-    "message": "Use the lookup tool to enter any word for analysis.",
+    "message": "Opens a lookup box in which you can enter any word to see its lemmas, morphology etc, just as if you had double-clicked on it in a text. Note that you can change the language in which the word will be searched.",
     "description": "info text",
     "component": "Panel"
   },
@@ -216,7 +216,7 @@
     "component": "Panel"
   },
   "TEXT_INFO_LANGDETECT": {
-    "message": "When you lookup a word, if Alpheios cannot detect the language of the word from the page markup it will use its default language, currently set to <b>{languageName}</b>.  You can change the default language for word lookups in the application Options. You can also return to this pane to lookup a word in <em>any</em> of the supported languages.",
+    "message": "If a web page identifies its language, Alpheios will use that language, otherwise it will use its default language - initially set to Latin. You can change this default in the settings options.",
     "description": "info text",
     "component": "Panel",
     "params": ["languageName"]
@@ -227,12 +227,12 @@
     "component": "Panel"
   },
   "TEXT_INFO_TOOLBAR": {
-    "message": "Click the tools icon on the Alpheios toolbar to access a tool in this panel, including your user account and wordlist, inflection table and grammar browsers and the application options.",
+    "message": "Shows a series of icons for other resources, including browsable inflection tables and grammars, setting options, and, if you have logged in, your word lists and profile.",
     "description": "info text",
     "component": "Panel"
   },
   "TEXT_INFO_ARROW": {
-    "message": "Use the arrow at the top of this panel to swap positions between the right and left side of your browser window.",
+    "message": "Moves this panel from side to side of your browser window.",
     "description": "info text",
     "component": "Panel"
   },
@@ -426,7 +426,7 @@
     "component": "UI"
   },
   "LABEL_TOOLS_CONTROL": {
-    "message": "Reading Tools",
+    "message": "Additional Resources",
     "description": "A tooltip for the reading tools icon on the toolbar",
     "component": "Toolbar"
   },
@@ -462,8 +462,8 @@
     "component": "Lookup"
   },
   "LABEL_RESKIN_SETTINGS": {
-    "message": "Reskin options",
-    "description": "Label for Reskin component",
+    "message": "Resize options",
+    "description": "Label for Resize component",
     "component": "ReskinFontColor"
   },
   "LABEL_RESET_OPTIONS": {
@@ -616,7 +616,10 @@
     "message": "🛈 This view is best in landscape mode with the panel expanded to full screen",
     "description": "hint to switch to landscape mode for a mobile view",
     "component": "Compact Panel"
+  },
+  "LABEL_INFO_FAQ": {
+    "message": "FAQ/Known Issues",
+    "description": "Faq button label",
+    "component": "info panel"
   }
-
-
 }
