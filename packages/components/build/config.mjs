@@ -30,7 +30,29 @@ const webpack = {
     },
     plugins: [
       new VueLoaderPlugin()
-    ]
+    ],
+    module: {
+      rules: [
+        /*
+        The following rule is required to fix the interact.js issue allowing no more than one sequence of
+        drag and drop operation in the Firefox content script. The problem is that interact.js uses
+        `requestAnimationFrame` and `cancelAnimationFrame` functions of the `window` object and
+        those lose the window context in a Firefox content script due to the Firefox bug.
+        Please see https://bugzilla.mozilla.org/show_bug.cgi?id=1208775 for more details.
+
+        To fix this we can rebind those functions to the window object. This code has to be executed
+        before any interact.js function to be called.
+
+        The simplest solution to this is to use an `imports-loader` webpack plugin and assign
+        a self-executing function to a variable. As a result, the content of this function's body
+        will be guaranteed to be executed before the interact.js functions are called.
+         */
+        {
+          test: /.*node_modules(?:\/|\\)interactjs(?:\/|\\)dist(?:\/|\\)interact.js/,
+          use: "imports-loader?alpheiosFFCSFix=>(function () { window.requestAnimationFrame=requestAnimationFrame.bind(window); window.cancelAnimationFrame=cancelAnimationFrame.bind(window) })()"
+        }
+      ]
+    }
   },
 
   production: {

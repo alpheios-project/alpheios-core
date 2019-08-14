@@ -1,6 +1,6 @@
 {
   "name": "alpheios-components",
-  "version": "1.2.22",
+  "version": "1.2.23",
   "description": "Alpheios Components",
   "main": "dist/alpheios-components.min.js",
   "module": "src/plugin.js",
@@ -70,6 +70,7 @@
     "flush-promises": "^1.0.2",
     "html-loader": "^0.5.5",
     "html-loader-jest": "^0.2.1",
+    "imports-loader": "^0.8.0",
     "interactjs": "^1.5.4",
     "intl-messageformat": "^2.2.0",
     "jest": "^24.8.0",
