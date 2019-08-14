@@ -1,6 +1,6 @@
 {
   "name": "alpheios-components",
-  "version": "1.2.23",
+  "version": "1.2.24",
   "description": "Alpheios Components",
   "main": "dist/alpheios-components.min.js",
   "module": "src/plugin.js",
