@@ -14,7 +14,7 @@
     </div>
 
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('definitions') }"
-         @click="changeTab('definitions')" v-show="$store.getters['app/defDataReady']">
+         @click="changeTab('definitions')" v-show="$store.getters['app/fullDefDataReady']">
       <div class="alpheios-navbuttons__icon-cont">
         <definitions-icon class="alpheios-navbuttons__icon"></definitions-icon>
       </div>

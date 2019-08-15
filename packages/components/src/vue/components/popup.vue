@@ -15,7 +15,7 @@
 
       <div class="alpheios-popup__toolbar-buttons">
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
-                        v-show="$store.getters['app/defDataReady']">
+                        v-show="$store.getters['app/fullDefDataReady']">
               <div class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('definitions')">
                 <definitions-icon  class="alpheios-navbuttons__icon" />
               </div>

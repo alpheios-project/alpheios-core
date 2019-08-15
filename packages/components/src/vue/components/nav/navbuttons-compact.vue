@@ -17,7 +17,7 @@
     <alph-tooltip
         :tooltipText="l10n.getText('TOOLTIP_DEFINITIONS')"
         tooltipDirection="top"
-        v-show="$store.getters['app/defDataReady']"
+        v-show="$store.getters['app/fullDefDataReady']"
     >
       <div
           :class="{ active: $store.getters['ui/isActiveTab']('definitions') }"

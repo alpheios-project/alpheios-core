@@ -22,11 +22,11 @@
 
     <div class="alpheios-action-menu__nav-cont">
       <alph-tooltip
-          :tooltipText="tooltipText('TOOLTIP_DEFINITIONS', $store.getters['app/defDataReady'])"
+          :tooltipText="tooltipText('TOOLTIP_DEFINITIONS', $store.getters['app/fullDefDataReady'])"
           :tooltipDirection="tooltipDirection"
       >
         <div
-            :class="{ disabled: !$store.getters['app/defDataReady'] }"
+            :class="{ disabled: !$store.getters['app/fullDefDataReady'] }"
             @click.stop="showPanelTab('definitions')"
             class="alpheios-action-menu__navbutton"
         >

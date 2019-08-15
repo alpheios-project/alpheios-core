@@ -19,7 +19,7 @@
           </span>
         </div>
         <div class="alpheios-panel__header-btn"
-          v-show="$store.getters['app/defDataReady'] && showMainTabIcons"
+          v-show="$store.getters['app/fullDefDataReady'] && showMainTabIcons"
           :class="{ 'alpheios-navbuttons__icon-active': currentTab === 'definitions' }"
         >
           <span @click="changeTab('definitions')" class="alpheios-navbuttons__icon-span">
@@ -175,7 +175,7 @@
           v-show="$store.getters['ui/isActiveTab']('definitions')"
           data-alpheios-ignore="all"
       >
-        <div v-if="$store.getters['app/defDataReady']">
+        <div v-if="$store.getters['app/shortDefDataReady']">
           <div :key="definition.ID"
                class="alpheios-panel__contentitem"
                v-for="definition in formattedShortDefinitions"
@@ -185,6 +185,9 @@
                 :languageCode="$store.state.app.languageCode"
             />
           </div>
+        </div>
+
+        <div v-if="$store.getters['app/fullDefDataReady']">
           <div
               class="alpheios-panel__contentitem alpheios-panel__contentitem-full-definitions"
               v-html="formattedFullDefinitions"/>
@@ -479,8 +482,8 @@ export default {
     },
 
     formattedShortDefinitions () {
-      let definitions = []
-      if (this.$store.getters['app/defDataReady'] && this.$store.state.app.homonymDataReady) {
+      let definitions = [] // eslint-disable-line prefer-const
+      if (this.$store.getters['app/shortDefDataReady'] && this.$store.state.app.homonymDataReady) {
         for (const lexeme of this.app.getHomonymLexemes()) {
           if (lexeme.meaning.shortDefs.length > 0) {
             definitions.push(...lexeme.meaning.shortDefs)
@@ -494,7 +497,7 @@ export default {
 
     formattedFullDefinitions () {
       let content = ''
-      if (this.$store.getters['app/defDataReady'] && this.$store.state.app.homonymDataReady) {
+      if (this.$store.getters['app/fullDefDataReady'] && this.$store.state.app.homonymDataReady) {
         for (const lexeme of this.app.getHomonymLexemes()) {
           content += `<h3>${lexeme.lemma.word}</h3>\n`
           for (const fullDef of lexeme.meaning.fullDefs) {

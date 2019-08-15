@@ -189,8 +189,10 @@ export default class UIController {
     LexicalQuery.evt.HOMONYM_READY.sub(uiController.onHomonymReady.bind(uiController))
     LexicalQuery.evt.LEMMA_TRANSL_READY.sub(uiController.updateTranslations.bind(uiController))
     LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.sub(uiController.updateWordUsageExamples.bind(uiController))
-    LexicalQuery.evt.DEFS_READY.sub(uiController.onDefinitionsReady.bind(uiController))
-    LexicalQuery.evt.DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
+    LexicalQuery.evt.SHORT_DEFS_READY.sub(uiController.onShortDefinitionsReady.bind(uiController))
+    LexicalQuery.evt.FULL_DEFS_READY.sub(uiController.onFullDefinitionsReady.bind(uiController))
+    LexicalQuery.evt.SHORT_DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
+    LexicalQuery.evt.FULL_DEFS_NOT_FOUND.sub(uiController.onDefinitionsNotFound.bind(uiController))
 
     // Subscribe to ResourceQuery events
     ResourceQuery.evt.RESOURCE_QUERY_COMPLETE.sub(uiController.onResourceQueryComplete.bind(uiController))
@@ -517,7 +519,8 @@ export default class UIController {
         homonymDataReady: false,
         wordUsageExampleEnabled: false,
         linkedFeatures: [], // An array of linked features, updated with every new homonym value is written to the store
-        defUpdateTime: 0, // A time of the last update of defintions, in ms. Needed to track changes in definitions.
+        shortDefUpdateTime: 0, // A time of the last update of short definitions, in ms. Needed to track changes in definitions.
+        fullDefUpdateTime: 0, // A time of the last update of full definitions, in ms. Needed to track changes in definitions.
         lexicalRequest: {
           source: null, // the source of the request
           startTime: 0, // A time when the last lexical request is started, in ms
@@ -542,17 +545,28 @@ export default class UIController {
 
       getters: {
         /*
+        Returns true if short definitions are available.
         This getter can serve as an indicator of a new definition data arrival.
         If used within a computed prop, it will force the prop to recalculate every time definitions are updated.
          */
-        defDataReady (state) {
-          return state.defUpdateTime > 0
+        shortDefDataReady (state) {
+          return state.shortDefUpdateTime > 0
+        },
+
+        /*
+        Returns true if full definitions are available.
+        This getter can serve as an indicator of a new definition data arrival.
+        If used within a computed prop, it will force the prop to recalculate every time definitions are updated.
+         */
+        fullDefDataReady (state) {
+          return state.fullDefUpdateTime > 0
         },
 
         /**
          * Identifies wither grammar resource(s) are available for the current state.
-         * @param state - A local state.
-         * @return {boolean} True if grammar resource(s) are available, false otherwise.
+         *
+         * @param {object} state - A local state.
+         * @returns {boolean} True if grammar resource(s) are available, false otherwise.
          */
         hasGrammarRes (state) {
           return state.grammarRes !== null
@@ -609,7 +623,8 @@ export default class UIController {
           state.linkedFeatures = []
           state.homonymDataReady = false
           state.wordUsageExampleEnabled = false
-          state.defUpdateTime = 0
+          state.shortDefUpdateTime = 0 // When short definitions were last updated
+          state.fullDefUpdateTime = 0 // When full definitions were last updated
           state.morphDataReady = false
           state.translationsDataReady = false
           state.providers = []
@@ -696,15 +711,19 @@ export default class UIController {
         },
 
         /**
-         * @param {Object} state - State object of the store
+         * @param {object} state - State object of the store
          * @param {ResourceProvider[]} providers - An array of resource provider objects
          */
         setProviders (state, providers) {
           state.providers = providers
         },
 
-        defsUpdated (state) {
-          state.defUpdateTime = Date.now()
+        shortDefsUpdated (state) {
+          state.shortDefUpdateTime = Date.now()
+        },
+
+        fullDefsUpdated (state) {
+          state.fullDefUpdateTime = Date.now()
         },
 
         setMorphDataReady (state, value = true) {
@@ -1119,7 +1138,7 @@ export default class UIController {
      * The key is a tab name, and a value is the function that returns true if the tab is available.
      */
     const tabsCheck = {
-      definitions: () => this.store.getters['app/defDataReady'],
+      definitions: () => this.store.getters['app/fullDefDataReady'],
       inflections: () => this.store.state.app.hasInflData,
       grammar: () => this.store.getters['app/hasGrammarRes'],
       treebank: () => this.store.getters['app/hasTreebankData'],
@@ -1134,6 +1153,7 @@ export default class UIController {
    * Switched between tabs in a panel.
    * All tab switching should be done through this function only as it performs safety check
    * regarding wither or not current tab can be available.
+   *
    * @param {string} tabName - A name of a tab to switch to.
    * @return {UIController} - An instance of a UI controller, for chaining.
    */
@@ -1173,6 +1193,7 @@ export default class UIController {
 
   /**
    * Reverses the current visibility state of a panel and switches it to the tab specified.
+   *
    * @param {string} tabName - A name of a tab to switch to.
    * @return {UIController} - A UI controller's instance reference, for chaining.
    */
@@ -1206,11 +1227,12 @@ export default class UIController {
   }
 
   /**
-   * Start a new lexical request
-   * @param {String} targetWord - the word to query
-   * @param {String} languageID - the language identifier for the query
-   * @param {Object} data - extra annotation data attributes from the selection, if any
-   * @param {String} source - source of the request. Possible values: 'page', 'lookup', or 'wordlist'
+   * Start a new lexical request.
+   *
+   * @param {string} targetWord - the word to query
+   * @param {string} languageID - the language identifier for the query
+   * @param {object} data - extra annotation data attributes from the selection, if any
+   * @param {string} source - source of the request. Possible values: 'page', 'lookup', or 'wordlist'
    *                          default is 'page'
    */
   newLexicalRequest (targetWord, languageID, data = null, source = 'page') {
@@ -1269,11 +1291,6 @@ export default class UIController {
     if (urls.length > 0) {
       this.store.commit('app/setGrammarRes', urls[0])
     }
-  }
-
-  updateDefinitions (homonym) {
-    this.updateProviders(homonym)
-    this.store.commit('app/defsUpdated')
   }
 
   updateTranslations (homonym) {
@@ -1636,8 +1653,11 @@ export default class UIController {
     }
     this.store.commit('app/setInflData', inflDataReady)
 
-    this.updateProviders(homonym)
-    this.updateDefinitions(homonym)
+    // The homonym can already has short defs data
+    if (homonym.hasShortDefs) {
+      this.updateProviders(homonym)
+      this.store.commit('app/shortDefsUpdated')
+    }
   }
 
   onWordListUpdated (wordList) {
@@ -1651,9 +1671,16 @@ export default class UIController {
     this.updateTranslations(homonym)
   }
 
-  onDefinitionsReady (data) {
+  onShortDefinitionsReady (data) {
     this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
-    this.updateDefinitions(data.homonym)
+    this.updateProviders(data.homonym)
+    this.store.commit('app/shortDefsUpdated')
+  }
+
+  onFullDefinitionsReady (data) {
+    this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
+    this.updateProviders(data.homonym)
+    this.store.commit('app/fullDefsUpdated')
   }
 
   onDefinitionsNotFound (data) {
@@ -1699,7 +1726,11 @@ export default class UIController {
     if (homonym && homonym.lexemes && homonym.lexemes.length > 0 && homonym.lexemes.filter(l => l.isPopulated()).length === homonym.lexemes.length) {
       // if we were able to retrieve full homonym data then we can just display it
       this.onHomonymReady(homonym)
-      this.updateDefinitions(homonym)
+      this.updateProviders(homonym)
+      // We already have both short and full definitions so we can update the status of both
+      this.store.commit('app/shortDefsUpdated')
+      this.store.commit('app/fullDefsUpdated')
+      // this.updateDefinitions(homonym)
       this.updateTranslations(homonym)
       this.store.commit('app/lexicalRequestFinished')
     } else {

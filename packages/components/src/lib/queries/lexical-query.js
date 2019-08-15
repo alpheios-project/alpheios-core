@@ -239,8 +239,8 @@ export default class LexicalQuery extends Query {
       params: {
         opts: lexiconShortOpts,
         homonym: this.homonym,
-        callBackEvtSuccess: LexicalQuery.evt.DEFS_READY,
-        callBackEvtFailed: LexicalQuery.evt.DEFS_NOT_FOUND
+        callBackEvtSuccess: LexicalQuery.evt.SHORT_DEFS_READY,
+        callBackEvtFailed: LexicalQuery.evt.SHORT_DEFS_NOT_FOUND
       }
     })
 
@@ -254,8 +254,8 @@ export default class LexicalQuery extends Query {
       params: {
         opts: lexiconFullOpts,
         homonym: this.homonym,
-        callBackEvtSuccess: LexicalQuery.evt.DEFS_READY,
-        callBackEvtFailed: LexicalQuery.evt.DEFS_NOT_FOUND
+        callBackEvtSuccess: LexicalQuery.evt.FULL_DEFS_READY,
+        callBackEvtFailed: LexicalQuery.evt.FULL_DEFS_NOT_FOUND
       }
     })
 
@@ -361,23 +361,42 @@ LexicalQuery.evt = {
   LEMMA_TRANSL_READY: new PsEvent(`Lemma Translations Ready`, LexicalQuery),
 
   /**
-   * Published when definitions data becomes available.
+   * Published when short definitions data becomes available.
    * Data: {
    *   requestType: definitionRequest.type,
    *   word: definitionRequest.lexeme.lemma.word,
    *   homonym: this.homonym
    * }
    */
-  DEFS_READY: new PsEvent(`Definitions Data Ready`, LexicalQuery),
+  SHORT_DEFS_READY: new PsEvent(`Short Definitions Data is Ready`, LexicalQuery),
 
   /**
-   * Published when definitions data has been not found.
+   * Published when full definitions data becomes available.
+   * Data: {
+   *   requestType: definitionRequest.type,
+   *   word: definitionRequest.lexeme.lemma.word,
+   *   homonym: this.homonym
+   * }
+   */
+  FULL_DEFS_READY: new PsEvent(`Full Definitions Data is Ready`, LexicalQuery),
+
+  /**
+   * Published when short definitions data has been not found.
    * Data: {
    *   requestType: definitionRequest.type,
    *   word: definitionRequest.lexeme.lemma.word
    * }
    */
-  DEFS_NOT_FOUND: new PsEvent(`Definitions Data Not Found`, LexicalQuery),
+  SHORT_DEFS_NOT_FOUND: new PsEvent(`Short Definitions Data is Not Found`, LexicalQuery),
+
+  /**
+   * Published when full definitions data has been not found.
+   * Data: {
+   *   requestType: definitionRequest.type,
+   *   word: definitionRequest.lexeme.lemma.word
+   * }
+   */
+  FULL_DEFS_NOT_FOUND: new PsEvent(`Full Definitions Data is Not Found`, LexicalQuery),
 
   /**
    * Published when Lexical Query is created and TextQuoteSelector is passed inside TextSelector.
