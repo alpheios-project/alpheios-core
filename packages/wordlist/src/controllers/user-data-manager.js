@@ -30,7 +30,7 @@ export default class UserDataManager {
   clear() {
     if (this.blocked) {
       // TODO we should wait on the request queue completion
-      console.error("Destroying User Data Manager with requests pending")
+      console.warn("Alpheios warn: destroying user data manager with requests pending. Words may not all be deleted.")
     }
     for (let unsub of this.subscriptions) {
       unsub()
@@ -88,7 +88,7 @@ export default class UserDataManager {
   }
 
   printErrorAdapterUnvailable(adapter) {
-    console.error(`Adapter is not available - ${adapter.constructor.name}`)
+    console.error(`Alpheios error: user data adapter is not available - ${adapter.constructor.name}`)
   }
 
   /**
@@ -137,7 +137,7 @@ export default class UserDataManager {
       }
       return result
     } catch (error) {
-      console.error('Some errors happen on updating data in IndexedDB or RemoteDBAdapter', error)
+      console.error('Alpheios error: unexpected error updating user data.', error)
     }
   }
 
@@ -189,7 +189,7 @@ export default class UserDataManager {
       }
       return remoteResult && localResult
     } catch (error) {
-      console.error('Some errors happen on deleting item from IndexedDB or RemoteDBAdapter', error.message)
+      console.error('Alpheios error: unexpected error deleting user data.', error.message)
     }
   }
 
@@ -233,15 +233,13 @@ export default class UserDataManager {
         this.printErrors(remoteAdapter)
         this.printErrors(localAdapter)
 
-        console.warn('Result of deleted many from IndexedDB', deletedLocal)
-
         this.blocked = false
         this.checkRequestQueue()
       }
 
       return deletedLocal && deletedRemote
     } catch (error) {
-      console.error('Some errors happen on deleting data from IndexedDB or RemoteDBAdapter', error.message)
+      console.error('Alpheios error: unexpected error deleting user data.', error.message)
     }
   }
 
@@ -303,7 +301,7 @@ export default class UserDataManager {
       this.printErrors(localAdapter)
       return finalItems
     } catch (error) {
-      console.error('Some errors happen on quiring data from IndexedDB or RemoteDBAdapter', error.message)
+      console.error('Alpheios error: unexpected error querying user data.', error.message)
     }
   }
 
@@ -312,7 +310,6 @@ export default class UserDataManager {
     for (let localItem of localItems) {
       let checkID  = localAdapter.dbDriver.makeIDCompareWithRemote(localItem)
       if (!remoteItems.find(remoteItem => remoteItem.ID === checkID)) {
-        console.warn('Need to delete from local', checkID)
         this.delete({ dataObj: localItem})
       }
     }
@@ -323,7 +320,7 @@ export default class UserDataManager {
    */
   printErrors (adapter) {
     if (adapter.errors && adapter.errors.length > 0) {
-      adapter.errors.forEach(error => console.error(`Print error - ${error}`))
+      adapter.errors.forEach(error => console.error(`Alpheios error: user data unexpected error - ${error}`))
     }
   }
 

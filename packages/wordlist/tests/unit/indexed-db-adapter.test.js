@@ -23,11 +23,11 @@ describe('indexed-db-adapter.test.js', () => {
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
   })
-      
+
   afterEach(() => {
     jest.resetModules()
   })
-      
+
   afterAll(() => {
     jest.clearAllMocks()
   })
@@ -269,11 +269,11 @@ describe('indexed-db-adapter.test.js', () => {
     expect(localItems[0]).toBeInstanceOf(WordItem)
     expect(localItems[1]).toBeInstanceOf(WordItem)
 
-    expect(localItems.filter(item => item.targetWord === 'tuli').length).toEqual(1)  
-    expect(localItems.filter(item => item.targetWord === 'latus').length).toEqual(1)  
+    expect(localItems.filter(item => item.targetWord === 'tuli').length).toEqual(1)
+    expect(localItems.filter(item => item.targetWord === 'latus').length).toEqual(1)
     await localAdapter.deleteMany({languageCode: 'lat'})
   })
-  
+
   it('13 IndexedDBAdapter - query method saves error to errors property', async () => {
     let dbDriverLocal = new WordItemIndexedDbDriver('alpheiosMockUser')
     let localAdapter = new IndexedDBAdapter(dbDriverLocal)
@@ -324,7 +324,7 @@ describe('indexed-db-adapter.test.js', () => {
         }
       }
     }
-    
+
     try {
       await localAdapter.clear()
     } catch (error) {
@@ -347,7 +347,7 @@ describe('indexed-db-adapter.test.js', () => {
     window.IDBKeyRange = undefined
 
     expect(localAdapter._initIndexedDBNamespaces()).toBeFalsy()
-    expect(console.warn).toHaveBeenCalledWith(expect.stringMatching(/Your browser doesn't support a stable version of IndexedDB/))
+    expect(console.warn).toHaveBeenCalledWith(expect.stringMatching(/IndexedDB/))
 
     window.indexedDB = IndexedDB
     window.IDBKeyRange = IDBKeyRange
@@ -363,7 +363,7 @@ describe('indexed-db-adapter.test.js', () => {
     expect(request.onupgradeneeded).toBeDefined()
     expect(request.readyState).toEqual('pending')
   })
-  
+
   it('18 IndexedDBAdapter - _createObjectStores method checks if objectStore from driver\'s list exists and creates it if not and creates indexes', () => {
     let dbDriverLocal = new WordItemIndexedDbDriver('alpheiosMockUser')
     let localAdapter = new IndexedDBAdapter(dbDriverLocal)
@@ -377,7 +377,7 @@ describe('indexed-db-adapter.test.js', () => {
         }
       })
     }
-    
+
     localAdapter._createObjectStores(testMockDB)
     expect(testMockDB.createObjectStore).toHaveBeenCalledTimes(dbDriverLocal.allObjectStoreData.length)
   })
@@ -395,9 +395,9 @@ describe('indexed-db-adapter.test.js', () => {
         }
       })
     }
-    
+
     localAdapter._createObjectStores(testMockDB)
-    
+
     expect(localAdapter.errors.length).toEqual(1)
   })
 

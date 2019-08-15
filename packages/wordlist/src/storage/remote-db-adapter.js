@@ -74,7 +74,6 @@ export default class RemoteDBAdapter {
 
       return updated
     } catch (error) {
-      console.error(error)
       if (error) {
         this.errors.push(error)
       }
@@ -105,7 +104,6 @@ export default class RemoteDBAdapter {
       let updated = this.dbDriver.storageMap.put.checkResult(result)
       return updated
     } catch (error) {
-      console.error(error)
       if (error) {
         this.errors.push(error)
       }

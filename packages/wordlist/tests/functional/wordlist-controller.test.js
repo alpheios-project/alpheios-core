@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import WordlistController from '@/controllers/wordlist-controller.js'
-import { WordList, WordItem, TextQuoteSelector } from 'alpheios-data-models'
+import { WordList, WordItem, TextQuoteSelector, Constants } from 'alpheios-data-models'
 
 
 describe('wordlist-controller.test.js', () => {
@@ -159,7 +159,7 @@ describe('wordlist-controller.test.js', () => {
     latList.addWordItem(mockWILatin)
     jest.spyOn(WordlistController.evt.WORDITEM_UPDATED,'pub')
     jest.spyOn(WordlistController.evt.WORDLIST_UPDATED,'pub')
-    wc.onHomonymReady({language: mockLClat, targetWord: testTarget})
+    wc.onHomonymReady({languageID:Constants.LANG_LATIN, targetWord: testTarget})
     let item = wc.getWordListItem(mockLClat,testTarget)
     expect(item.homonym).toBeDefined()
     expect(item.homonym.targetWord).toEqual(testTarget)
@@ -173,7 +173,7 @@ describe('wordlist-controller.test.js', () => {
     let testTarget = 'mare'
     jest.spyOn(WordlistController.evt.WORDITEM_UPDATED,'pub')
     jest.spyOn(WordlistController.evt.WORDLIST_UPDATED,'pub')
-    wc.onHomonymReady({language: mockLClat, targetWord: testTarget})
+    wc.onHomonymReady({languageID: Constants.LANG_LATIN, targetWord: testTarget})
     let item = wc.getWordListItem(mockLClat,testTarget)
     expect(item.homonym).toBeDefined()
     expect(item.homonym.targetWord).toEqual(testTarget)
@@ -187,7 +187,7 @@ describe('wordlist-controller.test.js', () => {
     latList.addWordItem(mockWILatin)
     jest.spyOn(WordlistController.evt.WORDITEM_UPDATED,'pub')
     jest.spyOn(WordlistController.evt.WORDLIST_UPDATED,'pub')
-    wc.onDefinitionsReady({homonym:{language: mockLClat, targetWord: testTarget}})
+    wc.onDefinitionsReady({homonym:{languageID: Constants.LANG_LATIN, targetWord: testTarget}})
     let item = wc.getWordListItem(mockLClat,testTarget)
     expect(item.homonym).toBeDefined()
     expect(item.homonym.targetWord).toEqual(testTarget)
@@ -201,7 +201,7 @@ describe('wordlist-controller.test.js', () => {
     latList.addWordItem(mockWILatin)
     jest.spyOn(WordlistController.evt.WORDITEM_UPDATED,'pub')
     jest.spyOn(WordlistController.evt.WORDLIST_UPDATED,'pub')
-    wc.onLemmaTranslationsReady({language: mockLClat, targetWord: testTarget})
+    wc.onLemmaTranslationsReady({languageID: Constants.LANG_LATIN, targetWord: testTarget})
     let item = wc.getWordListItem(mockLClat,testTarget)
     expect(item.homonym).toBeDefined()
     expect(item.homonym.targetWord).toEqual(testTarget)
@@ -283,8 +283,8 @@ describe('wordlist-controller.test.js', () => {
     let selector3 =  new TextQuoteSelector(mockLClat,'veni','fooPrefix')
     jest.spyOn(WordlistController.evt.WORDLIST_UPDATED,'pub')
     wc.onTextQuoteSelectorReceived(selector1)
-    wc.onDefinitionsReady({homonym:{language: mockLClat, targetWord: 'mare'}})
-    wc.onDefinitionsReady({homonym:{language: mockLClat, targetWord: 'veni'}})
+    wc.onDefinitionsReady({homonym:{languageID: Constants.LANG_LATIN, targetWord: 'mare'}})
+    wc.onDefinitionsReady({homonym:{languageID: Constants.LANG_LATIN, targetWord: 'veni'}})
     wc.onTextQuoteSelectorReceived(selector2)
     wc.onTextQuoteSelectorReceived(selector3)
     expect(wc.getWordListItemCount()).toEqual(2)

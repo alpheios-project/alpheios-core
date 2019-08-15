@@ -15,7 +15,7 @@ export default class IndexedDBAdapter {
     this.errors = []
   }
 
-  async checkAndUpdate (wordItem, segment, currentRemoteItems) {  
+  async checkAndUpdate (wordItem, segment, currentRemoteItems) {
     if (segment === 'context' || !segment)  {
       if (currentRemoteItems.length > 0 && currentRemoteItems[0].context && Array.isArray(currentRemoteItems[0].context)) {
         wordItem.context = []
@@ -28,10 +28,10 @@ export default class IndexedDBAdapter {
     if (!segment) {
       segment = this.dbDriver.segmentsSync
     }
-    
+
     let currentLocalItems = await this.query({ wordItem })
     if (currentLocalItems.length === 0 && segment && segment !== 'common') {
-      await this.update(wordItem, { segment: 'common' })  
+      await this.update(wordItem, { segment: 'common' })
     }
 
     let result = await this.update(wordItem, { segment })
@@ -154,7 +154,7 @@ export default class IndexedDBAdapter {
     try {
       let listItemsQuery = this.dbDriver.listItemsQuery(params)
       let listItemsQueryResult = await this._getFromStore(listItemsQuery)
-      
+
       let items = []
 
       for (let itemQuery of listItemsQueryResult) {
@@ -164,7 +164,7 @@ export default class IndexedDBAdapter {
           let query = this.dbDriver.segmentSelectQuery(segment, resultObject)
           let result = await this._getFromStore(query)
 
-          if (result.length > 0) {           
+          if (result.length > 0) {
             this.dbDriver.loadSegment(segment, result, resultObject)
           }
         }
@@ -204,7 +204,6 @@ export default class IndexedDBAdapter {
             // Make a request to clear all the data out of the object store
             let objectStoreRequest = objectStore.clear()
             objectStoreRequest.onsuccess = function(event) {
-              console.warn(`store ${store} cleared`)
               objectStoresRemaining = objectStoresRemaining - 1
               if (objectStoresRemaining === 0) {
                 resolve(true)
@@ -238,7 +237,7 @@ export default class IndexedDBAdapter {
     this.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction || {READ_WRITE: "readwrite"}; // This line should only be needed if it is needed to support the object's constants for older browsers
     this.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
     if (!this.indexedDB) {
-      console.warn("Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.");
+      console.warn("Alpheios warn: your browser doesn't support IndexedDB. Wordlists will not be available.");
       return false
     }
     return true
@@ -278,7 +277,7 @@ export default class IndexedDBAdapter {
           }
         })
       }
-    
+
     } catch (error) {
       this.errors.push(error)
     }
@@ -374,7 +373,7 @@ export default class IndexedDBAdapter {
 
           const index = objectStore.index(data.condition.indexName)
           const keyRange = this.IDBKeyRange[data.condition.type](data.condition.value)
-          
+
           const requestOpenCursor = index.getAll(keyRange, 0)
           requestOpenCursor.onsuccess = (event) => {
             resolve(event.target.result)
@@ -394,7 +393,7 @@ export default class IndexedDBAdapter {
       }
     })
     return promiseOpenDB
-    
+
   }
 
   /**
