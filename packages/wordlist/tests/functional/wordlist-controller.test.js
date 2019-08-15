@@ -31,7 +31,8 @@ describe('wordlist-controller.test.js', () => {
     mockEvents = {
       TEXT_QUOTE_SELECTOR_RECEIVED: {sub: jest.fn()},
       HOMONYM_READY: {sub: jest.fn()},
-      DEFS_READY: {sub: jest.fn()},
+      SHORT_DEFS_READY: {sub: jest.fn()},
+      FULL_DEFS_READY: {sub: jest.fn()},
       LEMMA_TRANSL_READY: { sub: jest.fn()}
     }
 
@@ -66,13 +67,15 @@ describe('wordlist-controller.test.js', () => {
   it('1 WordlistController - constructor subscribes to events',() => {
     jest.spyOn(mockEvents.TEXT_QUOTE_SELECTOR_RECEIVED,'sub')
     jest.spyOn(mockEvents.HOMONYM_READY,'sub')
-    jest.spyOn(mockEvents.DEFS_READY,'sub')
+    jest.spyOn(mockEvents.SHORT_DEFS_READY,'sub')
+    jest.spyOn(mockEvents.FULL_DEFS_READY,'sub')
     jest.spyOn(mockEvents.LEMMA_TRANSL_READY,'sub')
     let wc = new WordlistController([mockLClat,mockLCgrc],mockEvents)
     expect(wc.availableLangs).toEqual([mockLClat,mockLCgrc])
     expect(mockEvents.TEXT_QUOTE_SELECTOR_RECEIVED.sub).toHaveBeenCalled()
     expect(mockEvents.HOMONYM_READY.sub).toHaveBeenCalled()
-    expect(mockEvents.DEFS_READY.sub).toHaveBeenCalled()
+    expect(mockEvents.SHORT_DEFS_READY.sub).toHaveBeenCalled()
+    expect(mockEvents.FULL_DEFS_READY.sub).toHaveBeenCalled()
     expect(mockEvents.LEMMA_TRANSL_READY.sub).toHaveBeenCalled()
   })
 
