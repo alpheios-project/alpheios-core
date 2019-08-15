@@ -11,7 +11,8 @@ export default class WordlistController {
     this.availableLangs = availableLangs
     events.TEXT_QUOTE_SELECTOR_RECEIVED.sub(this.onTextQuoteSelectorReceived.bind(this))
     events.HOMONYM_READY.sub(this.onHomonymReady.bind(this))
-    events.DEFS_READY.sub(this.onDefinitionsReady.bind(this))
+    events.SHORT_DEFS_READY.sub(this.onDefinitionsReady.bind(this))
+    events.FULL_DEFS_READY.sub(this.onDefinitionsReady.bind(this))
     events.LEMMA_TRANSL_READY.sub(this.onLemmaTranslationsReady.bind(this))
   }
 
