@@ -43,6 +43,22 @@ class Homonym {
     return new Homonym([lexeme], word)
   }
 
+  /**
+   * Checks if any of the lexemes of this homonym has short definitions stored.
+   * @returns {boolean} - true if any definitions are stored, false otherwise.
+   */
+  get hasShortDefs () {
+    return Boolean(this.lexemes && this.lexemes.some(l => l.hasShortDefs))
+  }
+
+  /**
+   * Checks if any of the lexemes of this homonym has full definitions stored.
+   * @returns {boolean} - true if any definitions are stored, false otherwise.
+   */
+  get hasFullDefs () {
+    return Boolean(this.lexemes && this.lexemes.some(l => l.hasFullDefs))
+  }
+
   static readObject (jsonObject) {
     let lexemes = []
     if (jsonObject.lexemes) {

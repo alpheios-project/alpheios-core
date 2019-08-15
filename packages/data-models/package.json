@@ -1,6 +1,6 @@
 {
   "name": "alpheios-data-models",
-  "version": "2.3.1",
+  "version": "2.4.1",
   "description": "Alpheios Data Models",
   "main": "dist/alpheios-data-models.min.js",
   "directories": {
@@ -28,7 +28,7 @@
   "homepage": "https://github.com/alpheios-project/data-models#readme",
   "devDependencies": {
     "alpheios-node-build": "github:alpheios-project/node-build",
-    "coveralls": "^3.0.4",
+    "coveralls": "^3.0.6",
     "intl-messageformat": "^2.1.0",
     "jest": "^23.6.0",
     "jest-fetch-mock": "1.7.5",

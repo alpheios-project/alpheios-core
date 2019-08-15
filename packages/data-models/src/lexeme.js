@@ -82,6 +82,22 @@ class Lexeme {
   }
 
   /**
+   * Checks if any short definitions are stored within this lexeme.
+   * @returns {boolean} - true if any definitions are stored, false otherwise.
+   */
+  get hasShortDefs () {
+    return Boolean(this.meaning && this.meaning.hasShortDefs)
+  }
+
+  /**
+   * Checks if any full definitions are stored within this lexeme.
+   * @returns {boolean} - true if any definitions are stored, false otherwise.
+   */
+  get hasFullDefs () {
+    return Boolean(this.meaning && this.meaning.hasFullDefs)
+  }
+
+  /**
    * disambiguate with another supplied Lexeme
    * @param {Lexeme} lexeme the lexeme to be disambiguated
    * @param {Lexeme} disambiguator the lexeme to use to disambiguate

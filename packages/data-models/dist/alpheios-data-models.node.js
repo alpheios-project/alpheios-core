@@ -813,6 +813,22 @@ class DefinitionSet {
   }
 
   /**
+   * Checks if any short definitions are stored within this object.
+   * @returns {boolean} - true if any definitions are stored, false otherwise.
+   */
+  get hasShortDefs () {
+    return this.shortDefs.length > 0
+  }
+
+  /**
+   * Checks if any full definitions are stored within this object.
+   * @returns {boolean} - true if any definitions are stored, false otherwise.
+   */
+  get hasFullDefs () {
+    return this.fullDefs.length > 0
+  }
+
+  /**
    * Check to see if the DefinitionSet is empty
    * @return {boolean} true if empty false if there is at least one definition
    */
@@ -2587,6 +2603,22 @@ class Homonym {
     let lemma = new _lemma_js__WEBPACK_IMPORTED_MODULE_2__["default"](word, languageID)
     let lexeme = new _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"](lemma, inflections)
     return new Homonym([lexeme], word)
+  }
+
+  /**
+   * Checks if any of the lexemes of this homonym has short definitions stored.
+   * @returns {boolean} - true if any definitions are stored, false otherwise.
+   */
+  get hasShortDefs () {
+    return Boolean(this.lexemes && this.lexemes.some(l => l.hasShortDefs))
+  }
+
+  /**
+   * Checks if any of the lexemes of this homonym has full definitions stored.
+   * @returns {boolean} - true if any definitions are stored, false otherwise.
+   */
+  get hasFullDefs () {
+    return Boolean(this.lexemes && this.lexemes.some(l => l.hasFullDefs))
   }
 
   static readObject (jsonObject) {
@@ -4469,6 +4501,22 @@ class Lexeme {
     return Object.entries(this.lemma.features).length > 0 ||
       !this.meaning.isEmpty() ||
       this.inflections.length > 0
+  }
+
+  /**
+   * Checks if any short definitions are stored within this lexeme.
+   * @returns {boolean} - true if any definitions are stored, false otherwise.
+   */
+  get hasShortDefs () {
+    return Boolean(this.meaning && this.meaning.hasShortDefs)
+  }
+
+  /**
+   * Checks if any full definitions are stored within this lexeme.
+   * @returns {boolean} - true if any definitions are stored, false otherwise.
+   */
+  get hasFullDefs () {
+    return Boolean(this.meaning && this.meaning.hasFullDefs)
   }
 
   /**
