@@ -11,7 +11,7 @@ class AdapterError extends Error {
     try {
       Error.captureStackTrace(this, AdapterError)
     } catch (e) {
-      console.log('Error.captureStackTrace is not supported here')
+      // quietly continue
     }
   }
 

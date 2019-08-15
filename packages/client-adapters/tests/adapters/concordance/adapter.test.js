@@ -344,7 +344,7 @@ describe('concordance.test.js', () => {
       target: 'usque'
     }]
 
-    let testHomonym = { language: 'lat', targetWord: 'usque' }
+    let testHomonym = { languageID: Constants.LANG_LATIN, targetWord: 'usque' }
     let testAuthor = 'fooAuthor'
     let testTextWork = 'fooTextWork'
 
@@ -523,7 +523,7 @@ describe('concordance.test.js', () => {
       target: 'usque'
     }
 
-    let testHomonym = { language: 'lat', targetWord: 'usque' }
+    let testHomonym = { languageID: Constants.LANG_LATIN, targetWord: 'usque' }
     let testAuthor = 'fooAuthor'
     let testTextWork = 'fooTextWork'
     let testPassage = '1.1.1'

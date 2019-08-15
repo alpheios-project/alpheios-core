@@ -155,19 +155,16 @@ class BaseAdapter {
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
-      console.info(error.response.data)
-      console.info(error.response.status)
-      console.info(error.response.headers)
+      console.error('Alpheios error: unexpected response retrieving data from service', error)
     } else if (error.request) {
       // The request was made but no response was received
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
-      console.info(error.request)
+      console.error('Alpheios error: no response from service', error)
     } else {
       // Something happened in setting up the request that triggered an Error
-      console.info('Error', error.message)
+      console.error('Alpheios error: unexpected error requesting data from service', error.message)
     }
-    console.info(error.config)
   }
 
   /**

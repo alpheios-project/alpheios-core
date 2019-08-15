@@ -78,8 +78,6 @@ export default class L10n {
   setLocale (locale) {
     if (this.bundles.has(locale)) {
       this.selectedLocale = locale
-    } else {
-      console.error(`Cannot set locale to "${locale}" because there is no message bundle for it`)
     }
     return this
   }

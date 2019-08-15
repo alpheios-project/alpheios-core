@@ -86,7 +86,6 @@ class ImportData {
         } else {
           let message = `Unknown value "${providerValue}" of feature "${featureName}" for ${model.languageCode} (allowed = ${allowUnknownValues})`
           if (allowUnknownValues) {
-            console.log(message)
             mappedValue = model.typeFeature(featureName).createFeature(providerValue, sortOrder)
           } else {
             throw new Error(message)
@@ -125,7 +124,6 @@ class ImportData {
         } else {
           let message = `Unknown value "${item.providerValue}" of feature "${featureName}" for ${model.languageCode} (allowed = ${allowUnknownValues})`
           if (allowUnknownValues) {
-            console.log(message)
             values.push([item.providerValue, item.sortOrder])
           } else {
             throw new Error(message)

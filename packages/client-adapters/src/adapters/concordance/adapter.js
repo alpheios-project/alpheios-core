@@ -1,7 +1,7 @@
 import DefaultConfig from '@/adapters/concordance/config.json'
 import AuthorWorkConfigConfig from '@/adapters/concordance/author-work.json'
 
-import { ResourceProvider, Author, TextWork, WordUsageExample } from 'alpheios-data-models'
+import { ResourceProvider, Author, TextWork, WordUsageExample, LanguageModelFactory } from 'alpheios-data-models'
 import BaseAdapter from '@/adapters/base-adapter'
 
 class AlpheiosConcordanceAdapter extends BaseAdapter {
@@ -63,7 +63,7 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
         return {
           wordUsageExamples: parsedWordUsageList,
           targetWord: homonym.targetWord,
-          language: homonym.language,
+          language: LanguageModelFactory.getLanguageCodeFromId(homonym.languageID),
           provider: this.provider
         }
       } else {
@@ -289,7 +289,7 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
   */
   createWordUsageExample (jsonObj, homonym, author, textWork, passage) {
     let source = this.config.sourceTextUrl + jsonObj.link
-    let wordUsageExample = new WordUsageExample(homonym.language, jsonObj.target, jsonObj.left, jsonObj.right, source, jsonObj.cit)
+    let wordUsageExample = new WordUsageExample(LanguageModelFactory.getLanguageCodeFromId(homonym.languageID), jsonObj.target, jsonObj.left, jsonObj.right, source, jsonObj.cit)
     wordUsageExample.author = author
     wordUsageExample.textWork = textWork
     wordUsageExample.passage =  passage
