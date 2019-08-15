@@ -55,6 +55,7 @@ export default class Grammars {
 
       return requests
     } catch (error) {
+      console.error(`Alpheios error: unable to fetch resources due to ${error}`)
       return []
     }
   }
