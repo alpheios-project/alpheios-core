@@ -269,8 +269,8 @@ export default {
   },
   computed: {
     lexemes () {
-      // A call to `defDataReady` will force this computed prop to recalculate every time definitions data is updated
-      let defs = this.$store.getters['app/defDataReady']
+      // A call to `shortDefDataReady` will force this computed prop to recalculate every time definitions data is updated
+      let defs = this.$store.getters['app/shortDefDataReady']
       return this.$store.state.app.morphDataReady ? this.app.getHomonymLexemes() : []
     },
 
