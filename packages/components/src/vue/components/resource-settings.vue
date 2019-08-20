@@ -92,6 +92,8 @@
   .alpheios-resource-options__cont-fieldset {
     margin-bottom: 20px;
     padding: 10px;
+
+    border: 2px groove var(--alpheios-color-placehoder);
   }
 
   .alpheios-resource-options__item {

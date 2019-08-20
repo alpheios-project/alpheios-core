@@ -97,5 +97,8 @@
 
   .alpheios-feature-options__cont-concord {
     margin: textsize(15px) 0;
+    padding: 10px;
+
+    border: 2px groove var(--alpheios-color-placehoder);
   }
 </style>

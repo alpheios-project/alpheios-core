@@ -94,8 +94,18 @@
     margin: 0;
   }
 
-  select {
+  select,
+  input,
+  button {
     text-transform: none;
+    line-height: 1.15;
+    font-size: var(--alpheios-base-text-size);
+  }
+
+  button {
+    border: 0;
+    font-family: var(--alpheios-sans-font-face);
+    border-radius: 0;
   }
 
   textarea {

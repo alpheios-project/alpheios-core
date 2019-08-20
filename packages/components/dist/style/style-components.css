@@ -568,8 +568,17 @@ html {
   line-height: 1.15;
   margin: 0;
 }
-.alpheios-content select {
+.alpheios-content select,
+.alpheios-content input,
+.alpheios-content button {
   text-transform: none;
+  line-height: 1.15;
+  font-size: var(--alpheios-base-text-size);
+}
+.alpheios-content button {
+  border: 0;
+  font-family: var(--alpheios-sans-font-face);
+  border-radius: 0;
 }
 .alpheios-content textarea {
   overflow: auto;
@@ -3016,6 +3025,7 @@ p.alpheios-word-usage-filter-title {
 .alpheios-resource-options__cont-fieldset {
   margin-bottom: 20px;
   padding: 10px;
+  border: 2px groove var(--alpheios-color-placehoder);
 }
 .alpheios-resource-options__item .alpheios-setting__label {
   width: 30%;
@@ -3043,6 +3053,8 @@ p.alpheios-word-usage-filter-title {
 }
 .alpheios-feature-options__cont-concord {
   margin: calc(var(--alpheios-base-text-size) * 0.9375) 0;
+  padding: 10px;
+  border: 2px groove var(--alpheios-color-placehoder);
 }
 /*
  Calculates a size of text elements relative to the base size.
