@@ -196,7 +196,7 @@
     "component": "Panel"
   },
   "TEXT_INFO_CLICK": {
-    "message": "Double-click on a word to retrieve lemmas, morphology, short definitions and icons for additional resources, such as long definitions, and, when available, inflection tables, usage examples, and sentence diagrams.",
+    "message": "Double-click on a word to see lemmas, morphology, short definitions and icons for additional resources, such as long definitions, and, when available, inflection tables, usage examples, and sentence diagrams.",
     "description": "info text",
     "component": "Panel"
   },
