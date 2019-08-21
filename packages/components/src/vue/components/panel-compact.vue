@@ -391,6 +391,7 @@ export default {
       // Whether the panel is expanded full width
       expanded: false,
       prevOrientation: null,
+      prevExpanded: false,
       resized: false,
       showProviders: false
     }
@@ -449,6 +450,10 @@ export default {
 
       if ((this.prevOrientation !== Platform.orientations.LANDSCAPE) && isLandscapeCheck) {
         this.expanded = true
+      }
+
+      if ((this.prevOrientation === Platform.orientations.LANDSCAPE) && !isLandscapeCheck) {
+        this.expanded = this.prevExpanded
       }
       this.prevOrientation = this.$store.state.panel.orientation
       return isLandscapeCheck
@@ -540,14 +545,17 @@ export default {
 
     expand () {
       this.expanded = true
+      this.prevExpanded = this.expanded
     },
 
     contract () {
       this.expanded = false
+      this.prevExpanded = this.expanded
     },
 
     expandOrContract () {
       this.expanded = !this.expanded
+      this.prevExpanded = this.expanded
     },
 
     closePanel () {

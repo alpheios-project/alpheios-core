@@ -56,7 +56,7 @@
     "css-loader": "^3.2.0",
     "dom-anchor-text-quote": "*",
     "element-closest": "^3.0.1",
-    "eslint": "^6.2.0",
+    "eslint": "^6.2.1",
     "eslint-config-standard": "^13.0.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsdoc": "^15.8.3",
