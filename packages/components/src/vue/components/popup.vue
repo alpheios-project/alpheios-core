@@ -47,7 +47,6 @@
           </div>
       </div>
 
-
     </div>
 
     <div class="alpheios-popup__body">
@@ -205,7 +204,7 @@ export default {
     this.shift.x = this.moduleConfig.initialShift.x
     this.shift.y = this.moduleConfig.initialShift.y
 
-    let vm = this
+    let vm = this // eslint-disable-line prefer-const
     this.$on('updatePopupDimensions', function () {
       vm.updatePopupDimensions()
     })
@@ -253,9 +252,9 @@ export default {
         return this.widthValue === 'auto' ? 'auto' : `${this.widthValue}px`
       },
       set: function (newWidth) {
-        let viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
-        let verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth
-        let maxWidth = viewportWidth - 2 * this.moduleConfig.viewportMargin - verticalScrollbarWidth
+        const viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
+        const verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth
+        const maxWidth = viewportWidth - 2 * this.moduleConfig.viewportMargin - verticalScrollbarWidth
         if (newWidth >= maxWidth) {
           this.$options.logger.log(`Popup is too wide, limiting its width to ${maxWidth}px`)
           this.widthValue = maxWidth
@@ -268,7 +267,7 @@ export default {
 
     heightDm: {
       get: function () {
-        let time = Date.now()
+        const time = Date.now()
         if (this.resizedHeight !== null) {
           // Popup has been resized manually
           return `${this.resizedHeight}px`
@@ -277,7 +276,7 @@ export default {
         return this.heightValue === 'auto' ? 'auto' : `${this.heightValue}px`
       },
       set: function (newHeight) {
-        let time = Date.now()
+        const time = Date.now()
         this.$options.logger.log(`${time}: height setter, offsetHeight is ${newHeight}`)
         /*
               let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
@@ -295,8 +294,8 @@ export default {
     },
 
     maxHeight () {
-      let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-      let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
+      const viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+      const horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
       return viewportHeight - 2 * this.moduleConfig.viewportMargin - horizontalScrollbarWidth
     },
 
@@ -311,7 +310,7 @@ export default {
       if (this.showProviders) {
         // Show credits info
         this.$nextTick(() => {
-          let container = this.$el.querySelector(`#${this.lexicalDataContainerID}`)
+          let container = this.$el.querySelector(`#${this.lexicalDataContainerID}`) // eslint-disable-line prefer-const
           if (container) {
             container.scrollTop = container.scrollHeight // Will make it scroll all the way to the bottom
           }
@@ -336,10 +335,42 @@ export default {
       return {
         inertia: true,
         autoScroll: false,
-        restrict: {
-          elementRect: { top: 0.5, left: 0.5, bottom: 0.5, right: 0.5 }
-        },
         ignoreFrom: 'input, textarea, a[href], select, option'
+      }
+    },
+
+    /**
+     * @typedef {Object} BoundsCheckResult
+     * @property {boolean} withinBounds - If the toolbar is within the viewport bounds.
+     * @property {number} adjX - How much an X coordinate must be adjusted for the toolbar to fit into the viewport.
+     * @property {number} adjY - How much an Y coordinate must be adjusted for the toolbar to fit into the viewport.
+     */
+    /**
+     * Checks if the object is within the viewport bounds and if it is not,
+     * calculates how much a toolbar position must be adjusted so that it will fit into the viewport.
+     *
+     * @returns {BoundsCheckResult} - A result of the bounds check
+     */
+    isWithinBounds () {
+      const rect = this.$el.getBoundingClientRect()
+      let xAdjustment = 0
+      let yAdjustment = 0
+      if (rect.x < 0) {
+        xAdjustment = -rect.x
+      }
+      if ((rect.x + rect.width) > this.app.platform.viewport.width) {
+        xAdjustment = -(rect.x + rect.width - this.app.platform.viewport.width)
+      }
+      if (rect.y < 0) {
+        yAdjustment = -rect.y
+      }
+      if ((rect.y + rect.height) > this.app.platform.viewport.height) {
+        yAdjustment = -(rect.y + rect.height - this.app.platform.viewport.height)
+      }
+      return {
+        withinBounds: xAdjustment === 0 && yAdjustment === 0,
+        adjX: xAdjustment,
+        adjY: yAdjustment
       }
     },
 
@@ -388,26 +419,32 @@ export default {
     },
 
     dragEndListener () {
-      let uiOptions = this.settings.getUiOptions()
+      const boundsCheck = this.isWithinBounds()
+      if (!boundsCheck.withinBounds) {
+        this.shift.x += boundsCheck.adjX
+        this.shift.y += boundsCheck.adjY
+      }
+
+      const uiOptions = this.settings.getUiOptions()
       uiOptions.items.popupShiftX.setValue(this.shift.x)
       uiOptions.items.popupShiftY.setValue(this.shift.y)
     },
 
     /**
-       * This function is called from an `updated()` callback. Because of this, it should never use a `nextTick()`
-       * as it might result in an infinite loop of updates: nextTick() causes a popup to be updated, updated()
-       * callback is called, that, in turn, calls nextTick() and so on.
-       * It seems that calling it even without `nextTick()` is enough for updating a popup dimensions.
-       */
+     * This function is called from an `updated()` callback. Because of this, it should never use a `nextTick()`
+     * as it might result in an infinite loop of updates: nextTick() causes a popup to be updated, updated()
+     * callback is called, that, in turn, calls nextTick() and so on.
+     * It seems that calling it even without `nextTick()` is enough for updating a popup dimensions.
+     */
     updatePopupDimensions () {
-      let time = Date.now()
+      const time = Date.now()
 
       if (this.resizeCount >= this.resizeCountMax) {
         // Skip resizing if maximum number reached to avoid infinite loops
         return
       }
 
-      let innerDif = this.$el.querySelector('#alpheios-lexical-data-container').clientHeight - this.$el.querySelector('#alpheios-morph-component').clientHeight
+      const innerDif = this.$el.querySelector('#alpheios-lexical-data-container').clientHeight - this.$el.querySelector('#alpheios-morph-component').clientHeight
 
       if (this.heightDm !== 'auto' && innerDif > this.resizeDelta && this.heightValue !== this.maxHeight) {
         this.heightDm = 'auto'
@@ -461,6 +498,13 @@ export default {
         .on('resizemove', this.resizeListener)
     }
 
+    const boundsCheck = this.isWithinBounds()
+    if (!boundsCheck.withinBounds) {
+      this.shift.x += boundsCheck.adjX
+      this.shift.y += boundsCheck.adjY
+      this.$options.logger.log(`Popup position has been adjusted to stay within the viewport`)
+    }
+
     this.$options.lexrqStartedUnwatch = this.$store.watch((state, getters) => state.app.lexicalRequest.startTime, () => {
       // There is a new request coming in, reset popup dimensions
       this.resetPopupDimensions()
@@ -476,10 +520,10 @@ export default {
 
   updated () {
     if (this.$store.state.popup.visible) {
-      let time = Date.now()
+      const time = Date.now()
       this.$options.logger.log(`${time}: component is updated`)
 
-      let vm = this
+      const vm = this
       clearTimeout(this.updateDimensionsTimeout)
       let timeoutDuration = 0
       if (this.resizeCount > 1) {
