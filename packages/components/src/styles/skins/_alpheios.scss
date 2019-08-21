@@ -1,6 +1,8 @@
 // This is a default Alpheios theme. All CSS custom props in it defined for an `html` element.
 // Custom skins should define their own custom props for a `:root` pseudo-class as it has a higher specificity.
 html {
+  // NB: all styles inside html selectors will be excluded from getting the !important flag
+  // added to them in the postprocessing of the file for Safari. See alpheios-project/components#758 for details
   // Base font size of text elements that are scalable
   --alpheios-base-text-size: 16px;
   // Base size of UI elements that are scalable
