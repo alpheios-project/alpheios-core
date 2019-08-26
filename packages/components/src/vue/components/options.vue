@@ -137,6 +137,6 @@
     .alpheios-tab-options__aboutcont {
       border-top: 1px solid;
       padding-top: 10px;
-      font-size: uisize(12px);
+      font-size: textsize(12px);
     }
 </style>

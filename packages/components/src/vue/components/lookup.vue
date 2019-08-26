@@ -204,7 +204,7 @@ export default {
   }
 
   .alpheios-lookup__lang-hint {
-    font-size: uisize(12px);
+    font-size: textsize(12px);
   }
   span.alpheios-lookup__lang-change {
     color: var(--alpheios-lookup-link-color);

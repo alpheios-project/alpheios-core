@@ -17,7 +17,7 @@ export default {
   .alpheios-definition__short {
     .alpheios-definition__text {
       color: var(--alpheios-definition-short-color);
-      font-size: uisize(18px);
+      font-size: textsize(18px);
       font-weight: bold;
     }
   }

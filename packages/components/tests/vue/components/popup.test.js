@@ -114,7 +114,7 @@ describe('popup.test.js', () => {
     jest.clearAllMocks()
   })
 
-  it('1 Popup - renders a vue instance (min requirements)', () => {
+  it.skip('1 Popup - renders a vue instance (min requirements)', () => {
     let cmp = shallowMount(Popup, {
       data () {
         return {

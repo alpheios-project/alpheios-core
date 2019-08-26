@@ -1127,7 +1127,7 @@ body {
  */
 .alpheios-definition__short .alpheios-definition__text {
   color: var(--alpheios-definition-short-color);
-  font-size: calc(var(--alpheios-base-ui-size) * 1.125);
+  font-size: calc(var(--alpheios-base-text-size) * 1.125);
   font-weight: bold;
 }
 /*
@@ -3163,7 +3163,7 @@ p.alpheios-word-usage-filter-title {
 .alpheios-tab-options__aboutcont {
   border-top: 1px solid;
   padding-top: 10px;
-  font-size: calc(var(--alpheios-base-ui-size) * 0.75);
+  font-size: calc(var(--alpheios-base-text-size) * 0.75);
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -3630,7 +3630,7 @@ p.alpheios-word-usage-filter-title {
   width: calc(var(--alpheios-base-text-size) * 7.5);
 }
 .alpheios-lookup__lang-hint {
-  font-size: calc(var(--alpheios-base-ui-size) * 0.75);
+  font-size: calc(var(--alpheios-base-text-size) * 0.75);
 }
 span.alpheios-lookup__lang-change {
   color: var(--alpheios-lookup-link-color);
