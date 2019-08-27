@@ -90,12 +90,12 @@
         "component": "WordUsageExamples"
     },
     "WORDUSAGE_SHOW_FILTERS_TEXT": {
-        "message": "Show Focus/Sort",
+        "message": "Show Search/Sort Options",
         "description": "Show filters/sorting block",
         "component": "WordUsageExamples"
     },
     "WORDUSAGE_HIDE_FILTERS_TEXT": {
-        "message": "Hide Focus/Sort",
+        "message": "Hide Search/Sort Options",
         "description": "Hide filters/sorting block",
         "component": "WordUsageExamples"
     },
@@ -125,17 +125,19 @@
         "component": "WordUsageExamples"
     },
     "WORDUSAGE_FOCUS_AUTHOR": {
-        "message": "Focus on Author:",
+        "message": "Choose an Author:<br>(up to {maxResults} examples, default sort by work)",
         "description": "Title for the author's filter",
-        "component": "WordUsageExamples"
+        "component": "WordUsageExamples",
+        "params": ["maxResults"]
     },
     "WORDUSAGE_FOCUS_WORK": {
-        "message": "Focus on Work:",
+        "message": "Focus on Work:<br>(up to {maxResults} examples, default sort by preceding word)",
         "description": "Title for the textwork's filter",
-        "component": "WordUsageExamples"
+        "component": "WordUsageExamples",
+        "params": ["maxResults"]
     },
     "WORDUSAGE_HINT_INITIAL_SEARCH": {
-        "message": "(up to {maxResults} usages per author - Focus to get more results by author)",
+        "message": "(default display: all available authors, up to {maxResults} examples each)",
         "description": "Hint for initial search results",
         "params": ["maxResults"]
     },

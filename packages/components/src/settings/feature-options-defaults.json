@@ -91,7 +91,7 @@
     },
     "wordUsageExamplesMax": {
       "defaultValue": 5000,
-      "labelText": "Max total results ('Author/Work Focus' searches)",
+      "labelText": "Max total results ('Choose Author/Work' searches)",
       "number": true,
       "minValue": 1,
       "maxValue": 1000,

@@ -29,7 +29,7 @@ describe('morph.test.js', () => {
           hasMorphData () {
             return true
           },
-          defDataReady () {
+          shortDefDataReady () {
             return true
           }
         }

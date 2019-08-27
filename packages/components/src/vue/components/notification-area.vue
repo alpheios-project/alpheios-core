@@ -56,7 +56,7 @@
         <button
           @click="hideLoginPrompt"
           class="alpheios-button-tertiary"
-          v-show="!$store.state.auth.hideLoginPrompt && $store.state.auth.notification.count >= 3">
+          v-show="!$store.state.auth.hideLoginPrompt && $store.state.auth.notification.count >= 2">
           {{ l10n.getMsg(`AUTH_HIDE_LOGIN_BTN_LABEL`) }}
         </button>
       </div>
@@ -94,7 +94,7 @@ export default {
       hintWasShownForTabs: []
     }
   },
-   
+
   computed: {
     notificationClasses: function () {
       let classes = []

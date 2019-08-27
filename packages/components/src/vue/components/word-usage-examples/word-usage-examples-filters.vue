@@ -4,7 +4,7 @@
 
       <div v-show="showHeader && !collapsedHeader">
         <div class="alpheios-word-usage-filters-select" v-if="authorsList">
-          <p class="alpheios-word-usage-filter-title">{{ l10n.getText('WORDUSAGE_FOCUS_AUTHOR') }}</p>
+          <p class="alpheios-word-usage-filter-title" v-html="calcFocusHint('author')"></p>
           <select class="alpheios-select alpheios-word-usage-header-filter-select"
                     v-model="selectedAuthor"
                     @change = "getResults('author')"
@@ -17,7 +17,7 @@
           </select>
         </div>
         <div class="alpheios-word-usage-filters-select" v-if="filteredWorkList">
-          <p class="alpheios-word-usage-filter-title">{{ l10n.getText('WORDUSAGE_FOCUS_WORK') }}</p>
+          <p class="alpheios-word-usage-filter-title" v-html="calcFocusHint('work')"></p>
           <select class="alpheios-select alpheios-word-usage-header-filter-select"
                     v-model="selectedTextWork"
                     @change = "getResults('textWork')"
@@ -36,13 +36,15 @@
 <script>
 import Tooltip from '@/vue/components/tooltip.vue'
 import { LanguageModelFactory } from 'alpheios-data-models'
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'WordUsageExamplesFilters',
-  inject: ['app', 'l10n'],
+  inject: ['app', 'l10n', 'settings'],
   components: {
     alphTooltip: Tooltip
   },
+  mixins: [DependencyCheck],
   props: {
     collapsedHeader: {
       type: Boolean,
@@ -166,6 +168,14 @@ export default {
         }
       }
       return ''
+    },
+    calcFocusHint (type) {
+      // it would be better for this to be a computed property but settings.getFeatureOptions() is not reactive
+      if (type === 'author') {
+        return this.l10n.getText('WORDUSAGE_FOCUS_AUTHOR',{ maxResults:settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue })
+      } else {
+        return this.l10n.getText('WORDUSAGE_FOCUS_WORK',{ maxResults:settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue })
+      }
     },
     applySort (typeSort, items) {
       return items.sort((a,b) => {

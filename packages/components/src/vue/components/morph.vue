@@ -93,7 +93,7 @@
           </div>
         </div><!--alpheios-morph__features-->
 
-        <div class="alpheios-morph__definition_list" v-if="definitions(lex).length > 0">
+        <div class="alpheios-morph__definition_list" v-if="$store.getters['app/shortDefDataReady']">
           <!-- <p class="block_title">definitions</p> -->
           <div :data-lemmakey="lex.lemma.ID" :key="definition.ID"
                class="alpheios-morph__definition" v-for="(definition, dindex) in definitions(lex)">
