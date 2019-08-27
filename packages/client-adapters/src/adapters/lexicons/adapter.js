@@ -65,7 +65,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @param {String} urlKey - urlIndex for geting data from config
   */
   prepareFullDefPromise (homonym, urlKey) {
-    let url = this.config[urlKey].urls.full
+    let url = this.config[urlKey].urls.index
     let requestType = 'fullDefs'
 
     let resCheckCached = this.checkCachedData(url)
