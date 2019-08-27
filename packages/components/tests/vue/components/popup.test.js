@@ -50,6 +50,14 @@ describe('popup.test.js', () => {
     let featureOptions = new Options(FeatureOptionDefaults, ta1)
     let resourceOptions = new Options(LanguageOptionDefaults, ta2)
     let uiOptions = new Options(UIOptionDefaults, ta3)
+    const appAPI = {
+      platform: {
+        viewport: {
+          width: 0,
+          height: 0
+        }
+      }
+    }
     let settingsAPI = {
       getFeatureOptions: () => { return featureOptions },
       getResourceOptions: () => { return resourceOptions },
@@ -90,11 +98,12 @@ describe('popup.test.js', () => {
       }
     })
 
-    authModule  = new AuthModule(store,api,{auth:null})
+    authModule = new AuthModule(store,api,{auth:null})
     api = {
       ui: uiAPI,
-      auth:authModule,
-      settings: settingsAPI
+      auth: authModule,
+      settings: settingsAPI,
+      app: appAPI
     }
 
     l10nModule = new L10nModule(store, api, {

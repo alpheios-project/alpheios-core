@@ -158,7 +158,6 @@ export default {
     onClickaway: onClickaway
   },
   // Custom props to store unwatch functions
-  visibleUnwatch: null,
   lexrqStartedUnwatch: null,
   logger: Logger.getInstance(),
 
@@ -421,6 +420,7 @@ export default {
     dragEndListener () {
       const boundsCheck = this.isWithinBounds()
       if (!boundsCheck.withinBounds) {
+        // Adjust the popup to stay within bounds
         this.shift.x += boundsCheck.adjX
         this.shift.y += boundsCheck.adjY
       }
@@ -483,8 +483,23 @@ export default {
       this.resizedHeight = null
     },
 
-    attachTrackingClick: function () {
-      this.ui.closePopup()
+    attachTrackingClick: function (event) {
+      /*
+      When a popup is dragged outside of the viewport and then moved back
+      by an adjustment procedure in dragEndListener(), a drag end mouse release event
+      is generated outside of a popup's rect (and outside of the viewport) by some browsers
+      (Chrome and possibly Safari). With a clickaway directive in place this results in the popup being closed.
+      To prevent this we need to check event coordinates
+      and close the popup only if those coordinates are within the viewport.
+       */
+      if (
+        event.clientX >= 0 &&
+        event.clientX <= this.app.platform.viewport.width &&
+        event.clientY >= 0 &&
+        event.clientY <= this.app.platform.viewport.height
+      ) {
+        this.ui.closePopup()
+      }
     }
   },
 
@@ -514,7 +529,6 @@ export default {
 
   beforeDestroy () {
     // Teardown the watch function
-    // this.$options.visibleUnwatch()
     this.$options.lexrqStartedUnwatch()
   },
 
