@@ -322,6 +322,8 @@ import { directive as onClickaway } from '../directives/clickaway.js'
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
+const FONT_SIZE_PROP = '--alpheios-base-text-size'
+
 export default {
   name: 'PanelCompact',
   // API modules that are required for this component
@@ -373,6 +375,7 @@ export default {
   customPropStyle: undefined,
   baseTextSize: undefined,
   scaledTextSize: undefined,
+  textWasScaled: false,
   currentTextSize: undefined,
   panelVisibilityUnwatch: undefined,
   panelPositionUnwatch: undefined,
@@ -561,7 +564,11 @@ export default {
     closePanel () {
       this.ui.closePanel()
       // Reset a scaled font size
-      document.documentElement.style.removeProperty('--alpheios-base-text-size')
+      if (this.$options.textWasScaled) {
+        // Reset a custom font size scaling and set the font size to the value specified in options
+        document.documentElement.style.setProperty(FONT_SIZE_PROP, `${this.settings.getUiOptions().items.fontSize.currentValue}px`)
+        this.$options.textWasScaled = false
+      }
 
       // Close the menu if it was open during the panel closing
       this.menuVisible = false
@@ -572,7 +579,8 @@ export default {
       if (Math.abs(computedFontSize - this.$options.currentTextSize) > 1) {
         // Update element's style only when size change is greater than 1px to avoid extra redraws
         this.$options.currentTextSize = computedFontSize
-        document.documentElement.style.setProperty('--alpheios-base-text-size', `${this.$options.currentTextSize}px`, 'important')
+        document.documentElement.style.setProperty(FONT_SIZE_PROP, `${this.$options.currentTextSize}px`, 'important')
+        this.$options.textWasScaled = true // This text was custom adjusted
       }
     },
 
