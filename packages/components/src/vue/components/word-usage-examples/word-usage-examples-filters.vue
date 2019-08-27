@@ -172,9 +172,9 @@ export default {
     calcFocusHint (type) {
       // it would be better for this to be a computed property but settings.getFeatureOptions() is not reactive
       if (type === 'author') {
-        return this.l10n.getText('WORDUSAGE_FOCUS_AUTHOR',{ maxResults:settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue })
+        return this.l10n.getText('WORDUSAGE_FOCUS_AUTHOR',{ maxResults:this.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue })
       } else {
-        return this.l10n.getText('WORDUSAGE_FOCUS_WORK',{ maxResults:settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue })
+        return this.l10n.getText('WORDUSAGE_FOCUS_WORK',{ maxResults:this.settings.getFeatureOptions().items.wordUsageExamplesMax.currentValue })
       }
     },
     applySort (typeSort, items) {
