@@ -93,10 +93,16 @@
           </div>
         </div><!--alpheios-morph__features-->
 
-        <div class="alpheios-morph__definition_list" v-if="$store.getters['app/shortDefDataReady']">
+        <div class="alpheios-morph__definition_list">
           <!-- <p class="block_title">definitions</p> -->
+          <div class="alpheios-popup__definitions--placeholder"
+             v-show="! $store.getters['app/shortDefDataReady']"
+           >
+            <progress-bar :text="l10n.getText('PLACEHOLDER_LEX_DATA_LOADING')"></progress-bar>
+          </div>
           <div :data-lemmakey="lex.lemma.ID" :key="definition.ID"
-               class="alpheios-morph__definition" v-for="(definition, dindex) in definitions(lex)">
+               class="alpheios-morph__definition" v-for="(definition, dindex) in definitions(lex)"
+               v-show="$store.getters['app/shortDefDataReady']">
             <span class="definition_index" v-if="definitions(lex).length > 1">{{ definitionIndex(dindex) }}</span>
             <shortdef :definition="definition"></shortdef>
           </div>
@@ -249,6 +255,7 @@ import { Definition, Feature, LanguageModelFactory } from 'alpheios-data-models'
 import ShortDef from './shortdef.vue'
 import InflectionAttribute from './infl-attribute.vue'
 import LemmaTranslation from './lemma-translation.vue'
+import ProgressBar from './progress-bar.vue'
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
@@ -257,7 +264,8 @@ export default {
   components: {
     shortdef: ShortDef,
     inflectionattribute: InflectionAttribute,
-    lemmatranslation: LemmaTranslation
+    lemmatranslation: LemmaTranslation,
+    progressBar: ProgressBar,
   },
   inject: ['app', 'l10n'],
   storeModules: ['app'],

@@ -1154,6 +1154,54 @@ p.alpheios-lemma__translations-value {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-popup-lexdataloading__progress-wrapper {
+  box-sizing: border-box !important;
+}
+.alpheios-popup-lexdataloading__progress-inner {
+  border: calc(var(--alpheios-base-ui-size) * 0.125) solid var(--alpheios-desktop-popup-progress-bar-line) !important;
+  border-radius: calc(var(--alpheios-base-text-size) * 0.625) !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  background: white !important;
+}
+.alpheios-popup-lexdataloading__progress-line {
+  background: var(--alpheios-desktop-popup-progress-bar-line) !important;
+  animation: progress 3s infinite;
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  height: 100% !important;
+  width: 100% !important;
+  border-radius: calc(var(--alpheios-base-text-size) * 0.625) !important;
+}
+.alpheios-popup-lexdataloading__progress-text {
+  display: block;
+  padding: 4px !important;
+  box-sizing: border-box !important;
+  text-transform: uppercase !important;
+  position: relative !important;
+  z-index: 10 !important;
+  border: 2px solid #fff !important;
+  border-radius: calc(var(--alpheios-base-text-size) * 0.625) !important;
+  font-size: 85% !important;
+}
+@keyframes progress {
+0% {
+    transform: translateX(-49.5%) scaleX(0.01);
+}
+100% {
+    transform: translateX(0%) scaleX(1);
+}
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
 .alpheios-morph__formtext {
   font-weight: 700 !important;
 }
@@ -1598,54 +1646,6 @@ select.alpheios-setting__control,
   border-width: 5px !important;
   border-style: solid !important;
   border-color: transparent transparent transparent var(--alpheios-border-color) !important;
-}
-/*
- Calculates a size of text elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
- */
-/*
- Calculates a size of UI elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
- */
-.alpheios-popup-lexdataloading__progress-wrapper {
-  box-sizing: border-box !important;
-}
-.alpheios-popup-lexdataloading__progress-inner {
-  border: calc(var(--alpheios-base-ui-size) * 0.125) solid var(--alpheios-desktop-popup-progress-bar-line) !important;
-  border-radius: calc(var(--alpheios-base-text-size) * 0.625) !important;
-  text-align: center !important;
-  box-sizing: border-box !important;
-  position: relative !important;
-  background: white !important;
-}
-.alpheios-popup-lexdataloading__progress-line {
-  background: var(--alpheios-desktop-popup-progress-bar-line) !important;
-  animation: progress 3s infinite;
-  position: absolute !important;
-  left: 0 !important;
-  top: 0 !important;
-  height: 100% !important;
-  width: 100% !important;
-  border-radius: calc(var(--alpheios-base-text-size) * 0.625) !important;
-}
-.alpheios-popup-lexdataloading__progress-text {
-  display: block;
-  padding: 4px !important;
-  box-sizing: border-box !important;
-  text-transform: uppercase !important;
-  position: relative !important;
-  z-index: 10 !important;
-  border: 2px solid #fff !important;
-  border-radius: calc(var(--alpheios-base-text-size) * 0.625) !important;
-  font-size: 85% !important;
-}
-@keyframes progress {
-0% {
-    transform: translateX(-49.5%) scaleX(0.01);
-}
-100% {
-    transform: translateX(0%) scaleX(1);
-}
 }
 /*
  Calculates a size of text elements relative to the base size.

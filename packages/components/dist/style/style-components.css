@@ -1154,6 +1154,54 @@ p.alpheios-lemma__translations-value {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-popup-lexdataloading__progress-wrapper {
+  box-sizing: border-box;
+}
+.alpheios-popup-lexdataloading__progress-inner {
+  border: calc(var(--alpheios-base-ui-size) * 0.125) solid var(--alpheios-desktop-popup-progress-bar-line);
+  border-radius: calc(var(--alpheios-base-text-size) * 0.625);
+  text-align: center;
+  box-sizing: border-box;
+  position: relative;
+  background: white;
+}
+.alpheios-popup-lexdataloading__progress-line {
+  background: var(--alpheios-desktop-popup-progress-bar-line);
+  animation: progress 3s infinite;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: calc(var(--alpheios-base-text-size) * 0.625);
+}
+.alpheios-popup-lexdataloading__progress-text {
+  display: block;
+  padding: 4px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 10;
+  border: 2px solid #fff;
+  border-radius: calc(var(--alpheios-base-text-size) * 0.625);
+  font-size: 85%;
+}
+@keyframes progress {
+0% {
+    transform: translateX(-49.5%) scaleX(0.01);
+}
+100% {
+    transform: translateX(0%) scaleX(1);
+}
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
 .alpheios-morph__formtext {
   font-weight: 700;
 }
@@ -1598,54 +1646,6 @@ select.alpheios-setting__control,
   border-width: 5px;
   border-style: solid;
   border-color: transparent transparent transparent var(--alpheios-border-color);
-}
-/*
- Calculates a size of text elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
- */
-/*
- Calculates a size of UI elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
- */
-.alpheios-popup-lexdataloading__progress-wrapper {
-  box-sizing: border-box;
-}
-.alpheios-popup-lexdataloading__progress-inner {
-  border: calc(var(--alpheios-base-ui-size) * 0.125) solid var(--alpheios-desktop-popup-progress-bar-line);
-  border-radius: calc(var(--alpheios-base-text-size) * 0.625);
-  text-align: center;
-  box-sizing: border-box;
-  position: relative;
-  background: white;
-}
-.alpheios-popup-lexdataloading__progress-line {
-  background: var(--alpheios-desktop-popup-progress-bar-line);
-  animation: progress 3s infinite;
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  border-radius: calc(var(--alpheios-base-text-size) * 0.625);
-}
-.alpheios-popup-lexdataloading__progress-text {
-  display: block;
-  padding: 4px;
-  box-sizing: border-box;
-  text-transform: uppercase;
-  position: relative;
-  z-index: 10;
-  border: 2px solid #fff;
-  border-radius: calc(var(--alpheios-base-text-size) * 0.625);
-  font-size: 85%;
-}
-@keyframes progress {
-0% {
-    transform: translateX(-49.5%) scaleX(0.01);
-}
-100% {
-    transform: translateX(0%) scaleX(1);
-}
 }
 /*
  Calculates a size of text elements relative to the base size.
