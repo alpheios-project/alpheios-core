@@ -578,7 +578,6 @@ html {
 .alpheios-content button {
   border: 0 !important;
   font-family: var(--alpheios-sans-font-face) !important;
-  border-radius: 0 !important;
 }
 .alpheios-content textarea {
   overflow: auto !important;
@@ -3081,6 +3080,7 @@ p.alpheios-word-usage-filter-title {
   cursor: pointer !important;
   flex: 1 !important;
   margin: 0 !important;
+  border-radius: 0 !important;
 }
 .alpheios-setting__button-group button:last-child {
   border-right: none !important;

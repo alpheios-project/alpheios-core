@@ -63,6 +63,7 @@ export default {
       flex: 1;
       // Need below to override default styles of Safari
       margin: 0;
+      border-radius: 0;
     }
 
     button:last-child {
