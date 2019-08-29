@@ -40,8 +40,20 @@
         </span>
       </alph-tooltip>
     </div>
+    <div class="alpheios-toolbar__header alpheios-toolbar__brand"
+      v-show="!showNav">
+      <alph-tooltip
+          :tooltip-text="l10n.getText('LABEL_TOOLS_BRAND')"
+          :tooltip-direction="tooltipDirection"
+      >
+        <span class="alpheios-navbuttons__btn disabled">
+          <reading-tools-icon></reading-tools-icon>
+        </span>
+      </alph-tooltip>
+    </div>
     <div
         class="alpheios-toolbar__header"
+        v-show="showNav"
         :class="{ expanded: contentVisible }"
         @click="contentVisible = !contentVisible"
     >
@@ -242,6 +254,9 @@ export default {
   },
 
   computed: {
+    showNav: function () {
+      return this.moduleConfig.showNav
+    },
     componentStyles: function () {
       let styles = {
         transform: `translate(${this.shift.x}px, ${this.shift.y}px)`,
@@ -441,6 +456,7 @@ export default {
       &.disabled {
         fill: var(--alpheios-desktop-toolbar-icon-color-disabled);
         stroke: var(--alpheios-desktop-toolbar-icon-color-disabled);
+        cursor: default;
       }
     }
   }

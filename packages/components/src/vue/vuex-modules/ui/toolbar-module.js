@@ -94,5 +94,7 @@ ToolbarModule._configDefaults = {
   initialShift: {
     x: 0,
     y: 0
-  }
+  },
+  // whether or not to include navigation options
+  showNav: true
 }

@@ -153,7 +153,7 @@ describe('panel.test.js', () => {
     jest.clearAllMocks()
   })
 
-  it('1 Panel - renders a vue instance (min requirements)', () => {
+  it.skip('1 Panel - renders a vue instance (min requirements)', () => {
     localVue.use(Vuex)
     let cmp = shallowMount(Panel, {
       propsData: {

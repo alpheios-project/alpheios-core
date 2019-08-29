@@ -415,7 +415,7 @@ export default {
     },
     showMainTabIcons () {
       let mainTabArray = ['morphology', 'definitions', 'inflections', 'wordUsage', 'treebank']
-      return mainTabArray.includes(this.currentTab)
+      return this.moduleConfig.showNav && mainTabArray.includes(this.currentTab)
     },
     showMorphologyIcon () {
       return this.$store.state.app.morphDataReady && this.app.hasMorphData() && (this.showMainTabIcons || this.currentTab === 'grammar')

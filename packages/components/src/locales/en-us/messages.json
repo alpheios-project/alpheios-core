@@ -430,6 +430,11 @@
     "description": "A tooltip for the reading tools icon on the toolbar",
     "component": "Toolbar"
   },
+  "LABEL_TOOLS_BRAND": {
+    "message": "Alpheios Toolbar",
+    "description": "A tooltip for the reading tools icon on the toolbar when it's just for branding",
+    "component": "Toolbar"
+  },
   "LABEL_LOOKUP_CONTROL": {
     "message": "Word Lookup",
     "description": "A tooltip for the button that turns the lookup panel on and off",

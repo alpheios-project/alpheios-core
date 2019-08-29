@@ -18,7 +18,8 @@
 
       <div class="alpheios-panel__header-btn-group--center">
 
-        <navbuttons-large></navbuttons-large>
+        <navbuttons-large v-show="showNav"></navbuttons-large>
+        <div class="alpheios-panel__nav-spacer" v-show="! showNav"></div>
 
         <alph-tooltip :tooltipText="swapTooltip" tooltipDirection="bottom-narrow">
           <span @click="swapPosition()"
@@ -184,6 +185,9 @@ export default {
   prefixName: 'panel-large',
 
   computed: {
+    showNav() {
+      return this.moduleConfig.showNav
+    },
     rootClasses () {
       return this.$options.positionClassVariants[this.$store.state.panel.position]
     },
@@ -243,6 +247,11 @@ export default {
       svg {
         width: uisize(22px);
       }
+    }
+
+    /** make sure the panel is wide enough when we don't have navigation **/
+    .alpheios-panel__nav-spacer {
+      width: 600px;
     }
 
     &.alpheios-panel--left {

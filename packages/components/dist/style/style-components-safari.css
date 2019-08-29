@@ -907,7 +907,7 @@ div.alpheios-checkbox-block {
   content: "" !important;
 }
 
-.alpheios-button-tertiary, .alpheios-button-secondary, .alpheios-button-primary {
+.alpheios-button-tertiary, button.alpheios-button-tertiary, .alpheios-button-secondary, .alpheios-button-primary {
   font-family: var(--alpheios-sans-font-face) !important;
   font-size: var(--alpheios-base-text-size) !important;
   font-weight: 700 !important;
@@ -972,18 +972,18 @@ div.alpheios-checkbox-block {
   box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1) !important;
 }
 
-.alpheios-button-tertiary {
+.alpheios-button-tertiary, button.alpheios-button-tertiary {
   color: var(--alpheios-btn-tertiary-font-color) !important;
   background-color: var(--alpheios-btn-tertiary-bg-color) !important;
   border-color: var(--alpheios-btn-tertiary-border-color) !important;
 }
-.alpheios-button-tertiary:hover, .alpheios-button-tertiary:focus {
+.alpheios-button-tertiary:hover, .alpheios-button-tertiary:focus, button.alpheios-button-tertiary:hover, button.alpheios-button-tertiary:focus {
   color: var(--alpheios-btn-tertiary-font-color-hover) !important;
   background-color: var(--alpheios-btn-tertiary-bg-color-hover) !important;
   border-color: var(--alpheios-btn-tertiary-border-color-hover) !important;
   box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25) !important;
 }
-.alpheios-button-tertiary:active {
+.alpheios-button-tertiary:active, button.alpheios-button-tertiary:active {
   color: var(--alpheios-btn-tertiary-font-color-pressed) !important;
   background-color: var(--alpheios-btn-tertiary-bg-color-pressed) !important;
   border-color: var(--alpheios-btn-tertiary-border-color-pressed) !important;
@@ -3485,9 +3485,13 @@ p.alpheios-word-usage-filter-title {
   height: 100vh !important;
   max-width: 80vw !important;
   top: 0 !important;
+  /** make sure the panel is wide enough when we don't have navigation **/
 }
 .alpheios-panel--large .alpheios-navbuttons__btn svg {
   width: calc(var(--alpheios-base-ui-size) * 1.375) !important;
+}
+.alpheios-panel--large .alpheios-panel__nav-spacer {
+  width: 600px !important;
 }
 .alpheios-panel--large.alpheios-panel--left .alpheios-panel__header {
   padding-left: calc(var(--alpheios-base-ui-size) * 0.875) !important;
@@ -3725,6 +3729,7 @@ span.alpheios-lookup__lang-change:hover {
 .alpheios-toolbar .alpheios-navbuttons__btn.disabled {
   fill: var(--alpheios-desktop-toolbar-icon-color-disabled) !important;
   stroke: var(--alpheios-desktop-toolbar-icon-color-disabled) !important;
+  cursor: default !important;
 }
 .alpheios-toolbar__drag-handle {
   width: calc(var(--alpheios-base-ui-size) * 2.75) !important;

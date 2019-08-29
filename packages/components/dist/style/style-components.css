@@ -907,7 +907,7 @@ div.alpheios-checkbox-block {
   content: "";
 }
 
-.alpheios-button-tertiary, .alpheios-button-secondary, .alpheios-button-primary {
+.alpheios-button-tertiary, button.alpheios-button-tertiary, .alpheios-button-secondary, .alpheios-button-primary {
   font-family: var(--alpheios-sans-font-face);
   font-size: var(--alpheios-base-text-size);
   font-weight: 700;
@@ -972,18 +972,18 @@ div.alpheios-checkbox-block {
   box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1);
 }
 
-.alpheios-button-tertiary {
+.alpheios-button-tertiary, button.alpheios-button-tertiary {
   color: var(--alpheios-btn-tertiary-font-color);
   background-color: var(--alpheios-btn-tertiary-bg-color);
   border-color: var(--alpheios-btn-tertiary-border-color);
 }
-.alpheios-button-tertiary:hover, .alpheios-button-tertiary:focus {
+.alpheios-button-tertiary:hover, .alpheios-button-tertiary:focus, button.alpheios-button-tertiary:hover, button.alpheios-button-tertiary:focus {
   color: var(--alpheios-btn-tertiary-font-color-hover);
   background-color: var(--alpheios-btn-tertiary-bg-color-hover);
   border-color: var(--alpheios-btn-tertiary-border-color-hover);
   box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25);
 }
-.alpheios-button-tertiary:active {
+.alpheios-button-tertiary:active, button.alpheios-button-tertiary:active {
   color: var(--alpheios-btn-tertiary-font-color-pressed);
   background-color: var(--alpheios-btn-tertiary-bg-color-pressed);
   border-color: var(--alpheios-btn-tertiary-border-color-pressed);
@@ -3485,9 +3485,13 @@ p.alpheios-word-usage-filter-title {
   height: 100vh;
   max-width: 80vw;
   top: 0;
+  /** make sure the panel is wide enough when we don't have navigation **/
 }
 .alpheios-panel--large .alpheios-navbuttons__btn svg {
   width: calc(var(--alpheios-base-ui-size) * 1.375);
+}
+.alpheios-panel--large .alpheios-panel__nav-spacer {
+  width: 600px;
 }
 .alpheios-panel--large.alpheios-panel--left .alpheios-panel__header {
   padding-left: calc(var(--alpheios-base-ui-size) * 0.875);
@@ -3725,6 +3729,7 @@ span.alpheios-lookup__lang-change:hover {
 .alpheios-toolbar .alpheios-navbuttons__btn.disabled {
   fill: var(--alpheios-desktop-toolbar-icon-color-disabled);
   stroke: var(--alpheios-desktop-toolbar-icon-color-disabled);
+  cursor: default;
 }
 .alpheios-toolbar__drag-handle {
   width: calc(var(--alpheios-base-ui-size) * 2.75);

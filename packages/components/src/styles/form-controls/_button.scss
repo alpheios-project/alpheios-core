@@ -75,7 +75,7 @@
   }
 }
 
-.alpheios-button-tertiary {
+.alpheios-button-tertiary, button.alpheios-button-tertiary {
   @extend %alpheios-button;
   color: var(--alpheios-btn-tertiary-font-color);
   background-color: var(--alpheios-btn-tertiary-bg-color);

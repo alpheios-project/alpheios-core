@@ -97,5 +97,8 @@ PanelModule._configDefaults = {
   mountInto: 'body',
 
   // What should be the id of the root module's UI element (null if no root element must been set)
-  rootElementId: null
+  rootElementId: null,
+
+  // whether or not to show navigation buttons
+  showNav: true
 }

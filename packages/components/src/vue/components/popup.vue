@@ -15,28 +15,28 @@
 
       <div class="alpheios-popup__toolbar-buttons">
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
-                        v-show="$store.getters['app/fullDefDataReady']">
+                        v-show="showToolbar && $store.getters['app/fullDefDataReady']">
               <div class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('definitions')">
                 <definitions-icon  class="alpheios-navbuttons__icon" />
               </div>
           </alph-tooltip>
 
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_INFLECTIONS')" tooltipDirection="bottom-wide"
-                        v-show="$store.state.app.hasInflData">
+                        v-show="showToolbar && $store.state.app.hasInflData">
             <div class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('inflections')">
                <inflections-icon class="alpheios-navbuttons__icon" />
             </div>
           </alph-tooltip>
 
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_USAGEEXAMPLES')" tooltipDirection="bottom-wide"
-                        v-show="$store.state.app.wordUsageExampleEnabled">
+                        v-show="showToolbar && $store.state.app.wordUsageExampleEnabled">
                 <div class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('wordUsage')">
                   <word-usage-icon class="alpheios-navbuttons__icon" />
                 </div>
           </alph-tooltip>
 
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
-                        v-show="$store.getters['app/hasTreebankData']">
+                        v-show="showToolbar && $store.getters['app/hasTreebankData']">
                 <div class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('treebank')">
                   <treebank-icon class="alpheios-navbuttons__icon" />
                 </div>
@@ -46,7 +46,6 @@
             <close-icon></close-icon>
           </div>
       </div>
-
     </div>
 
     <div class="alpheios-popup__body">
@@ -209,6 +208,10 @@ export default {
     })
   },
   computed: {
+    showToolbar: function () {
+      return this.moduleConfig.showNav
+    },
+
     componentStyles: function () {
       return {
         left: this.positionLeftDm,
