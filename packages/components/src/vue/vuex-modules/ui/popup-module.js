@@ -99,6 +99,6 @@ PopupModule._configDefaults = {
   // A minimal margin between a popup and a viewport border, in pixels. In effect when popup is scaled down.
   viewportMargin: 5,
 
-  //whether or not to show tool icons
+  // whether or not to show tool icons
   showNav: true
 }

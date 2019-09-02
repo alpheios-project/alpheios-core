@@ -3868,16 +3868,16 @@ span.alpheios-lookup__lang-change:hover {
   /* must allow for the close icon */
 }
 .alpheios-action-panel.alpheios-action-panel--lookup-visible {
-  height: ui-size(190px) !important;
-  width: ui-size(300px) !important;
+  height: calc(var(--alpheios-base-ui-size) * 11.875) !important;
+  width: calc(var(--alpheios-base-ui-size) * 18.75) !important;
 }
 .alpheios-action-panel.alpheios-action-panel--nav-visible {
-  height: ui-size(100px) !important;
-  width: ui-size(280px) !important;
+  height: calc(var(--alpheios-base-ui-size) * 6.25) !important;
+  width: calc(var(--alpheios-base-ui-size) * 17.5) !important;
 }
 .alpheios-action-panel.alpheios-action-panel--lookup-visible.alpheios-action-panel--nav-visible {
-  height: ui-size(270px) !important;
-  width: ui-size(300px) !important;
+  height: calc(var(--alpheios-base-ui-size) * 16.875) !important;
+  width: calc(var(--alpheios-base-ui-size) * 18.75) !important;
 }
 .alpheios-action-panel__close-icon-span {
   display: inline-block;
@@ -3900,7 +3900,7 @@ span.alpheios-lookup__lang-change:hover {
   fill: var(--alpheios-btn-primary-bg-color-pressed) !important;
 }
 .alpheios-action-panel__lookup-cont {
-  height: ui-size(90px) !important;
+  height: calc(var(--alpheios-base-ui-size) * 5.625) !important;
   position: relative !important;
 }
 .alpheios-action-panel__lookup input.alpheios-input, .alpheios-action-panel__lookup input.alpheios-input:focus {
@@ -3909,11 +3909,11 @@ span.alpheios-lookup__lang-change:hover {
 .alpheios-action-panel__progress-bar {
   position: absolute !important;
   left: 0 !important;
-  top: ui-size(70px) !important;
+  top: calc(var(--alpheios-base-ui-size) * 4.375) !important;
   width: 100% !important;
 }
 .alpheios-action-panel__progress-bar .alpheios-popup-lexdataloading__progress-inner {
-  height: ui-size(16px) !important;
+  height: calc(var(--alpheios-base-ui-size) * 1) !important;
   border-color: var(--alpheios-compact-popup-progress-bar-line) !important;
 }
 .alpheios-action-panel__progress-bar .alpheios-popup-lexdataloading__progress-line {
