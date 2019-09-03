@@ -21,6 +21,22 @@ export default class AuthModule extends Module {
     }
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
     api[this.constructor.moduleName] = this.constructor.api(this, store)
+
+    if (this._auth) {
+      console.info(`Authenticator is available`)
+      // If authenticator publishes any events
+      if (this._auth.constructor.evt) {
+        console.info(`Authenticator does publish events`)
+        if (this._auth.constructor.evt.LOGGED_IN) {
+          console.info(`Authenticator does publish a LOGGED_IN event`)
+          this._auth.constructor.evt.LOGGED_IN.sub(api[this.constructor.moduleName].logUserIn)
+        }
+        if (this._auth.constructor.evt.LOGGED_OUT) {
+          console.info(`Authenticator does publish a LOGGED_OUT event`)
+          this._auth.constructor.evt.LOGGED_OUT.sub(api[this.constructor.moduleName].logUserOut)
+        }
+      }
+    }
   }
 }
 
@@ -130,6 +146,7 @@ AuthModule.api = (moduleInstance, store) => {
       moduleInstance._auth.authenticate().then(() => {
         return moduleInstance._auth.getProfileData()
       }).then((data) => {
+        // TODO: Switch to using setAuthenticatedState to avoid code duplication
         if (!data.sub) {
           throw new RangeError('UserId is empty!')
         }
@@ -140,18 +157,52 @@ AuthModule.api = (moduleInstance, store) => {
         return store.commit(`auth/setNotification`, { text: 'AUTH_LOGIN_AUTH_FAILURE_MSG' })
       })
     },
+
+    logUserIn: (userData) => {
+      console.info(`logUserIn`)
+      if (!userData.id) {
+        throw new RangeError('UserId is empty!')
+      }
+      store.commit('auth/setIsAuthenticated', {
+        sub: userData.userId,
+        nickname: userData.nickname
+      })
+      store.commit(`auth/setNotification`, { text: 'AUTH_LOGIN_SUCCESS_MSG' })
+    },
+
     logout: () => {
       if (!moduleInstance._auth) {
         return
       }
       moduleInstance._auth.logout().then(() => {
+        // TODO: Switch to using setLogoutState to avoid code duplication
         store.commit('auth/setIsNotAuthenticated')
         return store.commit(`auth/setNotification`, { text: 'AUTH_LOGOUT_SUCCESS_MSG' })
       }).catch((error) => {
         console.error('Alpheios logout failed', error)
       })
     },
+
+    logUserOut: () => {
+      console.info(`logUserOut`)
+      store.commit('auth/setIsNotAuthenticated')
+      store.commit(`auth/setNotification`, { text: 'AUTH_LOGOUT_SUCCESS_MSG' })
+    },
+
     getUserData: () => {
+      if (moduleInstance._auth && moduleInstance._auth.hasUserData) {
+        // User data has already been obtained, as with a Safari authentication schema
+        return new Promise((resolve, reject) => {
+          console.info(`Returning a user data from getUserData()`)
+          resolve({
+            accessToken: moduleInstance._auth.accessToken,
+            userId: moduleInstance._auth.userId,
+            endpoints: moduleInstance._auth.endpoints
+          })
+        })
+      }
+      // The following is for data retrieval workflow initiated from within the
+      // AuthModule as opposed to the one initiated from the outside (i.e. within Safari)
       return new Promise((resolve, reject) => {
         if (moduleInstance._auth) {
           let accessToken
