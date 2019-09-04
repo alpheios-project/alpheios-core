@@ -13385,7 +13385,7 @@ class BaseAdapter {
 
     if (url) {
       try {
-        if (typeof window !== 'undefined') {
+        if (typeof window !== 'undefined' && typeof window.fetch !== 'undefined') {
           if (options && options.timeout > 0) {
             res = await this.fetchWindowTimeout(url, options)
           } else {
@@ -13575,7 +13575,6 @@ class AlpheiosConcordanceAdapter extends _adapters_base_adapter__WEBPACK_IMPORTE
       textWork = this.getTextWorkByAbbr(author, jsonObjItem)
       passage = this.getPassage(jsonObjItem)
 
-
       let wordUsageExample = this.createWordUsageExample(jsonObjItem, homonym, author, textWork, passage)
       wordUsageExamples.push(wordUsageExample)
     }
@@ -13611,7 +13610,7 @@ class AlpheiosConcordanceAdapter extends _adapters_base_adapter__WEBPACK_IMPORTE
       // if we have only 2 parts in the citation, it's probably an author without a work
       // which in the phi data is really when the author and work are referenced as the same thing
       // as in an anonymous work
-      if (parts.length == 2) {
+      if (parts.length === 2) {
         passage = parts.slice(1).join('.')
       } else if (parts.length > 2) {
         passage = parts.slice(2).join('.')
@@ -13720,7 +13719,7 @@ class AlpheiosConcordanceAdapter extends _adapters_base_adapter__WEBPACK_IMPORTE
     let wordUsageExample = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["WordUsageExample"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageCodeFromId(homonym.languageID), jsonObj.target, jsonObj.left, jsonObj.right, source, jsonObj.cit)
     wordUsageExample.author = author
     wordUsageExample.textWork = textWork
-    wordUsageExample.passage =  passage
+    wordUsageExample.passage = passage
     wordUsageExample.homonym = homonym
     wordUsageExample.provider = this.provider
 
@@ -13805,7 +13804,7 @@ class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
   * @param {Object} options - options
   */
   async fetchFullDefs (homonym, options = {}) {
-    await this.fetchDefinitions(homonym, options,'full')
+    await this.fetchDefinitions(homonym, options, 'full')
   }
 
   /**
@@ -13895,7 +13894,7 @@ class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
   * @param {Object} lookupFunction - type of definitions - short, full
   * @return {Boolean} - result of fetching
   */
-  async fetchDefinitions (homonym, options,lookupFunction) {
+  async fetchDefinitions (homonym, options, lookupFunction) {
     Object.assign(this.options, options)
     if (!this.options.allow || this.options.allow.length === 0) {
       this.addError(this.l10n.messages['LEXICONS_NO_ALLOWED_URL'])

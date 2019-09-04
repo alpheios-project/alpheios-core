@@ -182,7 +182,7 @@ class BaseAdapter {
 
     if (url) {
       try {
-        if (typeof window !== 'undefined') {
+        if (typeof window !== 'undefined' && typeof window.fetch !== 'undefined') {
           if (options && options.timeout > 0) {
             res = await this.fetchWindowTimeout(url, options)
           } else {

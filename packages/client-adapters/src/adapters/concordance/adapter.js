@@ -147,7 +147,6 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
       textWork = this.getTextWorkByAbbr(author, jsonObjItem)
       passage = this.getPassage(jsonObjItem)
 
-
       let wordUsageExample = this.createWordUsageExample(jsonObjItem, homonym, author, textWork, passage)
       wordUsageExamples.push(wordUsageExample)
     }
@@ -183,7 +182,7 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
       // if we have only 2 parts in the citation, it's probably an author without a work
       // which in the phi data is really when the author and work are referenced as the same thing
       // as in an anonymous work
-      if (parts.length == 2) {
+      if (parts.length === 2) {
         passage = parts.slice(1).join('.')
       } else if (parts.length > 2) {
         passage = parts.slice(2).join('.')
@@ -292,7 +291,7 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
     let wordUsageExample = new WordUsageExample(LanguageModelFactory.getLanguageCodeFromId(homonym.languageID), jsonObj.target, jsonObj.left, jsonObj.right, source, jsonObj.cit)
     wordUsageExample.author = author
     wordUsageExample.textWork = textWork
-    wordUsageExample.passage =  passage
+    wordUsageExample.passage = passage
     wordUsageExample.homonym = homonym
     wordUsageExample.provider = this.provider
 

@@ -32,7 +32,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @param {Object} options - options
   */
   async fetchFullDefs (homonym, options = {}) {
-    await this.fetchDefinitions(homonym, options,'full')
+    await this.fetchDefinitions(homonym, options, 'full')
   }
 
   /**
@@ -122,7 +122,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @param {Object} lookupFunction - type of definitions - short, full
   * @return {Boolean} - result of fetching
   */
-  async fetchDefinitions (homonym, options,lookupFunction) {
+  async fetchDefinitions (homonym, options, lookupFunction) {
     Object.assign(this.options, options)
     if (!this.options.allow || this.options.allow.length === 0) {
       this.addError(this.l10n.messages['LEXICONS_NO_ALLOWED_URL'])
