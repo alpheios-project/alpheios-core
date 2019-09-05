@@ -1,7 +1,15 @@
 <template>
   <div class="alpheios-user-auth">
     <div class="alpheios-user-auth__user-container">
-      <login/>
+      <login v-show="!app.platform.isSafariAppExtension" />
+      <div class="alpheios-user-auth__user-login-instuctions" v-show="app.platform.isSafariAppExtension">
+        <div v-show="!this.$store.state.auth.isAuthenticated">
+          {{ l10n.getMsg(`AUTH_SAFARI_LOGIN_MSG`) }}
+        </div>
+        <div v-show="this.$store.state.auth.isAuthenticated">
+          {{ l10n.getMsg(`AUTH_SAFARI_LOGOUT_MSG`) }}
+        </div>
+      </div>
       <div class="alpheios-user-auth__user-info-box" v-show="this.$store.state.auth.isAuthenticated">
         <div class="alpheios-user-auth__user-info-item-box">
           <div class="alpheios-user-auth__user-info-item-name">
@@ -27,6 +35,7 @@ import CloseIcon from '@/images/inline-icons/x-close.svg'
 export default {
   name: 'UserAuth',
   inject: {
+    app: 'app',
     l10n: 'l10n',
     auth: { from: 'auth', default: null } // This module is options
   },
@@ -45,6 +54,10 @@ export default {
      height: 100%;
      justify-content: space-between;
    }
+
+  .alpheios-user-auth__user-login-instuctions {
+    color: var(--alpheios-text-color-vivid);
+  }
 
   .alpheios-user-auth__user-info-box {
     margin-top: uisize(20px);

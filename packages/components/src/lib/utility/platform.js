@@ -1,8 +1,11 @@
 import { PsEvent } from 'alpheios-data-models'
 
 export default class Platform {
-  constructor (setRootAttributes = false) {
+  constructor ({setRootAttributes = false, appType = Platform.appTypes.OTHER} = {}) {
     this.getData()
+    // It's a caller responsibility to set a correct application type
+    this._appType = appType
+    console.info(`Platform's application type is ${appType}`)
 
     if (setRootAttributes) {
       this.setRootAttributes()
@@ -108,6 +111,18 @@ export default class Platform {
     return /landscape/.test(this.orientation)
   }
 
+  get isWebextension () {
+    return this._appType === Platform.appTypes.WEBEXTENSION
+  }
+
+  get isSafariAppExtension () {
+    return this._appType === Platform.appTypes.SAFARI_APP_EXTENSION
+  }
+
+  get isEmbeddedLibrary () {
+    return this._appType === Platform.appTypes.EMBEDDED_LIBRARY
+  }
+
   /**
    * Returns orientation in its simple form (either "portrait" or "landscape"), not taking into
    * consideration an exact rotation angle (as in "primary" or "secondary").
@@ -138,6 +153,32 @@ Platform.deviceTypes = {
    * Indicates a platform agnostic value.
    */
   ANY: 'any'
+}
+
+/**
+ * Constants that determines types of applications which uses the Alpheios libraries..
+ * Used by modules and components to tweak their appearance.
+ */
+Platform.appTypes = {
+  /**
+   * A webextension for either Chrome or Firefox.
+   */
+  WEBEXTENSION: 'webextension',
+
+  /**
+   * A Safari App Extension.
+   */
+  SAFARI_APP_EXTENSION: 'safari app extension',
+
+  /**
+   * An Alpheios embedded library.
+   */
+  EMBEDDED_LIBRARY: 'embedded library',
+
+  /**
+   * Other or unknown application type.
+   */
+  OTHER: 'other'
 }
 
 /**

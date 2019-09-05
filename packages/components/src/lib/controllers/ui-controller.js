@@ -111,7 +111,7 @@ export default class UIController {
      *
      * @type {Platform} - A an object containing data about the platform.
      */
-    this.platform = new Platform(true)
+    this.platform = new Platform({setRootAttributes: true, appType: this.options.appType})
     // Assign a class that will specify what type of layout will be used
     const layoutClassName = (this.platform.isMobile)
       ? layoutClasses.COMPACT
@@ -234,6 +234,7 @@ export default class UIController {
         version: 'version'
       },
       mode: 'production', // Controls options available and output. Other possible values: `development`
+      appType: Platform.appTypes.OTHER, // A type of application that uses the controller
       clientId: 'alpheios-components',
       storageAdapter: LocalStorage,
       openPanel: true,

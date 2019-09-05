@@ -48,7 +48,7 @@
           class="alpheios-notification-area__msg"
           v-html="l10n.getMsg($store.state.auth.notification.text)"
       />
-      <div class="alpheios-notification-area__controlbox">
+      <div v-show="!app.platform.isSafariAppExtension" class="alpheios-notification-area__controlbox">
         <login
           class="alpheios-notification-area__control"
           btn-class="alpheios-button-primary"

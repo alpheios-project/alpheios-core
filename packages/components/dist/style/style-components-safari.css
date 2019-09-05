@@ -2453,6 +2453,9 @@ h3.alpheios-inflections__credits-title {
   height: 100% !important;
   justify-content: space-between !important;
 }
+.alpheios-user-auth__user-login-instuctions {
+  color: var(--alpheios-text-color-vivid) !important;
+}
 .alpheios-user-auth__user-info-box {
   margin-top: calc(var(--alpheios-base-ui-size) * 1.25) !important;
   display: flex;

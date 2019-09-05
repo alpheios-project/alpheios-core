@@ -572,6 +572,16 @@
     "description": "A message shown to the user if he or she logged out successfully",
     "component": "UserAuth Vue Component"
   },
+  "AUTH_SAFARI_LOGIN_MSG": {
+    "message": "Please use an Alpheios Reading Tools application to log in",
+    "description": "A message shown to the user if he or she is logged out (Safari only)",
+    "component": "UserAuth Vue Component"
+  },
+  "AUTH_SAFARI_LOGOUT_MSG": {
+    "message": "Please use an Alpheios Reading Tools application to log out",
+    "description": "A message shown to the user if he or she is logged in (Safari only)",
+    "component": "UserAuth Vue Component"
+  },
   "FONTSIZE_TEXT_SMALL": {
     "message": "Small",
     "description": "Description of a text size option within a button",
