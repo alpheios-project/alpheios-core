@@ -5,7 +5,6 @@ export default class Platform {
     this.getData()
     // It's a caller responsibility to set a correct application type
     this._appType = appType
-    console.info(`Platform's application type is ${appType}`)
 
     if (setRootAttributes) {
       this.setRootAttributes()

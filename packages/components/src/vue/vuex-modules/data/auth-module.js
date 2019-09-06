@@ -21,22 +21,6 @@ export default class AuthModule extends Module {
     }
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
     api[this.constructor.moduleName] = this.constructor.api(this, store)
-
-    if (this._auth) {
-      console.info(`Authenticator is available`)
-      // If authenticator publishes any events
-      if (this._auth.constructor.evt) {
-        console.info(`Authenticator does publish events`)
-        if (this._auth.constructor.evt.LOGGED_IN) {
-          console.info(`Authenticator does publish a LOGGED_IN event`)
-          this._auth.constructor.evt.LOGGED_IN.sub(api[this.constructor.moduleName].logUserIn)
-        }
-        if (this._auth.constructor.evt.LOGGED_OUT) {
-          console.info(`Authenticator does publish a LOGGED_OUT event`)
-          this._auth.constructor.evt.LOGGED_OUT.sub(api[this.constructor.moduleName].logUserOut)
-        }
-      }
-    }
   }
 }
 
@@ -137,16 +121,24 @@ AuthModule.api = (moduleInstance, store) => {
         // fail quietly
       })
     },
-    authenticate: () => {
+
+    /**
+     * Logs the user in.
+     * @param {object} authData - Data that may be required for user authentication.
+     * It is passed to the `authenticate()` method of the Authenticator object.
+     * Its format of this data is dependent on what type of Authenticator is used in the environment
+     * in which AuthModule operates. Please see an environment-specific Authenticator
+     * implementation for more details (i.e. BgAuthenticator, SafariAuthenticator, etc.).
+     */
+    authenticate: (authData) => {
       if (!moduleInstance._auth) {
         // fail quietly
         return
       }
       store.commit(`auth/setNotification`, { text: 'AUTH_LOGIN_PROGRESS_MSG' })
-      moduleInstance._auth.authenticate().then(() => {
+      moduleInstance._auth.authenticate(authData).then(() => {
         return moduleInstance._auth.getProfileData()
       }).then((data) => {
-        // TODO: Switch to using setAuthenticatedState to avoid code duplication
         if (!data.sub) {
           throw new RangeError('UserId is empty!')
         }
@@ -158,24 +150,14 @@ AuthModule.api = (moduleInstance, store) => {
       })
     },
 
-    logUserIn: (userData) => {
-      console.info(`logUserIn`)
-      if (!userData.id) {
-        throw new RangeError('UserId is empty!')
-      }
-      store.commit('auth/setIsAuthenticated', {
-        sub: userData.userId,
-        nickname: userData.nickname
-      })
-      store.commit(`auth/setNotification`, { text: 'AUTH_LOGIN_SUCCESS_MSG' })
-    },
-
+    /**
+     * Logs the user out
+     */
     logout: () => {
       if (!moduleInstance._auth) {
         return
       }
       moduleInstance._auth.logout().then(() => {
-        // TODO: Switch to using setLogoutState to avoid code duplication
         store.commit('auth/setIsNotAuthenticated')
         return store.commit(`auth/setNotification`, { text: 'AUTH_LOGOUT_SUCCESS_MSG' })
       }).catch((error) => {
@@ -183,26 +165,7 @@ AuthModule.api = (moduleInstance, store) => {
       })
     },
 
-    logUserOut: () => {
-      console.info(`logUserOut`)
-      store.commit('auth/setIsNotAuthenticated')
-      store.commit(`auth/setNotification`, { text: 'AUTH_LOGOUT_SUCCESS_MSG' })
-    },
-
     getUserData: () => {
-      if (moduleInstance._auth && moduleInstance._auth.hasUserData) {
-        // User data has already been obtained, as with a Safari authentication schema
-        return new Promise((resolve, reject) => {
-          console.info(`Returning a user data from getUserData()`)
-          resolve({
-            accessToken: moduleInstance._auth.accessToken,
-            userId: moduleInstance._auth.userId,
-            endpoints: moduleInstance._auth.endpoints
-          })
-        })
-      }
-      // The following is for data retrieval workflow initiated from within the
-      // AuthModule as opposed to the one initiated from the outside (i.e. within Safari)
       return new Promise((resolve, reject) => {
         if (moduleInstance._auth) {
           let accessToken
