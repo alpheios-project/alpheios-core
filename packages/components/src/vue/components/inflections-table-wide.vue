@@ -193,7 +193,7 @@ export default {
         }
       }
 
-      if (this.state.view.isImplemented) {
+      if (this.state.view && this.state.view.isImplemented) {
         this.state.view.wideView.collapsed = this.state.collapsed
       }
     },
