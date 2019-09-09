@@ -54,6 +54,7 @@
           >
             <div
                 class="alpheios-word-usage__examples-source-link-large"
+                data-alpheios-ignore="all"
                 v-html="formattedFullCit(wordUsageItem)"
                 @click="gotToTheSource(wordUsageItem)"
             >

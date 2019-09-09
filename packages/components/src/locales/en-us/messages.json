@@ -81,12 +81,12 @@
     "component": "Panel"
   },
   "TOOLTIP_WORDLIST": {
-    "message": "User word list",
+    "message": "User Word List",
     "description": "tooltip for user word list tab",
     "component": "Panel"
   },
   "TOOLTIP_USER": {
-    "message": "User info",
+    "message": "User Account",
     "description": "tooltip for a user info tab",
     "component": "Panel"
   },
