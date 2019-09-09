@@ -294,7 +294,11 @@ export default {
   mounted: function () {
     // Set a default value by the parent component
     if (this.collapsed !== null) {
-      this.state.collapsed = this.collapsed
+      // set the state to the opposite of the parent component first
+      this.state.collapsed = ! this.collapsed
+      // then execute the collapse function to switch the state
+      // so that the code that initializes the view can be called
+      this.collapse()
     }
   }
 }
