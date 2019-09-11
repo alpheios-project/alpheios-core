@@ -187,9 +187,21 @@ export default class LexicalQuery extends Query {
     // short definitions provided by the maAdapter
     if (lexiconShortOpts.allow) {
       this.homonym.lexemes.forEach((l) => { l.meaning.clearShortDefs() })
+      LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
+    } else {
+      // we won't have any remaining valid short definition requests
+      // so go ahead and publish the SHORT_DEFS_READY event so that the UI
+      // can update itself
+      // but issue the HOMONYM_READY event first otherwise we get errors
+      // from the wordlist which expects to see the homonym before definitions
+      LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
+      LexicalQuery.evt.SHORT_DEFS_READY.pub({
+        requestType: 'short',
+        homonym: this.homonym,
+        word: this.homonym.lexemes.length > 0 ? this.homonym.lexemes[0].lemma.word : ''
+      })
     }
 
-    LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
 
     if (this.lemmaTranslations) {
       const adapterTranslationRes = yield ClientAdapters.lemmatranslation.alpheios({
