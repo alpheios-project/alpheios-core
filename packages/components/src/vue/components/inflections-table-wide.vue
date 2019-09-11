@@ -177,7 +177,13 @@ export default {
     getRenderedView: function () {
       if (this.view) {
         // This component has an instance of an initialized view supplied
-        return this.view.render()
+        let view
+        // Render view only if it is renderable
+        // TODO: A temporary fix for view rendered too early. Probably can do it in a more elegant way
+        if (this.view.isRenderable) {
+          view = this.view.render()
+        }
+        return view
       } else if (this.standardFormData) {
         // A standard form data is provided. It will be used to create, initialize, and render the corresponding view.
         this.state.standardFormTable = true
