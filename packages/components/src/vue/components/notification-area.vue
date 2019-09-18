@@ -48,11 +48,19 @@
           class="alpheios-notification-area__msg"
           v-html="l10n.getMsg($store.state.auth.notification.text)"
       />
-      <div v-show="!app.platform.isSafariAppExtension" class="alpheios-notification-area__controlbox">
+      <div class="alpheios-notification-area__controlbox ">
         <login
           class="alpheios-notification-area__control"
           btn-class="alpheios-button-primary"
+          v-show="!app.platform.isSafariAppExtension"
         />
+        <button
+          @click="showUserAccount"
+          class="alpheios-button-primary"
+          v-show="app.platform.isSafariAppExtension"
+        >
+          {{ l10n.getMsg(`AUTH_USER_ACCOUNT_BTN_LABEL`) }}
+        </button>
         <button
           @click="hideLoginPrompt"
           class="alpheios-button-tertiary"
@@ -133,9 +141,14 @@ export default {
       let keyinfo = Options.parseKey(name)
       this.app.featureOptionChange(keyinfo.name, value)
     },
+
     hideLoginPrompt: function () {
       this.ui.optionChange('hideLoginPrompt',true)
-    }
+    },
+
+    showUserAccount: function () {
+      this.ui.showPanelTab('user')
+    },
   }
 }
 </script>

@@ -537,6 +537,11 @@
     "description": "A message shown on a log in button",
     "component": "UserAuth Vue Component"
   },
+  "AUTH_USER_ACCOUNT_BTN_LABEL": {
+    "message": "User Account",
+    "description": "A message shown on a user account button. It is displayed instead of a log in one within a Safari App Extension",
+    "component": "UserAuth Vue Component"
+  },
   "AUTH_LOGOUT_BTN_LABEL": {
     "message": "Log Out",
     "description": "A message shown on a log out button",
