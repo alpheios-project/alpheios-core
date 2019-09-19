@@ -1,7 +1,7 @@
 import { PsEvent } from 'alpheios-data-models'
 
 export default class Platform {
-  constructor ({setRootAttributes = false, appType = Platform.appTypes.OTHER} = {}) {
+  constructor ({ setRootAttributes = false, appType = Platform.appTypes.OTHER } = {}) {
     this.getData()
     // It's a caller responsibility to set a correct application type
     this._appType = appType

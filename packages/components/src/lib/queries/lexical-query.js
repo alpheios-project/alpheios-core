@@ -202,7 +202,6 @@ export default class LexicalQuery extends Query {
       })
     }
 
-
     if (this.lemmaTranslations) {
       const adapterTranslationRes = yield ClientAdapters.lemmatranslation.alpheios({
         method: 'fetchTranslations',

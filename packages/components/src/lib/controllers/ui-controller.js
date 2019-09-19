@@ -111,7 +111,7 @@ export default class UIController {
      *
      * @type {Platform} - A an object containing data about the platform.
      */
-    this.platform = new Platform({setRootAttributes: true, appType: this.options.appType})
+    this.platform = new Platform({ setRootAttributes: true, appType: this.options.appType })
     // Assign a class that will specify what type of layout will be used
     const layoutClassName = (this.platform.isMobile)
       ? layoutClasses.COMPACT
@@ -1267,20 +1267,20 @@ export default class UIController {
     let providers = new Map() // eslint-disable-line prefer-const
     homonym.lexemes.forEach((l) => {
       if (l.provider) {
-        providers.set(l.provider, 1)
+        providers.set(l.provider.uri, l.provider)
       }
       if (l.meaning && l.meaning.shortDefs) {
         l.meaning.shortDefs.forEach((d) => {
           if (d.provider) {
-            providers.set(d.provider, 1)
+            providers.set(d.provider.uri, d.provider)
           }
         })
       }
       if (l.lemma && l.lemma.translation && l.lemma.translation.provider) {
-        providers.set(l.lemma.translation.provider, 1)
+        providers.set(l.lemma.translation.provider.uri, l.lemma.translation.provider)
       }
     })
-    this.store.commit(`app/setProviders`, Array.from(providers.keys()))
+    this.store.commit(`app/setProviders`, Array.from(providers.values()))
   }
 
   /**
@@ -1652,7 +1652,24 @@ export default class UIController {
       inflDataReady = Boolean(inflectionsViewSet && inflectionsViewSet.hasMatchingViews)
       this.api.app.inflectionsViewSet = inflectionsViewSet
     }
-    this.store.commit('app/setInflData', inflDataReady)
+
+    // TODO: Shall we make this delay conditional to avoid performance degradation?
+    //       Or will it be not noticeable at all?
+    Vue.nextTick(() => {
+      /*
+      If we're using a word from a word list and a data manager is null then we're actually getting
+      a homonym data from memory. Because of this `inflDataReady` app store prop is changed to
+      false and then to true so fast that both those changes end up within the same Vue loop.
+      As a result of optimization performed by Vue, the change to false is probably never applied,
+      and maybe a change to true too.
+      This prevents an inflDataReady watcher within `inflection.vue` component from being called.
+      As a result, an update of inflection data within an inflections component that is triggered
+      within that callback does not happen.
+      To prevent this, we introduce a delay that will allow Vue to notice a prop change
+      and call a watcher function.
+       */
+      this.store.commit('app/setInflData', inflDataReady)
+    })
 
     // The homonym can already has short defs data
     if (homonym.hasShortDefs) {
