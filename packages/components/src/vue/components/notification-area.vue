@@ -57,7 +57,7 @@
         <button
           @click="showUserAccount"
           class="alpheios-button-primary"
-          v-show="app.platform.isSafariAppExtension"
+          v-show="app.platform.isSafariAppExtension && this.$store.state.ui.activeTab!=='user'"
         >
           {{ l10n.getMsg(`AUTH_USER_ACCOUNT_BTN_LABEL`) }}
         </button>
