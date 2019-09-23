@@ -98,7 +98,10 @@ export default class WordItem {
     return ''
   }
 
-  // TODO NOT SURE HOW THE MERGE FUNCTIONALITY IS USED
+  /**
+   * updates empty properties of this wordItem
+   * with those of the supplied worditem if also non-empty
+   */
   merge (prevWordItem) {
     let checkProps = ['homonym', 'important', 'currentSession']
     for (let prop of checkProps) {

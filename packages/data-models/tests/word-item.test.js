@@ -82,7 +82,11 @@ describe('word-item.test.js', () => {
 
   })
 
-  it.skip('9 WordItem - merges two items', () => {
-
+  it('9 WordItem - merges two items', () => {
+    let mockHomonym = { targetWord: 'mare' }
+    let w1 = new WordItem({ targetWord: 'mare', languageCode: 'lat' })
+    let w2 = new WordItem({ targetWord: 'mare', languageCode: 'lat', homonym: mockHomonym })
+    w1.merge(w2)
+    expect(w1.homonym).toEqual(mockHomonym)
   })
 })

@@ -41,7 +41,7 @@ export default class WordList {
     }
     let existingItem = this.getWordItem(item.targetWord, false)
     if (existingItem) {
-      item = item.merge(existingItem)
+      item.merge(existingItem)
     }
     let key = this._makeItemKey(this.languageCode, item.targetWord)
     this.items[key] = item

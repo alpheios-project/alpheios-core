@@ -5435,7 +5435,10 @@ class WordItem {
     return ''
   }
 
-  // TODO NOT SURE HOW THE MERGE FUNCTIONALITY IS USED
+  /**
+   * updates empty properties of this wordItem
+   * with those of the supplied worditem if also non-empty
+   */
   merge (prevWordItem) {
     let checkProps = ['homonym', 'important', 'currentSession']
     for (let prop of checkProps) {
@@ -5521,7 +5524,7 @@ class WordList {
     }
     let existingItem = this.getWordItem(item.targetWord, false)
     if (existingItem) {
-      item = item.merge(existingItem)
+      item.merge(existingItem)
     }
     let key = this._makeItemKey(this.languageCode, item.targetWord)
     this.items[key] = item
