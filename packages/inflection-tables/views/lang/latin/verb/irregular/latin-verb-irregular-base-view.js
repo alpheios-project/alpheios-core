@@ -33,6 +33,13 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
     return ['fero', 'queo', 'adeo', 'ineo']
   }
 
+  /**
+   * these headwords have a linked supine table
+   */
+  static get supineEnabledHdwds () {
+    return ['eo', 'fero', 'queo', 'nequeo', 'adeo', 'ineo', 'veneo']
+  }
+
   createTable () {
     this.table = new Table([this.features.voices, this.features.moods, this.features.tenses, this.features.numbers, this.features.persons])
     let features = this.table.features // eslint-disable-line prefer-const
@@ -83,7 +90,7 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
     // (e.g. sum, which has both an irregular and regular verb and one of the regular verbs has a different, non-matching lemma)
     // this will fail if we want to link tables for irregular and regular verbs together this way
     const inflections = this.homonym.inflections.filter(infl => infl[Feature.types.part].value === this.constructor.mainPartOfSpeech && infl.constraints && infl.constraints.irregular)
-    for (const Constructor of this.constructor.linkedViewConstructors) {
+    for (const Constructor of this.constructor.linkedViewConstructors(this.homonym)) {
       let linkedViewInflections = [] // eslint-disable-line prefer-const
       for (const infl of inflections) {
         let clone = infl.clone()

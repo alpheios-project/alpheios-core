@@ -5552,9 +5552,11 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 try {
   var util = __webpack_require__(/*! util */ "./node_modules/node-libs-browser/node_modules/util/util.js");
+  /* istanbul ignore next */
   if (typeof util.inherits !== 'function') throw '';
   module.exports = util.inherits;
 } catch (e) {
+  /* istanbul ignore next */
   module.exports = __webpack_require__(/*! ./inherits_browser.js */ "./node_modules/inherits/inherits_browser.js");
 }
 
@@ -5571,24 +5573,28 @@ try {
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    ctor.prototype = Object.create(superCtor.prototype, {
-      constructor: {
-        value: ctor,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
+    if (superCtor) {
+      ctor.super_ = superCtor
+      ctor.prototype = Object.create(superCtor.prototype, {
+        constructor: {
+          value: ctor,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      })
+    }
   };
 } else {
   // old school shim for old browsers
   module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    var TempCtor = function () {}
-    TempCtor.prototype = superCtor.prototype
-    ctor.prototype = new TempCtor()
-    ctor.prototype.constructor = ctor
+    if (superCtor) {
+      ctor.super_ = superCtor
+      var TempCtor = function () {}
+      TempCtor.prototype = superCtor.prototype
+      ctor.prototype = new TempCtor()
+      ctor.prototype.constructor = ctor
+    }
   }
 }
 
@@ -7413,6 +7419,58 @@ function isnan (val) {
 
 /***/ }),
 
+/***/ "./node_modules/node-libs-browser/node_modules/inherits/inherits.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/node-libs-browser/node_modules/inherits/inherits.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+try {
+  var util = __webpack_require__(/*! util */ "./node_modules/node-libs-browser/node_modules/util/util.js");
+  if (typeof util.inherits !== 'function') throw '';
+  module.exports = util.inherits;
+} catch (e) {
+  module.exports = __webpack_require__(/*! ./inherits_browser.js */ "./node_modules/node-libs-browser/node_modules/inherits/inherits_browser.js");
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/node-libs-browser/node_modules/inherits/inherits_browser.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/node-libs-browser/node_modules/inherits/inherits_browser.js ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    var TempCtor = function () {}
+    TempCtor.prototype = superCtor.prototype
+    ctor.prototype = new TempCtor()
+    ctor.prototype.constructor = ctor
+  }
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js":
 /*!*************************************************************************************!*\
   !*** ./node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js ***!
@@ -8015,7 +8073,7 @@ exports.log = function() {
  *     prototype.
  * @param {function} superCtor Constructor function to inherit prototype from.
  */
-exports.inherits = __webpack_require__(/*! inherits */ "./node_modules/inherits/inherits.js");
+exports.inherits = __webpack_require__(/*! inherits */ "./node_modules/node-libs-browser/node_modules/inherits/inherits.js");
 
 exports._extend = function(origin, add) {
   // Don't do anything if add isn't an object
@@ -8153,7 +8211,7 @@ exports.callbackify = callbackify;
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* @license
 Papa Parse
-v5.0.0
+v5.1.0
 https://github.com/mholt/PapaParse
 License: MIT
 */
@@ -8479,6 +8537,7 @@ License: MIT
 			}
 
 			if (typeof _config.quotes === 'boolean'
+				|| typeof _config.quotes === 'function'
 				|| Array.isArray(_config.quotes))
 				_quotes = _config.quotes;
 
@@ -8591,16 +8650,17 @@ License: MIT
 			if (str.constructor === Date)
 				return JSON.stringify(str).slice(1, 25);
 
-			str = str.toString().replace(quoteCharRegex, _escapedQuote);
+			var escapedQuoteStr = str.toString().replace(quoteCharRegex, _escapedQuote);
 
 			var needsQuotes = (typeof _quotes === 'boolean' && _quotes)
+							|| (typeof _quotes === 'function' && _quotes(str, col))
 							|| (Array.isArray(_quotes) && _quotes[col])
-							|| hasAny(str, Papa.BAD_DELIMITERS)
-							|| str.indexOf(_delimiter) > -1
-							|| str.charAt(0) === ' '
-							|| str.charAt(str.length - 1) === ' ';
+							|| hasAny(escapedQuoteStr, Papa.BAD_DELIMITERS)
+							|| escapedQuoteStr.indexOf(_delimiter) > -1
+							|| escapedQuoteStr.charAt(0) === ' '
+							|| escapedQuoteStr.charAt(escapedQuoteStr.length - 1) === ' ';
 
-			return needsQuotes ? _quoteChar + str + _quoteChar : str;
+			return needsQuotes ? _quoteChar + escapedQuoteStr + _quoteChar : escapedQuoteStr;
 		}
 
 		function hasAny(str, substrings)
@@ -8812,8 +8872,6 @@ License: MIT
 
 			if (IS_WORKER && xhr.status === 0)
 				this._chunkError();
-			else
-				this._start += this._config.chunkSize;
 		};
 
 		this._chunkLoaded = function()
@@ -8827,7 +8885,8 @@ License: MIT
 				return;
 			}
 
-			this._finished = !this._config.chunkSize || this._start > getFileSize(xhr);
+			this._start += xhr.responseText.length;
+			this._finished = !this._config.chunkSize || this._start >= getFileSize(xhr);
 			this.parseChunk(xhr.responseText);
 		};
 
@@ -9141,6 +9200,8 @@ License: MIT
 	function ParserHandle(_config)
 	{
 		// One goal is to minimize the use of regular expressions...
+		var MAX_FLOAT = Math.pow(2, 53);
+		var MIN_FLOAT = -MAX_FLOAT;
 		var FLOAT = /^\s*-?(\d*\.?\d+|\d+\.?\d*)(e[-+]?\d+)?\s*$/i;
 		var ISO_DATE = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))/;
 		var self = this;
@@ -9268,6 +9329,16 @@ License: MIT
 			return _config.skipEmptyLines === 'greedy' ? s.join('').trim() === '' : s.length === 1 && s[0].length === 0;
 		}
 
+		function testFloat(s) {
+			if (FLOAT.test(s)) {
+				var floatValue = parseFloat(s);
+				if (floatValue > MIN_FLOAT && floatValue < MAX_FLOAT) {
+					return true;
+				}
+			}
+			return false;
+		}
+
 		function processResults()
 		{
 			if (_results && _delimiterError)
@@ -9335,7 +9406,7 @@ License: MIT
 					return true;
 				else if (value === 'false' || value === 'FALSE')
 					return false;
-				else if (FLOAT.test(value))
+				else if (testFloat(value))
 					return parseFloat(value);
 				else if (ISO_DATE.test(value))
 					return new Date(value);
@@ -9390,7 +9461,7 @@ License: MIT
 			}
 
 			var incrementBy = 1;
-			if (!_results.data[0] || Array.isArray(_results.data[0]))
+			if (!_results.data.length || Array.isArray(_results.data[0]))
 			{
 				_results.data = _results.data.map(processRow);
 				incrementBy = _results.data.length;
@@ -9406,14 +9477,12 @@ License: MIT
 			return _results;
 		}
 
-		function guessDelimiter(input, newline, skipEmptyLines, comments, delimitersToGuess)
-		{
-			var bestDelim, bestDelta, fieldCountPrevRow;
+		function guessDelimiter(input, newline, skipEmptyLines, comments, delimitersToGuess) {
+			var bestDelim, bestDelta, fieldCountPrevRow, maxFieldCount;
 
 			delimitersToGuess = delimitersToGuess || [',', '\t', '|', ';', Papa.RECORD_SEP, Papa.UNIT_SEP];
 
-			for (var i = 0; i < delimitersToGuess.length; i++)
-			{
+			for (var i = 0; i < delimitersToGuess.length; i++) {
 				var delim = delimitersToGuess[i];
 				var delta = 0, avgFieldCount = 0, emptyLinesCount = 0;
 				fieldCountPrevRow = undefined;
@@ -9425,23 +9494,19 @@ License: MIT
 					preview: 10
 				}).parse(input);
 
-				for (var j = 0; j < preview.data.length; j++)
-				{
-					if (skipEmptyLines && testEmptyLine(preview.data[j]))
-					{
+				for (var j = 0; j < preview.data.length; j++) {
+					if (skipEmptyLines && testEmptyLine(preview.data[j])) {
 						emptyLinesCount++;
 						continue;
 					}
 					var fieldCount = preview.data[j].length;
 					avgFieldCount += fieldCount;
 
-					if (typeof fieldCountPrevRow === 'undefined')
-					{
-						fieldCountPrevRow = 0;
+					if (typeof fieldCountPrevRow === 'undefined') {
+						fieldCountPrevRow = fieldCount;
 						continue;
 					}
-					else if (fieldCount > 1)
-					{
+					else if (fieldCount > 0) {
 						delta += Math.abs(fieldCount - fieldCountPrevRow);
 						fieldCountPrevRow = fieldCount;
 					}
@@ -9450,11 +9515,11 @@ License: MIT
 				if (preview.data.length > 0)
 					avgFieldCount /= (preview.data.length - emptyLinesCount);
 
-				if ((typeof bestDelta === 'undefined' || delta > bestDelta)
-					&& avgFieldCount > 1.99)
-				{
+				if ((typeof bestDelta === 'undefined' || delta <= bestDelta)
+					&& (typeof maxFieldCount === 'undefined' || avgFieldCount > maxFieldCount) && avgFieldCount > 1.99) {
 					bestDelta = delta;
 					bestDelim = delim;
+					maxFieldCount = avgFieldCount;
 				}
 			}
 
@@ -9742,12 +9807,12 @@ License: MIT
 				if (nextDelim !== -1 && (nextDelim < nextNewline || nextNewline === -1))
 				{
 					// we check, if we have quotes, because delimiter char may be part of field enclosed in quotes
-					if (quoteSearch !== -1) {
+					if (quoteSearch > nextDelim) {
 						// we have quotes, so we try to find the next delimiter not enclosed in quotes and also next starting quote char
 						var nextDelimObj = getNextUnqotedDelimiter(nextDelim, quoteSearch, nextNewline);
 
 						// if we have next delimiter char which is not enclosed in quotes
-						if (nextDelimObj && nextDelimObj.nextDelim) {
+						if (nextDelimObj && typeof nextDelimObj.nextDelim !== 'undefined') {
 							nextDelim = nextDelimObj.nextDelim;
 							quoteSearch = nextDelimObj.quoteSearch;
 							row.push(input.substring(cursor, nextDelim));
@@ -10054,7 +10119,8 @@ License: MIT
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-if (!process.version ||
+if (typeof process === 'undefined' ||
+    !process.version ||
     process.version.indexOf('v0.') === 0 ||
     process.version.indexOf('v1.') === 0 && process.version.indexOf('v1.8.') !== 0) {
   module.exports = { nextTick: nextTick };
@@ -15339,6 +15405,13 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_latin_view_js__WEBPA
     return ['fero', 'queo', 'adeo', 'ineo']
   }
 
+  /**
+   * these headwords have a linked supine table
+   */
+  static get supineEnabledHdwds () {
+    return ['eo', 'fero', 'queo', 'nequeo', 'adeo', 'ineo', 'veneo']
+  }
+
   createTable () {
     this.table = new _views_lib_table__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.voices, this.features.moods, this.features.tenses, this.features.numbers, this.features.persons])
     let features = this.table.features // eslint-disable-line prefer-const
@@ -15389,7 +15462,7 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_latin_view_js__WEBPA
     // (e.g. sum, which has both an irregular and regular verb and one of the regular verbs has a different, non-matching lemma)
     // this will fail if we want to link tables for irregular and regular verbs together this way
     const inflections = this.homonym.inflections.filter(infl => infl[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.constructor.mainPartOfSpeech && infl.constraints && infl.constraints.irregular)
-    for (const Constructor of this.constructor.linkedViewConstructors) {
+    for (const Constructor of this.constructor.linkedViewConstructors(this.homonym)) {
       let linkedViewInflections = [] // eslint-disable-line prefer-const
       for (const infl of inflections) {
         let clone = infl.clone()
@@ -15510,8 +15583,12 @@ class LatinVerbIrregularView extends _views_lang_latin_verb_irregular_latin_verb
    * A list of constructors of linked views.
    * @return {View[]}
    */
-  static get linkedViewConstructors () {
-    return [_views_lang_latin_verb_irregular_latin_verb_participle_irregular_view_js__WEBPACK_IMPORTED_MODULE_2__["default"], _views_lang_latin_verb_irregular_latin_verb_supine_irregular_view_js__WEBPACK_IMPORTED_MODULE_3__["default"]]
+  static linkedViewConstructors (homonym) {
+    let views = [_views_lang_latin_verb_irregular_latin_verb_participle_irregular_view_js__WEBPACK_IMPORTED_MODULE_2__["default"]] // eslint-disable-line prefer-const
+    if (homonym.inflections.some(i => this.supineEnabledHdwds.includes(i.word.value))) {
+      views.push(_views_lang_latin_verb_irregular_latin_verb_supine_irregular_view_js__WEBPACK_IMPORTED_MODULE_3__["default"])
+    }
+    return views
   }
 }
 
@@ -15602,8 +15679,12 @@ class LatinVerbIrregularVoiceView extends _views_lang_latin_verb_irregular_latin
    * A list of constructors of linked views.
    * @return {View[]}
    */
-  static get linkedViewConstructors () {
-    return [_views_lang_latin_verb_irregular_latin_verb_participle_irregular_view_js__WEBPACK_IMPORTED_MODULE_2__["default"], _views_lang_latin_verb_irregular_latin_verb_supine_irregular_view_js__WEBPACK_IMPORTED_MODULE_3__["default"]]
+  static linkedViewConstructors (homonym) {
+    let views = [_views_lang_latin_verb_irregular_latin_verb_participle_irregular_view_js__WEBPACK_IMPORTED_MODULE_2__["default"]] // eslint-disable-line prefer-const
+    if (homonym.inflections.some(i => this.supineEnabledHdwds.includes(i.word.value))) {
+      views.push(_views_lang_latin_verb_irregular_latin_verb_supine_irregular_view_js__WEBPACK_IMPORTED_MODULE_3__["default"])
+    }
+    return views
   }
 }
 
@@ -15681,8 +15762,12 @@ class LatinVerbParticipleIrregularView extends _views_lang_latin_verb_irregular_
    * A list of constructors of linked views.
    * @return {View[]}
    */
-  static get linkedViewConstructors () {
-    return [_views_lang_latin_verb_irregular_latin_verb_irregular_view_js__WEBPACK_IMPORTED_MODULE_2__["default"], _views_lang_latin_verb_irregular_latin_verb_irregular_voice_view_js__WEBPACK_IMPORTED_MODULE_3__["default"], _views_lang_latin_verb_irregular_latin_verb_supine_irregular_view_js__WEBPACK_IMPORTED_MODULE_4__["default"]]
+  static linkedViewConstructors (homonym) {
+    let views = [_views_lang_latin_verb_irregular_latin_verb_irregular_view_js__WEBPACK_IMPORTED_MODULE_2__["default"], _views_lang_latin_verb_irregular_latin_verb_irregular_voice_view_js__WEBPACK_IMPORTED_MODULE_3__["default"]] // eslint-disable-line prefer-const
+    if (homonym.inflections.some(i => this.supineEnabledHdwds.includes(i.word.value))) {
+      views.push(_views_lang_latin_verb_irregular_latin_verb_supine_irregular_view_js__WEBPACK_IMPORTED_MODULE_4__["default"])
+    }
+    return views
   }
 }
 
