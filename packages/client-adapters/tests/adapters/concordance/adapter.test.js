@@ -355,6 +355,59 @@ describe('concordance.test.js', () => {
     expect(Array.isArray(res)).toBeTruthy()
     expect(res[0]).toBeInstanceOf(WordUsageExample)
     expect(res[0].provider).toBeDefined()
+
+    expect(res[0].author.urn).toBeDefined()
+    expect(res[0].textWork.urn).toBeDefined()
+  })
+
+  it('9.1 AlpheiosConcordanceAdapter - parseWordUsageResult method won\'t create a wordUsageExample if there is an author not from the list ', async () => {
+    let adapter = new AlpheiosConcordanceAdapter({
+      category: 'wordUsage',
+      adapterName: 'concordance',
+      method: 'getAuthorsWorks'
+    })
+
+    let testJsonObj = [{
+      "link":"/loc/1041/1/0/8625-8629",
+      "cit":"[Var].Sent.105.1",
+      "left":"ad videndum, quid senseris. Ad mores et opiniones ",
+      "right":"entium prudens vocem formabit. In singulis excellere et","target":"audi"
+    }]
+
+    let testHomonym = { languageID: Constants.LANG_LATIN, targetWord: 'usque' }
+    let testAuthor = 'fooAuthor'
+    let testTextWork = 'fooTextWork'
+
+    jest.spyOn(adapter, 'createWordUsageExample')
+    let res = await adapter.parseWordUsageResult(testJsonObj, testHomonym, testAuthor, testTextWork)
+
+    expect(adapter.createWordUsageExample).not.toHaveBeenCalled()
+    expect(res).toEqual([])
+  })
+
+  it('9.2 AlpheiosConcordanceAdapter - parseWordUsageResult method won\'t create a wordUsageExample if there is a textWork not from the list ', async () => {
+    let adapter = new AlpheiosConcordanceAdapter({
+      category: 'wordUsage',
+      adapterName: 'concordance',
+      method: 'getAuthorsWorks'
+    })
+
+    let testJsonObj = [{
+      "link":"/loc/1041/1/0/8625-8629",
+      "cit":"SenPhil.[Sent].105.1",
+      "left":"ad videndum, quid senseris. Ad mores et opiniones ",
+      "right":"entium prudens vocem formabit. In singulis excellere et","target":"audi"
+    }]
+
+    let testHomonym = { languageID: Constants.LANG_LATIN, targetWord: 'usque' }
+    let testAuthor = 'fooAuthor'
+    let testTextWork = 'fooTextWork'
+
+    jest.spyOn(adapter, 'createWordUsageExample')
+    let res = await adapter.parseWordUsageResult(testJsonObj, testHomonym, testAuthor, testTextWork)
+
+    expect(adapter.createWordUsageExample).not.toHaveBeenCalled()
+    expect(res).toEqual([])
   })
 
   it('10 AlpheiosConcordanceAdapter - getAuthorByAbbr and getTextWorkByAbbr extracts author and textWork by abbreviation', async () => {
@@ -578,4 +631,5 @@ describe('concordance.test.js', () => {
     expect(methodTextWork).toBeNull()
     expect(adapter.getPassage(testJsonObj)).toEqual('213')
   })
+
 })

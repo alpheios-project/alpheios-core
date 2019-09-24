@@ -13572,11 +13572,15 @@ class AlpheiosConcordanceAdapter extends _adapters_base_adapter__WEBPACK_IMPORTE
 
     for (let jsonObjItem of jsonObj) {
       author = this.getAuthorByAbbr(jsonObjItem)
-      textWork = this.getTextWorkByAbbr(author, jsonObjItem)
-      passage = this.getPassage(jsonObjItem)
+      if (author) {
+        textWork = this.getTextWorkByAbbr(author, jsonObjItem)
+        if (textWork) {
+          passage = this.getPassage(jsonObjItem)
 
-      let wordUsageExample = this.createWordUsageExample(jsonObjItem, homonym, author, textWork, passage)
-      wordUsageExamples.push(wordUsageExample)
+          let wordUsageExample = this.createWordUsageExample(jsonObjItem, homonym, author, textWork, passage)
+          wordUsageExamples.push(wordUsageExample)
+        }
+      }
     }
     return wordUsageExamples
   }
