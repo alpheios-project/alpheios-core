@@ -3747,7 +3747,7 @@ span.alpheios-lookup__lang-change:hover {
 }
 .alpheios-toolbar__lookup-control {
   cursor: pointer !important;
-  background: var(--alpheios-text-bg-color) !important;
+  background: var(--alpheios-desktop-toolbar-bg) !important;
 }
 .alpheios-toolbar__lookup-control .alpheios-navbuttons__btn {
   margin: 0 !important;
@@ -3755,7 +3755,7 @@ span.alpheios-lookup__lang-change:hover {
   border: none !important;
 }
 .alpheios-toolbar__help-control {
-  background: var(--alpheios-text-bg-color) !important;
+  background: var(--alpheios-desktop-toolbar-bg) !important;
 }
 .alpheios-toolbar__help-control .alpheios-navbuttons__btn {
   margin: 0 !important;
@@ -3903,7 +3903,6 @@ span.alpheios-lookup__lang-change:hover {
   fill: var(--alpheios-btn-primary-bg-color-pressed) !important;
 }
 .alpheios-action-panel__lookup-cont {
-  height: calc(var(--alpheios-base-ui-size) * 5.625) !important;
   position: relative !important;
 }
 .alpheios-action-panel__lookup input.alpheios-input, .alpheios-action-panel__lookup input.alpheios-input:focus {

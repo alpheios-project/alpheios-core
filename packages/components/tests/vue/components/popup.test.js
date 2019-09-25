@@ -1,813 +1,703 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
+
 import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
+import BaseTestHelp from '@tests/helpclasses/base-test-help'
+
 import Popup from '@/vue/components/popup.vue'
-import Tooltip from '@/vue/components/tooltip.vue'
-import Lookup from '@/vue/components/lookup.vue'
-import Setting from '@/vue/components/setting.vue'
-
-import Vue from 'vue/dist/vue'
 import Vuex from 'vuex'
-
-import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
-import AuthModule from '@/vue/vuex-modules/data/auth-module.js'
-import Locales from '@/locales/locales.js'
-import enUS from '@/locales/en-us/messages.json'
-import enUSData from '@/locales/en-us/messages-data.json'
-import enUSInfl from '@/locales/en-us/messages-inflections.json'
-import enGB from '@/locales/en-gb/messages.json'
-
-import Options from '@/lib/options/options.js'
-import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
-import FeatureOptionDefaults from '@/settings/feature-options-defaults.json'
-import UIOptionDefaults from '@/settings/ui-options-defaults.json'
-import LocalStorageArea from '@/lib/options/local-storage-area.js'
-import TempStorageArea from '@/lib/options/temp-storage-area.js'
+import Vue from 'vue/dist/vue'
 
 describe('popup.test.js', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
-  let store
-  let api = {}
-  let settingsAPI
-  let l10nModule
-  let authModule
-  const uiAPI = {
-    closePopup: () => {}
-  }
+
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
 
+  let store
+  let api = {}
+  let defaultData
+  
   beforeEach(() => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
 
-    let ta1 = new TempStorageArea('alpheios-feature-settings')
-    let ta2 = new TempStorageArea('alpheios-resource-settings')
-    let ta3 = new TempStorageArea('alpheios-ui-settings')
-    let featureOptions = new Options(FeatureOptionDefaults, ta1)
-    let resourceOptions = new Options(LanguageOptionDefaults, ta2)
-    let uiOptions = new Options(UIOptionDefaults, ta3)
-    const appAPI = {
-      platform: {
-        viewport: {
-          width: 0,
-          height: 0
-        }
-      }
-    }
-    let settingsAPI = {
-      getFeatureOptions: () => { return featureOptions },
-      getResourceOptions: () => { return resourceOptions },
-      getUiOptions: () => { return uiOptions },
-      verboseMode: () => { return false }
-    }
+    defaultData = { moduleConfig: {} }
 
-    store = new Vuex.Store({
-      modules: {
-        popup: {
-          state: {
-            visible: false
-          },
-          actions: {},
-          getters: {}
-        },
-        app: {
-          status: {
-            selectedText: '',
-            languageName: '',
-            languageCode: ''
-          }
-        },
-        ui: {
-          namespaced: true,
-          state: {
-            rootClasses: [],
+    store = BaseTestHelp.baseVuexStore()
 
-            messages: [],
-            notification: {
-              visible: false,
-              important: false,
-              showLanguageSwitcher: false,
-              text: null
-            }
-          }
-        }
-      }
-    })
-
-    authModule = new AuthModule(store,api,{auth:null})
     api = {
-      ui: uiAPI,
-      auth: authModule,
-      settings: settingsAPI,
-      app: appAPI
+      ui: BaseTestHelp.uiAPI(),
+      settings: BaseTestHelp.settingsAPI(),
+      app: BaseTestHelp.appAPI()
     }
 
-    l10nModule = new L10nModule(store, api, {
-      defaultLocale: Locales.en_US,
-      messageBundles: Locales.bundleArr([
-        [enUS, Locales.en_US],
-        [enUSData, Locales.en_US],
-        [enUSInfl, Locales.en_US],
-        [enGB, Locales.en_GB]
-      ])
-    })
-  })
-  afterEach(() => {
-    jest.resetModules()
-  })
-  afterAll(() => {
-    jest.clearAllMocks()
+    BaseTestHelp.authModule(store, api)
+    BaseTestHelp.l10nModule(store, api)
+
   })
 
-  it.skip('1 Popup - renders a vue instance (min requirements)', () => {
+  function timeout (ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
+
+  it('1 Popup - renders a vue instance (min requirements)', () => {
     let cmp = shallowMount(Popup, {
       data () {
-        return {
-          moduleConfig: {
-            draggable: true,
-            initialShift: { x: 0, y: 0 }
-          },
-          shift: { x: 0, y: 0 }
-        }
+        return defaultData
       },
       store,
       localVue,
       mocks: api
     })
     expect(cmp.isVueInstance()).toBeTruthy()
+    
   })
 
-  it.skip('2 Popup - render with children components (min requirements)', async () => {
-    let featureOptions = new Options(FeatureOptionDefaults, LocalStorageArea)
-    let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
-
-    let cmp = mount(Popup, {
-      propsData: {
-        messages: [],
-        lexemes: [],
-        definitions: {},
-        linkedfeatures: [],
-        visible: false,
-        translations: {}
+  it('2 Popup - Vue instance has shift property x,y = 0 by default', () => {
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
       },
-      computed: {
-        'uiController': function () {
-          return {
-            featureOptions: featureOptions,
-            resourceOptions: resourceOptions
+      store,
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.vm.shift.x).toEqual(0)
+    expect(cmp.vm.shift.y).toEqual(0)
+  })
+
+  it('3 Popup - Vue instance loads shift property from moduleConfig', () => {
+    let cmp = shallowMount(Popup, {
+      data () {
+        return {
+          moduleConfig: {
+            initialShift: { x: 10, y: 20 }
           }
         }
       },
-      mocks: {
-        l10n: l10nModule.api(l10nModule.store)
+      store,
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.vm.shift.x).toEqual(10)
+    expect(cmp.vm.shift.y).toEqual(20)
+  })
+
+  it('4 Popup - computed showToolbar = false by default and loads it from moduleConfig', () => {
+    let cmp = shallowMount(Popup, {
+      data () { return defaultData },
+      store, localVue,
+      mocks: api
+    })
+
+    expect(cmp.vm.showToolbar).toBeFalsy()
+
+    cmp.setData({
+      moduleConfig: {
+        showNav: true
       }
     })
-    expect(cmp.isVueInstance()).toBeTruthy()
 
-    expect(cmp.vm.interactInstance).not.toBeDefined()
-
-    expect(cmp.element.style.display).toEqual('none')
-
-    expect(cmp.find('.alpheios-popup__header').findAll('button').length).not.toBeLessThan(4)
-
-    expect(cmp.find('.alpheios-popup__header').findAll(Tooltip).length).not.toBeLessThan(4)
-
-    for (let i = 0; i < 4; i++) {
-      expect(cmp.find('.alpheios-popup__header').findAll(Tooltip).at(i).find('button').exists()).toBeTruthy()
-    }
-
-    expect(cmp.find('.alpheios-popup__morph-cont-ready').element.style.display).toEqual('none')
-    expect(cmp.findAll('.alpheios-popup__definitions--placeholder').filter(w => w.element.style.display !== 'none').exists()).toBeTruthy()
-
-    expect(cmp.find('.alpheios-popup__providers').find('img').exists()).toBeTruthy()
-    expect(cmp.find('.alpheios-popup__providers').find('a').exists()).toBeTruthy()
-
-    expect(cmp.find('.alpheios-popup__morph-cont-providers').exists()).toBeFalsy()
-
-    expect(cmp.find(Lookup)).toBeTruthy()
-
-    let lookupC = cmp.find(Lookup)
-
-    expect(lookupC.find('input').exists()).toBeTruthy()
-    expect(lookupC.find('button').exists()).toBeTruthy()
-    expect(lookupC.findAll(Setting).length).toEqual(1)
+    expect(cmp.vm.showToolbar).toBeTruthy()
   })
 
-  it.skip('3 Popup - render with children components (l10n - check labels buttons)', async () => {
-    let curProps = {
-      data: {},
-      messages: [],
-      lexemes: [],
-      definitions: {},
-      linkedfeatures: [],
-      visible: false,
-      translations: {}
+  it('5 Popup - computed componentStyles defines css properties from data', () => {
+    let api = {
+      ui: BaseTestHelp.uiAPI({
+        zIndex: 50
+      }),
+      settings: BaseTestHelp.settingsAPI(),
+      app: BaseTestHelp.appAPI()
     }
-    curProps.data.l10n = l10n
-
-    let cmp = mount(Popup, {
-      propsData: curProps
-    })
-
-    expect(cmp.find('.alpheios-popup__more-btn-treebank').text()).toEqual(l10n.messages.LABEL_POPUP_TREEBANK.get())
-
-    let tooltipsHeader = cmp.find('.alpheios-popup__header').findAll(Tooltip)
-    let k = 0
-
-    for (let i = 0; i < tooltipsHeader.length; i++) {
-      let checkText = tooltipsHeader.at(i).find('button').text()
-
-      if (checkText === l10n.messages.LABEL_POPUP_TREEBANK.get()) {
-        expect(tooltipsHeader.at(i).vm.tooltipText).toEqual(l10n.messages.TOOLTIP_TREEBANK.get())
-        expect(tooltipsHeader.at(i).find('.tooltiptext').text()).toEqual(l10n.messages.TOOLTIP_TREEBANK.get())
-        tooltipsHeader.at(i).find('button').trigger('click')
-
-        await Vue.nextTick()
-        expect(cmp.emitted()['showpaneltab'][k]).toEqual(['treebank'])
-        k++
-      }
-
-      if (checkText === l10n.messages.LABEL_POPUP_INFLECT.get()) {
-        expect(tooltipsHeader.at(i).vm.tooltipText).toEqual(l10n.messages.TOOLTIP_SHOW_INFLECTIONS.get())
-        expect(tooltipsHeader.at(i).find('.tooltiptext').text()).toEqual(l10n.messages.TOOLTIP_SHOW_INFLECTIONS.get())
-        tooltipsHeader.at(i).find('button').trigger('click')
-
-        await Vue.nextTick()
-        expect(cmp.emitted()['showpaneltab'][k]).toEqual(['inflections'])
-        k++
-      }
-
-      if (checkText === l10n.messages.LABEL_POPUP_DEFINE.get()) {
-        expect(tooltipsHeader.at(i).vm.tooltipText).toEqual(l10n.messages.TOOLTIP_SHOW_DEFINITIONS.get())
-        expect(tooltipsHeader.at(i).find('.tooltiptext').text()).toEqual(l10n.messages.TOOLTIP_SHOW_DEFINITIONS.get())
-        tooltipsHeader.at(i).find('button').trigger('click')
-
-        await Vue.nextTick()
-        expect(cmp.emitted()['showpaneltab'][k]).toEqual(['definitions'])
-        k++
-      }
-
-      if (checkText === l10n.messages.LABEL_POPUP_OPTIONS.get()) {
-        expect(tooltipsHeader.at(i).vm.tooltipText).toEqual(l10n.messages.TOOLTIP_SHOW_OPTIONS.get())
-        expect(tooltipsHeader.at(i).find('.tooltiptext').text()).toEqual(l10n.messages.TOOLTIP_SHOW_OPTIONS.get())
-        tooltipsHeader.at(i).find('button').trigger('click')
-
-        await Vue.nextTick()
-        expect(cmp.emitted()['showpaneltab'][k]).toEqual(['options'])
-        k++
-      }
-    }
-  })
-
-  it.skip('4.1 Popup - check showProviders functions', async () => {
-    let curProps = {
-      data: {},
-      messages: [],
-      lexemes: [],
-      definitions: {},
-      linkedfeatures: [],
-      visible: false,
-      translations: {}
-    }
-
-    curProps.data.l10n = l10n
-    curProps.data.showProviders = false
-    curProps.data.morphDataReady = true
-    curProps.data.providers = [ 'Provider1', 'Provider2' ]
-
-    let cmp = mount(Popup, {
-      propsData: curProps
-    })
-
-    expect(cmp.find('.alpheios-popup__morph-cont-ready').exists()).toBeTruthy()
-    expect(cmp.find('.alpheios-popup__morph-cont-providers').exists()).toBeFalsy()
-
-    expect(cmp.vm.providersLinkText).toEqual(l10n.messages.LABEL_POPUP_SHOWCREDITS.get())
-  })
-
-  it.skip('4.2 Popup - check showProviders functions', async () => {
-    let curProps = {
-      data: {},
-      messages: [],
-      lexemes: [],
-      definitions: {},
-      linkedfeatures: [],
-      visible: false,
-      translations: {}
-    }
-
-    curProps.data.l10n = l10n
-    curProps.data.showProviders = true
-    curProps.data.morphDataReady = true
-    curProps.data.providers = [ 'Provider1', 'Provider2' ]
-
-    let cmp = mount(Popup, {
-      propsData: curProps
-    })
-
-    expect(cmp.vm.data.showProviders).toBeTruthy()
-    expect(cmp.find('.alpheios-popup__morph-cont-providers').exists()).toBeTruthy()
-
-    expect(cmp.vm.providersLinkText).toEqual(l10n.messages.LABEL_POPUP_HIDECREDITS.get())
-
-    expect(cmp.findAll('.alpheios-popup__morph-cont-providers .alpheios-popup__morph-cont-providers-source').at(0).text()).toEqual('Provider1')
-    expect(cmp.findAll('.alpheios-popup__morph-cont-providers .alpheios-popup__morph-cont-providers-source').at(1).text()).toEqual('Provider2')
-  })
-
-  it.skip('5 Popup - header styles and close button check', async () => {
-    let curProps = {
-      data: {},
-      messages: [],
-      lexemes: [],
-      definitions: {},
-      linkedfeatures: [],
-      visible: true,
-      translations: {}
-    }
-
-    curProps.data.l10n = l10n
-    curProps.data.left = '10vw'
-    curProps.data.top = '10vh'
-
-    curProps.data.settings = { popupPosition: { currentValue: 'fixed' } }
-
-    let cmp = mount(Popup, {
-      propsData: curProps
-    })
-
-    expect(cmp.element.style.display).not.toEqual('none')
-    expect(cmp.element.style.left).toBeDefined()
-    expect(cmp.element.style.top).toBeDefined()
-    expect(cmp.element.style.width).toBeDefined()
-    expect(cmp.element.style.height).toBeDefined()
-
-    expect(cmp.vm.divClasses).toEqual('')
-
-    curProps.data.classes = ['foo1', 'foo2']
-    //    cmp.setProps({ classesChanged: 1 })
-    //    expect(cmp.vm.divClasses).toEqual('foo1 foo2')
-
-    //    expect(cmp.find('.alpheios-popup__close-btn').exists()).toBeTruthy()
-
-    //    cmp.find('.alpheios-popup__close-btn').trigger('click')
-
-    //    await Vue.nextTick()
-
-    //    expect(cmp.emitted()['close']).toBeTruthy()
-
-    //    let tooltips = cmp.findAll(Tooltip)
-    //    for (let i = 0; i < tooltips.length; i++) {
-    //      if (tooltips.at(i).find('.alpheios-popup__close-btn').length === 1) {
-    //        expect(tooltips.at(i).vm.tooltiptext).toEqual(l10n.messages.TOOLTIP_POPUP_CLOSE)
-    //        expect(tooltips.at(i).vm.additionalStyles).toBeDefined()
-    //      }
-    //    }
-  })
-
-  it.skip('6.1 Popup - check morph placeholders', () => {
-    let curProps = {
-      data: {},
-      messages: [],
-      lexemes: [],
-      definitions: {},
-      linkedfeatures: [],
-      visible: true,
-      translations: {}
-    }
-    curProps.data.l10n = l10n
-    curProps.data.morphDataReady = false
-    curProps.data.currentLanguageName = 'lat'
-    curProps.data.left = '10vw'
-    curProps.data.top = '10vh'
-    curProps.data.settings = { popupPosition: { currentValue: 'fixed' } }
-
-    let cmp = mount(Popup, {
-      propsData: curProps
-    })
-
-    let placeholder1 = cmp.findAll('.alpheios-popup__definitions--placeholder').filter(elm => elm.text() === l10n.messages.PLACEHOLDER_POPUP_DATA.get())
-
-    expect(placeholder1.exists()).toBeTruthy()
-    expect(placeholder1.at(0).element.style.display).not.toEqual('none')
-    expect(cmp.find('.alpheios-popup__morph-cont-ready').element.style.display).toEqual('none')
-
-    // curProps.data.morphDataReady = false
-    // curProps.data.currentLanguageName = undefined
-
-    // curProps.data.morphDataReady = true
-    // curProps.data.currentLanguageName = 'lat'
-
-    // curProps.data.morphDataReady = true
-    // curProps.data.currentLanguageName = 'lat'
-
-    // cmp.setProps({
-    //  lexemes: [
-    //    {
-    //      lemma: {
-    //        principalParts: [ {} ]
-    //      }
-    //    }
-    //  ]
-    // })
-
-    // let allplaceholders = cmp.findAll('.alpheios-popup__definitions--placeholder')
-    // for (let i = 0; i < allplaceholders.length; i++) {
-    //   expect(allplaceholders.at(i).element.style.display).toEqual('none')
-    // }
-
-    // expect(cmp.find('.alpheios-popup__morph-cont-ready').element.style.display).not.toEqual('none')
-  })
-
-  it.skip('6.2 Popup - check morph placeholders', () => {
-    let curProps = {
-      data: {},
-      messages: [],
-      lexemes: [],
-      definitions: {},
-      linkedfeatures: [],
-      visible: true,
-      translations: {}
-    }
-    curProps.data.l10n = l10n
-    curProps.data.morphDataReady = false
-    curProps.data.currentLanguageName = undefined
-    curProps.data.left = '10vw'
-    curProps.data.top = '10vh'
-    curProps.data.settings = { popupPosition: { currentValue: 'fixed' } }
-
-    let cmp = mount(Popup, {
-      propsData: curProps
-    })
-    let placeholder2 = cmp.findAll('.alpheios-popup__definitions--placeholder').filter(elm => elm.text() === l10n.messages.PLACEHOLDER_NO_LANGUAGE_POPUP_DATA.get())
-    expect(placeholder2.exists()).toBeTruthy()
-    expect(placeholder2.at(0).element.style.display).not.toEqual('none')
-    expect(cmp.find('.alpheios-popup__morph-cont-ready').element.style.display).toEqual('none')
-  })
-
-  it.skip('6.3 Popup - check morph placeholders', () => {
-    let curProps = {
-      data: {},
-      messages: [],
-      lexemes: [],
-      definitions: {},
-      linkedfeatures: [],
-      visible: true,
-      translations: {}
-    }
-    curProps.data.l10n = l10n
-    curProps.data.morphDataReady = true
-    curProps.data.currentLanguageName = 'lat'
-    curProps.data.left = '10vw'
-    curProps.data.top = '10vh'
-    curProps.data.settings = { popupPosition: { currentValue: 'fixed' } }
-
-    let cmp = mount(Popup, {
-      propsData: curProps
-    })
-    let placeholder3 = cmp.findAll('.alpheios-popup__definitions--placeholder').filter(elm => elm.text() === l10n.messages.PLACEHOLDER_NO_DATA_POPUP_DATA.get())
-    expect(placeholder3.exists()).toBeTruthy()
-    expect(placeholder3.at(0).element.style.display).not.toEqual('none')
-    expect(cmp.find('.alpheios-popup__morph-cont-ready').element.style.display).toEqual('none')
-  })
-
-  //  it('6.4 Popup - check morph placeholders', () => {
-  //    let curProps = {
-  //      data: {},
-  //      messages: [],
-  //      lexemes: [
-  //        {
-  //          lemma: {
-  //            principalParts: [ {} ]
-  //          }
-  //        }
-  //      ],
-  //      definitions: {},
-  //      linkedfeatures: [],
-  //      visible: true,
-  //      translations: {}
-  //    }
-  //    curProps.data.l10n = l10n
-  //    curProps.data.morphDataReady = true
-  //    curProps.data.currentLanguageName = 'lat'
-  //    curProps.data.left = '10vw'
-  //    curProps.data.top = '10vh'
-  //    curProps.data.settings = { popupPosition: { currentValue: 'fixed' } }
-
-  //    let cmp = mount(Popup, {
-  //      propsData: curProps
-  //    })
-  //    let allplaceholders = cmp.findAll('.alpheios-popup__definitions--placeholder')
-  //    for (let i = 0; i < allplaceholders.length; i++) {
-  //      expect(allplaceholders.at(i).element.style.display).toEqual('none')
-  //    }
-
-  //    expect(cmp.find('.alpheios-popup__morph-cont-ready').element.style.display).not.toEqual('none')
-  //  })
-
-  it.skip('7.1 Popup - check notifications', async () => {
-    let curProps = {
-      data: {},
-      messages: [],
-      lexemes: [],
-      definitions: {},
-      linkedfeatures: [],
-      visible: true,
-      translations: {}
-    }
-    curProps.data.l10n = l10n
-    curProps.data.notification = {
-      important: false,
-      showLanguageSwitcher: false,
-      text: '',
-      visible: true
-    }
-
-    curProps.data.left = '10vw'
-    curProps.data.top = '10vh'
-
-    let featureOptions = new Options(FeatureOptionDefaults, LocalStorageArea)
-
-    curProps.data.settings = {}
-    curProps.data.settings.popupPosition = featureOptions.items.popupPosition
-    curProps.data.settings.popupPosition.currentValue = 'fixed'
-    curProps.data.settings.preferredLanguage = featureOptions.items.preferredLanguage
-
-    let cmp = mount(Popup, {
-      propsData: curProps
-    })
-
-    expect(cmp.find('.alpheios-popup__notifications').exists()).toBeTruthy()
-    expect(cmp.find('.alpheios-popup__notifications').element.style.display).toEqual('none')
-  })
-
-  it.skip('7.2 Popup - check notifications', async () => {
-    let curProps = {
-      data: {},
-      messages: [],
-      lexemes: [],
-      definitions: {},
-      linkedfeatures: [],
-      visible: true,
-      translations: {}
-    }
-    curProps.data.l10n = l10n
-    curProps.data.notification = {
-      important: true,
-      showLanguageSwitcher: true,
-      text: '',
-      visible: true
-    }
-
-    curProps.data.left = '10vw'
-    curProps.data.top = '10vh'
-
-    let featureOptions = new Options(FeatureOptionDefaults, LocalStorageArea)
-
-    curProps.data.settings = {}
-    curProps.data.settings.popupPosition = featureOptions.items.popupPosition
-    curProps.data.settings.popupPosition.currentValue = 'fixed'
-    curProps.data.settings.preferredLanguage = featureOptions.items.preferredLanguage
-
-    let cmp = mount(Popup, {
-      propsData: curProps
-    })
-    expect(cmp.find('.alpheios-popup__notifications').element.style.display).not.toEqual('none')
-
-    expect(cmp.find('.alpheios-popup__notifications-close-btn').exists()).toBeTruthy()
-
-    expect(cmp.find('.alpheios-popup__notifications').find(Setting).exists()).toBeTruthy()
-
-    expect(cmp.find('.alpheios-popup__notifications').find(Setting).element.style.display).not.toEqual('none')
-
-    cmp.find('.alpheios-popup__notifications-close-btn').trigger('click')
-
-    await Vue.nextTick()
-
-    expect(cmp.emitted()['closepopupnotifications']).toBeTruthy()
-  })
-
-  it.skip('8 Popup - check events on created, change visible and updated', () => {
-    let curProps = {
-      data: {},
-      messages: [],
-      lexemes: [],
-      definitions: {},
-      linkedfeatures: [],
-      visible: true,
-      translations: {}
-    }
-
-    curProps.data.l10n = l10n
-    curProps.data.left = '10vw'
-    curProps.data.top = '10vh'
-
-    curProps.data.settings = { popupPosition: { currentValue: 'fixed' } }
-
-    let cmp = mount(Popup, {
-      propsData: curProps
-    })
-
-    jest.spyOn(cmp.vm, 'updatePopupDimensions')
-    jest.spyOn(cmp.vm, 'resetPopupDimensions')
-
-    cmp.vm.$emit('updatePopupDimensions')
-
-    expect(cmp.vm.updatePopupDimensions).toHaveBeenCalled()
-
-    cmp.vm.$emit('changeStyleClass', 'fontSize', 'medium')
-
-    expect(cmp.emitted()['ui-option-change']).toBeTruthy()
-    expect(cmp.emitted()['ui-option-change'][0]).toEqual(['fontSize', 'medium'])
-
-    cmp.vm.data.left = '9vw'
-    expect(cmp.vm.updatePopupDimensions).toHaveBeenCalled()
-    cmp.setProps({ visible: false })
-
-    expect(cmp.vm.resetPopupDimensions).toHaveBeenCalled()
-  })
-
-  it.skip('9 Popup - check computed properties', () => {
-    let curProps = {
-      data: {
-        requestStartTime: 'foo-time',
-        inflDataReady: 'foo-inflDataReady',
-        defDataReady: 'foo-defDataReady',
-        translationsDataReady: 'foo-translationsDataReady',
-        morphDataReady: 'foo-morphDataReady',
-        currentLanguageName: 'foo-language',
-        showProviders: 'foo-showProviders',
-        updates: 'foo-updates'
+    BaseTestHelp.authModule(store, api)
+    BaseTestHelp.l10nModule(store, api)
+    
+    let cmp = shallowMount(Popup, {
+      data () { return {
+          moduleConfig: {
+            initialShift: { x: 60, y: 70 }
+          }
+        } 
       },
-      messages: [],
-      lexemes: [],
-      definitions: {},
-      linkedfeatures: [],
-      visible: true,
-      translations: {}
-    }
-
-    curProps.data.l10n = l10n
-    curProps.data.left = '10vw'
-    curProps.data.top = '10vh'
-    curProps.data.settings = { popupPosition: { currentValue: 'fixed' } }
-
-    let cmp = mount(Popup, {
-      propsData: curProps
-    })
-
-    expect(cmp.vm.uiController).toBeNull()
-    expect(cmp.vm.requestStartTime).toEqual('foo-time')
-    expect(cmp.vm.inflDataReady).toEqual('foo-inflDataReady')
-    expect(cmp.vm.defDataReady).toEqual('foo-defDataReady')
-    expect(cmp.vm.translationsDataReady).toEqual('foo-translationsDataReady')
-    expect(cmp.vm.morphDataReady).toEqual('foo-morphDataReady')
-    expect(cmp.vm.currentLanguageName).toEqual('foo-language')
-    expect(cmp.vm.showProviders).toEqual('foo-showProviders')
-    expect(cmp.vm.updates).toEqual('foo-updates')
-  })
-
-  it.skip('10 Popup - check methods', () => {
-    let curProps = {
-      data: {},
-      messages: ['foomessage1', 'foomessage2'],
-      lexemes: [],
-      definitions: {},
-      linkedfeatures: [],
-      visible: true,
-      translations: {}
-    }
-
-    curProps.data.l10n = l10n
-    curProps.data.left = '10vw'
-    curProps.data.top = '10vh'
-    curProps.data.settings = { popupPosition: { currentValue: 'fixed' } }
-
-    let cmp = mount(Popup, {
-      propsData: curProps
-    })
-
-    cmp.vm.clearMessages()
-    expect(cmp.vm.messages.length).toEqual(0)
-
-    cmp.vm.uiOptionChanged('fooname', 'foovalue')
-    expect(cmp.emitted()['ui-option-change']).toBeTruthy()
-    expect(cmp.emitted()['ui-option-change'][0]).toEqual(['fooname', 'foovalue'])
-
-    cmp.vm.closePopup()
-    expect(cmp.emitted()['close']).toBeTruthy()
-
-    cmp.vm.closeNotifications()
-    expect(cmp.emitted()['closepopupnotifications']).toBeTruthy()
-
-    cmp.vm.showPanelTab('footab')
-    expect(cmp.emitted()['showpaneltab']).toBeTruthy()
-    expect(cmp.emitted()['showpaneltab'][0]).toEqual(['footab'])
-
-    cmp.vm.settingChanged('fooname', 'foovalue')
-    expect(cmp.emitted()['settingchange']).toBeTruthy()
-    expect(cmp.emitted()['settingchange'][0]).toEqual(['fooname', 'foovalue'])
-
-    cmp.vm.sendFeature('foofeature')
-    expect(cmp.emitted()['sendfeature']).toBeTruthy()
-    expect(cmp.emitted()['sendfeature'][0]).toEqual(['foofeature'])
-
-    let res = cmp.vm.ln10Messages()
-    expect(res).toEqual('unknown')
-
-    res = cmp.vm.ln10Messages('fooname')
-    expect(res).toEqual('unknown')
-
-    res = cmp.vm.ln10Messages('fooname', 'foounknown')
-    expect(res).toEqual('foounknown')
-
-    res = cmp.vm.ln10Messages('TOOLTIP_POPUP_CLOSE')
-    expect(res).toEqual(l10n.messages.TOOLTIP_POPUP_CLOSE.get())
-  })
-
-  //  it('11 Popup - check required props', () => {
-  //    let cmp = shallowMount(Popup, {
-  //      propsData: {}
-  //    })
-
-  //    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "data"'))
-  //    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "messages"'))
-  //    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "lexemes"'))
-  //    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "definitions"'))
-  //    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "linkedfeatures"'))
-  //    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "visible"'))
-  //    expect(console.error).toBeCalledWith(expect.stringContaining('[Vue warn]: Missing required prop: "translations"'))
-  //  })
-
-  it.skip('12 Popup - interact properties', () => {
-    let curProps = {
-      data: {},
-      messages: ['foomessage1', 'foomessage2'],
-      lexemes: [],
-      definitions: {},
-      linkedfeatures: [],
-      visible: true,
-      translations: {}
-    }
-
-    curProps.data.l10n = l10n
-    curProps.data.left = '10vw'
-    curProps.data.top = '10vh'
-    curProps.data.settings = { popupPosition: { currentValue: 'fixed' } }
-
-    curProps.data.draggable = true
-    curProps.data.resizable = true
-
-    let cmp = mount(Popup, {
-      propsData: curProps
-    })
-
-    expect(cmp.vm.interactInstance).toBeDefined()
-
-    expect(cmp.vm.interactInstance.events.ondragmove).toEqual(cmp.vm.dragMoveListener)
-    expect(cmp.vm.interactInstance.events.resizemove[0]).toEqual(cmp.vm.resizeListener)
-  })
-
-  it.skip('13 Popup - if popup invisible then positionLeftDm === 0px', async () => {
-    let curProps = {
-      data: { l10n: {} },
-      messages: [],
-      lexemes: [],
-      definitions: {},
-      linkedfeatures: [],
-      visible: false,
-      translations: {}
-    }
-
-    let cmp = mount(Popup, {
-      propsData: curProps
-    })
-
-    await Vue.nextTick()
-    expect(cmp.vm.positionLeftDm).toEqual('0px')
-    expect(cmp.vm.positionTopDm).toEqual('0px')
-  })
-
-  it.skip('14 Popup - header selection has language code', () => {
-    let cmp = mount(Popup, {
-      propsData: {
-        data: {
-          l10n: {},
-          status: { languageName: 'latin', languageCode: 'lat' }
-        },
-        messages: [],
-        lexemes: [],
-        definitions: {},
-        linkedfeatures: [],
-        visible: false,
-        translations: {}
+      store, localVue,
+      mocks: api,
+      computed: {
+        positionLeftDm: () => 10,
+        positionTopDm: () => 20,
+        widthDm: () => 30,
+        heightDm: () => 40
       }
     })
-    expect(cmp.isVueInstance()).toBeTruthy()
-    expect(cmp.find('.alpheios-popup__header-text').attributes()['lang']).toEqual('lat')
-    expect(cmp.find('.alpheios-popup__header-selection').attributes()['lang']).toEqual('lat')
+
+    expect(cmp.vm.componentStyles.left).toEqual(10) // positionLeftDm
+    expect(cmp.vm.componentStyles.top).toEqual(20) // positionTopDm
+    expect(cmp.vm.componentStyles.width).toEqual(30) // widthDm
+    expect(cmp.vm.componentStyles.height).toEqual(40) // heightDm
+    expect(cmp.vm.componentStyles.zIndex).toEqual(50) // ui.zIndex
+    expect(cmp.vm.componentStyles.transform).toEqual('translate(60px, 70px)') // ui.zIndex
+  })
+
+  it('6 Popup - computed noLanguage checks if $store.state.app.currentLanguageName is defined, by default = true', () => {
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.vm.noLanguage).toBeTruthy()
+
+    store.commit('app/setTestCurrentLanguageName', 'testLanguageName')
+    // await timeout(5000)
+    expect(cmp.vm.noLanguage).toBeFalsy()
+  })
+
+  it('7 Popup - computed positionLeftDm return 0px, if panel is invisible, otherwise it returns initialPos left from the config', () => {
+    let cmp = shallowMount(Popup, {
+      data () { 
+        return {
+          moduleConfig: {
+            initialPos: { left: 60, top: 70 }
+          }
+        }
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    expect(store.state.popup.visible).toBeFalsy()
+    expect(cmp.vm.positionLeftDm).toEqual('0px')
+    
+    store.commit('popup/setPopupVisible', true)
+    expect(cmp.vm.positionLeftDm).toEqual('60px')
+  })
+
+  it('8 Popup - computed positionTopDm return 0px, if panel is invisible, otherwise it returns initialPos top from the config', () => {
+    let cmp = shallowMount(Popup, {
+      data () { 
+        return {
+          moduleConfig: {
+            initialPos: { left: 60, top: 70 }
+          }
+        }
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    expect(store.state.popup.visible).toBeFalsy()
+    expect(cmp.vm.positionTopDm).toEqual('0px')
+    
+    store.commit('popup/setPopupVisible', true)
+    expect(cmp.vm.positionTopDm).toEqual('70px')
+  })
+
+  it('9 Popup - computed widthDm returns auto if widthValue is auto', () => {
+    Object.assign(defaultData, {
+      widthValue: 'auto'
+    })
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.vm.widthDm).toEqual('auto')
+  })
+
+  it('10 Popup - computed widthDm returns widthValue with px if widthValue is not auto', () => {
+    Object.assign(defaultData, {
+      widthValue: 10
+    })
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.vm.widthDm).toEqual('10px')
+  })
+
+  it('11 Popup - computed widthDm returns resizedWidth with px if resizedWidth is defined', () => {
+    Object.assign(defaultData, {
+      resizedWidth: 100
+    })
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.vm.widthDm).toEqual('100px')
+  })
+
+  it('12 Popup - computed widthDm set value - updates widthValue with auto, if newWidth is less then maxWidth, and with maxWidth if greater', () => {
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
+      },
+      store,
+      localVue,
+      mocks: api,
+      attachToDocument: true,
+      computed: {
+        maxWidth: () => 100
+      }
+    })
+
+    expect(cmp.vm.widthValue).toEqual(0)
+
+    cmp.vm.widthDm = 50
+    expect(cmp.vm.widthValue).toEqual('auto')
+
+    cmp.vm.widthDm = 150
+    expect(cmp.vm.widthValue).toEqual(100)
+    expect(cmp.vm.exactWidth).toEqual(100)
+
+    cmp.destroy()
+  })
+
+  it('13 Popup - computed heightDm set value - updates heightValue with auto, if newHeight is less then maxHeight, and with maxHeight if greater', () => {
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
+      },
+      store,
+      localVue,
+      mocks: api,
+      attachToDocument: true,
+      computed: {
+        maxHeight: () => 100
+      }
+    })
+
+    expect(cmp.vm.heightValue).toEqual(0)
+
+    cmp.vm.heightDm = 50
+    expect(cmp.vm.heightValue).toEqual('auto')
+
+    cmp.vm.heightDm = 150
+    expect(cmp.vm.heightValue).toEqual(100)
+    expect(cmp.vm.exactHeight).toEqual(100)
+
+    cmp.destroy()
+  })
+
+  it('14 Popup - computed maxWidth calculates max available width according to the document and viewport margin', () => {
+    Object.defineProperty(document.documentElement, 'clientWidth', {
+      get () {
+        return 190
+      }
+    })
+
+    Object.defineProperty(window, 'innerWidth', {
+      get () {
+        return 200
+      }
+    })
+
+    Object.assign(defaultData.moduleConfig, {
+      viewportMargin: 20
+    })
+
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
+      },
+      store,
+      localVue,
+      mocks: api,
+      attachToDocument: true
+    })
+
+    expect(cmp.vm.maxWidth).toEqual(150) // max - 2*viewport - scroll
+
+    cmp.destroy()
+  })
+
+  it('15 Popup - computed maxWidth calculates max available width according to the document and viewport margin', () => {
+    Object.defineProperty(document.documentElement, 'clientHeight', {
+      get () {
+        return 190
+      }
+    })
+
+    Object.defineProperty(window, 'innerHeight', {
+      get () {
+        return 200
+      }
+    })
+
+    Object.assign(defaultData.moduleConfig, {
+      viewportMargin: 30
+    })
+
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
+      },
+      store,
+      localVue,
+      mocks: api,
+      attachToDocument: true
+    })
+
+    expect(cmp.vm.maxHeight).toEqual(130) // max - 2*viewport - scroll
+
+    cmp.destroy()
+  })
+
+  it('16 Popup - computed verboseMode checks if verboseMode is turned on', () => {
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    cmp.vm.settings.getUiOptions = () => {
+      return {
+        items: {
+          verboseMode: {
+            currentValue: null
+          }
+        }
+      }
+    }
+
+    expect(cmp.vm.verboseMode).toBeFalsy()
+
+    cmp.vm.settings.getUiOptions = () => {
+      return {
+        items: {
+          verboseMode: {
+            currentValue: 'verbose'
+          }
+        }
+      }
+    }
+
+    expect(cmp.vm.verboseMode).toBeTruthy()
+  })
+
+  it('17 Popup - method switchProviders changes showProviders to oposite (showProviders = false by default)', () => {
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.vm.showProviders).toBeFalsy()
+
+    cmp.vm.switchProviders()
+
+    expect(cmp.vm.showProviders).toBeTruthy()
+
+    cmp.vm.switchProviders()
+
+    expect(cmp.vm.showProviders).toBeFalsy()
+  })
+
+  it('18 Popup - method resizableSettings returns result with enough properties', () => {
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let props = cmp.vm.resizableSettings()
+    expect(props.preserveAspectRatio).toBeDefined()
+    expect(props.edges).toBeDefined()
+    expect(props.edges.left).toBeDefined()
+    expect(props.edges.right).toBeDefined()
+    expect(props.edges.bottom).toBeDefined()
+    expect(props.edges.top).toBeDefined()
+    expect(props.restrictEdges).toBeDefined()
+    expect(props.restrictEdges.restriction).toBeDefined()
+    expect(props.restrictEdges.endOnly).toBeDefined()
+  })
+
+  it('19 Popup - method draggableSettings returns result with enough properties', () => {
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let props = cmp.vm.draggableSettings()
+    expect(props.inertia).toBeDefined()
+    expect(props.autoScroll).toBeDefined()
+    expect(props.ignoreFrom).toBeDefined()
+  })
+
+  it('20 Popup - method isWithinBounds define if viewport is enough for the element', () => {
+    let api = {
+      ui: BaseTestHelp.uiAPI(),
+      settings: BaseTestHelp.settingsAPI(),
+      app: BaseTestHelp.appAPI({
+        platform: {
+          viewport: {
+            width: 10,
+            height: 10
+          }
+        }
+      })
+    }
+
+    BaseTestHelp.authModule(store, api)
+    BaseTestHelp.l10nModule(store, api)
+
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
+      },
+      store,
+      localVue,
+      mocks: api,
+      attachToDocument: true
+    })
+
+    // out of the viewport to the right
+    cmp.vm.$el.getBoundingClientRect = () => {
+      return {
+        x: 100, y: 50, width: 150, height: 300
+      }
+    }
+
+    let props = cmp.vm.isWithinBounds()
+    expect(props.withinBounds).toBeFalsy()
+    expect(props.adjX).toBeLessThan(0)
+    expect(props.adjY).toBeLessThan(0)
+
+    // out of the viewport to the left
+    cmp.vm.$el.getBoundingClientRect = () => {
+      return {
+        x: -10, y: -10, width: 5, height: 5
+      }
+    }
+
+    props = cmp.vm.isWithinBounds()
+    expect(props.withinBounds).toBeFalsy()
+    expect(props.adjX).toBeGreaterThan(0)
+    expect(props.adjY).toBeGreaterThan(0)
+
+    // inside to the viewport
+    cmp.vm.$el.getBoundingClientRect = () => {
+      return {
+        x: 5, y: 5, width: 5, height: 5
+      }
+    }
+
+    props = cmp.vm.isWithinBounds()
+    expect(props.withinBounds).toBeTruthy()
+    expect(props.adjX).toEqual(0)
+    expect(props.adjY).toEqual(0)
+
+    cmp.destroy()
+  })
+
+  it('21 Popup - method resizeListener updates resized and shift properties only if resizable = true', () => {
+    Object.assign(defaultData, {
+      resizable: false,
+      resizedWidth: 100,
+      resizedHeight: 150,
+      moduleConfig: {
+        initialShift: {
+          x: 10, y: 20
+        }
+      }
+    })
+
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let testEvent = {
+      rect: {
+        width: 200,
+        height: 250
+      },
+      deltaRect: {
+        left: 110, top: 120
+      }
+    }
+
+    expect(cmp.vm.resizable).toBeFalsy()
+    cmp.vm.resizeListener(testEvent)
+    
+    expect(cmp.vm.resizedWidth).toEqual(defaultData.resizedWidth)
+    expect(cmp.vm.resizedHeight).toEqual(defaultData.resizedHeight)
+    expect(cmp.vm.shift.x).toEqual(defaultData.shift.x)
+    expect(cmp.vm.shift.y).toEqual(defaultData.shift.y)
+
+    cmp.vm.resizable = true
+    cmp.vm.resizeListener(testEvent)
+    
+    expect(cmp.vm.resizedWidth).toEqual(testEvent.rect.width)
+    expect(cmp.vm.resizedHeight).toEqual(testEvent.rect.height)
+    expect(cmp.vm.shift.x).toEqual(120)
+    expect(cmp.vm.shift.y).toEqual(140)
+  })
+
+
+  it('22 Popup - method dragMoveListener updates shift properties only if draggable = true, if drag mount more then 100, than it won\'t move  and saves a error to properties', () => {
+    Object.assign(defaultData, {
+      draggable: false,
+      moduleConfig: {
+        initialShift: {
+          x: 10, y: 20
+        }
+      }
+    })
+
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let testEvent = {
+      dx: 50, dy: 50
+    }
+
+    expect(cmp.vm.draggable).toBeFalsy()
+
+    cmp.vm.dragMoveListener(testEvent)
+    expect(cmp.vm.shift.x).toEqual(defaultData.shift.x)
+    expect(cmp.vm.shift.y).toEqual(defaultData.shift.y)
+
+    cmp.vm.draggable = true
+    cmp.vm.dragMoveListener(testEvent)
+
+    expect(cmp.vm.shift.x).toEqual(60)
+    expect(cmp.vm.shift.y).toEqual(70)
+
+    testEvent = {
+      dx: 150, dy: 150
+    }
+
+    cmp.vm.dragMoveListener(testEvent)
+
+    expect(cmp.vm.shift.x).toEqual(60)
+    expect(cmp.vm.shift.y).toEqual(70)
+    expect(cmp.vm.dragErrorX).toBeTruthy()
+    expect(cmp.vm.dragErrorY).toBeTruthy()
+  })
+
+  it('23 Popup - method dragEndListener updates shift properties according to isWithinBounds', () => {
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    cmp.vm.isWithinBounds = () => {
+      return {
+        withinBounds: true,
+        adjX: 50,
+        adjY: 60
+      }
+    }
+
+    expect(cmp.vm.shift.x).toEqual(0)
+    expect(cmp.vm.shift.y).toEqual(0)
+
+    cmp.vm.dragEndListener()
+
+    expect(cmp.vm.shift.x).toEqual(0)
+    expect(cmp.vm.shift.y).toEqual(0)
+
+    cmp.vm.isWithinBounds = () => {
+      return {
+        withinBounds: false,
+        adjX: 50,
+        adjY: 60
+      }
+    }
+
+    cmp.vm.dragEndListener()
+
+    expect(cmp.vm.shift.x).toEqual(50)
+    expect(cmp.vm.shift.y).toEqual(60)
+  })
+
+  it('24 Popup - method resetPopupDimensions sets 0 to size/position properties', () => {
+    Object.assign(defaultData, {
+      resizeCount: 10,
+      widthValue: 20,
+      heightValue: 30,
+      exactWidth: 40,
+      exactHeight: 50,
+      resizedWidth: 100,
+      resizedHeight: 150
+    })
+
+    let cmp = shallowMount(Popup, {
+      data () {
+        return defaultData
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.vm.resizeCount).toEqual(10)
+    expect(cmp.vm.widthValue).toEqual(20)
+    expect(cmp.vm.heightValue).toEqual(30)
+    expect(cmp.vm.exactWidth).toEqual(40)
+    expect(cmp.vm.exactHeight).toEqual(50)
+    expect(cmp.vm.resizedWidth).toEqual(100)
+    expect(cmp.vm.resizedHeight).toEqual(150)
+
+    cmp.vm.resetPopupDimensions()
+
+    expect(cmp.vm.resizeCount).toEqual(0)
+    expect(cmp.vm.widthValue).toEqual(0)
+    expect(cmp.vm.heightValue).toEqual(0)
+    expect(cmp.vm.exactWidth).toEqual(0)
+    expect(cmp.vm.exactHeight).toEqual(0)
+    expect(cmp.vm.resizedWidth).toBeNull()
+    expect(cmp.vm.resizedHeight).toBeNull()
   })
 })

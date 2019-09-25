@@ -174,7 +174,7 @@ export default {
     hidePopup () {
       this.footnotesPopupVisible = false
       this.$_alpheios_cleanup()
-      this.popupAlignmentStyles.transform = undefined
+      this.setTransformPopup()
     }
   }
 }

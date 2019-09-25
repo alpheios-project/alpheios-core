@@ -199,8 +199,8 @@ export default {
 
   created () {
     // This is the earliest moment when data props are available
-    this.shift.x = this.moduleConfig.initialShift.x
-    this.shift.y = this.moduleConfig.initialShift.y
+    this.shift.x = this.moduleConfig.initialShift ? this.moduleConfig.initialShift.x : 0
+    this.shift.y = this.moduleConfig.initialShift ? this.moduleConfig.initialShift.y : 0
 
     let vm = this // eslint-disable-line prefer-const
     this.$on('updatePopupDimensions', function () {
@@ -209,7 +209,7 @@ export default {
   },
   computed: {
     showToolbar: function () {
-      return this.moduleConfig.showNav
+      return Boolean(this.moduleConfig.showNav)
     },
 
     componentStyles: function () {
@@ -233,7 +233,7 @@ export default {
         return '0px'
       }
 
-      return this.moduleConfig.initialPos.left
+      return `${this.moduleConfig.initialPos.left}px`
     },
 
     positionTopDm: function () {
@@ -242,7 +242,7 @@ export default {
         return '0px'
       }
 
-      return this.moduleConfig.initialPos.top
+      return `${this.moduleConfig.initialPos.top}px`
     },
 
     widthDm: {
@@ -254,12 +254,9 @@ export default {
         return this.widthValue === 'auto' ? 'auto' : `${this.widthValue}px`
       },
       set: function (newWidth) {
-        const viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
-        const verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth
-        const maxWidth = viewportWidth - 2 * this.moduleConfig.viewportMargin - verticalScrollbarWidth
-        if (newWidth >= maxWidth) {
-          this.$options.logger.log(`Popup is too wide, limiting its width to ${maxWidth}px`)
-          this.widthValue = maxWidth
+        if (newWidth >= this.maxWidth) {
+          this.$options.logger.log(`Popup is too wide, limiting its width to ${this.maxWidth}px`)
+          this.widthValue = this.maxWidth
           this.exactWidth = this.widthValue
         } else {
           this.widthValue = 'auto'
@@ -280,11 +277,7 @@ export default {
       set: function (newHeight) {
         const time = Date.now()
         this.$options.logger.log(`${time}: height setter, offsetHeight is ${newHeight}`)
-        /*
-              let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-              let horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
-              let maxHeight = viewportHeight - 2*this.moduleConfig.viewportMargin - horizontalScrollbarWidth
-              */
+
         if (newHeight >= this.maxHeight) {
           this.$options.logger.log(`Popup is too tall, limiting its height to ${this.maxHeight}px`)
           this.heightValue = this.maxHeight
@@ -295,10 +288,16 @@ export default {
       }
     },
 
+    maxWidth () {
+      const viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
+      const verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth
+      return viewportWidth - 2 * (this.moduleConfig.viewportMargin || 0) - verticalScrollbarWidth
+    },
+
     maxHeight () {
       const viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
       const horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
-      return viewportHeight - 2 * this.moduleConfig.viewportMargin - horizontalScrollbarWidth
+      return viewportHeight - 2 * (this.moduleConfig.viewportMargin || 0) - horizontalScrollbarWidth
     },
 
     verboseMode () {
@@ -383,6 +382,7 @@ export default {
         this.resizedHeight = event.rect.height
 
         // Update popup position when resizing from top or left edges
+        
         this.shift.x += (event.deltaRect.left || 0)
         this.shift.y += (event.deltaRect.top || 0)
       }
@@ -516,11 +516,13 @@ export default {
         .on('resizemove', this.resizeListener)
     }
 
-    const boundsCheck = this.isWithinBounds()
-    if (!boundsCheck.withinBounds) {
-      this.shift.x += boundsCheck.adjX
-      this.shift.y += boundsCheck.adjY
-      this.$options.logger.log(`Popup position has been adjusted to stay within the viewport`)
+    if (typeof this.$el.querySelector === 'function') {
+      const boundsCheck = this.isWithinBounds()
+      if (!boundsCheck.withinBounds) {
+        this.shift.x += boundsCheck.adjX
+        this.shift.y += boundsCheck.adjY
+        this.$options.logger.log(`Popup position has been adjusted to stay within the viewport`)
+      }
     }
 
     this.$options.lexrqStartedUnwatch = this.$store.watch((state, getters) => state.app.lexicalRequest.startTime, () => {

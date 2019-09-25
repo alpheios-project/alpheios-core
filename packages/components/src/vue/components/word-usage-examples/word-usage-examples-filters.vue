@@ -88,6 +88,7 @@ export default {
       if (!this.$store.state.app.homonymDataReady) {
         return false
       }
+
       if (this.$store.state.app.wordUsageExamplesReady && (!this.lastTargetWord || this.lastTargetWord !== this.homonym.targetWord)) {
         this.lastTargetWord = this.homonym.targetWord
         this.lastAuthorsList = this.app.wordUsageExamples.wordUsageExamples
@@ -110,6 +111,7 @@ export default {
       if (this.selectedAuthor) {
         this.selectedTextWork = null
         let resArray = this.selectedAuthor.works.slice()
+
         if (resArray.length > 1 && this.languageCode) {
           resArray = this.applySort('textwork', resArray)
           resArray.unshift(null)

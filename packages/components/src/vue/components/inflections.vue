@@ -187,6 +187,7 @@ export default {
       let panel = document.querySelector(`#${this.elementIDs.panelInner}`)
       if (!panel) {
         this.$options.logger.warn(`Cannot find panel's inner element #${this.elementIDs.panelInner}. Scroll is cancelled`)
+        return
       }
       if (reflink === 'top') {
         // Navigate to the top of the page

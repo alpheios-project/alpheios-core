@@ -86,7 +86,7 @@ export default {
   },
   computed: {
     availableSortBy () {
-      return this.$store.state.app.wordUsageExamplesReady && this.app.wordUsageExamples.wordUsageExamples && this.app.wordUsageExamples.wordUsageExamples.length > 1
+      return this.$store.state.app.wordUsageExamplesReady && this.app.wordUsageExamples && this.app.wordUsageExamples.wordUsageExamples && this.app.wordUsageExamples.wordUsageExamples.length > 1
     },
     finalTypeSortingList () {
       return this.reloadSorting ? this.calctypeSortingList : null

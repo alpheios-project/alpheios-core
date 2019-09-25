@@ -27,9 +27,10 @@
         <lookup
             class="alpheios-action-panel__lookup"
             :name-base="`action-panel`"
-            :show-lang-selector="false"
+            :show-lang-selector="showLangSelector"
             :show-results-in="config.lookupResultsIn"
             @lookup-started="lookupStarted"
+            @toggleLangSelector = "toggleLangSelector"
         />
           <progress-bar
               class="alpheios-action-panel__progress-bar"
@@ -155,7 +156,8 @@ export default {
         y: 0
       },
 
-      tooltipDirection: 'top'
+      tooltipDirection: 'top', 
+      showLangSelector: false
     }
   },
 
@@ -225,6 +227,10 @@ export default {
       if (this.config.closeAfterLookup) {
         this.$store.commit('actionPanel/close')
       }
+    },
+
+    toggleLangSelector (value) {
+      this.showLangSelector = true
     }
   }
 }
@@ -285,7 +291,6 @@ export default {
   }
 
   .alpheios-action-panel__lookup-cont {
-    height: uisize(90px);
     position: relative;
   }
 

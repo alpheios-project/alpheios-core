@@ -118,11 +118,12 @@ export default {
 
     showHint () {
       let showHintForTab = !this.hintWasShownForTabs.includes(this.$store.state.ui.activeTab)
+      let willBeShown = this.$store.state.ui.hint.visible && showHintForTab
 
-      if (showHintForTab) {
+      if (willBeShown) {
         this.hintWasShownForTabs.push(this.$store.state.ui.activeTab)
       }
-      return this.$store.state.ui.hint.visible && showHintForTab
+      return willBeShown
     },
 
     showNotification () {

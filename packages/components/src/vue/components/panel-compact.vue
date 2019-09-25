@@ -418,7 +418,7 @@ export default {
       return this.moduleConfig.showNav && mainTabArray.includes(this.currentTab)
     },
     showMorphologyIcon () {
-      return this.$store.state.app.morphDataReady && this.app.hasMorphData() && (this.showMainTabIcons || this.currentTab === 'grammar')
+      return this.hasMorphologyData && (this.showMainTabIcons || this.currentTab === 'grammar')
     },
     rootClasses () {
       let classes = []
@@ -438,12 +438,10 @@ export default {
       return classes
     },
 
-
-
     componentStyles: function () {
       return {
         // It shall have a z-index higher than that of a popup
-        zIndex: this.ui.zIndex + 10
+        zIndex: (this.ui.zIndex || 0) + 10
       }
     },
 
@@ -491,6 +489,7 @@ export default {
 
     formattedShortDefinitions () {
       let definitions = [] // eslint-disable-line prefer-const
+      
       if (this.$store.getters['app/shortDefDataReady'] && this.$store.state.app.homonymDataReady) {
         for (const lexeme of this.app.getHomonymLexemes()) {
           if (lexeme.meaning.shortDefs.length > 0) {

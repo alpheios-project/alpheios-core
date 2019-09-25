@@ -81,7 +81,7 @@
 
     <div
         class="alpheios-inflections__not-impl-msg"
-        v-show="!state.collapsed && !isAvailable"
+        v-if="!state.collapsed && !isAvailable"
     >
       {{l10n.getMsg('INFLECT_MSG_TABLE_NOT_IMPLEMENTED')}}
     </div>
@@ -93,9 +93,11 @@ import { ViewSetFactory } from 'alpheios-inflection-tables'
 import InflFootnote from './infl-footnote.vue'
 import Tooltip from './tooltip.vue'
 
+import Vue from '@vue-runtime'
+
 export default {
   name: 'WideInflectionsTableStandardForm',
-  inject: ['l10n'],
+  inject: ['l10n', 'app'],
   components: {
     inflFootnote: InflFootnote,
     alphTooltip: Tooltip
@@ -165,10 +167,10 @@ export default {
 
     isAvailable: function () {
       return (
-        this.state.view &&
+        Boolean(this.state.view &&
         this.state.view.isImplemented &&
         this.state.view.wideView &&
-        this.state.view.wideView.rows.length > 0
+        this.state.view.wideView.rows.length > 0)
       )
     }
   },
@@ -191,6 +193,15 @@ export default {
       }
     },
     collapse: function () {
+      // findCurrentScrollPos and checkAndFixScroll methods are added 
+      // to fix the bug with scroll on IOS (mobile platform)
+      // before collapse current scrollPosition of the Panel Tab is saved to scrollPos
+
+      let scrollPos
+      if (this.app.platform.isMobile) {
+        scrollPos = this.findCurrentScrollPos()
+      }
+
       this.state.collapsed = !this.state.collapsed
       if (!this.state.collapsed) {
         // A view has been expanded, we need to check if it needs to be rendered.
@@ -201,6 +212,54 @@ export default {
 
       if (this.state.view && this.state.view.isImplemented) {
         this.state.view.wideView.collapsed = this.state.collapsed
+      }
+
+      // and then after the view is rendered
+      // we check the current scroll position, compare with previous saved position
+      // and if it changed (IOS scrolls up after rerendering), it would be returned to previos position
+      if (this.app.platform.isMobile && scrollPos) {
+        this.checkAndFixScroll(scrollPos.parentIBNode, scrollPos.scrollTop)
+      }
+    },
+
+    findCurrentScrollPos() {
+      let maxSteps = 8
+      let parentIBNode = null
+      let currentParent = null
+      let scrollTop = null
+
+      while (maxSteps >= 0 && !parentIBNode) {
+        maxSteps--
+        currentParent = !currentParent ? this.$el.parentNode : currentParent.parentNode
+        if (currentParent && currentParent.classList && currentParent.classList.contains('alpheios-panel__content')) {
+          parentIBNode = currentParent
+        }
+        if (!currentParent) {
+          maxSteps = -1
+        }
+      }
+
+      if (parentIBNode) {
+        scrollTop = parentIBNode.scrollTop
+      }
+
+      return {
+        parentIBNode,
+        scrollTop
+      }
+    },
+
+    checkAndFixScroll(parentIBNode, scrollTop) {
+      if (parentIBNode && scrollTop) {
+        Vue.nextTick().then(() => {
+          if (parentIBNode.scrollTop === 0) {
+            parentIBNode.scrollTo({
+              top: scrollTop, 
+              left: 0,
+              behavior: 'smooth'
+            })
+          }
+        })
       }
     },
 

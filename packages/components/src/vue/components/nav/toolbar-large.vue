@@ -83,7 +83,8 @@
     >
       <lookup
           :name-base="`toolbar`"
-          :show-lang-selector="false"
+          :show-lang-selector="showLangSelector"
+          @toggleLangSelector = "toggleLangSelector"
       />
     </div>
 
@@ -243,7 +244,8 @@ export default {
       },
 
       // An X position of the central point of a toolbar
-      xCenter: undefined
+      xCenter: undefined,
+      showLangSelector: false
     }
   },
 
@@ -388,6 +390,10 @@ export default {
     getXCenter () {
       const rect = this.$el.getBoundingClientRect()
       return rect.x + rect.width / 2
+    },
+    
+    toggleLangSelector (value) {
+      this.showLangSelector = true
     }
   },
 
@@ -476,7 +482,7 @@ export default {
 
   .alpheios-toolbar__lookup-control {
     cursor: pointer;
-    background: var(--alpheios-text-bg-color);
+    background: var(--alpheios-desktop-toolbar-bg);
 
     .alpheios-navbuttons__btn {
       margin: 0;
@@ -486,7 +492,7 @@ export default {
   }
 
   .alpheios-toolbar__help-control {
-    background: var(--alpheios-text-bg-color);
+    background: var(--alpheios-desktop-toolbar-bg);
     .alpheios-navbuttons__btn {
       margin: 0;
       border-radius: 0;

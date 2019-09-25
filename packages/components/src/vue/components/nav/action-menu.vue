@@ -12,7 +12,8 @@
       <lookup
           class="alpheios-action-menu__lookup"
           :name-base="`action-panel`"
-          :show-lang-selector="false"
+          :show-lang-selector="showLangSelector"
+          @toggleLangSelector = "toggleLangSelector"
       />
       <progress-bar
           class="alpheios-action-menu__progress-bar"
@@ -203,7 +204,9 @@ export default {
         y: 0 // this.moduleConfig.initialShift.y
       },
 
-      tooltipDirection: 'top'
+      tooltipDirection: 'top',
+
+      showLangSelector: false
     }
   },
 
@@ -224,6 +227,10 @@ export default {
     showPanelTab (tabName) {
       this.ui.showPanelTab(tabName)
       this.close()
+    },
+
+    toggleLangSelector (value) {
+      this.showLangSelector = true
     }
   }
 }
