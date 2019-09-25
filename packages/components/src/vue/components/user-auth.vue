@@ -2,12 +2,7 @@
   <div class="alpheios-user-auth">
     <div class="alpheios-user-auth__user-container">
       <login v-show="!app.platform.isSafariAppExtension" />
-      <div class="alpheios-user-auth__user-login-instuctions" v-show="app.platform.isSafariAppExtension">
-        <div v-show="!this.$store.state.auth.isAuthenticated" v-html="l10n.getMsg(`AUTH_SAFARI_LOGIN_MSG`, { userAccountTutorialLink: $options.userAccountTutorialLink })">
-        </div>
-        <div v-show="this.$store.state.auth.isAuthenticated" v-html="l10n.getMsg(`AUTH_SAFARI_LOGOUT_MSG`, { userAccountTutorialLink: $options.userAccountTutorialLink })">
-        </div>
-      </div>
+
       <div class="alpheios-user-auth__user-info-box" v-show="this.$store.state.auth.isAuthenticated">
         <div class="alpheios-user-auth__user-info-item-box">
           <div class="alpheios-user-auth__user-info-item-name">
@@ -18,6 +13,14 @@
           </div>
         </div>
       </div>
+
+      <div class="alpheios-user-auth__user-login-instuctions" v-show="app.platform.isSafariAppExtension">
+        <div v-show="!this.$store.state.auth.isAuthenticated" v-html="l10n.getMsg(`AUTH_SAFARI_LOGIN_MSG`, { userAccountTutorialLink: $options.userAccountTutorialLink })">
+        </div>
+        <div v-show="this.$store.state.auth.isAuthenticated" v-html="l10n.getMsg(`AUTH_SAFARI_LOGOUT_MSG`, { userAccountTutorialLink: $options.userAccountTutorialLink })">
+        </div>
+      </div>
+
     </div>
     <div class="alpheios-user-auth__credits">
       <a width="150" height="50" href="https://auth0.com/?utm_source=oss&utm_medium=gp&utm_campaign=oss"
@@ -59,7 +62,7 @@ export default {
   }
 
   .alpheios-user-auth__user-info-box {
-    margin-top: uisize(20px);
+    margin: uisize(20px) auto uisize(50px);
     display: flex;
     border-top: 1px solid var(--alpheios-border-color);
     flex-direction: column;
