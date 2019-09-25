@@ -578,14 +578,16 @@
     "component": "UserAuth Vue Component"
   },
   "AUTH_SAFARI_LOGIN_MSG": {
-    "message": "Please launch the Alpheios Reading Tools application from the LaunchPad and login to your user account there.",
+    "message": "<h2>Login Instructions</h2> <p>Please launch the Alpheios Reading Tools application. You can create and login to your account from there.</p> <p>Return to the browser after login.</p> <p>You will stay logged in, even after the browser is closed, until you logout or your session expires.</p> <p>See the <a href='{userAccountTutorialLink}' target='_blank'>User Account Tutorial</a> for further help with logging in.</p>",
     "description": "A message shown to the user if he or she is logged out (Safari only)",
-    "component": "UserAuth Vue Component"
+    "component": "UserAuth Vue Component",
+    "params": ["userAccountTutorialLink"]
   },
   "AUTH_SAFARI_LOGOUT_MSG": {
-    "message": "Please launch the Alpheios Reading Tools application from the LaunchPad and log out of your user account there.",
+    "message": "<h2>Logout Instructions</h2> <p>Please launch the Alpheios Reading Tools application. You can logout from your account from there.</p> <p>Return to the browser after logout.</p> <p>You may need to refresh or close your browser for the logout to take affect.</p> <p>See the <a href='{userAccountTutorialLink}' target='_blank'>User Account Tutorial</a> for further help with logging out.</p>",
     "description": "A message shown to the user if he or she is logged in (Safari only)",
-    "component": "UserAuth Vue Component"
+    "component": "UserAuth Vue Component",
+    "params": ["userAccountTutorialLink"]
   },
   "FONTSIZE_TEXT_SMALL": {
     "message": "Small",

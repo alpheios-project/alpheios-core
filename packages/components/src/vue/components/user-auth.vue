@@ -3,11 +3,9 @@
     <div class="alpheios-user-auth__user-container">
       <login v-show="!app.platform.isSafariAppExtension" />
       <div class="alpheios-user-auth__user-login-instuctions" v-show="app.platform.isSafariAppExtension">
-        <div v-show="!this.$store.state.auth.isAuthenticated">
-          {{ l10n.getMsg(`AUTH_SAFARI_LOGIN_MSG`) }}
+        <div v-show="!this.$store.state.auth.isAuthenticated" v-html="l10n.getMsg(`AUTH_SAFARI_LOGIN_MSG`, { userAccountTutorialLink: $options.userAccountTutorialLink })">
         </div>
-        <div v-show="this.$store.state.auth.isAuthenticated">
-          {{ l10n.getMsg(`AUTH_SAFARI_LOGOUT_MSG`) }}
+        <div v-show="this.$store.state.auth.isAuthenticated" v-html="l10n.getMsg(`AUTH_SAFARI_LOGOUT_MSG`, { userAccountTutorialLink: $options.userAccountTutorialLink })">
         </div>
       </div>
       <div class="alpheios-user-auth__user-info-box" v-show="this.$store.state.auth.isAuthenticated">
@@ -34,6 +32,7 @@ import CloseIcon from '@/images/inline-icons/x-close.svg'
 
 export default {
   name: 'UserAuth',
+  userAccountTutorialLink: 'https://alpheios.net/pages/tutorials/#safari-user-account',
   inject: {
     app: 'app',
     l10n: 'l10n',
