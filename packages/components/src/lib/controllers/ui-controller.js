@@ -939,7 +939,7 @@ export default class UIController {
     if (!this.isInitialized) { await this.init() }
 
     // Inject Alpheios CSS rules
-    this.addPageInjections()
+    this.activateOnPage()
 
     // Activate listeners
     if (this.evc) { this.evc.activateListeners() }
@@ -999,7 +999,7 @@ export default class UIController {
     if (this.api.ui.hasModule('panel')) { this.api.ui.closePanel(false) } // Close panel without updating it's state so the state can be saved for later reactivation
 
     // Remove Alpheios CSS rules
-    this.removePageInjections()
+    this.deactivateOnPage()
 
     this.isActivated = false
     this.isDeactivated = true
@@ -1036,17 +1036,24 @@ export default class UIController {
     return UIController.embedLibWarningInstance
   }
 
-  addPageInjections () {
-    if (this.options.disableTextSelection && this.platform.isMobile) {
-      if (document && document.body) {
+  activateOnPage () {
+    if (document && document.body) {
+      if (this.options.disableTextSelection && this.platform.isMobile) {
+        // Disable text selection on mobile platforms when a corresponding option is set
         document.body.classList.add(injectionClasses.DISABLE_TEXT_SELECTION)
       } else {
-        this.logger.warn(`Cannot inject Alpheios CSS rules because either document or body do not exist`)
+        // If extension has been deactivated previously, deactivateOnPage() would be setting
+        // a DISABLE_TEXT_SELECTION for the page body. We shall remove it.
+        if (document.body.classList.contains(injectionClasses.DISABLE_TEXT_SELECTION)) {
+          document.body.classList.remove(injectionClasses.DISABLE_TEXT_SELECTION)
+        }
       }
+    } else {
+      this.logger.warn(`Cannot inject Alpheios CSS rules because either document or body do not exist`)
     }
   }
 
-  removePageInjections () {
+  deactivateOnPage () {
     if (document && document.body) {
       document.body.classList.add(injectionClasses.DISABLE_TEXT_SELECTION)
     }
