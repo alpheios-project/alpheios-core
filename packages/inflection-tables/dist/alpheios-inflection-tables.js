@@ -15853,7 +15853,7 @@ class LatinVerbSupineIrregularView extends _views_lang_latin_verb_irregular_lati
    * A list of constructors of linked views.
    * @return {View[]}
    */
-  static get linkedViewConstructors () {
+  static linkedViewConstructors (homonym) {
     return [_views_lang_latin_verb_irregular_latin_verb_irregular_view_js__WEBPACK_IMPORTED_MODULE_2__["default"], _views_lang_latin_verb_irregular_latin_verb_irregular_voice_view_js__WEBPACK_IMPORTED_MODULE_3__["default"], _views_lang_latin_verb_irregular_latin_verb_participle_irregular_view_js__WEBPACK_IMPORTED_MODULE_4__["default"]]
   }
 }

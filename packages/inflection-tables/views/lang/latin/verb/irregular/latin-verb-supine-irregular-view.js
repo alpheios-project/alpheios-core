@@ -60,7 +60,7 @@ export default class LatinVerbSupineIrregularView extends LatinVerbIrregularBase
    * A list of constructors of linked views.
    * @return {View[]}
    */
-  static get linkedViewConstructors () {
+  static linkedViewConstructors (homonym) {
     return [LatinVerbIrregularView, LatinVerbIrregularVoiceView, LatinVerbParticipleIrregularView]
   }
 }
