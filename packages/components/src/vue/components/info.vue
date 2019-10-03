@@ -2,9 +2,12 @@
   <div class="alpheios-info">
 
     <a @click="logInHandler">Log in</a><br>
+    <a @click="accessTokenRequest">Obtain an access token</a><br>
+    <a @click="userInfoRequest">Obtain user info</a><br>
     <a @click="logInHandlerSafari">Log in (Safari)</a><br>
     <a @click="logInRedirectHandler">Log in with redirect</a><br>
     <a @click="logOutHandler">Log out</a><br>
+    <a @click="logOutHandlerSafari">Log out (Safari)</a><br>
 
     <div class="alpheios-info__faq">
       <a :href="faqLink" target="_blank">
@@ -83,10 +86,16 @@ export default {
   methods: {
     logInHandler () {
       if (this.$options.auth0) {
-        auth0.loginWithPopup().then(token => {
-          console.info(`User has been logged in, token is:`, token)
+        this.$options.auth0.loginWithPopup().then(() => {
+          console.info(`User has been logged in successfully`)
+
+          this.$options.auth0.getTokenSilently().then(accessToken => {
+            console.info(`Auth token has been obtained successfully:`, accessToken)
+          }).catch(err => {
+            console.info(`getTokenSilently() has failed:`, err)
+          })
           //logged in. you can get the user profile like this:
-          auth0.getUser().then(user => {
+          this.$options.auth0.getUser().then(user => {
             console.info(`User info has been obtained:`, user);
           }).catch(err => {
             console.info(`Auth0 user info request failed:`, err)
@@ -95,16 +104,35 @@ export default {
           console.info(`Auth0 login request failed:`, err)
         })
       } else {
-        console.info('Auth0 client object do not exist')
+        console.info('Auth0 client object does not exist')
       }
     },
 
+    accessTokenRequest () {
+      this.$options.auth0.getTokenSilently().then(accessToken => {
+        console.info(`Auth token has been obtained successfully:`, accessToken)
+      }).catch(err => {
+        console.info(`getTokenSilently() has failed:`, err)
+      })
+    },
+
+    userInfoRequest () {
+      this.$options.auth0.getUser().then(user => {
+        console.info(`User info has been obtained:`, user);
+      }).catch(err => {
+        console.info(`Auth0 user info request failed:`, err)
+      })
+    },
+
     logInHandlerSafari () {
-      if (this.$options.auth0) {
-        auth0.loginWithPopup().then(token => {
+      if (this.$options.auth0Safari) {
+        this.$options.auth0Safari.loginWithPopup({
+          audience: 'alpheios.net:apis',
+          scope: 'openid profile email'
+        }).then(token => {
           console.info(`User has been logged in, token is:`, token)
           //logged in. you can get the user profile like this:
-          auth0.getUser().then(user => {
+          this.$options.auth0Safari.getUser().then(user => {
             console.info(`User info has been obtained:`, user);
           }).catch(err => {
             console.info(`Auth0 user info request failed:`, err)
@@ -113,16 +141,16 @@ export default {
           console.info(`Auth0 login request failed:`, err)
         })
       } else {
-        console.info('Auth0 client object do not exist')
+        console.info('Auth0 Safari client object does not exist')
       }
     },
 
     logInRedirectHandler () {
       if (this.$options.auth0) {
-        auth0.loginWithRedirect().then(token => {
+        this.$options.auth0.loginWithRedirect().then(token => {
           console.info(`User has been logged in, token is:`, token)
           //logged in. you can get the user profile like this:
-          auth0.getUser().then(user => {
+          this.$options.auth0.getUser().then(user => {
             console.info(`User info has been obtained:`, user);
           }).catch(err => {
             console.info(`Auth0 user info request failed:`, err)
@@ -131,15 +159,23 @@ export default {
           console.info(`Auth0 login request failed:`, err)
         })
       } else {
-        console.info('Auth0 client object do not exist')
+        console.info('Auth0 client object does not exist')
       }
     },
 
     logOutHandler () {
       if (this.$options.auth0) {
-        auth0.logout()
+        this.$options.auth0.logout()
       } else {
-        console.info('Auth0 client object do not exist')
+        console.info('Auth0 client object does not exist')
+      }
+    },
+
+    logOutHandlerSafari () {
+      if (this.$options.auth0Safari) {
+        this.$options.auth0Safari.logout()
+      } else {
+        console.info('Auth0 Safari client object does not exist')
       }
     }
   },
@@ -149,7 +185,9 @@ export default {
     // For webextension
     createAuth0Client({
       domain: 'alpheios.auth0.com',
-      client_id: 'iT75HkBHThA4QdFwFoZRofLC41vVyvAt'
+      client_id: 'iT75HkBHThA4QdFwFoZRofLC41vVyvAt',
+      audience: 'alpheios.net:apis',
+      scope: 'openid profile offline_access'
     }).then(auth0 => {
       console.info(`Auth0 client has been created successfully:`, auth0)
       this.$options.auth0 = auth0
@@ -160,7 +198,10 @@ export default {
     // For Safari
     createAuth0Client({
       domain: 'alpheios.auth0.com',
-      client_id: 'iT75HkBHThA4QdFwFoZRofLC41vVyvAt'
+      client_id: 'iT75HkBHThA4QdFwFoZRofLC41vVyvAt',
+      // redirect_uri: 'alpheiossafariappextension://auth0'
+      // redirect_uri: 'safari-extension://net.alpheios.safari.ext-w79wnx2nkz/'
+      redirect_uri: 'http://localhost:8016'
     }).then(auth0 => {
       console.info(`Auth0 client for Safari has been created successfully:`, auth0)
       this.$options.auth0Safari = auth0
