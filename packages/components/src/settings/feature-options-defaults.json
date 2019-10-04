@@ -86,7 +86,7 @@
       "labelText": "Max results per author (initial search)",
       "number": true,
       "minValue": 1,
-      "maxValue": 1000,
+      "maxValue": 5000,
       "values": []
     },
     "wordUsageExamplesMax": {
@@ -94,7 +94,7 @@
       "labelText": "Max total results ('Choose Author/Work' searches)",
       "number": true,
       "minValue": 1,
-      "maxValue": 1000,
+      "maxValue": 5000,
       "values": []
     },
     "preferredLanguage": {

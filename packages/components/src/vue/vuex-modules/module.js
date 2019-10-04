@@ -122,7 +122,7 @@ Module._configDefaults = {
    * Dynamic module names are not supported
    * @type {string}
    */
-  _moduleName: `A name ame must be defined by a child module`,
+  _moduleName: 'A name ame must be defined by a child module',
   _moduleType: Module.types.DATA,
 
   /**

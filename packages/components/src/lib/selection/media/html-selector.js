@@ -120,7 +120,7 @@ export default class HTMLSelector extends MediaSelector {
       range.setEndPoint('EndToEnd', endRange)
       range.select()
     } else {
-      console.warn(`Browser does not support the Alpheios word selection code. Support for getSelection() or createTextRange() is required.`)
+      console.warn('Browser does not support the Alpheios word selection code. Support for getSelection() or createTextRange() is required.')
     }
     return range
   }

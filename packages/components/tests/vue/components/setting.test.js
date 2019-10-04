@@ -106,4 +106,40 @@ describe('setting.test.js', () => {
     cmp.vm.checkboxClick()
     expect(cmp.emitted()['change']).toBeTruthy()
   })
+
+  it('8 Setting - selected from data model', () => {
+    let cmp = mount(Setting, {
+      propsData: {
+        data: {
+          name: 'fooname',
+          labelText: 'foolabel',
+          textValues: function () { return [ 'footext1', 'footext2' ] },
+          currentTextValue: function () { return 'footext1' }
+        }
+      }
+    })
+
+    expect(cmp.vm.selected).toEqual('footext1')
+    expect(cmp.findAll('select').length).toEqual(1)
+    expect(cmp.findAll('select option').length).toEqual(2)
+    expect(cmp.find('select option:checked').text()).toEqual('footext1')
+  })
+
+  it('9 Setting - selected from data override', () => {
+    let cmp = mount(Setting, {
+      propsData: {
+        data: {
+          name: 'fooname',
+          labelText: 'foolabel',
+          textValues: function () { return [ 'footext1', 'footext2' ] },
+          currentTextValue: function () { return 'footext1' }
+        },
+        selectedOverride: 'footext2'
+      }
+    })
+
+    expect(cmp.vm.selected).toEqual('footext2')
+    expect(cmp.find('select option:checked').text()).toEqual('footext2')
+  })
+
 })

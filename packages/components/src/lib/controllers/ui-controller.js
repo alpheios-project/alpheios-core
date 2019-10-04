@@ -126,6 +126,9 @@ export default class UIController {
     this.api = {} // An API object for functions of registered modules and UI controller.
     this.modules = new Map()
 
+    // Get query parameters from the URL. Do this early so they will be available to modules during registration
+    this.queryParams = QueryParams.parse()
+
     /**
      * If an event controller be used with an instance of a UI Controller,
      * this prop will hold an event controller instance. It is usually initialized within a `build` method.
@@ -311,7 +314,8 @@ export default class UIController {
    */
   registerModule (moduleClass, options = {}) {
     if (moduleClass.isSupportedPlatform(this.platform)) {
-      // Add `platform` to module's options
+      // Add query parameters and platform info to module's options
+      options.queryParams = this.queryParams
       options.platform = this.platform
       this.modules.set(moduleClass.moduleName, { ModuleClass: moduleClass, options, instance: null })
     } else {
@@ -367,9 +371,7 @@ export default class UIController {
   }
 
   async init () {
-    if (this.isInitialized) { return `Already initialized` }
-    // Get query parameters from the URL
-    this.queryParams = QueryParams.parse()
+    if (this.isInitialized) { return 'Already initialized' }
     // Start loading options as early as possible
     const optionLoadPromises = this.initOptions(this.options.storageAdapter)
     // Create a copy of resource options for the lookup UI component
@@ -933,8 +935,8 @@ export default class UIController {
    * @returns {Promise<UIController>}
    */
   async activate () {
-    if (this.isActivated) { return `Already activated` }
-    if (this.state.isDisabled()) { return `UI controller is disabled` }
+    if (this.isActivated) { return 'Already activated' }
+    if (this.state.isDisabled()) { return 'UI controller is disabled' }
 
     if (!this.isInitialized) { await this.init() }
 
@@ -989,7 +991,7 @@ export default class UIController {
    * @returns {Promise<UIController>}
    */
   async deactivate () {
-    if (this.isDeactivated) { return `Already deactivated` }
+    if (this.isDeactivated) { return 'Already deactivated' }
 
     // Deactivate event listeners
     if (this.evc) { this.evc.deactivateListeners() }
@@ -1049,7 +1051,7 @@ export default class UIController {
         }
       }
     } else {
-      this.logger.warn(`Cannot inject Alpheios CSS rules because either document or body do not exist`)
+      this.logger.warn('Cannot inject Alpheios CSS rules because either document or body do not exist')
     }
   }
 
@@ -1113,25 +1115,25 @@ export default class UIController {
         // lookup is deduced from the page and might be wrong
         const message = this.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE',
           { targetWord: this.store.state.app.targetWord, languageName: languageName })
-        this.store.commit(`ui/setNotification`, { text: message, important: true, showLanguageSwitcher: true })
+        this.store.commit('ui/setNotification', { text: message, important: true, showLanguageSwitcher: true })
       } else {
         // if we are coming from e.g. the lookup or the wordlist, offering change language
         // here creates some confusion and the language was explicit upon lookup so it is not necessary
         const message = this.api.l10n.getMsg('TEXT_NOTICE_NOT_FOUND',
           { targetWord: this.store.state.app.targetWord, languageName: languageName })
-        this.store.commit(`ui/setNotification`, { text: message, important: true, showLanguageSwitcher: false })
+        this.store.commit('ui/setNotification', { text: message, important: true, showLanguageSwitcher: false })
       }
     }
   }
 
   // TODO: Do we need this function
   showErrorInfo (errorText) {
-    this.store.commit(`ui/setNotification`, { text: errorText, important: true })
+    this.store.commit('ui/setNotification', { text: errorText, important: true })
   }
 
   // TODO: Do we need this function
   showImportantNotification (message) {
-    this.store.commit(`ui/setNotification`, { text: message, important: true })
+    this.store.commit('ui/setNotification', { text: message, important: true })
   }
 
   /**
@@ -1180,9 +1182,9 @@ export default class UIController {
 
     if (['treebank', 'inflections', 'inflectionsbrowser', 'wordUsage'].includes(tabName) && this.platform.isMobile && isPortrait) {
       const message = this.api.l10n.getMsg('HINT_LANDSCAPE_MODE')
-      this.store.commit(`ui/setHint`, message, tabName)
+      this.store.commit('ui/setHint', message, tabName)
     } else {
-      this.store.commit(`ui/resetHint`)
+      this.store.commit('ui/resetHint')
     }
     return this
   }
@@ -1250,10 +1252,16 @@ export default class UIController {
     this.resetInflData()
     this.store.commit('ui/resetNotification')
     this.store.commit('ui/resetMessages')
-    this.store.commit('auth/resetNotification')
+    /*
+    Do not reset authentication notification if there is an expired user session:
+    in this case we always need to show a login prompt to the user
+     */
+    if (!this.store.state.auth.isSessionExpired) {
+      this.store.commit('auth/resetNotification')
+    }
 
     // Set new data values
-    this.store.commit(`app/setTextData`, { text: targetWord, languageID: languageID })
+    this.store.commit('app/setTextData', { text: targetWord, languageID: languageID })
     this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
     this.updateLanguage(languageID)
     this.updateWordAnnotationData(data)
@@ -1287,7 +1295,7 @@ export default class UIController {
         providers.set(l.lemma.translation.provider.uri, l.lemma.translation.provider)
       }
     })
-    this.store.commit(`app/setProviders`, Array.from(providers.values()))
+    this.store.commit('app/setProviders', Array.from(providers.values()))
   }
 
   /**
@@ -1385,7 +1393,7 @@ export default class UIController {
       }
       if (this.hasModule('toolbar')) {
         // Close a toolbar when a panel opens
-        this.store.commit(`toolbar/close`)
+        this.store.commit('toolbar/close')
       }
     }
   }
@@ -1400,7 +1408,7 @@ export default class UIController {
       if (syncState) { this.state.setPanelClosed() }
       // Open a toolbar when a panel closes. Do not open if the toolbar is deactivated.
       if (this.hasModule('toolbar') && this.getModule('toolbar').isActivated) {
-        this.store.commit(`toolbar/open`)
+        this.store.commit('toolbar/open')
       }
     }
   }
@@ -1421,7 +1429,7 @@ export default class UIController {
     if (this.api.ui.hasModule('toolbar')) {
       this.store.commit('toolbar/open')
     } else {
-      this.logger.warn(`Toolbar cannot be opened because its module is not registered`)
+      this.logger.warn('Toolbar cannot be opened because its module is not registered')
     }
   }
 
@@ -1435,7 +1443,7 @@ export default class UIController {
     if (this.api.ui.hasModule('actionPanel')) {
       this.store.commit('actionPanel/open', panelOptions)
     } else {
-      this.logger.warn(`Action panel cannot be opened because its module is not registered`)
+      this.logger.warn('Action panel cannot be opened because its module is not registered')
     }
   }
 
@@ -1443,7 +1451,7 @@ export default class UIController {
     if (this.api.ui.hasModule('actionPanel')) {
       this.store.commit('actionPanel/close')
     } else {
-      this.logger.warn(`Action panel cannot be closed because its module is not registered`)
+      this.logger.warn('Action panel cannot be closed because its module is not registered')
     }
   }
 
@@ -1453,7 +1461,7 @@ export default class UIController {
         ? this.store.commit('actionPanel/close')
         : this.store.commit('actionPanel/open', {})
     } else {
-      this.logger.warn(`Action panel cannot be toggled because its module is not registered`)
+      this.logger.warn('Action panel cannot be toggled because its module is not registered')
     }
   }
 
@@ -1541,8 +1549,10 @@ export default class UIController {
     this.store.commit('app/setWordUsageExamplesReady', false)
 
     const wordUsageExamples = this.enableWordUsageExamples({ languageID: homonym.languageID }, 'onDemand')
-      ? { paginationMax: this.featureOptions.items.wordUsageExamplesMax.currentValue,
-        paginationAuthMax: this.featureOptions.items.wordUsageExamplesAuthMax.currentValue }
+      ? {
+        paginationMax: this.featureOptions.items.wordUsageExamplesMax.currentValue,
+        paginationAuthMax: this.featureOptions.items.wordUsageExamplesAuthMax.currentValue
+      }
       : null
 
     await LexicalQuery.getWordUsageData(homonym, wordUsageExamples, params)
@@ -1567,8 +1577,10 @@ export default class UIController {
 
   getWordUsageExamplesQueryParams (textSelector) {
     if (this.enableWordUsageExamples(textSelector, 'onLexicalQuery')) {
-      return { paginationMax: this.featureOptions.items.wordUsageExamplesMax.currentValue,
-        paginationAuthMax: this.featureOptions.items.wordUsageExamplesAuthMax.currentValue }
+      return {
+        paginationMax: this.featureOptions.items.wordUsageExamplesMax.currentValue,
+        paginationAuthMax: this.featureOptions.items.wordUsageExamplesAuthMax.currentValue
+      }
     } else {
       return null
     }
@@ -1632,14 +1644,14 @@ export default class UIController {
   }
 
   onMorphDataNotFound () {
-    this.store.commit(`ui/setNotification`, { text: this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_NOTFOUND'), important: true })
+    this.store.commit('ui/setNotification', { text: this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_NOTFOUND'), important: true })
   }
 
   onHomonymReady (homonym) {
     homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
 
     // Update status info with data from a morphological analyzer
-    this.store.commit(`app/setTextData`, { text: homonym.targetWord, languageID: homonym.languageID })
+    this.store.commit('app/setTextData', { text: homonym.targetWord, languageID: homonym.languageID })
 
     // Update inflections data
     const inflectionsViewSet = ViewSetFactory.create(homonym, this.featureOptions.items.locale.currentValue)
@@ -1687,8 +1699,8 @@ export default class UIController {
 
   onWordListUpdated (wordList) {
     this.store.commit('app/setWordLists', wordList)
-    if (this.store.state.auth.enableLogin && !this.store.state.auth.isAuthenticated) {
-      this.store.commit(`auth/setNotification`, { text: 'TEXT_NOTICE_SUGGEST_LOGIN', showLogin: true, count: this.wordlistC.getWordListItemCount() })
+    if (this.store.state.auth.enableLogin && !this.store.state.auth.isAuthenticated && !this.store.state.auth.isSessionExpired) {
+      this.store.commit('auth/setNotification', { text: 'TEXT_NOTICE_SUGGEST_LOGIN', showLogin: true, count: this.wordlistC.getWordListItemCount() })
     }
   }
 
@@ -1872,7 +1884,7 @@ export default class UIController {
         break
       case 'hideLoginPrompt':
         if (this.api.auth) {
-          this.store.commit(`auth/setHideLoginPrompt`, uiOptions.items.hideLoginPrompt.currentValue)
+          this.store.commit('auth/setHideLoginPrompt', uiOptions.items.hideLoginPrompt.currentValue)
         }
         break
     }

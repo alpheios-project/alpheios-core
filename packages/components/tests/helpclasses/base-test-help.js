@@ -89,7 +89,8 @@ export default class BaseTestHelp {
               hasInflData: false,
               embedLibActive: false,
               currentLanguageID: null,
-              wordUsageExamplesReady: false
+              wordUsageExamplesReady: false,
+              wordListUpdateTime: 0
             },
             mutations: {
               setTestCurrentLanguageName (state, value) {
@@ -118,6 +119,9 @@ export default class BaseTestHelp {
               },
               setTestWordUsageExamplesReady (state, value) {
                 state.wordUsageExamplesReady = value
+              },
+              setTestWordListUpdateTime (state, value) {
+                state.wordListUpdateTime = value
               }
             },
             getters: {

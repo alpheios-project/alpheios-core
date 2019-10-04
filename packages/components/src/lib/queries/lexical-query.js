@@ -53,7 +53,8 @@ export default class LexicalQuery extends Query {
         const adapterConcordanceRes = await ClientAdapters.wordusageExamples.concordance({
           method: 'getWordUsageExamples',
           clientId: this.clientId,
-          params: { homonym: homonym,
+          params: {
+            homonym: homonym,
             pagination: paginationParams,
             filters: {
               author: params.author,
@@ -185,7 +186,7 @@ export default class LexicalQuery extends Query {
 
     // if lexicon options are set for short definitions, we want to override any
     // short definitions provided by the maAdapter
-    if (lexiconShortOpts.allow) {
+    if (lexiconShortOpts.allow && lexiconShortOpts.allow.length > 0) {
       this.homonym.lexemes.forEach((l) => { l.meaning.clearShortDefs() })
       LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
     } else {
@@ -227,7 +228,8 @@ export default class LexicalQuery extends Query {
       const adapterConcordanceRes = yield ClientAdapters.wordusageExamples.concordance({
         method: 'getWordUsageExamples',
         clientId: this.clientId,
-        params: { homonym: this.homonym,
+        params: {
+          homonym: this.homonym,
           pagination: {
             property: 'authmax',
             value: this.wordUsageExamples.paginationAuthMax
@@ -351,25 +353,25 @@ LexicalQuery.evt = {
    * Published when morphological data becomes available.
    * Data: an empty object.
    */
-  MORPH_DATA_READY: new PsEvent(`Morph Data Ready`, LexicalQuery),
+  MORPH_DATA_READY: new PsEvent('Morph Data Ready', LexicalQuery),
 
   /**
    * Published when no morphological data has been found.
    * Data: an empty object.
    */
-  MORPH_DATA_NOTAVAILABLE: new PsEvent(`Morph Data Not Found`, LexicalQuery),
+  MORPH_DATA_NOTAVAILABLE: new PsEvent('Morph Data Not Found', LexicalQuery),
 
   /**
    * Published when no morphological data has been found.
    * Data: {Homonym} homonym - A homonym object.
    */
-  HOMONYM_READY: new PsEvent(`Homonym Ready`, LexicalQuery),
+  HOMONYM_READY: new PsEvent('Homonym Ready', LexicalQuery),
 
   /**
    * Published when lemma translations becomes available.
    * Data: {Homonym} homonym - A homonym object.
    */
-  LEMMA_TRANSL_READY: new PsEvent(`Lemma Translations Ready`, LexicalQuery),
+  LEMMA_TRANSL_READY: new PsEvent('Lemma Translations Ready', LexicalQuery),
 
   /**
    * Published when short definitions data becomes available.
@@ -379,7 +381,7 @@ LexicalQuery.evt = {
    *   homonym: this.homonym
    * }
    */
-  SHORT_DEFS_READY: new PsEvent(`Short Definitions Data is Ready`, LexicalQuery),
+  SHORT_DEFS_READY: new PsEvent('Short Definitions Data is Ready', LexicalQuery),
 
   /**
    * Published when full definitions data becomes available.
@@ -389,7 +391,7 @@ LexicalQuery.evt = {
    *   homonym: this.homonym
    * }
    */
-  FULL_DEFS_READY: new PsEvent(`Full Definitions Data is Ready`, LexicalQuery),
+  FULL_DEFS_READY: new PsEvent('Full Definitions Data is Ready', LexicalQuery),
 
   /**
    * Published when short definitions data has been not found.
@@ -398,7 +400,7 @@ LexicalQuery.evt = {
    *   word: definitionRequest.lexeme.lemma.word
    * }
    */
-  SHORT_DEFS_NOT_FOUND: new PsEvent(`Short Definitions Data is Not Found`, LexicalQuery),
+  SHORT_DEFS_NOT_FOUND: new PsEvent('Short Definitions Data is Not Found', LexicalQuery),
 
   /**
    * Published when full definitions data has been not found.
@@ -407,7 +409,7 @@ LexicalQuery.evt = {
    *   word: definitionRequest.lexeme.lemma.word
    * }
    */
-  FULL_DEFS_NOT_FOUND: new PsEvent(`Full Definitions Data is Not Found`, LexicalQuery),
+  FULL_DEFS_NOT_FOUND: new PsEvent('Full Definitions Data is Not Found', LexicalQuery),
 
   /**
    * Published when Lexical Query is created and TextQuoteSelector is passed inside TextSelector.
@@ -415,6 +417,6 @@ LexicalQuery.evt = {
    *    textQuoteSelector
    * }
    */
-  TEXT_QUOTE_SELECTOR_RECEIVED: new PsEvent(`TextQuoteSelector recieved for the target word`, LexicalQuery),
-  WORD_USAGE_EXAMPLES_READY: new PsEvent(`Word usage examples ready`, LexicalQuery)
+  TEXT_QUOTE_SELECTOR_RECEIVED: new PsEvent('TextQuoteSelector recieved for the target word', LexicalQuery),
+  WORD_USAGE_EXAMPLES_READY: new PsEvent('Word usage examples ready', LexicalQuery)
 }

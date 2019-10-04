@@ -321,8 +321,8 @@ export default class TabScript extends UIStateAPI {
 
     if (this.tabID !== targetState.tabID) {
       diff.tabID = targetState.tabID
-      diff['_changedKeys'].push('tabID')
-      diff['_changedEntries'].push(['tabID', targetState.tabID])
+      diff._changedKeys.push('tabID')
+      diff._changedEntries.push(['tabID', targetState.tabID])
     }
 
     for (const key of Object.keys(targetState)) {
@@ -331,19 +331,19 @@ export default class TabScript extends UIStateAPI {
         if (this.hasOwnProperty(key)) { // eslint-disable-line no-prototype-builtins
           if (this[key] && targetState[key] && this[key] !== targetState[key]) {
             diff[key] = targetState[key]
-            diff['_changedKeys'].push(key)
-            diff['_changedEntries'].push([key, targetState[key]])
+            diff._changedKeys.push(key)
+            diff._changedEntries.push([key, targetState[key]])
           }
         }
       }
     }
 
     diff.keys = function () {
-      return diff['_changedKeys']
+      return diff._changedKeys
     }
 
     diff.entries = function () {
-      return diff['_changedEntries']
+      return diff._changedEntries
     }
 
     diff.has = function (prop) {

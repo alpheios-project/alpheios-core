@@ -1,5 +1,6 @@
 import Module from '@/vue/vuex-modules/module.js'
 import Platform from '@/lib/utility/platform.js'
+import AuthData from '@/lib/auth/auth-data.js'
 
 export default class AuthModule extends Module {
   /**
@@ -9,6 +10,8 @@ export default class AuthModule extends Module {
   constructor (store, api, config) {
     super(store, api, config)
     this._auth = this.config.auth
+    this._authData = new AuthData()
+    this._expirationTimeoutId = null
     this._externalLoginUrl = null
     this._externalLogoutUrl = null
     if (this._auth) {
@@ -22,6 +25,30 @@ export default class AuthModule extends Module {
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
     api[this.constructor.moduleName] = this.constructor.api(this, store)
   }
+
+  updateAuthData (authData, store) {
+    this._authData = authData
+
+    if (this.config.queryParams && this.config.queryParams.sessionDuration) {
+      const customSessionDuration = this.config.queryParams.sessionDuration
+      // Do not allow to override session duration to values higher than set by the auth server
+      if (customSessionDuration && Number(customSessionDuration) * 1000 < this._authData.expirationInterval) {
+        this._authData.setSessionDuration(Number(customSessionDuration) * 1000)
+      }
+    }
+
+    store.commit('auth/setIsAuthenticated', this._authData)
+
+    if (!this._authData.isExpired) {
+      if (!this._expirationTimeoutId) {
+        this._expirationTimeoutId = window.setTimeout(() => {
+          store.commit('auth/expireSession')
+          store.commit('auth/setNotification', { text: 'AUTH_SESSION_EXPIRED_MSG' })
+          this._expirationTimeoutId = null
+        }, this._authData.expirationInterval)
+      }
+    }
+  }
 }
 
 AuthModule.store = (moduleInstance) => {
@@ -33,6 +60,8 @@ AuthModule.store = (moduleInstance) => {
       userId: '',
       userNickName: '',
       isAuthenticated: false,
+      isSessionExpired: false,
+      expirationDateTime: null, // A date and time when an access token expires
       notification: {
         visible: false,
         hideLoginPrompt: false,
@@ -45,18 +74,29 @@ AuthModule.store = (moduleInstance) => {
       enableLogin: Boolean(moduleInstance._auth) // don't enable login if we have no auth object
     },
     mutations: {
-      setIsAuthenticated: (state, profile) => {
+      setIsAuthenticated: (state, authData) => {
         state.isAuthenticated = true
-        state.userId = profile.sub
-        state.userNickName = profile.nickname
+        state.expirationDateTime = authData.expirationDateTime
+        state.userId = authData.userId
+        state.userNickName = authData.userNickname
       },
+
       setIsNotAuthenticated: (state) => {
         state.isAuthenticated = false
+        state.isSessionExpired = false
+        state.expirationDateTime = null
         state.userId = ''
         state.userNickName = ''
       },
+
+      expireSession: (state) => {
+        state.isAuthenticated = false
+        state.isSessionExpired = true
+      },
+
       /**
        * set a UI notification
+       *
        * @param {Object} state current state Object
        * @param {Object} data notification object with the following properties:
        *   { showLogin: Boolean - set to true if the notification is a prompt for login
@@ -114,7 +154,7 @@ AuthModule.api = (moduleInstance, store) => {
         return
       }
       moduleInstance._auth.session().then((data) => {
-        store.commit('auth/setIsAuthenticated', data)
+        moduleInstance.updateAuthData(data, store)
       }).catch((error) => { // eslint-disable-line handle-callback-err
         // a session being unavailable is not necessarily an error
         // user might not have authenticated or it might be client-side auth
@@ -135,18 +175,21 @@ AuthModule.api = (moduleInstance, store) => {
         // fail quietly
         return
       }
-      store.commit(`auth/setNotification`, { text: 'AUTH_LOGIN_PROGRESS_MSG' })
+      store.commit('auth/setNotification', { text: 'AUTH_LOGIN_PROGRESS_MSG' })
+
       moduleInstance._auth.authenticate(authData).then(() => {
         return moduleInstance._auth.getProfileData()
-      }).then((data) => {
-        if (!data.sub) {
+      }).then((profileData) => {
+        // `profileData` is an AuthData object
+        if (!profileData.userId) {
           throw new RangeError('UserId is empty!')
         }
-        store.commit('auth/setIsAuthenticated', data)
-        store.commit(`auth/setNotification`, { text: 'AUTH_LOGIN_SUCCESS_MSG' })
+
+        moduleInstance.updateAuthData(profileData, store)
+        store.commit('auth/setNotification', { text: 'AUTH_LOGIN_SUCCESS_MSG' })
       }).catch((error) => {
         console.error('Alpheios authentication failed', error)
-        return store.commit(`auth/setNotification`, { text: 'AUTH_LOGIN_AUTH_FAILURE_MSG' })
+        return store.commit('auth/setNotification', { text: 'AUTH_LOGIN_AUTH_FAILURE_MSG' })
       })
     },
 
@@ -159,7 +202,7 @@ AuthModule.api = (moduleInstance, store) => {
       }
       moduleInstance._auth.logout().then(() => {
         store.commit('auth/setIsNotAuthenticated')
-        return store.commit(`auth/setNotification`, { text: 'AUTH_LOGOUT_SUCCESS_MSG' })
+        return store.commit('auth/setNotification', { text: 'AUTH_LOGOUT_SUCCESS_MSG' })
       }).catch((error) => {
         console.error('Alpheios logout failed', error)
       })

@@ -13,7 +13,7 @@ export default class TempStorageArea extends StorageAdapter {
    * successfully. If at least on save operation fails, returns a rejected promise with an error information.
    */
   set (keysObject) {
-    return new Promise((resolve) => { resolve(`TempStorageArea does not store any values permanently`) })
+    return new Promise((resolve) => { resolve('TempStorageArea does not store any values permanently') })
   }
 
   /**
@@ -27,6 +27,6 @@ export default class TempStorageArea extends StorageAdapter {
    * found in the storage area. If this operation failed, the promise will be rejected with an error message.
    */
   get (keys = undefined) {
-    return new Promise((resolve) => { resolve(`TempStorageArea does not have any stored values`) })
+    return new Promise((resolve) => { resolve('TempStorageArea does not have any stored values') })
   }
 }

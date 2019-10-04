@@ -148,7 +148,8 @@ export default {
       sortingState: {
         'targetWord': null
       }
-    }
+    } 
+     
   },
   computed: {
     hasSeveralItems () {
@@ -170,7 +171,6 @@ export default {
           let result = this.wordlist.values.filter(this.filterMethods[this.selectedFilterBy])
           this.applySorting(result)
           return result
-
         }
       }
       return []

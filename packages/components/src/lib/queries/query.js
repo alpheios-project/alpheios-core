@@ -74,7 +74,7 @@ export default class Query {
    * @returns {Promise<Error>}
    */
   async getData () {
-    return new Error(`getData() method should be implemented in a subclass of a Query`)
+    return new Error('getData() method should be implemented in a subclass of a Query')
   }
 
   /**
@@ -84,7 +84,7 @@ export default class Query {
    * @returns {*}
    */
   finalize () {
-    throw new Error(`finalize() method should be implemented in a subclass of a Query`)
+    throw new Error('finalize() method should be implemented in a subclass of a Query')
   }
 }
 

@@ -4,13 +4,13 @@
 export default class OptionItem {
   constructor (item, key, storageAdapter) {
     if (!item) {
-      throw new Error(`Item cannot be empty`)
+      throw new Error('Item cannot be empty')
     }
     if (!key) {
-      throw new Error(`Key cannot be empty`)
+      throw new Error('Key cannot be empty')
     }
     if (!storageAdapter) {
-      throw new Error(`Storage adapter object should be provided`)
+      throw new Error('Storage adapter object should be provided')
     }
     for (const key of Object.keys(item)) {
       this[key] = item[key]

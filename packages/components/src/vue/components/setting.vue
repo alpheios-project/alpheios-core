@@ -57,6 +57,10 @@ export default {
       type: Object,
       required: true
     },
+    selectedOverride: {
+      type: Object,
+      required: false
+    },
     showTitle: {
       type: Boolean,
       required: false,
@@ -84,7 +88,9 @@ export default {
     selected: {
       get: function () {
         let rv
-        if (typeof this.dataModel.currentTextValue === 'function' && this.dataModel.boolean !== true && this.dataModel.number !== true) {
+        if (this.selectedOverride) {
+          rv = this.selectedOverride
+        } else if (typeof this.dataModel.currentTextValue === 'function' && this.dataModel.boolean !== true && this.dataModel.number !== true) {
           rv = this.dataModel.currentTextValue()
         } else if (this.dataModel.boolean === true) {
           rv = this.dataModel.currentValue

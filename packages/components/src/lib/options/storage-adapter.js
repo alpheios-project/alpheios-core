@@ -23,7 +23,7 @@ export default class StorageAdapter {
    * successfully. If at least on save operation fails, returns a rejected promise with an error information.
    */
   set (keysObject) {
-    return new Promise((resolve, reject) => reject(new Error(`Set method should be implemented in a subclass`)))
+    return new Promise((resolve, reject) => reject(new Error('Set method should be implemented in a subclass')))
   }
 
   /**
@@ -36,7 +36,7 @@ export default class StorageAdapter {
    * found in the storage area. If this operation failed, the promise will be rejected with an error message.
    */
   get (keys) {
-    return new Promise((resolve, reject) => reject(new Error(`Get method should be implemented in a subclass`)))
+    return new Promise((resolve, reject) => reject(new Error('Get method should be implemented in a subclass')))
   }
 
   /**
@@ -48,13 +48,13 @@ export default class StorageAdapter {
    * successfully. If at least on save operation fails, returns a rejected promise with an error information.
    */
   remove (key) {
-    return new Promise((resolve, reject) => reject(new Error(`Remove method should be implemented in a subclass`)))
+    return new Promise((resolve, reject) => reject(new Error('Remove method should be implemented in a subclass')))
   }
 
   /**
    * clear all items in the storage
    */
   clearAll () {
-    return new Promise((resolve, reject) => reject(new Error(`clearAll method should be implemented in a subclass`)))
+    return new Promise((resolve, reject) => reject(new Error('clearAll method should be implemented in a subclass')))
   }
 }

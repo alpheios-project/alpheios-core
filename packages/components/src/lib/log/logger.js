@@ -35,15 +35,15 @@ export default class Logger {
       // There is an instance of the Logger already created, but we might need to change its parameters
       // It will be done only if the caller provided meaningful values to options' props
       if (typeof options.verbose !== 'undefined') {
-        console.info(`Setting a verbose mode`)
+        console.info('Setting a verbose mode')
         singleInstance.setVerboseMode(options.verbose)
       }
       if (typeof options.prepend !== 'undefined') {
-        console.info(`Setting a prepend mode`)
+        console.info('Setting a prepend mode')
         singleInstance.setVerboseMode(options.prepend)
       }
       if (typeof options.trace !== 'undefined') {
-        console.info(`Setting a trace mode`)
+        console.info('Setting a trace mode')
         singleInstance.setTraceMode(options.trace)
       }
     }

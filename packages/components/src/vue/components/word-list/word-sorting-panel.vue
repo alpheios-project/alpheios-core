@@ -38,7 +38,6 @@
 
   export default {
     name: 'WordSortingPanel',
-    inject: ['app', 'l10n'],
     components: {
       sortAscIcon: SortAscIcon,
       sortDescIcon: SortDescIcon

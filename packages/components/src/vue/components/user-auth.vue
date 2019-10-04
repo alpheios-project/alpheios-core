@@ -31,7 +31,6 @@
 </template>
 <script>
 import Login from './login.vue'
-import CloseIcon from '@/images/inline-icons/x-close.svg'
 
 export default {
   name: 'UserAuth',
@@ -42,8 +41,7 @@ export default {
     auth: { from: 'auth', default: null } // This module is options
   },
   components: {
-    login: Login,
-    closeIcon: CloseIcon
+    login: Login
   }
 }
 </script>

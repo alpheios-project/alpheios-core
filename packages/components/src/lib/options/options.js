@@ -14,10 +14,10 @@ export default class Options {
    */
   constructor (defaults, storageAdapter) {
     if (!defaults || !defaults.domain || !defaults.items || !defaults.version) {
-      throw new Error(`Defaults have no obligatory "domain", "version" and "items" properties`)
+      throw new Error('Defaults have no obligatory "domain", "version" and "items" properties')
     }
     if (!storageAdapter) {
-      throw new Error(`No storage adapter implementation provided`)
+      throw new Error('No storage adapter implementation provided')
     }
 
     this.defaults = defaults
@@ -91,7 +91,7 @@ export default class Options {
       return this
     } catch (error) {
       const message = `Unexpected error retrieving options for Alpheios from local storage: ${error}. Default values ` +
-      `will be used instead`
+      'will be used instead'
       console.error(message)
     }
   }

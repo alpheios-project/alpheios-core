@@ -20,7 +20,7 @@ export default class Message {
       throw new Error('Message data is missing')
     }
 
-    this.message = `Message text is not defined in translation data` // Message format string or text
+    this.message = 'Message text is not defined in translation data' // Message format string or text
     this.params = [] // Message parameters
 
     this.locale = locale

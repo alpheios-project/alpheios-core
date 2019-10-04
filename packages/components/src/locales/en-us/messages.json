@@ -562,6 +562,11 @@
     "description": "A message shown to the user if his or her authentication failed",
     "component": "UserAuth Vue Component"
   },
+  "AUTH_SESSION_EXPIRED_MSG": {
+    "message": "Your user session has expired. Please log in again.",
+    "description": "A message shown to the user if his or her authentication session has been expired",
+    "component": "UserAuth Vue Component"
+  },
   "AUTH_PROFILE_NICKNAME_LABEL": {
     "message": "Nickname",
     "description": "A user's profile nickname filed label",
@@ -584,7 +589,7 @@
     "params": ["userAccountTutorialLink"]
   },
   "AUTH_SAFARI_LOGOUT_MSG": {
-    "message": "<h2>Logout Instructions</h2> <p>Please launch the Alpheios Reading Tools application. You can logout from your account from there.</p> <p>Return to the browser after logout.</p> <p>You may need to refresh or close your browser for the logout to take affect.</p> <p>See the <a href='{userAccountTutorialLink}' target='_blank'>User Account Tutorial</a> for further help with logging out.</p>",
+    "message": "<h2>Logout Instructions</h2> <p>Please launch the Alpheios Reading Tools application. You can logout from your account from there.</p> <p>Return to the browser after logout.</p> <p>You may need to refresh or close your browser for the logout to take effect.</p> <p>See the <a href='{userAccountTutorialLink}' target='_blank'>User Account Tutorial</a> for further help with logging out.</p>",
     "description": "A message shown to the user if he or she is logged in (Safari only)",
     "component": "UserAuth Vue Component",
     "params": ["userAccountTutorialLink"]
