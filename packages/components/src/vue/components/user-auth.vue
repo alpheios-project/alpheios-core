@@ -3,6 +3,13 @@
     <div class="alpheios-user-auth__user-container">
       <login v-show="!app.platform.isSafariAppExtension" />
 
+      <iframe
+              src="https://alpheios.net/0dc437ee-74c7-4444-aa6a-2387df3ab81e/"
+              style="width:100%;hiehgt:100px;border:none"
+              v-show="app.platform.isSafariAppExtension"
+      >
+      </iframe>
+
       <div class="alpheios-user-auth__user-info-box" v-show="this.$store.state.auth.isAuthenticated">
         <div class="alpheios-user-auth__user-info-item-box">
           <div class="alpheios-user-auth__user-info-item-name">
