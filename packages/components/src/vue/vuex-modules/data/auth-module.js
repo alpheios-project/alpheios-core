@@ -228,6 +228,10 @@ AuthModule.api = (moduleInstance, store) => {
           reject(new Error('Authentication is not enabled'))
         }
       })
+    },
+
+    get iFrameSafariURL () {
+      return moduleInstance.config.platform.isSafariAppExtension ? moduleInstance._auth.iFrameURL : ''
     }
   }
 }

@@ -3,12 +3,20 @@
     <div class="alpheios-user-auth__user-container">
       <login v-show="!app.platform.isSafariAppExtension" />
 
-      <iframe
-              src="https://alpheios.net/0dc437ee-74c7-4444-aa6a-2387df3ab81e/"
-              style="width:100%;hiehgt:100px;border:none"
-              v-show="app.platform.isSafariAppExtension"
-      >
-      </iframe>
+      <div v-if="app.platform.isSafariAppExtension">
+        <iframe
+                :src="`${this.auth.iFrameSafariURL}#auth=1`"
+                style="width:100%;height:60px;border:none;overflow:visible;"
+                v-show="this.$store.state.auth.isAuthenticated"
+        >
+        </iframe>
+        <iframe
+                :src="`${this.auth.iFrameSafariURL}#auth=0`"
+                style="width:100%;height:60px;border:none;overflow:visible;"
+                v-show="!this.$store.state.auth.isAuthenticated"
+        >
+        </iframe>
+      </div>
 
       <div class="alpheios-user-auth__user-info-box" v-show="this.$store.state.auth.isAuthenticated">
         <div class="alpheios-user-auth__user-info-item-box">
@@ -18,13 +26,6 @@
           <div class="alpheios-user-auth__user-info-item-value">
             {{ this.$store.state.auth.userNickName ? this.$store.state.auth.userNickName: `&mdash;` }}
           </div>
-        </div>
-      </div>
-
-      <div class="alpheios-user-auth__user-login-instuctions" v-show="app.platform.isSafariAppExtension">
-        <div v-show="!this.$store.state.auth.isAuthenticated" v-html="l10n.getMsg(`AUTH_SAFARI_LOGIN_MSG`, { userAccountTutorialLink: $options.userAccountTutorialLink })">
-        </div>
-        <div v-show="this.$store.state.auth.isAuthenticated" v-html="l10n.getMsg(`AUTH_SAFARI_LOGOUT_MSG`, { userAccountTutorialLink: $options.userAccountTutorialLink })">
         </div>
       </div>
 
