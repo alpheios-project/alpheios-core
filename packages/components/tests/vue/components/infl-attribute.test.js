@@ -1,74 +1,47 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { mount, createLocalVue } from '@vue/test-utils'
+
+import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
+import BaseTestHelp from '@tests/helpclasses/base-test-help'
+
 import InflectionAttribute from '@/vue/components/infl-attribute.vue'
 import Vuex from 'vuex'
-import { Feature, Constants } from 'alpheios-data-models'
+import Vue from 'vue/dist/vue'
 
-describe('infl-attribute.test.js', () => {
+import { Constants, Feature } from 'alpheios-data-models'
+
+describe('popup.test.js', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
-  let store
-  let api = {}
-  let mockSendFeature
+  
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
-
-  const mockMessages = {
-    'foovalue': {
-      get: () => { return 'foovalue' },
-      abbr: () => { return 'fv' }
-    },
-    'INFL_ATTRIBUTE_LINK_TEXT_TYPE': {
-      get: () => { return 'source' },
-      abbr: () => { return 'src' }
-    },
-    'masculine': {
-      get: () => { return 'masculine' },
-      abbr: () => { return 'm.' }
-    },
-    'feminine': {
-      get: () => { return 'feminine' },
-      abbr: () => { return 'f.' }
-    }
-  }
+  
+  let store
+  let api = {}
 
   beforeEach(() => {
     jest.spyOn(console, 'error')
-
-    mockSendFeature = jest.fn(() => {})
+    jest.spyOn(console, 'log')
+    jest.spyOn(console, 'warn')
+  
+    store = BaseTestHelp.baseVuexStore()
+  
     api = {
-      app: {
-        sendFeature: mockSendFeature
-      },
-      l10n: {
-        hasMsg: (value) => mockMessages.hasOwnProperty(value),
-        getMsg: (value) => mockMessages[value].get(),
-        getAbbr: (value) => mockMessages[value].abbr()
-      }
+      app: BaseTestHelp.appAPI()
     }
+  
+    BaseTestHelp.l10nModule(store, api)
+  
   })
-  afterEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
-  })
-  afterAll(() => {
-  })
+  
+  function timeout (ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
 
   it('1 InflectionAttribute - renders a vue instance (min requirements)', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            linkedFeatures: []
-          }
-        }
-      }
-    })
-
-    let cmp = mount(InflectionAttribute, {
+    let cmp = shallowMount(InflectionAttribute, {
       propsData: {
         data: {},
         type: ''
@@ -81,17 +54,6 @@ describe('infl-attribute.test.js', () => {
   })
 
   it('2 InflectionAttribute - renders a vue instance (min requirements)', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            linkedFeatures: []
-          }
-        }
-      }
-    })
-
     let cmp = mount(InflectionAttribute, {
       propsData: {
         data: {
@@ -110,16 +72,13 @@ describe('infl-attribute.test.js', () => {
   })
 
   it('3 InflectionAttribute - renders a vue instance (min requirements)', async () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            linkedFeatures: ['fooType2']
-          }
-        }
-      }
-    })
+    let api = {
+      app: BaseTestHelp.appAPI({
+        sendFeature: jest.fn()
+      })
+    }
+    
+    BaseTestHelp.l10nModule(store, api)
 
     let cmp = mount(InflectionAttribute, {
       propsData: {
@@ -131,35 +90,27 @@ describe('infl-attribute.test.js', () => {
           },
           features: {
             fooType2: {
-              type: 'fooType2'
-            }
+            type: 'fooType2'
           }
-        },
-        type: 'fooType',
-        grouplevel: 2
+        }
       },
+      type: 'fooType',
+      grouplevel: 2
+    },
       store,
       localVue,
       mocks: api
     })
-
+    
+    store.commit('app/setLinkedFeatures', ['fooType2'])
     cmp.find('span').trigger('click')
-
-    expect(mockSendFeature.mock.calls.length).toBe(1)
-    expect(mockSendFeature).toBeCalledWith({ value: 'fooValue', values: ['fooValue'], type: 'fooType2' })
+    
+    expect(cmp.vm.app.sendFeature).toHaveBeenCalledTimes(1)
+    expect(cmp.vm.app.sendFeature).toHaveBeenCalledWith({ value: 'fooValue', values: ['fooValue'], type: 'fooType2' })
   })
 
-  it('3 InflectionAttribute - attributeClass method creates class list from featureType and extra classes', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            linkedFeatures: ['fooFeatureType']
-          }
-        }
-      }
-    })
+  it('4 InflectionAttribute - attributeClass method creates class list from featureType and extra classes', () => {
+    store.commit('app/setLinkedFeatures', ['fooFeatureType'])
 
     let cmp = mount(InflectionAttribute, {
       propsData: {
@@ -182,33 +133,31 @@ describe('infl-attribute.test.js', () => {
     expect(classList3).toEqual('alpheios-morph__attr someOtherClass')
   })
 
-  it('4 InflectionAttribute - decorate method formats data depending on the type and decorators', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            linkedFeatures: ['fooType2']
-          }
-        }
-      }
-    })
+  it('5 InflectionAttribute - decorate method formats data depending on the type and decorators', () => {
+
+    let api = {
+      app: BaseTestHelp.appAPI()
+    }
+    
+    let l10n = BaseTestHelp.l10nModule(store, api)
+
+    store.commit('app/setLinkedFeatures', ['fooType2'])
 
     let cmp = mount(InflectionAttribute, {
       propsData: {
         data: {
           'part of speech': new Feature(Feature.types.part, 'verb', Constants.LANG_GREEK),
-          'footype': 'foovalue',
+          'footype': 'masculine',
           'source': new Feature(Feature.types.source, 'http://example.org', Constants.LANG_GREEK)
         },
         type: 'part of speech',
-        decorators: ['brackets'],
-        messages: mockMessages
+        decorators: ['brackets']
       },
       store,
       localVue,
       mocks: api
     })
+
 
     expect(cmp.vm.decorate(cmp.vm.data, 'part of speech')).toEqual('[verb]')
 
@@ -218,12 +167,10 @@ describe('infl-attribute.test.js', () => {
 
     cmp.vm.decorators = ['parenthesize']
 
-    expect(cmp.vm.decorate(cmp.vm.data, 'footype')).toEqual('(foovalue)')
+    expect(cmp.vm.decorate(cmp.vm.data, 'footype')).toEqual('(masculine)')
 
     cmp.vm.decorators = ['abbreviate']
-
-    // TODO: fix this test
-    // expect(cmp.vm.decorate(cmp.vm.data, 'footype')).toEqual('fv')
+    expect(cmp.vm.decorate(cmp.vm.data, 'footype')).toEqual('m.')
 
     expect(cmp.vm.decorate(cmp.vm.data, 'part of speech')).toEqual('verb')
 
@@ -231,17 +178,15 @@ describe('infl-attribute.test.js', () => {
     expect(cmp.vm.decorate(cmp.vm.data, 'source')).toEqual('<a class="alpheios-morph__linkedattr" target="_blank" href="http://example.org">source</a>')
   })
 
-  it('5 InflectionAttribute - sendFeature method check arguments and if passed an array - it takes only the first value', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            linkedFeatures: ['part of speech']
-          }
-        }
-      }
-    })
+  it('6 InflectionAttribute - sendFeature method check arguments and if passed an array - it takes only the first value', () => {
+    let api = {
+      app: BaseTestHelp.appAPI({
+        sendFeature: jest.fn()
+      })
+    }
+      
+    BaseTestHelp.l10nModule(store, api)
+    store.commit('app/setLinkedFeatures', ['part of speech'])
 
     let cmp = mount(InflectionAttribute, {
       propsData: {
@@ -256,21 +201,20 @@ describe('infl-attribute.test.js', () => {
     let testFeature = new Feature(Feature.types.part, 'verb', Constants.LANG_GREEK)
 
     cmp.vm.sendFeature([testFeature])
-    expect(mockSendFeature.mock.calls.length).toBe(1)
-    expect(mockSendFeature).toBeCalledWith(testFeature)
+
+    expect(cmp.vm.app.sendFeature).toHaveBeenCalledTimes(1)
+    expect(cmp.vm.app.sendFeature).toHaveBeenCalledWith(testFeature)
   })
 
-  it('6 InflectionAttribute - sendFeature method check arguments and if the type of passed feature is not in linked features - event won\'t be emitted', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            linkedFeatures: ['part of speech']
-          }
-        }
-      }
-    })
+  it('7 InflectionAttribute - sendFeature method check arguments and if the type of passed feature is not in linked features - event won\'t be emitted', () => {
+    let api = {
+      app: BaseTestHelp.appAPI({
+        sendFeature: jest.fn()
+      })
+    }
+        
+    BaseTestHelp.l10nModule(store, api)
+    store.commit('app/setLinkedFeatures', ['part of speech'])
 
     let cmp = mount(InflectionAttribute, {
       propsData: {
@@ -285,29 +229,17 @@ describe('infl-attribute.test.js', () => {
     let testFeature = new Feature(Feature.types.gender, 'femine', Constants.LANG_GREEK)
 
     cmp.vm.sendFeature([testFeature])
-    expect(mockSendFeature.mock.calls.length).toBe(0)
+    expect(cmp.vm.app.sendFeature).not.toHaveBeenCalled()
   })
 
-  it('7 InflectionAttribute - decorate method handles multivalued features properly', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            linkedFeatures: []
-          }
-        }
-      }
-    })
-
+  it('8 InflectionAttribute - decorate method handles multivalued features properly', () => {
     let cmp = mount(InflectionAttribute, {
       propsData: {
         data: {
           'gender': new Feature(Feature.types.gender, ['feminine', 'masculine'], Constants.LANG_GREEK)
         },
         type: 'gender',
-        decorators: ['abbreviate'],
-        messages: mockMessages
+        decorators: ['abbreviate']
       },
       store,
       localVue,
@@ -317,3 +249,4 @@ describe('infl-attribute.test.js', () => {
     expect(cmp.vm.decorate(cmp.vm.data, 'gender')).toEqual('f. m.')
   })
 })
+  

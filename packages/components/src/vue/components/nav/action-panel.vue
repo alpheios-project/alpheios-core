@@ -201,7 +201,7 @@ export default {
 
     // Need this to return an object to Vue template when moduleConfig data is not available yet.
     config () {
-      return this.moduleConfig || {}
+      return this.moduleConfig || { initialShift: {} }
     }
   },
 
@@ -230,7 +230,7 @@ export default {
     },
 
     toggleLangSelector (value) {
-      this.showLangSelector = true
+      this.showLangSelector = value
     }
   }
 }

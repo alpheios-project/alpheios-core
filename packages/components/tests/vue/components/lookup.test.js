@@ -2,15 +2,11 @@
 /* eslint-disable no-unused-vars */
 import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import Lookup from '@/vue/components/lookup.vue'
-import Setting from '@/vue/components/setting.vue'
+import Vue from 'vue/dist/vue'
 
-import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
-import Locales from '@/locales/locales.js'
-import enUS from '@/locales/en-us/messages.json'
-import enUSData from '@/locales/en-us/messages-data.json'
-import enUSInfl from '@/locales/en-us/messages-inflections.json'
-import enGB from '@/locales/en-gb/messages.json'
+import Lookup from '@/vue/components/lookup.vue'
+
+import BaseTestHelp from '@tests/helpclasses/base-test-help'
 
 import Options from '@/lib/options/options.js'
 import FeatureOptionDefaults from '@/settings/feature-options-defaults.json'
@@ -23,11 +19,11 @@ import LexicalQueryLookup from '@/lib/queries/lexical-query-lookup.js'
 describe('lookup.test.js', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
+  
   const nameBase = 'LookupNameBase'
+
   let store
   let api
-  let settingsAPI
-  let l10nModule
 
   console.error = function () {}
   console.log = function () {}
@@ -38,59 +34,17 @@ describe('lookup.test.js', () => {
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
 
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            selectedLookupLangCode: 'lat'
-          }
-        }
-      }
-    })
-
-    // Modify defaults to provide more precise test results
-    FeatureOptionDefaults.items.preferredLanguage.defaultValue = 'ara'
-    FeatureOptionDefaults.items.lookupLanguage.defaultValue = 'grc'
-
-    let ta1 = new TempStorageArea('alpheios-feature-settings')
-    let ta2 = new TempStorageArea('alpheios-resource-options')
-    let ta3 = new TempStorageArea('alpheios-ui-settings')
-
-    let featureOptions = new Options(FeatureOptionDefaults, ta1)
-    let resourceOptions = new Options(LanguageOptionDefaults, ta2)
-    let uiOptions = new Options(UIOptionDefaults, ta3)
-    let lookupResourceOptions = new Options(LanguageOptionDefaults, ta2)
+    store = BaseTestHelp.baseVuexStore()
 
     api = {
-      app: {
-        state: {
-          lemmaTranslationLang: 'lat',
-          selectedLookupLangCode: 'lat'
-        },
-        updateLanguage: () => true,
-        enableWordUsageExamples: () => true,
-        setSelectedLookupLang: () => true,
-        getLanguageName: () => 'Latin'
-      },
-      settings: {
-        getFeatureOptions: () => { return featureOptions },
-        getResourceOptions: () => { return resourceOptions },
-        lookupResourceOptions: lookupResourceOptions,
-        verboseMode: () => { return false }
-      }
+      ui: BaseTestHelp.uiAPI(),
+      settings: BaseTestHelp.settingsAPI(),
+      app: BaseTestHelp.appAPI()
     }
 
-    l10nModule = new L10nModule(store, api, {
-      defaultLocale: Locales.en_US,
-      messageBundles: Locales.bundleArr([
-        [enUS, Locales.en_US],
-        [enUSData, Locales.en_US],
-        [enUSInfl, Locales.en_US],
-        [enGB, Locales.en_GB]
-      ])
-    })
+    BaseTestHelp.l10nModule(store, api)
   })
+
   afterEach(() => {
     jest.resetModules()
   })
@@ -99,7 +53,6 @@ describe('lookup.test.js', () => {
   })
 
   it('1 Lookup shall create a Vue instance', () => {
-    localVue.use(Vuex)
     let cmp = shallowMount(Lookup, {
       propsData: {
         nameBase: nameBase
@@ -114,7 +67,6 @@ describe('lookup.test.js', () => {
   })
 
   it('2 Lookup (with default parameters) shall be initialized properly', () => {
-    localVue.use(Vuex)
     let cmp = shallowMount(Lookup, {
       propsData: {
         nameBase: nameBase
@@ -125,7 +77,7 @@ describe('lookup.test.js', () => {
     })
 
     expect(cmp.props().usePageLangPrefs).toBeFalsy()
-    expect(cmp.vm.$options.lookupLanguage).toBe(api.settings.getFeatureOptions().items.lookupLanguage)
+    expect(cmp.vm.$options.lookupLanguage).toEqual(cmp.vm.settings.getFeatureOptions().items.lookupLanguage)
   })
 
   it('3 Lookup (set to show a language selector) shall be initialized properly', () => {
@@ -140,10 +92,10 @@ describe('lookup.test.js', () => {
     })
 
     expect(cmp.props().showLangSelector).toBeTruthy()
-    expect(cmp.vm.$options.lookupLanguage).toBe(api.settings.getFeatureOptions().items.lookupLanguage)
+    expect(cmp.vm.$options.lookupLanguage).toEqual(api.settings.getFeatureOptions().items.lookupLanguage)
   })
 
-  it(`8 Lookup's lookup action shall not proceed if lookup text is empty`, () => {
+  it('4 Lookup\'s lookup action shall not proceed if lookup text is empty', () => {
     let fn = LexicalQueryLookup.create
     LexicalQueryLookup.create = function () {
       return {
@@ -169,7 +121,7 @@ describe('lookup.test.js', () => {
     LexicalQueryLookup.create = fn
   })
 
-  it(`9 Lookup's lookup action shall call LexicalQueryLookup.create if correct lookup text is provided`, () => {
+  it('5 Lookup\'s lookup action shall call LexicalQueryLookup.create if correct lookup text is provided', async () => {
     let fn = LexicalQueryLookup.create
     LexicalQueryLookup.create = function () {
       return {
@@ -195,8 +147,178 @@ describe('lookup.test.js', () => {
     expect(cmp.find('input').element.value).toEqual('footext')
 
     cmp.find('button').trigger('click')
+
+
     expect(LexicalQueryLookup.create).toHaveBeenCalled()
 
     LexicalQueryLookup.create = fn
+  })
+
+  it('6 Lookup - method showLookupResult opens popup and closes panel for the lookup result when showResultsIn = popup', () => {
+    let api = {
+      ui: BaseTestHelp.uiAPI({
+        openPopup: jest.fn(),
+        closePanel: jest.fn(),
+        showPanelTab: jest.fn()
+      }),
+      settings: BaseTestHelp.settingsAPI(),
+      app: BaseTestHelp.appAPI()
+    }
+
+    BaseTestHelp.l10nModule(store, api)
+
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        nameBase: nameBase
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    cmp.setData({
+      showResultsIn: 'popup'
+    })
+
+    cmp.vm.showLookupResult()
+
+    expect(cmp.vm.ui.openPopup).toHaveBeenCalled()
+    expect(cmp.vm.ui.closePanel).toHaveBeenCalled()
+    expect(cmp.vm.ui.showPanelTab).not.toHaveBeenCalled()
+  })
+
+  it('7 Lookup - method showLookupResult warns if showResultsIn != popup and panel', () => {
+    let api = {
+      ui: BaseTestHelp.uiAPI({
+        openPopup: jest.fn(),
+        closePanel: jest.fn(),
+        showPanelTab: jest.fn()
+      }),
+      settings: BaseTestHelp.settingsAPI(),
+      app: BaseTestHelp.appAPI()
+    }
+
+    BaseTestHelp.l10nModule(store, api)
+
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        nameBase: nameBase
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    cmp.setData({
+      showResultsIn: 'test'
+    })
+
+    jest.spyOn(cmp.vm.$options.logger, 'warn')
+
+    cmp.vm.showLookupResult()
+
+    expect(cmp.vm.ui.openPopup).not.toHaveBeenCalled()
+    expect(cmp.vm.ui.closePanel).not.toHaveBeenCalled()
+    expect(cmp.vm.ui.showPanelTab).not.toHaveBeenCalled()
+    expect(cmp.vm.$options.logger.warn).toHaveBeenCalledWith(expect.stringContaining('Unknown afterLookupAction value: test'))
+  })
+
+  it('8 Lookup - method showLookupResult shows panel tab for the lookup result when showResultsIn = panel', () => {
+    let api = {
+      ui: BaseTestHelp.uiAPI({
+        openPopup: jest.fn(),
+        closePanel: jest.fn(),
+        showPanelTab: jest.fn()
+      }),
+      settings: BaseTestHelp.settingsAPI(),
+      app: BaseTestHelp.appAPI()
+    }
+
+    BaseTestHelp.l10nModule(store, api)
+
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        nameBase: nameBase
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    cmp.setData({
+      showResultsIn: 'panel'
+    })
+
+    cmp.vm.showLookupResult()
+
+    expect(cmp.vm.ui.openPopup).not.toHaveBeenCalled()
+    expect(cmp.vm.ui.closePanel).not.toHaveBeenCalled()
+    expect(cmp.vm.ui.showPanelTab).toHaveBeenCalledWith('morphology')
+  })
+
+  it('9 Lookup\'s -method settingChange changes lookupLanguage, setSelectedLookupLang in store and updates langUpdated', async () => {
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        nameBase: nameBase
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.vm.$options.lookupLanguage.currentValue).toEqual('lat')
+    expect(cmp.vm.$store.state.app.selectedLookupLangCode).toEqual('lat')
+
+    cmp.vm.settingChange(null, 'Greek')
+
+    expect(cmp.vm.$options.lookupLanguage.currentValue).toEqual('grc')
+    expect(cmp.vm.$store.state.app.selectedLookupLangCode).toEqual('grc')
+    expect(cmp.vm.langUpdated).toBeGreaterThan(0)
+
+  })
+
+  it('10 Lookup\'s - when morphDataReady is changed and is not empty then lookupText is cleared', async () => {
+    let api = {
+      ui: BaseTestHelp.uiAPI(),
+      settings: BaseTestHelp.settingsAPI(),
+      app: BaseTestHelp.appAPI({
+        hasMorphData: () => true
+      })
+    }
+    BaseTestHelp.l10nModule(store, api)
+
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        nameBase: nameBase
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    store.commit('app/setTestMorphDataReady', false)
+
+    cmp.setData({
+      lookuptext: 'mare'
+    })
+
+    store.commit('app/setTestMorphDataReady', true)
+
+    expect(cmp.vm.lookuptext).toEqual('')
+  })
+
+  it('11 Lookup\'s - method toggleLangSelector emitts toggleLangSelector with true value', async () => {
+    let cmp = shallowMount(Lookup, {
+      propsData: {
+        nameBase: nameBase
+      },
+      store,
+      localVue,
+      mocks: api
+    })
+
+    cmp.vm.toggleLangSelector()
+
+    expect(cmp.emitted()['toggleLangSelector'][0]).toEqual([true])
   })
 })

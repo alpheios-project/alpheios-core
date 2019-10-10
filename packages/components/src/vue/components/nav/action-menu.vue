@@ -230,7 +230,7 @@ export default {
     },
 
     toggleLangSelector (value) {
-      this.showLangSelector = true
+      this.showLangSelector = value
     }
   }
 }

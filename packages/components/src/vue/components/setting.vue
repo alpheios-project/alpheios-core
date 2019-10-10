@@ -58,7 +58,7 @@ export default {
       required: true
     },
     selectedOverride: {
-      type: Object,
+      type: String,
       required: false
     },
     showTitle: {

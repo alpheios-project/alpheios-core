@@ -120,7 +120,7 @@ export default {
       this.$emit('toggleLangSelector', true)
     },
 
-    lookup: function () {
+    lookup: function () { 
       this.lookuptext = this.lookuptext.trim()
       if (this.lookuptext.length === 0) {
         return null
@@ -142,7 +142,7 @@ export default {
         ? { paginationMax: featureOptions.items.wordUsageExamplesMax.currentValue,
           paginationAuthMax: featureOptions.items.wordUsageExamplesAuthMax.currentValue }
         : null
-
+  
       let lexQuery = LexicalQueryLookup
         .create(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, this.app.clientId, this.settings.verboseMode())
 
@@ -151,7 +151,10 @@ export default {
       lexQuery.getData()
       // Notify parent that the lookup has been started so that the parent can close itself if necessary
       this.$emit('lookup-started')
+      this.showLookupResult()
+    },
 
+    showLookupResult () {
       switch (this.showResultsIn) {
         case 'popup':
           this.ui.openPopup()

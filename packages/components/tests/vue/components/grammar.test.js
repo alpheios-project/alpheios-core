@@ -2,57 +2,41 @@
 /* eslint-disable no-unused-vars */
 import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
 import Grammar from '@/vue/components/grammar.vue'
-import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
-import Locales from '@/locales/locales.js'
-import enUS from '@/locales/en-us/messages.json'
-import enUSData from '@/locales/en-us/messages-data.json'
-import enUSInfl from '@/locales/en-us/messages-inflections.json'
-import enGB from '@/locales/en-gb/messages.json'
+import BaseTestHelp from '@tests/helpclasses/base-test-help'
+
 import Vuex from 'vuex'
 
 describe('grammar.test.js', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
+
   let store
   let api
-  let l10nModule
+
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
 
   beforeEach(() => {
     jest.spyOn(console, 'error')
+    jest.spyOn(console, 'log')
+    jest.spyOn(console, 'warn')
 
-    api = {}
+    store = BaseTestHelp.baseVuexStore()
+
+    api = {
+      app: BaseTestHelp.appAPI()
+    }
+
+    BaseTestHelp.l10nModule(store, api)
+
   })
-  afterEach(() => {
-    jest.resetModules()
-  })
-  afterAll(() => {
-    jest.clearAllMocks()
-  })
+
+  function timeout (ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
 
   it('1 Grammar - renders a vue instance (min requirements)', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          state: {
-            grammarRes: {}
-          }
-        }
-      }
-    })
-
-    l10nModule = new L10nModule(store, api, {
-      defaultLocale: Locales.en_US,
-      messageBundles: Locales.bundleArr([
-        [enUS, Locales.en_US],
-        [enUSData, Locales.en_US],
-        [enUSInfl, Locales.en_US],
-        [enGB, Locales.en_GB]
-      ])
-    })
-
     let cmp = shallowMount(Grammar, {
       store,
       localVue,
@@ -60,73 +44,97 @@ describe('grammar.test.js', () => {
     })
     expect(cmp.isVueInstance()).toBeTruthy()
   })
-  it('2 Grammar - renders a vue instance (min requirements)', () => {
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            grammarRes: {
-              url: 'http://example.com/'
-            }
-          },
-          getters: {
-            hasGrammarRes (state) {
-              return state.grammarRes !== null
-            }
-          }
-        }
-      }
+  
+  it('2 Grammar - renders iframe and provider', () => {
+    let cmp = shallowMount(Grammar, {
+      store,
+      localVue,
+      mocks: api
     })
 
-    l10nModule = new L10nModule(store, api, Locales.en_US, Locales.bundleArr([
-      [enUS, Locales.en_US],
-      [enUSData, Locales.en_US],
-      [enUSInfl, Locales.en_US],
-      [enGB, Locales.en_GB]
-    ]))
+    store.commit('app/setGrammarProvider', {
+      url: 'http://example.com/'
+    })
+
+    expect(cmp.find('iframe').attributes().src).toEqual('http://example.com/')
+    expect(cmp.find('.alpheios-grammar__provider').attributes('style')).toBe('display: none;')
+
+    store.commit('app/setGrammarProvider', {
+      provider: 'fooprovider',
+      url: 'http://example.com/'
+    })
+
+    expect(cmp.find('.alpheios-grammar__provider').exists()).toBeTruthy()
+    expect(cmp.find('.alpheios-grammar__provider').text()).toEqual('fooprovider')
+  })
+
+  it('3 Grammar - computed hasGrammarResUrl returns true if url is defined', () => {
+    let cmp = shallowMount(Grammar, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.vm.hasGrammarResUrl).toBeFalsy()
+
+    store.commit('app/setGrammarProvider', {
+      url: 'http://example.com/'
+    })
+
+    expect(cmp.vm.hasGrammarResUrl).toBeTruthy()
+  })
+
+  it('4 Grammar - computed hasGrammarProvider returns true if provider is defined', () => {
+    let cmp = shallowMount(Grammar, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.vm.hasGrammarProvider).toBeFalsy()
+
+    store.commit('app/setGrammarProvider', {
+      url: 'http://example.com/',
+      provider: 'fooprovider'
+    })
+
+    expect(cmp.vm.hasGrammarProvider).toBeTruthy()
+  })
+
+  it('5 Grammar - computed grammarProvider returns provider if it is  defined', () => {
+    let cmp = shallowMount(Grammar, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    expect(cmp.vm.grammarProvider).toEqual('')
+
+    store.commit('app/setGrammarProvider', {
+      url: 'http://example.com/',
+      provider: 'fooprovider'
+    })
+
+    expect(cmp.vm.grammarProvider).toEqual('fooprovider')
+  })
+
+  it('6 Grammar - method returnToIndex executes app.restoreGrammarIndex', () => {
+    let api = {
+      app: BaseTestHelp.appAPI({
+        restoreGrammarIndex: jest.fn()
+      })
+    }
+
+    BaseTestHelp.l10nModule(store, api)
 
     let cmp = shallowMount(Grammar, {
       store,
       localVue,
       mocks: api
     })
-    expect(cmp.find('iframe').attributes().src).toEqual('http://example.com/')
-    expect(cmp.find('.alpheios-grammar__provider').attributes('style')).toBe('display: none;')
 
-    store = new Vuex.Store({
-      modules: {
-        app: {
-          namespaced: true,
-          state: {
-            grammarRes: {
-              url: 'http://example.com/',
-              provider: 'fooprovider'
-            }
-          },
-          getters: {
-            hasGrammarRes (state) {
-              return state.grammarRes !== null
-            }
-          }
-        }
-      }
-    })
+    cmp.vm.returnToIndex()
 
-    l10nModule = new L10nModule(store, api, Locales.en_US, Locales.bundleArr([
-      [enUS, Locales.en_US],
-      [enUSData, Locales.en_US],
-      [enUSInfl, Locales.en_US],
-      [enGB, Locales.en_GB]
-    ]))
-
-    cmp = shallowMount(Grammar, {
-      store,
-      localVue,
-      mocks: api
-    })
-
-    expect(cmp.find('.alpheios-grammar__provider').exists()).toBeTruthy()
-    expect(cmp.find('.alpheios-grammar__provider').text()).toEqual('fooprovider')
+    expect(cmp.vm.app.restoreGrammarIndex).toHaveBeenCalled()
   })
 })
