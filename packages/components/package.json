@@ -88,6 +88,8 @@
     "sinon": "^7.5.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^1.0.0",
+    "terser": "4.3.4",
+    "terser-webpack-plugin": "2.1.2",
     "vue": "^2.6.10",
     "vue-eslint-parser": "^6.0.4",
     "vue-jest": "^3.0.5",
