@@ -1,6 +1,6 @@
 {
   "name": "alpheios-client-adapters",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Alpheios Client Adapters Library",
   "main": "dist/alpheios-client-adapters.min.js",
   "scripts": {
@@ -28,7 +28,7 @@
     "alpheios-data-models": "github:alpheios-project/data-models",
     "alpheios-node-build": "github:alpheios-project/node-build",
     "axios": "^0.19.0",
-    "coveralls": "^3.0.6",
+    "coveralls": "^3.0.7",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.18.2",
@@ -40,7 +40,7 @@
     "jest": "^23.6.0",
     "jest-fetch-mock": "1.6.5",
     "jest-serializer-vue": "^2.0.2",
-    "jest-vue-preprocessor": "^1.5.0",
+    "jest-vue-preprocessor": "^1.7.0",
     "papaparse": "^4.6.3",
     "source-map-loader": "^0.2.4",
     "whatwg-fetch": "*",
