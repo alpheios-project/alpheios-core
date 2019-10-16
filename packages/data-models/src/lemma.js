@@ -152,7 +152,7 @@ class Lemma {
       throw new Error('translation data cannot be empty.')
     }
 
-    if (translation.constructor.name !== 'Translation') {
+    if (translation.constructor.name.indexOf('Translation') === -1) {
       throw new Error('translation data must be a Translation object.')
     }
 
