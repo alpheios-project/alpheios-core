@@ -23,7 +23,7 @@ describe('word-list-panel.test.js', () => {
   let homonym, testWordItem
   
   beforeAll(async () => {
-    homonym = await BaseTestHelp.collectHomonym('cupidinibus', Constants.LANG_LATIN)
+    homonym = await BaseTestHelp.collectHomonym('cupidinibus', Constants.LANG_LATIN, false)
     testWordItem = new WordItem({
       targetWord: 'cupidinibus',
       languageCode: 'lat',

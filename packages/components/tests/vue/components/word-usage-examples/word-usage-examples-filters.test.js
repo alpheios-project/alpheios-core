@@ -29,7 +29,7 @@ describe('word-usage-examples-filters.test.js', () => {
     testAuthor.works.push(new TextWork(testAuthor, 'urn:cts:latinLit:phi0893.phi0001', { "lat": "Carmina" }, { "lat": "Carm" }))
     testAuthor.works.push(new TextWork(testAuthor, 'urn:cts:latinLit:phi0893.phi0004', { "lat": "Sermones" }, { "lat": "S" }))
 
-    testHomonym = await BaseTestHelp.collectHomonym('cupidinibus', Constants.LANG_LATIN)
+    testHomonym = await BaseTestHelp.collectHomonym('cupidinibus', Constants.LANG_LATIN, false)
     testWordUsageList = await BaseTestHelp.collectConcordance(testHomonym)
     
   })

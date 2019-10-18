@@ -23,8 +23,8 @@ describe('word-filter-panel.test.js', () => {
   let testWordItem1, testWordItem2, testWordList
   
   beforeAll(async () => {
-    let homonym1 = await BaseTestHelp.collectHomonym('cupidinibus', Constants.LANG_LATIN)
-    let homonym2 = await BaseTestHelp.collectHomonym('male', Constants.LANG_LATIN)
+    let homonym1 = await BaseTestHelp.collectHomonym('cupidinibus', Constants.LANG_LATIN, false)
+    let homonym2 = await BaseTestHelp.collectHomonym('male', Constants.LANG_LATIN, false)
 
     testWordItem1 = new WordItem({
       targetWord: 'cupidinibus',

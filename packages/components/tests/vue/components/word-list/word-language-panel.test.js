@@ -24,9 +24,9 @@ describe('word-language-panel.test.js', () => {
   let testWordItem1, testWordItem2, testWordItem3, testWordList
   
   beforeAll(async () => {
-    let homonym1 = await BaseTestHelp.collectHomonym('cupidinibus', Constants.LANG_LATIN)
-    let homonym2 = await BaseTestHelp.collectHomonym('male', Constants.LANG_LATIN)
-    let homonym3 = await BaseTestHelp.collectHomonym('placito', Constants.LANG_LATIN)
+    let homonym1 = await BaseTestHelp.collectHomonym('cupidinibus', Constants.LANG_LATIN, false)
+    let homonym2 = await BaseTestHelp.collectHomonym('male', Constants.LANG_LATIN, false)
+    let homonym3 = await BaseTestHelp.collectHomonym('placito', Constants.LANG_LATIN, false)
 
     testWordItem1 = new WordItem({
       targetWord: 'cupidinibus',

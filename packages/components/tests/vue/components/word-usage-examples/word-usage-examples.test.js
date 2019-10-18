@@ -23,7 +23,7 @@ describe('word-usage-examples.test.js', () => {
   let homonym, testWordUsageList
 
   beforeAll(async () => {
-    homonym = await BaseTestHelp.collectHomonym('cupidinibus', Constants.LANG_LATIN)
+    homonym = await BaseTestHelp.collectHomonym('cupidinibus', Constants.LANG_LATIN, false)
     testWordUsageList = await BaseTestHelp.collectConcordance(homonym)
   })
 

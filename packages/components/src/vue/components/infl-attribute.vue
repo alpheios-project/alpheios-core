@@ -89,4 +89,21 @@ export default {
 }
 </script>
 <style lang="scss">
+  @import "../../styles/variables";
+  .alpheios-morph__attr {
+    font-weight: normal;
+    padding-right: .25em;
+  }
+
+  // We have to use namespace to override increased specificity of content styles, that, in turn, had
+  // specificity increased to fight style leakage from some problematic websites
+  #{$alpheios-namespace} .alpheios-morph__linkedattr {
+    @include alpheios-interactive;
+    font-weight: 700;
+
+    color: var(--alpheios-desktop-popup-link-color);
+    &:hover {
+      color: var(--alpheios-desktop-popup-link-color-hover);
+    }
+  }
 </style>

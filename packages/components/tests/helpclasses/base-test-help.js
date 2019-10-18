@@ -17,7 +17,7 @@ import AuthModule from '@/vue/vuex-modules/data/auth-module.js'
 
 import Platform from '@/lib/utility/platform.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
-import { Constants } from 'alpheios-data-models'
+import { Constants, Lexeme, Lemma, Homonym } from 'alpheios-data-models'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import UIController from '@/lib/controllers/ui-controller.js'
 
@@ -116,7 +116,8 @@ export default class BaseTestHelp {
               wordListUpdateTime: 0,
               grammarRes: {},
               linkedFeatures: [],
-              selectedLookupLangCode: 'lat'
+              selectedLookupLangCode: 'lat',
+              translationsDataReady: false
             },
             mutations: {
               setTestCurrentLanguageName (state, value) {
@@ -157,6 +158,9 @@ export default class BaseTestHelp {
               },
               setSelectedLookupLang (state, value) {
                 state.selectedLookupLangCode = value
+              },
+              setTranslationsDataReady (state, value) {
+                state.translationsDataReady = value
               }
             },
             getters: {
@@ -301,7 +305,7 @@ export default class BaseTestHelp {
 
 
 
-    static async collectHomonym (targetWord, languageID) {
+    static async collectHomonym (targetWord, languageID, getLexicons = true) {
       let adapterTuftsRes = await ClientAdapters.morphology.tufts({
         method: 'getHomonym',
         clientId: 'alpheios-dev',
@@ -313,19 +317,25 @@ export default class BaseTestHelp {
       })
       let homonym = adapterTuftsRes.result
 
-      const lexiconFullOpts = BaseTestHelp.getLexiconOptions('lexicons', languageID)
+      if (!homonym) {
+        const formLexeme = new Lexeme(new Lemma(targetWord, languageID), [])
+        homonym = this.homonym = new Homonym([formLexeme], targetWord)
+      }
 
-      await ClientAdapters.lexicon.alpheios({
-        method: 'fetchFullDefs',
-        clientId: 'alpheios-dev',
-        params: {
-          opts: lexiconFullOpts,
-          homonym: homonym,
-          callBackEvtSuccess: LexicalQuery.evt.FULL_DEFS_READY,
-          callBackEvtFailed: LexicalQuery.evt.FULL_DEFS_NOT_FOUND
-        }
-      })
+      if (getLexicons) {
+        const lexiconFullOpts = BaseTestHelp.getLexiconOptions('lexicons', languageID)
 
+        await ClientAdapters.lexicon.alpheios({
+          method: 'fetchFullDefs',
+          clientId: 'alpheios-dev',
+          params: {
+            opts: lexiconFullOpts,
+            homonym: homonym,
+            callBackEvtSuccess: LexicalQuery.evt.FULL_DEFS_READY,
+            callBackEvtFailed: LexicalQuery.evt.FULL_DEFS_NOT_FOUND
+          }
+        })
+      }
       return homonym
     }
 
@@ -343,5 +353,21 @@ export default class BaseTestHelp {
       })
   
       return adapterConcordanceRes.result
+    }
+
+    static async collectTranslations (homonym, locale = 'it') {
+      let adapterTranslationRes
+      try {
+        adapterTranslationRes = await ClientAdapters.lemmatranslation.alpheios({
+          method: 'fetchTranslations',
+          clientId: 'alpheios-dev',
+          params: {
+            homonym: homonym,
+            browserLang: locale
+          }
+        })
+      } catch (e) {
+        console.info(e)
+      }
     }
 }
