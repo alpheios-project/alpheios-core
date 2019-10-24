@@ -27,7 +27,7 @@ export default class AuthData {
      * @type {string}
      * @public
      */
-    this.accessToken = undefined
+    this.accessToken = ''
 
     /**
      * An expiration date and time of an access token.
@@ -35,7 +35,15 @@ export default class AuthData {
      * @type {Date}
      * @public
      */
-    this.expirationDateTime = undefined
+    this.expirationDateTime = new Date(0)
+
+    /**
+     * Whether the user has been logged in previously and the session has been expired.
+     *
+     * @type {boolean}
+     * @public
+     */
+    this.hasSessionExpired = false
 
     /**
      * A user id (in Auth0 it is `sub`).
@@ -43,7 +51,7 @@ export default class AuthData {
      * @type {string}
      * @public
      */
-    this.userId = undefined
+    this.userId = ''
 
     /**
      * A user name.
@@ -51,7 +59,7 @@ export default class AuthData {
      * @type {string}
      * @public
      */
-    this.userName = undefined
+    this.userName = ''
 
     /**
      * A user nickname.
@@ -59,7 +67,20 @@ export default class AuthData {
      * @type {string}
      * @public
      */
-    this.userNickname = undefined
+    this.userNickname = ''
+  }
+
+  /**
+   * Deletes all user data from the AuthData object.
+   */
+  erase () {
+    this.isAuthenticated = false
+    this.accessToken = ''
+    this.expirationDateTime = new Date(0)
+    this.hasSessionExpired = false
+    this.userId = ''
+    this.userName = ''
+    this.userNickname = ''
   }
 
   /**
@@ -77,12 +98,26 @@ export default class AuthData {
 
   /**
    * Creates a serializable copy of an AuthData object.
+   * Dates are stored as JSON strings.
    *
    * @returns {object} - A serializable copy of an AuthData object.
    */
   serializable () {
     let serializable = Object.assign({}, this) // eslint-disable-line prefer-const
     serializable.expirationDateTime = this.expirationDateTime.toJSON()
+    return serializable
+  }
+
+  /**
+   * Creates a serializable copy of an AuthData object that is
+   * interoperable with other languages (i.e. Swift).
+   * Dates are stored as a Unix Time number (in whole seconds), in UTC.
+   *
+   * @returns {object} - A serializable copy of an AuthData object.
+   */
+  interopSerializable () {
+    let serializable = Object.assign({}, this) // eslint-disable-line prefer-const
+    serializable.expirationDateTime = Math.round(this.expirationDateTime.getTime() / 1000)
     return serializable
   }
 
@@ -109,12 +144,12 @@ export default class AuthData {
   }
 
   /**
-   * Checks if the user session has been expired.
+   * Checks if the user has been authenticated and the session is still valid.
    *
    * @returns {boolean} - True if expired, false otherwise.
    */
-  get isExpired () {
-    return (this.expirationDateTime.getTime() <= Date.now())
+  get isSessionActive () {
+    return (this.isAuthenticated && this.expirationDateTime.getTime() > Date.now())
   }
 
   /**
@@ -123,6 +158,16 @@ export default class AuthData {
    * @returns {number} - Remaining duration of user session, in milliseconds, or zero if session has been expired.
    */
   get expirationInterval () {
-    return !this.isExpired ? this.expirationDateTime.getTime() - Date.now() : 0
+    return this.isSessionActive ? this.expirationDateTime.getTime() - Date.now() : 0
+  }
+
+  /**
+   * Sets session as expired.
+   * @returns {AuthData} - A self reference for chaining.
+   */
+  expireSession () {
+    this.erase()
+    this.hasSessionExpired = true
+    return this
   }
 }
