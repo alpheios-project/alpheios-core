@@ -48,11 +48,10 @@
     "alpheios-node-build": "github:alpheios-project/node-build",
     "alpheios-res-client": "github:alpheios-project/res-client",
     "alpheios-wordlist": "github:alpheios-project/wordlist",
-    "autoprefixer": "^9.6.5",
+    "autoprefixer": "^9.7.0",
     "axios": "^0.19.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
-
     "bytes": "^3.1.0",
     "chalk": "^2.4.2",
     "coveralls": "^3.0.7",
