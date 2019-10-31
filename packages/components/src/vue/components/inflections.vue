@@ -189,19 +189,18 @@ export default {
         this.$options.logger.warn(`Cannot find panel's inner element #${this.elementIDs.panelInner}. Scroll is cancelled`)
         return
       }
+      let el
       if (reflink === 'top') {
         // Navigate to the top of the page
-        panel.scrollTop = 0
+        el = document.querySelector(`.alpheios-inflections__content`)
       } else {
         // Navigate to one of the supplemental tables
-        const paddingTop = 20 // A margin between an element and a top of a visible area, in pixels
-        let el = document.querySelector(`#${reflink}`)
-        if (el) {
-          const offset = Math.round(el.offsetTop)
-          panel.scrollTop = offset - paddingTop
-        } else {
-          this.$options.logger.warn(`Cannot find #${reflink} element. Navigation is cancelled`)
-        }
+        el = document.querySelector(`#${reflink}`)
+      }
+      if (el) {
+        el.scrollIntoView()
+      } else {
+        this.$options.logger.warn(`Cannot find element. Navigation is cancelled`)
       }
     }
   },
