@@ -1,6 +1,6 @@
 {
   "name": "alpheios-components",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "Alpheios Components",
   "main": "dist/alpheios-components.min.js",
   "module": "src/plugin.js",
@@ -48,7 +48,7 @@
     "alpheios-node-build": "github:alpheios-project/node-build",
     "alpheios-res-client": "github:alpheios-project/res-client",
     "alpheios-wordlist": "github:alpheios-project/wordlist",
-    "autoprefixer": "^9.7.0",
+    "autoprefixer": "^9.7.1",
     "axios": "^0.19.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
