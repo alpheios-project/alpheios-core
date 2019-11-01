@@ -70,7 +70,7 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
    * @param {[Lemma]} lemmaList
   */
   prepareInput (lemmaList) {
-    let inputList = lemmaList.map(lemma => lemma.word).filter((item, index, self) => self.indexOf(item) === index)
+    let inputList = lemmaList.map(lemma => encodeURIComponent(lemma.word)).filter((item, index, self) => self.indexOf(item) === index)
     return inputList.length > 0 ? inputList.join(',') : undefined
   }
   /**

@@ -86,7 +86,7 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
   createFetchURL (homonym, filters, pagination, sort) {
     let filterFormatted = this.formatFilter(filters)
     let paginationFormatted = this.formatPagination(pagination)
-    return `${this.config.url}${homonym.targetWord}${filterFormatted}${paginationFormatted}`
+    return `${this.config.url}${encodeURIComponent(homonym.targetWord)}${filterFormatted}${paginationFormatted}`
   }
 
   /**

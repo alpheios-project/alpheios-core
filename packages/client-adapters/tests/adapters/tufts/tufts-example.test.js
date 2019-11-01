@@ -419,4 +419,14 @@ describe('tufts-example.test.js', () => {
 
     expect(adapter.prepareRequestUrl(Constants.LANG_LATIN, 'mare')).toEqual('https://morph.alpheios.net/api/v1/analysis/word?word=mare&engine=whitakerLat&lang=lat&clientId=fooClient')
   }, 10000)
+
+  it('23 TuftsExample - escapes word in URL', () => {
+    let adapter = new AlpheiosTuftsAdapter({
+      category: 'morphology',
+      adapterName: 'tufts',
+      method: 'getHomonym',
+      clientId: 'fooClient'
+    })
+    expect(adapter.prepareRequestUrl(Constants.LANG_GREEK, 'ξυνέηκε')).toEqual('https://morph.alpheios.net/api/v1/analysis/word?word=%CE%BE%CF%85%CE%BD%CE%AD%CE%B7%CE%BA%CE%B5&engine=morpheusgrc&lang=grc&clientId=fooClient')
+  })
 })

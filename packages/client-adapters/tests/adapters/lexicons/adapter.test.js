@@ -481,4 +481,23 @@ describe('lexicons/adapter.test.js', () => {
     return timeoutRes
   }, 60000)
 
+  it('23 AlpheiosLexiconsAdapter - collectFullDefURLs escapes words', async () => {
+    let adapter = new AlpheiosLexiconsAdapter({
+      category: 'lexicon',
+      adapterName: 'alpheios',
+      method: 'fetchFullDefs'
+    })
+
+    let urlKey = 'https://github.com/alpheios-project/lsj'
+    let data = new Map()
+    let formLexeme = new Lexeme(new Lemma('συνίημι', Constants.LANG_GREEK), [])
+    let homonym = new Homonym([formLexeme], 'ξυνέηκε')
+
+    let fullDefsRequests = adapter.collectFullDefURLs(data, homonym, adapter.config[urlKey])
+
+    fullDefsRequests.forEach(reqData => {
+      expect(reqData.url).toEqual(expect.stringContaining('l=%CF%83%CF%85%CE%BD%CE%AF%CE%B7%CE%BC%CE%B9'))
+    })
+  }, 20000)
+
 })

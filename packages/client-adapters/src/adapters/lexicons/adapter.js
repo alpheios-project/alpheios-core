@@ -219,7 +219,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
           requests.push({ url: `${urlFull}&n=${id}`, lexeme: lexeme })
         }
       } else if (urlFull) {
-        requests.push({ url: `${urlFull}&l=${lexeme.lemma.word}`, lexeme: lexeme })
+        requests.push({ url: `${urlFull}&l=${encodeURIComponent(lexeme.lemma.word)}`, lexeme: lexeme })
       }
     }
     return requests

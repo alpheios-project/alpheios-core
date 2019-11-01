@@ -632,4 +632,30 @@ describe('concordance.test.js', () => {
     expect(adapter.getPassage(testJsonObj)).toEqual('213')
   })
 
+  it('19 AlpheiosConcordanceAdapter - createFetchURL escapes words', () => {
+    let adapter = new AlpheiosConcordanceAdapter({
+      category: 'wordUsage',
+      adapterName: 'concordance',
+      method: 'getAuthorsWorks'
+    })
+
+    let filterOptions = {
+      author: testAuthor,
+      textWork: testTextWork
+    }
+
+    let paginationOptions =  {
+      property: 'max',
+      value: 5
+    }
+
+    jest.spyOn(adapter, 'formatFilter')
+    jest.spyOn(adapter, 'formatPagination')
+
+    let testHomonym = { languageID: Constants.LANG_LATIN, targetWord: 'āsque' }
+    let resURL = adapter.createFetchURL(testHomonym, filterOptions, paginationOptions)
+    expect(resURL).toEqual('https://latin.packhum.org/rst/concordance/%C4%81sque[690:3]?max=5')
+  })
+
+
 })

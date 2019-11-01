@@ -108,4 +108,17 @@ describe('lexicons/adapter.test.js', () => {
     let resFailed = await adapter.getAvailableResLang('lat', 'foo')
     expect(resFailed).toBeUndefined()
   })
+
+  it('5 AlpheiosLemmaTranslationsAdapter - prepareInput escapes words', async () => {
+    let adapter = new AlpheiosLemmaTranslationsAdapter({
+      category: 'lexicon',
+      adapterName: 'alpheios',
+      method: 'fetchTranslations'
+    })
+
+    let lemmaList = [{ word: 'mās'}]
+
+    let res = adapter.prepareInput(lemmaList)
+    expect(res).toEqual('m%C4%81s')
+  })
 })

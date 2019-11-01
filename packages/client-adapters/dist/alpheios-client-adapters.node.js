@@ -8658,7 +8658,7 @@ class AlpheiosConcordanceAdapter extends _adapters_base_adapter__WEBPACK_IMPORTE
   createFetchURL (homonym, filters, pagination, sort) {
     let filterFormatted = this.formatFilter(filters)
     let paginationFormatted = this.formatPagination(pagination)
-    return `${this.config.url}${homonym.targetWord}${filterFormatted}${paginationFormatted}`
+    return `${this.config.url}${encodeURIComponent(homonym.targetWord)}${filterFormatted}${paginationFormatted}`
   }
 
   /**
@@ -9139,7 +9139,7 @@ class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_M
           requests.push({ url: `${urlFull}&n=${id}`, lexeme: lexeme })
         }
       } else if (urlFull) {
-        requests.push({ url: `${urlFull}&l=${lexeme.lemma.word}`, lexeme: lexeme })
+        requests.push({ url: `${urlFull}&l=${encodeURIComponent(lexeme.lemma.word)}`, lexeme: lexeme })
       }
     }
     return requests
@@ -9349,7 +9349,7 @@ class AlpheiosLemmaTranslationsAdapter extends _adapters_base_adapter__WEBPACK_I
    * @param {[Lemma]} lemmaList
   */
   prepareInput (lemmaList) {
-    let inputList = lemmaList.map(lemma => lemma.word).filter((item, index, self) => self.indexOf(item) === index)
+    let inputList = lemmaList.map(lemma => encodeURIComponent(lemma.word)).filter((item, index, self) => self.indexOf(item) === index)
     return inputList.length > 0 ? inputList.join(',') : undefined
   }
   /**
@@ -9504,7 +9504,7 @@ class AlpheiosTuftsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODU
 
     if (engine) {
       let code = engine.engine
-      return this.config.url.replace('r_WORD', word).replace('r_ENGINE', code).replace('r_LANG', langCode).replace('r_CLIENT', this.config.clientId)
+      return this.config.url.replace('r_WORD', encodeURIComponent(word)).replace('r_ENGINE', code).replace('r_LANG', langCode).replace('r_CLIENT', this.config.clientId)
     } else {
       return null
     }
