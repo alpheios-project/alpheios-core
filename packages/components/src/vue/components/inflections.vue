@@ -200,7 +200,7 @@ export default {
       if (el) {
         el.scrollIntoView()
       } else {
-        this.$options.logger.warn(`Cannot find element. Navigation is cancelled`)
+        this.$options.logger.warn(`Cannot find #${reflink} element. Navigation is cancelled`)
       }
     }
   },

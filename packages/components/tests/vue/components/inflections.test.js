@@ -13,6 +13,7 @@ import { Constants } from 'alpheios-data-models'
 describe('inflections.test.js', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
+  let restoreQuerySelector = document.querySelector
 
   console.error = function () {}
   console.log = function () {}
@@ -37,6 +38,16 @@ describe('inflections.test.js', () => {
     BaseTestHelp.authModule(store, api)
     BaseTestHelp.l10nModule(store, api)
 
+  })
+  afterEach(() => {
+    document.querySelector = restoreQuerySelector
+    jest.clearAllMocks()
+    jest.resetAllMocks()
+  })
+  afterAll(() => {
+    document.querySelector = restoreQuerySelector
+    jest.clearAllMocks()
+    jest.resetAllMocks()
   })
 
   function timeout (ms) {
@@ -85,7 +96,7 @@ describe('inflections.test.js', () => {
       localVue,
       mocks: api
     })
-    
+
     cmp.vm.partOfSpeechSelector = 'fooPart'
     expect(cmp.vm.partOfSpeechSelector).toEqual('fooPart')
     expect(cmp.vm.views.length).toEqual(1)
@@ -121,7 +132,7 @@ describe('inflections.test.js', () => {
       localVue,
       mocks: api
     })
-    
+
     cmp.setData({
       views: [{
         id: 'fooId',
@@ -130,7 +141,7 @@ describe('inflections.test.js', () => {
         })
       }]
     })
-    
+
     cmp.vm.viewSelector = 'fooId'
 
     expect(cmp.vm.selectedView).toEqual('fooView')
@@ -143,7 +154,7 @@ describe('inflections.test.js', () => {
       localVue,
       mocks: api
     })
-    
+
     cmp.setData({
       selectedView: { id: 'fooId' }
     })
@@ -157,7 +168,7 @@ describe('inflections.test.js', () => {
       localVue,
       mocks: api
     })
-    
+
     expect(cmp.vm.footnotes).toEqual([])
 
     let footNotesValues = new Map()
@@ -176,7 +187,7 @@ describe('inflections.test.js', () => {
       localVue,
       mocks: api
     })
-    
+
     expect(cmp.vm.forms).toEqual([])
 
     let formsValues = new Map()
@@ -195,7 +206,7 @@ describe('inflections.test.js', () => {
       localVue,
       mocks: api
     })
-    
+
     expect(cmp.vm.showExplanatoryHint).toBeFalsy()
 
     cmp.setData({
@@ -211,7 +222,7 @@ describe('inflections.test.js', () => {
         name: 'GreekParadigmView'
       }}
     })
-  
+
     expect(cmp.vm.showExplanatoryHint).toBeTruthy()
   })
 
@@ -233,7 +244,7 @@ describe('inflections.test.js', () => {
 
     store.commit('app/setTestHasInflData', false)
     cmp.vm.initViewSet()
-    
+
     expect(cmp.vm.hasInflectionData).toBeFalsy()
     expect(cmp.vm.partsOfSpeech.length).toEqual(0)
     expect(cmp.vm.selectedPartOfSpeech).toBeNull()
@@ -247,7 +258,7 @@ describe('inflections.test.js', () => {
       settings: BaseTestHelp.settingsAPI(),
       app: BaseTestHelp.appAPI({
         getInflectionsViewSet: jest.fn(() => {
-          
+
           return {
             languageID: Constants.LANG_LATIN,
             hasMatchingViews: true,
@@ -294,7 +305,7 @@ describe('inflections.test.js', () => {
       mocks: api,
       attachToDocument: true
     })
-    
+
     jest.spyOn(cmp.vm.$options.logger, 'warn')
 
     document.body.innerHTML = ''
@@ -302,33 +313,35 @@ describe('inflections.test.js', () => {
     panel.id = 'alpheios-panel-inner'
     panel.innerHTML = '<div style="height: 50px"></div><div id="test-ref" style="height: 150px;">Test text</div>'
     document.body.appendChild(panel)
+    const scrollIntoViewSpy = jest.fn()
+    jest.spyOn(document,'querySelector').mockImplementation(() => {return { scrollIntoView: scrollIntoViewSpy }})
 
     let result = cmp.vm.navigate('test-ref')
-    expect(panel.scrollTop).toEqual(-20) //offsetTop (0) - 20
+    expect(scrollIntoViewSpy).toHaveBeenCalledTimes(1);
     expect(cmp.vm.$options.logger.warn).not.toHaveBeenCalled()
     cmp.destroy()
   })
 
-  it('13 Inflections - method navigate scrolls to the top (0) if we pass top as an argument', () => {
+  it('13 Inflections - method navigate scrolls to the content element if we pass top as an argument', () => {
     let cmp = shallowMount(Inflections, {
       store,
       localVue,
       mocks: api,
       attachToDocument: true
     })
-    
+
     jest.spyOn(cmp.vm.$options.logger, 'warn')
 
     document.body.innerHTML = ''
     let testPannelInner = document.createElement("div")
     testPannelInner.id = "alpheios-panel-inner"
-    testPannelInner.scrollTop = 10
     document.body.appendChild(testPannelInner)
-
-    expect(testPannelInner.scrollTop).toEqual(10)
+    const scrollIntoViewSpy = jest.fn()
+    jest.spyOn(document,'querySelector').mockImplementation(() => {return { scrollIntoView: scrollIntoViewSpy }})
 
     let result = cmp.vm.navigate('top')
-    expect(testPannelInner.scrollTop).toEqual(0)
+    expect(document.querySelector).toHaveBeenCalledWith('.alpheios-inflections__content')
+    expect(scrollIntoViewSpy).toHaveBeenCalledTimes(1);
     expect(cmp.vm.$options.logger.warn).not.toHaveBeenCalled()
     cmp.destroy()
   })
@@ -343,7 +356,7 @@ describe('inflections.test.js', () => {
     jest.spyOn(cmp.vm.$options.logger, 'warn')
     document.body.innerHTML = ''
     let result = cmp.vm.navigate()
-    
+
     expect(result).toBeUndefined()
     expect(cmp.vm.$options.logger.warn).toHaveBeenLastCalledWith(expect.stringContaining('Cannot find panel\'s inner element'))
     cmp.destroy()
@@ -357,17 +370,17 @@ describe('inflections.test.js', () => {
       mocks: api,
       attachToDocument: true
     })
-    
+
     jest.spyOn(cmp.vm.$options.logger, 'warn')
 
     document.body.innerHTML = ''
     let panel = document.createElement("div")
     panel.id = 'alpheios-panel-inner'
-    panel.innerHTML = '<div style="height: 50px"></div>'
     document.body.appendChild(panel)
+    console.info(document.querySelector)
 
     let result = cmp.vm.navigate('test-ref2')
-    expect(panel.scrollTop).toEqual(0) 
+    expect(panel.scrollTop).toEqual(0)
     expect(cmp.vm.$options.logger.warn).toHaveBeenLastCalledWith(expect.stringContaining('Cannot find #test-ref2 element. Navigation is cancelled'))
     cmp.destroy()
   })

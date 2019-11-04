@@ -69,7 +69,7 @@ describe('definitions-list.test.js', () => {
       localVue,
       mocks: api
     })
-    
+
     store.commit('app/setTestShortDefUpdateTime', 1)
     console.info(cmp.vm.definitions)
     expect(cmp.vm.definitions.length).toEqual(1)
@@ -85,7 +85,7 @@ describe('definitions-list.test.js', () => {
       localVue,
       mocks: api
     })
-    
+
     store.commit('app/setTestShortDefUpdateTime', 1)
     expect(cmp.vm.definitions.length).toEqual(1)
     expect(cmp.vm.definitions[0].text).toEqual('desire/love/wish/longing (passionate); lust; greed, appetite; desire for gain;')
@@ -100,9 +100,9 @@ describe('definitions-list.test.js', () => {
       localVue,
       mocks: api
     })
-    
+
     store.commit('app/setTestShortDefUpdateTime', 2)
-    
+
     expect(cmp.vm.definitions.length).toEqual(1)
     expect(cmp.vm.definitions[0].text).toEqual(expect.stringContaining('No definitions'))
   })
@@ -116,8 +116,8 @@ describe('definitions-list.test.js', () => {
       localVue,
       mocks: api
     })
-    
-   
+
+
     expect(cmp.vm.definitionIndex(2)).toEqual('c.')
   })
 
@@ -131,8 +131,8 @@ describe('definitions-list.test.js', () => {
       localVue,
       mocks: api
     })
-    
-   
+
+
     expect(cmp.find('.alpheios-morph-definitions_list__definitions--placeholder').isVisible()).toBeTruthy()
   })
 

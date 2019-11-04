@@ -227,7 +227,7 @@ export default class BaseTestHelp {
           }
         }
       })
-  
+
     }
 
     static uiAPI (props) {
@@ -315,7 +315,9 @@ export default class BaseTestHelp {
 
         }
       })
+      console.info("Request",targetWord)
       let homonym = adapterTuftsRes.result
+      console.info(homonym)
 
       if (!homonym) {
         const formLexeme = new Lexeme(new Lemma(targetWord, languageID), [])
@@ -351,7 +353,7 @@ export default class BaseTestHelp {
         method: 'getWordUsageExamples',
         params: { homonym: homonym, filters: filtersFinal, pagination: paginationOptionsFinal }
       })
-  
+
       return adapterConcordanceRes.result
     }
 
