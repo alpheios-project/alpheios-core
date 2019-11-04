@@ -138,9 +138,9 @@ class BaseAdapter {
       try {
         let res
         if (options && options.timeout > 0) {
-          res = await axios.get(encodeURI(url), { timeout: options.timeout })
+          res = await axios.get(encodeURI(decodeURI(url)), { timeout: options.timeout })
         } else {
-          res = await axios.get(encodeURI(url))
+          res = await axios.get(encodeURI(decodeURI(url)))
         }
         return res.data
       } catch (error) {

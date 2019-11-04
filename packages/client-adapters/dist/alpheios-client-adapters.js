@@ -13341,9 +13341,9 @@ class BaseAdapter {
       try {
         let res
         if (options && options.timeout > 0) {
-          res = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(encodeURI(url), { timeout: options.timeout })
+          res = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(encodeURI(decodeURI(url)), { timeout: options.timeout })
         } else {
-          res = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(encodeURI(url))
+          res = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(encodeURI(decodeURI(url)))
         }
         return res.data
       } catch (error) {
