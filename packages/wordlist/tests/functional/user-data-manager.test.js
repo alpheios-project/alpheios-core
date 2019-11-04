@@ -28,7 +28,7 @@ describe('user-data-manager.test.js', () => {
     window.IDBKeyRange = IDBKeyRange
     auth  = {
       accessToken: process.env.AUTH_TOKEN,
-      userId: 'alpheiosMockUser',
+      userId: 'auth0|alpheiosMockUser',
       endpoints: {
         wordlist: process.env.ENDPOINT
       }
@@ -204,6 +204,7 @@ describe('user-data-manager.test.js', () => {
       prefix: 'prefix2',
       suffix: 'suffix2'
     })
+
 
     res = await udm.update({ dataObj: testWordItem2, params: {segment: 'context'} })
     expect(res).toBeTruthy()

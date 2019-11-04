@@ -100,6 +100,7 @@ export default class RemoteDBAdapter {
         content = this.dbDriver.storageMap.put.serialize(data)
       }
 
+
       let result = await axios.put(url, content, this.dbDriver.requestsParams)
       let updated = this.dbDriver.storageMap.put.checkResult(result)
       return updated

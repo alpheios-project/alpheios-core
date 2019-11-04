@@ -86,7 +86,12 @@ export default class WordItemRemoteDbDriver {
    * @return {WordItem}
    */
   mergeHommonymPart  (currentItem, newItem) {
-    currentItem.homonym = currentItem.homonym || this._serializeHomonym(newItem)
+    if (! currentItem.homonym) {
+        let homonym = this._serializeHomonym(newItem)
+        if (homonym) {
+          currentItem.homonym = homonym
+        }
+    }
     return currentItem
   }
 
@@ -167,7 +172,8 @@ export default class WordItemRemoteDbDriver {
     }
 
     let homonym = this._serializeHomonym(wordItem)
-    if (homonym) {
+
+    if (homonym !== null) {
       result.homonym = homonym
     }
     let context = this._serializeContext(wordItem)

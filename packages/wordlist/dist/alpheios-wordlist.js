@@ -2452,6 +2452,7 @@ class WordlistController {
     // create the item in the word list if it doesn't exist
     let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(data.languageID), data.targetWord, true)
     wordItem.homonym = data
+    wordItem.currentSession = true
     WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'shortHomonym'}})
     // emit a wordlist updated event too in case the wordlist was updated
     WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
@@ -2465,6 +2466,7 @@ class WordlistController {
   onDefinitionsReady (data) {
     let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(data.homonym.languageID),data.homonym.targetWord)
     if (wordItem) {
+      wordItem.currentSession = true
       wordItem.homonym = data.homonym
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
     } else {
@@ -2482,6 +2484,7 @@ class WordlistController {
   onLemmaTranslationsReady (data) {
     let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(data.languageID), data.targetWord)
     if (wordItem) {
+      wordItem.currentSession = true
       wordItem.homonym = data
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
     } else {
@@ -2499,6 +2502,7 @@ class WordlistController {
     // create the item in the word list if it doesn't exist
     let wordItem = this.getWordListItem(data.languageCode, data.normalizedText, true)
     if (wordItem) {
+      wordItem.currentSession = true
       wordItem.addContext([data])
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'context'}})
       // emit a wordlist updated event too in case the wordlist was updated
@@ -3369,6 +3373,7 @@ class RemoteDBAdapter {
         content = this.dbDriver.storageMap.put.serialize(data)
       }
 
+
       let result = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.put(url, content, this.dbDriver.requestsParams)
       let updated = this.dbDriver.storageMap.put.checkResult(result)
       return updated
@@ -4018,7 +4023,12 @@ class WordItemRemoteDbDriver {
    * @return {WordItem}
    */
   mergeHommonymPart  (currentItem, newItem) {
-    currentItem.homonym = currentItem.homonym || this._serializeHomonym(newItem)
+    if (! currentItem.homonym) {
+        let homonym = this._serializeHomonym(newItem)
+        if (homonym) {
+          currentItem.homonym = homonym
+        }
+    }
     return currentItem
   }
 
@@ -4099,7 +4109,8 @@ class WordItemRemoteDbDriver {
     }
 
     let homonym = this._serializeHomonym(wordItem)
-    if (homonym) {
+
+    if (homonym !== null) {
       result.homonym = homonym
     }
     let context = this._serializeContext(wordItem)
