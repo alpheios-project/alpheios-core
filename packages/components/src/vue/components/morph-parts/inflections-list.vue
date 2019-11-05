@@ -1,18 +1,18 @@
 <template>
     <div class="alpheios-inflections-list__inflections" v-if="hasInflections">
         <div class="alpheios-morph__inflset" v-for="(inflset, ifindex) in inflections" v-bind:key="ifindex">
-            
+
             <span class="alpheios-inflections-list__inflset_index" v-if="inflections.length > 1">{{ ifindex + 1 }}.</span>
 
             <div class="alpheios-inflections-list__forms">
-                <span 
+                <span
                     v-for="feat in featuresList.wordParts.filter(feat => inflset.groupingKey[feat.name])" v-bind:key="feat.name"
-                    :lang="languageCode" class="alpheios-inflections-list__formtext" 
+                    :lang="languageCode" class="alpheios-inflections-list__formtext"
                     data-grouplevel="1" data-feature="feat.name"
                 >{{ feat.template.replace('%s', inflset.groupingKey[feat.name]) }}</span>
 
                 <span class="alpheios-inflections-list__inflfeatures">
-                    <inflectionattribute 
+                    <inflectionattribute
                         v-for="feat in featuresList.level1.filter(feat => feat.checkfn(inflset))" v-bind:key="feat.name"
                         :data="inflset.groupingKey"  :grouplevel="1"
                         :decorators="feat.decorators"  :type="types[feat.name]"
@@ -21,26 +21,26 @@
 
                 <div class="alpheios-inflections-list__inflgroup" v-for="(group, grInflIndex) in inflset.inflections" v-bind:key="grInflIndex">
                     <span v-if="group.groupingKey.isCaseInflectionSet">
-                        <inflectionattribute 
+                        <inflectionattribute
                             v-for="feat in featuresList.level2" v-bind:key="feat.name"
                             :data="group.groupingKey" :grouplevel="2"
                             :decorators="feat.decorators"
                             :type="types[feat.name]"
                         />
                     </span>
-                
+
 
                     <div :class="groupClass(group)" v-for="(nextGroup, nextGrInflIndex) in group.inflections" v-bind:key="nextGrInflIndex">
                         <span v-if="group.groupingKey.isCaseInflectionSet">
-                            <inflectionattribute 
+                            <inflectionattribute
                                 v-for="feat in featuresList.level3" v-bind:key="feat.name"
                                 :data="group.groupingKey"  :grouplevel="3"
                                 :decorators="feat.decorators"  :type="types[feat.name]"
                             />
-                        </span>              
- 
+                        </span>
+
                         <div :class="groupClass(group)"  v-for="(infl, nextGrInflIndex2) in nextGroup.inflections" v-bind:key="nextGrInflIndex2">
-                            <inflectionattribute 
+                            <inflectionattribute
                                 v-for="feat in featuresList.level4.filter(feat => feat.checkfn(infl, group))" v-bind:key="feat.name"
                                 :data="infl.groupingKey"  :grouplevel="4"
                                 :decorators="feat.decorators"  :type="types[feat.name]"
@@ -59,9 +59,9 @@
                             </span>
                         </div>
                     </div>
-                     
+
                 </div><!-- alpheios-morph__inflgroup -->
-               
+
             </div><!-- alpheios-morph__forms -->
         </div><!-- alpheios-morph__inflset -->
     </div><!-- alpheios-morph__inflections -->
@@ -93,11 +93,11 @@
             { name: 'suffix', template: '-%s'}
           ],
           level1: [
-            { name: 'part', decorators: [], 
-              checkfn: (inflset) => ! this.featureMatch(this.lexeme.lemma.features[this.types.part], inflset.groupingKey[this.types.part]) 
+            { name: 'part', decorators: [],
+              checkfn: (inflset) => ! this.featureMatch(this.lexeme.lemma.features[this.types.part], inflset.groupingKey[this.types.part])
             },
-            { name: 'declension', decorators: ['appendtype'], 
-              checkfn: (inflset) => inflset.groupingKey.declension && ! this.featureMatch(inflset.groupingKey.declension, this.lexeme.lemma.features.declension) 
+            { name: 'declension', decorators: ['appendtype'],
+              checkfn: (inflset) => inflset.groupingKey.declension && ! this.featureMatch(inflset.groupingKey.declension, this.lexeme.lemma.features.declension)
             }
           ],
           level2: [
@@ -110,22 +110,22 @@
           ],
           level4: [
             { name: 'grmCase', decorators: ['abbreviate'], checkfn: () => true },
-            { name: 'gender', decorators: ['parenthesize','abbreviate'], 
-              checkfn: (infl, group) => !this.featureMatch(infl.groupingKey[this.types.gender], this.lexeme.lemma.features[this.types.gender]) 
+            { name: 'gender', decorators: ['parenthesize','abbreviate'],
+              checkfn: (infl, group) => !this.featureMatch(infl.groupingKey[this.types.gender], this.lexeme.lemma.features[this.types.gender])
             },
             { name: 'comparison', decorators: ['abbreviate'], checkfn: () => true },
             { name: 'person', decorators: ['appendtype','abbreviate'], checkfn: () => true },
-            { name: 'number', decorators: ['abbreviate'], 
-              checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet 
+            { name: 'number', decorators: ['abbreviate'],
+              checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet
             },
-            { name: 'tense', decorators: ['abbreviate'], 
-              checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet 
+            { name: 'tense', decorators: ['abbreviate'],
+              checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet
             },
-            { name: 'mood', decorators: ['abbreviate'], 
-              checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet 
+            { name: 'mood', decorators: ['abbreviate'],
+              checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet
             },
-            { name: 'voice', decorators: ['abbreviate'], 
-              checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet 
+            { name: 'voice', decorators: ['abbreviate'],
+              checkfn: (infl, group) => !group.groupingKey.isCaseInflectionSet
             }
           ]
         }
@@ -177,7 +177,11 @@
   }
 
   div.alpheios-inflections-list__inline {
-    display: inline;
+    display: flex;
+    flex-direction: row;
+    span {
+      padding-right: .5em;
+    }
   }
 
   div.alpheios-inflections-list__block {
@@ -191,7 +195,14 @@
   .alpheios-inflections-list__inflfeatures span:last-child:after {
     content: ')';
   }
-  
+  .alpheios-inflections-list__inflfeatures, .alpheios-inflections-list__inflgroup {
+    display: flex;
+    flex-direction: row;
+    span {
+      padding-right: .5em;
+    }
+  }
+
   .alpheios-inflections-list__inflections {
     .alpheios-inflections-list__inflset {
       margin-top: 0;
@@ -213,4 +224,3 @@
     }
   }
 </style>
-    

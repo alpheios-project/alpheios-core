@@ -1306,7 +1306,11 @@ h4.alpheios-principal-parts__groupitem {
   margin-top: 0.5em;
 }
 div.alpheios-inflections-list__inline {
-  display: inline;
+  display: flex;
+  flex-direction: row;
+}
+div.alpheios-inflections-list__inline span {
+  padding-right: 0.5em;
 }
 div.alpheios-inflections-list__block {
   display: block;
@@ -1316,6 +1320,13 @@ div.alpheios-inflections-list__block {
 }
 .alpheios-inflections-list__inflfeatures span:last-child:after {
   content: ")";
+}
+.alpheios-inflections-list__inflfeatures, .alpheios-inflections-list__inflgroup {
+  display: flex;
+  flex-direction: row;
+}
+.alpheios-inflections-list__inflfeatures span, .alpheios-inflections-list__inflgroup span {
+  padding-right: 0.5em;
 }
 .alpheios-inflections-list__inflections .alpheios-inflections-list__inflset {
   margin-top: 0;
