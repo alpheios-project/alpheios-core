@@ -180,7 +180,7 @@
     display: flex;
     flex-direction: row;
     span {
-      padding-right: .5em;
+      padding-right: .25em;
     }
   }
 
@@ -199,7 +199,7 @@
     display: flex;
     flex-direction: row;
     span {
-      padding-right: .5em;
+      padding-right: .25em;
     }
   }
 

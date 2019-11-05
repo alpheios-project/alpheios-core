@@ -1310,7 +1310,7 @@ div.alpheios-inflections-list__inline {
   flex-direction: row;
 }
 div.alpheios-inflections-list__inline span {
-  padding-right: 0.5em;
+  padding-right: 0.25em;
 }
 div.alpheios-inflections-list__block {
   display: block;
@@ -1326,7 +1326,7 @@ div.alpheios-inflections-list__block {
   flex-direction: row;
 }
 .alpheios-inflections-list__inflfeatures span, .alpheios-inflections-list__inflgroup span {
-  padding-right: 0.5em;
+  padding-right: 0.25em;
 }
 .alpheios-inflections-list__inflections .alpheios-inflections-list__inflset {
   margin-top: 0;
