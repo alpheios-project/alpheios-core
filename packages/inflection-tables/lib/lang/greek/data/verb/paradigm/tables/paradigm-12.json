@@ -491,18 +491,21 @@
                 "role": "data",
                 "tense": "perfect",
                 "voice": "mediopassive middle",
+                "part of speech": "verb_participle",
                 "value": "λελυμένος, -η, -ον"
             },
             {
                 "role": "data",
                 "tense": "perfect",
                 "voice": "mediopassive middle",
+                "part of speech": "verb_participle",
                 "value": "πεπεισμένος, -η, -ον"
             },
             {
                 "role": "data",
                 "tense": "perfect",
                 "voice": "mediopassive middle",
+                "part of speech": "verb_participle",
                 "value": "γεγραμμένος, -η, -ον"
             }
         ]}
