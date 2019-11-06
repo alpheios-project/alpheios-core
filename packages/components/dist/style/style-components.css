@@ -1137,7 +1137,7 @@ body {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-morph__attr {
+span.alpheios-morph__attr {
   font-weight: normal;
   padding-right: 0.25em;
 }
