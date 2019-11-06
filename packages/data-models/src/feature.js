@@ -116,7 +116,8 @@ export default class Feature {
       derivtype: 'derivtype',
       stemtype: 'stemtype',
       morph: 'morph', // general morphological information
-      var: 'var' // variance?
+      var: 'var', // variance?
+      radical: 'radical'
     }
   }
 
