@@ -12,6 +12,13 @@
       "params": {
         "getHomonym" : [ "languageID", "word" ]
       }
+    },
+    "chineseloc": {
+      "adapter": "chineseAdapter",
+      "methods": [ "getHomonym" ],
+      "params": {
+        "getHomonym" : [ "languageID", "word" ]
+      }
     }
   },
 

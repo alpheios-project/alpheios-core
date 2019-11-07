@@ -16,7 +16,7 @@
     "component": "morphology.tufts",
     "params": ["languageID"]
   },
-  "MORPH_TUFTS_NO_HOMONYM": {
+  "MORPH_NO_HOMONYM": {
     "message": "There is no homonym for the given word - {word} and languageID {languageID}",
     "description": "Error message for morphology.tufts adapter - when no homonym was returned from the source",
     "component": "morphology.tufts",
@@ -28,7 +28,7 @@
     "component": "morphology.tufts",
     "params": ["word", "languageID"]
   },
-  "MORPH_TUFTS_UNKNOWN_ERROR": {
+  "MORPH_UNKNOWN_ERROR": {
     "message": "Unknown error - {message}",
     "description": "Error message for morph.tufts adapter - unknown",
     "component": "morphology.tufts",

@@ -61,7 +61,7 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
         let homonym = transformAdapter.transformData(res, word)
 
         if (!homonym) {
-          this.addError(this.l10n.messages['MORPH_TUFTS_NO_HOMONYM'].get(word, languageID.toString()))
+          this.addError(this.l10n.messages['MORPH_NO_HOMONYM'].get(word, languageID.toString()))
           return
         }
 
@@ -72,7 +72,7 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
         return homonym
       }
     } catch (error) {
-      this.addError(this.l10n.messages['MORPH_TUFTS_UNKNOWN_ERROR'].get(error.mesage))
+      this.addError(this.l10n.messages['MORPH_UNKNOWN_ERROR'].get(error.mesage))
     }
   }
 

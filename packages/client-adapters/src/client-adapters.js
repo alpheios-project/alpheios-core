@@ -1,4 +1,5 @@
 import AlpheiosTuftsAdapter from '@/adapters/tufts/adapter'
+import AlpheiosChineseLocAdapter from '@/adapters/chineseloc/adapter'
 import AlpheiosTreebankAdapter from '@/adapters/alpheiostb/adapter'
 import AlpheiosLemmaTranslationsAdapter from '@/adapters/translations/adapter'
 import AlpheiosLexiconsAdapter from '@/adapters/lexicons/adapter'
@@ -135,6 +136,22 @@ class ClientAdapters {
     if (options.method === 'getHomonym') {
       let homonym = await localMaAdapter.getHomonym(options.params.languageID, options.params.word)
       return { result: homonym, errors: localMaAdapter.errors }
+    }
+    return null
+  }
+
+  static async chineseAdapter (options) {
+    ClientAdapters.checkMethodParam('morphology', 'chineseloc', options)
+
+    let localChineseAdapter = new AlpheiosChineseLocAdapter({
+      category: 'morphology',
+      adapterName: 'chineseloc',
+      method: options.method
+    })
+
+    if (options.method === 'getHomonym') {
+      let homonym = await localChineseAdapter.getHomonym(options.params.word)
+      return { result: homonym, errors: localChineseAdapter.errors }
     }
     return null
   }
