@@ -12,7 +12,7 @@ export default class ChineseLanguageModel extends LanguageModel {
   static get languageID () { return Constants.LANG_CHINESE }
   static get languageCode () { return Constants.STR_LANG_CODE_ZHO }
   static get languageCodes () { return [Constants.STR_LANG_CODE_ZH, Constants.STR_LANG_CODE_ZHO] }
-  static get contextForward () { return 1 }
+  static get contextForward () { return 5 }
   static get contextBackward () { return 0 }
   static get direction () { return Constants.LANG_DIR_LTR }
   static get baseUnit () { return Constants.LANG_UNIT_CHAR }
@@ -50,5 +50,9 @@ export default class ChineseLanguageModel extends LanguageModel {
       typeFeatures.set(featureName, this.getFeature(featureName))
     }
     typeFeaturesInitialized = true
+  }
+
+  static getPunctuation () {
+    return ".,;:!?'\"(){}\\[\\]<>/\\\n\r\uFF0C\u3001\u3002\u300C\u300D\u300A\u300B\u200C\u200D"
   }
 }

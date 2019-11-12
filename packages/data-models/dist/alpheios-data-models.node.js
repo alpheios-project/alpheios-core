@@ -347,7 +347,7 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
   static get languageID () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__["LANG_CHINESE"] }
   static get languageCode () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__["STR_LANG_CODE_ZHO"] }
   static get languageCodes () { return [_constants_js__WEBPACK_IMPORTED_MODULE_2__["STR_LANG_CODE_ZH"], _constants_js__WEBPACK_IMPORTED_MODULE_2__["STR_LANG_CODE_ZHO"]] }
-  static get contextForward () { return 1 }
+  static get contextForward () { return 5 }
   static get contextBackward () { return 0 }
   static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__["LANG_DIR_LTR"] }
   static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__["LANG_UNIT_CHAR"] }
@@ -385,6 +385,10 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
       typeFeatures.set(featureName, this.getFeature(featureName))
     }
     typeFeaturesInitialized = true
+  }
+
+  static getPunctuation () {
+    return ".,;:!?'\"(){}\\[\\]<>/\\\n\r\uFF0C\u3001\u3002\u300C\u300D\u300A\u300B\u200C\u200D"
   }
 }
 

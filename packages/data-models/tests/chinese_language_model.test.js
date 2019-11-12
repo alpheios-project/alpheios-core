@@ -28,7 +28,7 @@ describe('chinese_language_model.js', () => {
 
   it('1 ChineseLanguageModel - check static get methods', () => {
     expect(chineseModel.languageID).toEqual(Constants.LANG_CHINESE)
-    expect(chineseModel.contextForward).toEqual(1)
+    expect(chineseModel.contextForward).toEqual(5)
     expect(chineseModel.contextBackward).toEqual(0)
     expect(chineseModel.direction).toEqual(Constants.LANG_DIR_LTR)
     expect(chineseModel.baseUnit).toEqual(Constants.LANG_UNIT_CHAR)
