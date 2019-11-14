@@ -44,7 +44,7 @@ describe('chineseloc.test.js', () => {
 
     const result = adapter.fetchChineseData('而今')
 
-    expect(result.length).toEqual(3)
+    expect(result.length).toEqual(1)
     expect(result[0].dictEntry).toEqual('而今')
     expect(result[0].pinyin).toEqual('ér jin')
     expect(result[0].shortDef).toEqual('now; at the present (time)')
@@ -67,7 +67,7 @@ describe('chineseloc.test.js', () => {
 
     expect(homonym).toBeDefined()
 
-    expect(homonym.lexemes.length).toEqual(3)
+    expect(homonym.lexemes.length).toEqual(1)
     expect(homonym.targetWord).toEqual('而今')
 
     expect(homonym.lexemes[0].lemma.languageID).toEqual(Constants.LANG_CHINESE)

@@ -11,15 +11,15 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
 
   get languageID () { return ChineseLanguageModel.languageID }
 
-  fetchChineseData (targetWord) {
+  fetchChineseData (targetWord, checkContextForward) {
     ChineseSource.collectData()
 
-    return ChineseSource.lookupChinese(targetWord)
+    return ChineseSource.lookupChinese(targetWord, checkContextForward)
   }
 
-  getHomonym (targetWord) {
+  getHomonym (targetWord, checkContextForward) {
     try {
-      const res = this.fetchChineseData(targetWord)
+      const res = this.fetchChineseData(targetWord, checkContextForward)
       if (res) {
         let homonym = this.transformData(res, targetWord)
 

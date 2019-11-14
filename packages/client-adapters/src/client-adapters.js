@@ -150,7 +150,7 @@ class ClientAdapters {
     })
 
     if (options.method === 'getHomonym') {
-      let homonym = await localChineseAdapter.getHomonym(options.params.word)
+      let homonym = await localChineseAdapter.getHomonym(options.params.word, options.params.checkContextForward)
       return { result: homonym, errors: localChineseAdapter.errors }
     }
     return null

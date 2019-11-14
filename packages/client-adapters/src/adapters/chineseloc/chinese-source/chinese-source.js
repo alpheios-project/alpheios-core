@@ -113,26 +113,37 @@ export default class ChineseSource {
     return null
   }
 
-  static lookupChinese (targetWord) {
-    let cpWord = targetWord
+  static lookupChinese (targetWord, checkContextForward = '') {
+    let checkWords = [ targetWord ]
+
+    if (checkContextForward.length > 0) {
+      let cpWord = targetWord
+      while (cpWord.length > 1) {
+        cpWord = cpWord.substring(0, cpWord.length - 1)
+        checkWords.push(cpWord)
+      }
+    }
+
     let count = 0
     let format = 'simp'
 
     let rs = []
 
     let result
-    while (cpWord.length > 0) {
+    let checkedWords = 0
+    while (checkedWords < checkWords.length) {
+      const checkWord = checkWords[checkedWords]
       if (format === 'simp') {
-        result = ChineseSource.findWord(cpWord, dWordIndexSimp, dWordDict)
+        result = ChineseSource.findWord(checkWord, dWordIndexSimp, dWordDict)
         if (!result) {
           format = 'trad'
-          result = ChineseSource.findWord(cpWord, dWordIndexTrad, dWordDict)
+          result = ChineseSource.findWord(checkWord, dWordIndexTrad, dWordDict)
         }
       } else {
-        result = ChineseSource.findWord(cpWord, dWordIndexTrad, dWordDict)
+        result = ChineseSource.findWord(checkWord, dWordIndexTrad, dWordDict)
         if (!result) {
           format = 'simp'
-          result = ChineseSource.findWord(cpWord, dWordIndexSimp, dWordDict)
+          result = ChineseSource.findWord(checkWord, dWordIndexSimp, dWordDict)
         }
       }
 
@@ -147,7 +158,7 @@ export default class ChineseSource {
           rs[count++] = finalResItem
         })
       }
-      cpWord = cpWord.substring(0, cpWord.length - 1)
+      checkedWords = checkedWords + 1
     }
 
     return rs
@@ -256,7 +267,7 @@ export default class ChineseSource {
                   if (k + 1 < pin.length - 1 && pin[k + 1] === ':') { pin = pin.replace('u:', _v[tone]) } else { pin = pin.replace('u', _u[tone]) }
                   break
                 default:
-                  console.info('some kind of weird vowel')
+                  console.warn('some kind of weird vowel', pin[k])
               }
               break
             }
