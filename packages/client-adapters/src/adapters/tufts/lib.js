@@ -30,7 +30,7 @@ class ImportData {
         // only process if we have a lemma that differs from the target
         // word or if we have at least a part of speech
         if (this.reportLexeme(lex)) {
-          lex.inflections = inflections
+          lex.inflections = inflections.map(inflection => inflection.clone())
           lexemes.push(lex)
         }
       }

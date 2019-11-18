@@ -70,13 +70,13 @@ data.setLexemeAggregator(function (lexemeSet, inflections) {
                 otherLex.addAltLemma(lex.lemma)
               }
             } else {
-              lex.inflections = inflections
+              lex.inflections = inflections.map(inflection => inflection.clone())
               lexemes.push(lex)
             }
           }
         }
       } else {
-        lex.inflections = inflections
+        lex.inflections = inflections.map(inflection => inflection.clone())
         lexemes.push(lex)
       }
     }
