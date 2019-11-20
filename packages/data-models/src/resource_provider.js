@@ -39,6 +39,30 @@ class ResourceProvider {
       }
     })
   }
+
+  convertToJSONObject () {
+    let rights = {}
+    for (const [key, value] of this.rights.entries()) {
+      rights[key] = value
+    }
+
+    let resultProvider = {
+      uri: this.uri,
+      rights
+    }
+    return resultProvider
+  }
+
+  static readObject (jsonObject) {
+    let rights = new Map()
+    if (jsonObject.rights) {
+      Object.keys(jsonObject.rights).forEach(key => {
+        rights.set(key, jsonObject.rights[key])
+      })
+    }
+
+    return new ResourceProvider(jsonObject.uri, '', rights)
+  }
 }
 
 export default ResourceProvider

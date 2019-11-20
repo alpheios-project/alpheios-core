@@ -2,6 +2,7 @@ import Lemma from './lemma.js'
 import Inflection from './inflection.js'
 import DefinitionSet from './definition-set'
 import LMF from './language_model_factory'
+import ResourceProvider from './resource_provider.js'
 
 /**
  * A basic unit of lexical meaning. Contains a primary Lemma object, one or more Inflection objects
@@ -145,7 +146,13 @@ class Lexeme {
     if (jsonObject.meaning) {
       lexeme.meaning = DefinitionSet.readObject(jsonObject.meaning)
     }
-    return lexeme
+
+    if (jsonObject.provider) {
+      let provider = ResourceProvider.readObject(jsonObject.provider)
+      return ResourceProvider.getProxy(provider, lexeme)
+    } else {
+      return lexeme
+    }
   }
 
   convertToJSONObject (addMeaning = false) {
@@ -160,6 +167,10 @@ class Lexeme {
     if (addMeaning) {
       let resMeaning = this.meaning.convertToJSONObject()
       resLexeme.meaning = resMeaning
+    }
+
+    if (this.provider) {
+      resLexeme.provider = this.provider.convertToJSONObject()
     }
 
     return resLexeme

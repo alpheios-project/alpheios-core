@@ -16,10 +16,9 @@ export default class DefinitionSet {
    * @return {DefinitionSet} A DefinitionSet object populated with data from JSON object.
    */
   static readObject (jsonObject) {
-    if (!jsonObject.languageID && jsonObject.languageCode) {
-      jsonObject.languageID = LMF.getLanguageIdFromCode(jsonObject.languageCode)
-    }
-    let definitionSet = new DefinitionSet(jsonObject.lemmaWord, jsonObject.languageID)
+    const languageID = LMF.getLanguageIdFromCode(jsonObject.languageCode)
+
+    let definitionSet = new DefinitionSet(jsonObject.lemmaWord, languageID)
 
     for (let shortDef of jsonObject.shortDefs) {
       definitionSet.shortDefs.push(Definition.readObject(shortDef))

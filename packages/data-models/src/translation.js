@@ -37,14 +37,25 @@ class Translation {
   }
 
   convertToJSONObject () {
-    return {
+    let result = {
       languageCode: this.languageCode,
       translations: this.glosses
     }
+
+    if (this.provider) {
+      result.provider = this.provider.convertToJSONObject()
+    }
+    return result
   }
 
   static readObject (jsonObject, lemma) {
-    return new Translation(lemma, jsonObject.languageCode, jsonObject.translations)
+    let translation = new Translation(lemma, jsonObject.languageCode, jsonObject.translations)
+    if (jsonObject.provider) {
+      let provider = ResourceProvider.readObject(jsonObject.provider)
+      return ResourceProvider.getProxy(provider, translation)
+    } else {
+      return translation
+    }
   }
 }
 export default Translation
