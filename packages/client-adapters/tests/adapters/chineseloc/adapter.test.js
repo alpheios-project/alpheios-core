@@ -73,7 +73,7 @@ describe('chineseloc.test.js', () => {
     expect(homonym.lexemes[0].lemma.languageID).toEqual(Constants.LANG_CHINESE)
     expect(homonym.lexemes[0].lemma.languageCode).toEqual(Constants.STR_LANG_CODE_ZHO)
     expect(homonym.lexemes[0].lemma.word).toEqual('而今')
-    expect(homonym.lexemes[0].lemma.principalParts).toEqual(['而今'])
+    expect(homonym.lexemes[0].lemma.principalParts).toEqual([])
     expect(homonym.lexemes[0].lemma.features.pronunciation.values).toEqual(['ér jin', 'mandarin - ér  néng', 'cantonese - ji4', 'tang - *njiə'])
     expect(homonym.lexemes[0].lemma.features.note.value).toEqual('simplified')
     expect(homonym.lexemes[0].lemma.features.frequency.value).toEqual('least frequent')
@@ -142,7 +142,7 @@ describe('chineseloc.test.js', () => {
         method: 'getHomonym'
     })
 
-   
+
     let featureConfig = { checkAttribute: 'pinyin', featureType: Feature.types.pronunciation, featOrder: 4 }
     let featureVal1 = adapter.defineMultipleFeature(featureConfig, { pinyin: 'ér jin' }, [])
 
@@ -173,7 +173,7 @@ describe('chineseloc.test.js', () => {
         method: 'getHomonym'
     })
 
-   
+
     let featureConfig = { checkAttribute: 'frequency', featureType: Feature.types.frequency }
     let featureVal1 = adapter.defineSimpleFeature(featureConfig, { frequency: 'least frequent' }, [])
 

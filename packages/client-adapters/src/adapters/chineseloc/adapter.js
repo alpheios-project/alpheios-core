@@ -37,7 +37,7 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
   transformData (rawLexemes, targetWord) {
     let lexemes = []
     rawLexemes.forEach(rawLexeme => {
-      let lemma = new Lemma(targetWord, this.languageID, [rawLexeme.dictEntry])
+      let lemma = new Lemma(rawLexeme.dictEntry, this.languageID, [])
 
       let features = this.extractFeatures(rawLexeme)
       lemma.addFeatures(features)

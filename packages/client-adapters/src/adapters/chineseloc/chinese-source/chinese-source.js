@@ -116,12 +116,9 @@ export default class ChineseSource {
   static lookupChinese (targetWord, checkContextForward = '') {
     let checkWords = [ targetWord ]
 
-    if (checkContextForward.length > 0) {
-      let cpWord = targetWord
-      while (cpWord.length > 1) {
-        cpWord = cpWord.substring(0, cpWord.length - 1)
-        checkWords.push(cpWord)
-      }
+    for (let i = 1; i <= checkContextForward.length; i++) {
+      let cpWord = targetWord + checkContextForward.substr(0, i)
+      checkWords.push(cpWord)
     }
 
     let count = 0
