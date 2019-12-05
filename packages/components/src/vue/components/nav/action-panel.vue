@@ -55,13 +55,12 @@
         </alph-tooltip>
 
         <alph-tooltip
-            :tooltip-text="tooltipText('TOOLTIP_GRAMMAR', $store.getters[`app/hasGrammarRes`])"
+            :tooltip-text="tooltipText('TOOLTIP_GRAMMAR')"
             :tooltip-direction="tooltipDirection"
         >
           <div
-              :class="{ disabled: !$store.getters[`app/hasGrammarRes`] }"
               class="alpheios-action-panel__navbutton"
-              @click.stop="$store.getters[`app/hasGrammarRes`] ? openTab('grammar') : null"
+              @click.stop="openTab('grammar')"
           >
             <grammar-icon/>
           </div>

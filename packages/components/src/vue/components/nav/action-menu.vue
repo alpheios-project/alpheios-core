@@ -89,11 +89,10 @@
       </alph-tooltip>
 
       <alph-tooltip
-          :tooltip-text="tooltipText('TOOLTIP_GRAMMAR', $store.getters[`app/hasGrammarRes`])"
+          :tooltip-text="tooltipText('TOOLTIP_GRAMMAR')"
           :tooltip-direction="tooltipDirection"
       >
         <div
-            :class="{ disabled: !$store.getters[`app/hasGrammarRes`] }"
             class="alpheios-action-menu__navbutton"
             @click.stop="showPanelTab('grammar')"
         >

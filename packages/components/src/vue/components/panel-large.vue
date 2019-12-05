@@ -86,8 +86,7 @@
         <inflection-browser/>
       </div>
 
-      <div class="alpheios-panel__tab-panel alpheios-panel__tab__grammar
-            alpheios-panel__tab-panel--no-padding"
+      <div class="alpheios-panel__tab-panel alpheios-panel__tab__grammar alpheios-panel__tab-panel--no-padding"
             data-alpheios-ignore="all"
             v-show="$store.getters['ui/isActiveTab']('grammar')">
         <grammar></grammar>

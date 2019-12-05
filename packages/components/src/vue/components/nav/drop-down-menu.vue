@@ -55,7 +55,7 @@
     </div>
 
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('grammar') }"
-         v-show="$store.getters[`app/hasGrammarRes`]" @click="changeTab('grammar')">
+         @click="changeTab('grammar')">
       <div  class="alpheios-navbuttons__icon-cont">
         <grammar-icon class="alpheios-navbuttons__icon"></grammar-icon>
       </div>

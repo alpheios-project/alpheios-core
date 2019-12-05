@@ -37,6 +37,7 @@ export default class ResourceQuery extends Query {
   * iterations () {
     this.grammarResources = yield this.grammars.fetchResources(this.feature)
     yield 'Retrieval of grammar info complete'
+
     let grammarRequests = []
     grammarRequests = grammarRequests.concat(this.grammarResources.map(res => {
       return {
@@ -46,7 +47,7 @@ export default class ResourceQuery extends Query {
     }
     ))
     if (grammarRequests.length === 0) {
-      ResourceQuery.evt.GRAMMAR_NOT_FOUND.pub()
+      ResourceQuery.evt.GRAMMAR_NOT_FOUND.pub(this.feature.languageID)
       this.finalize()
     }
     for (let q of grammarRequests) { // eslint-disable-line prefer-const
@@ -54,7 +55,7 @@ export default class ResourceQuery extends Query {
         url => {
           q.complete = true
           if (this.active) {
-            ResourceQuery.evt.GRAMMAR_AVAILABLE.pub({ url: url })
+            ResourceQuery.evt.GRAMMAR_AVAILABLE.pub({ urls: url, languageID: this.feature.languageID })
           }
           if (grammarRequests.every(request => request.complete)) {
             if (this.active) {

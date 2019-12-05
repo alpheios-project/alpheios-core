@@ -47,8 +47,7 @@
       </div>
     </alph-tooltip>
 
-    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_GRAMMAR')" tooltipDirection="bottom-narrow"
-                v-show="$store.getters[`app/hasGrammarRes`]">
+    <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_GRAMMAR')" tooltipDirection="bottom-narrow" >
       <div @click="ui.changeTab('grammar')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('grammar') }">
         <grammar-icon></grammar-icon>

@@ -636,5 +636,15 @@
     "message": "FAQ/Known Issues",
     "description": "Faq button label",
     "component": "info panel"
+  },
+  "PLACEHOLDER_GRAMMAR_DATA_LOADING": {
+    "message": "Grammar data is loading",
+    "description": "placeholder text for grammar data",
+    "component": "Grammar"
+  },
+  "LABEL_BROWSE_GRAMMAR": {
+    "message": "Browse Language Grammar",
+    "description": "Panel title for grammar tab",
+    "component": "Grammar"
   }
 }

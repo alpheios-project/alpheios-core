@@ -115,9 +115,14 @@ export default class BaseTestHelp {
               wordUsageExamplesReady: false,
               wordListUpdateTime: 0,
               grammarRes: {},
+              updatedGrammar: 0,
               linkedFeatures: [],
               selectedLookupLangCode: 'lat',
-              translationsDataReady: false
+              translationsDataReady: false,
+              lexicalRequest: {
+                startTime: 0
+              },
+              currentLanguageCode: null
             },
             mutations: {
               setTestCurrentLanguageName (state, value) {
@@ -125,6 +130,10 @@ export default class BaseTestHelp {
               },
               setTestCurrentLanguageID (state, value) {
                 state.currentLanguageID = value
+              },
+              setCurrentLanguage (state, data) {
+                state.currentLanguageID = data.languageID
+                state.currentLanguageCode = data.languageCode
               },
               setTestMorphDataReady (state, value) {
                 state.morphDataReady = value
@@ -161,6 +170,12 @@ export default class BaseTestHelp {
               },
               setTranslationsDataReady (state, value) {
                 state.translationsDataReady = value
+              },
+              lexicalRequestStarted (state, data) {
+                state.lexicalRequest.startTime = Date.now()
+              },
+              setUpdatedGrammar (state) {
+                state.updatedGrammar = state.updatedGrammar + 1
               }
             },
             getters: {
@@ -315,7 +330,6 @@ export default class BaseTestHelp {
 
         }
       })
-
       let homonym = adapterTuftsRes.result
 
       if (!homonym) {

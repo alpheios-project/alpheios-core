@@ -41,9 +41,9 @@
     computed: {
       definitions () {
         let definitionsLocal = []
-        if (this.$store.getters['app/shortDefDataReady'] && this.lexeme.meaning && this.lexeme.meaning.shortDefs && this.lexeme.meaning.shortDefs.length > 0) {
+        if (this.$store.getters['app/shortDefDataReady'] && this.lexeme && this.lexeme.meaning && this.lexeme.meaning.shortDefs && this.lexeme.meaning.shortDefs.length > 0) {
           definitionsLocal = this.lexeme.meaning.shortDefs
-        } else if (this.lexeme.lemma.features && Object.entries(this.lexeme.lemma.features).length > 0) {
+        } else if (this.lexeme && this.lexeme.lemma.features && Object.entries(this.lexeme.lemma.features).length > 0) {
           definitionsLocal = [new Definition(this.l10n.getMsg('TEXT_NOTICE_NO_DEFS_FOUND'), 'en-US', 'text/plain', this.lexeme.lemma.word)]
         } 
         return definitionsLocal

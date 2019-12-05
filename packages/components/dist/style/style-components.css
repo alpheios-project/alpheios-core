@@ -2326,16 +2326,24 @@ h3.alpheios-inflections__credits-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-grammar__titles {
+  padding: 40px 20px 20px;
+}
+p.alpheios-grammar__block__title {
+  color: var(--alpheios-inflect-title-color);
+  font-size: calc(var(--alpheios-base-text-size) * 1.375);
+  font-family: var(--alpheios-serif-font-face);
+  font-weight: 700;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 1.25);
+  display: inline-block;
+}
+p.alpheios-grammar__block__title.open {
+  border-bottom: calc(var(--alpheios-base-text-size) * 0.125) solid var(--alpheios-inflect-title-color);
+}
 .alpheios-grammar {
   display: flex;
   flex-direction: column;
   height: 100%;
-}
-.alpheios-grammar__provider {
-  flex: none;
-  font-weight: normal;
-  padding: 20px 25px 20px;
-  font-size: 80%;
 }
 .alpheios-grammar__frame-cont {
   flex: 1 1 auto;
@@ -2356,6 +2364,12 @@ h3.alpheios-inflections__credits-title {
   margin: 0;
   padding: 0;
   overflow: scroll;
+}
+.alpheios-grammar__provider {
+  flex: none;
+  font-weight: normal;
+  padding: 20px 25px 20px;
+  font-size: 80%;
 }
 .alpheios-grammar__button--back-block {
   position: absolute;
@@ -2383,6 +2397,9 @@ h3.alpheios-inflections__credits-title {
   color: var(--alpheios-grammar-back-button-color-hover);
   background-color: var(--alpheios-grammar-back-button-bg-hover);
   border-color: var(--alpheios-grammar-back-button-border-color-hover);
+}
+.alpheios-grammar__frame-progress {
+  padding: 20px;
 }
 /*
  Calculates a size of text elements relative to the base size.

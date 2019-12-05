@@ -81,6 +81,7 @@ export default {
       } else {
         this.selectedSortBy = null
       }
+      
       this.changedSortBy()
     }
   },

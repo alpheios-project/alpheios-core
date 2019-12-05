@@ -110,7 +110,7 @@
           :tooltip-direction="tooltipDirection"
       >
         <span
-            :class="{ active: $store.getters['ui/isActiveTab']('grammar') && $store.state.panel.open, disabled: !$store.getters[`app/hasGrammarRes`] }"
+            :class="{ active: $store.getters['ui/isActiveTab']('grammar') && $store.state.panel.open }"
             class="alpheios-navbuttons__btn"
             @click="ui.togglePanelTab('grammar')"
         >
