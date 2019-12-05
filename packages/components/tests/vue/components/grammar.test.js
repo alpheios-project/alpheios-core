@@ -45,7 +45,7 @@ describe('grammar.test.js', () => {
     expect(cmp.isVueInstance()).toBeTruthy()
   })
   
-  it('2 Grammar - renders iframe and provider', () => {
+  it.skip('2 Grammar - renders iframe and provider', () => {
     let cmp = shallowMount(Grammar, {
       store,
       localVue,

@@ -144,11 +144,10 @@ describe('lookup.test.js', () => {
     cmp.setData({
       lookuptext: 'footext'
     })
-    expect(cmp.find('input').element.value).toEqual('footext')
-
+    Vue.nextTick().then(() => {
+      expect(cmp.find('input').element.value).toEqual('footext')
+    })
     cmp.find('button').trigger('click')
-
-
     expect(LexicalQueryLookup.create).toHaveBeenCalled()
 
     LexicalQueryLookup.create = fn
@@ -303,8 +302,11 @@ describe('lookup.test.js', () => {
     })
 
     store.commit('app/setTestMorphDataReady', true)
-
-    expect(cmp.vm.lookuptext).toEqual('')
+    
+    Vue.nextTick().then(() => {
+      expect(cmp.vm.lookuptext).toEqual('')
+    })
+    
   })
 
   it('11 Lookup\'s - method toggleLangSelector emitts toggleLangSelector with true value', async () => {

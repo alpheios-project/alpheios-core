@@ -65,7 +65,7 @@ describe('word-usage-examples-filters.test.js', () => {
     expect(cmp.isVueInstance()).toBeTruthy()
   })
 
-  it('2 WordUsageExamplesFilters - clears filters on changing tab to wordusage', () => {
+  it('2 WordUsageExamplesFilters - clears filters on changing tab to wordusage', async () => {
     let cmp = shallowMount(WordUsageExamplesFilters, {
       store,
       localVue,
@@ -84,7 +84,7 @@ describe('word-usage-examples-filters.test.js', () => {
     store.commit('app/setTestWordUsageExamplesReady', false)
 
     store.commit('ui/setTestCurrentTab', 'wordUsage')
-
+    await Vue.nextTick()
     expect(cmp.vm.selectedAuthor).toBeNull()
     expect(cmp.vm.selectedTextWork).toBeNull()
     expect(cmp.vm.getResults).toHaveBeenCalled()

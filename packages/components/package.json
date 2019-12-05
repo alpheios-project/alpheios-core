@@ -42,7 +42,7 @@
     "@babel/runtime": "^7.7.2",
     "@vue/test-utils": "^1.0.0-beta.29",
     "acorn": "^7.1.0",
-    "alpheios-client-adapters": "github:alpheios-project/client-adapters#v1.0.0",
+    "alpheios-client-adapters": "github:alpheios-project/client-adapters",
     "alpheios-data-models": "github:alpheios-project/data-models#v2.5.3",
     "alpheios-experience": "github:alpheios-project/experience#v1.1.0",
     "alpheios-inflection-tables": "github:alpheios-project/inflection-tables#v1.5.9",

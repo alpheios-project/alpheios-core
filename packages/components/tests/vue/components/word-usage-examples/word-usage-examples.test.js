@@ -206,7 +206,7 @@ describe('word-usage-examples.test.js', () => {
     expect(cmp.vm.showHeader).toBeTruthy()
   })
 
-  it('6 WordUsageExamples - computed showWordUsageExampleItems returns wordUsageExamplesReady from the store, if false changes collapsedHeader to true ', () => {
+  it('6 WordUsageExamples - computed showWordUsageExampleItems returns wordUsageExamplesReady from the store, if false changes collapsedHeader to true ', async () => {
     let cmp = shallowMount(WordUsageExamples, {
       store,
       localVue,
@@ -225,6 +225,7 @@ describe('word-usage-examples.test.js', () => {
       collapsedHeader: false
     })
     store.commit('app/setTestWordUsageExamplesReady', false)
+    await Vue.nextTick()
     expect(cmp.vm.collapsedHeader).toBeTruthy()
   })
 

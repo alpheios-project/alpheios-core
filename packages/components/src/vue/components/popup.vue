@@ -61,13 +61,6 @@
           >
             {{$store.state.app.selectedText}}
           </h3>
-          <span
-              class="alpheios-popup__toolbar-word"
-              lang="en"
-              v-show="$store.state.app.languageName && verboseMode"
-          >
-            ({{$store.state.app.languageName}})
-          </span>
         </div>
       </div>
 

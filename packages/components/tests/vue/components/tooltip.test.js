@@ -3,6 +3,7 @@
 import Vuex from 'vuex'
 import { mount, createLocalVue } from '@vue/test-utils'
 import Tooltip from '@/vue/components/tooltip.vue'
+import Vue from 'vue/dist/vue'
 
 describe('tooltip.test.js', () => {
   console.error = function () {}
@@ -109,7 +110,10 @@ describe('tooltip.test.js', () => {
       additionalStyles: { color: 'red' }
     })
 
-    expect(cmp.find('.tooltiptext').element.style.color).toEqual('red')
+    Vue.nextTick().then(() => {
+      expect(cmp.find('.tooltiptext').element.style.color).toEqual('red')
+    })
+    
 
     cmp.setProps({
       tooltipDirection: 'bottom-wide'
@@ -150,6 +154,7 @@ describe('tooltip.test.js', () => {
       tooltipDirection: 'top-left'
     })
     expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-top-left': true })
+
   })
 
   it('3 Tooltip - check required props', () => {

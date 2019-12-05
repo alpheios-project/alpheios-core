@@ -2965,6 +2965,12 @@ p.alpheios-word-usage-filter-title {
 .alpheios-wordlist-download-confirmation {
   margin-top: 10px;
 }
+.alpheios-wordlist-download-with-filters {
+  margin-top: 5px;
+}
+.alpheios-wordlist-download-with-filters label {
+  color: var(--alpheios-usage-link-color);
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.

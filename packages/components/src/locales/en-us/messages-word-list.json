@@ -128,11 +128,16 @@
     "WORDLIST_DOWNLOAD_BUTTON": {
         "message": "Download",
         "description": "Download list button",
-        "component": "WordFilterPanel"
+        "component": "WordLanguagePanel"
     },
     "WORDLIST_DOWNLOAD_NOTICE": {
         "message": "Your wordlist will be downloaded as tabular data file. It can be imported into a spreadsheet program. Columns are separated by semi-colons. (This feature may not work on iOS devices.)",
         "description": "Download notice",
-        "component": "WordFilterPanel"
+        "component": "WordLanguagePanel"
+    },
+    "WORDLIST_DOWNLOAD_FILTERING_CHECK": {
+        "message": "with filtering",
+        "description": "Download list filtering check",
+        "component": "WordLanguagePanel"
     }
 }

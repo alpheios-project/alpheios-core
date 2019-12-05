@@ -223,7 +223,7 @@ describe('word-language-panel.test.js', () => {
     expect(cmp.vm.languageName).toEqual('lat')
   })
 
-  it('9 WordLanguagePanel - method showDeleteAll updates showDeleteAllBox to true and shows alpheios-wordlist-delete-all-confirmation block', () => {
+  it('9 WordLanguagePanel - method showDeleteAll updates showDeleteAllBox to true and shows alpheios-wordlist-delete-all-confirmation block', async () => {
     let cmp = shallowMount(WordLanguagePanel, {
       store,
       localVue,
@@ -238,11 +238,12 @@ describe('word-language-panel.test.js', () => {
     expect(deleteAllBlock.isVisible()).toBeFalsy()
 
     cmp.vm.showDeleteAll()
+    await Vue.nextTick()
     expect(cmp.vm.showDeleteAllBox).toBeTruthy()
     expect(deleteAllBlock.isVisible()).toBeTruthy()
   })
 
-  it('10 WordLanguagePanel - method showDownloadList updates showDownloadBox to true and shows alpheios-wordlist-download-confirmation block', () => {
+  it('10 WordLanguagePanel - method showDownloadList updates showDownloadBox to true and shows alpheios-wordlist-download-confirmation block', async () => {
     let cmp = shallowMount(WordLanguagePanel, {
       store,
       localVue,
@@ -257,6 +258,8 @@ describe('word-language-panel.test.js', () => {
     expect(downloadBlock.isVisible()).toBeFalsy()
 
     cmp.vm.showDownloadList()
+
+    await Vue.nextTick()
     expect(cmp.vm.showDownloadBox).toBeTruthy()
     expect(downloadBlock.isVisible()).toBeTruthy()
   })

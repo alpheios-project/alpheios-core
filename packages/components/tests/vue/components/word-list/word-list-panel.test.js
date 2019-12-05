@@ -169,7 +169,7 @@ describe('word-list-panel.test.js', () => {
     expect(cmp.vm.wordLists).toEqual([])
   })
 
-  it('8 WordListPanel - computed wordLists returns an wordLists from the api.app', () => {
+  it('9 WordListPanel - computed wordLists returns an wordLists from the api.app', async () => {
     let api = {
       app: BaseTestHelp.appAPI()
     }
@@ -184,6 +184,7 @@ describe('word-list-panel.test.js', () => {
     api.app.getAllWordLists = jest.fn(() => 'testWordList')
     store.commit('app/setTestWordListUpdateTime', 1)
 
+    await Vue.nextTick()
     expect(api.app.getAllWordLists).toHaveBeenCalled()
     expect(cmp.vm.wordLists).toEqual('testWordList')
   })
