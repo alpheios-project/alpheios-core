@@ -974,18 +974,18 @@ div.alpheios-checkbox-block {
 
 .alpheios-button-tertiary, button.alpheios-button-tertiary {
   color: var(--alpheios-btn-tertiary-font-color);
-  background-color: var(--alpheios-btn-tertiary-bg-color);
+  background: var(--alpheios-btn-tertiary-bg-color);
   border-color: var(--alpheios-btn-tertiary-border-color);
 }
 .alpheios-button-tertiary:hover, .alpheios-button-tertiary:focus, button.alpheios-button-tertiary:hover, button.alpheios-button-tertiary:focus {
   color: var(--alpheios-btn-tertiary-font-color-hover);
-  background-color: var(--alpheios-btn-tertiary-bg-color-hover);
+  background: var(--alpheios-btn-tertiary-bg-color-hover);
   border-color: var(--alpheios-btn-tertiary-border-color-hover);
   box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25);
 }
 .alpheios-button-tertiary:active, button.alpheios-button-tertiary:active {
   color: var(--alpheios-btn-tertiary-font-color-pressed);
-  background-color: var(--alpheios-btn-tertiary-bg-color-pressed);
+  background: var(--alpheios-btn-tertiary-bg-color-pressed);
   border-color: var(--alpheios-btn-tertiary-border-color-pressed);
   box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1);
 }
