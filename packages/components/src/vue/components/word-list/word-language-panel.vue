@@ -59,8 +59,8 @@
               </button>
             </alph-tooltip>
             <div class="alpheios-wordlist-download-with-filters alpheios-checkbox-block" data-alpheios-ignore="all">
-              <input id="alpheios-wordlist-download-with-filters-input" type="checkbox" v-model="downloadWithFilter">
-              <label for="alpheios-wordlist-download-with-filters-input">
+              <input :id="downloadFilterId" type="checkbox" v-model="downloadWithFilter">
+              <label :for="downloadFilterId">
                 {{ l10n.getText('WORDLIST_DOWNLOAD_FILTERING_CHECK') }}
               </label>
             </div>
@@ -159,6 +159,9 @@ export default {
      
   },
   computed: {
+    downloadFilterId () {
+      return `alpheios-wordlist-download-with-filters-input-${this.languageCode}`
+    },
     hasSeveralItems () {
       return this.wordlist && this.wordlist.values && this.wordlist.values.length > 1
     },

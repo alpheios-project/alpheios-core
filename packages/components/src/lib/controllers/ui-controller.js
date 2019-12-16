@@ -478,7 +478,6 @@ export default class UIController {
           return false
         }
 
-        console.info('hasMorphData - this.store.state.app.homonymDataReady', this.store.state.app.homonymDataReady, lexemes)
         if (Array.isArray(lexemes) && lexemes.length > 0 &&
           (lexemes[0].lemma.principalParts.length > 0 || lexemes[0].inflections.length > 0 || lexemes[0].inflections.length > 0 ||
             lexemes[0].meaning.fullDefs.length > 0 || lexemes[0].meaning.shortDefs.length > 0)
