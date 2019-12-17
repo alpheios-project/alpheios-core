@@ -1330,8 +1330,7 @@ export default class UIController {
     this.resetInflData()
   }
 
-  restoreGrammarIndex () {
-    const currentLanguageID = this.store.state.app.currentLanguageID
+  restoreGrammarIndex (currentLanguageID) {
     this.startResourceQuery({ type: 'table-of-contents', value: '', languageID: currentLanguageID })
   }
 

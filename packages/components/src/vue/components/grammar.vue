@@ -1,6 +1,6 @@
 <template>
   <div class="alpheios-grammar">
-    <div class="alpheios-grammar__titles">
+    <div class="alpheios-grammar__titles" v-show="showTitles">
         <h1 class="alpheios-panel__title">{{ l10n.getText('LABEL_BROWSE_GRAMMAR') }}</h1>
       <div class="alpheios-grammar__block alpheios-clickable" 
           :class="{open: !languageItem.collapsed}"
@@ -18,9 +18,16 @@
         <progress-bar :text="l10n.getText('PLACEHOLDER_GRAMMAR_DATA_LOADING')"></progress-bar>
       </div>
       <div class="alpheios-grammar__frame-cont" v-show="!languageList[currentLanguageCode].collapsed" v-if="currentUrl">
+        <div class="alpheios-grammar__button--show-titles-block">
+          <alph-tooltip :tooltipText="showHideTooltipValue" tooltipDirection="bottom-left">
+            <button @click="showHideTitles"
+              class="alpheios-button-primary alpheios-svg-index"><definitions-icon /></button>
+          </alph-tooltip>
+        </div>
         <div class="alpheios-grammar__button--back-block">
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_BACK_TO_INDEX')" tooltipDirection="bottom-left">
-            <button @click="returnToIndex"  class="alpheios-button-primary alpheios-svg-index"><back-icon /></button>
+            <button @click="returnToIndex"
+              class="alpheios-button-primary alpheios-svg-index"><back-icon /></button>
           </alph-tooltip>
         </div>
         <iframe :src="currentUrl" class="alpheios-grammar__frame" scrolling="yes"></iframe>
@@ -50,6 +57,7 @@ import { Grammars } from 'alpheios-res-client'
 import Vue from '@vue-runtime'
 
 import BackIcon from '@/images/inline-icons/back.svg'
+import DefinitionsIcon from '@/images/inline-icons/definitions.svg'
 import Tooltip from './tooltip.vue'
 import ProgressBar from './progress-bar.vue'
 
@@ -60,6 +68,7 @@ export default {
   mixins: [DependencyCheck],
   components: {
     backIcon: BackIcon,
+    definitionsIcon: DefinitionsIcon,
     alphTooltip: Tooltip,
     progressBar: ProgressBar
   },
@@ -86,7 +95,8 @@ export default {
           provider: null,
           collapsed: true
         }
-      }
+      },
+      showTitles: false
     }
   },
   mounted () {
@@ -100,6 +110,15 @@ export default {
     this.$options.lexrqStartedUnwatch()
   },
   computed: {
+    currentLanguageID () {
+      return this.languageList[this.currentLanguageCode].languageID
+    },
+    showHideTooltipValue () {
+      if (this.showTitles) {
+        return this.l10n.getText('TOOLTIP_HIDE_GRAMMAR_TITLES')
+      }
+      return this.l10n.getText('TOOLTIP_SHOW_GRAMMAR_TITLES')
+    },
     // used for updating currentURL, languageList and collapse state based on store Vuex properties mutations
     updatedGrammarData () {
       if (this.$store.state.app.updatedGrammar) {
@@ -184,7 +203,10 @@ export default {
       }
     },
     returnToIndex () {
-      this.app.restoreGrammarIndex()
+      this.app.restoreGrammarIndex(this.currentLanguageID)
+    },
+    showHideTitles () {
+      this.showTitles = !this.showTitles
     }
   }
 }
@@ -245,12 +267,18 @@ export default {
     font-size: 80%;
   }
 
-    .alpheios-grammar__button--back-block {
+  .alpheios-grammar__button--back-block,
+  .alpheios-grammar__button--show-titles-block {
     position: absolute;
     top: 5px;
     right: 20px;
     z-index: 1000;
   }
+
+  .alpheios-grammar__button--show-titles-block {
+    right: 60px;
+  }
+
   .alpheios-svg-index {
     display: block;
     padding: 4px;
@@ -263,18 +291,22 @@ export default {
     }
   }
 
-  .alpheios-grammar__button--back-block button {
-    color: var(--alpheios-grammar-back-button-color);
-    background-color: var(--alpheios-grammar-back-button-bg);
-    border-color: var(--alpheios-grammar-back-button-border-color);
+  .alpheios-grammar__button--back-block,
+  .alpheios-grammar__button--show-titles-block {
     
-    &:hover {
-      color: var(--alpheios-grammar-back-button-color-hover);
-      background-color: var(--alpheios-grammar-back-button-bg-hover);
-      border-color: var(--alpheios-grammar-back-button-border-color-hover);
+    button {
+      color: var(--alpheios-grammar-back-button-color);
+      background-color: var(--alpheios-grammar-back-button-bg);
+      border-color: var(--alpheios-grammar-back-button-border-color);
+      
+      &:hover {
+        color: var(--alpheios-grammar-back-button-color-hover);
+        background-color: var(--alpheios-grammar-back-button-bg-hover);
+        border-color: var(--alpheios-grammar-back-button-border-color-hover);
+      }
     }
   }
-    .alpheios-grammar__frame-progress {
-      padding: 20px;
-    }
+  .alpheios-grammar__frame-progress {
+    padding: 20px;
+  }
 </style>

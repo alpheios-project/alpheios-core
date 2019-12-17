@@ -2371,11 +2371,15 @@ p.alpheios-grammar__block__title.open {
   padding: 20px 25px 20px !important;
   font-size: 80% !important;
 }
-.alpheios-grammar__button--back-block {
+.alpheios-grammar__button--back-block,
+.alpheios-grammar__button--show-titles-block {
   position: absolute !important;
   top: 5px !important;
   right: 20px !important;
   z-index: 1000 !important;
+}
+.alpheios-grammar__button--show-titles-block {
+  right: 60px !important;
 }
 .alpheios-svg-index {
   display: block;
@@ -2388,12 +2392,14 @@ p.alpheios-grammar__block__title.open {
   height: auto !important;
   fill: var(--alpheios-btn-primary-font-color) !important;
 }
-.alpheios-grammar__button--back-block button {
+.alpheios-grammar__button--back-block button,
+.alpheios-grammar__button--show-titles-block button {
   color: var(--alpheios-grammar-back-button-color) !important;
   background-color: var(--alpheios-grammar-back-button-bg) !important;
   border-color: var(--alpheios-grammar-back-button-border-color) !important;
 }
-.alpheios-grammar__button--back-block button:hover {
+.alpheios-grammar__button--back-block button:hover,
+.alpheios-grammar__button--show-titles-block button:hover {
   color: var(--alpheios-grammar-back-button-color-hover) !important;
   background-color: var(--alpheios-grammar-back-button-bg-hover) !important;
   border-color: var(--alpheios-grammar-back-button-border-color-hover) !important;

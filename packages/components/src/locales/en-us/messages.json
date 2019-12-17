@@ -646,5 +646,15 @@
     "message": "Browse Language Grammar",
     "description": "Panel title for grammar tab",
     "component": "Grammar"
+  },
+  "TOOLTIP_HIDE_GRAMMAR_TITLES": {
+    "message": "Hide Language Selector",
+    "description": "Tooltip for Hide Languges Titles Block",
+    "component": "Grammar"
+  },
+  "TOOLTIP_SHOW_GRAMMAR_TITLES": {
+    "message": "Show Language Selector",
+    "description": "Tooltip for Show Languges Titles Block",
+    "component": "Grammar"
   }
 }

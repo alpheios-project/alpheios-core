@@ -2371,11 +2371,15 @@ p.alpheios-grammar__block__title.open {
   padding: 20px 25px 20px;
   font-size: 80%;
 }
-.alpheios-grammar__button--back-block {
+.alpheios-grammar__button--back-block,
+.alpheios-grammar__button--show-titles-block {
   position: absolute;
   top: 5px;
   right: 20px;
   z-index: 1000;
+}
+.alpheios-grammar__button--show-titles-block {
+  right: 60px;
 }
 .alpheios-svg-index {
   display: block;
@@ -2388,12 +2392,14 @@ p.alpheios-grammar__block__title.open {
   height: auto;
   fill: var(--alpheios-btn-primary-font-color);
 }
-.alpheios-grammar__button--back-block button {
+.alpheios-grammar__button--back-block button,
+.alpheios-grammar__button--show-titles-block button {
   color: var(--alpheios-grammar-back-button-color);
   background-color: var(--alpheios-grammar-back-button-bg);
   border-color: var(--alpheios-grammar-back-button-border-color);
 }
-.alpheios-grammar__button--back-block button:hover {
+.alpheios-grammar__button--back-block button:hover,
+.alpheios-grammar__button--show-titles-block button:hover {
   color: var(--alpheios-grammar-back-button-color-hover);
   background-color: var(--alpheios-grammar-back-button-bg-hover);
   border-color: var(--alpheios-grammar-back-button-border-color-hover);
