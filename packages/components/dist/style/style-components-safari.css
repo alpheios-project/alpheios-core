@@ -2383,11 +2383,16 @@ p.alpheios-grammar__block__title.open {
 }
 .alpheios-svg-index {
   display: block;
-  padding: 4px !important;
   border-radius: 15px !important;
   opacity: 0.5 !important;
+  padding: 0 !important;
+  width: 30px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+  text-align: center !important;
 }
 .alpheios-svg-index svg {
+  display: inline-block;
   width: 22px !important;
   height: auto !important;
   fill: var(--alpheios-btn-primary-font-color) !important;

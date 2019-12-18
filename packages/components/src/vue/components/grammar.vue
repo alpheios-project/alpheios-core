@@ -21,7 +21,7 @@
         <div class="alpheios-grammar__button--show-titles-block">
           <alph-tooltip :tooltipText="showHideTooltipValue" tooltipDirection="bottom-left">
             <button @click="showHideTitles"
-              class="alpheios-button-primary alpheios-svg-index"><definitions-icon /></button>
+              class="alpheios-button-primary alpheios-svg-index"><grammar-icon /></button>
           </alph-tooltip>
         </div>
         <div class="alpheios-grammar__button--back-block">
@@ -57,7 +57,7 @@ import { Grammars } from 'alpheios-res-client'
 import Vue from '@vue-runtime'
 
 import BackIcon from '@/images/inline-icons/back.svg'
-import DefinitionsIcon from '@/images/inline-icons/definitions.svg'
+import GrammarIcon from '@/images/inline-icons/resources.svg'
 import Tooltip from './tooltip.vue'
 import ProgressBar from './progress-bar.vue'
 
@@ -68,7 +68,7 @@ export default {
   mixins: [DependencyCheck],
   components: {
     backIcon: BackIcon,
-    definitionsIcon: DefinitionsIcon,
+    grammarIcon: GrammarIcon,
     alphTooltip: Tooltip,
     progressBar: ProgressBar
   },
@@ -281,10 +281,17 @@ export default {
 
   .alpheios-svg-index {
     display: block;
-    padding: 4px;
     border-radius: 15px;
     opacity: 0.5;
+
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+
     svg {
+      display: inline-block;
       width: 22px;
       height: auto;
       fill: var(--alpheios-btn-primary-font-color);
