@@ -16,6 +16,7 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
     this.config = this.uploadConfig(config, DefaultConfig)
     this.uploadEngines(this.config.engine)
     this.engineSet = new EnginesSet(this.engines)
+    this.sourceData = config.sourceData
   }
 
   /**
@@ -45,16 +46,22 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
    *      - {undefined} - if failed
   */
   async getHomonym (languageID, word) {
-    let url = this.prepareRequestUrl(languageID, word)
-    if (!url) {
-      this.addError(this.l10n.messages['MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE'].get(languageID.toString()))
-      return
-    }
+    let res
     try {
-      let res = await this.fetch(url)
-      if (res.constructor.name === 'AdapterError') {
-        return
+      if (this.sourceData) {
+        res = this.sourceData
+      } else {
+        let url = this.prepareRequestUrl(languageID, word)
+        if (!url) {
+          this.addError(this.l10n.messages['MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE'].get(languageID.toString()))
+          return
+        }
+        res = await this.fetch(url)
+        if (res.constructor.name === 'AdapterError') {
+          return
+        }
       }
+
       if (res) {
         let transformAdapter = new TransformAdapter(this)
 

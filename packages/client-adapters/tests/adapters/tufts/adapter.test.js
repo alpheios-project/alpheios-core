@@ -4,6 +4,8 @@ import 'whatwg-fetch'
 import AlpheiosTuftsAdapter from '@/adapters/tufts/adapter'
 import { Constants, Homonym } from 'alpheios-data-models'
 
+import { Fixture } from 'alpheios-fixtures'
+
 describe('tufts/adapter.test.js', () => {
   console.error = function () {}
   console.log = function () {}
@@ -66,10 +68,15 @@ describe('tufts/adapter.test.js', () => {
   })
 
   it('4 AlpheiosTuftsAdapter - getHomonym returns undefined if url doesn\'t return answer and adds error', async () => {
+    let sourceJson = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: 'fooword'
+    })
+
     let adapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      sourceData: sourceJson
     })
     expect(adapter.errors.length).toEqual(0)
 
@@ -79,10 +86,15 @@ describe('tufts/adapter.test.js', () => {
   }, 20000)
 
   it('5 AlpheiosTuftsAdapter - getHomonym returns homonym if url returns correct answer', async () => {
+    let sourceJson = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: 'placito'
+    })
+
     let adapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      sourceData: sourceJson
     })
 
     let res = await adapter.getHomonym(Constants.LANG_LATIN, 'placito')
@@ -90,10 +102,15 @@ describe('tufts/adapter.test.js', () => {
   }, 20000)
 
   it('6 AlpheiosTuftsAdapter - prepareRequestUrl returns null if engine is not defined for given languageID', async () => {
+    let sourceJson = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: 'placito'
+    })
+
     let adapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      sourceData: sourceJson
     })
 
     let res = adapter.prepareRequestUrl(Constants.LANG_UNDEFINED, 'placito')
@@ -101,10 +118,15 @@ describe('tufts/adapter.test.js', () => {
   })
 
   it('7 AlpheiosTuftsAdapter - prepareRequestUrl returns url if engine is defined for given languageID', async () => {
+    let sourceJson = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: 'placito'
+    })
+
     let adapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      sourceData: sourceJson
     })
 
     let res = adapter.prepareRequestUrl(Constants.LANG_LATIN, 'placito')
@@ -112,11 +134,16 @@ describe('tufts/adapter.test.js', () => {
   })
 
   it('8 AlpheiosTuftsAdapter - prepareRequestUrl adds clientId to url', async () => {
+    let sourceJson = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: 'placito'
+    })
+
     let adapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
       method: 'getHomonym',
-      clientId: 'abcdef'
+      clientId: 'abcdef',
+      sourceData: sourceJson
     })
 
     let res = adapter.prepareRequestUrl(Constants.LANG_LATIN, 'placito')

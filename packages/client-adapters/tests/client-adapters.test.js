@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import ClientAdapters from '@/client-adapters.js'
+import { Fixture } from 'alpheios-fixtures'
 
 import { Constants, Homonym, Author, WordUsageExample } from 'alpheios-data-models'
 
@@ -99,13 +100,17 @@ describe('client-adapters.test.js', () => {
 
   it('8 ClientAdapters - maAdapter returns homonym and empty errors if adapter returns correct data', async () => {
     ClientAdapters.init()
+    let sourceJson = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: 'cepit'
+    })
 
     let res = await ClientAdapters.maAdapter({
       method: 'getHomonym',
       params: {
         languageID: Constants.LANG_LATIN,
         word: 'cepit'
-      }
+      },
+      sourceData: sourceJson
     })
 
     expect(res.errors).toEqual([])
@@ -115,12 +120,18 @@ describe('client-adapters.test.js', () => {
   it('9 ClientAdapters - maAdapter returns empty homonym and errors if adapter doesn\'t return correct data', async () => {
     ClientAdapters.init()
 
+    let sourceJson = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: 'foo'
+    })
+
+
     let res = await ClientAdapters.maAdapter({
       method: 'getHomonym',
       params: {
         languageID: Constants.LANG_LATIN,
         word: 'foo'
-      }
+      },
+      sourceData: sourceJson
     })
 
     expect(res.errors.length).toBeGreaterThan(0)
@@ -160,12 +171,17 @@ describe('client-adapters.test.js', () => {
   it('12 ClientAdapters - lemmaTranslations returns empty errors if adapter returns correct data', async () => {
     ClientAdapters.init()
 
+    let sourceJson = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: 'cepit'
+    })
+
     let reHomonym = await ClientAdapters.maAdapter({
       method: 'getHomonym',
       params: {
         languageID: Constants.LANG_LATIN,
         word: 'cepit'
-      }
+      },
+      sourceData: sourceJson
     })
 
     let res = await ClientAdapters.lemmaTranslations({
@@ -182,7 +198,11 @@ describe('client-adapters.test.js', () => {
   it('13 ClientAdapters - lemmaTranslations returns errors if adapter doesn\'t return correct data', async () => {
     ClientAdapters.init()
 
-    let reHomonym = await ClientAdapters.maAdapter({
+    let sourceJson = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: 'foo'
+    })
+
+    let resHomonym = await ClientAdapters.maAdapter({
       method: 'getHomonym',
       params: {
         languageID: Constants.LANG_LATIN,
@@ -193,8 +213,8 @@ describe('client-adapters.test.js', () => {
     let res = await ClientAdapters.lemmaTranslations({
       method: 'fetchTranslations',
       params: {
-        homonym: reHomonym.result,
-        browserLang: 'spa'
+        homonym: resHomonym.result,
+        browserLang: 'bla'
       }
     })
 
@@ -204,12 +224,17 @@ describe('client-adapters.test.js', () => {
   it('14 ClientAdapters - lexicons returns empty errors if adapter returns correct data', async () => {
     ClientAdapters.init()
 
+    let sourceJson = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: 'cepit'
+    })
+
     let reHomonym = await ClientAdapters.maAdapter({
       method: 'getHomonym',
       params: {
         languageID: Constants.LANG_LATIN,
         word: 'cepit'
-      }
+      },
+      sourceData: sourceJson
     })
 
     let res = await ClientAdapters.lexicons({
@@ -228,12 +253,17 @@ describe('client-adapters.test.js', () => {
   it('15 ClientAdapters - lexicons returns errors if adapter doesn\'t return correct data', async () => {
     ClientAdapters.init()
 
+    let sourceJson = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: 'cepit'
+    })
+
     let reHomonym = await ClientAdapters.maAdapter({
       method: 'getHomonym',
       params: {
         languageID: Constants.LANG_LATIN,
         word: 'cepit'
-      }
+      },
+      sourceData: sourceJson
     })
 
     let res = await ClientAdapters.lexicons({
@@ -283,12 +313,17 @@ describe('client-adapters.test.js', () => {
   it('18 ClientAdapters - wordusageExamples - getWordUsageExamples returns array of wordUsageExample', async () => {
     ClientAdapters.init()
 
+    let sourceJson = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: 'submersasque'
+    })
+
     let testHomonymRes1 = await ClientAdapters.morphology.tufts({
       method: 'getHomonym',
       params: {
         languageID: Constants.LANG_LATIN,
         word: 'submersasque'
-      }
+      },
+      sourceData: sourceJson
     })
 
     let res = await ClientAdapters.wordUsageExamples({

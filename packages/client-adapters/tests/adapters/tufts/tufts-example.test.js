@@ -5,6 +5,8 @@ import AlpheiosTuftsAdapter from '@/adapters/tufts/adapter'
 import TransformAdapter from '@/adapters/tufts/transform-adapter'
 import { Constants, Homonym, Feature } from 'alpheios-data-models'
 
+import { Fixture } from 'alpheios-fixtures'
+
 describe('tufts-example.test.js', () => {
   console.error = function () {}
   console.log = function () {}
@@ -103,8 +105,10 @@ describe('tufts-example.test.js', () => {
     })
 
     let word = 'mare'
-    let url = adapter.prepareRequestUrl(Constants.LANG_LATIN, word)
-    let res = await adapter.fetch(url)
+
+    let res = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: word
+    })
 
     let transformAdapter = new TransformAdapter(adapter)
     let homonym = transformAdapter.transformData(res, word)
@@ -134,8 +138,9 @@ describe('tufts-example.test.js', () => {
     })
 
     let word = 'cupidinibus'
-    let url = adapter.prepareRequestUrl(Constants.LANG_LATIN, word)
-    let res = await adapter.fetch(url)
+    let res = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: word
+    })
 
     let transformAdapter = new TransformAdapter(adapter)
     let homonym = transformAdapter.transformData(res, word)
@@ -155,8 +160,9 @@ describe('tufts-example.test.js', () => {
     })
 
     let word = 'ἐλῴην'
-    let url = adapter.prepareRequestUrl(Constants.LANG_GREEK, word)
-    let res = await adapter.fetch(url)
+    let res = Fixture.getFixtureRes({
+      langCode: 'grc', adapter: 'tufts', word: word
+    })
 
     let transformAdapter = new TransformAdapter(adapter)
     let homonym = transformAdapter.transformData(res, word)
@@ -177,6 +183,7 @@ describe('tufts-example.test.js', () => {
     })
 
     let word = 'conditum'
+    
     let url = adapter.prepareRequestUrl(Constants.LANG_LATIN, word)
     let res = await adapter.fetch(url)
 
@@ -205,8 +212,9 @@ describe('tufts-example.test.js', () => {
     })
 
     let word = 'sui'
-    let url = adapter.prepareRequestUrl(Constants.LANG_LATIN, word)
-    let res = await adapter.fetch(url)
+    let res = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: word
+    })
 
     let transformAdapter = new TransformAdapter(adapter)
     let homonym = transformAdapter.transformData(res, word)
@@ -226,8 +234,9 @@ describe('tufts-example.test.js', () => {
     })
 
     let word = 'mellitisque'
-    let url = adapter.prepareRequestUrl(Constants.LANG_LATIN, word)
-    let res = await adapter.fetch(url)
+    let res = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: word
+    })
 
     let transformAdapter = new TransformAdapter(adapter)
     let homonym = transformAdapter.transformData(res, word)
@@ -244,9 +253,10 @@ describe('tufts-example.test.js', () => {
       method: 'getHomonym'
     })
 
-    let word = 'مشکل‌ها'
-    let url = adapter.prepareRequestUrl(Constants.LANG_PERSIAN, word)
-    let res = await adapter.fetch(url)
+    let word = 'بگذرد'
+    let res = Fixture.getFixtureRes({
+      langCode: 'per', adapter: 'tufts', word: word
+    })
 
     let transformAdapter = new TransformAdapter(adapter)
     let homonym = transformAdapter.transformData(res, word)
@@ -261,8 +271,9 @@ describe('tufts-example.test.js', () => {
     })
 
     let word = 'ترجمة'
-    let url = adapter.prepareRequestUrl(Constants.LANG_ARABIC, word)
-    let res = await adapter.fetch(url)
+    let res = Fixture.getFixtureRes({
+      langCode: 'ara', adapter: 'tufts', word: word
+    })
 
     let transformAdapter = new TransformAdapter(adapter)
     let homonym = transformAdapter.transformData(res, word)
@@ -278,8 +289,9 @@ describe('tufts-example.test.js', () => {
     })
 
     let word = 'οὐδεμία'
-    let url = adapter.prepareRequestUrl(Constants.LANG_GREEK, word)
-    let res = await adapter.fetch(url)
+    let res = Fixture.getFixtureRes({
+      langCode: 'grc', adapter: 'tufts', word: word
+    })
 
     let transformAdapter = new TransformAdapter(adapter)
     let homonym = transformAdapter.transformData(res, word)
@@ -295,8 +307,9 @@ describe('tufts-example.test.js', () => {
     })
 
     let word = 'est'
-    let url = adapter.prepareRequestUrl(Constants.LANG_LATIN, word)
-    let res = await adapter.fetch(url)
+    let res = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: word
+    })
 
     let transformAdapter = new TransformAdapter(adapter)
     let homonym = transformAdapter.transformData(res, word)
@@ -304,7 +317,7 @@ describe('tufts-example.test.js', () => {
     expect(homonym.lexemes[1].inflections[0].suffix).toEqual('est')
   }, 20000)
 
-  it.skip('16 TuftsExample - can parse gez', async () => {
+  it('16 TuftsExample - can parse gez', async () => {
     let adapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
@@ -312,12 +325,14 @@ describe('tufts-example.test.js', () => {
     })
 
     let word = 'ሀገርየ'
-    let url = adapter.prepareRequestUrl(Constants.LANG_GEEZ, word)
-    let res = await adapter.fetch(url)
+    
+    let res = Fixture.getFixtureRes({
+      langCode: 'gez', adapter: 'tufts', word: word
+    })
 
     let transformAdapter = new TransformAdapter(adapter)
     let homonym = transformAdapter.transformData(res, word)
-    expect(homonym.lexemes.length).toEqual(10)
+    expect(homonym.lexemes.length).toEqual(3)
   }, 20000)
 
   it('17 TuftsExample - hdwd created if no hdwd suffix and no stem', async () => {
@@ -328,8 +343,9 @@ describe('tufts-example.test.js', () => {
     })
 
     let word = 'ego'
-    let url = adapter.prepareRequestUrl(Constants.LANG_LATIN, word)
-    let res = await adapter.fetch(url)
+    let res = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: word
+    })
 
     let transformAdapter = new TransformAdapter(adapter)
     let homonym = transformAdapter.transformData(res, word)
@@ -344,8 +360,9 @@ describe('tufts-example.test.js', () => {
     })
 
     let word = 'sum'
-    let url = adapter.prepareRequestUrl(Constants.LANG_LATIN, word)
-    let res = await adapter.fetch(url)
+    let res = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: word
+    })
 
     let transformAdapter = new TransformAdapter(adapter)
     let homonym = transformAdapter.transformData(res, word)
@@ -362,8 +379,9 @@ describe('tufts-example.test.js', () => {
     })
 
     let word = 'aberis'
-    let url = adapter.prepareRequestUrl(Constants.LANG_LATIN, word)
-    let res = await adapter.fetch(url)
+    let res = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: word
+    })
 
     let transformAdapter = new TransformAdapter(adapter)
     let homonym = transformAdapter.transformData(res, word)
@@ -382,8 +400,9 @@ describe('tufts-example.test.js', () => {
     })
 
     let word = 'adsum'
-    let url = adapter.prepareRequestUrl(Constants.LANG_LATIN, word)
-    let res = await adapter.fetch(url)
+    let res = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: word
+    })
 
     let transformAdapter = new TransformAdapter(adapter)
     let homonym = transformAdapter.transformData(res, word)
@@ -398,8 +417,9 @@ describe('tufts-example.test.js', () => {
     })
 
     let word = 'auditum'
-    let url = adapter.prepareRequestUrl(Constants.LANG_LATIN, word)
-    let res = await adapter.fetch(url)
+    let res = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: word
+    })
 
     let transformAdapter = new TransformAdapter(adapter)
     let homonym = transformAdapter.transformData(res, word)

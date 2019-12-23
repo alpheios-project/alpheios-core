@@ -142,13 +142,13 @@ describe('lexicons/adapter.test.js', () => {
     adapter.prepareSuccessCallback = jest.fn()
 
     adapter.prepareFullDefPromise(testSuccessHomonym, urlKey)
-    let timeoutRes = await timeout(5000)
+    let timeoutRes = await timeout(25000)
 
     expect(adapter.collectFullDefURLs).toHaveBeenCalled()
     expect(adapter.updateFullDefs).toHaveBeenCalled()
     expect(adapter.prepareSuccessCallback).toHaveBeenCalled()
     return timeoutRes
-  }, 25000)
+  }, 500000)
 
   it('7 AlpheiosLexiconsAdapter - prepareSuccessCallback, if callBackEvtSuccess is defined it would be executed', async () => {
     let adapter = new AlpheiosLexiconsAdapter({
