@@ -9,7 +9,7 @@ import RowTitleCell from '@views/lib/row-title-cell.js'
 import Form from '@lib/form.js'
 
 import { Constants, Feature } from 'alpheios-data-models'
-import { AlpheiosTuftsAdapter } from 'alpheios-morph-client'
+import BaseTestHelp from '@tests/data/base-test-help.js'
 import LanguageDatasetFactory from '@lib/language-dataset-factory.js'
 
 import GroupFeatureType from '@views/lib/group-feature-type.js'
@@ -23,8 +23,7 @@ describe('row.test.js', () => {
   let testMorphemes, testFeatures, testCells, testTitleCell
 
   beforeAll(async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym(Constants.LANG_GREEK, 'δύο')
+    let testHomonym = await BaseTestHelp.getHomonym('δύο', Constants.LANG_GREEK)
     let testInflectionData = await LanguageDatasetFactory.getInflectionData(testHomonym)
     testMorphemes = testInflectionData.pos.get('numeral').types.get(Form).items
 

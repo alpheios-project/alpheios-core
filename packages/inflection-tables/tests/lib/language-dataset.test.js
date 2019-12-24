@@ -3,7 +3,7 @@
 import 'whatwg-fetch'
 import { Constants, Feature, Inflection, LanguageModelFactory as LMF } from 'alpheios-data-models'
 
-import { AlpheiosTuftsAdapter } from 'alpheios-morph-client'
+import BaseTestHelp from '@tests/data/base-test-help.js'
 
 import LanguageDataset from '@lib/language-dataset.js'
 import LanguageDatasetFactory from '@lib/language-dataset-factory.js'
@@ -27,16 +27,7 @@ describe('language-dataset.test.js', () => {
 
   const languageIDLat = Constants.LANG_LATIN
   const languageIDGreek = Constants.LANG_GREEK
-  /*
-  Object.defineProperty(GreekLanguageDataset, 'verbParadigmTables', {
-    get: jest.fn(() => GreekLanguageDatasetJSON.verbParadigmTables),
-    set: jest.fn()
-  })
-  Object.defineProperty(GreekLanguageDataset, 'verbParticipleParadigmTables', {
-    get: jest.fn(() => GreekLanguageDatasetJSON.verbParticipleParadigmTables),
-    set: jest.fn()
-  })
-*/
+
   beforeEach(() => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
@@ -248,31 +239,9 @@ describe('language-dataset.test.js', () => {
     expect(result.matchedItems).toEqual([ Feature.types.grmCase, Feature.types.gender, Feature.types.number ])
   })
 
-  // It now does not provide such comparison behavior
-  /* it('11 LanguageDataset - checkMatches checks matches of the feature and if morpheme hasn\'t current feature - it automaticaly adds as matched', () => {
-    let matchList = [ Feature.types.grmCase, Feature.types.declension, Feature.types.gender, Feature.types.number ]
-
-    let inflection = new Inflection('beat', 'lat', 'um')
-    inflection.addFeature(new Feature(Feature.types.part, Constants.POFS_ADJECTIVE, languageIDLat))
-    inflection.addFeature(new Feature(Feature.types.grmCase, 'nominative', languageIDLat))
-    inflection.addFeature(new Feature(Feature.types.declension, '1st', languageIDLat))
-    inflection.addFeature(new Feature(Feature.types.gender, 'neuter', languageIDLat))
-    inflection.addFeature(new Feature(Feature.types.number, 'singular', languageIDLat))
-    inflection.setConstraints()
-
-    let suffixItem = new Suffix('um')
-    suffixItem.features[Feature.types.part] = new Feature(Feature.types.part, Constants.POFS_NOUN, languageIDLat)
-    suffixItem.features[Feature.types.grmCase] = new Feature(Feature.types.grmCase, 'nominative', languageIDLat)
-
-    let result = LanguageDataset.checkMatches(matchList, inflection, suffixItem)
-
-    expect(result.fullMatch).toBeTruthy()
-    expect(result.matchedItems).toEqual([ Feature.types.grmCase, Feature.types.declension, Feature.types.gender, Feature.types.number ])
-  }) */
 
   it('12 LanguageDataset - setInflectionData - throw Error if even one inflection doesn\'t have part of speech feature', async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym(languageIDGreek, 'ζώνη')
+    let testHomonym = await BaseTestHelp.getHomonym('ζώνη', languageIDGreek)
 
     let testInflection = testHomonym.lexemes[0].inflections[0]
     let testLemma = testHomonym.lexemes[0].lemma
@@ -284,8 +253,7 @@ describe('language-dataset.test.js', () => {
   })
 
   it('13 LanguageDataset - setInflectionData - throw Error if even one inflection has part of speech feature as Multiple ', async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym(languageIDGreek, 'ζώνη')
+    let testHomonym = await BaseTestHelp.getHomonym('ζώνη', languageIDGreek)
 
     let testInflection = testHomonym.lexemes[0].inflections[0]
     let testLemma = testHomonym.lexemes[0].lemma
@@ -296,8 +264,7 @@ describe('language-dataset.test.js', () => {
   })
 
   it('14 LanguageDataset - setInflectionData - throw Error if even inflection.constraints has pronounClassRequired = true and doesn\'t have class Feature ', async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym(languageIDGreek, 'δύο')
+    let testHomonym = await BaseTestHelp.getHomonym('δύο', languageIDGreek)
 
     let LD = LanguageDatasetFactory.getDataset(languageIDGreek)
 
@@ -311,8 +278,7 @@ describe('language-dataset.test.js', () => {
   })
 
   it('15 LanguageDataset - setInflectionData - throw Error if even inflection.constraints has pronounClassRequired = true and doesn\'t have class Feature ', async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym(languageIDGreek, 'δύο')
+    let testHomonym = await BaseTestHelp.getHomonym('δύο', languageIDGreek)
 
     let LD = new GreekLanguageDataset()
 
@@ -326,8 +292,7 @@ describe('language-dataset.test.js', () => {
   })
 
   it('16 LanguageDataset - setInflectionData - define fullFormBased, suffixBased, pronounClassRequired, paradigmBased (numeral)', async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym(languageIDGreek, 'δύο')
+    let testHomonym = await BaseTestHelp.getHomonym('δύο', languageIDGreek)
 
     let LD = LanguageDatasetFactory.getDataset(languageIDGreek) // returns LanguageDataset
 
@@ -343,8 +308,7 @@ describe('language-dataset.test.js', () => {
   })
 
   it('17 LanguageDataset - setInflectionData - define fullFormBased, suffixBased, pronounClassRequired, paradigmBased (verb)', async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym(languageIDGreek, 'συνδέει')
+    let testHomonym = await BaseTestHelp.getHomonym('συνδέει', languageIDGreek)
 
     let LD = LanguageDatasetFactory.getDataset(languageIDGreek) // returns LanguageDataset
 
@@ -360,8 +324,7 @@ describe('language-dataset.test.js', () => {
   })
 
   it('18 LanguageDataset - setInflectionData - define fullFormBased, suffixBased, pronounClassRequired, paradigmBased (pronoun)', async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym(languageIDGreek, 'με')
+    let testHomonym = await BaseTestHelp.getHomonym('με', languageIDGreek)
 
     let LD = LanguageDatasetFactory.getDataset(languageIDGreek) // returns LanguageDataset
 
@@ -377,8 +340,7 @@ describe('language-dataset.test.js', () => {
   })
 
   it.skip('17 LanguageDataset - getInflectionData - define Word feature for inflections and fill pos with InflectionSet with Suffix key', async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym('grc', 'συνεχής')
+    let testHomonym = await BaseTestHelp.getHomonym('συνεχής', languageIDGreek)
 
     for (let inflection of testHomonym.inflections) {
       inflection.setConstraints()
@@ -402,8 +364,7 @@ describe('language-dataset.test.js', () => {
   })
 
   it.skip('18 LanguageDataset - getInflectionData - if pronounClassRequired, class feature is added to inflections', async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym('grc', 'με')
+    let testHomonym = await BaseTestHelp.getHomonym('με', languageIDGreek)
 
     for (let inflection of testHomonym.inflections) {
       inflection.setConstraints()
@@ -421,8 +382,7 @@ describe('language-dataset.test.js', () => {
   })
 
   it.skip('19 LanguageDataset - getInflectionData - if LD.pos hasn\'t morphems for current part of speech - it prints warn to console', async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym('grc', 'με')
+    let testHomonym = await BaseTestHelp.getHomonym('με', languageIDGreek)
 
     for (let inflection of testHomonym.inflections) {
       inflection.setConstraints()
@@ -439,8 +399,7 @@ describe('language-dataset.test.js', () => {
   })
 
   it('20 LanguageDataset - hasMatchingForms - returns False if partOfSpeech of inflection is not the same as partOfSpeech from the argument', async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym(languageIDGreek, 'συνεχής') // adjective
+    let testHomonym = await BaseTestHelp.getHomonym('συνεχής', languageIDGreek) // adjective
 
     for (let inflection of testHomonym.inflections) {
       inflection.setConstraints()
@@ -454,8 +413,7 @@ describe('language-dataset.test.js', () => {
   })
 
   it('21 LanguageDataset - hasMatchingForms - returns False if it hasn\'t Form', async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym(languageIDGreek, 'συνεχής') // adjective
+    let testHomonym = await BaseTestHelp.getHomonym('συνεχής', languageIDGreek) // adjective
 
     for (let inflection of testHomonym.inflections) {
       inflection.setConstraints()
@@ -468,8 +426,7 @@ describe('language-dataset.test.js', () => {
   })
 
   it.skip('22 LanguageDataset - hasMatchingForms - returns True If it has Form from inflections using matcher function', async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym(languageIDGreek, 'δύο') // numeral
+    let testHomonym = await BaseTestHelp.getHomonym('δύο', languageIDGreek) // numeral
 
     for (let inflection of testHomonym.inflections) {
       inflection.setConstraints()
@@ -501,8 +458,7 @@ describe('language-dataset.test.js', () => {
   })
 
   it('24 LanguageDataset - matcher - checks inflections with item - has all matches example', async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym(languageIDGreek, 'ταῖν') // adjective
+    let testHomonym = await BaseTestHelp.getHomonym('ταῖν', languageIDGreek) // adjective
     let LD = LanguageDatasetFactory.getDataset(languageIDGreek)
     const obligatoryMatchList = LD.constructor.getObligatoryMatchList(testHomonym.lexemes[0].inflections[0])
     const optionalMatchList = LD.constructor.getOptionalMatchList(testHomonym.lexemes[0].inflections[0])
@@ -523,8 +479,7 @@ describe('language-dataset.test.js', () => {
   })
 
   it('25 LanguageDataset - matcher - checks inflections with item - has only partial match example', async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym(languageIDGreek, 'ἐμαυτοῦ') // adjective
+    let testHomonym = await BaseTestHelp.getHomonym('ἐμαυτοῦ', languageIDGreek) // adjective
     let LD = LanguageDatasetFactory.getDataset(languageIDGreek)
     const obligatoryMatchList = LD.constructor.getObligatoryMatchList(testHomonym.lexemes[0].inflections[0])
     const optionalMatchList = LD.constructor.getOptionalMatchList(testHomonym.lexemes[0].inflections[0])
@@ -546,8 +501,7 @@ describe('language-dataset.test.js', () => {
   })
 
   it('26 LanguageDataset - matcher - checks inflections with item with different part of speech has no match', async () => {
-    let maAdapter = new AlpheiosTuftsAdapter()
-    let testHomonym = await maAdapter.getHomonym(languageIDGreek, 'ταῖν') // adjective
+    let testHomonym = await BaseTestHelp.getHomonym('ταῖν', languageIDGreek) // adjective
 
     let LD = LanguageDatasetFactory.getDataset(languageIDGreek)
 

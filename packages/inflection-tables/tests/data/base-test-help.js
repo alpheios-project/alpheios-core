@@ -1,21 +1,33 @@
 /* eslint-env jest */
 import 'whatwg-fetch'
-import { ClientAdapters } from 'alpheios-client-adapters'
 import ViewSetFactory from '@views/lib/view-set-factory.js'
 
+import { ClientAdapters } from 'alpheios-client-adapters'
+import { Fixture } from 'alpheios-fixtures'
+import { LanguageModelFactory as LMF } from 'alpheios-data-models'
+
 export default class BaseTestHelp {
-  static async getInflectionSet(targetWord, languageID) {
-    const locale = "en-US"
+  static async getHomonym(targetWord, languageID) {
+    const langCode = LMF.getLanguageCodeFromId(languageID)
+    let sourceJson = Fixture.getFixtureRes({
+      langCode: langCode, adapter: 'tufts', word: targetWord
+    })
 
     const adapterTuftsRes = await ClientAdapters.morphology.tufts({
       method: 'getHomonym',
       params: {
         languageID: languageID,
         word: targetWord
-      }
+      },
+      sourceData: sourceJson
     })
       
-    const testHomonym = adapterTuftsRes.result
+    return adapterTuftsRes.result
+  }
+  static async getInflectionSet(targetWord, languageID) {
+    const locale = "en-US"
+      
+    const testHomonym = await BaseTestHelp.getHomonym(targetWord, languageID)
     const inflectionsViewSet = ViewSetFactory.create(testHomonym, locale)
     return inflectionsViewSet
   }

@@ -73,7 +73,7 @@ describe('verified-issues.test.js', () => {
       title: 'Verb Conjugation (Irregular)',
       additionalTitle: 'eo, ire,ivi(ii),itus'
     })
-  }, 60000)
+  })
 
   it('2 - issue 227 - δέδια, δεδίῃ, δεδίητον, δεδίητε, δέδιμεν, δέδιτε, ἐδεδίειν - Athematic Perfects - δέδια', async () => {
     let inflectionsViewSet, result
@@ -202,7 +202,7 @@ describe('verified-issues.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm64' ]
     })
-  }, 50000)
+  })
 
   it('3 - issue 223 - οἶδα - οἶδα: Perfect System', async () => {
     let inflectionsViewSet, result

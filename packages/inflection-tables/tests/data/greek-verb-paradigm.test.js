@@ -60,7 +60,7 @@ describe('greek-verb-paradigm.test.js', () => {
     })
   })
 
-  it('3 - no matches - checked Verb Paradigm3', async () => {
+  it.skip('3 - no matches - checked Verb Paradigm3', async () => {
    
   })
 
@@ -98,7 +98,7 @@ describe('greek-verb-paradigm.test.js', () => {
     })
   })
 
-  it('5 - no matchesx - checked Verb Paradigm5', async () => {
+  it.skip('5 - no matchesx - checked Verb Paradigm5', async () => {
   })
 
   it('6 - checked Verb Paradigm6 - ἀγάγοις', async () => {
@@ -593,10 +593,10 @@ describe('greek-verb-paradigm.test.js', () => {
     })
   })
 
-  it('34 - no matches - checked Verb Paradigm 34', async () => {
+  it.skip('34 - no matches - checked Verb Paradigm 34', async () => {
   })
 
-  it('35 - no matches - checked Verb Paradigm 35', async () => {
+  it.skip('35 - no matches - checked Verb Paradigm 35', async () => {
   })
 
   it('36 - checked Verb Paradigm 36 - διδῷ', async () => {

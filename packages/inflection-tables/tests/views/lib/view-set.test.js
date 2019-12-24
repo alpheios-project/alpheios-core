@@ -5,7 +5,7 @@ import ViewSet from '@views/lib/view-set.js'
 import GroupFeatureType from '@views/lib/group-feature-type.js'
 import ViewSetFactory from '@views/lib/view-set-factory.js'
 import LanguageDatasetFactory from '@lib/language-dataset-factory.js'
-import { AlpheiosTuftsAdapter } from 'alpheios-morph-client'
+import BaseTestHelp from '@tests/data/base-test-help.js'
 import { Constants, Feature, LanguageModelFactory } from 'alpheios-data-models'
 
 import GreekLanguageDataset from '@lib/lang/greek/greek-language-dataset.js'
@@ -29,25 +29,13 @@ describe('view-set.test.js', () => {
   console.log = function () {}
   console.warn = function () {}
 
-  let maAdapter, testHomonym, testHomonymFailed
+  let testHomonym, testHomonymFailed
 
   const testLocale = 'en-US'
 
-  /*  Object.defineProperty(GreekLanguageDataset, 'verbParadigmTables', {
-    get: jest.fn(() => GreekLanguageDatasetJSON.verbParadigmTables),
-    set: jest.fn()
-  })
-  Object.defineProperty(GreekLanguageDataset, 'verbParticipleParadigmTables', {
-    get: jest.fn(() => GreekLanguageDatasetJSON.verbParticipleParadigmTables),
-    set: jest.fn()
-  }) */
-
-  //  L10n.getMessages = jest.fn((locale) => L10nJSON.getMessages(locale))
-
   beforeAll(async () => {
-    maAdapter = new AlpheiosTuftsAdapter()
-    testHomonym = await maAdapter.getHomonym(Constants.LANG_GREEK, 'ἐμαυτοῦ')
-    testHomonymFailed = await maAdapter.getHomonym(Constants.LANG_ARABIC, 'سُلطَان')
+    testHomonym = await BaseTestHelp.getHomonym('δύο', Constants.LANG_GREEK)
+    testHomonym = await BaseTestHelp.getHomonym('سُلطَان', Constants.LANG_ARABIC)
   })
 
   beforeEach(() => {

@@ -7,8 +7,7 @@ import HeaderCell from '@views/lib/header-cell.js'
 
 import { Constants, Feature } from 'alpheios-data-models'
 
-import { AlpheiosTuftsAdapter } from 'alpheios-morph-client'
-import GreekLanguageDatasetJSON from '@tests/lib/lang/greek-language-dataset-json.js'
+import BaseTestHelp from '@tests/data/base-test-help.js'
 import LanguageDatasetFactory from '@lib/language-dataset-factory.js'
 import GreekLanguageDataset from '@lib/lang/greek/greek-language-dataset.js'
 
@@ -26,19 +25,9 @@ describe('column.test.js', () => {
   let testGroupingFeature, testGroupFeatureType, testHeaderCell
 
   const testLocale = 'en-US'
-  /*
-  Object.defineProperty(GreekLanguageDataset, 'verbParadigmTables', {
-    get: jest.fn(() => GreekLanguageDatasetJSON.verbParadigmTables),
-    set: jest.fn()
-  })
-  Object.defineProperty(GreekLanguageDataset, 'verbParticipleParadigmTables', {
-    get: jest.fn(() => GreekLanguageDatasetJSON.verbParticipleParadigmTables),
-    set: jest.fn()
-  }) */
 
   beforeAll(async () => {
-    maAdapter = new AlpheiosTuftsAdapter()
-    testHomonym = await maAdapter.getHomonym(Constants.LANG_GREEK, 'δύο')
+    testHomonym = await BaseTestHelp.getHomonym('δύο', Constants.LANG_GREEK)
     testInflectionData = await LanguageDatasetFactory.getInflectionData(testHomonym)
     testMorphemes = testInflectionData.pos.get('numeral').types.get(Form).items
 

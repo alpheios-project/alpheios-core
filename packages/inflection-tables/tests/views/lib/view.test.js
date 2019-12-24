@@ -4,7 +4,7 @@ import 'whatwg-fetch'
 import View from '@views/lib/view.js'
 
 import LanguageDatasetFactory from '@lib/language-dataset-factory.js'
-import { AlpheiosTuftsAdapter } from 'alpheios-morph-client'
+import BaseTestHelp from '@tests/data/base-test-help.js'
 import { Constants } from 'alpheios-data-models'
 
 import GreekLanguageDataset from '@lib/lang/greek/greek-language-dataset.js'
@@ -12,7 +12,7 @@ import GreekLanguageDatasetJSON from '@tests/lib/lang/greek-language-dataset-jso
 
 import Form from '@lib/form.js'
 
-jest.setTimeout(30000)
+// jest.setTimeout(30000)
 
 describe('view.test.js', () => {
   console.error = function () {}
@@ -44,8 +44,7 @@ describe('view.test.js', () => {
   })
 
   beforeAll(async () => {
-    maAdapter = new AlpheiosTuftsAdapter()
-    testHomonym = await maAdapter.getHomonym(Constants.LANG_GREEK, 'δύο')
+    testHomonym = await BaseTestHelp.getHomonym('δύο', Constants.LANG_GREEK)
     testInflectionData = await LanguageDatasetFactory.getInflectionData(testHomonym)
   })
 

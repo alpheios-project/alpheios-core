@@ -3,34 +3,24 @@
 import 'whatwg-fetch'
 import LanguageDatasetFactory from '@lib/language-dataset-factory.js'
 import { Constants } from 'alpheios-data-models'
-import { AlpheiosTuftsAdapter } from 'alpheios-morph-client'
+
+import BaseTestHelp from '@tests/data/base-test-help.js'
 
 import LatinLanguageDataset from '@lib/lang/latin/latin-language-dataset.js'
 import GreekLanguageDataset from '@lib/lang/greek/greek-language-dataset.js'
 import InflectionData from '@lib/inflection-data.js'
-
-import GreekLanguageDatasetJSON from '@tests/lib/lang/greek-language-dataset-json.js'
 
 describe('language-dataset-factory.test.js', () => {
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
 
-  /*  Object.defineProperty(GreekLanguageDataset, 'verbParadigmTables', {
-    get: jest.fn(() => GreekLanguageDatasetJSON.verbParadigmTables),
-    set: jest.fn()
-  })
-  Object.defineProperty(GreekLanguageDataset, 'verbParticipleParadigmTables', {
-    get: jest.fn(() => GreekLanguageDatasetJSON.verbParticipleParadigmTables),
-    set: jest.fn()
-  }) */
 
-  let maAdapter, testHomonymARA, testHomonymGRC
+  let testHomonymARA, testHomonymGRC
 
   beforeAll(async () => {
-    maAdapter = new AlpheiosTuftsAdapter()
-    testHomonymARA = await maAdapter.getHomonym(Constants.LANG_ARABIC, 'مَقَرٍ')
-    testHomonymGRC = await maAdapter.getHomonym(Constants.LANG_GREEK, 'δύο')
+    testHomonymARA = await BaseTestHelp.getHomonym('مَقَرٍ', Constants.LANG_ARABIC)
+    testHomonymGRC = await BaseTestHelp.getHomonym('δύο', Constants.LANG_GREEK)
   })
 
   beforeEach(() => {
