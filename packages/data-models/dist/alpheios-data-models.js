@@ -1226,7 +1226,8 @@ class Feature {
    *
    * If multiple values without sort order are provided, data format will be:
    *  [value1, value2, value3, ...]
-   * Items will be assigned a sort order according to their order in an array, starting from one.
+   * Items will be assigned a sort order according to their order in an array.
+   * The first item will receive a highest sort order, the last one will receive the lowest, one.
    *
    * If multiple values with sort order are provided, data format will be:
    *  [[value1, sortOrder1], [value2, sortOrder2], [value3, sortOrder3], ...]
@@ -1257,19 +1258,36 @@ class Feature {
     this.sortOrder = sortOrder
     this.allowedValues = allowedValues
 
-    // `_data` is an array
+    /**
+     * Keeps feature values along with their sort order.
+     * Items with higher sort order usually have more importance,
+     * but how to interpret the sortOrder value is ultimately implementation-dependent.
+     * @type {{sortOrder: number, value: *}[]}
+     * @private
+     */
     this._data = Feature.dataValuesFromInput(data)
     this.sort()
   }
 
+  /**
+   *
+   * @param {string | string[] | string[][]} data - Feature values with, possibly, their sort order.
+   *        @see {@link Feature#constructor} for more details about possible values of `data` parameter.
+   * @returns {{sortOrder: number, value: *}[]} Array of object in a format that will be used to store
+   *          data values along with their sort order within a Feature object
+   */
   static dataValuesFromInput (data) {
     let normalized
     if (!Array.isArray(data)) {
       // Single value with no sort order
       normalized = [[data, this.defaultSortOrder]]
     } else if (!Array.isArray(data[0])) {
-      // Multiple values without any sort order, default sort order will be used
-      // we reverse because sortOrder is numeric descending (i.e. 2 is before 1)
+      /*
+      If several values are provided without any explicit sort order, they will be
+      assigned a sort order automatically, according to their array index number.
+      The first value item in an array will receive the highest sort order equal
+      to the length of the array. The last item will have the lowest sort order, one.
+       */
       normalized = data.map((v, i) => [v, data.length - i])
     } else {
       // Value has all the data, including a sort order
@@ -1368,7 +1386,7 @@ class Feature {
   /**
    * Compares a feature's values to another feature's values for sorting
    * @param {Feature} otherFeature the feature to compare this feature's values to
-   * @return {integer} < 1 if this feature should be sorted first, 0 if they are equal and -1 if this feature should be sorted second
+   * @return {number} < 1 if this feature should be sorted first, 0 if they are equal and -1 if this feature should be sorted second
    */
   compareTo (otherFeature) {
     // the data values are sorted upon construction and insertion so we only should need to look at the first values
@@ -1390,6 +1408,7 @@ class Feature {
    * If it has multiple values, those values will be concatenated with a default separator and
    * returned in a single string. Values composing this string are sorted according
    * to each value's sort order.
+   * NOTE: If object contains a single value and it is a number, it will be converted to a string.
    * @return {string} A single value string.
    */
   get value () {
@@ -1397,9 +1416,24 @@ class Feature {
   }
 
   /**
+   * Returns a feature value, if Feature object contains a single value. If no value is stored,
+   * returns `undefined`. If feature has more than one value, throws an error.
+   * This method allows to avoid conversion of a value to the string type as is the case
+   * with other methods.
+   *
+   * @returns {undefined|*} - A single value in a format in which it is stored or `undefined`
+   *          if feature has no value.
+   */
+  get singleValue () {
+    if (this._data.length === 0) return undefined
+    if (this._data.length > 1) throw new Error('More than one value stored')
+    return this._data[0].value
+  }
+
+  /**
    * Returns an array of string values of a feature, sorted according to each item's sort order.
    * If a feature contains a single feature, an array with one value will be returned.
-   * @return {string[]} An array of string values.
+   * @return {*[]} An array of values in a format in which they are stored in the Feature object.
    */
   get values () {
     return this._data.map(v => v.value)
@@ -1407,10 +1441,10 @@ class Feature {
 
   /**
    * Retrieves a value object by name. Can be used to update a value object directly.
-   * @param {string} featureVale - A feature value of an object to retrieve.
+   * @param {string} featureValue - A feature value of an object to retrieve.
    */
-  getValue (featureVale) {
-    return this._data.find(v => v.value === featureVale)
+  getValue (featureValue) {
+    return this._data.find(v => v.value === featureValue)
   }
 
   /**
@@ -1660,6 +1694,10 @@ class Feature {
     let languageID = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageIdFromCode(jsonObject.languageCode)
     return new Feature(jsonObject.type, jsonObject.data, languageID, jsonObject.sortOrder, jsonObject.allowedValues)
   }
+}
+
+Feature.errMsgs = {
+  NO_SINGLE_VALUE: 'More than one value stored'
 }
 
 

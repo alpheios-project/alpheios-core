@@ -66,19 +66,31 @@ describe('feature.test.js', () => {
   })
 
   it('4 Feature - check dataValuesFromInput, sort, compareTo, items, isEqual', () => {
+    // A single value
     let res = Feature.dataValuesFromInput('foovalue1')
     expect(res).toEqual([ { value: 'foovalue1', sortOrder: 1 } ])
 
+    // A single value in an array
     res = Feature.dataValuesFromInput(['foovalue2'])
     expect(res).toEqual([ { value: 'foovalue2', sortOrder: 1 } ])
 
+    // Multiple values with softOrder set automatically
+    res = Feature.dataValuesFromInput(['valueA', 'valueB', 'valueC'])
+    // Items that goes earlier in an array will receive the highest sort order numbers.
+    expect(res).toEqual([
+      { value: 'valueA', sortOrder: 3 },
+      { value: 'valueB', sortOrder: 2 },
+      { value: 'valueC', sortOrder: 1 }
+    ])
+
+    // Multiple values with specified sort order
     res = Feature.dataValuesFromInput([ ['foovalue3', 2], ['foovalue4', 1] ])
     expect(res).toEqual([ { value: 'foovalue3', sortOrder: 2 }, { value: 'foovalue4', sortOrder: 1 } ])
 
-    let feature1 = new Feature('word', [ ['foovalue3', 1], ['foovalue4', 2] ], latID)
+    const feature1 = new Feature('word', [ ['foovalue3', 1], ['foovalue4', 2] ], latID)
     expect(feature1._data).toEqual([ { value: 'foovalue4', sortOrder: 2 }, { value: 'foovalue3', sortOrder: 1 } ])
 
-    let feature2 = new Feature('word', [ ['foovalue4', 1], ['foovalue3', 1] ], latID)
+    const feature2 = new Feature('word', [ ['foovalue4', 1], ['foovalue3', 1] ], latID)
     expect(feature2._data).toEqual([ { value: 'foovalue3', sortOrder: 1 }, { value: 'foovalue4', sortOrder: 1 } ])
 
     expect(feature1.compareTo(feature2)).toEqual(-1)
@@ -194,7 +206,30 @@ describe('feature.test.js', () => {
     expect(feature.hasSomeValues(['foovalue4', 'foovalue3'])).toBeFalsy()
   })
 
-  it('9 Feature - check addValue, addValues, removeValue', () => {
+  it('9 Feature singleValue should return a value of the feature', () => {
+    const value = 'A test value'
+    let feature = new Feature(Feature.types.note, value, latID)
+    expect(feature.singleValue).toBe(value)
+  })
+
+  it('10 Feature singleValue should preserve a value type', () => {
+    const number = 5
+    let feature = new Feature(Feature.types.note, number, latID)
+    expect(feature.singleValue).toEqual(expect.any(Number))
+  })
+
+  it('11 Feature singleValue should return undefined if there is no value', () => {
+    const number = 5
+    let feature = new Feature(Feature.types.note, [], latID)
+    expect(feature.singleValue).toBeUndefined()
+  })
+
+  it('12 Feature singleValue should throw an error if there is more than one value', () => {
+    let feature = new Feature(Feature.types.note, ['one', 'two'], latID)
+    expect(() => feature.singleValue).toThrowError(Feature.errMsgs.NO_SINGLE_VALUE)
+  })
+
+  it('13 Feature - check addValue, addValues, removeValue', () => {
     let feature = new Feature('word', [ ['foovalue1', 2], ['foovalue2', 1] ], latID)
 
     let checkRes = [
@@ -241,7 +276,7 @@ describe('feature.test.js', () => {
     expect(console.warn).toHaveBeenCalledWith(`This feature is not implemented yet`)
   })
 
-  it('10 Feature - check createFeature, createFeatures, getCopy', () => {
+  it('14 Feature - check createFeature, createFeatures, getCopy', () => {
     let feature = new Feature('word', 'fooword', latID)
 
     let res1 = feature.createFeature('fooword2')
@@ -266,7 +301,7 @@ describe('feature.test.js', () => {
     expect(res3._data).toEqual([{ value: 'fooword', sortOrder: 1 }])
   })
 
-  it('11 Feature - check addImporter, getImporter', () => {
+  it('15 Feature - check addImporter, getImporter', () => {
     let feature = new Feature('word', 'fooword', latID)
     feature.addImporter()
 
@@ -287,7 +322,7 @@ describe('feature.test.js', () => {
     }).toThrow(new Error(`Importer "fooname1" does not exist`))
   })
 
-  it('12 Feature - check addFromImporter', () => {
+  it('16 Feature - check addFromImporter', () => {
     let feature = new Feature('word', 'fooword', latID)
 
     expect(function () {
@@ -312,7 +347,7 @@ describe('feature.test.js', () => {
     expect(feature._data).toEqual([{ value: 'foovalue1', sortOrder: 2 }, { value: 'fooword', sortOrder: 1 }])
   })
 
-  it('13 Feature - check createFromImporter', () => {
+  it('17 Feature - check createFromImporter', () => {
     let feature = new Feature('word', 'fooword', latID)
 
     expect(function () {
