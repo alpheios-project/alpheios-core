@@ -219,7 +219,7 @@ export default class Feature {
    */
   get singleValue () {
     if (this._data.length === 0) return undefined
-    if (this._data.length > 1) throw new Error('More than one value stored')
+    if (this._data.length > 1) throw new Error(Feature.errMsgs.NO_SINGLE_VALUE)
     return this._data[0].value
   }
 

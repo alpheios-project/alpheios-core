@@ -219,7 +219,6 @@ describe('feature.test.js', () => {
   })
 
   it('11 Feature singleValue should return undefined if there is no value', () => {
-    const number = 5
     let feature = new Feature(Feature.types.note, [], latID)
     expect(feature.singleValue).toBeUndefined()
   })
