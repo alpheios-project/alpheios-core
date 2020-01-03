@@ -218,7 +218,7 @@ export default class Feature {
    *          if feature has no value.
    */
   get singleValue () {
-    if (this._data.length === 0) return undefined
+    if (this._data.length === 0) return
     if (this._data.length > 1) throw new Error(Feature.errMsgs.NO_SINGLE_VALUE)
     return this._data[0].value
   }
