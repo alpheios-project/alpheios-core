@@ -1,7 +1,7 @@
 import uuidv4 from 'uuid/v4'
 import { Feature } from 'alpheios-data-models'
-import ParadigmRule from './paradigm-rule.js'
-import ParadigmInflectionList from './paradigm-inflection-list.js'
+import ParadigmRule from '@/paradigm/lib/paradigm-rule.js'
+import ParadigmInflectionList from '@/paradigm/lib/paradigm-inflection-list.js'
 
 export default class Paradigm {
   constructor (languageID, partOfSpeech, paradigm) {

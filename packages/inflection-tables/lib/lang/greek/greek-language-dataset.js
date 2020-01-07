@@ -1,13 +1,13 @@
 /*
  * Greek language data module
  */
-import { Constants, Feature, Lemma, FeatureImporter } from 'alpheios-data-models'
+import { Constants, Feature, FeatureImporter } from 'alpheios-data-models'
 
 import LanguageDataset from '@lib/language-dataset.js'
 import ExtendedGreekData from '@lib/extended-greek-data'
 import Suffix from '@lib/suffix.js'
 import Form from '@lib/form.js'
-import Paradigm from '@lib/paradigm.js'
+
 import nounSuffixesCSV from '@lib/lang/greek/data/noun/suffixes.csv'
 import nounFootnotesCSV from '@lib/lang/greek/data/noun/footnotes.csv'
 
@@ -28,84 +28,6 @@ import pronounFootnotesCSV from '@lib/lang/greek/data/pronoun/footnotes.csv'
 import adjectiveFootnotesCSV from './data/adjective/footnotes.csv';
 import verbSuffixesCSV from './data/verb/suffixes.csv';
 import verbFootnotesCSV from './data/verb/footnotes.csv'; */
-
-// Verb paradigm tables
-import paradigm01 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-01.json'
-import paradigm02 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-02.json'
-import paradigm03 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-03.json'
-import paradigm04 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-04.json'
-import paradigm05 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-05.json'
-import paradigm06 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-06.json'
-import paradigm07 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-07.json'
-import paradigm08 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-08.json'
-import paradigm09 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-09.json'
-import paradigm10 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-10.json'
-import paradigm11 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-11.json'
-import paradigm12 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-12.json'
-import paradigm13 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-13.json'
-import paradigm14 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-14.json'
-import paradigm15 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-15.json'
-import paradigm16 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-16.json'
-import paradigm17 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-17.json'
-import paradigm17b from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-17b.json'
-import paradigm17c from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-17c.json'
-import paradigm18 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-18.json'
-import paradigm19 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-19.json'
-import paradigm20 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-20.json'
-import paradigm21 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-21.json'
-import paradigm22 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-22.json'
-import paradigm23 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-23.json'
-import paradigm24 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-24.json'
-import paradigm25 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-25.json'
-import paradigm26 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-26.json'
-import paradigm27 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-27.json'
-import paradigm28 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-28.json'
-import paradigm29 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-29.json'
-import paradigm30 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-30.json'
-import paradigm31 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-31.json'
-import paradigm32 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-32.json'
-import paradigm33 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-33.json'
-import paradigm34 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-34.json'
-import paradigm35 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-35.json'
-import paradigm36 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-36.json'
-import paradigm37 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-37.json'
-import paradigm38 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-38.json'
-import paradigm39 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-39.json'
-import paradigm40 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-40.json'
-import paradigm41 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-41.json'
-import paradigm42 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-42.json'
-import paradigm43 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-43.json'
-import paradigm43b from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-43b.json'
-import paradigm44 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-44.json'
-import paradigm45 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-45.json'
-import paradigm46 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-46.json'
-import paradigm47 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-47.json'
-import paradigm48 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-48.json'
-import paradigm49 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-49.json'
-import paradigm50 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-50.json'
-import paradigm51 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-51.json'
-import paradigm52 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-52.json'
-import paradigm53 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-53.json'
-// Verb paradigm rules and footnotes
-import verbParadigmRulesCSV from '@lib/lang/greek/data/verb/paradigm/rules.csv'
-import verbParadigmFootnotesCSV from '@lib/lang/greek/data/verb/paradigm/footnotes.csv'
-
-// Verb participle paradigm tables
-import paradigm54 from '@lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-54.json'
-import paradigm55 from '@lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-55.json'
-import paradigm56 from '@lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-56.json'
-import paradigm57 from '@lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-57.json'
-import paradigm58 from '@lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-58.json'
-import paradigm59 from '@lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-59.json'
-import paradigm60 from '@lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-60.json'
-import paradigm61 from '@lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-61.json'
-import paradigm62 from '@lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-62.json'
-import paradigm63 from '@lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-63.json'
-import paradigm64 from '@lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-64.json'
-import paradigm65 from '@lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-65.json'
-import paradigm66 from '@lib/lang/greek/data/verb-participle/paradigm/tables/paradigm-66.json'
-// Verb participle rules
-import verbParticipleParadigmRulesCSV from '@lib/lang/greek/data/verb-participle/paradigm/rules.csv'
 
 import papaparse from 'papaparse'
 
@@ -372,139 +294,6 @@ export default class GreekLanguageDataset extends LanguageDataset {
     }
   }
 
-  static get verbParadigmTables () {
-    const partOfSpeech = Constants.POFS_VERB
-    return new Map([
-      ['verbpdgm1', new Paradigm(this.languageID, partOfSpeech, paradigm01)],
-      ['verbpdgm2', new Paradigm(this.languageID, partOfSpeech, paradigm02)],
-      ['verbpdgm3', new Paradigm(this.languageID, partOfSpeech, paradigm03)],
-      ['verbpdgm4', new Paradigm(this.languageID, partOfSpeech, paradigm04)],
-      ['verbpdgm5', new Paradigm(this.languageID, partOfSpeech, paradigm05)],
-      ['verbpdgm6', new Paradigm(this.languageID, partOfSpeech, paradigm06)],
-      ['verbpdgm7', new Paradigm(this.languageID, partOfSpeech, paradigm07)],
-      ['verbpdgm8', new Paradigm(this.languageID, partOfSpeech, paradigm08)],
-      ['verbpdgm9', new Paradigm(this.languageID, partOfSpeech, paradigm09)],
-      ['verbpdgm10', new Paradigm(this.languageID, partOfSpeech, paradigm10)],
-      ['verbpdgm11', new Paradigm(this.languageID, partOfSpeech, paradigm11)],
-      ['verbpdgm12', new Paradigm(this.languageID, partOfSpeech, paradigm12)],
-      ['verbpdgm13', new Paradigm(this.languageID, partOfSpeech, paradigm13)],
-      ['verbpdgm14', new Paradigm(this.languageID, partOfSpeech, paradigm14)],
-      ['verbpdgm15', new Paradigm(this.languageID, partOfSpeech, paradigm15)],
-      ['verbpdgm16', new Paradigm(this.languageID, partOfSpeech, paradigm16)],
-      ['verbpdgm17', new Paradigm(this.languageID, partOfSpeech, paradigm17)],
-      ['verbpdgm17b', new Paradigm(this.languageID, partOfSpeech, paradigm17b)],
-      ['verbpdgm17c', new Paradigm(this.languageID, partOfSpeech, paradigm17c)],
-      ['verbpdgm18', new Paradigm(this.languageID, partOfSpeech, paradigm18)],
-      ['verbpdgm19', new Paradigm(this.languageID, partOfSpeech, paradigm19)],
-      ['verbpdgm20', new Paradigm(this.languageID, partOfSpeech, paradigm20)],
-      ['verbpdgm21', new Paradigm(this.languageID, partOfSpeech, paradigm21)],
-      ['verbpdgm22', new Paradigm(this.languageID, partOfSpeech, paradigm22)],
-      ['verbpdgm23', new Paradigm(this.languageID, partOfSpeech, paradigm23)],
-      ['verbpdgm24', new Paradigm(this.languageID, partOfSpeech, paradigm24)],
-      ['verbpdgm25', new Paradigm(this.languageID, partOfSpeech, paradigm25)],
-      ['verbpdgm26', new Paradigm(this.languageID, partOfSpeech, paradigm26)],
-      ['verbpdgm27', new Paradigm(this.languageID, partOfSpeech, paradigm27)],
-      ['verbpdgm28', new Paradigm(this.languageID, partOfSpeech, paradigm28)],
-      ['verbpdgm29', new Paradigm(this.languageID, partOfSpeech, paradigm29)],
-      ['verbpdgm30', new Paradigm(this.languageID, partOfSpeech, paradigm30)],
-      ['verbpdgm31', new Paradigm(this.languageID, partOfSpeech, paradigm31)],
-      ['verbpdgm32', new Paradigm(this.languageID, partOfSpeech, paradigm32)],
-      ['verbpdgm33', new Paradigm(this.languageID, partOfSpeech, paradigm33)],
-      ['verbpdgm34', new Paradigm(this.languageID, partOfSpeech, paradigm34)],
-      ['verbpdgm35', new Paradigm(this.languageID, partOfSpeech, paradigm35)],
-      ['verbpdgm36', new Paradigm(this.languageID, partOfSpeech, paradigm36)],
-      ['verbpdgm37', new Paradigm(this.languageID, partOfSpeech, paradigm37)],
-      ['verbpdgm38', new Paradigm(this.languageID, partOfSpeech, paradigm38)],
-      ['verbpdgm39', new Paradigm(this.languageID, partOfSpeech, paradigm39)],
-      ['verbpdgm40', new Paradigm(this.languageID, partOfSpeech, paradigm40)],
-      ['verbpdgm41', new Paradigm(this.languageID, partOfSpeech, paradigm41)],
-      ['verbpdgm42', new Paradigm(this.languageID, partOfSpeech, paradigm42)],
-      ['verbpdgm43', new Paradigm(this.languageID, partOfSpeech, paradigm43)],
-      ['verbpdgm43b', new Paradigm(this.languageID, partOfSpeech, paradigm43b)],
-      ['verbpdgm44', new Paradigm(this.languageID, partOfSpeech, paradigm44)],
-      ['verbpdgm45', new Paradigm(this.languageID, partOfSpeech, paradigm45)],
-      ['verbpdgm46', new Paradigm(this.languageID, partOfSpeech, paradigm46)],
-      ['verbpdgm47', new Paradigm(this.languageID, partOfSpeech, paradigm47)],
-      ['verbpdgm48', new Paradigm(this.languageID, partOfSpeech, paradigm48)],
-      ['verbpdgm49', new Paradigm(this.languageID, partOfSpeech, paradigm49)],
-      ['verbpdgm50', new Paradigm(this.languageID, partOfSpeech, paradigm50)],
-      ['verbpdgm51', new Paradigm(this.languageID, partOfSpeech, paradigm51)],
-      ['verbpdgm52', new Paradigm(this.languageID, partOfSpeech, paradigm52)],
-      ['verbpdgm53', new Paradigm(this.languageID, partOfSpeech, paradigm53)]
-    ])
-  }
-
-  static get verbParticipleParadigmTables () {
-    const partOfSpeech = Constants.POFS_VERB_PARTICIPLE
-    return new Map([
-      ['verbpdgm54', new Paradigm(this.languageID, partOfSpeech, paradigm54)],
-      ['verbpdgm55', new Paradigm(this.languageID, partOfSpeech, paradigm55)],
-      ['verbpdgm56', new Paradigm(this.languageID, partOfSpeech, paradigm56)],
-      ['verbpdgm57', new Paradigm(this.languageID, partOfSpeech, paradigm57)],
-      ['verbpdgm58', new Paradigm(this.languageID, partOfSpeech, paradigm58)],
-      ['verbpdgm59', new Paradigm(this.languageID, partOfSpeech, paradigm59)],
-      ['verbpdgm60', new Paradigm(this.languageID, partOfSpeech, paradigm60)],
-      ['verbpdgm61', new Paradigm(this.languageID, partOfSpeech, paradigm61)],
-      ['verbpdgm62', new Paradigm(this.languageID, partOfSpeech, paradigm62)],
-      ['verbpdgm63', new Paradigm(this.languageID, partOfSpeech, paradigm63)],
-      ['verbpdgm64', new Paradigm(this.languageID, partOfSpeech, paradigm64)],
-      ['verbpdgm65', new Paradigm(this.languageID, partOfSpeech, paradigm65)],
-      ['verbpdgm66', new Paradigm(this.languageID, partOfSpeech, paradigm66)]
-    ])
-  }
-
-  setParadigmData (partOfSpeech, paradigms, rulesData, suppParadigmTables) {
-    // An order of columns in a data CSV file
-    const n = {
-      id: 0,
-      matchOrder: 1,
-      partOfSpeech: 2, // Ignored, an argument value will be used
-      stemtype: 3,
-      voice: 4,
-      mood: 5,
-      tense: 6,
-      lemma: 7,
-      morphFlags: 8,
-      dialect: 9
-    }
-
-    // First row contains headers
-    for (let i = 1; i < rulesData.length; i++) {
-      const item = rulesData[i]
-      const id = item[n.id]
-      const matchOrder = Number.parseInt(item[n.matchOrder])
-
-      let features = [partOfSpeech] // eslint-disable-line prefer-const
-
-      if (item[n.stemtype]) { features.push(this.typeFeatures.get(Feature.types.stemtype).createFromImporter(item[n.stemtype])) }
-      if (item[n.voice]) { features.push(this.typeFeatures.get(Feature.types.voice).createFromImporter(item[n.voice])) }
-      if (item[n.mood]) { features.push(this.typeFeatures.get(Feature.types.mood).createFromImporter(item[n.mood])) }
-      if (item[n.tense]) { features.push(this.typeFeatures.get(Feature.types.tense).createFromImporter(item[n.tense])) }
-      if (item[n.dialect]) { features.push(this.typeFeatures.get(Feature.types.dialect).createFromImporter(item[n.dialect])) }
-
-      let lemma
-      if (item[n.lemma]) {
-        lemma = new Lemma(item[n.lemma], this.constructor.languageID)
-      }
-
-      let morphFlags = ''
-      if (item[n.morphFlags]) {
-        morphFlags = item[n.morphFlags]
-      }
-
-      if (paradigms.has(id)) {
-        paradigms.get(id).addRule(matchOrder, features, lemma, morphFlags)
-      } else {
-        console.warn(`Cannot find a paradigm table for "${id}" index`)
-      }
-    }
-    for (let paradigm of paradigms.values()) { // eslint-disable-line prefer-const
-      paradigm.sortRules()
-      paradigm.addSuppTables(suppParadigmTables)
-    }
-    return Array.from(paradigms.values())
-  }
-
   addFootnotes (partOfSpeech, classType, data) {
     let footnotes = [] // eslint-disable-line prefer-const
     // First row are headers
@@ -519,7 +308,6 @@ export default class GreekLanguageDataset extends LanguageDataset {
     let partOfSpeech
     let suffixes
     let forms
-    let paradigms
     let pofsFootnotes
     let footnotes
 
@@ -555,27 +343,6 @@ export default class GreekLanguageDataset extends LanguageDataset {
     footnotes = this.addFootnotes(partOfSpeech, Form, pofsFootnotes.data)
     forms = papaparse.parse(numeralFormsCSV, { skipEmptyLines: true })
     this.addNumeralForms(partOfSpeech, forms.data, footnotes)
-
-    // Verbs
-    // Paradigms
-    const verbParadigmTables = this.constructor.verbParadigmTables
-    const verbParticipleParadigmTables = this.constructor.verbParticipleParadigmTables
-    const verbAndParticipleParadigmTables = new Map([...verbParadigmTables, ...verbParticipleParadigmTables])
-
-    partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_VERB)
-    paradigms = this.setParadigmData(
-      partOfSpeech, verbParadigmTables,
-      papaparse.parse(verbParadigmRulesCSV, { skipEmptyLines: true }).data, verbAndParticipleParadigmTables)
-    this.addParadigms(partOfSpeech, paradigms)
-    this.addFootnotes(partOfSpeech, Paradigm, papaparse.parse(verbParadigmFootnotesCSV, { skipEmptyLines: true }).data)
-
-    // Verb Participles
-    // Paradigms
-    partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_VERB_PARTICIPLE)
-    paradigms = this.setParadigmData(
-      partOfSpeech, verbParticipleParadigmTables,
-      papaparse.parse(verbParticipleParadigmRulesCSV, { skipEmptyLines: true }).data, verbAndParticipleParadigmTables)
-    this.addParadigms(partOfSpeech, paradigms)
 
     this.dataLoaded = true
     return this

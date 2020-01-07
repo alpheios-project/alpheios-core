@@ -1,7 +1,10 @@
 import { Constants, Feature } from 'alpheios-data-models'
-import Paradigm from '@lib/paradigm.js'
+import Paradigm from '@/paradigm/lib/paradigm.js'
 import View from '@views/lib/view.js'
 import GreekView from '@views/lang/greek/greek-view.js'
+
+import GreekParadigmDataset from '@/paradigm/data/greek/greek-paradigm-dataset.js'
+import LDF from '@lib/language-dataset-factory.js'
 
 /**
  * This is a base class for all pronoun views. This class should not be used to create tables. Its purpose
@@ -45,6 +48,10 @@ export default class GreekVerbParadigmView extends GreekView {
 
     this.hasCredits = this.paradigm.hasCredits
     this.creditsText = this.paradigm.creditsText
+  }
+
+  static get dataset () {
+    return LDF.getDataset(this.languageID, 'GreekParadigmDataset')
   }
 
   static get viewID () {
@@ -98,14 +105,6 @@ export default class GreekVerbParadigmView extends GreekView {
     return (this.languageID === languageID &&
       inflections.some(i => i[Feature.types.part].value === this.mainPartOfSpeech)) &&
       inflectionData.types.has(this.inflectionType)
-
-    /* if (this.languageID === inflection.languageID && this.partsOfSpeech.includes(inflection[Feature.types.part].value)) {
-      let inflectionSet = inflectionData.pos.get(inflection[Feature.types.part].value)
-      if (inflectionSet.types.has(this.inflectionType)) {
-        return true
-      }
-    }
-    return false */
   }
 
   static getMatchingInstances (homonym) {

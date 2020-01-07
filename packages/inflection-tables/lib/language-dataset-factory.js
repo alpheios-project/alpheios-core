@@ -1,6 +1,6 @@
-import InflectionData from './inflection-data.js'
 import LatinDataset from './lang/latin/latin-language-dataset.js'
 import GreekDataset from './lang/greek/greek-language-dataset.js'
+import GreekParadigmDataset from '@/paradigm/data/greek/greek-paradigm-dataset.js'
 
 // Stores a LanguageDatasetFactory's single instance
 let datasetFactory
@@ -13,10 +13,13 @@ export default class LanguageDatasetFactory {
   /**
    * @param {Constructor[]} languageData - Language datasets of supported languages.
    */
-  constructor (languageData = [LatinDataset, GreekDataset]) {
+  constructor (languageData = [LatinDataset, GreekParadigmDataset, GreekDataset]) {
     this.sets = new Map()
     for (const LngDataset of languageData) {
-      this.sets.set(LngDataset.languageID, new LngDataset())
+      if (!this.sets.has(LngDataset.languageID)) {
+        this.sets.set(LngDataset.languageID, [])
+      }
+      this.sets.get(LngDataset.languageID).push(new LngDataset())
     }
   }
 
@@ -36,35 +39,28 @@ export default class LanguageDatasetFactory {
    * @param {symbol} languageID - A language ID of a dataset to be retrieved.
    * @return {LanguageDataset} An instance of a language dataset.
    */
-  static getDataset (languageID) {
+  static getDatasets (languageID) {
     const instance = this.instance
+
     if (instance.sets.has(languageID)) {
-      let dataset = instance.sets.get(languageID) // eslint-disable-line prefer-const
-      if (!dataset.dataLoaded) {
-        dataset.loadData()
-      }
-      return dataset
+      let datasets = instance.sets.get(languageID) // eslint-disable-line prefer-const
+      datasets.forEach(dataset => {
+        if (!dataset.dataLoaded) {
+          dataset.loadData()
+        }
+      })
+      return datasets
     }
   }
 
-  /**
-   * Finds matching forms or suffixes for a homonym.
-   * @deprecated Will be removed when will have no usages
-   * @param {Homonym} homonym - A homonym for which matching suffixes must be found.
-   * @return {InflectionData} A return value of an inflection query.
-   */
-  static getInflectionData (homonym) {
-    const instance = this.instance
-    if (instance.sets.has(homonym.languageID)) {
-      const dataset = this.getDataset(homonym.languageID)
-      for (let inflection of homonym.inflections) { // eslint-disable-line prefer-const
-        // Set grammar rules for an inflection
-        inflection.setConstraints()
-        // dataset.setInflectionConstraints(inflection)
-      }
-      return dataset.getInflectionData(homonym)
-    } else {
-      return new InflectionData(homonym) // Return an empty inflection data set
+  static getDataset (languageID, constructorName) {
+    const datasets = this.getDatasets(languageID)
+    if (!datasets) {
+      return
     }
+    if (constructorName) {
+      return datasets.find(dataset => dataset.constructor.name.endsWith(constructorName))
+    }
+    return datasets[0]
   }
 }

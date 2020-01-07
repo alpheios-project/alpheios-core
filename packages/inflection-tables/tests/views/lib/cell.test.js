@@ -6,9 +6,7 @@ import Cell from '@views/lib/cell.js'
 import { Constants, Feature } from 'alpheios-data-models'
 
 import BaseTestHelp from '@tests/data/base-test-help.js'
-import GreekLanguageDatasetJSON from '@tests/lib/lang/greek-language-dataset-json.js'
-import LanguageDatasetFactory from '@lib/language-dataset-factory.js'
-import GreekLanguageDataset from '@lib/lang/greek/greek-language-dataset.js'
+import GreekView from '@views/lang/greek/greek-view.js'
 
 import Form from '@lib/form.js'
 import * as Styles from '@views/styles/styles'
@@ -24,7 +22,9 @@ describe('cell.test.js', () => {
 
   beforeAll(async () => {
     testHomonym = await BaseTestHelp.getHomonym('δύο', Constants.LANG_GREEK)
-    testInflectionData = await LanguageDatasetFactory.getInflectionData(testHomonym)
+    const dataset = GreekView.dataset
+
+    testInflectionData = dataset.getInflectionData(testHomonym)
     testMorphemes = testInflectionData.pos.get('numeral').types.get(Form).items.slice(0, 1)
 
     testFeatures = []
@@ -137,4 +137,5 @@ describe('cell.test.js', () => {
     expect(cell.column.clearHighlighting).toHaveBeenCalled()
     expect(cell.row.clearHighlighting).toHaveBeenCalled()
   })
+  
 })

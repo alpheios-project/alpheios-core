@@ -18,7 +18,7 @@ export default class ViewSet {
 
     if (this.homonym) {
       this.languageID = homonym.languageID
-      this.dataset = LanguageDatasetFactory.getDataset(homonym.languageID)
+      this.datasets = LanguageDatasetFactory.getDatasets(homonym.languageID)
 
       /**
        * Whether inflections are enabled for the homonym's language
@@ -27,9 +27,12 @@ export default class ViewSet {
 
       if (this.enabled) {
         for (const lexeme of homonym.lexemes) {
-          for (let inflection of lexeme.inflections) {
+          for (const inflection of lexeme.inflections) {
             // Inflections are grouped by part of speech
-            inflection = this.dataset.setInflectionData(inflection, lexeme.lemma)
+            // inflection = this.dataset.setInflectionData(inflection, lexeme.lemma)
+            this.datasets.forEach(dataset => {
+              dataset.setInflectionData(inflection, lexeme.lemma)
+            })
           }
         }
 

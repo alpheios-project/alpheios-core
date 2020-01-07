@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import { Constants, LanguageModelFactory as LMF } from 'alpheios-data-models'
 import ViewSet from './view-set.js'
 import LatinViewSet from '../lang/latin/latin-view-set.js'

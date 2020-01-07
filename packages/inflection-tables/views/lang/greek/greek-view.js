@@ -1,8 +1,10 @@
 import { Constants, Feature } from 'alpheios-data-models'
-// import LanguageDatasetFactory from '../../../lib/language-dataset-factory.js'
+import LDF from '@lib/language-dataset-factory.js'
 import Table from '../../lib/table.js'
 import View from '../../lib/view.js'
 import GroupFeatureType from '../../lib/group-feature-type.js'
+
+// import GreekLanguageDataset from '@lib/lang/greek/greek-language-dataset.js'
 
 export default class GreekView extends View {
   constructor (homonym, inflectionData) {
@@ -33,6 +35,10 @@ export default class GreekView extends View {
 
   static get languageID () {
     return Constants.LANG_GREEK
+  }
+
+  static get dataset () {
+    return LDF.getDataset(this.languageID, 'GreekLanguageDataset')
   }
 
   /**

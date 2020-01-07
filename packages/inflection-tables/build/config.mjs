@@ -14,7 +14,8 @@ const webpack = {
         'alpheios-data-models': path.join(projectRoot, 'node_modules/alpheios-data-models/dist/alpheios-data-models.js'),
         '@lib': path.join(projectRoot, 'lib'),
         '@views': path.join(projectRoot, 'views'),
-        '@l10n': path.join(projectRoot, 'l10n')
+        '@l10n': path.join(projectRoot, 'l10n'),
+        '@': path.join(projectRoot, 'src')
       }
     },
     module: {

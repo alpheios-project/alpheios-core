@@ -8,6 +8,8 @@ import BaseTestHelp from '@tests/data/base-test-help.js'
 
 import LatinLanguageDataset from '@lib/lang/latin/latin-language-dataset.js'
 import GreekLanguageDataset from '@lib/lang/greek/greek-language-dataset.js'
+import GreekParadigmDataset from '@/paradigm/data/greek/greek-paradigm-dataset.js'
+
 import InflectionData from '@lib/inflection-data.js'
 
 describe('language-dataset-factory.test.js', () => {
@@ -53,25 +55,15 @@ describe('language-dataset-factory.test.js', () => {
     expect(LanguageDatasetFactory.getDataset(Constants.LANG_LATIN)).toBeInstanceOf(LatinLanguageDataset)
     expect(LanguageDatasetFactory.getDataset(Constants.LANG_LATIN).dataLoaded).toBeTruthy()
 
-    expect(LanguageDatasetFactory.getDataset(Constants.LANG_GREEK)).toBeInstanceOf(GreekLanguageDataset)
+    expect(LanguageDatasetFactory.getDataset(Constants.LANG_GREEK)).toBeInstanceOf(GreekParadigmDataset)
     expect(LanguageDatasetFactory.getDataset(Constants.LANG_GREEK).dataLoaded).toBeTruthy()
+
+    expect(LanguageDatasetFactory.getDataset(Constants.LANG_GREEK, 'GreekLanguageDataset')).toBeInstanceOf(GreekLanguageDataset)
+    expect(LanguageDatasetFactory.getDataset(Constants.LANG_GREEK, 'GreekLanguageDataset').dataLoaded).toBeTruthy()
   })
 
   it('4 LanguageDatasetFactory - getDataset returns undefined for unsupported languageID', () => {
     expect(LanguageDatasetFactory.getDataset(Constants.LANG_ARABIC)).toBeUndefined()
   })
 
-  it('5 LanguageDatasetFactory - getInflectionData returns an empty InflectionData for unsupported language', () => {
-    let LDFAra = LanguageDatasetFactory.getInflectionData(testHomonymARA)
-    expect(LDFAra).toBeInstanceOf(InflectionData)
-    expect(LDFAra.pos.size).toEqual(0)
-  })
-
-  it('6 LanguageDatasetFactory - getInflectionData returns a filled InflectionData for supported language', () => {
-    // console.info('***********testHomonymGRC', testHomonymGRC.inflections)
-    let LDFGrc = LanguageDatasetFactory.getInflectionData(testHomonymGRC)
-    expect(LDFGrc).toBeInstanceOf(InflectionData)
-    expect(Array.from(LDFGrc.pos.keys())).toEqual(['numeral'])
-    expect(LDFGrc.pos.get('numeral').types.size).toBeGreaterThan(0)
-  })
 })

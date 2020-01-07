@@ -10,7 +10,7 @@ import Form from '@lib/form.js'
 
 import { Constants, Feature } from 'alpheios-data-models'
 import BaseTestHelp from '@tests/data/base-test-help.js'
-import LanguageDatasetFactory from '@lib/language-dataset-factory.js'
+import GreekView from '@views/lang/greek/greek-view.js'
 
 import GroupFeatureType from '@views/lib/group-feature-type.js'
 import GroupFeatureList from '@views/lib/group-feature-list.js'
@@ -24,7 +24,8 @@ describe('row.test.js', () => {
 
   beforeAll(async () => {
     let testHomonym = await BaseTestHelp.getHomonym('δύο', Constants.LANG_GREEK)
-    let testInflectionData = await LanguageDatasetFactory.getInflectionData(testHomonym)
+    const dataset = GreekView.dataset
+    let testInflectionData = dataset.getInflectionData(testHomonym)
     testMorphemes = testInflectionData.pos.get('numeral').types.get(Form).items
 
     testFeatures = []

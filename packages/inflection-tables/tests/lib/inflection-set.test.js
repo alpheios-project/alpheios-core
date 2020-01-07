@@ -5,9 +5,8 @@ import { Constants, Inflection } from 'alpheios-data-models'
 import InflectionSet from '@lib/inflection-set.js'
 import Inflections from '@lib/inflection-list.js'
 import Form from '@lib/form.js'
-import Paradigm from '@lib/paradigm.js'
 
-import paradigm01 from '@lib/lang/greek/data/verb/paradigm/tables/paradigm-01.json'
+import paradigm01 from '@/paradigm/data/greek/verb/tables/paradigm-01.json'
 
 describe('inflection-set.test.js', () => {
   console.error = function () {}

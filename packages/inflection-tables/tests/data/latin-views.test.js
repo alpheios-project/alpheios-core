@@ -1648,4 +1648,5 @@ describe('latin-views.test.js', () => {
       linkedViewsLength: 0
     })
   })
+
 })

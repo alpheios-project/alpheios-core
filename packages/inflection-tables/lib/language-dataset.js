@@ -2,7 +2,7 @@ import { Feature, LanguageModelFactory as LMF } from 'alpheios-data-models'
 import Morpheme from './morpheme.js'
 import Suffix from './suffix.js'
 import Form from './form.js'
-import Paradigm from './paradigm.js'
+
 import Footnote from './footnote.js'
 import InflectionSet from './inflection-set.js'
 import InflectionData from './inflection-data.js'
@@ -74,13 +74,6 @@ export default class LanguageDataset {
     }
 
     this.pos.get(partOfSpeech).addInflectionItem(item)
-  }
-
-  addParadigms (partOfSpeech, paradigms) {
-    if (!this.pos.has(partOfSpeech.value)) {
-      this.pos.set(partOfSpeech.value, new InflectionSet(partOfSpeech.value, this.languageID))
-    }
-    this.pos.get(partOfSpeech.value).addInflectionItems(paradigms)
   }
 
   /**
@@ -176,6 +169,50 @@ export default class LanguageDataset {
     return { fullMatch: result, matchedItems: matches }
   }
 
+  setBaseInflectionData (inflection, lemma) {
+    inflection.lemma = lemma
+    inflection.addFeature(new Feature(Feature.types.word, lemma.word, lemma.languageID))
+    inflection.constraints = this.model.getInflectionConstraints(inflection)
+
+    inflection.constraints.implemented = this.isImplemented(inflection)
+    if (inflection.constraints.implemented) {
+      inflection.constraints.obligatoryMatches = this.constructor.getObligatoryMatchList(inflection)
+      inflection.constraints.optionalMatches = this.constructor.getOptionalMatchList(inflection)
+      inflection.constraints.morphologyMatches = this.constructor.getMorphologyMatchList(inflection)
+    }
+  }
+
+  setPronounInflectionData (partOfSpeech, inflection) {
+    if (inflection.constraints.pronounClassRequired) {
+      /*
+      A `class` grammatical feature is an obligatory match for Greek pronouns. Class, however, is not present in
+      the Inflection object at the time we receive it from a morphological analyzer because a morphological analyzer
+      does not provide such data. To fix this, for pronouns we need to figure out what the `class` feature value is
+      by finding an exact pronoun form match in inflection data and obtaining a corresponding `class` value.
+      The value found will then be attached to an Inflection object.
+       */
+      // Get a class this inflection belongs to
+      const grmClasses = this.model.getPronounClasses(this.pos.get(partOfSpeech).types.get(Form).items, inflection.getForm())
+      if (!grmClasses) {
+        console.warn(`Cannot determine a grammar class for a ${inflection.form} pronoun.
+              Table construction will probably fail`)
+      } else {
+        // One or more values found
+        inflection.addFeature(grmClasses)
+      }
+    }
+  }
+
+  setIrregularInflectionData (inflection) {
+    // Check if this is an irregular word after a `word` feature is added
+    inflection.constraints.irregular = this.isIrregular(inflection)
+    if (inflection.constraints.irregular) {
+      // Irregular words are always full form based
+      inflection.constraints.fullFormBased = true
+      // inflection.constraints.suffixBased = false // Turn this on to not show regular tables for irregular verbs
+    }
+  }
+
   /**
    * Sets inflection grammar properties based on inflection data
    * @param {Inflection} inflection - An inflection data object
@@ -202,70 +239,34 @@ export default class LanguageDataset {
     if (!partOfSpeech.isSingle) {
       throw new Error('Part of speech data should have only one value')
     }
-    partOfSpeech = partOfSpeech.value
+    partOfSpeech = inflection[Feature.types.part].value
 
-    // add the lemma to the inflection before setting inflection constraints
-    inflection.lemma = lemma
-    inflection.addFeature(new Feature(Feature.types.word, lemma.word, lemma.languageID))
-
-    inflection.constraints = this.model.getInflectionConstraints(inflection)
-
-    if (inflection.constraints.pronounClassRequired) {
-      /*
-      A `class` grammatical feature is an obligatory match for Greek pronouns. Class, however, is not present in
-      the Inflection object at the time we receive it from a morphological analyzer because a morphological analyzer
-      does not provide such data. To fix this, for pronouns we need to figure out what the `class` feature value is
-      by finding an exact pronoun form match in inflection data and obtaining a corresponding `class` value.
-      The value found will then be attached to an Inflection object.
-       */
-      // Get a class this inflection belongs to
-      const grmClasses = this.model.getPronounClasses(this.pos.get(partOfSpeech).types.get(Form).items, inflection.getForm())
-      if (!grmClasses) {
-        console.warn(`Cannot determine a grammar class for a ${inflection.form} pronoun.
-              Table construction will probably fail`)
-      } else {
-        // One or more values found
-        inflection.addFeature(grmClasses)
-      }
+    if (!this.pos.get(partOfSpeech)) {
+      // There is no source data for this part of speech
+      console.warn(`There is no source data for the following part of speech: ${partOfSpeech}`)
+      return inflection
     }
 
-    // Check if this is an irregular word after a `word` feature is added
-    inflection.constraints.irregular = this.isIrregular(inflection)
-    if (inflection.constraints.irregular) {
-      // Irregular words are always full form based
-      inflection.constraints.fullFormBased = true
-      // inflection.constraints.suffixBased = false // Turn this on to not show regular tables for irregular verbs
-    }
-    inflection.constraints.implemented = this.isImplemented(inflection)
+    this.setBaseInflectionData(inflection, lemma)
+    this.setPronounInflectionData(partOfSpeech, inflection)
+    this.setIrregularInflectionData(inflection)
 
-    if (inflection.constraints.implemented) {
-      if (!this.pos.get(partOfSpeech)) {
-        // There is no source data for this part of speech
-        console.warn(`There is no source data for the following part of speech: ${partOfSpeech}`)
-        return inflection
-      }
-
-      // This cannot be determined by language model so we have to check it manually
-      inflection.constraints.paradigmBased = this.pos.get(partOfSpeech).hasMatchingItems(Paradigm, inflection)
-
+    if (inflection.constraints.implemented && !inflection.constraints.paradigmBased) {
       // Set match features data
-      inflection.constraints.obligatoryMatches = this.constructor.getObligatoryMatchList(inflection)
-      inflection.constraints.optionalMatches = this.constructor.getOptionalMatchList(inflection)
-      inflection.constraints.morphologyMatches = this.constructor.getMorphologyMatchList(inflection)
-
       /*
       Check if inflection if full form based if `fullFormBased` flag is set
       (i.e. inflection model knows it can be full form based)
       or if no other flags are set (we don't know what type of inflection it is and want to check all to figure out).
        */
-      if (inflection.constraints.fullFormBased || !(inflection.constraints.suffixBased || inflection.constraints.paradigmBased)) {
+
+      if (inflection.constraints.fullFormBased || !inflection.constraints.suffixBased) {
         /*
-        If we don't know what inflection is based upon, let's assume
-        this inflection is full form based and let's try to find matching forms.
-        For this, we need set a `fullFormBased` flag on inflection temporarily
-        and clear it if no matching forms are found (because it cannot be based on full forms then).
-        This flag is required for matcher to compare full forms, not suffixes.
-         */
+          If we don't know what inflection is based upon, let's assume
+          this inflection is full form based and let's try to find matching forms.
+          For this, we need set a `fullFormBased` flag on inflection temporarily
+          and clear it if no matching forms are found (because it cannot be based on full forms then).
+          This flag is required for matcher to compare full forms, not suffixes.
+          */
         inflection.constraints.fullFormBased = true
         // TODO: This is done for almost every word and it does scan across many items. Need to optimize
         const hasMatchingForms = this.hasMatchingForms(partOfSpeech, inflection)
@@ -278,9 +279,9 @@ export default class LanguageDataset {
       }
 
       /*
-      If we did not figure out what type of inflection it is,
-      then it is probably suffix based as this type is more prevalent
-       */
+        If we did not figure out what type of inflection it is,
+        then it is probably suffix based as this type is more prevalent
+        */
       if (!inflection.constraints.fullFormBased && !inflection.constraints.paradigmBased) {
         // If it is not full form based, then probably it is suffix base
         inflection.constraints.suffixBased = true
@@ -350,6 +351,7 @@ export default class LanguageDataset {
    */
   createInflectionSet (pofsValue, inflections, options) {
     let inflectionSet = new InflectionSet(pofsValue, this.languageID) // eslint-disable-line prefer-const
+
     inflectionSet.inflections = inflections.filter(i => i.constraints.implemented === true)
     inflectionSet.isImplemented = inflectionSet.inflections.length > 0
 
@@ -370,7 +372,6 @@ export default class LanguageDataset {
       // If at least one inflection in a group has a constraint, we'll search for data based on that criteria
       const suffixBased = inflections.some(i => i.constraints.suffixBased)
       const formBased = inflections.some(i => i.constraints.fullFormBased)
-      const paradigmBased = inflections.some(i => i.constraints.paradigmBased)
 
       // Check for suffix matches
       if (suffixBased) {
@@ -392,27 +393,26 @@ export default class LanguageDataset {
         }
       }
 
-      // Get paradigm matches
-      if (paradigmBased) {
-        const paradigms = sourceSet.getMatchingItems(Paradigm, inflections)
-        inflectionSet.addInflectionItems(paradigms)
-      }
+      this.createInflectionSetFootnote(inflectionSet, sourceSet)
+    }
 
-      // Add footnotes
-      if (inflectionSet.hasTypes) {
-        for (const inflectionType of inflectionSet.inflectionTypes) {
-          const footnotesSource = sourceSet.types.get(inflectionType).footnotesMap
-          const footnotesInUse = inflectionSet.types.get(inflectionType).footnotesInUse
-          for (const footnote of footnotesSource.values()) {
-            if (footnotesInUse.includes(footnote.index)) {
-              inflectionSet.addFootnote(inflectionType, footnote.index, footnote)
-            }
+    return inflectionSet
+  }
+
+  createInflectionSetFootnote (inflectionSet, sourceSet) {
+    // Add footnotes
+    if (inflectionSet.hasTypes) {
+      const finalSourceSet = sourceSet
+      for (const inflectionType of inflectionSet.inflectionTypes) {
+        const footnotesSource = finalSourceSet.types.get(inflectionType).footnotesMap
+        const footnotesInUse = inflectionSet.types.get(inflectionType).footnotesInUse
+        for (const footnote of footnotesSource.values()) {
+          if (footnotesInUse.includes(footnote.index)) {
+            inflectionSet.addFootnote(inflectionType, footnote.index, footnote)
           }
         }
       }
     }
-
-    return inflectionSet
   }
 
   /**

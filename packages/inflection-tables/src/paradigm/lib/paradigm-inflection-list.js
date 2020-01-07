@@ -1,4 +1,4 @@
-import InflectionList from './inflection-list.js'
+import InflectionList from '@lib/inflection-list.js'
 
 export default class ParadigmInflectionList extends InflectionList {
   /**

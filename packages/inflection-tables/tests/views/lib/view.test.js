@@ -3,12 +3,10 @@
 import 'whatwg-fetch'
 import View from '@views/lib/view.js'
 
-import LanguageDatasetFactory from '@lib/language-dataset-factory.js'
 import BaseTestHelp from '@tests/data/base-test-help.js'
 import { Constants } from 'alpheios-data-models'
 
-import GreekLanguageDataset from '@lib/lang/greek/greek-language-dataset.js'
-import GreekLanguageDatasetJSON from '@tests/lib/lang/greek-language-dataset-json.js'
+import GreekView from '@views/lang/greek/greek-view.js'
 
 import Form from '@lib/form.js'
 
@@ -45,7 +43,8 @@ describe('view.test.js', () => {
 
   beforeAll(async () => {
     testHomonym = await BaseTestHelp.getHomonym('δύο', Constants.LANG_GREEK)
-    testInflectionData = await LanguageDatasetFactory.getInflectionData(testHomonym)
+    const dataset = GreekView.dataset
+    testInflectionData = dataset.getInflectionData(testHomonym)
   })
 
   beforeEach(() => {

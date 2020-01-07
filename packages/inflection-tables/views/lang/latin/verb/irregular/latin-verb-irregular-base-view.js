@@ -95,6 +95,7 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
       for (const infl of inflections) {
         let clone = infl.clone()
         clone[Feature.types.part] = clone[Feature.types.part].createFeature(Constructor.mainPartOfSpeech)
+
         clone = this.constructor.dataset.setInflectionData(clone, infl.lemma)
         linkedViewInflections.push(clone)
       }

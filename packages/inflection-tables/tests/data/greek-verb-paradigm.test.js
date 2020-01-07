@@ -3,14 +3,12 @@
 import { Constants, Feature, LanguageModelFactory } from 'alpheios-data-models'
 
 import BaseTestHelp from '@tests/data/base-test-help.js'
-
-// import LanguageDatasetFactory from '@views/lib/language-dataset-factory.js'
-
 describe('greek-verb-paradigm.test.js', () => {
+  
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
-
+  
   const locale = "en-US"
   beforeAll(async () => {
   })
@@ -60,7 +58,7 @@ describe('greek-verb-paradigm.test.js', () => {
     })
   })
 
-  it.skip('3 - no matches - checked Verb Paradigm3', async () => {
+  it('3 - no matches - checked Verb Paradigm3', async () => {
    
   })
 

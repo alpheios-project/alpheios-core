@@ -8,8 +8,7 @@ import HeaderCell from '@views/lib/header-cell.js'
 import { Constants, Feature } from 'alpheios-data-models'
 
 import BaseTestHelp from '@tests/data/base-test-help.js'
-import LanguageDatasetFactory from '@lib/language-dataset-factory.js'
-import GreekLanguageDataset from '@lib/lang/greek/greek-language-dataset.js'
+import GreekView from '@views/lang/greek/greek-view.js'
 
 import GroupFeatureType from '@views/lib/group-feature-type.js'
 
@@ -28,7 +27,8 @@ describe('column.test.js', () => {
 
   beforeAll(async () => {
     testHomonym = await BaseTestHelp.getHomonym('δύο', Constants.LANG_GREEK)
-    testInflectionData = await LanguageDatasetFactory.getInflectionData(testHomonym)
+    const dataset = GreekView.dataset
+    testInflectionData = dataset.getInflectionData(testHomonym)
     testMorphemes = testInflectionData.pos.get('numeral').types.get(Form).items
 
     testFeatures = []

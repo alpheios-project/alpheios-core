@@ -1,5 +1,5 @@
 import { Constants } from 'alpheios-data-models'
-import GreekVerbParadigmView from '../verb/greek-verb-paradigm-view.js'
+import GreekVerbParadigmView from '@/paradigm/views/greek/verb/greek-verb-paradigm-view.js'
 
 export default class GreekVerbParticipleParadigmView extends GreekVerbParadigmView {
   static get viewID () {
