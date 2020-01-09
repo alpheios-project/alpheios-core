@@ -27,9 +27,6 @@ describe('inflections-subtables-wide.test.js', () => {
     })
 
     let testHomonym = adapterTuftsRes.result
-
-    let testInflectionData = await LanguageDatasetFactory.getInflectionData(testHomonym)
-
     let inflectionViewSet = ViewSetFactory.create(testHomonym, 'en-US')
     let views = inflectionViewSet.getViews('verb')
     testView = views[0]

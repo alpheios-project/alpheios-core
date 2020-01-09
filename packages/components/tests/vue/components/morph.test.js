@@ -104,7 +104,7 @@ describe('morph.test.js', () => {
 
     expect(Object.values(cmp.vm.translations).length).toEqual(2)
     expect(Object.values(cmp.vm.translations)[0].glosses.length).toEqual(3)
-  }, 50000)
+  }, 500000)
 
   it('4 Morph - method showLexeme checks lexeme and if it has any data returns true, otherwise returns false', () => {
     let cmp = shallowMount(Morph, {
@@ -138,7 +138,7 @@ describe('morph.test.js', () => {
     expect(cmp.vm.hasTranslations(testHomonymCupidinibus.lexemes[0].lemma.ID)).toBeTruthy()
     expect(cmp.vm.hasTranslations(testHomonymCupidinibus.lexemes[1].lemma.ID)).toBeFalsy()
 
-  }, 50000)
+  }, 500000)
 
   it('6 Morph - method morphClass adds class and specific class for disambiguated lexemes', () => {
     let cmp = shallowMount(Morph, {
