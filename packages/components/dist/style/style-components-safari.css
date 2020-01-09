@@ -2327,14 +2327,19 @@ h3.alpheios-inflections__credits-title {
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
 .alpheios-grammar__titles {
-  padding: 40px 20px 20px !important;
+  padding: 10px 30px 5px !important;
+  border-bottom: 3px solid var(--alpheios-color-neutral-light) !important;
+}
+.alpheios-grammar__titles h1.alpheios-panel__title {
+  font-size: calc(var(--alpheios-base-text-size) * 1.3) !important;
+  margin: 0 0 calc(var(--alpheios-base-text-size) * 0.5) 0 !important;
 }
 p.alpheios-grammar__block__title {
   color: var(--alpheios-inflect-title-color) !important;
-  font-size: calc(var(--alpheios-base-text-size) * 1.375) !important;
+  font-size: calc(var(--alpheios-base-text-size) * 1.1) !important;
   font-family: var(--alpheios-serif-font-face) !important;
   font-weight: 700 !important;
-  margin-bottom: calc(var(--alpheios-base-text-size) * 1.25) !important;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.5) !important;
   display: inline-block;
 }
 p.alpheios-grammar__block__title.open {

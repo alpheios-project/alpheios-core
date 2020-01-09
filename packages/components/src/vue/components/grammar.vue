@@ -216,14 +216,20 @@ export default {
   @import "../../styles/variables";
 
   .alpheios-grammar__titles {
-    padding: 40px 20px 20px;
+    padding: 10px 30px 5px;
+    border-bottom: 3px solid var(--alpheios-color-neutral-light);
+
+    h1.alpheios-panel__title {
+      font-size: calc(var(--alpheios-base-text-size) * 1.3) !important;
+      margin: 0 0 calc(var(--alpheios-base-text-size) * 0.5) 0 !important;
+    }
   }
   p.alpheios-grammar__block__title {
     color: var(--alpheios-inflect-title-color);
-    font-size: textsize(22px);
+    font-size: calc(var(--alpheios-base-text-size) * 1.1);
     font-family: var(--alpheios-serif-font-face);
     font-weight: 700;
-    margin-bottom: textsize(20px);
+    margin-bottom: calc(var(--alpheios-base-text-size) * 0.5);
     // To have the border under the text only
     display: inline-block;
 
