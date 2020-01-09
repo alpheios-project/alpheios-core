@@ -70,5 +70,10 @@ describe('greek-verb-paradigm.test.js', () => {
 
     expect(matchingViews[0].constructor.name).toEqual('GreekVerbParadigmView')
     expect(matchingViews[0].paradigm.paradigmID).toEqual('verbpdgm1')
+    
+    const view = matchingViews[0].render()
+    expect(view.wideTable.rows[2].cells[3].fullMatch).toBeTruthy()
+    expect(view.wideTable.rows[2].cells[2].fullMatch).toBeFalsy()
+    // GreekVerbParadigmView.getStandardFormInstance({ paradigmID: matchingViews[0].paradigm.paradigmID })
   })
 })

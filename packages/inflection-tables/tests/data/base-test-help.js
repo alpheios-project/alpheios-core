@@ -21,7 +21,10 @@ export default class BaseTestHelp {
       },
       sourceData: sourceJson
     })
-      
+    
+    if (adapterTuftsRes.errors.length > 0) {
+      console.error(adapterTuftsRes.errors)
+    }
     return adapterTuftsRes.result
   }
   static async getInflectionSet(targetWord, languageID) {

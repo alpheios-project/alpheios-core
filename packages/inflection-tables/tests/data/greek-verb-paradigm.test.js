@@ -25,6 +25,7 @@ describe('greek-verb-paradigm.test.js', () => {
     jest.clearAllMocks()
   })
 
+
   it('1 - checked Verb Paradigm1 - βουλεύῃς', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('βουλεύῃς', Constants.LANG_GREEK)
 
@@ -40,8 +41,14 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm54' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[2].cells[2].fullMatch).toBeFalsy() // βουλεύεις
+    expect(renderedTable.rows[2].cells[3].fullMatch).toBeTruthy() // βουλεύῃς
   })
 
+  
   it('2 - checked Verb Paradigm2 - βουλευέσθων', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('βουλευέσθων', Constants.LANG_GREEK)
 
@@ -56,6 +63,12 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[5].cells[4].fullMatch).toBeFalsy() // βουλευοίσθην
+    expect(renderedTable.rows[5].cells[5].fullMatch).toBeTruthy() // βουλευέσθων
+    expect(renderedTable.rows[8].cells[5].fullMatch).toBeTruthy() // βουλευέσθων
   })
 
   it('3 - no matches - checked Verb Paradigm3', async () => {
@@ -77,6 +90,11 @@ describe('greek-verb-paradigm.test.js', () => {
       suppParadigms: [ 'verbpdgm58' ]
     })
 
+    let renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // ἐβούλευσα
+    expect(renderedTable.rows[1].cells[3].fullMatch).toBeTruthy() // βουλεύσω
+
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[1],
       viewName: 'GreekVerbParadigmView',
@@ -86,6 +104,11 @@ describe('greek-verb-paradigm.test.js', () => {
       suppParadigms: [ 'verbpdgm55', 'verbpdgm65' ]
     })
 
+    renderedTable = inflectionsViewSet.matchingViews[1].render().wideTable
+
+    expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // βαλοίην (βαλοῖμι)	
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // βαλῶ
+
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekVerbParadigmView',
@@ -94,6 +117,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
+
+    expect(renderedTable.rows[2].cells[3].fullMatch).toBeFalsy() // βουλεύσῃ	
+    expect(renderedTable.rows[2].cells[2].fullMatch).toBeTruthy() // ἐβουλεύσω
   })
 
   it.skip('5 - no matchesx - checked Verb Paradigm5', async () => {
@@ -113,6 +141,12 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm57' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[2].cells[3].fullMatch).toBeFalsy() // ἀγάγῃς
+    expect(renderedTable.rows[2].cells[4].fullMatch).toBeTruthy() // ἀγάγοις
+
   })
 
   it('7 - checked Verb Paradigm7 - ἀγαγοῦ', async () => {
@@ -129,6 +163,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[2].cells[4].fullMatch).toBeFalsy() // ἀγάγοιο
+    expect(renderedTable.rows[2].cells[5].fullMatch).toBeTruthy() // ἀγαγοῦ
   })
 
   it('10 - checked Verb Paradigm10 - βουλευθῇς', async () => {
@@ -145,6 +184,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm60' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[2].cells[2].fullMatch).toBeFalsy() // ἐβουλεύθης
+    expect(renderedTable.rows[2].cells[3].fullMatch).toBeTruthy() // βουλευθῇς
   })
 
   it('11 - checked Verb Paradigm11 - λελοίπῃ', async () => {
@@ -161,6 +205,12 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm63' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[3].cells[3].fullMatch).toBeFalsy() // λέλοιπε(ν)
+    expect(renderedTable.rows[3].cells[4].fullMatch).toBeTruthy() // λελοίπῃ
+    expect(renderedTable.rows[3].cells[5].fullMatch).toBeTruthy() // λελοιπὼς (-υῖα, -ὸς) ᾖ
   })
 
   it('12 - checked Verb Paradigm12 - γέγραψαι', async () => {
@@ -176,6 +226,23 @@ describe('greek-verb-paradigm.test.js', () => {
       paradigmID: 'verbpdgm12',
       hasSuppParadigms: false
     })
+
+    let renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // λέλυμαι
+    expect(renderedTable.rows[2].cells[2].fullMatch).toBeTruthy() // λέλυσαι
+    expect(renderedTable.rows[2].cells[3].fullMatch).toBeTruthy() // πέπεισαι
+    expect(renderedTable.rows[2].cells[4].fullMatch).toBeTruthy() // γέγραψαι
+
+    expect(inflectionsViewSet.matchingViews[0].wideSubTables.length).toEqual(1)
+
+    renderedTable = inflectionsViewSet.matchingViews[0].render().wideSubTables[0]
+
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // πέπραγμαι
+    expect(renderedTable.rows[2].cells[2].fullMatch).toBeTruthy() // πέπραξαι
+    expect(renderedTable.rows[2].cells[3].fullMatch).toBeTruthy() // ἤγγελσαι
+    expect(renderedTable.rows[2].cells[4].fullMatch).toBeTruthy() // ———
+
   })
 
   it('13, 14 - checked Verb Paradigm13, 14 - μεμνῶμαι', async () => {
@@ -192,6 +259,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: false
     })
 
+    let renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // λελυμένος (-η) εἴην
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // λελυμένος (-η) ὦ
+
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[1],
       viewName: 'GreekVerbParadigmView',
@@ -199,6 +271,11 @@ describe('greek-verb-paradigm.test.js', () => {
       paradigmID: 'verbpdgm14',
       hasSuppParadigms: false
     })
+
+    renderedTable = inflectionsViewSet.matchingViews[1].render().wideTable
+
+    expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // μεμνῄμην
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // μεμνῶμαι
   })
 
   it('15 - checked Verb Paradigm15 - ἐγέγραψο', async () => {
@@ -214,6 +291,17 @@ describe('greek-verb-paradigm.test.js', () => {
       paradigmID: 'verbpdgm15',
       hasSuppParadigms: false
     })
+
+    let renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[2].cells[2].fullMatch).toBeFalsy() // ἐλελύκης
+    expect(renderedTable.rows[2].cells[3].fullMatch).toBeTruthy() // ἐλέλυσο
+    expect(renderedTable.rows[2].cells[4].fullMatch).toBeTruthy() // ἐπέπεισο
+    expect(renderedTable.rows[2].cells[5].fullMatch).toBeTruthy() // ἐγέγραψο
+
+    expect(renderedTable.rows[12].cells[2].fullMatch).toBeTruthy() // ἐπέπραξο
+    expect(renderedTable.rows[12].cells[3].fullMatch).toBeTruthy() // ἤγγελσο
+    expect(renderedTable.rows[12].cells[4].fullMatch).toBeTruthy() // ———
   })
 
   it('16 - checked Verb Paradigm16 - τεθνήξεις', async () => {
@@ -230,6 +318,12 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[2].cells[4].fullMatch).toBeFalsy() // λελύσῃ
+    expect(renderedTable.rows[2].cells[2].fullMatch).toBeTruthy() // λελυκὼς (-υῖα) ἔσῃ
+    expect(renderedTable.rows[2].cells[3].fullMatch).toBeTruthy() // τεθνήξεις
   })
 
   it('17 - checked Verb Paradigm17 - ἕσταθι', async () => {
@@ -247,6 +341,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm64' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[2].cells[4].fullMatch).toBeFalsy() // ἕσταίης
+    expect(renderedTable.rows[2].cells[5].fullMatch).toBeTruthy() // ἕσταθι
   })
 
   it('17b - checked Verb Paradigm17b - τέθνατον', async () => {
@@ -264,6 +363,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm64' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[2].cells[4].fullMatch).toBeFalsy() // τεθναίης
+    expect(renderedTable.rows[4].cells[2].fullMatch).toBeTruthy() // τέθνατον
   })
 
   it('17c - checked Verb Paradigm17c - δέδιμεν', async () => {
@@ -281,6 +385,18 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm64' ]
     })
+
+    let renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // δέδια
+    expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // δεδίω
+
+    expect(inflectionsViewSet.matchingViews[0].wideSubTables.length).toEqual(1)
+
+    renderedTable = inflectionsViewSet.matchingViews[0].render().wideSubTables[0]
+
+    expect(renderedTable.rows[1].cells[1].fullMatch).toBeFalsy() // δεδιώς, δεδιυῖᾰ, δεδιός (see declension)
+    expect(renderedTable.rows[0].cells[1].fullMatch).toBeTruthy() // δεδιέναι
   })
 
   it('18 - checked Verb Paradigm18 - ποιεῖτον', async () => {
@@ -298,6 +414,18 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm55' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[4].cells[3].fullMatch).toBeFalsy() // ποιῆτον
+    expect(renderedTable.rows[5].cells[3].fullMatch).toBeFalsy() // ποιῆτον
+
+    expect(renderedTable.rows[4].cells[2].fullMatch).toBeTruthy() // ποιεῖτον
+    expect(renderedTable.rows[5].cells[2].fullMatch).toBeTruthy() // ποιεῖτον
+    expect(renderedTable.rows[4].cells[4].fullMatch).toBeTruthy() // ποιοῖτον
+    expect(renderedTable.rows[4].cells[5].fullMatch).toBeTruthy() // (ποιοίητον)
+    expect(renderedTable.rows[4].cells[6].fullMatch).toBeTruthy() // ποιεῖτον
+    expect(renderedTable.rows[4].cells[7].fullMatch).toBeTruthy() // ἐποιεῖτον
   })
 
   it('19 - checked Verb Paradigm19 - ἔπλει', async () => {
@@ -315,6 +443,13 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm54' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[3].cells[4].fullMatch).toBeFalsy() // πλέοι
+    expect(renderedTable.rows[3].cells[5].fullMatch).toBeFalsy() // πλείτω
+
+    expect(renderedTable.rows[3].cells[6].fullMatch).toBeTruthy() // ἔπλει
   })
 
   it('20, 27 - checked Verb Paradigm20, 27 - ἐποιοῦ', async () => {
@@ -333,6 +468,11 @@ describe('greek-verb-paradigm.test.js', () => {
       suppParadigms: [ 'verbpdgm65' ]
     })
 
+    let renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[2].cells[5].fullMatch).toBeFalsy() // ποιοῦ
+    expect(renderedTable.rows[2].cells[6].fullMatch).toBeTruthy() // ἐποιοῦ
+
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[1],
       viewName: 'GreekVerbParadigmView',
@@ -341,6 +481,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    renderedTable = inflectionsViewSet.matchingViews[1].render().wideTable
+
+    expect(renderedTable.rows[2].cells[5].fullMatch).toBeFalsy() // δηλοῦ
+    expect(renderedTable.rows[2].cells[6].fullMatch).toBeTruthy() // ἐδηλοῦ
   })
 
   it('20, 21 - checked Verb Paradigm 20, 21 - ἐδέοντο', async () => {
@@ -359,6 +504,11 @@ describe('greek-verb-paradigm.test.js', () => {
       suppParadigms: [ 'verbpdgm65' ]
     })
 
+    let renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[8].cells[5].fullMatch).toBeFalsy() // ποιείσθων
+    expect(renderedTable.rows[8].cells[6].fullMatch).toBeTruthy() // ἐποιοῦντο
+
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[1],
       viewName: 'GreekVerbParadigmView',
@@ -367,6 +517,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    renderedTable = inflectionsViewSet.matchingViews[1].render().wideTable
+
+    expect(renderedTable.rows[8].cells[5].fullMatch).toBeFalsy() // δείσθων
+    expect(renderedTable.rows[8].cells[6].fullMatch).toBeTruthy() // ἐδέοντο
   })
 
   it('22 - checked Verb Paradigm 22 - ὁρᾷς', async () => {
@@ -384,6 +539,12 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm56' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[2].cells[4].fullMatch).toBeFalsy() // (ὁρῷς)
+    expect(renderedTable.rows[2].cells[2].fullMatch).toBeTruthy() // ὁρᾷς
+    expect(renderedTable.rows[2].cells[3].fullMatch).toBeTruthy() // ὁρᾷς
   })
 
   it('22, 23 - checked Verb Paradigm 22, 23 - χρῷμεν', async () => {
@@ -402,6 +563,12 @@ describe('greek-verb-paradigm.test.js', () => {
       suppParadigms: [ 'verbpdgm56' ]
     })
 
+    let renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // ὁρῶμεν
+    expect(renderedTable.rows[6].cells[4].fullMatch).toBeTruthy() // ὁρῷμεν
+    expect(renderedTable.rows[6].cells[5].fullMatch).toBeTruthy() // (ὁρῴημεν)
+
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[1],
       viewName: 'GreekVerbParadigmView',
@@ -410,6 +577,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm56' ]
     })
+
+    renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // χρῶμεν
+    expect(renderedTable.rows[6].cells[4].fullMatch).toBeTruthy() // χρῷμεν
   })
 
   it('24 - checked Verb Paradigm 24 - ἑωρᾶσθον', async () => {
@@ -427,6 +599,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[4].cells[5].fullMatch).toBeFalsy() // ὁρᾶσθον
+    expect(renderedTable.rows[4].cells[6].fullMatch).toBeTruthy() // ἑωρᾶσθον
   })
 
   it('24, 25 - checked Verb Paradigm 24, 25 - χρῷντο', async () => {
@@ -445,6 +622,11 @@ describe('greek-verb-paradigm.test.js', () => {
       suppParadigms: [ 'verbpdgm65' ]
     })
 
+    let renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[8].cells[3].fullMatch).toBeFalsy() // χρῶνται
+    expect(renderedTable.rows[8].cells[4].fullMatch).toBeTruthy() // χρῷντο
+
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[1],
       viewName: 'GreekVerbParadigmView',
@@ -453,6 +635,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    renderedTable = inflectionsViewSet.matchingViews[1].render().wideTable
+
+    expect(renderedTable.rows[8].cells[3].fullMatch).toBeFalsy() // ὁρῶνται
+    expect(renderedTable.rows[8].cells[4].fullMatch).toBeTruthy() // ὁρῷντο
   })
 
   it('26 - checked Verb Paradigm 26 - δηλοῖς', async () => {
@@ -470,6 +657,14 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm55' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[2].cells[6].fullMatch).toBeFalsy() // δήλου
+    expect(renderedTable.rows[2].cells[2].fullMatch).toBeTruthy() // δηλοῖς
+    expect(renderedTable.rows[2].cells[3].fullMatch).toBeTruthy() // δηλοῖς
+    expect(renderedTable.rows[2].cells[4].fullMatch).toBeTruthy() // (δηλοῖς)
+    expect(renderedTable.rows[2].cells[5].fullMatch).toBeTruthy() // δηλοίης
   })
 
   it('27 - checked Verb Paradigm 27 - δηλοῦσθον', async () => {
@@ -487,6 +682,14 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // δηλοῦμαι
+    expect(renderedTable.rows[4].cells[2].fullMatch).toBeTruthy() // δηλοῦσθον
+    expect(renderedTable.rows[4].cells[5].fullMatch).toBeTruthy() // δηλοῦσθον
+    expect(renderedTable.rows[4].cells[6].fullMatch).toBeTruthy() // ἐδηλοῦσθον
+    expect(renderedTable.rows[5].cells[2].fullMatch).toBeTruthy() // δηλοῦσθον
   })
 
   it('28 - checked Verb Paradigm 28 - ἐτιθέτην', async () => {
@@ -504,6 +707,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm60' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // τίθημι
+    expect(renderedTable.rows[5].cells[6].fullMatch).toBeTruthy() // ἐτιθέτην
   })
 
   it('29 - checked Verb Paradigm 29 - τιθέσθων', async () => {
@@ -521,6 +729,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[8].cells[2].fullMatch).toBeFalsy() // τίθενται
+    expect(renderedTable.rows[8].cells[5].fullMatch).toBeTruthy() // τιθέσθων
   })
 
   it('30 - checked Verb Paradigm 30 - ἔθεσαν', async () => {
@@ -538,6 +751,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm60' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[8].cells[3].fullMatch).toBeFalsy() // θῶσῐ(ν)
+    expect(renderedTable.rows[8].cells[2].fullMatch).toBeTruthy() // ἔθεσαν
   })
 
   it('31 - checked Verb Paradigm 31 - ἐθέμεθα', async () => {
@@ -555,6 +773,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // θώμεθα
+    expect(renderedTable.rows[6].cells[2].fullMatch).toBeTruthy() // ἐθέμεθα
   })
 
   it('32 - checked Verb Paradigm 32 - ἵην', async () => {
@@ -572,6 +795,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm60' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // ἱῶ
+    expect(renderedTable.rows[1].cells[6].fullMatch).toBeTruthy() // ἵην
   })
 
   it('33 - checked Verb Paradigm 33 - ἵεσθον', async () => {
@@ -589,6 +817,13 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[4].cells[3].fullMatch).toBeFalsy() // ἱῆσθον
+    expect(renderedTable.rows[4].cells[2].fullMatch).toBeTruthy() // ἵεσθον
+    expect(renderedTable.rows[4].cells[6].fullMatch).toBeTruthy() // ἵεσθον
+    expect(renderedTable.rows[5].cells[2].fullMatch).toBeTruthy() // ἵεσθον
   })
 
   it.skip('34 - no matches - checked Verb Paradigm 34', async () => {
@@ -612,6 +847,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm61' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // 	δίδωσι(ν)
+    expect(renderedTable.rows[3].cells[3].fullMatch).toBeTruthy() // διδῷ
   })
 
   it('37 - checked Verb Paradigm 37 - διδοῖο', async () => {
@@ -629,6 +869,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[2].cells[3].fullMatch).toBeFalsy() // διδῷ
+    expect(renderedTable.rows[2].cells[4].fullMatch).toBeTruthy() // διδοῖο
   })
 
   it('38 - checked Verb Paradigm 38 - ἔδοτον', async () => {
@@ -646,6 +891,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm61' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[4].cells[3].fullMatch).toBeFalsy() // δῶτον
+    expect(renderedTable.rows[4].cells[2].fullMatch).toBeTruthy() // ἔδοτον
   })
 
   it('39 - checked Verb Paradigm 39 - δῶται', async () => {
@@ -663,6 +913,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
+
+    expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // ἔδοτο
+    expect(renderedTable.rows[3].cells[3].fullMatch).toBeTruthy() // δῶται
   })
 
   it('40, 22 - checked Verb Paradigm 40, 22 - ἱστάτην', async () => {
@@ -681,6 +936,11 @@ describe('greek-verb-paradigm.test.js', () => {
       suppParadigms: [ 'verbpdgm59' ]
     })
 
+    let renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[5].cells[5].fullMatch).toBeFalsy() // ἱστάτων
+    expect(renderedTable.rows[5].cells[6].fullMatch).toBeTruthy() // ἱστάτην
+
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[1],
       viewName: 'GreekVerbParadigmView',
@@ -689,6 +949,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm56' ]
     })
+
+    renderedTable = inflectionsViewSet.matchingViews[1].render().wideTable
+
+    expect(renderedTable.rows[5].cells[6].fullMatch).toBeFalsy() // ὁράτων
+    expect(renderedTable.rows[5].cells[7].fullMatch).toBeTruthy() // ἑωράτην
   })
 
   it('41 - checked Verb Paradigm 41 - ἵσταται', async () => {
@@ -706,6 +971,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[3].cells[3].fullMatch).toBeFalsy() // ἱστῆται
+    expect(renderedTable.rows[3].cells[2].fullMatch).toBeTruthy() // ἵσταται
   })
 
   it('42 - checked Verb Paradigm 42 - ἐστήτην', async () => {
@@ -723,6 +993,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm59' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[5].cells[3].fullMatch).toBeFalsy() // στῆτον
+    expect(renderedTable.rows[5].cells[2].fullMatch).toBeTruthy() // ἐστήτην
   })
 
   it('43 - checked Verb Paradigm 43 - ἐδύνατο', async () => {
@@ -740,6 +1015,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[3].cells[5].fullMatch).toBeFalsy() // δυνάσθω
+    expect(renderedTable.rows[3].cells[6].fullMatch).toBeTruthy() // ἐδύνατο
   })
 
   it('43b - checked Verb Paradigm 43b - ἐπίστησθε', async () => {
@@ -757,6 +1037,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[7].cells[2].fullMatch).toBeFalsy() // ἐπίστασθε
+    expect(renderedTable.rows[7].cells[3].fullMatch).toBeTruthy() // ἐπίστησθε
   })
 
   it('44 - checked Verb Paradigm 44 - ἐδείκνῠτε', async () => {
@@ -774,6 +1059,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm62' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[7].cells[5].fullMatch).toBeFalsy() // δείκνῠτε
+    expect(renderedTable.rows[7].cells[6].fullMatch).toBeTruthy() // ἐδείκνῠτε
   })
 
   it('45 - checked Verb Paradigm 45 - δείκνῠται', async () => {
@@ -791,6 +1081,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[3].cells[3].fullMatch).toBeFalsy() // δεικνύηται
+    expect(renderedTable.rows[3].cells[2].fullMatch).toBeTruthy() // δείκνῠται
   })
 
   it('46 - checked Verb Paradigm 46 - ἔστων', async () => {
@@ -808,6 +1103,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm57', 'verbpdgm65' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[8].cells[5].fullMatch).toBeFalsy() // εἴησαν
+    expect(renderedTable.rows[8].cells[6].fullMatch).toBeTruthy() // ἔστων
   })
 
   it('47 - checked Verb Paradigm 47 - ἴτων', async () => {
@@ -825,6 +1125,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm57' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
+
+    expect(renderedTable.rows[5].cells[4].fullMatch).toBeFalsy() // ἰοίτην
+    expect(renderedTable.rows[5].cells[6].fullMatch).toBeTruthy() // ἴτων
   })
 
   it('48 - checked Verb Paradigm 48 - φαίης', async () => {
@@ -842,6 +1147,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm59' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[2].cells[3].fullMatch).toBeFalsy() // φῇς
+    expect(renderedTable.rows[2].cells[4].fullMatch).toBeTruthy() // φαίης
   })
 
   it('49 - checked Verb Paradigm 49 - βήτω', async () => {
@@ -859,6 +1169,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm59' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[3].cells[4].fullMatch).toBeFalsy() // βαίη
+    expect(renderedTable.rows[3].cells[6].fullMatch).toBeTruthy() // βήτω
   })
 
   it('50, 51 - checked Verb Paradigm 50, 51 - γνῶτον', async () => {
@@ -877,6 +1192,14 @@ describe('greek-verb-paradigm.test.js', () => {
       suppParadigms: [ 'verbpdgm61' ]
     })
 
+    let renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[4].cells[4].fullMatch).toBeFalsy() // γνοίητον
+    expect(renderedTable.rows[4].cells[2].fullMatch).toBeTruthy() // ἔγνωτον
+    expect(renderedTable.rows[4].cells[3].fullMatch).toBeTruthy() // γνῶτον
+    expect(renderedTable.rows[4].cells[6].fullMatch).toBeTruthy() // γνῶτον
+    expect(renderedTable.rows[5].cells[3].fullMatch).toBeTruthy() // γνῶτον
+
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[1],
       viewName: 'GreekVerbParadigmView',
@@ -885,6 +1208,15 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm61' ]
     })
+
+    renderedTable = inflectionsViewSet.matchingViews[1].render().wideTable
+
+    expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // ἑάλω
+    expect(renderedTable.rows[4].cells[2].fullMatch).toBeTruthy() // ἑάλωτον
+    expect(renderedTable.rows[4].cells[3].fullMatch).toBeTruthy() // ἥλωτον
+    expect(renderedTable.rows[4].cells[4].fullMatch).toBeTruthy() // ἁλῶτον
+    expect(renderedTable.rows[4].cells[6].fullMatch).toBeTruthy() // 
+    expect(renderedTable.rows[5].cells[4].fullMatch).toBeTruthy() // ἁλῶτον
   })
 
   it('52 - checked Verb Paradigm 52 - δῦθι', async () => {
@@ -902,6 +1234,11 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm62' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[2].cells[4].fullMatch).toBeFalsy() // δύοις
+    expect(renderedTable.rows[2].cells[5].fullMatch).toBeTruthy() // δῦθι
   })
 
   it('53 - checked Verb Paradigm 53 - ᾔδεις', async () => {
@@ -919,6 +1256,12 @@ describe('greek-verb-paradigm.test.js', () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm63' ]
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[2].cells[6].fullMatch).toBeFalsy() // ἴσθι
+    expect(renderedTable.rows[2].cells[7].fullMatch).toBeTruthy() // ᾔδησθα
+    expect(renderedTable.rows[2].cells[8].fullMatch).toBeTruthy() // ᾔδεις
   })
 
 })

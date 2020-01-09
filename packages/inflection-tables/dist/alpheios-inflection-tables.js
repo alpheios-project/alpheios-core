@@ -13831,9 +13831,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _paradigm_lib_paradigm_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/paradigm/lib/paradigm.js */ "./src/paradigm/lib/paradigm.js");
 /* harmony import */ var _views_lib_view_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @views/lib/view.js */ "./views/lib/view.js");
 /* harmony import */ var _views_lang_greek_greek_view_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @views/lang/greek/greek-view.js */ "./views/lang/greek/greek-view.js");
-/* harmony import */ var _paradigm_data_greek_greek_paradigm_dataset_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/paradigm/data/greek/greek-paradigm-dataset.js */ "./src/paradigm/data/greek/greek-paradigm-dataset.js");
-/* harmony import */ var _lib_language_dataset_factory_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @lib/language-dataset-factory.js */ "./lib/language-dataset-factory.js");
-
+/* harmony import */ var _lib_language_dataset_factory_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @lib/language-dataset-factory.js */ "./lib/language-dataset-factory.js");
 
 
 
@@ -13883,10 +13881,12 @@ class GreekVerbParadigmView extends _views_lang_greek_greek_view_js__WEBPACK_IMP
 
     this.hasCredits = this.paradigm.hasCredits
     this.creditsText = this.paradigm.creditsText
+
+    this.fullMatchDefined = false
   }
 
   static get dataset () {
-    return _lib_language_dataset_factory_js__WEBPACK_IMPORTED_MODULE_5__["default"].getDataset(this.languageID, 'GreekParadigmDataset')
+    return _lib_language_dataset_factory_js__WEBPACK_IMPORTED_MODULE_4__["default"].getDataset(this.languageID, 'GreekParadigmDataset')
   }
 
   static get viewID () {
@@ -13953,7 +13953,60 @@ class GreekVerbParadigmView extends _views_lang_greek_greek_view_js__WEBPACK_IMP
 
   render (options) {
     // Do nothing as there is no need to render anything
+    if (!this.fullMatchDefined) { this.fillFullMatch() }
     return this
+  }
+
+  fillFullMatch () {
+    this.checkTableForFullMatch(this.wideTable)
+
+    if (this.wideSubTables && this.wideSubTables.length > 0) {
+      this.wideSubTables.forEach(table => this.checkTableForFullMatch(table))
+    }
+    this.fullMatchDefined = true
+  }
+
+  checkTableForFullMatch (table) {
+    table.rows.forEach(row => {
+      row.cells.forEach(cell => {
+        cell.fullMatch = this.defineCellFullMatch(cell)
+      })
+    })
+  }
+
+
+  defineComparativeFeatures (cell) {
+    let comparativeFeatures = []
+    Object.keys(cell).forEach(prop => {
+      if (prop !== 'role' && prop !== 'value') {
+        comparativeFeatures.push(prop)
+      }
+    })    
+
+    return comparativeFeatures
+  }
+
+  defineCellFullMatch (cell) {
+    if (cell.role !== 'data') { return }
+    if (this.homonym && this.homonym.inflections) {
+      const comparativeFeatures = this.defineComparativeFeatures(cell)
+
+      for (const inflection of this.homonym.inflections) {
+        let fullMatch = true
+
+        for (const feature of comparativeFeatures) {
+          if (inflection.hasOwnProperty(feature)) {
+            fullMatch = fullMatch && cell[feature].hasValues(inflection[feature].values)
+            if (!fullMatch) {
+              break
+            } // If at least one feature does not match, there is no reason to check others
+          }
+        }
+
+        if (fullMatch) { return true }
+      }
+    }
+    return false
   }
 
   get wideViewNodes () {

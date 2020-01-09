@@ -625,4 +625,38 @@ describe('verified-issues.test.js', () => {
       additionalTitle: 'volo, velle,volui,-'
     })
   })
+
+  it('14 - issue 846 - ἄγων - Correct full match for paradigm', async () => {
+    let inflectionsViewSet, result
+
+    // πρόσφυμα
+
+    inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἄγων', Constants.LANG_GREEK)
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'Present System Active of Contract Verbs in -άω',
+      paradigmID: 'verbpdgm22'
+    })
+
+    let renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // ὁρῶ
+    expect(renderedTable.rows[1].cells[7].fullMatch).toBeTruthy() // ἑώρων
+    expect(renderedTable.rows[8].cells[7].fullMatch).toBeTruthy() // ἑώρων
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[1],
+      viewName: 'GreekVerbParticipleParadigmView',
+      viewTitle: 'Participles in -ων, -ουσα, -ον (present and future active, uncontracted)',
+      paradigmID: 'verbpdgm54'
+    })
+
+    renderedTable = inflectionsViewSet.matchingViews[1].render().wideTable
+
+    expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // ἄγουσᾰ
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // ἄγων
+  })
 })

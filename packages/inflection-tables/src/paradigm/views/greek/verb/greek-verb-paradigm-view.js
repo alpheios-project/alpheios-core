@@ -3,7 +3,6 @@ import Paradigm from '@/paradigm/lib/paradigm.js'
 import View from '@views/lib/view.js'
 import GreekView from '@views/lang/greek/greek-view.js'
 
-import GreekParadigmDataset from '@/paradigm/data/greek/greek-paradigm-dataset.js'
 import LDF from '@lib/language-dataset-factory.js'
 
 /**
@@ -48,6 +47,8 @@ export default class GreekVerbParadigmView extends GreekView {
 
     this.hasCredits = this.paradigm.hasCredits
     this.creditsText = this.paradigm.creditsText
+
+    this.fullMatchDefined = false
   }
 
   static get dataset () {
@@ -118,7 +119,60 @@ export default class GreekVerbParadigmView extends GreekView {
 
   render (options) {
     // Do nothing as there is no need to render anything
+    if (!this.fullMatchDefined) { this.fillFullMatch() }
     return this
+  }
+
+  fillFullMatch () {
+    this.checkTableForFullMatch(this.wideTable)
+
+    if (this.wideSubTables && this.wideSubTables.length > 0) {
+      this.wideSubTables.forEach(table => this.checkTableForFullMatch(table))
+    }
+    this.fullMatchDefined = true
+  }
+
+  checkTableForFullMatch (table) {
+    table.rows.forEach(row => {
+      row.cells.forEach(cell => {
+        cell.fullMatch = this.defineCellFullMatch(cell)
+      })
+    })
+  }
+
+
+  defineComparativeFeatures (cell) {
+    let comparativeFeatures = []
+    Object.keys(cell).forEach(prop => {
+      if (prop !== 'role' && prop !== 'value') {
+        comparativeFeatures.push(prop)
+      }
+    })    
+
+    return comparativeFeatures
+  }
+
+  defineCellFullMatch (cell) {
+    if (cell.role !== 'data') { return }
+    if (this.homonym && this.homonym.inflections) {
+      const comparativeFeatures = this.defineComparativeFeatures(cell)
+
+      for (const inflection of this.homonym.inflections) {
+        let fullMatch = true
+
+        for (const feature of comparativeFeatures) {
+          if (inflection.hasOwnProperty(feature)) {
+            fullMatch = fullMatch && cell[feature].hasValues(inflection[feature].values)
+            if (!fullMatch) {
+              break
+            } // If at least one feature does not match, there is no reason to check others
+          }
+        }
+
+        if (fullMatch) { return true }
+      }
+    }
+    return false
   }
 
   get wideViewNodes () {

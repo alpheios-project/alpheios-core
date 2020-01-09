@@ -40,6 +40,12 @@ describe('greek-verb-participle-paradigm.test.js', () => {
       paradigmID: 'verbpdgm54',
       hasSuppParadigms: false
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[2].cells[3].fullMatch).toBeFalsy() // ἀγούσης
+    expect(renderedTable.rows[2].cells[2].fullMatch).toBeTruthy() // ἄγοντος
+    expect(renderedTable.rows[2].cells[4].fullMatch).toBeTruthy() // ἄγοντος
   })
 
   it('55 - checked Verb Particile Paradigm55 - μενοῦν', async () => {
@@ -55,6 +61,13 @@ describe('greek-verb-participle-paradigm.test.js', () => {
       paradigmID: 'verbpdgm55',
       hasSuppParadigms: false
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // μενοῦσᾰ
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // μενῶν
+    expect(renderedTable.rows[1].cells[4].fullMatch).toBeTruthy() // μενοῦν
+    expect(renderedTable.rows[4].cells[4].fullMatch).toBeTruthy() // μενοῦν
   })
 
   it('56 - checked Verb Particile Paradigm56 - ὁρώσᾱ', async () => {
@@ -71,6 +84,11 @@ describe('greek-verb-participle-paradigm.test.js', () => {
       paradigmID: 'verbpdgm56',
       hasSuppParadigms: false
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[5].cells[2].fullMatch).toBeFalsy() // ὁρῶντε
+    expect(renderedTable.rows[5].cells[3].fullMatch).toBeTruthy() // ὁρώσᾱ
   })
 
   it('57 - checked Verb Particile Paradigm57 - λιπόν', async () => {
@@ -88,6 +106,13 @@ describe('greek-verb-participle-paradigm.test.js', () => {
       paradigmID: 'verbpdgm57',
       hasSuppParadigms: false
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // λιποῦσᾰ
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // λιπών
+    expect(renderedTable.rows[1].cells[4].fullMatch).toBeTruthy() // λιπόν
+    expect(renderedTable.rows[4].cells[4].fullMatch).toBeTruthy() // λιπόν
   })
 
   it('58 - checked Verb Particile Paradigm58 - λύσαντᾰ', async () => {
@@ -106,6 +131,12 @@ describe('greek-verb-participle-paradigm.test.js', () => {
       hasSuppParadigms: false
     })
 
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[4].cells[3].fullMatch).toBeFalsy() // λύσᾱσᾰν
+    expect(renderedTable.rows[4].cells[2].fullMatch).toBeTruthy() // λύσαντᾰ
+    expect(renderedTable.rows[7].cells[4].fullMatch).toBeTruthy() // λύσαντᾰ
+    expect(renderedTable.rows[10].cells[4].fullMatch).toBeTruthy() // λύσαντᾰ
   })
 
   it('59 - checked Verb Particile Paradigm59 - ἱστάντε', async () => {
@@ -124,6 +155,11 @@ describe('greek-verb-participle-paradigm.test.js', () => {
       hasSuppParadigms: false
     })
 
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[5].cells[3].fullMatch).toBeFalsy() // ἱστάσᾱ
+    expect(renderedTable.rows[5].cells[2].fullMatch).toBeTruthy() // ἱστάντε
+    expect(renderedTable.rows[5].cells[4].fullMatch).toBeTruthy() // ἱστάντε
   })
 
   it('60 - checked Verb Particile Paradigm60 - λυθέντος', async () => {
@@ -141,6 +177,11 @@ describe('greek-verb-participle-paradigm.test.js', () => {
       hasSuppParadigms: false
     })
 
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[3].cells[4].fullMatch).toBeFalsy() // τιθέντος
+    expect(renderedTable.rows[3].cells[5].fullMatch).toBeTruthy() // λυθέντος
+    expect(renderedTable.rows[3].cells[7].fullMatch).toBeTruthy() // λυθέντος
   })
 
   it('61 - checked Verb Particile Paradigm61 - διδόντοιν', async () => {
@@ -158,6 +199,11 @@ describe('greek-verb-participle-paradigm.test.js', () => {
       hasSuppParadigms: false
     })
 
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // διδούσαιν
+    expect(renderedTable.rows[6].cells[2].fullMatch).toBeTruthy() // διδόντοιν
+    expect(renderedTable.rows[6].cells[4].fullMatch).toBeTruthy() // διδόντοιν
   })
 
   it('62 - checked Verb Particile Paradigm62 - δεικνύντᾰ', async () => {
@@ -174,6 +220,13 @@ describe('greek-verb-participle-paradigm.test.js', () => {
       paradigmID: 'verbpdgm62',
       hasSuppParadigms: false
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // δεικνύντι
+    expect(renderedTable.rows[4].cells[2].fullMatch).toBeTruthy() // δεικνύντᾰ
+    expect(renderedTable.rows[7].cells[4].fullMatch).toBeTruthy() // δεικνύντᾰ
+    expect(renderedTable.rows[10].cells[4].fullMatch).toBeTruthy() // δεικνύντᾰ
   })
 
   it('63 - checked Verb Particile Paradigm63 - λελοιπότων', async () => {
@@ -190,7 +243,11 @@ describe('greek-verb-participle-paradigm.test.js', () => {
       hasSuppParadigms: false
     })
 
-    // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[8].cells[3].fullMatch).toBeFalsy() // λελοιπυιῶν
+    expect(renderedTable.rows[8].cells[2].fullMatch).toBeTruthy() // λελοιπότων
+    expect(renderedTable.rows[8].cells[4].fullMatch).toBeTruthy() // λελοιπότων
   })
 
   it('64 - checked Verb Particile Paradigm64 - ἑστῶσαι', async () => {
@@ -207,6 +264,11 @@ describe('greek-verb-participle-paradigm.test.js', () => {
       paradigmID: 'verbpdgm64',
       hasSuppParadigms: false
     }) 
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[7].cells[2].fullMatch).toBeFalsy() // ἑστῶτες
+    expect(renderedTable.rows[7].cells[3].fullMatch).toBeTruthy() // ἑστῶσαι
   })
 
   it('65 - checked Verb Particile Paradigm65 - πεμπομένους', async () => {
@@ -223,6 +285,11 @@ describe('greek-verb-participle-paradigm.test.js', () => {
       paradigmID: 'verbpdgm65',
       hasSuppParadigms: false
     })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[11].cells[3].fullMatch).toBeFalsy() // πεμπομένᾱς
+    expect(renderedTable.rows[11].cells[2].fullMatch).toBeTruthy() // πεμπομένους
   })
 
   it('66 - checked Verb Particile Paradigm66 - γεγραμμένοιν', async () => {
@@ -240,6 +307,11 @@ describe('greek-verb-participle-paradigm.test.js', () => {
       hasSuppParadigms: false
     })
 
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[7].cells[3].fullMatch).toBeFalsy() // γεγραμμέναιν
+    expect(renderedTable.rows[7].cells[2].fullMatch).toBeTruthy() // γεγραμμένοιν
+    expect(renderedTable.rows[7].cells[4].fullMatch).toBeTruthy() // γεγραμμένοιν
   })
 })
 
