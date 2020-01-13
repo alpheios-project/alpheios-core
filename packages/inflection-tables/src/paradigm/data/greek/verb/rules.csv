@@ -8,8 +8,7 @@ verbpdgm3,1,verb,aw_fut,,,,,,
 verbpdgm4,2,verb,aw_fut,,,,,contr,
 verbpdgm3,1,verb,ew_fut,,,,,,
 verbpdgm4,2,verb,ew_fut,,,,,contr,
-verbpdgm5,3,verb,aw_fut,,,,,contr,doric
-verbpdgm5,3,verb,aw_fut,,,,,contr,aeolic
+verbpdgm5,3,verb,aw_fut,,,,,contr
 verbpdgm6,1,verb,aor2,active,,,,,
 verbpdgm7,1,verb,aor2,middle,,,,,
 verbpdgm8,1,verb,aor1,active,,,,,
