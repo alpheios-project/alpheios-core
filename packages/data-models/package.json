@@ -1,6 +1,6 @@
 {
   "name": "alpheios-data-models",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "description": "Alpheios Data Models",
   "main": "dist/alpheios-data-models.min.js",
   "directories": {
@@ -55,6 +55,10 @@
     "parserOptions": {
       "ecmaVersion": 2017,
       "sourceType": "module"
+    },
+    "rules": {
+      "no-prototype-builtins": "off",
+      "dot-notation": "off"
     }
   },
   "standard": {

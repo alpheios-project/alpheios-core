@@ -39,4 +39,11 @@ describe('chinese_language_model.js', () => {
     expect(chineseModel.getPunctuation().length).toBeGreaterThan(0)
     expect(chineseModel.alternateWordEncodings().length).toEqual(0)
   })
+
+  it('2 formatPinyin must handle tones from 1 to 5', () => {
+    expect(chineseModel.formatPinyin('wan2 nong4 ci2 zao3')).toEqual('wán nòng cí zǎo')
+    expect(chineseModel.formatPinyin('ji1')).toEqual('ji')
+    expect(chineseModel.formatPinyin('hong2 wai4 guang1 pu3')).toEqual('hóng wài guang pǔ')
+    expect(chineseModel.formatPinyin('Hong2 Gua3 fu5 niao3')).toEqual('Hóng Guǎ fu niǎo')
+  })
 })
