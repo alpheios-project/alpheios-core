@@ -14,65 +14,68 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
     this.mapLangUri = {}
     this.provider = new ResourceProvider(this.config.url, this.config.rights)
   }
+
   /**
    * This method updates homonym with retrieved translations, if an error occurs it will be added to errors property of an adapter
    * @param {Homonym} homonym
    * @param {String} browserLang - language of the translation (for example its, spa)
   */
   async getTranslationsList (homonym, browserLang) {
-    let lemmaList = []
+    let lemmaList = [] // eslint-disable-line prefer-const
     if (!homonym || !homonym.lexemes) {
-      this.addError(this.l10n.messages['TRANSLATION_INCORRECT_LEXEMES'])
+      this.addError(this.l10n.messages.TRANSLATION_INCORRECT_LEXEMES)
       return
     }
 
-    for (let lexeme of homonym.lexemes) {
+    for (const lexeme of homonym.lexemes) {
       lemmaList.push(lexeme.lemma)
     }
 
     const inLang = LMF.getLanguageCodeFromId(homonym.lexemes[0].lemma.languageID)
-    let outLang = this.config.langMap[browserLang] || this.config.defaultLang
+    const outLang = this.config.langMap[browserLang] || this.config.defaultLang
 
-    let input = this.prepareInput(lemmaList)
+    const input = this.prepareInput(lemmaList)
 
     if (!input) {
-      this.addError(this.l10n.messages['TRANSLATION_INPUT_PREPARE_ERROR'].get(input.toString()))
+      this.addError(this.l10n.messages.TRANSLATION_INPUT_PREPARE_ERROR.get(input.toString()))
       return
     }
 
     try {
-      let urlLang = await this.getAvailableResLang(inLang, outLang)
+      const urlLang = await this.getAvailableResLang(inLang, outLang)
       if (urlLang && urlLang.constructor.name === 'AdapterError') {
         return
       }
 
       if (input && urlLang) {
         try {
-          let url = urlLang + '?input=' + input
-          let translationsList = await this.fetch(url)
+          const url = urlLang + '?input=' + input
+          const translationsList = await this.fetch(url)
           if (translationsList && translationsList.constructor.name === 'AdapterError') {
             return
           }
 
-          for (let lemma of lemmaList) {
+          for (const lemma of lemmaList) {
             Translation.loadTranslations(lemma, outLang, translationsList, this.provider)
           }
         } catch (error) {
-          this.addError(this.l10n.messages['TRANSLATION_UNKNOWN_ERROR'].get(error.message))
+          this.addError(this.l10n.messages.TRANSLATION_UNKNOWN_ERROR.get(error.message))
         }
       }
     } catch (error) {
-      this.addError(this.l10n.messages['TRANSLATION_UNKNOWN_ERROR'].get(error.message))
+      this.addError(this.l10n.messages.TRANSLATION_UNKNOWN_ERROR.get(error.message))
     }
   }
+
   /**
    * This method creates a string with unique lemma's words form lemmas list
    * @param {[Lemma]} lemmaList
   */
   prepareInput (lemmaList) {
-    let inputList = lemmaList.map(lemma => encodeURIComponent(lemma.word)).filter((item, index, self) => self.indexOf(item) === index)
+    const inputList = lemmaList.map(lemma => encodeURIComponent(lemma.word)).filter((item, index, self) => self.indexOf(item) === index)
     return inputList.length > 0 ? inputList.join(',') : undefined
   }
+
   /**
    * This method fetches an url for translation
    * @param {String} inLang  - translate from language  (for example, lat)
@@ -80,14 +83,14 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
   */
   async getAvailableResLang (inLang, outLang) {
     if (this.mapLangUri[inLang] === undefined) {
-      let urlAvaLangsRes = this.config.url + '/' + inLang + '/'
-      let unparsed = await this.fetch(urlAvaLangsRes)
+      const urlAvaLangsRes = this.config.url + '/' + inLang + '/'
+      const unparsed = await this.fetch(urlAvaLangsRes)
 
       if (unparsed && unparsed.constructor.name === 'AdapterError') {
         return unparsed
       }
 
-      let mapLangUri = {}
+      let mapLangUri = {} // eslint-disable-line prefer-const
       unparsed.forEach(function (langItem) {
         mapLangUri[langItem.lang] = langItem.uri
       })

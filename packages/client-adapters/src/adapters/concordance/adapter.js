@@ -28,14 +28,14 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
         this.authorWorkData = await this.uploadConfig({}, AuthorWorkConfigConfig)
 
         this.authors = []
-        for (let authorWorkDataItem of Object.values(this.authorWorkData.authors)) {
-          let author = this.createAuthor(authorWorkDataItem)
+        for (const authorWorkDataItem of Object.values(this.authorWorkData.authors)) {
+          const author = this.createAuthor(authorWorkDataItem)
           this.authors.push(author)
         }
       }
       return this.authors
     } catch (error) {
-      this.addError(this.l10n.messages['CONCORDANCE_AUTHOR_UPLOAD_ERROR'].get(error.message))
+      this.addError(this.l10n.messages.CONCORDANCE_AUTHOR_UPLOAD_ERROR.get(error.message))
     }
   }
 
@@ -56,10 +56,10 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
   */
   async getWordUsageExamples (homonym, filters = {}, pagination = {}, sort = {}) {
     try {
-      let url = this.createFetchURL(homonym, filters, pagination, sort)
-      let wordUsageListRes = await this.fetch(url)
+      const url = this.createFetchURL(homonym, filters, pagination, sort)
+      const wordUsageListRes = await this.fetch(url)
       if (Array.isArray(wordUsageListRes)) {
-        let parsedWordUsageList = await this.parseWordUsageResult(wordUsageListRes, homonym)
+        const parsedWordUsageList = await this.parseWordUsageResult(wordUsageListRes, homonym)
         return {
           wordUsageExamples: parsedWordUsageList,
           targetWord: homonym.targetWord,
@@ -70,7 +70,7 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
         return []
       }
     } catch (error) {
-      this.addError(this.l10n.messages['CONCORDANCE_WORD_USAGE_FETCH_ERROR'].get(error.message))
+      this.addError(this.l10n.messages.CONCORDANCE_WORD_USAGE_FETCH_ERROR.get(error.message))
     }
   }
 
@@ -84,8 +84,8 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
   * @return {String}
   */
   createFetchURL (homonym, filters, pagination, sort) {
-    let filterFormatted = this.formatFilter(filters)
-    let paginationFormatted = this.formatPagination(pagination)
+    const filterFormatted = this.formatFilter(filters)
+    const paginationFormatted = this.formatPagination(pagination)
     return `${this.config.url}${encodeURIComponent(homonym.targetWord)}${filterFormatted}${paginationFormatted}`
   }
 
@@ -135,21 +135,21 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
   * @return {WordUsageExample[]}
   */
   async parseWordUsageResult (jsonObj, homonym) {
-    let wordUsageExamples = []
+    let wordUsageExamples = [] // eslint-disable-line prefer-const
     let author, textWork, passage
 
     if (this.authors.length === 0) {
       await this.getAuthorsWorks()
     }
 
-    for (let jsonObjItem of jsonObj) {
+    for (const jsonObjItem of jsonObj) {
       author = this.getAuthorByAbbr(jsonObjItem)
       if (author) {
         textWork = this.getTextWorkByAbbr(author, jsonObjItem)
         if (textWork) {
           passage = this.getPassage(jsonObjItem)
 
-          let wordUsageExample = this.createWordUsageExample(jsonObjItem, homonym, author, textWork, passage)
+          let wordUsageExample = this.createWordUsageExample(jsonObjItem, homonym, author, textWork, passage) // eslint-disable-line prefer-const
           wordUsageExamples.push(wordUsageExample)
         }
       }
@@ -159,7 +159,7 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
 
   getAuthorByAbbr (jsonObj) {
     if (jsonObj.cit && this.authors.length > 0) {
-      let authorAbbr = jsonObj.cit.split('.')[0]
+      const authorAbbr = jsonObj.cit.split('.')[0]
       return this.authors.find(author => Object.values(author.abbreviations).includes(authorAbbr))
     }
     return null
@@ -167,12 +167,12 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
 
   getTextWorkByAbbr (author, jsonObj) {
     if (jsonObj.cit && author && author.works.length > 0) {
-      let parts = jsonObj.cit.split('.')
+      const parts = jsonObj.cit.split('.')
       // if we have only 2 parts in the citation, it's probably an author without a work
       // which in the phi data is really when the author and work are referenced as the same thing
       // as in an anonymous work
       if (parts.length > 2) {
-        let textWorkAbbr = parts[1]
+        const textWorkAbbr = parts[1]
         return author.works.find(textWork => Object.values(textWork.abbreviations).includes(textWorkAbbr))
       }
     }
@@ -182,7 +182,7 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
   getPassage (jsonObj) {
     let passage = null
     if (jsonObj.cit) {
-      let parts = jsonObj.cit.split('.')
+      const parts = jsonObj.cit.split('.')
       // if we have only 2 parts in the citation, it's probably an author without a work
       // which in the phi data is really when the author and work are referenced as the same thing
       // as in an anonymous work
@@ -209,19 +209,19 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
   * @returns {Author}
   */
   createAuthor (jsonObj) {
-    let titles = {}
+    let titles = {} // eslint-disable-line prefer-const
     jsonObj.title.forEach(titleItem => {
       titles[titleItem['@lang']] = titleItem['@value']
     })
 
-    let abbreviations = {}
+    let abbreviations = {} // eslint-disable-line prefer-const
     jsonObj.abbreviations.forEach(abbrItem => {
       abbreviations[abbrItem['@lang']] = abbrItem['@value'].replace('.', '')
     })
 
-    let author = new Author(jsonObj.urn, titles, abbreviations)
+    let author = new Author(jsonObj.urn, titles, abbreviations) // eslint-disable-line prefer-const
     author.ID = this.extractIDFromURNAuthor(author.urn)
-    let works = []
+    let works = [] // eslint-disable-line prefer-const
 
     jsonObj.works.forEach(workItem => {
       works.push(this.createTextWork(author, workItem))
@@ -236,9 +236,9 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
   * @returns {Number, null}
   */
   extractIDFromURNAuthor (urn) {
-    let partsUrn = urn.split(':')
+    const partsUrn = urn.split(':')
     if (Array.isArray(partsUrn) && partsUrn.length >= 4) {
-      let workIDPart = partsUrn[3].indexOf('.') === -1 ? partsUrn[3] : partsUrn[3].substr(0, partsUrn[3].indexOf('.'))
+      const workIDPart = partsUrn[3].indexOf('.') === -1 ? partsUrn[3] : partsUrn[3].substr(0, partsUrn[3].indexOf('.'))
       return parseInt(workIDPart.replace(this.defaultIDPrefix, ''))
     }
     return null
@@ -251,17 +251,17 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
   * @returns {TextWork}
   */
   createTextWork (author, jsonObj) {
-    let titles = {}
+    let titles = {} // eslint-disable-line prefer-const
     jsonObj.title.forEach(titleItem => {
       titles[titleItem['@lang']] = titleItem['@value']
     })
 
-    let abbreviations = {}
+    let abbreviations = {} // eslint-disable-line prefer-const
     jsonObj.abbreviations.forEach(abbrItem => {
       abbreviations[abbrItem['@lang']] = abbrItem['@value'].replace('.', '')
     })
 
-    let textWork = new TextWork(author, jsonObj.urn, titles, abbreviations)
+    let textWork = new TextWork(author, jsonObj.urn, titles, abbreviations) // eslint-disable-line prefer-const
     textWork.ID = this.extractIDFromURNTextWork(textWork.urn)
     return textWork
   }
@@ -271,10 +271,10 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
   * @returns {Number, null}
   */
   extractIDFromURNTextWork (urn) {
-    let partsUrn = urn.split(':')
+    const partsUrn = urn.split(':')
 
     if (Array.isArray(partsUrn) && partsUrn.length >= 4) {
-      let workIDPart = partsUrn[3].indexOf('.') === -1 ? null : partsUrn[3].substr(partsUrn[3].indexOf('.') + 1)
+      const workIDPart = partsUrn[3].indexOf('.') === -1 ? null : partsUrn[3].substr(partsUrn[3].indexOf('.') + 1)
 
       return parseInt(workIDPart.replace(this.defaultIDPrefix, ''))
     }
@@ -291,8 +291,10 @@ class AlpheiosConcordanceAdapter extends BaseAdapter {
   * @returns {WordUsageExample}
   */
   createWordUsageExample (jsonObj, homonym, author, textWork, passage) {
-    let source = this.config.sourceTextUrl + jsonObj.link
-    let wordUsageExample = new WordUsageExample(LanguageModelFactory.getLanguageCodeFromId(homonym.languageID), jsonObj.target, jsonObj.left, jsonObj.right, source, jsonObj.cit)
+    const source = this.config.sourceTextUrl + jsonObj.link
+    let wordUsageExample = new WordUsageExample( // eslint-disable-line prefer-const
+      LanguageModelFactory.getLanguageCodeFromId(homonym.languageID), jsonObj.target, jsonObj.left, jsonObj.right, source, jsonObj.cit
+    )
     wordUsageExample.author = author
     wordUsageExample.textWork = textWork
     wordUsageExample.passage = passage

@@ -1,3 +1,16 @@
 {
-  "presets": ["env"]
+  "presets": ["@babel/preset-env"],
+  "plugins": [
+    ["@babel/plugin-transform-runtime",
+      {
+        "regenerator": true
+      }
+    ],
+    ["@babel/plugin-proposal-object-rest-spread"],
+    ["module-resolver", {
+      "alias": {
+        "alpheios-lexis-cs": "./node_modules/alpheios-lexis-cs/dist/test/lexis-cs-test-bundle.js"
+      }
+    }]
+  ]
 }

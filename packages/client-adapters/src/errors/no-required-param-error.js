@@ -1,6 +1,6 @@
 class NoRequiredParamError extends Error {
   constructor (category, adapterName, methodName, paramName) {
-    let message = `There is no required parameter - ${paramName} for ${category}.${adapterName} - ${methodName}`
+    const message = `There is no required parameter - ${paramName} for ${category}.${adapterName} - ${methodName}`
     super(message)
     this.adapter = `${category}.${adapterName}`
     this.methodName = methodName

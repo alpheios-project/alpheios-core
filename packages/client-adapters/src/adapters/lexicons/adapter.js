@@ -4,7 +4,7 @@ import papaparse from 'papaparse'
 import BaseAdapter from '@/adapters/base-adapter'
 import DefaultConfig from '@/adapters/lexicons/config.json'
 
-let cachedDefinitions = new Map()
+let cachedDefinitions = new Map() // eslint-disable-line prefer-const
 
 class AlpheiosLexiconsAdapter extends BaseAdapter {
   /**
@@ -41,10 +41,10 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @param {String} urlKey - urlIndex for geting data from config
   */
   prepareShortDefPromise (homonym, urlKey) {
-    let url = this.config[urlKey].urls.short
-    let requestType = 'shortDefs'
+    const url = this.config[urlKey].urls.short
+    const requestType = 'shortDefs'
 
-    let resCheckCached = this.checkCachedData(url)
+    const resCheckCached = this.checkCachedData(url)
     return resCheckCached.then(
       async (result) => {
         if (result) {
@@ -53,7 +53,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
         }
       },
       error => {
-        this.addError(this.l10n.messages['LEXICONS_FAILED_CACHED_DATA'].get(error.message))
+        this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
         this.prepareFailedCallback(requestType, homonym)
       }
     )
@@ -65,23 +65,23 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @param {String} urlKey - urlIndex for geting data from config
   */
   prepareFullDefPromise (homonym, urlKey) {
-    let url = this.config[urlKey].urls.index
-    let requestType = 'fullDefs'
+    const url = this.config[urlKey].urls.index
+    const requestType = 'fullDefs'
 
-    let resCheckCached = this.checkCachedData(url)
+    const resCheckCached = this.checkCachedData(url)
     return resCheckCached.then(
       async (result) => {
         if (result) {
-          let fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
-          let resFullDefs = this.updateFullDefs(fullDefsRequests, this.config[urlKey], homonym)
+          const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
+          const resFullDefs = this.updateFullDefs(fullDefsRequests, this.config[urlKey], homonym)
           resFullDefs.catch(error => {
-            this.addError(this.l10n.messages['LEXICONS_FAILED_CACHED_DATA'].get(error.message))
+            this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
             this.prepareFailedCallback(requestType, homonym)
           })
         }
       },
       error => {
-        this.addError(this.l10n.messages['LEXICONS_FAILED_CACHED_DATA'].get(error.message))
+        this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
         this.prepareFailedCallback(requestType, homonym)
       }
     )
@@ -125,13 +125,13 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   async fetchDefinitions (homonym, options, lookupFunction) {
     Object.assign(this.options, options)
     if (!this.options.allow || this.options.allow.length === 0) {
-      this.addError(this.l10n.messages['LEXICONS_NO_ALLOWED_URL'])
+      this.addError(this.l10n.messages.LEXICONS_NO_ALLOWED_URL)
       return
     }
-    let languageID = homonym.lexemes[0].lemma.languageID
-    let urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
+    const languageID = homonym.lexemes[0].lemma.languageID
+    const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
 
-    for (let urlKey of urlKeys) {
+    for (const urlKey of urlKeys) {
       if (lookupFunction === 'short') {
         this.prepareShortDefPromise(homonym, urlKey, lookupFunction)
       }
@@ -149,12 +149,12 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   async checkCachedData (url) {
     if (!cachedDefinitions.has(url)) {
       try {
-        let unparsed = await this.fetch(url, { type: 'xml', timeout: this.options.timeout })
-        let parsed = papaparse.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
-        let data = this.fillMap(parsed.data)
+        const unparsed = await this.fetch(url, { type: 'xml', timeout: this.options.timeout })
+        const parsed = papaparse.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
+        const data = this.fillMap(parsed.data)
         cachedDefinitions.set(url, data)
       } catch (error) {
-        this.addError(this.l10n.messages['LEXICONS_FAILED_CACHED_DATA'].get(error.message))
+        this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
         return false
       }
     }
@@ -168,27 +168,27 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @param {Object} config - config data for url
   */
   async updateShortDefs (data, homonym, config) {
-    let languageID = homonym.lexemes[0].lemma.languageID
-    let model = LMF.getLanguageModel(languageID)
+    const languageID = homonym.lexemes[0].lemma.languageID
+    const model = LMF.getLanguageModel(languageID)
 
-    for (let lexeme of homonym.lexemes) {
-      let deftexts = this.lookupInDataIndex(data, lexeme.lemma, model)
+    for (let lexeme of homonym.lexemes) { // eslint-disable-line prefer-const
+      const deftexts = this.lookupInDataIndex(data, lexeme.lemma, model)
 
       if (deftexts) {
-        for (let d of deftexts) {
+        for (const d of deftexts) {
           try {
-            let provider = new ResourceProvider(config.urls.short, config.rights)
-            let def = new Definition(d, config.langs.target, 'text/plain', lexeme.lemma.word)
-            let definition = await ResourceProvider.getProxy(provider, def)
-            lexeme.meaning['appendShortDefs'](definition)
+            const provider = new ResourceProvider(config.urls.short, config.rights)
+            const def = new Definition(d, config.langs.target, 'text/plain', lexeme.lemma.word)
+            const definition = await ResourceProvider.getProxy(provider, def)
+            lexeme.meaning.appendShortDefs(definition)
           } catch (error) {
-            this.addError(this.l10n.messages['LEXICONS_FAILED_APPEND_DEFS'].get(error.message))
+            this.addError(this.l10n.messages.LEXICONS_FAILED_APPEND_DEFS.get(error.message))
             continue
           }
         }
       } else {
-        let url = config.urls.short
-        this.addError(this.l10n.messages['LEXICONS_NO_DATA_FROM_URL'].get(url))
+        const url = config.urls.short
+        this.addError(this.l10n.messages.LEXICONS_NO_DATA_FROM_URL.get(url))
         this.prepareFailedCallback('shortDefs', homonym)
       }
     }
@@ -202,20 +202,20 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @return {[String]} - array of urls for retrieving data
   */
   collectFullDefURLs (data, homonym, config) {
-    let languageID = homonym.lexemes[0].lemma.languageID
-    let model = LMF.getLanguageModel(languageID)
-    let urlFull = config.urls.full
+    const languageID = homonym.lexemes[0].lemma.languageID
+    const model = LMF.getLanguageModel(languageID)
+    const urlFull = config.urls.full
 
     if (!urlFull) {
-      this.addError(this.l10n.messages['LEXICONS_NO_FULL_URL'])
+      this.addError(this.l10n.messages.LEXICONS_NO_FULL_URL)
       return
     }
 
-    let requests = []
-    for (let lexeme of homonym.lexemes) {
-      let ids = this.lookupInDataIndex(data, lexeme.lemma, model)
+    let requests = [] // eslint-disable-line prefer-const
+    for (const lexeme of homonym.lexemes) {
+      const ids = this.lookupInDataIndex(data, lexeme.lemma, model)
       if (urlFull && ids) {
-        for (let id of ids) {
+        for (const id of ids) {
           requests.push({ url: `${urlFull}&n=${id}`, lexeme: lexeme })
         }
       } else if (urlFull) {
@@ -232,25 +232,25 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @param {Homonym} homonym - homonym we search definitions for
   */
   async updateFullDefs (fullDefsRequests, config, homonym) {
-    for (let request of fullDefsRequests) {
-      let fullDefDataRes = this.fetch(request.url, { type: 'xml' })
+    for (let request of fullDefsRequests) { // eslint-disable-line prefer-const
+      const fullDefDataRes = this.fetch(request.url, { type: 'xml' })
 
       fullDefDataRes.then(
         async (fullDefData) => {
           if (fullDefData && fullDefData.match(/alph:error|alpheios-lex-error/)) {
-            let error = fullDefData.match(/no entries found/i) ? 'No entries found.' : fullDefData
-            this.addError(this.l10n.messages['LEXICONS_FAILED_CACHED_DATA'].get(error))
+            const error = fullDefData.match(/no entries found/i) ? 'No entries found.' : fullDefData
+            this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error))
             this.prepareFailedCallback('fullDefs', homonym)
           } else {
-            let provider = new ResourceProvider(config.urls.full, config.rights)
-            let def = new Definition(fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
-            let definition = await ResourceProvider.getProxy(provider, def)
-            request.lexeme.meaning['appendFullDefs'](definition)
+            const provider = new ResourceProvider(config.urls.full, config.rights)
+            const def = new Definition(fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
+            const definition = await ResourceProvider.getProxy(provider, def)
+            request.lexeme.meaning.appendFullDefs(definition)
             this.prepareSuccessCallback('fullDefs', homonym)
           }
         },
         error => {
-          this.addError(this.l10n.messages['LEXICONS_FAILED_APPEND_DEFS'].get(error.message))
+          this.addError(this.l10n.messages.LEXICONS_FAILED_APPEND_DEFS.get(error.message))
         }
       )
     }
@@ -261,7 +261,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @param {Symbol} languageID
   */
   getRequests (languageID) {
-    let languageCode = LMF.getLanguageCodeFromId(languageID)
+    const languageCode = LMF.getLanguageCodeFromId(languageID)
     return Object.keys(this.config).filter(url => this.config[url] && this.config[url].langs && this.config[url].langs.source === languageCode)
   }
 
@@ -273,12 +273,12 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
    * @return {Map} the filled map
    */
   fillMap (rows) {
-    let data = new Map()
-    for (let row of rows) {
+    let data = new Map() // eslint-disable-line prefer-const
+    for (const row of rows) {
       if (data.has(row[0])) {
         data.get(row[0]).push(row[1])
       } else {
-        data.set(row[0], [ row[1] ])
+        data.set(row[0], [row[1]])
       }
     }
     return data
@@ -298,23 +298,23 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
     let found
 
     let alternatives = []
-    let altEncodings = []
-    for (let l of [lemma.word, ...lemma.principalParts]) {
+    let altEncodings = [] // eslint-disable-line prefer-const
+    for (const l of [lemma.word, ...lemma.principalParts]) {
       alternatives.push(l)
-      for (let a of model.alternateWordEncodings(l)) {
+      for (const a of model.alternateWordEncodings(l)) {
         // we gather altEncodings separately because they should
         // be tried last after the lemma and principalParts in their
         // original form
         altEncodings.push(a)
       }
-      let nosense = l.replace(/_?\d+$/, '')
+      const nosense = l.replace(/_?\d+$/, '')
       if (l !== nosense) {
         alternatives.push(nosense)
       }
     }
     alternatives = [...alternatives, ...altEncodings]
 
-    for (let lookup of alternatives) {
+    for (const lookup of alternatives) {
       found = data.get(lookup.toLocaleLowerCase())
       if (found && found.length === 1 && found[0] === '@') {
         found = data.get(`@${lookup}`)

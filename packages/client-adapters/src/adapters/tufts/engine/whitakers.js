@@ -1,7 +1,7 @@
 import ImportData from '../lib'
 import * as Models from 'alpheios-data-models'
 
-let data = new ImportData(Models.LatinLanguageModel, 'whitakerLat')
+const data = new ImportData(Models.LatinLanguageModel, 'whitakerLat')
 
 // Whitaker's has weird inflection data for conjugation, we prefer
 // the dictionary entry's conjugation if it's available
@@ -41,15 +41,15 @@ data.setPropertyParser(function (propertyName, propertyValue) {
 })
 
 data.setLexemeAggregator(function (lexemeSet, inflections) {
-  let lexemes = []
-  for (let lex of lexemeSet) {
+  let lexemes = [] // eslint-disable-line prefer-const
+  for (let lex of lexemeSet) { // eslint-disable-line prefer-const
     if (this.reportLexeme(lex)) {
       if (lex.meaning.shortDefs.length === 0 && lexemeSet.length > 1) {
-        for (let otherLex of lexemeSet) {
+        for (let otherLex of lexemeSet) { // eslint-disable-line prefer-const
           // same headword and same part of speech
           if (otherLex.meaning.shortDefs.length > 0 && otherLex.lemma.isFullHomonym(lex.lemma)) {
             let featuresMatch = true
-            for (let feature of Object.entries(lex.lemma.features)) {
+            for (const feature of Object.entries(lex.lemma.features)) {
               // check the other features excluding frequency, source and age
               if ((feature[0] !== Models.Feature.types.frequency) &&
                    (feature[0] !== Models.Feature.types.source) &&
@@ -89,10 +89,10 @@ data.setLemmaParser(function (lemma) {
   // Whitaker's Words returns principal parts for some words
   // and sometimes has a space separted stem and suffix
   let parsed, primary
-  let parts = []
-  let lemmas = lemma.split(', ')
-  for (let [index, l] of lemmas.entries()) {
-    let normalized = l.split(' ')[0]
+  let parts = [] // eslint-disable-line prefer-const
+  const lemmas = lemma.split(', ')
+  for (const [index, l] of lemmas.entries()) {
+    const normalized = l.split(' ')[0]
     if (index === 0) {
       primary = normalized
     }

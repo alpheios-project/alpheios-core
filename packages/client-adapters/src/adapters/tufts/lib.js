@@ -19,14 +19,14 @@ class ImportData {
     this.engine = engine
     // add all the features that the language supports so that we
     // can return the default values if we don't need to import a mapping
-    for (let featureName of Object.keys(this.model.features)) {
+    for (const featureName of Object.keys(this.model.features)) {
       this.addFeature(featureName)
     }
     // may be overridden by specific engine to handle vagaries in reporting of dictionary entries
     // default just returns them as provided
     this.aggregateLexemes = function (lexemeSet, inflections) {
-      let lexemes = []
-      for (let lex of lexemeSet) {
+      let lexemes = [] // eslint-disable-line prefer-const
+      for (const lex of lexemeSet) {
         // only process if we have a lemma that differs from the target
         // word or if we have at least a part of speech
         if (this.reportLexeme(lex)) {
@@ -68,7 +68,7 @@ class ImportData {
      */
   addFeature (featureName) {
     this[featureName] = {}
-    let model = this.model
+    const model = this.model
 
     this[featureName].add = function add (providerValue, alpheiosValue) {
       this[providerValue] = alpheiosValue
@@ -84,7 +84,7 @@ class ImportData {
             model.typeFeature(featureName).valuesUnrestricted) {
           mappedValue = model.typeFeature(featureName).createFeature(providerValue, sortOrder)
         } else {
-          let message = `Unknown value "${providerValue}" of feature "${featureName}" for ${model.languageCode} (allowed = ${allowUnknownValues})`
+          const message = `Unknown value "${providerValue}" of feature "${featureName}" for ${model.languageCode} (allowed = ${allowUnknownValues})`
           if (allowUnknownValues) {
             mappedValue = model.typeFeature(featureName).createFeature(providerValue, sortOrder)
           } else {
@@ -92,7 +92,7 @@ class ImportData {
           }
         }
       } else {
-        let tempValue = this.importer.get(providerValue)
+        const tempValue = this.importer.get(providerValue)
         if (Array.isArray(tempValue)) {
           mappedValue = model.typeFeature(featureName).createFeatures(tempValue, sortOrder)
         } else {
@@ -111,7 +111,7 @@ class ImportData {
       let values = [] // Converts values from `data` into `values` array
       for (const item of data) {
         if (this.importer.has(item.providerValue)) {
-          let value = this.importer.get(item.providerValue)
+          const value = this.importer.get(item.providerValue)
           if (Array.isArray(value)) {
             // if the import returns an array, it should already have the sortOrder
             values = value
@@ -122,7 +122,7 @@ class ImportData {
           model.typeFeature(featureName).valuesUnrestricted) {
           values.push([item.providerValue, item.sortOrder])
         } else {
-          let message = `Unknown value "${item.providerValue}" of feature "${featureName}" for ${model.languageCode} (allowed = ${allowUnknownValues})`
+          const message = `Unknown value "${item.providerValue}" of feature "${featureName}" for ${model.languageCode} (allowed = ${allowUnknownValues})`
           if (allowUnknownValues) {
             values.push([item.providerValue, item.sortOrder])
           } else {
@@ -177,12 +177,12 @@ class ImportData {
    * @param {boolean} allowUnknownValues flag to indicate if unknown values are allowed
    */
   mapFeature (model, inputElem, inputName, featureName, allowUnknownValues) {
-    let inputItem = inputElem[inputName]
+    const inputItem = inputElem[inputName]
     if (inputItem && (Array.isArray(inputItem) || inputItem.$)) {
       let values = []
       if (Array.isArray(inputItem)) {
         // There are multiple values of this feature
-        for (let e of inputItem) {
+        for (const e of inputItem) {
           values.push(...this.parseProperty(inputName, e.$))
         }
       } else {
@@ -192,7 +192,7 @@ class ImportData {
       if (values.length > 0) {
         // There are some values found
         values = values.map(v => { return { providerValue: v, sortOrder: inputItem.order ? inputItem.order : 1 } })
-        let feature = this[Feature.types[featureName]].getMultiple(values, allowUnknownValues)
+        const feature = this[Feature.types[featureName]].getMultiple(values, allowUnknownValues)
         model.addFeature(feature)
       }
     }
@@ -207,7 +207,7 @@ class ImportData {
    */
   overrideInflectionFeatureIfRequired (featureType, inflection, lemmas) {
     if (this.inflectionOverrides.includes(featureType)) {
-      for (let lemma of lemmas.filter(l => l.features[featureType])) {
+      for (const lemma of lemmas.filter(l => l.features[featureType])) {
         inflection.addFeature(lemma.features[featureType])
       }
     }

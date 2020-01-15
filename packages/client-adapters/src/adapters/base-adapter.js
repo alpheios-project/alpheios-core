@@ -23,7 +23,7 @@ class BaseAdapter {
    * @param {String} message  - message text for the error
   */
   addError (message) {
-    let error = new AdapterError(this.config.category, this.config.adapterName, this.config.method, message)
+    const error = new AdapterError(this.config.category, this.config.adapterName, this.config.method, message)
     this.errors.push(error)
   }
 
@@ -34,7 +34,7 @@ class BaseAdapter {
    * @return {Object} - configuration data
   */
   uploadConfig (config, defaultConfig) {
-    let configRes = {}
+    let configRes = {} // eslint-disable-line prefer-const
     Object.keys(config).forEach(configKey => {
       configRes[configKey] = config[configKey]
     })
@@ -68,9 +68,9 @@ class BaseAdapter {
   async fetchWindow (url, options = { type: 'json' }) {
     if (url) {
       try {
-        let response = await window.fetch(url)
+        const response = await window.fetch(url)
         if (!response.ok) {
-          this.addError(this.l10n.messages['BASIC_ADAPTER_URL_RESPONSE_FAILED'].get(response.status, response.statusText))
+          this.addError(this.l10n.messages.BASIC_ADAPTER_URL_RESPONSE_FAILED.get(response.status, response.statusText))
           return
         }
         if (options.type === 'xml') {
@@ -79,10 +79,10 @@ class BaseAdapter {
           return response.json()
         }
       } catch (error) {
-        this.addError(this.l10n.messages['BASIC_ADAPTER_NO_DATA_FROM_URL'].get(url))
+        this.addError(this.l10n.messages.BASIC_ADAPTER_NO_DATA_FROM_URL.get(url))
       }
     } else {
-      this.addError(this.l10n.messages['BASIC_ADAPTER_EMPTY_URL'])
+      this.addError(this.l10n.messages.BASIC_ADAPTER_EMPTY_URL)
     }
   }
 
@@ -116,13 +116,13 @@ class BaseAdapter {
             }
           })
           .catch((err) => {
-            this.addError(this.l10n.messages['BASIC_ADAPTER_NO_DATA_FROM_URL'].get(url))
+            this.addError(this.l10n.messages.BASIC_ADAPTER_NO_DATA_FROM_URL.get(url))
             if (didTimeOut) return
             reject(err)
           })
       })
     } else {
-      this.addError(this.l10n.messages['BASIC_ADAPTER_EMPTY_URL'])
+      this.addError(this.l10n.messages.BASIC_ADAPTER_EMPTY_URL)
     }
   }
 
@@ -144,10 +144,10 @@ class BaseAdapter {
         }
         return res.data
       } catch (error) {
-        this.addError(this.l10n.messages['BASIC_ADAPTER_NO_DATA_FROM_URL'].get(url))
+        this.addError(this.l10n.messages.BASIC_ADAPTER_NO_DATA_FROM_URL.get(url))
       }
     } else {
-      this.addError(this.l10n.messages['BASIC_ADAPTER_EMPTY_URL'])
+      this.addError(this.l10n.messages.BASIC_ADAPTER_EMPTY_URL)
     }
   }
 
@@ -194,10 +194,10 @@ class BaseAdapter {
 
         return res
       } catch (error) {
-        this.addError(this.l10n.messages['BASIC_ADAPTER_UNKNOWN_ERROR'].get(error.message))
+        this.addError(this.l10n.messages.BASIC_ADAPTER_UNKNOWN_ERROR.get(error.message))
       }
     } else {
-      this.addError(this.l10n.messages['BASIC_ADAPTER_EMPTY_URL'])
+      this.addError(this.l10n.messages.BASIC_ADAPTER_EMPTY_URL)
     }
   }
 }

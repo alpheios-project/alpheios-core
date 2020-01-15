@@ -7,26 +7,22 @@ const webpack = {
     externals: {
       'alpheios-data-models': 'alpheios-data-models'
     },
-    target: "node"
+    resolve: {
+      alias: {
+        // Below will force all imported modules with unresolved dependencies to use a single instance of that dependency
+        'alpheios-data-models': path.join(projectRoot, 'node_modules/alpheios-data-models/dist/alpheios-data-models.node.js'),
+        '@lexisCs': path.join(projectRoot, 'node_modules/alpheios-lexis-cs/src/'),
+        '@': path.join(projectRoot, 'src')
+      }
+    },
+    target: 'node'
   },
 
   production: {
-    output: {filename: 'alpheios-client-adapters.node.min.js'},
-    resolve: {
-      alias: {
-        'alpheios-data-models': path.join(projectRoot, 'node_modules/alpheios-data-models/dist/alpheios-data-models.node.min.js'),
-        '@': path.join(projectRoot, 'src')
-      }
-    }
+    output: { filename: 'alpheios-client-adapters.node.min.js' }
   },
   development: {
-    output: {filename: 'alpheios-client-adapters.node.js'},
-    resolve: {
-      alias: {
-        'alpheios-data-models': path.join(projectRoot, 'node_modules/alpheios-data-models/dist/alpheios-data-models.node.js'),
-        '@': path.join(projectRoot, 'src')
-      }
-    }
+    output: { filename: 'alpheios-client-adapters.node.js' }
   }
 }
 

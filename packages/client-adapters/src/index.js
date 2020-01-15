@@ -1,3 +1,3 @@
-import ClientAdapters from '@/client-adapters'
+import ClientAdapters from '@/client-adapters.js'
 
 export { ClientAdapters }

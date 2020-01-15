@@ -12,7 +12,7 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
   constructor (config = {}) {
     super()
     this.config = this.uploadConfig(config, DefaultConfig)
-    this.models = { 'lat': LatinLanguageModel, 'grc': GreekLanguageModel }
+    this.models = { lat: LatinLanguageModel, grc: GreekLanguageModel }
   }
 
   /**
@@ -24,25 +24,25 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
    *      - {undefined} - if failed
   */
   async getHomonym (languageID, wordref) {
-    let server = this.prepareRequest(wordref)
+    const server = this.prepareRequest(wordref)
     if (!server.url) {
-      this.addError(this.l10n.messages['MORPH_TREEBANK_NO_URL'].get(wordref))
+      this.addError(this.l10n.messages.MORPH_TREEBANK_NO_URL.get(wordref))
       return
     }
     try {
-      let res = await this.fetch(server.url, { type: 'xml' })
+      const res = await this.fetch(server.url, { type: 'xml' })
 
       if (res.constructor.name === 'AdapterError') {
         return
       }
 
       if (res) {
-        let langCode = LMF.getLanguageCodeFromId(languageID)
+        const langCode = LMF.getLanguageCodeFromId(languageID)
 
-        let jsonObj = xmlToJSON.parseString(res)
+        const jsonObj = xmlToJSON.parseString(res)
         jsonObj.words[0].word[0].entry[0].dict[0].hdwd[0]._attr = { lang: { _value: langCode } }
 
-        let homonym = this.transform(jsonObj, jsonObj.words[0].word[0].form[0]._text, server.config)
+        const homonym = this.transform(jsonObj, jsonObj.words[0].word[0].form[0]._text, server.config)
         return homonym
       } else {
         this.addError(this.l10n.messages['MORPH_TREEBANK_NO_ANSWER_FOR_WORD'].get(wordref))
@@ -58,10 +58,10 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
    * @return {String} - constructed url for getting data from Treebank
   */
   prepareRequest (wordref) {
-    let [text, fragment] = wordref.split(/#/)
-    let requestServer = {}
+    const [text, fragment] = wordref.split(/#/)
+    let requestServer = {} // eslint-disable-line prefer-const
     if (text && fragment) {
-      for (let serverConfig of this.config.servers) {
+      for (const serverConfig of this.config.servers) {
         if (serverConfig.isDefault || serverConfig.texts.includes(text)) {
           requestServer.config = serverConfig
           requestServer.url = serverConfig.url.replace('r_TEXT', text)
@@ -82,37 +82,37 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
   */
   transform (jsonObj, targetWord, config) {
     'use strict'
-    let providerUri = config.providerUri
-    let providerRights = config.providerRights
-    let provider = new ResourceProvider(providerUri, providerRights)
+    const providerUri = config.providerUri
+    const providerRights = config.providerRights
+    const provider = new ResourceProvider(providerUri, providerRights)
 
-    let hdwd = jsonObj.words[0].word[0].entry[0].dict[0].hdwd[0]
+    const hdwd = jsonObj.words[0].word[0].entry[0].dict[0].hdwd[0]
     let lemmaText = hdwd._text
     // the Alpheios v1 treebank data kept trailing digits on the lemmas
     // these won't match morphology service lemmas which have them stripped
     lemmaText = lemmaText.replace(/\d+$/, '')
 
-    let model = this.models[hdwd._attr.lang._value]
-    let lemma = new Lemma(lemmaText, model.languageCode)
-    let lexmodel = new Lexeme(lemma, [])
-    let inflection = new Inflection(lemmaText, model.languageID, null, null, null)
-    let infl = jsonObj.words[0].word[0].entry[0].infl[0]
+    const model = this.models[hdwd._attr.lang._value]
+    let lemma = new Lemma(lemmaText, model.languageCode) // eslint-disable-line prefer-const
+    const lexmodel = new Lexeme(lemma, [])
+    let inflection = new Inflection(lemmaText, model.languageID, null, null, null) // eslint-disable-line prefer-const
+    const infl = jsonObj.words[0].word[0].entry[0].infl[0]
     inflection.addFeature(new Feature(Feature.types.fullForm, targetWord, model.languageID))
 
-    let features = config.featuresArray
-    for (let feature of features) {
-      let localName = feature[0]
-      let featureType = feature[1]
-      let addToLemma = feature[2]
+    const features = config.featuresArray
+    for (const feature of features) {
+      const localName = feature[0]
+      const featureType = feature[1]
+      const addToLemma = feature[2]
       if (infl[localName]) {
-        let obj = model.typeFeature(Feature.types[featureType]).createFeatures(infl[localName][0]._text, 1)
+        const obj = model.typeFeature(Feature.types[featureType]).createFeatures(infl[localName][0]._text, 1)
         inflection.addFeature(obj)
         if (addToLemma) {
           lemma.addFeature(obj)
         }
       }
     }
-    lexmodel.inflections = [ inflection ]
+    lexmodel.inflections = [inflection]
     return new Homonym([ResourceProvider.getProxy(provider, lexmodel)], targetWord)
   }
 }

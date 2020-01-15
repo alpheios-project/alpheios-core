@@ -10,8 +10,8 @@ import NoRequiredParamError from '@/errors/no-required-param-error'
 
 import AdaptersConfig from '@/adapters/adapters-config.json'
 
-let cachedConfig = new Map()
-let cachedAdaptersList = new Map()
+let cachedConfig = new Map() // eslint-disable-line prefer-const
+let cachedAdaptersList = new Map() // eslint-disable-line prefer-const
 
 class ClientAdapters {
   /**
@@ -19,10 +19,10 @@ class ClientAdapters {
   */
   static init () {
     if (cachedConfig.size === 0) {
-      for (let category in AdaptersConfig) {
-        let adapters = {}
-        for (let adapterKey in AdaptersConfig[category]) {
-          let adapterData = AdaptersConfig[category][adapterKey]
+      for (const category in AdaptersConfig) {
+        let adapters = {} // eslint-disable-line prefer-const
+        for (const adapterKey in AdaptersConfig[category]) {
+          const adapterData = AdaptersConfig[category][adapterKey]
 
           adapters[adapterKey] = {
             adapter: ClientAdapters[adapterData.adapter],
@@ -33,8 +33,8 @@ class ClientAdapters {
         cachedConfig.set(category, adapters)
       }
 
-      for (let key of cachedConfig.keys()) {
-        let res = {}
+      for (const key of cachedConfig.keys()) {
+        const res = {}
         Object.keys(cachedConfig.get(key)).forEach(typeAdapter => {
           res[typeAdapter] = cachedConfig.get(key)[typeAdapter].adapter
         })
@@ -43,6 +43,7 @@ class ClientAdapters {
       }
     }
   }
+
   /**
   *  Additional abstraction layer for structuring adapters
   *  it is used for retrieving data from morphology category
@@ -51,6 +52,7 @@ class ClientAdapters {
     ClientAdapters.init()
     return cachedAdaptersList.get('morphology')
   }
+
   /**
   * it is used for retrieving data from lexicon category
   */
@@ -58,6 +60,7 @@ class ClientAdapters {
     ClientAdapters.init()
     return cachedAdaptersList.get('lexicon')
   }
+
   /**
   * it is used for retrieving data from lemmatranslation category
   */
@@ -126,7 +129,7 @@ class ClientAdapters {
   static async maAdapter (options) {
     ClientAdapters.checkMethodParam('morphology', 'tufts', options)
 
-    let localMaAdapter = new AlpheiosTuftsAdapter({
+    const localMaAdapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
       method: options.method,
@@ -135,7 +138,7 @@ class ClientAdapters {
     })
 
     if (options.method === 'getHomonym') {
-      let homonym = await localMaAdapter.getHomonym(options.params.languageID, options.params.word)
+      const homonym = await localMaAdapter.getHomonym(options.params.languageID, options.params.word)
       return { result: homonym, errors: localMaAdapter.errors }
     }
     return null
@@ -144,14 +147,14 @@ class ClientAdapters {
   static async chineseAdapter (options) {
     ClientAdapters.checkMethodParam('morphology', 'chineseloc', options)
 
-    let localChineseAdapter = new AlpheiosChineseLocAdapter({
+    const localChineseAdapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
       adapterName: 'chineseloc',
       method: options.method
     })
 
     if (options.method === 'getHomonym') {
-      let homonym = await localChineseAdapter.getHomonym(options.params.word, options.params.checkContextForward)
+      const homonym = await localChineseAdapter.getHomonym(options.params.word, options.params.checkContextForward)
       return { result: homonym, errors: localChineseAdapter.errors }
     }
     return null
@@ -172,14 +175,14 @@ class ClientAdapters {
   static async tbAdapter (options) {
     ClientAdapters.checkMethodParam('morphology', 'alpheiosTreebank', options)
 
-    let localTbAdapter = new AlpheiosTreebankAdapter({
+    const localTbAdapter = new AlpheiosTreebankAdapter({
       category: 'morphology',
       adapterName: 'alpheiosTreebank',
       method: options.method,
       clientId: options.clientId
     })
     if (options.method === 'getHomonym') {
-      let homonym = await localTbAdapter.getHomonym(options.params.languageID, options.params.wordref)
+      const homonym = await localTbAdapter.getHomonym(options.params.languageID, options.params.wordref)
       return { result: homonym, errors: localTbAdapter.errors }
     }
     return null
@@ -199,7 +202,7 @@ class ClientAdapters {
   static async lemmaTranslations (options) {
     ClientAdapters.checkMethodParam('lemmatranslation', 'alpheios', options)
 
-    let localLemmasAdapter = new AlpheiosLemmaTranslationsAdapter({
+    const localLemmasAdapter = new AlpheiosLemmaTranslationsAdapter({
       category: 'lemmatranslation',
       adapterName: 'alpheios',
       method: options.method,
@@ -216,7 +219,7 @@ class ClientAdapters {
   static async wordUsageExamples (options) {
     ClientAdapters.checkMethodParam('wordusageExamples', 'concordance', options)
 
-    let localLemmasAdapter = new AlpheiosConcordanceAdapter({
+    const localLemmasAdapter = new AlpheiosConcordanceAdapter({
       category: 'wordUsage',
       adapterName: 'concordance',
       method: options.method,
@@ -224,12 +227,12 @@ class ClientAdapters {
     })
 
     if (options.method === 'getAuthorsWorks') {
-      let res = await localLemmasAdapter.getAuthorsWorks()
+      const res = await localLemmasAdapter.getAuthorsWorks()
       return { result: res, errors: localLemmasAdapter.errors }
     }
 
     if (options.method === 'getWordUsageExamples') {
-      let res = await localLemmasAdapter.getWordUsageExamples(options.params.homonym, options.params.filters, options.params.pagination, options.params.sort)
+      const res = await localLemmasAdapter.getWordUsageExamples(options.params.homonym, options.params.filters, options.params.pagination, options.params.sort)
       return { result: res, errors: localLemmasAdapter.errors }
     }
 
@@ -252,7 +255,7 @@ class ClientAdapters {
   static async lexicons (options) {
     ClientAdapters.checkMethodParam('lexicon', 'alpheios', options)
 
-    let adapterParams = {
+    const adapterParams = {
       category: 'lexicon',
       adapterName: 'alpheios',
       method: options.method,
@@ -262,7 +265,7 @@ class ClientAdapters {
       callBackEvtFailed: options.params.callBackEvtFailed
     }
 
-    let localLexiconsAdapter = new AlpheiosLexiconsAdapter(adapterParams)
+    const localLexiconsAdapter = new AlpheiosLexiconsAdapter(adapterParams)
 
     if (options.method === 'fetchShortDefs') {
       await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)

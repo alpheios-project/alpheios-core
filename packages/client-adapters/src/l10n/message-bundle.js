@@ -26,7 +26,7 @@ export default class MessageBundle {
      */
     this.messages = {}
 
-    let messages = (typeof messagesJSON === 'string') ? JSON.parse(messagesJSON) : messagesJSON
+    const messages = (typeof messagesJSON === 'string') ? JSON.parse(messagesJSON) : messagesJSON
     this.append(messages)
   }
 
@@ -35,7 +35,7 @@ export default class MessageBundle {
    * @param {string} messagesJSON - A JSON string
    */
   appendFromJSON (messagesJSON) {
-    let messages = JSON.parse(messagesJSON)
+    const messages = JSON.parse(messagesJSON)
     this.append(messages)
   }
 
@@ -46,8 +46,8 @@ export default class MessageBundle {
    */
   append (messages) {
     for (const [key, messageObj] of Object.entries(messages)) {
-      if (!this.hasOwnProperty(key)) {
-        let message = new Message(messageObj, this._locale)
+      if (!this.hasOwnProperty(key)) { // eslint-disable-line no-prototype-builtins
+        const message = new Message(messageObj, this._locale)
         this[key] = message
         message.defineProperties(this.messages, key)
       }

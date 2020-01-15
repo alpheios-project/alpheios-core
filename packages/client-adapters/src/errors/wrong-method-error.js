@@ -1,6 +1,6 @@
 class WrongMethodError extends Error {
   constructor (category, adapterName, methodName) {
-    let message = `Wrong method for ${category}.${adapterName} - ${methodName}`
+    const message = `Wrong method for ${category}.${adapterName} - ${methodName}`
     super(message)
     this.adapter = `${category}.${adapterName}`
     this.method = methodName

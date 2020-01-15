@@ -1,6 +1,6 @@
 class AdapterError extends Error {
   constructor (category, adapterName, methodName, messageError) {
-    let message = messageError
+    const message = messageError
     super(message)
     this.adapter = `${category}.${adapterName}`
     this.methodName = methodName

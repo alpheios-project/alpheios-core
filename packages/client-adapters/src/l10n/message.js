@@ -43,7 +43,7 @@ export default class Message {
    * @return {undefined} Has no return value.
    */
   defineProperties (messages, key) {
-    let self = this
+    const self = this
 
     if (this.hasParameters) {
       messages[key] = {
@@ -51,9 +51,9 @@ export default class Message {
           return self.formatFunc.format(options)
         },
         get (...options) {
-          let params = {}
+          let params = {} // eslint-disable-line prefer-const
           // TODO: Add checks
-          for (let [index, param] of self.params.entries()) {
+          for (const [index, param] of self.params.entries()) {
             params[param] = options[index]
           }
           return self.formatFunc.format(params)

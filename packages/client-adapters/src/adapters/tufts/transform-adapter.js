@@ -14,17 +14,17 @@ class TransformAdapter {
    * @return {String|Object} - extracted data
   */
   extractData (source, nameParam) {
-    let schema = {
-      'providerUri': [ 'RDF', 'Annotation', 'creator', 'Agent', 'about' ],
-      'providerRights': [ 'RDF', 'Annotation', 'rights', '$' ],
-      'inflections': [ 'rest', 'entry', 'infl' ],
-      'dictData': [ 'rest', 'entry', 'dict' ]
+    const schema = {
+      providerUri: ['RDF', 'Annotation', 'creator', 'Agent', 'about'],
+      providerRights: ['RDF', 'Annotation', 'rights', '$'],
+      inflections: ['rest', 'entry', 'infl'],
+      dictData: ['rest', 'entry', 'dict']
     }
     let res
 
     if (schema[nameParam]) {
       res = source
-      for (let pathPart of schema[nameParam]) {
+      for (const pathPart of schema[nameParam]) {
         if (res[pathPart]) {
           res = res[pathPart]
         } else {
@@ -62,7 +62,7 @@ class TransformAdapter {
    * @return {Array} - array with parts for hdwr
   */
   collectHdwdArray (data, term, direction) {
-    let hdwd = []
+    let hdwd = [] // eslint-disable-line prefer-const
 
     if (data && !Array.isArray(data) && (!data.hdwd || !data.hdwd.$) && term) {
       hdwd.push(term.prefix ? term.prefix.$ : '')
@@ -84,7 +84,7 @@ class TransformAdapter {
    * @return {String}  - language code
   */
   defineLanguage (data, term) {
-    let lemmaData = Array.isArray(data) ? data[0] : data
+    let lemmaData = Array.isArray(data) ? data[0] : data // eslint-disable-line prefer-const
     if (!lemmaData.hdwd && term) {
       lemmaData.hdwd = {}
       lemmaData.hdwd.lang = term.lang
@@ -101,60 +101,60 @@ class TransformAdapter {
    *     - {undefined}
   */
   transformData (jsonObj, targetWord) {
-    let lexemes = []
-    let annotationBody = this.checkToBeArray(jsonObj.RDF.Annotation.Body)
+    let lexemes = [] // eslint-disable-line prefer-const
+    const annotationBody = this.checkToBeArray(jsonObj.RDF.Annotation.Body)
 
-    let providerUri = this.extractData(jsonObj, 'providerUri')
-    let providerRights = this.extractData(jsonObj, 'providerRights')
+    const providerUri = this.extractData(jsonObj, 'providerUri')
+    const providerRights = this.extractData(jsonObj, 'providerRights')
 
-    let provider = new ResourceProvider(providerUri, providerRights)
+    const provider = new ResourceProvider(providerUri, providerRights)
 
-    for (let lexeme of annotationBody) {
-      let inflectionsJSON = this.checkToBeArray(this.extractData(lexeme, 'inflections'))
-      let inflectionsJSONTerm = inflectionsJSON.length > 0 ? inflectionsJSON[0].term : undefined
+    for (const lexeme of annotationBody) {
+      const inflectionsJSON = this.checkToBeArray(this.extractData(lexeme, 'inflections'))
+      const inflectionsJSONTerm = inflectionsJSON.length > 0 ? inflectionsJSON[0].term : undefined
 
-      let dictData = this.extractData(lexeme, 'dictData')
+      const dictData = this.extractData(lexeme, 'dictData')
 
-      let lemmaElements = this.checkToBeArray(dictData, inflectionsJSONTerm ? [ inflectionsJSONTerm ] : [])
-      let language = this.defineLanguage(lemmaElements, inflectionsJSONTerm)
+      const lemmaElements = this.checkToBeArray(dictData, inflectionsJSONTerm ? [inflectionsJSONTerm] : [])
+      const language = this.defineLanguage(lemmaElements, inflectionsJSONTerm)
       if (!language) {
-        this.adapter.addError(this.adapter.l10n.messages['MORPH_TRANSFORM_NO_LANGUAGE'])
+        this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_LANGUAGE)
         continue
       }
 
       // Get importer based on the language
-      let mappingData = this.engineSet.getEngineByCodeFromLangCode(language)
+      const mappingData = this.engineSet.getEngineByCodeFromLangCode(language)
       if (!mappingData) {
-        this.adapter.addError(this.adapter.l10n.messages['MORPH_TRANSFORM_NO_MAPPING_DATA'].get(language))
+        this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_MAPPING_DATA.get(language))
         continue
       }
 
-      let reconstructHdwd = this.collectHdwdArray(dictData, inflectionsJSONTerm, mappingData.model.direction)
+      const reconstructHdwd = this.collectHdwdArray(dictData, inflectionsJSONTerm, mappingData.model.direction)
       if (reconstructHdwd.length > 0) {
         lemmaElements[0].hdwd.$ = reconstructHdwd.join('')
       }
 
-      let lemmas = []
-      let lexemeSet = []
+      let lemmas = [] // eslint-disable-line prefer-const
+      let lexemeSet = [] // eslint-disable-line prefer-const
 
-      for (let entry of lemmaElements.entries()) {
-        let index = entry[0]
-        let elem = entry[1]
+      for (const entry of lemmaElements.entries()) {
+        const index = entry[0]
+        const elem = entry[1]
 
-        let lemmaText = elem.hdwd ? elem.hdwd.$ : undefined
+        const lemmaText = elem.hdwd ? elem.hdwd.$ : undefined
         if (!lemmaText) {
-          this.adapter.addError(this.adapter.l10n.messages['MORPH_TRANSFORM_NO_LEMMA'])
+          this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_LEMMA)
           continue
         }
-        let lemma = mappingData.parseLemma(lemmaText, language)
+        const lemma = mappingData.parseLemma(lemmaText, language)
         lemmas.push(lemma)
 
-        let features = this.config.featuresArray
-        for (let feature of features) {
+        const features = this.config.featuresArray
+        for (const feature of features) {
           mappingData.mapFeature(lemma, elem, ...feature, this.config.allowUnknownValues)
         }
 
-        let shortdefs = []
+        let shortdefs = [] // eslint-disable-line prefer-const
         let meanings = lexeme.rest.entry.mean
         if (!Array.isArray(meanings)) {
           meanings = [meanings]
@@ -164,22 +164,22 @@ class TransformAdapter {
         // if we have multiple dictionary elements, take the meaning with the matching index
         if (lemmaElements.length > 1) {
           if (meanings && meanings[index]) {
-            let meaning = meanings[index]
+            const meaning = meanings[index]
             // TODO: convert a source-specific language code to ISO 639-3 if don't match
-            let lang = meaning.lang ? meaning.lang : 'eng'
+            const lang = meaning.lang ? meaning.lang : 'eng'
             shortdefs.push(ResourceProvider.getProxy(provider,
               new Definition(meaning.$, lang, 'text/plain', lemmas[index].word)))
           }
         } else {
           // Changed to prevent some weird "Array Iterator.prototype.next called on incompatible receiver [object Unknown]" error
-          let sDefs = meanings.map(meaning => {
-            let lang = meaning.lang ? meaning.lang : 'eng'
+          const sDefs = meanings.map(meaning => {
+            const lang = meaning.lang ? meaning.lang : 'eng'
             return ResourceProvider.getProxy(provider,
               new Definition(meaning.$, lang, 'text/plain', lemma.word))
           })
           shortdefs.push(...sDefs)
         }
-        let lexmodel = new Lexeme(lemma, [])
+        let lexmodel = new Lexeme(lemma, []) // eslint-disable-line prefer-const
 
         lexmodel.meaning.appendShortDefs(shortdefs)
         lexemeSet.push(ResourceProvider.getProxy(provider, lexmodel))
@@ -189,24 +189,24 @@ class TransformAdapter {
         continue
       }
 
-      let inflections = []
-      for (let inflectionJSON of inflectionsJSON) {
-        let stem = inflectionJSON.term.stem ? inflectionJSON.term.stem.$ : null
-        let suffix = inflectionJSON.term.suff ? inflectionJSON.term.suff.$ : null
-        let prefix = inflectionJSON.term.pref ? inflectionJSON.term.pref.$ : null
-        let xmpl = inflectionJSON.xmpl ? inflectionJSON.xmpl.$ : null
+      const inflections = []
+      for (const inflectionJSON of inflectionsJSON) {
+        const stem = inflectionJSON.term.stem ? inflectionJSON.term.stem.$ : null
+        const suffix = inflectionJSON.term.suff ? inflectionJSON.term.suff.$ : null
+        const prefix = inflectionJSON.term.pref ? inflectionJSON.term.pref.$ : null
+        const xmpl = inflectionJSON.xmpl ? inflectionJSON.xmpl.$ : null
         let inflection
         try {
           inflection = new Inflection(stem, mappingData.model.languageID, suffix, prefix, xmpl)
         } catch (e) {
-          this.adapter.addError(this.adapter.l10n.messages['MORPH_TRANSFORM_INFLECTION_ERROR'].get(e.message))
+          this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_INFLECTION_ERROR.get(e.message))
           continue
         }
         if (targetWord) {
           inflection.addFeature(new Feature(Feature.types.fullForm, targetWord, mappingData.model.languageID))
         }
         // Parse whatever grammatical features we're interested in and are provided
-        for (let f of this.config.featuresArrayAll) {
+        for (const f of this.config.featuresArrayAll) {
           try {
             mappingData.mapFeature(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
             mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
@@ -229,7 +229,7 @@ class TransformAdapter {
           inflections.push(inflection)
         }
         // inflection can provide lemma decl, pofs, conj
-        for (let lemma of lemmas) {
+        for (const lemma of lemmas) {
           if (!lemma.features[Feature.types.part]) {
             mappingData.mapFeature(lemma, inflectionJSON, 'pofs', 'part', this.config.allowUnknownValues)
           }
@@ -245,7 +245,7 @@ class TransformAdapter {
           }
         }
       }
-      let aggregated = mappingData.aggregateLexemes(lexemeSet, inflections)
+      const aggregated = mappingData.aggregateLexemes(lexemeSet, inflections)
       lexemes.push(...aggregated)
     }
     if (lexemes.length > 0) {

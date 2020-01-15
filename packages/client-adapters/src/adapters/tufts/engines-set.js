@@ -21,8 +21,8 @@ class EnginesSet {
   */
   getEngineByCode (languageID) {
     if (this.engine[languageID]) {
-      let engineCode = this.engine[languageID][0]
-      let allEngines = new Map(([ Whitakers, Morpheusgrc, Aramorph, Hazm, Traces ]).map((e) => { return [ e.engine, e ] }))
+      const engineCode = this.engine[languageID][0]
+      const allEngines = new Map(([Whitakers, Morpheusgrc, Aramorph, Hazm, Traces]).map((e) => { return [e.engine, e] }))
       return allEngines.get(engineCode)
     }
   }
@@ -33,7 +33,7 @@ class EnginesSet {
    * @return {Engine Class}
   */
   getEngineByCodeFromLangCode (languageCode) {
-    let languageID = LMF.getLanguageIdFromCode(languageCode)
+    const languageID = LMF.getLanguageIdFromCode(languageCode)
     return this.getEngineByCode(languageID)
   }
 }

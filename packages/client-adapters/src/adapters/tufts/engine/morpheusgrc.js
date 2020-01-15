@@ -1,7 +1,7 @@
 import ImportData from '../lib'
 import * as Models from 'alpheios-data-models'
 
-let data = new ImportData(Models.GreekLanguageModel, 'morpheusgrc')
+let data = new ImportData(Models.GreekLanguageModel, 'morpheusgrc') // eslint-disable-line prefer-const
 
 /*
 Below are value conversion maps for each grammatical feature to be parsed.

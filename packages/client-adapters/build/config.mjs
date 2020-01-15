@@ -1,5 +1,4 @@
 import path from 'path'
-
 const projectRoot = process.cwd()
 
 const webpack = {
@@ -12,16 +11,17 @@ const webpack = {
       alias: {
         // Below will force all imported modules with unresolved dependencies to use a single instance of that dependency
         'alpheios-data-models': path.join(projectRoot, 'node_modules/alpheios-data-models/dist/alpheios-data-models.js'),
+        '@lexisCs': path.join(projectRoot, 'node_modules/alpheios-lexis-cs/src/'),
         '@': path.join(projectRoot, 'src')
       }
     }
   },
 
   production: {
-    output: {filename: 'alpheios-client-adapters.min.js'}
+    output: { filename: 'alpheios-client-adapters.min.js' }
   },
   development: {
-    output: {filename: 'alpheios-client-adapters.js'}
+    output: { filename: 'alpheios-client-adapters.js' }
   }
 }
 
