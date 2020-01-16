@@ -7,6 +7,7 @@
         </button>
       </a>
     </div>
+
     <div class="alpheios-info__helptext">
       <div
           class="alpheios-notification-area__close-btn"></div>
@@ -40,17 +41,15 @@
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 import ReadingToolsIcon from '@/images/inline-icons/reading-tools.svg'
 import LookupIcon from '@/images/inline-icons/lookup.svg'
-import OptionsIcon from '@/images/inline-icons/options.svg'
 import LogoIcon from '@/images/alpheios/logo.svg'
 import SwapPosition from '@/images/inline-icons/swap-horizontally.svg'
 import TapGestureIcon from '@/images/inline-icons/tap-gesture-icon.svg'
 
 export default {
   name: 'Info',
-  inject: ['app', 'l10n'],
+  inject: ['app', 'l10n', 'lexis'],
   storeModules: ['app'],
   components: {
-    optionsIcon: OptionsIcon,
     readingToolsIcon: ReadingToolsIcon,
     lookupIcon: LookupIcon,
     logoIcon: LogoIcon,
@@ -58,20 +57,20 @@ export default {
     tapGestureIcon: TapGestureIcon
   },
   mixins: [DependencyCheck],
+
   computed: {
     defaultLanguage () {
       return this.app.getLanguageName(this.app.getDefaultLangCode()).name
     },
-    faqLink() {
+    faqLink () {
       if (this.$store.state.app.embedLibActive) {
-        return "https://alpheios.net/pages/v3/faq-embedded"
+        return 'https://alpheios.net/pages/v3/faq-embedded'
       } else {
-        return "https://alpheios.net/pages/v3/faq-extension"
+        return 'https://alpheios.net/pages/v3/faq-extension'
       }
     }
 
   }
-
 }
 </script>
 <style lang="scss">
@@ -96,7 +95,6 @@ export default {
     column-count: 2;
     align-items: center;
     margin-bottom: 1em;
-
 
     & .alpheios-info__helpicon {
       padding-right: 15px;

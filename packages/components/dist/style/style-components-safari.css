@@ -1198,6 +1198,14 @@ h4.alpheios-principal-parts__groupitem {
 .alpheios-principal-parts__groupitem:last-child:after {
   content: ":" !important;
 }
+.alpheios-morph-data__chinese p {
+  margin-bottom: 0 !important;
+}
+.alpheios-morph__attr i {
+  font-style: italic !important;
+  font-family: sans-serif !important;
+  font-size: 90% !important;
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1359,7 +1367,8 @@ div.alpheios-inflections-list__block {
 .alpheios-morph__dictentry p.feature_extras,
 .alpheios-morph__dictentry .alpheios-morph-definitions_list,
 .alpheios-morph__dictentry .alpheios-morph__translation_list,
-.alpheios-morph__dictentry .alpheios-inflections-list__inflections {
+.alpheios-morph__dictentry .alpheios-inflections-list__inflections,
+.alpheios-morph__dictentry .alpheios-morph-data__chinese {
   margin-left: 34px !important;
 }
 .alpheios-morph__dictentry .alpheios-morph-definitions_list,

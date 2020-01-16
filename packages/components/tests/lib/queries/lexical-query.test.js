@@ -88,6 +88,7 @@ describe('lexical-query.test.js', () => {
     const mockStaticMorphology = jest.fn()
     mockStaticMorphology.mockReturnValue({
       tufts: jest.fn(() => { return { result: testHomonym, errors: [] } }),
+      chineseloc: jest.fn(() => { return { result: testHomonym, errors: [] } }),
       alpheiosTreebank: jest.fn(() => { return { result: testHomonym, errors: [] } }),
     })
     const mockStaticEmpty = jest.fn()
@@ -122,8 +123,8 @@ describe('lexical-query.test.js', () => {
   let testLDFAdapterFailed = {
     getInflectionData: function () { return new Promise((resolve, reject) => { reject(new Error('testLDFAdapterFailed error')) }) }
   }
-/*
-  it('1 LexicalQuery - create function returns a new LexicalQuery with params', () => {
+
+  it.skip('1 LexicalQuery - create function returns a new LexicalQuery with params', () => {
     let query = LexicalQuery.create('foo selector', {})
 
     expect(typeof query).toEqual('object')
@@ -133,7 +134,7 @@ describe('lexical-query.test.js', () => {
   })
 
   // TODO: Probably removal of iteration of `getInflectionData()` broke it. Need to fix
-  it('3 LexicalQuery - getData could make another iterations circle if canReset = true', async () => {
+  it.skip('3 LexicalQuery - getData could make another iterations circle if canReset = true', async () => {
     let curUI = Object.assign({}, testUI)
     let query = LexicalQuery.create(testTextSelector, {
       uiController: curUI,
@@ -153,7 +154,7 @@ describe('lexical-query.test.js', () => {
     expect(query.canReset).toBeFalsy()
     expect(query.getData).toHaveBeenCalled()
   })
-*/
+
   it('4 LexicalQuery - getData executes iterations: maAdapter.getHomonym and after it updateMorphology, updateDefinitions, showStatusInfo with homonym data', async () => {
     let curUI = Object.assign({}, testUI)
     let query = LexicalQuery.create(testTextSelector, {
@@ -177,8 +178,39 @@ describe('lexical-query.test.js', () => {
     })
     expect(LexicalQuery.evt.HOMONYM_READY.pub).toHaveBeenCalledWith(testHomonym)
   })
-/*
-  it('8 LexicalQuery - getData executes fetchShortDefs and fetchFullDefs ', async () => {
+
+  it('5 LexicalQuery - getData executes iterations: chineseLoc.getHomonym and after it updateMorphology for Chinese', async () => {
+    let testTextSelectorChinese = {
+      normalizedText: '培養',
+      word: '培養',
+      languageID: Constants.LANG_CHINESE,
+      data: 'foo data'
+    }
+
+    let curUI = Object.assign({}, testUI)
+    let query = LexicalQuery.create(testTextSelectorChinese, {
+      uiController: curUI,
+      htmlSelector: testHtmlSelector
+    })
+    query.canReset = false
+    query.getLexiconOptions = function () { return { allow: false } }
+
+    query.LDFAdapter = testLDFAdapterFailed
+    jest.spyOn(LexicalQuery.evt.HOMONYM_READY, 'pub')
+
+    await query.getData()
+
+    expect(ClientAdapters.morphology.chineseloc).toHaveBeenCalledWith({
+      method: 'getHomonym',
+      params: {
+        languageID: testTextSelectorChinese.languageID,
+        word: testTextSelectorChinese.normalizedText
+      }
+    })
+    expect(LexicalQuery.evt.HOMONYM_READY.pub).toHaveBeenCalledWith(testHomonym)
+  })
+
+  it.skip('8 LexicalQuery - getData executes fetchShortDefs and fetchFullDefs ', async () => {
     let curUI = Object.assign({}, testUI)
     let query = LexicalQuery.create(testTextSelector, {
       uiController: curUI,
@@ -211,7 +243,7 @@ describe('lexical-query.test.js', () => {
     expect(LexicalQuery.evt.HOMONYM_READY.pub).toHaveBeenCalledWith(testHomonym)
   })
 
-  it('9 LexicalQuery - getData executes fetchTranslations and it executes updateTranslations', async () => {
+  it.skip('9 LexicalQuery - getData executes fetchTranslations and it executes updateTranslations', async () => {
     let curUI = Object.assign({}, testUI)
 
     let userLang = 'fr'
@@ -242,7 +274,7 @@ describe('lexical-query.test.js', () => {
     expect(LexicalQuery.evt.LEMMA_TRANSL_READY.pub).toHaveBeenCalledWith(testHomonym)
   })
 
-  it('10 LexicalQuery - getLexiconOptions parses lexicons', () => {
+  it.skip('10 LexicalQuery - getLexiconOptions parses lexicons', () => {
     let mockSelector = {
       location: 'http://example.org',
       languageID: Constants.LANG_LATIN
@@ -270,7 +302,7 @@ describe('lexical-query.test.js', () => {
     expect(query.getLexiconOptions('lexiconsShort')).toEqual({ allow: ['https://github.com/alpheios-project/xx'] })
   })
 
-  it('11 LexicalQuery - getLexiconOptions parses empty lexicons and returns {}', () => {
+  it.skip('11 LexicalQuery - getLexiconOptions parses empty lexicons and returns {}', () => {
     let mockSelector = {
       location: 'http://example.org',
       languageID: Constants.LANG_LATIN
@@ -285,7 +317,7 @@ describe('lexical-query.test.js', () => {
     expect(query.getLexiconOptions('lexiconsShort')).toEqual({})
   })
 
-  it('12 LexicalQuery - calls tbAdapter if treebank data is present in selector', async () => {
+  it.skip('12 LexicalQuery - calls tbAdapter if treebank data is present in selector', async () => {
     let curUI = Object.assign({}, testUI)
     let mockSelector = {
       normalizedText: 'foo',
@@ -322,7 +354,7 @@ describe('lexical-query.test.js', () => {
     })
   })
 
-  it('13 LexicalQuery - does not call tbAdapter if treebank data is not present in selector', async () => {
+  it.skip('13 LexicalQuery - does not call tbAdapter if treebank data is not present in selector', async () => {
     let curUI = Object.assign({}, testUI)
     let mockSelector = {
       normalizedText: 'foo',
@@ -350,7 +382,7 @@ describe('lexical-query.test.js', () => {
     })
   })
 
-  it('14 LexicalQuery - it finalizes if no definition requests are made', async () => {
+  it.skip('14 LexicalQuery - it finalizes if no definition requests are made', async () => {
     let curUI = Object.assign({}, testUI)
     let query = LexicalQuery.create(testTextSelector, {
       uiController: curUI,
@@ -369,7 +401,7 @@ describe('lexical-query.test.js', () => {
     expect(query.finalize).toHaveBeenCalledWith('Success-NoDefs')
   })
 
-  it('15 LexicalQuery - it finalizes if definition requests are made', async () => {
+  it.skip('15 LexicalQuery - it finalizes if definition requests are made', async () => {
     let curUI = Object.assign({}, testUI)
     let query = LexicalQuery.create(testTextSelector, {
       uiController: curUI,
@@ -388,5 +420,5 @@ describe('lexical-query.test.js', () => {
     expect(LexicalQuery.evt.DEFS_READY.pub).toHaveBeenCalled()
     expect(query.finalize).toHaveBeenCalledWith('Success')
   })
-*/
+
 })

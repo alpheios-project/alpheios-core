@@ -79,7 +79,7 @@ describe('inflections.test.js', () => {
     expect(wideTables.length).toEqual(118)
   })
 
-  it('3 InflectionsBrowser - renders Latin and Greek wide-tables - latin_noun_view', () => {
+  it.skip('3 InflectionsBrowser - renders Latin and Greek wide-tables - latin_noun_view', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -94,7 +94,7 @@ describe('inflections.test.js', () => {
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
    })
 
-  it('4 InflectionsBrowser - renders Latin and Greek wide-tables - latin_adjective_view', () => {
+  it.skip('4 InflectionsBrowser - renders Latin and Greek wide-tables - latin_adjective_view', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -109,7 +109,7 @@ describe('inflections.test.js', () => {
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })  
 
-  it('5 InflectionsBrowser - renders Latin and Greek wide-tables - latin_conjugation_mood_voice_view', () => {
+  it.skip('5 InflectionsBrowser - renders Latin and Greek wide-tables - latin_conjugation_mood_voice_view', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -125,7 +125,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('6 InflectionsBrowser - renders Latin and Greek wide-tables - latin_conjugation_voice_mood_view', () => {
+  it.skip('6 InflectionsBrowser - renders Latin and Greek wide-tables - latin_conjugation_voice_mood_view', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -141,7 +141,7 @@ describe('inflections.test.js', () => {
  
   })
 
-  it('7 InflectionsBrowser - renders Latin and Greek wide-tables - latin_mood_conjugation_voice_view', () => {
+  it.skip('7 InflectionsBrowser - renders Latin and Greek wide-tables - latin_mood_conjugation_voice_view', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -156,7 +156,7 @@ describe('inflections.test.js', () => {
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it('8 InflectionsBrowser - renders Latin and Greek wide-tables - latin_mood_voice_conjugation_view', () => {
+  it.skip('8 InflectionsBrowser - renders Latin and Greek wide-tables - latin_mood_voice_conjugation_view', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -171,7 +171,7 @@ describe('inflections.test.js', () => {
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it('9 InflectionsBrowser - renders Latin and Greek wide-tables - latin_voice_conjugation_mood_view', () => {
+  it.skip('9 InflectionsBrowser - renders Latin and Greek wide-tables - latin_voice_conjugation_mood_view', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -186,7 +186,7 @@ describe('inflections.test.js', () => {
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it('10 InflectionsBrowser - renders Latin and Greek wide-tables - latin_voice_mood_conjugation_view', () => {
+  it.skip('10 InflectionsBrowser - renders Latin and Greek wide-tables - latin_voice_mood_conjugation_view', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -201,7 +201,7 @@ describe('inflections.test.js', () => {
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it('11 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_participle_view', () => {
+  it.skip('11 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_participle_view', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -216,7 +216,7 @@ describe('inflections.test.js', () => {
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it('12 InflectionsBrowser - renders Latin and Greek wide-tables - latin_infinitive_view', () => {
+  it.skip('12 InflectionsBrowser - renders Latin and Greek wide-tables - latin_infinitive_view', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -231,7 +231,7 @@ describe('inflections.test.js', () => {
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it('13 InflectionsBrowser - renders Latin and Greek wide-tables - latin_imperative_view', () => {
+  it.skip('13 InflectionsBrowser - renders Latin and Greek wide-tables - latin_imperative_view', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -248,7 +248,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('14 InflectionsBrowser - renders Latin and Greek wide-tables - latin_supine_view', () => {
+  it.skip('14 InflectionsBrowser - renders Latin and Greek wide-tables - latin_supine_view', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -265,7 +265,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('15 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - sum', () => {
+  it.skip('15 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - sum', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -285,7 +285,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('16 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - fero', () => {
+  it.skip('16 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - fero', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -305,7 +305,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('17 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - malo', () => {
+  it.skip('17 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - malo', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -325,7 +325,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('18 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - malo', () => {
+  it.skip('18 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - malo', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -345,7 +345,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('19 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - malo', () => {
+  it.skip('19 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - malo', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -365,7 +365,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('20 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - eo', () => {
+  it.skip('20 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - eo', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -385,7 +385,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('21 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - absum', () => {
+  it.skip('21 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - absum', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -405,7 +405,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('22 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - adsum', () => {
+  it.skip('22 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - adsum', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -425,7 +425,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('23 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - dēsum', () => {
+  it.skip('23 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - dēsum', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -445,7 +445,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('24 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - insum', () => {
+  it.skip('24 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - insum', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -465,7 +465,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('25 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - intersum', () => {
+  it.skip('25 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - intersum', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -485,7 +485,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('26 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - obsum', () => {
+  it.skip('26 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - obsum', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -505,7 +505,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('27 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - possum', () => {
+  it.skip('27 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - possum', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -525,7 +525,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('28 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - prosum', () => {
+  it.skip('28 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - prosum', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -545,7 +545,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('29 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - praesum', () => {
+  it.skip('29 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - praesum', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -565,7 +565,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('30 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - subsum', () => {
+  it.skip('30 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - subsum', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -585,7 +585,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('31 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - supersum', () => {
+  it.skip('31 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - supersum', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -605,7 +605,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('32 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - queo', () => {
+  it.skip('32 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - queo', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -625,7 +625,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('33 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - nequeo', () => {
+  it.skip('33 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - nequeo', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -645,7 +645,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('34 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - adeo', () => {
+  it.skip('34 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - adeo', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -665,7 +665,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('35 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - ineo', () => {
+  it.skip('35 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - ineo', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -685,7 +685,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('36 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - veneo', () => {
+  it.skip('36 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - veneo', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -706,7 +706,7 @@ describe('inflections.test.js', () => {
   })
 
 
-  it('37 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_view', () => {
+  it.skip('37 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_view', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -723,7 +723,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('38 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_simplified_view', () => {
+  it.skip('38 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_simplified_view', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -740,7 +740,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('39 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_view', () => {
+  it.skip('39 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_view', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -757,7 +757,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('40 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_simplified_view', () => {
+  it.skip('40 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_simplified_view', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -774,7 +774,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('41 InflectionsBrowser - renders Latin and Greek wide-tables - greek_person_pronoun_view, form - νώ', () => {
+  it.skip('41 InflectionsBrowser - renders Latin and Greek wide-tables - greek_person_pronoun_view, form - νώ', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -794,7 +794,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('42 InflectionsBrowser - renders Latin and Greek wide-tables - greek_person_gender_pronoun_view, form - ἡμᾶς', () => {
+  it.skip('42 InflectionsBrowser - renders Latin and Greek wide-tables - greek_person_gender_pronoun_view, form - ἡμᾶς', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -815,7 +815,7 @@ describe('inflections.test.js', () => {
   })
 
 
-  it('43 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - ἀλλήλᾱ', () => {
+  it.skip('43 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - ἀλλήλᾱ', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -835,7 +835,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('44 InflectionsBrowser - renders Latin and Greek wide-tables - greek_lemma_gender_pronoun_view, form - τούτω', () => {
+  it.skip('44 InflectionsBrowser - renders Latin and Greek wide-tables - greek_lemma_gender_pronoun_view, form - τούτω', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -855,7 +855,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('45 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - οἷς', () => {
+  it.skip('45 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - οἷς', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -873,7 +873,7 @@ describe('inflections.test.js', () => {
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it('46 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - ὥτινε', () => {
+  it.skip('46 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - ὥτινε', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -893,7 +893,7 @@ describe('inflections.test.js', () => {
 
   })
 
-  it('47 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - τίνε', () => {
+  it.skip('47 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - τίνε', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -911,7 +911,7 @@ describe('inflections.test.js', () => {
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it('48 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - τινοῖν', () => {
+  it.skip('48 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - τινοῖν', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -929,7 +929,7 @@ describe('inflections.test.js', () => {
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it('49 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - αὐτά', () => {
+  it.skip('49 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - αὐτά', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -948,7 +948,7 @@ describe('inflections.test.js', () => {
   })
 
 
-  it('50 InflectionsBrowser - renders Latin and Greek wide-tables - greek_article_view, form - τοῦ', () => {
+  it.skip('50 InflectionsBrowser - renders Latin and Greek wide-tables - greek_article_view, form - τοῦ', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -966,7 +966,7 @@ describe('inflections.test.js', () => {
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it('51 InflectionsBrowser - renders Latin and Greek wide-tables - greek_numeral_view, form - δύο', () => {
+  it.skip('51 InflectionsBrowser - renders Latin and Greek wide-tables - greek_numeral_view, form - δύο', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -984,7 +984,7 @@ describe('inflections.test.js', () => {
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it('52 InflectionsBrowser - renders Latin and Greek wide-tables - greek_verb_paradigm_view, paradigmID - verbpdgm1', () => {
+  it.skip('52 InflectionsBrowser - renders Latin and Greek wide-tables - greek_verb_paradigm_view, paradigmID - verbpdgm1', () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,

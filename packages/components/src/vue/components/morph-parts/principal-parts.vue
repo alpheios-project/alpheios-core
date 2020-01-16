@@ -23,13 +23,13 @@
 
         <inflectionattribute
             :data="lemma.features"
-            :decorators="['brackets']"
+            :decorators="['brackets', 'appendspace', 'chinese']"
             :type="types.pronunciation"
         />
 
         <span class="feature_extras" v-if="hasExtras" >
             <inflectionattribute
-                :data="featureList(['age','area','geo','frequency'],'extras')"
+                :data="featureList(['age','area','geo', 'frequency'],'extras')"
                 :type="'extras'"
             />
         </span>
@@ -136,5 +136,15 @@
 
   .alpheios-principal-parts__groupitem:last-child:after {
     content: ':';
+  }
+
+  .alpheios-morph-data__chinese p {
+    margin-bottom: 0;
+  }
+
+  .alpheios-morph__attr i {
+    font-style: italic;
+    font-family: sans-serif;
+    font-size: 90%;
   }
 </style>

@@ -91,6 +91,7 @@ describe('definitions-list.test.js', () => {
   })
 
   it('4 DefinitionsList - computed definitions returns no definitions text  if there are no definitions', async () => {
+    // console.info('testHomonymGreek.lexemes', testHomonymGreek.lexemes)
     let cmp = shallowMount(DefinitionsList, {
       propsData: {
         lexeme: testHomonymGreek.lexemes[1]

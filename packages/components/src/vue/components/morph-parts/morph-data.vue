@@ -3,7 +3,7 @@
         <div class="alpheios-morph-data__principal_parts" v-for="(lemma, lemmaIndex) in allLemmas" v-bind:key="lemmaIndex">
             <principal-parts :lemma="lemma" :lemmaindex="lemmaIndex" :lexemeslength="lexemeslength" :lexemeindex="lexemeindex"/>
         </div>
-        <div class="alpheios-morph-data__morphdata">
+        <div class="alpheios-morph-data__morphdata" v-if="hasMorphData">
             <span class="alpheios-morph-data__pofs">
                 <inflectionattribute v-for="(feat, featIndex) in featuresList.pofs" v-bind:key="featIndex"
                     :data="lexeme.lemma.features" :type="types[feat]"
@@ -11,7 +11,7 @@
             </span>
                 <inflectionattribute v-for="(feat, featIndex) in featuresList.others" v-bind:key="featIndex"
                     :data="lexeme.lemma.features" :type="types[feat.name]" :decorators="[feat.decorator]"
-                />
+                />   
         </div>
     </div>
 </template>
@@ -46,10 +46,11 @@
         featuresList: {
           pofs: [ 'grmCase', 'gender', 'part' ],
           others: [
+            { name: 'radical', decorator: 'brackets' },
             { name: 'kind', decorator: 'parenthesize' },
             { name: 'declension', decorator: 'appendtype' },
             { name: 'conjugation', decorator: 'appendtype' },
-            { name: 'note', decorator: 'brackets' }
+            { name: 'note', decorator: 'brackets' },
           ]
         }
       }
@@ -57,8 +58,24 @@
     created: function () {
       this.types = Feature.types
     },
-    computed: { 
+    computed: {
+      hasMorphData () {
+        if (!this.lexeme.lemma.features) {
+          return false
+        }
 
+        let check = false
+        this.featuresList.pofs.forEach(feature => {
+          check = check || this.getFeature(feature.name)
+        })
+
+        
+        this.featuresList.others.forEach(feature => {
+          check = check || this.getFeature(feature.name)
+        })
+        
+        return check
+      },
       allLemmas () {
         if (this.lexeme.altLemmas && this.lexeme.altLemmas.length > 0) {
           return [this.lexeme.lemma, ...this.lexeme.altLemmas].sort((a, b) => {
@@ -75,6 +92,14 @@
         } else {
           return [this.lexeme.lemma]
         }
+      }
+    },
+    methods: {
+      getFeature (type) {
+        if (this.lexeme.lemma.features[type] !== undefined) {
+          return this.lexeme.lemma.features[type].value
+        }
+        return
       }
     }
   }

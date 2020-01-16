@@ -63,7 +63,8 @@ export default class HTMLSelector extends MediaSelector {
     textSelector.model = LanguageModelFactory.getLanguageModel(this.languageID)
     textSelector.location = this.location
     textSelector.data = this.data
-    if (this.browserSelector) {
+    // TODO We will want the data-alpheios-word-node functionality to work eventually with chinese
+    if (this.browserSelector && this.languageID !== Constants.LANG_CHINESE) {
       textSelector = this.doFromTargetWordSelection(textSelector)
     }
     if (textSelector.isEmpty()) {
@@ -110,8 +111,11 @@ export default class HTMLSelector extends MediaSelector {
 
     if (range && typeof window.getSelection === 'function') {
       let sel = window.getSelection() // eslint-disable-line prefer-const
-      sel.removeAllRanges()
-      sel.addRange(range)
+
+      if (range.startOffset !== range.endOffset) {
+        sel.removeAllRanges()
+        sel.addRange(range)
+      }
     } else if (typeof doc.body.createTextRange === 'function') {
       range = doc.body.createTextRange()
       range.moveToPoint(startX, startY)
@@ -122,6 +126,7 @@ export default class HTMLSelector extends MediaSelector {
     } else {
       console.warn('Browser does not support the Alpheios word selection code. Support for getSelection() or createTextRange() is required.')
     }
+
     return range
   }
 
@@ -328,8 +333,50 @@ export default class HTMLSelector extends MediaSelector {
    * @see #findSelection
    * @private
    */
-  doCharacterBasedWordSelection (textSelection) {
-    // TODO
+  doCharacterBasedWordSelection (textSelector) {
+    const selection = HTMLSelector.getSelection(this.target)
+    const rStart = selection.anchorOffset
+    const rEnd = selection.focusOffset
+
+    if (rStart === rEnd || rEnd === 0) {
+      return textSelector
+    }
+
+    const anchor = selection.anchorNode
+    const anchorText = anchor.data
+
+    let word = anchorText.substring(rStart, rEnd).trim()
+    word = word.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']', 'g'), ' ')
+
+    let contextStr = null
+    let contextPos = 0
+
+    const contextForward = textSelector.model.contextForward
+    const contextBackward = textSelector.model.contextBackward
+
+    if (contextForward || contextBackward) {
+      let prevWord = anchorText.substr(0, rStart - 1)
+      prevWord = prevWord.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']', 'g'), ' ')
+      prevWord = prevWord.substr(prevWord.length - contextBackward, contextBackward)
+
+      let postWord = anchorText.substr(rEnd)
+      postWord = postWord.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']', 'g'), ' ')
+      postWord = postWord.substr(0, contextForward)
+
+      contextStr = prevWord + ' ' + postWord
+      contextPos = prevWord.length - 1
+    }
+
+    textSelector.text = word
+    textSelector.start = rStart
+    textSelector.end = rEnd
+    textSelector.context = contextStr
+    textSelector.position = contextPos
+
+    const prefix = selection.anchorNode.data.substr(0, textSelector.start).trim().replace(/\n/g, '')
+    const suffix = selection.anchorNode.data.substr(textSelector.end).trim().replace(/\n/g, '')
+    textSelector.createTextQuoteSelector(prefix, suffix)
+    return textSelector
   }
 
   _escapeRegExp (string) {

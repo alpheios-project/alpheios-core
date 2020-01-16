@@ -377,7 +377,6 @@ describe('inflections.test.js', () => {
     let panel = document.createElement("div")
     panel.id = 'alpheios-panel-inner'
     document.body.appendChild(panel)
-    console.info(document.querySelector)
 
     let result = cmp.vm.navigate('test-ref2')
     expect(panel.scrollTop).toEqual(0)

@@ -6,6 +6,8 @@
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
+import { Feature } from 'alpheios-data-models'
+
 export default {
   name: 'InflectionAttribute',
   inject: ['app', 'l10n'],
@@ -69,7 +71,18 @@ export default {
         decorated = `(${decorated})`
       }
       if (this.decorators.includes('brackets')) {
-        decorated = `[${decorated}]`
+        if (!this.decorators.includes('appendspace')) {
+          decorated = `[${decorated}]`
+        } else {
+          let formattedDecoratedArr = decoratedValues.map(val => `[${val}]`)
+          decorated = formattedDecoratedArr.join(' ')
+        }
+      }
+
+      if (this.decorators.includes('chinese')) {
+        decorated = decorated.replace('mandarin', '<i>mandarin</i>')
+        decorated = decorated.replace('cantonese', '<i>cantonese</i>')
+        decorated = decorated.replace('tang', '<i>tang</i>')
       }
       return decorated
     },

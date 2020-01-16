@@ -112,14 +112,17 @@ describe('morph-data.test.js', () => {
     })
 
     let allIA = cmp.findAll(InflectionAttribute)
-    expect(allIA.length).toEqual(7)
+    expect(allIA.length).toEqual(8)
 
     expect(allIA.at(0).attributes().type).toEqual('case')
     expect(allIA.at(1).attributes().type).toEqual('gender')
     expect(allIA.at(2).attributes().type).toEqual('part of speech')
-    expect(allIA.at(3).attributes().type).toEqual('kind')
-    expect(allIA.at(4).attributes().type).toEqual('declension')
-    expect(allIA.at(5).attributes().type).toEqual('conjugation')
-    expect(allIA.at(6).attributes().type).toEqual('note')
+    expect(allIA.at(3).attributes().type).toEqual('radical')
+
+    expect(allIA.at(4).attributes().type).toEqual('kind')
+    expect(allIA.at(5).attributes().type).toEqual('declension')
+    expect(allIA.at(6).attributes().type).toEqual('conjugation')
+    expect(allIA.at(7).attributes().type).toEqual('note')
+    
   })
 })

@@ -1,4 +1,4 @@
-import { LanguageModelFactory as LMF, Lexeme, Lemma, Homonym, PsEvent } from 'alpheios-data-models'
+import { LanguageModelFactory as LMF, Lexeme, Lemma, Homonym, PsEvent, Constants } from 'alpheios-data-models'
 import Query from './query.js'
 import Options from '@/lib/options/options.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
@@ -136,21 +136,34 @@ export default class LexicalQuery extends Query {
 
     if (!this.canReset) {
       // if we can't reset, proceed with full lookup sequence
-      const adapterTuftsRes = yield ClientAdapters.morphology.tufts({
-        method: 'getHomonym',
-        clientId: this.clientId,
-        params: {
-          languageID: this.selector.languageID,
-          word: this.selector.normalizedText
-        }
-      })
+      let adapterMorphRes
 
-      if (adapterTuftsRes.errors.length > 0) {
-        adapterTuftsRes.errors.forEach(error => this.logger.log(error.message))
+      if (this.selector.languageID === Constants.LANG_CHINESE) {
+        adapterMorphRes = yield ClientAdapters.morphology.chineseloc({
+          method: 'getHomonym',
+          clientId: this.clientId,
+          params: {
+            languageID: this.selector.languageID,
+            word: this.selector.normalizedText
+          }
+        })
+      } else {
+        adapterMorphRes = yield ClientAdapters.morphology.tufts({
+          method: 'getHomonym',
+          clientId: this.clientId,
+          params: {
+            languageID: this.selector.languageID,
+            word: this.selector.normalizedText
+          }
+        })
       }
 
-      if (adapterTuftsRes.result) {
-        this.homonym = adapterTuftsRes.result
+      if (adapterMorphRes.errors.length > 0) {
+        adapterMorphRes.errors.forEach(error => this.logger.log(error.message))
+      }
+
+      if (adapterMorphRes.result) {
+        this.homonym = adapterMorphRes.result
         if (this.annotatedHomonym) {
           this.homonym = Homonym.disambiguate(this.homonym, [this.annotatedHomonym])
         }

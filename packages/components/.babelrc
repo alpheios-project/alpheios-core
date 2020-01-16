@@ -6,6 +6,11 @@
         "regenerator": true
       }
     ],
-    ["@babel/plugin-proposal-object-rest-spread"]
+    ["@babel/plugin-proposal-object-rest-spread"],
+    ["module-resolver", {
+      "alias": {
+        "alpheios-lexis-cs": "./node_modules/alpheios-lexis-cs/dist/test/lexis-cs-test-bundle.js"
+      }
+    }]
   ]
 }

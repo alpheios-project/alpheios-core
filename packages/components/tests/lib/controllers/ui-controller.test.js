@@ -23,7 +23,7 @@ import { LanguageModelFactory as LMF, Definition, Constants } from 'alpheios-dat
 import Panel from '@/vue/components/panel-large.vue'
 import Popup from '@/vue/components/popup.vue'
 
-describe.skip('ui-controller.test.js', () => {
+describe('ui-controller.test.js', () => {
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
@@ -43,7 +43,7 @@ describe.skip('ui-controller.test.js', () => {
     featureOptions = new Options(FeatureOptionDefaults, sa1)
     resourceOptions = new Options(LanguageOptionDefaults, sa2)
     let uiOptions = new Options(UIOptionDefaults, sa3)
-
+/*
     uiC = new UIController(state, LocalStorageArea, {})
     uiC.featureOptions = featureOptions
     uiC.resourceOptions = resourceOptions
@@ -51,7 +51,7 @@ describe.skip('ui-controller.test.js', () => {
 
     await uiC.init()
     await uiC.activate()
-
+*/
     done()
   })
   afterEach(() => {
@@ -69,7 +69,7 @@ describe.skip('ui-controller.test.js', () => {
 
   let latID = Constants.LANG_LATIN
   let araID = Constants.LANG_ARABIC
-
+/*
   it('1 UIController - create object with min arguments', async () => {
     expect(uiC.options).toHaveProperty('uiTypePanel')
     expect(uiC.options).toHaveProperty('uiTypePopup')
@@ -821,6 +821,28 @@ describe.skip('ui-controller.test.js', () => {
     expect(uiC.tabs.DEFAULT).toEqual('settings')
     let uiC2 = UIController.create(state, { overrideHelp: false})
     expect(uiC2.tabs.DEFAULT).toEqual('info')
+  })
+*/
+  it('37 UIController - method getLanguageName returns language data', () => {
+    let latData = UIController.getLanguageName(Constants.LANG_LATIN)
+    expect(latData.name).toEqual('Latin')
+    
+    let grcData = UIController.getLanguageName(Constants.LANG_GREEK)
+    expect(grcData.name).toEqual('Greek')
+
+    let araData = UIController.getLanguageName(Constants.LANG_ARABIC)
+    expect(araData.name).toEqual('Arabic')
+
+    let perData = UIController.getLanguageName(Constants.LANG_PERSIAN)
+    expect(perData.name).toEqual('Persian')
+
+    let gezData = UIController.getLanguageName(Constants.LANG_GEEZ)
+    expect(gezData.name).toEqual('Ancient Ethiopic (Ge\'ez)')
+
+    let zhoData = UIController.getLanguageName(Constants.LANG_CHINESE)
+    expect(zhoData.name).toEqual('Chinese')
+
+    // console.info('latData', latData)
   })
 
 })

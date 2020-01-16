@@ -93,7 +93,8 @@ export default {
     p.feature_extras,
     .alpheios-morph-definitions_list,
     .alpheios-morph__translation_list,
-    .alpheios-inflections-list__inflections {
+    .alpheios-inflections-list__inflections,
+    .alpheios-morph-data__chinese {
       margin-left: $lemma_index_size + 14px;
     }
 
