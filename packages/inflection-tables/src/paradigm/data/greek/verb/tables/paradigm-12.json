@@ -64,6 +64,7 @@
                 "number": "singular",
                 "person": "1st",
                 "mood": "indicative",
+                "stemtype": "perfp_vow",
                 "value": "λέλυμαι"
             },
             {
@@ -73,6 +74,7 @@
                 "number": "singular",
                 "person": "1st",
                 "mood": "indicative",
+                "stemtype": "perfp_d",
                 "value": "πέπεισμαι"
             },
             {
@@ -82,6 +84,7 @@
                 "number": "singular",
                 "person": "1st",
                 "mood": "indicative",
+                "stemtype": "perfp_p",
                 "value": "γέγραμμαι"
             }
         ]},
@@ -108,6 +111,7 @@
                 "number": "singular",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_vow",
                 "value": "λέλυσαι"
             },
             {
@@ -117,6 +121,7 @@
                 "number": "singular",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_d",
                 "value": "πέπεισαι"
             },
             {
@@ -126,6 +131,7 @@
                 "number": "singular",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_p",
                 "value": "γέγραψαι"
             }
         ]},
@@ -152,6 +158,7 @@
                 "number": "singular",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_vow",
                 "value": "λέλυται"
             },
             {
@@ -161,6 +168,7 @@
                 "number": "singular",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_d",
                 "value": "πέπεισται"
             },
             {
@@ -170,6 +178,7 @@
                 "number": "singular",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_p",
                 "value": "γέγραπται"
             }
         ]},
@@ -196,6 +205,7 @@
                 "number": "dual",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_vow",
                 "value": "λέλυσθον"
             },
             {
@@ -205,6 +215,7 @@
                 "number": "dual",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_d",
                 "value": "πέπεισθον"
             },
             {
@@ -214,6 +225,7 @@
                 "number": "dual",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_p",
                 "value": "γέγραφθον"
             }
         ]},
@@ -240,6 +252,7 @@
                 "number": "dual",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_vow",
                 "value": "λέλυσθον"
             },
             {
@@ -249,6 +262,7 @@
                 "number": "dual",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_d",
                 "value": "πέπεισθον"
             },
             {
@@ -258,6 +272,7 @@
                 "number": "dual",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_p",
                 "value": "γέγραφθον"
             }
         ]},
@@ -284,6 +299,7 @@
                 "number": "plural",
                 "person": "1st",
                 "mood": "indicative",
+                "stemtype": "perfp_vow",
                 "value": "λελύμεθα"
             },
             {
@@ -293,6 +309,7 @@
                 "number": "plural",
                 "person": "1st",
                 "mood": "indicative",
+                "stemtype": "perfp_d",
                 "value": "πεπείσμεθα"
             },
             {
@@ -302,6 +319,7 @@
                 "number": "plural",
                 "person": "1st",
                 "mood": "indicative",
+                "stemtype": "perfp_p",
                 "value": "γεγράμμεθα"
             }
         ]},
@@ -328,6 +346,7 @@
                 "number": "plural",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_vow",
                 "value": "λέλυσθε"
             },
             {
@@ -337,6 +356,7 @@
                 "number": "plural",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_d",
                 "value": "πέπεισθε"
             },
             {
@@ -346,6 +366,7 @@
                 "number": "plural",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_p",
                 "value": "γέγραφθε"
             }
         ]},
@@ -372,6 +393,7 @@
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_vow",
                 "value": "λέλυνται"
             },
             {
@@ -381,6 +403,7 @@
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_d",
                 "value": "πεπεισμένοι (-αι) εἰσί(ν)"
             },
             {
@@ -390,6 +413,7 @@
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_p",
                 "value": "γεγραμμένοι (-αι) εἰσί(ν)"
             }
         ]},
@@ -416,6 +440,7 @@
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_vow",
                 "value": ""
             },
             {
@@ -425,6 +450,7 @@
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_d",
                 "value": "πεπεισμένα ἐστί(ν)"
             },
             {
@@ -434,6 +460,7 @@
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_p",
                 "value": "γεγραμμένα ἐστί(ν)"
             }
         ]},
@@ -457,6 +484,7 @@
                 "tense": "perfect",
                 "voice": "mediopassive middle",
                 "mood": "infinitive",
+                "stemtype": "perfp_vow",
                 "value": "λελύσθαι"
             },
             {
@@ -464,6 +492,7 @@
                 "tense": "perfect",
                 "voice": "mediopassive middle",
                 "mood": "infinitive",
+                "stemtype": "perfp_d",
                 "value": "πεπεῖσθαι"
             },
             {
@@ -471,6 +500,7 @@
                 "tense": "perfect",
                 "voice": "mediopassive middle",
                 "mood": "infinitive",
+                "stemtype": "perfp_p",
                 "value": "γεγράφθαι"
             }
         ]},
@@ -492,6 +522,7 @@
                 "tense": "perfect",
                 "voice": "mediopassive middle",
                 "part of speech": "verb_participle",
+                "stemtype": "perfp_vow",
                 "value": "λελυμένος, -η, -ον"
             },
             {
@@ -499,6 +530,7 @@
                 "tense": "perfect",
                 "voice": "mediopassive middle",
                 "part of speech": "verb_participle",
+                "stemtype": "perfp_d",
                 "value": "πεπεισμένος, -η, -ον"
             },
             {
@@ -506,6 +538,7 @@
                 "tense": "perfect",
                 "voice": "mediopassive middle",
                 "part of speech": "verb_participle",
+                "stemtype": "perfp_p",
                 "value": "γεγραμμένος, -η, -ον"
             }
         ]}
@@ -571,6 +604,7 @@
                 "number": "singular",
                 "person": "1st",
                 "mood": "indicative",
+                "stemtype": "perfp_g",
                 "value": "πέπραγμαι"
             },
             {
@@ -580,6 +614,7 @@
                 "number": "singular",
                 "person": "1st",
                 "mood": "indicative",
+                "stemtype": "perfp_l",
                 "value": "ἤγγελμαι"
             },
             {
@@ -589,6 +624,7 @@
                 "number": "singular",
                 "person": "1st",
                 "mood": "indicative",
+                "stemtype": "perfp_n",
                 "value": "πέφασμαι"
             }
         ]},
@@ -615,6 +651,7 @@
                 "number": "singular",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_g",
                 "value": "πέπραξαι"
             },
             {
@@ -624,6 +661,7 @@
                 "number": "singular",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_l",
                 "value": "ἤγγελσαι"
             },
             {
@@ -633,6 +671,7 @@
                 "number": "singular",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_n",
                 "value": "\u2014\u2014\u2014"
             }
         ]},
@@ -659,6 +698,7 @@
                 "number": "singular",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_g",
                 "value": "πέπρακται"
             },
             {
@@ -668,6 +708,7 @@
                 "number": "singular",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_l",
                 "value": "ἤγγελται"
             },
             {
@@ -677,6 +718,7 @@
                 "number": "singular",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_n",
                 "value": "πέφανται"
             }
         ]},
@@ -703,6 +745,7 @@
                 "number": "dual",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_g",
                 "value": "πέπραχθον"
             },
             {
@@ -712,6 +755,7 @@
                 "number": "dual",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_l",
                 "value": "ἤγγελθον"
             },
             {
@@ -721,6 +765,7 @@
                 "number": "dual",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_n",
                 "value": "πέφανθον"
             }
         ]},
@@ -747,6 +792,7 @@
                 "number": "dual",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_g",
                 "value": "πέπραχθον"
             },
             {
@@ -756,6 +802,7 @@
                 "number": "dual",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_l",
                 "value": "ἤγγελθον"
             },
             {
@@ -765,6 +812,7 @@
                 "number": "dual",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_n",
                 "value": "πέφανθον"
             }
         ]},
@@ -791,6 +839,7 @@
                 "number": "plural",
                 "person": "1st",
                 "mood": "indicative",
+                "stemtype": "perfp_g",
                 "value": "πεπράγμεθα"
             },
             {
@@ -800,6 +849,7 @@
                 "number": "plural",
                 "person": "1st",
                 "mood": "indicative",
+                "stemtype": "perfp_l",
                 "value": "ἠγγέλμεθα"
             },
             {
@@ -809,6 +859,7 @@
                 "number": "plural",
                 "person": "1st",
                 "mood": "indicative",
+                "stemtype": "perfp_n",
                 "value": "πεφάσμεθα"
             }
         ]},
@@ -835,6 +886,7 @@
                 "number": "plural",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_g",
                 "value": "πέπραχθε"
             },
             {
@@ -844,6 +896,7 @@
                 "number": "plural",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_l",
                 "value": "ἤγγελθε"
             },
             {
@@ -853,6 +906,7 @@
                 "number": "plural",
                 "person": "2nd",
                 "mood": "indicative",
+                "stemtype": "perfp_n",
                 "value": "πέφανθε"
             }
         ]},
@@ -879,6 +933,7 @@
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_g",
                 "value": "πεπραγμένοι (-αι) εἰσί(ν)"
             },
             {
@@ -888,6 +943,7 @@
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_l",
                 "value": "ἠγγελμένοι (-αι) εἰσί(ν)"
             },
             {
@@ -897,6 +953,7 @@
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_n",
                 "value": "πεφασμένοι (-αι) εἰσί(ν)"
             }
         ]},
@@ -923,6 +980,7 @@
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_g",
                 "value": "πεπραγμένα ἐστί(ν)"
             },
             {
@@ -932,6 +990,7 @@
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_l",
                 "value": "ἠγγελμένα ἐστί(ν)"
             },
             {
@@ -941,6 +1000,7 @@
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
+                "stemtype": "perfp_n",
                 "value": "πεφασμένα ἐστί(ν)"
             }
         ]},
@@ -964,6 +1024,7 @@
                 "tense": "perfect",
                 "voice": "mediopassive middle",
                 "mood": "infinitive",
+                "stemtype": "perfp_g",
                 "value": "πεπρᾶχθαι"
             },
             {
@@ -971,6 +1032,7 @@
                 "tense": "perfect",
                 "voice": "mediopassive middle",
                 "mood": "infinitive",
+                "stemtype": "perfp_l",
                 "value": "ἠγγέλθαι"
             },
             {
@@ -978,6 +1040,7 @@
                 "tense": "perfect",
                 "voice": "mediopassive middle",
                 "mood": "infinitive",
+                "stemtype": "perfp_n",
                 "value": "πεφάνθαι"
             }
         ]},
@@ -999,6 +1062,7 @@
                 "tense": "perfect",
                 "voice": "mediopassive middle",
                 "part of speech": "verb_participle",
+                "stemtype": "perfp_g",
                 "value": "πεπραγμένος, -η, -ον"
             },
             {
@@ -1006,6 +1070,7 @@
                 "tense": "perfect",
                 "voice": "mediopassive middle",
                 "part of speech": "verb_participle",
+                "stemtype": "perfp_l",
                 "value": "ἠγγελμένος, -η, -ον"
             },
             {
@@ -1013,6 +1078,7 @@
                 "tense": "perfect",
                 "voice": "mediopassive middle",
                 "part of speech": "verb_participle",
+                "stemtype": "perfp_n",
                 "value": "πεφασμένος, -η, -ον"
             }
         ]}
