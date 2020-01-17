@@ -14,23 +14,31 @@ export default class HTMLSelector extends MediaSelector {
   constructor (event, defaultLanguageCode) {
     super()
     this.event = event
+    this.target = event.end.target
+    // Determine a language ID based on an environment of a target
+    this.languageID = this.getLanguageID(defaultLanguageCode)
 
+    const noSelectorCheck = ((this.event.evtType === 'mousemove') && (this.languageID !== Constants.LANG_CHINESE))
+
+    if (!noSelectorCheck) {
+      this.defineInitialData()
+    }
+  }
+
+  defineInitialData () {
     /**
      * Pointer event has two elements: `start` (where a pointer was down) and
      * `end` (where a pointer was up). If pointer was moved, they will be different.
      * It makes more sense to use `end` for our purposes.
      * @type {HTMLElement}
      */
-    this.target = event.end.target
+
     this.targetRect = {
       top: this.event.end.client.y,
       left: this.event.end.client.x
     }
     this.location = this.target.ownerDocument.location.href
     this.browserSelector = false
-
-    // Determine a language ID based on an environment of a target
-    this.languageID = this.getLanguageID(defaultLanguageCode)
 
     /**
      * We need to create a selection for a click or touch position
@@ -42,7 +50,7 @@ export default class HTMLSelector extends MediaSelector {
       //  let the browser select this word
       this.browserSelector = true
     } else {
-      HTMLSelector.createSelectionFromPoint(this.targetRect.left, this.targetRect.top)
+      HTMLSelector.createSelectionFromPoint(this.event, this.targetRect.left, this.targetRect.top)
     }
     this.setDataAttributes()
     this.wordSeparator = new Map()
@@ -59,6 +67,9 @@ export default class HTMLSelector extends MediaSelector {
   }
 
   createTextSelector () {
+    if (this.event.evtType === 'mousemove' && this.languageID !== Constants.LANG_CHINESE) {
+      return
+    }
     let textSelector = new TextSelector(this.languageID)
     textSelector.model = LanguageModelFactory.getLanguageModel(this.languageID)
     textSelector.location = this.location
@@ -86,7 +97,7 @@ export default class HTMLSelector extends MediaSelector {
    * @param {number} endY
    * @return {Range | null} A range if one is successfully created or null in case of failure.
    */
-  static createSelectionFromPoint (startX, startY, endX = startX, endY = startY) {
+  static createSelectionFromPoint (event, startX, startY, endX = startX, endY = startY) {
     const doc = window.document
     let start
     let end
@@ -96,22 +107,36 @@ export default class HTMLSelector extends MediaSelector {
       As a fallback, we'll use `caretRangeFromPoint`.
     */
     if (typeof doc.caretPositionFromPoint === 'function') {
-      start = doc.caretPositionFromPoint(startX, startY)
-      end = doc.caretPositionFromPoint(endX, endY)
+      if (event.evtType === 'mousemove') {
+        // We need to imititate a small selection for this event type - 10px left and 10px right from the MouseMove registered point
+        start = doc.caretPositionFromPoint(startX - event.mouseMoveAccuracy, startY)
+        end = doc.caretPositionFromPoint(endX + event.mouseMoveAccuracy, endY)
+      } else {
+        start = doc.caretPositionFromPoint(startX, startY)
+        end = doc.caretPositionFromPoint(endX, endY)
+      }
+
       range = doc.createRange()
       range.setStart(start.offsetNode, start.offset)
       range.setEnd(end.offsetNode, end.offset)
     } else if (typeof doc.caretRangeFromPoint === 'function') {
-      start = doc.caretRangeFromPoint(startX, startY)
-      end = doc.caretRangeFromPoint(endX, endY)
+      if (event.evtType === 'mousemove') {
+        // We need to imititate a small selection for this event type - 10px left and 10px right from the MouseMove registered point
+        start = doc.caretRangeFromPoint(startX - event.mouseMoveAccuracy, startY)
+        end = doc.caretRangeFromPoint(endX + event.mouseMoveAccuracy, endY)
+      } else {
+        start = doc.caretRangeFromPoint(startX, startY)
+        end = doc.caretRangeFromPoint(endX, endY)
+      }
+
       range = doc.createRange()
+
       range.setStart(start.startContainer, start.startOffset)
       range.setEnd(end.startContainer, end.startOffset)
     }
 
     if (range && typeof window.getSelection === 'function') {
       let sel = window.getSelection() // eslint-disable-line prefer-const
-
       if (range.startOffset !== range.endOffset) {
         sel.removeAllRanges()
         sel.addRange(range)
@@ -211,6 +236,9 @@ export default class HTMLSelector extends MediaSelector {
     const selection = HTMLSelector.getSelection(this.target)
 
     let anchor = selection.anchorNode // A node where is a beginning of a selection
+    if (!anchor) {
+      return
+    }
     let focus = selection.focusNode // A node where the end of a selection
     let anchorText = anchor.data // A text of an anchor node?
     let ro // An offset from the beginning of a selection
@@ -232,7 +260,7 @@ export default class HTMLSelector extends MediaSelector {
     }
 
     if (!anchorText) {
-      return undefined
+      return
     }
     // clean string:
     //   convert punctuation to spaces
@@ -336,7 +364,7 @@ export default class HTMLSelector extends MediaSelector {
   doCharacterBasedWordSelection (textSelector) {
     const selection = HTMLSelector.getSelection(this.target)
     const rStart = selection.anchorOffset
-    const rEnd = selection.focusOffset
+    let rEnd = selection.focusOffset
 
     if (rStart === rEnd || rEnd === 0) {
       return textSelector
@@ -348,8 +376,13 @@ export default class HTMLSelector extends MediaSelector {
     let word = anchorText.substring(rStart, rEnd).trim()
     word = word.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']', 'g'), ' ')
 
+    if (word.length > 2) {
+      rEnd = rEnd - (word.length - 2)
+      word = word.substr(0, 2)
+    }
     let contextStr = null
     let contextPos = 0
+    let checkContext
 
     const contextForward = textSelector.model.contextForward
     const contextBackward = textSelector.model.contextBackward
@@ -365,18 +398,26 @@ export default class HTMLSelector extends MediaSelector {
 
       contextStr = prevWord + ' ' + postWord
       contextPos = prevWord.length - 1
+
+      checkContext = this.defineCheckContextFromContext(postWord)
     }
 
-    textSelector.text = word
+    textSelector.text = word.trim()
     textSelector.start = rStart
     textSelector.end = rEnd
     textSelector.context = contextStr
     textSelector.position = contextPos
 
+    textSelector.checkContextForward = checkContext
+
     const prefix = selection.anchorNode.data.substr(0, textSelector.start).trim().replace(/\n/g, '')
     const suffix = selection.anchorNode.data.substr(textSelector.end).trim().replace(/\n/g, '')
     textSelector.createTextQuoteSelector(prefix, suffix)
     return textSelector
+  }
+
+  defineCheckContextFromContext (contextStr) {
+    return contextStr.indexOf(' ') === -1 ? contextStr : contextStr.substr(0, contextStr.indexOf(' '))
   }
 
   _escapeRegExp (string) {

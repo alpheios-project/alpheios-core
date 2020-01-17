@@ -1,6 +1,6 @@
 {
   "name": "alpheios-components",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Alpheios Components",
   "main": "dist/alpheios-components.min.js",
   "module": "src/plugin.js",
@@ -47,7 +47,7 @@
     "alpheios-experience": "github:alpheios-project/experience",
     "alpheios-inflection-tables": "github:alpheios-project/inflection-tables",
     "alpheios-lexis-cs": "github:alpheios-project/lexis-cs",
-    "alpheios-node-build": "github:alpheios-project/node-build",
+    "alpheios-node-build": "github:alpheios-project/node-build#v0.6.7",
     "alpheios-res-client": "github:alpheios-project/res-client",
     "alpheios-wordlist": "github:alpheios-project/wordlist",
     "autoprefixer": "^9.7.4",
@@ -110,7 +110,7 @@
   "peerDependencies": {},
   "engines": {
     "node": ">= 13.2.0",
-    "npm": ">= 6.9.0"
+    "npm": ">= 6.13.0"
   },
   "jest": {
     "verbose": true,
@@ -160,7 +160,5 @@
     "**/dist",
     "**/support"
   ],
-  "dependencies": {
-    "lexis-cs": "github:alpheios-project/lexis-cs"
-  }
+  "dependencies": {}
 }

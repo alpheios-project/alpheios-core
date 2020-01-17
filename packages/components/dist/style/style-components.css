@@ -3111,7 +3111,8 @@ p.alpheios-word-usage-filter-title {
   align-items: flex-start;
   flex: 1 1 auto;
 }
-.alpheios-feature-options__cont-concord {
+.alpheios-feature-options__cont-concord,
+.alpheios-feature-options__cont-chinese {
   margin: calc(var(--alpheios-base-text-size) * 0.9375) 0;
   padding: 10px;
   border: 2px groove var(--alpheios-color-placehoder);

@@ -50,6 +50,28 @@
         @change="featureOptionChanged"
     >
     </setting>
+
+    <fieldset class="alpheios-feature-options__cont-chinese">
+      <legend>{{ l10n.getText("LABEL_FIELDSET_CHINESE") }}</legend>
+      <setting
+          class="alpheios-feature-options__item"
+          :data="featureOptions.items.enableMouseMove"
+          @change="featureOptionChanged"
+      >
+      </setting>
+       <setting
+          class="alpheios-feature-options__item"
+          :data="featureOptions.items.mouseMoveDelay"
+          @change="featureOptionChanged"
+      >
+      </setting>
+       <setting
+          class="alpheios-feature-options__item"
+          :data="featureOptions.items.mouseMoveAccuracy"
+          @change="featureOptionChanged"
+      >
+      </setting>
+    </fieldset>
   </div>
 </template>
 <script>
@@ -95,7 +117,8 @@
     flex: 1 1 auto;
   }
 
-  .alpheios-feature-options__cont-concord {
+  .alpheios-feature-options__cont-concord,
+   .alpheios-feature-options__cont-chinese {
     margin: textsize(15px) 0;
     padding: 10px;
 

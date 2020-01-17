@@ -160,6 +160,37 @@
 
         }
       ]
+    },
+    "enableMouseMove": {
+      "defaultValue": false,
+      "labelText": "Enable MouseMove usage (Chinese)",
+      "boolean": true,
+      "values": [
+        {
+          "value": true,
+          "text": "Yes"
+        },
+        {
+          "value": false,
+          "text": "No"
+        }
+      ]
+    },
+    "mouseMoveDelay": {
+      "defaultValue": 1000,
+      "labelText": "MouseMove delay (ms)",
+      "number": true,
+      "minValue": 1,
+      "maxValue": 5000,
+      "values": []
+    },
+    "mouseMoveAccuracy": {
+      "defaultValue": 10,
+      "labelText": "MouseMove accuracy (pixels)",
+      "number": true,
+      "minValue": 1,
+      "maxValue": 5000,
+      "values": []
     }
   }
 }

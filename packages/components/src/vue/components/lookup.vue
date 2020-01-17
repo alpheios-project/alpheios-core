@@ -1,5 +1,5 @@
 <template>
-  <div class="alpheios-lookup__form">
+  <div class="alpheios-lookup__form" data-alpheios-ignore="all">
     <div class="alpheios-lookup__form-row">
       <div class="alpheios-lookup__form-element">
         <label class="alpheios-setting__label">Word lookup</label>

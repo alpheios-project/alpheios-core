@@ -15,6 +15,8 @@ export default class LexicalQuery extends Query {
     this.siteOptions = options.siteOptions || []
     this.lemmaTranslations = options.lemmaTranslations
     this.wordUsageExamples = options.wordUsageExamples
+    this.checkContextForward = options.checkContextForward
+
     const langID = this.selector.languageID
     this.canReset = (this.langOpts[langID] && this.langOpts[langID].lookupMorphLast)
 
@@ -144,7 +146,8 @@ export default class LexicalQuery extends Query {
           clientId: this.clientId,
           params: {
             languageID: this.selector.languageID,
-            word: this.selector.normalizedText
+            word: this.selector.normalizedText,
+            checkContextForward: this.checkContextForward
           }
         })
       } else {
