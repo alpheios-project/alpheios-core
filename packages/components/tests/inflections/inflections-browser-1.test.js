@@ -79,7 +79,7 @@ describe('inflections.test.js', () => {
     expect(wideTables.length).toEqual(118)
   })
 
-  it.skip('3 InflectionsBrowser - renders Latin and Greek wide-tables - latin_noun_view', () => {
+  it('3 InflectionsBrowser - renders Latin and Greek wide-tables - latin_noun_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -90,11 +90,12 @@ describe('inflections.test.js', () => {
     expect(wideTable.props().standardFormData.viewID).toEqual('latin_noun_view')
 
     wideTable.findAll('span').at(0).trigger('click')
+    await Vue.nextTick()
 
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
    })
 
-  it.skip('4 InflectionsBrowser - renders Latin and Greek wide-tables - latin_adjective_view', () => {
+  it('4 InflectionsBrowser - renders Latin and Greek wide-tables - latin_adjective_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -105,11 +106,11 @@ describe('inflections.test.js', () => {
     expect(wideTable.props().standardFormData.viewID).toEqual('latin_adjective_view')
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })  
 
-  it.skip('5 InflectionsBrowser - renders Latin and Greek wide-tables - latin_conjugation_mood_voice_view', () => {
+  it('5 InflectionsBrowser - renders Latin and Greek wide-tables - latin_conjugation_mood_voice_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -121,11 +122,11 @@ describe('inflections.test.js', () => {
 
     wideTable.findAll('span').at(0).trigger('click')
 
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
   })
 
-  it.skip('6 InflectionsBrowser - renders Latin and Greek wide-tables - latin_conjugation_voice_mood_view', () => {
+  it('6 InflectionsBrowser - renders Latin and Greek wide-tables - latin_conjugation_voice_mood_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -136,12 +137,12 @@ describe('inflections.test.js', () => {
     expect(wideTable.props().standardFormData.viewID).toEqual('latin_conjugation_voice_mood_view')
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
  
   })
 
-  it.skip('7 InflectionsBrowser - renders Latin and Greek wide-tables - latin_mood_conjugation_voice_view', () => {
+  it('7 InflectionsBrowser - renders Latin and Greek wide-tables - latin_mood_conjugation_voice_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -152,11 +153,11 @@ describe('inflections.test.js', () => {
     expect(wideTable.props().standardFormData.viewID).toEqual('latin_mood_conjugation_voice_view')
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it.skip('8 InflectionsBrowser - renders Latin and Greek wide-tables - latin_mood_voice_conjugation_view', () => {
+  it('8 InflectionsBrowser - renders Latin and Greek wide-tables - latin_mood_voice_conjugation_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -167,11 +168,11 @@ describe('inflections.test.js', () => {
     expect(wideTable.props().standardFormData.viewID).toEqual('latin_mood_voice_conjugation_view')
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it.skip('9 InflectionsBrowser - renders Latin and Greek wide-tables - latin_voice_conjugation_mood_view', () => {
+  it('9 InflectionsBrowser - renders Latin and Greek wide-tables - latin_voice_conjugation_mood_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -182,11 +183,11 @@ describe('inflections.test.js', () => {
     expect(wideTable.props().standardFormData.viewID).toEqual('latin_voice_conjugation_mood_view')
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it.skip('10 InflectionsBrowser - renders Latin and Greek wide-tables - latin_voice_mood_conjugation_view', () => {
+  it('10 InflectionsBrowser - renders Latin and Greek wide-tables - latin_voice_mood_conjugation_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -197,11 +198,11 @@ describe('inflections.test.js', () => {
     expect(wideTable.props().standardFormData.viewID).toEqual('latin_voice_mood_conjugation_view')
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it.skip('11 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_participle_view', () => {
+  it('11 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_participle_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -212,11 +213,11 @@ describe('inflections.test.js', () => {
     expect(wideTable.props().standardFormData.viewID).toEqual('latin_verb_participle_view')
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it.skip('12 InflectionsBrowser - renders Latin and Greek wide-tables - latin_infinitive_view', () => {
+  it('12 InflectionsBrowser - renders Latin and Greek wide-tables - latin_infinitive_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -227,11 +228,11 @@ describe('inflections.test.js', () => {
     expect(wideTable.props().standardFormData.viewID).toEqual('latin_infinitive_view')
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it.skip('13 InflectionsBrowser - renders Latin and Greek wide-tables - latin_imperative_view', () => {
+  it('13 InflectionsBrowser - renders Latin and Greek wide-tables - latin_imperative_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -242,13 +243,13 @@ describe('inflections.test.js', () => {
     expect(wideTable.props().standardFormData.viewID).toEqual('latin_imperative_view')
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('14 InflectionsBrowser - renders Latin and Greek wide-tables - latin_supine_view', () => {
+  it('14 InflectionsBrowser - renders Latin and Greek wide-tables - latin_supine_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -259,13 +260,13 @@ describe('inflections.test.js', () => {
     expect(wideTable.props().standardFormData.viewID).toEqual('latin_supine_view')
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(3)
 
 
   })
 
-  it.skip('15 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - sum', () => {
+  it('15 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - sum', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -279,13 +280,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('16 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - fero', () => {
+  it('16 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - fero', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -299,13 +300,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('17 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - malo', () => {
+  it('17 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - malo', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -319,13 +320,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('18 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - malo', () => {
+  it('18 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - malo', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -339,13 +340,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('19 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - malo', () => {
+  it('19 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - malo', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -359,13 +360,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('20 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - eo', () => {
+  it('20 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - eo', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -379,13 +380,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('21 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - absum', () => {
+  it('21 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - absum', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -399,13 +400,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('22 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - adsum', () => {
+  it('22 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - adsum', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -419,13 +420,14 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('23 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - dēsum', () => {
+  it.skip('23 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - dēsum', async () => {
+    // This table has not been implemented yet - it is appeared from some change - need to be checked later
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -439,13 +441,14 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
+    await Vue.nextTick()
+    await Vue.nextTick()
 
+    console.info(wideTable.html())
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
   })
 
-  it.skip('24 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - insum', () => {
+  it('24 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - insum', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -459,13 +462,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('25 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - intersum', () => {
+  it('25 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - intersum', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -479,13 +482,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('26 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - obsum', () => {
+  it('26 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - obsum', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -499,13 +502,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('27 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - possum', () => {
+  it('27 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - possum', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -519,13 +522,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('28 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - prosum', () => {
+  it('28 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - prosum', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -539,13 +542,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('29 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - praesum', () => {
+  it('29 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - praesum', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -559,13 +562,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('30 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - subsum', () => {
+  it('30 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - subsum', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -579,13 +582,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('31 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - supersum', () => {
+  it('31 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - supersum', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -599,13 +602,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('32 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - queo', () => {
+  it('32 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - queo', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -619,13 +622,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('33 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - nequeo', () => {
+  it('33 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - nequeo', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -639,13 +642,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('34 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - adeo', () => {
+  it('34 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - adeo', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -659,13 +662,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('35 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - ineo', () => {
+  it('35 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - ineo', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -679,13 +682,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('36 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - veneo', () => {
+  it('36 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - veneo', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -699,14 +702,14 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
 
-  it.skip('37 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_view', () => {
+  it('37 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -717,13 +720,13 @@ describe('inflections.test.js', () => {
     expect(wideTable.props().standardFormData.viewID).toEqual('greek_noun_view')
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('38 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_simplified_view', () => {
+  it('38 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_simplified_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -734,13 +737,13 @@ describe('inflections.test.js', () => {
     expect(wideTable.props().standardFormData.viewID).toEqual('greek_noun_simplified_view')
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('39 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_view', () => {
+  it('39 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -751,13 +754,13 @@ describe('inflections.test.js', () => {
     expect(wideTable.props().standardFormData.viewID).toEqual('greek_adjective_view')
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('40 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_simplified_view', () => {
+  it('40 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_simplified_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -768,13 +771,13 @@ describe('inflections.test.js', () => {
     expect(wideTable.props().standardFormData.viewID).toEqual('greek_adjective_simplified_view')
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('41 InflectionsBrowser - renders Latin and Greek wide-tables - greek_person_pronoun_view, form - νώ', () => {
+  it('41 InflectionsBrowser - renders Latin and Greek wide-tables - greek_person_pronoun_view, form - νώ', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -788,13 +791,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('42 InflectionsBrowser - renders Latin and Greek wide-tables - greek_person_gender_pronoun_view, form - ἡμᾶς', () => {
+  it('42 InflectionsBrowser - renders Latin and Greek wide-tables - greek_person_gender_pronoun_view, form - ἡμᾶς', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -808,14 +811,14 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
 
-  it.skip('43 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - ἀλλήλᾱ', () => {
+  it('43 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - ἀλλήλᾱ', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -829,13 +832,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('44 InflectionsBrowser - renders Latin and Greek wide-tables - greek_lemma_gender_pronoun_view, form - τούτω', () => {
+  it('44 InflectionsBrowser - renders Latin and Greek wide-tables - greek_lemma_gender_pronoun_view, form - τούτω', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -849,13 +852,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('45 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - οἷς', () => {
+  it('45 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - οἷς', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -869,11 +872,11 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it.skip('46 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - ὥτινε', () => {
+  it('46 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - ὥτινε', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -887,13 +890,13 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
 
 
   })
 
-  it.skip('47 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - τίνε', () => {
+  it('47 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - τίνε', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -907,11 +910,11 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it.skip('48 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - τινοῖν', () => {
+  it('48 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - τινοῖν', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -925,11 +928,11 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it.skip('49 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - αὐτά', () => {
+  it('49 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - αὐτά', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -943,12 +946,12 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
 
-  it.skip('50 InflectionsBrowser - renders Latin and Greek wide-tables - greek_article_view, form - τοῦ', () => {
+  it('50 InflectionsBrowser - renders Latin and Greek wide-tables - greek_article_view, form - τοῦ', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -962,11 +965,11 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it.skip('51 InflectionsBrowser - renders Latin and Greek wide-tables - greek_numeral_view, form - δύο', () => {
+  it('51 InflectionsBrowser - renders Latin and Greek wide-tables - greek_numeral_view, form - δύο', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -980,11 +983,11 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
-  it.skip('52 InflectionsBrowser - renders Latin and Greek wide-tables - greek_verb_paradigm_view, paradigmID - verbpdgm1', () => {
+  it('52 InflectionsBrowser - renders Latin and Greek wide-tables - greek_verb_paradigm_view, paradigmID - verbpdgm1', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -998,12 +1001,12 @@ describe('inflections.test.js', () => {
     }))
 
     wideTable.findAll('span').at(0).trigger('click')
-
+    await Vue.nextTick()
     expect(wideTable.findAll('.infl-prdgm-tbl-cell--data').length).toBeGreaterThan(10)
   })
 
   
-  it('119 InflectionsBrowser - method collapseLanguage changes language state for the given languageID', () => {
+  it('119 InflectionsBrowser - method collapseLanguage changes language state for the given languageID', async () => {
     let cmp = shallowMount(InflectionsBrowser, {
       store,
       localVue,
@@ -1032,7 +1035,7 @@ describe('inflections.test.js', () => {
     expect(cmp.vm.collapsed['Symbol(greek)']).toBeFalsy()
   })
 
-  it('120 InflectionsBrowser - method expands language block on mount if it is given', () => {
+  it('120 InflectionsBrowser - method expands language block on mount if it is given', async () => {
     store.commit('app/setTestCurrentLanguageID', Constants.LANG_LATIN)
 
     let cmp = shallowMount(InflectionsBrowser, {
