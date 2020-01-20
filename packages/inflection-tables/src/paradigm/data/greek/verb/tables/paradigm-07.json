@@ -8,40 +8,40 @@
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "value": ""
             },
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "value": ""
             },
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "mood": "indicative",
                 "value": "indicative"
             },
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "mood": "subjunctive",
                 "value": "subjunctive"
             },
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "mood": "optative",
                 "value": "optative"
             },
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "mood": "imperative",
                 "value": "imperative"
             }
@@ -50,20 +50,20 @@
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "value": "singular"
             },
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "value": "1st"
             },
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "1st",
                 "mood": "indicative",
@@ -72,7 +72,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "1st",
                 "mood": "subjunctive",
@@ -81,7 +81,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "1st",
                 "mood": "optative",
@@ -90,7 +90,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "1st",
                 "mood": "imperative",
@@ -101,20 +101,20 @@
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "value": ""
             },
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "value": "2nd"
             },
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "2nd",
                 "mood": "indicative",
@@ -123,7 +123,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "2nd",
                 "mood": "subjunctive",
@@ -132,7 +132,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "2nd",
                 "mood": "optative",
@@ -141,7 +141,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "2nd",
                 "mood": "imperative",
@@ -152,20 +152,20 @@
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "value": ""
             },
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "value": "3rd"
             },
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "3rd",
                 "mood": "indicative",
@@ -174,7 +174,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "3rd",
                 "mood": "subjunctive",
@@ -183,7 +183,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "3rd",
                 "mood": "optative",
@@ -192,7 +192,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "singular",
                 "person": "3rd",
                 "mood": "imperative",
@@ -203,20 +203,20 @@
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "value": "dual"
             },
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "value": "2nd"
             },
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "2nd",
                 "mood": "indicative",
@@ -225,7 +225,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "2nd",
                 "mood": "subjunctive",
@@ -234,7 +234,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "2nd",
                 "mood": "optative",
@@ -243,7 +243,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "2nd",
                 "mood": "imperative",
@@ -254,20 +254,20 @@
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "value": ""
             },
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "value": "3rd"
             },
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "3rd",
                 "mood": "indicative",
@@ -276,7 +276,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "3rd",
                 "mood": "subjunctive",
@@ -285,7 +285,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "3rd",
                 "mood": "optative",
@@ -294,7 +294,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "dual",
                 "person": "3rd",
                 "mood": "imperative",
@@ -305,20 +305,20 @@
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "value": "plural"
             },
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "value": "1st"
             },
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "1st",
                 "mood": "indicative",
@@ -327,7 +327,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "1st",
                 "mood": "subjunctive",
@@ -336,7 +336,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "1st",
                 "mood": "optative",
@@ -345,7 +345,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "1st",
                 "mood": "imperative",
@@ -356,20 +356,20 @@
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mimediopassive middledle",
                 "value": ""
             },
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "value": "2nd"
             },
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "2nd",
                 "mood": "indicative",
@@ -378,7 +378,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "2nd",
                 "mood": "subjunctive",
@@ -387,7 +387,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "2nd",
                 "mood": "optative",
@@ -396,7 +396,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "2nd",
                 "mood": "imperative",
@@ -407,20 +407,20 @@
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "value": ""
             },
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "value": "3rd"
             },
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
@@ -429,7 +429,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "3rd",
                 "mood": "subjunctive",
@@ -438,7 +438,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "3rd",
                 "mood": "optative",
@@ -447,7 +447,7 @@
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "number": "plural",
                 "person": "3rd",
                 "mood": "imperative",
@@ -460,13 +460,13 @@
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "value": "infinitive"
             },
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "mood": "infinitive",
                 "value": "ἀγαγέσθαι"
             }
@@ -475,13 +475,13 @@
             {
                 "role": "label",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "value": "participle"
             },
             {
                 "role": "data",
                 "tense": "aorist",
-                "voice": "middle",
+                "voice": "mediopassive middle",
                 "part of speech": "verb_participle",
                 "value": "ἀγαγόμενος, -η, -ον",
                 "reflink": {

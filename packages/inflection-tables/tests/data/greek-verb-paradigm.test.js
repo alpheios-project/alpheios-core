@@ -25,7 +25,6 @@ describe('greek-verb-paradigm.test.js', () => {
     jest.clearAllMocks()
   })
 
-
   it('1 - checked Verb Paradigm1 - βουλεύῃς', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('βουλεύῃς', Constants.LANG_GREEK)
 
@@ -168,6 +167,27 @@ describe('greek-verb-paradigm.test.js', () => {
 
     expect(renderedTable.rows[2].cells[4].fullMatch).toBeFalsy() // ἀγάγοιο
     expect(renderedTable.rows[2].cells[5].fullMatch).toBeTruthy() // ἀγαγοῦ
+  })
+
+  it('7-1 - checked Verb Paradigm7 - ἀγαγοῦ', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀγάγηται', Constants.LANG_GREEK)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'Strong (2nd) Aorist System Middle',
+      paradigmID: 'verbpdgm7',
+      hasSuppParadigms: true,
+      suppParadigms: [ 'verbpdgm65' ]
+    })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // ἠγάγετο
+    expect(renderedTable.rows[3].cells[3].fullMatch).toBeTruthy() // ἀγάγηται
   })
 
   it('10 - checked Verb Paradigm10 - βουλευθῇς', async () => {
