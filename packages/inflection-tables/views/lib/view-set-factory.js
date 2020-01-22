@@ -15,6 +15,7 @@ export default class ViewSetFactory {
       // Create an empty ViewSet with no inflection data
       viewSet = new ViewSet()
     }
+
     return viewSet
   }
 

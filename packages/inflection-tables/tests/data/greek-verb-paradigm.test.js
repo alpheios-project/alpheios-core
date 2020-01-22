@@ -211,6 +211,93 @@ describe('greek-verb-paradigm.test.js', () => {
     expect(renderedTable.rows[2].cells[3].fullMatch).toBeTruthy() // βουλευθῇς
   })
 
+  it('10-1 - checked Verb Paradigm10 - ἐβουλεύθην, βουλευθῶ, βουλευθείην, ἐγράφην', async () => {
+
+    // ἐβουλεύθην βουλευθῶ  βουλευθείην - ἐγράφην
+    let inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἐβουλεύθην', Constants.LANG_GREEK)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'Aorist Passive System',
+      paradigmID: 'verbpdgm10'
+    })
+
+    let renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // ἐβουλεύθην
+    expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy()
+    expect(renderedTable.rows[1].cells[4].fullMatch).toBeFalsy()
+    expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy()
+    expect(renderedTable.rows[1].cells[6].fullMatch).toBeFalsy()
+
+    /// βουλευθῶ
+    inflectionsViewSet = await BaseTestHelp.getInflectionSet('βουλευθῶ', Constants.LANG_GREEK)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'Aorist Passive System',
+      paradigmID: 'verbpdgm10'
+    })
+
+    renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() 
+    expect(renderedTable.rows[1].cells[3].fullMatch).toBeTruthy() // βουλευθῶ
+    expect(renderedTable.rows[1].cells[4].fullMatch).toBeFalsy()
+    expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy()
+    expect(renderedTable.rows[1].cells[6].fullMatch).toBeFalsy()
+
+    /// βουλευθείην
+    inflectionsViewSet = await BaseTestHelp.getInflectionSet('βουλευθείην', Constants.LANG_GREEK)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'Aorist Passive System',
+      paradigmID: 'verbpdgm10'
+    })
+
+    renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() 
+    expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy()
+    expect(renderedTable.rows[1].cells[4].fullMatch).toBeTruthy() // βουλευθείην
+    expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy()
+    expect(renderedTable.rows[1].cells[6].fullMatch).toBeFalsy()
+
+    /// ἐγράφην
+    inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἐγράφην', Constants.LANG_GREEK)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'Aorist Passive System',
+      paradigmID: 'verbpdgm10'
+    })
+
+    renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() 
+    expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy()
+    expect(renderedTable.rows[1].cells[4].fullMatch).toBeFalsy() 
+    expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy()
+    expect(renderedTable.rows[1].cells[6].fullMatch).toBeTruthy() //ἐγράφην
+  })
+
   it('11 - checked Verb Paradigm11 - λελοίπῃ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('λελοίπῃ', Constants.LANG_GREEK)
 

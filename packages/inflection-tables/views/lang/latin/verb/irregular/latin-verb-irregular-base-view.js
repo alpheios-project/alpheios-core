@@ -60,7 +60,8 @@ export default class LatinVerbIrregularVoiceView extends LatinView {
   }
 
   static enabledForInflection (inflection) {
-    return inflection[Feature.types.part].value === this.mainPartOfSpeech &&
+    return inflection[Feature.types.part] &&
+      inflection[Feature.types.part].value === this.mainPartOfSpeech &&
       inflection.constraints &&
       inflection.constraints.irregular
   }

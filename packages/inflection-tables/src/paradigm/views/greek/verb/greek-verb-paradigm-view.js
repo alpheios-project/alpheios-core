@@ -104,7 +104,7 @@ export default class GreekVerbParadigmView extends GreekView {
    */
   static matchFilter (languageID, inflections, inflectionData) {
     return (this.languageID === languageID &&
-      inflections.some(i => i[Feature.types.part].value === this.mainPartOfSpeech)) &&
+      inflections.some(i => i[Feature.types.part] && i[Feature.types.part].value === this.mainPartOfSpeech)) &&
       inflectionData.types.has(this.inflectionType)
   }
 

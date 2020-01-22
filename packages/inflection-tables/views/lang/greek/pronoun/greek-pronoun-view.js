@@ -94,7 +94,7 @@ export default class GreekPronounView extends GreekView {
    * @return {boolean}
    */
   static matchFilter (languageID, inflections, inflectionData) {
-    if (this.languageID === languageID && inflections.some(i => i[Feature.types.part].value === this.mainPartOfSpeech)) {
+    if (this.languageID === languageID && inflections.some(i => i[Feature.types.part] && i[Feature.types.part].value === this.mainPartOfSpeech)) {
       if (inflectionData.types.has(this.inflectionType)) {
         const inflections = inflectionData.types.get(this.inflectionType)
         const found = inflections.items.find(form => {

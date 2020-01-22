@@ -237,4 +237,23 @@ describe('greek-views.test.js', () => {
       linkedViewsLength: 0
     })
   })
+
+  it('11 - checked Greek Views - οἰστροδόνου - GreekAdjectiveView (with incorrect inflection without part of speech)', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('οἰστροδόνου', Constants.LANG_GREEK)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+
+    // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(2)
+    
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'GreekAdjectiveView'
+    })
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'GreekAdjectiveSimplifiedView'
+    })
+  })
 })

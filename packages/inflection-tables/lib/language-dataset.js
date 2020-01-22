@@ -231,7 +231,6 @@ export default class LanguageDataset {
      */
 
     let partOfSpeech = inflection[Feature.types.part]
-
     if (!partOfSpeech) {
       throw new Error('Part of speech data is missing in an inflection')
     }

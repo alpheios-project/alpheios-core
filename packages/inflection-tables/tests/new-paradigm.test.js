@@ -36,20 +36,24 @@ describe('greek-verb-paradigm.test.js', () => {
     jest.clearAllMocks()
   })
 
-  it('1 - check paradigm (paradigm1) - βουλεύῃς', async () => {
+  it('1 - check paradigm (paradigm1) - οἰστροδόνου', async () => {
     const locale = "en-US"
-    let homonym = await BaseTestHelp.getHomonym('βουλεύῃς', Constants.LANG_GREEK)
+    let homonym = await BaseTestHelp.getHomonym('οἰστροδόνου', Constants.LANG_GREEK)
     const inflectionsViewSet = ViewSetFactory.create(homonym, locale)
-    const partOfSpeech = new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK)
+    const partOfSpeech = new Feature(Feature.types.part, Constants.POFS_ADJECTIVE, Constants.LANG_GREEK)
+
+    // console.info('TC inflectionsViewSet', inflectionsViewSet)
 
     let matchingViews = inflectionsViewSet.getViews(partOfSpeech.value)
-    expect(matchingViews.length).toEqual(1)
+    // console.info('TC matchingViews', matchingViews)   
+    expect(matchingViews.length).toEqual(2)
 
-    expect(matchingViews[0].constructor.name).toEqual('GreekVerbParadigmView')
-    expect(matchingViews[0].paradigm.paradigmID).toEqual('verbpdgm1')
+    expect(matchingViews[0].constructor.name).toEqual('GreekAdjectiveView')
+    expect(matchingViews[1].constructor.name).toEqual('GreekAdjectiveSimplifiedView')
+    
   })
 
-  it('2 - check paradigm (paradigm1) - βουλεύῃς', async () => {
+  it.skip('2 - check paradigm (paradigm1) - βουλεύῃς', async () => {
     let homonym = await BaseTestHelp.getHomonym('βουλεύῃς', Constants.LANG_GREEK)
     
     let dataset = new GreekParadigmDataset()
