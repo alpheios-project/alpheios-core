@@ -1,6 +1,6 @@
 {
   "name": "alpheios-client-adapters",
-  "version": "1.0.1",
+  "version": "1.0.2-dev",
   "description": "Alpheios Client Adapters Library",
   "main": "dist/alpheios-client-adapters.min.js",
   "scripts": {
@@ -29,12 +29,12 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/runtime": "^7.8.3",
-    "@vue/test-utils": "^1.0.0-beta.30",
+    "@vue/test-utils": "^1.0.0-beta.31",
     "alpheios-data-models": "github:alpheios-project/data-models",
     "alpheios-fixtures": "github:alpheios-project/fixtures",
     "alpheios-lexis-cs": "github:alpheios-project/lexis-cs",
     "alpheios-node-build": "github:alpheios-project/node-build",
-    "axios": "^0.19.1",
+    "axios": "^0.19.2",
     "babel-plugin-module-resolver": "^4.0.0",
     "coveralls": "^3.0.9",
     "eslint": "^6.8.0",

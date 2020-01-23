@@ -4,20 +4,11 @@ import 'whatwg-fetch'
 
 import AlpheiosChineseLocAdapter from '@/adapters/chineseloc/adapter'
 
-import { Constants, Feature } from 'alpheios-data-models'
+import { Constants } from 'alpheios-data-models'
 
 import { CedictFixture } from 'alpheios-fixtures'
 
 describe('chineseloc.test.js', () => {
-  console.error = function () {}
-  console.log = function () {}
-  console.warn = function () {}
-
-  beforeEach(() => {
-    jest.spyOn(console, 'error')
-    jest.spyOn(console, 'log')
-    jest.spyOn(console, 'warn')
-  })
   afterEach(() => {
     jest.resetModules()
   })
@@ -38,7 +29,7 @@ describe('chineseloc.test.js', () => {
     expect(adapter.languageID).toEqual(Constants.LANG_CHINESE)
   })
 
-  it('3 AlpheiosChineseLocAdapter: getHomonym returns a single-character traditional word', async () => {
+  it('2 AlpheiosChineseLocAdapter: getHomonym returns a single-character traditional word', async () => {
     // eslint-disable-next-line prefer-const
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
@@ -71,7 +62,7 @@ describe('chineseloc.test.js', () => {
     expect(adapter.errors.length).toEqual(0)
   })
 
-  it('4 AlpheiosChineseLocAdapter: getHomonym returns a single-character simplified word', async () => {
+  it('3 AlpheiosChineseLocAdapter: getHomonym returns a single-character simplified word', async () => {
     // eslint-disable-next-line prefer-const
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
@@ -109,6 +100,29 @@ describe('chineseloc.test.js', () => {
     ])
 
     expect(adapter.errors.length).toEqual(0)
+  })
+
+  it('4 AlpheiosChineseLocAdapter: getHomonym with context forward must create a correct word list', async () => {
+    // eslint-disable-next-line prefer-const
+    let adapter = new AlpheiosChineseLocAdapter({
+      category: 'morphology',
+      adapterName: 'chineseloc',
+      method: 'getHomonym'
+    })
+    const sendRequestToMock = jest.fn((name, request) => ({ body: {} }))
+    // Stub the messaging service method
+    adapter._messagingService.sendRequestTo = sendRequestToMock
+    const homonym = await adapter.getHomonym('眠', '21三體綜合症')
+    expect(sendRequestToMock.mock.calls[0][1].body.getWords.words).toEqual([
+      '眠',
+      '眠2',
+      '眠21',
+      '眠21三',
+      '眠21三體',
+      '眠21三體綜',
+      '眠21三體綜合',
+      '眠21三體綜合症'
+    ])
   })
 
   it('5 AlpheiosChineseLocAdapter: getHomonym with context forward must return value from context forward if value for selection is not found', async () => {
