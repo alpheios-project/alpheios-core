@@ -66,7 +66,7 @@
 
         let check = false
         this.featuresList.pofs.forEach(feature => {
-          check = check || this.getFeature(feature.name)
+          check = check || this.getFeature(this.types[feature])
         })
 
         

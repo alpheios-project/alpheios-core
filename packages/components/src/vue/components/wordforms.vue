@@ -41,7 +41,7 @@ export default {
       let forms = new Set()
       for (let lexeme of this.lexemes) {
         for (let inflection of lexeme.inflections) {
-          if (inflection[Feature.types.part].values.includes(this.partOfSpeech)) {
+          if (inflection[Feature.types.part] && inflection[Feature.types.part].values.includes(this.partOfSpeech)) {
             forms.add(inflection.form)
           }
         }

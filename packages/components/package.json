@@ -13,7 +13,7 @@
     "test-c": "jest tests/vue/components/inflections-subtables-wide.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test-a": "jest tests/lib/queries/resourse-query.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test-s": "AUTH_TOKEN=alpheiosMockUserIdlP0DWnmNxe ENDPOINT='https://8wkx9pxc55.execute-api.us-east-2.amazonaws.com/prod/settings' jest tests/lib/options --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-m": "jest tests/vue/components/morph-parts/definitions-list.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test-m": "jest tests/vue/components/morph.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "build": "npm run build-safari && npm run build-regular",
     "build-regular": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue config.mjs",
     "build-safari": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all vue-postcss config-safari.mjs",
@@ -40,18 +40,19 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/runtime": "^7.8.3",
-    "@vue/test-utils": "^1.0.0-beta.30",
+    "@vue/test-utils": "^1.0.0-beta.31",
     "acorn": "^7.1.0",
     "alpheios-client-adapters": "github:alpheios-project/client-adapters",
     "alpheios-data-models": "github:alpheios-project/data-models",
     "alpheios-experience": "github:alpheios-project/experience",
+    "alpheios-fixtures": "github:alpheios-project/fixtures",
     "alpheios-inflection-tables": "github:alpheios-project/inflection-tables",
     "alpheios-lexis-cs": "github:alpheios-project/lexis-cs",
     "alpheios-node-build": "github:alpheios-project/node-build#v0.6.7",
     "alpheios-res-client": "github:alpheios-project/res-client",
     "alpheios-wordlist": "github:alpheios-project/wordlist",
     "autoprefixer": "^9.7.4",
-    "axios": "^0.19.1",
+    "axios": "^0.19.2",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
     "babel-plugin-module-resolver": "^4.0.0",
@@ -160,5 +161,7 @@
     "**/dist",
     "**/support"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "lexis-cs": "github:alpheios-project/lexis-cs"
+  }
 }

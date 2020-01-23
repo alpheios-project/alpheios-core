@@ -17,11 +17,12 @@ import AuthModule from '@/vue/vuex-modules/data/auth-module.js'
 
 import Platform from '@/lib/utility/platform.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
-import { Constants, Lexeme, Lemma, Homonym } from 'alpheios-data-models'
+import { Constants, Lexeme, Lemma, Homonym, LanguageModelFactory as LMF } from 'alpheios-data-models'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import UIController from '@/lib/controllers/ui-controller.js'
 
 import MouseDblClick from '@/lib/custom-pointer-events/mouse-dbl-click.js'
+import { Fixture } from 'alpheios-fixtures'
 
 export default class BaseTestHelp {
     static get defaultFeatureOptions () {
@@ -320,18 +321,25 @@ export default class BaseTestHelp {
       return { allow: ['https://github.com/alpheios-project/lsj'] }
     }
 
-
-
-    static async collectHomonym (targetWord, languageID, getLexicons = true) {
-      let adapterTuftsRes = await ClientAdapters.morphology.tufts({
+    static async collectHomonym (targetWord, languageID, getLexicons = true, noFixture = false) {
+      let params = {
         method: 'getHomonym',
         clientId: 'alpheios-dev',
         params: {
           languageID: languageID,
           word: targetWord
-
         }
-      })
+      }
+
+      if (!noFixture) {
+        const langCode = LMF.getLanguageCodeFromId(languageID)
+        const sourceJson = Fixture.getFixtureRes({
+          langCode: langCode, adapter: 'tufts', word: targetWord
+        })
+        params.sourceData = sourceJson
+      }
+
+      let adapterTuftsRes = await ClientAdapters.morphology.tufts(params)
       let homonym = adapterTuftsRes.result
 
       if (!homonym) {
@@ -387,6 +395,7 @@ export default class BaseTestHelp {
         console.info(e)
       }
     }
+
 
     static createEventWithSelection (text, start, eventEl) {
       let testElement2 = document.createElement("p")
