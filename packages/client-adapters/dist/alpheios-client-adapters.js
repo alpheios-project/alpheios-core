@@ -15999,7 +15999,6 @@ class AlpheiosChineseLocAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED
         wordList.push(`${targetWord}${contextForward.slice(0, i + 1)}`)
       }
     }
-    console.info('Context forward is ', wordList)
     return wordList
   }
 

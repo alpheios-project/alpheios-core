@@ -11104,11 +11104,22 @@ class AlpheiosChineseLocAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED
     return responseMessage.body
   }
 
+  /**
+   * Creates a list of words that will be requested from a CEDICT service.
+   * This method builds a list of words that would make sense in a context of a Chinese language
+   * out of the word selected by user and its surrounding texts (context forward represents
+   * the text that is located at the right of the selected word.
+   *
+   * @param {string} targetWord - A word that was selected by the user.
+   * @param {string} contextForward - A piece of text that follows the selected word in a text.
+   * @returns {[string]} An array of words that will be requested from a CEDICT service.
+   * @private
+   */
   static _buildWordList (targetWord, contextForward) {
     const wordList = [targetWord]
     if (contextForward) {
       for (let i = 0; i < contextForward.length; i++) {
-        wordList.push(contextForward.slice(0, i + 1))
+        wordList.push(`${targetWord}${contextForward.slice(0, i + 1)}`)
       }
     }
     return wordList

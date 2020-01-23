@@ -29,7 +29,7 @@ describe('chineseloc.test.js', () => {
     expect(adapter.languageID).toEqual(Constants.LANG_CHINESE)
   })
 
-  it('AlpheiosChineseLocAdapter: getHomonym returns pronunciation values in a specific order', async () => {
+  it('2 AlpheiosChineseLocAdapter: getHomonym returns pronunciation values in a specific order', async () => {
     // eslint-disable-next-line prefer-const
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
@@ -43,7 +43,7 @@ describe('chineseloc.test.js', () => {
     expect(homonym.lexemes[0].lemma.features.pronunciation.values).toEqual(['mián', 'mandarin - mián', 'cantonese - min4', 'tang - *men'])
   })
 
-  it('2 AlpheiosChineseLocAdapter: getHomonym returns a single-character traditional word', async () => {
+  it('3 AlpheiosChineseLocAdapter: getHomonym returns a single-character traditional word', async () => {
     // eslint-disable-next-line prefer-const
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
@@ -76,7 +76,7 @@ describe('chineseloc.test.js', () => {
     expect(adapter.errors.length).toEqual(0)
   })
 
-  it('3 AlpheiosChineseLocAdapter: getHomonym returns a single-character simplified word', async () => {
+  it('4 AlpheiosChineseLocAdapter: getHomonym returns a single-character simplified word', async () => {
     // eslint-disable-next-line prefer-const
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
@@ -116,7 +116,7 @@ describe('chineseloc.test.js', () => {
     expect(adapter.errors.length).toEqual(0)
   })
 
-  it('4 AlpheiosChineseLocAdapter: getHomonym with context forward must create a correct word list', async () => {
+  it('5 AlpheiosChineseLocAdapter: getHomonym with context forward must create a correct word list', async () => {
     // eslint-disable-next-line prefer-const
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
@@ -139,7 +139,7 @@ describe('chineseloc.test.js', () => {
     ])
   })
 
-  it('5 AlpheiosChineseLocAdapter: getHomonym with context forward must return value from context forward if value for selection is not found', async () => {
+  it('6 AlpheiosChineseLocAdapter: getHomonym with context forward must return value from context forward if value for selection is not found', async () => {
     // eslint-disable-next-line prefer-const
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
@@ -176,7 +176,7 @@ describe('chineseloc.test.js', () => {
   Multi-character words do not have tang, mandarin or cantonese pronunciations as well as frequency and radical values.
   Those values exist for single-character words only.
    */
-  it('6 AlpheiosChineseLocAdapter - method getHomonym with a multi-character word returns homonym if fetch was successful', async () => {
+  it('7 AlpheiosChineseLocAdapter - method getHomonym with a multi-character word returns homonym if fetch was successful', async () => {
     // eslint-disable-next-line prefer-const
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
@@ -207,7 +207,7 @@ describe('chineseloc.test.js', () => {
     expect(adapter.errors.length).toEqual(0)
   })
 
-  it('7 AlpheiosChineseLocAdapter: getHomonym returns a simplified multi-character word', async () => {
+  it('8 AlpheiosChineseLocAdapter: getHomonym returns a simplified multi-character word', async () => {
     // eslint-disable-next-line prefer-const
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
@@ -239,7 +239,7 @@ describe('chineseloc.test.js', () => {
     expect(adapter.errors.length).toEqual(0)
   })
 
-  it('8 AlpheiosChineseLocAdapter - method getHomonym  returns undefined if fetch was not successfull and adds an error to adapter', async () => {
+  it('9 AlpheiosChineseLocAdapter - method getHomonym  returns undefined if fetch was not successfull and adds an error to adapter', async () => {
     // eslint-disable-next-line prefer-const
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
