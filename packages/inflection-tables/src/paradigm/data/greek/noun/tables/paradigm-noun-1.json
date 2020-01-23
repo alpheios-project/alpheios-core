@@ -1,0 +1,394 @@
+{
+    "ID": "nounpdgm1",
+    "partOfSpeech": "noun",
+    "title": "Omicron-Declension Nouns",
+    "credits": "Noun paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "nominative",
+                "value": "ἄνθρωπος"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "nominative",
+                "value": "ἔργον"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "genitive",
+                "value": "ἀνθρώπου"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "genitive",
+                "value": "ἔργου"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "dative",
+                "value": "ἀνθρώπῳ"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "dative",
+                "value": "ἔργῳ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "accusative",
+                "value": "ἄνθρωπον"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "accusative",
+                "value": "ἔργον"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "vocative",
+                "value": "ἄνθρωπε"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "vocative",
+                "value": "ἔργον"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "masculine",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "ἀνθρώπω"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "neuter",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "ἔργω"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "masculine",
+                "number": "dual",
+                "case": "genitive dativee",
+                "value": "ἀνθρώποιν"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "neuter",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "ἔργοιν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "ἄνθρωποι"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "ἔργᾰ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "genitive",
+                "value": "ἀνθρώπων"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "genitive",
+                "value": "ἔργων"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "dative",
+                "value": "ἀνθρώποις"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "dative",
+                "value": "ἔργοις"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "accusative",
+                "value": "ἀνθρώπους"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "os_ou",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "accusative",
+                "value": "ἔργᾰ"
+            }
+        ]}
+      ]},
+      "subTables": []
+}

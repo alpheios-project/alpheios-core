@@ -3,7 +3,6 @@ import Paradigm from '@/paradigm/lib/paradigm.js'
 import GreekParadigmData from '@/paradigm/data/greek/greek-paradigm-data.js'
 
 import InflectionSet from '@lib//inflection-set.js'
-import Footnote from '@lib/footnote.js'
 
 import papaparse from 'papaparse'
 import LanguageDataset from '@lib/language-dataset.js'
@@ -29,7 +28,7 @@ export default class GreekParadigmDataset extends LanguageDataset {
     return Constants.LANG_GREEK
   }
 
-  setParadigmData (partOfSpeech, paradigms, rulesData, suppParadigmTables) {
+  setVerbParadigmData (partOfSpeech, paradigms, rulesData, suppParadigmTables) {
     // An order of columns in a data CSV file
     const n = {
       id: 0,
@@ -82,9 +81,60 @@ export default class GreekParadigmDataset extends LanguageDataset {
     return Array.from(paradigms.values())
   }
 
+  setNounParadigmData (partOfSpeech, paradigms, rulesData) {
+    // An order of columns in a data CSV file
+    const n = {
+      id: 0,
+      matchOrder: 1,
+      partOfSpeech: 2, // Ignored, an argument value will be used
+      stemtype: 3,
+      declension: 4,
+      gender: 5,
+      lemma: 6,
+      morphFlags: 7,
+      dialect: 8
+    }
+
+    // First row contains headers
+    for (let i = 1; i < rulesData.length; i++) {
+      const item = rulesData[i]
+      const id = item[n.id]
+      const matchOrder = Number.parseInt(item[n.matchOrder])
+
+      let features = [partOfSpeech] // eslint-disable-line prefer-const
+
+      if (item[n.stemtype]) { features.push(this.typeFeatures.get(Feature.types.stemtype).createFromImporter(item[n.stemtype])) }
+      if (item[n.declension]) { features.push(this.typeFeatures.get(Feature.types.declension).createFromImporter(item[n.declension])) }
+      if (item[n.gender]) { features.push(this.typeFeatures.get(Feature.types.gender).createFromImporter(item[n.gender])) }
+      if (item[n.dialect]) { features.push(this.typeFeatures.get(Feature.types.dialect).createFromImporter(item[n.dialect])) }
+
+      let lemma
+      if (item[n.lemma]) {
+        lemma = new Lemma(item[n.lemma], this.languageID)
+      }
+
+      let morphFlags = ''
+      if (item[n.morphFlags]) {
+        morphFlags = item[n.morphFlags]
+      }
+
+      if (paradigms.has(id)) {
+        paradigms.get(id).addRule(matchOrder, features, lemma, morphFlags)
+      } else {
+        console.warn(`Cannot find a paradigm table for "${id}" index`)
+      }
+    }
+    for (let paradigm of paradigms.values()) { // eslint-disable-line prefer-const
+      paradigm.sortRules()
+    }
+
+    return Array.from(paradigms.values())
+  }
+
   loadData () {
     this.loadVerbParadigmData()
     this.loadVerbParticipleParadigmData()
+    this.loadNounParadigmData()
 
     this.dataLoaded = true
   }
@@ -95,11 +145,9 @@ export default class GreekParadigmDataset extends LanguageDataset {
     const verbAndParticipleParadigmTables = new Map([...verbParadigmTables, ...verbParticipleParadigmTables])
 
     const partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_VERB)
-    const paradigms = this.setParadigmData(
+    const paradigms = this.setVerbParadigmData(
       partOfSpeech, verbParadigmTables,
       papaparse.parse(GreekParadigmData.verbParadigmRules, { skipEmptyLines: true }).data, verbAndParticipleParadigmTables)
-
-    // console.info(paradigms)
 
     this.addParadigms(partOfSpeech, paradigms)
     this.addFootnotes(partOfSpeech, Paradigm, papaparse.parse(GreekParadigmData.verbParadigmFootnotes, { skipEmptyLines: true }).data)
@@ -111,9 +159,20 @@ export default class GreekParadigmDataset extends LanguageDataset {
     const verbAndParticipleParadigmTables = new Map([...verbParadigmTables, ...verbParticipleParadigmTables])
     
     const partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_VERB_PARTICIPLE)
-    const paradigms = this.setParadigmData(
+    const paradigms = this.setVerbParadigmData(
       partOfSpeech, verbParticipleParadigmTables,
       papaparse.parse(GreekParadigmData.verbParticipleParadigmRules, { skipEmptyLines: true }).data, verbAndParticipleParadigmTables)
+    
+    this.addParadigms(partOfSpeech, paradigms)
+  }
+
+  loadNounParadigmData () {
+    const nounParadigmTables = GreekParadigmData.nounParadigmTables
+    
+    const partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
+    const paradigms = this.setNounParadigmData(
+      partOfSpeech, nounParadigmTables,
+      papaparse.parse(GreekParadigmData.nounParadigmRules, { skipEmptyLines: true }).data, nounParadigmTables)
     
     this.addParadigms(partOfSpeech, paradigms)
   }
@@ -129,6 +188,7 @@ export default class GreekParadigmDataset extends LanguageDataset {
     let footnotes = [] // eslint-disable-line prefer-const
     // First row are headers
     for (let i = 1; i < data.length; i++) {
+
       const footnote = this.addFootnote(partOfSpeech.value, classType, data[i][0], data[i][1])
       footnotes.push(footnote)
     }
@@ -151,6 +211,7 @@ export default class GreekParadigmDataset extends LanguageDataset {
   }
 
   createInflectionSet (pofsValue, inflections, options) {
+    
     let inflectionSet = new InflectionSet(pofsValue, this.languageID) // eslint-disable-line prefer-const
     inflectionSet.inflections = inflections.filter(i => i.constraints.implemented === true)
     inflectionSet.isImplemented = inflectionSet.inflections.length > 0
@@ -162,7 +223,6 @@ export default class GreekParadigmDataset extends LanguageDataset {
 
     if (inflectionSet.isImplemented) {      
       const paradigmBased = inflections.some(i => i.constraints.paradigmBased)
-
       if (paradigmBased) {
         const paradigms = sourceSet.getMatchingItems(Paradigm, inflections)
         inflectionSet.addInflectionItems(paradigms)

@@ -1281,6 +1281,7 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     expect(inflectionsViewSet.matchingViews.length).toEqual(3)
 
+
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekVerbParadigmView',

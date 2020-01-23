@@ -2348,7 +2348,10 @@ class LanguageDataset {
   setBaseInflectionData (inflection, lemma) {
     inflection.lemma = lemma
     inflection.addFeature(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.word, lemma.word, lemma.languageID))
-    inflection.constraints = this.model.getInflectionConstraints(inflection)
+    inflection.constraints = Object.assign(inflection.constraints, this.model.getInflectionConstraints(inflection))
+    if (inflection.constraints.paradigmBased && inflection.constraints.suffixBased) {
+      inflection.constraints.suffixBased = false
+    }
 
     inflection.constraints.implemented = this.isImplemented(inflection)
     if (inflection.constraints.implemented) {
@@ -12288,6 +12291,9 @@ var _paradigm_data_greek_verb_participle_tables_paradigm_65_json__WEBPACK_IMPORT
 /* harmony import */ var _paradigm_data_greek_verb_participle_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_72__ = __webpack_require__(/*! @/paradigm/data/greek/verb-participle/tables/paradigm-66.json */ "./src/paradigm/data/greek/verb-participle/tables/paradigm-66.json");
 var _paradigm_data_greek_verb_participle_tables_paradigm_66_json__WEBPACK_IMPORTED_MODULE_72___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/paradigm/data/greek/verb-participle/tables/paradigm-66.json */ "./src/paradigm/data/greek/verb-participle/tables/paradigm-66.json", 1);
 /* harmony import */ var _paradigm_data_greek_verb_participle_rules_csv__WEBPACK_IMPORTED_MODULE_73__ = __webpack_require__(/*! @/paradigm/data/greek/verb-participle/rules.csv */ "./src/paradigm/data/greek/verb-participle/rules.csv");
+/* harmony import */ var _paradigm_data_greek_noun_tables_paradigm_noun_1_json__WEBPACK_IMPORTED_MODULE_74__ = __webpack_require__(/*! @/paradigm/data/greek/noun/tables/paradigm-noun-1.json */ "./src/paradigm/data/greek/noun/tables/paradigm-noun-1.json");
+var _paradigm_data_greek_noun_tables_paradigm_noun_1_json__WEBPACK_IMPORTED_MODULE_74___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/paradigm/data/greek/noun/tables/paradigm-noun-1.json */ "./src/paradigm/data/greek/noun/tables/paradigm-noun-1.json", 1);
+/* harmony import */ var _paradigm_data_greek_noun_rules_csv__WEBPACK_IMPORTED_MODULE_75__ = __webpack_require__(/*! @/paradigm/data/greek/noun/rules.csv */ "./src/paradigm/data/greek/noun/rules.csv");
 
 
 
@@ -12367,6 +12373,13 @@ var _paradigm_data_greek_verb_participle_tables_paradigm_66_json__WEBPACK_IMPORT
 
 
 // Verb participle rules
+
+
+// Noun paradigm tables
+
+// Noun rules
+
+
 
 
 class GreekParadigmData {
@@ -12466,6 +12479,17 @@ class GreekParadigmData {
   static get verbParticipleParadigmRules () {
     return _paradigm_data_greek_verb_participle_rules_csv__WEBPACK_IMPORTED_MODULE_73__["default"]
   }
+
+  static get nounParadigmTables () {
+    const partOfSpeech = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_NOUN
+    return new Map([
+        ['nounpdgm1', new _paradigm_lib_paradigm_js__WEBPACK_IMPORTED_MODULE_1__["default"](this.languageID, partOfSpeech, _paradigm_data_greek_noun_tables_paradigm_noun_1_json__WEBPACK_IMPORTED_MODULE_74__)]
+    ])
+  }
+
+  static get nounParadigmRules () {
+    return _paradigm_data_greek_noun_rules_csv__WEBPACK_IMPORTED_MODULE_75__["default"]
+  }
 }
 
 /***/ }),
@@ -12485,10 +12509,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _paradigm_lib_paradigm_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/paradigm/lib/paradigm.js */ "./src/paradigm/lib/paradigm.js");
 /* harmony import */ var _paradigm_data_greek_greek_paradigm_data_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/paradigm/data/greek/greek-paradigm-data.js */ "./src/paradigm/data/greek/greek-paradigm-data.js");
 /* harmony import */ var _lib_inflection_set_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @lib//inflection-set.js */ "./lib/inflection-set.js");
-/* harmony import */ var _lib_footnote_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @lib/footnote.js */ "./lib/footnote.js");
-/* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! papaparse */ "./node_modules/papaparse/papaparse.js");
-/* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(papaparse__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _lib_language_dataset_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @lib/language-dataset.js */ "./lib/language-dataset.js");
+/* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! papaparse */ "./node_modules/papaparse/papaparse.js");
+/* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(papaparse__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _lib_language_dataset_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @lib/language-dataset.js */ "./lib/language-dataset.js");
 
 
 
@@ -12498,8 +12521,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-class GreekParadigmDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MODULE_6__["default"] {
+class GreekParadigmDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MODULE_5__["default"] {
   constructor () {
     super(GreekParadigmDataset.languageID)
 
@@ -12520,7 +12542,7 @@ class GreekParadigmDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
     return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_GREEK
   }
 
-  setParadigmData (partOfSpeech, paradigms, rulesData, suppParadigmTables) {
+  setVerbParadigmData (partOfSpeech, paradigms, rulesData, suppParadigmTables) {
     // An order of columns in a data CSV file
     const n = {
       id: 0,
@@ -12573,9 +12595,60 @@ class GreekParadigmDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
     return Array.from(paradigms.values())
   }
 
+  setNounParadigmData (partOfSpeech, paradigms, rulesData) {
+    // An order of columns in a data CSV file
+    const n = {
+      id: 0,
+      matchOrder: 1,
+      partOfSpeech: 2, // Ignored, an argument value will be used
+      stemtype: 3,
+      declension: 4,
+      gender: 5,
+      lemma: 6,
+      morphFlags: 7,
+      dialect: 8
+    }
+
+    // First row contains headers
+    for (let i = 1; i < rulesData.length; i++) {
+      const item = rulesData[i]
+      const id = item[n.id]
+      const matchOrder = Number.parseInt(item[n.matchOrder])
+
+      let features = [partOfSpeech] // eslint-disable-line prefer-const
+
+      if (item[n.stemtype]) { features.push(this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.stemtype).createFromImporter(item[n.stemtype])) }
+      if (item[n.declension]) { features.push(this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.declension).createFromImporter(item[n.declension])) }
+      if (item[n.gender]) { features.push(this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.gender).createFromImporter(item[n.gender])) }
+      if (item[n.dialect]) { features.push(this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.dialect).createFromImporter(item[n.dialect])) }
+
+      let lemma
+      if (item[n.lemma]) {
+        lemma = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"](item[n.lemma], this.languageID)
+      }
+
+      let morphFlags = ''
+      if (item[n.morphFlags]) {
+        morphFlags = item[n.morphFlags]
+      }
+
+      if (paradigms.has(id)) {
+        paradigms.get(id).addRule(matchOrder, features, lemma, morphFlags)
+      } else {
+        console.warn(`Cannot find a paradigm table for "${id}" index`)
+      }
+    }
+    for (let paradigm of paradigms.values()) { // eslint-disable-line prefer-const
+      paradigm.sortRules()
+    }
+
+    return Array.from(paradigms.values())
+  }
+
   loadData () {
     this.loadVerbParadigmData()
     this.loadVerbParticipleParadigmData()
+    this.loadNounParadigmData()
 
     this.dataLoaded = true
   }
@@ -12586,14 +12659,12 @@ class GreekParadigmDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
     const verbAndParticipleParadigmTables = new Map([...verbParadigmTables, ...verbParticipleParadigmTables])
 
     const partOfSpeech = this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part).createFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_VERB)
-    const paradigms = this.setParadigmData(
+    const paradigms = this.setVerbParadigmData(
       partOfSpeech, verbParadigmTables,
-      papaparse__WEBPACK_IMPORTED_MODULE_5___default.a.parse(_paradigm_data_greek_greek_paradigm_data_js__WEBPACK_IMPORTED_MODULE_2__["default"].verbParadigmRules, { skipEmptyLines: true }).data, verbAndParticipleParadigmTables)
-
-    // console.info(paradigms)
+      papaparse__WEBPACK_IMPORTED_MODULE_4___default.a.parse(_paradigm_data_greek_greek_paradigm_data_js__WEBPACK_IMPORTED_MODULE_2__["default"].verbParadigmRules, { skipEmptyLines: true }).data, verbAndParticipleParadigmTables)
 
     this.addParadigms(partOfSpeech, paradigms)
-    this.addFootnotes(partOfSpeech, _paradigm_lib_paradigm_js__WEBPACK_IMPORTED_MODULE_1__["default"], papaparse__WEBPACK_IMPORTED_MODULE_5___default.a.parse(_paradigm_data_greek_greek_paradigm_data_js__WEBPACK_IMPORTED_MODULE_2__["default"].verbParadigmFootnotes, { skipEmptyLines: true }).data)
+    this.addFootnotes(partOfSpeech, _paradigm_lib_paradigm_js__WEBPACK_IMPORTED_MODULE_1__["default"], papaparse__WEBPACK_IMPORTED_MODULE_4___default.a.parse(_paradigm_data_greek_greek_paradigm_data_js__WEBPACK_IMPORTED_MODULE_2__["default"].verbParadigmFootnotes, { skipEmptyLines: true }).data)
   }
 
   loadVerbParticipleParadigmData () {
@@ -12602,9 +12673,20 @@ class GreekParadigmDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
     const verbAndParticipleParadigmTables = new Map([...verbParadigmTables, ...verbParticipleParadigmTables])
     
     const partOfSpeech = this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part).createFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_VERB_PARTICIPLE)
-    const paradigms = this.setParadigmData(
+    const paradigms = this.setVerbParadigmData(
       partOfSpeech, verbParticipleParadigmTables,
-      papaparse__WEBPACK_IMPORTED_MODULE_5___default.a.parse(_paradigm_data_greek_greek_paradigm_data_js__WEBPACK_IMPORTED_MODULE_2__["default"].verbParticipleParadigmRules, { skipEmptyLines: true }).data, verbAndParticipleParadigmTables)
+      papaparse__WEBPACK_IMPORTED_MODULE_4___default.a.parse(_paradigm_data_greek_greek_paradigm_data_js__WEBPACK_IMPORTED_MODULE_2__["default"].verbParticipleParadigmRules, { skipEmptyLines: true }).data, verbAndParticipleParadigmTables)
+    
+    this.addParadigms(partOfSpeech, paradigms)
+  }
+
+  loadNounParadigmData () {
+    const nounParadigmTables = _paradigm_data_greek_greek_paradigm_data_js__WEBPACK_IMPORTED_MODULE_2__["default"].nounParadigmTables
+    
+    const partOfSpeech = this.typeFeatures.get(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part).createFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_NOUN)
+    const paradigms = this.setNounParadigmData(
+      partOfSpeech, nounParadigmTables,
+      papaparse__WEBPACK_IMPORTED_MODULE_4___default.a.parse(_paradigm_data_greek_greek_paradigm_data_js__WEBPACK_IMPORTED_MODULE_2__["default"].nounParadigmRules, { skipEmptyLines: true }).data, nounParadigmTables)
     
     this.addParadigms(partOfSpeech, paradigms)
   }
@@ -12620,6 +12702,7 @@ class GreekParadigmDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
     let footnotes = [] // eslint-disable-line prefer-const
     // First row are headers
     for (let i = 1; i < data.length; i++) {
+
       const footnote = this.addFootnote(partOfSpeech.value, classType, data[i][0], data[i][1])
       footnotes.push(footnote)
     }
@@ -12642,6 +12725,7 @@ class GreekParadigmDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
   }
 
   createInflectionSet (pofsValue, inflections, options) {
+    
     let inflectionSet = new _lib_inflection_set_js__WEBPACK_IMPORTED_MODULE_3__["default"](pofsValue, this.languageID) // eslint-disable-line prefer-const
     inflectionSet.inflections = inflections.filter(i => i.constraints.implemented === true)
     inflectionSet.isImplemented = inflectionSet.inflections.length > 0
@@ -12653,7 +12737,6 @@ class GreekParadigmDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
 
     if (inflectionSet.isImplemented) {      
       const paradigmBased = inflections.some(i => i.constraints.paradigmBased)
-
       if (paradigmBased) {
         const paradigms = sourceSet.getMatchingItems(_paradigm_lib_paradigm_js__WEBPACK_IMPORTED_MODULE_1__["default"], inflections)
         inflectionSet.addInflectionItems(paradigms)
@@ -12669,6 +12752,30 @@ class GreekParadigmDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
     return pos.get(partOfSpeech).types.get(_paradigm_lib_paradigm_js__WEBPACK_IMPORTED_MODULE_1__["default"]).getByID(paradigmID)
   }
 }
+
+/***/ }),
+
+/***/ "./src/paradigm/data/greek/noun/rules.csv":
+/*!************************************************!*\
+  !*** ./src/paradigm/data/greek/noun/rules.csv ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("ID ref,Match order,Part of speech,Stem type,Declension,Gender,Lemma,Morph flags,Dialect\r\nnounpdgm1,1,noun,os_ou,2nd,masculine,ἄνθρωπος,,\r\nnounpdgm1,1,noun,os_ou,2nd,neuter,ἔργον,,");
+
+/***/ }),
+
+/***/ "./src/paradigm/data/greek/noun/tables/paradigm-noun-1.json":
+/*!******************************************************************!*\
+  !*** ./src/paradigm/data/greek/noun/tables/paradigm-noun-1.json ***!
+  \******************************************************************/
+/*! exports provided: ID, partOfSpeech, title, credits, table, subTables, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"ID\":\"nounpdgm1\",\"partOfSpeech\":\"noun\",\"title\":\"Omicron-Declension Nouns\",\"credits\":\"Noun paradigm tables derived from <a target=\\\"_blank\\\" href=\\\"http://ucbclassics.dreamhosters.com/ancgreek/\\\">Ancient Greek Tutorials</a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.\",\"table\":{\"rows\":[{\"cells\":[{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"singular\",\"value\":\"singular\"},{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"singular\",\"case\":\"nominative\",\"value\":\"nominative\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"masculine\",\"number\":\"singular\",\"case\":\"nominative\",\"value\":\"ἄνθρωπος\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"neuter\",\"number\":\"singular\",\"case\":\"nominative\",\"value\":\"ἔργον\"}]},{\"cells\":[{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"singular\",\"value\":\"\"},{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"singular\",\"case\":\"genitive\",\"value\":\"genitive\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"masculine\",\"number\":\"singular\",\"case\":\"genitive\",\"value\":\"ἀνθρώπου\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"neuter\",\"number\":\"singular\",\"case\":\"genitive\",\"value\":\"ἔργου\"}]},{\"cells\":[{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"singular\",\"value\":\"\"},{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"singular\",\"case\":\"dative\",\"value\":\"dative\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"masculine\",\"number\":\"singular\",\"case\":\"dative\",\"value\":\"ἀνθρώπῳ\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"neuter\",\"number\":\"singular\",\"case\":\"dative\",\"value\":\"ἔργῳ\"}]},{\"cells\":[{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"singular\",\"value\":\"\"},{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"singular\",\"case\":\"accusative\",\"value\":\"accusative\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"masculine\",\"number\":\"singular\",\"case\":\"accusative\",\"value\":\"ἄνθρωπον\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"neuter\",\"number\":\"singular\",\"case\":\"accusative\",\"value\":\"ἔργον\"}]},{\"cells\":[{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"singular\",\"value\":\"\"},{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"singular\",\"case\":\"vocative\",\"value\":\"vocative\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"masculine\",\"number\":\"singular\",\"case\":\"vocative\",\"value\":\"ἄνθρωπε\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"neuter\",\"number\":\"singular\",\"case\":\"vocative\",\"value\":\"ἔργον\"}]},{\"cells\":[{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"dual\",\"value\":\"dual\"},{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"dual\",\"case\":\"nominative accusative vocative\",\"value\":\"nominative accusative vocative\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"masculine\",\"number\":\"dual\",\"case\":\"nominative accusative vocative\",\"value\":\"ἀνθρώπω\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"neuter\",\"number\":\"dual\",\"case\":\"nominative accusative vocative\",\"value\":\"ἔργω\"}]},{\"cells\":[{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"dual\",\"value\":\"dual\"},{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"dual\",\"case\":\"genitive dative\",\"value\":\"genitive dative\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"masculine\",\"number\":\"dual\",\"case\":\"genitive dativee\",\"value\":\"ἀνθρώποιν\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"neuter\",\"number\":\"dual\",\"case\":\"genitive dative\",\"value\":\"ἔργοιν\"}]},{\"cells\":[{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"plural\",\"value\":\"plural\"},{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"plural\",\"case\":\"nominative vocative\",\"value\":\"nominative vocative\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"masculine\",\"number\":\"plural\",\"case\":\"nominative vocative\",\"value\":\"ἄνθρωποι\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"neuter\",\"number\":\"plural\",\"case\":\"nominative vocative\",\"value\":\"ἔργᾰ\"}]},{\"cells\":[{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"plural\",\"value\":\"plural\"},{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"plural\",\"case\":\"genitive\",\"value\":\"genitive\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"masculine\",\"number\":\"plural\",\"case\":\"genitive\",\"value\":\"ἀνθρώπων\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"neuter\",\"number\":\"plural\",\"case\":\"genitive\",\"value\":\"ἔργων\"}]},{\"cells\":[{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"plural\",\"value\":\"plural\"},{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"plural\",\"case\":\"dative\",\"value\":\"dative\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"masculine\",\"number\":\"plural\",\"case\":\"dative\",\"value\":\"ἀνθρώποις\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"neuter\",\"number\":\"plural\",\"case\":\"dative\",\"value\":\"ἔργοις\"}]},{\"cells\":[{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"plural\",\"value\":\"plural\"},{\"role\":\"label\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"number\":\"plural\",\"case\":\"accusative\",\"value\":\"accusative\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"masculine\",\"number\":\"plural\",\"case\":\"accusative\",\"value\":\"ἀνθρώπους\"},{\"role\":\"data\",\"declension\":\"2nd\",\"stemtype\":\"os_ou\",\"gender\":\"neuter\",\"number\":\"plural\",\"case\":\"accusative\",\"value\":\"ἔργᾰ\"}]}]},\"subTables\":[]}");
 
 /***/ }),
 
@@ -13784,6 +13891,36 @@ class Paradigm {
 
 /***/ }),
 
+/***/ "./src/paradigm/views/greek/noun/greek-noun-paradigm-view.js":
+/*!*******************************************************************!*\
+  !*** ./src/paradigm/views/greek/noun/greek-noun-paradigm-view.js ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return GreekNounParadigmView; });
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _paradigm_views_greek_verb_greek_verb_paradigm_view_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/paradigm/views/greek/verb/greek-verb-paradigm-view.js */ "./src/paradigm/views/greek/verb/greek-verb-paradigm-view.js");
+
+
+
+class GreekNounParadigmView extends _paradigm_views_greek_verb_greek_verb_paradigm_view_js__WEBPACK_IMPORTED_MODULE_1__["default"] {
+  static get viewID () {
+    return 'greek_noun_paradigm_view'
+  }
+
+  static get partsOfSpeech () {
+    return [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_NOUN]
+  }
+
+}
+
+
+/***/ }),
+
 /***/ "./src/paradigm/views/greek/verb-participle/greek-verb-participle-paradigm-view.js":
 /*!*****************************************************************************************!*\
   !*** ./src/paradigm/views/greek/verb-participle/greek-verb-participle-paradigm-view.js ***!
@@ -14246,6 +14383,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_lang_greek_pronoun_greek_person_pronoun_view_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @views/lang/greek/pronoun/greek-person-pronoun-view.js */ "./views/lang/greek/pronoun/greek-person-pronoun-view.js");
 /* harmony import */ var _paradigm_views_greek_verb_greek_verb_paradigm_view_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/paradigm/views/greek/verb/greek-verb-paradigm-view.js */ "./src/paradigm/views/greek/verb/greek-verb-paradigm-view.js");
 /* harmony import */ var _paradigm_views_greek_verb_participle_greek_verb_participle_paradigm_view_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/paradigm/views/greek/verb-participle/greek-verb-participle-paradigm-view.js */ "./src/paradigm/views/greek/verb-participle/greek-verb-participle-paradigm-view.js");
+/* harmony import */ var _paradigm_views_greek_noun_greek_noun_paradigm_view_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/paradigm/views/greek/noun/greek-noun-paradigm-view.js */ "./src/paradigm/views/greek/noun/greek-noun-paradigm-view.js");
+
 
 
 
@@ -14283,7 +14422,8 @@ class GreekViewSet extends _lib_view_set_js__WEBPACK_IMPORTED_MODULE_0__["defaul
       _views_lang_greek_pronoun_greek_person_pronoun_view_js__WEBPACK_IMPORTED_MODULE_10__["default"],
       _views_lang_greek_pronoun_greek_lemma_gender_pronoun_view_js__WEBPACK_IMPORTED_MODULE_8__["default"],
       _paradigm_views_greek_verb_greek_verb_paradigm_view_js__WEBPACK_IMPORTED_MODULE_11__["default"],
-      _paradigm_views_greek_verb_participle_greek_verb_participle_paradigm_view_js__WEBPACK_IMPORTED_MODULE_12__["default"]
+      _paradigm_views_greek_verb_participle_greek_verb_participle_paradigm_view_js__WEBPACK_IMPORTED_MODULE_12__["default"],
+      _paradigm_views_greek_noun_greek_noun_paradigm_view_js__WEBPACK_IMPORTED_MODULE_13__["default"]
     ]
   }
 }
@@ -18612,9 +18752,9 @@ class View {
    * @return {boolean}
    */
   static matchFilter (languageID, inflections) {
-    // return (this.languageID === inflection.languageID && this.partsOfSpeech.includes(inflection[Feature.types.part].value))
     // Disable multiple parts of speech for now
-    return (this.languageID === languageID && inflections.some(i => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part] && i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.mainPartOfSpeech))
+    const res = (this.languageID === languageID && inflections.some(i => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part] && i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.mainPartOfSpeech))
+    return res
   }
 
   /**
@@ -18791,6 +18931,7 @@ class View {
   static getMatchingInstances (homonym) {
     if (this.matchFilter(homonym.languageID, homonym.inflections)) {
       const inflectionData = this.getInflectionsData(homonym)
+
       if (inflectionData.types.has(this.inflectionType)) {
         // There is some inflection data found for the view's morpheme type
         const view = new this(homonym, inflectionData)

@@ -172,7 +172,10 @@ export default class LanguageDataset {
   setBaseInflectionData (inflection, lemma) {
     inflection.lemma = lemma
     inflection.addFeature(new Feature(Feature.types.word, lemma.word, lemma.languageID))
-    inflection.constraints = this.model.getInflectionConstraints(inflection)
+    inflection.constraints = Object.assign(inflection.constraints, this.model.getInflectionConstraints(inflection))
+    if (inflection.constraints.paradigmBased && inflection.constraints.suffixBased) {
+      inflection.constraints.suffixBased = false
+    }
 
     inflection.constraints.implemented = this.isImplemented(inflection)
     if (inflection.constraints.implemented) {
