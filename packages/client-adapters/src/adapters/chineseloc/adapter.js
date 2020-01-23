@@ -89,12 +89,12 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
       let lemma = new Lemma(headword, this.languageID, []) // eslint-disable-line prefer-const
 
       // eslint-disable-next-line prefer-const
-      let pronunciationValues = ['tang', 'mandarin', 'cantonese'].reduce((arr, i) => {
+      let pronunciationValues = entry.pinyin ? [ChineseLanguageModel.formatPinyin(entry.pinyin)] : []
+      pronunciationValues = ['mandarin', 'cantonese', 'tang'].reduce((arr, i) => {
         // Add all of the values listed above to an array or pronunciation feature. Each feature value will be preceded with its name.
         // TODO: Update once we decide on a better format of storing pronunciation in a Feature object.
         if (cfData[i]) arr.push(`${i} - ${cfData[i]}`); return arr
-      }, [])
-      if (entry.pinyin) pronunciationValues.push(ChineseLanguageModel.formatPinyin(entry.pinyin))
+      }, pronunciationValues)
       lemma.addFeature(this._createFeature(Feature.types.pronunciation, pronunciationValues))
       lemma.addFeature(this._createFeature(Feature.types.note, characterForm))
       if (cfData.radical && cfData.radical.character) lemma.addFeature(this._createFeature(Feature.types.radical, cfData.radical.character))
