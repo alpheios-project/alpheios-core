@@ -1,6 +1,7 @@
 #travis config
 language: node_js
-node_js: 
- - "8"
+node_js:
+ - 13.2
+cache: npm
 notifications:
   slack: alpheiosproject:9WEA6UNyLr3U0bWIJctp1rqS
