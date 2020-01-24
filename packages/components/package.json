@@ -161,7 +161,5 @@
     "**/dist",
     "**/support"
   ],
-  "dependencies": {
-    "lexis-cs": "github:alpheios-project/lexis-cs"
-  }
+  "dependencies": {}
 }
