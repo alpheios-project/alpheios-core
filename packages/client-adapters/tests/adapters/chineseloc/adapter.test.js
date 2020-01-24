@@ -72,6 +72,7 @@ describe('chineseloc.test.js', () => {
     expect(homonym.lexemes[0].meaning.shortDefs.length).toEqual(2)
     expect(homonym.lexemes[0].meaning.shortDefs[0].text).toEqual('to sleep')
     expect(homonym.lexemes[0].meaning.shortDefs[1].text).toEqual('to hibernate')
+    expect(homonym.isMultiHomonym).toBeFalsy()
 
     expect(adapter.errors.length).toEqual(0)
   })
@@ -112,6 +113,7 @@ describe('chineseloc.test.js', () => {
       'to sharpen (knife)',
       '(old) coffin-bearing pole'
     ])
+    expect(homonym.isMultiHomonym).toBeFalsy()
 
     expect(adapter.errors.length).toEqual(0)
   })
@@ -139,7 +141,36 @@ describe('chineseloc.test.js', () => {
     ])
   })
 
-  it('6 AlpheiosChineseLocAdapter: getHomonym with context forward must return value from context forward if value for selection is not found', async () => {
+  it('6 AlpheiosChineseLocAdapter: getHomonym with context forward must return a homonym with all words returned by CEDICT', async () => {
+    // eslint-disable-next-line prefer-const
+    let adapter = new AlpheiosChineseLocAdapter({
+      category: 'morphology',
+      adapterName: 'chineseloc',
+      method: 'getHomonym'
+    })
+    // Stub the messaging service method
+    adapter._messagingService.sendRequestTo = CedictFixture.lexisCedictRequest
+    const homonym = await adapter.getHomonym('日', '月盈昃')
+    expect(homonym).toBeDefined()
+    expect(homonym.lexemes.length).toEqual(3)
+    expect(homonym.isMultiHomonym).toBeTruthy()
+  })
+
+  it('7 AlpheiosChineseLocAdapter: getHomonym must return a homonym with a multi-homonym prop set when multiple word matches are found in CEDICT', async () => {
+    // eslint-disable-next-line prefer-const
+    let adapter = new AlpheiosChineseLocAdapter({
+      category: 'morphology',
+      adapterName: 'chineseloc',
+      method: 'getHomonym'
+    })
+    // Stub the messaging service method
+    adapter._messagingService.sendRequestTo = CedictFixture.lexisCedictRequest
+    const homonym = await adapter.getHomonym('日', '月盈昃')
+    expect(homonym).toBeDefined()
+    expect(homonym.isMultiHomonym).toBeTruthy()
+  })
+
+  it('8 AlpheiosChineseLocAdapter: getHomonym with context forward must return value from context forward if value for selection is not found', async () => {
     // eslint-disable-next-line prefer-const
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
@@ -168,6 +199,7 @@ describe('chineseloc.test.js', () => {
     expect(homonym.lexemes[0].meaning.shortDefs.length).toEqual(2)
     expect(homonym.lexemes[0].meaning.shortDefs[0].text).toEqual('to sleep')
     expect(homonym.lexemes[0].meaning.shortDefs[1].text).toEqual('to hibernate')
+    expect(homonym.isMultiHomonym).toBeFalsy()
 
     expect(adapter.errors.length).toEqual(0)
   })
@@ -176,7 +208,7 @@ describe('chineseloc.test.js', () => {
   Multi-character words do not have tang, mandarin or cantonese pronunciations as well as frequency and radical values.
   Those values exist for single-character words only.
    */
-  it('7 AlpheiosChineseLocAdapter - method getHomonym with a multi-character word returns homonym if fetch was successful', async () => {
+  it('9 AlpheiosChineseLocAdapter - method getHomonym with a multi-character word returns homonym if fetch was successful', async () => {
     // eslint-disable-next-line prefer-const
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
@@ -203,11 +235,12 @@ describe('chineseloc.test.js', () => {
     expect(homonym.lexemes[0].meaning.shortDefs.length).toEqual(2)
     expect(homonym.lexemes[0].meaning.shortDefs[0].text).toEqual('now')
     expect(homonym.lexemes[0].meaning.shortDefs[1].text).toEqual('at the present (time)')
+    expect(homonym.isMultiHomonym).toBeFalsy()
 
     expect(adapter.errors.length).toEqual(0)
   })
 
-  it('8 AlpheiosChineseLocAdapter: getHomonym returns a simplified multi-character word', async () => {
+  it('10 AlpheiosChineseLocAdapter: getHomonym returns a simplified multi-character word', async () => {
     // eslint-disable-next-line prefer-const
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
@@ -235,11 +268,12 @@ describe('chineseloc.test.js', () => {
     expect(homonym.lexemes[0].meaning.shortDefs.length).toEqual(2)
     expect(homonym.lexemes[0].meaning.shortDefs[0].text).toEqual('trisomy')
     expect(homonym.lexemes[0].meaning.shortDefs[1].text).toEqual('Down\'s syndrome')
+    expect(homonym.isMultiHomonym).toBeFalsy()
 
     expect(adapter.errors.length).toEqual(0)
   })
 
-  it('9 AlpheiosChineseLocAdapter - method getHomonym  returns undefined if fetch was not successfull and adds an error to adapter', async () => {
+  it('11 AlpheiosChineseLocAdapter - method getHomonym  returns undefined if fetch was not successfull and adds an error to adapter', async () => {
     // eslint-disable-next-line prefer-const
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',

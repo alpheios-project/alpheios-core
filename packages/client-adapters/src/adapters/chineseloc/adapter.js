@@ -64,14 +64,12 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
         this.addError(this.l10n.messages.MORPH_NO_HOMONYM.get(targetWord, this.languageID.toString()))
         return
       }
-      // const homonym = this._transformData(res, targetWord)
-      const cedictHomonym = this._transformData(cedictRes, targetWord)
-
-      if (!cedictHomonym) {
+      const homonym = this._transformData(cedictRes, targetWord)
+      if (!homonym) {
         this.addError(this.l10n.messages.MORPH_NO_HOMONYM.get(targetWord, this.languageID.toString()))
         return
       }
-      return cedictHomonym
+      return homonym
     } catch (error) {
       this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
     }
@@ -83,7 +81,8 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
       ? CedictCharacterForms.SIMPLIFIED
       : CedictCharacterForms.TRADITIONAL
     let lexemes = [] // eslint-disable-line prefer-const
-    cedictEntries[characterForm][targetWord].forEach(entry => {
+    const wordEntries = Object.values(cedictEntries[characterForm]).flat()
+    wordEntries.forEach(entry => {
       const cfData = entry[characterForm]
       const headword = cfData.headword
       let lemma = new Lemma(headword, this.languageID, []) // eslint-disable-line prefer-const
@@ -105,7 +104,26 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
       lexModel.meaning.appendShortDefs(shortDefs)
       lexemes.push(lexModel)
     })
-    return new Homonym(lexemes, targetWord)
+    let homonym = new Homonym(lexemes, targetWord) // eslint-disable-line prefer-const
+    /*
+    As a temporary measure, until HomonymSet is introduced, we will place several Chinese homonyms
+    into the single Homonym object as individual lexemes. We will use an `isMultiHomonym` prop set to true
+    to mark Homonym objects like this.
+     */
+    homonym.isMultiHomonym = AlpheiosChineseLocAdapter._wordsFound(cedictEntries[characterForm]) > 1
+    return homonym
+  }
+
+  /**
+   * Returns the number of words that has some matching CEDICT entries.
+   *
+   * @param {object} result - Data returned from CEDICT, an object whose keys are words and values are arrays
+   *        either empty (if no entries in CEDICT are found for a word) or containing CEDICT records.
+   * @returns {number} A number of words that has some matching CECIDT records.
+   * @private
+   */
+  static _wordsFound (result) {
+    return Object.keys(result).filter(key => result[key].length > 0).length
   }
 
   _createFeature (featureType, values) {
