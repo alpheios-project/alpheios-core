@@ -116,14 +116,16 @@ function bytesToUuid(buf, offset) {
   var i = offset || 0;
   var bth = byteToHex;
   // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
-  return ([bth[buf[i++]], bth[buf[i++]], 
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]],
-	bth[buf[i++]], bth[buf[i++]],
-	bth[buf[i++]], bth[buf[i++]]]).join('');
+  return ([
+    bth[buf[i++]], bth[buf[i++]],
+    bth[buf[i++]], bth[buf[i++]], '-',
+    bth[buf[i++]], bth[buf[i++]], '-',
+    bth[buf[i++]], bth[buf[i++]], '-',
+    bth[buf[i++]], bth[buf[i++]], '-',
+    bth[buf[i++]], bth[buf[i++]],
+    bth[buf[i++]], bth[buf[i++]],
+    bth[buf[i++]], bth[buf[i++]]
+  ]).join('');
 }
 
 module.exports = bytesToUuid;
@@ -414,7 +416,7 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
     for (let j = 0; j < aPinyin.length; j++) {
       if (j % 2 === 0) {
         let pin = aPinyin[j]
-        const tone = toneFormat[aPinyin[j + 1]] ? toneFormat[aPinyin[j + 1]] : 4
+        const tone = toneFormat[aPinyin[j + 1]] !== undefined ? toneFormat[aPinyin[j + 1]] : 4
 
         if (pin.indexOf('a') !== -1) {
           pin = pin.replace('a', _a[tone])

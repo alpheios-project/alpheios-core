@@ -79,7 +79,7 @@ export default class ChineseLanguageModel extends LanguageModel {
     for (let j = 0; j < aPinyin.length; j++) {
       if (j % 2 === 0) {
         let pin = aPinyin[j]
-        const tone = toneFormat[aPinyin[j + 1]] ? toneFormat[aPinyin[j + 1]] : 4
+        const tone = toneFormat[aPinyin[j + 1]] !== undefined ? toneFormat[aPinyin[j + 1]] : 4
 
         if (pin.indexOf('a') !== -1) {
           pin = pin.replace('a', _a[tone])
