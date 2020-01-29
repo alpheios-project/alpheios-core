@@ -2436,10 +2436,11 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
   static normalizeWord (word) {
     // we normalize greek to NFC - Normalization Form Canonical Composition
     if (word) {
-      return word.normalize('NFC')
-    } else {
-      return word
+      word = word.normalize('NFC')
+      // normalize the right single quotation at the end (elision) to Greek Koronois \u1fbd
+      word = word.replace(/\u2019$/, '\u1fbd')
     }
+    return word
   }
 
   /**
@@ -2503,7 +2504,7 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
    * @returns {String} a string containing valid puncutation symbols
    */
   static getPunctuation () {
-    return '.,;:!?"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D'
+    return '.,;:!?"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u201C\u201D\u0387\u00B7\n\r\u200C\u200D'
   }
 
   /**

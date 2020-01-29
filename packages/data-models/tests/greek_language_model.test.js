@@ -129,4 +129,8 @@ describe('greek_language_model.j', () => {
     // and are not equal if we don't normalize
     expect(greekModel.compareWords('συνεχής', 'συνεχης', false)).toBeFalsy()
   })
+
+  it('13 GreekLanguageModel - normalizes right quotation to koronis', () => {
+    expect(greekModel.normalizeWord('ἀλλ’')).toEqual('ἀλλ\u1fbd')
+  })
 })
