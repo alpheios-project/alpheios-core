@@ -1,0 +1,471 @@
+{
+    "ID": "nounpdgm12",
+    "partOfSpeech": "noun",
+    "title": "Consonant-Declension Nouns: irregular nouns",
+    "credits": "Noun paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "γυνή",
+                "value": "γυνή"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "χείρ",
+                "value": "χείρ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "υἱός",
+                "value": "υἱός, ὑός"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "γυνή",
+                "value": "γυναικός"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "χείρ",
+                "value": "χειρός"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "υἱός",
+                "value": "υἱέος, ὑέος"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "γυνή",
+                "value": "γυναικί"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "χείρ",
+                "value": "χειρί"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "υἱός",
+                "value": "υἱεῖ, ὑεῖ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "γυνή",
+                "value": "γυναῖκᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "χείρ",
+                "value": "χεῖρᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "υἱός",
+                "value": "---"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "γυνή",
+                "value": "γύναι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "χείρ",
+                "value": "χείρ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "υἱός",
+                "value": "---"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "γυνή",
+                "value": "γυναῖκε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "χείρ",
+                "value": "χεῖρε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "υἱός",
+                "value": "υἱεῖ, ὑεῖ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "γυνή",
+                "value": "γυναικοῖν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "χείρ",
+                "value": "χεροῖν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "υἱός",
+                "value": "υἱοῖν, ὑοῖν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "γυνή",
+                "value": "γυναῖκας"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "χείρ",
+                "value": "χεῖρες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "υἱός",
+                "value": "υἱεῖς, ὑεῖς"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "γυνή",
+                "value": "γυναικῶν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "χείρ",
+                "value": "χειρῶν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "υἱός",
+                "value": "υἱέων, ὑέων"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "γυνή",
+                "value": "γυναιξί(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "χείρ",
+                "value": "χερσί(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "υἱός",
+                "value": "υἱέσι(ν), ὑέσι(ν)"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "γυνή",
+                "value": "γυναῖκᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "χείρ",
+                "value": "χεῖρᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "υἱός",
+                "value": "υἱεῖς, ὑεῖς"
+            }
+        ]}
+      ]},
+      "subTables": []
+}

@@ -22,8 +22,12 @@ export default class ParadigmRule {
    */
   matches (inflection) {
     let match = true
+    // console.info('*******************', this.features[0].value)
     for (const feature of this.features) {
       match = match && inflection.hasOwnProperty(feature.type) && feature.value === inflection[feature.type].value // eslint-disable-line no-prototype-builtins
+      if (inflection.hasOwnProperty(feature.type)) {
+        // console.info('Rule lemma1', feature.value, feature.value === inflection[feature.type].value, match)
+      }
       if (!match) {
         return false
       }
@@ -32,6 +36,8 @@ export default class ParadigmRule {
       // If there is lemma present in the rule, check that it will match the target word
       match = match && inflection.word && inflection.word.value === this.lemma.word
     }
+
+    // console.info('Rule lemma2', this.lemma.word, inflection.word.value, match)
     return match
   }
 }

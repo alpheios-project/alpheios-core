@@ -1,0 +1,570 @@
+{
+    "ID": "nounpdgm13",
+    "partOfSpeech": "noun",
+    "title": "Consonant-Declension Nouns: stems in ι or υ",
+    "credits": "Noun paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_ews",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "πόλις",
+                "value": "πόλις"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "πῆχυς",
+                "value": "πῆχυς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ἄστυ",
+                "value": "ἄστυ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "uLs_uos",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ἰχθύς",
+                "value": "ἰχθύς"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_ews",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "πόλις",
+                "value": "πατρός"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "πῆχυς",
+                "value": "μητρός"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἄστυ",
+                "value": "θυγατρός"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "uLs_uos",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἰχθύς",
+                "value": "ἀνδρός"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_ews",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "πόλις",
+                "value": "πατρί"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "πῆχυς",
+                "value": "μητρί"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἄστυ",
+                "value": "θυγατρί"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "uLs_uos",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἰχθύς",
+                "value": "ἀνδρί"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_ews",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "πόλις",
+                "value": "πατέρᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "πῆχυς",
+                "value": "μητέρᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἄστυ",
+                "value": "θυγατέρᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "uLs_uos",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἰχθύς",
+                "value": "ἄνδρᾰ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_ews",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "πόλις",
+                "value": "πάτερ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "πῆχυς",
+                "value": "μῆτερ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ἄστυ",
+                "value": "θύγατερ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "uLs_uos",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ἰχθύς",
+                "value": "ἄνερ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_ews",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "πόλις",
+                "value": "πατέρε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "πῆχυς",
+                "value": "μητέρε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἄστυ",
+                "value": "θυγατέρε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "uLs_uos",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἰχθύς",
+                "value": "ἄνδρε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_ews",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "πόλις",
+                "value": "πατέροιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "πῆχυς",
+                "value": "μητέροιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἄστυ",
+                "value": "θυγατέροιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "uLs_uos",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἰχθύς",
+                "value": "ἀνδροῖν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_ews",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "πόλις",
+                "value": "πατέρες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "πῆχυς",
+                "value": "μητέρες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἄστυ",
+                "value": "θυγατέρες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "uLs_uos",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἰχθύς",
+                "value": "ἄνδρες"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_ews",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "πόλις",
+                "value": "πατέρων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "πῆχυς",
+                "value": "μητέρων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἄστυ",
+                "value": "θυγατέρων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "uLs_uos",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἰχθύς",
+                "value": "ἀνδρῶν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_ews",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "πόλις",
+                "value": "πατράσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "πῆχυς",
+                "value": "μητράσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἄστυ",
+                "value": "θυγατράσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "uLs_uos",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἰχθύς",
+                "value": "ἀνδράσι(ν)"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_ews",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "πόλις",
+                "value": "πατέρᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "πῆχυς",
+                "value": "μητέρᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "us_ews",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἄστυ",
+                "value": "θυγατέρᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "uLs_uos",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἰχθύς",
+                "value": "ἄνδρᾰς"
+            }
+        ]}
+      ]},
+      "subTables": []
+}

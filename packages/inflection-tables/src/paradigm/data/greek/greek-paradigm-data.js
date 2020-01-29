@@ -81,6 +81,24 @@ import verbParticipleParadigmRulesCSV from '@/paradigm/data/greek/verb-participl
 
 // Noun paradigm tables
 import paradigmNoun1 from '@/paradigm/data/greek/noun/tables/paradigm-noun-1.json'
+import paradigmNoun2 from '@/paradigm/data/greek/noun/tables/paradigm-noun-2.json'
+import paradigmNoun3 from '@/paradigm/data/greek/noun/tables/paradigm-noun-3.json'
+import paradigmNoun4 from '@/paradigm/data/greek/noun/tables/paradigm-noun-4.json'
+import paradigmNoun5 from '@/paradigm/data/greek/noun/tables/paradigm-noun-5.json'
+import paradigmNoun6 from '@/paradigm/data/greek/noun/tables/paradigm-noun-6.json'
+import paradigmNoun7 from '@/paradigm/data/greek/noun/tables/paradigm-noun-7.json'
+import paradigmNoun8 from '@/paradigm/data/greek/noun/tables/paradigm-noun-8.json'
+import paradigmNoun9 from '@/paradigm/data/greek/noun/tables/paradigm-noun-9.json'
+import paradigmNoun10 from '@/paradigm/data/greek/noun/tables/paradigm-noun-10.json'
+import paradigmNoun11 from '@/paradigm/data/greek/noun/tables/paradigm-noun-11.json'
+import paradigmNoun12 from '@/paradigm/data/greek/noun/tables/paradigm-noun-12.json'
+import paradigmNoun13 from '@/paradigm/data/greek/noun/tables/paradigm-noun-13.json'
+import paradigmNoun14 from '@/paradigm/data/greek/noun/tables/paradigm-noun-14.json'
+import paradigmNoun15 from '@/paradigm/data/greek/noun/tables/paradigm-noun-15.json'
+import paradigmNoun16 from '@/paradigm/data/greek/noun/tables/paradigm-noun-16.json'
+import paradigmNoun17 from '@/paradigm/data/greek/noun/tables/paradigm-noun-17.json'
+import paradigmNoun18 from '@/paradigm/data/greek/noun/tables/paradigm-noun-18.json'
+
 // Noun rules
 import nounParadigmRulesCSV from '@/paradigm/data/greek/noun/rules.csv'
 
@@ -187,7 +205,24 @@ export default class GreekParadigmData {
   static get nounParadigmTables () {
     const partOfSpeech = Constants.POFS_NOUN
     return new Map([
-        ['nounpdgm1', new Paradigm(this.languageID, partOfSpeech, paradigmNoun1)]
+        ['nounpdgm1', new Paradigm(this.languageID, partOfSpeech, paradigmNoun1)],
+        ['nounpdgm2', new Paradigm(this.languageID, partOfSpeech, paradigmNoun2)],
+        ['nounpdgm3', new Paradigm(this.languageID, partOfSpeech, paradigmNoun3)],
+        ['nounpdgm4', new Paradigm(this.languageID, partOfSpeech, paradigmNoun4)],
+        ['nounpdgm5', new Paradigm(this.languageID, partOfSpeech, paradigmNoun5)],
+        ['nounpdgm6', new Paradigm(this.languageID, partOfSpeech, paradigmNoun6)],
+        ['nounpdgm7', new Paradigm(this.languageID, partOfSpeech, paradigmNoun7)],
+        ['nounpdgm8', new Paradigm(this.languageID, partOfSpeech, paradigmNoun8)],
+        ['nounpdgm9', new Paradigm(this.languageID, partOfSpeech, paradigmNoun9)],
+        ['nounpdgm10', new Paradigm(this.languageID, partOfSpeech, paradigmNoun10)],
+        ['nounpdgm11', new Paradigm(this.languageID, partOfSpeech, paradigmNoun11)],
+        ['nounpdgm12', new Paradigm(this.languageID, partOfSpeech, paradigmNoun12)],
+        ['nounpdgm13', new Paradigm(this.languageID, partOfSpeech, paradigmNoun13)],
+        ['nounpdgm14', new Paradigm(this.languageID, partOfSpeech, paradigmNoun14)],
+        ['nounpdgm15', new Paradigm(this.languageID, partOfSpeech, paradigmNoun15)],
+        ['nounpdgm16', new Paradigm(this.languageID, partOfSpeech, paradigmNoun16)],
+        ['nounpdgm17', new Paradigm(this.languageID, partOfSpeech, paradigmNoun17)],
+        ['nounpdgm18', new Paradigm(this.languageID, partOfSpeech, paradigmNoun18)]
     ])
   }
 

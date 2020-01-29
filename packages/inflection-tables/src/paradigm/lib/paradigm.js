@@ -49,7 +49,7 @@ export default class Paradigm {
           let cellFeatures = [] // eslint-disable-line prefer-const
           for (const prop of Object.keys(cell)) {
             // Eliminate "non-feature" keys
-            if (prop !== 'role' && prop !== 'value') {
+            if (prop !== 'role' && prop !== 'value'  && prop !== 'lemma') {
               cellFeatures.push(prop)
             }
           }
@@ -147,6 +147,7 @@ export default class Paradigm {
    * @return {ParadigmRule[] | []} Array of matching rules or an empty array if no matches found.
    */
   matchingRules (inflection) {
+    // console.info('********************************************************matchingRules - ', this.paradigmID)
     return this.rules.filter(r => r.matches(inflection))
   }
 }

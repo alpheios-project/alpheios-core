@@ -1,0 +1,570 @@
+{
+    "ID": "nounpdgm9",
+    "partOfSpeech": "noun",
+    "title": "Consonant-Declension Nouns: liquid and nasal stems",
+    "credits": "Noun paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wr_oros",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ῥήτωρ",
+                "value": "ῥήτωρ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_onos",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "δαίμων",
+                "value": "δαίμων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "n_nos",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ἀγών",
+                "value": "ἀγών"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ἅλς",
+                "value": "ἅλς"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wr_oros",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ῥήτωρ",
+                "value": "ῥήτορος"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_onos",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "δαίμων",
+                "value": "δαίμονος"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "n_nos",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἀγών",
+                "value": "ἀγῶνος"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἅλς",
+                "value": "ἁλός"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wr_oros",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ῥήτωρ",
+                "value": "ῥήτορι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_onos",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "δαίμων",
+                "value": "δαίμονι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "n_nos",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἀγών",
+                "value": "ἀγῶνι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἅλς",
+                "value": "ἁλί"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wr_oros",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ῥήτωρ",
+                "value": "ῥήτορᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_onos",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "δαίμων",
+                "value": "δαίμονᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "n_nos",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἀγών",
+                "value": "ἀγῶνᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἅλς",
+                "value": "ἅλᾰ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wr_oros",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ῥήτωρ",
+                "value": "ῥῆτορ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_onos",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "δαίμων",
+                "value": "δαῖμον"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "n_nos",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ἀγών",
+                "value": "ἀγών"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ἅλς",
+                "value": "---"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wr_oros",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ῥήτωρ",
+                "value": "ῥήτορε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_onos",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "δαίμων",
+                "value": "δαίμονε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "n_nos",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἀγών",
+                "value": "ἀγῶνε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἅλς",
+                "value": "ἅλε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wr_oros",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ῥήτωρ",
+                "value": "ῥητόροιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_onos",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "δαίμων",
+                "value": "δαιμόνοιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "n_nos",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἀγών",
+                "value": "ἀγώνοιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἅλς",
+                "value": "ἁλοῖν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wr_oros",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ῥήτωρ",
+                "value": "ῥήτορες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_onos",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "δαίμων",
+                "value": "δαίμονες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "n_nos",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἀγών",
+                "value": "ἀγῶνες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἅλς",
+                "value": "ἅλες"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wr_oros",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ῥήτωρ",
+                "value": "ῥητόρων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_onos",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "δαίμων",
+                "value": "δαιμόνων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "n_nos",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἀγών",
+                "value": "ἀγώνων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἅλς",
+                "value": "ἁλῶν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wr_oros",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ῥήτωρ",
+                "value": "ῥήτορσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_onos",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "δαίμων",
+                "value": "δαίμοσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "n_nos",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἀγών",
+                "value": "ἀγῶσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἅλς",
+                "value": "ἁλσί(ν)"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wr_oros",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ῥήτωρ",
+                "value": "ῥήτορᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_onos",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "δαίμων",
+                "value": "δαίμονᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "n_nos",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἀγών",
+                "value": "ἀγῶνᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἅλς",
+                "value": "ἅλᾰς"
+            }
+        ]}
+      ]},
+      "subTables": []
+}

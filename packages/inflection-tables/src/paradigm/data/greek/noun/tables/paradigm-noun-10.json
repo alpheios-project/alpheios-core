@@ -1,0 +1,570 @@
+{
+    "ID": "nounpdgm10",
+    "partOfSpeech": "noun",
+    "title": "Consonant-Declension Nouns: irregular ρ-stems",
+    "credits": "Noun paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "πατήρ",
+                "value": "πατήρ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "μήτηρ",
+                "value": "μήτηρ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "θυγάτηρ",
+                "value": "θυγάτηρ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ἀνήρ",
+                "value": "ἀνήρ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "πατήρ",
+                "value": "πατρός"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "μήτηρ",
+                "value": "μητρός"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "θυγάτηρ",
+                "value": "θυγατρός"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἀνήρ",
+                "value": "ἀνδρός"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "πατήρ",
+                "value": "πατρί"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "μήτηρ",
+                "value": "μητρί"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "θυγάτηρ",
+                "value": "θυγατρί"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἀνήρ",
+                "value": "ἀνδρί"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "πατήρ",
+                "value": "πατέρᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "μήτηρ",
+                "value": "μητέρᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "θυγάτηρ",
+                "value": "θυγατέρᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἀνήρ",
+                "value": "ἄνδρᾰ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "πατήρ",
+                "value": "πάτερ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "μήτηρ",
+                "value": "μῆτερ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "θυγάτηρ",
+                "value": "θύγατερ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ἀνήρ",
+                "value": "ἄνερ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "πατήρ",
+                "value": "πατέρε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "μήτηρ",
+                "value": "μητέρε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "θυγάτηρ",
+                "value": "θυγατέρε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἀνήρ",
+                "value": "ἄνδρε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "πατήρ",
+                "value": "πατέροιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "μήτηρ",
+                "value": "μητέροιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "θυγάτηρ",
+                "value": "θυγατέροιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἀνήρ",
+                "value": "ἀνδροῖν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "πατήρ",
+                "value": "πατέρες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "μήτηρ",
+                "value": "μητέρες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "θυγάτηρ",
+                "value": "θυγατέρες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἀνήρ",
+                "value": "ἄνδρες"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "πατήρ",
+                "value": "πατέρων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "μήτηρ",
+                "value": "μητέρων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "θυγάτηρ",
+                "value": "θυγατέρων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἀνήρ",
+                "value": "ἀνδρῶν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "πατήρ",
+                "value": "πατράσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "μήτηρ",
+                "value": "μητράσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "θυγάτηρ",
+                "value": "θυγατράσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἀνήρ",
+                "value": "ἀνδράσι(ν)"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "πατήρ",
+                "value": "πατέρᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "μήτηρ",
+                "value": "μητέρᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hr_eros",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "θυγάτηρ",
+                "value": "θυγατέρᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἀνήρ",
+                "value": "ἄνδρᾰς"
+            }
+        ]}
+      ]},
+      "subTables": []
+}

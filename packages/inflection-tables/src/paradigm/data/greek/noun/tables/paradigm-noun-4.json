@@ -1,0 +1,438 @@
+{
+    "ID": "nounpdgm4",
+    "partOfSpeech": "noun",
+    "title": "Alpha-Declension Nouns: masculines",
+    "credits": "Noun paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "νεανίης",
+                "value": "νεανίᾱς"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "στρατιώτης",
+                "value": "στρατιώτης"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "νεανίης",
+                "value": "νεανίου"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "στρατιώτης",
+                "value": "στρατιώτου"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "νεανίης",
+                "value": "νεανίᾳ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "στρατιώτης",
+                "value": "στρατιώτῃ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "νεανίης",
+                "value": "νεανίᾱν"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "στρατιώτης",
+                "value": "στρατιώτην"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "νεανίης",
+                "value": "νεανίᾱ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "στρατιώτης",
+                "value": "στρατιῶτα"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "νεανίης",
+                "value": "νεανίᾱ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "στρατιώτης",
+                "value": "στρατιώτᾱ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "dual",
+                "case": "genitive dativee",
+                "lemma": "νεανίης",
+                "value": "νεανίαιν"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "στρατιώτης",
+                "value": "στρατιώταιν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "νεανίης",
+                "value": "νεανίαι"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "στρατιώτης",
+                "value": "στρατιῶται"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "νεανίης",
+                "value": "νεανιῶν"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "στρατιώτης",
+                "value": "στρατιωτῶν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "νεανίης",
+                "value": "νεανίαις"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "στρατιώτης",
+                "value": "στρατιώταις"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "νεανίης",
+                "value": "νεανίᾱς"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "hs_ou",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "στρατιώτης",
+                "value": "στρατιώτᾱς"
+            }
+        ]}
+      ]},
+      "subTables": []
+}

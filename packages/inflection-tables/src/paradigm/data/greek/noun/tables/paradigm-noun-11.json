@@ -1,0 +1,471 @@
+{
+    "ID": "nounpdgm11",
+    "partOfSpeech": "noun",
+    "title": "Consonant-Declension Nouns: σ-stems",
+    "credits": "Noun paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "τριήρης",
+                "value": "τριήρης"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "γένος",
+                "value": "γένος"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_aos",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "γέρας",
+                "value": "γέρας"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "τριήρης",
+                "value": "τριήρους"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "γένος",
+                "value": "γένους"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_aos",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "γέρας",
+                "value": "γέρως"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "τριήρης",
+                "value": "τριήρει"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "γένος",
+                "value": "γένει"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_aos",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "γέρας",
+                "value": "γέρᾳ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "τριήρης",
+                "value": "τριήρη"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "γένος",
+                "value": "γένος"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_aos",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "γέρας",
+                "value": "γέρας"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "τριήρης",
+                "value": "τριῆρες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "γένος",
+                "value": "γένος"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_aos",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "γέρας",
+                "value": "γέρας"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "τριήρης",
+                "value": "τριήρει"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "γένος",
+                "value": "γένει"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_aos",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "γέρας",
+                "value": "γέρᾱ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "τριήρης",
+                "value": "τριήροιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "γένος",
+                "value": "γένοῖν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_aos",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "γέρας",
+                "value": "γερῷν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "τριήρης",
+                "value": "τριήρεις"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "γένος",
+                "value": "γένη"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_aos",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "γέρας",
+                "value": "γέρᾱ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "τριήρης",
+                "value": "τριήρων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "γένος",
+                "value": "γενῶν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_aos",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "γέρας",
+                "value": "γερῶν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "τριήρης",
+                "value": "τριήρεσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "γένος",
+                "value": "γένεσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_aos",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "γέρας",
+                "value": "γέρασι(ν)"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "τριήρης",
+                "value": "τριήρεις"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_eos",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "γένος",
+                "value": "γένη"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_aos",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "γέρας",
+                "value": "γέρᾱ"
+            }
+        ]}
+      ]},
+      "subTables": []
+}

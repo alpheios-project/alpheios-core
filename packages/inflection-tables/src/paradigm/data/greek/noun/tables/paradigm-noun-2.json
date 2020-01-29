@@ -1,0 +1,438 @@
+{
+    "ID": "nounpdgm2",
+    "partOfSpeech": "noun",
+    "title": "Alpha-Declension Nouns: long-vowel feminines",
+    "credits": "Noun paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "χώρα",
+                "value": "χώρᾱ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "γνώμη",
+                "value": "γνώμη"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "χώρα",
+                "value": "χώρᾱς"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "γνώμη",
+                "value": "γνώμης"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "χώρα",
+                "value": "χώρᾳ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "γνώμη",
+                "value": "γνώμῃ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "χώρα",
+                "value": "χώρᾱν"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "γνώμη",
+                "value": "γνώμην"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "χώρα",
+                "value": "χώρᾱ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "γνώμη",
+                "value": "γνώμη"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "χώρα",
+                "value": "χώρᾱ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "γνώμη",
+                "value": "γνώμᾱ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "dual",
+                "case": "genitive dativee",
+                "lemma": "χώρα",
+                "value": "χώραιν"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "γνώμη",
+                "value": "γνώμαιν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "χώρα",
+                "value": "χῶραι"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "γνώμη",
+                "value": "γνῶμαι"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "χώρα",
+                "value": "χωρῶν"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "γνώμη",
+                "value": "γνωμῶν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "χώρα",
+                "value": "χώραις"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "γνώμη",
+                "value": "γνώμαις"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "χώρα",
+                "value": "χώρᾱς"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "h_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "γνώμη",
+                "value": "γνώμᾱς"
+            }
+        ]}
+      ]},
+      "subTables": []
+}

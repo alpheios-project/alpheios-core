@@ -1,0 +1,438 @@
+{
+    "ID": "nounpdgm3",
+    "partOfSpeech": "noun",
+    "title": "Alpha-Declension Nouns: short-vowel feminines",
+    "credits": "Noun paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ὑγίεια",
+                "value": "ὑγίειᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "θάλασσα",
+                "value": "θάλαττᾰ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ὑγίεια",
+                "value": "ὑγιείᾱς"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "θάλασσα",
+                "value": "θαλάττης"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ὑγίεια",
+                "value": "ὑγιείᾳ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "θάλασσα",
+                "value": "θαλάττῃ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ὑγίεια",
+                "value": "ὑγίειᾰν"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "θάλασσα",
+                "value": "θάλαττᾰν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ὑγίεια",
+                "value": "ὑγίειᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "θάλασσα",
+                "value": "θάλαττᾰ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ὑγίεια",
+                "value": "ὑγιείᾱ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "θάλασσα",
+                "value": "θαλάττᾱ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "dual",
+                "case": "genitive dativee",
+                "lemma": "ὑγίεια",
+                "value": "ὑγιείαιν"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "θάλασσα",
+                "value": "θαλάτταιν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ὑγίεια",
+                "value": "ὑγίειαι"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "θάλασσα",
+                "value": "θάλατται"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ὑγίεια",
+                "value": "ὑγιειῶν"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "θάλασσα",
+                "value": "θαλαττῶν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ὑγίεια",
+                "value": "ὑγιείαις"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "θάλασσα",
+                "value": "θαλάτταις"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ὑγίεια",
+                "value": "ὑγιείᾱς"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "a_hs",
+                "gender": "feminine",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "θάλασσα",
+                "value": "θαλάττᾱς"
+            }
+        ]}
+      ]},
+      "subTables": []
+}

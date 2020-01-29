@@ -1,0 +1,471 @@
+{
+    "ID": "nounpdgm15",
+    "partOfSpeech": "noun",
+    "title": "Nouns with Contraction: O-Declension",
+    "credits": "Noun paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "νόος",
+                "value": "νοῦς"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "περίπλους",
+                "value": "περίπλους"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "eos_eou",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "κάνεον",
+                "value": "κανοῦν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "νόος",
+                "value": "νοῦ"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "περίπλους",
+                "value": "περίπλου"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "eos_eou",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "κάνεον",
+                "value": "κανοῦ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "νόος",
+                "value": "νῷ"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "περίπλους",
+                "value": "περίπλῳ"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "eos_eou",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "κάνεον",
+                "value": "κανῷ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "νόος",
+                "value": "νοῦν"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "περίπλους",
+                "value": "περίπλουν"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "eos_eou",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "κάνεον",
+                "value": "κανοῦν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "νόος",
+                "value": "νοῦ"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "περίπλους",
+                "value": "περίπλου"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "eos_eou",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "κάνεον",
+                "value": "κανοῦν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "νόος",
+                "value": "νώ"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "περίπλους",
+                "value": "περίπλω"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "eos_eou",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "κάνεον",
+                "value": "κανώ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "νόος",
+                "value": "νοῖν"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "περίπλους",
+                "value": "περίπλοιν"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "eos_eou",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "κάνεον",
+                "value": "κανοῖν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "νόος",
+                "value": "νοῖ"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "περίπλους",
+                "value": "περίπλοι"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "eos_eou",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "κάνεον",
+                "value": "κανᾶ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "νόος",
+                "value": "νῶν"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "περίπλους",
+                "value": "περίπλων"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "eos_eou",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "κάνεον",
+                "value": "κανῶν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "νόος",
+                "value": "νοῖς"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "περίπλους",
+                "value": "περίπλοις"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "eos_eou",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "κάνεον",
+                "value": "κανοῖς"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "2nd",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "νόος",
+                "value": "νοῦς"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "oos_oou",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "περίπλους",
+                "value": "περίπλους"
+            },
+            {
+                "role": "data",
+                "declension": "2nd",
+                "stemtype": "eos_eou",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "κάνεον",
+                "value": "κανᾶ"
+            }
+        ]}
+      ]},
+      "subTables": []
+}

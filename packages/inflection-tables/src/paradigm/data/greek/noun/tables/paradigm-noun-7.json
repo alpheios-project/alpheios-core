@@ -1,0 +1,471 @@
+{
+    "ID": "nounpdgm7",
+    "partOfSpeech": "noun",
+    "title": "Consonant-Declension Nouns: ντ-stems",
+    "credits": "Noun paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_ontos",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "γέρων",
+                "value": "γέρων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_antos",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "γίγας",
+                "value": "γίγᾱς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ous_ontos",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ὀδούς",
+                "value": "ὀδούς"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_ontos",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "γέρων",
+                "value": "γέροντος"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_antos",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "γίγας",
+                "value": "γίγαντος"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ous_ontos",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ὀδούς",
+                "value": "ὀδόντος"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_ontos",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "γέρων",
+                "value": "γέροντι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_antos",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "γίγας",
+                "value": "γίγαντι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ous_ontos",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ὀδούς",
+                "value": "ὀδόντι"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_ontos",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "γέρων",
+                "value": "γέροντᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_antos",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "γίγας",
+                "value": "γίγαντᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ous_ontos",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ὀδούς",
+                "value": "ὀδόντᾰ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_ontos",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "γέρων",
+                "value": "γέρον"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_antos",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "γίγας",
+                "value": "γίγᾰν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ous_ontos",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ὀδούς",
+                "value": "ὀδούς"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_ontos",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "γέρων",
+                "value": "γέροντε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_antos",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "γίγας",
+                "value": "γίγαντε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ous_ontos",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ὀδούς",
+                "value": "ὀδόντε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_ontos",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "γέρων",
+                "value": "γερόντοιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_antos",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "γίγας",
+                "value": "γιγάντοιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ous_ontos",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ὀδούς",
+                "value": "ὀδόντοιν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_ontos",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "γέρων",
+                "value": "γέροντες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_antos",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "γίγας",
+                "value": "γίγαντες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ous_ontos",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ὀδούς",
+                "value": "ὀδόντες"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_ontos",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "γέρων",
+                "value": "γερόντων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_antos",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "γίγας",
+                "value": "γιγάντων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ous_ontos",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ὀδούς",
+                "value": "ὀδόντων"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_ontos",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "γέρων",
+                "value": "γέρουσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_antos",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "γίγας",
+                "value": "γίγᾱσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ous_ontos",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ὀδούς",
+                "value": "ὀδοῦσι(ν)"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_ontos",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "γέρων",
+                "value": "γέροντᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "as_antos",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "γίγας",
+                "value": "γίγαντᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ous_ontos",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ὀδούς",
+                "value": "ὀδόντᾰς"
+            }
+        ]}
+      ]},
+      "subTables": []
+}

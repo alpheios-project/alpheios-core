@@ -1,0 +1,570 @@
+{
+    "ID": "nounpdgm16",
+    "partOfSpeech": "noun",
+    "title": "Nouns with Contraction: A-Declension",
+    "credits": "Noun paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "γῆ",
+                "value": "γῆ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "συκῆ",
+                "value": "συκῆ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ah_ahs",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "μνᾶ",
+                "value": "μνᾶ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ehs_eou",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "Ἑρμῆς",
+                "value": "Ἑρμῆς"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "γῆ",
+                "value": "γῆς"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "συκῆ",
+                "value": "συκῆς"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ah_ahs",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "μνᾶ",
+                "value": "μνᾶς"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ehs_eou",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "Ἑρμῆς",
+                "value": "Ἑρμοῦ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "γῆ",
+                "value": "γῇ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "συκῆ",
+                "value": "συκῇ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ah_ahs",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "μνᾶ",
+                "value": "μνᾷ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ehs_eou",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "Ἑρμῆς",
+                "value": "Ἑρμῇ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "γῆ",
+                "value": "γῆν"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "συκῆ",
+                "value": "συκῆν"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ah_ahs",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "μνᾶ",
+                "value": "μνᾶν"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ehs_eou",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "Ἑρμῆς",
+                "value": "Ἑρμῆν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "γῆ",
+                "value": "γῆ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "συκῆ",
+                "value": "συκῆ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ah_ahs",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "μνᾶ",
+                "value": "μνᾶ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ehs_eou",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "Ἑρμῆς",
+                "value": "Ἑρμῆ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "γῆ",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "συκῆ",
+                "value": "συκᾶ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ah_ahs",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "μνᾶ",
+                "value": "μνᾶ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ehs_eou",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "Ἑρμῆς",
+                "value": "Ἑρμᾶ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "γῆ",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "συκῆ",
+                "value": "συκαῖν"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ah_ahs",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "μνᾶ",
+                "value": "μναῖν"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ehs_eou",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "Ἑρμῆς",
+                "value": "Ἑρμαῖν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "γῆ",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "συκῆ",
+                "value": "συκαῖ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ah_ahs",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "μνᾶ",
+                "value": "μναῖ"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ehs_eou",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "Ἑρμῆς",
+                "value": "Ἑρμαῖ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "γῆ",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "συκῆ",
+                "value": "συκῶν"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ah_ahs",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "μνᾶ",
+                "value": "μνῶν"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ehs_eou",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "Ἑρμῆς",
+                "value": "Ἑρμῶν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "γῆ",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "συκῆ",
+                "value": "συκαῖς"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ah_ahs",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "μνᾶ",
+                "value": "μναῖς"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ehs_eou",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "Ἑρμῆς",
+                "value": "Ἑρμαῖς"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "γῆ",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "eh_ehs",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "συκῆ",
+                "value": "συκᾶς"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ah_ahs",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "μνᾶ",
+                "value": "μνᾶς"
+            },
+            {
+                "role": "data",
+                "declension": "1st",
+                "stemtype": "ehs_eou",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "Ἑρμῆς",
+                "value": "Ἑρμᾶς"
+            }
+        ]}
+      ]},
+      "subTables": []
+}

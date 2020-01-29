@@ -1,0 +1,416 @@
+{
+    "ID": "nounpdgm5",
+    "partOfSpeech": "noun",
+    "title": "Consonant-Declension Nouns: labial and velar plosive stems",
+    "credits": "Noun paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "y_pos",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "κλώψ",
+                "value": "κλώψ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "c_kos",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "φύλαξ",
+                "value": "φύλαξ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "y_pos",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "κλώψ",
+                "value": "κλωπός"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "c_kos",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "φύλαξ",
+                "value": "φύλακος"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "y_pos",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "κλώψ",
+                "value": "κλωπί"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "c_kos",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "φύλαξ",
+                "value": "φύλακι"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "y_pos",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "κλώψ",
+                "value": "κλῶπᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "c_kos",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "φύλαξ",
+                "value": "φύλακᾰ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "y_pos",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "κλώψ",
+                "value": "κλώψ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "c_kos",
+                "gender": "masculine",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "φύλαξ",
+                "value": "φύλαξ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "y_pos",
+                "gender": "masculine",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "κλώψ",
+                "value": "κλῶπε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "c_kos",
+                "gender": "masculine",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "φύλαξ",
+                "value": "φύλακε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "y_pos",
+                "gender": "masculine",
+                "number": "dual",
+                "case": "genitive dativee",
+                "lemma": "κλώψ",
+                "value": "κλωποῖν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "c_kos",
+                "gender": "masculine",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "φύλαξ",
+                "value": "φυλάκοιν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "y_pos",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "κλώψ",
+                "value": "κλῶπες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "c_kos",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "φύλαξ",
+                "value": "φύλακες"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "y_pos",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "κλώψ",
+                "value": "κλωπῶν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "c_kos",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "φύλαξ",
+                "value": "φυλάκων"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "y_pos",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "κλώψ",
+                "value": "κλωψί(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "c_kos",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "φύλαξ",
+                "value": "φύλαξι(ν)"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "y_pos",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "κλώψ",
+                "value": "κλῶπᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "c_kos",
+                "gender": "masculine",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "φύλαξ",
+                "value": "φύλακᾰς"
+            }
+        ]}
+      ]},
+      "subTables": []
+}

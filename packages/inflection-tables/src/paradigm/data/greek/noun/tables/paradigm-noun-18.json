@@ -1,0 +1,372 @@
+{
+    "ID": "nounpdgm18",
+    "partOfSpeech": "noun",
+    "title": "Nouns in -ως",
+    "credits": "Noun paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_oos",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "αἰδώς",
+                "value": "αἰδώς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_wos",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ἥρως",
+                "value": "ἥρως"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_oos",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "αἰδώς",
+                "value": "αἰδοῦς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_wos",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἥρως",
+                "value": "ἥρωος, ἥρω"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_oos",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "αἰδώς",
+                "value": "αἰδοῖ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_wos",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἥρως",
+                "value": "ἥρωϊ, ἥρῳ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_oos",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "αἰδώς",
+                "value": "αἰδῶ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_wos",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἥρως",
+                "value": "ἥρωᾰ, ἥρω"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_oos",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "αἰδώς",
+                "value": "αἰδώς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_wos",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ἥρως",
+                "value": "ἥρως"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_oos",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "αἰδώς",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_wos",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἥρως",
+                "value": "ἥρωε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_oos",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "αἰδώς",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_wos",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἥρως",
+                "value": "ἡρώοιν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_oos",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "αἰδώς",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_wos",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἥρως",
+                "value": "ἥρωες, ἥρως"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_oos",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "αἰδώς",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_wos",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἥρως",
+                "value": "ἡρώων"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_oos",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "αἰδώς",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_wos",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἥρως",
+                "value": "ἥρωσι(ν)"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_oos",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "αἰδώς",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "ws_wos",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἥρως",
+                "value": "ἥρωᾰς, ἥρως"
+            }
+        ]}
+      ]},
+      "subTables": []
+}

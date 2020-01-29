@@ -1,0 +1,471 @@
+{
+    "ID": "nounpdgm6",
+    "partOfSpeech": "noun",
+    "title": "Consonant-Declension Nouns: dental plosive stems (masc. and fem.)",
+    "credits": "Noun paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_itos",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "χάρις",
+                "value": "χάρις"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_idos",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ἀσπίς",
+                "value": "ἀσπίς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "s_dos",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "Ἑλλάς",
+                "value": "Ἑλλάς"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_itos",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "χάρις",
+                "value": "χάριτος"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_idos",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἀσπίς",
+                "value": "ἀσπίδος"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "s_dos",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "Ἑλλάς",
+                "value": "Ἑλλάδος"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_itos",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "χάρις",
+                "value": "χάριτι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_idos",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἀσπίς",
+                "value": "ἀσπίδι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "s_dos",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "Ἑλλάς",
+                "value": "Ἑλλάδι"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_itos",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "χάρις",
+                "value": "χάριν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_idos",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἀσπίς",
+                "value": "ἀσπίδᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "s_dos",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "Ἑλλάς",
+                "value": "Ἑλλάδᾰ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_itos",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "χάρις",
+                "value": "χάρι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_idos",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ἀσπίς",
+                "value": "ἀσπί"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "s_dos",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "Ἑλλάς",
+                "value": "Ἑλλάς"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_itos",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "χάρις",
+                "value": "χάριτε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_idos",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἀσπίς",
+                "value": "ἀσπίδε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "s_dos",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "Ἑλλάς",
+                "value": "Ἑλλάδε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_itos",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "χάρις",
+                "value": "χαρίτοιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_idos",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἀσπίς",
+                "value": "ἀσπίδοιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "s_dos",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "Ἑλλάς",
+                "value": "Ἑλλάδοιν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_itos",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "χάρις",
+                "value": "χάριτες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_idos",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἀσπίς",
+                "value": "ἀσπίδες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "s_dos",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "Ἑλλάς",
+                "value": "Ἑλλάδες"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_itos",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "χάρις",
+                "value": "χαρίτων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_idos",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἀσπίς",
+                "value": "ἀσπίδων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "s_dos",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "Ἑλλάς",
+                "value": "Ἑλλάδων"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_itos",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "χάρις",
+                "value": "χάρισι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_idos",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἀσπίς",
+                "value": "ἀσπίσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "s_dos",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "Ἑλλάς",
+                "value": "Ἑλλάσι(ν)"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_itos",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "χάρις",
+                "value": "χάριτᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "is_idos",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἀσπίς",
+                "value": "ἀσπίδᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "s_dos",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "Ἑλλάς",
+                "value": "Ἑλλάδᾰς"
+            }
+        ]}
+      ]},
+      "subTables": []
+}

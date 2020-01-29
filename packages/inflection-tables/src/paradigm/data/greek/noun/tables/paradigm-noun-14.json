@@ -1,0 +1,570 @@
+{
+    "ID": "nounpdgm14",
+    "partOfSpeech": "noun",
+    "title": "Consonant-Declension Nouns: stems in ευ, αυ, or ου",
+    "credits": "Noun paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ἱππεύς",
+                "value": "ἱππεύς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "γραῦς",
+                "value": "γραῦς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ναῦς",
+                "value": "ναῦς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "βοῦς",
+                "value": "βοῦς"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἱππεύς",
+                "value": "ἱππέως"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "γραῦς",
+                "value": "γρᾱός"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ναῦς",
+                "value": "νεώς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "βοῦς",
+                "value": "βοός"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἱππεύς",
+                "value": "ἱππεῖ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "γραῦς",
+                "value": "γρᾱΐ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ναῦς",
+                "value": "νηΐ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "βοῦς",
+                "value": "βοΐ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἱππεύς",
+                "value": "ἱππέᾱ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "γραῦς",
+                "value": "γραῦν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ναῦς",
+                "value": "ναῦν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "βοῦς",
+                "value": "βοῦν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ἱππεύς",
+                "value": "ἱππεῦ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "γραῦς",
+                "value": "γραῦ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ναῦς",
+                "value": "ναῦ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "βοῦς",
+                "value": "βοῦ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἱππεύς",
+                "value": "ἱππῆ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "γραῦς",
+                "value": "γρᾶε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ναῦς",
+                "value": "νῆε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "βοῦς",
+                "value": "βόε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἱππεύς",
+                "value": "ἱππέοιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "γραῦς",
+                "value": "γρᾱοῖν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ναῦς",
+                "value": "νεοῖν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "βοῦς",
+                "value": "βοοῖν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἱππεύς",
+                "value": "ἱππῆς, ἱππεῖς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "γραῦς",
+                "value": "γρᾶες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ναῦς",
+                "value": "νῆες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "βοῦς",
+                "value": "βόες"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἱππεύς",
+                "value": "ἱππέων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "γραῦς",
+                "value": "γρᾱῶν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ναῦς",
+                "value": "νεῶν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "βοῦς",
+                "value": "βοῶν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἱππεύς",
+                "value": "ἱππεῦσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "γραῦς",
+                "value": "γραυσί(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ναῦς",
+                "value": "ναυσί(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "βοῦς",
+                "value": "βουσί(ν)"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "eus_ews",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἱππεύς",
+                "value": "ἱππέᾱς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "γραῦς",
+                "value": "γραῦς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ναῦς",
+                "value": "ναῦς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "irreg_decl3",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "βοῦς",
+                "value": "βοῦς"
+            }
+        ]}
+      ]},
+      "subTables": []
+}

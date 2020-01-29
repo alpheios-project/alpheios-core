@@ -1,0 +1,416 @@
+{
+    "ID": "nounpdgm8",
+    "partOfSpeech": "noun",
+    "title": "Consonant-Declension Nouns: neuter τ-stems",
+    "credits": "Noun paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "ma_matos",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "πρᾶγμα",
+                "value": "πρᾶγμα"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_atos",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "τέρας",
+                "value": "τέρας"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "ma_matos",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "πρᾶγμα",
+                "value": "πράγματος"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_atos",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "τέρας",
+                "value": "τέρατος"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "ma_matos",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "πρᾶγμα",
+                "value": "πράγματι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_atos",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "τέρας",
+                "value": "τέρατι"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "ma_matos",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "πρᾶγμα",
+                "value": "πρᾶγμα"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_atos",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "τέρας",
+                "value": "τέρας"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "singular",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "ma_matos",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "πρᾶγμα",
+                "value": "πρᾶγμα"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_atos",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "τέρας",
+                "value": "τέρας"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "ma_matos",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "πρᾶγμα",
+                "value": "πράγματε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_atos",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "τέρας",
+                "value": "τέρατε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "ma_matos",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "πρᾶγμα",
+                "value": "πραγμάτοιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_atos",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "τέρας",
+                "value": "τεράτοιν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "ma_matos",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "πρᾶγμα",
+                "value": "πράγματα"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_atos",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "τέρας",
+                "value": "τέρατα"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "ma_matos",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "πρᾶγμα",
+                "value": "πραγμάτων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_atos",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "τέρας",
+                "value": "τεράτων"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "ma_matos",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "πρᾶγμα",
+                "value": "πράγμασι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_atos",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "τέρας",
+                "value": "τέρασι(ν)"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "ma_matos",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "πρᾶγμα",
+                "value": "πράγματα"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_atos",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "τέρας",
+                "value": "τέρατα"
+            }
+        ]}
+      ]},
+      "subTables": []
+}
