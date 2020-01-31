@@ -637,6 +637,34 @@ html {
   fill: #FFF !important;
 }
 
+.alpheios-content .alpheios-popup__body h1, .alpheios-content .alpheios-popup__body h2, .alpheios-content .alpheios-popup__body h3, .alpheios-content .alpheios-popup__body h4, .alpheios-content .alpheios-popup__body h5, .alpheios-content .alpheios-popup__body h6, .alpheios-content .alpheios-popup__body p, .alpheios-content .alpheios-popup__body span, .alpheios-content .alpheios-popup__body a,
+.alpheios-content .alpheios-panel__content h1,
+.alpheios-content .alpheios-panel__content h2,
+.alpheios-content .alpheios-panel__content h3,
+.alpheios-content .alpheios-panel__content h4,
+.alpheios-content .alpheios-panel__content h5,
+.alpheios-content .alpheios-panel__content h6,
+.alpheios-content .alpheios-panel__content p,
+.alpheios-content .alpheios-panel__content span,
+.alpheios-content .alpheios-panel__content a,
+.alpheios-content .alpheios-toolbar__lookup h1,
+.alpheios-content .alpheios-toolbar__lookup h2,
+.alpheios-content .alpheios-toolbar__lookup h3,
+.alpheios-content .alpheios-toolbar__lookup h4,
+.alpheios-content .alpheios-toolbar__lookup h5,
+.alpheios-content .alpheios-toolbar__lookup h6,
+.alpheios-content .alpheios-toolbar__lookup p,
+.alpheios-content .alpheios-toolbar__lookup span,
+.alpheios-content .alpheios-toolbar__lookup a {
+  line-height: 1.15 !important;
+  text-align: left !important;
+  padding: 0 !important;
+  font-family: var(--alpheios-sans-font-face) !important;
+  font-style: normal !important;
+  font-size: var(--alpheios-base-text-size) !important;
+  color: var(--alpheios-text-color) !important;
+}
+
 input.alpheios-input, input.alpheios-input[type] {
   box-sizing: border-box !important;
   margin: 0 !important;
