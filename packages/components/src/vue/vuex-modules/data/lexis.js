@@ -1,10 +1,6 @@
 import Module from '@/vue/vuex-modules/module.js'
 import Platform from '@/lib/utility/platform.js'
-import {
-  MessagingService, WindowIframeDestination as Destination, CedictDestinationConfig as CedictConfig
-} from 'alpheios-lexis-cs'
-
-const serviceName = 'ComponentsLexisService'
+import { CedictDestinationConfig as CedictConfig } from 'alpheios-lexis-cs'
 
 export default class Lexis extends Module {
   /**
@@ -19,8 +15,6 @@ export default class Lexis extends Module {
     super(store, api, config)
     // Add an iframe with CEDICT service
     this.createIframe()
-    // Create a messaging service with CEDICT destination
-    this._messagingService = new MessagingService(serviceName, new Destination(CedictConfig))
 
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
     api[this.constructor.moduleName] = this.constructor.api(this, store)
