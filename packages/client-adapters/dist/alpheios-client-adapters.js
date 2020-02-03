@@ -96,28 +96,28 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
-/***/ "../node_modules/alpheios-lexis-cs/index.js":
-/*!**************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/index.js ***!
-  \**************************************************/
+/***/ "../../../node_modules/alpheios-lexis-cs/index.js":
+/*!**************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/index.js ***!
+  \**************************************************************************************/
 /*! exports provided: MessagingService, WindowIframeDestination, RequestMessage, CedictDestinationConfig, CedictCharacterForms */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lexisCs_messaging_messaging_service_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @lexisCs/messaging/messaging-service.js */ "../node_modules/alpheios-lexis-cs/src/messaging/messaging-service.js");
+/* harmony import */ var _lexisCs_messaging_messaging_service_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @lexisCs/messaging/messaging-service.js */ "../../../node_modules/alpheios-lexis-cs/src/messaging/messaging-service.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MessagingService", function() { return _lexisCs_messaging_messaging_service_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
-/* harmony import */ var _lexisCs_messaging_destinations_window_iframe_destination_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @lexisCs/messaging/destinations/window-iframe-destination.js */ "../node_modules/alpheios-lexis-cs/src/messaging/destinations/window-iframe-destination.js");
+/* harmony import */ var _lexisCs_messaging_destinations_window_iframe_destination_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @lexisCs/messaging/destinations/window-iframe-destination.js */ "../../../node_modules/alpheios-lexis-cs/src/messaging/destinations/window-iframe-destination.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WindowIframeDestination", function() { return _lexisCs_messaging_destinations_window_iframe_destination_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _lexisCs_messaging_messages_request_message_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @lexisCs/messaging/messages/request-message.js */ "../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js");
+/* harmony import */ var _lexisCs_messaging_messages_request_message_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @lexisCs/messaging/messages/request-message.js */ "../../../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RequestMessage", function() { return _lexisCs_messaging_messages_request_message_js__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
-/* harmony import */ var _lexisCs_cedict_service_constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @lexisCs/cedict-service/constants.js */ "../node_modules/alpheios-lexis-cs/src/cedict-service/constants.js");
+/* harmony import */ var _lexisCs_cedict_service_constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @lexisCs/cedict-service/constants.js */ "../../../node_modules/alpheios-lexis-cs/src/cedict-service/constants.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CedictCharacterForms", function() { return _lexisCs_cedict_service_constants_js__WEBPACK_IMPORTED_MODULE_3__["CedictCharacterForms"]; });
 
-/* harmony import */ var _lexisCs_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @lexisCs/configurations/destinations.js */ "../node_modules/alpheios-lexis-cs/src/configurations/destinations.js");
+/* harmony import */ var _lexisCs_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @lexisCs/configurations/destinations.js */ "../../../node_modules/alpheios-lexis-cs/src/configurations/destinations.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CedictDestinationConfig", function() { return _lexisCs_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__["CedictDestinationConfig"]; });
 
 
@@ -131,10 +131,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../node_modules/alpheios-lexis-cs/src/cedict-service/constants.js":
-/*!*************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/cedict-service/constants.js ***!
-  \*************************************************************************/
+/***/ "../../../node_modules/alpheios-lexis-cs/src/cedict-service/constants.js":
+/*!*************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/cedict-service/constants.js ***!
+  \*************************************************************************************************************/
 /*! exports provided: CedictCharacterForms */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -154,10 +154,10 @@ const CedictCharacterForms = {
 
 /***/ }),
 
-/***/ "../node_modules/alpheios-lexis-cs/src/configurations/destinations.js":
-/*!****************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/configurations/destinations.js ***!
-  \****************************************************************************/
+/***/ "../../../node_modules/alpheios-lexis-cs/src/configurations/destinations.js":
+/*!****************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/configurations/destinations.js ***!
+  \****************************************************************************************************************/
 /*! exports provided: CedictDestinationConfig */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -178,10 +178,10 @@ const CedictDestinationConfig = {
 
 /***/ }),
 
-/***/ "../node_modules/alpheios-lexis-cs/src/messaging/destinations/destination.js":
-/*!***********************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/messaging/destinations/destination.js ***!
-  \***********************************************************************************/
+/***/ "../../../node_modules/alpheios-lexis-cs/src/messaging/destinations/destination.js":
+/*!***********************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/messaging/destinations/destination.js ***!
+  \***********************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -236,17 +236,17 @@ class Destination {
 
 /***/ }),
 
-/***/ "../node_modules/alpheios-lexis-cs/src/messaging/destinations/window-iframe-destination.js":
-/*!*************************************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/messaging/destinations/window-iframe-destination.js ***!
-  \*************************************************************************************************/
+/***/ "../../../node_modules/alpheios-lexis-cs/src/messaging/destinations/window-iframe-destination.js":
+/*!*************************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/messaging/destinations/window-iframe-destination.js ***!
+  \*************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WindowIframeDestination; });
-/* harmony import */ var _lexisCs_messaging_destinations_destination_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @lexisCs/messaging/destinations/destination.js */ "../node_modules/alpheios-lexis-cs/src/messaging/destinations/destination.js");
+/* harmony import */ var _lexisCs_messaging_destinations_destination_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @lexisCs/messaging/destinations/destination.js */ "../../../node_modules/alpheios-lexis-cs/src/messaging/destinations/destination.js");
 /**
  * @module WindowIframeDestination
  */
@@ -362,17 +362,17 @@ class WindowIframeDestination extends _lexisCs_messaging_destinations_destinatio
 
 /***/ }),
 
-/***/ "../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js":
-/*!***************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js ***!
-  \***************************************************************************/
+/***/ "../../../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js":
+/*!***************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/messaging/messages/message.js ***!
+  \***************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Message; });
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid/v4 */ "../node_modules/uuid/v4.js");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid/v4 */ "../../../node_modules/uuid/v4.js");
 /* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_0__);
 /**
  * @module Message
@@ -433,17 +433,17 @@ Message.types = {
 
 /***/ }),
 
-/***/ "../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js":
-/*!***********************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js ***!
-  \***********************************************************************************/
+/***/ "../../../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js":
+/*!***********************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js ***!
+  \***********************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RequestMessage; });
-/* harmony import */ var _message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./message.js */ "../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js");
+/* harmony import */ var _message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./message.js */ "../../../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js");
 /**
  * @module RequestMessage
  */
@@ -470,18 +470,18 @@ class RequestMessage extends _message_js__WEBPACK_IMPORTED_MODULE_0__["default"]
 
 /***/ }),
 
-/***/ "../node_modules/alpheios-lexis-cs/src/messaging/messages/response-message.js":
-/*!************************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/messaging/messages/response-message.js ***!
-  \************************************************************************************/
+/***/ "../../../node_modules/alpheios-lexis-cs/src/messaging/messages/response-message.js":
+/*!************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/messaging/messages/response-message.js ***!
+  \************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ResponseMessage; });
-/* harmony import */ var _lexisCs_messaging_messages_message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @lexisCs/messaging/messages/message.js */ "../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js");
-/* harmony import */ var _lexisCs_messaging_messages_request_message_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @lexisCs/messaging/messages/request-message.js */ "../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js");
+/* harmony import */ var _lexisCs_messaging_messages_message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @lexisCs/messaging/messages/message.js */ "../../../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js");
+/* harmony import */ var _lexisCs_messaging_messages_request_message_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @lexisCs/messaging/messages/request-message.js */ "../../../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js");
 /**
  * @module ResponseMessage
  */
@@ -561,18 +561,18 @@ ResponseMessage.responseCodes = {
 
 /***/ }),
 
-/***/ "../node_modules/alpheios-lexis-cs/src/messaging/messaging-service.js":
-/*!****************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/messaging/messaging-service.js ***!
-  \****************************************************************************/
+/***/ "../../../node_modules/alpheios-lexis-cs/src/messaging/messaging-service.js":
+/*!****************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/messaging/messaging-service.js ***!
+  \****************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MessagingService; });
-/* harmony import */ var _messages_response_message__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./messages/response-message */ "../node_modules/alpheios-lexis-cs/src/messaging/messages/response-message.js");
-/* harmony import */ var _stored_request__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stored-request */ "../node_modules/alpheios-lexis-cs/src/messaging/stored-request.js");
+/* harmony import */ var _messages_response_message__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./messages/response-message */ "../../../node_modules/alpheios-lexis-cs/src/messaging/messages/response-message.js");
+/* harmony import */ var _stored_request__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stored-request */ "../../../node_modules/alpheios-lexis-cs/src/messaging/stored-request.js");
 /**
  * @module MessagingService
  */
@@ -793,10 +793,10 @@ MessagingService.errMsgs = {
 
 /***/ }),
 
-/***/ "../node_modules/alpheios-lexis-cs/src/messaging/stored-request.js":
-/*!*************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/messaging/stored-request.js ***!
-  \*************************************************************************/
+/***/ "../../../node_modules/alpheios-lexis-cs/src/messaging/stored-request.js":
+/*!*************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/messaging/stored-request.js ***!
+  \*************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -837,34 +837,34 @@ class StoredRequest {
 
 /***/ }),
 
-/***/ "../node_modules/axios/index.js":
-/*!**************************************!*\
-  !*** ../node_modules/axios/index.js ***!
-  \**************************************/
+/***/ "../../../node_modules/axios/index.js":
+/*!**************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/index.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./lib/axios */ "../node_modules/axios/lib/axios.js");
+module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/axios/lib/axios.js");
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/adapters/xhr.js":
-/*!*************************************************!*\
-  !*** ../node_modules/axios/lib/adapters/xhr.js ***!
-  \*************************************************/
+/***/ "../../../node_modules/axios/lib/adapters/xhr.js":
+/*!*************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/adapters/xhr.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
-var settle = __webpack_require__(/*! ./../core/settle */ "../node_modules/axios/lib/core/settle.js");
-var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "../node_modules/axios/lib/helpers/buildURL.js");
-var buildFullPath = __webpack_require__(/*! ../core/buildFullPath */ "../node_modules/axios/lib/core/buildFullPath.js");
-var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "../node_modules/axios/lib/helpers/parseHeaders.js");
-var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "../node_modules/axios/lib/helpers/isURLSameOrigin.js");
-var createError = __webpack_require__(/*! ../core/createError */ "../node_modules/axios/lib/core/createError.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
+var settle = __webpack_require__(/*! ./../core/settle */ "../../../node_modules/axios/lib/core/settle.js");
+var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "../../../node_modules/axios/lib/helpers/buildURL.js");
+var buildFullPath = __webpack_require__(/*! ../core/buildFullPath */ "../../../node_modules/axios/lib/core/buildFullPath.js");
+var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "../../../node_modules/axios/lib/helpers/parseHeaders.js");
+var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "../../../node_modules/axios/lib/helpers/isURLSameOrigin.js");
+var createError = __webpack_require__(/*! ../core/createError */ "../../../node_modules/axios/lib/core/createError.js");
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -961,7 +961,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(/*! ./../helpers/cookies */ "../node_modules/axios/lib/helpers/cookies.js");
+      var cookies = __webpack_require__(/*! ./../helpers/cookies */ "../../../node_modules/axios/lib/helpers/cookies.js");
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ?
@@ -1040,21 +1040,21 @@ module.exports = function xhrAdapter(config) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/axios.js":
-/*!******************************************!*\
-  !*** ../node_modules/axios/lib/axios.js ***!
-  \******************************************/
+/***/ "../../../node_modules/axios/lib/axios.js":
+/*!******************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/axios.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./utils */ "../node_modules/axios/lib/utils.js");
-var bind = __webpack_require__(/*! ./helpers/bind */ "../node_modules/axios/lib/helpers/bind.js");
-var Axios = __webpack_require__(/*! ./core/Axios */ "../node_modules/axios/lib/core/Axios.js");
-var mergeConfig = __webpack_require__(/*! ./core/mergeConfig */ "../node_modules/axios/lib/core/mergeConfig.js");
-var defaults = __webpack_require__(/*! ./defaults */ "../node_modules/axios/lib/defaults.js");
+var utils = __webpack_require__(/*! ./utils */ "../../../node_modules/axios/lib/utils.js");
+var bind = __webpack_require__(/*! ./helpers/bind */ "../../../node_modules/axios/lib/helpers/bind.js");
+var Axios = __webpack_require__(/*! ./core/Axios */ "../../../node_modules/axios/lib/core/Axios.js");
+var mergeConfig = __webpack_require__(/*! ./core/mergeConfig */ "../../../node_modules/axios/lib/core/mergeConfig.js");
+var defaults = __webpack_require__(/*! ./defaults */ "../../../node_modules/axios/lib/defaults.js");
 
 /**
  * Create an instance of Axios
@@ -1087,15 +1087,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ "../node_modules/axios/lib/cancel/Cancel.js");
-axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ "../node_modules/axios/lib/cancel/CancelToken.js");
-axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ "../node_modules/axios/lib/cancel/isCancel.js");
+axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ "../../../node_modules/axios/lib/cancel/Cancel.js");
+axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ "../../../node_modules/axios/lib/cancel/CancelToken.js");
+axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ "../../../node_modules/axios/lib/cancel/isCancel.js");
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(/*! ./helpers/spread */ "../node_modules/axios/lib/helpers/spread.js");
+axios.spread = __webpack_require__(/*! ./helpers/spread */ "../../../node_modules/axios/lib/helpers/spread.js");
 
 module.exports = axios;
 
@@ -1105,10 +1105,10 @@ module.exports.default = axios;
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/cancel/Cancel.js":
-/*!**************************************************!*\
-  !*** ../node_modules/axios/lib/cancel/Cancel.js ***!
-  \**************************************************/
+/***/ "../../../node_modules/axios/lib/cancel/Cancel.js":
+/*!**************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/cancel/Cancel.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1136,17 +1136,17 @@ module.exports = Cancel;
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/cancel/CancelToken.js":
-/*!*******************************************************!*\
-  !*** ../node_modules/axios/lib/cancel/CancelToken.js ***!
-  \*******************************************************/
+/***/ "../../../node_modules/axios/lib/cancel/CancelToken.js":
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/cancel/CancelToken.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(/*! ./Cancel */ "../node_modules/axios/lib/cancel/Cancel.js");
+var Cancel = __webpack_require__(/*! ./Cancel */ "../../../node_modules/axios/lib/cancel/Cancel.js");
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -1205,10 +1205,10 @@ module.exports = CancelToken;
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/cancel/isCancel.js":
-/*!****************************************************!*\
-  !*** ../node_modules/axios/lib/cancel/isCancel.js ***!
-  \****************************************************/
+/***/ "../../../node_modules/axios/lib/cancel/isCancel.js":
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/cancel/isCancel.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1222,21 +1222,21 @@ module.exports = function isCancel(value) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/core/Axios.js":
-/*!***********************************************!*\
-  !*** ../node_modules/axios/lib/core/Axios.js ***!
-  \***********************************************/
+/***/ "../../../node_modules/axios/lib/core/Axios.js":
+/*!***********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/Axios.js ***!
+  \***********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
-var buildURL = __webpack_require__(/*! ../helpers/buildURL */ "../node_modules/axios/lib/helpers/buildURL.js");
-var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ "../node_modules/axios/lib/core/InterceptorManager.js");
-var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ "../node_modules/axios/lib/core/dispatchRequest.js");
-var mergeConfig = __webpack_require__(/*! ./mergeConfig */ "../node_modules/axios/lib/core/mergeConfig.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
+var buildURL = __webpack_require__(/*! ../helpers/buildURL */ "../../../node_modules/axios/lib/helpers/buildURL.js");
+var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ "../../../node_modules/axios/lib/core/InterceptorManager.js");
+var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ "../../../node_modules/axios/lib/core/dispatchRequest.js");
+var mergeConfig = __webpack_require__(/*! ./mergeConfig */ "../../../node_modules/axios/lib/core/mergeConfig.js");
 
 /**
  * Create a new instance of Axios
@@ -1328,17 +1328,17 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/core/InterceptorManager.js":
-/*!************************************************************!*\
-  !*** ../node_modules/axios/lib/core/InterceptorManager.js ***!
-  \************************************************************/
+/***/ "../../../node_modules/axios/lib/core/InterceptorManager.js":
+/*!************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/InterceptorManager.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
 
 function InterceptorManager() {
   this.handlers = [];
@@ -1392,18 +1392,18 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/core/buildFullPath.js":
-/*!*******************************************************!*\
-  !*** ../node_modules/axios/lib/core/buildFullPath.js ***!
-  \*******************************************************/
+/***/ "../../../node_modules/axios/lib/core/buildFullPath.js":
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/buildFullPath.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var isAbsoluteURL = __webpack_require__(/*! ../helpers/isAbsoluteURL */ "../node_modules/axios/lib/helpers/isAbsoluteURL.js");
-var combineURLs = __webpack_require__(/*! ../helpers/combineURLs */ "../node_modules/axios/lib/helpers/combineURLs.js");
+var isAbsoluteURL = __webpack_require__(/*! ../helpers/isAbsoluteURL */ "../../../node_modules/axios/lib/helpers/isAbsoluteURL.js");
+var combineURLs = __webpack_require__(/*! ../helpers/combineURLs */ "../../../node_modules/axios/lib/helpers/combineURLs.js");
 
 /**
  * Creates a new URL by combining the baseURL with the requestedURL,
@@ -1424,17 +1424,17 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/core/createError.js":
-/*!*****************************************************!*\
-  !*** ../node_modules/axios/lib/core/createError.js ***!
-  \*****************************************************/
+/***/ "../../../node_modules/axios/lib/core/createError.js":
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/createError.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(/*! ./enhanceError */ "../node_modules/axios/lib/core/enhanceError.js");
+var enhanceError = __webpack_require__(/*! ./enhanceError */ "../../../node_modules/axios/lib/core/enhanceError.js");
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -1454,20 +1454,20 @@ module.exports = function createError(message, config, code, request, response) 
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/core/dispatchRequest.js":
-/*!*********************************************************!*\
-  !*** ../node_modules/axios/lib/core/dispatchRequest.js ***!
-  \*********************************************************/
+/***/ "../../../node_modules/axios/lib/core/dispatchRequest.js":
+/*!*********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/dispatchRequest.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
-var transformData = __webpack_require__(/*! ./transformData */ "../node_modules/axios/lib/core/transformData.js");
-var isCancel = __webpack_require__(/*! ../cancel/isCancel */ "../node_modules/axios/lib/cancel/isCancel.js");
-var defaults = __webpack_require__(/*! ../defaults */ "../node_modules/axios/lib/defaults.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
+var transformData = __webpack_require__(/*! ./transformData */ "../../../node_modules/axios/lib/core/transformData.js");
+var isCancel = __webpack_require__(/*! ../cancel/isCancel */ "../../../node_modules/axios/lib/cancel/isCancel.js");
+var defaults = __webpack_require__(/*! ../defaults */ "../../../node_modules/axios/lib/defaults.js");
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -1545,10 +1545,10 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/core/enhanceError.js":
-/*!******************************************************!*\
-  !*** ../node_modules/axios/lib/core/enhanceError.js ***!
-  \******************************************************/
+/***/ "../../../node_modules/axios/lib/core/enhanceError.js":
+/*!******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/enhanceError.js ***!
+  \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1599,17 +1599,17 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/core/mergeConfig.js":
-/*!*****************************************************!*\
-  !*** ../node_modules/axios/lib/core/mergeConfig.js ***!
-  \*****************************************************/
+/***/ "../../../node_modules/axios/lib/core/mergeConfig.js":
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/mergeConfig.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ../utils */ "../node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ../utils */ "../../../node_modules/axios/lib/utils.js");
 
 /**
  * Config-specific merge-function which creates a new config-object
@@ -1684,17 +1684,17 @@ module.exports = function mergeConfig(config1, config2) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/core/settle.js":
-/*!************************************************!*\
-  !*** ../node_modules/axios/lib/core/settle.js ***!
-  \************************************************/
+/***/ "../../../node_modules/axios/lib/core/settle.js":
+/*!************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/settle.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(/*! ./createError */ "../node_modules/axios/lib/core/createError.js");
+var createError = __webpack_require__(/*! ./createError */ "../../../node_modules/axios/lib/core/createError.js");
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -1721,17 +1721,17 @@ module.exports = function settle(resolve, reject, response) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/core/transformData.js":
-/*!*******************************************************!*\
-  !*** ../node_modules/axios/lib/core/transformData.js ***!
-  \*******************************************************/
+/***/ "../../../node_modules/axios/lib/core/transformData.js":
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/transformData.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
 
 /**
  * Transform the data for a request or a response
@@ -1753,18 +1753,18 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/defaults.js":
-/*!*********************************************!*\
-  !*** ../node_modules/axios/lib/defaults.js ***!
-  \*********************************************/
+/***/ "../../../node_modules/axios/lib/defaults.js":
+/*!*********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/defaults.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(/*! ./utils */ "../node_modules/axios/lib/utils.js");
-var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ "../node_modules/axios/lib/helpers/normalizeHeaderName.js");
+var utils = __webpack_require__(/*! ./utils */ "../../../node_modules/axios/lib/utils.js");
+var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ "../../../node_modules/axios/lib/helpers/normalizeHeaderName.js");
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -1780,10 +1780,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(/*! ./adapters/xhr */ "../node_modules/axios/lib/adapters/xhr.js");
+    adapter = __webpack_require__(/*! ./adapters/xhr */ "../../../node_modules/axios/lib/adapters/xhr.js");
   } else if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(/*! ./adapters/http */ "../node_modules/axios/lib/adapters/xhr.js");
+    adapter = __webpack_require__(/*! ./adapters/http */ "../../../node_modules/axios/lib/adapters/xhr.js");
   }
   return adapter;
 }
@@ -1859,14 +1859,14 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "../node_modules/process/browser.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "../../../node_modules/process/browser.js")))
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/helpers/bind.js":
-/*!*************************************************!*\
-  !*** ../node_modules/axios/lib/helpers/bind.js ***!
-  \*************************************************/
+/***/ "../../../node_modules/axios/lib/helpers/bind.js":
+/*!*************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/bind.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1886,17 +1886,17 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/helpers/buildURL.js":
-/*!*****************************************************!*\
-  !*** ../node_modules/axios/lib/helpers/buildURL.js ***!
-  \*****************************************************/
+/***/ "../../../node_modules/axios/lib/helpers/buildURL.js":
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/buildURL.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -1969,10 +1969,10 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/helpers/combineURLs.js":
-/*!********************************************************!*\
-  !*** ../node_modules/axios/lib/helpers/combineURLs.js ***!
-  \********************************************************/
+/***/ "../../../node_modules/axios/lib/helpers/combineURLs.js":
+/*!********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/combineURLs.js ***!
+  \********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1995,17 +1995,17 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/helpers/cookies.js":
-/*!****************************************************!*\
-  !*** ../node_modules/axios/lib/helpers/cookies.js ***!
-  \****************************************************/
+/***/ "../../../node_modules/axios/lib/helpers/cookies.js":
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/cookies.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -2060,10 +2060,10 @@ module.exports = (
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/helpers/isAbsoluteURL.js":
-/*!**********************************************************!*\
-  !*** ../node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
-  \**********************************************************/
+/***/ "../../../node_modules/axios/lib/helpers/isAbsoluteURL.js":
+/*!**********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2086,17 +2086,17 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/helpers/isURLSameOrigin.js":
-/*!************************************************************!*\
-  !*** ../node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
-  \************************************************************/
+/***/ "../../../node_modules/axios/lib/helpers/isURLSameOrigin.js":
+/*!************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -2166,17 +2166,17 @@ module.exports = (
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/helpers/normalizeHeaderName.js":
-/*!****************************************************************!*\
-  !*** ../node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
-  \****************************************************************/
+/***/ "../../../node_modules/axios/lib/helpers/normalizeHeaderName.js":
+/*!****************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ../utils */ "../node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ../utils */ "../../../node_modules/axios/lib/utils.js");
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -2190,17 +2190,17 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/helpers/parseHeaders.js":
-/*!*********************************************************!*\
-  !*** ../node_modules/axios/lib/helpers/parseHeaders.js ***!
-  \*********************************************************/
+/***/ "../../../node_modules/axios/lib/helpers/parseHeaders.js":
+/*!*********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/parseHeaders.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "../node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../../node_modules/axios/lib/utils.js");
 
 // Headers whose duplicates are ignored by node
 // c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -2255,10 +2255,10 @@ module.exports = function parseHeaders(headers) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/helpers/spread.js":
-/*!***************************************************!*\
-  !*** ../node_modules/axios/lib/helpers/spread.js ***!
-  \***************************************************/
+/***/ "../../../node_modules/axios/lib/helpers/spread.js":
+/*!***************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/spread.js ***!
+  \***************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2294,17 +2294,17 @@ module.exports = function spread(callback) {
 
 /***/ }),
 
-/***/ "../node_modules/axios/lib/utils.js":
-/*!******************************************!*\
-  !*** ../node_modules/axios/lib/utils.js ***!
-  \******************************************/
+/***/ "../../../node_modules/axios/lib/utils.js":
+/*!******************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/utils.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var bind = __webpack_require__(/*! ./helpers/bind */ "../node_modules/axios/lib/helpers/bind.js");
+var bind = __webpack_require__(/*! ./helpers/bind */ "../../../node_modules/axios/lib/helpers/bind.js");
 
 /*global toString:true*/
 
@@ -2650,10 +2650,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "../node_modules/base64-js/index.js":
-/*!******************************************!*\
-  !*** ../node_modules/base64-js/index.js ***!
-  \******************************************/
+/***/ "../../../node_modules/base64-js/index.js":
+/*!******************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/base64-js/index.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2814,10 +2814,10 @@ function fromByteArray (uint8) {
 
 /***/ }),
 
-/***/ "../node_modules/buffer/index.js":
-/*!***************************************!*\
-  !*** ../node_modules/buffer/index.js ***!
-  \***************************************/
+/***/ "../../../node_modules/buffer/index.js":
+/*!***************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/buffer/index.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2832,9 +2832,9 @@ function fromByteArray (uint8) {
 
 
 
-var base64 = __webpack_require__(/*! base64-js */ "../node_modules/base64-js/index.js")
-var ieee754 = __webpack_require__(/*! ieee754 */ "../node_modules/ieee754/index.js")
-var isArray = __webpack_require__(/*! isarray */ "../node_modules/isarray/index.js")
+var base64 = __webpack_require__(/*! base64-js */ "../../../node_modules/base64-js/index.js")
+var ieee754 = __webpack_require__(/*! ieee754 */ "../../../node_modules/ieee754/index.js")
+var isArray = __webpack_require__(/*! isarray */ "../../../node_modules/isarray/index.js")
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -4612,14 +4612,14 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "../../../node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
-/***/ "../node_modules/core-util-is/lib/util.js":
-/*!************************************************!*\
-  !*** ../node_modules/core-util-is/lib/util.js ***!
-  \************************************************/
+/***/ "../../../node_modules/core-util-is/lib/util.js":
+/*!************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/core-util-is/lib/util.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4731,14 +4731,14 @@ function objectToString(o) {
   return Object.prototype.toString.call(o);
 }
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../buffer/index.js */ "../node_modules/buffer/index.js").Buffer))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../buffer/index.js */ "../../../node_modules/buffer/index.js").Buffer))
 
 /***/ }),
 
-/***/ "../node_modules/events/events.js":
-/*!****************************************!*\
-  !*** ../node_modules/events/events.js ***!
-  \****************************************/
+/***/ "../../../node_modules/events/events.js":
+/*!****************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/events/events.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5193,10 +5193,10 @@ function unwrapListeners(arr) {
 
 /***/ }),
 
-/***/ "../node_modules/ieee754/index.js":
-/*!****************************************!*\
-  !*** ../node_modules/ieee754/index.js ***!
-  \****************************************/
+/***/ "../../../node_modules/ieee754/index.js":
+/*!****************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/ieee754/index.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -5288,78 +5288,84 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 /***/ }),
 
-/***/ "../node_modules/inherits/inherits.js":
-/*!********************************************!*\
-  !*** ../node_modules/inherits/inherits.js ***!
-  \********************************************/
+/***/ "../../../node_modules/inherits/inherits.js":
+/*!********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/inherits/inherits.js ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 try {
-  var util = __webpack_require__(/*! util */ "../node_modules/util/util.js");
+  var util = __webpack_require__(/*! util */ "../../../node_modules/util/util.js");
+  /* istanbul ignore next */
   if (typeof util.inherits !== 'function') throw '';
   module.exports = util.inherits;
 } catch (e) {
-  module.exports = __webpack_require__(/*! ./inherits_browser.js */ "../node_modules/inherits/inherits_browser.js");
+  /* istanbul ignore next */
+  module.exports = __webpack_require__(/*! ./inherits_browser.js */ "../../../node_modules/inherits/inherits_browser.js");
 }
 
 
 /***/ }),
 
-/***/ "../node_modules/inherits/inherits_browser.js":
-/*!****************************************************!*\
-  !*** ../node_modules/inherits/inherits_browser.js ***!
-  \****************************************************/
+/***/ "../../../node_modules/inherits/inherits_browser.js":
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/inherits/inherits_browser.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    ctor.prototype = Object.create(superCtor.prototype, {
-      constructor: {
-        value: ctor,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
+    if (superCtor) {
+      ctor.super_ = superCtor
+      ctor.prototype = Object.create(superCtor.prototype, {
+        constructor: {
+          value: ctor,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      })
+    }
   };
 } else {
   // old school shim for old browsers
   module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    var TempCtor = function () {}
-    TempCtor.prototype = superCtor.prototype
-    ctor.prototype = new TempCtor()
-    ctor.prototype.constructor = ctor
+    if (superCtor) {
+      ctor.super_ = superCtor
+      var TempCtor = function () {}
+      TempCtor.prototype = superCtor.prototype
+      ctor.prototype = new TempCtor()
+      ctor.prototype.constructor = ctor
+    }
   }
 }
 
 
 /***/ }),
 
-/***/ "../node_modules/intl-messageformat-parser/index.js":
-/*!**********************************************************!*\
-  !*** ../node_modules/intl-messageformat-parser/index.js ***!
-  \**********************************************************/
+/***/ "../../../node_modules/intl-messageformat-parser/index.js":
+/*!**********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat-parser/index.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-exports = module.exports = __webpack_require__(/*! ./lib/parser */ "../node_modules/intl-messageformat-parser/lib/parser.js")['default'];
+exports = module.exports = __webpack_require__(/*! ./lib/parser */ "../../../node_modules/intl-messageformat-parser/lib/parser.js")['default'];
 exports['default'] = exports;
 
 
 /***/ }),
 
-/***/ "../node_modules/intl-messageformat-parser/lib/parser.js":
-/*!***************************************************************!*\
-  !*** ../node_modules/intl-messageformat-parser/lib/parser.js ***!
-  \***************************************************************/
+/***/ "../../../node_modules/intl-messageformat-parser/lib/parser.js":
+/*!***************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat-parser/lib/parser.js ***!
+  \***************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6768,10 +6774,10 @@ exports["default"] = (function() {
 
 /***/ }),
 
-/***/ "../node_modules/intl-messageformat/index.js":
-/*!***************************************************!*\
-  !*** ../node_modules/intl-messageformat/index.js ***!
-  \***************************************************/
+/***/ "../../../node_modules/intl-messageformat/index.js":
+/*!***************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/index.js ***!
+  \***************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6780,7 +6786,7 @@ exports["default"] = (function() {
 
 
 
-var IntlMessageFormat = __webpack_require__(/*! ./lib/main */ "../node_modules/intl-messageformat/lib/main.js")['default'];
+var IntlMessageFormat = __webpack_require__(/*! ./lib/main */ "../../../node_modules/intl-messageformat/lib/main.js")['default'];
 
 // Add all locale data to `IntlMessageFormat`. This module will be ignored when
 // bundling for the browser with Browserify/Webpack.
@@ -6795,10 +6801,10 @@ exports['default'] = exports;
 
 /***/ }),
 
-/***/ "../node_modules/intl-messageformat/lib/compiler.js":
-/*!**********************************************************!*\
-  !*** ../node_modules/intl-messageformat/lib/compiler.js ***!
-  \**********************************************************/
+/***/ "../../../node_modules/intl-messageformat/lib/compiler.js":
+/*!**********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/compiler.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7015,10 +7021,10 @@ SelectFormat.prototype.getOption = function (value) {
 
 /***/ }),
 
-/***/ "../node_modules/intl-messageformat/lib/core.js":
-/*!******************************************************!*\
-  !*** ../node_modules/intl-messageformat/lib/core.js ***!
-  \******************************************************/
+/***/ "../../../node_modules/intl-messageformat/lib/core.js":
+/*!******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/core.js ***!
+  \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7032,7 +7038,7 @@ See the accompanying LICENSE file for terms.
 /* jslint esnext: true */
 
 
-var src$utils$$ = __webpack_require__(/*! ./utils */ "../node_modules/intl-messageformat/lib/utils.js"), src$es5$$ = __webpack_require__(/*! ./es5 */ "../node_modules/intl-messageformat/lib/es5.js"), src$compiler$$ = __webpack_require__(/*! ./compiler */ "../node_modules/intl-messageformat/lib/compiler.js"), intl$messageformat$parser$$ = __webpack_require__(/*! intl-messageformat-parser */ "../node_modules/intl-messageformat-parser/index.js");
+var src$utils$$ = __webpack_require__(/*! ./utils */ "../../../node_modules/intl-messageformat/lib/utils.js"), src$es5$$ = __webpack_require__(/*! ./es5 */ "../../../node_modules/intl-messageformat/lib/es5.js"), src$compiler$$ = __webpack_require__(/*! ./compiler */ "../../../node_modules/intl-messageformat/lib/compiler.js"), intl$messageformat$parser$$ = __webpack_require__(/*! intl-messageformat-parser */ "../../../node_modules/intl-messageformat-parser/index.js");
 exports["default"] = MessageFormat;
 
 // -- MessageFormat --------------------------------------------------------
@@ -7303,10 +7309,10 @@ MessageFormat.prototype._resolveLocale = function (locales) {
 
 /***/ }),
 
-/***/ "../node_modules/intl-messageformat/lib/en.js":
-/*!****************************************************!*\
-  !*** ../node_modules/intl-messageformat/lib/en.js ***!
-  \****************************************************/
+/***/ "../../../node_modules/intl-messageformat/lib/en.js":
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/en.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7319,10 +7325,10 @@ exports["default"] = {"locale":"en","pluralRuleFunction":function (n,ord){var s=
 
 /***/ }),
 
-/***/ "../node_modules/intl-messageformat/lib/es5.js":
-/*!*****************************************************!*\
-  !*** ../node_modules/intl-messageformat/lib/es5.js ***!
-  \*****************************************************/
+/***/ "../../../node_modules/intl-messageformat/lib/es5.js":
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/es5.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7336,7 +7342,7 @@ See the accompanying LICENSE file for terms.
 /* jslint esnext: true */
 
 
-var src$utils$$ = __webpack_require__(/*! ./utils */ "../node_modules/intl-messageformat/lib/utils.js");
+var src$utils$$ = __webpack_require__(/*! ./utils */ "../../../node_modules/intl-messageformat/lib/utils.js");
 
 // Purposely using the same implementation as the Intl.js `Intl` polyfill.
 // Copyright 2013 Andy Earnshaw, MIT License
@@ -7380,10 +7386,10 @@ exports.defineProperty = defineProperty, exports.objCreate = objCreate;
 
 /***/ }),
 
-/***/ "../node_modules/intl-messageformat/lib/main.js":
-/*!******************************************************!*\
-  !*** ../node_modules/intl-messageformat/lib/main.js ***!
-  \******************************************************/
+/***/ "../../../node_modules/intl-messageformat/lib/main.js":
+/*!******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/main.js ***!
+  \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7391,7 +7397,7 @@ exports.defineProperty = defineProperty, exports.objCreate = objCreate;
 /* jslint esnext: true */
 
 
-var src$core$$ = __webpack_require__(/*! ./core */ "../node_modules/intl-messageformat/lib/core.js"), src$en$$ = __webpack_require__(/*! ./en */ "../node_modules/intl-messageformat/lib/en.js");
+var src$core$$ = __webpack_require__(/*! ./core */ "../../../node_modules/intl-messageformat/lib/core.js"), src$en$$ = __webpack_require__(/*! ./en */ "../../../node_modules/intl-messageformat/lib/en.js");
 
 src$core$$["default"].__addLocaleData(src$en$$["default"]);
 src$core$$["default"].defaultLocale = 'en';
@@ -7402,10 +7408,10 @@ exports["default"] = src$core$$["default"];
 
 /***/ }),
 
-/***/ "../node_modules/intl-messageformat/lib/utils.js":
-/*!*******************************************************!*\
-  !*** ../node_modules/intl-messageformat/lib/utils.js ***!
-  \*******************************************************/
+/***/ "../../../node_modules/intl-messageformat/lib/utils.js":
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/utils.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7445,10 +7451,10 @@ exports.hop = hop;
 
 /***/ }),
 
-/***/ "../node_modules/isarray/index.js":
-/*!****************************************!*\
-  !*** ../node_modules/isarray/index.js ***!
-  \****************************************/
+/***/ "../../../node_modules/isarray/index.js":
+/*!****************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/isarray/index.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -7461,10 +7467,10 @@ module.exports = Array.isArray || function (arr) {
 
 /***/ }),
 
-/***/ "../node_modules/papaparse/papaparse.js":
-/*!**********************************************!*\
-  !*** ../node_modules/papaparse/papaparse.js ***!
-  \**********************************************/
+/***/ "../../../node_modules/papaparse/papaparse.js":
+/*!**********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/papaparse/papaparse.js ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8362,7 +8368,7 @@ License: MIT
 
 
 	function DuplexStreamStreamer(_config) {
-		var Duplex = __webpack_require__(/*! stream */ "../node_modules/stream-browserify/index.js").Duplex;
+		var Duplex = __webpack_require__(/*! stream */ "../../../node_modules/stream-browserify/index.js").Duplex;
 		var config = copy(_config);
 		var parseOnWrite = true;
 		var writeStreamHasFinished = false;
@@ -9388,10 +9394,10 @@ License: MIT
 
 /***/ }),
 
-/***/ "../node_modules/process-nextick-args/index.js":
-/*!*****************************************************!*\
-  !*** ../node_modules/process-nextick-args/index.js ***!
-  \*****************************************************/
+/***/ "../../../node_modules/process-nextick-args/index.js":
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/process-nextick-args/index.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9442,14 +9448,14 @@ function nextTick(fn, arg1, arg2, arg3) {
 }
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../process/browser.js */ "../node_modules/process/browser.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../process/browser.js */ "../../../node_modules/process/browser.js")))
 
 /***/ }),
 
-/***/ "../node_modules/process/browser.js":
-/*!******************************************!*\
-  !*** ../node_modules/process/browser.js ***!
-  \******************************************/
+/***/ "../../../node_modules/process/browser.js":
+/*!******************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/process/browser.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9641,22 +9647,22 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "../node_modules/readable-stream/duplex-browser.js":
-/*!*********************************************************!*\
-  !*** ../node_modules/readable-stream/duplex-browser.js ***!
-  \*********************************************************/
+/***/ "../../../node_modules/readable-stream/duplex-browser.js":
+/*!*********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/readable-stream/duplex-browser.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./lib/_stream_duplex.js */ "../node_modules/readable-stream/lib/_stream_duplex.js");
+module.exports = __webpack_require__(/*! ./lib/_stream_duplex.js */ "../../../node_modules/readable-stream/lib/_stream_duplex.js");
 
 
 /***/ }),
 
-/***/ "../node_modules/readable-stream/lib/_stream_duplex.js":
-/*!*************************************************************!*\
-  !*** ../node_modules/readable-stream/lib/_stream_duplex.js ***!
-  \*************************************************************/
+/***/ "../../../node_modules/readable-stream/lib/_stream_duplex.js":
+/*!*************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/readable-stream/lib/_stream_duplex.js ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9691,7 +9697,7 @@ module.exports = __webpack_require__(/*! ./lib/_stream_duplex.js */ "../node_mod
 
 /*<replacement>*/
 
-var pna = __webpack_require__(/*! process-nextick-args */ "../node_modules/process-nextick-args/index.js");
+var pna = __webpack_require__(/*! process-nextick-args */ "../../../node_modules/process-nextick-args/index.js");
 /*</replacement>*/
 
 /*<replacement>*/
@@ -9706,12 +9712,12 @@ var objectKeys = Object.keys || function (obj) {
 module.exports = Duplex;
 
 /*<replacement>*/
-var util = Object.create(__webpack_require__(/*! core-util-is */ "../node_modules/core-util-is/lib/util.js"));
-util.inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits.js");
+var util = Object.create(__webpack_require__(/*! core-util-is */ "../../../node_modules/core-util-is/lib/util.js"));
+util.inherits = __webpack_require__(/*! inherits */ "../../../node_modules/inherits/inherits.js");
 /*</replacement>*/
 
-var Readable = __webpack_require__(/*! ./_stream_readable */ "../node_modules/readable-stream/lib/_stream_readable.js");
-var Writable = __webpack_require__(/*! ./_stream_writable */ "../node_modules/readable-stream/lib/_stream_writable.js");
+var Readable = __webpack_require__(/*! ./_stream_readable */ "../../../node_modules/readable-stream/lib/_stream_readable.js");
+var Writable = __webpack_require__(/*! ./_stream_writable */ "../../../node_modules/readable-stream/lib/_stream_writable.js");
 
 util.inherits(Duplex, Readable);
 
@@ -9795,10 +9801,10 @@ Duplex.prototype._destroy = function (err, cb) {
 
 /***/ }),
 
-/***/ "../node_modules/readable-stream/lib/_stream_passthrough.js":
-/*!******************************************************************!*\
-  !*** ../node_modules/readable-stream/lib/_stream_passthrough.js ***!
-  \******************************************************************/
+/***/ "../../../node_modules/readable-stream/lib/_stream_passthrough.js":
+/*!******************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/readable-stream/lib/_stream_passthrough.js ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9832,11 +9838,11 @@ Duplex.prototype._destroy = function (err, cb) {
 
 module.exports = PassThrough;
 
-var Transform = __webpack_require__(/*! ./_stream_transform */ "../node_modules/readable-stream/lib/_stream_transform.js");
+var Transform = __webpack_require__(/*! ./_stream_transform */ "../../../node_modules/readable-stream/lib/_stream_transform.js");
 
 /*<replacement>*/
-var util = Object.create(__webpack_require__(/*! core-util-is */ "../node_modules/core-util-is/lib/util.js"));
-util.inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits.js");
+var util = Object.create(__webpack_require__(/*! core-util-is */ "../../../node_modules/core-util-is/lib/util.js"));
+util.inherits = __webpack_require__(/*! inherits */ "../../../node_modules/inherits/inherits.js");
 /*</replacement>*/
 
 util.inherits(PassThrough, Transform);
@@ -9853,10 +9859,10 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 
 /***/ }),
 
-/***/ "../node_modules/readable-stream/lib/_stream_readable.js":
-/*!***************************************************************!*\
-  !*** ../node_modules/readable-stream/lib/_stream_readable.js ***!
-  \***************************************************************/
+/***/ "../../../node_modules/readable-stream/lib/_stream_readable.js":
+/*!***************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/readable-stream/lib/_stream_readable.js ***!
+  \***************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9886,13 +9892,13 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 
 /*<replacement>*/
 
-var pna = __webpack_require__(/*! process-nextick-args */ "../node_modules/process-nextick-args/index.js");
+var pna = __webpack_require__(/*! process-nextick-args */ "../../../node_modules/process-nextick-args/index.js");
 /*</replacement>*/
 
 module.exports = Readable;
 
 /*<replacement>*/
-var isArray = __webpack_require__(/*! isarray */ "../node_modules/isarray/index.js");
+var isArray = __webpack_require__(/*! isarray */ "../../../node_modules/isarray/index.js");
 /*</replacement>*/
 
 /*<replacement>*/
@@ -9902,7 +9908,7 @@ var Duplex;
 Readable.ReadableState = ReadableState;
 
 /*<replacement>*/
-var EE = __webpack_require__(/*! events */ "../node_modules/events/events.js").EventEmitter;
+var EE = __webpack_require__(/*! events */ "../../../node_modules/events/events.js").EventEmitter;
 
 var EElistenerCount = function (emitter, type) {
   return emitter.listeners(type).length;
@@ -9910,12 +9916,12 @@ var EElistenerCount = function (emitter, type) {
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(/*! ./internal/streams/stream */ "../node_modules/readable-stream/lib/internal/streams/stream-browser.js");
+var Stream = __webpack_require__(/*! ./internal/streams/stream */ "../../../node_modules/readable-stream/lib/internal/streams/stream-browser.js");
 /*</replacement>*/
 
 /*<replacement>*/
 
-var Buffer = __webpack_require__(/*! safe-buffer */ "../node_modules/safe-buffer/index.js").Buffer;
+var Buffer = __webpack_require__(/*! safe-buffer */ "../../../node_modules/readable-stream/node_modules/safe-buffer/index.js").Buffer;
 var OurUint8Array = global.Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
   return Buffer.from(chunk);
@@ -9927,8 +9933,8 @@ function _isUint8Array(obj) {
 /*</replacement>*/
 
 /*<replacement>*/
-var util = Object.create(__webpack_require__(/*! core-util-is */ "../node_modules/core-util-is/lib/util.js"));
-util.inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits.js");
+var util = Object.create(__webpack_require__(/*! core-util-is */ "../../../node_modules/core-util-is/lib/util.js"));
+util.inherits = __webpack_require__(/*! inherits */ "../../../node_modules/inherits/inherits.js");
 /*</replacement>*/
 
 /*<replacement>*/
@@ -9941,8 +9947,8 @@ if (debugUtil && debugUtil.debuglog) {
 }
 /*</replacement>*/
 
-var BufferList = __webpack_require__(/*! ./internal/streams/BufferList */ "../node_modules/readable-stream/lib/internal/streams/BufferList.js");
-var destroyImpl = __webpack_require__(/*! ./internal/streams/destroy */ "../node_modules/readable-stream/lib/internal/streams/destroy.js");
+var BufferList = __webpack_require__(/*! ./internal/streams/BufferList */ "../../../node_modules/readable-stream/lib/internal/streams/BufferList.js");
+var destroyImpl = __webpack_require__(/*! ./internal/streams/destroy */ "../../../node_modules/readable-stream/lib/internal/streams/destroy.js");
 var StringDecoder;
 
 util.inherits(Readable, Stream);
@@ -9962,7 +9968,7 @@ function prependListener(emitter, event, fn) {
 }
 
 function ReadableState(options, stream) {
-  Duplex = Duplex || __webpack_require__(/*! ./_stream_duplex */ "../node_modules/readable-stream/lib/_stream_duplex.js");
+  Duplex = Duplex || __webpack_require__(/*! ./_stream_duplex */ "../../../node_modules/readable-stream/lib/_stream_duplex.js");
 
   options = options || {};
 
@@ -10032,14 +10038,14 @@ function ReadableState(options, stream) {
   this.decoder = null;
   this.encoding = null;
   if (options.encoding) {
-    if (!StringDecoder) StringDecoder = __webpack_require__(/*! string_decoder/ */ "../node_modules/string_decoder/lib/string_decoder.js").StringDecoder;
+    if (!StringDecoder) StringDecoder = __webpack_require__(/*! string_decoder/ */ "../../../node_modules/string_decoder/lib/string_decoder.js").StringDecoder;
     this.decoder = new StringDecoder(options.encoding);
     this.encoding = options.encoding;
   }
 }
 
 function Readable(options) {
-  Duplex = Duplex || __webpack_require__(/*! ./_stream_duplex */ "../node_modules/readable-stream/lib/_stream_duplex.js");
+  Duplex = Duplex || __webpack_require__(/*! ./_stream_duplex */ "../../../node_modules/readable-stream/lib/_stream_duplex.js");
 
   if (!(this instanceof Readable)) return new Readable(options);
 
@@ -10188,7 +10194,7 @@ Readable.prototype.isPaused = function () {
 
 // backwards compatibility.
 Readable.prototype.setEncoding = function (enc) {
-  if (!StringDecoder) StringDecoder = __webpack_require__(/*! string_decoder/ */ "../node_modules/string_decoder/lib/string_decoder.js").StringDecoder;
+  if (!StringDecoder) StringDecoder = __webpack_require__(/*! string_decoder/ */ "../../../node_modules/string_decoder/lib/string_decoder.js").StringDecoder;
   this._readableState.decoder = new StringDecoder(enc);
   this._readableState.encoding = enc;
   return this;
@@ -10880,14 +10886,14 @@ function indexOf(xs, x) {
   }
   return -1;
 }
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../../process/browser.js */ "../node_modules/process/browser.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "../../../node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../../process/browser.js */ "../../../node_modules/process/browser.js")))
 
 /***/ }),
 
-/***/ "../node_modules/readable-stream/lib/_stream_transform.js":
-/*!****************************************************************!*\
-  !*** ../node_modules/readable-stream/lib/_stream_transform.js ***!
-  \****************************************************************/
+/***/ "../../../node_modules/readable-stream/lib/_stream_transform.js":
+/*!****************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/readable-stream/lib/_stream_transform.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10959,11 +10965,11 @@ function indexOf(xs, x) {
 
 module.exports = Transform;
 
-var Duplex = __webpack_require__(/*! ./_stream_duplex */ "../node_modules/readable-stream/lib/_stream_duplex.js");
+var Duplex = __webpack_require__(/*! ./_stream_duplex */ "../../../node_modules/readable-stream/lib/_stream_duplex.js");
 
 /*<replacement>*/
-var util = Object.create(__webpack_require__(/*! core-util-is */ "../node_modules/core-util-is/lib/util.js"));
-util.inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits.js");
+var util = Object.create(__webpack_require__(/*! core-util-is */ "../../../node_modules/core-util-is/lib/util.js"));
+util.inherits = __webpack_require__(/*! inherits */ "../../../node_modules/inherits/inherits.js");
 /*</replacement>*/
 
 util.inherits(Transform, Duplex);
@@ -11109,10 +11115,10 @@ function done(stream, er, data) {
 
 /***/ }),
 
-/***/ "../node_modules/readable-stream/lib/_stream_writable.js":
-/*!***************************************************************!*\
-  !*** ../node_modules/readable-stream/lib/_stream_writable.js ***!
-  \***************************************************************/
+/***/ "../../../node_modules/readable-stream/lib/_stream_writable.js":
+/*!***************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/readable-stream/lib/_stream_writable.js ***!
+  \***************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11146,7 +11152,7 @@ function done(stream, er, data) {
 
 /*<replacement>*/
 
-var pna = __webpack_require__(/*! process-nextick-args */ "../node_modules/process-nextick-args/index.js");
+var pna = __webpack_require__(/*! process-nextick-args */ "../../../node_modules/process-nextick-args/index.js");
 /*</replacement>*/
 
 module.exports = Writable;
@@ -11183,23 +11189,23 @@ var Duplex;
 Writable.WritableState = WritableState;
 
 /*<replacement>*/
-var util = Object.create(__webpack_require__(/*! core-util-is */ "../node_modules/core-util-is/lib/util.js"));
-util.inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits.js");
+var util = Object.create(__webpack_require__(/*! core-util-is */ "../../../node_modules/core-util-is/lib/util.js"));
+util.inherits = __webpack_require__(/*! inherits */ "../../../node_modules/inherits/inherits.js");
 /*</replacement>*/
 
 /*<replacement>*/
 var internalUtil = {
-  deprecate: __webpack_require__(/*! util-deprecate */ "../node_modules/util-deprecate/node.js")
+  deprecate: __webpack_require__(/*! util-deprecate */ "../../../node_modules/util-deprecate/node.js")
 };
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(/*! ./internal/streams/stream */ "../node_modules/readable-stream/lib/internal/streams/stream-browser.js");
+var Stream = __webpack_require__(/*! ./internal/streams/stream */ "../../../node_modules/readable-stream/lib/internal/streams/stream-browser.js");
 /*</replacement>*/
 
 /*<replacement>*/
 
-var Buffer = __webpack_require__(/*! safe-buffer */ "../node_modules/safe-buffer/index.js").Buffer;
+var Buffer = __webpack_require__(/*! safe-buffer */ "../../../node_modules/readable-stream/node_modules/safe-buffer/index.js").Buffer;
 var OurUint8Array = global.Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
   return Buffer.from(chunk);
@@ -11210,14 +11216,14 @@ function _isUint8Array(obj) {
 
 /*</replacement>*/
 
-var destroyImpl = __webpack_require__(/*! ./internal/streams/destroy */ "../node_modules/readable-stream/lib/internal/streams/destroy.js");
+var destroyImpl = __webpack_require__(/*! ./internal/streams/destroy */ "../../../node_modules/readable-stream/lib/internal/streams/destroy.js");
 
 util.inherits(Writable, Stream);
 
 function nop() {}
 
 function WritableState(options, stream) {
-  Duplex = Duplex || __webpack_require__(/*! ./_stream_duplex */ "../node_modules/readable-stream/lib/_stream_duplex.js");
+  Duplex = Duplex || __webpack_require__(/*! ./_stream_duplex */ "../../../node_modules/readable-stream/lib/_stream_duplex.js");
 
   options = options || {};
 
@@ -11367,7 +11373,7 @@ if (typeof Symbol === 'function' && Symbol.hasInstance && typeof Function.protot
 }
 
 function Writable(options) {
-  Duplex = Duplex || __webpack_require__(/*! ./_stream_duplex */ "../node_modules/readable-stream/lib/_stream_duplex.js");
+  Duplex = Duplex || __webpack_require__(/*! ./_stream_duplex */ "../../../node_modules/readable-stream/lib/_stream_duplex.js");
 
   // Writable ctor is applied to Duplexes, too.
   // `realHasInstance` is necessary because using plain `instanceof`
@@ -11804,14 +11810,14 @@ Writable.prototype._destroy = function (err, cb) {
   this.end();
   cb(err);
 };
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "../node_modules/process/browser.js"), __webpack_require__(/*! ./../../timers-browserify/main.js */ "../node_modules/timers-browserify/main.js").setImmediate, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "../../../node_modules/process/browser.js"), __webpack_require__(/*! ./../../timers-browserify/main.js */ "../../../node_modules/timers-browserify/main.js").setImmediate, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "../../../node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
-/***/ "../node_modules/readable-stream/lib/internal/streams/BufferList.js":
-/*!**************************************************************************!*\
-  !*** ../node_modules/readable-stream/lib/internal/streams/BufferList.js ***!
-  \**************************************************************************/
+/***/ "../../../node_modules/readable-stream/lib/internal/streams/BufferList.js":
+/*!**************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/readable-stream/lib/internal/streams/BufferList.js ***!
+  \**************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11820,7 +11826,7 @@ Writable.prototype._destroy = function (err, cb) {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Buffer = __webpack_require__(/*! safe-buffer */ "../node_modules/safe-buffer/index.js").Buffer;
+var Buffer = __webpack_require__(/*! safe-buffer */ "../../../node_modules/readable-stream/node_modules/safe-buffer/index.js").Buffer;
 var util = __webpack_require__(/*! util */ 2);
 
 function copyBuffer(src, target, offset) {
@@ -11898,10 +11904,10 @@ if (util && util.inspect && util.inspect.custom) {
 
 /***/ }),
 
-/***/ "../node_modules/readable-stream/lib/internal/streams/destroy.js":
-/*!***********************************************************************!*\
-  !*** ../node_modules/readable-stream/lib/internal/streams/destroy.js ***!
-  \***********************************************************************/
+/***/ "../../../node_modules/readable-stream/lib/internal/streams/destroy.js":
+/*!***********************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/readable-stream/lib/internal/streams/destroy.js ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11910,7 +11916,7 @@ if (util && util.inspect && util.inspect.custom) {
 
 /*<replacement>*/
 
-var pna = __webpack_require__(/*! process-nextick-args */ "../node_modules/process-nextick-args/index.js");
+var pna = __webpack_require__(/*! process-nextick-args */ "../../../node_modules/process-nextick-args/index.js");
 /*</replacement>*/
 
 // undocumented cb() API, needed for core, not for public API
@@ -11983,81 +11989,27 @@ module.exports = {
 
 /***/ }),
 
-/***/ "../node_modules/readable-stream/lib/internal/streams/stream-browser.js":
-/*!******************************************************************************!*\
-  !*** ../node_modules/readable-stream/lib/internal/streams/stream-browser.js ***!
-  \******************************************************************************/
+/***/ "../../../node_modules/readable-stream/lib/internal/streams/stream-browser.js":
+/*!******************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/readable-stream/lib/internal/streams/stream-browser.js ***!
+  \******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! events */ "../node_modules/events/events.js").EventEmitter;
+module.exports = __webpack_require__(/*! events */ "../../../node_modules/events/events.js").EventEmitter;
 
 
 /***/ }),
 
-/***/ "../node_modules/readable-stream/passthrough.js":
-/*!******************************************************!*\
-  !*** ../node_modules/readable-stream/passthrough.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(/*! ./readable */ "../node_modules/readable-stream/readable-browser.js").PassThrough
-
-
-/***/ }),
-
-/***/ "../node_modules/readable-stream/readable-browser.js":
-/*!***********************************************************!*\
-  !*** ../node_modules/readable-stream/readable-browser.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ./lib/_stream_readable.js */ "../node_modules/readable-stream/lib/_stream_readable.js");
-exports.Stream = exports;
-exports.Readable = exports;
-exports.Writable = __webpack_require__(/*! ./lib/_stream_writable.js */ "../node_modules/readable-stream/lib/_stream_writable.js");
-exports.Duplex = __webpack_require__(/*! ./lib/_stream_duplex.js */ "../node_modules/readable-stream/lib/_stream_duplex.js");
-exports.Transform = __webpack_require__(/*! ./lib/_stream_transform.js */ "../node_modules/readable-stream/lib/_stream_transform.js");
-exports.PassThrough = __webpack_require__(/*! ./lib/_stream_passthrough.js */ "../node_modules/readable-stream/lib/_stream_passthrough.js");
-
-
-/***/ }),
-
-/***/ "../node_modules/readable-stream/transform.js":
-/*!****************************************************!*\
-  !*** ../node_modules/readable-stream/transform.js ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(/*! ./readable */ "../node_modules/readable-stream/readable-browser.js").Transform
-
-
-/***/ }),
-
-/***/ "../node_modules/readable-stream/writable-browser.js":
-/*!***********************************************************!*\
-  !*** ../node_modules/readable-stream/writable-browser.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(/*! ./lib/_stream_writable.js */ "../node_modules/readable-stream/lib/_stream_writable.js");
-
-
-/***/ }),
-
-/***/ "../node_modules/safe-buffer/index.js":
-/*!********************************************!*\
-  !*** ../node_modules/safe-buffer/index.js ***!
-  \********************************************/
+/***/ "../../../node_modules/readable-stream/node_modules/safe-buffer/index.js":
+/*!*************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/readable-stream/node_modules/safe-buffer/index.js ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint-disable node/no-deprecated-api */
-var buffer = __webpack_require__(/*! buffer */ "../node_modules/buffer/index.js")
+var buffer = __webpack_require__(/*! buffer */ "../../../node_modules/buffer/index.js")
 var Buffer = buffer.Buffer
 
 // alternative to using Object.keys for old browsers
@@ -12122,10 +12074,64 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 
 /***/ }),
 
-/***/ "../node_modules/setimmediate/setImmediate.js":
-/*!****************************************************!*\
-  !*** ../node_modules/setimmediate/setImmediate.js ***!
-  \****************************************************/
+/***/ "../../../node_modules/readable-stream/passthrough.js":
+/*!******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/readable-stream/passthrough.js ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! ./readable */ "../../../node_modules/readable-stream/readable-browser.js").PassThrough
+
+
+/***/ }),
+
+/***/ "../../../node_modules/readable-stream/readable-browser.js":
+/*!***********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/readable-stream/readable-browser.js ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ./lib/_stream_readable.js */ "../../../node_modules/readable-stream/lib/_stream_readable.js");
+exports.Stream = exports;
+exports.Readable = exports;
+exports.Writable = __webpack_require__(/*! ./lib/_stream_writable.js */ "../../../node_modules/readable-stream/lib/_stream_writable.js");
+exports.Duplex = __webpack_require__(/*! ./lib/_stream_duplex.js */ "../../../node_modules/readable-stream/lib/_stream_duplex.js");
+exports.Transform = __webpack_require__(/*! ./lib/_stream_transform.js */ "../../../node_modules/readable-stream/lib/_stream_transform.js");
+exports.PassThrough = __webpack_require__(/*! ./lib/_stream_passthrough.js */ "../../../node_modules/readable-stream/lib/_stream_passthrough.js");
+
+
+/***/ }),
+
+/***/ "../../../node_modules/readable-stream/transform.js":
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/readable-stream/transform.js ***!
+  \****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! ./readable */ "../../../node_modules/readable-stream/readable-browser.js").Transform
+
+
+/***/ }),
+
+/***/ "../../../node_modules/readable-stream/writable-browser.js":
+/*!***********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/readable-stream/writable-browser.js ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! ./lib/_stream_writable.js */ "../../../node_modules/readable-stream/lib/_stream_writable.js");
+
+
+/***/ }),
+
+/***/ "../../../node_modules/setimmediate/setImmediate.js":
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/setimmediate/setImmediate.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12316,14 +12322,14 @@ SafeBuffer.allocUnsafeSlow = function (size) {
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../process/browser.js */ "../node_modules/process/browser.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "../../../node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../process/browser.js */ "../../../node_modules/process/browser.js")))
 
 /***/ }),
 
-/***/ "../node_modules/stream-browserify/index.js":
-/*!**************************************************!*\
-  !*** ../node_modules/stream-browserify/index.js ***!
-  \**************************************************/
+/***/ "../../../node_modules/stream-browserify/index.js":
+/*!**************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/index.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12350,15 +12356,15 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 
 module.exports = Stream;
 
-var EE = __webpack_require__(/*! events */ "../node_modules/events/events.js").EventEmitter;
-var inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits.js");
+var EE = __webpack_require__(/*! events */ "../../../node_modules/events/events.js").EventEmitter;
+var inherits = __webpack_require__(/*! inherits */ "../../../node_modules/inherits/inherits.js");
 
 inherits(Stream, EE);
-Stream.Readable = __webpack_require__(/*! readable-stream/readable.js */ "../node_modules/readable-stream/readable-browser.js");
-Stream.Writable = __webpack_require__(/*! readable-stream/writable.js */ "../node_modules/readable-stream/writable-browser.js");
-Stream.Duplex = __webpack_require__(/*! readable-stream/duplex.js */ "../node_modules/readable-stream/duplex-browser.js");
-Stream.Transform = __webpack_require__(/*! readable-stream/transform.js */ "../node_modules/readable-stream/transform.js");
-Stream.PassThrough = __webpack_require__(/*! readable-stream/passthrough.js */ "../node_modules/readable-stream/passthrough.js");
+Stream.Readable = __webpack_require__(/*! readable-stream/readable.js */ "../../../node_modules/readable-stream/readable-browser.js");
+Stream.Writable = __webpack_require__(/*! readable-stream/writable.js */ "../../../node_modules/readable-stream/writable-browser.js");
+Stream.Duplex = __webpack_require__(/*! readable-stream/duplex.js */ "../../../node_modules/readable-stream/duplex-browser.js");
+Stream.Transform = __webpack_require__(/*! readable-stream/transform.js */ "../../../node_modules/readable-stream/transform.js");
+Stream.PassThrough = __webpack_require__(/*! readable-stream/passthrough.js */ "../../../node_modules/readable-stream/passthrough.js");
 
 // Backwards-compat with node 0.4.x
 Stream.Stream = Stream;
@@ -12458,10 +12464,10 @@ Stream.prototype.pipe = function(dest, options) {
 
 /***/ }),
 
-/***/ "../node_modules/string_decoder/lib/string_decoder.js":
-/*!************************************************************!*\
-  !*** ../node_modules/string_decoder/lib/string_decoder.js ***!
-  \************************************************************/
+/***/ "../../../node_modules/string_decoder/lib/string_decoder.js":
+/*!************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/string_decoder/lib/string_decoder.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12491,7 +12497,7 @@ Stream.prototype.pipe = function(dest, options) {
 
 /*<replacement>*/
 
-var Buffer = __webpack_require__(/*! safe-buffer */ "../node_modules/safe-buffer/index.js").Buffer;
+var Buffer = __webpack_require__(/*! safe-buffer */ "../../../node_modules/string_decoder/node_modules/safe-buffer/index.js").Buffer;
 /*</replacement>*/
 
 var isEncoding = Buffer.isEncoding || function (encoding) {
@@ -12765,10 +12771,83 @@ function simpleEnd(buf) {
 
 /***/ }),
 
-/***/ "../node_modules/timers-browserify/main.js":
-/*!*************************************************!*\
-  !*** ../node_modules/timers-browserify/main.js ***!
-  \*************************************************/
+/***/ "../../../node_modules/string_decoder/node_modules/safe-buffer/index.js":
+/*!************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/string_decoder/node_modules/safe-buffer/index.js ***!
+  \************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* eslint-disable node/no-deprecated-api */
+var buffer = __webpack_require__(/*! buffer */ "../../../node_modules/buffer/index.js")
+var Buffer = buffer.Buffer
+
+// alternative to using Object.keys for old browsers
+function copyProps (src, dst) {
+  for (var key in src) {
+    dst[key] = src[key]
+  }
+}
+if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
+  module.exports = buffer
+} else {
+  // Copy properties from require('buffer')
+  copyProps(buffer, exports)
+  exports.Buffer = SafeBuffer
+}
+
+function SafeBuffer (arg, encodingOrOffset, length) {
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+// Copy static methods from Buffer
+copyProps(Buffer, SafeBuffer)
+
+SafeBuffer.from = function (arg, encodingOrOffset, length) {
+  if (typeof arg === 'number') {
+    throw new TypeError('Argument must not be a number')
+  }
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+SafeBuffer.alloc = function (size, fill, encoding) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  var buf = Buffer(size)
+  if (fill !== undefined) {
+    if (typeof encoding === 'string') {
+      buf.fill(fill, encoding)
+    } else {
+      buf.fill(fill)
+    }
+  } else {
+    buf.fill(0)
+  }
+  return buf
+}
+
+SafeBuffer.allocUnsafe = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return Buffer(size)
+}
+
+SafeBuffer.allocUnsafeSlow = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return buffer.SlowBuffer(size)
+}
+
+
+/***/ }),
+
+/***/ "../../../node_modules/timers-browserify/main.js":
+/*!*************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/timers-browserify/main.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12825,7 +12904,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(/*! setimmediate */ "../node_modules/setimmediate/setImmediate.js");
+__webpack_require__(/*! setimmediate */ "../../../node_modules/setimmediate/setImmediate.js");
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -12836,14 +12915,14 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "../../../node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
-/***/ "../node_modules/util-deprecate/node.js":
-/*!**********************************************!*\
-  !*** ../node_modules/util-deprecate/node.js ***!
-  \**********************************************/
+/***/ "../../../node_modules/util-deprecate/node.js":
+/*!**********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/util-deprecate/node.js ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12852,15 +12931,67 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
  * For Node.js, simply re-export the core `util.deprecate` function.
  */
 
-module.exports = __webpack_require__(/*! util */ "../node_modules/util/util.js").deprecate;
+module.exports = __webpack_require__(/*! util */ "../../../node_modules/util/util.js").deprecate;
 
 
 /***/ }),
 
-/***/ "../node_modules/util/support/isBufferBrowser.js":
-/*!*******************************************************!*\
-  !*** ../node_modules/util/support/isBufferBrowser.js ***!
-  \*******************************************************/
+/***/ "../../../node_modules/util/node_modules/inherits/inherits.js":
+/*!**************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/util/node_modules/inherits/inherits.js ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+try {
+  var util = __webpack_require__(/*! util */ "../../../node_modules/util/util.js");
+  if (typeof util.inherits !== 'function') throw '';
+  module.exports = util.inherits;
+} catch (e) {
+  module.exports = __webpack_require__(/*! ./inherits_browser.js */ "../../../node_modules/util/node_modules/inherits/inherits_browser.js");
+}
+
+
+/***/ }),
+
+/***/ "../../../node_modules/util/node_modules/inherits/inherits_browser.js":
+/*!**********************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/util/node_modules/inherits/inherits_browser.js ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    var TempCtor = function () {}
+    TempCtor.prototype = superCtor.prototype
+    ctor.prototype = new TempCtor()
+    ctor.prototype.constructor = ctor
+  }
+}
+
+
+/***/ }),
+
+/***/ "../../../node_modules/util/support/isBufferBrowser.js":
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/util/support/isBufferBrowser.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -12873,10 +13004,10 @@ module.exports = function isBuffer(arg) {
 
 /***/ }),
 
-/***/ "../node_modules/util/util.js":
-/*!************************************!*\
-  !*** ../node_modules/util/util.js ***!
-  \************************************/
+/***/ "../../../node_modules/util/util.js":
+/*!************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/util/util.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13415,7 +13546,7 @@ function isPrimitive(arg) {
 }
 exports.isPrimitive = isPrimitive;
 
-exports.isBuffer = __webpack_require__(/*! ./support/isBuffer */ "../node_modules/util/support/isBufferBrowser.js");
+exports.isBuffer = __webpack_require__(/*! ./support/isBuffer */ "../../../node_modules/util/support/isBufferBrowser.js");
 
 function objectToString(o) {
   return Object.prototype.toString.call(o);
@@ -13459,7 +13590,7 @@ exports.log = function() {
  *     prototype.
  * @param {function} superCtor Constructor function to inherit prototype from.
  */
-exports.inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits.js");
+exports.inherits = __webpack_require__(/*! inherits */ "../../../node_modules/util/node_modules/inherits/inherits.js");
 
 exports._extend = function(origin, add) {
   // Don't do anything if add isn't an object
@@ -13584,14 +13715,14 @@ function callbackify(original) {
 }
 exports.callbackify = callbackify;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../process/browser.js */ "../node_modules/process/browser.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../process/browser.js */ "../../../node_modules/process/browser.js")))
 
 /***/ }),
 
-/***/ "../node_modules/uuid/lib/bytesToUuid.js":
-/*!***********************************************!*\
-  !*** ../node_modules/uuid/lib/bytesToUuid.js ***!
-  \***********************************************/
+/***/ "../../../node_modules/uuid/lib/bytesToUuid.js":
+/*!***********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/uuid/lib/bytesToUuid.js ***!
+  \***********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -13608,14 +13739,16 @@ function bytesToUuid(buf, offset) {
   var i = offset || 0;
   var bth = byteToHex;
   // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
-  return ([bth[buf[i++]], bth[buf[i++]], 
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]],
-	bth[buf[i++]], bth[buf[i++]],
-	bth[buf[i++]], bth[buf[i++]]]).join('');
+  return ([
+    bth[buf[i++]], bth[buf[i++]],
+    bth[buf[i++]], bth[buf[i++]], '-',
+    bth[buf[i++]], bth[buf[i++]], '-',
+    bth[buf[i++]], bth[buf[i++]], '-',
+    bth[buf[i++]], bth[buf[i++]], '-',
+    bth[buf[i++]], bth[buf[i++]],
+    bth[buf[i++]], bth[buf[i++]],
+    bth[buf[i++]], bth[buf[i++]]
+  ]).join('');
 }
 
 module.exports = bytesToUuid;
@@ -13623,10 +13756,10 @@ module.exports = bytesToUuid;
 
 /***/ }),
 
-/***/ "../node_modules/uuid/lib/rng-browser.js":
-/*!***********************************************!*\
-  !*** ../node_modules/uuid/lib/rng-browser.js ***!
-  \***********************************************/
+/***/ "../../../node_modules/uuid/lib/rng-browser.js":
+/*!***********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/uuid/lib/rng-browser.js ***!
+  \***********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -13668,15 +13801,15 @@ if (getRandomValues) {
 
 /***/ }),
 
-/***/ "../node_modules/uuid/v4.js":
-/*!**********************************!*\
-  !*** ../node_modules/uuid/v4.js ***!
-  \**********************************/
+/***/ "../../../node_modules/uuid/v4.js":
+/*!**********************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/uuid/v4.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var rng = __webpack_require__(/*! ./lib/rng */ "../node_modules/uuid/lib/rng-browser.js");
-var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ "../node_modules/uuid/lib/bytesToUuid.js");
+var rng = __webpack_require__(/*! ./lib/rng */ "../../../node_modules/uuid/lib/rng-browser.js");
+var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ "../../../node_modules/uuid/lib/bytesToUuid.js");
 
 function v4(options, buf, offset) {
   var i = buf && offset || 0;
@@ -13708,10 +13841,10 @@ module.exports = v4;
 
 /***/ }),
 
-/***/ "../node_modules/webpack/buildin/global.js":
-/*!*************************************************!*\
-  !*** ../node_modules/webpack/buildin/global.js ***!
-  \*************************************************/
+/***/ "../../../node_modules/webpack/buildin/global.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -13739,10 +13872,10 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "../node_modules/webpack/buildin/module.js":
-/*!*************************************************!*\
-  !*** ../node_modules/webpack/buildin/module.js ***!
-  \*************************************************/
+/***/ "../../../node_modules/webpack/buildin/module.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/module.js ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -13772,10 +13905,10 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "../node_modules/xmltojson/lib/xmlToJSON.js":
-/*!**************************************************!*\
-  !*** ../node_modules/xmltojson/lib/xmlToJSON.js ***!
-  \**************************************************/
+/***/ "../../../node_modules/xmltojson/lib/xmlToJSON.js":
+/*!**************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/xmltojson/lib/xmlToJSON.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14023,7 +14156,7 @@ if ( true && module !== null && module.exports) module.exports = xmlToJSON;
 else if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () { return xmlToJSON }).call(exports, __webpack_require__, exports, module),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/module.js */ "../node_modules/webpack/buildin/module.js")(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/module.js */ "../../../node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
 
@@ -14052,7 +14185,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/adapters/base-adapter */ "./adapters/base-adapter.js");
 /* harmony import */ var _adapters_alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/adapters/alpheiostb/config.json */ "./adapters/alpheiostb/config.json");
 var _adapters_alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/adapters/alpheiostb/config.json */ "./adapters/alpheiostb/config.json", 1);
-/* harmony import */ var xmltojson__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! xmltojson */ "../node_modules/xmltojson/lib/xmlToJSON.js");
+/* harmony import */ var xmltojson__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! xmltojson */ "../../../node_modules/xmltojson/lib/xmlToJSON.js");
 /* harmony import */ var xmltojson__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(xmltojson__WEBPACK_IMPORTED_MODULE_3__);
 
 
@@ -14198,7 +14331,7 @@ module.exports = JSON.parse("{\"servers\":[{\"texts\":[],\"isDefault\":true,\"ur
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/errors/adapter-error */ "./errors/adapter-error.js");
 /* harmony import */ var _l10n_l10n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/l10n/l10n */ "./l10n/l10n.js");
@@ -14428,7 +14561,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/adapters/base-adapter */ "./adapters/base-adapter.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var alpheios_lexis_cs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-lexis-cs */ "../node_modules/alpheios-lexis-cs/index.js");
+/* harmony import */ var alpheios_lexis_cs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-lexis-cs */ "../../../node_modules/alpheios-lexis-cs/index.js");
 /* eslint-disable no-unused-vars */
 
 
@@ -14486,6 +14619,7 @@ class AlpheiosChineseLocAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED
   }
 
   async getHomonym (targetWord, contextForward) {
+    console.info('getHomonym')
     try {
       const cedictRes = await this._fetchCedictData(targetWord, contextForward)
       if (Object.keys(cedictRes).length === 0) {
@@ -14925,7 +15059,7 @@ module.exports = JSON.parse("{\"url\":\"https://latin.packhum.org/rst/concordanc
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! papaparse */ "../node_modules/papaparse/papaparse.js");
+/* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! papaparse */ "../../../node_modules/papaparse/papaparse.js");
 /* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(papaparse__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/adapters/base-adapter */ "./adapters/base-adapter.js");
 /* harmony import */ var _adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/adapters/lexicons/config.json */ "./adapters/lexicons/config.json");
@@ -16968,7 +17102,7 @@ class MessageBundle {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Message; });
-/* harmony import */ var intl_messageformat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-messageformat */ "../node_modules/intl-messageformat/index.js");
+/* harmony import */ var intl_messageformat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-messageformat */ "../../../node_modules/intl-messageformat/index.js");
 /* harmony import */ var intl_messageformat__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(intl_messageformat__WEBPACK_IMPORTED_MODULE_0__);
 
 

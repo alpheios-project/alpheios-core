@@ -1,5 +1,7 @@
 import path from 'path'
-const projectRoot = process.cwd()
+const packageRoot = process.cwd()
+const monorepoRoot = path.join(process.cwd(), '../..')
+console.info('Project root is', monorepoRoot)
 
 const webpack = {
   common: {
@@ -10,9 +12,9 @@ const webpack = {
     resolve: {
       alias: {
         // Below will force all imported modules with unresolved dependencies to use a single instance of that dependency
-        'alpheios-data-models': path.join(projectRoot, 'node_modules/alpheios-data-models/dist/alpheios-data-models.js'),
-        '@lexisCs': path.join(projectRoot, 'node_modules/alpheios-lexis-cs/src/'),
-        '@': path.join(projectRoot, 'src')
+        'alpheios-data-models': path.join(monorepoRoot, 'node_modules/alpheios-data-models/dist/alpheios-data-models.js'),
+        '@lexisCs': path.join(monorepoRoot, 'node_modules/alpheios-lexis-cs/src/'),
+        '@': path.join(packageRoot, 'src')
       }
     }
   },

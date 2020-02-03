@@ -8,8 +8,8 @@
     "test-c": "eslint --fix src/**/*.js && jest tests/morph-fixture.test.js",
     "test-u": "eslint --fix src/**/*.js && jest tests/adapters/tufts/tufts-example.test.js",
     "build": "npm run build-lib && npm run build-node",
-    "build-lib": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue config.mjs",
-    "build-node": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all node-lib config-node.mjs",
+    "build-lib": "eslint --fix src/**/*.js && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs all all vue config.mjs",
+    "build-node": "eslint --fix src/**/*.js && node --experimental-modules ../../node_modules/alpheios-node-build/dist/build.mjs all all node-lib config-node.mjs",
     "build-prod": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue",
     "build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue",
     "lint": "eslint --fix src/**/*.js && "
