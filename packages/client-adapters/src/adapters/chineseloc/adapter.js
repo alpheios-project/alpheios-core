@@ -58,6 +58,7 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
   }
 
   async getHomonym (targetWord, contextForward) {
+
     try {
       const cedictRes = await this._fetchCedictData(targetWord, contextForward)
       if (Object.keys(cedictRes).length === 0) {
