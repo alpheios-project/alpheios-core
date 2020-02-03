@@ -261,7 +261,7 @@ describe('chineseloc.test.js', () => {
     expect(homonym.lexemes[0].lemma.languageCode).toEqual(Constants.STR_LANG_CODE_ZHO)
     expect(homonym.lexemes[0].lemma.word).toEqual('21三体综合症')
     expect(homonym.lexemes[0].lemma.principalParts).toEqual([])
-    expect(homonym.lexemes[0].lemma.features.pronunciation.values).toEqual(['èr shí yi san tǐ zong hé zhèng'])
+    expect(homonym.lexemes[0].lemma.features.pronunciation.values).toEqual(['èr shí yī sān tǐ zōng hé zhèng'])
     expect(homonym.lexemes[0].lemma.features.note.value).toEqual('simplified')
     expect(homonym.lexemes[0].lemma.features.frequency).toBeUndefined()
 
