@@ -1,0 +1,647 @@
+{
+    "ID": "adjpdgm3",
+    "partOfSpeech": "adjective",
+    "title": "Consonant-Declension Adjectives with Two Endings",
+    "credits": "Adjective paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "masculine feminine"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "neuter"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "masculine feminine"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "neuter"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "masculine feminine",
+                "number": "singular",
+                "case": "nominative",
+                "value": "ἀληθής"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "nominative",
+                "value": "ἀληθές"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "masculine feminine",
+                "number": "singular",
+                "case": "nominative",
+                "value": "ἀληθής"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "nominative",
+                "value": "ἀληθές"
+            }
+
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "masculine feminine",
+                "number": "singular",
+                "case": "genitive",
+                "value": "ἀληθοῦς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "genitive",
+                "value": "ἀδίκου"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "masculine feminine",
+                "number": "singular",
+                "case": "genitive",
+                "value": "σώφρονος"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "genitive",
+                "value": "σώφρονος"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "masculine feminine",
+                "number": "singular",
+                "case": "dative",
+                "value": "ἀληθεῖ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "dative",
+                "value": "ἀληθεῖ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "masculine feminine",
+                "number": "singular",
+                "case": "dative",
+                "value": "σώφρονι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "dative",
+                "value": "σώφρονι"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "masculine feminine",
+                "number": "singular",
+                "case": "accusative",
+                "value": "ἀληθῆ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "accusative",
+                "value": "ἀληθές"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "masculine feminine",
+                "number": "singular",
+                "case": "accusative",
+                "value": "σώφρονᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "accusative",
+                "value": "σῶφρον"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "masculine feminine",
+                "number": "singular",
+                "case": "vocative",
+                "value": "ἀληθές"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "vocative",
+                "value": "ἀληθές"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "masculine feminine",
+                "number": "singular",
+                "case": "vocative",
+                "value": "σῶφρον"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "vocative",
+                "value": "σῶφρον"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "masculine feminine",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "ἀληθεῖ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "neuter",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "ἀληθεῖ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "masculine feminine",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "σώφρονε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "neuter",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "σώφρονε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "masculine feminine",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "ἀληθοῖν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "neuter",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "ἀληθοῖν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "masculine feminine",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "σωφρόνοιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "neuter",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "σωφρόνοιν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "masculine feminine",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "ἀληθεῖς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "ἀληθῆ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "masculine feminine",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "σώφρονες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "σώφρονᾰ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "masculine feminine",
+                "number": "plural",
+                "case": "genitive",
+                "value": "ἀληθῶν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "genitive",
+                "value": "ἀληθῶν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "masculine feminine",
+                "number": "plural",
+                "case": "genitive",
+                "value": "σωφρόνων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "genitive",
+                "value": "σωφρόνων"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "masculine feminine",
+                "number": "plural",
+                "case": "dative",
+                "value": "ἀληθέσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "dative",
+                "value": "ἀληθέσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "masculine feminine",
+                "number": "plural",
+                "case": "dative",
+                "value": "σώφροσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "dative",
+                "value": "σώφροσι(ν)"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "masculine feminine",
+                "number": "plural",
+                "case": "accusative",
+                "value": "ἀληθεῖς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "hs_es",
+                "lemma": "ἀληθής",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "accusative",
+                "value": "ἀληθῆ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "masculine feminine",
+                "number": "plural",
+                "case": "accusative",
+                "value": "σώφρονᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "stemtype": "wn_on",
+                "lemma": "σώφρων",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "accusative",
+                "value": "σώφρονᾰ"
+            }
+        ]}
+
+    ]}
+}

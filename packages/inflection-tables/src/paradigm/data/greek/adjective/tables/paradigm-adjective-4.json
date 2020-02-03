@@ -1,0 +1,919 @@
+{
+    "ID": "adjpdgm4",
+    "partOfSpeech": "adjective",
+    "title": "Consonant-Declension Adjectives with Three Endings",
+    "credits": "Adjective paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "stems in υ"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "stems in ν"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "masculine"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "feminine"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "neuter"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "masculine"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "feminine"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "neuter"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "us_eia_u",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ἡδύς",
+                "value": "ἡδύς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "us_eia_u",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ἡδύς",
+                "value": "ἡδεῖᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "us_eia_u",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ἡδύς",
+                "value": "ἡδύ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "as_aina_an",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "μέλας",
+                "value": "μέλας"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "as_aina_an",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "μέλας",
+                "value": "μέλαινᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_aina_an",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "μέλας",
+                "value": "μέλαν"
+            }
+
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "us_eia_u",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἡδύς",
+                "value": "ἡδέος"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "us_eia_u",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἡδύς",
+                "value": "ἡδείᾱς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "us_eia_u",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἡδύς",
+                "value": "ἡδέος"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "as_aina_an",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "μέλας",
+                "value": "μέλανος"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "as_aina_an",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "μέλας",
+                "value": "μελαίνης"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_aina_an",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "μέλας",
+                "value": "μέλανος"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "us_eia_u",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἡδύς",
+                "value": "ἡδεῖ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "us_eia_u",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἡδύς",
+                "value": "ἡδείᾳ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "us_eia_u",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἡδύς",
+                "value": "ἡδεῖ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "as_aina_an",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "μέλας",
+                "value": "μέλανι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "as_aina_an",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "μέλας",
+                "value": "μελαίνῃ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_aina_an",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "μέλας",
+                "value": "μέλανι"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "us_eia_u",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἡδύς",
+                "value": "ἡδύν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "us_eia_u",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἡδύς",
+                "value": "ἡδεῖᾰν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "us_eia_u",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἡδύς",
+                "value": "ἡδύ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "as_aina_an",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "μέλας",
+                "value": "μέλανᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "as_aina_an",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "μέλας",
+                "value": "μέλαινᾰν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_aina_an",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "μέλας",
+                "value": "μέλαν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "us_eia_u",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ἡδύς",
+                "value": "ἡδύ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "us_eia_u",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ἡδύς",
+                "value": "ἡδεῖᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "us_eia_u",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ἡδύς",
+                "value": "ἡδύ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "as_aina_an",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "μέλας",
+                "value": "μέλαν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "as_aina_an",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "μέλας",
+                "value": "μέλαινᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_aina_an",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "μέλας",
+                "value": "μέλαν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "us_eia_u",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἡδύς",
+                "value": "ἡδέε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "us_eia_u",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἡδύς",
+                "value": "ἡδείᾱ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "us_eia_u",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἡδύς",
+                "value": "ἡδέε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "as_aina_an",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "μέλας",
+                "value": "μέλανε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "as_aina_an",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "μέλας",
+                "value": "μελαίνᾱ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_aina_an",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "μέλας",
+                "value": "μέλανε"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "us_eia_u",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἡδύς",
+                "value": "ἡδέοιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "us_eia_u",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἡδύς",
+                "value": "ἡδείαιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "us_eia_u",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἡδύς",
+                "value": "ἡδέοιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "as_aina_an",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "μέλας",
+                "value": "μελάνοιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "as_aina_an",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "μέλας",
+                "value": "μελαίναιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_aina_an",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "μέλας",
+                "value": "μελάνοιν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "us_eia_u",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἡδύς",
+                "value": "ἡδεῖς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "us_eia_u",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἡδύς",
+                "value": "ἡδεῖαι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "us_eia_u",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἡδύς",
+                "value": "ἡδέᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "as_aina_an",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "μέλας",
+                "value": "μέλανες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "as_aina_an",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "μέλας",
+                "value": "μέλαιναι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_aina_an",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "μέλας",
+                "value": "μέλανᾰ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "us_eia_u",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἡδύς",
+                "value": "ἡδέων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "us_eia_u",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἡδύς",
+                "value": "ἡδειῶν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "us_eia_u",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἡδύς",
+                "value": "ἡδέων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "as_aina_an",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "μέλας",
+                "value": "μελάνων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "as_aina_an",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "μέλας",
+                "value": "μελαινῶν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_aina_an",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "μέλας",
+                "value": "μελάνων"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "us_eia_u",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἡδύς",
+                "value": "ἡδέσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "us_eia_u",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἡδύς",
+                "value": "ἡδείαις"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "us_eia_u",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἡδύς",
+                "value": "ἡδέσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "as_aina_an",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "μέλας",
+                "value": "μέλασι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "as_aina_an",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "μέλας",
+                "value": "μελαίναις"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_aina_an",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "μέλας",
+                "value": "μέλασι(ν)"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "us_eia_u",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἡδύς",
+                "value": "ἡδεῖς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "us_eia_u",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἡδύς",
+                "value": "ἡδείᾱς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "us_eia_u",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἡδύς",
+                "value": "ἡδέᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "as_aina_an",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "μέλας",
+                "value": "μέλανᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "as_aina_an",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "μέλας",
+                "value": "μελαίνᾱς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "as_aina_an",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "μέλας",
+                "value": "μέλανᾰ"
+            }
+        ]}
+
+    ]}
+}

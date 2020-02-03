@@ -102,7 +102,18 @@ import paradigmNoun18 from '@/paradigm/data/greek/noun/tables/paradigm-noun-18.j
 // Noun rules
 import nounParadigmRulesCSV from '@/paradigm/data/greek/noun/rules.csv'
 
+// Adjective paradigm tables
+import paradigmAdj1 from '@/paradigm/data/greek/adjective/tables/paradigm-adjective-1.json'
+import paradigmAdj2 from '@/paradigm/data/greek/adjective/tables/paradigm-adjective-2.json'
+import paradigmAdj3 from '@/paradigm/data/greek/adjective/tables/paradigm-adjective-3.json'
+import paradigmAdj4 from '@/paradigm/data/greek/adjective/tables/paradigm-adjective-4.json'
+import paradigmAdj5 from '@/paradigm/data/greek/adjective/tables/paradigm-adjective-5.json'
+import paradigmAdj6 from '@/paradigm/data/greek/adjective/tables/paradigm-adjective-6.json'
+import paradigmAdj7 from '@/paradigm/data/greek/adjective/tables/paradigm-adjective-7.json'
+import paradigmAdj8 from '@/paradigm/data/greek/adjective/tables/paradigm-adjective-8.json'
 
+// Adjective rules
+import adjectiveParadigmRulesCSV from '@/paradigm/data/greek/adjective/rules.csv'
 
 export default class GreekParadigmData {
   static get languageID () {
@@ -228,5 +239,23 @@ export default class GreekParadigmData {
 
   static get nounParadigmRules () {
     return nounParadigmRulesCSV
+  }
+
+  static get adjectiveParadigmTables () {
+    const partOfSpeech = Constants.POFS_ADJECTIVE
+    return new Map([
+        ['adjpdgm1', new Paradigm(this.languageID, partOfSpeech, paradigmAdj1)],
+        ['adjpdgm2', new Paradigm(this.languageID, partOfSpeech, paradigmAdj2)],
+        ['adjpdgm3', new Paradigm(this.languageID, partOfSpeech, paradigmAdj3)],
+        ['adjpdgm4', new Paradigm(this.languageID, partOfSpeech, paradigmAdj4)],
+        ['adjpdgm5', new Paradigm(this.languageID, partOfSpeech, paradigmAdj5)],
+        ['adjpdgm6', new Paradigm(this.languageID, partOfSpeech, paradigmAdj6)],
+        ['adjpdgm7', new Paradigm(this.languageID, partOfSpeech, paradigmAdj7)],
+        ['adjpdgm8', new Paradigm(this.languageID, partOfSpeech, paradigmAdj8)]
+    ])
+  }
+
+  static get adjectiveParadigmRules () {
+    return adjectiveParadigmRulesCSV
   }
 }

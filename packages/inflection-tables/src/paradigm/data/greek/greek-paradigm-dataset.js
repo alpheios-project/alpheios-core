@@ -135,6 +135,7 @@ export default class GreekParadigmDataset extends LanguageDataset {
     this.loadVerbParadigmData()
     this.loadVerbParticipleParadigmData()
     this.loadNounParadigmData()
+    this.loadAdjectiveParadigmData()
 
     this.dataLoaded = true
   }
@@ -173,6 +174,17 @@ export default class GreekParadigmDataset extends LanguageDataset {
     const paradigms = this.setNounParadigmData(
       partOfSpeech, nounParadigmTables,
       papaparse.parse(GreekParadigmData.nounParadigmRules, { skipEmptyLines: true }).data, nounParadigmTables)
+    
+    this.addParadigms(partOfSpeech, paradigms)
+  }
+
+  loadAdjectiveParadigmData () {
+    const adjectiveParadigmTables = GreekParadigmData.adjectiveParadigmTables
+    
+    const partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
+    const paradigms = this.setNounParadigmData(
+      partOfSpeech, adjectiveParadigmTables,
+      papaparse.parse(GreekParadigmData.adjectiveParadigmRules, { skipEmptyLines: true }).data, adjectiveParadigmTables)
     
     this.addParadigms(partOfSpeech, paradigms)
   }

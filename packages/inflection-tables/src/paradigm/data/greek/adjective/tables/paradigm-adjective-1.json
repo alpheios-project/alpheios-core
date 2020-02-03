@@ -1,0 +1,919 @@
+{
+    "ID": "adjpdgm1",
+    "partOfSpeech": "adjective",
+    "title": "Vowel-Declension Adjectives with Three Endings",
+    "credits": "Adjective paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": "with ᾱ-fem."
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": "with η-fem."
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": ""
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": "masculine"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": "feminine"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": "neuter"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": "masculine"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": "feminine"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": "neuter"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ἄξιος",
+                "value": "ἄξιος"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ἄξιος",
+                "value": "ἀξίᾱ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ἄξιος",
+                "value": "ἄξιον"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθός"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθή"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθόν"
+            }
+
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἄξιος",
+                "value": "ἀξίου"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἄξιος",
+                "value": "ἀξίᾱς"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἄξιος",
+                "value": "ἀξίου"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθοῦ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθῆς"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθοῦ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἄξιος",
+                "value": "ἀξίῳ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἄξιος",
+                "value": "ἀξίᾳ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἄξιος",
+                "value": "ἀξίῳ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθῷ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθῇ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθῷ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἄξιος",
+                "value": "ἄξιον"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἄξιος",
+                "value": "ἀξίᾱν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἄξιος",
+                "value": "ἄξιον"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθόν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθήν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθόν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ἄξιος",
+                "value": "ἄξιε"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ἄξιος",
+                "value": "ἀξίᾱ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ἄξιος",
+                "value": "ἄξιον"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθέ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθή"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθόν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἄξιος",
+                "value": "ἀξίω"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἄξιος",
+                "value": "ἀξίᾱ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἄξιος",
+                "value": "ἀξίω"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθώ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθά"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθώ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἄξιος",
+                "value": "ἀξίοιν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἄξιος",
+                "value": "ἀξίαιν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἄξιος",
+                "value": "ἀξίοιν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθοῖν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθαῖν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθοῖν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἄξιος",
+                "value": "ἄξιοι"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἄξιος",
+                "value": "ἄξιαι"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἄξιος",
+                "value": "ἄξιᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθοί"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθαί"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθά"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἄξιος",
+                "value": "ἀξίων"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἄξιος",
+                "value": "ἀξίων"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἄξιος",
+                "value": "ἀξίων"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθῶν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθῶν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθῶν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἄξιος",
+                "value": "ἀξίοις"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἄξιος",
+                "value": "ἀξίαις"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἄξιος",
+                "value": "ἀξίοις"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθοῖς"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθαῖς"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθοῖς"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἄξιος",
+                "value": "ἀξίους"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἄξιος",
+                "value": "ἀξίᾱς"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἄξιος",
+                "value": "ἄξιᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθούς"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθούς"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "os_h_on",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἀγαθός",
+                "value": "ἀγαθά"
+            }
+        ]}
+
+    ]}
+}

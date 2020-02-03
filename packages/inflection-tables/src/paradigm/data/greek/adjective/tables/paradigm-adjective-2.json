@@ -1,0 +1,461 @@
+{
+    "ID": "adjpdgm2",
+    "partOfSpeech": "adjective",
+    "title": "Vowel-Declension Adjectives with Two Endings",
+    "credits": "Adjective paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": "masculine feminine"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": "neuter"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "masculine feminine",
+                "number": "singular",
+                "case": "nominative",
+                "value": "ἄδικος"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "nominative",
+                "value": "ἄδικον"
+            }
+
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "masculine feminine",
+                "number": "singular",
+                "case": "genitive",
+                "value": "ἀδίκου"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "genitive",
+                "value": "ἀδίκου"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "masculine feminine",
+                "number": "singular",
+                "case": "dative",
+                "value": "ἀδίκῳ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "dative",
+                "value": "ἀδίκῳ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "masculine feminine",
+                "number": "singular",
+                "case": "accusative",
+                "value": "ἄδικον"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "accusative",
+                "value": "ἄδικον"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "masculine feminine",
+                "number": "singular",
+                "case": "vocative",
+                "value": "ἄδικε"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "neuter",
+                "number": "singular",
+                "case": "vocative",
+                "value": "ἄδικον"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "masculine feminine",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "ἀδίκω"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "neuter",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "ἀδίκω"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "masculine feminine",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "ἀδίκοιν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "neuter",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "ἀδίκοιν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "masculine feminine",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "ἄδικοι"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "ἄδικᾰ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "masculine feminine",
+                "number": "plural",
+                "case": "genitive",
+                "value": "ἀδίκων"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "genitive",
+                "value": "ἀδίκων"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "masculine feminine",
+                "number": "plural",
+                "case": "dative",
+                "value": "ἀδίκοις"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "dative",
+                "value": "ἀδίκοις"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "masculine feminine",
+                "number": "plural",
+                "case": "accusative",
+                "value": "ἀδίκους"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "stemtype": "os_on",
+                "lemma": "ἄδικος",
+                "gender": "neuter",
+                "number": "plural",
+                "case": "accusative",
+                "value": "ἀδίκους"
+            }
+        ]}
+
+    ]}
+}

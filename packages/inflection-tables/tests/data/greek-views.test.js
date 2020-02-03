@@ -32,9 +32,9 @@ describe('greek-views.test.js', () => {
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
 
-    // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
+    // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
+    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(3)
     
     BaseTestHelp.checkView({
       inflectionsViewSet,
@@ -52,15 +52,8 @@ describe('greek-views.test.js', () => {
 
     BaseTestHelp.checkView({
       inflectionsViewSet,
-      viewName: 'GreekAdjectiveView',
-      title: 'Adjective declension',
-      linkedViewsLength: 0
-    })
-
-    BaseTestHelp.checkView({
-      inflectionsViewSet,
-      viewName: 'GreekAdjectiveSimplifiedView',
-      title: 'Adjective declension (simplified)',
+      viewName: 'GreekAdjectiveParadigmView',
+      title: 'Consonant-Declension Adjectives with Three Endings',
       linkedViewsLength: 0
     })
   })
@@ -256,4 +249,5 @@ describe('greek-views.test.js', () => {
       viewName: 'GreekAdjectiveSimplifiedView'
     })
   })
+  
 })

@@ -1,0 +1,697 @@
+{
+    "ID": "adjpdgm7",
+    "partOfSpeech": "adjective",
+    "title": "Vowel-Declension Adjectives with Contraction (-οος)",
+    "credits": "Adjective paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": "masculine feminine"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": "neuter"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": "masculine"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": "feminine"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "value": "neuter"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine feminine",
+                "stemtype": "oos_oon",
+                "number": "singular",
+                "case": "nominative vocative",
+                "lemma": "εὔνους",
+                "value": "εὔνους"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oon",
+                "number": "singular",
+                "case": "nominative vocative",
+                "lemma": "εὔνους",
+                "value": "εὔνουν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "oos_oh_oon",
+                "number": "singular",
+                "case": "nominative vocative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλοῦς"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "oos_oh_oon",
+                "number": "singular",
+                "case": "nominative vocative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλῆ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oh_oon",
+                "number": "singular",
+                "case": "nominative vocative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλοῦν"
+            }
+
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine feminine",
+                "stemtype": "oos_oon",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "εὔνους",
+                "value": "εὔνου"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oon",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "εὔνους",
+                "value": "εὔνου"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "oos_oh_oon",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλοῦ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "oos_oh_oon",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλῆς"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oh_oon",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλοῦ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine feminine",
+                "stemtype": "oos_oon",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "εὔνους",
+                "value": "εὔνῳ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oon",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "εὔνους",
+                "value": "εὔνῳ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "oos_oh_oon",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλῷ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "oos_oh_oon",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλῇ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oh_oon",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλῷ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine feminine",
+                "stemtype": "oos_oon",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "εὔνους",
+                "value": "εὔνουν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oon",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "εὔνους",
+                "value": "εὔνουν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "oos_oh_oon",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλοῦν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "oos_oh_oon",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλῆν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oh_oon",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλοῦν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine feminine",
+                "stemtype": "oos_oon",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "εὔνους",
+                "value": "εὔνω"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oon",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "εὔνους",
+                "value": "εὔνω"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "oos_oh_oon",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλώ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "oos_oh_oon",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλᾶ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oh_oon",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλώ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine feminine",
+                "stemtype": "oos_oon",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "εὔνους",
+                "value": "εὔνοιν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oon",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "εὔνους",
+                "value": "εὔνοιν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "oos_oh_oon",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλοῖν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "oos_oh_oon",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλαῖν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oh_oon",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλοῖν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine feminine",
+                "stemtype": "oos_oon",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "εὔνους",
+                "value": "εὔνοι"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oon",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "εὔνους",
+                "value": "εὔνοᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "oos_oh_oon",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλοῖ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "oos_oh_oon",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλαῖ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oh_oon",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλόᾰ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine feminine",
+                "stemtype": "oos_oon",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "εὔνους",
+                "value": "εὔνων"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oon",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "εὔνους",
+                "value": "εὔνων"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "oos_oh_oon",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλῶν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "oos_oh_oon",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλῶν"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oh_oon",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλῶν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine feminine",
+                "stemtype": "oos_oon",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "εὔνους",
+                "value": "εὔνοις"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oon",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "εὔνους",
+                "value": "εὔνοις"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "oos_oh_oon",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλοῖς"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "oos_oh_oon",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλαῖς"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oh_oon",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλοῖς"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "1st 2nd",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine feminine",
+                "stemtype": "oos_oon",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "εὔνους",
+                "value": "εὔνους"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oon",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "εὔνους",
+                "value": "εὔνοᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "masculine",
+                "stemtype": "oos_oh_oon",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλοῦς"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "feminine",
+                "stemtype": "oos_oh_oon",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλᾶς"
+            },
+            {
+                "role": "data",
+                "declension": "1st 2nd",
+                "gender": "neuter",
+                "stemtype": "oos_oh_oon",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "ἁπλόος",
+                "value": "ἁπλόᾰ"
+            }
+        ]}
+
+    ]}
+}

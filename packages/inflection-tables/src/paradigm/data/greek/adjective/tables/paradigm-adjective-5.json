@@ -1,0 +1,919 @@
+{
+    "ID": "adjpdgm5",
+    "partOfSpeech": "adjective",
+    "title": "Consonant-Declension Adjectives with Three Endings",
+    "credits": "Adjective paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "table": {"rows": [
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "stems in ντ"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": ""
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "masculine"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "feminine"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "neuter"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "masculine"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "feminine"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "value": "neuter"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "nominative",
+                "value": "nominative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "eis_essa",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεις"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "eis_essa",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεσσᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "eis_essa",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "irreg_adj3",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "πᾶς",
+                "value": "πᾶς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "irreg_adj3",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "πᾶς",
+                "value": "πᾶσᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "irreg_adj3",
+                "number": "singular",
+                "case": "nominative",
+                "lemma": "πᾶς",
+                "value": "πᾶν"
+            }
+
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "eis_essa",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "χαρίεις",
+                "value": "χαρίεντος"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "eis_essa",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "χαρίεις",
+                "value": "χαριέσσης"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "eis_essa",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "χαρίεις",
+                "value": "χαρίεντος"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "irreg_adj3",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "πᾶς",
+                "value": "παντός"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "irreg_adj3",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "πᾶς",
+                "value": "πάσης"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "irreg_adj3",
+                "number": "singular",
+                "case": "genitive",
+                "lemma": "πᾶς",
+                "value": "παντός"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "eis_essa",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεντι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "eis_essa",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "χαρίεις",
+                "value": "χαριέσσῃ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "eis_essa",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεντι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "irreg_adj3",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "πᾶς",
+                "value": "παντί"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "irreg_adj3",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "πᾶς",
+                "value": "πάσῃ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "irreg_adj3",
+                "number": "singular",
+                "case": "dative",
+                "lemma": "πᾶς",
+                "value": "παντί"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "eis_essa",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεντᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "eis_essa",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεσσᾰν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "eis_essa",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "irreg_adj3",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "πᾶς",
+                "value": "πάντᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "irreg_adj3",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "πᾶς",
+                "value": "πᾶσαν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "irreg_adj3",
+                "number": "singular",
+                "case": "accusative",
+                "lemma": "πᾶς",
+                "value": "πᾶν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "value": "singular"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "singular",
+                "case": "vocative",
+                "value": "vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "eis_essa",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "eis_essa",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεσσᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "eis_essa",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "irreg_adj3",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "πᾶς",
+                "value": "πᾶς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "irreg_adj3",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "πᾶς",
+                "value": "πᾶσᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "irreg_adj3",
+                "number": "singular",
+                "case": "vocative",
+                "lemma": "πᾶς",
+                "value": "πᾶν"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "value": "nominative accusative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "eis_essa",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεντε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "eis_essa",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "χαρίεις",
+                "value": "χαριέσσᾱ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "eis_essa",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεντε"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "irreg_adj3",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "πᾶς",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "irreg_adj3",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "πᾶς",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "irreg_adj3",
+                "number": "dual",
+                "case": "nominative accusative vocative",
+                "lemma": "πᾶς",
+                "value": ""
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "value": "dual"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "dual",
+                "case": "genitive dative",
+                "value": "genitive dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "eis_essa",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "χαρίεις",
+                "value": "χαριέντοιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "eis_essa",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "χαρίεις",
+                "value": "χαριέσσαιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "eis_essa",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "χαρίεις",
+                "value": "χαριέντοιν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "irreg_adj3",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "πᾶς",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "irreg_adj3",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "πᾶς",
+                "value": ""
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "irreg_adj3",
+                "number": "dual",
+                "case": "genitive dative",
+                "lemma": "πᾶς",
+                "value": ""
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "nominative vocative",
+                "value": "nominative vocative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "eis_essa",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεντες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "eis_essa",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεσσαι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "eis_essa",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεντᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "irreg_adj3",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "πᾶς",
+                "value": "πάντες"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "irreg_adj3",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "πᾶς",
+                "value": "πᾶσαι"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "irreg_adj3",
+                "number": "plural",
+                "case": "nominative vocative",
+                "lemma": "πᾶς",
+                "value": "πάντᾰ"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "genitive",
+                "value": "genitive"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "eis_essa",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "χαρίεις",
+                "value": "χαριέντων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "eis_essa",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "χαρίεις",
+                "value": "χαριεσσῶν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "eis_essa",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "χαρίεις",
+                "value": "χαριέντων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "irreg_adj3",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "πᾶς",
+                "value": "πάντων"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "irreg_adj3",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "πᾶς",
+                "value": "πᾱσῶν"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "irreg_adj3",
+                "number": "plural",
+                "case": "genitive",
+                "lemma": "πᾶς",
+                "value": "πάντων"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "dative",
+                "value": "dative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "eis_essa",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "eis_essa",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "χαρίεις",
+                "value": "χαριέσσαις"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "eis_essa",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "irreg_adj3",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "πᾶς",
+                "value": "πᾶσι(ν)"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "irreg_adj3",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "πᾶς",
+                "value": "πάσαις"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "irreg_adj3",
+                "number": "plural",
+                "case": "dative",
+                "lemma": "πᾶς",
+                "value": "πᾶσι(ν)"
+            }
+        ]},
+        {"cells": [
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "value": "plural"
+            },
+            {
+                "role": "label",
+                "declension": "3rd",
+                "number": "plural",
+                "case": "accusative",
+                "value": "accusative"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "eis_essa",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεντᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "eis_essa",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "χαρίεις",
+                "value": "χαριέσσᾱς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "eis_essa",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "χαρίεις",
+                "value": "χαρίεντᾰ"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "masculine",
+                "stemtype": "irreg_adj3",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "πᾶς",
+                "value": "πάντᾰς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "feminine",
+                "stemtype": "irreg_adj3",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "πᾶς",
+                "value": "πάσᾱς"
+            },
+            {
+                "role": "data",
+                "declension": "3rd",
+                "gender": "neuter",
+                "stemtype": "irreg_adj3",
+                "number": "plural",
+                "case": "accusative",
+                "lemma": "πᾶς",
+                "value": "πάντᾰ"
+            }
+        ]}
+
+    ]}
+}
