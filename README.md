@@ -12,6 +12,9 @@ It contains the following packages:
 
 Please see [lerna bootstrap documentation](https://github.com/lerna/lerna/tree/master/commands/bootstrap#readme) for more information on that command.
 
+### Add a local or remote dependency
+`npx lerna add package-dependency-to-add --dev --scope=package-to-which-dependency-to-be-added`. If you want to add, for example, `alpheios-data-models` dependency to `alpheios-client-adapters` then the following command will do it: `npx lerna add alpheios-data-models --dev --scope=alpheios-client-adapters`.
+
 ### Develop a new feature
 Create a feature branch and do your development work in there as with regular packages. After your work is completed, merge changes to master.
 
@@ -19,3 +22,6 @@ Create a feature branch and do your development work in there as with regular pa
 To run npm scripts for any individual package, go to that package directory (i.e. `alpheios-core/packages/package-name`) and run script using npm run-script: `npm run script-name`. Alternatively, you can use `npx lerna run --scope package-name script-name`.
 
 To run npm scripts for all packages use `npx lerna run script-name` from the top-level directory (i.e. `alpheios-core`). This will run `script-name` script for all packages that have this script in their `package.json`. See [lerna run documentation](https://github.com/lerna/lerna/tree/master/commands/run#readme) for more information on this command.
+
+## TODOs
+* `npx lerna bootstrap --hoist` may not create links to dependencies in `data-models`. We'll use bootstrap without the `--host` option until this is resolved.

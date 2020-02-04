@@ -96,10 +96,45 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
-/***/ "../../../node_modules/alpheios-lexis-cs/src/cedict-service/constants.js":
-/*!*************************************************************************************************************!*\
-  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/cedict-service/constants.js ***!
-  \*************************************************************************************************************/
+/***/ "../node_modules/alpheios-lexis-cs/index.js":
+/*!**************************************************!*\
+  !*** ../node_modules/alpheios-lexis-cs/index.js ***!
+  \**************************************************/
+/*! exports provided: MessagingService, WindowIframeDestination, RequestMessage, CedictDestinationConfig, CedictCharacterForms */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _lexisCs_messaging_messaging_service_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @lexisCs/messaging/messaging-service.js */ "../node_modules/alpheios-lexis-cs/src/messaging/messaging-service.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MessagingService", function() { return _lexisCs_messaging_messaging_service_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+/* harmony import */ var _lexisCs_messaging_destinations_window_iframe_destination_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @lexisCs/messaging/destinations/window-iframe-destination.js */ "../node_modules/alpheios-lexis-cs/src/messaging/destinations/window-iframe-destination.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WindowIframeDestination", function() { return _lexisCs_messaging_destinations_window_iframe_destination_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+
+/* harmony import */ var _lexisCs_messaging_messages_request_message_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @lexisCs/messaging/messages/request-message.js */ "../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RequestMessage", function() { return _lexisCs_messaging_messages_request_message_js__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+
+/* harmony import */ var _lexisCs_cedict_service_constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @lexisCs/cedict-service/constants.js */ "../node_modules/alpheios-lexis-cs/src/cedict-service/constants.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CedictCharacterForms", function() { return _lexisCs_cedict_service_constants_js__WEBPACK_IMPORTED_MODULE_3__["CedictCharacterForms"]; });
+
+/* harmony import */ var _lexisCs_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @lexisCs/configurations/destinations.js */ "../node_modules/alpheios-lexis-cs/src/configurations/destinations.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CedictDestinationConfig", function() { return _lexisCs_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__["CedictDestinationConfig"]; });
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+
+/***/ "../node_modules/alpheios-lexis-cs/src/cedict-service/constants.js":
+/*!*************************************************************************!*\
+  !*** ../node_modules/alpheios-lexis-cs/src/cedict-service/constants.js ***!
+  \*************************************************************************/
 /*! exports provided: CedictCharacterForms */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -119,10 +154,10 @@ const CedictCharacterForms = {
 
 /***/ }),
 
-/***/ "../../../node_modules/alpheios-lexis-cs/src/configurations/destinations.js":
-/*!****************************************************************************************************************!*\
-  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/configurations/destinations.js ***!
-  \****************************************************************************************************************/
+/***/ "../node_modules/alpheios-lexis-cs/src/configurations/destinations.js":
+/*!****************************************************************************!*\
+  !*** ../node_modules/alpheios-lexis-cs/src/configurations/destinations.js ***!
+  \****************************************************************************/
 /*! exports provided: CedictDestinationConfig */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -143,10 +178,10 @@ const CedictDestinationConfig = {
 
 /***/ }),
 
-/***/ "../../../node_modules/alpheios-lexis-cs/src/messaging/destinations/destination.js":
-/*!***********************************************************************************************************************!*\
-  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/messaging/destinations/destination.js ***!
-  \***********************************************************************************************************************/
+/***/ "../node_modules/alpheios-lexis-cs/src/messaging/destinations/destination.js":
+/*!***********************************************************************************!*\
+  !*** ../node_modules/alpheios-lexis-cs/src/messaging/destinations/destination.js ***!
+  \***********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -201,17 +236,17 @@ class Destination {
 
 /***/ }),
 
-/***/ "../../../node_modules/alpheios-lexis-cs/src/messaging/destinations/window-iframe-destination.js":
-/*!*************************************************************************************************************************************!*\
-  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/messaging/destinations/window-iframe-destination.js ***!
-  \*************************************************************************************************************************************/
+/***/ "../node_modules/alpheios-lexis-cs/src/messaging/destinations/window-iframe-destination.js":
+/*!*************************************************************************************************!*\
+  !*** ../node_modules/alpheios-lexis-cs/src/messaging/destinations/window-iframe-destination.js ***!
+  \*************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WindowIframeDestination; });
-/* harmony import */ var _lexisCs_messaging_destinations_destination_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @lexisCs/messaging/destinations/destination.js */ "../../../node_modules/alpheios-lexis-cs/src/messaging/destinations/destination.js");
+/* harmony import */ var _lexisCs_messaging_destinations_destination_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @lexisCs/messaging/destinations/destination.js */ "../node_modules/alpheios-lexis-cs/src/messaging/destinations/destination.js");
 /**
  * @module WindowIframeDestination
  */
@@ -327,17 +362,17 @@ class WindowIframeDestination extends _lexisCs_messaging_destinations_destinatio
 
 /***/ }),
 
-/***/ "../../../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js":
-/*!***************************************************************************************************************!*\
-  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/messaging/messages/message.js ***!
-  \***************************************************************************************************************/
+/***/ "../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js":
+/*!***************************************************************************!*\
+  !*** ../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js ***!
+  \***************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Message; });
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid/v4 */ "../../../node_modules/uuid/v4.js");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid/v4 */ "../node_modules/uuid/v4.js");
 /* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_0__);
 /**
  * @module Message
@@ -398,17 +433,17 @@ Message.types = {
 
 /***/ }),
 
-/***/ "../../../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js":
-/*!***********************************************************************************************************************!*\
-  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js ***!
-  \***********************************************************************************************************************/
+/***/ "../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js":
+/*!***********************************************************************************!*\
+  !*** ../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js ***!
+  \***********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RequestMessage; });
-/* harmony import */ var _message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./message.js */ "../../../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js");
+/* harmony import */ var _message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./message.js */ "../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js");
 /**
  * @module RequestMessage
  */
@@ -435,18 +470,18 @@ class RequestMessage extends _message_js__WEBPACK_IMPORTED_MODULE_0__["default"]
 
 /***/ }),
 
-/***/ "../../../node_modules/alpheios-lexis-cs/src/messaging/messages/response-message.js":
-/*!************************************************************************************************************************!*\
-  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/messaging/messages/response-message.js ***!
-  \************************************************************************************************************************/
+/***/ "../node_modules/alpheios-lexis-cs/src/messaging/messages/response-message.js":
+/*!************************************************************************************!*\
+  !*** ../node_modules/alpheios-lexis-cs/src/messaging/messages/response-message.js ***!
+  \************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ResponseMessage; });
-/* harmony import */ var _lexisCs_messaging_messages_message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @lexisCs/messaging/messages/message.js */ "../../../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js");
-/* harmony import */ var _lexisCs_messaging_messages_request_message_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @lexisCs/messaging/messages/request-message.js */ "../../../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js");
+/* harmony import */ var _lexisCs_messaging_messages_message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @lexisCs/messaging/messages/message.js */ "../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js");
+/* harmony import */ var _lexisCs_messaging_messages_request_message_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @lexisCs/messaging/messages/request-message.js */ "../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js");
 /**
  * @module ResponseMessage
  */
@@ -526,18 +561,18 @@ ResponseMessage.responseCodes = {
 
 /***/ }),
 
-/***/ "../../../node_modules/alpheios-lexis-cs/src/messaging/messaging-service.js":
-/*!****************************************************************************************************************!*\
-  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/messaging/messaging-service.js ***!
-  \****************************************************************************************************************/
+/***/ "../node_modules/alpheios-lexis-cs/src/messaging/messaging-service.js":
+/*!****************************************************************************!*\
+  !*** ../node_modules/alpheios-lexis-cs/src/messaging/messaging-service.js ***!
+  \****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MessagingService; });
-/* harmony import */ var _messages_response_message__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./messages/response-message */ "../../../node_modules/alpheios-lexis-cs/src/messaging/messages/response-message.js");
-/* harmony import */ var _stored_request__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stored-request */ "../../../node_modules/alpheios-lexis-cs/src/messaging/stored-request.js");
+/* harmony import */ var _messages_response_message__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./messages/response-message */ "../node_modules/alpheios-lexis-cs/src/messaging/messages/response-message.js");
+/* harmony import */ var _stored_request__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stored-request */ "../node_modules/alpheios-lexis-cs/src/messaging/stored-request.js");
 /**
  * @module MessagingService
  */
@@ -758,10 +793,10 @@ MessagingService.errMsgs = {
 
 /***/ }),
 
-/***/ "../../../node_modules/alpheios-lexis-cs/src/messaging/stored-request.js":
-/*!*************************************************************************************************************!*\
-  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-lexis-cs/src/messaging/stored-request.js ***!
-  \*************************************************************************************************************/
+/***/ "../node_modules/alpheios-lexis-cs/src/messaging/stored-request.js":
+/*!*************************************************************************!*\
+  !*** ../node_modules/alpheios-lexis-cs/src/messaging/stored-request.js ***!
+  \*************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -798,170 +833,6 @@ class StoredRequest {
     this.reject = reject
   }
 }
-
-
-/***/ }),
-
-/***/ "../../../node_modules/uuid/lib/bytesToUuid.js":
-/*!***********************************************************************************!*\
-  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/uuid/lib/bytesToUuid.js ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Convert array of 16 byte values to UUID string format of the form:
- * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
- */
-var byteToHex = [];
-for (var i = 0; i < 256; ++i) {
-  byteToHex[i] = (i + 0x100).toString(16).substr(1);
-}
-
-function bytesToUuid(buf, offset) {
-  var i = offset || 0;
-  var bth = byteToHex;
-  // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
-  return ([
-    bth[buf[i++]], bth[buf[i++]],
-    bth[buf[i++]], bth[buf[i++]], '-',
-    bth[buf[i++]], bth[buf[i++]], '-',
-    bth[buf[i++]], bth[buf[i++]], '-',
-    bth[buf[i++]], bth[buf[i++]], '-',
-    bth[buf[i++]], bth[buf[i++]],
-    bth[buf[i++]], bth[buf[i++]],
-    bth[buf[i++]], bth[buf[i++]]
-  ]).join('');
-}
-
-module.exports = bytesToUuid;
-
-
-/***/ }),
-
-/***/ "../../../node_modules/uuid/lib/rng.js":
-/*!***************************************************************************!*\
-  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/uuid/lib/rng.js ***!
-  \***************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Unique ID creation requires a high quality random # generator.  In node.js
-// this is pretty straight-forward - we use the crypto API.
-
-var crypto = __webpack_require__(/*! crypto */ "crypto");
-
-module.exports = function nodeRNG() {
-  return crypto.randomBytes(16);
-};
-
-
-/***/ }),
-
-/***/ "../../../node_modules/uuid/v4.js":
-/*!**********************************************************************!*\
-  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/uuid/v4.js ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var rng = __webpack_require__(/*! ./lib/rng */ "../../../node_modules/uuid/lib/rng.js");
-var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ "../../../node_modules/uuid/lib/bytesToUuid.js");
-
-function v4(options, buf, offset) {
-  var i = buf && offset || 0;
-
-  if (typeof(options) == 'string') {
-    buf = options === 'binary' ? new Array(16) : null;
-    options = null;
-  }
-  options = options || {};
-
-  var rnds = options.random || (options.rng || rng)();
-
-  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
-  rnds[6] = (rnds[6] & 0x0f) | 0x40;
-  rnds[8] = (rnds[8] & 0x3f) | 0x80;
-
-  // Copy bytes to buffer, if provided
-  if (buf) {
-    for (var ii = 0; ii < 16; ++ii) {
-      buf[i + ii] = rnds[ii];
-    }
-  }
-
-  return buf || bytesToUuid(rnds);
-}
-
-module.exports = v4;
-
-
-/***/ }),
-
-/***/ "../../../node_modules/webpack/buildin/module.js":
-/*!***********************************!*\
-  !*** (webpack)/buildin/module.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if (!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-
-/***/ "../node_modules/alpheios-lexis-cs/index.js":
-/*!**************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/index.js ***!
-  \**************************************************/
-/*! exports provided: MessagingService, WindowIframeDestination, RequestMessage, CedictDestinationConfig, CedictCharacterForms */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lexisCs_messaging_messaging_service_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @lexisCs/messaging/messaging-service.js */ "../../../node_modules/alpheios-lexis-cs/src/messaging/messaging-service.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MessagingService", function() { return _lexisCs_messaging_messaging_service_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
-
-/* harmony import */ var _lexisCs_messaging_destinations_window_iframe_destination_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @lexisCs/messaging/destinations/window-iframe-destination.js */ "../../../node_modules/alpheios-lexis-cs/src/messaging/destinations/window-iframe-destination.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WindowIframeDestination", function() { return _lexisCs_messaging_destinations_window_iframe_destination_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
-
-/* harmony import */ var _lexisCs_messaging_messages_request_message_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @lexisCs/messaging/messages/request-message.js */ "../../../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RequestMessage", function() { return _lexisCs_messaging_messages_request_message_js__WEBPACK_IMPORTED_MODULE_2__["default"]; });
-
-/* harmony import */ var _lexisCs_cedict_service_constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @lexisCs/cedict-service/constants.js */ "../../../node_modules/alpheios-lexis-cs/src/cedict-service/constants.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CedictCharacterForms", function() { return _lexisCs_cedict_service_constants_js__WEBPACK_IMPORTED_MODULE_3__["CedictCharacterForms"]; });
-
-/* harmony import */ var _lexisCs_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @lexisCs/configurations/destinations.js */ "../../../node_modules/alpheios-lexis-cs/src/configurations/destinations.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CedictDestinationConfig", function() { return _lexisCs_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__["CedictDestinationConfig"]; });
-
-
-
-
-
-
-
-
 
 
 /***/ }),
@@ -3073,10 +2944,10 @@ module.exports = {
 /*!******************************************!*\
   !*** ../node_modules/axios/package.json ***!
   \******************************************/
-/*! exports provided: _args, _development, _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _spec, _where, author, browser, bugs, bundlesize, dependencies, description, devDependencies, homepage, keywords, license, main, name, repository, scripts, typings, version, default */
+/*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, browser, bugs, bundleDependencies, bundlesize, dependencies, deprecated, description, devDependencies, homepage, keywords, license, main, name, repository, scripts, typings, version, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_args\":[[\"axios@0.19.2\",\"C:\\\\uds\\\\projects\\\\alpheios\\\\alpheios-core\\\\packages\\\\client-adapters\"]],\"_development\":true,\"_from\":\"axios@0.19.2\",\"_id\":\"axios@0.19.2\",\"_inBundle\":false,\"_integrity\":\"sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.19.2\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.19.2\",\"saveSpec\":null,\"fetchSpec\":\"0.19.2\"},\"_requiredBy\":[\"#DEV:/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.19.2.tgz\",\"_spec\":\"0.19.2\",\"_where\":\"C:\\\\uds\\\\projects\\\\alpheios\\\\alpheios-core\\\\packages\\\\client-adapters\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"1.5.10\"},\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"version\":\"0.19.2\"}");
+module.exports = JSON.parse("{\"_from\":\"axios@^0.19.2\",\"_id\":\"axios@0.19.2\",\"_inBundle\":false,\"_integrity\":\"sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"axios@^0.19.2\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"^0.19.2\",\"saveSpec\":null,\"fetchSpec\":\"^0.19.2\"},\"_requiredBy\":[\"#DEV:/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.19.2.tgz\",\"_shasum\":\"3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27\",\"_spec\":\"axios@^0.19.2\",\"_where\":\"C:\\\\uds\\\\projects\\\\alpheios\\\\alpheios-core\\\\packages\\\\client-adapters\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundleDependencies\":false,\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"1.5.10\"},\"deprecated\":false,\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"bundlesize\":\"^0.17.0\",\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.0.2\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^20.1.0\",\"grunt-karma\":\"^2.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^1.0.18\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^1.3.0\",\"karma-chrome-launcher\":\"^2.2.0\",\"karma-coverage\":\"^1.1.1\",\"karma-firefox-launcher\":\"^1.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-opera-launcher\":\"^1.0.0\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^1.2.0\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.7\",\"karma-webpack\":\"^1.7.0\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^5.2.0\",\"sinon\":\"^4.5.0\",\"typescript\":\"^2.8.1\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^1.13.1\",\"webpack-dev-server\":\"^1.14.1\"},\"homepage\":\"https://github.com/axios/axios\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test && bundlesize\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"version\":\"0.19.2\"}");
 
 /***/ }),
 
@@ -8897,6 +8768,133 @@ module.exports = (function () {
 
 /***/ }),
 
+/***/ "../node_modules/uuid/lib/bytesToUuid.js":
+/*!***********************************************!*\
+  !*** ../node_modules/uuid/lib/bytesToUuid.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Convert array of 16 byte values to UUID string format of the form:
+ * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+ */
+var byteToHex = [];
+for (var i = 0; i < 256; ++i) {
+  byteToHex[i] = (i + 0x100).toString(16).substr(1);
+}
+
+function bytesToUuid(buf, offset) {
+  var i = offset || 0;
+  var bth = byteToHex;
+  // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
+  return ([bth[buf[i++]], bth[buf[i++]], 
+	bth[buf[i++]], bth[buf[i++]], '-',
+	bth[buf[i++]], bth[buf[i++]], '-',
+	bth[buf[i++]], bth[buf[i++]], '-',
+	bth[buf[i++]], bth[buf[i++]], '-',
+	bth[buf[i++]], bth[buf[i++]],
+	bth[buf[i++]], bth[buf[i++]],
+	bth[buf[i++]], bth[buf[i++]]]).join('');
+}
+
+module.exports = bytesToUuid;
+
+
+/***/ }),
+
+/***/ "../node_modules/uuid/lib/rng.js":
+/*!***************************************!*\
+  !*** ../node_modules/uuid/lib/rng.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Unique ID creation requires a high quality random # generator.  In node.js
+// this is pretty straight-forward - we use the crypto API.
+
+var crypto = __webpack_require__(/*! crypto */ "crypto");
+
+module.exports = function nodeRNG() {
+  return crypto.randomBytes(16);
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/uuid/v4.js":
+/*!**********************************!*\
+  !*** ../node_modules/uuid/v4.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var rng = __webpack_require__(/*! ./lib/rng */ "../node_modules/uuid/lib/rng.js");
+var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ "../node_modules/uuid/lib/bytesToUuid.js");
+
+function v4(options, buf, offset) {
+  var i = buf && offset || 0;
+
+  if (typeof(options) == 'string') {
+    buf = options === 'binary' ? new Array(16) : null;
+    options = null;
+  }
+  options = options || {};
+
+  var rnds = options.random || (options.rng || rng)();
+
+  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+  rnds[6] = (rnds[6] & 0x0f) | 0x40;
+  rnds[8] = (rnds[8] & 0x3f) | 0x80;
+
+  // Copy bytes to buffer, if provided
+  if (buf) {
+    for (var ii = 0; ii < 16; ++ii) {
+      buf[i + ii] = rnds[ii];
+    }
+  }
+
+  return buf || bytesToUuid(rnds);
+}
+
+module.exports = v4;
+
+
+/***/ }),
+
+/***/ "../node_modules/webpack/buildin/module.js":
+/*!*************************************************!*\
+  !*** ../node_modules/webpack/buildin/module.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if (!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+
 /***/ "../node_modules/xmltojson/lib/xmlToJSON.js":
 /*!**************************************************!*\
   !*** ../node_modules/xmltojson/lib/xmlToJSON.js ***!
@@ -9148,7 +9146,7 @@ if ( true && module !== null && module.exports) module.exports = xmlToJSON;
 else if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () { return xmlToJSON }).call(exports, __webpack_require__, exports, module),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ "../../../node_modules/webpack/buildin/module.js")(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/module.js */ "../node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
 

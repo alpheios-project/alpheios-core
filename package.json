@@ -2,6 +2,15 @@
   "name": "alpheios-core",
   "version": "1.0.0",
   "private": false,
+  "scripts": {
+    "bootstrap": "npx lerna bootstrap",
+    "clean": "npx lerna clean --yes",
+    "test": "npm run test-data-models ; npm run test-client-adapters",
+    "test-data-models": "npm --prefix packages/data-models run test",
+    "build-data-models": "npm --prefix packages/data-models run build",
+    "test-client-adapters": "npm --prefix packages/client-adapters run test",
+    "build-client-adapters": "npm --prefix packages/client-adapters run build"
+  },
   "devDependencies": {
     "lerna": "^3.20.2"
   }
