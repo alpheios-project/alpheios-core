@@ -2,6 +2,7 @@
   "name": "alpheios-data-models",
   "version": "3.2.1-dev.1",
   "description": "Alpheios Data Models",
+  "private": true,
   "main": "dist/alpheios-data-models.min.js",
   "directories": {
     "doc": "doc"
@@ -36,7 +37,7 @@
     "coveralls": "^3.0.9",
     "intl-messageformat": "^2.2.0",
     "jest": "^25.1.0",
-    "jest-fetch-mock": "^3.0.0",
+    "jest-fetch-mock": "^3.0.1",
     "standard": "^12.0.1",
     "uuid": "^3.4.0"
   },

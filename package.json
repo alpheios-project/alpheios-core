@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "private": false,
   "scripts": {
-    "bootstrap": "npx lerna bootstrap",
+    "bootstrap": "npx lerna bootstrap --hoist --nohoist=alpheios-node-build --nohoist=alpheios-lexis-cs",
     "clean": "npx lerna clean --yes",
     "list-mismatching-deps": "npx syncpack list-mismatches; exit(0)",
     "list-outdated-deps": "npx lerna exec --no-bail npm outdated",
     "fix-mismatching-deps": "npx syncpack fix-mismatches",
     "test": "npm run test-data-models ; npm run test-client-adapters",
     "test-data-models": "npm --prefix packages/data-models run test",
+    "build": "npm run build-data-models && npm run build-client-adapters",
     "build-data-models": "npm --prefix packages/data-models run build-dev",
     "test-client-adapters": "npm --prefix packages/client-adapters run test",
     "build-client-adapters": "npm --prefix packages/client-adapters run build",
@@ -21,6 +22,7 @@
     "version-graduate": "npx lerna version --conventional-commits"
   },
   "devDependencies": {
+    "alpheios-node-build": "github:alpheios-project/node-build",
     "lerna": "^3.20.2"
   }
 }
