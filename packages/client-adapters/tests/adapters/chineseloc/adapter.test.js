@@ -229,7 +229,7 @@ describe('chineseloc.test.js', () => {
     expect(homonym.lexemes[0].lemma.languageCode).toEqual(Constants.STR_LANG_CODE_ZHO)
     expect(homonym.lexemes[0].lemma.word).toEqual('而今')
     expect(homonym.lexemes[0].lemma.principalParts).toEqual([])
-    expect(homonym.lexemes[0].lemma.features.pronunciation.values).toEqual(['ér jin'])
+    expect(homonym.lexemes[0].lemma.features.pronunciation.values).toEqual(['ér jīn'])
     expect(homonym.lexemes[0].lemma.features.note.value).toEqual('traditional')
 
     expect(homonym.lexemes[0].meaning.shortDefs.length).toEqual(2)

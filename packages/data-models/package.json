@@ -7,9 +7,9 @@
     "doc": "doc"
   },
   "scripts": {
-    "test": "standard --fix && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-c": "standard --fix && jest tests/chinese/chinese.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-l": "standard --fix && jest tests/convert-upload-worditem.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test-c": "jest tests/chinese/chinese.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test-l": "jest tests/convert-upload-worditem.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "build-lib": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all lib",
     "build-node": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all node-lib config-node.mjs",
     "build": "npm run build-lib && npm run build-node",
@@ -28,15 +28,18 @@
   },
   "homepage": "https://github.com/alpheios-project/data-models#readme",
   "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/runtime": "^7.8.4",
     "alpheios-node-build": "github:alpheios-project/node-build",
     "coveralls": "^3.0.9",
-    "intl-messageformat": "^2.1.0",
-    "jest": "^23.6.0",
-    "jest-fetch-mock": "1.7.5",
+    "intl-messageformat": "^2.2.0",
+    "jest": "^25.1.0",
+    "jest-fetch-mock": "^3.0.0",
     "standard": "^12.0.1",
     "uuid": "^3.4.0"
   },
-  "dependencies": {},
   "jest": {
     "verbose": true,
     "moduleNameMapper": {
@@ -44,8 +47,8 @@
     }
   },
   "peerDependencies": {
-    "intl-messageformat": "^2.1.0",
-    "uuid": "3.x.x"
+    "intl-messageformat": "^2.2.0",
+    "uuid": "^3.4.0"
   },
   "eslintConfig": {
     "env": {

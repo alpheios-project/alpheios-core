@@ -24,4 +24,4 @@ To run npm scripts for any individual package, go to that package directory (i.e
 To run npm scripts for all packages use `npx lerna run script-name` from the top-level directory (i.e. `alpheios-core`). This will run `script-name` script for all packages that have this script in their `package.json`. See [lerna run documentation](https://github.com/lerna/lerna/tree/master/commands/run#readme) for more information on this command.
 
 ## TODOs
-* `npx lerna bootstrap --hoist` may not create links to dependencies in `data-models`. We'll use bootstrap without the `--host` option until this is resolved.
+* `npx lerna bootstrap --hoist` does not usually create links to dependencies in individual packages. See [module resolution](https://github.com/lerna/lerna/blob/master/doc/hoist.md#module-resolution) for more details. We might need to change our build script to accomodate for that, but until it's solved we'll use bootstrap without the `--host` option.
