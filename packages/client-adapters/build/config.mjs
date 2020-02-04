@@ -12,7 +12,7 @@ const webpack = {
     resolve: {
       alias: {
         // Below will force all imported modules with unresolved dependencies to use a single instance of that dependency
-        'alpheios-data-models': path.join(monorepoRoot, 'node_modules/alpheios-data-models/dist/alpheios-data-models.js'),
+        'alpheios-data-models': path.join(packageRoot, '../data-models/dist/alpheios-data-models.js'),
         '@lexisCs': path.join(monorepoRoot, 'node_modules/alpheios-lexis-cs/src/'),
         '@': path.join(packageRoot, 'src')
       }
