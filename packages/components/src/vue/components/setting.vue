@@ -89,7 +89,7 @@ export default {
       get: function () {
         let rv
         if (typeof this.selectedOverride === "string") {
-          if (this.dataModel.booolean == true) {
+          if (this.dataModel.boolean == true) {
             rv = this.selectedOverried === "true" ? true : false
           } else {
             rv = this.selectedOverride
