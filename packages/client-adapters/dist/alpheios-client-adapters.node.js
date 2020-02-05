@@ -8383,29 +8383,29 @@ else if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () { return xmlToJSON
 
 /***/ }),
 
-/***/ "../node_modules/alpheios-lexis-cs/index.js":
-/*!**************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/index.js ***!
-  \**************************************************/
-/*! exports provided: MessagingService, WindowIframeDestination, RequestMessage, CedictDestinationConfig, CedictCharacterForms */
+/***/ "../node_modules/alpheios-messaging/index.js":
+/*!***************************************************!*\
+  !*** ../node_modules/alpheios-messaging/index.js ***!
+  \***************************************************/
+/*! exports provided: MessagingService, WindowIframeDestination, RequestMessage, ResponseMessage, CedictDestinationConfig */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lexisCs_messaging_messaging_service_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @lexisCs/messaging/messaging-service.js */ "../node_modules/alpheios-lexis-cs/src/messaging/messaging-service.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MessagingService", function() { return _lexisCs_messaging_messaging_service_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+/* harmony import */ var _messServ_core_messaging_service_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @messServ/core/messaging-service.js */ "../node_modules/alpheios-messaging/src/core/messaging-service.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MessagingService", function() { return _messServ_core_messaging_service_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
-/* harmony import */ var _lexisCs_messaging_destinations_window_iframe_destination_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @lexisCs/messaging/destinations/window-iframe-destination.js */ "../node_modules/alpheios-lexis-cs/src/messaging/destinations/window-iframe-destination.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WindowIframeDestination", function() { return _lexisCs_messaging_destinations_window_iframe_destination_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+/* harmony import */ var _messServ_destinations_window_iframe_destination_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @messServ/destinations/window-iframe-destination.js */ "../node_modules/alpheios-messaging/src/destinations/window-iframe-destination.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WindowIframeDestination", function() { return _messServ_destinations_window_iframe_destination_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _lexisCs_messaging_messages_request_message_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @lexisCs/messaging/messages/request-message.js */ "../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RequestMessage", function() { return _lexisCs_messaging_messages_request_message_js__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+/* harmony import */ var _messServ_messages_request_message_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @messServ/messages/request-message.js */ "../node_modules/alpheios-messaging/src/messages/request-message.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RequestMessage", function() { return _messServ_messages_request_message_js__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
-/* harmony import */ var _lexisCs_cedict_service_constants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @lexisCs/cedict-service/constants.js */ "../node_modules/alpheios-lexis-cs/src/cedict-service/constants.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CedictCharacterForms", function() { return _lexisCs_cedict_service_constants_js__WEBPACK_IMPORTED_MODULE_3__["CedictCharacterForms"]; });
+/* harmony import */ var _messServ_messages_response_message_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @messServ/messages/response-message.js */ "../node_modules/alpheios-messaging/src/messages/response-message.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ResponseMessage", function() { return _messServ_messages_response_message_js__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
-/* harmony import */ var _lexisCs_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @lexisCs/configurations/destinations.js */ "../node_modules/alpheios-lexis-cs/src/configurations/destinations.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CedictDestinationConfig", function() { return _lexisCs_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__["CedictDestinationConfig"]; });
+/* harmony import */ var _messServ_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @messServ/configurations/destinations.js */ "../node_modules/alpheios-messaging/src/configurations/destinations.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CedictDestinationConfig", function() { return _messServ_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__["CedictDestinationConfig"]; });
 
 
 
@@ -8418,33 +8418,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../node_modules/alpheios-lexis-cs/src/cedict-service/constants.js":
-/*!*************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/cedict-service/constants.js ***!
-  \*************************************************************************/
-/*! exports provided: CedictCharacterForms */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CedictCharacterForms", function() { return CedictCharacterForms; });
-/**
- * Character forms that are supported with the current version of the service.
- *
- * @type {{SIMPLIFIED: string, TRADITIONAL: string}}
- */
-const CedictCharacterForms = {
-  SIMPLIFIED: 'simplified',
-  TRADITIONAL: 'traditional'
-}
-
-
-/***/ }),
-
-/***/ "../node_modules/alpheios-lexis-cs/src/configurations/destinations.js":
-/*!****************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/configurations/destinations.js ***!
-  \****************************************************************************/
+/***/ "../node_modules/alpheios-messaging/src/configurations/destinations.js":
+/*!*****************************************************************************!*\
+  !*** ../node_modules/alpheios-messaging/src/configurations/destinations.js ***!
+  \*****************************************************************************/
 /*! exports provided: CedictDestinationConfig */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -8465,401 +8442,18 @@ const CedictDestinationConfig = {
 
 /***/ }),
 
-/***/ "../node_modules/alpheios-lexis-cs/src/messaging/destinations/destination.js":
-/*!***********************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/messaging/destinations/destination.js ***!
-  \***********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Destination; });
-/**
- * @module Destination
- */
-
-/** Destination represents a place where messages are sent to and are received from (e.g. a windows) */
-class Destination {
-  /**
-   * Creates an instance of a Destination object. Descendants may take configuration parameters through
-   * a second argument that they can define.
-   *
-   * @param {object} [configuration={}] - A configuration object for a destination.
-   * @param {string} configuration.name - A name of a particular destination.
-   */
-  constructor ({ name } = {}) {
-    if (!name) {
-      throw new Error('Destination name is missing')
-    }
-
-    /**
-     * A name of a destination. Used to refer to it within a messaging service.
-     *
-     * @type {string}
-     * @public
-     */
-    this.name = name
-
-    /**
-     * A function that will be called when a response from destination is received.
-     *
-     * @type {Function}
-     * @private
-     */
-    this._responseCallback = null
-  }
-
-  /**
-   * Registers a function to call when a response from destination is received.
-   *
-   * @param {Function} callbackFn - A function to be called when response is received.
-   */
-  registerResponseCallback (callbackFn) {
-    this._responseCallback = callbackFn
-  }
-}
-
-
-/***/ }),
-
-/***/ "../node_modules/alpheios-lexis-cs/src/messaging/destinations/window-iframe-destination.js":
-/*!*************************************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/messaging/destinations/window-iframe-destination.js ***!
-  \*************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WindowIframeDestination; });
-/* harmony import */ var _lexisCs_messaging_destinations_destination_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @lexisCs/messaging/destinations/destination.js */ "../node_modules/alpheios-lexis-cs/src/messaging/destinations/destination.js");
-/**
- * @module WindowIframeDestination
- */
-
-
-/** WindowIframeDestination represents a content window within an iframe */
-class WindowIframeDestination extends _lexisCs_messaging_destinations_destination_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  /**
-   * @param {object} [configuration={}] - An object containing configuration parameters.
-   * @param {string} configuration.name - A name of a destination (for addressing a destination in a messaging service).
-   * @param {string} configuration.targetURL - A URL of a document within an iframe where messages will be sent.
-   * @param {string} configuration.targetIframeID - An ID of an iframe element (without `#`).
-   */
-  constructor ({ name, targetURL, targetIframeID } = {}) {
-    super({ name })
-
-    if (!targetURL) {
-      throw new Error('Target URL is not provided')
-    }
-
-    if (!targetIframeID) {
-      throw new Error('Target iframe ID is not provided')
-    }
-
-    /**
-     * A URL of a document within an iframe where messages will be sent.
-     *
-     * @type {string}
-     * @private
-     */
-    this._targetURL = targetURL
-
-    /**
-     * An ID of an iframe element (without `#`).
-     *
-     * @type {string}
-     * @private
-     */
-    this._targetIframeID = targetIframeID
-
-    window.addEventListener('message', this._responseHandler.bind(this), false)
-  }
-
-  /**
-   * Registers a function to be called an a receiving side when a message from origin to destination will arrive.
-   * This callback will receive the following arguments: the request object (of `RequestMessage` type)
-   * and the function that can be used to send a response.
-   *
-   * @param {Function} callbackFn - A function that will be called when a request will arrive to its destination.
-   */
-  registerReceiverCallback (callbackFn) {
-    window.addEventListener('message', this._requestHandler.bind(this, callbackFn), false)
-  }
-
-  /**
-   * A function that will be called to send a request from origin to destination.
-   *
-   * @param {RequestMessage} requestMessage - A request message object.
-   */
-  sendRequest (requestMessage) {
-    const iframe = document.querySelector(`#${this._targetIframeID}`)
-    if (!iframe) {
-      throw new Error(`An #${this._targetIframeID} iframe does not exist in the document`)
-    }
-    const iframeWindow = iframe.contentWindow
-    iframeWindow.postMessage(requestMessage, this._targetURL)
-  }
-
-  /**
-   * A function that is used to send a response from destination to origin.
-   *
-   * @param {ResponseMessage} responseMessage - A response message object.
-   */
-  sendResponse (responseMessage) {
-    window.parent.postMessage(responseMessage, responseMessage.requestHeader.origin)
-  }
-
-  /**
-   * An internal handler that is called when request arrives to its destination.
-   *
-   * @param {Function} callbackFn - A client's callback function that will be called and
-   *                                passed a request (a `RequestMessage` object).
-   * @param {Event} event - A browser's event object.
-   * @private
-   */
-  _requestHandler (callbackFn, event) {
-    // `data` prop of an event contains a request message object
-    let request = event.data // eslint-disable-line prefer-const
-    request.header.origin = event.origin
-    callbackFn(request, this.sendResponse.bind(this))
-  }
-
-  /**
-   * An internal handler that is called when response arrives from destination to origin.
-   *
-   * @param {Event} event - A browser's event object.
-   * @private
-   */
-  _responseHandler (event) {
-    if (event.origin !== this._targetURL) {
-      // Message came from a destination we're not listening for
-      return
-    }
-
-    // `data` prop of an event contains a response message object
-    const responseMessage = event.data
-    if (this._responseCallback) {
-      this._responseCallback(responseMessage)
-    }
-  }
-}
-
-
-/***/ }),
-
-/***/ "../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js":
-/*!***************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js ***!
-  \***************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Message; });
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid/v4 */ "../node_modules/uuid/v4.js");
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_0__);
-/**
- * @module Message
- */
-
-
-/** A base class for all types of messages */
-class Message {
-  /**
-   * @param {object} [body={}] - A plain JS object (with no methods) representing a body of the message.
-   */
-  constructor (body = {}) {
-    /**
-     * A message's role (@see {@link Message.roles}). Will be defined in descendants.
-     *
-     * @type {string | undefined}
-     */
-    this.role = undefined
-
-    /**
-     * A type of the message. Used to distinguish one kind of message from the other (@see {@link Message.types}).
-     *
-     * @type {string | undefined}
-     */
-    this.type = Message.types.GENERIC
-
-    /**
-     * A unique identifier of the message.
-     *
-     * @type {string}
-     */
-    this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_0___default()()
-
-    /**
-     * An object with no methods representing a message body.
-     *
-     * @type {object}
-     */
-    this.body = body
-  }
-}
-
-/**
- * Specifies whether a message is request or response.
- */
-Message.roles = {
-  REQUEST: 'Request',
-  RESPONSE: 'Response'
-}
-
-/**
- * Specifies a message type: what kind of message it is and what purpose it serves.
- */
-Message.types = {
-  GENERIC: 'Generic'
-}
-
-
-/***/ }),
-
-/***/ "../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js":
-/*!***********************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js ***!
-  \***********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RequestMessage; });
-/* harmony import */ var _message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./message.js */ "../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js");
-/**
- * @module RequestMessage
- */
-
-
-/** A request message */
-class RequestMessage extends _message_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  /**
-   * @param {object} [body={}] - A plain JS object (with no methods) representing a body of the message.
-   */
-  constructor (body = {}) {
-    super(body)
-    this.role = _message_js__WEBPACK_IMPORTED_MODULE_0__["default"].roles.REQUEST
-
-    /**
-     * A message header. Will contain routing information usually.
-     *
-     * @type {object}
-     */
-    this.header = {}
-  }
-}
-
-
-/***/ }),
-
-/***/ "../node_modules/alpheios-lexis-cs/src/messaging/messages/response-message.js":
-/*!************************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/messaging/messages/response-message.js ***!
-  \************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ResponseMessage; });
-/* harmony import */ var _lexisCs_messaging_messages_message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @lexisCs/messaging/messages/message.js */ "../node_modules/alpheios-lexis-cs/src/messaging/messages/message.js");
-/* harmony import */ var _lexisCs_messaging_messages_request_message_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @lexisCs/messaging/messages/request-message.js */ "../node_modules/alpheios-lexis-cs/src/messaging/messages/request-message.js");
-/**
- * @module ResponseMessage
- */
-
-
-
-/** A response message that is sent as an answer to the request message. */
-class ResponseMessage extends _lexisCs_messaging_messages_message_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  /**
-   * @param {RequestMessage} request - A request that initiated this response. Used to copy routing information mostly.
-   * @param {object} [body={}] - A body of the response, a plain JS object with no methods.
-   * @param {string} responseCode - A code to indicate results of the request handling: Success, Failure, etc.
-   */
-  constructor (request, body = {}, responseCode = ResponseMessage.responseCodes.UNDEFINED) {
-    super(body)
-    if (!request) throw new Error('Request is not provided')
-    if (!request.ID) throw new Error('Request has no ID')
-    this.role = _lexisCs_messaging_messages_message_js__WEBPACK_IMPORTED_MODULE_0__["default"].roles.RESPONSE
-    this.requestHeader = request.header || {}
-    this.requestID = request.ID // ID of the request to match request and response
-    this.responseCode = responseCode
-  }
-
-  /**
-   * A builder for a response message with a SUCCESS response code.
-   *
-   * @param {RequestMessage} request - An original request.
-   * @param {object} [body={}] - A body of response message.
-   * @returns {ResponseMessage} - A newly created response message with the SUCCESS return code.
-   * @class
-   */
-  static Success (request, body = {}) {
-    return new this(request, body, ResponseMessage.responseCodes.SUCCESS)
-  }
-
-  /**
-   * A builder for a message with an ERROR response code. Error information will be sent within the message body.
-   *
-   * @param {RequestMessage} request - An original request.
-   * @param {Error} error - An error object containing error information.
-   * @returns {ResponseMessage} - A newly created response message with the SUCCESS return code.
-   * @class
-   */
-  static Error (request, error) {
-    return new this(request, error, ResponseMessage.responseCodes.ERROR)
-  }
-
-  /**
-   * Checks if this message is a response (i.e. if it follows a response message format and conventions).
-   *
-   * @param {RequestMessage | ResponseMessage} message - A request or response message to be tested.
-   * @returns {boolean} - True if the message is a response, false otherwise.
-   */
-  static isResponse (message) {
-    return message.role &&
-      message.role === _lexisCs_messaging_messages_message_js__WEBPACK_IMPORTED_MODULE_0__["default"].roles.RESPONSE &&
-      message.requestHeader &&
-      message.requestID
-  }
-}
-
-/**
- * Specifies whether a request was processed successfully or not.
- */
-ResponseMessage.responseCodes = {
-  // Request was processed successfully.
-  // In this case a message body may contain a response data object or be empty.
-  SUCCESS: 'Success',
-
-  // There is no information about what was the outcome of request.
-  UNDEFINED: 'Undefined',
-
-  // Request failed. A message body will have information about an error.
-  ERROR: 'Error'
-}
-
-
-/***/ }),
-
-/***/ "../node_modules/alpheios-lexis-cs/src/messaging/messaging-service.js":
-/*!****************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/messaging/messaging-service.js ***!
-  \****************************************************************************/
+/***/ "../node_modules/alpheios-messaging/src/core/messaging-service.js":
+/*!************************************************************************!*\
+  !*** ../node_modules/alpheios-messaging/src/core/messaging-service.js ***!
+  \************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MessagingService; });
-/* harmony import */ var _messages_response_message__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./messages/response-message */ "../node_modules/alpheios-lexis-cs/src/messaging/messages/response-message.js");
-/* harmony import */ var _stored_request__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stored-request */ "../node_modules/alpheios-lexis-cs/src/messaging/stored-request.js");
+/* harmony import */ var _messServ_messages_response_message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @messServ/messages/response-message.js */ "../node_modules/alpheios-messaging/src/messages/response-message.js");
+/* harmony import */ var _messServ_core_stored_request_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @messServ/core/stored-request.js */ "../node_modules/alpheios-messaging/src/core/stored-request.js");
 /**
  * @module MessagingService
  */
@@ -8985,7 +8579,7 @@ class MessagingService {
    * @param {ResponseMessage} message - An incoming response message.
    */
   dispatchMessage (message) {
-    if (!_messages_response_message__WEBPACK_IMPORTED_MODULE_0__["default"].isResponse(message)) {
+    if (!_messServ_messages_response_message_js__WEBPACK_IMPORTED_MODULE_0__["default"].isResponse(message)) {
       console.error('A message not following a response format will be ignored:', message)
       return
     }
@@ -9001,7 +8595,7 @@ class MessagingService {
     window.clearTimeout(requestInfo.timeoutID) // Clear a timeout
     const responseCode = message.responseCode
 
-    if (responseCode === _messages_response_message__WEBPACK_IMPORTED_MODULE_0__["default"].responseCodes.ERROR) {
+    if (responseCode === _messServ_messages_response_message_js__WEBPACK_IMPORTED_MODULE_0__["default"].responseCodes.ERROR) {
       // There was an error returned. An error info is in the message body.
       requestInfo.reject(message.body)
     } else {
@@ -9021,7 +8615,7 @@ class MessagingService {
    */
   registerRequest (request, timeout = 10000) {
     if (this._messages.has(request.ID)) throw new Error(`Request with ${request.ID} ID is already registered`)
-    let storedRequest = new _stored_request__WEBPACK_IMPORTED_MODULE_1__["default"](request) // eslint-disable-line prefer-const
+    let storedRequest = new _messServ_core_stored_request_js__WEBPACK_IMPORTED_MODULE_1__["default"](request) // eslint-disable-line prefer-const
     this._messages.set(request.ID, storedRequest)
     storedRequest.timeoutID = window.setTimeout((requestID) => {
       storedRequest.reject(new Error(`Timeout has been expired for a message with request ID ${request.ID}`))
@@ -9080,10 +8674,10 @@ MessagingService.errMsgs = {
 
 /***/ }),
 
-/***/ "../node_modules/alpheios-lexis-cs/src/messaging/stored-request.js":
-/*!*************************************************************************!*\
-  !*** ../node_modules/alpheios-lexis-cs/src/messaging/stored-request.js ***!
-  \*************************************************************************/
+/***/ "../node_modules/alpheios-messaging/src/core/stored-request.js":
+/*!*********************************************************************!*\
+  !*** ../node_modules/alpheios-messaging/src/core/stored-request.js ***!
+  \*********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -9119,6 +8713,389 @@ class StoredRequest {
     this.resolve = resolve
     this.reject = reject
   }
+}
+
+
+/***/ }),
+
+/***/ "../node_modules/alpheios-messaging/src/destinations/destination.js":
+/*!**************************************************************************!*\
+  !*** ../node_modules/alpheios-messaging/src/destinations/destination.js ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Destination; });
+/**
+ * @module Destination
+ */
+
+/** Destination represents a place where messages are sent to and are received from (e.g. a windows) */
+class Destination {
+  /**
+   * Creates an instance of a Destination object. Descendants may take configuration parameters through
+   * a second argument that they can define.
+   *
+   * @param {object} [configuration={}] - A configuration object for a destination.
+   * @param {string} configuration.name - A name of a particular destination.
+   */
+  constructor ({ name } = {}) {
+    if (!name) {
+      throw new Error('Destination name is missing')
+    }
+
+    /**
+     * A name of a destination. Used to refer to it within a messaging service.
+     *
+     * @type {string}
+     * @public
+     */
+    this.name = name
+
+    /**
+     * A function that will be called when a response from destination is received.
+     *
+     * @type {Function}
+     * @private
+     */
+    this._responseCallback = null
+  }
+
+  /**
+   * Registers a function to call when a response from destination is received.
+   *
+   * @param {Function} callbackFn - A function to be called when response is received.
+   */
+  registerResponseCallback (callbackFn) {
+    this._responseCallback = callbackFn
+  }
+}
+
+
+/***/ }),
+
+/***/ "../node_modules/alpheios-messaging/src/destinations/window-iframe-destination.js":
+/*!****************************************************************************************!*\
+  !*** ../node_modules/alpheios-messaging/src/destinations/window-iframe-destination.js ***!
+  \****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WindowIframeDestination; });
+/* harmony import */ var _messServ_destinations_destination_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @messServ/destinations/destination.js */ "../node_modules/alpheios-messaging/src/destinations/destination.js");
+/**
+ * @module WindowIframeDestination
+ */
+
+
+/** WindowIframeDestination represents a content window within an iframe */
+class WindowIframeDestination extends _messServ_destinations_destination_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * @param {object} [configuration={}] - An object containing configuration parameters.
+   * @param {string} configuration.name - A name of a destination (for addressing a destination in a messaging service).
+   * @param {string} configuration.targetURL - A URL of a document within an iframe where messages will be sent.
+   * @param {string} configuration.targetIframeID - An ID of an iframe element (without `#`).
+   */
+  constructor ({ name, targetURL, targetIframeID } = {}) {
+    super({ name })
+
+    if (!targetURL) {
+      throw new Error('Target URL is not provided')
+    }
+
+    if (!targetIframeID) {
+      throw new Error('Target iframe ID is not provided')
+    }
+
+    /**
+     * A URL of a document within an iframe where messages will be sent.
+     *
+     * @type {string}
+     * @private
+     */
+    this._targetURL = targetURL
+
+    /**
+     * An ID of an iframe element (without `#`).
+     *
+     * @type {string}
+     * @private
+     */
+    this._targetIframeID = targetIframeID
+
+    window.addEventListener('message', this._responseHandler.bind(this), false)
+  }
+
+  /**
+   * Registers a function to be called an a receiving side when a message from origin to destination will arrive.
+   * This callback will receive the following arguments: the request object (of `RequestMessage` type)
+   * and the function that can be used to send a response.
+   *
+   * @param {Function} callbackFn - A function that will be called when a request will arrive to its destination.
+   */
+  registerReceiverCallback (callbackFn) {
+    window.addEventListener('message', this._requestHandler.bind(this, callbackFn), false)
+  }
+
+  /**
+   * A function that will be called to send a request from origin to destination.
+   *
+   * @param {RequestMessage} requestMessage - A request message object.
+   */
+  sendRequest (requestMessage) {
+    const iframe = document.querySelector(`#${this._targetIframeID}`)
+    if (!iframe) {
+      throw new Error(`An #${this._targetIframeID} iframe does not exist in the document`)
+    }
+    const iframeWindow = iframe.contentWindow
+    iframeWindow.postMessage(requestMessage, this._targetURL)
+  }
+
+  /**
+   * A function that is used to send a response from destination to origin.
+   *
+   * @param {ResponseMessage} responseMessage - A response message object.
+   */
+  sendResponse (responseMessage) {
+    window.parent.postMessage(responseMessage, responseMessage.requestHeader.origin)
+  }
+
+  /**
+   * An internal handler that is called when request arrives to its destination.
+   *
+   * @param {Function} callbackFn - A client's callback function that will be called and
+   *                                passed a request (a `RequestMessage` object).
+   * @param {Event} event - A browser's event object.
+   * @private
+   */
+  _requestHandler (callbackFn, event) {
+    // `data` prop of an event contains a request message object
+    let request = event.data // eslint-disable-line prefer-const
+    request.header.origin = event.origin
+    callbackFn(request, this.sendResponse.bind(this))
+  }
+
+  /**
+   * An internal handler that is called when response arrives from destination to origin.
+   *
+   * @param {Event} event - A browser's event object.
+   * @private
+   */
+  _responseHandler (event) {
+    if (event.origin !== this._targetURL) {
+      // Message came from a destination we're not listening for
+      return
+    }
+
+    // `data` prop of an event contains a response message object
+    const responseMessage = event.data
+    if (this._responseCallback) {
+      this._responseCallback(responseMessage)
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "../node_modules/alpheios-messaging/src/messages/message.js":
+/*!******************************************************************!*\
+  !*** ../node_modules/alpheios-messaging/src/messages/message.js ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Message; });
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid/v4 */ "../node_modules/uuid/v4.js");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_0__);
+/**
+ * @module Message
+ */
+
+
+/** A base class for all types of messages */
+class Message {
+  /**
+   * @param {object} [body={}] - A plain JS object (with no methods) representing a body of the message.
+   */
+  constructor (body = {}) {
+    /**
+     * A message's role (@see {@link Message.roles}). Will be defined in descendants.
+     *
+     * @type {string | undefined}
+     */
+    this.role = undefined
+
+    /**
+     * A type of the message. Used to distinguish one kind of message from the other (@see {@link Message.types}).
+     *
+     * @type {string | undefined}
+     */
+    this.type = Message.types.GENERIC
+
+    /**
+     * A unique identifier of the message.
+     *
+     * @type {string}
+     */
+    this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_0___default()()
+
+    /**
+     * An object with no methods representing a message body.
+     *
+     * @type {object}
+     */
+    this.body = body
+  }
+}
+
+/**
+ * Specifies whether a message is request or response.
+ */
+Message.roles = {
+  REQUEST: 'Request',
+  RESPONSE: 'Response'
+}
+
+/**
+ * Specifies a message type: what kind of message it is and what purpose it serves.
+ */
+Message.types = {
+  GENERIC: 'Generic'
+}
+
+
+/***/ }),
+
+/***/ "../node_modules/alpheios-messaging/src/messages/request-message.js":
+/*!**************************************************************************!*\
+  !*** ../node_modules/alpheios-messaging/src/messages/request-message.js ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RequestMessage; });
+/* harmony import */ var _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @messServ/messages/message.js */ "../node_modules/alpheios-messaging/src/messages/message.js");
+/**
+ * @module RequestMessage
+ */
+
+
+/** A request message */
+class RequestMessage extends _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * @param {object} [body={}] - A plain JS object (with no methods) representing a body of the message.
+   */
+  constructor (body = {}) {
+    super(body)
+    this.role = _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__["default"].roles.REQUEST
+
+    /**
+     * A message header. Will contain routing information usually.
+     *
+     * @type {object}
+     */
+    this.header = {}
+  }
+}
+
+
+/***/ }),
+
+/***/ "../node_modules/alpheios-messaging/src/messages/response-message.js":
+/*!***************************************************************************!*\
+  !*** ../node_modules/alpheios-messaging/src/messages/response-message.js ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ResponseMessage; });
+/* harmony import */ var _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @messServ/messages/message.js */ "../node_modules/alpheios-messaging/src/messages/message.js");
+/* harmony import */ var _messServ_messages_request_message_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @messServ/messages/request-message.js */ "../node_modules/alpheios-messaging/src/messages/request-message.js");
+/**
+ * @module ResponseMessage
+ */
+
+
+
+/** A response message that is sent as an answer to the request message. */
+class ResponseMessage extends _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * @param {RequestMessage} request - A request that initiated this response. Used to copy routing information mostly.
+   * @param {object} [body={}] - A body of the response, a plain JS object with no methods.
+   * @param {string} responseCode - A code to indicate results of the request handling: Success, Failure, etc.
+   */
+  constructor (request, body = {}, responseCode = ResponseMessage.responseCodes.UNDEFINED) {
+    super(body)
+    if (!request) throw new Error('Request is not provided')
+    if (!request.ID) throw new Error('Request has no ID')
+    this.role = _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__["default"].roles.RESPONSE
+    this.requestHeader = request.header || {}
+    this.requestID = request.ID // ID of the request to match request and response
+    this.responseCode = responseCode
+  }
+
+  /**
+   * A builder for a response message with a SUCCESS response code.
+   *
+   * @param {RequestMessage} request - An original request.
+   * @param {object} [body={}] - A body of response message.
+   * @returns {ResponseMessage} - A newly created response message with the SUCCESS return code.
+   * @class
+   */
+  static Success (request, body = {}) {
+    return new this(request, body, ResponseMessage.responseCodes.SUCCESS)
+  }
+
+  /**
+   * A builder for a message with an ERROR response code. Error information will be sent within the message body.
+   *
+   * @param {RequestMessage} request - An original request.
+   * @param {Error} error - An error object containing error information.
+   * @returns {ResponseMessage} - A newly created response message with the SUCCESS return code.
+   * @class
+   */
+  static Error (request, error) {
+    return new this(request, error, ResponseMessage.responseCodes.ERROR)
+  }
+
+  /**
+   * Checks if this message is a response (i.e. if it follows a response message format and conventions).
+   *
+   * @param {RequestMessage | ResponseMessage} message - A request or response message to be tested.
+   * @returns {boolean} - True if the message is a response, false otherwise.
+   */
+  static isResponse (message) {
+    return message.role &&
+      message.role === _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__["default"].roles.RESPONSE &&
+      message.requestHeader &&
+      message.requestID
+  }
+}
+
+/**
+ * Specifies whether a request was processed successfully or not.
+ */
+ResponseMessage.responseCodes = {
+  // Request was processed successfully.
+  // In this case a message body may contain a response data object or be empty.
+  SUCCESS: 'Success',
+
+  // There is no information about what was the outcome of request.
+  UNDEFINED: 'Undefined',
+
+  // Request failed. A message body will have information about an error.
+  ERROR: 'Error'
 }
 
 
@@ -9644,19 +9621,25 @@ class BaseAdapter {
 /*!****************************************!*\
   !*** ./adapters/chineseloc/adapter.js ***!
   \****************************************/
-/*! exports provided: default */
+/*! exports provided: CedictCharacterForms, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CedictCharacterForms", function() { return CedictCharacterForms; });
 /* harmony import */ var _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/adapters/base-adapter */ "./adapters/base-adapter.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var alpheios_lexis_cs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-lexis-cs */ "../node_modules/alpheios-lexis-cs/index.js");
+/* harmony import */ var alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-messaging */ "../node_modules/alpheios-messaging/index.js");
 /* eslint-disable no-unused-vars */
 
 
 
+
+const CedictCharacterForms = {
+  SIMPLIFIED: 'simplified',
+  TRADITIONAL: 'traditional'
+}
 
 const msgServiceName = 'AdaptersLexisService'
 
@@ -9670,10 +9653,10 @@ class AlpheiosChineseLocAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED
     We do not want to create a new instance of a messaging service with that. Thus, we'll use a single
     instance of the service that will be created once and reused across consecutive constructor invocations.
      */
-    if (!alpheios_lexis_cs__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].hasService(msgServiceName)) {
-      alpheios_lexis_cs__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].createService(msgServiceName, new alpheios_lexis_cs__WEBPACK_IMPORTED_MODULE_2__["WindowIframeDestination"](alpheios_lexis_cs__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationConfig"]))
+    if (!alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].hasService(msgServiceName)) {
+      alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].createService(msgServiceName, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["WindowIframeDestination"](alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationConfig"]))
     }
-    this._messagingService = alpheios_lexis_cs__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].getService(msgServiceName)
+    this._messagingService = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].getService(msgServiceName)
   }
 
   get languageID () { return alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["ChineseLanguageModel"].languageID }
@@ -9684,7 +9667,7 @@ class AlpheiosChineseLocAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED
         words: this.constructor._buildWordList(targetWord, contextForward)
       }
     }
-    const responseMessage = await this._messagingService.sendRequestTo(alpheios_lexis_cs__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationConfig"].name, new alpheios_lexis_cs__WEBPACK_IMPORTED_MODULE_2__["RequestMessage"](requestBody))
+    const responseMessage = await this._messagingService.sendRequestTo(alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationConfig"].name, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["RequestMessage"](requestBody))
     return responseMessage.body
   }
 
@@ -9729,9 +9712,9 @@ class AlpheiosChineseLocAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED
 
   _transformData (cedictEntries, targetWord) {
     // eslint-disable-next-line no-prototype-builtins
-    const characterForm = cedictEntries.hasOwnProperty(alpheios_lexis_cs__WEBPACK_IMPORTED_MODULE_2__["CedictCharacterForms"].SIMPLIFIED)
-      ? alpheios_lexis_cs__WEBPACK_IMPORTED_MODULE_2__["CedictCharacterForms"].SIMPLIFIED
-      : alpheios_lexis_cs__WEBPACK_IMPORTED_MODULE_2__["CedictCharacterForms"].TRADITIONAL
+    const characterForm = cedictEntries.hasOwnProperty(CedictCharacterForms.SIMPLIFIED)
+      ? CedictCharacterForms.SIMPLIFIED
+      : CedictCharacterForms.TRADITIONAL
     let lexemes = [] // eslint-disable-line prefer-const
     const wordEntries = Object.values(cedictEntries[characterForm]).flat()
     wordEntries.forEach(entry => {

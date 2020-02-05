@@ -2,9 +2,13 @@
 import BaseAdapter from '@/adapters/base-adapter'
 import { ChineseLanguageModel, Lemma, Lexeme, Homonym, Feature, Definition } from 'alpheios-data-models'
 import {
-  MessagingService, WindowIframeDestination as Destination, CedictDestinationConfig as CedictConfig,
-  CedictCharacterForms, RequestMessage
-} from 'alpheios-lexis-cs'
+  MessagingService, WindowIframeDestination as Destination, CedictDestinationConfig as CedictConfig, RequestMessage
+} from 'alpheios-messaging'
+
+export const CedictCharacterForms = {
+  SIMPLIFIED: 'simplified',
+  TRADITIONAL: 'traditional'
+}
 
 const msgServiceName = 'AdaptersLexisService'
 

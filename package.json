@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": false,
   "scripts": {
-    "bootstrap": "npx lerna bootstrap --hoist --nohoist=alpheios-node-build --nohoist=alpheios-lexis-cs",
+    "bootstrap": "npx lerna bootstrap --hoist --nohoist=alpheios-node-build --nohoist=alpheios-messaging",
     "clean": "npx lerna clean --yes",
     "list-mismatching-deps": "npx syncpack list-mismatches; exit(0)",
     "list-outdated-deps": "npx lerna exec --no-bail npm outdated",
@@ -22,7 +22,6 @@
     "version-graduate": "npx lerna version --conventional-commits"
   },
   "devDependencies": {
-    "alpheios-node-build": "github:alpheios-project/node-build",
     "lerna": "^3.20.2"
   }
 }
