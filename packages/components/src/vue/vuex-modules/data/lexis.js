@@ -1,6 +1,6 @@
 import Module from '@/vue/vuex-modules/module.js'
 import Platform from '@/lib/utility/platform.js'
-import { CedictDestinationConfig as CedictConfig } from 'alpheios-lexis-cs'
+import { CedictDestinationConfig as CedictConfig } from 'alpheios-messaging'
 
 export default class Lexis extends Module {
   /**

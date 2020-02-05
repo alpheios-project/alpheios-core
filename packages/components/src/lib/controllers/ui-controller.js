@@ -407,7 +407,6 @@ if you want to create a different configuration of a UI controller.
 
     await Promise.all(optionLoadPromises)
 
-
     // All options has been loaded after this point
 
     // The following options will be applied to all logging done via a single Logger instance
@@ -1010,7 +1009,7 @@ if you want to create a different configuration of a UI controller.
     return this.options.overridePreferredLanguage ? this.options.textLangCode : this.featureOptions.items.preferredLanguage.currentValue
   }
 
-  getMouseMoveOverride() {
+  getMouseMoveOverride () {
     return this.options.enableMouseMoveOverride
   }
 
