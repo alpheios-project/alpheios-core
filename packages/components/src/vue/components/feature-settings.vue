@@ -51,11 +51,12 @@
     >
     </setting>
 
-    <fieldset class="alpheios-feature-options__cont-chinese">
-      <legend>{{ l10n.getText("LABEL_FIELDSET_CHINESE") }}</legend>
+    <fieldset class="alpheios-feature-options__cont-wordselect">
+      <legend>{{ l10n.getText("LABEL_FIELDSET_WORDSELECT") }}</legend>
       <setting
           class="alpheios-feature-options__item"
           :data="featureOptions.items.enableMouseMove"
+          :selectedOverride = "mouseMoveChecked"
           @change="featureOptionChanged"
       >
       </setting>
@@ -92,6 +93,10 @@
       setting: Setting,
     },
     computed: {
+
+      mouseMoveChecked: function() {
+        return this.app.getMouseMoveOverride() ? 'true' : 'false'
+      },
       featureOptions: function() {
         return this.settings.getFeatureOptions()
       }
@@ -118,7 +123,7 @@
   }
 
   .alpheios-feature-options__cont-concord,
-   .alpheios-feature-options__cont-chinese {
+   .alpheios-feature-options__cont-wordselect {
     margin: textsize(15px) 0;
     padding: 10px;
 

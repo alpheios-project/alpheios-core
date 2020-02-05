@@ -3140,7 +3140,7 @@ p.alpheios-word-usage-filter-title {
   flex: 1 1 auto;
 }
 .alpheios-feature-options__cont-concord,
-.alpheios-feature-options__cont-chinese {
+.alpheios-feature-options__cont-wordselect {
   margin: calc(var(--alpheios-base-text-size) * 0.9375) 0;
   padding: 10px;
   border: 2px groove var(--alpheios-color-placehoder);

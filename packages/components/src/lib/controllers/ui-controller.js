@@ -238,6 +238,7 @@ if you want to create a different configuration of a UI controller.
                                             the default 'dblClick' will be used.
    *     {string} textQueryTriggerMobile - what event will start a lexical query on a selected text on mobile devices.  if null,
    *                                       the default 'longTap' pointer event will be used.
+   *     {boolean} enableMouseMoveOverride - whether or not to enable mousemovement for word selection
    *     {string} textQuerySelector - an area(s) on a page where a trigger event will start a lexical query. This is
    *     a standard CSS selector. Default value: 'body'.
    *     {Object} template - object w ith the following properties:
@@ -256,6 +257,7 @@ if you want to create a different configuration of a UI controller.
       openPanel: true,
       textQueryTriggerMobile: 'longTap',
       textQueryTriggerDesktop: 'dblClick',
+      enableMouseMoveOverride: false,
       textQuerySelector: 'body',
       enableLemmaTranslations: false,
       irregularBaseFontSizeClassName: 'alpheios-irregular-base-font-size',
@@ -405,7 +407,6 @@ if you want to create a different configuration of a UI controller.
 
     await Promise.all(optionLoadPromises)
 
-    this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
 
     // All options has been loaded after this point
 
@@ -481,6 +482,7 @@ if you want to create a different configuration of a UI controller.
 
       // TODO: Some of the functions below should probably belong to other API groups.
       getDefaultLangCode: this.getDefaultLangCode.bind(this),
+      getMouseMoveOverride: this.getMouseMoveOverride.bind(this),
       featureOptionChange: this.featureOptionChange.bind(this),
       resetAllOptions: this.resetAllOptions.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
@@ -967,6 +969,7 @@ if you want to create a different configuration of a UI controller.
 
     // Activate listeners
     if (this.evc) { this.evc.activateListeners() }
+    this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
 
     this.isActivated = true
     this.isDeactivated = false
@@ -1005,6 +1008,10 @@ if you want to create a different configuration of a UI controller.
 
   getDefaultLangCode () {
     return this.options.overridePreferredLanguage ? this.options.textLangCode : this.featureOptions.items.preferredLanguage.currentValue
+  }
+
+  getMouseMoveOverride() {
+    return this.options.enableMouseMoveOverride
   }
 
   /**
@@ -1502,7 +1509,7 @@ If no URLS are provided, will reset grammar data.
   getSelectedText (event, domEvent) {
     if (this.state.isActive() &&
         this.state.uiIsActive() &&
-        (!this.options.triggerPreCallback || this.options.triggerPreCallback(domEvent))) {
+        (!this.options.triggerPreCallback || this.enableMouseMoveEvent() || this.options.triggerPreCallback(domEvent))) {
       // Open the UI immediately to reduce visual delays
 
       /*
@@ -1891,6 +1898,8 @@ NB this is Prototype functionality
         break
       case 'enableMouseMove':
         this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+        // If user manually sets the mouse move option then this takes priority over the page override
+        this.options.enableMouseMoveOverride = false
         break
       case 'mouseMoveDelay':
         this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
@@ -2016,23 +2025,28 @@ NB this is Prototype functionality
   registerAndActivateGetSelectedText (listenerName, selector) {
     this.registerGetSelectedText(listenerName, selector)
     this.evc.activateListener(listenerName)
+    this.registerAndActivateMouseMove(listenerName, selector)
   }
 
   registerAndActivateMouseMove (listenerName, selector) {
-    this.evc.unregisterListener(listenerName + '-mousemove')
-
     if (this.enableMouseMoveEvent()) {
       const eventParams = {
         mouseMoveDelay: this.featureOptions.items.mouseMoveDelay.currentValue,
         mouseMoveAccuracy: this.featureOptions.items.mouseMoveAccuracy.currentValue
       }
       this.evc.registerListener(listenerName + '-mousemove', selector, this.getSelectedText.bind(this), MouseMove, eventParams)
+      // when the mousemove event is activated, the regular listener needs to be deactivated
+      this.evc.deactivateListener(listenerName)
       this.evc.activateListener(listenerName + '-mousemove')
+    } else {
+      // when the mousemove event is deactivated, the regular listener needs to be reactivated
+      this.evc.deactivateListener(listenerName + '-mousemove')
+      this.evc.activateListener(listenerName)
     }
   }
 
   enableMouseMoveEvent () {
-    return this.platform.isDesktop && this.featureOptions.items.enableMouseMove.currentValue
+    return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride)
   }
 }
 

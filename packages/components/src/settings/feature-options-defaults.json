@@ -163,7 +163,7 @@
     },
     "enableMouseMove": {
       "defaultValue": false,
-      "labelText": "Enable MouseMove usage (Chinese)",
+      "labelText": "Use Mouseover to Select Words (recommended for Chinese)",
       "boolean": true,
       "values": [
         {
@@ -178,7 +178,7 @@
     },
     "mouseMoveDelay": {
       "defaultValue": 1000,
-      "labelText": "MouseMove delay (ms)",
+      "labelText": "Mouseover delay (ms)",
       "number": true,
       "minValue": 1,
       "maxValue": 5000,
@@ -186,7 +186,7 @@
     },
     "mouseMoveAccuracy": {
       "defaultValue": 10,
-      "labelText": "MouseMove accuracy (pixels)",
+      "labelText": "Mouseover accuracy (pixels)",
       "number": true,
       "minValue": 1,
       "maxValue": 5000,

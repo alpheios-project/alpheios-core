@@ -18,11 +18,7 @@ export default class HTMLSelector extends MediaSelector {
     // Determine a language ID based on an environment of a target
     this.languageID = this.getLanguageID(defaultLanguageCode)
 
-    const noSelectorCheck = ((this.event.evtType === 'mousemove') && (this.languageID !== Constants.LANG_CHINESE))
-
-    if (!noSelectorCheck) {
-      this.defineInitialData()
-    }
+    this.defineInitialData()
   }
 
   defineInitialData () {
@@ -67,9 +63,6 @@ export default class HTMLSelector extends MediaSelector {
   }
 
   createTextSelector () {
-    if (this.event.evtType === 'mousemove' && this.languageID !== Constants.LANG_CHINESE) {
-      return
-    }
     let textSelector = new TextSelector(this.languageID)
     textSelector.model = LanguageModelFactory.getLanguageModel(this.languageID)
     textSelector.location = this.location

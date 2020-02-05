@@ -1,6 +1,6 @@
 {
   "name": "alpheios-components",
-  "version": "1.6.1-dev",
+  "version": "1.6.2-dev",
   "description": "Alpheios Components",
   "main": "dist/alpheios-components.min.js",
   "module": "src/plugin.js",
@@ -64,7 +64,7 @@
     "element-closest": "^3.0.2",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsdoc": "^15.12.2",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",

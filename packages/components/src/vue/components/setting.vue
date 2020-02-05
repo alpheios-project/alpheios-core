@@ -88,8 +88,12 @@ export default {
     selected: {
       get: function () {
         let rv
-        if (this.selectedOverride) {
-          rv = this.selectedOverride
+        if (typeof this.selectedOverride === "string") {
+          if (this.dataModel.booolean == true) {
+            rv = this.selectedOverried === "true" ? true : false
+          } else {
+            rv = this.selectedOverride
+          }
         } else if (typeof this.dataModel.currentTextValue === 'function' && this.dataModel.boolean !== true && this.dataModel.number !== true) {
           rv = this.dataModel.currentTextValue()
         } else if (this.dataModel.boolean === true) {
@@ -101,6 +105,7 @@ export default {
       },
       set: function (newValue) {
         this.$emit('change', this.data.name, newValue)
+        this.selectedOverride = undefined
         this.dataModel = this.data // To force Vue.js to redraw
       }
     },

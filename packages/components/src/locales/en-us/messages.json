@@ -607,8 +607,8 @@
     "description": "Legend for options fieldset",
     "component": "Options Tab"
   },
-  "LABEL_FIELDSET_CHINESE": {
-    "message": "Chinese Lookup",
+  "LABEL_FIELDSET_WORDSELECT": {
+    "message": "Word Selection",
     "description": "Legend for options fieldset",
     "component": "Options Tab"
   },
