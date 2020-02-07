@@ -1,6 +1,6 @@
 {
   "name": "alpheios-res-client",
-  "version": "1.1.2",
+  "version": "3.2.1-dev.3",
   "description": "Alpheios Resource Client Library",
   "private": true,
   "main": "dist/alpheios-res-client.min.js",
@@ -75,6 +75,5 @@
       "**/dist",
       "**/tests/test-bundle.js"
     ]
-  },
-  "dependencies": {}
+  }
 }
