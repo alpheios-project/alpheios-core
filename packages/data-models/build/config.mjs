@@ -2,7 +2,8 @@ const webpack = {
   common: {
     entry: './driver.js',
     externals: {
-      'intl-messageformat': 'intl-messageformat'
+      'intl-messageformat': 'intl-messageformat',
+      'uuid/v4': 'uuid/v4'
     }
   },
 

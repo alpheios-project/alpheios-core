@@ -1,8 +1,8 @@
-import DefaultConfig from '@/adapters/concordance/config.json'
-import AuthorWorkConfigConfig from '@/adapters/concordance/author-work.json'
+import DefaultConfig from '@clAdapters/adapters/concordance/config.json'
+import AuthorWorkConfigConfig from '@clAdapters/adapters/concordance/author-work.json'
 
 import { ResourceProvider, Author, TextWork, WordUsageExample, LanguageModelFactory } from 'alpheios-data-models'
-import BaseAdapter from '@/adapters/base-adapter'
+import BaseAdapter from '@clAdapters/adapters/base-adapter'
 
 class AlpheiosConcordanceAdapter extends BaseAdapter {
   /**

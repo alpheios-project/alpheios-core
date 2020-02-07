@@ -1,14 +1,14 @@
-import AlpheiosTuftsAdapter from '@/adapters/tufts/adapter'
-import AlpheiosChineseLocAdapter from '@/adapters/chineseloc/adapter'
-import AlpheiosTreebankAdapter from '@/adapters/alpheiostb/adapter'
-import AlpheiosLemmaTranslationsAdapter from '@/adapters/translations/adapter'
-import AlpheiosLexiconsAdapter from '@/adapters/lexicons/adapter'
-import AlpheiosConcordanceAdapter from '@/adapters/concordance/adapter'
+import AlpheiosTuftsAdapter from '@clAdapters/adapters/tufts/adapter'
+import AlpheiosChineseLocAdapter from '@clAdapters/adapters/chineseloc/adapter'
+import AlpheiosTreebankAdapter from '@clAdapters/adapters/alpheiostb/adapter'
+import AlpheiosLemmaTranslationsAdapter from '@clAdapters/adapters/translations/adapter'
+import AlpheiosLexiconsAdapter from '@clAdapters/adapters/lexicons/adapter'
+import AlpheiosConcordanceAdapter from '@clAdapters/adapters/concordance/adapter'
 
-import WrongMethodError from '@/errors/wrong-method-error'
-import NoRequiredParamError from '@/errors/no-required-param-error'
+import WrongMethodError from '@clAdapters/errors/wrong-method-error'
+import NoRequiredParamError from '@clAdapters/errors/no-required-param-error'
 
-import AdaptersConfig from '@/adapters/adapters-config.json'
+import AdaptersConfig from '@clAdapters/adapters/adapters-config.json'
 
 let cachedConfig = new Map() // eslint-disable-line prefer-const
 let cachedAdaptersList = new Map() // eslint-disable-line prefer-const

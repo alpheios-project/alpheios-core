@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
-import AlpheiosTreebankAdapter from '@/adapters/alpheiostb/adapter'
+import AlpheiosTreebankAdapter from '@clAdapters/adapters/alpheiostb/adapter'
 import { Constants, Homonym } from 'alpheios-data-models'
 
 describe('alpheiostb/adapter.test.js', () => {

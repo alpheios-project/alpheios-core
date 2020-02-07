@@ -2,8 +2,8 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 
-import AlpheiosLemmaTranslationsAdapter from '@/adapters/translations/adapter'
-import ClientAdapters from '@/client-adapters.js'
+import AlpheiosLemmaTranslationsAdapter from '@clAdapters/adapters/translations/adapter'
+import ClientAdapters from '@clAdapters/client-adapters.js'
 import { LanguageModelFactory as LMF, Constants, Homonym, Lexeme, Lemma } from 'alpheios-data-models'
 
 describe('lexicons/adapter.test.js', () => {

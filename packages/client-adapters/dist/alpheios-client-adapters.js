@@ -14026,9 +14026,9 @@ module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/adapters/base-adapter */ "./adapters/base-adapter.js");
-/* harmony import */ var _adapters_alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/adapters/alpheiostb/config.json */ "./adapters/alpheiostb/config.json");
-var _adapters_alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/adapters/alpheiostb/config.json */ "./adapters/alpheiostb/config.json", 1);
+/* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
+/* harmony import */ var _clAdapters_adapters_alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/adapters/alpheiostb/config.json */ "./adapters/alpheiostb/config.json");
+var _clAdapters_adapters_alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/adapters/alpheiostb/config.json */ "./adapters/alpheiostb/config.json", 1);
 /* harmony import */ var xmltojson__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! xmltojson */ "../../../node_modules/xmltojson/lib/xmlToJSON.js");
 /* harmony import */ var xmltojson__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(xmltojson__WEBPACK_IMPORTED_MODULE_3__);
 
@@ -14037,14 +14037,14 @@ var _adapters_alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*
 
 
 
-class AlpheiosTreebankAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__["default"] {
+class AlpheiosTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__["default"] {
   /**
    * Treebank adapter uploads config data and fills model property
    * @param {Object} config - properties with higher priority
   */
   constructor (config = {}) {
     super()
-    this.config = this.uploadConfig(config, _adapters_alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2__)
+    this.config = this.uploadConfig(config, _clAdapters_adapters_alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_2__)
     this.models = { lat: alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LatinLanguageModel"], grc: alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["GreekLanguageModel"] }
   }
 
@@ -14177,13 +14177,13 @@ module.exports = JSON.parse("{\"servers\":[{\"texts\":[],\"isDefault\":true,\"ur
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/errors/adapter-error */ "./errors/adapter-error.js");
-/* harmony import */ var _l10n_l10n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/l10n/l10n */ "./l10n/l10n.js");
-/* harmony import */ var _locales_locales_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/locales/locales.js */ "./locales/locales.js");
-/* harmony import */ var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json");
-var _locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
-/* harmony import */ var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
-var _locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+/* harmony import */ var _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/adapter-error */ "./errors/adapter-error.js");
+/* harmony import */ var _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/l10n/l10n */ "./l10n/l10n.js");
+/* harmony import */ var _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json");
+var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
+/* harmony import */ var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
 
 
 
@@ -14198,10 +14198,10 @@ class BaseAdapter {
   */
   constructor () {
     this.errors = []
-    this.l10n = new _l10n_l10n__WEBPACK_IMPORTED_MODULE_2__["default"]()
-      .addMessages(_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_US)
-      .addMessages(_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5__, _locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_GB)
-      .setLocale(_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_US)
+    this.l10n = new _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_2__["default"]()
+      .addMessages(_clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_US)
+      .addMessages(_clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_GB)
+      .setLocale(_clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_US)
   }
 
   /**
@@ -14209,7 +14209,7 @@ class BaseAdapter {
    * @param {String} message  - message text for the error
   */
   addError (message) {
-    const error = new _errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__["default"](this.config.category, this.config.adapterName, this.config.method, message)
+    const error = new _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__["default"](this.config.category, this.config.adapterName, this.config.method, message)
     this.errors.push(error)
   }
 
@@ -14403,7 +14403,7 @@ class BaseAdapter {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CedictCharacterForms", function() { return CedictCharacterForms; });
-/* harmony import */ var _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/adapters/base-adapter */ "./adapters/base-adapter.js");
+/* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-messaging */ "../node_modules/alpheios-messaging/index.js");
@@ -14419,7 +14419,7 @@ const CedictCharacterForms = {
 
 const msgServiceName = 'AdaptersLexisService'
 
-class AlpheiosChineseLocAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__["default"] {
+class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__["default"] {
   constructor (config = {}) {
     super()
     this.config = config
@@ -14556,27 +14556,27 @@ class AlpheiosChineseLocAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _adapters_concordance_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/adapters/concordance/config.json */ "./adapters/concordance/config.json");
-var _adapters_concordance_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/adapters/concordance/config.json */ "./adapters/concordance/config.json", 1);
-/* harmony import */ var _adapters_concordance_author_work_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/adapters/concordance/author-work.json */ "./adapters/concordance/author-work.json");
-var _adapters_concordance_author_work_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/adapters/concordance/author-work.json */ "./adapters/concordance/author-work.json", 1);
+/* harmony import */ var _clAdapters_adapters_concordance_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/concordance/config.json */ "./adapters/concordance/config.json");
+var _clAdapters_adapters_concordance_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/adapters/concordance/config.json */ "./adapters/concordance/config.json", 1);
+/* harmony import */ var _clAdapters_adapters_concordance_author_work_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/concordance/author-work.json */ "./adapters/concordance/author-work.json");
+var _clAdapters_adapters_concordance_author_work_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/adapters/concordance/author-work.json */ "./adapters/concordance/author-work.json", 1);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/adapters/base-adapter */ "./adapters/base-adapter.js");
+/* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
 
 
 
 
 
 
-class AlpheiosConcordanceAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_3__["default"] {
+class AlpheiosConcordanceAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_3__["default"] {
   /**
    * Adapter uploads config data and creates provider
    * @param {Object} config - properties with higher priority
   */
   constructor (config = {}) {
     super()
-    this.config = this.uploadConfig(config, _adapters_concordance_config_json__WEBPACK_IMPORTED_MODULE_0__)
+    this.config = this.uploadConfig(config, _clAdapters_adapters_concordance_config_json__WEBPACK_IMPORTED_MODULE_0__)
     this.provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["ResourceProvider"](this.config.url, this.config.rights)
     this.authors = []
   }
@@ -14590,7 +14590,7 @@ class AlpheiosConcordanceAdapter extends _adapters_base_adapter__WEBPACK_IMPORTE
   async getAuthorsWorks (reload = false) {
     try {
       if (reload || this.authors.length === 0) {
-        this.authorWorkData = await this.uploadConfig({}, _adapters_concordance_author_work_json__WEBPACK_IMPORTED_MODULE_1__)
+        this.authorWorkData = await this.uploadConfig({}, _clAdapters_adapters_concordance_author_work_json__WEBPACK_IMPORTED_MODULE_1__)
 
         this.authors = []
         for (const authorWorkDataItem of Object.values(this.authorWorkData.authors)) {
@@ -14910,9 +14910,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! papaparse */ "../../../node_modules/papaparse/papaparse.js");
 /* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(papaparse__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/adapters/base-adapter */ "./adapters/base-adapter.js");
-/* harmony import */ var _adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/adapters/lexicons/config.json */ "./adapters/lexicons/config.json");
-var _adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/adapters/lexicons/config.json */ "./adapters/lexicons/config.json", 1);
+/* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
+/* harmony import */ var _clAdapters_adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/adapters/lexicons/config.json */ "./adapters/lexicons/config.json");
+var _clAdapters_adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/adapters/lexicons/config.json */ "./adapters/lexicons/config.json", 1);
 
 
 
@@ -14921,14 +14921,14 @@ var _adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#_
 
 let cachedDefinitions = new Map() // eslint-disable-line prefer-const
 
-class AlpheiosLexiconsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_2__["default"] {
+class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_2__["default"] {
   /**
   * Lexicons adapter uploads config data, defines default options and inits data
   * @param {Object} config - properties with higher priority
   */
   constructor (config = {}) {
     super()
-    this.config = this.uploadConfig(config, _adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3__)
+    this.config = this.uploadConfig(config, _clAdapters_adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3__)
     this.options = { timeout: this.config.timeout ? this.config.timeout : 0 }
   }
 
@@ -15267,24 +15267,24 @@ module.exports = JSON.parse("{\"https://github.com/alpheios-project/lsj\":{\"url
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _adapters_translations_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/adapters/translations/config.json */ "./adapters/translations/config.json");
-var _adapters_translations_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/adapters/translations/config.json */ "./adapters/translations/config.json", 1);
+/* harmony import */ var _clAdapters_adapters_translations_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/translations/config.json */ "./adapters/translations/config.json");
+var _clAdapters_adapters_translations_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/adapters/translations/config.json */ "./adapters/translations/config.json", 1);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/adapters/base-adapter */ "./adapters/base-adapter.js");
+/* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
 
 
 
 
 
-class AlpheiosLemmaTranslationsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_2__["default"] {
+class AlpheiosLemmaTranslationsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_2__["default"] {
   /**
    * Adapter uploads config data, creates provider and inits mapLangUri (Object for storing data for available languages)
    * @param {Object} config - properties with higher priority
   */
   constructor (config = {}) {
     super()
-    this.config = this.uploadConfig(config, _adapters_translations_config_json__WEBPACK_IMPORTED_MODULE_0__)
+    this.config = this.uploadConfig(config, _clAdapters_adapters_translations_config_json__WEBPACK_IMPORTED_MODULE_0__)
     this.mapLangUri = {}
     this.provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["ResourceProvider"](this.config.url, this.config.rights)
   }
@@ -15405,11 +15405,11 @@ module.exports = JSON.parse("{\"url\":\"https://ats.alpheios.net\",\"availableLa
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/adapters/base-adapter */ "./adapters/base-adapter.js");
-/* harmony import */ var _adapters_tufts_transform_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/adapters/tufts/transform-adapter */ "./adapters/tufts/transform-adapter.js");
-/* harmony import */ var _adapters_tufts_config_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/adapters/tufts/config.json */ "./adapters/tufts/config.json");
-var _adapters_tufts_config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/adapters/tufts/config.json */ "./adapters/tufts/config.json", 1);
-/* harmony import */ var _adapters_tufts_engines_set__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/adapters/tufts/engines-set */ "./adapters/tufts/engines-set.js");
+/* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
+/* harmony import */ var _clAdapters_adapters_tufts_transform_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/adapters/tufts/transform-adapter */ "./adapters/tufts/transform-adapter.js");
+/* harmony import */ var _clAdapters_adapters_tufts_config_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/adapters/tufts/config.json */ "./adapters/tufts/config.json");
+var _clAdapters_adapters_tufts_config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/adapters/tufts/config.json */ "./adapters/tufts/config.json", 1);
+/* harmony import */ var _clAdapters_adapters_tufts_engines_set__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/adapters/tufts/engines-set */ "./adapters/tufts/engines-set.js");
 
 
 
@@ -15418,16 +15418,16 @@ var _adapters_tufts_config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PU
 
 
 
-class AlpheiosTuftsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__["default"] {
+class AlpheiosTuftsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__["default"] {
   /**
    * Tufts adapter uploads config data, uploads available engines and creates EnginesSet from them
    * @param {Object} config - properties with higher priority
   */
   constructor (config = {}) {
     super()
-    this.config = this.uploadConfig(config, _adapters_tufts_config_json__WEBPACK_IMPORTED_MODULE_3__)
+    this.config = this.uploadConfig(config, _clAdapters_adapters_tufts_config_json__WEBPACK_IMPORTED_MODULE_3__)
     this.uploadEngines(this.config.engine)
-    this.engineSet = new _adapters_tufts_engines_set__WEBPACK_IMPORTED_MODULE_4__["default"](this.engines)
+    this.engineSet = new _clAdapters_adapters_tufts_engines_set__WEBPACK_IMPORTED_MODULE_4__["default"](this.engines)
     this.sourceData = config.sourceData
   }
 
@@ -15475,7 +15475,7 @@ class AlpheiosTuftsAdapter extends _adapters_base_adapter__WEBPACK_IMPORTED_MODU
       }
 
       if (res) {
-        const transformAdapter = new _adapters_tufts_transform_adapter__WEBPACK_IMPORTED_MODULE_2__["default"](this)
+        const transformAdapter = new _clAdapters_adapters_tufts_transform_adapter__WEBPACK_IMPORTED_MODULE_2__["default"](this)
 
         let homonym = transformAdapter.transformData(res, word) // eslint-disable-line prefer-const
 
@@ -15770,11 +15770,11 @@ data.setLemmaParser(function (lemma) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _adapters_tufts_engine_whitakers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/adapters/tufts/engine/whitakers */ "./adapters/tufts/engine/whitakers.js");
-/* harmony import */ var _adapters_tufts_engine_morpheusgrc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/adapters/tufts/engine/morpheusgrc */ "./adapters/tufts/engine/morpheusgrc.js");
-/* harmony import */ var _adapters_tufts_engine_aramorph__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/adapters/tufts/engine/aramorph */ "./adapters/tufts/engine/aramorph.js");
-/* harmony import */ var _adapters_tufts_engine_hazm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/adapters/tufts/engine/hazm */ "./adapters/tufts/engine/hazm.js");
-/* harmony import */ var _adapters_tufts_engine_traces__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/adapters/tufts/engine/traces */ "./adapters/tufts/engine/traces.js");
+/* harmony import */ var _clAdapters_adapters_tufts_engine_whitakers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/tufts/engine/whitakers */ "./adapters/tufts/engine/whitakers.js");
+/* harmony import */ var _clAdapters_adapters_tufts_engine_morpheusgrc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/tufts/engine/morpheusgrc */ "./adapters/tufts/engine/morpheusgrc.js");
+/* harmony import */ var _clAdapters_adapters_tufts_engine_aramorph__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/adapters/tufts/engine/aramorph */ "./adapters/tufts/engine/aramorph.js");
+/* harmony import */ var _clAdapters_adapters_tufts_engine_hazm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/adapters/tufts/engine/hazm */ "./adapters/tufts/engine/hazm.js");
+/* harmony import */ var _clAdapters_adapters_tufts_engine_traces__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/adapters/tufts/engine/traces */ "./adapters/tufts/engine/traces.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_5__);
 
@@ -15801,7 +15801,7 @@ class EnginesSet {
   getEngineByCode (languageID) {
     if (this.engine[languageID]) {
       const engineCode = this.engine[languageID][0]
-      const allEngines = new Map(([_adapters_tufts_engine_whitakers__WEBPACK_IMPORTED_MODULE_0__["default"], _adapters_tufts_engine_morpheusgrc__WEBPACK_IMPORTED_MODULE_1__["default"], _adapters_tufts_engine_aramorph__WEBPACK_IMPORTED_MODULE_2__["default"], _adapters_tufts_engine_hazm__WEBPACK_IMPORTED_MODULE_3__["default"], _adapters_tufts_engine_traces__WEBPACK_IMPORTED_MODULE_4__["default"]]).map((e) => { return [e.engine, e] }))
+      const allEngines = new Map(([_clAdapters_adapters_tufts_engine_whitakers__WEBPACK_IMPORTED_MODULE_0__["default"], _clAdapters_adapters_tufts_engine_morpheusgrc__WEBPACK_IMPORTED_MODULE_1__["default"], _clAdapters_adapters_tufts_engine_aramorph__WEBPACK_IMPORTED_MODULE_2__["default"], _clAdapters_adapters_tufts_engine_hazm__WEBPACK_IMPORTED_MODULE_3__["default"], _clAdapters_adapters_tufts_engine_traces__WEBPACK_IMPORTED_MODULE_4__["default"]]).map((e) => { return [e.engine, e] }))
       return allEngines.get(engineCode)
     }
   }
@@ -16336,16 +16336,16 @@ class TransformAdapter {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _adapters_tufts_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/adapters/tufts/adapter */ "./adapters/tufts/adapter.js");
-/* harmony import */ var _adapters_chineseloc_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/adapters/chineseloc/adapter */ "./adapters/chineseloc/adapter.js");
-/* harmony import */ var _adapters_alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/adapters/alpheiostb/adapter */ "./adapters/alpheiostb/adapter.js");
-/* harmony import */ var _adapters_translations_adapter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/adapters/translations/adapter */ "./adapters/translations/adapter.js");
-/* harmony import */ var _adapters_lexicons_adapter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/adapters/lexicons/adapter */ "./adapters/lexicons/adapter.js");
-/* harmony import */ var _adapters_concordance_adapter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/adapters/concordance/adapter */ "./adapters/concordance/adapter.js");
-/* harmony import */ var _errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/errors/wrong-method-error */ "./errors/wrong-method-error.js");
-/* harmony import */ var _errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/errors/no-required-param-error */ "./errors/no-required-param-error.js");
-/* harmony import */ var _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/adapters/adapters-config.json */ "./adapters/adapters-config.json");
-var _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_8___namespace = /*#__PURE__*/__webpack_require__.t(/*! @/adapters/adapters-config.json */ "./adapters/adapters-config.json", 1);
+/* harmony import */ var _clAdapters_adapters_tufts_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/tufts/adapter */ "./adapters/tufts/adapter.js");
+/* harmony import */ var _clAdapters_adapters_chineseloc_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/chineseloc/adapter */ "./adapters/chineseloc/adapter.js");
+/* harmony import */ var _clAdapters_adapters_alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/adapters/alpheiostb/adapter */ "./adapters/alpheiostb/adapter.js");
+/* harmony import */ var _clAdapters_adapters_translations_adapter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/adapters/translations/adapter */ "./adapters/translations/adapter.js");
+/* harmony import */ var _clAdapters_adapters_lexicons_adapter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/adapters/lexicons/adapter */ "./adapters/lexicons/adapter.js");
+/* harmony import */ var _clAdapters_adapters_concordance_adapter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/adapters/concordance/adapter */ "./adapters/concordance/adapter.js");
+/* harmony import */ var _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @clAdapters/errors/wrong-method-error */ "./errors/wrong-method-error.js");
+/* harmony import */ var _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @clAdapters/errors/no-required-param-error */ "./errors/no-required-param-error.js");
+/* harmony import */ var _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @clAdapters/adapters/adapters-config.json */ "./adapters/adapters-config.json");
+var _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_8___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/adapters/adapters-config.json */ "./adapters/adapters-config.json", 1);
 
 
 
@@ -16367,10 +16367,10 @@ class ClientAdapters {
   */
   static init () {
     if (cachedConfig.size === 0) {
-      for (const category in _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_8__) {
+      for (const category in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_8__) {
         let adapters = {} // eslint-disable-line prefer-const
-        for (const adapterKey in _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_8__[category]) {
-          const adapterData = _adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_8__[category][adapterKey]
+        for (const adapterKey in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_8__[category]) {
+          const adapterData = _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_8__[category][adapterKey]
 
           adapters[adapterKey] = {
             adapter: ClientAdapters[adapterData.adapter],
@@ -16430,7 +16430,7 @@ class ClientAdapters {
   */
   static checkMethod (category, adapterName, methodName) {
     if (!cachedConfig.get(category)[adapterName].methods.includes(methodName)) {
-      throw new _errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_6__["default"](category, adapterName, methodName)
+      throw new _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_6__["default"](category, adapterName, methodName)
     }
   }
 
@@ -16445,7 +16445,7 @@ class ClientAdapters {
     if (cachedConfig.get(category)[adapterName].params) {
       cachedConfig.get(category)[adapterName].params[methodName].forEach(paramName => {
         if (!params[paramName]) {
-          throw new _errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_7__["default"](category, adapterName, methodName, paramName)
+          throw new _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_7__["default"](category, adapterName, methodName, paramName)
         }
       })
     }
@@ -16477,7 +16477,7 @@ class ClientAdapters {
   static async maAdapter (options) {
     ClientAdapters.checkMethodParam('morphology', 'tufts', options)
 
-    const localMaAdapter = new _adapters_tufts_adapter__WEBPACK_IMPORTED_MODULE_0__["default"]({
+    const localMaAdapter = new _clAdapters_adapters_tufts_adapter__WEBPACK_IMPORTED_MODULE_0__["default"]({
       category: 'morphology',
       adapterName: 'tufts',
       method: options.method,
@@ -16495,7 +16495,7 @@ class ClientAdapters {
   static async chineseAdapter (options) {
     ClientAdapters.checkMethodParam('morphology', 'chineseloc', options)
 
-    const localChineseAdapter = new _adapters_chineseloc_adapter__WEBPACK_IMPORTED_MODULE_1__["default"]({
+    const localChineseAdapter = new _clAdapters_adapters_chineseloc_adapter__WEBPACK_IMPORTED_MODULE_1__["default"]({
       category: 'morphology',
       adapterName: 'chineseloc',
       method: options.method
@@ -16523,7 +16523,7 @@ class ClientAdapters {
   static async tbAdapter (options) {
     ClientAdapters.checkMethodParam('morphology', 'alpheiosTreebank', options)
 
-    const localTbAdapter = new _adapters_alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_2__["default"]({
+    const localTbAdapter = new _clAdapters_adapters_alpheiostb_adapter__WEBPACK_IMPORTED_MODULE_2__["default"]({
       category: 'morphology',
       adapterName: 'alpheiosTreebank',
       method: options.method,
@@ -16550,7 +16550,7 @@ class ClientAdapters {
   static async lemmaTranslations (options) {
     ClientAdapters.checkMethodParam('lemmatranslation', 'alpheios', options)
 
-    const localLemmasAdapter = new _adapters_translations_adapter__WEBPACK_IMPORTED_MODULE_3__["default"]({
+    const localLemmasAdapter = new _clAdapters_adapters_translations_adapter__WEBPACK_IMPORTED_MODULE_3__["default"]({
       category: 'lemmatranslation',
       adapterName: 'alpheios',
       method: options.method,
@@ -16567,7 +16567,7 @@ class ClientAdapters {
   static async wordUsageExamples (options) {
     ClientAdapters.checkMethodParam('wordusageExamples', 'concordance', options)
 
-    const localLemmasAdapter = new _adapters_concordance_adapter__WEBPACK_IMPORTED_MODULE_5__["default"]({
+    const localLemmasAdapter = new _clAdapters_adapters_concordance_adapter__WEBPACK_IMPORTED_MODULE_5__["default"]({
       category: 'wordUsage',
       adapterName: 'concordance',
       method: options.method,
@@ -16613,7 +16613,7 @@ class ClientAdapters {
       callBackEvtFailed: options.params.callBackEvtFailed
     }
 
-    const localLexiconsAdapter = new _adapters_lexicons_adapter__WEBPACK_IMPORTED_MODULE_4__["default"](adapterParams)
+    const localLexiconsAdapter = new _clAdapters_adapters_lexicons_adapter__WEBPACK_IMPORTED_MODULE_4__["default"](adapterParams)
 
     if (options.method === 'fetchShortDefs') {
       await localLexiconsAdapter.fetchShortDefs(options.params.homonym, options.params.opts)
@@ -16730,8 +16730,8 @@ class WrongMethodError extends Error {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _client_adapters_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/client-adapters.js */ "./client-adapters.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ClientAdapters", function() { return _client_adapters_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+/* harmony import */ var _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/client-adapters.js */ "./client-adapters.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ClientAdapters", function() { return _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
 
 

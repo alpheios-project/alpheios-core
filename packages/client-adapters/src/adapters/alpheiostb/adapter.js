@@ -1,7 +1,7 @@
 import { LanguageModelFactory as LMF, LatinLanguageModel, GreekLanguageModel, ResourceProvider, Lexeme, Lemma, Feature, Inflection, Homonym } from 'alpheios-data-models'
-import BaseAdapter from '@/adapters/base-adapter'
+import BaseAdapter from '@clAdapters/adapters/base-adapter'
 
-import DefaultConfig from '@/adapters/alpheiostb/config.json'
+import DefaultConfig from '@clAdapters/adapters/alpheiostb/config.json'
 import xmlToJSON from 'xmltojson'
 
 class AlpheiosTreebankAdapter extends BaseAdapter {

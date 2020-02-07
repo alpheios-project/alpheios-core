@@ -1,8 +1,8 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
-import ClientAdapters from '@/client-adapters.js'
-import AlpheiosConcordanceAdapter from '@/adapters/concordance/adapter'
+import ClientAdapters from '@clAdapters/client-adapters.js'
+import AlpheiosConcordanceAdapter from '@clAdapters/adapters/concordance/adapter'
 
 import { Constants, Author, TextWork, WordUsageExample } from 'alpheios-data-models'
 

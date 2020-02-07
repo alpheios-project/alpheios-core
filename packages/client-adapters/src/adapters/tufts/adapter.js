@@ -1,10 +1,10 @@
 import { LanguageModelFactory as LMF, Lexeme, Feature, Constants } from 'alpheios-data-models'
 
-import BaseAdapter from '@/adapters/base-adapter'
-import TransformAdapter from '@/adapters/tufts/transform-adapter'
+import BaseAdapter from '@clAdapters/adapters/base-adapter'
+import TransformAdapter from '@clAdapters/adapters/tufts/transform-adapter'
 
-import DefaultConfig from '@/adapters/tufts/config.json'
-import EnginesSet from '@/adapters/tufts/engines-set'
+import DefaultConfig from '@clAdapters/adapters/tufts/config.json'
+import EnginesSet from '@clAdapters/adapters/tufts/engines-set'
 
 class AlpheiosTuftsAdapter extends BaseAdapter {
   /**

@@ -1,10 +1,10 @@
 import axios from 'axios'
-import AdapterError from '@/errors/adapter-error'
+import AdapterError from '@clAdapters/errors/adapter-error'
 
-import L10n from '@/l10n/l10n'
-import Locales from '@/locales/locales.js'
-import enUS from '@/locales/en-us/messages.json'
-import enGB from '@/locales/en-gb/messages.json'
+import L10n from '@clAdapters/l10n/l10n'
+import Locales from '@clAdapters/locales/locales.js'
+import enUS from '@clAdapters/locales/en-us/messages.json'
+import enGB from '@clAdapters/locales/en-gb/messages.json'
 
 class BaseAdapter {
   /**

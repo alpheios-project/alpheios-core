@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
-import ClientAdapters from '@/client-adapters.js'
+import ClientAdapters from '@clAdapters/client-adapters.js'
 
 import { Constants, Homonym } from 'alpheios-data-models'
 

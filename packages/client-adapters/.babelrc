@@ -9,7 +9,8 @@
     ["@babel/plugin-proposal-object-rest-spread"],
     ["module-resolver", {
       "alias": {
-        "alpheios-messaging": "./node_modules/alpheios-messaging/dist/dev/messaging-service.js"
+        "alpheios-data-models": "./node_modules/alpheios-data-models/dist/alpheios-data-models.js",
+        "alpheios-messaging": "./node_modules/alpheios-messaging/dist/dev/alpheios-messaging.js"
       }
     }]
   ]

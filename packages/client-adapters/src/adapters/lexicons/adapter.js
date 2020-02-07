@@ -1,8 +1,8 @@
 import { LanguageModelFactory as LMF, Definition, ResourceProvider } from 'alpheios-data-models'
 import papaparse from 'papaparse'
 
-import BaseAdapter from '@/adapters/base-adapter'
-import DefaultConfig from '@/adapters/lexicons/config.json'
+import BaseAdapter from '@clAdapters/adapters/base-adapter'
+import DefaultConfig from '@clAdapters/adapters/lexicons/config.json'
 
 let cachedDefinitions = new Map() // eslint-disable-line prefer-const
 

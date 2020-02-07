@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import BaseAdapter from '@/adapters/base-adapter'
+import BaseAdapter from '@clAdapters/adapters/base-adapter'
 import { ChineseLanguageModel, Lemma, Lexeme, Homonym, Feature, Definition } from 'alpheios-data-models'
 import {
   MessagingService, WindowIframeDestination as Destination, CedictDestinationConfig as CedictConfig, RequestMessage

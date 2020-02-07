@@ -1,10 +1,10 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
-import BaseAdapter from '@/adapters/base-adapter'
-import L10n from '@/l10n/l10n'
+import BaseAdapter from '@clAdapters/adapters/base-adapter'
+import L10n from '@clAdapters/l10n/l10n'
 
-import ClientAdapters from '@/client-adapters.js'
+import ClientAdapters from '@clAdapters/client-adapters.js'
 import { Constants, Homonym } from 'alpheios-data-models'
 
 describe('base-adapter.test.js', () => {

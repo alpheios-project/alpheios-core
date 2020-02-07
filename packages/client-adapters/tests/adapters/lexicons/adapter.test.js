@@ -3,8 +3,8 @@
 import 'whatwg-fetch'
 import papaparse from 'papaparse'
 
-import AlpheiosLexiconsAdapter from '@/adapters/lexicons/adapter'
-import ClientAdapters from '@/client-adapters.js'
+import AlpheiosLexiconsAdapter from '@clAdapters/adapters/lexicons/adapter'
+import ClientAdapters from '@clAdapters/client-adapters.js'
 import { LanguageModelFactory as LMF, Constants, Homonym, Lexeme, Lemma } from 'alpheios-data-models'
 
 describe('lexicons/adapter.test.js', () => {

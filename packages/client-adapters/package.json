@@ -71,10 +71,10 @@
       "\\.js$": "babel-jest"
     },
     "transformIgnorePatterns": [
-      "!node_modules/alpheios-data-models/"
+      "/node_modules/"
     ],
     "moduleNameMapper": {
-      "^@[/](.+)": "<rootDir>/src/$1",
+      "^@clAdapters[/](.+)": "<rootDir>/src/$1",
       "^@tests[/](.+)": "<rootDir>/tests/$1"
     },
     "moduleFileExtensions": [

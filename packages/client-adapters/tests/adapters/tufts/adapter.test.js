@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
-import AlpheiosTuftsAdapter from '@/adapters/tufts/adapter'
+import AlpheiosTuftsAdapter from '@clAdapters/adapters/tufts/adapter'
 import { Constants, Homonym } from 'alpheios-data-models'
 
 import { Fixture } from 'alpheios-fixtures'

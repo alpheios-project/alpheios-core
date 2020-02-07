@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 
-import AlpheiosChineseLocAdapter from '@/adapters/chineseloc/adapter'
+import AlpheiosChineseLocAdapter from '@clAdapters/adapters/chineseloc/adapter'
 
 import { Constants } from 'alpheios-data-models'
 
