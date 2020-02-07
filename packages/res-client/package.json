@@ -2,6 +2,7 @@
   "name": "alpheios-res-client",
   "version": "1.1.2",
   "description": "Alpheios Resource Client Library",
+  "private": true,
   "main": "dist/alpheios-res-client.min.js",
   "moduleExternal": "dist/alpheios-res-client.module-external.js",
   "scripts": {
