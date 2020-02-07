@@ -9,8 +9,6 @@ const webpack = {
     },
     resolve: {
       alias: {
-        // Below will force all imported modules with unresolved dependencies to use a single instance of that dependency
-        '@messServ': path.join(projectRoot, 'node_modules/alpheios-messaging/src'),
         '@clAdapters': path.join(projectRoot, 'src')
       }
     },
