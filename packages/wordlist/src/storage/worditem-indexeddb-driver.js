@@ -1,7 +1,7 @@
 import { Homonym, WordItem, TextQuoteSelector, LanguageModelFactory as LMF } from 'alpheios-data-models'
 
-import IndexedDBObjectStoresStructure from '@/storage/indexeddbDriver/indexed-db-object-stores-structure'
-import IndexedDBLoadProcess from '@/storage/indexeddbDriver/indexed-db-load-process'
+import IndexedDBObjectStoresStructure from '@wordlist/storage/indexeddbDriver/indexed-db-object-stores-structure'
+import IndexedDBLoadProcess from '@wordlist/storage/indexeddbDriver/indexed-db-load-process'
 
 export default class WordItemIndexedDbDriver {
 

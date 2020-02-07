@@ -21,74 +21,37 @@
   },
   "homepage": "https://github.com/alpheios-project/wordlist#readme",
   "devDependencies": {
-    "@vue/test-utils": "^1.0.0-beta.29",
-    "alpheios-client-adapters": "github:alpheios-project/client-adapters",
-    "alpheios-data-models": "github:alpheios-project/data-models",
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/runtime": "^7.8.4",
     "alpheios-node-build": "github:alpheios-project/node-build",
-    "autoprefixer": "^8.6.5",
-    "axios": "^0.18.1",
-    "bytes": "^3.1.0",
-    "chalk": "^2.4.2",
-    "copy-webpack-plugin": "^4.6.0",
-    "coveralls": "^3.0.7",
-    "css-loader": "^0.28.11",
-    "dom-anchor-text-quote": "*",
-    "element-closest": "^2.0.2",
-    "eslint": "^5.16.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^8.0.1",
+    "axios": "^0.19.2",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "coveralls": "^3.0.9",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "eslint-plugin-vue": "^5.2.3",
-    "fake-indexeddb": "^2.1.1",
-    "file-loader": "^1.1.11",
-    "flush-promises": "^1.0.2",
-    "font-awesome-svg-png": "^1.2.2",
-    "friendly-errors-webpack-plugin": "^1.7.0",
-    "fs": "0.0.1-security",
-    "html-loader": "^0.5.5",
-    "html-loader-jest": "^0.2.1",
-    "interactjs": "^1.6.3",
-    "intl-messageformat": "^2.2.0",
-    "jest": "^23.6.0",
-    "jest-serializer-vue": "^2.0.2",
-    "jest-vue-preprocessor": "^1.7.0",
-    "jsdom": "^13.2.0",
-    "postcss-import": "^11.0.0",
-    "postcss-loader": "^2.1.6",
-    "raw-loader": "^0.5.1",
-    "sass-loader": "^7.3.1",
-    "semver": "^5.7.1",
-    "shelljs": "^0.8.3",
-    "shelving-mock-indexeddb": "^1.1.0",
-    "sinon": "^6.3.5",
-    "source-map-loader": "^0.2.4",
-    "style-loader": "^0.21.0",
-    "terser": "3.14.1",
-    "uikit": "^3.2.2",
-    "uuid": "^3.3.3",
-    "vue": "^2.6.10",
-    "whatwg-fetch": "^2.0.4",
-    "wrap-range-text": "*"
+    "fake-indexeddb": "^3.0.0",
+    "jest": "^25.1.0",
+    "whatwg-fetch": "^3.0.0"
   },
   "peerDependencies": {
-    "alpheios-data-models": "github:alpheios-project/data-models",
-    "dom-anchor-text-quote": "4.0.2",
-    "intl-messageformat": "2.x.x",
-    "uuid": "3.x.x",
-    "wrap-range-text": ""
+    "intl-messageformat": "^2.2.0"
   },
   "jest": {
     "verbose": true,
     "moduleNameMapper": {
-      "^@[/](.+)": "<rootDir>/src/$1"
+      "^@wordlist[/](.+)": "<rootDir>/src/$1",
+      "alpheios-data-models": "<rootDir>/../data-models/dist/alpheios-data-models.js",
+      "alpheios-client-adapters": "<rootDir>/../client-adapters/dist/alpheios-client-adapters.js"
     },
     "transform": {
-      "^.+\\.htmlf$": "html-loader-jest",
-      "^.+\\.jsx?$": "babel-jest",
-      ".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor",
-      ".*\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileTransform.js"
+      "^.+\\.jsx?$": "babel-jest"
     }
   },
   "eslintConfig": {
@@ -98,7 +61,7 @@
       "jest": true
     },
     "parserOptions": {
-      "ecmaVersion": 2017,
+      "ecmaVersion": 2019,
       "sourceType": "module"
     }
   },

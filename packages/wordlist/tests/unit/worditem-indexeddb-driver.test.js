@@ -6,7 +6,7 @@ import IDBKeyRange from 'fake-indexeddb/lib/FDBKeyRange'
 import { ClientAdapters } from 'alpheios-client-adapters'
 import { WordItem, Constants, TextQuoteSelector } from 'alpheios-data-models'
 
-import WordItemIndexedDbDriver from '@/storage/worditem-indexeddb-driver'
+import WordItemIndexedDbDriver from '@wordlist/storage/worditem-indexeddb-driver'
 
 describe('worditem-indexeddb-driver.test.js', () => {
   console.error = function () {}

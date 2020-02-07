@@ -1,7 +1,7 @@
-import WordItemIndexedDbDriver from '@/storage/worditem-indexeddb-driver.js'
-import WordItemRemoteDbDriver from '@/storage/worditem-remotedb-driver.js'
-import IndexedDBAdapter from '@/storage/indexed-db-adapter.js'
-import RemoteDBAdapter from '@/storage/remote-db-adapter.js'
+import WordItemIndexedDbDriver from '@wordlist/storage/worditem-indexeddb-driver.js'
+import WordItemRemoteDbDriver from '@wordlist/storage/worditem-remotedb-driver.js'
+import IndexedDBAdapter from '@wordlist/storage/indexed-db-adapter.js'
+import RemoteDBAdapter from '@wordlist/storage/remote-db-adapter.js'
 
 export default class UserDataManager {
 

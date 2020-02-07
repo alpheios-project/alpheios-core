@@ -1,8 +1,8 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
-import WordItemRemoteDbDriver from '@/storage/worditem-remotedb-driver'
-import RemoteDBAdapter from '@/storage/remote-db-adapter'
+import WordItemRemoteDbDriver from '@wordlist/storage/worditem-remotedb-driver'
+import RemoteDBAdapter from '@wordlist/storage/remote-db-adapter'
 import axios from 'axios';
 import { WordItem } from 'alpheios-data-models'
 

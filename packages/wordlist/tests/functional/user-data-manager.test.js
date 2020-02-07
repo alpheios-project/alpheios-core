@@ -3,13 +3,13 @@
 import 'whatwg-fetch'
 import { ClientAdapters } from 'alpheios-client-adapters'
 import { Constants, WordItem, TextQuoteSelector, LanguageModelFactory as LMF } from 'alpheios-data-models'
-import UserDataManager from '@/controllers/user-data-manager'
+import UserDataManager from '@wordlist/controllers/user-data-manager'
 
-import WordItemIndexedDbDriver from '@/storage/worditem-indexeddb-driver.js'
-import WordItemRemoteDbDriver from '@/storage/worditem-remotedb-driver.js'
-import IndexedDBAdapter from '@/storage/indexed-db-adapter.js'
-import RemoteDBAdapter from '@/storage/remote-db-adapter.js'
-import WordlistController from '@/controllers/wordlist-controller'
+import WordItemIndexedDbDriver from '@wordlist/storage/worditem-indexeddb-driver.js'
+import WordItemRemoteDbDriver from '@wordlist/storage/worditem-remotedb-driver.js'
+import IndexedDBAdapter from '@wordlist/storage/indexed-db-adapter.js'
+import RemoteDBAdapter from '@wordlist/storage/remote-db-adapter.js'
+import WordlistController from '@wordlist/controllers/wordlist-controller'
 
 import axios from 'axios'
 

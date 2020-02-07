@@ -1,8 +1,8 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
-import WordItemIndexedDbDriver from '@/storage/worditem-indexeddb-driver'
-import IndexedDBAdapter from '@/storage/indexed-db-adapter'
+import WordItemIndexedDbDriver from '@wordlist/storage/worditem-indexeddb-driver.js'
+import IndexedDBAdapter from '@wordlist/storage/indexed-db-adapter.js'
 import { WordItem, Constants } from 'alpheios-data-models'
 
 import IndexedDB from 'fake-indexeddb'

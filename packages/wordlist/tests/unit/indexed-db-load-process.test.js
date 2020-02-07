@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import { ClientAdapters } from 'alpheios-client-adapters'
-import IndexedDBLoadProcess from '@/storage/indexeddbDriver/indexed-db-load-process'
+import IndexedDBLoadProcess from '@wordlist/storage/indexeddbDriver/indexed-db-load-process'
 import { WordItem, Constants, Homonym } from 'alpheios-data-models'
 
 describe('indexed-db-load-process.test.js', () => {
