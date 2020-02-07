@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": false,
   "scripts": {
-    "install": "npx lerna bootstrap --hoist --nohoist=alpheios-node-build --nohoist=alpheios-messaging",
+    "bootstrap": "npx lerna bootstrap --hoist --nohoist=alpheios-node-build --nohoist=alpheios-messaging",
     "clean": "npx lerna clean --yes",
-    "reinstall": "npm run clean && npm run install",
+    "rebootstrap": "npm run clean && npm run install",
     "list-mismatching-deps": "npx syncpack list-mismatches; exit(0)",
     "list-outdated-deps": "npx lerna exec --no-bail npm outdated",
     "fix-mismatching-deps": "npx syncpack fix-mismatches",
