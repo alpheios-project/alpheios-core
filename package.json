@@ -1,6 +1,6 @@
 {
   "name": "alpheios-core",
-  "version": "1.0.0",
+  "version": "1.0.1-dev.0",
   "private": false,
   "scripts": {
     "bootstrap": "npx lerna bootstrap --hoist --nohoist=alpheios-node-build --nohoist=alpheios-messaging",
