@@ -43,7 +43,7 @@
     "papaparse": "^5.1.1"
   },
   "peerDependencies": {
-    "alpheios-data-models": "^3.2.1-dev.2"
+    "alpheios-data-models": "^3.2.1-dev.3"
   },
   "engines": {
     "node": ">= 9.10.1",
