@@ -449,7 +449,7 @@ export default class LanguageDataset {
   reducerGen (inflections, options) {
     const instance = this
     function reducerFn (accumulator, item) {
-      const result = instance['matcher'](inflections, item, options)
+      const result = instance.matcher(inflections, item, options)
       if (result) {
         accumulator.push(result)
       }

@@ -23,7 +23,7 @@ export default class LatinVerbIrregularVoiceView extends LatinVerbIrregularBaseV
     this.isImplemented = inflections.length > 0
     if (this.isImplemented) {
       const lemmas = this.constructor.dataset.getMatchingIrregularLemmas(inflections)
-      this.additionalTitle = lemmas.length > 0 ? `${lemmas[0].word}, ${lemmas[0].principalParts}` : ``
+      this.additionalTitle = lemmas.length > 0 ? `${lemmas[0].word}, ${lemmas[0].principalParts}` : ''
       this.createTable()
     }
   }

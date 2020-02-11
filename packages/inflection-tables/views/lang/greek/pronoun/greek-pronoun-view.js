@@ -129,7 +129,7 @@ export default class GreekPronounView extends GreekView {
 
   static createStandardFormHomonym (options = {}) {
     if (!options || !options.form) {
-      throw new Error(`Obligatory options property, "form", is missing`)
+      throw new Error('Obligatory options property, "form", is missing')
     }
     let inflection = new Inflection(options.form, this.languageID)
     inflection.addFeature(new Feature(Feature.types.part, this.mainPartOfSpeech, this.languageID))

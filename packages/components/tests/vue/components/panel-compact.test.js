@@ -454,7 +454,7 @@ describe('panel-compact.test.js', () => {
 
     expect(definitions2.length).toBeGreaterThan(0)
     definitions2.forEach(definition => {
-      expect(definition.constructor.name).toEqual(expect.stringContaining('definition'))
+      expect(definition.constructor.name).toEqual(expect.stringContaining('Definition'))
     })
   })
 

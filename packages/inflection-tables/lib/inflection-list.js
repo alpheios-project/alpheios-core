@@ -13,7 +13,7 @@ export default class InflectionList {
    */
   addItem (item) {
     if (!item) {
-      throw new Error(`Inflection item cannot be empty`)
+      throw new Error('Inflection item cannot be empty')
     }
     this.items.push(item)
   }
@@ -24,13 +24,13 @@ export default class InflectionList {
    */
   addItems (items) {
     if (!items) {
-      throw new Error(`Inflection items cannot be empty`)
+      throw new Error('Inflection items cannot be empty')
     }
     if (!Array.isArray(items)) {
-      throw new Error(`Inflection items must be in an array`)
+      throw new Error('Inflection items must be in an array')
     }
     if (items.length === 0) {
-      throw new Error(`Inflection items array must not be empty`)
+      throw new Error('Inflection items array must not be empty')
     }
     // Store only new items, avoid duplicates
     for (const item of items) {

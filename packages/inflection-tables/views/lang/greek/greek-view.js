@@ -74,22 +74,22 @@ export default class GreekView extends View {
 
   static getOrdinalTitle (featureValue) {
     switch (featureValue) {
-      case Constants.ORD_1ST: return `First`
-      case Constants.ORD_2ND: return `Second`
-      case Constants.ORD_3RD: return `Third`
-      case Constants.ORD_4TH: return `Fourth`
-      case Constants.ORD_5TH: return `Fifth`
+      case Constants.ORD_1ST: return 'First'
+      case Constants.ORD_2ND: return 'Second'
+      case Constants.ORD_3RD: return 'Third'
+      case Constants.ORD_4TH: return 'Fourth'
+      case Constants.ORD_5TH: return 'Fifth'
       default: return featureValue
     }
   }
 
   static getDeclensionTitle (featureValue) {
     switch (featureValue) {
-      case Constants.ORD_1ST: return `First<br>α`
-      case Constants.ORD_2ND: return `Second<br>ο`
-      case Constants.ORD_3RD: return `Third<br>ι, ω`
-      case Constants.ORD_4TH: return `Fourth`
-      case Constants.ORD_5TH: return `Fifth`
+      case Constants.ORD_1ST: return 'First<br>α'
+      case Constants.ORD_2ND: return 'Second<br>ο'
+      case Constants.ORD_3RD: return 'Third<br>ι, ω'
+      case Constants.ORD_4TH: return 'Fourth'
+      case Constants.ORD_5TH: return 'Fifth'
       default: return featureValue
     }
   }

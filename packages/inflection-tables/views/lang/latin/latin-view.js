@@ -68,11 +68,11 @@ export default class LatinView extends View {
    */
   static getOrdinalTitle (featureValue) {
     switch (featureValue) {
-      case Constants.ORD_1ST: return `First`
-      case Constants.ORD_2ND: return `Second`
-      case Constants.ORD_3RD: return `Third`
-      case Constants.ORD_4TH: return `Fourth`
-      case Constants.ORD_5TH: return `Fifth`
+      case Constants.ORD_1ST: return 'First'
+      case Constants.ORD_2ND: return 'Second'
+      case Constants.ORD_3RD: return 'Third'
+      case Constants.ORD_4TH: return 'Fourth'
+      case Constants.ORD_5TH: return 'Fifth'
       default: return featureValue
     }
   }
@@ -84,11 +84,11 @@ export default class LatinView extends View {
    */
   static getDeclensionTitle (featureValue) {
     switch (featureValue) {
-      case Constants.ORD_1ST: return `First<br>ā`
-      case Constants.ORD_2ND: return `Second<br>o`
-      case Constants.ORD_3RD: return `Third<br>(mutes, liquids, nasals, i)`
-      case Constants.ORD_4TH: return `Fourth<br>u`
-      case Constants.ORD_5TH: return `Fifth<br>ē`
+      case Constants.ORD_1ST: return 'First<br>ā'
+      case Constants.ORD_2ND: return 'Second<br>o'
+      case Constants.ORD_3RD: return 'Third<br>(mutes, liquids, nasals, i)'
+      case Constants.ORD_4TH: return 'Fourth<br>u'
+      case Constants.ORD_5TH: return 'Fifth<br>ē'
       default: return featureValue
     }
   }
@@ -100,10 +100,10 @@ export default class LatinView extends View {
    */
   static getGenderTitle (featureValue) {
     switch (featureValue) {
-      case Constants.GEND_MASCULINE: return `m.`
-      case Constants.GEND_FEMININE: return `f.`
-      case Constants.GEND_NEUTER: return `n.`
-      case LatinView.datasetConsts.GEND_MASCULINE_FEMININE: return `f./m.`
+      case Constants.GEND_MASCULINE: return 'm.'
+      case Constants.GEND_FEMININE: return 'f.'
+      case Constants.GEND_NEUTER: return 'n.'
+      case LatinView.datasetConsts.GEND_MASCULINE_FEMININE: return 'f./m.'
       default: return featureValue
     }
   }
@@ -115,18 +115,18 @@ export default class LatinView extends View {
    */
   static getVoiceTitle (featureValue) {
     switch (featureValue) {
-      case Constants.VOICE_ACTIVE: return `Active`
-      case Constants.VOICE_PASSIVE: return `Passive`
+      case Constants.VOICE_ACTIVE: return 'Active'
+      case Constants.VOICE_PASSIVE: return 'Passive'
       default: return featureValue
     }
   }
 
   static getConjugationTitle (featureValue) {
     switch (featureValue) {
-      case Constants.ORD_1ST: return `First<br><span class="infl-cell__conj-stem">ā</span>`
-      case Constants.ORD_2ND: return `Second<br><span class="infl-cell__conj-stem">ē</span>`
-      case Constants.ORD_3RD: return `Third<br><span class="infl-cell__conj-stem">e</span>`
-      case Constants.ORD_4TH: return `Fourth<br><span class="infl-cell__conj-stem">i</span>`
+      case Constants.ORD_1ST: return 'First<br><span class="infl-cell__conj-stem">ā</span>'
+      case Constants.ORD_2ND: return 'Second<br><span class="infl-cell__conj-stem">ē</span>'
+      case Constants.ORD_3RD: return 'Third<br><span class="infl-cell__conj-stem">e</span>'
+      case Constants.ORD_4TH: return 'Fourth<br><span class="infl-cell__conj-stem">i</span>'
       default: return featureValue
     }
   }

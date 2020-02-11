@@ -43,8 +43,8 @@ export default class LatinAdjectiveView extends LatinView {
 
   static getDeclensionTitle (featureValue) {
     switch (featureValue) {
-      case LatinView.datasetConsts.ORD_1ST_2ND: return `First/Second<br>ā and o`
-      case Constants.ORD_3RD: return `Third<br>consonant and i`
+      case LatinView.datasetConsts.ORD_1ST_2ND: return 'First/Second<br>ā and o'
+      case Constants.ORD_3RD: return 'Third<br>consonant and i'
       default: return featureValue
     }
   }

@@ -366,7 +366,7 @@ export default class View {
 
   static createStandardFormHomonym (options) {
     if (this.inflectionType === Form && !options.form) {
-      throw new Error(`Obligatory options property, "form", is missing`)
+      throw new Error('Obligatory options property, "form", is missing')
     }
     const stem = options.form ? options.form : 'stem'
     const suffix = options.suffix ? options.suffix : 'suffix'

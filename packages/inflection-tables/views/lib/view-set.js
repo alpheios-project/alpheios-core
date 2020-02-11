@@ -102,7 +102,7 @@ export default class ViewSet {
 
   static getStandardForm (options) {
     if (!options || !options.viewID) {
-      throw new Error(`Obligatory options property, "viewID", is missing`)
+      throw new Error('Obligatory options property, "viewID", is missing')
     }
     const view = this.getViewByID(options.viewID)
     return view ? view.getStandardFormInstance(options) : null

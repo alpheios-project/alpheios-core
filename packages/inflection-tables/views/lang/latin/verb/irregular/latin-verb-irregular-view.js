@@ -21,7 +21,7 @@ export default class LatinVerbIrregularView extends LatinVerbIrregularBaseView {
     if (this.isImplemented) {
       const inflections = this.homonym.inflections.filter(item => item.constraints.implemented)
       const lemmas = this.constructor.dataset.getMatchingIrregularLemmas(inflections)
-      this.additionalTitle = lemmas.length > 0 ? `${lemmas[0].word}, ${lemmas[0].principalParts}` : ``
+      this.additionalTitle = lemmas.length > 0 ? `${lemmas[0].word}, ${lemmas[0].principalParts}` : ''
       this.createTable()
     }
   }
