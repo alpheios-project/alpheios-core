@@ -1118,7 +1118,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../packages/wordlist/node_modules/alpheios-node-build/node_modules/process/browser.js */ "../node_modules/alpheios-node-build/node_modules/process/browser.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "../../../node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -1909,10 +1909,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "../node_modules/alpheios-node-build/node_modules/process/browser.js":
-/*!***************************************************************************!*\
-  !*** ../node_modules/alpheios-node-build/node_modules/process/browser.js ***!
-  \***************************************************************************/
+/***/ "../../../node_modules/process/browser.js":
+/*!******************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/process/browser.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
