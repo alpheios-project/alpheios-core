@@ -1,9 +1,9 @@
 {
-  "name": "alpheios-client-adapters",
-  "version": "3.2.1-dev.4",
-  "description": "Alpheios Client Adapters Library",
-  "private": true,
-  "main": "dist/alpheios-client-adapters.min.js",
+	"name": "alpheios-client-adapters",
+	"version": "3.2.1-dev.4",
+	"description": "Alpheios Client Adapters Library",
+	"private": true,
+	"main": "dist/alpheios-client-adapters.min.js",
   "scripts": {
     "test": "eslint --fix src/**/*.js && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-c": "eslint --fix src/**/*.js && jest tests/morph-fixture.test.js",
@@ -15,17 +15,17 @@
     "build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue",
     "lint": "eslint --fix src/**/*.js && "
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alpheios-project/client-adapters.git"
-  },
-  "author": "The Alpheios Project, Ltd.",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/alpheios-project/client-adapters/issues"
-  },
-  "homepage": "https://github.com/alpheios-project/client-adapters#readme",
-  "devDependencies": {
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/alpheios-project/client-adapters.git"
+	},
+	"author": "The Alpheios Project, Ltd.",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/alpheios-project/client-adapters/issues"
+	},
+	"homepage": "https://github.com/alpheios-project/client-adapters#readme",
+	"devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.8.3",
@@ -34,7 +34,7 @@
     "alpheios-data-models": "^3.2.1-dev.3",
     "alpheios-fixtures": "github:alpheios-project/fixtures",
     "alpheios-messaging": "github:alpheios-project/alpheios-messaging",
-    "alpheios-node-build": "github:alpheios-project/node-build",
+    "alpheios-node-build": "github:alpheios-project/node-build#v2.0.0",
     "axios": "^0.19.2",
     "babel-plugin-module-resolver": "^4.0.0",
     "coveralls": "^3.0.9",
@@ -56,53 +56,53 @@
     "source-map-loader": "^0.2.4",
     "whatwg-fetch": "^3.0.0",
     "xmltojson": "^1.3.5"
-  },
-  "engines": {
-    "node": ">= 13.2.0",
-    "npm": ">= 6.9.0"
-  },
-  "jest": {
-    "verbose": true,
-    "testPathIgnorePatterns": [
-      "<rootDir>/node_modules/"
-    ],
-    "transform": {
-      "\\.xml$": "jest-raw-loader",
-      "\\.js$": "babel-jest"
-    },
-    "transformIgnorePatterns": [
-      "/node_modules/"
-    ],
-    "moduleNameMapper": {
-      "^@clAdapters[/](.+)": "<rootDir>/src/$1",
-      "^@tests[/](.+)": "<rootDir>/tests/$1"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "vue"
-    ]
-  },
-  "eslintConfig": {
-    "extends": [
-      "standard",
-      "plugin:vue/essential"
-    ],
-    "env": {
-      "browser": true,
-      "node": true
-    },
-    "parserOptions": {
-      "ecmaVersion": 2018,
-      "sourceType": "module",
-      "experimentalObjectRestSpread": true
-    },
-    "rules": {
-      "no-prototype-builtins": "off",
-      "dot-notation": "off"
-    }
-  },
-  "eslintIgnore": [
-    "**/dist",
-    "**/support"
-  ]
+	},
+	"engines": {
+		"node": ">= 13.2.0",
+		"npm": ">= 6.9.0"
+	},
+	"jest": {
+		"verbose": true,
+		"testPathIgnorePatterns": [
+			"<rootDir>/node_modules/"
+		],
+		"transform": {
+			"\\.xml$": "jest-raw-loader",
+			"\\.js$": "babel-jest"
+		},
+		"transformIgnorePatterns": [
+			"/node_modules/"
+		],
+		"moduleNameMapper": {
+			"^@clAdapters[/](.+)": "<rootDir>/src/$1",
+			"^@tests[/](.+)": "<rootDir>/tests/$1"
+		},
+		"moduleFileExtensions": [
+			"js",
+			"vue"
+		]
+	},
+	"eslintConfig": {
+		"extends": [
+			"standard",
+			"plugin:vue/essential"
+		],
+		"env": {
+			"browser": true,
+			"node": true
+		},
+		"parserOptions": {
+			"ecmaVersion": 2018,
+			"sourceType": "module",
+			"experimentalObjectRestSpread": true
+		},
+		"rules": {
+			"no-prototype-builtins": "off",
+			"dot-notation": "off"
+		}
+	},
+	"eslintIgnore": [
+		"**/dist",
+		"**/support"
+	]
 }

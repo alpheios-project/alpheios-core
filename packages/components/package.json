@@ -1,9 +1,9 @@
 {
-  "name": "alpheios-components",
-  "version": "3.2.1-dev.4",
-  "description": "Alpheios Components",
-  "private": true,
-  "main": "dist/alpheios-components.min.js",
+	"name": "alpheios-components",
+	"version": "3.2.1-dev.4",
+	"description": "Alpheios Components",
+	"private": true,
+	"main": "dist/alpheios-components.min.js",
   "scripts": {
     "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test-lib": "jest tests/lib --coverage",
@@ -25,17 +25,17 @@
     "lint-jsdoc": "eslint --no-eslintrc -c eslint-jsdoc-conf.json src/**/*.js",
     "lint-vue": "eslint --no-eslintrc --fix-dry-run -c eslint-vue-conf.json src/**/*.vue"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alpheios-project/components.git"
-  },
-  "author": "The Alpheios Project, Ltd.",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/alpheios-project/components/issues"
-  },
-  "homepage": "https://github.com/alpheios-project/components#readme",
-  "devDependencies": {
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/alpheios-project/components.git"
+	},
+	"author": "The Alpheios Project, Ltd.",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/alpheios-project/components/issues"
+	},
+	"homepage": "https://github.com/alpheios-project/components#readme",
+	"devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.8.3",
@@ -48,7 +48,7 @@
     "alpheios-fixtures": "github:alpheios-project/fixtures",
     "alpheios-inflection-tables": "^3.2.1-dev.4",
     "alpheios-messaging": "github:alpheios-project/alpheios-messaging",
-    "alpheios-node-build": "github:alpheios-project/node-build#latest",
+    "alpheios-node-build": "github:alpheios-project/node-build#v2.0.0",
     "alpheios-res-client": "^3.2.1-dev.4",
     "alpheios-wordlist": "^3.2.1-dev.4",
     "autoprefixer": "^9.7.4",
@@ -57,7 +57,6 @@
     "babel-eslint": "^10.0.3",
     "babel-plugin-module-resolver": "^4.0.0",
     "bytes": "^3.1.0",
-    "chalk": "^2.4.2",
     "coveralls": "^3.0.9",
     "css-loader": "^3.4.2",
     "dom-anchor-text-quote": "*",
@@ -103,62 +102,61 @@
     "vue-template-compiler": "^2.6.11",
     "vue-template-loader": "^1.0.0",
     "vuex": "^3.1.2",
-    "webpack": "^4.41.5",
     "whatwg-fetch": "^3.0.0",
     "wrap-range-text": "^1.0.1"
-  },
-  "engines": {
-    "node": ">= 13.2.0",
-    "npm": ">= 6.13.0"
-  },
-  "jest": {
-    "verbose": true,
-    "testPathIgnorePatterns": [
-      "<rootDir>/node_modules/"
-    ],
-    "transform": {
-      "^.+\\.htmlf$": "html-loader-jest",
-      "^.+\\.jsx?$": "babel-jest",
-      ".*\\.(vue)$": "vue-jest",
-      ".*\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "!node_modules/alpheios-data-models/"
-    ],
-    "moduleNameMapper": {
-      "^@vue-runtime$": "vue/dist/vue.runtime.common.js",
-      "^@[/](.+)": "<rootDir>/src/$1",
-      "^@tests[/](.+)": "<rootDir>/tests/$1",
-      "alpheios-data-models": "<rootDir>/node_modules/alpheios-data-models/dist/alpheios-data-models.js",
-      "alpheios-messaging": "<rootDir>../../node_modules/alpheios-messaging/dist/dev/alpheios-messaging.js",
-      "alpheios-morph-client": "<rootDir>/node_modules/alpheios-morph-client/dist/alpheios-morph-client.js",
-      "alpheios-inflection-tables": "<rootDir>/node_modules/alpheios-inflection-tables/dist/alpheios-inflection-tables.js"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "vue"
-    ]
-  },
-  "eslintConfig": {
-    "extends": [
-      "standard",
-      "plugin:jsdoc/recommended",
-      "plugin:vue/essential"
-    ],
-    "env": {
-      "browser": true,
-      "node": true
-    },
-    "parserOptions": {
-      "parser": "babel-eslint",
-      "ecmaVersion": 2019,
-      "sourceType": "module",
-      "allowImportExportEverywhere": true
-    }
-  },
-  "eslintIgnore": [
-    "**/dist",
-    "**/support"
-  ]
+	},
+	"engines": {
+		"node": ">= 13.2.0",
+		"npm": ">= 6.13.0"
+	},
+	"jest": {
+		"verbose": true,
+		"testPathIgnorePatterns": [
+			"<rootDir>/node_modules/"
+		],
+		"transform": {
+			"^.+\\.htmlf$": "html-loader-jest",
+			"^.+\\.jsx?$": "babel-jest",
+			".*\\.(vue)$": "vue-jest",
+			".*\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileTransform.js"
+		},
+		"transformIgnorePatterns": [
+			"!node_modules/alpheios-data-models/"
+		],
+		"moduleNameMapper": {
+			"^@vue-runtime$": "vue/dist/vue.runtime.common.js",
+			"^@[/](.+)": "<rootDir>/src/$1",
+			"^@tests[/](.+)": "<rootDir>/tests/$1",
+			"alpheios-data-models": "<rootDir>/node_modules/alpheios-data-models/dist/alpheios-data-models.js",
+			"alpheios-messaging": "<rootDir>../../node_modules/alpheios-messaging/dist/dev/alpheios-messaging.js",
+			"alpheios-morph-client": "<rootDir>/node_modules/alpheios-morph-client/dist/alpheios-morph-client.js",
+			"alpheios-inflection-tables": "<rootDir>/node_modules/alpheios-inflection-tables/dist/alpheios-inflection-tables.js"
+		},
+		"moduleFileExtensions": [
+			"js",
+			"json",
+			"vue"
+		]
+	},
+	"eslintConfig": {
+		"extends": [
+			"standard",
+			"plugin:jsdoc/recommended",
+			"plugin:vue/essential"
+		],
+		"env": {
+			"browser": true,
+			"node": true
+		},
+		"parserOptions": {
+			"parser": "babel-eslint",
+			"ecmaVersion": 2019,
+			"sourceType": "module",
+			"allowImportExportEverywhere": true
+		}
+	},
+	"eslintIgnore": [
+		"**/dist",
+		"**/support"
+	]
 }
