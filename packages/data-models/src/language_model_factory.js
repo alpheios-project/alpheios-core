@@ -8,21 +8,22 @@ import ChineseLanguageModel from './chinese_language_model.js'
 import * as Constants from './constants.js'
 
 const MODELS = new Map([
-  [ Constants.STR_LANG_CODE_LA, LatinLanguageModel ],
-  [ Constants.STR_LANG_CODE_LAT, LatinLanguageModel ],
-  [ Constants.STR_LANG_CODE_GRC, GreekLanguageModel ],
-  [ Constants.STR_LANG_CODE_ARA, ArabicLanguageModel ],
-  [ Constants.STR_LANG_CODE_AR, ArabicLanguageModel ],
-  [ Constants.STR_LANG_CODE_PER, PersianLanguageModel ],
-  [ Constants.STR_LANG_CODE_GEZ, GeezLanguageModel ],
-  [ Constants.STR_LANG_CODE_ZHO, ChineseLanguageModel ]
+  [Constants.STR_LANG_CODE_LA, LatinLanguageModel],
+  [Constants.STR_LANG_CODE_LAT, LatinLanguageModel],
+  [Constants.STR_LANG_CODE_GRC, GreekLanguageModel],
+  [Constants.STR_LANG_CODE_ARA, ArabicLanguageModel],
+  [Constants.STR_LANG_CODE_AR, ArabicLanguageModel],
+  [Constants.STR_LANG_CODE_PER, PersianLanguageModel],
+  [Constants.STR_LANG_CODE_GEZ, GeezLanguageModel],
+  [Constants.STR_LANG_CODE_ZHO, ChineseLanguageModel]
 ])
 
 class LanguageModelFactory {
   /**
    * Checks whether a language is supported
+   *
    * @param {string | symbol} language - Language as a language ID (symbol) or a language code (string)
-   * @return {boolean} True if language is supported, false otherwise
+   * @returns {boolean} True if language is supported, false otherwise
    */
   static supportsLanguage (language) {
     language = (typeof language === 'symbol') ? LanguageModelFactory.getLanguageCodeFromId(language) : language
@@ -30,8 +31,8 @@ class LanguageModelFactory {
   }
 
   static availableLanguages () {
-    let avail = new Set()
-    for (let model of MODELS.values()) {
+    let avail = new Set() // eslint-disable-line prefer-const
+    for (const model of MODELS.values()) {
       avail.add(model.languageCode)
     }
     return Array.from(avail)
@@ -39,11 +40,12 @@ class LanguageModelFactory {
 
   /**
    * Returns a constructor of language model for a specific language ID.
+   *
    * @param {symbol} languageID - A language ID of a desired language model.
-   * @return {LanguageModel} A language model for a given language ID.
+   * @returns {LanguageModel} A language model for a given language ID.
    */
   static getLanguageModel (languageID) {
-    let languageCode = LanguageModelFactory.getLanguageCodeFromId(languageID)
+    const languageCode = LanguageModelFactory.getLanguageCodeFromId(languageID)
     return LanguageModelFactory.getLanguageModelFromCode(languageCode)
   }
 
@@ -57,7 +59,7 @@ class LanguageModelFactory {
   }
 
   static getLanguageForCode (code = null) {
-    let Model = MODELS.get(code)
+    const Model = MODELS.get(code)
     if (Model) {
       return new Model()
     }
@@ -68,8 +70,9 @@ class LanguageModelFactory {
 
   /**
    * Converts an ISO 639-3 language code to a language ID
+   *
    * @param {string} languageCode - An ISO 639-3 language code
-   * @return {symbol | undefined} A language ID or undefined if language ID is not found
+   * @returns {symbol | undefined} A language ID or undefined if language ID is not found
    */
   static getLanguageIdFromCode (languageCode) {
     for (const languageModel of MODELS.values()) {
@@ -83,8 +86,9 @@ class LanguageModelFactory {
 
   /**
    * Converts a language ID to an default ISO 639-3 language code for that language
+   *
    * @param {symbol} languageID - A language ID
-   * @return {string | undefined} An ISO 639-3 language code or undefined if language code is not found
+   * @returns {string | undefined} An ISO 639-3 language code or undefined if language code is not found
    */
   static getLanguageCodeFromId (languageID) {
     for (const languageModel of MODELS.values()) {
@@ -98,8 +102,9 @@ class LanguageModelFactory {
 
   /**
    * Takes either a language ID or a language code and returns an object with both an ID and a code.
+   *
    * @param {string | symbol} language - Either a language ID (a Symbol) or a language code (a String).
-   * @return {object} An object with the following properties:
+   * @returns {object} An object with the following properties:
    *    {symbol} languageID
    *    {string} languageCode
    */
@@ -123,9 +128,10 @@ class LanguageModelFactory {
    * Compares two languages in either a language ID or a language code format. For this, does conversion of
    * language IDs to language code. Because fo this, it will work even for language IDs defined in
    * different modules
+   *
    * @param {string | symbol} languageA - Either a language ID (a symbol) or a language code (a string).
    * @param {string | symbol} languageB - Either a language ID (a symbol) or a language code (a string).
-   * @return {boolean} True if languages are the same, false otherwise.
+   * @returns {boolean} True if languages are the same, false otherwise.
    */
   static compareLanguages (languageA, languageB) {
     languageA = (typeof languageA === 'symbol') ? LanguageModelFactory.getLanguageCodeFromId(languageA) : languageA

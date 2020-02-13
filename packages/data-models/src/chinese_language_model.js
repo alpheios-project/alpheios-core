@@ -2,7 +2,7 @@ import LanguageModel from './language_model.js'
 import Feature from './feature.js'
 import * as Constants from './constants.js'
 
-let typeFeatures = new Map()
+let typeFeatures = new Map() // eslint-disable-line prefer-const
 let typeFeaturesInitialized = false
 
 /**
@@ -71,7 +71,7 @@ export default class ChineseLanguageModel extends LanguageModel {
     // Remove spaces before and after split parts; eliminate empty split parts
     aPinyin = aPinyin.split(/(\d)/).map(el => el.trim()).filter(el => Boolean(el))
 
-    let formatedPinyin = []
+    let formatedPinyin = [] // eslint-disable-line prefer-const
     const toneFormat = {
       1: 0, 2: 1, 3: 2, 4: 3
     }

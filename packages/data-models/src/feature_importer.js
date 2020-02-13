@@ -4,11 +4,11 @@ class FeatureImporter {
    * @param {boolean} returnUnknown - If true, and a source value is not found in the importer,
    * a source value will be returned without any change (a passthrough). If false, an Error
    * will be thrown for unknown source values.
-   * @return {FeatureImporter}
+   * @returns {FeatureImporter}
    */
   constructor (defaults = [], returnUnknown = false) {
     this.hash = {}
-    for (let value of defaults) {
+    for (const value of defaults) {
       this.map(value, value)
     }
     this.returnUnknown = returnUnknown
@@ -18,8 +18,9 @@ class FeatureImporter {
   /**
    * Sets mapping between external imported value and one or more library standard values. If an importedValue
    * is already in a hash table, old libraryValue will be overwritten with the new one.
+   *
    * @param {string} importedValue - External value
-   * @param {Object | Object[] | string | string[]} libraryValue - Library standard value
+   * @param {object|object[]|string|string[]} libraryValue - Library standard value
    */
   map (importedValue, libraryValue) {
     if (!importedValue) {
@@ -36,6 +37,7 @@ class FeatureImporter {
 
   /**
    * Checks if value is in a map.
+   *
    * @param {string} importedValue - A value to test.
    * @returns {boolean} - Tru if value is in a map, false otherwise.
    */
@@ -45,8 +47,9 @@ class FeatureImporter {
 
   /**
    * Returns one or more library standard values that match an external value
+   *
    * @param {string} sourceValue - External value
-   * @returns {Object | string} One or more of library standard values
+   * @returns {object|string} One or more of library standard values
    */
   get (sourceValue) {
     if (this.has(sourceValue)) {

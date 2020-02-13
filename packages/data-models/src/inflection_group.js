@@ -4,6 +4,7 @@ class InflectionGroup {
    *
    * @param {InflectionGroupingKey} groupingKey features of the inflections in the group
    * @param {Inflection[]|InflectionGroup[]} inflections array of Inflections or InflectionGroups in this group
+   * @param sortKey
    */
   constructor (groupingKey, inflections = [], sortKey = null) {
     this.groupingKey = groupingKey
@@ -12,6 +13,7 @@ class InflectionGroup {
 
   /**
    * Add an Inflection or InflectionGroup to the group
+   *
    * @param {Inflection|InflectionGroup} inflection
    */
   append (inflection) {

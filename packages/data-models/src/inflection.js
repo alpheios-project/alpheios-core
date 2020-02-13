@@ -26,13 +26,14 @@ import * as Constants from './constants.js'
  */
 class Inflection {
   /**
-     * Initializes an Inflection object.
-     * @param {string} stem - A stem of a word.
-     * @param {string | symbol} language - A word's language.
-     * @param {string} suffix - a suffix of a word
-     * @param {prefix} prefix - a prefix of a word
-     * @param {example} example - example
-     */
+   * Initializes an Inflection object.
+   *
+   * @param {string} stem - A stem of a word.
+   * @param {string | symbol} language - A word's language.
+   * @param {string} suffix - a suffix of a word
+   * @param {prefix} prefix - a prefix of a word
+   * @param {example} example - example
+   */
   constructor (stem = null, language, suffix = null, prefix = null, example = null) {
     if (!stem && !suffix) {
       throw new Error('At least stem or suffix must be defined')
@@ -78,6 +79,7 @@ class Inflection {
   }
 
   clone () {
+    // eslint-disable-next-line prefer-const
     let clone = new Inflection(this.stem, this.languageID, this.suffix, this.prefix, this.example)
     // Features are not modified right now so we can share them
     clone.addFeatures(Array.from(this.features).map(f => this[f]))
@@ -96,7 +98,8 @@ class Inflection {
 
   /**
    * Returns a full form of a word using ' - ' as a divider for suffix-based inflections.
-   * @return {string} A word form.
+   *
+   * @returns {string} A word form.
    */
   get form () {
     const divider = this.stem ? ' - ' : ''
@@ -105,13 +108,14 @@ class Inflection {
 
   /**
    * Returns a full form of a word using user specified divider for suffix-based inflections.
+   *
    * @param {string} divider - A divider to use between stem and suffix.
-   * @return {string} A word form.
+   * @returns {string} A word form.
    */
   getForm (divider = '') {
     let form, prefix, suffix
 
-    let stem = this.stem ? this.stem : ''
+    const stem = this.stem ? this.stem : ''
 
     if (this.model.direction === Constants.LANG_DIR_RTL) {
       prefix = this.prefix ? divider + this.prefix : ''
@@ -130,10 +134,11 @@ class Inflection {
 
   /**
    * This is a compatibility function for legacy code.
-   * @return {String} A language code.
+   *
+   * @returns {string} A language code.
    */
   get language () {
-    console.warn(`Please use a "languageID" instead of a "language"`)
+    console.warn('Please use a "languageID" instead of a "language"')
     return this.languageCode
   }
 
@@ -142,7 +147,7 @@ class Inflection {
    */
   setConstraints () {
     if (this.model.hasOwnProperty('getInflectionConstraints')) {
-      let constraintData = this.model.getInflectionConstraints(this)
+      const constraintData = this.model.getInflectionConstraints(this)
       this.constraints = Object.assign(this.constraints, constraintData)
     }
   }
@@ -150,6 +155,7 @@ class Inflection {
   /**
    * Compares if two words are the same. Options allows to specify
    * comparison algorithms for cases when word info is not fully correct.
+   *
    * @param {string} word - A word or suffix to compare with inflection.
    * @param {string} className - A type of word: 'Suffix' or "Form'.
    * @param {comparison} options - These settings define comparison algorithm:
@@ -157,12 +163,12 @@ class Inflection {
    *        'fuzzySuffix' - if suffix contained in a 'word' does not match our suffix data,
    *                        try to find a match by checking if inflection full form
    *                        ends with this suffix.
-   * @return {boolean} True for match, false otherwise.
+   * @returns {boolean} True for match, false otherwise.
    */
   smartWordCompare (word, className, options = {}) {
     // Default values
-    if (!options.hasOwnProperty(`normalize`)) { options.normalize = true }
-    if (!options.hasOwnProperty(`fuzzySuffix`)) { options.fuzzySuffix = false }
+    if (!options.hasOwnProperty('normalize')) { options.normalize = true }
+    if (!options.hasOwnProperty('fuzzySuffix')) { options.fuzzySuffix = false }
 
     let value
     if (!this.constraints.irregular) {
@@ -178,9 +184,9 @@ class Inflection {
     let matchResult = this.modelCompareWords(word, value, options.normalize)
 
     if (!matchResult && className === 'Suffix' && options.fuzzySuffix) {
-      let form = this.getForm()
+      const form = this.getForm()
       if (form && word && form.length >= word.length) {
-        let altSuffix = form.substring(form.length - word.length)
+        const altSuffix = form.substring(form.length - word.length)
         matchResult = this.modelCompareWords(word, altSuffix, options.normalize)
       }
     }
@@ -196,9 +202,10 @@ class Inflection {
   /**
    * Compare to words (or partial words) delegating to the language model
    * rules for normalization
-   * @param {String} wordA the first word
-   * @param {String} wordB the second word
-   * @param {Boolean} normalize whether or not to apply normalization
+   *
+   * @param {string} wordA the first word
+   * @param {string} wordB the second word
+   * @param {boolean} normalize whether or not to apply normalization
    */
   modelCompareWords (wordA, wordB, normalize = true) {
     const model = LMF.getLanguageModel(this.languageID)
@@ -207,6 +214,7 @@ class Inflection {
 
   /**
    * Check to see if the supplied inflection can disambiguate this one
+   *
    * @param {Inflection} infl Inflection object to be used for disambiguation
    */
   disambiguatedBy (infl) {
@@ -219,7 +227,7 @@ class Inflection {
     if (infl.features.length > this.features.length) {
       matched = false
     }
-    for (let feature of infl.features) {
+    for (const feature of infl.features) {
       if (!this[feature] || !this[feature].isEqual(infl[feature])) {
         matched = false
         break
@@ -236,7 +244,7 @@ class Inflection {
    * @param {Feature | Feature[]} data
    */
   set feature (data) {
-    console.warn(`Please use "addFeature" instead.`)
+    console.warn('Please use "addFeature" instead.')
     if (!data) {
       throw new Error('Inflection feature data cannot be empty.')
     }
@@ -244,9 +252,9 @@ class Inflection {
       data = [data]
     }
 
-    let type = data[0].type
+    const type = data[0].type
     this[type] = []
-    for (let element of data) {
+    for (const element of data) {
       if (!(element instanceof Feature)) {
         throw new Error('Inflection feature data must be a Feature object.')
       }
@@ -263,6 +271,7 @@ class Inflection {
 
   /**
    * Sets a grammatical feature of an inflection. Feature is stored in a `feature.type` property.
+   *
    * @param {Feature} feature - A feature object with one or multiple values.
    */
   addFeature (feature) {
@@ -285,23 +294,25 @@ class Inflection {
 
   /**
    * Sets multiple grammatical features of an inflection.
+   *
    * @param {Feature[]} features - Features to be added.
    */
   addFeatures (features) {
     if (!Array.isArray(features)) {
-      throw new Error(`Features must be in an array`)
+      throw new Error('Features must be in an array')
     }
 
-    for (let feature of features) {
+    for (const feature of features) {
       this.addFeature(feature)
     }
   }
 
   /**
    * Checks whether an inflection has a feature with `featureName` name and `featureValue` value
+   *
    * @param {string} featureName - A name of a feature
    * @param {string} featureValue - A value of a feature
-   * @return {boolean} True if an inflection contains a feature, false otherwise
+   * @returns {boolean} True if an inflection contains a feature, false otherwise
    */
   hasFeatureValue (featureName, featureValue) {
     if (this.hasOwnProperty(featureName)) {
@@ -315,7 +326,7 @@ class Inflection {
     for (const feature of this.features.values()) {
       string += `${feature}: ${this[feature].value}, `
     }
-    string += `\n  constraints:  `
+    string += '\n  constraints:  '
     for (const [key, value] of Object.entries(this.constraints)) {
       if (Array.isArray(value)) {
         string += `${key}: [${value}], `
@@ -328,6 +339,7 @@ class Inflection {
   }
 
   static readObject (jsonObject, lemma) {
+    // eslint-disable-next-line prefer-const
     let inflection =
       new Inflection(
         jsonObject.stem, jsonObject.languageCode, jsonObject.suffix, jsonObject.prefix, jsonObject.example)
@@ -345,11 +357,11 @@ class Inflection {
   }
 
   convertToJSONObject () {
-    let resultFeatures = []
-    for (let key of this.features.keys()) {
+    let resultFeatures = [] // eslint-disable-line prefer-const
+    for (const key of this.features.keys()) {
       resultFeatures.push(this[key].convertToJSONObject())
     }
-    let languageCode = LMF.getLanguageCodeFromId(this.languageID)
+    const languageCode = LMF.getLanguageCodeFromId(this.languageID)
     return {
       stem: this.stem,
       languageCode: languageCode,

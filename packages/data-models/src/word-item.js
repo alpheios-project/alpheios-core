@@ -3,15 +3,14 @@ import TextQuoteSelector from './w3c/text-quote-selector.js'
 
 export default class WordItem {
   /**
-   * @constructor
-   * @param {Object} constructorArgs
-   *   {String} targetWord
-   *   {String} languageCode
-   *   {Boolean} important
-   *   {Boolean} currentSession
-   *   {TextQuoteSelector[]} context
-   *   {Homonym} homonym
-   *
+   * @class
+   * @param data
+   * {String} targetWord
+   * {String} languageCode
+   * {Boolean} important
+   * {Boolean} currentSession
+   * {TextQuoteSelector[]} context
+   * {Homonym} homonym
    */
   constructor (data = { targetWord: null, languageCode: null, important: false, currentSession: true, context: [], homonym: {} }) {
     // TODO handling of version
@@ -29,6 +28,8 @@ export default class WordItem {
 
   /**
    * Construct a WordItem from JSON
+   *
+   * @param jsonObject
    */
   static readObject (jsonObject) {
     let homonym = {}
@@ -39,7 +40,7 @@ export default class WordItem {
     if (jsonObject.context) {
       context = WordItem.readContext(jsonObject)
     }
-    let worditem = new WordItem({
+    const worditem = new WordItem({
       targetWord: jsonObject.targetWord,
       languageCode: jsonObject.languageCode,
       important: jsonObject.important,
@@ -52,6 +53,8 @@ export default class WordItem {
 
   /**
    * Construct the homonym portion of a WordItem from JSON
+   *
+   * @param jsonObject
    */
   static readHomonym (jsonObject) {
     return Homonym.readObject(jsonObject.homonym)
@@ -63,11 +66,13 @@ export default class WordItem {
 
   /**
    * Construct the context portion of a WordItem from JSON
+   *
+   * @param jsonObject
    */
   static readContext (jsonObject) {
-    let tqs = []
-    for (let jsonObj of jsonObject) {
-      let tq = TextQuoteSelector.readObject(jsonObj)
+    let tqs = [] // eslint-disable-line prefer-const
+    for (const jsonObj of jsonObject) {
+      const tq = TextQuoteSelector.readObject(jsonObj)
       tqs.push(tq)
     }
     return tqs
@@ -75,11 +80,12 @@ export default class WordItem {
 
   /**
    * add one or more context selectors
+   *
    * @param {TextQuoteSelector[]} selectors
    */
   addContext (selectors) {
-    for (let s of selectors) {
-      let found = this.context.filter(tqs => tqs.isEqual(s))
+    for (const s of selectors) {
+      const found = this.context.filter(tqs => tqs.isEqual(s))
       if (found.length === 0) {
         this.context.push(s)
       }
@@ -99,12 +105,13 @@ export default class WordItem {
   }
 
   /**
-   * updates empty properties of this wordItem
-   * with those of the supplied worditem if also non-empty
+   * updates empty properties of this wordItem with those of the supplied worditem if also non-empty
+   *
+   * @param prevWordItem
    */
   merge (prevWordItem) {
-    let checkProps = ['homonym', 'important', 'currentSession']
-    for (let prop of checkProps) {
+    const checkProps = ['homonym', 'important', 'currentSession']
+    for (const prop of checkProps) {
       if (this._emptyProp(prop) && !prevWordItem._emptyProp(prop)) {
         this[prop] = prevWordItem[prop]
       }
@@ -113,14 +120,16 @@ export default class WordItem {
 
   /**
    * private method to detect an empty property
+   *
+   * @param propName
    */
   _emptyProp (propName) {
     return !this[propName] || (typeof this[propName] === 'object' && Object.keys(this[propName]).length === 0)
   }
 
   get formattedContext () {
-    let res = {}
-    for (let tq of this.context) {
+    let res = {} // eslint-disable-line prefer-const
+    for (const tq of this.context) {
       if (!res[tq.source]) {
         res[tq.source] = []
       }

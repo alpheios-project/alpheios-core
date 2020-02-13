@@ -5,6 +5,7 @@
 class FeatureList {
   /**
    * Initializes a feature list.
+   *
    * @param {Feature[]} features - Features that build the list (optional, can be set later).
    */
   constructor (features = []) {
@@ -18,7 +19,7 @@ class FeatureList {
       throw new Error('Features must be defined and must come in an array.')
     }
 
-    for (let feature of features) {
+    for (const feature of features) {
       this._features.push(feature)
       this._types[feature.type] = feature
     }
@@ -26,6 +27,7 @@ class FeatureList {
 
   /**
    * Returns an array of grouping features.
+   *
    * @returns {FeatureType[]} - An array of grouping features.
    */
   get items () {
@@ -38,8 +40,9 @@ class FeatureList {
 
   /**
    * Returns a feature of a particular type. If such feature does not exist in a list, returns undefined.
+   *
    * @param {string} type - Feature type as defined in `types` object.
-   * @return {FeatureType | undefined} A feature if a particular type if contains it. Undefined otherwise.
+   * @returns {FeatureType | undefined} A feature if a particular type if contains it. Undefined otherwise.
    */
   ofType (type) {
     if (this.hasType(type)) {
@@ -49,8 +52,9 @@ class FeatureList {
 
   /**
    * Checks whether a feature list has a feature of a specific type.
+   *
    * @param {string} type - Feature type as defined in `types` object.
-   * @return {boolean} Whether a feature list has a feature of a particular type.
+   * @returns {boolean} Whether a feature list has a feature of a particular type.
    */
   hasType (type) {
     return this._types.hasOwnProperty(type)

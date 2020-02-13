@@ -17,15 +17,16 @@ export default class TextQuoteSelector {
   }
 
   get contextHTML () {
-    let templateWord = `<span class="alpheios_worditem_incontext_add">${this.text}</span>`
-    let checkPrefix = this.prefix.replace(this.text, templateWord)
-    let checkSuffix = this.suffix.replace(this.text, templateWord)
+    const templateWord = `<span class="alpheios_worditem_incontext_add">${this.text}</span>`
+    const checkPrefix = this.prefix.replace(this.text, templateWord)
+    const checkSuffix = this.suffix.replace(this.text, templateWord)
 
-    let fullText = `${checkPrefix} <span class="alpheios_worditem_incontext">${this.text}</span> ${checkSuffix}`
+    const fullText = `${checkPrefix} <span class="alpheios_worditem_incontext">${this.text}</span> ${checkSuffix}`
     return fullText
   }
 
   static readObject (jsonObject) {
+    // eslint-disable-next-line prefer-const
     let tq = new TextQuoteSelector(jsonObject.languageCode, jsonObject.target.selector.exact)
     tq.prefix = jsonObject.target.selector.prefix
     tq.suffix = jsonObject.target.selector.suffix

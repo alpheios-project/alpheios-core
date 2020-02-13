@@ -12,6 +12,7 @@ class Definition {
   }
 
   static readObject (jsonObject) {
+    // eslint-disable-next-line prefer-const
     let definition = new Definition(jsonObject.text, jsonObject.language, jsonObject.format, jsonObject.lemmaText)
 
     if (jsonObject.ID) {
@@ -19,7 +20,7 @@ class Definition {
     }
 
     if (jsonObject.provider) {
-      let provider = ResourceProvider.readObject(jsonObject.provider)
+      const provider = ResourceProvider.readObject(jsonObject.provider)
       return ResourceProvider.getProxy(provider, definition)
     } else {
       return definition
@@ -27,6 +28,7 @@ class Definition {
   }
 
   convertToJSONObject () {
+    // eslint-disable-next-line prefer-const
     let result = {
       text: this.text,
       language: this.language,

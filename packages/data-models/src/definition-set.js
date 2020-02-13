@@ -12,18 +12,19 @@ export default class DefinitionSet {
 
   /**
    * A function that is used to instantiate a DefinitionSet object from a JSON object.
-   * @param {Object} jsonObject - A JSON object representing DefinitionSet data.
-   * @return {DefinitionSet} A DefinitionSet object populated with data from JSON object.
+   *
+   * @param {object} jsonObject - A JSON object representing DefinitionSet data.
+   * @returns {DefinitionSet} A DefinitionSet object populated with data from JSON object.
    */
   static readObject (jsonObject) {
     const languageID = LMF.getLanguageIdFromCode(jsonObject.languageCode)
 
-    let definitionSet = new DefinitionSet(jsonObject.lemmaWord, languageID)
+    let definitionSet = new DefinitionSet(jsonObject.lemmaWord, languageID) // eslint-disable-line prefer-const
 
-    for (let shortDef of jsonObject.shortDefs) {
+    for (const shortDef of jsonObject.shortDefs) {
       definitionSet.shortDefs.push(Definition.readObject(shortDef))
     }
-    for (let fullDef of jsonObject.fullDefs) {
+    for (const fullDef of jsonObject.fullDefs) {
       definitionSet.fullDefs.push(Definition.readObject(fullDef))
     }
 
@@ -32,6 +33,7 @@ export default class DefinitionSet {
 
   /**
    * Checks if any short definitions are stored within this object.
+   *
    * @returns {boolean} - true if any definitions are stored, false otherwise.
    */
   get hasShortDefs () {
@@ -40,6 +42,7 @@ export default class DefinitionSet {
 
   /**
    * Checks if any full definitions are stored within this object.
+   *
    * @returns {boolean} - true if any definitions are stored, false otherwise.
    */
   get hasFullDefs () {
@@ -48,7 +51,8 @@ export default class DefinitionSet {
 
   /**
    * Check to see if the DefinitionSet is empty
-   * @return {boolean} true if empty false if there is at least one definition
+   *
+   * @returns {boolean} true if empty false if there is at least one definition
    */
   isEmpty () {
     return this.shortDefs.length === 0 && this.fullDefs.length === 0
@@ -56,8 +60,9 @@ export default class DefinitionSet {
 
   /**
    * Appends one or more definitions to a list of short definitions.
+   *
    * @param {Definition | Definition[]} definitions - One or more definition objects to add.
-   * @return {Definition[]} A list of short definitions this object has.
+   * @returns {Definition[]} A list of short definitions this object has.
    */
   appendShortDefs (definitions) {
     // TODO: check for duplicates?
@@ -77,8 +82,9 @@ export default class DefinitionSet {
 
   /**
    * Appends one or more definitions to a list of full definitions.
+   *
    * @param {Definition | Definition[]} definitions - One or more definition objects to add.
-   * @return {Definition[]} A list of full definitions this object has.
+   * @returns {Definition[]} A list of full definitions this object has.
    */
   appendFullDefs (definitions) {
     // TODO: check for duplicates?
@@ -97,7 +103,7 @@ export default class DefinitionSet {
   }
 
   convertToJSONObject () {
-    let languageCode = LMF.getLanguageCodeFromId(this.languageID)
+    const languageCode = LMF.getLanguageCodeFromId(this.languageID)
     return {
       lemmaWord: this.lemmaWord,
       languageCode: languageCode,

@@ -6,9 +6,10 @@ import ResourceProvider from './resource_provider.js'
 class Translation {
   /**
    * Initializes a Translation object.
+   *
    * @param {Lemma} lemma - A lemma object.
-   * @param [] meanings - A set of definitions.
-
+   * @param languageCode
+   * @param translations
    */
   constructor (lemma, languageCode, translations = []) {
     if (!lemma) {
@@ -23,8 +24,8 @@ class Translation {
     if (!translationsList || !Array.isArray(translationsList)) {
       throw new Error('Recieved not proper translation list', translationsList)
     }
-    let curTranslations = translationsList.find(function (element) { return element.in === lemma.word })
-    let translation = new Translation(lemma, languageCode, curTranslations.translations)
+    const curTranslations = translationsList.find(function (element) { return element.in === lemma.word })
+    const translation = new Translation(lemma, languageCode, curTranslations.translations)
     if (provider) {
       return ResourceProvider.getProxy(provider, translation)
     } else {
@@ -37,6 +38,7 @@ class Translation {
   }
 
   convertToJSONObject () {
+    // eslint-disable-next-line prefer-const
     let result = {
       languageCode: this.languageCode,
       translations: this.glosses
@@ -49,9 +51,9 @@ class Translation {
   }
 
   static readObject (jsonObject, lemma) {
-    let translation = new Translation(lemma, jsonObject.languageCode, jsonObject.translations)
+    const translation = new Translation(lemma, jsonObject.languageCode, jsonObject.translations)
     if (jsonObject.provider) {
-      let provider = ResourceProvider.readObject(jsonObject.provider)
+      const provider = ResourceProvider.readObject(jsonObject.provider)
       return ResourceProvider.getProxy(provider, translation)
     } else {
       return translation
