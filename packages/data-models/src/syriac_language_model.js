@@ -26,27 +26,32 @@ export default class SyriacLanguageModel extends LanguageModel {
     return new Map([
       ...LanguageModel.featureValues,
       [
-        Feature.types.grmCase,
+        Feature.types.part,
         [
-          // TODO Valid Values for case for syriac
+          Constants.POFS_ADVERB,
+          Constants.POFS_ADVERBIAL,
+          Constants.POFS_ADJECTIVE,
+          Constants.POFS_ARTICLE,
+          Constants.POFS_CONJUNCTION,
+          Constants.POFS_EXCLAMATION,
+          Constants.POFS_INTERJECTION,
+          Constants.POFS_NOUN,
+          Constants.POFS_NUMERAL,
+          Constants.POFS_PARTICLE,
+          Constants.POFS_PREFIX,
+          Constants.POFS_PREPOSITION,
+          Constants.POFS_PRONOUN,
+          Constants.POFS_SUFFIX,
+          Constants.POFS_SUPINE,
+          Constants.POFS_VERB,
+          Constants.POFS_VERB_PARTICIPLE,
+          Constants.POFS_DENOMINATIVE
         ]
       ],
       [
-        Feature.types.number,
+        Feature.types.paradigm,
         [
-          // TODO Valid Values for number for syriac
-        ]
-      ],
-      [
-        Feature.types.gender,
-        [
-          // TODO Valid Values for gender for syriac
-        ]
-      ],
-      [
-        Feature.types.mood,
-        [
-          // TODO Valid Values for mood for syriac
+          /** TODO list of kaylo and state values **/
         ]
       ]
     ])

@@ -484,7 +484,7 @@ class LanguageModel {
     // group inflections by part of speech
     for (let infl of aggregated) {
       let groupingKey = new InflectionGroupingKey(infl,
-        [Feature.types.part, Feature.types.declension, Feature.types.dialect, Feature.types.comparison],
+        [Feature.types.part, Feature.types.declension, Feature.types.dialect, Feature.types.comparison, Feature.types.paradigm],
         {
           prefix: infl.prefix,
           suffix: infl.suffix,

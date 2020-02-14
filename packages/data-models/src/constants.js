@@ -49,6 +49,7 @@ export const POFS_GERUNDIVE = 'gerundive'
 export const POFS_SUPINE = 'supine'
 export const POFS_VERB = 'verb'
 export const POFS_VERB_PARTICIPLE = 'verb participle'
+export const POFS_DENOMINATIVE = 'denominative'
 // gender
 export const GEND_MASCULINE = 'masculine'
 export const GEND_FEMININE = 'feminine'
@@ -227,4 +228,6 @@ export const CLASS_GENERAL_RELATIVE = 'general relative'
 export const CLASS_INDEFINITE = 'indefinite'
 export const CLASS_INTENSIVE = 'intensive'
 export const CLASS_RECIPROCAL = 'reciprocal'
-/* eslit-enable no-unused-vars */
+// Paradigms
+export const PARADIGM_CAT_KAYLO = 'kaylo'
+export const PARADIGM_CAT_STATE = 'state'

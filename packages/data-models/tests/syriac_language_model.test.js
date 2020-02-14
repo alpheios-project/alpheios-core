@@ -2,6 +2,7 @@
 'use strict'
 import * as Constants from '../src/constants.js'
 import LMF from '../src/language_model_factory.js'
+import Feature from '../src/feature.js'
 
 describe('LanguageModelFactory object', () => {
   'use strict'
@@ -26,5 +27,15 @@ describe('LanguageModelFactory object', () => {
 
   test('can inflect should be false', () => {
     expect(syr.canInflect()).toBeFalsy()
+  })
+
+  it('supports pofs denominative', () => {
+    let pofs = syr.typeFeature(Feature.types.part).createFeature(Constants.POFS_DENOMINATIVE)
+    expect(pofs).toBeDefined()
+  })
+
+  it('supports kaylo paradigm', () => {
+    let paradigm = syr.typeFeature(Feature.types.paradigm).createFeature('ethpaʿli')
+    expect(paradigm).toBeDefined()
   })
 })

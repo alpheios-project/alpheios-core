@@ -362,7 +362,7 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 /*!**********************!*\
   !*** ./constants.js ***!
   \**********************/
-/*! exports provided: LANG_UNIT_WORD, LANG_UNIT_CHAR, LANG_DIR_LTR, LANG_DIR_RTL, LANG_UNDEFINED, LANG_LATIN, LANG_GREEK, LANG_ARABIC, LANG_PERSIAN, LANG_GEEZ, LANG_CHINESE, LANG_SYRIAC, STR_LANG_CODE_UNDEFINED, STR_LANG_CODE_LAT, STR_LANG_CODE_LA, STR_LANG_CODE_GRC, STR_LANG_CODE_ARA, STR_LANG_CODE_AR, STR_LANG_CODE_FAS, STR_LANG_CODE_PER, STR_LANG_CODE_FA_IR, STR_LANG_CODE_FA, STR_LANG_CODE_GEZ, STR_LANG_CODE_ZHO, STR_LANG_CODE_ZH, STR_LANG_CODE_SYC, STR_LANG_CODE_SYR, STR_LANG_CODE_SYR_SYRJ, POFS_ADJECTIVE, POFS_ADVERB, POFS_ADVERBIAL, POFS_ARTICLE, POFS_CONJUNCTION, POFS_EXCLAMATION, POFS_INTERJECTION, POFS_NOUN, POFS_NOUN_PROPER, POFS_NUMERAL, POFS_PARTICLE, POFS_PREFIX, POFS_PREPOSITION, POFS_PRONOUN, POFS_SUFFIX, POFS_GERUNDIVE, POFS_SUPINE, POFS_VERB, POFS_VERB_PARTICIPLE, GEND_MASCULINE, GEND_FEMININE, GEND_NEUTER, GEND_COMMON, GEND_ANIMATE, GEND_INANIMATE, GEND_PERSONAL_MASCULINE, GEND_ANIMATE_MASCULINE, GEND_INANIMATE_MASCULINE, COMP_POSITIVE, COMP_COMPARITIVE, COMP_SUPERLATIVE, CASE_ABESSIVE, CASE_ABLATIVE, CASE_ABSOLUTIVE, CASE_ACCUSATIVE, CASE_ADDIRECTIVE, CASE_ADELATIVE, CASE_ADESSIVE, CASE_ADVERBIAL, CASE_ALLATIVE, CASE_ANTESSIVE, CASE_APUDESSIVE, CASE_AVERSIVE, CASE_BENEFACTIVE, CASE_CARITIVE, CASE_CAUSAL, CASE_CAUSAL_FINAL, CASE_COMITATIVE, CASE_DATIVE, CASE_DELATIVE, CASE_DIRECT, CASE_DISTRIBUTIVE, CASE_DISTRIBUTIVE_TEMPORAL, CASE_ELATIVE, CASE_ERGATIVE, CASE_ESSIVE, CASE_ESSIVE_FORMAL, CASE_ESSIVE_MODAL, CASE_EQUATIVE, CASE_EVITATIVE, CASE_EXESSIVE, CASE_FINAL, CASE_FORMAL, CASE_GENITIVE, CASE_ILLATIVE, CASE_INELATIVE, CASE_INESSIVE, CASE_INSTRUCTIVE, CASE_INSTRUMENTAL, CASE_INSTRUMENTAL_COMITATIVE, CASE_INTRANSITIVE, CASE_LATIVE, CASE_LOCATIVE, CASE_MODAL, CASE_MULTIPLICATIVE, CASE_NOMINATIVE, CASE_PARTITIVE, CASE_PEGATIVE, CASE_PERLATIVE, CASE_POSSESSIVE, CASE_POSTELATIVE, CASE_POSTDIRECTIVE, CASE_POSTESSIVE, CASE_POSTPOSITIONAL, CASE_PREPOSITIONAL, CASE_PRIVATIVE, CASE_PROLATIVE, CASE_PROSECUTIVE, CASE_PROXIMATIVE, CASE_SEPARATIVE, CASE_SOCIATIVE, CASE_SUBDIRECTIVE, CASE_SUBESSIVE, CASE_SUBELATIVE, CASE_SUBLATIVE, CASE_SUPERDIRECTIVE, CASE_SUPERESSIVE, CASE_SUPERLATIVE, CASE_SUPPRESSIVE, CASE_TEMPORAL, CASE_TERMINATIVE, CASE_TRANSLATIVE, CASE_VIALIS, CASE_VOCATIVE, MOOD_ADMIRATIVE, MOOD_COHORTATIVE, MOOD_CONDITIONAL, MOOD_DECLARATIVE, MOOD_DUBITATIVE, MOOD_ENERGETIC, MOOD_EVENTIVE, MOOD_GENERIC, MOOD_GERUNDIVE, MOOD_HYPOTHETICAL, MOOD_IMPERATIVE, MOOD_INDICATIVE, MOOD_INFERENTIAL, MOOD_INFINITIVE, MOOD_INTERROGATIVE, MOOD_JUSSIVE, MOOD_NEGATIVE, MOOD_OPTATIVE, MOOD_PARTICIPLE, MOOD_PRESUMPTIVE, MOOD_RENARRATIVE, MOOD_SUBJUNCTIVE, MOOD_SUPINE, NUM_SINGULAR, NUM_PLURAL, NUM_DUAL, NUM_TRIAL, NUM_PAUCAL, NUM_SINGULATIVE, NUM_COLLECTIVE, NUM_DISTRIBUTIVE_PLURAL, NRL_CARDINAL, NRL_ORDINAL, NRL_DISTRIBUTIVE, NURL_NUMERAL_ADVERB, ORD_1ST, ORD_2ND, ORD_3RD, ORD_4TH, ORD_5TH, ORD_6TH, ORD_7TH, ORD_8TH, ORD_9TH, TENSE_AORIST, TENSE_FUTURE, TENSE_FUTURE_PERFECT, TENSE_IMPERFECT, TENSE_PAST_ABSOLUTE, TENSE_PERFECT, TENSE_PLUPERFECT, TENSE_PRESENT, VKIND_TO_BE, VKIND_COMPOUNDS_OF_TO_BE, VKIND_TAKING_ABLATIVE, VKIND_TAKING_DATIVE, VKIND_TAKING_GENITIVE, VKIND_TRANSITIVE, VKIND_INTRANSITIVE, VKIND_IMPERSONAL, VKIND_DEPONENT, VKIND_SEMIDEPONENT, VKIND_PERFECT_DEFINITE, VOICE_ACTIVE, VOICE_PASSIVE, VOICE_MEDIOPASSIVE, VOICE_IMPERSONAL_PASSIVE, VOICE_MIDDLE, VOICE_ANTIPASSIVE, VOICE_REFLEXIVE, VOICE_RECIPROCAL, VOICE_CAUSATIVE, VOICE_ADJUTATIVE, VOICE_APPLICATIVE, VOICE_CIRCUMSTANTIAL, VOICE_DEPONENT, TYPE_IRREGULAR, TYPE_REGULAR, CLASS_PERSONAL, CLASS_REFLEXIVE, CLASS_POSSESSIVE, CLASS_DEMONSTRATIVE, CLASS_RELATIVE, CLASS_INTERROGATIVE, CLASS_GENERAL_RELATIVE, CLASS_INDEFINITE, CLASS_INTENSIVE, CLASS_RECIPROCAL */
+/*! exports provided: LANG_UNIT_WORD, LANG_UNIT_CHAR, LANG_DIR_LTR, LANG_DIR_RTL, LANG_UNDEFINED, LANG_LATIN, LANG_GREEK, LANG_ARABIC, LANG_PERSIAN, LANG_GEEZ, LANG_CHINESE, LANG_SYRIAC, STR_LANG_CODE_UNDEFINED, STR_LANG_CODE_LAT, STR_LANG_CODE_LA, STR_LANG_CODE_GRC, STR_LANG_CODE_ARA, STR_LANG_CODE_AR, STR_LANG_CODE_FAS, STR_LANG_CODE_PER, STR_LANG_CODE_FA_IR, STR_LANG_CODE_FA, STR_LANG_CODE_GEZ, STR_LANG_CODE_ZHO, STR_LANG_CODE_ZH, STR_LANG_CODE_SYC, STR_LANG_CODE_SYR, STR_LANG_CODE_SYR_SYRJ, POFS_ADJECTIVE, POFS_ADVERB, POFS_ADVERBIAL, POFS_ARTICLE, POFS_CONJUNCTION, POFS_EXCLAMATION, POFS_INTERJECTION, POFS_NOUN, POFS_NOUN_PROPER, POFS_NUMERAL, POFS_PARTICLE, POFS_PREFIX, POFS_PREPOSITION, POFS_PRONOUN, POFS_SUFFIX, POFS_GERUNDIVE, POFS_SUPINE, POFS_VERB, POFS_VERB_PARTICIPLE, POFS_DENOMINATIVE, GEND_MASCULINE, GEND_FEMININE, GEND_NEUTER, GEND_COMMON, GEND_ANIMATE, GEND_INANIMATE, GEND_PERSONAL_MASCULINE, GEND_ANIMATE_MASCULINE, GEND_INANIMATE_MASCULINE, COMP_POSITIVE, COMP_COMPARITIVE, COMP_SUPERLATIVE, CASE_ABESSIVE, CASE_ABLATIVE, CASE_ABSOLUTIVE, CASE_ACCUSATIVE, CASE_ADDIRECTIVE, CASE_ADELATIVE, CASE_ADESSIVE, CASE_ADVERBIAL, CASE_ALLATIVE, CASE_ANTESSIVE, CASE_APUDESSIVE, CASE_AVERSIVE, CASE_BENEFACTIVE, CASE_CARITIVE, CASE_CAUSAL, CASE_CAUSAL_FINAL, CASE_COMITATIVE, CASE_DATIVE, CASE_DELATIVE, CASE_DIRECT, CASE_DISTRIBUTIVE, CASE_DISTRIBUTIVE_TEMPORAL, CASE_ELATIVE, CASE_ERGATIVE, CASE_ESSIVE, CASE_ESSIVE_FORMAL, CASE_ESSIVE_MODAL, CASE_EQUATIVE, CASE_EVITATIVE, CASE_EXESSIVE, CASE_FINAL, CASE_FORMAL, CASE_GENITIVE, CASE_ILLATIVE, CASE_INELATIVE, CASE_INESSIVE, CASE_INSTRUCTIVE, CASE_INSTRUMENTAL, CASE_INSTRUMENTAL_COMITATIVE, CASE_INTRANSITIVE, CASE_LATIVE, CASE_LOCATIVE, CASE_MODAL, CASE_MULTIPLICATIVE, CASE_NOMINATIVE, CASE_PARTITIVE, CASE_PEGATIVE, CASE_PERLATIVE, CASE_POSSESSIVE, CASE_POSTELATIVE, CASE_POSTDIRECTIVE, CASE_POSTESSIVE, CASE_POSTPOSITIONAL, CASE_PREPOSITIONAL, CASE_PRIVATIVE, CASE_PROLATIVE, CASE_PROSECUTIVE, CASE_PROXIMATIVE, CASE_SEPARATIVE, CASE_SOCIATIVE, CASE_SUBDIRECTIVE, CASE_SUBESSIVE, CASE_SUBELATIVE, CASE_SUBLATIVE, CASE_SUPERDIRECTIVE, CASE_SUPERESSIVE, CASE_SUPERLATIVE, CASE_SUPPRESSIVE, CASE_TEMPORAL, CASE_TERMINATIVE, CASE_TRANSLATIVE, CASE_VIALIS, CASE_VOCATIVE, MOOD_ADMIRATIVE, MOOD_COHORTATIVE, MOOD_CONDITIONAL, MOOD_DECLARATIVE, MOOD_DUBITATIVE, MOOD_ENERGETIC, MOOD_EVENTIVE, MOOD_GENERIC, MOOD_GERUNDIVE, MOOD_HYPOTHETICAL, MOOD_IMPERATIVE, MOOD_INDICATIVE, MOOD_INFERENTIAL, MOOD_INFINITIVE, MOOD_INTERROGATIVE, MOOD_JUSSIVE, MOOD_NEGATIVE, MOOD_OPTATIVE, MOOD_PARTICIPLE, MOOD_PRESUMPTIVE, MOOD_RENARRATIVE, MOOD_SUBJUNCTIVE, MOOD_SUPINE, NUM_SINGULAR, NUM_PLURAL, NUM_DUAL, NUM_TRIAL, NUM_PAUCAL, NUM_SINGULATIVE, NUM_COLLECTIVE, NUM_DISTRIBUTIVE_PLURAL, NRL_CARDINAL, NRL_ORDINAL, NRL_DISTRIBUTIVE, NURL_NUMERAL_ADVERB, ORD_1ST, ORD_2ND, ORD_3RD, ORD_4TH, ORD_5TH, ORD_6TH, ORD_7TH, ORD_8TH, ORD_9TH, TENSE_AORIST, TENSE_FUTURE, TENSE_FUTURE_PERFECT, TENSE_IMPERFECT, TENSE_PAST_ABSOLUTE, TENSE_PERFECT, TENSE_PLUPERFECT, TENSE_PRESENT, VKIND_TO_BE, VKIND_COMPOUNDS_OF_TO_BE, VKIND_TAKING_ABLATIVE, VKIND_TAKING_DATIVE, VKIND_TAKING_GENITIVE, VKIND_TRANSITIVE, VKIND_INTRANSITIVE, VKIND_IMPERSONAL, VKIND_DEPONENT, VKIND_SEMIDEPONENT, VKIND_PERFECT_DEFINITE, VOICE_ACTIVE, VOICE_PASSIVE, VOICE_MEDIOPASSIVE, VOICE_IMPERSONAL_PASSIVE, VOICE_MIDDLE, VOICE_ANTIPASSIVE, VOICE_REFLEXIVE, VOICE_RECIPROCAL, VOICE_CAUSATIVE, VOICE_ADJUTATIVE, VOICE_APPLICATIVE, VOICE_CIRCUMSTANTIAL, VOICE_DEPONENT, TYPE_IRREGULAR, TYPE_REGULAR, CLASS_PERSONAL, CLASS_REFLEXIVE, CLASS_POSSESSIVE, CLASS_DEMONSTRATIVE, CLASS_RELATIVE, CLASS_INTERROGATIVE, CLASS_GENERAL_RELATIVE, CLASS_INDEFINITE, CLASS_INTENSIVE, CLASS_RECIPROCAL, PARADIGM_CAT_KAYLO, PARADIGM_CAT_STATE */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -414,6 +414,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "POFS_SUPINE", function() { return POFS_SUPINE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "POFS_VERB", function() { return POFS_VERB; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "POFS_VERB_PARTICIPLE", function() { return POFS_VERB_PARTICIPLE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "POFS_DENOMINATIVE", function() { return POFS_DENOMINATIVE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GEND_MASCULINE", function() { return GEND_MASCULINE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GEND_FEMININE", function() { return GEND_FEMININE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GEND_NEUTER", function() { return GEND_NEUTER; });
@@ -587,6 +588,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CLASS_INDEFINITE", function() { return CLASS_INDEFINITE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CLASS_INTENSIVE", function() { return CLASS_INTENSIVE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CLASS_RECIPROCAL", function() { return CLASS_RECIPROCAL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PARADIGM_CAT_KAYLO", function() { return PARADIGM_CAT_KAYLO; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PARADIGM_CAT_STATE", function() { return PARADIGM_CAT_STATE; });
 /* eslint-disable no-unused-vars */
 const LANG_UNIT_WORD = Symbol('word')
 const LANG_UNIT_CHAR = Symbol('char')
@@ -638,6 +641,7 @@ const POFS_GERUNDIVE = 'gerundive'
 const POFS_SUPINE = 'supine'
 const POFS_VERB = 'verb'
 const POFS_VERB_PARTICIPLE = 'verb participle'
+const POFS_DENOMINATIVE = 'denominative'
 // gender
 const GEND_MASCULINE = 'masculine'
 const GEND_FEMININE = 'feminine'
@@ -816,7 +820,9 @@ const CLASS_GENERAL_RELATIVE = 'general relative'
 const CLASS_INDEFINITE = 'indefinite'
 const CLASS_INTENSIVE = 'intensive'
 const CLASS_RECIPROCAL = 'reciprocal'
-/* eslit-enable no-unused-vars */
+// Paradigms
+const PARADIGM_CAT_KAYLO = 'kaylo'
+const PARADIGM_CAT_STATE = 'state'
 
 
 /***/ }),
@@ -1228,21 +1234,21 @@ class Feature {
   static dataValuesFromInput (data) {
     let normalized
     if (!Array.isArray(data)) {
-      // Single value with no sort order
-      normalized = [[data, this.defaultSortOrder]]
+      // Single value with no sort order and no category
+      normalized = [[data, this.defaultSortOrder, this.defaultCategory]]
     } else if (!Array.isArray(data[0])) {
       /*
-      If several values are provided without any explicit sort order, they will be
+      If several values are provided without any explicit sort order or category, they will be
       assigned a sort order automatically, according to their array index number.
       The first value item in an array will receive the highest sort order equal
       to the length of the array. The last item will have the lowest sort order, one.
        */
-      normalized = data.map((v, i) => [v, data.length - i])
+      normalized = data.map((v, i) => [v, data.length - i, this.defaultCategory])
     } else {
-      // Value has all the data, including a sort order
+      // Value has all the data, including a sort order and cateogry
       normalized = data
     }
-    return normalized.map(d => { return { value: d[0], sortOrder: Number.parseInt(d[1]) } })
+    return normalized.map(d => { return { value: d[0], sortOrder: Number.parseInt(d[1]), category: d[2] ? d[2] : this.defaultCategory } })
   }
 
   /**
@@ -1290,6 +1296,7 @@ class Feature {
       derivtype: 'derivtype',
       stemtype: 'stemtype',
       morph: 'morph', // general morphological information
+      paradigm: 'paradigm', // paradigm type
       var: 'var', // variance?
       radical: 'radical'
     }
@@ -1301,6 +1308,10 @@ class Feature {
 
   static get defaultSortOrder () {
     return 1
+  }
+
+  static get defaultCategory () {
+    return null
   }
 
   static get joinSeparator () {
@@ -1364,6 +1375,10 @@ class Feature {
     return this.values.join(this.constructor.joinSeparator)
   }
 
+  get category () {
+    return this.categories.join(this.constructor.joinSeparator)
+  }
+
   /**
    * Returns a feature value, if Feature object contains a single value. If no value is stored,
    * returns `undefined`. If feature has more than one value, throws an error.
@@ -1388,12 +1403,20 @@ class Feature {
     return this._data.map(v => v.value)
   }
 
+  get categories () {
+    return this._data.map(v => v.category)
+  }
+
   /**
    * Retrieves a value object by name. Can be used to update a value object directly.
    * @param {string} featureValue - A feature value of an object to retrieve.
    */
   getValue (featureValue) {
     return this._data.find(v => v.value === featureValue)
+  }
+
+  getCategory (categoryValue) {
+    return this._data.find(v => v.category === categoryValue)
   }
 
   /**
@@ -1403,6 +1426,10 @@ class Feature {
   get valQty () {
     return this._data.length
   }
+
+  /**
+   * get the category or categories
+   */
 
   get isEmpty () {
     return this.valQty === 0
@@ -1446,6 +1473,18 @@ class Feature {
     return hasValues
   }
 
+  hasCategory (category) {
+    return this.categories.includes(category)
+  }
+
+  hasCategories (categories) {
+    let hasCategories = true
+    for (let category of categories) {
+      hasCategories = hasCategories && this.hasCategory(category)
+    }
+    return hasCategories
+  }
+
   /**
    * Checks if this feature has some value from an array.
    * @param {string[]} values - An array of values to check for.
@@ -1465,7 +1504,7 @@ class Feature {
 
   /**
    * Two features are considered fully equal if they are of the same type, have the same language,
-   * and the same set of feature values in the same order.
+   * and the same set of feature values and categories in the same order.
    * @param {Feature} feature - A GrmFtr object this feature should be compared with.
    * @return {boolean} True if features are equal, false otherwise.
    */
@@ -1473,7 +1512,8 @@ class Feature {
     return feature &&
       this.type === feature.type &&
       _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].compareLanguages(this.languageID, feature.languageID) &&
-      this.value === feature.value
+      this.value === feature.value &&
+      this.category === feature.category
   }
 
   /**
@@ -1483,11 +1523,12 @@ class Feature {
    * @param {number} sortOrder - A sort order.
    * @return {Feature} - Self reference for chaining.
    */
-  addValue (value, sortOrder = this.constructor.defaultSortOrder) {
+  addValue (value, sortOrder = this.constructor.defaultSortOrder, category = this.constructor.defaultCategory) {
     if (!this.hasValue(value)) {
       this._data.push({
         value: value,
-        sortOrder: sortOrder
+        sortOrder: sortOrder,
+        category: category
       })
       this.sort() // Resort an array to place an inserted value to the proper place
     } else {
@@ -1532,9 +1573,9 @@ class Feature {
    * @param {number} sortOrder.
    * @return {Feature} A new Ftr object.
    */
-  createFeature (value, sortOrder = this.constructor.defaultSortOrder) {
+  createFeature (value, sortOrder = this.constructor.defaultSortOrder, category = this.constructor.defaultCategory) {
     // TODO: Add a check of if the value exists in a source Feature object
-    return new Feature(this.type, [[value, sortOrder]], this.languageID, this.sortOrder, this.allowedValues)
+    return new Feature(this.type, [[value, sortOrder, category]], this.languageID, this.sortOrder, this.allowedValues)
   }
 
   /**
@@ -1600,7 +1641,7 @@ class Feature {
     }
     const importer = this.importers.get(name)
     foreignData = this.constructor.dataValuesFromInput(foreignData)
-    this._data.push(...foreignData.map(fv => { return { value: importer.get(fv.value), sortOrder: fv.sortOrder } }))
+    this._data.push(...foreignData.map(fv => { return { value: importer.get(fv.value), sortOrder: fv.sortOrder, category: fv.category } }))
     this.sort()
     return this
   }
@@ -3815,7 +3856,7 @@ class LanguageModel {
     // group inflections by part of speech
     for (let infl of aggregated) {
       let groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__["default"](infl,
-        [_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.dialect, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.comparison],
+        [_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.dialect, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.comparison, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.paradigm],
         {
           prefix: infl.prefix,
           suffix: infl.suffix,
@@ -5122,27 +5163,32 @@ class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
     return new Map([
       ..._language_model_js__WEBPACK_IMPORTED_MODULE_0__["default"].featureValues,
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.grmCase,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part,
         [
-          // TODO Valid Values for case for syriac
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_ADVERB"],
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_ADVERBIAL"],
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_ADJECTIVE"],
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_ARTICLE"],
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_CONJUNCTION"],
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_EXCLAMATION"],
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_INTERJECTION"],
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_NOUN"],
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_NUMERAL"],
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_PARTICLE"],
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_PREFIX"],
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_PREPOSITION"],
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_PRONOUN"],
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_SUFFIX"],
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_SUPINE"],
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_VERB"],
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_VERB_PARTICIPLE"],
+          _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_DENOMINATIVE"]
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.number,
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.paradigm,
         [
-          // TODO Valid Values for number for syriac
-        ]
-      ],
-      [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.gender,
-        [
-          // TODO Valid Values for gender for syriac
-        ]
-      ],
-      [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.mood,
-        [
-          // TODO Valid Values for mood for syriac
+          /** TODO list of kaylo and state values **/
         ]
       ]
     ])
