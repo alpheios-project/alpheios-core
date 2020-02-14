@@ -4,11 +4,12 @@
     "grc": ["morpheusgrc"],
     "ara": ["aramorph"],
     "per": ["hazm"],
-    "gez": ["traces"]
+    "gez": ["traces"],
+    "syr": ["sedra"]
   },
   "url": "https://morph.alpheios.net/api/v1/analysis/word?word=r_WORD&engine=r_ENGINE&lang=r_LANG&clientId=r_CLIENT",
   "allowUnknownValues": true,
-  "featuresArray" : 
+  "featuresArray" :
     [
       ["pofs", "part"],
       ["case", "grmCase"],
@@ -24,7 +25,7 @@
       ["kind", "kind"],
       ["src", "source"]
     ],
-  "featuresArrayAll" : 
+  "featuresArrayAll" :
     [
       ["pofs", "part"],
       ["case", "grmCase"],

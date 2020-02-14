@@ -85,7 +85,7 @@ describe('LanguageModelFactory object', () => {
       Constants.STR_LANG_CODE_PER,
       Constants.STR_LANG_CODE_GEZ,
       Constants.STR_LANG_CODE_ZHO,
-      Constants.STR_LANG_CODE_SYR,
+      Constants.STR_LANG_CODE_SYR
     ])
   })
 })
