@@ -10,6 +10,7 @@ export const LANG_ARABIC = Symbol('arabic')
 export const LANG_PERSIAN = Symbol('persian')
 export const LANG_GEEZ = Symbol('ge\'ez')
 export const LANG_CHINESE = Symbol('chinese')
+export const LANG_SYRIAC = Symbol('syriac')
 
 export const STR_LANG_CODE_UNDEFINED = 'undefined'
 export const STR_LANG_CODE_LAT = 'lat'
@@ -24,6 +25,9 @@ export const STR_LANG_CODE_FA = 'fa'
 export const STR_LANG_CODE_GEZ = 'gez'
 export const STR_LANG_CODE_ZHO = 'zho'
 export const STR_LANG_CODE_ZH = 'zh'
+export const STR_LANG_CODE_SYC = 'syc'
+export const STR_LANG_CODE_SYR = 'syr'
+export const STR_LANG_CODE_SYR_SYRJ = 'syr-Syrj'
 
 // parts of speech
 export const POFS_ADJECTIVE = 'adjective'
