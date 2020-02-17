@@ -14865,6 +14865,13 @@ __webpack_require__.r(__webpack_exports__);
 
 const data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["SyriacLanguageModel"], 'sedra')
 
+// the sedra api has some html in the glosses that we want to strip out
+data.setMeaningParser(function(meaning,targetWord) {
+  const lang = meaning.lang ? meaning.lang : 'eng'
+  let meaning_text = meaning.$ || ""
+  meaning_text = meaning_text.replace(/<span .*?>(.*?)<\/span>/g,"$1")
+  return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Definition"](meaning_text, lang, 'text/plain', targetWord)
+})
 /* harmony default export */ __webpack_exports__["default"] = (data);
 
 
@@ -15130,6 +15137,13 @@ class ImportData {
     }
     // may be overridden by specific engine use via setLemmaParser
     this.parseLemma = function (lemma) { return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"](lemma, this.model.languageID) }
+
+    // may be overridden by specific engine use via setMeaningParser
+    this.parseMeaning = function (meaning, targetWord) {
+      const lang = meaning.lang ? meaning.lang : 'eng'
+      return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](meaning.$, lang, 'text/plain', targetWord)
+    }
+
     // may be overridden by specific engine use via setPropertyParser - default just returns the property value
     // as a list
     this.parseProperty = function (propertyName, propertyValue) {
@@ -15246,6 +15260,10 @@ class ImportData {
     this.parseLemma = callback
   }
 
+  setMeaningParser (callback) {
+    this.parseMeaning = callback
+  }
+
   /**
    * Add an engine-specific property parser
    */
@@ -15303,17 +15321,21 @@ class ImportData {
    */
   mapFeatureByAttribute (model, inputElem, inputName, attributeName, allowUnknownValues) {
     const inputItem = inputElem[inputName]
-    if (inputItem) {
-    }
+    let featureName
     if (inputItem && (Array.isArray(inputItem) || inputItem.$)) {
       let values = []
       if (Array.isArray(inputItem)) {
         // There are multiple values of this feature
         for (const e of inputItem) {
-          values.push(...this.parseProperty(inputName, e[attributeName]))
+          if (featureName && featureName !== e[attributeName]) {
+            console.warn("Mutiple feature values with mismatching attribute value",inputElem)
+          }
+          featureName = e[attributeName]
+          values.push(...this.parseProperty(inputName, e.$))
         }
       } else {
-        values = this.parseProperty(inputName, inputItem[attributeName])
+        featureName = inputItem[attributeName]
+        values = this.parseProperty(inputName, inputItem.$)
       }
       // `values` is always an array as an array is a return value of `parseProperty`
       if (values.length > 0) {
@@ -15521,19 +15543,16 @@ class TransformAdapter {
 
         // if we have multiple dictionary elements, take the meaning with the matching index
         if (lemmaElements.length > 1) {
-          if (meanings && meanings[index]) {
+          if (meanings && meanings[index] && meanings[index].$) {
             const meaning = meanings[index]
-            // TODO: convert a source-specific language code to ISO 639-3 if don't match
-            const lang = meaning.lang ? meaning.lang : 'eng'
             shortdefs.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider,
-              new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](meaning.$, lang, 'text/plain', lemmas[index].word)))
+              mappingData.parseMeaning(meaning, lemmas[index].word)))
           }
         } else {
           // Changed to prevent some weird "Array Iterator.prototype.next called on incompatible receiver [object Unknown]" error
-          const sDefs = meanings.map(meaning => {
-            const lang = meaning.lang ? meaning.lang : 'eng'
+          const sDefs = meanings.filter((m) => m.$).map(meaning => {
             return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider,
-              new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](meaning.$, lang, 'text/plain', lemma.word))
+              mappingData.parseMeaning(meaning, lemma.word))
           })
           shortdefs.push(...sDefs)
         }

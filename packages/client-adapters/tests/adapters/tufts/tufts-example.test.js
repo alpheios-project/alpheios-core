@@ -465,7 +465,7 @@ describe('tufts-example.test.js', () => {
     let homonym = await adapter.getHomonym(Constants.LANG_SYRIAC,word)
     expect(homonym.lexemes.length).toEqual(4)
     console.info(homonym.lexemes[0].inflections[0])
-    expect(homonym.lexemes[0].inflections[0].kaylo.value).toEqual("p'al")
+    expect(homonym.lexemes[0].inflections[0].kaylo.value).toEqual("pʿal")
   })
 
 })

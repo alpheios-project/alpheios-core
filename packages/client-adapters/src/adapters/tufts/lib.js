@@ -1,7 +1,7 @@
 /*
 Objects of a morphology analyzer's library
  */
-import { Feature, Lemma, FeatureImporter } from 'alpheios-data-models'
+import { Feature, Lemma, FeatureImporter, Definition } from 'alpheios-data-models'
 
 /**
  * Holds all information required to transform from morphological analyzer's grammatical feature values to the
@@ -38,6 +38,13 @@ class ImportData {
     }
     // may be overridden by specific engine use via setLemmaParser
     this.parseLemma = function (lemma) { return new Lemma(lemma, this.model.languageID) }
+
+    // may be overridden by specific engine use via setMeaningParser
+    this.parseMeaning = function (meaning, targetWord) {
+      const lang = meaning.lang ? meaning.lang : 'eng'
+      return new Definition(meaning.$, lang, 'text/plain', targetWord)
+    }
+
     // may be overridden by specific engine use via setPropertyParser - default just returns the property value
     // as a list
     this.parseProperty = function (propertyName, propertyValue) {
@@ -154,6 +161,10 @@ class ImportData {
     this.parseLemma = callback
   }
 
+  setMeaningParser (callback) {
+    this.parseMeaning = callback
+  }
+
   /**
    * Add an engine-specific property parser
    */
@@ -211,17 +222,21 @@ class ImportData {
    */
   mapFeatureByAttribute (model, inputElem, inputName, attributeName, allowUnknownValues) {
     const inputItem = inputElem[inputName]
-    if (inputItem) {
-    }
+    let featureName
     if (inputItem && (Array.isArray(inputItem) || inputItem.$)) {
       let values = []
       if (Array.isArray(inputItem)) {
         // There are multiple values of this feature
         for (const e of inputItem) {
-          values.push(...this.parseProperty(inputName, e[attributeName]))
+          if (featureName && featureName !== e[attributeName]) {
+            console.warn("Mutiple feature values with mismatching attribute value",inputElem)
+          }
+          featureName = e[attributeName]
+          values.push(...this.parseProperty(inputName, e.$))
         }
       } else {
-        values = this.parseProperty(inputName, inputItem[attributeName])
+        featureName = inputItem[attributeName]
+        values = this.parseProperty(inputName, inputItem.$)
       }
       // `values` is always an array as an array is a return value of `parseProperty`
       if (values.length > 0) {

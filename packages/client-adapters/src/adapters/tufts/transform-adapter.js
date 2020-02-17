@@ -163,19 +163,16 @@ class TransformAdapter {
 
         // if we have multiple dictionary elements, take the meaning with the matching index
         if (lemmaElements.length > 1) {
-          if (meanings && meanings[index]) {
+          if (meanings && meanings[index] && meanings[index].$) {
             const meaning = meanings[index]
-            // TODO: convert a source-specific language code to ISO 639-3 if don't match
-            const lang = meaning.lang ? meaning.lang : 'eng'
             shortdefs.push(ResourceProvider.getProxy(provider,
-              new Definition(meaning.$, lang, 'text/plain', lemmas[index].word)))
+              mappingData.parseMeaning(meaning, lemmas[index].word)))
           }
         } else {
           // Changed to prevent some weird "Array Iterator.prototype.next called on incompatible receiver [object Unknown]" error
-          const sDefs = meanings.map(meaning => {
-            const lang = meaning.lang ? meaning.lang : 'eng'
+          const sDefs = meanings.filter((m) => m.$).map(meaning => {
             return ResourceProvider.getProxy(provider,
-              new Definition(meaning.$, lang, 'text/plain', lemma.word))
+              mappingData.parseMeaning(meaning, lemma.word))
           })
           shortdefs.push(...sDefs)
         }
