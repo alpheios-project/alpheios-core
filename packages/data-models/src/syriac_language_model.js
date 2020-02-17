@@ -21,7 +21,7 @@ export default class SyriacLanguageModel extends LanguageModel {
 
   static get contextBackward () { return 0 }
 
-  static get direction () { return Constants.LANG_DIR_LTR }
+  static get direction () { return Constants.LANG_DIR_RTL }
 
   static get baseUnit () { return Constants.LANG_UNIT_WORD }
   static get featureValues () {

@@ -5130,7 +5130,7 @@ class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
 
   static get contextBackward () { return 0 }
 
-  static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__["LANG_DIR_LTR"] }
+  static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__["LANG_DIR_RTL"] }
 
   static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__["LANG_UNIT_WORD"] }
   static get featureValues () {
