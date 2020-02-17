@@ -37,7 +37,7 @@
         <span class="feature_source" v-if="hasSource">
             <inflectionattribute
                 :data="lemma.features"
-                :decorators="['link','brackets']"
+                :decorators="['link','brackets','multiline']"
                 :type="types.source"
             />
         </span>
