@@ -218,7 +218,6 @@ class TransformAdapter {
         // Parse attribute based features
         for (const f of this.config.attributeBasedFeatures) {
           try {
-            console.info("MAP ",f)
             mappingData.mapFeatureByAttribute(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
             mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
           } catch (e) {

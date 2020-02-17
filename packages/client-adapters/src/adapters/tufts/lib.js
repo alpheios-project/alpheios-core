@@ -76,7 +76,7 @@ class ImportData {
       return this
     }
 
-    this[featureName].get = function get (providerValue, sortOrder = 1, allowUnknownValues = false, category = null) {
+    this[featureName].get = function get (providerValue, sortOrder = 1, allowUnknownValues = false) {
       let mappedValue = []
       if (!this.importer.has(providerValue)) {
         // if the providerValue matches the model value or the model value
@@ -108,7 +108,7 @@ class ImportData {
      * @param allowUnknownValues
      * @return {Feature}
      */
-    this[featureName].getMultiple = function get (data, allowUnknownValues = false, category = null) {
+    this[featureName].getMultiple = function get (data, allowUnknownValues = false) {
       let values = [] // Converts values from `data` into `values` array
       for (const item of data) {
         if (this.importer.has(item.providerValue)) {
@@ -193,7 +193,7 @@ class ImportData {
       if (values.length > 0) {
         // There are some values found
         values = values.map(v => { return { providerValue: v, sortOrder: inputItem.order ? inputItem.order : 1 } })
-        const feature = this[Feature.types[featureName]].getMultiple(values, allowUnknownValues, inputItem.cat)
+        const feature = this[Feature.types[featureName]].getMultiple(values, allowUnknownValues)
         model.addFeature(feature)
       }
     }

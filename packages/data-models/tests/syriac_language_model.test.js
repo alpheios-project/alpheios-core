@@ -3,6 +3,7 @@
 import * as Constants from '../src/constants.js'
 import LMF from '../src/language_model_factory.js'
 import Feature from '../src/feature.js'
+import Inflection from '../src/inflection.js'
 
 describe('LanguageModelFactory object', () => {
   'use strict'
@@ -37,5 +38,18 @@ describe('LanguageModelFactory object', () => {
   it('supports kaylo paradigm', () => {
     let paradigm = syr.typeFeature(Feature.types.kaylo).createFeature('ethpaʿli')
     expect(paradigm).toBeDefined()
+  })
+
+  it('includes kaylo in base inflection group', () => {
+    let one = new Inflection('a', Constants.LANG_SYRIAC, 'astem', null, null)
+
+    one.addFeature(new Feature(Feature.types.part, [['verb', 1]], Constants.LANG_SYRIAC))
+    one.addFeature(new Feature(Feature.types.gender, 'masculine', Constants.LANG_SYRIAC))
+    one.addFeature(new Feature(Feature.types.number, 'plural', Constants.LANG_SYRIAC))
+    one.addFeature(new Feature(Feature.types.mood, 'participle', Constants.LANG_SYRIAC))
+    one.addFeature(new Feature(Feature.types.kaylo, "p'al", Constants.LANG_SYRIAC))
+    let grouped = syr.groupInflectionsForDisplay([one])
+    expect(grouped[0].groupingKey.hasFeatureValue(Feature.types.kaylo, "p'al")).toBeTruthy()
+    expect(grouped[0].groupingKey.hasFeatureValue(Feature.types.part, 'verb')).toBeTruthy()
   })
 })
