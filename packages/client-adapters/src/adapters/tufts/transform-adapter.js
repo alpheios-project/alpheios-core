@@ -214,6 +214,18 @@ class TransformAdapter {
             // quietly continue
           }
         }
+
+        // Parse attribute based features
+        for (const f of this.config.attributeBasedFeatures) {
+          try {
+            console.info("MAP ",f)
+            mappingData.mapFeatureByAttribute(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
+            mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
+          } catch (e) {
+            // quietly continue
+          }
+        }
+
         // we only use the inflection if it tells us something the dictionary details do not
         if (inflection[Feature.types.grmCase] ||
           inflection[Feature.types.tense] ||
@@ -221,10 +233,12 @@ class TransformAdapter {
           inflection[Feature.types.voice] ||
           inflection[Feature.types.person] ||
           inflection[Feature.types.comparison] ||
-          inflection[Feature.types.stemtype] ||
-          inflection[Feature.types.derivtype] ||
-          inflection[Feature.types.dialect] ||
-          inflection[Feature.types.morph] ||
+          inflection[Feature.types.stemtype] || /** greek - morpheus **/
+          inflection[Feature.types.derivtype] || /** greek - morpheus **/
+          inflection[Feature.types.dialect] || /** greek **/
+          inflection[Feature.types.morph] || /** arabic - aramorph **/
+          inflection[Feature.types.kaylo] || /** syriac - sedra **/
+          inflection[Feature.types.state] || /** syriac - sedra **/
           inflection[Feature.types.example]) {
           inflections.push(inflection)
         }

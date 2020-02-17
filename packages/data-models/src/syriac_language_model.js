@@ -49,10 +49,12 @@ export default class SyriacLanguageModel extends LanguageModel {
         ]
       ],
       [
-        Feature.types.paradigm,
-        [
-          /** TODO list of kaylo and state values **/
-        ]
+        Feature.types.kaylo,
+        []
+      ],
+      [
+        Feature.types.state,
+        []
       ]
     ])
   }

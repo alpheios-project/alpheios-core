@@ -49,7 +49,7 @@ describe('feature.test.js', () => {
     expect(feature.sortOrder).toEqual(1)
     expect(feature.allowedValues).toEqual([])
 
-    expect(feature._data).toEqual([ { value: 'fooword', sortOrder: 1, category: null } ])
+    expect(feature._data).toEqual([ { value: 'fooword', sortOrder: 1 } ])
 
     expect(feature.allowsUnrestrictedValues).toBeTruthy()
     expect(feature.valuesUnrestricted).toBeTruthy()
@@ -68,30 +68,30 @@ describe('feature.test.js', () => {
   it('4 Feature - check dataValuesFromInput, sort, compareTo, items, isEqual', () => {
     // A single value
     let res = Feature.dataValuesFromInput('foovalue1')
-    expect(res).toEqual([ { value: 'foovalue1', sortOrder: 1, category: null } ])
+    expect(res).toEqual([ { value: 'foovalue1', sortOrder: 1 } ])
 
     // A single value in an array
     res = Feature.dataValuesFromInput(['foovalue2'])
-    expect(res).toEqual([ { value: 'foovalue2', sortOrder: 1, category: null } ])
+    expect(res).toEqual([ { value: 'foovalue2', sortOrder: 1 } ])
 
     // Multiple values with softOrder set automatically
     res = Feature.dataValuesFromInput(['valueA', 'valueB', 'valueC'])
     // Items that goes earlier in an array will receive the highest sort order numbers.
     expect(res).toEqual([
-      { value: 'valueA', sortOrder: 3, category: null },
-      { value: 'valueB', sortOrder: 2, category: null },
-      { value: 'valueC', sortOrder: 1, category: null }
+      { value: 'valueA', sortOrder: 3 },
+      { value: 'valueB', sortOrder: 2 },
+      { value: 'valueC', sortOrder: 1 }
     ])
 
     // Multiple values with specified sort order
     res = Feature.dataValuesFromInput([ ['foovalue3', 2], ['foovalue4', 1] ])
-    expect(res).toEqual([ { value: 'foovalue3', sortOrder: 2, category: null }, { value: 'foovalue4', sortOrder: 1, category: null } ])
+    expect(res).toEqual([ { value: 'foovalue3', sortOrder: 2 }, { value: 'foovalue4', sortOrder: 1 } ])
 
     const feature1 = new Feature('word', [ ['foovalue3', 1], ['foovalue4', 2] ], latID)
-    expect(feature1._data).toEqual([ { value: 'foovalue4', sortOrder: 2, category: null }, { value: 'foovalue3', sortOrder: 1, category: null } ])
+    expect(feature1._data).toEqual([ { value: 'foovalue4', sortOrder: 2 }, { value: 'foovalue3', sortOrder: 1 } ])
 
     const feature2 = new Feature('word', [ ['foovalue4', 1], ['foovalue3', 1] ], latID)
-    expect(feature2._data).toEqual([ { value: 'foovalue3', sortOrder: 1, category: null }, { value: 'foovalue4', sortOrder: 1, category: null } ])
+    expect(feature2._data).toEqual([ { value: 'foovalue3', sortOrder: 1 }, { value: 'foovalue4', sortOrder: 1 } ])
 
     expect(feature1.compareTo(feature2)).toEqual(-1)
     expect(feature2.compareTo(feature1)).toEqual(1)
@@ -190,7 +190,7 @@ describe('feature.test.js', () => {
     expect(feature.value).toEqual(`foovalue1${Feature.joinSeparator}foovalue2`)
     expect(feature.toString()).toEqual(`foovalue1${Feature.joinSeparator}foovalue2`)
 
-    expect(feature.getValue('foovalue1')).toEqual({ value: 'foovalue1', sortOrder: 2, category: null })
+    expect(feature.getValue('foovalue1')).toEqual({ value: 'foovalue1', sortOrder: 2 })
     expect(feature.valQty).toEqual(2)
     expect(feature.isEmpty).toBeFalsy()
     expect(feature.isSingle).toBeFalsy()
@@ -232,9 +232,9 @@ describe('feature.test.js', () => {
     let feature = new Feature('word', [ ['foovalue1', 2], ['foovalue2', 1] ], latID)
 
     let checkRes = [
-      { value: 'foovalue3', sortOrder: 3, category: null },
-      { value: 'foovalue1', sortOrder: 2, category: null },
-      { value: 'foovalue2', sortOrder: 1, category: null }
+      { value: 'foovalue3', sortOrder: 3 },
+      { value: 'foovalue1', sortOrder: 2 },
+      { value: 'foovalue2', sortOrder: 1 }
     ]
 
     feature.addValue('foovalue3', 3)
@@ -242,10 +242,10 @@ describe('feature.test.js', () => {
 
     feature.addValue('foovalue10')
     checkRes = [
-      { value: 'foovalue3', sortOrder: 3, category: null },
-      { value: 'foovalue1', sortOrder: 2, category: null },
-      { value: 'foovalue10', sortOrder: 1, category: null },
-      { value: 'foovalue2', sortOrder: 1, category: null }
+      { value: 'foovalue3', sortOrder: 3 },
+      { value: 'foovalue1', sortOrder: 2 },
+      { value: 'foovalue10', sortOrder: 1 },
+      { value: 'foovalue2', sortOrder: 1 }
     ]
     expect(feature._data).toEqual(checkRes)
 
@@ -256,12 +256,12 @@ describe('feature.test.js', () => {
     feature.addValues([ ['foovalue4', 4], ['foovalue5', 5] ])
 
     checkRes = [
-      { value: 'foovalue5', sortOrder: 5, category: null },
-      { value: 'foovalue4', sortOrder: 4, category: null },
-      { value: 'foovalue3', sortOrder: 3, category: null },
-      { value: 'foovalue1', sortOrder: 2, category: null },
-      { value: 'foovalue10', sortOrder: 1, category: null },
-      { value: 'foovalue2', sortOrder: 1, category: null }
+      { value: 'foovalue5', sortOrder: 5 },
+      { value: 'foovalue4', sortOrder: 4 },
+      { value: 'foovalue3', sortOrder: 3 },
+      { value: 'foovalue1', sortOrder: 2 },
+      { value: 'foovalue10', sortOrder: 1 },
+      { value: 'foovalue2', sortOrder: 1 }
     ]
 
     expect(feature._data).toEqual(checkRes)
@@ -283,21 +283,21 @@ describe('feature.test.js', () => {
     expect(res1.type).toEqual('word')
     expect(res1.languageID).toEqual(latID)
 
-    expect(res1._data).toEqual([{ value: 'fooword2', sortOrder: 1, category: null }])
+    expect(res1._data).toEqual([{ value: 'fooword2', sortOrder: 1 }])
 
     let res2 = feature.createFeatures([ ['foovalue4', 4] ])
     expect(res2).toBeInstanceOf(Feature)
     expect(res2.type).toEqual('word')
     expect(res2.languageID).toEqual(latID)
 
-    expect(res2._data).toEqual([{ value: 'foovalue4', sortOrder: 4, category: null }])
+    expect(res2._data).toEqual([{ value: 'foovalue4', sortOrder: 4 }])
 
     let res3 = feature.getCopy()
     expect(res3).toBeInstanceOf(Feature)
     expect(res3.type).toEqual('word')
     expect(res3.languageID).toEqual(latID)
 
-    expect(res3._data).toEqual([{ value: 'fooword', sortOrder: 1, category: null }])
+    expect(res3._data).toEqual([{ value: 'fooword', sortOrder: 1 }])
   })
 
   it('15 Feature - check addImporter, getImporter', () => {
@@ -343,7 +343,7 @@ describe('feature.test.js', () => {
 
     feature.addImporter(new FeatureImporter(['foovalue1']), 'default1')
     feature.addFromImporter([ ['foovalue1', 2] ], 'default1')
-    expect(feature._data).toEqual([{ value: 'foovalue1', sortOrder: 2, category: null }, { value: 'fooword', sortOrder: 1, category: null }])
+    expect(feature._data).toEqual([{ value: 'foovalue1', sortOrder: 2 }, { value: 'fooword', sortOrder: 1 }])
   })
 
   it('17 Feature - check createFromImporter', () => {
@@ -374,11 +374,11 @@ describe('feature.test.js', () => {
     expect(res1.type).toEqual('word')
     expect(res1.languageID).toEqual(latID)
 
-    expect(res1._data).toEqual([{ value: 'foovalue1', sortOrder: 2, category: null }, { value: 'foovalue2', sortOrder: 1, category: null }])
+    expect(res1._data).toEqual([{ value: 'foovalue1', sortOrder: 2 }, { value: 'foovalue2', sortOrder: 1 }])
 
     feature.addImporter(new FeatureImporter(['foovalue10']))
     let res2 = feature.createFromImporter('foovalue10')
 
-    expect(res2._data).toEqual([{ value: 'foovalue10', sortOrder: 1, category: null }])
+    expect(res2._data).toEqual([{ value: 'foovalue10', sortOrder: 1 }])
   })
 })

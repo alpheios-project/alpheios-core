@@ -51,6 +51,7 @@ class ImportData {
       }
       return propertyValues
     }
+
     // may be overridden by specifc engine use via setLexemeFilter - default assumes we will have a part of speech
     this.reportLexeme = function (lexeme) {
       return lexeme.lemma.features[Feature.types.part]
@@ -75,7 +76,7 @@ class ImportData {
       return this
     }
 
-    this[featureName].get = function get (providerValue, sortOrder = 1, allowUnknownValues = false) {
+    this[featureName].get = function get (providerValue, sortOrder = 1, allowUnknownValues = false, category = null) {
       let mappedValue = []
       if (!this.importer.has(providerValue)) {
         // if the providerValue matches the model value or the model value
@@ -107,7 +108,7 @@ class ImportData {
      * @param allowUnknownValues
      * @return {Feature}
      */
-    this[featureName].getMultiple = function get (data, allowUnknownValues = false) {
+    this[featureName].getMultiple = function get (data, allowUnknownValues = false, category = null) {
       let values = [] // Converts values from `data` into `values` array
       for (const item of data) {
         if (this.importer.has(item.providerValue)) {
@@ -192,7 +193,41 @@ class ImportData {
       if (values.length > 0) {
         // There are some values found
         values = values.map(v => { return { providerValue: v, sortOrder: inputItem.order ? inputItem.order : 1 } })
-        const feature = this[Feature.types[featureName]].getMultiple(values, allowUnknownValues)
+        const feature = this[Feature.types[featureName]].getMultiple(values, allowUnknownValues, inputItem.cat)
+        model.addFeature(feature)
+      }
+    }
+  }
+
+  /**
+   * Maps property of a single feature type to a single Feature object with one or more values, using an attribute
+   * to determine the mapped-to feature name
+   * (if this feature has multiple values). Feature is stored as a property of the supplied model object.
+   * @param {object} model the model object to which the feature will be added
+   * @param {object} inputElem the input data element
+   * @param {object} inputName the  property name in the input data
+   * @param {string} attributeName the attribute to use to get the feature name
+   * @param {boolean} allowUnknownValues flag to indicate if unknown values are allowed
+   */
+  mapFeatureByAttribute (model, inputElem, inputName, attributeName, allowUnknownValues) {
+    const inputItem = inputElem[inputName]
+    if (inputItem) {
+    }
+    if (inputItem && (Array.isArray(inputItem) || inputItem.$)) {
+      let values = []
+      if (Array.isArray(inputItem)) {
+        // There are multiple values of this feature
+        for (const e of inputItem) {
+          values.push(...this.parseProperty(inputName, e[attributeName]))
+        }
+      } else {
+        values = this.parseProperty(inputName, inputItem[attributeName])
+      }
+      // `values` is always an array as an array is a return value of `parseProperty`
+      if (values.length > 0) {
+        // There are some values found
+        values = values.map(v => { return { providerValue: v, sortOrder: inputItem.order ? inputItem.order : 1 } })
+        const feature = this[Feature.types[featureName]].getMultiple(values, allowUnknownValues, inputItem.cat)
         model.addFeature(feature)
       }
     }

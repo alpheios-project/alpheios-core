@@ -35,7 +35,7 @@ describe('LanguageModelFactory object', () => {
   })
 
   it('supports kaylo paradigm', () => {
-    let paradigm = syr.typeFeature(Feature.types.paradigm).createFeature('ethpaʿli')
+    let paradigm = syr.typeFeature(Feature.types.kaylo).createFeature('ethpaʿli')
     expect(paradigm).toBeDefined()
   })
 })

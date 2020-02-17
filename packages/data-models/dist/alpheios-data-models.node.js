@@ -1234,21 +1234,21 @@ class Feature {
   static dataValuesFromInput (data) {
     let normalized
     if (!Array.isArray(data)) {
-      // Single value with no sort order and no category
-      normalized = [[data, this.defaultSortOrder, this.defaultCategory]]
+      // Single value with no sort order
+      normalized = [[data, this.defaultSortOrder]]
     } else if (!Array.isArray(data[0])) {
       /*
-      If several values are provided without any explicit sort order or category, they will be
+      If several values are provided without any explicit sort order, they will be
       assigned a sort order automatically, according to their array index number.
       The first value item in an array will receive the highest sort order equal
       to the length of the array. The last item will have the lowest sort order, one.
        */
-      normalized = data.map((v, i) => [v, data.length - i, this.defaultCategory])
+      normalized = data.map((v, i) => [v, data.length - i])
     } else {
-      // Value has all the data, including a sort order and cateogry
+      // Value has all the data, including a sort order
       normalized = data
     }
-    return normalized.map(d => { return { value: d[0], sortOrder: Number.parseInt(d[1]), category: d[2] ? d[2] : this.defaultCategory } })
+    return normalized.map(d => { return { value: d[0], sortOrder: Number.parseInt(d[1]) } })
   }
 
   /**
@@ -1296,9 +1296,13 @@ class Feature {
       derivtype: 'derivtype',
       stemtype: 'stemtype',
       morph: 'morph', // general morphological information
-      paradigm: 'paradigm', // paradigm type
       var: 'var', // variance?
-      radical: 'radical'
+      /** for CJK languages only **/
+      radical: 'radical',
+      /** used for Syriac **/
+      kaylo: 'kaylo',
+      state: 'state'
+
     }
   }
 
@@ -1308,10 +1312,6 @@ class Feature {
 
   static get defaultSortOrder () {
     return 1
-  }
-
-  static get defaultCategory () {
-    return null
   }
 
   static get joinSeparator () {
@@ -1375,10 +1375,6 @@ class Feature {
     return this.values.join(this.constructor.joinSeparator)
   }
 
-  get category () {
-    return this.categories.join(this.constructor.joinSeparator)
-  }
-
   /**
    * Returns a feature value, if Feature object contains a single value. If no value is stored,
    * returns `undefined`. If feature has more than one value, throws an error.
@@ -1403,20 +1399,12 @@ class Feature {
     return this._data.map(v => v.value)
   }
 
-  get categories () {
-    return this._data.map(v => v.category)
-  }
-
   /**
    * Retrieves a value object by name. Can be used to update a value object directly.
    * @param {string} featureValue - A feature value of an object to retrieve.
    */
   getValue (featureValue) {
     return this._data.find(v => v.value === featureValue)
-  }
-
-  getCategory (categoryValue) {
-    return this._data.find(v => v.category === categoryValue)
   }
 
   /**
@@ -1426,10 +1414,6 @@ class Feature {
   get valQty () {
     return this._data.length
   }
-
-  /**
-   * get the category or categories
-   */
 
   get isEmpty () {
     return this.valQty === 0
@@ -1473,18 +1457,6 @@ class Feature {
     return hasValues
   }
 
-  hasCategory (category) {
-    return this.categories.includes(category)
-  }
-
-  hasCategories (categories) {
-    let hasCategories = true
-    for (let category of categories) {
-      hasCategories = hasCategories && this.hasCategory(category)
-    }
-    return hasCategories
-  }
-
   /**
    * Checks if this feature has some value from an array.
    * @param {string[]} values - An array of values to check for.
@@ -1504,7 +1476,7 @@ class Feature {
 
   /**
    * Two features are considered fully equal if they are of the same type, have the same language,
-   * and the same set of feature values and categories in the same order.
+   * and the same set of feature values in the same order.
    * @param {Feature} feature - A GrmFtr object this feature should be compared with.
    * @return {boolean} True if features are equal, false otherwise.
    */
@@ -1512,8 +1484,7 @@ class Feature {
     return feature &&
       this.type === feature.type &&
       _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].compareLanguages(this.languageID, feature.languageID) &&
-      this.value === feature.value &&
-      this.category === feature.category
+      this.value === feature.value
   }
 
   /**
@@ -1523,12 +1494,11 @@ class Feature {
    * @param {number} sortOrder - A sort order.
    * @return {Feature} - Self reference for chaining.
    */
-  addValue (value, sortOrder = this.constructor.defaultSortOrder, category = this.constructor.defaultCategory) {
+  addValue (value, sortOrder = this.constructor.defaultSortOrder) {
     if (!this.hasValue(value)) {
       this._data.push({
         value: value,
-        sortOrder: sortOrder,
-        category: category
+        sortOrder: sortOrder
       })
       this.sort() // Resort an array to place an inserted value to the proper place
     } else {
@@ -1573,9 +1543,9 @@ class Feature {
    * @param {number} sortOrder.
    * @return {Feature} A new Ftr object.
    */
-  createFeature (value, sortOrder = this.constructor.defaultSortOrder, category = this.constructor.defaultCategory) {
+  createFeature (value, sortOrder = this.constructor.defaultSortOrder) {
     // TODO: Add a check of if the value exists in a source Feature object
-    return new Feature(this.type, [[value, sortOrder, category]], this.languageID, this.sortOrder, this.allowedValues)
+    return new Feature(this.type, [[value, sortOrder]], this.languageID, this.sortOrder, this.allowedValues)
   }
 
   /**
@@ -1641,7 +1611,7 @@ class Feature {
     }
     const importer = this.importers.get(name)
     foreignData = this.constructor.dataValuesFromInput(foreignData)
-    this._data.push(...foreignData.map(fv => { return { value: importer.get(fv.value), sortOrder: fv.sortOrder, category: fv.category } }))
+    this._data.push(...foreignData.map(fv => { return { value: importer.get(fv.value), sortOrder: fv.sortOrder } }))
     this.sort()
     return this
   }
@@ -5186,10 +5156,12 @@ class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
         ]
       ],
       [
-        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.paradigm,
-        [
-          /** TODO list of kaylo and state values **/
-        ]
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.kaylo,
+        []
+      ],
+      [
+        _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.state,
+        []
       ]
     ])
   }

@@ -24,6 +24,7 @@
       ["pron", "pronunciation"],
       ["kind", "kind"],
       ["src", "source"]
+
     ],
   "featuresArrayAll" :
     [
@@ -42,5 +43,9 @@
       ["derivtype", "derivtype"],
       ["dial", "dialect"],
       ["morph", "morph"]
+    ],
+    "attributeBasedFeatures":
+    [
+        ["paradigm","cat"]
     ]
 }
