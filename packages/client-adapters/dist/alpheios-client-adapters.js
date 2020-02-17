@@ -14872,6 +14872,15 @@ data.setMeaningParser(function(meaning,targetWord) {
   meaning_text = meaning_text.replace(/<span .*?>(.*?)<\/span>/g,"$1")
   return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Definition"](meaning_text, lang, 'text/plain', targetWord)
 })
+
+data.setPropertyParser(function (propertyName, propertyValue) {
+  let propertyValues = []
+  if (propertyName !== 'src') {
+    propertyValues = [propertyValue]
+  }
+  return propertyValues
+})
+
 /* harmony default export */ __webpack_exports__["default"] = (data);
 
 

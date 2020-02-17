@@ -10,4 +10,13 @@ data.setMeaningParser(function(meaning,targetWord) {
   meaning_text = meaning_text.replace(/<span .*?>(.*?)<\/span>/g,"$1")
   return new Models.Definition(meaning_text, lang, 'text/plain', targetWord)
 })
+
+data.setPropertyParser(function (propertyName, propertyValue) {
+  let propertyValues = []
+  if (propertyName !== 'src') {
+    propertyValues = [propertyValue]
+  }
+  return propertyValues
+})
+
 export default data
