@@ -14875,15 +14875,16 @@ data.setMeaningParser(function(meaning,targetWord) {
 
 data.setPropertyParser(function (propertyName, propertyValue) {
   let propertyValues = []
-  if (propertyName === 'state') {
+  if (propertyName === 'paradigm') {
      // state has some extra "" around values
      propertyValues = [ propertyValue.replace(/"/g,'') ]
-  } else if (propertyName !== 'src') {
+  } else {
     propertyValues = [propertyValue]
   }
   return propertyValues
 })
 
+/**
 data.setRightsParser(function(data) {
   let allSources
   if (! Array.isArray(data.src)) {
@@ -14893,6 +14894,7 @@ data.setRightsParser(function(data) {
   }
   return allSources.map(s => s.$).join("\n")
 })
+*/
 
 /* harmony default export */ __webpack_exports__["default"] = (data);
 
