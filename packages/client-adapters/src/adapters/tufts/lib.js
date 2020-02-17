@@ -45,6 +45,11 @@ class ImportData {
       return new Definition(meaning.$, lang, 'text/plain', targetWord)
     }
 
+    // may be overriden by specific engine use via setRightsParser
+    this.parseRights = function(data) {
+      return null
+    }
+
     // may be overridden by specific engine use via setPropertyParser - default just returns the property value
     // as a list
     this.parseProperty = function (propertyName, propertyValue) {
@@ -163,6 +168,10 @@ class ImportData {
 
   setMeaningParser (callback) {
     this.parseMeaning = callback
+  }
+
+  setRightsParser (callback) {
+    this.parseRights = callback
   }
 
   /**

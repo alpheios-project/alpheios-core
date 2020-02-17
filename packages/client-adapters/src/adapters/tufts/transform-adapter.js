@@ -128,6 +128,13 @@ class TransformAdapter {
         this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_MAPPING_DATA.get(language))
         continue
       }
+      const rights = mappingData.parseRights(dictData)
+      let lexemeProvider
+      if (rights) {
+        lexemeProvider = new ResourceProvider(providerUri, rights)
+      } else {
+        lexemeProvider = provider
+      }
 
       const reconstructHdwd = this.collectHdwdArray(dictData, inflectionsJSONTerm, mappingData.model.direction)
       if (reconstructHdwd.length > 0) {
@@ -165,13 +172,13 @@ class TransformAdapter {
         if (lemmaElements.length > 1) {
           if (meanings && meanings[index] && meanings[index].$) {
             const meaning = meanings[index]
-            shortdefs.push(ResourceProvider.getProxy(provider,
+            shortdefs.push(ResourceProvider.getProxy(lexemeProvider,
               mappingData.parseMeaning(meaning, lemmas[index].word)))
           }
         } else {
           // Changed to prevent some weird "Array Iterator.prototype.next called on incompatible receiver [object Unknown]" error
           const sDefs = meanings.filter((m) => m.$).map(meaning => {
-            return ResourceProvider.getProxy(provider,
+            return ResourceProvider.getProxy(lexemeProvider,
               mappingData.parseMeaning(meaning, lemma.word))
           })
           shortdefs.push(...sDefs)
@@ -179,7 +186,7 @@ class TransformAdapter {
         let lexmodel = new Lexeme(lemma, []) // eslint-disable-line prefer-const
 
         lexmodel.meaning.appendShortDefs(shortdefs)
-        lexemeSet.push(ResourceProvider.getProxy(provider, lexmodel))
+        lexemeSet.push(ResourceProvider.getProxy(lexemeProvider, lexmodel))
       }
 
       if (lemmas.length === 0) {

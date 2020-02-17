@@ -13,10 +13,23 @@ data.setMeaningParser(function(meaning,targetWord) {
 
 data.setPropertyParser(function (propertyName, propertyValue) {
   let propertyValues = []
-  if (propertyName !== 'src') {
+  if (propertyName === 'state') {
+     // state has some extra "" around values
+     propertyValues = [ propertyValue.replace(/"/g,'') ]
+  } else if (propertyName !== 'src') {
     propertyValues = [propertyValue]
   }
   return propertyValues
+})
+
+data.setRightsParser(function(data) {
+  let allSources
+  if (! Array.isArray(data.src)) {
+    allSources = [ data.src ]
+  } else {
+    allSources = data.src
+  }
+  return allSources.map(s => s.$).join("\n")
 })
 
 export default data

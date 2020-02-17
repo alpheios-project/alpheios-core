@@ -25,7 +25,7 @@ export default class Lexis extends Module {
     iframe.id = CedictConfig.targetIframeID
     iframe.style.display = 'none'
     iframe.src = CedictConfig.targetURL
-    document.body.appendChild(iframe)
+    //document.body.appendChild(iframe)
   }
 }
 

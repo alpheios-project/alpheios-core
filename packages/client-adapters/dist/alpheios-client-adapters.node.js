@@ -10067,10 +10067,23 @@ data.setMeaningParser(function(meaning,targetWord) {
 
 data.setPropertyParser(function (propertyName, propertyValue) {
   let propertyValues = []
-  if (propertyName !== 'src') {
+  if (propertyName === 'state') {
+     // state has some extra "" around values
+     propertyValues = [ propertyValue.replace(/"/g,'') ]
+  } else if (propertyName !== 'src') {
     propertyValues = [propertyValue]
   }
   return propertyValues
+})
+
+data.setRightsParser(function(data) {
+  let allSources
+  if (! Array.isArray(data.src)) {
+    allSources = [ data.src ]
+  } else {
+    allSources = data.src
+  }
+  return allSources.map(s => s.$).join("\n")
 })
 
 /* harmony default export */ __webpack_exports__["default"] = (data);
@@ -10345,6 +10358,11 @@ class ImportData {
       return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](meaning.$, lang, 'text/plain', targetWord)
     }
 
+    // may be overriden by specific engine use via setRightsParser
+    this.parseRights = function(data) {
+      return null
+    }
+
     // may be overridden by specific engine use via setPropertyParser - default just returns the property value
     // as a list
     this.parseProperty = function (propertyName, propertyValue) {
@@ -10463,6 +10481,10 @@ class ImportData {
 
   setMeaningParser (callback) {
     this.parseMeaning = callback
+  }
+
+  setRightsParser (callback) {
+    this.parseRights = callback
   }
 
   /**
@@ -10709,6 +10731,13 @@ class TransformAdapter {
         this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_MAPPING_DATA.get(language))
         continue
       }
+      const rights = mappingData.parseRights(dictData)
+      let lexemeProvider
+      if (rights) {
+        lexemeProvider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](providerUri, rights)
+      } else {
+        lexemeProvider = provider
+      }
 
       const reconstructHdwd = this.collectHdwdArray(dictData, inflectionsJSONTerm, mappingData.model.direction)
       if (reconstructHdwd.length > 0) {
@@ -10746,13 +10775,13 @@ class TransformAdapter {
         if (lemmaElements.length > 1) {
           if (meanings && meanings[index] && meanings[index].$) {
             const meaning = meanings[index]
-            shortdefs.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider,
+            shortdefs.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(lexemeProvider,
               mappingData.parseMeaning(meaning, lemmas[index].word)))
           }
         } else {
           // Changed to prevent some weird "Array Iterator.prototype.next called on incompatible receiver [object Unknown]" error
           const sDefs = meanings.filter((m) => m.$).map(meaning => {
-            return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider,
+            return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(lexemeProvider,
               mappingData.parseMeaning(meaning, lemma.word))
           })
           shortdefs.push(...sDefs)
@@ -10760,7 +10789,7 @@ class TransformAdapter {
         let lexmodel = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lexeme"](lemma, []) // eslint-disable-line prefer-const
 
         lexmodel.meaning.appendShortDefs(shortdefs)
-        lexemeSet.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, lexmodel))
+        lexemeSet.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(lexemeProvider, lexmodel))
       }
 
       if (lemmas.length === 0) {
