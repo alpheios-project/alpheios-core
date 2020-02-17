@@ -98,6 +98,12 @@
             },
             { name: 'declension', decorators: ['appendtype'],
               checkfn: (inflset) => inflset.groupingKey.declension && ! this.featureMatch(inflset.groupingKey.declension, this.lexeme.lemma.features.declension)
+            },
+            { name: 'kaylo', decorators: ['prefixtype'],
+              checkfn: (inflset) => inflset.groupingKey.kaylo
+            },
+            { name: 'state', decorators: ['prefixtype'],
+              checkfn: (inflset) => inflset.groupingKey.state
             }
           ],
           level2: [

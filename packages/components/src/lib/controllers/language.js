@@ -5,7 +5,9 @@ const languageNames = new Map([
   [Constants.LANG_LATIN, 'Latin'],
   [Constants.LANG_GREEK, 'Greek'],
   [Constants.LANG_ARABIC, 'Arabic'],
-  [Constants.LANG_PERSIAN, 'Persian']
+  [Constants.LANG_PERSIAN, 'Persian'],
+  [Constants.LANG_CHINESE, 'Chinese'],
+  [Constants.LANG_SYRIAC, 'Syriac'],
 ])
 
 const UNKNOWN_LANGUAGE_NAME = ''

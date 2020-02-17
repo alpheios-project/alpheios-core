@@ -45,6 +45,7 @@ const languageNames = new Map([
   [Constants.LANG_ARABIC, 'Arabic'],
   [Constants.LANG_PERSIAN, 'Persian'],
   [Constants.LANG_GEEZ, 'Ancient Ethiopic (Ge\'ez)'],
+  [Constants.LANG_SYRIAC, 'Syriac'],
   [Constants.LANG_CHINESE, 'Chinese']
 ])
 

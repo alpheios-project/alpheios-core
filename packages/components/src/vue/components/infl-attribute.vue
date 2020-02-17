@@ -67,6 +67,9 @@ export default {
       if (this.decorators.includes('appendtype')) {
         decorated = `${decorated} ${type}`
       }
+      if (this.decorators.includes('prefixtype')) {
+        decorated = `${type} ${decorated}`
+      }
       if (this.decorators.includes('parenthesize')) {
         decorated = `(${decorated})`
       }

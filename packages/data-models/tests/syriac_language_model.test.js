@@ -52,4 +52,16 @@ describe('LanguageModelFactory object', () => {
     expect(grouped[0].groupingKey.hasFeatureValue(Feature.types.kaylo, "p'al")).toBeTruthy()
     expect(grouped[0].groupingKey.hasFeatureValue(Feature.types.part, 'verb')).toBeTruthy()
   })
+
+  it('includes state in base inflection group', () => {
+    let one = new Inflection('a', Constants.LANG_SYRIAC, 'astem', null, null)
+
+    one.addFeature(new Feature(Feature.types.part, [['noun', 1]], Constants.LANG_SYRIAC))
+    one.addFeature(new Feature(Feature.types.gender, 'masculine', Constants.LANG_SYRIAC))
+    one.addFeature(new Feature(Feature.types.number, 'plural', Constants.LANG_SYRIAC))
+    one.addFeature(new Feature(Feature.types.state, 'construct', Constants.LANG_SYRIAC))
+    let grouped = syr.groupInflectionsForDisplay([one])
+    expect(grouped[0].groupingKey.hasFeatureValue(Feature.types.state, 'construct')).toBeTruthy()
+    expect(grouped[0].groupingKey.hasFeatureValue(Feature.types.part, 'noun')).toBeTruthy()
+  })
 })
