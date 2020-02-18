@@ -929,10 +929,7 @@ p.alpheios-lemma__translations-value {
   margin-right: calc(var(--alpheios-base-text-size) * 0.3125) !important;
 }
 .alpheios-principal-parts__item {
-  display: flex;
-}
-.alpheios-principal-parts__item .feature_source {
-  flex-basis: 50% !important;
+  max-width: 400px !important;
 }
 .alpheios-principal-parts__listitem:after {
   content: ", " !important;

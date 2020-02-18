@@ -122,11 +122,7 @@
   }
 
   .alpheios-principal-parts__item {
-    display: flex;
-  }
-  
-  .alpheios-principal-parts__item .feature_source {
-    flex-basis: 50%;
+    max-width: 400px;
   }
 
   .alpheios-principal-parts__listitem:after {
