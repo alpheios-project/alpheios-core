@@ -14878,6 +14878,10 @@ data.setPropertyParser(function (propertyName, propertyValue) {
   if (propertyName === 'paradigm') {
      // state has some extra "" around values
      propertyValues = [ propertyValue.replace(/"/g,'') ]
+  } else if (propertyName === 'src') {
+    // replace the '[from sedra.bethmardutho.org, accessed on XXXXX]' as duplicative
+    // with rights
+    propertyValues = [ propertyValue.replace(/\[from sedra.bethmardutho.org .*?\]/g,'') ]
   } else {
     propertyValues = [propertyValue]
   }
