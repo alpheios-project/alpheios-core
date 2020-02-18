@@ -10073,7 +10073,7 @@ data.setPropertyParser(function (propertyName, propertyValue) {
   } else if (propertyName === 'src') {
     // replace the '[from sedra.bethmardutho.org, accessed on XXXXX]' as duplicative
     // with rights
-    propertyValues = [ propertyValue.replace(/\[from sedra.bethmardutho.org .*?\]/g,'') ]
+    propertyValues = [ propertyValue.replace(/\[from sedra.bethmardutho.org, .*?\]/g,'') ]
   } else {
     propertyValues = [propertyValue]
   }

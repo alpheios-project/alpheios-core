@@ -121,6 +121,14 @@
     margin-right: textsize(5px);
   }
 
+  .alpheios-principal-parts__item {
+    display: flex;
+  }
+  
+  .alpheios-principal-parts__item .feature_source {
+    flex-basis: 50%;
+  }
+
   .alpheios-principal-parts__listitem:after {
     content: ", ";
   }

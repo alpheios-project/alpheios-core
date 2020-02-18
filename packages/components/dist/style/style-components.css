@@ -928,6 +928,12 @@ p.alpheios-lemma__translations-value {
   font-weight: 700;
   margin-right: calc(var(--alpheios-base-text-size) * 0.3125);
 }
+.alpheios-principal-parts__item {
+  display: flex;
+}
+.alpheios-principal-parts__item .feature_source {
+  flex-basis: 50%;
+}
 .alpheios-principal-parts__listitem:after {
   content: ", ";
 }
