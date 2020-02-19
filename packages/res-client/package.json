@@ -1,18 +1,18 @@
 {
 	"name": "alpheios-res-client",
-	"version": "3.2.1-dev.4",
+	"version": "3.2.1-dev.5",
 	"description": "Alpheios Resource Client Library",
 	"private": true,
 	"main": "dist/alpheios-res-client.min.js",
 	"moduleExternal": "dist/alpheios-res-client.module-external.js",
-  "scripts": {
-    "test": "jest --coverage && shx cat ./coverage/lcov.info | overalls",
-	"test-no-coverage": "jest",
-    "build": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all lib",
-    "build-prod": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production lib",
-    "build-dev": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development lib",
-    "lint": "eslint --fix src/**/*.js"
-  },
+	"scripts": {
+		"test": "jest --coverage && shx cat ./coverage/lcov.info | overalls",
+		"test-no-coverage": "jest",
+		"build": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all lib",
+		"build-prod": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production lib",
+		"build-dev": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development lib",
+		"lint": "eslint --fix src/**/*.js"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/alpheios-project/res-client.git"
@@ -24,25 +24,25 @@
 	},
 	"homepage": "https://github.com/alpheios-project/res-client#readme",
 	"devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.8.3",
-    "@babel/preset-env": "^7.8.4",
-    "@babel/runtime": "^7.8.4",
-	"alpheios-node-build": "github:alpheios-project/node-build#v2.0.0",
-    "babel-jest": "^21.2.0",
-    "babel-plugin-module-resolver": "^4.0.0",
-    "coveralls": "^3.0.9",
-    "eslint": "^6.8.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "jest": "^25.1.0",
-    "jest-fetch-mock": "^3.0.1",
-    "papaparse": "^5.1.1",
-	"shx": "^0.3.2"
+		"@babel/core": "^7.8.4",
+		"@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+		"@babel/plugin-transform-runtime": "^7.8.3",
+		"@babel/preset-env": "^7.8.4",
+		"@babel/runtime": "^7.8.4",
+		"alpheios-node-build": "github:alpheios-project/node-build#v2.0.0",
+		"babel-jest": "^21.2.0",
+		"babel-plugin-module-resolver": "^4.0.0",
+		"coveralls": "^3.0.9",
+		"eslint": "^6.8.0",
+		"eslint-config-standard": "^14.1.0",
+		"eslint-plugin-import": "^2.20.1",
+		"eslint-plugin-node": "^10.0.0",
+		"eslint-plugin-promise": "^4.2.1",
+		"eslint-plugin-standard": "^4.0.1",
+		"jest": "^25.1.0",
+		"jest-fetch-mock": "^3.0.1",
+		"papaparse": "^5.1.1",
+		"shx": "^0.3.2"
 	},
 	"peerDependencies": {
 		"alpheios-data-models": "^3.2.1-dev.3"

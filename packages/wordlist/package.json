@@ -1,17 +1,17 @@
 {
 	"name": "alpheios-wordlist",
-	"version": "3.2.1-dev.4",
+	"version": "3.2.1-dev.5",
 	"description": "Word-In-Context List library for an Alpheios project",
 	"private": true,
 	"main": "dist/alpheios-wordlist.min.js",
-  "scripts": {
-    "test": "cross-env AUTH_TOKEN='alpheiosMockUserId021d0136-51d6-4e36-9d2d-3b6c96707e80' ENDPOINT='https://userapis-dev.alpheios.net/v1/words' jest --coverage && shx cat ./coverage/lcov.info | coveralls",
-    "test-no-coverage": "cross-env AUTH_TOKEN='alpheiosMockUserId021d0136-51d6-4e36-9d2d-3b6c96707e80' ENDPOINT='https://userapis-dev.alpheios.net/v1/words' jest",
-	"build": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue",
-    "build-prod": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue",
-    "build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue",
-    "lint": "eslint --fix src/**/*.js"
-  },
+	"scripts": {
+		"test": "cross-env AUTH_TOKEN='alpheiosMockUserId021d0136-51d6-4e36-9d2d-3b6c96707e80' ENDPOINT='https://userapis-dev.alpheios.net/v1/words' jest --coverage && shx cat ./coverage/lcov.info | coveralls",
+		"test-no-coverage": "cross-env AUTH_TOKEN='alpheiosMockUserId021d0136-51d6-4e36-9d2d-3b6c96707e80' ENDPOINT='https://userapis-dev.alpheios.net/v1/words' jest",
+		"build": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue",
+		"build-prod": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue",
+		"build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue",
+		"lint": "eslint --fix src/**/*.js"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/alpheios-project/wordlist.git"
@@ -23,26 +23,26 @@
 	},
 	"homepage": "https://github.com/alpheios-project/wordlist#readme",
 	"devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.8.3",
-    "@babel/preset-env": "^7.8.4",
-    "@babel/runtime": "^7.8.4",
-    "alpheios-node-build": "github:alpheios-project/node-build#v2.0.0",
-    "axios": "^0.19.2",
-    "babel-plugin-module-resolver": "^4.0.0",
-    "coveralls": "^3.0.9",
-	"cross-env": "^7.0.0",
-    "eslint": "^6.8.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "fake-indexeddb": "^3.0.0",
-    "jest": "^25.1.0",
-	"shx": "^0.3.2",
-    "whatwg-fetch": "^3.0.0"
+		"@babel/core": "^7.8.4",
+		"@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+		"@babel/plugin-transform-runtime": "^7.8.3",
+		"@babel/preset-env": "^7.8.4",
+		"@babel/runtime": "^7.8.4",
+		"alpheios-node-build": "github:alpheios-project/node-build#v2.0.0",
+		"axios": "^0.19.2",
+		"babel-plugin-module-resolver": "^4.0.0",
+		"coveralls": "^3.0.9",
+		"cross-env": "^7.0.0",
+		"eslint": "^6.8.0",
+		"eslint-config-standard": "^14.1.0",
+		"eslint-plugin-import": "^2.20.1",
+		"eslint-plugin-node": "^10.0.0",
+		"eslint-plugin-promise": "^4.2.1",
+		"eslint-plugin-standard": "^4.0.1",
+		"fake-indexeddb": "^3.0.0",
+		"jest": "^25.1.0",
+		"shx": "^0.3.2",
+		"whatwg-fetch": "^3.0.0"
 	},
 	"peerDependencies": {
 		"intl-messageformat": "^2.2.0"
