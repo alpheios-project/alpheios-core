@@ -5,8 +5,9 @@
 	"private": true,
 	"main": "dist/alpheios-wordlist.min.js",
   "scripts": {
-    "test": "eslint --fix src/**/*.js && AUTH_TOKEN='alpheiosMockUserId021d0136-51d6-4e36-9d2d-3b6c96707e80' ENDPOINT='https://userapis-dev.alpheios.net/v1/words' jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "build": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue",
+    "test": "cross-env AUTH_TOKEN='alpheiosMockUserId021d0136-51d6-4e36-9d2d-3b6c96707e80' ENDPOINT='https://userapis-dev.alpheios.net/v1/words' jest --coverage && shx cat ./coverage/lcov.info | coveralls",
+    "test-no-coverage": "cross-env AUTH_TOKEN='alpheiosMockUserId021d0136-51d6-4e36-9d2d-3b6c96707e80' ENDPOINT='https://userapis-dev.alpheios.net/v1/words' jest",
+	"build": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue",
     "build-prod": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue",
     "build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue",
     "lint": "eslint --fix src/**/*.js"
@@ -31,6 +32,7 @@
     "axios": "^0.19.2",
     "babel-plugin-module-resolver": "^4.0.0",
     "coveralls": "^3.0.9",
+	"cross-env": "^7.0.0",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
@@ -39,6 +41,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "fake-indexeddb": "^3.0.0",
     "jest": "^25.1.0",
+	"shx": "^0.3.2",
     "whatwg-fetch": "^3.0.0"
 	},
 	"peerDependencies": {

@@ -6,7 +6,8 @@
 	"main": "dist/alpheios-res-client.min.js",
 	"moduleExternal": "dist/alpheios-res-client.module-external.js",
   "scripts": {
-    "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test": "jest --coverage && shx cat ./coverage/lcov.info | overalls",
+	"test-no-coverage": "jest",
     "build": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all lib",
     "build-prod": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production lib",
     "build-dev": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development lib",
@@ -40,7 +41,8 @@
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^25.1.0",
     "jest-fetch-mock": "^3.0.1",
-    "papaparse": "^5.1.1"
+    "papaparse": "^5.1.1",
+	"shx": "^0.3.2"
 	},
 	"peerDependencies": {
 		"alpheios-data-models": "^3.2.1-dev.3"

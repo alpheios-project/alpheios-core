@@ -8,9 +8,10 @@
     "doc": "doc"
   },
   "scripts": {
-    "test": "npm run lint && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-data": "npm run lint && jest tests/data/*",
-    "test-c": "npm run lint && jest tests/lib/lang/greek-language-dataset.test.js --no-cache --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test": "jest --coverage && shx cat ./coverage/lcov.info | coveralls",
+    "test-no-coverage": "jest",
+    "test-data": "jest tests/data/*",
+    "test-c": "jest tests/lib/lang/greek-language-dataset.test.js --no-cache --coverage && shx cat ./coverage/lcov.info | coveralls",
     "test-a": "npm run lint && jest tests/data/greek-adjective-paradigm.test.js",
     "test-o": "npm run lint && jest tests/new-paradigm.test.js",
     "build": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack all lib config.mjs",
@@ -54,6 +55,7 @@
     "jest": "^25.1.0",
     "papaparse": "^5.1.1",
     "raw-loader": "^4.0.0",
+    "shx": "^0.3.2",
     "source-map-loader": "^0.2.4",
     "uuid": "^3.4.0",
     "whatwg-fetch": "^3.0.0",
