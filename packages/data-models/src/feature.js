@@ -55,6 +55,7 @@ export default class Feature {
      * Keeps feature values along with their sort order.
      * Items with higher sort order usually have more importance,
      * but how to interpret the sortOrder value is ultimately implementation-dependent.
+     *
      * @type {{sortOrder: number, value: *}[]}
      * @private
      */
@@ -107,12 +108,12 @@ export default class Feature {
       hdwd: 'headword',
       part: 'part of speech', // Part of speech
       number: 'number',
-      'case': 'case',
+      case: 'case',
       grmCase: 'case', // A synonym of `case`
       declension: 'declension',
       gender: 'gender',
       type: 'type',
-      'class': 'class',
+      class: 'class',
       grmClass: 'class', // A synonym of `class`
       conjugation: 'conjugation',
       comparison: 'comparison',
@@ -162,6 +163,7 @@ export default class Feature {
 
   /**
    * Test to see if this feature allows unrestricted values.
+   *
    * @returns {boolean} true if unrestricted false if not.
    */
   get allowsUnrestrictedValues () {
@@ -183,8 +185,9 @@ export default class Feature {
 
   /**
    * Compares a feature's values to another feature's values for sorting
+   *
    * @param {Feature} otherFeature the feature to compare this feature's values to
-   * @return {number} < 1 if this feature should be sorted first, 0 if they are equal and -1 if this feature should be sorted second
+   * @returns {number} < 1 if this feature should be sorted first, 0 if they are equal and -1 if this feature should be sorted second
    */
   compareTo (otherFeature) {
     // the data values are sorted upon construction and insertion so we only should need to look at the first values
@@ -207,7 +210,8 @@ export default class Feature {
    * returned in a single string. Values composing this string are sorted according
    * to each value's sort order.
    * NOTE: If object contains a single value and it is a number, it will be converted to a string.
-   * @return {string} A single value string.
+   *
+   * @returns {string} A single value string.
    */
   get value () {
     return this.values.join(this.constructor.joinSeparator)
@@ -231,7 +235,8 @@ export default class Feature {
   /**
    * Returns an array of string values of a feature, sorted according to each item's sort order.
    * If a feature contains a single feature, an array with one value will be returned.
-   * @return {*[]} An array of values in a format in which they are stored in the Feature object.
+   *
+   * @returns {*[]} An array of values in a format in which they are stored in the Feature object.
    */
   get values () {
     return this._data.map(v => v.value)
@@ -239,6 +244,7 @@ export default class Feature {
 
   /**
    * Retrieves a value object by name. Can be used to update a value object directly.
+   *
    * @param {string} featureValue - A feature value of an object to retrieve.
    */
   getValue (featureValue) {
@@ -247,6 +253,7 @@ export default class Feature {
 
   /**
    * Returns a number of feature values.
+   *
    * @retrun {number] A quantity of feature values
    */
   get valQty () {
@@ -267,7 +274,8 @@ export default class Feature {
 
   /**
    * A string representation of a feature.
-   * @return {string}
+   *
+   * @returns {string}
    */
   toString () {
     return this.value
@@ -275,6 +283,7 @@ export default class Feature {
 
   /**
    * Examines the feature for a specific value.
+   *
    * @param {string} value
    * @returns {boolean} true if the value is included in the feature's values.
    */
@@ -284,12 +293,13 @@ export default class Feature {
 
   /**
    * Checks if this feature has all value from an array.
+   *
    * @param {string[]} values - An array of values to check for.
    * @returns {boolean} true if the value is included in the feature's values.
    */
   hasValues (values) {
     let hasValues = true
-    for (let value of values) {
+    for (const value of values) {
       hasValues = hasValues && this.hasValue(value)
     }
     return hasValues
@@ -297,12 +307,13 @@ export default class Feature {
 
   /**
    * Checks if this feature has some value from an array.
+   *
    * @param {string[]} values - An array of values to check for.
    * @returns {boolean} true if the value is included in the feature's values.
    */
   hasSomeValues (values) {
     let hasValues = false
-    for (let value of values) {
+    for (const value of values) {
       hasValues = hasValues || this.hasValue(value)
     }
     return hasValues
@@ -315,8 +326,9 @@ export default class Feature {
   /**
    * Two features are considered fully equal if they are of the same type, have the same language,
    * and the same set of feature values in the same order.
+   *
    * @param {Feature} feature - A GrmFtr object this feature should be compared with.
-   * @return {boolean} True if features are equal, false otherwise.
+   * @returns {boolean} True if features are equal, false otherwise.
    */
   isEqual (feature) {
     return feature &&
@@ -328,9 +340,10 @@ export default class Feature {
   /**
    * Adds a single new value to the existing feature object.
    * This function is chainable.
+   *
    * @param {string} value - A feature value.
    * @param {number} sortOrder - A sort order.
-   * @return {Feature} - Self reference for chaining.
+   * @returns {Feature} - Self reference for chaining.
    */
   addValue (value, sortOrder = this.constructor.defaultSortOrder) {
     if (!this.hasValue(value)) {
@@ -348,12 +361,13 @@ export default class Feature {
   /**
    * Adds multiple new values to the existing feature object.
    * This function is chainable.
+   *
    * @param {string | string[] | string[][]} data - Single or multiple values, in different combinations.
-   * @return {Feature} - Self reference for chaining.
+   * @returns {Feature} - Self reference for chaining.
    */
   addValues (data) {
-    let normalizedData = this.constructor.dataValuesFromInput(data)
-    let values = normalizedData.map(v => v.value)
+    const normalizedData = this.constructor.dataValuesFromInput(data)
+    const values = normalizedData.map(v => v.value)
     if (!this.hasSomeValues(values)) {
       this._data = this._data.concat(normalizedData)
       this.sort() // Resort an array to place an inserted value to the proper place
@@ -365,21 +379,24 @@ export default class Feature {
 
   /**
    * Removes a single value from the existing feature object.
+   *
    * @param value
    */
   removeValue (value) {
     // TODO: Do we need it?
-    console.warn(`This feature is not implemented yet`)
+    console.warn('This feature is not implemented yet')
   }
 
   /**
    * Creates a new single value Feature object of the same type and same language,
-   * but with a different feature value.
-   * This can be used when one feature defines a type and it is necessary
-   * to create other items of the same type.
+but with a different feature value.
+This can be used when one feature defines a type and it is necessary
+to create other items of the same type.
+   *
    * @param {string} value - A value of a feature.
+   * @param sortOrder
    * @param {number} sortOrder.
-   * @return {Feature} A new Ftr object.
+   * @returns {Feature} A new Ftr object.
    */
   createFeature (value, sortOrder = this.constructor.defaultSortOrder) {
     // TODO: Add a check of if the value exists in a source Feature object
@@ -389,9 +406,10 @@ export default class Feature {
   /**
    * Creates a multiple value Feature object of the same type and same language,
    * but with a different feature values.
+   *
    * @param {string | string[] | string[][]} data - Single or multiple values, in different combinations,
    * formatted according to rules described in a Ftr constructor.
-   * @return {Feature} A new Ftr object.
+   * @returns {Feature} A new Ftr object.
    */
   createFeatures (data) {
     return new Feature(this.type, data, this.languageID, this.sortOrder, this.allowedValues)
@@ -402,7 +420,8 @@ export default class Feature {
    * form the values of this object.
    * Useful when the current objects is a type feature and it is necessary to create an array
    * of Feature objects for the type from it.
-   * @return {Feature[]} - An array of Feature objects. Each object represents one feature value
+   *
+   * @returns {Feature[]} - An array of Feature objects. Each object represents one feature value
    * from the current object.
    */
   get ownFeatures () {
@@ -413,12 +432,13 @@ export default class Feature {
    * Create a copy of the feature object.
    */
   getCopy () {
-    let values = this._data.map(item => [item.value, item.sortOrder])
+    const values = this._data.map(item => [item.value, item.sortOrder])
     return new Feature(this.type, values, this.languageID, this.sortOrder, this.allowedValues.slice())
   }
 
   /**
    * Adds an importer to the internal list.
+   *
    * @param {string} name - A name of an importer.
    * @param {FeatureImporter} importer - A `FeatureImporter` object.
    */
@@ -439,9 +459,10 @@ export default class Feature {
 
   /**
    * Adds feature values from the imported values.
+   *
    * @param {string | string[]} foreignData - A single value or an array of values from a third-party source.
    * @param {string} name - A name of an importer.
-   * @return {Feature} - A new Ftr object.
+   * @returns {Feature} - A new Ftr object.
    */
   addFromImporter (foreignData, name = this.constructor.defaultImporterName) {
     if (!this.importers || !this.importers.has(name)) {
@@ -456,9 +477,10 @@ export default class Feature {
 
   /**
    * Creates a new feature of the same type and with the same language from the imported values.
+   *
    * @param {string | string[]} foreignData - A single value or an array of values from a third-party source.
    * @param {string} name - A name of an importer.
-   * @return {Feature} - A new Ftr object.
+   * @returns {Feature} - A new Ftr object.
    */
   createFromImporter (foreignData, name = this.constructor.defaultImporterName) {
     if (!this.importers || !this.importers.has(name)) {
@@ -478,7 +500,7 @@ export default class Feature {
   }
 
   convertToJSONObject () {
-    let data = this._data.map(dataItem => [dataItem.value, dataItem.sortOrder])
+    const data = this._data.map(dataItem => [dataItem.value, dataItem.sortOrder])
     return {
       type: this.type,
       languageCode: LanguageModelFactory.getLanguageCodeFromId(this.languageID),
@@ -489,7 +511,7 @@ export default class Feature {
   }
 
   static readObject (jsonObject) {
-    let languageID = LanguageModelFactory.getLanguageIdFromCode(jsonObject.languageCode)
+    const languageID = LanguageModelFactory.getLanguageIdFromCode(jsonObject.languageCode)
     return new Feature(jsonObject.type, jsonObject.data, languageID, jsonObject.sortOrder, jsonObject.allowedValues)
   }
 }

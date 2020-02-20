@@ -2,10 +2,10 @@ import WordItem from './word-item'
 
 export default class WordList {
   /**
-  * @constructor
-  * @param {String} languageCode the language code of the list
-  * @param {WordItem[]} worditems an optional array of WordItems with which to initialize the list
-  */
+   * @class
+   * @param {string} languageCode the language code of the list
+   * @param {WordItem[]} worditems an optional array of WordItems with which to initialize the list
+   */
   constructor (languageCode, worditems = []) {
     if (!languageCode) {
       throw new Error('Unable to construct a wordlist without a languagecode')
@@ -20,6 +20,7 @@ export default class WordList {
   get size () {
     return Object.keys(this.items).length
   }
+
   /**
    * get the items of the list
    */
@@ -29,7 +30,8 @@ export default class WordList {
 
   /**
    * checks to see if the list is empty
-   * @return {Boolean}
+   *
+   * @returns {boolean}
    */
   get isEmpty () {
     return Object.values(this.items).length === 0
@@ -39,22 +41,23 @@ export default class WordList {
     if (item.languageCode !== this.languageCode) {
       throw new Error(`Language Code mismatch ${item.languageCode} !=== ${this.languageCode}`)
     }
-    let existingItem = this.getWordItem(item.targetWord, false)
+    const existingItem = this.getWordItem(item.targetWord, false)
     if (existingItem) {
       item.merge(existingItem)
     }
-    let key = this._makeItemKey(this.languageCode, item.targetWord)
+    const key = this._makeItemKey(this.languageCode, item.targetWord)
     this.items[key] = item
   }
 
   /**
-  * delete an individual word item from the list
-  * @param {String} targetWord the word to delete
-  * @return {WordItem} the deleted item
-  */
+   * delete an individual word item from the list
+   *
+   * @param {string} targetWord the word to delete
+   * @returns {WordItem} the deleted item
+   */
   deleteWordItem (targetWord) {
-    let key = this._makeItemKey(this.languageCode, targetWord)
-    let toDelete = this.items[key]
+    const key = this._makeItemKey(this.languageCode, targetWord)
+    const toDelete = this.items[key]
     if (toDelete) {
       delete this.items[key]
     }
@@ -62,22 +65,24 @@ export default class WordList {
   }
 
   /**
-  * delete all items from a list
-  */
+   * delete all items from a list
+   */
   removeAllWordItems () {
     this.items = {}
   }
 
   /**
    * get an item from a list
+   *
    * @param targetWord the word to get
-   * @param {Boolean} create true to create the item if it doesn't exist
-   * @return {WordItem} the retrieved item
+   * @param {boolean} create true to create the item if it doesn't exist
+   * @param eventWordItemUpdated
+   * @returns {WordItem} the retrieved item
    */
   getWordItem (targetWord, create = true, eventWordItemUpdated = null) {
-    let key = this._makeItemKey(this.languageCode, targetWord)
+    const key = this._makeItemKey(this.languageCode, targetWord)
     if (create && !this.items[key]) {
-      let wordItem = new WordItem({ targetWord: targetWord, languageCode: this.languageCode })
+      const wordItem = new WordItem({ targetWord: targetWord, languageCode: this.languageCode })
       if (eventWordItemUpdated) {
         eventWordItemUpdated.pub({ dataObj: wordItem, params: { segment: 'common' } })
       }
@@ -87,10 +92,11 @@ export default class WordList {
   }
 
   /**
-    * make a key for a word item
-    * @param {String} languageCode
-    * @param {String} targetWord
-    */
+   * make a key for a word item
+   *
+   * @param {string} languageCode
+   * @param {string} targetWord
+   */
   _makeItemKey (languageCode, targetWord) {
     return `${languageCode}:${targetWord.toLowerCase()}`
   }

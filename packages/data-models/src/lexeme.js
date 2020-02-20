@@ -11,6 +11,7 @@ import ResourceProvider from './resource_provider.js'
 class Lexeme {
   /**
    * Initializes a Lexeme object.
+   *
    * @param {Lemma} lemma - A lemma object.
    * @param {Inflection[]} inflections - An array of inflections.
    * @param {DefinitionSet} meaning - A set of definitions.
@@ -32,7 +33,7 @@ class Lexeme {
       throw new Error('Inflection data should be provided in an array.')
     }
 
-    for (let inflection of inflections) {
+    for (const inflection of inflections) {
       if (!(inflection instanceof Inflection)) {
         throw new Error('All inflection data should be of Inflection object type.')
       }
@@ -52,6 +53,7 @@ class Lexeme {
 
   /**
    * add an inflection to the lexeme
+   *
    * @param {Inflection} inflection
    */
   addInflection (inflection) {
@@ -62,6 +64,7 @@ class Lexeme {
 
   /**
    * add an alternative lemma to the lexeme
+   *
    * @param {Lemma} lemma
    */
   addAltLemma (lemma) {
@@ -74,7 +77,8 @@ class Lexeme {
    *   its lemma has morphological features defined
    *   it has one ore more definitions supplied in the meaning
    *   it has one ore more inflections
-   * @return {boolean}
+   *
+   * @returns {boolean}
    */
   isPopulated () {
     return Object.entries(this.lemma.features).length > 0 ||
@@ -84,6 +88,7 @@ class Lexeme {
 
   /**
    * Checks if any short definitions are stored within this lexeme.
+   *
    * @returns {boolean} - true if any definitions are stored, false otherwise.
    */
   get hasShortDefs () {
@@ -92,6 +97,7 @@ class Lexeme {
 
   /**
    * Checks if any full definitions are stored within this lexeme.
+   *
    * @returns {boolean} - true if any definitions are stored, false otherwise.
    */
   get hasFullDefs () {
@@ -100,20 +106,21 @@ class Lexeme {
 
   /**
    * disambiguate with another supplied Lexeme
+   *
    * @param {Lexeme} lexeme the lexeme to be disambiguated
    * @param {Lexeme} disambiguator the lexeme to use to disambiguate
-   * @return {Lexeme} a new lexeme, if disamibugation was successful disambiguated flag will be set on it
+   * @returns {Lexeme} a new lexeme, if disamibugation was successful disambiguated flag will be set on it
    */
   static disambiguate (lexeme, disambiguator) {
-    let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning)
+    let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning) // eslint-disable-line prefer-const
     if (lexeme.lemma.isFullHomonym(disambiguator.lemma) && disambiguator.inflections.length > 0) {
       newLexeme.disambiguated = true
-      let keepInflections = []
+      let keepInflections = [] // eslint-disable-line prefer-const
       // iterate through this lexemes inflections and keep only thoes that are disambiguatedBy by the supplied lexeme's inflection
       // we want to keep the original inflections rather than just replacing them
       // because the original inflections may have more information
-      for (let inflection of newLexeme.inflections) {
-        for (let disambiguatorInflection of disambiguator.inflections) {
+      for (const inflection of newLexeme.inflections) {
+        for (const disambiguatorInflection of disambiguator.inflections) {
           if (inflection.disambiguatedBy(disambiguatorInflection)) {
             keepInflections.push(inflection)
           }
@@ -122,7 +129,7 @@ class Lexeme {
       newLexeme.inflections = keepInflections
       // if we couldn't match any existing inflections, then add the disambiguated one
       if (newLexeme.inflections.length === 0) {
-        for (let infl of disambiguator.inflections) {
+        for (const infl of disambiguator.inflections) {
           newLexeme.addInflection(infl)
         }
       }
@@ -131,24 +138,24 @@ class Lexeme {
   }
 
   getGroupedInflections () {
-    let lm = LMF.getLanguageModel(this.lemma.languageID)
+    const lm = LMF.getLanguageModel(this.lemma.languageID)
     return lm.groupInflectionsForDisplay(this.inflections)
   }
 
   static readObject (jsonObject) {
-    let lemma = Lemma.readObject(jsonObject.lemma)
-    let inflections = []
-    for (let inflection of jsonObject.inflections) {
+    const lemma = Lemma.readObject(jsonObject.lemma)
+    let inflections = [] // eslint-disable-line prefer-const
+    for (const inflection of jsonObject.inflections) {
       inflections.push(Inflection.readObject(inflection))
     }
 
-    let lexeme = new Lexeme(lemma, inflections)
+    const lexeme = new Lexeme(lemma, inflections)
     if (jsonObject.meaning) {
       lexeme.meaning = DefinitionSet.readObject(jsonObject.meaning)
     }
 
     if (jsonObject.provider) {
-      let provider = ResourceProvider.readObject(jsonObject.provider)
+      const provider = ResourceProvider.readObject(jsonObject.provider)
       return ResourceProvider.getProxy(provider, lexeme)
     } else {
       return lexeme
@@ -156,17 +163,16 @@ class Lexeme {
   }
 
   convertToJSONObject (addMeaning = false) {
-    let resInflections = []
+    let resInflections = [] // eslint-disable-line prefer-const
     this.inflections.forEach(inflection => { resInflections.push(inflection.convertToJSONObject()) })
 
-    let resLexeme = {
+    const resLexeme = {
       lemma: this.lemma.convertToJSONObject(),
       inflections: resInflections
     }
 
     if (addMeaning) {
-      let resMeaning = this.meaning.convertToJSONObject()
-      resLexeme.meaning = resMeaning
+      resLexeme.meaning = this.meaning.convertToJSONObject()
     }
 
     if (this.provider) {
@@ -180,6 +186,7 @@ class Lexeme {
    * Get a sort function for an array of lexemes which applies a primary and secondary
    * sort logic using the sort order specified for each feature. Sorts in descending order -
    * higher sort order means it should come first
+   *
    * @param {string} primary feature name to use as primary sort key
    * @param {string} secondary feature name to use as secondary sort key
    * @returns {Function} function which can be passed to Array.sort

@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+  - 13.2
+cache: npm
+install:
+  - npm run set-node-build-deps
+  - npm run bootstrap
+script: npm run test-ci
+before_deploy:
+  - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
+deploy:
+  - provider: script
+    script: "npx lerna publish from-package --yes --dist-tag dev"
+    on:
+      branch: master
+  - provider: script
+    script: "npx lerna publish from-package --yes --dist-tag qa"
+    on:
+      branch: qa

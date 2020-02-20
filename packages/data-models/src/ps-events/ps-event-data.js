@@ -27,7 +27,8 @@ export default class PsEventData {
    *     LexicalQuery.finalize -> [Lexical Query Complete]
    * If caller function is not specified during a `pub()` call, description will be:
    *     LexicalQuery -> [Lexical Query Complete]
-   * @return {string} - An event data description.
+   *
+   * @returns {string} - An event data description.
    */
   get description () {
     return this.caller ? `${this.publisher}.${this.caller} -> [${this.name}]` : `${this.publisher} -> [${this.name}]`

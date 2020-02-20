@@ -1,28 +1,29 @@
 {
-	"name": "alpheios-res-client",
-	"version": "3.2.1-dev.5",
-	"description": "Alpheios Resource Client Library",
-	"private": true,
-	"main": "dist/alpheios-res-client.min.js",
-	"moduleExternal": "dist/alpheios-res-client.module-external.js",
+  "name": "alpheios-res-client",
+  "version": "3.2.1-dev.7",
+  "description": "Alpheios Resource Client Library",
+  "private": true,
+  "main": "dist/alpheios-res-client.min.js",
+  "moduleExternal": "dist/alpheios-res-client.module-external.js",
   "scripts": {
-    "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test": "jest --coverage && shx cat ./coverage/lcov.info | overalls",
+    "test-no-coverage": "jest",
     "build": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all lib",
     "build-prod": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production lib",
     "build-dev": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development lib",
     "lint": "eslint --fix src/**/*.js"
   },
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/alpheios-project/res-client.git"
-	},
-	"author": "The Alpheios Project, Ltd.",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/alpheios-project/res-client/issues"
-	},
-	"homepage": "https://github.com/alpheios-project/res-client#readme",
-	"devDependencies": {
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alpheios-project/res-client.git"
+  },
+  "author": "The Alpheios Project, Ltd.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alpheios-project/res-client/issues"
+  },
+  "homepage": "https://github.com/alpheios-project/res-client#readme",
+  "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.8.3",
@@ -40,40 +41,41 @@
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^25.1.0",
     "jest-fetch-mock": "^3.0.1",
-    "papaparse": "^5.1.1"
-	},
-	"peerDependencies": {
-		"alpheios-data-models": "^3.2.1-dev.3"
-	},
-	"engines": {
-		"node": ">= 9.10.1",
-		"npm": ">= 5.6.0"
-	},
-	"jest": {
-		"verbose": true,
-		"moduleNameMapper": {
-			"^@wordlist[/](.+)": "<rootDir>/src/$1",
-			"alpheios-data-models": "<rootDir>/../data-models/dist/alpheios-data-models.js"
-		},
-		"transform": {
-			"^.+\\.jsx?$": "babel-jest"
-		}
-	},
-	"eslintConfig": {
-		"env": {
-			"browser": true,
-			"node": true,
-			"jest": true
-		},
-		"parserOptions": {
-			"ecmaVersion": 2019,
-			"sourceType": "module"
-		}
-	},
-	"standard": {
-		"ignore": [
-			"**/dist",
-			"**/tests/test-bundle.js"
-		]
-	}
+    "papaparse": "^5.1.1",
+    "shx": "^0.3.2"
+  },
+  "peerDependencies": {
+    "alpheios-data-models": "^3.2.1-dev.5"
+  },
+  "engines": {
+    "node": ">= 9.10.1",
+    "npm": ">= 5.6.0"
+  },
+  "jest": {
+    "verbose": true,
+    "moduleNameMapper": {
+      "^@wordlist[/](.+)": "<rootDir>/src/$1",
+      "alpheios-data-models": "<rootDir>/../data-models/dist/alpheios-data-models.js"
+    },
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true,
+      "jest": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2019,
+      "sourceType": "module"
+    }
+  },
+  "standard": {
+    "ignore": [
+      "**/dist",
+      "**/tests/test-bundle.js"
+    ]
+  }
 }

@@ -17,12 +17,13 @@ class FeatureType {
   // TODO: value checking
   /**
    * Creates and initializes a Feature Type object.
+   *
    * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
    * @param {string[] | string[][]} values - A list of allowed values for this feature type.
    * If an empty array is provided, there will be no
    * allowed values as well as no ordering (can be used for items that do not need or have a simple order,
    * such as footnotes).
-   * @param {String | Symbol} language - A language of a feature type.
+   * @param {string|symbol} language - A language of a feature type.
    */
   constructor (type, values, language) {
     if (!values || !Array.isArray(values)) {
@@ -47,7 +48,7 @@ class FeatureType {
     for (const [index, value] of values.entries()) {
       this._orderIndex.push(value)
       if (Array.isArray(value)) {
-        for (let element of value) {
+        for (const element of value) {
           this[element] = new Feature(this.type, element, this.languageID)
           this._orderLookup[element] = index
         }
@@ -60,15 +61,17 @@ class FeatureType {
 
   /**
    * This is a compatibility function for legacy code.
-   * @return {String} A language code.
+   *
+   * @returns {string} A language code.
    */
   get language () {
-    console.warn(`Please use a "languageID" instead of a "language"`)
+    console.warn('Please use a "languageID" instead of a "language"')
     return this.languageCode
   }
 
   /**
    * test to see if this FeatureType allows unrestricted values
+   *
    * @returns {boolean} true if unrestricted false if not
    */
   hasUnrestrictedValue () {
@@ -78,6 +81,7 @@ class FeatureType {
   /**
    * Return a Feature with an arbitrary value. This value would not be necessarily present among FeatureType values.
    * This can be especially useful for features that do not set: a list of predefined values, such as footnotes.
+   *
    * @param value
    * @param {int} sortOrder
    * @returns {Feature}
@@ -93,7 +97,7 @@ class FeatureType {
   /**
    *
    * @param {string[][]} data - An array of value arrays as: [[value1, sortOrder1], [value2, sortOrder2]]
-   * @return {Feature}
+   * @returns {Feature}
    */
   getValues (data) {
     return new Feature(this.type, data, this.languageID)
@@ -113,6 +117,7 @@ class FeatureType {
   /**
    * Creates and returns a new importer with a specific name. If an importer with this name already exists,
    * an existing Importer object will be returned.
+   *
    * @param {string} name - A name of an importer object
    * @returns {Importer} A new or existing Importer object that matches a name provided
    */
@@ -128,6 +133,7 @@ class FeatureType {
   /**
    * Return copies of all feature values as Feature objects in a sorted array, according to feature type's sort order.
    * For a similar function that returns strings instead of Feature objects see orderedValues().
+   *
    * @returns {Feature[] | Feature[][]} Array of feature values sorted according to orderIndex.
    * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
    * an array of Feature objects will be returned instead of a single Feature object, as for single feature values.
@@ -144,6 +150,7 @@ class FeatureType {
    * create a wrapper around this function providing it with options arguments so it will be able to decide
    * in what order those features will be based on those arguments.
    * For a similar function that returns Feature objects instead of strings see orderedValues().
+   *
    * @returns {string[]} Array of feature values sorted according to orderIndex.
    * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
    * an array of strings will be returned instead of a single strings, as for single feature values.
@@ -156,6 +163,7 @@ class FeatureType {
    * Returns a lookup table for type values as:
    *  {value1: order1, value2: order2}, where order is a sort order of an item. If two items have the same sort order,
    *  their order value will be the same.
+   *
    * @returns {object}
    */
   get orderLookup () {
@@ -183,9 +191,9 @@ class FeatureType {
       values = [values]
     }
 
-    for (let value of values) {
+    for (const value of values) {
       if (Array.isArray(value)) {
-        for (let element of value) {
+        for (const element of value) {
           if (!this.hasOwnProperty(element.value)) {
             throw new Error('Trying to order an element with "' + element.value + '" value that is not stored in a "' + this.type + '" type.')
           }
@@ -221,7 +229,7 @@ class FeatureType {
     for (const [index, element] of values.entries()) {
       if (Array.isArray(element)) {
         // If it is an array, all values should have the same order
-        let elements = []
+        let elements = [] // eslint-disable-line prefer-const
         for (const subElement of element) {
           this._orderLookup[subElement.value] = index
           elements.push(subElement.value)

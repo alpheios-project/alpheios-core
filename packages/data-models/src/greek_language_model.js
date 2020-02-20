@@ -3,7 +3,7 @@ import LanguageModelFactory from './language_model_factory.js'
 import * as Constants from './constants.js'
 import Feature from './feature.js'
 
-let typeFeatures = new Map()
+let typeFeatures = new Map() // eslint-disable-line prefer-const
 let typeFeaturesInitialized = false
 /**
  * @class  LatinLanguageModel is the lass for Latin specific behavior
@@ -121,7 +121,9 @@ export default class GreekLanguageModel extends LanguageModel {
 
   /**
    * Check to see if this language tool can produce an inflection table display
-   * for the current node
+for the current node
+   *
+   * @param node
    */
   static canInflect (node) {
     return true
@@ -137,6 +139,7 @@ export default class GreekLanguageModel extends LanguageModel {
 
   /**
    * Return a normalized version of a word which can be used to compare the word for equality
+   *
    * @param {string} word the source word
    * @returns {string} the normalized form of the word (default version just returns the same word,
    *          override in language-specific subclass)
@@ -169,16 +172,16 @@ export default class GreekLanguageModel extends LanguageModel {
       return []
     }
     // make sure it's normalized to NFC and in lower case
-    let normalized = GreekLanguageModel.normalizeWord(word).toLocaleLowerCase()
-    let strippedVowelLength = normalized.replace(
+    const normalized = GreekLanguageModel.normalizeWord(word).toLocaleLowerCase()
+    const strippedVowelLength = normalized.replace(
       /[\u{1FB0}\u{1FB1}]/ug, '\u{03B1}').replace(
       /[\u{1FB8}\u{1FB9}]/ug, '\u{0391}').replace(
       /[\u{1FD0}\u{1FD1}]/ug, '\u{03B9}').replace(
       /[\u{1FD8}\u{1FD9}]/ug, '\u{0399}').replace(
       /[\u{1FE0}\u{1FE1}]/ug, '\u{03C5}').replace(
       /[\u{1FE8}\u{1FE9}]/ug, '\u{03A5}').replace(
-      /[\u{00AF}\u{0304}\u{0306}]/ug, '')
-    let strippedDiaeresis = normalized.replace(
+      /[\u{00AF}\u{0304}\u{0306}]/ug, '') // eslint-disable-line no-misleading-character-class
+    const strippedDiaeresis = normalized.replace(
       /\u{0390}/ug, '\u{03AF}').replace(
       /\u{03AA}/ug, '\u{0399}').replace(
       /\u{03AB}/ug, '\u{03A5}').replace(
@@ -194,11 +197,11 @@ export default class GreekLanguageModel extends LanguageModel {
       /\u{1FC1}/ug, '\u{1FC0}').replace(
       /\u{1FED}/ug, '\u{1FEF}').replace(
       /\u{1FEE}/ug, '\u{1FFD}').replace(
-      /[\u{00A8}\u{0308}]/ug, '')
+      /[\u{00A8}\u{0308}]/ug, '') // eslint-disable-line no-misleading-character-class
     // to strip diacritics, rather than list all possible combined vowels with
     // diacritis, decompose, remove the combining accents, and then recompose
-    let strippedDiacritics = normalized.normalize('NFD').replace(
-      /[\u{300}\u{0301}\u{0304}\u{0306},\u{342}]/ug, '').normalize('NFC')
+    const strippedDiacritics = normalized.normalize('NFD').replace(
+      /[\u{300}\u{0301}\u{0304}\u{0306},\u{342}]/ug, '').normalize('NFC') // eslint-disable-line no-misleading-character-class
     if (encoding === 'strippedDiaeresis') {
       return [strippedDiaeresis]
     } else if (encoding === 'strippedDiacritics') {
@@ -210,7 +213,8 @@ export default class GreekLanguageModel extends LanguageModel {
 
   /**
    * Get a list of valid puncutation for this language
-   * @returns {String} a string containing valid puncutation symbols
+   *
+   * @returns {string} a string containing valid puncutation symbols
    */
   static getPunctuation () {
     return '.,;:!?"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u201C\u201D\u0387\u00B7\n\r\u200C\u200D'
@@ -218,16 +222,17 @@ export default class GreekLanguageModel extends LanguageModel {
 
   /**
    * Sets inflection grammar properties based on its characteristics
+   *
    * @param {Inflection} inflection - An inflection object
-   * @return {Object} Inflection properties
+   * @returns {object} Inflection properties
    */
   static getInflectionConstraints (inflection) {
-    let constraints = {
+    const constraints = {
       fullFormBased: false,
       suffixBased: false,
       pronounClassRequired: false
     }
-    let formBasedList = [Constants.POFS_PRONOUN, Constants.POFS_NUMERAL, Constants.POFS_ARTICLE]
+    const formBasedList = [Constants.POFS_PRONOUN, Constants.POFS_NUMERAL, Constants.POFS_ARTICLE]
     if (inflection.hasOwnProperty(Feature.types.part)) {
       if (formBasedList.includes(inflection[Feature.types.part].value)) {
         constraints.fullFormBased = true
@@ -235,7 +240,7 @@ export default class GreekLanguageModel extends LanguageModel {
         constraints.suffixBased = true
       }
     } else {
-      console.warn(`Unable to set grammar: part of speech data is missing or is incorrect`, inflection[Feature.types.part])
+      console.warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[Feature.types.part])
     }
 
     constraints.pronounClassRequired =
@@ -253,15 +258,17 @@ export default class GreekLanguageModel extends LanguageModel {
    * provide class information at all. However, class information is essential in
    * deciding in what table should pronouns be grouped. For this, we have to
    * determine pronoun classes using this method.
+   *
    * @param {Form[]} forms - An array of known forms of pronouns.
    * @param {string} word - A word we need to find a matching class for.
    * @param {boolean} normalize - Whether normalized forms of words shall be used for comparison.
-   * @return {Feature} Matching classes found within a Feature objects. If no matching classes found,
+   * @returns {Feature} Matching classes found within a Feature objects. If no matching classes found,
    * returns undefined.
    */
   static getPronounClasses (forms, word, normalize = true) {
+    // eslint-disable-next-line prefer-const
     let matchingValues = new Set() // Will eliminate duplicated values
-    let matchingForms = forms.filter(
+    const matchingForms = forms.filter(
       form => {
         let match = false
         if (form.value) {
@@ -288,8 +295,8 @@ export default class GreekLanguageModel extends LanguageModel {
   static compareWords (wordA, wordB, normalize = true) {
     let matched = false
     if (normalize) {
-      let altWordA = GreekLanguageModel.alternateWordEncodings(wordA, null, null, 'strippedDiacritics')
-      let altWordB = GreekLanguageModel.alternateWordEncodings(wordB, null, null, 'strippedDiacritics')
+      const altWordA = GreekLanguageModel.alternateWordEncodings(wordA, null, null, 'strippedDiacritics')
+      const altWordB = GreekLanguageModel.alternateWordEncodings(wordB, null, null, 'strippedDiacritics')
       for (let i = 0; i < altWordA.length; i++) {
         matched = altWordA[i] === altWordB[i]
         if (matched) {

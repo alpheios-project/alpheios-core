@@ -42,10 +42,11 @@ class GrmFeature {
 
   /**
    * This is a compatibility function for legacy code.
-   * @return {String} A language code.
+   *
+   * @returns {string} A language code.
    */
   get language () {
-    console.warn(`Please use a "languageID" instead of a "language"`)
+    console.warn('Please use a "languageID" instead of a "language"')
     return this.languageCode
   }
 
@@ -71,9 +72,9 @@ class GrmFeature {
       features = [features] // If `features` is a single value, convert it to an array (a more general case)
     }
     // `feature` is an array of feature objects with (possibly) each having a single feature value.
-    let languageID = features[0].languageID // Assume all Feature objects have the same language ID
-    let type = features[0].type // Assume all Feature objects have the same type
-    let values = features.map(f => f.value)
+    const languageID = features[0].languageID // Assume all Feature objects have the same language ID
+    const type = features[0].type // Assume all Feature objects have the same type
+    const values = features.map(f => f.value)
     if (LMF.compareLanguages(this.languageID, languageID) && this.type === type && values.includes(this.value)) {
       return true
     }
@@ -82,6 +83,7 @@ class GrmFeature {
 
   /**
    * examine the feature for a specific value
+   *
    * @param {string} value
    * @returns {boolean} true if the value is included in the feature's values
    */
@@ -95,7 +97,8 @@ class GrmFeature {
 
   /**
    * string representation of a feature
-   * @return {string}
+   *
+   * @returns {string}
    */
   toString () {
     if (Array.isArray(this.value)) {
@@ -126,12 +129,12 @@ GrmFeature.types = {
   word: 'word',
   part: 'part of speech', // Part of speech
   number: 'number',
-  'case': 'case',
+  case: 'case',
   grmCase: 'case', // A synonym of `case`
   declension: 'declension',
   gender: 'gender',
   type: 'type',
-  'class': 'class',
+  class: 'class',
   grmClass: 'class', // A synonym of `class`
   conjugation: 'conjugation',
   comparison: 'comparison',
@@ -155,7 +158,7 @@ GrmFeature.types = {
   morph: 'morph', // general morphological information
   var: 'var', // variance?
   isAllowed (value) {
-    let v = `${value}`
+    const v = `${value}`
     return Object.values(this).includes(v)
   }
 }

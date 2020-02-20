@@ -12,23 +12,26 @@ export default class WordUsageExample extends TextQuoteSelector {
     this.textWork = null
     this.passage = null
   }
+
   createContext () {
     return null // not implemented in the current child-class
   }
 
   /**
-  * Creates a full text of example prefix + word + suffix
-  * @returns {String}
-  */
+   * Creates a full text of example prefix + word + suffix
+   *
+   * @returns {string}
+   */
   get htmlExample () {
     return `${this.prefix}<span class="alpheios_word_usage_list_item__text_targetword">${this.normalizedText}</span>${this.suffix}`
   }
 
   /**
-  * Creates a full description - author + textWork + cit number
-  * @param {String} lang - language for getting text
-  * @returns {String}
-  */
+   * Creates a full description - author + textWork + cit number
+   *
+   * @param {string} lang - language for getting text
+   * @returns {string}
+   */
   fullCit (lang) {
     if (!this.author && !this.textWork && !this.passage) {
       return this.cit
@@ -74,13 +77,13 @@ export default class WordUsageExample extends TextQuoteSelector {
   }
 
   get prefixForSort () {
-    let model = LanguageModelFactory.getLanguageModelFromCode(this.languageCode)
-    let clearPrefix = this.prefix.replace(new RegExp('[' + model.getPunctuation() + ' ]', 'g'), ' ').toUpperCase().split(' ').filter(item => item.length > 0)
+    const model = LanguageModelFactory.getLanguageModelFromCode(this.languageCode)
+    const clearPrefix = this.prefix.replace(new RegExp('[' + model.getPunctuation() + ' ]', 'g'), ' ').toUpperCase().split(' ').filter(item => item.length > 0)
     return clearPrefix[clearPrefix.length - 1]
   }
 
   get suffixForSort () {
-    let model = LanguageModelFactory.getLanguageModelFromCode(this.languageCode)
+    const model = LanguageModelFactory.getLanguageModelFromCode(this.languageCode)
     return this.suffix.replace(new RegExp('[' + model.getPunctuation() + ' ]', 'g'), '').toUpperCase()
   }
 }

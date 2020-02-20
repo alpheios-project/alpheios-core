@@ -113,7 +113,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let typeFeatures = new Map()
+const typeFeatures = new Map()
 let typeFeaturesInitialized = false
 
 /**
@@ -142,7 +142,9 @@ class ArabicLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
 
   /**
    * Check to see if this language tool can produce an inflection table display
-   * for the current node
+for the current node
+   *
+   * @param node
    */
   static canInflect (node) {
     return false
@@ -153,18 +155,18 @@ class ArabicLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
    */
   static alternateWordEncodings (word, preceding = null, following = null, encoding = null) {
     // tanwin (& tatweel) - drop FATHATAN, DAMMATAN, KASRATAN, TATWEEL
-    let tanwin = word.replace(/[\u{064B}\u{064C}\u{064D}\u{0640}]/ug, '')
+    const tanwin = word.replace(/[\u{064B}\u{064C}\u{064D}\u{0640}]/ug, '')
     // hamzas - replace ALEF WITH MADDA ABOVE, ALEF WITH HAMZA ABOVE/BELOW with ALEF
-    let hamza = tanwin.replace(/[\u{0622}\u{0623}\u{0625}]/ug, '\u{0627}')
+    const hamza = tanwin.replace(/[\u{0622}\u{0623}\u{0625}]/ug, '\u{0627}')
     // harakat - drop FATHA, DAMMA, KASRA, SUPERSCRIPT ALEF, ALEF WASLA
-    let harakat = hamza.replace(/[\u{064E}\u{064F}\u{0650}\u{0670}\u{0671}]/ug, '')
+    const harakat = hamza.replace(/[\u{064E}\u{064F}\u{0650}\u{0670}\u{0671}]/ug, '')
     // shadda
-    let shadda = harakat.replace(/\u{0651}/ug, '')
+    const shadda = harakat.replace(/\u{0651}/ug, '')
     // sukun
-    let sukun = shadda.replace(/\u{0652}/ug, '')
+    const sukun = shadda.replace(/\u{0652}/ug, '')
     // alef
-    let alef = sukun.replace(/\u{0627}/ug, '')
-    let alternates = new Map([
+    const alef = sukun.replace(/\u{0627}/ug, '')
+    const alternates = new Map([
       ['tanwin', tanwin],
       ['hamza', hamza],
       ['harakat', harakat],
@@ -181,7 +183,8 @@ class ArabicLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
 
   /**
    * Get a list of valid puncutation for this language
-   * @returns {String} a string containing valid puncutation symbols
+   *
+   * @returns {string} a string containing valid puncutation symbols
    */
   static getPunctuation () {
     return ".,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
@@ -189,13 +192,16 @@ class ArabicLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
 
   /**
    * Aggregate inflections for display according to language model characteristics
+   *
+   * @param inflections
    */
   static aggregateInflectionsForDisplay (inflections) {
     // TODO at some point we might want to be able to check the provider in here
     // because this really only applies to the specifics of the Aramorph parser
-    let aggregated = []
+    let aggregated = [] // eslint-disable-line prefer-const
+    // eslint-disable-next-line prefer-const
     let aggregates = { [_constants_js__WEBPACK_IMPORTED_MODULE_1__["POFS_NOUN"]]: [], [_constants_js__WEBPACK_IMPORTED_MODULE_1__["POFS_ADJECTIVE"]]: [], [_constants_js__WEBPACK_IMPORTED_MODULE_1__["POFS_NOUN_PROPER"]]: [] }
-    for (let infl of inflections) {
+    for (const infl of inflections) {
       if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.morph] && infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.morph].value.match(/ADJ[uaiNK]/)) {
         aggregates[_constants_js__WEBPACK_IMPORTED_MODULE_1__["POFS_ADJECTIVE"]].push(infl)
       } else if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.morph] && infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.morph].value.match(/NOUN[uaiNK]/)) {
@@ -208,8 +214,8 @@ class ArabicLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
         aggregated.push(infl)
       }
     }
-    for (let type of Object.keys(aggregates)) {
-      let base = aggregated.filter((i) => i[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part].value === type)
+    for (const type of Object.keys(aggregates)) {
+      const base = aggregated.filter((i) => i[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part].value === type)
       if (base.length !== 1) {
         // if we don't have the base form then we don't really know what to do here
         // so just put the inflection back in the ones available for display
@@ -243,7 +249,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let typeFeatures = new Map()
+let typeFeatures = new Map() // eslint-disable-line prefer-const
 let typeFeaturesInitialized = false
 
 /**
@@ -312,7 +318,7 @@ class ChineseLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
     // Remove spaces before and after split parts; eliminate empty split parts
     aPinyin = aPinyin.split(/(\d)/).map(el => el.trim()).filter(el => Boolean(el))
 
-    let formatedPinyin = []
+    let formatedPinyin = [] // eslint-disable-line prefer-const
     const toneFormat = {
       1: 0, 2: 1, 3: 2, 4: 3
     }
@@ -853,18 +859,19 @@ class DefinitionSet {
 
   /**
    * A function that is used to instantiate a DefinitionSet object from a JSON object.
-   * @param {Object} jsonObject - A JSON object representing DefinitionSet data.
-   * @return {DefinitionSet} A DefinitionSet object populated with data from JSON object.
+   *
+   * @param {object} jsonObject - A JSON object representing DefinitionSet data.
+   * @returns {DefinitionSet} A DefinitionSet object populated with data from JSON object.
    */
   static readObject (jsonObject) {
     const languageID = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageIdFromCode(jsonObject.languageCode)
 
-    let definitionSet = new DefinitionSet(jsonObject.lemmaWord, languageID)
+    let definitionSet = new DefinitionSet(jsonObject.lemmaWord, languageID) // eslint-disable-line prefer-const
 
-    for (let shortDef of jsonObject.shortDefs) {
+    for (const shortDef of jsonObject.shortDefs) {
       definitionSet.shortDefs.push(_definition__WEBPACK_IMPORTED_MODULE_0__["default"].readObject(shortDef))
     }
-    for (let fullDef of jsonObject.fullDefs) {
+    for (const fullDef of jsonObject.fullDefs) {
       definitionSet.fullDefs.push(_definition__WEBPACK_IMPORTED_MODULE_0__["default"].readObject(fullDef))
     }
 
@@ -873,6 +880,7 @@ class DefinitionSet {
 
   /**
    * Checks if any short definitions are stored within this object.
+   *
    * @returns {boolean} - true if any definitions are stored, false otherwise.
    */
   get hasShortDefs () {
@@ -881,6 +889,7 @@ class DefinitionSet {
 
   /**
    * Checks if any full definitions are stored within this object.
+   *
    * @returns {boolean} - true if any definitions are stored, false otherwise.
    */
   get hasFullDefs () {
@@ -889,7 +898,8 @@ class DefinitionSet {
 
   /**
    * Check to see if the DefinitionSet is empty
-   * @return {boolean} true if empty false if there is at least one definition
+   *
+   * @returns {boolean} true if empty false if there is at least one definition
    */
   isEmpty () {
     return this.shortDefs.length === 0 && this.fullDefs.length === 0
@@ -897,8 +907,9 @@ class DefinitionSet {
 
   /**
    * Appends one or more definitions to a list of short definitions.
+   *
    * @param {Definition | Definition[]} definitions - One or more definition objects to add.
-   * @return {Definition[]} A list of short definitions this object has.
+   * @returns {Definition[]} A list of short definitions this object has.
    */
   appendShortDefs (definitions) {
     // TODO: check for duplicates?
@@ -918,8 +929,9 @@ class DefinitionSet {
 
   /**
    * Appends one or more definitions to a list of full definitions.
+   *
    * @param {Definition | Definition[]} definitions - One or more definition objects to add.
-   * @return {Definition[]} A list of full definitions this object has.
+   * @returns {Definition[]} A list of full definitions this object has.
    */
   appendFullDefs (definitions) {
     // TODO: check for duplicates?
@@ -938,7 +950,7 @@ class DefinitionSet {
   }
 
   convertToJSONObject () {
-    let languageCode = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageCodeFromId(this.languageID)
+    const languageCode = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageCodeFromId(this.languageID)
     return {
       lemmaWord: this.lemmaWord,
       languageCode: languageCode,
@@ -977,6 +989,7 @@ class Definition {
   }
 
   static readObject (jsonObject) {
+    // eslint-disable-next-line prefer-const
     let definition = new Definition(jsonObject.text, jsonObject.language, jsonObject.format, jsonObject.lemmaText)
 
     if (jsonObject.ID) {
@@ -984,7 +997,7 @@ class Definition {
     }
 
     if (jsonObject.provider) {
-      let provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_1__["default"].readObject(jsonObject.provider)
+      const provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_1__["default"].readObject(jsonObject.provider)
       return _resource_provider_js__WEBPACK_IMPORTED_MODULE_1__["default"].getProxy(provider, definition)
     } else {
       return definition
@@ -992,6 +1005,7 @@ class Definition {
   }
 
   convertToJSONObject () {
+    // eslint-disable-next-line prefer-const
     let result = {
       text: this.text,
       language: this.language,
@@ -1217,6 +1231,7 @@ class Feature {
      * Keeps feature values along with their sort order.
      * Items with higher sort order usually have more importance,
      * but how to interpret the sortOrder value is ultimately implementation-dependent.
+     *
      * @type {{sortOrder: number, value: *}[]}
      * @private
      */
@@ -1269,12 +1284,12 @@ class Feature {
       hdwd: 'headword',
       part: 'part of speech', // Part of speech
       number: 'number',
-      'case': 'case',
+      case: 'case',
       grmCase: 'case', // A synonym of `case`
       declension: 'declension',
       gender: 'gender',
       type: 'type',
-      'class': 'class',
+      class: 'class',
       grmClass: 'class', // A synonym of `class`
       conjugation: 'conjugation',
       comparison: 'comparison',
@@ -1324,6 +1339,7 @@ class Feature {
 
   /**
    * Test to see if this feature allows unrestricted values.
+   *
    * @returns {boolean} true if unrestricted false if not.
    */
   get allowsUnrestrictedValues () {
@@ -1345,8 +1361,9 @@ class Feature {
 
   /**
    * Compares a feature's values to another feature's values for sorting
+   *
    * @param {Feature} otherFeature the feature to compare this feature's values to
-   * @return {number} < 1 if this feature should be sorted first, 0 if they are equal and -1 if this feature should be sorted second
+   * @returns {number} < 1 if this feature should be sorted first, 0 if they are equal and -1 if this feature should be sorted second
    */
   compareTo (otherFeature) {
     // the data values are sorted upon construction and insertion so we only should need to look at the first values
@@ -1369,7 +1386,8 @@ class Feature {
    * returned in a single string. Values composing this string are sorted according
    * to each value's sort order.
    * NOTE: If object contains a single value and it is a number, it will be converted to a string.
-   * @return {string} A single value string.
+   *
+   * @returns {string} A single value string.
    */
   get value () {
     return this.values.join(this.constructor.joinSeparator)
@@ -1393,7 +1411,8 @@ class Feature {
   /**
    * Returns an array of string values of a feature, sorted according to each item's sort order.
    * If a feature contains a single feature, an array with one value will be returned.
-   * @return {*[]} An array of values in a format in which they are stored in the Feature object.
+   *
+   * @returns {*[]} An array of values in a format in which they are stored in the Feature object.
    */
   get values () {
     return this._data.map(v => v.value)
@@ -1401,6 +1420,7 @@ class Feature {
 
   /**
    * Retrieves a value object by name. Can be used to update a value object directly.
+   *
    * @param {string} featureValue - A feature value of an object to retrieve.
    */
   getValue (featureValue) {
@@ -1409,6 +1429,7 @@ class Feature {
 
   /**
    * Returns a number of feature values.
+   *
    * @retrun {number] A quantity of feature values
    */
   get valQty () {
@@ -1429,7 +1450,8 @@ class Feature {
 
   /**
    * A string representation of a feature.
-   * @return {string}
+   *
+   * @returns {string}
    */
   toString () {
     return this.value
@@ -1437,6 +1459,7 @@ class Feature {
 
   /**
    * Examines the feature for a specific value.
+   *
    * @param {string} value
    * @returns {boolean} true if the value is included in the feature's values.
    */
@@ -1446,12 +1469,13 @@ class Feature {
 
   /**
    * Checks if this feature has all value from an array.
+   *
    * @param {string[]} values - An array of values to check for.
    * @returns {boolean} true if the value is included in the feature's values.
    */
   hasValues (values) {
     let hasValues = true
-    for (let value of values) {
+    for (const value of values) {
       hasValues = hasValues && this.hasValue(value)
     }
     return hasValues
@@ -1459,12 +1483,13 @@ class Feature {
 
   /**
    * Checks if this feature has some value from an array.
+   *
    * @param {string[]} values - An array of values to check for.
    * @returns {boolean} true if the value is included in the feature's values.
    */
   hasSomeValues (values) {
     let hasValues = false
-    for (let value of values) {
+    for (const value of values) {
       hasValues = hasValues || this.hasValue(value)
     }
     return hasValues
@@ -1477,8 +1502,9 @@ class Feature {
   /**
    * Two features are considered fully equal if they are of the same type, have the same language,
    * and the same set of feature values in the same order.
+   *
    * @param {Feature} feature - A GrmFtr object this feature should be compared with.
-   * @return {boolean} True if features are equal, false otherwise.
+   * @returns {boolean} True if features are equal, false otherwise.
    */
   isEqual (feature) {
     return feature &&
@@ -1490,9 +1516,10 @@ class Feature {
   /**
    * Adds a single new value to the existing feature object.
    * This function is chainable.
+   *
    * @param {string} value - A feature value.
    * @param {number} sortOrder - A sort order.
-   * @return {Feature} - Self reference for chaining.
+   * @returns {Feature} - Self reference for chaining.
    */
   addValue (value, sortOrder = this.constructor.defaultSortOrder) {
     if (!this.hasValue(value)) {
@@ -1510,12 +1537,13 @@ class Feature {
   /**
    * Adds multiple new values to the existing feature object.
    * This function is chainable.
+   *
    * @param {string | string[] | string[][]} data - Single or multiple values, in different combinations.
-   * @return {Feature} - Self reference for chaining.
+   * @returns {Feature} - Self reference for chaining.
    */
   addValues (data) {
-    let normalizedData = this.constructor.dataValuesFromInput(data)
-    let values = normalizedData.map(v => v.value)
+    const normalizedData = this.constructor.dataValuesFromInput(data)
+    const values = normalizedData.map(v => v.value)
     if (!this.hasSomeValues(values)) {
       this._data = this._data.concat(normalizedData)
       this.sort() // Resort an array to place an inserted value to the proper place
@@ -1527,21 +1555,24 @@ class Feature {
 
   /**
    * Removes a single value from the existing feature object.
+   *
    * @param value
    */
   removeValue (value) {
     // TODO: Do we need it?
-    console.warn(`This feature is not implemented yet`)
+    console.warn('This feature is not implemented yet')
   }
 
   /**
    * Creates a new single value Feature object of the same type and same language,
-   * but with a different feature value.
-   * This can be used when one feature defines a type and it is necessary
-   * to create other items of the same type.
+but with a different feature value.
+This can be used when one feature defines a type and it is necessary
+to create other items of the same type.
+   *
    * @param {string} value - A value of a feature.
+   * @param sortOrder
    * @param {number} sortOrder.
-   * @return {Feature} A new Ftr object.
+   * @returns {Feature} A new Ftr object.
    */
   createFeature (value, sortOrder = this.constructor.defaultSortOrder) {
     // TODO: Add a check of if the value exists in a source Feature object
@@ -1551,9 +1582,10 @@ class Feature {
   /**
    * Creates a multiple value Feature object of the same type and same language,
    * but with a different feature values.
+   *
    * @param {string | string[] | string[][]} data - Single or multiple values, in different combinations,
    * formatted according to rules described in a Ftr constructor.
-   * @return {Feature} A new Ftr object.
+   * @returns {Feature} A new Ftr object.
    */
   createFeatures (data) {
     return new Feature(this.type, data, this.languageID, this.sortOrder, this.allowedValues)
@@ -1564,7 +1596,8 @@ class Feature {
    * form the values of this object.
    * Useful when the current objects is a type feature and it is necessary to create an array
    * of Feature objects for the type from it.
-   * @return {Feature[]} - An array of Feature objects. Each object represents one feature value
+   *
+   * @returns {Feature[]} - An array of Feature objects. Each object represents one feature value
    * from the current object.
    */
   get ownFeatures () {
@@ -1575,12 +1608,13 @@ class Feature {
    * Create a copy of the feature object.
    */
   getCopy () {
-    let values = this._data.map(item => [item.value, item.sortOrder])
+    const values = this._data.map(item => [item.value, item.sortOrder])
     return new Feature(this.type, values, this.languageID, this.sortOrder, this.allowedValues.slice())
   }
 
   /**
    * Adds an importer to the internal list.
+   *
    * @param {string} name - A name of an importer.
    * @param {FeatureImporter} importer - A `FeatureImporter` object.
    */
@@ -1601,9 +1635,10 @@ class Feature {
 
   /**
    * Adds feature values from the imported values.
+   *
    * @param {string | string[]} foreignData - A single value or an array of values from a third-party source.
    * @param {string} name - A name of an importer.
-   * @return {Feature} - A new Ftr object.
+   * @returns {Feature} - A new Ftr object.
    */
   addFromImporter (foreignData, name = this.constructor.defaultImporterName) {
     if (!this.importers || !this.importers.has(name)) {
@@ -1618,9 +1653,10 @@ class Feature {
 
   /**
    * Creates a new feature of the same type and with the same language from the imported values.
+   *
    * @param {string | string[]} foreignData - A single value or an array of values from a third-party source.
    * @param {string} name - A name of an importer.
-   * @return {Feature} - A new Ftr object.
+   * @returns {Feature} - A new Ftr object.
    */
   createFromImporter (foreignData, name = this.constructor.defaultImporterName) {
     if (!this.importers || !this.importers.has(name)) {
@@ -1640,7 +1676,7 @@ class Feature {
   }
 
   convertToJSONObject () {
-    let data = this._data.map(dataItem => [dataItem.value, dataItem.sortOrder])
+    const data = this._data.map(dataItem => [dataItem.value, dataItem.sortOrder])
     return {
       type: this.type,
       languageCode: _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageCodeFromId(this.languageID),
@@ -1651,7 +1687,7 @@ class Feature {
   }
 
   static readObject (jsonObject) {
-    let languageID = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageIdFromCode(jsonObject.languageCode)
+    const languageID = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageIdFromCode(jsonObject.languageCode)
     return new Feature(jsonObject.type, jsonObject.data, languageID, jsonObject.sortOrder, jsonObject.allowedValues)
   }
 }
@@ -1678,11 +1714,11 @@ class FeatureImporter {
    * @param {boolean} returnUnknown - If true, and a source value is not found in the importer,
    * a source value will be returned without any change (a passthrough). If false, an Error
    * will be thrown for unknown source values.
-   * @return {FeatureImporter}
+   * @returns {FeatureImporter}
    */
   constructor (defaults = [], returnUnknown = false) {
     this.hash = {}
-    for (let value of defaults) {
+    for (const value of defaults) {
       this.map(value, value)
     }
     this.returnUnknown = returnUnknown
@@ -1692,8 +1728,9 @@ class FeatureImporter {
   /**
    * Sets mapping between external imported value and one or more library standard values. If an importedValue
    * is already in a hash table, old libraryValue will be overwritten with the new one.
+   *
    * @param {string} importedValue - External value
-   * @param {Object | Object[] | string | string[]} libraryValue - Library standard value
+   * @param {object|object[]|string|string[]} libraryValue - Library standard value
    */
   map (importedValue, libraryValue) {
     if (!importedValue) {
@@ -1710,6 +1747,7 @@ class FeatureImporter {
 
   /**
    * Checks if value is in a map.
+   *
    * @param {string} importedValue - A value to test.
    * @returns {boolean} - Tru if value is in a map, false otherwise.
    */
@@ -1719,8 +1757,9 @@ class FeatureImporter {
 
   /**
    * Returns one or more library standard values that match an external value
+   *
    * @param {string} sourceValue - External value
-   * @returns {Object | string} One or more of library standard values
+   * @returns {object|string} One or more of library standard values
    */
   get (sourceValue) {
     if (this.has(sourceValue)) {
@@ -1753,6 +1792,7 @@ __webpack_require__.r(__webpack_exports__);
 class FeatureList {
   /**
    * Initializes a feature list.
+   *
    * @param {Feature[]} features - Features that build the list (optional, can be set later).
    */
   constructor (features = []) {
@@ -1766,7 +1806,7 @@ class FeatureList {
       throw new Error('Features must be defined and must come in an array.')
     }
 
-    for (let feature of features) {
+    for (const feature of features) {
       this._features.push(feature)
       this._types[feature.type] = feature
     }
@@ -1774,6 +1814,7 @@ class FeatureList {
 
   /**
    * Returns an array of grouping features.
+   *
    * @returns {FeatureType[]} - An array of grouping features.
    */
   get items () {
@@ -1786,8 +1827,9 @@ class FeatureList {
 
   /**
    * Returns a feature of a particular type. If such feature does not exist in a list, returns undefined.
+   *
    * @param {string} type - Feature type as defined in `types` object.
-   * @return {FeatureType | undefined} A feature if a particular type if contains it. Undefined otherwise.
+   * @returns {FeatureType | undefined} A feature if a particular type if contains it. Undefined otherwise.
    */
   ofType (type) {
     if (this.hasType(type)) {
@@ -1797,8 +1839,9 @@ class FeatureList {
 
   /**
    * Checks whether a feature list has a feature of a specific type.
+   *
    * @param {string} type - Feature type as defined in `types` object.
-   * @return {boolean} Whether a feature list has a feature of a particular type.
+   * @returns {boolean} Whether a feature list has a feature of a particular type.
    */
   hasType (type) {
     return this._types.hasOwnProperty(type)
@@ -1840,12 +1883,13 @@ class FeatureType {
   // TODO: value checking
   /**
    * Creates and initializes a Feature Type object.
+   *
    * @param {string} type - A type of the feature, allowed values are specified in 'types' object.
    * @param {string[] | string[][]} values - A list of allowed values for this feature type.
    * If an empty array is provided, there will be no
    * allowed values as well as no ordering (can be used for items that do not need or have a simple order,
    * such as footnotes).
-   * @param {String | Symbol} language - A language of a feature type.
+   * @param {string|symbol} language - A language of a feature type.
    */
   constructor (type, values, language) {
     if (!values || !Array.isArray(values)) {
@@ -1870,7 +1914,7 @@ class FeatureType {
     for (const [index, value] of values.entries()) {
       this._orderIndex.push(value)
       if (Array.isArray(value)) {
-        for (let element of value) {
+        for (const element of value) {
           this[element] = new _feature_js__WEBPACK_IMPORTED_MODULE_0__["default"](this.type, element, this.languageID)
           this._orderLookup[element] = index
         }
@@ -1883,15 +1927,17 @@ class FeatureType {
 
   /**
    * This is a compatibility function for legacy code.
-   * @return {String} A language code.
+   *
+   * @returns {string} A language code.
    */
   get language () {
-    console.warn(`Please use a "languageID" instead of a "language"`)
+    console.warn('Please use a "languageID" instead of a "language"')
     return this.languageCode
   }
 
   /**
    * test to see if this FeatureType allows unrestricted values
+   *
    * @returns {boolean} true if unrestricted false if not
    */
   hasUnrestrictedValue () {
@@ -1901,6 +1947,7 @@ class FeatureType {
   /**
    * Return a Feature with an arbitrary value. This value would not be necessarily present among FeatureType values.
    * This can be especially useful for features that do not set: a list of predefined values, such as footnotes.
+   *
    * @param value
    * @param {int} sortOrder
    * @returns {Feature}
@@ -1916,7 +1963,7 @@ class FeatureType {
   /**
    *
    * @param {string[][]} data - An array of value arrays as: [[value1, sortOrder1], [value2, sortOrder2]]
-   * @return {Feature}
+   * @returns {Feature}
    */
   getValues (data) {
     return new _feature_js__WEBPACK_IMPORTED_MODULE_0__["default"](this.type, data, this.languageID)
@@ -1936,6 +1983,7 @@ class FeatureType {
   /**
    * Creates and returns a new importer with a specific name. If an importer with this name already exists,
    * an existing Importer object will be returned.
+   *
    * @param {string} name - A name of an importer object
    * @returns {Importer} A new or existing Importer object that matches a name provided
    */
@@ -1951,6 +1999,7 @@ class FeatureType {
   /**
    * Return copies of all feature values as Feature objects in a sorted array, according to feature type's sort order.
    * For a similar function that returns strings instead of Feature objects see orderedValues().
+   *
    * @returns {Feature[] | Feature[][]} Array of feature values sorted according to orderIndex.
    * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
    * an array of Feature objects will be returned instead of a single Feature object, as for single feature values.
@@ -1967,6 +2016,7 @@ class FeatureType {
    * create a wrapper around this function providing it with options arguments so it will be able to decide
    * in what order those features will be based on those arguments.
    * For a similar function that returns Feature objects instead of strings see orderedValues().
+   *
    * @returns {string[]} Array of feature values sorted according to orderIndex.
    * If particular feature contains multiple feature values (i.e. `masculine` and `feminine` values combined),
    * an array of strings will be returned instead of a single strings, as for single feature values.
@@ -1979,6 +2029,7 @@ class FeatureType {
    * Returns a lookup table for type values as:
    *  {value1: order1, value2: order2}, where order is a sort order of an item. If two items have the same sort order,
    *  their order value will be the same.
+   *
    * @returns {object}
    */
   get orderLookup () {
@@ -2006,9 +2057,9 @@ class FeatureType {
       values = [values]
     }
 
-    for (let value of values) {
+    for (const value of values) {
       if (Array.isArray(value)) {
-        for (let element of value) {
+        for (const element of value) {
           if (!this.hasOwnProperty(element.value)) {
             throw new Error('Trying to order an element with "' + element.value + '" value that is not stored in a "' + this.type + '" type.')
           }
@@ -2044,7 +2095,7 @@ class FeatureType {
     for (const [index, element] of values.entries()) {
       if (Array.isArray(element)) {
         // If it is an array, all values should have the same order
-        let elements = []
+        let elements = [] // eslint-disable-line prefer-const
         for (const subElement of element) {
           this._orderLookup[subElement.value] = index
           elements.push(subElement.value)
@@ -2081,7 +2132,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let typeFeatures = new Map()
+const typeFeatures = new Map()
 let typeFeaturesInitialized = false
 
 /**
@@ -2145,7 +2196,9 @@ class GeezLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__[
 
   /**
    * Check to see if this language tool can produce an inflection table display
-   * for the current node
+for the current node
+   *
+   * @param node
    */
   static canInflect (node) {
     return false
@@ -2153,6 +2206,7 @@ class GeezLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__[
 
   /**
    * Returns alternate encodings for a word
+   *
    * @param {string} word the word
    * @param {string} preceding optional preceding word
    * @param {string} following optional following word
@@ -2166,7 +2220,8 @@ class GeezLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__[
 
   /**
    * Get a list of valid puncutation for this language
-   * @returns {String} a string containing valid puncutation symbols
+   *
+   * @returns {string} a string containing valid puncutation symbols
    */
   static getPunctuation () {
     return "፡፨።፣፤፥፦፧፠,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
@@ -2195,7 +2250,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let typeFeatures = new Map()
+let typeFeatures = new Map() // eslint-disable-line prefer-const
 let typeFeaturesInitialized = false
 /**
  * @class  LatinLanguageModel is the lass for Latin specific behavior
@@ -2313,7 +2368,9 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 
   /**
    * Check to see if this language tool can produce an inflection table display
-   * for the current node
+for the current node
+   *
+   * @param node
    */
   static canInflect (node) {
     return true
@@ -2329,6 +2386,7 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 
   /**
    * Return a normalized version of a word which can be used to compare the word for equality
+   *
    * @param {string} word the source word
    * @returns {string} the normalized form of the word (default version just returns the same word,
    *          override in language-specific subclass)
@@ -2361,16 +2419,16 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
       return []
     }
     // make sure it's normalized to NFC and in lower case
-    let normalized = GreekLanguageModel.normalizeWord(word).toLocaleLowerCase()
-    let strippedVowelLength = normalized.replace(
+    const normalized = GreekLanguageModel.normalizeWord(word).toLocaleLowerCase()
+    const strippedVowelLength = normalized.replace(
       /[\u{1FB0}\u{1FB1}]/ug, '\u{03B1}').replace(
       /[\u{1FB8}\u{1FB9}]/ug, '\u{0391}').replace(
       /[\u{1FD0}\u{1FD1}]/ug, '\u{03B9}').replace(
       /[\u{1FD8}\u{1FD9}]/ug, '\u{0399}').replace(
       /[\u{1FE0}\u{1FE1}]/ug, '\u{03C5}').replace(
       /[\u{1FE8}\u{1FE9}]/ug, '\u{03A5}').replace(
-      /[\u{00AF}\u{0304}\u{0306}]/ug, '')
-    let strippedDiaeresis = normalized.replace(
+      /[\u{00AF}\u{0304}\u{0306}]/ug, '') // eslint-disable-line no-misleading-character-class
+    const strippedDiaeresis = normalized.replace(
       /\u{0390}/ug, '\u{03AF}').replace(
       /\u{03AA}/ug, '\u{0399}').replace(
       /\u{03AB}/ug, '\u{03A5}').replace(
@@ -2386,11 +2444,11 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
       /\u{1FC1}/ug, '\u{1FC0}').replace(
       /\u{1FED}/ug, '\u{1FEF}').replace(
       /\u{1FEE}/ug, '\u{1FFD}').replace(
-      /[\u{00A8}\u{0308}]/ug, '')
+      /[\u{00A8}\u{0308}]/ug, '') // eslint-disable-line no-misleading-character-class
     // to strip diacritics, rather than list all possible combined vowels with
     // diacritis, decompose, remove the combining accents, and then recompose
-    let strippedDiacritics = normalized.normalize('NFD').replace(
-      /[\u{300}\u{0301}\u{0304}\u{0306},\u{342}]/ug, '').normalize('NFC')
+    const strippedDiacritics = normalized.normalize('NFD').replace(
+      /[\u{300}\u{0301}\u{0304}\u{0306},\u{342}]/ug, '').normalize('NFC') // eslint-disable-line no-misleading-character-class
     if (encoding === 'strippedDiaeresis') {
       return [strippedDiaeresis]
     } else if (encoding === 'strippedDiacritics') {
@@ -2402,7 +2460,8 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 
   /**
    * Get a list of valid puncutation for this language
-   * @returns {String} a string containing valid puncutation symbols
+   *
+   * @returns {string} a string containing valid puncutation symbols
    */
   static getPunctuation () {
     return '.,;:!?"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u201C\u201D\u0387\u00B7\n\r\u200C\u200D'
@@ -2410,16 +2469,17 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 
   /**
    * Sets inflection grammar properties based on its characteristics
+   *
    * @param {Inflection} inflection - An inflection object
-   * @return {Object} Inflection properties
+   * @returns {object} Inflection properties
    */
   static getInflectionConstraints (inflection) {
-    let constraints = {
+    const constraints = {
       fullFormBased: false,
       suffixBased: false,
       pronounClassRequired: false
     }
-    let formBasedList = [_constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_PRONOUN"], _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_NUMERAL"], _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_ARTICLE"]]
+    const formBasedList = [_constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_PRONOUN"], _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_NUMERAL"], _constants_js__WEBPACK_IMPORTED_MODULE_2__["POFS_ARTICLE"]]
     if (inflection.hasOwnProperty(_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part)) {
       if (formBasedList.includes(inflection[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part].value)) {
         constraints.fullFormBased = true
@@ -2427,7 +2487,7 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
         constraints.suffixBased = true
       }
     } else {
-      console.warn(`Unable to set grammar: part of speech data is missing or is incorrect`, inflection[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part])
+      console.warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.part])
     }
 
     constraints.pronounClassRequired =
@@ -2445,15 +2505,17 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
    * provide class information at all. However, class information is essential in
    * deciding in what table should pronouns be grouped. For this, we have to
    * determine pronoun classes using this method.
+   *
    * @param {Form[]} forms - An array of known forms of pronouns.
    * @param {string} word - A word we need to find a matching class for.
    * @param {boolean} normalize - Whether normalized forms of words shall be used for comparison.
-   * @return {Feature} Matching classes found within a Feature objects. If no matching classes found,
+   * @returns {Feature} Matching classes found within a Feature objects. If no matching classes found,
    * returns undefined.
    */
   static getPronounClasses (forms, word, normalize = true) {
+    // eslint-disable-next-line prefer-const
     let matchingValues = new Set() // Will eliminate duplicated values
-    let matchingForms = forms.filter(
+    const matchingForms = forms.filter(
       form => {
         let match = false
         if (form.value) {
@@ -2480,8 +2542,8 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
   static compareWords (wordA, wordB, normalize = true) {
     let matched = false
     if (normalize) {
-      let altWordA = GreekLanguageModel.alternateWordEncodings(wordA, null, null, 'strippedDiacritics')
-      let altWordB = GreekLanguageModel.alternateWordEncodings(wordB, null, null, 'strippedDiacritics')
+      const altWordA = GreekLanguageModel.alternateWordEncodings(wordA, null, null, 'strippedDiacritics')
+      const altWordB = GreekLanguageModel.alternateWordEncodings(wordB, null, null, 'strippedDiacritics')
       for (let i = 0; i < altWordA.length; i++) {
         matched = altWordA[i] === altWordB[i]
         if (matched) {
@@ -2556,10 +2618,11 @@ class GrmFeature {
 
   /**
    * This is a compatibility function for legacy code.
-   * @return {String} A language code.
+   *
+   * @returns {string} A language code.
    */
   get language () {
-    console.warn(`Please use a "languageID" instead of a "language"`)
+    console.warn('Please use a "languageID" instead of a "language"')
     return this.languageCode
   }
 
@@ -2585,9 +2648,9 @@ class GrmFeature {
       features = [features] // If `features` is a single value, convert it to an array (a more general case)
     }
     // `feature` is an array of feature objects with (possibly) each having a single feature value.
-    let languageID = features[0].languageID // Assume all Feature objects have the same language ID
-    let type = features[0].type // Assume all Feature objects have the same type
-    let values = features.map(f => f.value)
+    const languageID = features[0].languageID // Assume all Feature objects have the same language ID
+    const type = features[0].type // Assume all Feature objects have the same type
+    const values = features.map(f => f.value)
     if (_language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].compareLanguages(this.languageID, languageID) && this.type === type && values.includes(this.value)) {
       return true
     }
@@ -2596,6 +2659,7 @@ class GrmFeature {
 
   /**
    * examine the feature for a specific value
+   *
    * @param {string} value
    * @returns {boolean} true if the value is included in the feature's values
    */
@@ -2609,7 +2673,8 @@ class GrmFeature {
 
   /**
    * string representation of a feature
-   * @return {string}
+   *
+   * @returns {string}
    */
   toString () {
     if (Array.isArray(this.value)) {
@@ -2640,12 +2705,12 @@ GrmFeature.types = {
   word: 'word',
   part: 'part of speech', // Part of speech
   number: 'number',
-  'case': 'case',
+  case: 'case',
   grmCase: 'case', // A synonym of `case`
   declension: 'declension',
   gender: 'gender',
   type: 'type',
-  'class': 'class',
+  class: 'class',
   grmClass: 'class', // A synonym of `class`
   conjugation: 'conjugation',
   comparison: 'comparison',
@@ -2669,7 +2734,7 @@ GrmFeature.types = {
   morph: 'morph', // general morphological information
   var: 'var', // variance?
   isAllowed (value) {
-    let v = `${value}`
+    const v = `${value}`
     return Object.values(this).includes(v)
   }
 }
@@ -2697,6 +2762,7 @@ __webpack_require__.r(__webpack_exports__);
 class Homonym {
   /**
    * Initializes a Homonym object.
+   *
    * @param {Lexeme[]} lexemes - An array of Lexeme objects.
    * @param {string} form - the form which produces the homonyms
    */
@@ -2709,7 +2775,7 @@ class Homonym {
       throw new Error('Lexeme data should be provided in an array.')
     }
 
-    for (let lexeme of lexemes) {
+    for (const lexeme of lexemes) {
       if (!(lexeme instanceof _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"])) {
         throw new Error('All lexeme data should be of Lexeme object type.')
       }
@@ -2724,19 +2790,21 @@ class Homonym {
    * Creates a simple form of inflection with one lexeme and zero or more inflections
    * attached to it. The lexeme will have lemma whose `word` will be set to
    * a homonym's target word.
+   *
    * @param {string} word - A word that will populate homonym's `targetWord` prop and lemma `word` one.
    * @param {symbol} languageID - A language identificator as defined in Constants.LANG_XXX.
    * @param {Inflection[]} inflections - Zero or more inflection objects that will be attached to the lexeme
-   * @return {Homonym} A newly created homonym object.
+   * @returns {Homonym} A newly created homonym object.
    */
   static createSimpleForm (word, languageID, inflections = []) {
-    let lemma = new _lemma_js__WEBPACK_IMPORTED_MODULE_2__["default"](word, languageID)
-    let lexeme = new _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"](lemma, inflections)
+    const lemma = new _lemma_js__WEBPACK_IMPORTED_MODULE_2__["default"](word, languageID)
+    const lexeme = new _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"](lemma, inflections)
     return new Homonym([lexeme], word)
   }
 
   /**
    * Checks if any of the lexemes of this homonym has short definitions stored.
+   *
    * @returns {boolean} - true if any definitions are stored, false otherwise.
    */
   get hasShortDefs () {
@@ -2745,6 +2813,7 @@ class Homonym {
 
   /**
    * Checks if any of the lexemes of this homonym has full definitions stored.
+   *
    * @returns {boolean} - true if any definitions are stored, false otherwise.
    */
   get hasFullDefs () {
@@ -2752,19 +2821,19 @@ class Homonym {
   }
 
   static readObject (jsonObject) {
-    let lexemes = []
+    let lexemes = [] // eslint-disable-line prefer-const
     if (jsonObject.lexemes) {
-      for (let lexeme of jsonObject.lexemes) {
+      for (const lexeme of jsonObject.lexemes) {
         lexemes.push(_lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"].readObject(lexeme))
       }
     }
-    let homonym = new Homonym(lexemes, jsonObject.form)
+    const homonym = new Homonym(lexemes, jsonObject.form)
     return homonym
   }
 
   convertToJSONObject (addMeaning = false) {
-    let resultHomonym = { lexemes: [], form: this.targetWord }
-    for (let lexeme of this.lexemes) {
+    let resultHomonym = { lexemes: [], form: this.targetWord } // eslint-disable-line prefer-const
+    for (const lexeme of this.lexemes) {
       resultHomonym.lexemes.push(lexeme.convertToJSONObject(addMeaning))
     }
     return resultHomonym
@@ -2775,10 +2844,11 @@ class Homonym {
    * Homonym does not have a language property, only lemmas and inflections do. We assume that all lemmas
    * and inflections within the same homonym will have the same language, and we can determine a language
    * by using language property of the first lemma. We chan change this logic in the future if we'll need to.
+   *
    * @returns {string} A language code, as defined in the `languages` object.
    */
   get language () {
-    console.warn(`Please use languageID instead`)
+    console.warn('Please use languageID instead')
     return _language_model_factory__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageCodeFromId(this.languageID)
   }
 
@@ -2787,7 +2857,8 @@ class Homonym {
    * Homonym does not have a languageID property, only lemmas and inflections do. We assume that all lemmas
    * and inflections within the same homonym will have the same language, and we can determine a language
    * by using languageID property of the first lemma. We chan change this logic in the future if we'll need to.
-   * @returns {Symbol} A language ID, as defined in the `LANG_` constants.
+   *
+   * @returns {symbol} A language ID, as defined in the `LANG_` constants.
    */
   get languageID () {
     if (this.lexemes && this.lexemes[0] && this.lexemes[0].lemma && this.lexemes[0].lemma.languageID) {
@@ -2799,7 +2870,8 @@ class Homonym {
 
   /**
    * Returns a list of all inflections within all lexemes of a homonym
-   * @return {Inflection[]} An array of inflections
+   *
+   * @returns {Inflection[]} An array of inflections
    */
   get inflections () {
     let inflections = []
@@ -2815,6 +2887,7 @@ class Homonym {
 
   /**
    * Disambiguate homymyn objects with another
+   *
    * @param {Homonym} base the homonym to use to disambiguate
    * @param {Homonym[]} disambiguators the homonyms to use to disambiguate
    */
@@ -2823,15 +2896,15 @@ class Homonym {
       // nothing left to disamibugate with
       return base
     }
-    let disambiguator = disambiguators.shift()
-    let lexemes = []
-    let missedLexemes = []
+    const disambiguator = disambiguators.shift()
+    let lexemes = [] // eslint-disable-line prefer-const
+    let missedLexemes = [] // eslint-disable-line prefer-const
     // iterate through the lexemes in the disambiguator and try
     // to disambiguate the existing lexemes with each
-    for (let otherLexeme of disambiguator.lexemes) {
+    for (const otherLexeme of disambiguator.lexemes) {
       let lexemeMatched = false
-      for (let lexeme of base.lexemes) {
-        let newLex = _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"].disambiguate(lexeme, otherLexeme)
+      for (const lexeme of base.lexemes) {
+        const newLex = _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"].disambiguate(lexeme, otherLexeme)
         lexemes.push(newLex)
         if (newLex.disambiguated) {
           lexemeMatched = true
@@ -2845,7 +2918,7 @@ class Homonym {
       }
     }
     // create a new homonym with the disamibugated lexemes
-    let newHom = new Homonym([...lexemes, ...missedLexemes], base.targetWord)
+    const newHom = new Homonym([...lexemes, ...missedLexemes], base.targetWord)
     return Homonym.disambiguate(newHom, disambiguators)
   }
 }
@@ -2894,13 +2967,14 @@ __webpack_require__.r(__webpack_exports__);
  */
 class Inflection {
   /**
-     * Initializes an Inflection object.
-     * @param {string} stem - A stem of a word.
-     * @param {string | symbol} language - A word's language.
-     * @param {string} suffix - a suffix of a word
-     * @param {prefix} prefix - a prefix of a word
-     * @param {example} example - example
-     */
+   * Initializes an Inflection object.
+   *
+   * @param {string} stem - A stem of a word.
+   * @param {string | symbol} language - A word's language.
+   * @param {string} suffix - a suffix of a word
+   * @param {prefix} prefix - a prefix of a word
+   * @param {example} example - example
+   */
   constructor (stem = null, language, suffix = null, prefix = null, example = null) {
     if (!stem && !suffix) {
       throw new Error('At least stem or suffix must be defined')
@@ -2946,6 +3020,7 @@ class Inflection {
   }
 
   clone () {
+    // eslint-disable-next-line prefer-const
     let clone = new Inflection(this.stem, this.languageID, this.suffix, this.prefix, this.example)
     // Features are not modified right now so we can share them
     clone.addFeatures(Array.from(this.features).map(f => this[f]))
@@ -2964,7 +3039,8 @@ class Inflection {
 
   /**
    * Returns a full form of a word using ' - ' as a divider for suffix-based inflections.
-   * @return {string} A word form.
+   *
+   * @returns {string} A word form.
    */
   get form () {
     const divider = this.stem ? ' - ' : ''
@@ -2973,13 +3049,14 @@ class Inflection {
 
   /**
    * Returns a full form of a word using user specified divider for suffix-based inflections.
+   *
    * @param {string} divider - A divider to use between stem and suffix.
-   * @return {string} A word form.
+   * @returns {string} A word form.
    */
   getForm (divider = '') {
     let form, prefix, suffix
 
-    let stem = this.stem ? this.stem : ''
+    const stem = this.stem ? this.stem : ''
 
     if (this.model.direction === _constants_js__WEBPACK_IMPORTED_MODULE_2__["LANG_DIR_RTL"]) {
       prefix = this.prefix ? divider + this.prefix : ''
@@ -2998,10 +3075,11 @@ class Inflection {
 
   /**
    * This is a compatibility function for legacy code.
-   * @return {String} A language code.
+   *
+   * @returns {string} A language code.
    */
   get language () {
-    console.warn(`Please use a "languageID" instead of a "language"`)
+    console.warn('Please use a "languageID" instead of a "language"')
     return this.languageCode
   }
 
@@ -3010,7 +3088,7 @@ class Inflection {
    */
   setConstraints () {
     if (this.model.hasOwnProperty('getInflectionConstraints')) {
-      let constraintData = this.model.getInflectionConstraints(this)
+      const constraintData = this.model.getInflectionConstraints(this)
       this.constraints = Object.assign(this.constraints, constraintData)
     }
   }
@@ -3018,6 +3096,7 @@ class Inflection {
   /**
    * Compares if two words are the same. Options allows to specify
    * comparison algorithms for cases when word info is not fully correct.
+   *
    * @param {string} word - A word or suffix to compare with inflection.
    * @param {string} className - A type of word: 'Suffix' or "Form'.
    * @param {comparison} options - These settings define comparison algorithm:
@@ -3025,12 +3104,12 @@ class Inflection {
    *        'fuzzySuffix' - if suffix contained in a 'word' does not match our suffix data,
    *                        try to find a match by checking if inflection full form
    *                        ends with this suffix.
-   * @return {boolean} True for match, false otherwise.
+   * @returns {boolean} True for match, false otherwise.
    */
   smartWordCompare (word, className, options = {}) {
     // Default values
-    if (!options.hasOwnProperty(`normalize`)) { options.normalize = true }
-    if (!options.hasOwnProperty(`fuzzySuffix`)) { options.fuzzySuffix = false }
+    if (!options.hasOwnProperty('normalize')) { options.normalize = true }
+    if (!options.hasOwnProperty('fuzzySuffix')) { options.fuzzySuffix = false }
 
     let value
     if (!this.constraints.irregular) {
@@ -3046,9 +3125,9 @@ class Inflection {
     let matchResult = this.modelCompareWords(word, value, options.normalize)
 
     if (!matchResult && className === 'Suffix' && options.fuzzySuffix) {
-      let form = this.getForm()
+      const form = this.getForm()
       if (form && word && form.length >= word.length) {
-        let altSuffix = form.substring(form.length - word.length)
+        const altSuffix = form.substring(form.length - word.length)
         matchResult = this.modelCompareWords(word, altSuffix, options.normalize)
       }
     }
@@ -3064,9 +3143,10 @@ class Inflection {
   /**
    * Compare to words (or partial words) delegating to the language model
    * rules for normalization
-   * @param {String} wordA the first word
-   * @param {String} wordB the second word
-   * @param {Boolean} normalize whether or not to apply normalization
+   *
+   * @param {string} wordA the first word
+   * @param {string} wordB the second word
+   * @param {boolean} normalize whether or not to apply normalization
    */
   modelCompareWords (wordA, wordB, normalize = true) {
     const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModel(this.languageID)
@@ -3075,6 +3155,7 @@ class Inflection {
 
   /**
    * Check to see if the supplied inflection can disambiguate this one
+   *
    * @param {Inflection} infl Inflection object to be used for disambiguation
    */
   disambiguatedBy (infl) {
@@ -3087,7 +3168,7 @@ class Inflection {
     if (infl.features.length > this.features.length) {
       matched = false
     }
-    for (let feature of infl.features) {
+    for (const feature of infl.features) {
       if (!this[feature] || !this[feature].isEqual(infl[feature])) {
         matched = false
         break
@@ -3104,7 +3185,7 @@ class Inflection {
    * @param {Feature | Feature[]} data
    */
   set feature (data) {
-    console.warn(`Please use "addFeature" instead.`)
+    console.warn('Please use "addFeature" instead.')
     if (!data) {
       throw new Error('Inflection feature data cannot be empty.')
     }
@@ -3112,9 +3193,9 @@ class Inflection {
       data = [data]
     }
 
-    let type = data[0].type
+    const type = data[0].type
     this[type] = []
-    for (let element of data) {
+    for (const element of data) {
       if (!(element instanceof _feature_js__WEBPACK_IMPORTED_MODULE_0__["default"])) {
         throw new Error('Inflection feature data must be a Feature object.')
       }
@@ -3131,6 +3212,7 @@ class Inflection {
 
   /**
    * Sets a grammatical feature of an inflection. Feature is stored in a `feature.type` property.
+   *
    * @param {Feature} feature - A feature object with one or multiple values.
    */
   addFeature (feature) {
@@ -3153,23 +3235,25 @@ class Inflection {
 
   /**
    * Sets multiple grammatical features of an inflection.
+   *
    * @param {Feature[]} features - Features to be added.
    */
   addFeatures (features) {
     if (!Array.isArray(features)) {
-      throw new Error(`Features must be in an array`)
+      throw new Error('Features must be in an array')
     }
 
-    for (let feature of features) {
+    for (const feature of features) {
       this.addFeature(feature)
     }
   }
 
   /**
    * Checks whether an inflection has a feature with `featureName` name and `featureValue` value
+   *
    * @param {string} featureName - A name of a feature
    * @param {string} featureValue - A value of a feature
-   * @return {boolean} True if an inflection contains a feature, false otherwise
+   * @returns {boolean} True if an inflection contains a feature, false otherwise
    */
   hasFeatureValue (featureName, featureValue) {
     if (this.hasOwnProperty(featureName)) {
@@ -3183,7 +3267,7 @@ class Inflection {
     for (const feature of this.features.values()) {
       string += `${feature}: ${this[feature].value}, `
     }
-    string += `\n  constraints:  `
+    string += '\n  constraints:  '
     for (const [key, value] of Object.entries(this.constraints)) {
       if (Array.isArray(value)) {
         string += `${key}: [${value}], `
@@ -3196,6 +3280,7 @@ class Inflection {
   }
 
   static readObject (jsonObject, lemma) {
+    // eslint-disable-next-line prefer-const
     let inflection =
       new Inflection(
         jsonObject.stem, jsonObject.languageCode, jsonObject.suffix, jsonObject.prefix, jsonObject.example)
@@ -3213,11 +3298,11 @@ class Inflection {
   }
 
   convertToJSONObject () {
-    let resultFeatures = []
-    for (let key of this.features.keys()) {
+    let resultFeatures = [] // eslint-disable-line prefer-const
+    for (const key of this.features.keys()) {
       resultFeatures.push(this[key].convertToJSONObject())
     }
-    let languageCode = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageCodeFromId(this.languageID)
+    const languageCode = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageCodeFromId(this.languageID)
     return {
       stem: this.stem,
       languageCode: languageCode,
@@ -3248,6 +3333,7 @@ class InflectionGroup {
    *
    * @param {InflectionGroupingKey} groupingKey features of the inflections in the group
    * @param {Inflection[]|InflectionGroup[]} inflections array of Inflections or InflectionGroups in this group
+   * @param sortKey
    */
   constructor (groupingKey, inflections = [], sortKey = null) {
     this.groupingKey = groupingKey
@@ -3256,6 +3342,7 @@ class InflectionGroup {
 
   /**
    * Add an Inflection or InflectionGroup to the group
+   *
    * @param {Inflection|InflectionGroup} inflection
    */
   append (inflection) {
@@ -3281,13 +3368,13 @@ __webpack_require__.r(__webpack_exports__);
 
 class InflectionGroupingKey {
   /**
-   * @constructor
+   * @class
    * @param {Inflection} infl inflection with features which are used as a grouping key
    * @param {string[]} features array of feature names which are used as the key
-   * @param {Object} extras extra property name and value pairs used in the key
+   * @param {object} extras extra property name and value pairs used in the key
    */
   constructor (infl, features, extras = {}) {
-    for (let feature of features) {
+    for (const feature of features) {
       this[feature] = infl[feature]
     }
     Object.assign(this, extras)
@@ -3295,8 +3382,11 @@ class InflectionGroupingKey {
 
   /**
    * checks if a feature with a specific value
-   * is included in the grouping key
+is included in the grouping key
+   *
    * @returns {boolean} true if found, false if not
+   * @param feature
+   * @param value
    */
   hasFeatureValue (feature, value) {
     if (this.hasOwnProperty(feature)) {
@@ -3307,13 +3397,14 @@ class InflectionGroupingKey {
 
   /**
    * Return this key as a string
+   *
    * @returns {string} string representation of the key
    */
   toString () {
-    let values = []
-    for (let prop of Object.getOwnPropertyNames(this).sort()) {
+    let values = [] // eslint-disable-line prefer-const
+    for (const prop of Object.getOwnPropertyNames(this).sort()) {
       // A prop can be either a Feature object, or a one of the extras of a string type
-      let value = (this[prop] instanceof _feature_js__WEBPACK_IMPORTED_MODULE_0__["default"]) ? this[prop].values.sort().join(',') : this[prop]
+      const value = (this[prop] instanceof _feature_js__WEBPACK_IMPORTED_MODULE_0__["default"]) ? this[prop].values.sort().join(',') : this[prop]
       values.push(value)
     }
     return values.join(' ')
@@ -3366,7 +3457,7 @@ class LanguageModel {
    * @deprecated
    */
   get contextForward () {
-    console.warn(`Please use static "contextForward" instead`)
+    console.warn('Please use static "contextForward" instead')
     return this.constructor.contextForward
   }
 
@@ -3374,7 +3465,7 @@ class LanguageModel {
    * @deprecated
    */
   get contextBackward () {
-    console.warn(`Please use static "contextBackward" instead`)
+    console.warn('Please use static "contextBackward" instead')
     return this.constructor.contextBackward
   }
 
@@ -3382,7 +3473,7 @@ class LanguageModel {
    * @deprecated
    */
   get direction () {
-    console.warn(`Please use static "direction" instead`)
+    console.warn('Please use static "direction" instead')
     return this.constructor.direction
   }
 
@@ -3390,7 +3481,7 @@ class LanguageModel {
    * @deprecated
    */
   get baseUnit () {
-    console.warn(`Please use static "baseUnit" instead`)
+    console.warn('Please use static "baseUnit" instead')
     return this.constructor.baseUnit
   }
 
@@ -3398,13 +3489,14 @@ class LanguageModel {
    * @deprecated
    */
   get features () {
-    console.warn(`Please use individual "getFeatureType" or static "features" instead`)
+    console.warn('Please use individual "getFeatureType" or static "features" instead')
     return this.constructor.features
   }
 
   /**
    * Returns a list of names of feature types that are defined in a language model.
-   * @return {string[]} Names of features that are defined in a model.
+   *
+   * @returns {string[]} Names of features that are defined in a model.
    */
   static get featureNames () {
     return this.featureValues.keys()
@@ -3415,8 +3507,9 @@ class LanguageModel {
    * object instance. It returns the one defined in a language model. To get a new instance of a Feature
    * object, use `getFeature` instead.
    * If no feature of `featureType` is defined in a language model, throws an error.
+   *
    * @param {string} featureType - A feature type name.
-   * @return {Feature} A feature object of requested type.
+   * @returns {Feature} A feature object of requested type.
    */
   static typeFeature (featureType) {
     if (this.typeFeatures.has(featureType)) {
@@ -3429,15 +3522,16 @@ class LanguageModel {
   /**
    * Returns a map with Feature objects of all features defined in a language. Use this method to get all
    * Feature objects defined in a language model.
-   * @return {Map} Feature objects for all features defined within a language in a Map object. The key is
+   *
+   * @returns {Map} Feature objects for all features defined within a language in a Map object. The key is
    * a feature type (a string), and the value is a Feature object.
    */
   static get typeFeatures () {
-    console.warn(`This getter must be defined in a descendant class`)
+    console.warn('This getter must be defined in a descendant class')
   }
 
   static get features () {
-    let features = {}
+    let features = {} // eslint-disable-line prefer-const
     for (const featureName of this.featureNames) {
       features[featureName] = this.getFeature(featureName)
     }
@@ -3454,47 +3548,49 @@ class LanguageModel {
 
   /**
    * Returns an array of language codes that represents the language.
-   * @return {String[]} An array of language codes that matches the language.
+   *
+   * @returns {string[]} An array of language codes that matches the language.
    */
   static get languageCodes () {
     return []
   }
 
   static get codes () {
-    console.warn(`Use static "languageCodes" instead`)
+    console.warn('Use static "languageCodes" instead')
     return this.languageCodes
   }
 
   /**
    * @deprecated
-   * @return {String[]}
+   * @returns {string[]}
    */
   get codes () {
-    console.warn(`Please use a static version of "codes" instead`)
+    console.warn('Please use a static version of "codes" instead')
     return this.constructor.languageCodes
   }
 
   /**
    * @deprecated
-   * @return {string}
+   * @returns {string}
    */
   toCode () {
-    console.warn(`Please use a static "languageCode" instead`)
+    console.warn('Please use a static "languageCode" instead')
     return this.constructor.languageCode
   }
 
   /**
    * @deprecated
-   * @return {string}
+   * @returns {string}
    */
   static toCode () {
-    console.warn(`Please use a static "languageCode" instead`)
+    console.warn('Please use a static "languageCode" instead')
     return this.languageCode
   }
 
   /**
    * Return a list of feature values that are allowed for each feature type
-   * @return {Map<string, string[]>}
+   *
+   * @returns {Map<string, string[]>}
    */
   static get featureValues () {
     /*
@@ -3603,30 +3699,30 @@ class LanguageModel {
 
   /**
    * @deprecated
-   * @return {symbol} Returns a language ID
+   * @returns {symbol} Returns a language ID
    */
   static get sourceLanguage () {
-    console.warn(`Please use languageID directly`)
+    console.warn('Please use languageID directly')
     return this.languageID
   }
 
   /**
    * @deprecated
-   * @return {symbol} Returns a language ID
+   * @returns {symbol} Returns a language ID
    */
   get sourceLanguage () {
-    console.warn(`Please use languageID directly`)
+    console.warn('Please use languageID directly')
     return this.constructor.languageID
   }
 
   /**
    * @deprecated
    * @param name
-   * @return {FeatureType}
+   * @returns {FeatureType}
    */
   static getFeatureType (name) {
     console.warn('Please use getFeature instead')
-    let featureValues = this.featureValues
+    const featureValues = this.featureValues
     if (featureValues.has(name)) {
       return new _feature_type_js__WEBPACK_IMPORTED_MODULE_3__["default"](name, featureValues.get(name), this.languageID)
     } else {
@@ -3637,13 +3733,14 @@ class LanguageModel {
   /**
    * Returns a new instance of a feature with `featureType`. It uses a feature defined in a language model
    * as a master.
+   *
    * @param {string} featureType - A name of a feature type.
-   * @return {Feature} - A newly created Feature object.
+   * @returns {Feature} - A newly created Feature object.
    */
   static getFeature (featureType) {
-    let featureValues = this.featureValues // To cache the values
+    const featureValues = this.featureValues // To cache the values
     if (featureValues.has(featureType)) {
-      let allowedValues = featureValues.get(featureType)
+      const allowedValues = featureValues.get(featureType)
       return new _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"](featureType, allowedValues, this.languageID, 1, allowedValues)
     } else {
       throw new Error(`Feature "${featureType}" is not defined`)
@@ -3651,7 +3748,7 @@ class LanguageModel {
   }
 
   _initializeFeatures () {
-    let features = {}
+    const features = {}
     for (const featureName of this.constructor.featureValues.keys()) {
       features[featureName] = this.constructor.getFeature(featureName)
     }
@@ -3662,21 +3759,23 @@ class LanguageModel {
    * @deprecated
    */
   grammarFeatures () {
-    console.warn(`Please use a static version of "grammarFeatures" instead`)
+    console.warn('Please use a static version of "grammarFeatures" instead')
     return this.constructor.grammarFeatures()
   }
 
   /**
    * Identify the morphological features which should be linked to a grammar.
-   * @returns {String[]} Array of Feature types
+   *
+   * @returns {string[]} Array of Feature types
    */
   static grammarFeatures () {
     return []
   }
 
   /**
-   * Check to see if this language tool can produce an inflection table display
-   * for the current node
+   * Check to see if this language tool can produce an inflection table display for the current node
+   *
+   * @param node
    */
   static canInflect (node) {
     return false
@@ -3684,6 +3783,7 @@ class LanguageModel {
 
   /**
    * Check to see if the supplied language code is supported by this tool
+   *
    * @param {string} code the language code
    * @returns true if supported false if not
    * @type Boolean
@@ -3694,10 +3794,11 @@ class LanguageModel {
 
   /**
    * Return a normalized version of a word which can be used to compare the word for equality
+   *
    * @param {string} word the source word
-   * @returns the normalized form of the word (default version just returns the same word,
+   * @returns string normalized form of the word (default version just returns the same word,
    *          override in language-specific subclass)
-   * @type String
+   * @type string
    */
   static normalizeWord (word) {
     return word
@@ -3705,6 +3806,7 @@ class LanguageModel {
 
   /**
    * Returns alternate encodings for a word
+   *
    * @param {string} word the word
    * @param {string} preceding optional preceding word
    * @param {string} following optional following word
@@ -3717,9 +3819,10 @@ class LanguageModel {
 
   /**
    * Compare two words with language specific logic
-   * @param {String} wordA
-   * @param {String} wordB
-   * @param {Boolean} normalize - whether or not to apply normalization algorithms
+   *
+   * @param {string} wordA
+   * @param {string} wordB
+   * @param {boolean} normalize - whether or not to apply normalization algorithms
    */
   static compareWords (wordA, wordB, normalize = true) {
     if (normalize) {
@@ -3730,13 +3833,14 @@ class LanguageModel {
   }
 
   alternateWordEncodings (word, preceding, following, encoding) {
-    console.warn(`Please use static "alternateWordEncodings" instead`)
+    console.warn('Please use static "alternateWordEncodings" instead')
     return this.constructor.alternateWordEncodings(word, preceding, following, encoding)
   }
 
   /**
    * Get a list of valid puncutation for this language
-   * @returns {String} a string containing valid puncutation symbols
+   *
+   * @returns {string} a string containing valid puncutation symbols
    */
   static getPunctuation () {
     return '.,;:!?\'"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r'
@@ -3744,10 +3848,10 @@ class LanguageModel {
 
   /**
    * @deprecated
-   * @return {String}
+   * @returns {string}
    */
   getPunctuation () {
-    console.warn(`Please use a static version of "getPunctuation"`)
+    console.warn('Please use a static version of "getPunctuation"')
     return this.constructor.getPunctuation()
   }
 
@@ -3768,8 +3872,9 @@ class LanguageModel {
 
   /**
    * Checks whether a language has a particular language code in its list of codes
-   * @param {String} languageCode - A language code to check
-   * @return {boolean} Whether this language code exists in a language code list
+   *
+   * @param {string} languageCode - A language code to check
+   * @returns {boolean} Whether this language code exists in a language code list
    */
   static hasCode (languageCode) {
     if (this.isLanguageCode(languageCode)) {
@@ -3781,8 +3886,9 @@ class LanguageModel {
 
   /**
    * Tests wither a provided language identificator is a language ID.
-   * @param {Symbol | string} language - A language identificator, either a Symbol or a string language code.
-   * @return {boolean} True if language identificator provided is a language ID.
+   *
+   * @param {symbol|string} language - A language identificator, either a Symbol or a string language code.
+   * @returns {boolean} True if language identificator provided is a language ID.
    */
   static isLanguageID (language) {
     return (typeof language === 'symbol')
@@ -3790,8 +3896,9 @@ class LanguageModel {
 
   /**
    * Tests wither a provided language identificator is a language code.
-   * @param {Symbol | string} language - A language identificator, either a Symbol or a string language code.
-   * @return {boolean} - True if language identificator provided is a language code.
+   *
+   * @param {symbol|string} language - A language identificator, either a Symbol or a string language code.
+   * @returns {boolean} - True if language identificator provided is a language code.
    */
   static isLanguageCode (language) {
     return !LanguageModel.isLanguageID(language)
@@ -3802,30 +3909,32 @@ class LanguageModel {
    * @param node
    */
   canInflect (node) {
-    console.warn(`Please use a static version of "canInflect" instead`)
+    console.warn('Please use a static version of "canInflect" instead')
     return this.constructor.canInflect(node)
   }
 
   /**
    * Groups a set of inflections according to a language-specific display paradigm
-   * The default groups according to the following logic:
-   *   1. groups of groups with unique stem, prefix, suffix, part of speech, declension, dialect and comparison
-   *     2. groups of those groups with unique
-   *          number, if it's an inflection with a grammatical case
-   *          tense, if it's an inflection with tense but no case (i.e. a verb)
-   *          verbs without tense or case
-   *          adverbs
-   *          everything else
-   *       3. groups of those groups with unique voice and tense
-   *         4. groups of inflections with unique gender, person, mood, and sort
+     The default groups according to the following logic:
+     1. groups of groups with unique stem, prefix, suffix, part of speech, declension, dialect and comparison
+     2. groups of those groups with unique
+     number, if it's an inflection with a grammatical case
+     tense, if it's an inflection with tense but no case (i.e. a verb)
+     verbs without tense or case
+     adverbs
+     everything else
+     3. groups of those groups with unique voice and tense
+     4. groups of inflections with unique gender, person, mood, and sort
+   *
+   * @param inflections
    */
   static groupInflectionsForDisplay (inflections) {
-    let grouped = new Map()
-    let aggregated = this.aggregateInflectionsForDisplay(inflections)
+    let grouped = new Map() // eslint-disable-line prefer-const
+    const aggregated = this.aggregateInflectionsForDisplay(inflections)
 
     // group inflections by part of speech
-    for (let infl of aggregated) {
-      let groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__["default"](infl,
+    for (const infl of aggregated) {
+      const groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__["default"](infl,
         [_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.dialect, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.comparison],
         {
           prefix: infl.prefix,
@@ -3833,7 +3942,7 @@ class LanguageModel {
           stem: infl.stem
         }
       )
-      let groupingKeyStr = groupingKey.toString()
+      const groupingKeyStr = groupingKey.toString()
       if (grouped.has(groupingKeyStr)) {
         grouped.get(groupingKeyStr).append(infl)
       } else {
@@ -3842,9 +3951,9 @@ class LanguageModel {
     }
 
     // iterate through each group key to group the inflections in that group
-    for (let kv of grouped) {
-      let inflgrp = new Map()
-      for (let infl of kv[1].inflections) {
+    for (const kv of grouped) {
+      const inflgrp = new Map()
+      for (const infl of kv[1].inflections) {
         let keyprop
         let isCaseInflectionSet = false
         if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.grmCase]) {
@@ -3865,8 +3974,8 @@ class LanguageModel {
           // grouping on adverbs without case or tense
           // everything else
         }
-        let groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__["default"](infl, [keyprop], { isCaseInflectionSet: isCaseInflectionSet })
-        let groupingKeyStr = groupingKey.toString()
+        const groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__["default"](infl, [keyprop], { isCaseInflectionSet: isCaseInflectionSet })
+        const groupingKeyStr = groupingKey.toString()
         if (inflgrp.has(groupingKeyStr)) {
           inflgrp.get(groupingKeyStr).append(infl)
         } else {
@@ -3880,13 +3989,13 @@ class LanguageModel {
       //  inflections of adverbs
       //  everything else
       // iterate through each inflection group key to group the inflections in that group by tense and voice
-      for (let kv of inflgrp) {
-        let nextGroup = new Map()
-        let sortOrder = new Map()
-        for (let infl of kv[1].inflections) {
-          let sortkey = infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.grmCase] ? Math.max(infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.grmCase].items.map(f => f.sortOrder)) : 1
-          let groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__["default"](infl, [_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.voice])
-          let groupingKeyStr = groupingKey.toString()
+      for (const kv of inflgrp) {
+        const nextGroup = new Map()
+        const sortOrder = new Map()
+        for (const infl of kv[1].inflections) {
+          const sortkey = infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.grmCase] ? Math.max(infl[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.grmCase].items.map(f => f.sortOrder)) : 1
+          const groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__["default"](infl, [_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.voice])
+          const groupingKeyStr = groupingKey.toString()
           if (nextGroup.has(groupingKeyStr)) {
             nextGroup.get(groupingKeyStr).append(infl)
           } else {
@@ -3895,30 +4004,30 @@ class LanguageModel {
           }
         }
         kv[1].inflections = []
-        let sortedKeys = Array.from(nextGroup.keys()).sort(
+        const sortedKeys = Array.from(nextGroup.keys()).sort(
           (a, b) => {
-            let orderA = sortOrder.get(a)
-            let orderB = sortOrder.get(b)
+            const orderA = sortOrder.get(a)
+            const orderB = sortOrder.get(b)
             return orderA > orderB ? -1 : orderB > orderA ? 1 : 0
           }
         )
-        for (let groupkey of sortedKeys) {
+        for (const groupkey of sortedKeys) {
           kv[1].inflections.push(nextGroup.get(groupkey))
         }
       }
 
       // inflgrp is now a Map of groups of groups of inflections
 
-      for (let kv of inflgrp) {
-        let groups = kv[1]
-        for (let group of groups.inflections) {
-          let nextGroup = new Map()
-          for (let infl of group.inflections) {
+      for (const kv of inflgrp) {
+        const groups = kv[1]
+        for (const group of groups.inflections) {
+          let nextGroup = new Map() // eslint-disable-line prefer-const
+          for (const infl of group.inflections) {
             // set key is case comp gend pers mood sort
-            let groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__["default"](infl,
+            const groupingKey = new _inflection_grouping_key_js__WEBPACK_IMPORTED_MODULE_4__["default"](infl,
               [_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.grmCase, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.comparison, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.gender, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.number, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.person,
                 _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.mood, _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.voice])
-            let groupingKeyStr = groupingKey.toString()
+            const groupingKeyStr = groupingKey.toString()
             if (nextGroup.has(groupingKeyStr)) {
               nextGroup.get(groupingKeyStr).append(infl)
             } else {
@@ -3935,8 +4044,9 @@ class LanguageModel {
 
   /**
    * Aggregate inflections for display according to language model characteristics
+   *
    * @param {Inflection[]} inflections an array of inflections
-   * @return Inflection[] the aggregated inflections
+   * @returns Inflection[] the aggregated inflections
    */
   static aggregateInflectionsForDisplay (inflections) {
     // default is just to do nothing
@@ -3946,10 +4056,10 @@ class LanguageModel {
   /**
    * @deprecated
    * @param inflections
-   * @return {*}
+   * @returns {*}
    */
   groupInflectionsForDisplay (inflections) {
-    console.warn(`Please use a static version of "groupInflectionsForDisplay" instead`)
+    console.warn('Please use a static version of "groupInflectionsForDisplay" instead')
     return this.constructor.groupInflectionsForDisplay(inflections)
   }
 }
@@ -4004,8 +4114,9 @@ const MODELS = new Map([
 class LanguageModelFactory {
   /**
    * Checks whether a language is supported
+   *
    * @param {string | symbol} language - Language as a language ID (symbol) or a language code (string)
-   * @return {boolean} True if language is supported, false otherwise
+   * @returns {boolean} True if language is supported, false otherwise
    */
   static supportsLanguage (language) {
     language = (typeof language === 'symbol') ? LanguageModelFactory.getLanguageCodeFromId(language) : language
@@ -4013,8 +4124,8 @@ class LanguageModelFactory {
   }
 
   static availableLanguages () {
-    let avail = new Set()
-    for (let model of MODELS.values()) {
+    let avail = new Set() // eslint-disable-line prefer-const
+    for (const model of MODELS.values()) {
       avail.add(model.languageCode)
     }
     return Array.from(avail)
@@ -4022,11 +4133,12 @@ class LanguageModelFactory {
 
   /**
    * Returns a constructor of language model for a specific language ID.
+   *
    * @param {symbol} languageID - A language ID of a desired language model.
-   * @return {LanguageModel} A language model for a given language ID.
+   * @returns {LanguageModel} A language model for a given language ID.
    */
   static getLanguageModel (languageID) {
-    let languageCode = LanguageModelFactory.getLanguageCodeFromId(languageID)
+    const languageCode = LanguageModelFactory.getLanguageCodeFromId(languageID)
     return LanguageModelFactory.getLanguageModelFromCode(languageCode)
   }
 
@@ -4040,7 +4152,7 @@ class LanguageModelFactory {
   }
 
   static getLanguageForCode (code = null) {
-    let Model = MODELS.get(code)
+    const Model = MODELS.get(code)
     if (Model) {
       return new Model()
     }
@@ -4051,8 +4163,9 @@ class LanguageModelFactory {
 
   /**
    * Converts an ISO 639-3 language code to a language ID
+   *
    * @param {string} languageCode - An ISO 639-3 language code
-   * @return {symbol | undefined} A language ID or undefined if language ID is not found
+   * @returns {symbol | undefined} A language ID or undefined if language ID is not found
    */
   static getLanguageIdFromCode (languageCode) {
     for (const languageModel of MODELS.values()) {
@@ -4066,8 +4179,9 @@ class LanguageModelFactory {
 
   /**
    * Converts a language ID to an default ISO 639-3 language code for that language
+   *
    * @param {symbol} languageID - A language ID
-   * @return {string | undefined} An ISO 639-3 language code or undefined if language code is not found
+   * @returns {string | undefined} An ISO 639-3 language code or undefined if language code is not found
    */
   static getLanguageCodeFromId (languageID) {
     for (const languageModel of MODELS.values()) {
@@ -4081,8 +4195,9 @@ class LanguageModelFactory {
 
   /**
    * Takes either a language ID or a language code and returns an object with both an ID and a code.
+   *
    * @param {string | symbol} language - Either a language ID (a Symbol) or a language code (a String).
-   * @return {object} An object with the following properties:
+   * @returns {object} An object with the following properties:
    *    {symbol} languageID
    *    {string} languageCode
    */
@@ -4106,9 +4221,10 @@ class LanguageModelFactory {
    * Compares two languages in either a language ID or a language code format. For this, does conversion of
    * language IDs to language code. Because fo this, it will work even for language IDs defined in
    * different modules
+   *
    * @param {string | symbol} languageA - Either a language ID (a symbol) or a language code (a string).
    * @param {string | symbol} languageB - Either a language ID (a symbol) or a language code (a string).
-   * @return {boolean} True if languages are the same, false otherwise.
+   * @returns {boolean} True if languages are the same, false otherwise.
    */
   static compareLanguages (languageA, languageB) {
     languageA = (typeof languageA === 'symbol') ? LanguageModelFactory.getLanguageCodeFromId(languageA) : languageA
@@ -4138,7 +4254,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let typeFeatures = new Map()
+let typeFeatures = new Map() // eslint-disable-line prefer-const
 let typeFeaturesInitialized = false
 
 /**
@@ -4266,8 +4382,9 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
   }
 
   /**
-   * Check to see if this language tool can produce an inflection table display
-   * for the current node
+   * Check to see if this language tool can produce an inflection table display for the current node
+   *
+   * @param node
    */
   static canInflect (node) {
     return true
@@ -4275,7 +4392,8 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 
   /**
    * Return a normalized version of a word which can be used to compare the word for equality
-   * @param {String} word the source word
+   *
+   * @param {string} word the source word
    * @returns the normalized form of the word (Latin replaces accents and special chars)
    * @type String
    */
@@ -4301,6 +4419,7 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 
   /**
    * Returns alternate encodings for a word
+   *
    * @param {string} word the word
    * @param {string} preceding optional preceding word
    * @param {string} following optional following word
@@ -4314,7 +4433,8 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 
   /**
    * Get a list of valid puncutation for this language
-   * @returns {String} a string containing valid puncutation symbols
+   *
+   * @returns {string} a string containing valid puncutation symbols
    */
   static getPunctuation () {
     return ".,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
@@ -4322,10 +4442,12 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 
   /**
    * Sets inflection grammar properties based on its characteristics
+   *
    * @param {Inflection} inflection - An inflection object
-   * @return {Object} Inflection properties
+   * @returns {object} Inflection properties
    */
   static getInflectionConstraints (inflection) {
+    // eslint-disable-next-line prefer-const
     let grammar = {
       fullFormBased: false,
       suffixBased: false,
@@ -4341,7 +4463,7 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
         grammar.suffixBased = true
       }
     } else {
-      console.warn(`Unable to set grammar: part of speech data is missing or is incorrect`, inflection[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part])
+      console.warn('Unable to set grammar: part of speech data is missing or is incorrect', inflection[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part])
     }
 
     return grammar
@@ -4376,10 +4498,11 @@ __webpack_require__.r(__webpack_exports__);
 class Lemma {
   /**
    * Initializes a Lemma object.
+   *
    * @param {string} word - A word.
    * @param {symbol | string} languageID - A language ID (symbol, please use this) or a language code of a word.
    * @param {string[]} principalParts - the principalParts of a lemma.
-   * @param {Object} features - the grammatical features of a lemma.
+   * @param {object} features - the grammatical features of a lemma.
 
    * @param {Translation} transaltions - translations from python service
    */
@@ -4405,12 +4528,13 @@ class Lemma {
   }
 
   get language () {
-    console.warn(`Please use "languageID" instead of "language"`)
+    console.warn('Please use "languageID" instead of "language"')
     return this.languageCode
   }
 
   static readObject (jsonObject) {
-    let language = jsonObject.language ? jsonObject.language : jsonObject.languageCode
+    const language = jsonObject.language ? jsonObject.language : jsonObject.languageCode
+    // eslint-disable-next-line prefer-const
     let resLemma = new Lemma(jsonObject.word, language, jsonObject.principalParts, jsonObject.pronunciation)
 
     if (jsonObject.features && jsonObject.features.length > 0) {
@@ -4426,10 +4550,11 @@ class Lemma {
   }
 
   convertToJSONObject () {
-    let resultFeatures = []
-    for (let feature of Object.values(this.features)) {
+    let resultFeatures = [] // eslint-disable-line prefer-const
+    for (const feature of Object.values(this.features)) {
       resultFeatures.push(feature.convertToJSONObject())
     }
+    // eslint-disable-next-line prefer-const
     let resultLemma = {
       word: this.word,
       language: this.languageCode,
@@ -4451,7 +4576,7 @@ class Lemma {
    * @param {Feature | Feature[]} data
    */
   set feature (data) {
-    console.warn(`Please use "addFeature" instead`)
+    console.warn('Please use "addFeature" instead')
     if (!data) {
       throw new Error('feature data cannot be empty.')
     }
@@ -4459,9 +4584,9 @@ class Lemma {
       data = [data]
     }
 
-    let type = data[0].type
+    const type = data[0].type
     this.features[type] = []
-    for (let element of data) {
+    for (const element of data) {
       if (!(element instanceof _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"])) {
         throw new Error('feature data must be a Feature object.')
       }
@@ -4477,6 +4602,7 @@ class Lemma {
 
   /**
    * Sets a grammatical feature of a lemma. Feature is stored in a `feature.type` property.
+   *
    * @param {Feature} feature - A feature object with one or multiple values.
    */
   addFeature (feature) {
@@ -4498,20 +4624,22 @@ class Lemma {
 
   /**
    * Sets multiple grammatical features of a lemma.
+   *
    * @param {Feature[]} features - Features to be added.
    */
   addFeatures (features) {
     if (!Array.isArray(features)) {
-      throw new Error(`Features must be in an array`)
+      throw new Error('Features must be in an array')
     }
 
-    for (let feature of features) {
+    for (const feature of features) {
       this.addFeature(feature)
     }
   }
 
   /**
    * Sets a translation from python service.
+   *
    * @param {Translation} translation - A translation object
    */
   addTranslation (translation) {
@@ -4528,8 +4656,9 @@ class Lemma {
 
   /**
    * Test to see if two lemmas are full homonyms
+   *
    * @param {Lemma} lemma the lemma to compare
-   * @return {Boolean} true or false
+   * @returns {boolean} true or false
    */
   isFullHomonym (lemma) {
     // returns true if the word and part of speech match
@@ -4572,6 +4701,7 @@ __webpack_require__.r(__webpack_exports__);
 class Lexeme {
   /**
    * Initializes a Lexeme object.
+   *
    * @param {Lemma} lemma - A lemma object.
    * @param {Inflection[]} inflections - An array of inflections.
    * @param {DefinitionSet} meaning - A set of definitions.
@@ -4593,7 +4723,7 @@ class Lexeme {
       throw new Error('Inflection data should be provided in an array.')
     }
 
-    for (let inflection of inflections) {
+    for (const inflection of inflections) {
       if (!(inflection instanceof _inflection_js__WEBPACK_IMPORTED_MODULE_1__["default"])) {
         throw new Error('All inflection data should be of Inflection object type.')
       }
@@ -4613,6 +4743,7 @@ class Lexeme {
 
   /**
    * add an inflection to the lexeme
+   *
    * @param {Inflection} inflection
    */
   addInflection (inflection) {
@@ -4623,6 +4754,7 @@ class Lexeme {
 
   /**
    * add an alternative lemma to the lexeme
+   *
    * @param {Lemma} lemma
    */
   addAltLemma (lemma) {
@@ -4635,7 +4767,8 @@ class Lexeme {
    *   its lemma has morphological features defined
    *   it has one ore more definitions supplied in the meaning
    *   it has one ore more inflections
-   * @return {boolean}
+   *
+   * @returns {boolean}
    */
   isPopulated () {
     return Object.entries(this.lemma.features).length > 0 ||
@@ -4645,6 +4778,7 @@ class Lexeme {
 
   /**
    * Checks if any short definitions are stored within this lexeme.
+   *
    * @returns {boolean} - true if any definitions are stored, false otherwise.
    */
   get hasShortDefs () {
@@ -4653,6 +4787,7 @@ class Lexeme {
 
   /**
    * Checks if any full definitions are stored within this lexeme.
+   *
    * @returns {boolean} - true if any definitions are stored, false otherwise.
    */
   get hasFullDefs () {
@@ -4661,20 +4796,21 @@ class Lexeme {
 
   /**
    * disambiguate with another supplied Lexeme
+   *
    * @param {Lexeme} lexeme the lexeme to be disambiguated
    * @param {Lexeme} disambiguator the lexeme to use to disambiguate
-   * @return {Lexeme} a new lexeme, if disamibugation was successful disambiguated flag will be set on it
+   * @returns {Lexeme} a new lexeme, if disamibugation was successful disambiguated flag will be set on it
    */
   static disambiguate (lexeme, disambiguator) {
-    let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning)
+    let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning) // eslint-disable-line prefer-const
     if (lexeme.lemma.isFullHomonym(disambiguator.lemma) && disambiguator.inflections.length > 0) {
       newLexeme.disambiguated = true
-      let keepInflections = []
+      let keepInflections = [] // eslint-disable-line prefer-const
       // iterate through this lexemes inflections and keep only thoes that are disambiguatedBy by the supplied lexeme's inflection
       // we want to keep the original inflections rather than just replacing them
       // because the original inflections may have more information
-      for (let inflection of newLexeme.inflections) {
-        for (let disambiguatorInflection of disambiguator.inflections) {
+      for (const inflection of newLexeme.inflections) {
+        for (const disambiguatorInflection of disambiguator.inflections) {
           if (inflection.disambiguatedBy(disambiguatorInflection)) {
             keepInflections.push(inflection)
           }
@@ -4683,7 +4819,7 @@ class Lexeme {
       newLexeme.inflections = keepInflections
       // if we couldn't match any existing inflections, then add the disambiguated one
       if (newLexeme.inflections.length === 0) {
-        for (let infl of disambiguator.inflections) {
+        for (const infl of disambiguator.inflections) {
           newLexeme.addInflection(infl)
         }
       }
@@ -4692,24 +4828,24 @@ class Lexeme {
   }
 
   getGroupedInflections () {
-    let lm = _language_model_factory__WEBPACK_IMPORTED_MODULE_3__["default"].getLanguageModel(this.lemma.languageID)
+    const lm = _language_model_factory__WEBPACK_IMPORTED_MODULE_3__["default"].getLanguageModel(this.lemma.languageID)
     return lm.groupInflectionsForDisplay(this.inflections)
   }
 
   static readObject (jsonObject) {
-    let lemma = _lemma_js__WEBPACK_IMPORTED_MODULE_0__["default"].readObject(jsonObject.lemma)
-    let inflections = []
-    for (let inflection of jsonObject.inflections) {
+    const lemma = _lemma_js__WEBPACK_IMPORTED_MODULE_0__["default"].readObject(jsonObject.lemma)
+    let inflections = [] // eslint-disable-line prefer-const
+    for (const inflection of jsonObject.inflections) {
       inflections.push(_inflection_js__WEBPACK_IMPORTED_MODULE_1__["default"].readObject(inflection))
     }
 
-    let lexeme = new Lexeme(lemma, inflections)
+    const lexeme = new Lexeme(lemma, inflections)
     if (jsonObject.meaning) {
       lexeme.meaning = _definition_set__WEBPACK_IMPORTED_MODULE_2__["default"].readObject(jsonObject.meaning)
     }
 
     if (jsonObject.provider) {
-      let provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_4__["default"].readObject(jsonObject.provider)
+      const provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_4__["default"].readObject(jsonObject.provider)
       return _resource_provider_js__WEBPACK_IMPORTED_MODULE_4__["default"].getProxy(provider, lexeme)
     } else {
       return lexeme
@@ -4717,17 +4853,16 @@ class Lexeme {
   }
 
   convertToJSONObject (addMeaning = false) {
-    let resInflections = []
+    let resInflections = [] // eslint-disable-line prefer-const
     this.inflections.forEach(inflection => { resInflections.push(inflection.convertToJSONObject()) })
 
-    let resLexeme = {
+    const resLexeme = {
       lemma: this.lemma.convertToJSONObject(),
       inflections: resInflections
     }
 
     if (addMeaning) {
-      let resMeaning = this.meaning.convertToJSONObject()
-      resLexeme.meaning = resMeaning
+      resLexeme.meaning = this.meaning.convertToJSONObject()
     }
 
     if (this.provider) {
@@ -4741,6 +4876,7 @@ class Lexeme {
    * Get a sort function for an array of lexemes which applies a primary and secondary
    * sort logic using the sort order specified for each feature. Sorts in descending order -
    * higher sort order means it should come first
+   *
    * @param {string} primary feature name to use as primary sort key
    * @param {string} secondary feature name to use as secondary sort key
    * @returns {Function} function which can be passed to Array.sort
@@ -4799,7 +4935,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let typeFeatures = new Map()
+let typeFeatures = new Map() // eslint-disable-line prefer-const
 let typeFeaturesInitialized = false
 
 /**
@@ -4833,8 +4969,9 @@ class PersianLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
   }
 
   /**
-   * Check to see if this language tool can produce an inflection table display
-   * for the current node
+   * Check to see if this language tool can produce an inflection table display for the current node
+   *
+   * @param node
    */
   static canInflect (node) {
     return false
@@ -4842,6 +4979,7 @@ class PersianLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 
   /**
    * Returns alternate encodings for a word
+   *
    * @param {string} word the word
    * @param {string} preceding optional preceding word
    * @param {string} following optional following word
@@ -4855,7 +4993,8 @@ class PersianLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0
 
   /**
    * Get a list of valid puncutation for this language
-   * @returns {String} a string containing valid puncutation symbols
+   *
+   * @returns {string} a string containing valid punctuation symbols
    */
   static getPunctuation () {
     return ".,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
@@ -4904,7 +5043,8 @@ class PsEventData {
    *     LexicalQuery.finalize -> [Lexical Query Complete]
    * If caller function is not specified during a `pub()` call, description will be:
    *     LexicalQuery -> [Lexical Query Complete]
-   * @return {string} - An event data description.
+   *
+   * @returns {string} - An event data description.
    */
   get description () {
     return this.caller ? `${this.publisher}.${this.caller} -> [${this.name}]` : `${this.publisher} -> [${this.name}]`
@@ -4942,18 +5082,21 @@ class PsEvent {
   constructor (name, publisher) {
     /**
      * A name of the event.
+     *
      * @type {string}
      */
     this.name = name
 
     /**
      * A name of the publisher.
+     *
      * @type {string}
      */
     this.publisher = publisher.name
 
     /**
      * A subscribers that listens to the published event.
+     *
      * @type {Map<int, EventSubscriber>} - A map of subscriber's functions
      */
     this._subscribers = new Map()
@@ -4961,8 +5104,9 @@ class PsEvent {
 
   /**
    * This function is called when an event is published.
+   *
    * @callback EventSubscriber
-   * @param {Object} data - An event-specific data associated with the event.
+   * @param {object} data - An event-specific data associated with the event.
    * @param {PsEventData} eventData - A data about the event being published.
    *        PsEvent data allows generic subscribers (i.e. functions that are subscribed to
    *        more than one event) to distinguish between an event being published.
@@ -4970,7 +5114,8 @@ class PsEvent {
 
   /**
    * Return a list of subscribers for the current event.
-   * @return {EventSubscriber[]} An array of event subscriber functions.
+   *
+   * @returns {EventSubscriber[]} An array of event subscriber functions.
    */
   get subscribers () {
     return Array.from(this._subscribers.values())
@@ -4979,8 +5124,9 @@ class PsEvent {
   /**
    * Subscribes a function to the published event.
    * When event is published, a @type {Event~subscriber} function is called.
+   *
    * @param {EventSubscriber} subscriber - A subscriber function.
-   * @return {Function} - An function that, when called, will unsubscribe the current subscriber from an event.
+   * @returns {Function} - An function that, when called, will unsubscribe the current subscriber from an event.
    */
   sub (subscriber) {
     const subId = uuid_v4__WEBPACK_IMPORTED_MODULE_0___default()()
@@ -4993,7 +5139,8 @@ class PsEvent {
   /**
    * Publishes an event with data related to it. All subscribers will receive an
    * event notification along with event data.
-   * @param {Object} [data={}] - An event-specific data associated with the event.
+   *
+   * @param {object} [data={}] - An event-specific data associated with the event.
    * @param {string} [caller=''] - The name of the function that called `pub`.
    */
   pub (data = {}, caller = '') {
@@ -5025,7 +5172,6 @@ __webpack_require__.r(__webpack_exports__);
  */
 class ResourceProvider {
   /**
-   * @constructor
    * @param {string} uri - a unique resource identifier for this provider
    * @param {string} rights - rights text
    * @param {Map} rightsTranslations - optional map of translated rights text - keys should be language of text, values the text
@@ -5039,7 +5185,7 @@ class ResourceProvider {
   }
 
   /**
-   * @return a string representation of the resource provider, in the default language
+   * @returns a string representation of the resource provider, in the default language
    */
   toString () {
     return this.rights.get('default')
@@ -5047,8 +5193,9 @@ class ResourceProvider {
 
   /**
    * Produce a string representation of the resource provider, in the requested locale if available
+   *
    * @param {string} languageCode
-   * @return a string representation of the resource provider, in the requested locale if available
+   * @returns a string representation of the resource provider, in the requested locale if available
    */
   toLocaleString (languageCode) {
     return this.rights.get(languageCode) || this.rights.get('default')
@@ -5063,12 +5210,12 @@ class ResourceProvider {
   }
 
   convertToJSONObject () {
-    let rights = {}
+    let rights = {} // eslint-disable-line prefer-const
     for (const [key, value] of this.rights.entries()) {
       rights[key] = value
     }
 
-    let resultProvider = {
+    const resultProvider = {
       uri: this.uri,
       rights
     }
@@ -5076,7 +5223,7 @@ class ResourceProvider {
   }
 
   static readObject (jsonObject) {
-    let rights = new Map()
+    const rights = new Map() // eslint-disable-line prefer-const
     if (jsonObject.rights) {
       Object.keys(jsonObject.rights).forEach(key => {
         rights.set(key, jsonObject.rights[key])
@@ -5353,12 +5500,13 @@ class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
 __webpack_require__.r(__webpack_exports__);
 class Author {
   /**
-  * Constructor, extracts ID from urn
-  * @param {String} urn - string identificator in special format, for example 'urn:cts:latinLit:phi0959'
-  * @param {Object} titles - has the following format { languageCode: title }
-  * @param {Object} abbreviations - has the following format { languageCode: abbreviation }
-  * @returns {Author}
-  */
+   * Constructor, extracts ID from urn
+   *
+   * @param {string} urn - string identificator in special format, for example 'urn:cts:latinLit:phi0959'
+   * @param {object} titles - has the following format { languageCode: title }
+   * @param {object} abbreviations - has the following format { languageCode: abbreviation }
+   * @returns {Author}
+   */
   constructor (urn, titles, abbreviations) {
     this.urn = urn
     this.titles = titles
@@ -5366,18 +5514,20 @@ class Author {
   }
 
   /**
-  * This property is used to define title for panel
-  * @returns {String}
-  */
+   * This property is used to define title for panel
+   *
+   * @returns {string}
+   */
   static get defaultLang () {
     return 'eng'
   }
 
   /**
-  * Method returns title in the lang from arguments, otherwise in default language or (if not exists) it returns first available title
-  * @param {String} lang - language for getting title
-  * @returns {String}
-  */
+   * Method returns title in the lang from arguments, otherwise in default language or (if not exists) it returns first available title
+   *
+   * @param {string} lang - language for getting title
+   * @returns {string}
+   */
   title (lang) {
     if (this.titles[lang]) {
       return this.titles[lang]
@@ -5390,10 +5540,11 @@ class Author {
   }
 
   /**
-  * Method returns abbreviation in the lang from arguments, otherwise in default language or (if not exists) it returns first available abbreviation
-  * @param {String} lang - language for getting abbreviation
-  * @returns {String}
-  */
+   * Method returns abbreviation in the lang from arguments, otherwise in default language or (if not exists) it returns first available abbreviation
+   *
+   * @param {string} lang - language for getting abbreviation
+   * @returns {string}
+   */
   abbreviation (lang) {
     if (this.abbreviations[lang]) {
       return this.abbreviations[lang]
@@ -5422,13 +5573,14 @@ class Author {
 __webpack_require__.r(__webpack_exports__);
 class TextWork {
   /**
-  * Constructor, extracts ID from urn
-  * @param {Author} author - author of the textWork
-  * @param {String} urn - string identificator in special format, for example 'urn:cts:latinLit:phi0959'
-  * @param {Object} titles - has the following format { languageCode: title }
-  * @param {Object} abbreviations - has the following format { languageCode: abbreviation }
-  * @returns {TextWork}
-  */
+   * Constructor, extracts ID from urn
+   *
+   * @param {Author} author - author of the textWork
+   * @param {string} urn - string identificator in special format, for example 'urn:cts:latinLit:phi0959'
+   * @param {object} titles - has the following format { languageCode: title }
+   * @param {object} abbreviations - has the following format { languageCode: abbreviation }
+   * @returns {TextWork}
+   */
   constructor (author, urn, titles, abbreviations) {
     this.urn = urn
     this.titles = titles
@@ -5437,26 +5589,29 @@ class TextWork {
   }
 
   /**
-  * This property is used to define title for panel
-  * @returns {String}
-  */
+   * This property is used to define title for panel
+   *
+   * @returns {string}
+   */
   static get defaultLang () {
     return 'eng'
   }
 
   /**
-  * This property is used to define prefix fr extract ID
-  * @returns {String}
-  */
+   * This property is used to define prefix fr extract ID
+   *
+   * @returns {string}
+   */
   static get defaultIDPrefix () {
     return 'phi'
   }
 
   /**
-  * Method returns title in the lang from arguments, otherwise in default language or (if not exists) it returns first available title
-  * @param {String} lang - language for getting title
-  * @returns {String}
-  */
+   * Method returns title in the lang from arguments, otherwise in default language or (if not exists) it returns first available title
+   *
+   * @param {string} lang - language for getting title
+   * @returns {string}
+   */
   title (lang) {
     if (this.titles[lang]) {
       return this.titles[lang]
@@ -5469,10 +5624,11 @@ class TextWork {
   }
 
   /**
-  * Method returns abbreviation in the lang from arguments, otherwise in default language or (if not exists) it returns first available abbreviation
-  * @param {String} lang - language for getting abbreviation
-  * @returns {String}
-  */
+   * Method returns abbreviation in the lang from arguments, otherwise in default language or (if not exists) it returns first available abbreviation
+   *
+   * @param {string} lang - language for getting abbreviation
+   * @returns {string}
+   */
   abbreviation (lang) {
     if (this.abbreviations[lang]) {
       return this.abbreviations[lang]
@@ -5516,23 +5672,26 @@ class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MOD
     this.textWork = null
     this.passage = null
   }
+
   createContext () {
     return null // not implemented in the current child-class
   }
 
   /**
-  * Creates a full text of example prefix + word + suffix
-  * @returns {String}
-  */
+   * Creates a full text of example prefix + word + suffix
+   *
+   * @returns {string}
+   */
   get htmlExample () {
     return `${this.prefix}<span class="alpheios_word_usage_list_item__text_targetword">${this.normalizedText}</span>${this.suffix}`
   }
 
   /**
-  * Creates a full description - author + textWork + cit number
-  * @param {String} lang - language for getting text
-  * @returns {String}
-  */
+   * Creates a full description - author + textWork + cit number
+   *
+   * @param {string} lang - language for getting text
+   * @returns {string}
+   */
   fullCit (lang) {
     if (!this.author && !this.textWork && !this.passage) {
       return this.cit
@@ -5578,13 +5737,13 @@ class WordUsageExample extends _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MOD
   }
 
   get prefixForSort () {
-    let model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModelFromCode(this.languageCode)
-    let clearPrefix = this.prefix.replace(new RegExp('[' + model.getPunctuation() + ' ]', 'g'), ' ').toUpperCase().split(' ').filter(item => item.length > 0)
+    const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModelFromCode(this.languageCode)
+    const clearPrefix = this.prefix.replace(new RegExp('[' + model.getPunctuation() + ' ]', 'g'), ' ').toUpperCase().split(' ').filter(item => item.length > 0)
     return clearPrefix[clearPrefix.length - 1]
   }
 
   get suffixForSort () {
-    let model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModelFromCode(this.languageCode)
+    const model = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModelFromCode(this.languageCode)
     return this.suffix.replace(new RegExp('[' + model.getPunctuation() + ' ]', 'g'), '').toUpperCase()
   }
 }
@@ -5610,9 +5769,10 @@ __webpack_require__.r(__webpack_exports__);
 class Translation {
   /**
    * Initializes a Translation object.
+   *
    * @param {Lemma} lemma - A lemma object.
-   * @param [] meanings - A set of definitions.
-
+   * @param languageCode
+   * @param translations
    */
   constructor (lemma, languageCode, translations = []) {
     if (!lemma) {
@@ -5627,8 +5787,8 @@ class Translation {
     if (!translationsList || !Array.isArray(translationsList)) {
       throw new Error('Recieved not proper translation list', translationsList)
     }
-    let curTranslations = translationsList.find(function (element) { return element.in === lemma.word })
-    let translation = new Translation(lemma, languageCode, curTranslations.translations)
+    const curTranslations = translationsList.find(function (element) { return element.in === lemma.word })
+    const translation = new Translation(lemma, languageCode, curTranslations.translations)
     if (provider) {
       return _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__["default"].getProxy(provider, translation)
     } else {
@@ -5641,6 +5801,7 @@ class Translation {
   }
 
   convertToJSONObject () {
+    // eslint-disable-next-line prefer-const
     let result = {
       languageCode: this.languageCode,
       translations: this.glosses
@@ -5653,9 +5814,9 @@ class Translation {
   }
 
   static readObject (jsonObject, lemma) {
-    let translation = new Translation(lemma, jsonObject.languageCode, jsonObject.translations)
+    const translation = new Translation(lemma, jsonObject.languageCode, jsonObject.translations)
     if (jsonObject.provider) {
-      let provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__["default"].readObject(jsonObject.provider)
+      const provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__["default"].readObject(jsonObject.provider)
       return _resource_provider_js__WEBPACK_IMPORTED_MODULE_0__["default"].getProxy(provider, translation)
     } else {
       return translation
@@ -5698,15 +5859,16 @@ class TextQuoteSelector {
   }
 
   get contextHTML () {
-    let templateWord = `<span class="alpheios_worditem_incontext_add">${this.text}</span>`
-    let checkPrefix = this.prefix.replace(this.text, templateWord)
-    let checkSuffix = this.suffix.replace(this.text, templateWord)
+    const templateWord = `<span class="alpheios_worditem_incontext_add">${this.text}</span>`
+    const checkPrefix = this.prefix.replace(this.text, templateWord)
+    const checkSuffix = this.suffix.replace(this.text, templateWord)
 
-    let fullText = `${checkPrefix} <span class="alpheios_worditem_incontext">${this.text}</span> ${checkSuffix}`
+    const fullText = `${checkPrefix} <span class="alpheios_worditem_incontext">${this.text}</span> ${checkSuffix}`
     return fullText
   }
 
   static readObject (jsonObject) {
+    // eslint-disable-next-line prefer-const
     let tq = new TextQuoteSelector(jsonObject.languageCode, jsonObject.target.selector.exact)
     tq.prefix = jsonObject.target.selector.prefix
     tq.suffix = jsonObject.target.selector.suffix
@@ -5749,15 +5911,14 @@ __webpack_require__.r(__webpack_exports__);
 
 class WordItem {
   /**
-   * @constructor
-   * @param {Object} constructorArgs
-   *   {String} targetWord
-   *   {String} languageCode
-   *   {Boolean} important
-   *   {Boolean} currentSession
-   *   {TextQuoteSelector[]} context
-   *   {Homonym} homonym
-   *
+   * @class
+   * @param data
+   * {String} targetWord
+   * {String} languageCode
+   * {Boolean} important
+   * {Boolean} currentSession
+   * {TextQuoteSelector[]} context
+   * {Homonym} homonym
    */
   constructor (data = { targetWord: null, languageCode: null, important: false, currentSession: true, context: [], homonym: {} }) {
     // TODO handling of version
@@ -5775,6 +5936,8 @@ class WordItem {
 
   /**
    * Construct a WordItem from JSON
+   *
+   * @param jsonObject
    */
   static readObject (jsonObject) {
     let homonym = {}
@@ -5785,7 +5948,7 @@ class WordItem {
     if (jsonObject.context) {
       context = WordItem.readContext(jsonObject)
     }
-    let worditem = new WordItem({
+    const worditem = new WordItem({
       targetWord: jsonObject.targetWord,
       languageCode: jsonObject.languageCode,
       important: jsonObject.important,
@@ -5798,6 +5961,8 @@ class WordItem {
 
   /**
    * Construct the homonym portion of a WordItem from JSON
+   *
+   * @param jsonObject
    */
   static readHomonym (jsonObject) {
     return _homonym_js__WEBPACK_IMPORTED_MODULE_0__["default"].readObject(jsonObject.homonym)
@@ -5809,11 +5974,13 @@ class WordItem {
 
   /**
    * Construct the context portion of a WordItem from JSON
+   *
+   * @param jsonObject
    */
   static readContext (jsonObject) {
-    let tqs = []
-    for (let jsonObj of jsonObject) {
-      let tq = _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_1__["default"].readObject(jsonObj)
+    let tqs = [] // eslint-disable-line prefer-const
+    for (const jsonObj of jsonObject) {
+      const tq = _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_1__["default"].readObject(jsonObj)
       tqs.push(tq)
     }
     return tqs
@@ -5821,11 +5988,12 @@ class WordItem {
 
   /**
    * add one or more context selectors
+   *
    * @param {TextQuoteSelector[]} selectors
    */
   addContext (selectors) {
-    for (let s of selectors) {
-      let found = this.context.filter(tqs => tqs.isEqual(s))
+    for (const s of selectors) {
+      const found = this.context.filter(tqs => tqs.isEqual(s))
       if (found.length === 0) {
         this.context.push(s)
       }
@@ -5845,12 +6013,13 @@ class WordItem {
   }
 
   /**
-   * updates empty properties of this wordItem
-   * with those of the supplied worditem if also non-empty
+   * updates empty properties of this wordItem with those of the supplied worditem if also non-empty
+   *
+   * @param prevWordItem
    */
   merge (prevWordItem) {
-    let checkProps = ['homonym', 'important', 'currentSession']
-    for (let prop of checkProps) {
+    const checkProps = ['homonym', 'important', 'currentSession']
+    for (const prop of checkProps) {
       if (this._emptyProp(prop) && !prevWordItem._emptyProp(prop)) {
         this[prop] = prevWordItem[prop]
       }
@@ -5859,14 +6028,16 @@ class WordItem {
 
   /**
    * private method to detect an empty property
+   *
+   * @param propName
    */
   _emptyProp (propName) {
     return !this[propName] || (typeof this[propName] === 'object' && Object.keys(this[propName]).length === 0)
   }
 
   get formattedContext () {
-    let res = {}
-    for (let tq of this.context) {
+    let res = {} // eslint-disable-line prefer-const
+    for (const tq of this.context) {
       if (!res[tq.source]) {
         res[tq.source] = []
       }
@@ -5894,10 +6065,10 @@ __webpack_require__.r(__webpack_exports__);
 
 class WordList {
   /**
-  * @constructor
-  * @param {String} languageCode the language code of the list
-  * @param {WordItem[]} worditems an optional array of WordItems with which to initialize the list
-  */
+   * @class
+   * @param {string} languageCode the language code of the list
+   * @param {WordItem[]} worditems an optional array of WordItems with which to initialize the list
+   */
   constructor (languageCode, worditems = []) {
     if (!languageCode) {
       throw new Error('Unable to construct a wordlist without a languagecode')
@@ -5912,6 +6083,7 @@ class WordList {
   get size () {
     return Object.keys(this.items).length
   }
+
   /**
    * get the items of the list
    */
@@ -5921,7 +6093,8 @@ class WordList {
 
   /**
    * checks to see if the list is empty
-   * @return {Boolean}
+   *
+   * @returns {boolean}
    */
   get isEmpty () {
     return Object.values(this.items).length === 0
@@ -5931,22 +6104,23 @@ class WordList {
     if (item.languageCode !== this.languageCode) {
       throw new Error(`Language Code mismatch ${item.languageCode} !=== ${this.languageCode}`)
     }
-    let existingItem = this.getWordItem(item.targetWord, false)
+    const existingItem = this.getWordItem(item.targetWord, false)
     if (existingItem) {
       item.merge(existingItem)
     }
-    let key = this._makeItemKey(this.languageCode, item.targetWord)
+    const key = this._makeItemKey(this.languageCode, item.targetWord)
     this.items[key] = item
   }
 
   /**
-  * delete an individual word item from the list
-  * @param {String} targetWord the word to delete
-  * @return {WordItem} the deleted item
-  */
+   * delete an individual word item from the list
+   *
+   * @param {string} targetWord the word to delete
+   * @returns {WordItem} the deleted item
+   */
   deleteWordItem (targetWord) {
-    let key = this._makeItemKey(this.languageCode, targetWord)
-    let toDelete = this.items[key]
+    const key = this._makeItemKey(this.languageCode, targetWord)
+    const toDelete = this.items[key]
     if (toDelete) {
       delete this.items[key]
     }
@@ -5954,22 +6128,24 @@ class WordList {
   }
 
   /**
-  * delete all items from a list
-  */
+   * delete all items from a list
+   */
   removeAllWordItems () {
     this.items = {}
   }
 
   /**
    * get an item from a list
+   *
    * @param targetWord the word to get
-   * @param {Boolean} create true to create the item if it doesn't exist
-   * @return {WordItem} the retrieved item
+   * @param {boolean} create true to create the item if it doesn't exist
+   * @param eventWordItemUpdated
+   * @returns {WordItem} the retrieved item
    */
   getWordItem (targetWord, create = true, eventWordItemUpdated = null) {
-    let key = this._makeItemKey(this.languageCode, targetWord)
+    const key = this._makeItemKey(this.languageCode, targetWord)
     if (create && !this.items[key]) {
-      let wordItem = new _word_item__WEBPACK_IMPORTED_MODULE_0__["default"]({ targetWord: targetWord, languageCode: this.languageCode })
+      const wordItem = new _word_item__WEBPACK_IMPORTED_MODULE_0__["default"]({ targetWord: targetWord, languageCode: this.languageCode })
       if (eventWordItemUpdated) {
         eventWordItemUpdated.pub({ dataObj: wordItem, params: { segment: 'common' } })
       }
@@ -5979,10 +6155,11 @@ class WordList {
   }
 
   /**
-    * make a key for a word item
-    * @param {String} languageCode
-    * @param {String} targetWord
-    */
+   * make a key for a word item
+   *
+   * @param {string} languageCode
+   * @param {string} targetWord
+   */
   _makeItemKey (languageCode, targetWord) {
     return `${languageCode}:${targetWord.toLowerCase()}`
   }

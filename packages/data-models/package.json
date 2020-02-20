@@ -1,73 +1,84 @@
 {
-	"name": "alpheios-data-models",
-	"version": "3.2.1-dev.5",
-	"description": "Alpheios Data Models",
-	"private": true,
-	"main": "dist/alpheios-data-models.min.js",
-	"directories": {
-		"doc": "doc"
-	},
-  "scripts": {
-    "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-c": "jest tests/chinese/chinese.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-l": "jest tests/convert-upload-worditem.test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "build-lib": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all lib",
-    "build-node": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all node-lib config-node.mjs",
-    "build": "npm run build-lib && npm run build-node",
-    "build-prod": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production lib",
-    "build-dev": "standard --fix && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development lib",
-    "lint": "standard --fix"
+  "name": "alpheios-data-models",
+  "version": "3.2.1-dev.7",
+  "description": "Alpheios Data Models",
+  "private": true,
+  "main": "dist/alpheios-data-models.min.js",
+  "directories": {
+    "doc": "doc"
   },
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/alpheios-project/data-models.git"
-	},
-	"author": "The Alpheios Project, Ltd.",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/alpheios-project/data-models/issues"
-	},
-	"homepage": "https://github.com/alpheios-project/data-models#readme",
-	"devDependencies": {
+  "scripts": {
+    "test": "jest --coverage && shx cat ./coverage/lcov.info | coveralls",
+    "test-no-coverage": "jest",
+    "test-c": "jest tests/chinese/chinese.test.js --coverage && shx cat ./coverage/lcov.info | coveralls",
+    "test-l": "jest tests/convert-upload-worditem.test.js --coverage && shx cat ./coverage/lcov.info | coveralls",
+    "build-lib": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all lib",
+    "build-node": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all node-lib config-node.mjs",
+    "build": "npm run build-lib && npm run build-node",
+    "build-prod": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production lib",
+    "build-dev": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development lib",
+    "lint": "eslint --fix src/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alpheios-project/data-models.git"
+  },
+  "author": "The Alpheios Project, Ltd.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alpheios-project/data-models/issues"
+  },
+  "homepage": "https://github.com/alpheios-project/data-models#readme",
+  "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.8.4",
     "@babel/runtime": "^7.8.4",
     "alpheios-node-build": "github:alpheios-project/node-build#v2.0.0",
     "coveralls": "^3.0.9",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsdoc": "^15.12.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-scope": "^5.0.0",
     "intl-messageformat": "^2.2.0",
     "jest": "^25.1.0",
-    "jest-fetch-mock": "^3.0.1",
-    "standard": "^12.0.1",
+    "shx": "^0.3.2",
     "uuid": "^3.4.0"
-	},
-	"jest": {
-		"verbose": true,
-		"moduleNameMapper": {
-			"^@[/](.+)": "<rootDir>/src/$1"
-		}
-	},
-	"peerDependencies": {
-		"intl-messageformat": "^2.2.0",
-		"uuid": "^3.4.0"
-	},
-	"eslintConfig": {
-		"env": {
-			"browser": true,
-			"node": true
-		},
-		"parserOptions": {
-			"ecmaVersion": 2019,
-			"sourceType": "module"
-		},
-		"rules": {
-			"no-prototype-builtins": "off",
-			"dot-notation": "off"
-		}
-	},
-	"standard": {
-		"ignore": [
-			"**/dist"
-		]
-	}
+  },
+  "jest": {
+    "verbose": true,
+    "moduleNameMapper": {
+      "^@[/](.+)": "<rootDir>/src/$1"
+    }
+  },
+  "peerDependencies": {
+    "intl-messageformat": "^2.2.0",
+    "uuid": "^3.4.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "standard",
+      "plugin:jsdoc/recommended"
+    ],
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "parserOptions": {
+      "parser": "babel-eslint",
+      "ecmaVersion": 2019,
+      "sourceType": "module",
+      "allowImportExportEverywhere": true
+    },
+    "rules": {
+      "no-prototype-builtins": "off"
+    }
+  },
+  "eslintIgnore": [
+    "**/dist"
+  ]
 }

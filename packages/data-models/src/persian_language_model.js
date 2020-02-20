@@ -1,7 +1,7 @@
 import LanguageModel from './language_model.js'
 import * as Constants from './constants.js'
 
-let typeFeatures = new Map()
+let typeFeatures = new Map() // eslint-disable-line prefer-const
 let typeFeaturesInitialized = false
 
 /**
@@ -35,8 +35,9 @@ export default class PersianLanguageModel extends LanguageModel {
   }
 
   /**
-   * Check to see if this language tool can produce an inflection table display
-   * for the current node
+   * Check to see if this language tool can produce an inflection table display for the current node
+   *
+   * @param node
    */
   static canInflect (node) {
     return false
@@ -44,6 +45,7 @@ export default class PersianLanguageModel extends LanguageModel {
 
   /**
    * Returns alternate encodings for a word
+   *
    * @param {string} word the word
    * @param {string} preceding optional preceding word
    * @param {string} following optional following word
@@ -57,7 +59,8 @@ export default class PersianLanguageModel extends LanguageModel {
 
   /**
    * Get a list of valid puncutation for this language
-   * @returns {String} a string containing valid puncutation symbols
+   *
+   * @returns {string} a string containing valid punctuation symbols
    */
   static getPunctuation () {
     return ".,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"

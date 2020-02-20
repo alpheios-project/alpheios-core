@@ -9,10 +9,11 @@ import uuidv4 from 'uuid/v4'
 class Lemma {
   /**
    * Initializes a Lemma object.
+   *
    * @param {string} word - A word.
    * @param {symbol | string} languageID - A language ID (symbol, please use this) or a language code of a word.
    * @param {string[]} principalParts - the principalParts of a lemma.
-   * @param {Object} features - the grammatical features of a lemma.
+   * @param {object} features - the grammatical features of a lemma.
 
    * @param {Translation} transaltions - translations from python service
    */
@@ -38,12 +39,13 @@ class Lemma {
   }
 
   get language () {
-    console.warn(`Please use "languageID" instead of "language"`)
+    console.warn('Please use "languageID" instead of "language"')
     return this.languageCode
   }
 
   static readObject (jsonObject) {
-    let language = jsonObject.language ? jsonObject.language : jsonObject.languageCode
+    const language = jsonObject.language ? jsonObject.language : jsonObject.languageCode
+    // eslint-disable-next-line prefer-const
     let resLemma = new Lemma(jsonObject.word, language, jsonObject.principalParts, jsonObject.pronunciation)
 
     if (jsonObject.features && jsonObject.features.length > 0) {
@@ -59,10 +61,11 @@ class Lemma {
   }
 
   convertToJSONObject () {
-    let resultFeatures = []
-    for (let feature of Object.values(this.features)) {
+    let resultFeatures = [] // eslint-disable-line prefer-const
+    for (const feature of Object.values(this.features)) {
       resultFeatures.push(feature.convertToJSONObject())
     }
+    // eslint-disable-next-line prefer-const
     let resultLemma = {
       word: this.word,
       language: this.languageCode,
@@ -84,7 +87,7 @@ class Lemma {
    * @param {Feature | Feature[]} data
    */
   set feature (data) {
-    console.warn(`Please use "addFeature" instead`)
+    console.warn('Please use "addFeature" instead')
     if (!data) {
       throw new Error('feature data cannot be empty.')
     }
@@ -92,9 +95,9 @@ class Lemma {
       data = [data]
     }
 
-    let type = data[0].type
+    const type = data[0].type
     this.features[type] = []
-    for (let element of data) {
+    for (const element of data) {
       if (!(element instanceof Feature)) {
         throw new Error('feature data must be a Feature object.')
       }
@@ -110,6 +113,7 @@ class Lemma {
 
   /**
    * Sets a grammatical feature of a lemma. Feature is stored in a `feature.type` property.
+   *
    * @param {Feature} feature - A feature object with one or multiple values.
    */
   addFeature (feature) {
@@ -131,20 +135,22 @@ class Lemma {
 
   /**
    * Sets multiple grammatical features of a lemma.
+   *
    * @param {Feature[]} features - Features to be added.
    */
   addFeatures (features) {
     if (!Array.isArray(features)) {
-      throw new Error(`Features must be in an array`)
+      throw new Error('Features must be in an array')
     }
 
-    for (let feature of features) {
+    for (const feature of features) {
       this.addFeature(feature)
     }
   }
 
   /**
    * Sets a translation from python service.
+   *
    * @param {Translation} translation - A translation object
    */
   addTranslation (translation) {
@@ -161,8 +167,9 @@ class Lemma {
 
   /**
    * Test to see if two lemmas are full homonyms
+   *
    * @param {Lemma} lemma the lemma to compare
-   * @return {Boolean} true or false
+   * @returns {boolean} true or false
    */
   isFullHomonym (lemma) {
     // returns true if the word and part of speech match
