@@ -3,7 +3,7 @@
   "version": "1.0.1-dev.0",
   "private": false,
   "scripts": {
-    "set-node-build-deps": "npm i -D git://github.com/alpheios-project/node-build.git#semver:2.0.0 && npx install-peerdeps alpheios-node-build --dev --only-peers && npm un alpheios-node-build",
+    "set-node-build-deps": "npm i -D git://github.com/alpheios-project/node-build.git#v2.0.0 && npx install-peerdeps alpheios-node-build --dev --only-peers && npm un alpheios-node-build",
     "bootstrap": "npx lerna bootstrap --hoist --nohoist=alpheios-node-build --nohoist=eslint-config-standard --nohoist=coveralls",
     "clean": "npx lerna clean --yes",
     "list-mismatching-deps": "npx syncpack list-mismatches; exit(0)",
