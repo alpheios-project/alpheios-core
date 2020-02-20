@@ -9915,7 +9915,6 @@ class AlpheiosTuftsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IM
         return homonym
       }
     } catch (error) {
-      console.info(error)
       this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
     }
   }
@@ -10079,18 +10078,6 @@ data.setPropertyParser(function (propertyName, propertyValue) {
   }
   return propertyValues
 })
-
-/**
-data.setRightsParser(function(data) {
-  let allSources
-  if (! Array.isArray(data.src)) {
-    allSources = [ data.src ]
-  } else {
-    allSources = data.src
-  }
-  return allSources.map(s => s.$).join("\n")
-})
-*/
 
 /* harmony default export */ __webpack_exports__["default"] = (data);
 
@@ -10364,11 +10351,6 @@ class ImportData {
       return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](meaning.$, lang, 'text/plain', targetWord)
     }
 
-    // may be overriden by specific engine use via setRightsParser
-    this.parseRights = function(data) {
-      return null
-    }
-
     // may be overridden by specific engine use via setPropertyParser - default just returns the property value
     // as a list
     this.parseProperty = function (propertyName, propertyValue) {
@@ -10489,10 +10471,6 @@ class ImportData {
     this.parseMeaning = callback
   }
 
-  setRightsParser (callback) {
-    this.parseRights = callback
-  }
-
   /**
    * Add an engine-specific property parser
    */
@@ -10539,9 +10517,10 @@ class ImportData {
   }
 
   /**
-   * Maps property of a single feature type to a single Feature object with one or more values, using an attribute
-   * to determine the mapped-to feature name
-   * (if this feature has multiple values). Feature is stored as a property of the supplied model object.
+   * Maps property of a single feature type to a single Feature object with one
+   * or more values, using an attribute to determine the mapped-to feature name
+   * (if this feature has multiple values). Feature is stored as a property of
+   * the supplied model object.
    * @param {object} model the model object to which the feature will be added
    * @param {object} inputElem the input data element
    * @param {object} inputName the  property name in the input data
@@ -10737,13 +10716,6 @@ class TransformAdapter {
         this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_MAPPING_DATA.get(language))
         continue
       }
-      const rights = mappingData.parseRights(dictData)
-      let lexemeProvider
-      if (rights) {
-        lexemeProvider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](providerUri, rights)
-      } else {
-        lexemeProvider = provider
-      }
 
       const reconstructHdwd = this.collectHdwdArray(dictData, inflectionsJSONTerm, mappingData.model.direction)
       if (reconstructHdwd.length > 0) {
@@ -10781,13 +10753,13 @@ class TransformAdapter {
         if (lemmaElements.length > 1) {
           if (meanings && meanings[index] && meanings[index].$) {
             const meaning = meanings[index]
-            shortdefs.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(lexemeProvider,
+            shortdefs.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider,
               mappingData.parseMeaning(meaning, lemmas[index].word)))
           }
         } else {
           // Changed to prevent some weird "Array Iterator.prototype.next called on incompatible receiver [object Unknown]" error
           const sDefs = meanings.filter((m) => m.$).map(meaning => {
-            return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(lexemeProvider,
+            return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider,
               mappingData.parseMeaning(meaning, lemma.word))
           })
           shortdefs.push(...sDefs)
@@ -10795,7 +10767,7 @@ class TransformAdapter {
         let lexmodel = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lexeme"](lemma, []) // eslint-disable-line prefer-const
 
         lexmodel.meaning.appendShortDefs(shortdefs)
-        lexemeSet.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(lexemeProvider, lexmodel))
+        lexemeSet.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, lexmodel))
       }
 
       if (lemmas.length === 0) {
