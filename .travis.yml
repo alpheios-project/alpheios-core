@@ -13,7 +13,3 @@ deploy:
     script: "npx lerna publish from-package --yes --dist-tag dev"
     on:
       branch: master
-  - provider: script
-      script: "npx lerna publish from-package --yes --dist-tag qa"
-      on:
-        branch: qa
