@@ -1,7 +1,10 @@
 language: node_js
 node_js:
-- 13.2
+  - 13.2
 cache: npm
+install:
+  - npm run set-node-build-deps
+  - npm run bootstrap
 script: npm run test-ci
 deploy:
   provider: releases
