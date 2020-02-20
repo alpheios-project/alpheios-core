@@ -45,11 +45,6 @@ class ImportData {
       return new Definition(meaning.$, lang, 'text/plain', targetWord)
     }
 
-    // may be overriden by specific engine use via setRightsParser
-    this.parseRights = function(data) {
-      return null
-    }
-
     // may be overridden by specific engine use via setPropertyParser - default just returns the property value
     // as a list
     this.parseProperty = function (propertyName, propertyValue) {
@@ -170,10 +165,6 @@ class ImportData {
     this.parseMeaning = callback
   }
 
-  setRightsParser (callback) {
-    this.parseRights = callback
-  }
-
   /**
    * Add an engine-specific property parser
    */
@@ -220,9 +211,10 @@ class ImportData {
   }
 
   /**
-   * Maps property of a single feature type to a single Feature object with one or more values, using an attribute
-   * to determine the mapped-to feature name
-   * (if this feature has multiple values). Feature is stored as a property of the supplied model object.
+   * Maps property of a single feature type to a single Feature object with one
+   * or more values, using an attribute to determine the mapped-to feature name
+   * (if this feature has multiple values). Feature is stored as a property of
+   * the supplied model object.
    * @param {object} model the model object to which the feature will be added
    * @param {object} inputElem the input data element
    * @param {object} inputName the  property name in the input data

@@ -63,12 +63,7 @@ export default {
         }
         decoratedValues.push(decorated)
       }
-      let decorated
-      if (this.decorators.includes('multiline')) {
-        decorated = decoratedValues.join('<br>')
-      } else {
-        decorated = decoratedValues.join(' ')
-      }
+      let decorated = decoratedValues.join(' ')
       if (this.decorators.includes('appendtype')) {
         decorated = `${decorated} ${type}`
       }

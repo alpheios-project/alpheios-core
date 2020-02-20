@@ -79,7 +79,6 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
         return homonym
       }
     } catch (error) {
-      console.info(error)
       this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
     }
   }

@@ -26,16 +26,4 @@ data.setPropertyParser(function (propertyName, propertyValue) {
   return propertyValues
 })
 
-/**
-data.setRightsParser(function(data) {
-  let allSources
-  if (! Array.isArray(data.src)) {
-    allSources = [ data.src ]
-  } else {
-    allSources = data.src
-  }
-  return allSources.map(s => s.$).join("\n")
-})
-*/
-
 export default data

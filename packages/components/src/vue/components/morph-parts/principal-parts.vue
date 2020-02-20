@@ -121,10 +121,6 @@
     margin-right: textsize(5px);
   }
 
-  .alpheios-principal-parts__item {
-    max-width: 400px;
-  }
-
   .alpheios-principal-parts__listitem:after {
     content: ", ";
   }
