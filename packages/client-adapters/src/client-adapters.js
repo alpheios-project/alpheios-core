@@ -125,7 +125,6 @@ class ClientAdapters {
    *    - null, method is registered in configuration file but not implemented here
    *    - { result: Homonym, errors: [AdapterError] }
 */
-
   static async maAdapter (options) {
     ClientAdapters.checkMethodParam('morphology', 'tufts', options)
 

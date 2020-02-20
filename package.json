@@ -30,7 +30,8 @@
     "version-increase-prerelease-dev": "npx lerna version prerelease --preid dev --no-push",
     "version-increase-prerelease-qa": "npx lerna version prerelease --preid qa --no-push",
     "version-increase-prerelease": "npx lerna version prerelease --preid rel --no-push",
-    "version-graduate": "npx lerna version --conventional-commits"
+    "version-graduate": "npx lerna version --conventional-commits",
+    "publish-ci": "npx lerna publish from-package --yes"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
