@@ -23,7 +23,7 @@
   "author": "The Alpheios Project, Ltd.",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/alpheios-project/client-adapters/issues"
+    "url": "https://github.com/alpheios-project/alpheios-core/issues"
   },
   "homepage": "https://github.com/alpheios-project/client-adapters#readme",
   "devDependencies": {
