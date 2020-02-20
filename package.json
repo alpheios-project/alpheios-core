@@ -3,7 +3,6 @@
   "version": "1.0.1-dev.0",
   "private": false,
   "scripts": {
-    "postinstall": "npm run set-node-build-deps && npm install && npm run bootstrap",
     "set-node-build-deps": "npm i -D git://github.com/alpheios-project/node-build.git#v2.0.0 && npx install-peerdeps alpheios-node-build --dev --only-peers && npm un alpheios-node-build",
     "bootstrap": "npx lerna bootstrap --hoist --nohoist=alpheios-node-build --nohoist=eslint-config-standard --nohoist=coveralls",
     "clean": "npx lerna clean --yes",
