@@ -120,7 +120,7 @@ export default class LexicalQuery extends Query {
     const formLexeme = new Lexeme(new Lemma(this.selector.normalizedText, this.selector.languageID), [])
     if (this.selector.data.treebank && this.selector.data.treebank.word) {
       let adapterTreebankRes
-      if (word.version && word.version >= 3) {
+      if (this.selector.data.treebank.word.version && this.selector.data.treebank.word.version >= 3) {
         adapterTreebankRes = yield ClientAdapters.morphology.arethusaTreebank({
           method: 'getHomonym',
           clientId: this.clientId,
