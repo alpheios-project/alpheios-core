@@ -188,6 +188,42 @@ class ClientAdapters {
   }
 
   /**
+   * it is used for getting data from arethusa
+   * @param {Object} options - object contains parameters:
+   *    @param {String} options.method - for now one value - "getHomonym" - action that should be done wth the help of adapter
+   *    @param {Symbol} options.params.languageID - languageID value for the word
+   *    @param {Symbol} options.params.word - target word
+   *    @param {String} options.params.provider - the provider url for Arethusa
+   *    @param {String} options.params.sentenceId - the sentence identifier
+   *    @param {String} options.params.wordId - the word identifier
+   * Returned values:
+   *    - throw an Error if there is used a wrong metod or not enough required parameters
+   *    - null, method is registered in configuration file but not implemented here
+   *    - { result: Homonym, errors: [AdapterError] }
+*/
+
+  static async arethusaAdapter (options) {
+    ClientAdapters.checkMethodParam('morphology', 'arethusaTreebank', options)
+
+    const localAdapter = new ArethusaTreebankAdapter({
+      category: 'morphology',
+      adapterName: 'arethusaTreebank',
+      method: options.method,
+      clientId: options.clientId
+    })
+    if (options.method === 'getHomonym') {
+      const homonym = await localAdapter.getHomonym(options.params.languageID,
+        options.params.word,
+        options.params.provider,
+        options.params.sentenceId,
+        options.params.wordId)
+      return { result: homonym, errors: localAdapter.errors }
+    }
+    return null
+  }
+
+
+  /**
    * it is used for getting data from translations adapter
    * @param {Object} options - object contains parametes:
    *    @param {String} options.method - for now one value - "fetchTranslations" - action that should be done wth the help of adapter
