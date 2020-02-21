@@ -34,6 +34,9 @@ describe('client-adapters.test.js', () => {
 
     expect(morphRes.alpheiosTreebank).toBeDefined()
     expect(morphRes.alpheiosTreebank).toBeInstanceOf(Function)
+
+    expect(morphRes.arethusaTreebank).toBeDefined()
+    expect(morphRes.arethusaTreebank).toBeInstanceOf(Function)
   })
 
   it('2 ClientAdapters - lexicon executes init and returns object with alpheios', () => {

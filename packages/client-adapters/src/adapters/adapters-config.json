@@ -6,6 +6,13 @@
         "getHomonym" : [ "languageID", "wordref" ]
       }
     },
+    "arethusaTreebank": {
+      "adapter": "arethusaAdapter",
+      "methods": [ "getHomonym" ],
+      "params": {
+        "getHomonym" : [ "languageID", "word", "provider", "sentenceId", "wordId" ]
+      }
+    },
     "tufts": {
       "adapter": "maAdapter",
       "methods": [ "getHomonym" ],
