@@ -34,7 +34,7 @@ class ArethusaTreebankAdapter extends BaseAdapter {
       }
     }
     let config = {
-      name: srcUrl,
+      name: targetURL,
       targetURL: targetURL,
       targetIframeID: 'alpheios-treebank-frame'
     }
