@@ -10058,7 +10058,7 @@ const data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_mode
 
 // the sedra api has some html in the glosses that we want to strip out
 data.setMeaningParser(function(meaning,targetWord) {
-  const lang = meaning.lang ? meaning.lang : 'eng'
+  const lang = meaning.lang ? meaning.lang : alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].STR_LANG_CODE_ENG
   let meaning_text = meaning.$ || ""
   meaning_text = meaning_text.replace(/<span .*?>(.*?)<\/span>/g,"$1")
   return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Definition"](meaning_text, lang, 'text/plain', targetWord)
@@ -10347,7 +10347,7 @@ class ImportData {
 
     // may be overridden by specific engine use via setMeaningParser
     this.parseMeaning = function (meaning, targetWord) {
-      const lang = meaning.lang ? meaning.lang : 'eng'
+      const lang = meaning.lang ? meaning.lang : alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_ENG
       return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](meaning.$, lang, 'text/plain', targetWord)
     }
 

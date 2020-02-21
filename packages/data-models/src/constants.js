@@ -28,6 +28,7 @@ export const STR_LANG_CODE_ZH = 'zh'
 export const STR_LANG_CODE_SYC = 'syc'
 export const STR_LANG_CODE_SYR = 'syr'
 export const STR_LANG_CODE_SYR_SYRJ = 'syr-Syrj'
+export const STR_LANG_CODE_ENG = 'eng'
 
 // parts of speech
 export const POFS_ADJECTIVE = 'adjective'

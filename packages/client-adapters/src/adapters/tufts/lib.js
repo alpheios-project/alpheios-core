@@ -1,7 +1,7 @@
 /*
 Objects of a morphology analyzer's library
  */
-import { Feature, Lemma, FeatureImporter, Definition } from 'alpheios-data-models'
+import { Feature, Lemma, FeatureImporter, Definition, Constants } from 'alpheios-data-models'
 
 /**
  * Holds all information required to transform from morphological analyzer's grammatical feature values to the
@@ -41,7 +41,7 @@ class ImportData {
 
     // may be overridden by specific engine use via setMeaningParser
     this.parseMeaning = function (meaning, targetWord) {
-      const lang = meaning.lang ? meaning.lang : 'eng'
+      const lang = meaning.lang ? meaning.lang : Constants.STR_LANG_CODE_ENG
       return new Definition(meaning.$, lang, 'text/plain', targetWord)
     }
 
