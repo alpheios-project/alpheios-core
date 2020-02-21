@@ -1031,7 +1031,7 @@ class Definition {
 /*!*******************!*\
   !*** ./driver.js ***!
   \*******************/
-/*! exports provided: Constants, Definition, DefinitionSet, Feature, GrmFeature, FeatureType, FeatureList, FeatureImporter, Inflection, LanguageModelFactory, Homonym, Lexeme, Lemma, LatinLanguageModel, GreekLanguageModel, ArabicLanguageModel, PersianLanguageModel, GeezLanguageModel, ChineseLanguageModel, SyriacLanguageModel, ResourceProvider, Translation, PsEvent, PsEventData, TextQuoteSelector, WordUsageExample, Author, TextWork, WordItem, WordList */
+/*! exports provided: Constants, Definition, DefinitionSet, Feature, GrmFeature, FeatureType, FeatureList, FeatureImporter, Inflection, LanguageModelFactory, Homonym, Lexeme, Lemma, LatinLanguageModel, GreekLanguageModel, ArabicLanguageModel, PersianLanguageModel, GeezLanguageModel, ChineseLanguageModel, SyriacLanguageModel, ResourceProvider, Translation, PsEvent, PsEventData, TextQuoteSelector, WordUsageExample, Author, TextWork, WordItem, WordList, TreebankDataItem */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1124,6 +1124,11 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony import */ var _word_list_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./word-list.js */ "./word-list.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WordList", function() { return _word_list_js__WEBPACK_IMPORTED_MODULE_29__["default"]; });
+
+/* harmony import */ var _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./treebank_data_item.js */ "./treebank_data_item.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TreebankDataItem", function() { return _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_30__["default"]; });
+
+
 
 
 
@@ -5827,6 +5832,45 @@ class Translation {
 }
 /* harmony default export */ __webpack_exports__["default"] = (Translation);
 
+
+/***/ }),
+
+/***/ "./treebank_data_item.js":
+/*!*******************************!*\
+  !*** ./treebank_data_item.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return TreebankDataItem; });
+class TreebankDataItem  {
+
+  constructor(elem) {
+    const tbSrcElem = elem.ownerDocument.querySelector('[data-alpheios_tb_src]')
+    if (! tbSrcElem) {
+      throw new Error(`No treebank source url defined in the document`)
+    }
+    this.version = tbSrcElem.dataset.alpheios_tb_version ? parseInt(tbSrcElem.dataset.alpheios_tb_version) : null
+    if (! elem.dataset.alpheios_tb_ref) {
+      throw new Error(`Missing treebank reference ${elem.dataset.alpheios_tb_ref}`)
+    }
+    const [doc, ref] = elem.dataset.alpheios_tb_ref.split(/#/)
+    if (!doc || !ref) {
+      throw new Error(`Invalid treebank reference ${elem.dataset.alpheios_tb_ref}`)
+    }
+    const [s, w] = ref.split(/-/)
+    this.doc = doc
+    this.sentenceId = s
+    this.wordId = w
+    this.fullUrl = tbSrcElem.dataset.alpheios_tb_src.replace('DOC', doc).replace('SENTENCE', s).replace('WORD', w)
+  }
+
+  get provider() {
+    return new URL(this.fullUrl).origin
+  }
+}
 
 /***/ }),
 
