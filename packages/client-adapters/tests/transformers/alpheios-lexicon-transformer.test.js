@@ -1,8 +1,9 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
+import AlpheiosLexiconTransformer from '@clAdapters/transformers/alpheios-lexicon-transformer'
 import AlpheiosTuftsAdapter from '@clAdapters/adapters/tufts/adapter'
-import TransformAdapter from '@clAdapters/adapters/tufts/transform-adapter'
 import { Constants, Homonym, Feature } from 'alpheios-data-models'
+import Traces from '@clAdapters/adapters/tufts/engine/traces'
 
 describe('transform-adapter.test.js', () => {
   console.error = function () {}
@@ -22,13 +23,6 @@ describe('transform-adapter.test.js', () => {
   })
 
   it('1 TransformAdapter - does not fail on inflection creation error', async () => {
-    let adapter = new AlpheiosTuftsAdapter({
-      category: 'morphology',
-      adapterName: 'tufts',
-      method: 'getHomonym'
-    })
-
-    let word = 'foo'
     let data =
     `{
       "RDF": {
@@ -146,8 +140,14 @@ describe('transform-adapter.test.js', () => {
       }
     `
     let res = JSON.parse(data)
-    let transformAdapter = new TransformAdapter(adapter)
-    let homonym = transformAdapter.transformData(res, word)
+    let adapter = new AlpheiosTuftsAdapter({
+      category: 'morphology',
+      adapterName: 'tufts',
+      method: 'getHomonym',
+      sourceData: res
+    })
+    let transformAdapter = new AlpheiosLexiconTransformer(adapter,Traces)
+    let homonym = transformAdapter.transformData(res, 'foo')
 
     expect(homonym.lexemes.length).toEqual(1)
     expect(homonym.lexemes[0].lemma.word).toEqual('hdwdb')

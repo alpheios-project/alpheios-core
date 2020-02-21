@@ -1,10 +1,53 @@
-import { ResourceProvider, Definition, Lexeme, Constants, Feature, Inflection, Homonym } from 'alpheios-data-models'
+import { ResourceProvider, Lexeme, Constants, Feature, Inflection, Homonym } from 'alpheios-data-models'
 
-class TransformAdapter {
-  constructor (adapter) {
-    this.engineSet = adapter.engineSet
-    this.config = adapter.config
+/**
+ Transforms morphological output adhering to the Alpheios lexicon
+ schema to an Alpheios Homonym data model object
+*/
+
+const featuresArray = [
+  ['pofs', 'part'],
+  ['case', 'grmCase'],
+  ['gend', 'gender'],
+  ['decl', 'declension'],
+  ['conj', 'conjugation'],
+  ['area', 'area'],
+  ['age', 'age'],
+  ['geo', 'geo'],
+  ['freq', 'frequency'],
+  ['note', 'note'],
+  ['pron', 'pronunciation'],
+  ['kind', 'kind'],
+  ['src', 'source']
+]
+
+const featuresArrayAll = [
+  ['pofs', 'part'],
+  ['case', 'grmCase'],
+  ['gend', 'gender'],
+  ['decl', 'declension'],
+  ['conj', 'conjugation'],
+  ['num', 'number'],
+  ['tense', 'tense'],
+  ['voice', 'voice'],
+  ['mood', 'mood'],
+  ['pers', 'person'],
+  ['comp', 'comparison'],
+  ['stemtype', 'stemtype'],
+  ['derivtype', 'derivtype'],
+  ['dial', 'dialect'],
+  ['morph', 'morph']
+]
+
+const attributeBasedFeatures = [
+  ['paradigm', 'cat']
+]
+
+class AlpheiosLexiconTransformer {
+  constructor (adapter, mappingData) {
     this.adapter = adapter
+    this.mappingData = mappingData
+    this.allowUnknownValues = true
   }
 
   /**
@@ -122,14 +165,7 @@ class TransformAdapter {
         continue
       }
 
-      // Get importer based on the language
-      const mappingData = this.engineSet.getEngineByCodeFromLangCode(language)
-      if (!mappingData) {
-        this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_MAPPING_DATA.get(language))
-        continue
-      }
-
-      const reconstructHdwd = this.collectHdwdArray(dictData, inflectionsJSONTerm, mappingData.model.direction)
+      const reconstructHdwd = this.collectHdwdArray(dictData, inflectionsJSONTerm, this.mappingData.model.direction)
       if (reconstructHdwd.length > 0) {
         lemmaElements[0].hdwd.$ = reconstructHdwd.join('')
       }
@@ -146,12 +182,12 @@ class TransformAdapter {
           this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_LEMMA)
           continue
         }
-        const lemma = mappingData.parseLemma(lemmaText, language)
+        const lemma = this.mappingData.parseLemma(lemmaText, language)
         lemmas.push(lemma)
 
-        const features = this.config.featuresArray
+        const features = featuresArray
         for (const feature of features) {
-          mappingData.mapFeature(lemma, elem, ...feature, this.config.allowUnknownValues)
+          this.mappingData.mapFeature(lemma, elem, ...feature, this.allowUnknownValues)
         }
 
         let shortdefs = [] // eslint-disable-line prefer-const
@@ -166,13 +202,13 @@ class TransformAdapter {
           if (meanings && meanings[index] && meanings[index].$) {
             const meaning = meanings[index]
             shortdefs.push(ResourceProvider.getProxy(provider,
-              mappingData.parseMeaning(meaning, lemmas[index].word)))
+              this.mappingData.parseMeaning(meaning, lemmas[index].word)))
           }
         } else {
           // Changed to prevent some weird "Array Iterator.prototype.next called on incompatible receiver [object Unknown]" error
           const sDefs = meanings.filter((m) => m.$).map(meaning => {
             return ResourceProvider.getProxy(provider,
-              mappingData.parseMeaning(meaning, lemma.word))
+              this.mappingData.parseMeaning(meaning, lemma.word))
           })
           shortdefs.push(...sDefs)
         }
@@ -188,35 +224,37 @@ class TransformAdapter {
 
       const inflections = []
       for (const inflectionJSON of inflectionsJSON) {
-        const stem = inflectionJSON.term.stem ? inflectionJSON.term.stem.$ : null
-        const suffix = inflectionJSON.term.suff ? inflectionJSON.term.suff.$ : null
-        const prefix = inflectionJSON.term.pref ? inflectionJSON.term.pref.$ : null
+        const stem = inflectionJSON.term && inflectionJSON.term.stem ? inflectionJSON.term.stem.$ : null
+        const form = inflectionJSON.term && inflectionJSON.term.form ? inflectionJSON.term.form.$ : null
+        const suffix = inflectionJSON.term && inflectionJSON.term.suff ? inflectionJSON.term.suff.$ : null
+        const prefix = inflectionJSON.term && inflectionJSON.term.pref ? inflectionJSON.term.pref.$ : null
         const xmpl = inflectionJSON.xmpl ? inflectionJSON.xmpl.$ : null
+        const inflWord = stem || form
         let inflection
         try {
-          inflection = new Inflection(stem, mappingData.model.languageID, suffix, prefix, xmpl)
+          inflection = new Inflection(inflWord, this.mappingData.model.languageID, suffix, prefix, xmpl)
         } catch (e) {
           this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_INFLECTION_ERROR.get(e.message))
           continue
         }
         if (targetWord) {
-          inflection.addFeature(new Feature(Feature.types.fullForm, targetWord, mappingData.model.languageID))
+          inflection.addFeature(new Feature(Feature.types.fullForm, targetWord, this.mappingData.model.languageID))
         }
         // Parse whatever grammatical features we're interested in and are provided
-        for (const f of this.config.featuresArrayAll) {
+        for (const f of featuresArrayAll) {
           try {
-            mappingData.mapFeature(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
-            mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
+            this.mappingData.mapFeature(inflection, inflectionJSON, ...f, this.allowUnknownValues)
+            this.mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
           } catch (e) {
             // quietly continue
           }
         }
 
         // Parse attribute based features
-        for (const f of this.config.attributeBasedFeatures) {
+        for (const f of attributeBasedFeatures) {
           try {
-            mappingData.mapFeatureByAttribute(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
-            mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
+            this.mappingData.mapFeatureByAttribute(inflection, inflectionJSON, ...f, this.allowUnknownValues)
+            this.mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
           } catch (e) {
             // quietly continue
           }
@@ -241,21 +279,21 @@ class TransformAdapter {
         // inflection can provide lemma decl, pofs, conj
         for (const lemma of lemmas) {
           if (!lemma.features[Feature.types.part]) {
-            mappingData.mapFeature(lemma, inflectionJSON, 'pofs', 'part', this.config.allowUnknownValues)
+            this.mappingData.mapFeature(lemma, inflectionJSON, 'pofs', 'part', this.allowUnknownValues)
           }
           // only take declension from inflection if lemma has no part of speech or its the same as the inflection
           if (!lemma.features[Feature.types.declension] &&
             (!lemma.features[Feature.types.part] || lemma.features[Feature.types.part].isEqual(inflection[Feature.types.part]))) {
-            mappingData.mapFeature(lemma, inflectionJSON, 'decl', 'declension', this.config.allowUnknownValues)
+            this.mappingData.mapFeature(lemma, inflectionJSON, 'decl', 'declension', this.allowUnknownValues)
           }
           // only take conjugation from inflection if lemma has a part of speech and its the same as the inflection
           if (!lemma.features[Feature.types.conjugation] &&
             (!lemma.features[Feature.types.part] || lemma.features[Feature.types.part].isEqual(inflection[Feature.types.part]))) {
-            mappingData.mapFeature(lemma, inflectionJSON, 'conj', 'conjugation', this.config.allowUnknownValues)
+            this.mappingData.mapFeature(lemma, inflectionJSON, 'conj', 'conjugation', this.allowUnknownValues)
           }
         }
       }
-      const aggregated = mappingData.aggregateLexemes(lexemeSet, inflections)
+      const aggregated = this.mappingData.aggregateLexemes(lexemeSet, inflections)
       lexemes.push(...aggregated)
     }
     if (lexemes.length > 0) {
@@ -266,4 +304,4 @@ class TransformAdapter {
   }
 }
 
-export default TransformAdapter
+export default AlpheiosLexiconTransformer

@@ -1,7 +1,7 @@
 import { LanguageModelFactory as LMF, Lexeme, Feature, Constants } from 'alpheios-data-models'
 
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
-import TransformAdapter from '@clAdapters/adapters/tufts/transform-adapter'
+import AlpheiosLexiconTransformer from '@clAdapters/transformers/alpheios-lexicon-transformer'
 
 import DefaultConfig from '@clAdapters/adapters/tufts/config.json'
 import EnginesSet from '@clAdapters/adapters/tufts/engines-set'
@@ -63,8 +63,12 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
       }
 
       if (res) {
-        const transformAdapter = new TransformAdapter(this)
-
+        const mappingData = this.engineSet.getEngineByCode(languageID)
+        if (!mappingData) {
+          this.addError(this.l10n.messages.MORPH_TRANSFORM_NO_MAPPING_DATA.get(languageID.toString()))
+          return
+        }
+        const transformAdapter = new AlpheiosLexiconTransformer(this,mappingData,this)
         let homonym = transformAdapter.transformData(res, word) // eslint-disable-line prefer-const
 
         if (!homonym) {
@@ -79,6 +83,7 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
         return homonym
       }
     } catch (error) {
+      console.log(error)
       this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
     }
   }

@@ -5,13 +5,13 @@ import { Feature, Lemma, FeatureImporter, Definition, Constants } from 'alpheios
 
 /**
  * Holds all information required to transform from morphological analyzer's grammatical feature values to the
- * library standards. There is one ImportData object per language.
+ * library standards. There is one ImportMorphData object per language.
  */
-class ImportData {
+class ImportMorphData {
   /**
-     * Creates an ImportData object for the language provided.
+     * Creates an ImportMorphData object for the language provided.
      * @param {Function<LanguageModel>} model - A language model of the import data.
-     * @param {string} engine - engine code
+     * @param {String} engine - a code for the engine that is using this mapping model
      */
   constructor (model, engine) {
     'use strict'
@@ -230,7 +230,7 @@ class ImportData {
         // There are multiple values of this feature
         for (const e of inputItem) {
           if (featureName && featureName !== e[attributeName]) {
-            console.warn("Mutiple feature values with mismatching attribute value",inputElem)
+            console.warn('Mutiple feature values with mismatching attribute value', inputElem)
           }
           featureName = e[attributeName]
           values.push(...this.parseProperty(inputName, e.$))
@@ -264,4 +264,4 @@ class ImportData {
     }
   }
 }
-export default ImportData
+export default ImportMorphData

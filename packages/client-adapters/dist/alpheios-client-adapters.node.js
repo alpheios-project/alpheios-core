@@ -9830,7 +9830,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
-/* harmony import */ var _clAdapters_adapters_tufts_transform_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/adapters/tufts/transform-adapter */ "./adapters/tufts/transform-adapter.js");
+/* harmony import */ var _clAdapters_transformers_alpheios_lexicon_transformer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/transformers/alpheios-lexicon-transformer */ "./transformers/alpheios-lexicon-transformer.js");
 /* harmony import */ var _clAdapters_adapters_tufts_config_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/adapters/tufts/config.json */ "./adapters/tufts/config.json");
 var _clAdapters_adapters_tufts_config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/adapters/tufts/config.json */ "./adapters/tufts/config.json", 1);
 /* harmony import */ var _clAdapters_adapters_tufts_engines_set__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/adapters/tufts/engines-set */ "./adapters/tufts/engines-set.js");
@@ -9899,8 +9899,12 @@ class AlpheiosTuftsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IM
       }
 
       if (res) {
-        const transformAdapter = new _clAdapters_adapters_tufts_transform_adapter__WEBPACK_IMPORTED_MODULE_2__["default"](this)
-
+        const mappingData = this.engineSet.getEngineByCode(languageID)
+        if (!mappingData) {
+          this.addError(this.l10n.messages.MORPH_TRANSFORM_NO_MAPPING_DATA.get(languageID.toString()))
+          return
+        }
+        const transformAdapter = new _clAdapters_transformers_alpheios_lexicon_transformer__WEBPACK_IMPORTED_MODULE_2__["default"](this,mappingData,this)
         let homonym = transformAdapter.transformData(res, word) // eslint-disable-line prefer-const
 
         if (!homonym) {
@@ -9915,6 +9919,7 @@ class AlpheiosTuftsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IM
         return homonym
       }
     } catch (error) {
+      console.log(error)
       this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
     }
   }
@@ -9965,13 +9970,13 @@ module.exports = JSON.parse("{\"engine\":{\"lat\":[\"whitakerLat\"],\"grc\":[\"m
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib */ "./adapters/tufts/lib.js");
+/* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
-const data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["ArabicLanguageModel"], 'aramorph')
+const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["ArabicLanguageModel"],'aramorph')
 
 /* harmony default export */ __webpack_exports__["default"] = (data);
 
@@ -9987,13 +9992,13 @@ const data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_mode
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib */ "./adapters/tufts/lib.js");
+/* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
-let data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["PersianLanguageModel"], 'hazm') // eslint-disable-line prefer-const
+let data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["PersianLanguageModel"],'hazm') // eslint-disable-line prefer-const
 
 // hazm allow all lemmas in without respect features as all we use it for is lemmatizing
 data.setLexemeFilter(function (lexeme) { return Boolean(lexeme.lemma.word) })
@@ -10012,13 +10017,13 @@ data.setLexemeFilter(function (lexeme) { return Boolean(lexeme.lemma.word) })
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib */ "./adapters/tufts/lib.js");
+/* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
-let data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["GreekLanguageModel"], 'morpheusgrc') // eslint-disable-line prefer-const
+let data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["GreekLanguageModel"],'morpheusgrc') // eslint-disable-line prefer-const
 
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
@@ -10048,13 +10053,13 @@ data.addFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].typ
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib */ "./adapters/tufts/lib.js");
+/* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
-const data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["SyriacLanguageModel"], 'sedra')
+const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["SyriacLanguageModel"], 'sedra')
 
 // the sedra api has some html in the glosses that we want to strip out
 data.setMeaningParser(function(meaning,targetWord) {
@@ -10093,13 +10098,13 @@ data.setPropertyParser(function (propertyName, propertyValue) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib */ "./adapters/tufts/lib.js");
+/* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
-const data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["GeezLanguageModel"], 'traces')
+const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["GeezLanguageModel"],'traces')
 
 /* harmony default export */ __webpack_exports__["default"] = (data);
 
@@ -10115,13 +10120,13 @@ const data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_mode
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib */ "./adapters/tufts/lib.js");
+/* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
-const data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LatinLanguageModel"], 'whitakerLat')
+const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LatinLanguageModel"],'whitakerLat')
 
 // Whitaker's has weird inflection data for conjugation, we prefer
 // the dictionary entry's conjugation if it's available
@@ -10289,572 +10294,6 @@ class EnginesSet {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (EnginesSet);
-
-
-/***/ }),
-
-/***/ "./adapters/tufts/lib.js":
-/*!*******************************!*\
-  !*** ./adapters/tufts/lib.js ***!
-  \*******************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/*
-Objects of a morphology analyzer's library
- */
-
-
-/**
- * Holds all information required to transform from morphological analyzer's grammatical feature values to the
- * library standards. There is one ImportData object per language.
- */
-class ImportData {
-  /**
-     * Creates an ImportData object for the language provided.
-     * @param {Function<LanguageModel>} model - A language model of the import data.
-     * @param {string} engine - engine code
-     */
-  constructor (model, engine) {
-    'use strict'
-    this.model = model
-    this.engine = engine
-    // add all the features that the language supports so that we
-    // can return the default values if we don't need to import a mapping
-    for (const featureName of Object.keys(this.model.features)) {
-      this.addFeature(featureName)
-    }
-    // may be overridden by specific engine to handle vagaries in reporting of dictionary entries
-    // default just returns them as provided
-    this.aggregateLexemes = function (lexemeSet, inflections) {
-      let lexemes = [] // eslint-disable-line prefer-const
-      for (const lex of lexemeSet) {
-        // only process if we have a lemma that differs from the target
-        // word or if we have at least a part of speech
-        if (this.reportLexeme(lex)) {
-          lex.inflections = inflections.map(inflection => inflection.clone())
-          lexemes.push(lex)
-        }
-      }
-      return lexemes
-    }
-    // may be overridden by specific engine use via setLemmaParser
-    this.parseLemma = function (lemma) { return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"](lemma, this.model.languageID) }
-
-    // may be overridden by specific engine use via setMeaningParser
-    this.parseMeaning = function (meaning, targetWord) {
-      const lang = meaning.lang ? meaning.lang : alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_ENG
-      return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](meaning.$, lang, 'text/plain', targetWord)
-    }
-
-    // may be overridden by specific engine use via setPropertyParser - default just returns the property value
-    // as a list
-    this.parseProperty = function (propertyName, propertyValue) {
-      let propertyValues = []
-      if (propertyName === 'decl') {
-        propertyValues = propertyValue.split('&').map((p) => p.trim())
-      } else if (propertyName === 'comp' && propertyValue === 'positive') {
-        propertyValues = []
-      } else {
-        propertyValues = [propertyValue]
-      }
-      return propertyValues
-    }
-
-    // may be overridden by specifc engine use via setLexemeFilter - default assumes we will have a part of speech
-    this.reportLexeme = function (lexeme) {
-      return lexeme.lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]
-    }
-
-    // may be overriden by specific engine use to a list of of featureTypes which
-    // should be overridden in the inflection data from the lemma data
-    this.inflectionOverrides = []
-  }
-
-  /**
-     * Adds a grammatical feature whose values to be mapped.
-     * @param {string} featureName - A name of a grammatical feature (i.e. declension, number, etc.)
-     * @return {Object} An object that represent a newly created grammatical feature.
-     */
-  addFeature (featureName) {
-    this[featureName] = {}
-    const model = this.model
-
-    this[featureName].add = function add (providerValue, alpheiosValue) {
-      this[providerValue] = alpheiosValue
-      return this
-    }
-
-    this[featureName].get = function get (providerValue, sortOrder = 1, allowUnknownValues = false) {
-      let mappedValue = []
-      if (!this.importer.has(providerValue)) {
-        // if the providerValue matches the model value or the model value
-        // is unrestricted, return a feature with the providerValue and order
-        if (model.typeFeature(featureName).hasValue(providerValue) ||
-            model.typeFeature(featureName).valuesUnrestricted) {
-          mappedValue = model.typeFeature(featureName).createFeature(providerValue, sortOrder)
-        } else {
-          const message = `Unknown value "${providerValue}" of feature "${featureName}" for ${model.languageCode} (allowed = ${allowUnknownValues})`
-          if (allowUnknownValues) {
-            mappedValue = model.typeFeature(featureName).createFeature(providerValue, sortOrder)
-          } else {
-            throw new Error(message)
-          }
-        }
-      } else {
-        const tempValue = this.importer.get(providerValue)
-        if (Array.isArray(tempValue)) {
-          mappedValue = model.typeFeature(featureName).createFeatures(tempValue, sortOrder)
-        } else {
-          mappedValue = model.typeFeature(featureName).createFeature(tempValue, sortOrder)
-        }
-      }
-      return mappedValue
-    }
-
-    /**
-     * @param {Object[]} data - An array of objects with `providerData` (an item value) and `sortOrder` fields
-     * @param allowUnknownValues
-     * @return {Feature}
-     */
-    this[featureName].getMultiple = function get (data, allowUnknownValues = false) {
-      let values = [] // Converts values from `data` into `values` array
-      for (const item of data) {
-        if (this.importer.has(item.providerValue)) {
-          const value = this.importer.get(item.providerValue)
-          if (Array.isArray(value)) {
-            // if the import returns an array, it should already have the sortOrder
-            values = value
-          } else {
-            values = [[value, item.sortOrder]]
-          }
-        } else if (model.typeFeature(featureName).hasValue(item.providerValue) ||
-          model.typeFeature(featureName).valuesUnrestricted) {
-          values.push([item.providerValue, item.sortOrder])
-        } else {
-          const message = `Unknown value "${item.providerValue}" of feature "${featureName}" for ${model.languageCode} (allowed = ${allowUnknownValues})`
-          if (allowUnknownValues) {
-            values.push([item.providerValue, item.sortOrder])
-          } else {
-            throw new Error(message)
-          }
-        }
-      }
-      return model.typeFeature(featureName).createFeatures(values)
-    }
-
-    this[featureName].importer = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["FeatureImporter"]()
-
-    return this[featureName]
-  }
-
-  /**
-   * Add an engine-specific lexeme aggregator
-   */
-  setLexemeAggregator (callback) {
-    this.aggregateLexemes = callback
-  }
-
-  /**
-  /**
-   * Add an engine-specific lemma parser
-   */
-  setLemmaParser (callback) {
-    this.parseLemma = callback
-  }
-
-  setMeaningParser (callback) {
-    this.parseMeaning = callback
-  }
-
-  /**
-   * Add an engine-specific property parser
-   */
-  setPropertyParser (callback) {
-    this.parseProperty = callback
-  }
-
-  /**
-   * Add an engine-specific lexeme filter
-   */
-  setLexemeFilter (callback) {
-    this.reportLexeme = callback
-  }
-
-  /**
-   * Maps property of a single feature type to a single Feature object with one or more values
-   * (if this feature has multiple values). Feature is stored as a property of the supplied model object.
-   * @param {object} model the model object to which the feature will be added
-   * @param {object} inputElem the input data element
-   * @param {object} inputName the  property name in the input data
-   * @param {string} featureName the name of the feature it will be mapped to
-   * @param {boolean} allowUnknownValues flag to indicate if unknown values are allowed
-   */
-  mapFeature (model, inputElem, inputName, featureName, allowUnknownValues) {
-    const inputItem = inputElem[inputName]
-    if (inputItem && (Array.isArray(inputItem) || inputItem.$)) {
-      let values = []
-      if (Array.isArray(inputItem)) {
-        // There are multiple values of this feature
-        for (const e of inputItem) {
-          values.push(...this.parseProperty(inputName, e.$))
-        }
-      } else {
-        values = this.parseProperty(inputName, inputItem.$)
-      }
-      // `values` is always an array as an array is a return value of `parseProperty`
-      if (values.length > 0) {
-        // There are some values found
-        values = values.map(v => { return { providerValue: v, sortOrder: inputItem.order ? inputItem.order : 1 } })
-        const feature = this[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types[featureName]].getMultiple(values, allowUnknownValues)
-        model.addFeature(feature)
-      }
-    }
-  }
-
-  /**
-   * Maps property of a single feature type to a single Feature object with one
-   * or more values, using an attribute to determine the mapped-to feature name
-   * (if this feature has multiple values). Feature is stored as a property of
-   * the supplied model object.
-   * @param {object} model the model object to which the feature will be added
-   * @param {object} inputElem the input data element
-   * @param {object} inputName the  property name in the input data
-   * @param {string} attributeName the attribute to use to get the feature name
-   * @param {boolean} allowUnknownValues flag to indicate if unknown values are allowed
-   */
-  mapFeatureByAttribute (model, inputElem, inputName, attributeName, allowUnknownValues) {
-    const inputItem = inputElem[inputName]
-    let featureName
-    if (inputItem && (Array.isArray(inputItem) || inputItem.$)) {
-      let values = []
-      if (Array.isArray(inputItem)) {
-        // There are multiple values of this feature
-        for (const e of inputItem) {
-          if (featureName && featureName !== e[attributeName]) {
-            console.warn("Mutiple feature values with mismatching attribute value",inputElem)
-          }
-          featureName = e[attributeName]
-          values.push(...this.parseProperty(inputName, e.$))
-        }
-      } else {
-        featureName = inputItem[attributeName]
-        values = this.parseProperty(inputName, inputItem.$)
-      }
-      // `values` is always an array as an array is a return value of `parseProperty`
-      if (values.length > 0) {
-        // There are some values found
-        values = values.map(v => { return { providerValue: v, sortOrder: inputItem.order ? inputItem.order : 1 } })
-        const feature = this[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types[featureName]].getMultiple(values, allowUnknownValues, inputItem.cat)
-        model.addFeature(feature)
-      }
-    }
-  }
-
-  /**
-   * Overrides feature data from an inflection with feature data from the lemma
-   * if required by an engine-specific list of featureTypes
-   * @param {String} featureType the feature type name
-   * @param {Inflection} inflection the inflection object
-   * @param {Lemma[]} lemmas the lemma objects
-   */
-  overrideInflectionFeatureIfRequired (featureType, inflection, lemmas) {
-    if (this.inflectionOverrides.includes(featureType)) {
-      for (const lemma of lemmas.filter(l => l.features[featureType])) {
-        inflection.addFeature(lemma.features[featureType])
-      }
-    }
-  }
-}
-/* harmony default export */ __webpack_exports__["default"] = (ImportData);
-
-
-/***/ }),
-
-/***/ "./adapters/tufts/transform-adapter.js":
-/*!*********************************************!*\
-  !*** ./adapters/tufts/transform-adapter.js ***!
-  \*********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-
-
-class TransformAdapter {
-  constructor (adapter) {
-    this.engineSet = adapter.engineSet
-    this.config = adapter.config
-    this.adapter = adapter
-  }
-
-  /**
-   * This method extract parameter by defined path
-   * @param {Object} source - json object to retrieve data from
-   * @param {String} nameParam - parameter name that should be retrieved
-   * @return {String|Object} - extracted data
-  */
-  extractData (source, nameParam) {
-    const schema = {
-      providerUri: ['RDF', 'Annotation', 'creator', 'Agent', 'about'],
-      providerRights: ['RDF', 'Annotation', 'rights', '$'],
-      inflections: ['rest', 'entry', 'infl'],
-      dictData: ['rest', 'entry', 'dict']
-    }
-    let res
-
-    if (schema[nameParam]) {
-      res = source
-      for (const pathPart of schema[nameParam]) {
-        if (res[pathPart]) {
-          res = res[pathPart]
-        } else {
-          res = undefined
-          break
-        }
-      }
-    }
-    return res
-  }
-
-  /**
-   * This method checks if data is array, if not - converts to array
-   * @param {?} data - value that should be checked
-   * @param {?} defaultData - default value, if data is null
-   * @return {Array}
-  */
-  checkToBeArray (data, defaultData = []) {
-    let resData = data
-    if (!Array.isArray(data)) {
-      if (data) {
-        resData = [data]
-      } else {
-        resData = defaultData
-      }
-    }
-    return resData
-  }
-
-  /**
-   * This method creates hdwd from source json object
-   * @param {Object} data - jsonObj from adapter
-   * @param {Object} term - data from inflections
-   * @param {Symbol} direction - define the word direction
-   * @return {Array} - array with parts for hdwr
-  */
-  collectHdwdArray (data, term, direction) {
-    let hdwd = [] // eslint-disable-line prefer-const
-
-    if (data && !Array.isArray(data) && (!data.hdwd || !data.hdwd.$) && term) {
-      hdwd.push(term.prefix ? term.prefix.$ : '')
-      hdwd.push(term.stem ? term.stem.$ : '')
-      hdwd.push(term.suff ? term.suff.$ : '')
-
-      if (direction === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_DIR_RTL) {
-        hdwd.reverse()
-      }
-    }
-
-    return hdwd
-  }
-
-  /**
-   * This method defines language from dictData nd inflections data
-   * @param {Object} data - jsonObj from adapter
-   * @param {Object} term - data from inflections
-   * @return {String}  - language code
-  */
-  defineLanguage (data, term) {
-    let lemmaData = Array.isArray(data) ? data[0] : data // eslint-disable-line prefer-const
-    if (!lemmaData.hdwd && term) {
-      lemmaData.hdwd = {}
-      lemmaData.hdwd.lang = term.lang
-    }
-    return lemmaData.hdwd ? lemmaData.hdwd.lang : lemmaData.lang
-  }
-
-  /**
-   * This method defines language from dictData nd inflections data
-   * @param {Object} data - jsonObj from adapter
-   * @param {Object} term - data from inflections
-   * Returned values:
-   *     - {Homonym}
-   *     - {undefined}
-  */
-  transformData (jsonObj, targetWord) {
-    let lexemes = [] // eslint-disable-line prefer-const
-    const annotationBody = this.checkToBeArray(jsonObj.RDF.Annotation.Body)
-
-    const providerUri = this.extractData(jsonObj, 'providerUri')
-    const providerRights = this.extractData(jsonObj, 'providerRights')
-
-    const provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](providerUri, providerRights)
-
-    for (const lexeme of annotationBody) {
-      const inflectionsJSON = this.checkToBeArray(this.extractData(lexeme, 'inflections'))
-      const inflectionsJSONTerm = inflectionsJSON.length > 0 ? inflectionsJSON[0].term : undefined
-
-      const dictData = this.extractData(lexeme, 'dictData')
-
-      const lemmaElements = this.checkToBeArray(dictData, inflectionsJSONTerm ? [inflectionsJSONTerm] : [])
-      const language = this.defineLanguage(lemmaElements, inflectionsJSONTerm)
-      if (!language) {
-        this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_LANGUAGE)
-        continue
-      }
-
-      // Get importer based on the language
-      const mappingData = this.engineSet.getEngineByCodeFromLangCode(language)
-      if (!mappingData) {
-        this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_MAPPING_DATA.get(language))
-        continue
-      }
-
-      const reconstructHdwd = this.collectHdwdArray(dictData, inflectionsJSONTerm, mappingData.model.direction)
-      if (reconstructHdwd.length > 0) {
-        lemmaElements[0].hdwd.$ = reconstructHdwd.join('')
-      }
-
-      let lemmas = [] // eslint-disable-line prefer-const
-      let lexemeSet = [] // eslint-disable-line prefer-const
-
-      for (const entry of lemmaElements.entries()) {
-        const index = entry[0]
-        const elem = entry[1]
-
-        const lemmaText = elem.hdwd ? elem.hdwd.$ : undefined
-        if (!lemmaText) {
-          this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_LEMMA)
-          continue
-        }
-        const lemma = mappingData.parseLemma(lemmaText, language)
-        lemmas.push(lemma)
-
-        const features = this.config.featuresArray
-        for (const feature of features) {
-          mappingData.mapFeature(lemma, elem, ...feature, this.config.allowUnknownValues)
-        }
-
-        let shortdefs = [] // eslint-disable-line prefer-const
-        let meanings = lexeme.rest.entry.mean
-        if (!Array.isArray(meanings)) {
-          meanings = [meanings]
-        }
-        meanings = meanings.filter((m) => m)
-
-        // if we have multiple dictionary elements, take the meaning with the matching index
-        if (lemmaElements.length > 1) {
-          if (meanings && meanings[index] && meanings[index].$) {
-            const meaning = meanings[index]
-            shortdefs.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider,
-              mappingData.parseMeaning(meaning, lemmas[index].word)))
-          }
-        } else {
-          // Changed to prevent some weird "Array Iterator.prototype.next called on incompatible receiver [object Unknown]" error
-          const sDefs = meanings.filter((m) => m.$).map(meaning => {
-            return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider,
-              mappingData.parseMeaning(meaning, lemma.word))
-          })
-          shortdefs.push(...sDefs)
-        }
-        let lexmodel = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lexeme"](lemma, []) // eslint-disable-line prefer-const
-
-        lexmodel.meaning.appendShortDefs(shortdefs)
-        lexemeSet.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, lexmodel))
-      }
-
-      if (lemmas.length === 0) {
-        continue
-      }
-
-      const inflections = []
-      for (const inflectionJSON of inflectionsJSON) {
-        const stem = inflectionJSON.term.stem ? inflectionJSON.term.stem.$ : null
-        const suffix = inflectionJSON.term.suff ? inflectionJSON.term.suff.$ : null
-        const prefix = inflectionJSON.term.pref ? inflectionJSON.term.pref.$ : null
-        const xmpl = inflectionJSON.xmpl ? inflectionJSON.xmpl.$ : null
-        let inflection
-        try {
-          inflection = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Inflection"](stem, mappingData.model.languageID, suffix, prefix, xmpl)
-        } catch (e) {
-          this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_INFLECTION_ERROR.get(e.message))
-          continue
-        }
-        if (targetWord) {
-          inflection.addFeature(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.fullForm, targetWord, mappingData.model.languageID))
-        }
-        // Parse whatever grammatical features we're interested in and are provided
-        for (const f of this.config.featuresArrayAll) {
-          try {
-            mappingData.mapFeature(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
-            mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
-          } catch (e) {
-            // quietly continue
-          }
-        }
-
-        // Parse attribute based features
-        for (const f of this.config.attributeBasedFeatures) {
-          try {
-            mappingData.mapFeatureByAttribute(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
-            mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
-          } catch (e) {
-            // quietly continue
-          }
-        }
-
-        // we only use the inflection if it tells us something the dictionary details do not
-        if (inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmCase] ||
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.tense] ||
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.mood] ||
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice] ||
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.person] ||
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.comparison] ||
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.stemtype] || /** greek - morpheus **/
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.derivtype] || /** greek - morpheus **/
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.dialect] || /** greek **/
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.morph] || /** arabic - aramorph **/
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.kaylo] || /** syriac - sedra **/
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.state] || /** syriac - sedra **/
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.example]) {
-          inflections.push(inflection)
-        }
-        // inflection can provide lemma decl, pofs, conj
-        for (const lemma of lemmas) {
-          if (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]) {
-            mappingData.mapFeature(lemma, inflectionJSON, 'pofs', 'part', this.config.allowUnknownValues)
-          }
-          // only take declension from inflection if lemma has no part of speech or its the same as the inflection
-          if (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.declension] &&
-            (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part] || lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].isEqual(inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]))) {
-            mappingData.mapFeature(lemma, inflectionJSON, 'decl', 'declension', this.config.allowUnknownValues)
-          }
-          // only take conjugation from inflection if lemma has a part of speech and its the same as the inflection
-          if (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation] &&
-            (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part] || lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].isEqual(inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]))) {
-            mappingData.mapFeature(lemma, inflectionJSON, 'conj', 'conjugation', this.config.allowUnknownValues)
-          }
-        }
-      }
-      const aggregated = mappingData.aggregateLexemes(lexemeSet, inflections)
-      lexemes.push(...aggregated)
-    }
-    if (lexemes.length > 0) {
-      return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"](lexemes, targetWord)
-    } else {
-      return undefined
-    }
-  }
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (TransformAdapter);
 
 
 /***/ }),
@@ -11575,10 +11014,10 @@ module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a t
 /*!*************************************!*\
   !*** ./locales/en-us/messages.json ***!
   \*************************************/
-/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE, MORPH_NO_HOMONYM, MORPH_TUFTS_NO_ANSWER_FOR_WORD, MORPH_UNKNOWN_ERROR, MORPH_TRANSFORM_NO_LANGUAGE, MORPH_TRANSFORM_NO_LEMMA, MORPH_TRANSFORM_NO_MAPPING_DATA, MORPH_TRANSFORM_INFLECTION_ERROR, BASIC_ADAPTER_NO_DATA_FROM_URL, BASIC_ADAPTER_EMPTY_URL, BASIC_ADAPTER_UNKNOWN_ERROR, BASIC_ADAPTER_URL_RESPONSE_FAILED, MORPH_TREEBANK_NO_URL, MORPH_TREEBANK_NO_ANSWER_FOR_WORD, MORPH_TREEBANK_UNKNOWN_ERROR, TRANSLATION_INPUT_PREPARE_ERROR, TRANSLATION_UNKNOWN_ERROR, TRANSLATION_INCORRECT_LEXEMES, LEXICONS_NO_ALLOWED_URL, LEXICONS_FAILED_CACHED_DATA, LEXICONS_FAILED_APPEND_DEFS, LEXICONS_NO_FULL_URL, LEXICONS_NO_DATA_FROM_URL, CONCORDANCE_AUTHOR_UPLOAD_ERROR, CONCORDANCE_WORD_USAGE_FETCH_ERROR, default */
+/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE, MORPH_NO_HOMONYM, MORPH_TUFTS_NO_ANSWER_FOR_WORD, MORPH_UNKNOWN_ERROR, MORPH_TRANSFORM_NO_LANGUAGE, MORPH_TRANSFORM_NO_LEMMA, MORPH_TRANSFORM_NO_MAPPING_DATA, MORPH_TRANSFORM_INFLECTION_ERROR, BASIC_ADAPTER_NO_DATA_FROM_URL, BASIC_ADAPTER_EMPTY_URL, BASIC_ADAPTER_UNKNOWN_ERROR, BASIC_ADAPTER_URL_RESPONSE_FAILED, MORPH_TREEBANK_MISSING_REF, MORPH_TREEBANK_UNSUPPORTED_LANGUAGE, MORPH_TREEBANK_NO_URL, MORPH_TREEBANK_NO_ANSWER_FOR_WORD, MORPH_TREEBANK_UNKNOWN_ERROR, TRANSLATION_INPUT_PREPARE_ERROR, TRANSLATION_UNKNOWN_ERROR, TRANSLATION_INCORRECT_LEXEMES, LEXICONS_NO_ALLOWED_URL, LEXICONS_FAILED_CACHED_DATA, LEXICONS_FAILED_APPEND_DEFS, LEXICONS_NO_FULL_URL, LEXICONS_NO_DATA_FROM_URL, CONCORDANCE_AUTHOR_UPLOAD_ERROR, CONCORDANCE_WORD_USAGE_FETCH_ERROR, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a test message about a cookie.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\"},\"NUM_LINES_TEST_MESSAGE\":{\"message\":\"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\",\"params\":[\"numLines\"]},\"MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE\":{\"message\":\"There is no engine for the given languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no engine is found for given languageID\",\"component\":\"morphology.tufts\",\"params\":[\"languageID\"]},\"MORPH_NO_HOMONYM\":{\"message\":\"There is no homonym for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no homonym was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_TUFTS_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no data was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.tufts adapter - unknown\",\"component\":\"morphology.tufts\",\"params\":[\"message\"]},\"MORPH_TRANSFORM_NO_LANGUAGE\":{\"message\":\"No Language was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_LEMMA\":{\"message\":\"No Lemma was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_MAPPING_DATA\":{\"message\":\"No mapping data found for {language}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"language\"]},\"MORPH_TRANSFORM_INFLECTION_ERROR\":{\"message\":\"Error parsing inflection: {error}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"error\"]},\"BASIC_ADAPTER_NO_DATA_FROM_URL\":{\"message\":\"Unable to get data from url - {url}\",\"description\":\"Error message for basic adapter - when no data was returned from the url\",\"component\":\"basic_adapter\",\"params\":[\"url\"]},\"BASIC_ADAPTER_EMPTY_URL\":{\"message\":\"Unable to get data from empty url\",\"description\":\"Error message for basic adapter - when empty url was given\",\"component\":\"basic_adapter\"},\"BASIC_ADAPTER_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"message\"]},\"BASIC_ADAPTER_URL_RESPONSE_FAILED\":{\"message\":\"Request doesn't return data - {statusCode}: {statusText}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"statusCode\",\"statusText\"]},\"MORPH_TREEBANK_NO_URL\":{\"message\":\"There is a problem with creating url for the given word - {word}\",\"description\":\"Error message for morph.treebank - no url for fetching data from treebank\",\"component\":\"morph.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word}\",\"description\":\"Error message for morphology.treebank adapter - when no data was returned from the source\",\"component\":\"morphology.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.treebank adapter - unknown\",\"component\":\"morphology.treebank\",\"params\":[\"message\"]},\"TRANSLATION_INPUT_PREPARE_ERROR\":{\"message\":\"Some problems with preparing input for geting translations - {input}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - problems with input\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"input\"]},\"TRANSLATION_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - unknown\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"message\"]},\"TRANSLATION_INCORRECT_LEXEMES\":{\"message\":\"There is no correct homonym in input\",\"description\":\"Error message for lemmatranslation.alpheios adapter - no lexemes\",\"component\":\"lemmatranslation.alpheios\"},\"LEXICONS_NO_ALLOWED_URL\":{\"message\":\"There are no allowed urls in the options\",\"description\":\"Error message for lexicon.alpheios adapter - no urls were found in options\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_FAILED_CACHED_DATA\":{\"message\":\"There is a problem with catching data from lexicon source - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with getting cached data\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_FAILED_APPEND_DEFS\":{\"message\":\"There is a problem with updating definitions - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with updating definitions\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_NO_FULL_URL\":{\"message\":\"No full url is defined for definitions\",\"description\":\"Error message for lexicon.alpheios adapter - no full url is defined\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_NO_DATA_FROM_URL\":{\"message\":\"No data recieved from url - {url}\",\"description\":\"Error message for lexicon.alpheios adapter - no data from url\",\"component\":\"lexicon.alpheios\",\"params\":[\"url\"]},\"CONCORDANCE_AUTHOR_UPLOAD_ERROR\":{\"message\":\"Some problems with retrieving from author/textWork config file - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with uploading data from author-work config file\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]},\"CONCORDANCE_WORD_USAGE_FETCH_ERROR\":{\"message\":\"Some problems with fetching word usage examples from concordance api - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with fetching word usage examples from concordance api\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]}}");
+module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a test message about a cookie.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\"},\"NUM_LINES_TEST_MESSAGE\":{\"message\":\"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\",\"params\":[\"numLines\"]},\"MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE\":{\"message\":\"There is no engine for the given languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no engine is found for given languageID\",\"component\":\"morphology.tufts\",\"params\":[\"languageID\"]},\"MORPH_NO_HOMONYM\":{\"message\":\"There is no homonym for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no homonym was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_TUFTS_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no data was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.tufts adapter - unknown\",\"component\":\"morphology.tufts\",\"params\":[\"message\"]},\"MORPH_TRANSFORM_NO_LANGUAGE\":{\"message\":\"No Language was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_LEMMA\":{\"message\":\"No Lemma was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_MAPPING_DATA\":{\"message\":\"No mapping data found for {language}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"language\"]},\"MORPH_TRANSFORM_INFLECTION_ERROR\":{\"message\":\"Error parsing inflection: {error}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"error\"]},\"BASIC_ADAPTER_NO_DATA_FROM_URL\":{\"message\":\"Unable to get data from url - {url}\",\"description\":\"Error message for basic adapter - when no data was returned from the url\",\"component\":\"basic_adapter\",\"params\":[\"url\"]},\"BASIC_ADAPTER_EMPTY_URL\":{\"message\":\"Unable to get data from empty url\",\"description\":\"Error message for basic adapter - when empty url was given\",\"component\":\"basic_adapter\"},\"BASIC_ADAPTER_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"message\"]},\"BASIC_ADAPTER_URL_RESPONSE_FAILED\":{\"message\":\"Request doesn't return data - {statusCode}: {statusText}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"statusCode\",\"statusText\"]},\"MORPH_TREEBANK_MISSING_REF\":{\"message\":\"Reference is missing from treebank request = {request}\",\"description\":\"Missing reference in treebank request\",\"component\":\"morph.treebank\",\"params\":[\"request\"]},\"MORPH_TREEBANK_UNSUPPORTED_LANGUAGE\":{\"message\":\"Unsupported treebank language ${languageId}\",\"description\":\"Unsupported treebank language\",\"component\":\"morph.treebank\",\"params\":[\"languageId\"]},\"MORPH_TREEBANK_NO_URL\":{\"message\":\"There is a problem with creating url for the given word - {word}\",\"description\":\"Error message for morph.treebank - no url for fetching data from treebank\",\"component\":\"morph.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word}\",\"description\":\"Error message for morphology.treebank adapter - when no data was returned from the source\",\"component\":\"morphology.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.treebank adapter - unknown\",\"component\":\"morphology.treebank\",\"params\":[\"message\"]},\"TRANSLATION_INPUT_PREPARE_ERROR\":{\"message\":\"Some problems with preparing input for geting translations - {input}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - problems with input\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"input\"]},\"TRANSLATION_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - unknown\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"message\"]},\"TRANSLATION_INCORRECT_LEXEMES\":{\"message\":\"There is no correct homonym in input\",\"description\":\"Error message for lemmatranslation.alpheios adapter - no lexemes\",\"component\":\"lemmatranslation.alpheios\"},\"LEXICONS_NO_ALLOWED_URL\":{\"message\":\"There are no allowed urls in the options\",\"description\":\"Error message for lexicon.alpheios adapter - no urls were found in options\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_FAILED_CACHED_DATA\":{\"message\":\"There is a problem with catching data from lexicon source - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with getting cached data\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_FAILED_APPEND_DEFS\":{\"message\":\"There is a problem with updating definitions - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with updating definitions\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_NO_FULL_URL\":{\"message\":\"No full url is defined for definitions\",\"description\":\"Error message for lexicon.alpheios adapter - no full url is defined\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_NO_DATA_FROM_URL\":{\"message\":\"No data recieved from url - {url}\",\"description\":\"Error message for lexicon.alpheios adapter - no data from url\",\"component\":\"lexicon.alpheios\",\"params\":[\"url\"]},\"CONCORDANCE_AUTHOR_UPLOAD_ERROR\":{\"message\":\"Some problems with retrieving from author/textWork config file - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with uploading data from author-work config file\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]},\"CONCORDANCE_WORD_USAGE_FETCH_ERROR\":{\"message\":\"Some problems with fetching word usage examples from concordance api - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with fetching word usage examples from concordance api\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]}}");
 
 /***/ }),
 
@@ -11606,6 +11045,610 @@ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/_
     en_GB: _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1__
   }
 });
+
+
+/***/ }),
+
+/***/ "./transformers/alpheios-lexicon-transformer.js":
+/*!******************************************************!*\
+  !*** ./transformers/alpheios-lexicon-transformer.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+
+
+/**
+ Transforms morphological output adhering to the Alpheios lexicon
+ schema to an Alpheios Homonym data model object
+*/
+
+const featuresArray = [
+  ['pofs', 'part'],
+  ['case', 'grmCase'],
+  ['gend', 'gender'],
+  ['decl', 'declension'],
+  ['conj', 'conjugation'],
+  ['area', 'area'],
+  ['age', 'age'],
+  ['geo', 'geo'],
+  ['freq', 'frequency'],
+  ['note', 'note'],
+  ['pron', 'pronunciation'],
+  ['kind', 'kind'],
+  ['src', 'source']
+]
+
+const featuresArrayAll = [
+  ['pofs', 'part'],
+  ['case', 'grmCase'],
+  ['gend', 'gender'],
+  ['decl', 'declension'],
+  ['conj', 'conjugation'],
+  ['num', 'number'],
+  ['tense', 'tense'],
+  ['voice', 'voice'],
+  ['mood', 'mood'],
+  ['pers', 'person'],
+  ['comp', 'comparison'],
+  ['stemtype', 'stemtype'],
+  ['derivtype', 'derivtype'],
+  ['dial', 'dialect'],
+  ['morph', 'morph']
+]
+
+const attributeBasedFeatures = [
+  ['paradigm', 'cat']
+]
+
+class AlpheiosLexiconTransformer {
+  constructor (adapter, mappingData) {
+    this.adapter = adapter
+    this.mappingData = mappingData
+    this.allowUnknownValues = true
+  }
+
+  /**
+   * This method extract parameter by defined path
+   * @param {Object} source - json object to retrieve data from
+   * @param {String} nameParam - parameter name that should be retrieved
+   * @return {String|Object} - extracted data
+  */
+  extractData (source, nameParam) {
+    const schema = {
+      providerUri: ['RDF', 'Annotation', 'creator', 'Agent', 'about'],
+      providerRights: ['RDF', 'Annotation', 'rights', '$'],
+      inflections: ['rest', 'entry', 'infl'],
+      dictData: ['rest', 'entry', 'dict']
+    }
+    let res
+
+    if (schema[nameParam]) {
+      res = source
+      for (const pathPart of schema[nameParam]) {
+        if (res[pathPart]) {
+          res = res[pathPart]
+        } else {
+          res = undefined
+          break
+        }
+      }
+    }
+    return res
+  }
+
+  /**
+   * This method checks if data is array, if not - converts to array
+   * @param {?} data - value that should be checked
+   * @param {?} defaultData - default value, if data is null
+   * @return {Array}
+  */
+  checkToBeArray (data, defaultData = []) {
+    let resData = data
+    if (!Array.isArray(data)) {
+      if (data) {
+        resData = [data]
+      } else {
+        resData = defaultData
+      }
+    }
+    return resData
+  }
+
+  /**
+   * This method creates hdwd from source json object
+   * @param {Object} data - jsonObj from adapter
+   * @param {Object} term - data from inflections
+   * @param {Symbol} direction - define the word direction
+   * @return {Array} - array with parts for hdwr
+  */
+  collectHdwdArray (data, term, direction) {
+    let hdwd = [] // eslint-disable-line prefer-const
+
+    if (data && !Array.isArray(data) && (!data.hdwd || !data.hdwd.$) && term) {
+      hdwd.push(term.prefix ? term.prefix.$ : '')
+      hdwd.push(term.stem ? term.stem.$ : '')
+      hdwd.push(term.suff ? term.suff.$ : '')
+
+      if (direction === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_DIR_RTL) {
+        hdwd.reverse()
+      }
+    }
+
+    return hdwd
+  }
+
+  /**
+   * This method defines language from dictData nd inflections data
+   * @param {Object} data - jsonObj from adapter
+   * @param {Object} term - data from inflections
+   * @return {String}  - language code
+  */
+  defineLanguage (data, term) {
+    let lemmaData = Array.isArray(data) ? data[0] : data // eslint-disable-line prefer-const
+    if (!lemmaData.hdwd && term) {
+      lemmaData.hdwd = {}
+      lemmaData.hdwd.lang = term.lang
+    }
+    return lemmaData.hdwd ? lemmaData.hdwd.lang : lemmaData.lang
+  }
+
+  /**
+   * This method defines language from dictData nd inflections data
+   * @param {Object} data - jsonObj from adapter
+   * @param {Object} term - data from inflections
+   * Returned values:
+   *     - {Homonym}
+   *     - {undefined}
+  */
+  transformData (jsonObj, targetWord) {
+    let lexemes = [] // eslint-disable-line prefer-const
+    const annotationBody = this.checkToBeArray(jsonObj.RDF.Annotation.Body)
+
+    const providerUri = this.extractData(jsonObj, 'providerUri')
+    const providerRights = this.extractData(jsonObj, 'providerRights')
+
+    const provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](providerUri, providerRights)
+
+    for (const lexeme of annotationBody) {
+      const inflectionsJSON = this.checkToBeArray(this.extractData(lexeme, 'inflections'))
+      const inflectionsJSONTerm = inflectionsJSON.length > 0 ? inflectionsJSON[0].term : undefined
+
+      const dictData = this.extractData(lexeme, 'dictData')
+
+      const lemmaElements = this.checkToBeArray(dictData, inflectionsJSONTerm ? [inflectionsJSONTerm] : [])
+      const language = this.defineLanguage(lemmaElements, inflectionsJSONTerm)
+      if (!language) {
+        this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_LANGUAGE)
+        continue
+      }
+
+      const reconstructHdwd = this.collectHdwdArray(dictData, inflectionsJSONTerm, this.mappingData.model.direction)
+      if (reconstructHdwd.length > 0) {
+        lemmaElements[0].hdwd.$ = reconstructHdwd.join('')
+      }
+
+      let lemmas = [] // eslint-disable-line prefer-const
+      let lexemeSet = [] // eslint-disable-line prefer-const
+
+      for (const entry of lemmaElements.entries()) {
+        const index = entry[0]
+        const elem = entry[1]
+
+        const lemmaText = elem.hdwd ? elem.hdwd.$ : undefined
+        if (!lemmaText) {
+          this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_LEMMA)
+          continue
+        }
+        const lemma = this.mappingData.parseLemma(lemmaText, language)
+        lemmas.push(lemma)
+
+        const features = featuresArray
+        for (const feature of features) {
+          this.mappingData.mapFeature(lemma, elem, ...feature, this.allowUnknownValues)
+        }
+
+        let shortdefs = [] // eslint-disable-line prefer-const
+        let meanings = lexeme.rest.entry.mean
+        if (!Array.isArray(meanings)) {
+          meanings = [meanings]
+        }
+        meanings = meanings.filter((m) => m)
+
+        // if we have multiple dictionary elements, take the meaning with the matching index
+        if (lemmaElements.length > 1) {
+          if (meanings && meanings[index] && meanings[index].$) {
+            const meaning = meanings[index]
+            shortdefs.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider,
+              this.mappingData.parseMeaning(meaning, lemmas[index].word)))
+          }
+        } else {
+          // Changed to prevent some weird "Array Iterator.prototype.next called on incompatible receiver [object Unknown]" error
+          const sDefs = meanings.filter((m) => m.$).map(meaning => {
+            return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider,
+              this.mappingData.parseMeaning(meaning, lemma.word))
+          })
+          shortdefs.push(...sDefs)
+        }
+        let lexmodel = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lexeme"](lemma, []) // eslint-disable-line prefer-const
+
+        lexmodel.meaning.appendShortDefs(shortdefs)
+        lexemeSet.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, lexmodel))
+      }
+
+      if (lemmas.length === 0) {
+        continue
+      }
+
+      const inflections = []
+      for (const inflectionJSON of inflectionsJSON) {
+        const stem = inflectionJSON.term && inflectionJSON.term.stem ? inflectionJSON.term.stem.$ : null
+        const form = inflectionJSON.term && inflectionJSON.term.form ? inflectionJSON.term.form.$ : null
+        const suffix = inflectionJSON.term && inflectionJSON.term.suff ? inflectionJSON.term.suff.$ : null
+        const prefix = inflectionJSON.term && inflectionJSON.term.pref ? inflectionJSON.term.pref.$ : null
+        const xmpl = inflectionJSON.xmpl ? inflectionJSON.xmpl.$ : null
+        const inflWord = stem || form
+        let inflection
+        try {
+          inflection = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Inflection"](inflWord, this.mappingData.model.languageID, suffix, prefix, xmpl)
+        } catch (e) {
+          this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_INFLECTION_ERROR.get(e.message))
+          continue
+        }
+        if (targetWord) {
+          inflection.addFeature(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.fullForm, targetWord, this.mappingData.model.languageID))
+        }
+        // Parse whatever grammatical features we're interested in and are provided
+        for (const f of featuresArrayAll) {
+          try {
+            this.mappingData.mapFeature(inflection, inflectionJSON, ...f, this.allowUnknownValues)
+            this.mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
+          } catch (e) {
+            // quietly continue
+          }
+        }
+
+        // Parse attribute based features
+        for (const f of attributeBasedFeatures) {
+          try {
+            this.mappingData.mapFeatureByAttribute(inflection, inflectionJSON, ...f, this.allowUnknownValues)
+            this.mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
+          } catch (e) {
+            // quietly continue
+          }
+        }
+
+        // we only use the inflection if it tells us something the dictionary details do not
+        if (inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmCase] ||
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.tense] ||
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.mood] ||
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice] ||
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.person] ||
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.comparison] ||
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.stemtype] || /** greek - morpheus **/
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.derivtype] || /** greek - morpheus **/
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.dialect] || /** greek **/
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.morph] || /** arabic - aramorph **/
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.kaylo] || /** syriac - sedra **/
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.state] || /** syriac - sedra **/
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.example]) {
+          inflections.push(inflection)
+        }
+        // inflection can provide lemma decl, pofs, conj
+        for (const lemma of lemmas) {
+          if (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]) {
+            this.mappingData.mapFeature(lemma, inflectionJSON, 'pofs', 'part', this.allowUnknownValues)
+          }
+          // only take declension from inflection if lemma has no part of speech or its the same as the inflection
+          if (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.declension] &&
+            (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part] || lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].isEqual(inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]))) {
+            this.mappingData.mapFeature(lemma, inflectionJSON, 'decl', 'declension', this.allowUnknownValues)
+          }
+          // only take conjugation from inflection if lemma has a part of speech and its the same as the inflection
+          if (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation] &&
+            (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part] || lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].isEqual(inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]))) {
+            this.mappingData.mapFeature(lemma, inflectionJSON, 'conj', 'conjugation', this.allowUnknownValues)
+          }
+        }
+      }
+      const aggregated = this.mappingData.aggregateLexemes(lexemeSet, inflections)
+      lexemes.push(...aggregated)
+    }
+    if (lexemes.length > 0) {
+      return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"](lexemes, targetWord)
+    } else {
+      return undefined
+    }
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (AlpheiosLexiconTransformer);
+
+
+/***/ }),
+
+/***/ "./transformers/import-morph-data.js":
+/*!*******************************************!*\
+  !*** ./transformers/import-morph-data.js ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/*
+Objects of a morphology analyzer's library
+ */
+
+
+/**
+ * Holds all information required to transform from morphological analyzer's grammatical feature values to the
+ * library standards. There is one ImportMorphData object per language.
+ */
+class ImportMorphData {
+  /**
+     * Creates an ImportMorphData object for the language provided.
+     * @param {Function<LanguageModel>} model - A language model of the import data.
+     * @param {String} engine - a code for the engine that is using this mapping model
+     */
+  constructor (model, engine) {
+    'use strict'
+    this.model = model
+    this.engine = engine
+    // add all the features that the language supports so that we
+    // can return the default values if we don't need to import a mapping
+    for (const featureName of Object.keys(this.model.features)) {
+      this.addFeature(featureName)
+    }
+    // may be overridden by specific engine to handle vagaries in reporting of dictionary entries
+    // default just returns them as provided
+    this.aggregateLexemes = function (lexemeSet, inflections) {
+      let lexemes = [] // eslint-disable-line prefer-const
+      for (const lex of lexemeSet) {
+        // only process if we have a lemma that differs from the target
+        // word or if we have at least a part of speech
+        if (this.reportLexeme(lex)) {
+          lex.inflections = inflections.map(inflection => inflection.clone())
+          lexemes.push(lex)
+        }
+      }
+      return lexemes
+    }
+    // may be overridden by specific engine use via setLemmaParser
+    this.parseLemma = function (lemma) { return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"](lemma, this.model.languageID) }
+
+    // may be overridden by specific engine use via setMeaningParser
+    this.parseMeaning = function (meaning, targetWord) {
+      const lang = meaning.lang ? meaning.lang : alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_ENG
+      return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](meaning.$, lang, 'text/plain', targetWord)
+    }
+
+    // may be overridden by specific engine use via setPropertyParser - default just returns the property value
+    // as a list
+    this.parseProperty = function (propertyName, propertyValue) {
+      let propertyValues = []
+      if (propertyName === 'decl') {
+        propertyValues = propertyValue.split('&').map((p) => p.trim())
+      } else if (propertyName === 'comp' && propertyValue === 'positive') {
+        propertyValues = []
+      } else {
+        propertyValues = [propertyValue]
+      }
+      return propertyValues
+    }
+
+    // may be overridden by specifc engine use via setLexemeFilter - default assumes we will have a part of speech
+    this.reportLexeme = function (lexeme) {
+      return lexeme.lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]
+    }
+
+    // may be overriden by specific engine use to a list of of featureTypes which
+    // should be overridden in the inflection data from the lemma data
+    this.inflectionOverrides = []
+  }
+
+  /**
+     * Adds a grammatical feature whose values to be mapped.
+     * @param {string} featureName - A name of a grammatical feature (i.e. declension, number, etc.)
+     * @return {Object} An object that represent a newly created grammatical feature.
+     */
+  addFeature (featureName) {
+    this[featureName] = {}
+    const model = this.model
+
+    this[featureName].add = function add (providerValue, alpheiosValue) {
+      this[providerValue] = alpheiosValue
+      return this
+    }
+
+    this[featureName].get = function get (providerValue, sortOrder = 1, allowUnknownValues = false) {
+      let mappedValue = []
+      if (!this.importer.has(providerValue)) {
+        // if the providerValue matches the model value or the model value
+        // is unrestricted, return a feature with the providerValue and order
+        if (model.typeFeature(featureName).hasValue(providerValue) ||
+            model.typeFeature(featureName).valuesUnrestricted) {
+          mappedValue = model.typeFeature(featureName).createFeature(providerValue, sortOrder)
+        } else {
+          const message = `Unknown value "${providerValue}" of feature "${featureName}" for ${model.languageCode} (allowed = ${allowUnknownValues})`
+          if (allowUnknownValues) {
+            mappedValue = model.typeFeature(featureName).createFeature(providerValue, sortOrder)
+          } else {
+            throw new Error(message)
+          }
+        }
+      } else {
+        const tempValue = this.importer.get(providerValue)
+        if (Array.isArray(tempValue)) {
+          mappedValue = model.typeFeature(featureName).createFeatures(tempValue, sortOrder)
+        } else {
+          mappedValue = model.typeFeature(featureName).createFeature(tempValue, sortOrder)
+        }
+      }
+      return mappedValue
+    }
+
+    /**
+     * @param {Object[]} data - An array of objects with `providerData` (an item value) and `sortOrder` fields
+     * @param allowUnknownValues
+     * @return {Feature}
+     */
+    this[featureName].getMultiple = function get (data, allowUnknownValues = false) {
+      let values = [] // Converts values from `data` into `values` array
+      for (const item of data) {
+        if (this.importer.has(item.providerValue)) {
+          const value = this.importer.get(item.providerValue)
+          if (Array.isArray(value)) {
+            // if the import returns an array, it should already have the sortOrder
+            values = value
+          } else {
+            values = [[value, item.sortOrder]]
+          }
+        } else if (model.typeFeature(featureName).hasValue(item.providerValue) ||
+          model.typeFeature(featureName).valuesUnrestricted) {
+          values.push([item.providerValue, item.sortOrder])
+        } else {
+          const message = `Unknown value "${item.providerValue}" of feature "${featureName}" for ${model.languageCode} (allowed = ${allowUnknownValues})`
+          if (allowUnknownValues) {
+            values.push([item.providerValue, item.sortOrder])
+          } else {
+            throw new Error(message)
+          }
+        }
+      }
+      return model.typeFeature(featureName).createFeatures(values)
+    }
+
+    this[featureName].importer = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["FeatureImporter"]()
+
+    return this[featureName]
+  }
+
+  /**
+   * Add an engine-specific lexeme aggregator
+   */
+  setLexemeAggregator (callback) {
+    this.aggregateLexemes = callback
+  }
+
+  /**
+  /**
+   * Add an engine-specific lemma parser
+   */
+  setLemmaParser (callback) {
+    this.parseLemma = callback
+  }
+
+  setMeaningParser (callback) {
+    this.parseMeaning = callback
+  }
+
+  /**
+   * Add an engine-specific property parser
+   */
+  setPropertyParser (callback) {
+    this.parseProperty = callback
+  }
+
+  /**
+   * Add an engine-specific lexeme filter
+   */
+  setLexemeFilter (callback) {
+    this.reportLexeme = callback
+  }
+
+  /**
+   * Maps property of a single feature type to a single Feature object with one or more values
+   * (if this feature has multiple values). Feature is stored as a property of the supplied model object.
+   * @param {object} model the model object to which the feature will be added
+   * @param {object} inputElem the input data element
+   * @param {object} inputName the  property name in the input data
+   * @param {string} featureName the name of the feature it will be mapped to
+   * @param {boolean} allowUnknownValues flag to indicate if unknown values are allowed
+   */
+  mapFeature (model, inputElem, inputName, featureName, allowUnknownValues) {
+    const inputItem = inputElem[inputName]
+    if (inputItem && (Array.isArray(inputItem) || inputItem.$)) {
+      let values = []
+      if (Array.isArray(inputItem)) {
+        // There are multiple values of this feature
+        for (const e of inputItem) {
+          values.push(...this.parseProperty(inputName, e.$))
+        }
+      } else {
+        values = this.parseProperty(inputName, inputItem.$)
+      }
+      // `values` is always an array as an array is a return value of `parseProperty`
+      if (values.length > 0) {
+        // There are some values found
+        values = values.map(v => { return { providerValue: v, sortOrder: inputItem.order ? inputItem.order : 1 } })
+        const feature = this[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types[featureName]].getMultiple(values, allowUnknownValues)
+        model.addFeature(feature)
+      }
+    }
+  }
+
+  /**
+   * Maps property of a single feature type to a single Feature object with one
+   * or more values, using an attribute to determine the mapped-to feature name
+   * (if this feature has multiple values). Feature is stored as a property of
+   * the supplied model object.
+   * @param {object} model the model object to which the feature will be added
+   * @param {object} inputElem the input data element
+   * @param {object} inputName the  property name in the input data
+   * @param {string} attributeName the attribute to use to get the feature name
+   * @param {boolean} allowUnknownValues flag to indicate if unknown values are allowed
+   */
+  mapFeatureByAttribute (model, inputElem, inputName, attributeName, allowUnknownValues) {
+    const inputItem = inputElem[inputName]
+    let featureName
+    if (inputItem && (Array.isArray(inputItem) || inputItem.$)) {
+      let values = []
+      if (Array.isArray(inputItem)) {
+        // There are multiple values of this feature
+        for (const e of inputItem) {
+          if (featureName && featureName !== e[attributeName]) {
+            console.warn('Mutiple feature values with mismatching attribute value', inputElem)
+          }
+          featureName = e[attributeName]
+          values.push(...this.parseProperty(inputName, e.$))
+        }
+      } else {
+        featureName = inputItem[attributeName]
+        values = this.parseProperty(inputName, inputItem.$)
+      }
+      // `values` is always an array as an array is a return value of `parseProperty`
+      if (values.length > 0) {
+        // There are some values found
+        values = values.map(v => { return { providerValue: v, sortOrder: inputItem.order ? inputItem.order : 1 } })
+        const feature = this[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types[featureName]].getMultiple(values, allowUnknownValues, inputItem.cat)
+        model.addFeature(feature)
+      }
+    }
+  }
+
+  /**
+   * Overrides feature data from an inflection with feature data from the lemma
+   * if required by an engine-specific list of featureTypes
+   * @param {String} featureType the feature type name
+   * @param {Inflection} inflection the inflection object
+   * @param {Lemma[]} lemmas the lemma objects
+   */
+  overrideInflectionFeatureIfRequired (featureType, inflection, lemmas) {
+    if (this.inflectionOverrides.includes(featureType)) {
+      for (const lemma of lemmas.filter(l => l.features[featureType])) {
+        inflection.addFeature(lemma.features[featureType])
+      }
+    }
+  }
+}
+/* harmony default export */ __webpack_exports__["default"] = (ImportMorphData);
 
 
 /***/ }),

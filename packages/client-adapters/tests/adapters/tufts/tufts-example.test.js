@@ -2,19 +2,18 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import AlpheiosTuftsAdapter from '@clAdapters/adapters/tufts/adapter'
-import TransformAdapter from '@clAdapters/adapters/tufts/transform-adapter'
 import { Constants, Homonym, Feature } from 'alpheios-data-models'
 
 import { Fixture } from 'alpheios-fixtures'
 
 describe('tufts-example.test.js', () => {
   console.error = function () {}
-  console.log = function () {}
+  //console.log = function () {}
   console.warn = function () {}
 
   beforeEach(() => {
     jest.spyOn(console, 'error')
-    jest.spyOn(console, 'log')
+   // jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
   })
   afterEach(() => {
@@ -98,21 +97,17 @@ describe('tufts-example.test.js', () => {
   }, 10000)
 
   it('6 TuftsExample - check transform process for mare word', async () => {
-    let adapter = new AlpheiosTuftsAdapter({
-      category: 'morphology',
-      adapterName: 'tufts',
-      method: 'getHomonym'
-    })
-
     let word = 'mare'
-
     let res = Fixture.getFixtureRes({
       langCode: 'lat', adapter: 'tufts', word: word
     })
-
-    let transformAdapter = new TransformAdapter(adapter)
-    let homonym = transformAdapter.transformData(res, word)
-
+    let adapter = new AlpheiosTuftsAdapter({
+      category: 'morphology',
+      adapterName: 'tufts',
+      method: 'getHomonym',
+      sourceData: res
+    })
+    let homonym = await adapter.getHomonym(Constants.LANG_LATIN,word)
     expect(homonym.lexemes.length).toEqual(4)
     let nounMare = homonym.lexemes.filter(l => l.lemma.features['part of speech'].value === 'noun')
     expect(nounMare.length).toEqual(2)
@@ -128,22 +123,21 @@ describe('tufts-example.test.js', () => {
       if (c.values.includes('vocative')) { vocative++ }
     }
     expect(vocative).toEqual(1)
-  }, 10000)
+  })
 
   it('7 TuftsExample - check transform process for cupidinibus data', async () => {
-    let adapter = new AlpheiosTuftsAdapter({
-      category: 'morphology',
-      adapterName: 'tufts',
-      method: 'getHomonym'
-    })
-
     let word = 'cupidinibus'
     let res = Fixture.getFixtureRes({
       langCode: 'lat', adapter: 'tufts', word: word
     })
+    let adapter = new AlpheiosTuftsAdapter({
+      category: 'morphology',
+      adapterName: 'tufts',
+      method: 'getHomonym',
+      sourceData: res
+    })
 
-    let transformAdapter = new TransformAdapter(adapter)
-    let homonym = transformAdapter.transformData(res, word)
+    let homonym = await adapter.getHomonym(Constants.LANG_LATIN,word)
 
     expect(homonym.lexemes.length).toEqual(2)
     let wordTest = homonym.lexemes.filter(l => l.lemma.word === 'cupido')
@@ -153,19 +147,19 @@ describe('tufts-example.test.js', () => {
   }, 20000)
 
   it('8 TuftsExample - parses dialect stemtype derivtype morph', async () => {
-    let adapter = new AlpheiosTuftsAdapter({
-      category: 'morphology',
-      adapterName: 'tufts',
-      method: 'getHomonym'
-    })
-
     let word = 'ἐλῴην'
     let res = Fixture.getFixtureRes({
       langCode: 'grc', adapter: 'tufts', word: word
     })
+    let adapter = new AlpheiosTuftsAdapter({
+      category: 'morphology',
+      adapterName: 'tufts',
+      method: 'getHomonym',
+      sourceData: res
+    })
 
-    let transformAdapter = new TransformAdapter(adapter)
-    let homonym = transformAdapter.transformData(res, word)
+
+    let homonym = await adapter.getHomonym(Constants.LANG_GREEK,word)
 
     expect(homonym.lexemes.length).toEqual(1)
     expect(homonym.lexemes[0].inflections.length).toEqual(2)
@@ -176,253 +170,241 @@ describe('tufts-example.test.js', () => {
   }, 20000)
 
   it('9 TuftsExample - multiple dict and mean entries', async () => {
+    let word = 'conditum'
+    let res = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: word
+    })
     let adapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      sourceData: res
     })
 
-    let word = 'conditum'
-
-    let url = adapter.prepareRequestUrl(Constants.LANG_LATIN, word)
-    let res = await adapter.fetch(url)
-
-    let transformAdapter = new TransformAdapter(adapter)
-    let homonym = transformAdapter.transformData(res, word)
-
+    let homonym = await adapter.getHomonym(Constants.LANG_LATIN,word)
     expect(homonym.lexemes.length).toEqual(6)
-    expect(homonym.lexemes[5].meaning.shortDefs.length).toEqual(1)
-    expect(homonym.lexemes[5].lemma.principalParts).toEqual(['conditus', 'condita', 'conditior', 'conditissimus'])
-    expect(homonym.lexemes[5].meaning.shortDefs[0].text).toEqual('seasoned, spiced up, flavored, savory; polished, ornamented (discourse/style);')
-    expect(homonym.lexemes[5].provider).toBeTruthy()
-    expect(homonym.lexemes[5].inflections.length).toEqual(4)
-    expect(homonym.lexemes[4].meaning.shortDefs.length).toEqual(1)
-    expect(homonym.lexemes[4].lemma.principalParts).toEqual(['conditus', 'condita', 'conditum'])
-    expect(homonym.lexemes[4].meaning.shortDefs[0].text).toEqual('preserved, kept in store; hidden, concealed, secret; sunken (eyes);')
-    expect(homonym.lexemes[4].meaning.shortDefs[0].lemmaText).toEqual('conditus')
-    expect(homonym.lexemes[4].inflections.length).toEqual(4)
+    expect(homonym.lexemes[2].meaning.shortDefs.length).toEqual(1)
+    expect(homonym.lexemes[2].lemma.principalParts).toEqual(['conditus', 'condita', 'conditior', 'conditissimus'])
+    expect(homonym.lexemes[2].meaning.shortDefs[0].text).toEqual('seasoned, spiced up, flavored, savory; polished, ornamented (discourse/style);')
+    expect(homonym.lexemes[2].provider).toBeTruthy()
+    expect(homonym.lexemes[2].inflections.length).toEqual(4)
+    expect(homonym.lexemes[1].meaning.shortDefs.length).toEqual(1)
+    expect(homonym.lexemes[1].lemma.principalParts).toEqual(['conditus', 'condita', 'conditum'])
+    expect(homonym.lexemes[1].meaning.shortDefs[0].text).toEqual('preserved, kept in store; hidden, concealed, secret; sunken (eyes);')
+    expect(homonym.lexemes[1].meaning.shortDefs[0].lemmaText).toEqual('conditus')
+    expect(homonym.lexemes[1].inflections.length).toEqual(4)
     expect(homonym.lexemes[0].meaning.shortDefs.length).toEqual(3)
-  }, 20000)
+  })
 
   it('10 TuftsExample - lemma from infl', async () => {
-    let adapter = new AlpheiosTuftsAdapter({
-      category: 'morphology',
-      adapterName: 'tufts',
-      method: 'getHomonym'
-    })
-
     let word = 'sui'
     let res = Fixture.getFixtureRes({
       langCode: 'lat', adapter: 'tufts', word: word
     })
 
-    let transformAdapter = new TransformAdapter(adapter)
-    let homonym = transformAdapter.transformData(res, word)
-
-    expect(homonym.lexemes.length).toEqual(6)
-    expect(homonym.lexemes[5].lemma.word).toEqual('sui')
-    expect(homonym.lexemes[5].lemma.features['part of speech'].value).toEqual('pronoun')
-    expect(homonym.lexemes[5].lemma.features['declension'].value).toEqual('5th')
-    expect(homonym.lexemes[5].lemma.features['frequency'].value).toEqual('very frequent')
-  }, 20000)
-
-  it('11 TuftsExample - lemma filter latin', async () => {
     let adapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      sourceData: res
     })
 
+    let homonym = await adapter.getHomonym(Constants.LANG_LATIN,word)
+
+    expect(homonym.lexemes.length).toEqual(6)
+    expect(homonym.lexemes[0].lemma.word).toEqual('sui')
+    expect(homonym.lexemes[0].lemma.features['part of speech'].value).toEqual('pronoun')
+    expect(homonym.lexemes[0].lemma.features['declension'].value).toEqual('5th')
+    expect(homonym.lexemes[0].lemma.features['frequency'].value).toEqual('very frequent')
+  })
+
+  it('11 TuftsExample - lemma filter latin', async () => {
     let word = 'mellitisque'
     let res = Fixture.getFixtureRes({
       langCode: 'lat', adapter: 'tufts', word: word
     })
-
-    let transformAdapter = new TransformAdapter(adapter)
-    let homonym = transformAdapter.transformData(res, word)
-
-    expect(homonym.lexemes.length).toEqual(2)
-    expect(homonym.lexemes[0].lemma.word).toEqual('mellitus')
-    expect(homonym.lexemes[1].lemma.word).toEqual('que')
-  }, 20000)
-
-  it('12 TuftsExample - lemma filter persian', async () => {
     let adapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      sourceData: res
     })
 
+    let homonym = await adapter.getHomonym(Constants.LANG_LATIN,word)
+    expect(homonym.lexemes.length).toEqual(2)
+    expect(homonym.lexemes[0].lemma.word).toEqual('mellitus')
+    expect(homonym.lexemes[1].lemma.word).toEqual('que')
+  })
+
+  it('12 TuftsExample - lemma filter persian', async () => {
     let word = 'بگذرد'
     let res = Fixture.getFixtureRes({
       langCode: 'per', adapter: 'tufts', word: word
     })
-
-    let transformAdapter = new TransformAdapter(adapter)
-    let homonym = transformAdapter.transformData(res, word)
-    expect(homonym.lexemes.length).toEqual(1)
-  }, 10000)
-
-  it('13 TuftsExample - multivalued features', async () => {
     let adapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      sourceData: res
     })
 
+    let homonym = await adapter.getHomonym(Constants.LANG_ARABIC,word)
+    // TODO why is there no test here?
+  })
+
+  it('13 TuftsExample - multivalued features', async () => {
     let word = 'ترجمة'
     let res = Fixture.getFixtureRes({
       langCode: 'ara', adapter: 'tufts', word: word
     })
-
-    let transformAdapter = new TransformAdapter(adapter)
-    let homonym = transformAdapter.transformData(res, word)
-    expect(homonym.lexemes.length).toEqual(5)
-    expect(homonym.lexemes[3].inflections[0].morph.values.length).toEqual(2)
-  }, 10000)
-
-  it('14 TuftsExample - lemma declension feature not set if pofs differs', async () => {
     let adapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      sourceData: res
     })
 
+    let homonym = await adapter.getHomonym(Constants.LANG_ARABIC,word)
+    expect(homonym.lexemes.length).toEqual(5)
+    expect(homonym.lexemes[0].inflections[0].morph.values.length).toEqual(2)
+  })
+
+  it('14 TuftsExample - lemma declension feature not set if pofs differs', async () => {
     let word = 'οὐδεμία'
     let res = Fixture.getFixtureRes({
       langCode: 'grc', adapter: 'tufts', word: word
     })
+    let adapter = new AlpheiosTuftsAdapter({
+      category: 'morphology',
+      adapterName: 'tufts',
+      method: 'getHomonym',
+      sourceData: res
+    })
 
-    let transformAdapter = new TransformAdapter(adapter)
-    let homonym = transformAdapter.transformData(res, word)
+    let homonym = await adapter.getHomonym(Constants.LANG_GREEK,word)
     expect(homonym.lexemes[0].lemma.features['part of speech'].value).toEqual('pronoun')
     expect(homonym.lexemes[0].lemma.features.declension).toBeFalsy()
   }, 20000)
 
   it('15 TuftsExample - inflection created if no stem', async () => {
-    let adapter = new AlpheiosTuftsAdapter({
-      category: 'morphology',
-      adapterName: 'tufts',
-      method: 'getHomonym'
-    })
-
     let word = 'est'
     let res = Fixture.getFixtureRes({
       langCode: 'lat', adapter: 'tufts', word: word
     })
-
-    let transformAdapter = new TransformAdapter(adapter)
-    let homonym = transformAdapter.transformData(res, word)
-    expect(homonym.lexemes[1].inflections[0].stem).toBeNull()
-    expect(homonym.lexemes[1].inflections[0].suffix).toEqual('est')
-  }, 20000)
-
-  it('16 TuftsExample - can parse gez', async () => {
     let adapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      sourceData: res
     })
 
-    let word = 'ሀገርየ'
+    let homonym = await adapter.getHomonym(Constants.LANG_LATIN,word)
+    expect(homonym.lexemes[0].inflections[0].stem).toBeNull()
+    expect(homonym.lexemes[0].inflections[0].suffix).toEqual('est')
+  })
 
+  it('16 TuftsExample - can parse gez', async () => {
+    let word = 'ሀገርየ'
     let res = Fixture.getFixtureRes({
       langCode: 'gez', adapter: 'tufts', word: word
     })
-
-    let transformAdapter = new TransformAdapter(adapter)
-    let homonym = transformAdapter.transformData(res, word)
-    expect(homonym.lexemes.length).toEqual(3)
-  }, 20000)
-
-  it('17 TuftsExample - hdwd created if no hdwd suffix and no stem', async () => {
     let adapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      sourceData: res
     })
 
+    let homonym = await adapter.getHomonym(Constants.LANG_GEEZ,word)
+    expect(homonym.lexemes.length).toEqual(3)
+  })
+
+  it('17 TuftsExample - hdwd created if no hdwd suffix and no stem', async () => {
     let word = 'ego'
     let res = Fixture.getFixtureRes({
       langCode: 'lat', adapter: 'tufts', word: word
     })
-
-    let transformAdapter = new TransformAdapter(adapter)
-    let homonym = transformAdapter.transformData(res, word)
-    expect(homonym.lexemes[0].lemma.word).toEqual('ego')
-  }, 10000)
-
-  it('18 TuftsExample - parses irregular conjugations', async () => {
     let adapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      sourceData: res
     })
 
+
+    let homonym = await adapter.getHomonym(Constants.LANG_LATIN,word)
+    expect(homonym.lexemes[0].lemma.word).toEqual('ego')
+  })
+
+  it('18 TuftsExample - parses irregular conjugations', async () => {
     let word = 'sum'
     let res = Fixture.getFixtureRes({
       langCode: 'lat', adapter: 'tufts', word: word
     })
 
-    let transformAdapter = new TransformAdapter(adapter)
-    let homonym = transformAdapter.transformData(res, word)
-
-    expect(homonym.lexemes[2].lemma.features['conjugation'].value).toEqual('irregular')
-    expect(homonym.lexemes[2].inflections[0]['conjugation'].value).toEqual('irregular')
-  }, 20000)
-
-  it('19 TuftsExample - aggregatesLexemes', async () => {
     let adapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      sourceData: res
     })
 
+    let homonym = await adapter.getHomonym(Constants.LANG_LATIN,word)
+
+    expect(homonym.lexemes[1].lemma.features['conjugation'].value).toEqual('irregular')
+    expect(homonym.lexemes[1].inflections[0]['conjugation'].value).toEqual('irregular')
+  })
+
+  it('19 TuftsExample - aggregatesLexemes', async () => {
     let word = 'aberis'
-    let res = Fixture.getFixtureRes({
+    let sourceJson = Fixture.getFixtureRes({
       langCode: 'lat', adapter: 'tufts', word: word
     })
+    let adapter = new AlpheiosTuftsAdapter({
+      category: 'morphology',
+      adapterName: 'tufts',
+      method: 'getHomonym',
+      sourceData:sourceJson
+    })
 
-    let transformAdapter = new TransformAdapter(adapter)
-    let homonym = transformAdapter.transformData(res, word)
+    let homonym = await adapter.getHomonym(Constants.LANG_LATIN,word)
 
     expect(homonym.lexemes.length).toEqual(1)
     expect(homonym.lexemes[0].altLemmas.length).toEqual(1)
     expect(homonym.lexemes[0].altLemmas[0].principalParts).toEqual(['absum', 'abesse', 'abfui', 'abfuturus'])
     expect(homonym.lexemes[0].lemma.principalParts).toEqual(['absum', 'abesse', 'afui', 'afuturus'])
-  }, 10000)
+  })
 
   it('20 TuftsExample - adsum', async () => {
-    let adapter = new AlpheiosTuftsAdapter({
-      category: 'morphology',
-      adapterName: 'tufts',
-      method: 'getHomonym'
-    })
-
     let word = 'adsum'
     let res = Fixture.getFixtureRes({
       langCode: 'lat', adapter: 'tufts', word: word
     })
-
-    let transformAdapter = new TransformAdapter(adapter)
-    let homonym = transformAdapter.transformData(res, word)
-    expect(homonym.lexemes.length).toEqual(2)
-  }, 10000)
-
-  it('21 TuftsExample - overrides inflection with lemma for auditum', async () => {
     let adapter = new AlpheiosTuftsAdapter({
       category: 'morphology',
       adapterName: 'tufts',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      sourceData: res
     })
 
+    let homonym = await adapter.getHomonym(Constants.LANG_LATIN,word)
+    expect(homonym.lexemes.length).toEqual(2)
+  })
+
+  it('21 TuftsExample - overrides inflection with lemma for auditum', async () => {
     let word = 'auditum'
     let res = Fixture.getFixtureRes({
       langCode: 'lat', adapter: 'tufts', word: word
     })
+    let adapter = new AlpheiosTuftsAdapter({
+      category: 'morphology',
+      adapterName: 'tufts',
+      method: 'getHomonym',
+      sourceData: res
+    })
 
-    let transformAdapter = new TransformAdapter(adapter)
-    let homonym = transformAdapter.transformData(res, word)
+
+    let homonym = await adapter.getHomonym(Constants.LANG_LATIN,word)
     expect(homonym.lexemes[0].inflections.length).toEqual(5)
     expect(homonym.lexemes[0].inflections.filter(i => i.conjugation.value === '4th').length).toEqual(5)
     expect(homonym.lexemes[0].inflections.filter(i => i.conjugation.value === '3rd').length).toEqual(0)
@@ -438,7 +420,7 @@ describe('tufts-example.test.js', () => {
     })
 
     expect(adapter.prepareRequestUrl(Constants.LANG_LATIN, 'mare')).toEqual('https://morph.alpheios.net/api/v1/analysis/word?word=mare&engine=whitakerLat&lang=lat&clientId=fooClient')
-  }, 10000)
+  })
 
   it('23 TuftsExample - escapes word in URL', () => {
     let adapter = new AlpheiosTuftsAdapter({

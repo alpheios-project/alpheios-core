@@ -1,7 +1,7 @@
-import ImportData from '../lib'
+import ImportData from '@clAdapters/transformers/import-morph-data.js'
 import * as Models from 'alpheios-data-models'
 
-const data = new ImportData(Models.LatinLanguageModel, 'whitakerLat')
+const data = new ImportData(Models.LatinLanguageModel,'whitakerLat')
 
 // Whitaker's has weird inflection data for conjugation, we prefer
 // the dictionary entry's conjugation if it's available

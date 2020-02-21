@@ -79,6 +79,18 @@
     "component": "basic_adapter",
     "params": ["statusCode", "statusText"]
   },
+  "MORPH_TREEBANK_MISSING_REF": {
+    "message": "Reference is missing from treebank request = {request}",
+    "description": "Missing reference in treebank request",
+    "component": "morph.treebank",
+    "params": ["request"]
+  },
+  "MORPH_TREEBANK_UNSUPPORTED_LANGUAGE": {
+    "message": "Unsupported treebank language ${languageId}",
+    "description": "Unsupported treebank language",
+    "component": "morph.treebank",
+    "params": ["languageId"]
+  },
   "MORPH_TREEBANK_NO_URL": {
     "message": "There is a problem with creating url for the given word - {word}",
     "description": "Error message for morph.treebank - no url for fetching data from treebank",
