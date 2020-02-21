@@ -1,6 +1,6 @@
 {
   "name": "alpheios-client-adapters",
-  "version": "3.2.1-dev.17",
+  "version": "3.2.1-dev.18",
   "description": "Alpheios Client Adapters Library",
   "private": true,
   "main": "dist/alpheios-client-adapters.min.js",
