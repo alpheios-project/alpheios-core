@@ -4,6 +4,7 @@ import AlpheiosTreebankAdapter from '@clAdapters/adapters/alpheiostb/adapter'
 import AlpheiosLemmaTranslationsAdapter from '@clAdapters/adapters/translations/adapter'
 import AlpheiosLexiconsAdapter from '@clAdapters/adapters/lexicons/adapter'
 import AlpheiosConcordanceAdapter from '@clAdapters/adapters/concordance/adapter'
+import ArethusaTreebankAdapter from '@clAdapters/adapters/arethusa/adapter'
 
 import WrongMethodError from '@clAdapters/errors/wrong-method-error'
 import NoRequiredParamError from '@clAdapters/errors/no-required-param-error'
