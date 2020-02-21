@@ -34,10 +34,9 @@ deploy:
       branch: production
   - provider: releases
     api_key:
-      secure: Zb00TY4LiRGVFJdJoBaNLSzmDbRKUVnCcnvBjSX4kwpG3ZIjAi4BgpH8W8VzwA18tFEDpO3ZW95E9U9kUCTkO+qVbxM74/yODwT8RuhPzi1YUfy8W+6nuOY+QWfMXPCUemIbYdAea7t9Qox6z9bTjm/WOnZlsFu3l1bU2ZdUDdG1GVp2SGmZp+IwLmVU8kgnkx+rJvO8ftNRF2SPhuYB8NioUROLZJ5jr7ZFyvYoiLzxdZZ68I2NS4XB5ib9tOd2GOrzStGYUoRIrBgrspkOXODrh5944W2kDbOdIzez/5jXdLBKssW44kuVx800p+utTRwvFYvOmzgBKEeKtBFLCCSf5zvQqSe6LkwewmG6bhHsdLYEaHA+1laaTIX6ny2wA5gXC6O/ppMmQZmHrc7VG/antdvBdtxYoUu4ocA99RcOO2S0H/7FjiaGYuqKi1n+iK7X8F/OW6WZKSUl5taoXuluV7nPB39jl9DQiLggXDJu7qM3RnQ4DWkH4HvA5NnkaYsW6VH3cMCvykBItSMmjRYOMSz6oNS9pZTCC3fLixLiB1QfoHFssNdf5QP/Fw/pkiqOl1iP6LFHOVVZKmtlfqBAEOPl6HlsCWrUQs8+Acml+C7TVpUXGKwEi9vVtECmGAnV6tSZqIK/JRlzEBPCbbclH/6redXm3BjgzujInZs=
+      secure: RSCtr6AeKz3YEaeTG+YUScyl1NbNA/96yPcmEk2rssRtYLRcRXhd7Px352ODhPGW/gjncCi3fIndT5JPtq1u2CLsSqYwSa50tGe188/WFLoxMVUAmhR3PeKtwokWYth1/zq4AbkPNqJEcQtd9qepqLtl/Qd6INSy+pEMGc+/jBhbE7HOlL+t4zgQlgBjjnDPnQHZ8HLNZM8Z5UiZfnaS3pf59FL1An+vtVCto6b8d2coxvK9XKg3ytLMrlfCVZh9J7g6cNYFJe52WAXWllylghJZqUq5AgocR9lV/YbXJE9yKnz5+PC1N6fmseyz+f3blBKD6QevX0tFLrLJOHBxzmUwP8gRx7s5hunJ7x+8eJ0+Gj7KNre5d9Kz8l/pfLNTJ0PBb7UIZRj5VEDvC6SBnfKhRv63eikjZMUMwANzrcglt6xYYDYqkSudNcudPfUrMOFFBbhNI84P2jLNYE6U8AJW9u0S4+6Z/v/AII3sOGHLJf3U0KoGe85mHWhEDpp0TNWGKdhCAabBlPNHOaWgEkuccjvHX00HTT9q0pOZX8AFPDAf9S7WUBdY4qisCBq1mr+HgDRqHFEVQLZqjZIDGcEq17JOT+vP1hZkCMhAJxNRJqkQGZ5Ci3Zfsj7AxrMXcNLr6erglX5/2dbJZuMThW5YlSzFqNEXzIPUc/BZZJo=
     on:
       repo: alpheios-project/alpheios-core
       all_branches: true
       tags: on
       condition: $TRAVIS_TAG =~ ^v[0-9]+.[0-9]+.[0-9]+
-
