@@ -6,6 +6,9 @@ import LatinLanguageModel from '../src/latin_language_model.js'
 import GreekLanguageModel from '../src/greek_language_model.js'
 import ArabicLanguageModel from '../src/arabic_language_model.js'
 import PersianLanguageModel from '../src/persian_language_model.js'
+import SyriacLanguageModel from '../src/syriac_language_model.js'
+import ChineseLanguageModel from '../src/chinese_language_model.js'
+import GeezLanguageModel from '../src/geez_language_model.js'
 import LanguageModel from '../src/language_model.js'
 
 describe('LanguageModelFactory object', () => {
@@ -39,6 +42,31 @@ describe('LanguageModelFactory object', () => {
     expect(id).toBeTruthy()
   })
 
+  test('Should return a Chinese model', () => {
+    let model = LanguageModelFactory.getLanguageForCode('zho')
+    expect(model instanceof ChineseLanguageModel).toBeTruthy()
+  })
+
+  test('Should return a Geez model', () => {
+    let model = LanguageModelFactory.getLanguageForCode('gez')
+    expect(model instanceof GeezLanguageModel).toBeTruthy()
+  })
+
+  test('Should return a Syriac model', () => {
+    let model = LanguageModelFactory.getLanguageForCode('syr')
+    expect(model instanceof SyriacLanguageModel).toBeTruthy()
+  })
+
+  test('Should return a Syriac model (classical)', () => {
+    let model = LanguageModelFactory.getLanguageForCode('syc')
+    expect(model instanceof SyriacLanguageModel).toBeTruthy()
+  })
+
+  test('Should return a Syriac model (extended)', () => {
+    let model = LanguageModelFactory.getLanguageForCode('syr-Syrj')
+    expect(model instanceof SyriacLanguageModel).toBeTruthy()
+  })
+
   test('Should return a Base model', () => {
     let model = LanguageModelFactory.getLanguageForCode('foo')
     expect(model instanceof LanguageModel).toBeTruthy()
@@ -56,7 +84,8 @@ describe('LanguageModelFactory object', () => {
       Constants.STR_LANG_CODE_ARA,
       Constants.STR_LANG_CODE_PER,
       Constants.STR_LANG_CODE_GEZ,
-      Constants.STR_LANG_CODE_ZHO
+      Constants.STR_LANG_CODE_ZHO,
+      Constants.STR_LANG_CODE_SYR
     ])
   })
 })

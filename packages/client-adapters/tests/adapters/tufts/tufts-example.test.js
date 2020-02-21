@@ -183,7 +183,7 @@ describe('tufts-example.test.js', () => {
     })
 
     let word = 'conditum'
-    
+
     let url = adapter.prepareRequestUrl(Constants.LANG_LATIN, word)
     let res = await adapter.fetch(url)
 
@@ -325,7 +325,7 @@ describe('tufts-example.test.js', () => {
     })
 
     let word = 'ሀገርየ'
-    
+
     let res = Fixture.getFixtureRes({
       langCode: 'gez', adapter: 'tufts', word: word
     })
@@ -449,4 +449,23 @@ describe('tufts-example.test.js', () => {
     })
     expect(adapter.prepareRequestUrl(Constants.LANG_GREEK, 'ξυνέηκε')).toEqual('https://morph.alpheios.net/api/v1/analysis/word?word=%CE%BE%CF%85%CE%BD%CE%AD%CE%B7%CE%BA%CE%B5&engine=morpheusgrc&lang=grc&clientId=fooClient')
   })
+
+  it('24 TuftsExample - lemma filtersyriac', async () => {
+    let word = 'ܘܐܡܪܝܢ'
+    let res = Fixture.getFixtureRes({
+      langCode: 'syr', adapter: 'tufts', word: word
+    })
+    let adapter = new AlpheiosTuftsAdapter({
+      category: 'morphology',
+      adapterName: 'tufts',
+      method: 'getHomonym',
+      sourceData: res
+    })
+
+    let homonym = await adapter.getHomonym(Constants.LANG_SYRIAC,word)
+    expect(homonym.lexemes.length).toEqual(4)
+    expect(homonym.lexemes[0].inflections[0].kaylo.value).toEqual("pʿal")
+    expect(homonym.lexemes[0].lemma.features.source.value).not.toEqual(expect.stringMatching(/from sedra.bethmardutho.org/))
+  })
+
 })

@@ -136,7 +136,12 @@ export default class Feature {
       stemtype: 'stemtype',
       morph: 'morph', // general morphological information
       var: 'var', // variance?
-      radical: 'radical'
+      /** for CJK languages only **/
+      radical: 'radical',
+      /** used for Syriac **/
+      kaylo: 'kaylo',
+      state: 'state'
+
     }
   }
 

@@ -5,6 +5,7 @@ html {
   --alpheios-sans-font-face: "Source Sans Pro", sans-serif;
   --alpheios-serif-font-face: "Source Serif Pro", serif;
   --alpheios-arabic-font-face: Amiri, serif;
+  --alpheios-syriac-font-face: "Noto Sans Syriac Western", serif;
   --alpheios-color-placehoder: #ddd;
   --alpheios-color-neutral-dark: #757575;
   --alpheios-color-neutral-light: #E6E6E6;
@@ -217,6 +218,9 @@ html {
 }
 .alpheios-content [lang=ara] {
   font-family: var(--alpheios-arabic-font-face) !important;
+}
+.alpheios-content [lang=syr] {
+  font-family: var(--alpheios-syriac-font-face) !important;
 }
 .alpheios-content h1, .alpheios-content h2, .alpheios-content h3, .alpheios-content h4, .alpheios-content h5, .alpheios-content h6, .alpheios-content p, .alpheios-content span, .alpheios-content a {
   line-height: 1.15;
@@ -850,6 +854,13 @@ div.alpheios-checkbox-block {
   font-weight: 400;
   src: local("Amiri Regular"), local("Amiri-Regular"), url(https://fonts.gstatic.com/s/amiri/v11/J7aRnpd8CGxBHpUrtLMA7w.woff2) format("woff2");
   unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC;
+}
+@font-face {
+  font-family: "Noto Sans Syriac Western";
+  font-style: normal;
+  font-weight: 400;
+  src: url(//fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.eot);
+  src: url(//fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.eot?#iefix) format("embedded-opentype"), url(//fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.woff2) format("woff2"), url(//fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.woff) format("woff"), url(//fonts.gstatic.com/ea/notosanssyriacwestern/v1/NotoSansSyriacWestern-Regular.ttf) format("truetype");
 }
 body {
   -webkit-touch-callout: auto;

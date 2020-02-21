@@ -25,6 +25,7 @@
     "lint": "eslint --no-eslintrc -c eslint-standard-conf.json --fix src/**/*.js",
     "lint-jsdoc": "eslint --no-eslintrc -c eslint-jsdoc-conf.json src/**/*.js",
     "lint-vue": "eslint --no-eslintrc --fix-dry-run -c eslint-vue-conf.json src/**/*.vue"
+    "version": "npm run build"
   },
   "repository": {
     "type": "git",

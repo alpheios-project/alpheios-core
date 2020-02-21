@@ -10,6 +10,7 @@ export const LANG_ARABIC = Symbol('arabic')
 export const LANG_PERSIAN = Symbol('persian')
 export const LANG_GEEZ = Symbol('ge\'ez')
 export const LANG_CHINESE = Symbol('chinese')
+export const LANG_SYRIAC = Symbol('syriac')
 
 export const STR_LANG_CODE_UNDEFINED = 'undefined'
 export const STR_LANG_CODE_LAT = 'lat'
@@ -24,6 +25,10 @@ export const STR_LANG_CODE_FA = 'fa'
 export const STR_LANG_CODE_GEZ = 'gez'
 export const STR_LANG_CODE_ZHO = 'zho'
 export const STR_LANG_CODE_ZH = 'zh'
+export const STR_LANG_CODE_SYC = 'syc'
+export const STR_LANG_CODE_SYR = 'syr'
+export const STR_LANG_CODE_SYR_SYRJ = 'syr-Syrj'
+export const STR_LANG_CODE_ENG = 'eng'
 
 // parts of speech
 export const POFS_ADJECTIVE = 'adjective'
@@ -45,6 +50,7 @@ export const POFS_GERUNDIVE = 'gerundive'
 export const POFS_SUPINE = 'supine'
 export const POFS_VERB = 'verb'
 export const POFS_VERB_PARTICIPLE = 'verb participle'
+export const POFS_DENOMINATIVE = 'denominative'
 // gender
 export const GEND_MASCULINE = 'masculine'
 export const GEND_FEMININE = 'feminine'
@@ -223,4 +229,6 @@ export const CLASS_GENERAL_RELATIVE = 'general relative'
 export const CLASS_INDEFINITE = 'indefinite'
 export const CLASS_INTENSIVE = 'intensive'
 export const CLASS_RECIPROCAL = 'reciprocal'
-/* eslit-enable no-unused-vars */
+// Paradigms
+export const PARADIGM_CAT_KAYLO = 'kaylo'
+export const PARADIGM_CAT_STATE = 'state'

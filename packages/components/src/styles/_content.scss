@@ -20,6 +20,11 @@
     font-family: var(--alpheios-arabic-font-face) !important;
   }
 
+  [lang='syr'] {
+    // `Important` below is required to override aggressive styling on pages
+    font-family: var(--alpheios-syriac-font-face) !important;
+  }
+
   h1, h2, h3, h4, h5, h6, p, span, a {
     line-height: 1.15;
     text-align: left;
@@ -194,5 +199,4 @@
       color: var(--alpheios-text-color);
     }
   }
-
 }

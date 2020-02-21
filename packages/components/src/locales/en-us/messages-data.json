@@ -587,5 +587,26 @@
   },
   "intensive":{
     "message":"intensive"
+  },
+  "paradigm": {
+    "message": "paradigm"
+  },
+  "kaylo": {
+    "message": "kaylo"
+  },
+  "state": {
+    "message": "state"
+  },
+  "denominative": {
+    "message": "denominative"
+  },
+  "absolute": {
+    "message": "absolute"
+  },
+  "construct": {
+    "message": "construct"
+  },
+  "emphatic": {
+    "message": "emphatic"
   }
 }

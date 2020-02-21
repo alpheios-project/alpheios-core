@@ -163,19 +163,16 @@ class TransformAdapter {
 
         // if we have multiple dictionary elements, take the meaning with the matching index
         if (lemmaElements.length > 1) {
-          if (meanings && meanings[index]) {
+          if (meanings && meanings[index] && meanings[index].$) {
             const meaning = meanings[index]
-            // TODO: convert a source-specific language code to ISO 639-3 if don't match
-            const lang = meaning.lang ? meaning.lang : 'eng'
             shortdefs.push(ResourceProvider.getProxy(provider,
-              new Definition(meaning.$, lang, 'text/plain', lemmas[index].word)))
+              mappingData.parseMeaning(meaning, lemmas[index].word)))
           }
         } else {
           // Changed to prevent some weird "Array Iterator.prototype.next called on incompatible receiver [object Unknown]" error
-          const sDefs = meanings.map(meaning => {
-            const lang = meaning.lang ? meaning.lang : 'eng'
+          const sDefs = meanings.filter((m) => m.$).map(meaning => {
             return ResourceProvider.getProxy(provider,
-              new Definition(meaning.$, lang, 'text/plain', lemma.word))
+              mappingData.parseMeaning(meaning, lemma.word))
           })
           shortdefs.push(...sDefs)
         }
@@ -214,6 +211,17 @@ class TransformAdapter {
             // quietly continue
           }
         }
+
+        // Parse attribute based features
+        for (const f of this.config.attributeBasedFeatures) {
+          try {
+            mappingData.mapFeatureByAttribute(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
+            mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
+          } catch (e) {
+            // quietly continue
+          }
+        }
+
         // we only use the inflection if it tells us something the dictionary details do not
         if (inflection[Feature.types.grmCase] ||
           inflection[Feature.types.tense] ||
@@ -221,10 +229,12 @@ class TransformAdapter {
           inflection[Feature.types.voice] ||
           inflection[Feature.types.person] ||
           inflection[Feature.types.comparison] ||
-          inflection[Feature.types.stemtype] ||
-          inflection[Feature.types.derivtype] ||
-          inflection[Feature.types.dialect] ||
-          inflection[Feature.types.morph] ||
+          inflection[Feature.types.stemtype] || /** greek - morpheus **/
+          inflection[Feature.types.derivtype] || /** greek - morpheus **/
+          inflection[Feature.types.dialect] || /** greek **/
+          inflection[Feature.types.morph] || /** arabic - aramorph **/
+          inflection[Feature.types.kaylo] || /** syriac - sedra **/
+          inflection[Feature.types.state] || /** syriac - sedra **/
           inflection[Feature.types.example]) {
           inflections.push(inflection)
         }

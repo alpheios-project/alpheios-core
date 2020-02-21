@@ -1,7 +1,7 @@
 /*
 Objects of a morphology analyzer's library
  */
-import { Feature, Lemma, FeatureImporter } from 'alpheios-data-models'
+import { Feature, Lemma, FeatureImporter, Definition, Constants } from 'alpheios-data-models'
 
 /**
  * Holds all information required to transform from morphological analyzer's grammatical feature values to the
@@ -38,6 +38,13 @@ class ImportData {
     }
     // may be overridden by specific engine use via setLemmaParser
     this.parseLemma = function (lemma) { return new Lemma(lemma, this.model.languageID) }
+
+    // may be overridden by specific engine use via setMeaningParser
+    this.parseMeaning = function (meaning, targetWord) {
+      const lang = meaning.lang ? meaning.lang : Constants.STR_LANG_CODE_ENG
+      return new Definition(meaning.$, lang, 'text/plain', targetWord)
+    }
+
     // may be overridden by specific engine use via setPropertyParser - default just returns the property value
     // as a list
     this.parseProperty = function (propertyName, propertyValue) {
@@ -51,6 +58,7 @@ class ImportData {
       }
       return propertyValues
     }
+
     // may be overridden by specifc engine use via setLexemeFilter - default assumes we will have a part of speech
     this.reportLexeme = function (lexeme) {
       return lexeme.lemma.features[Feature.types.part]
@@ -153,6 +161,10 @@ class ImportData {
     this.parseLemma = callback
   }
 
+  setMeaningParser (callback) {
+    this.parseMeaning = callback
+  }
+
   /**
    * Add an engine-specific property parser
    */
@@ -193,6 +205,45 @@ class ImportData {
         // There are some values found
         values = values.map(v => { return { providerValue: v, sortOrder: inputItem.order ? inputItem.order : 1 } })
         const feature = this[Feature.types[featureName]].getMultiple(values, allowUnknownValues)
+        model.addFeature(feature)
+      }
+    }
+  }
+
+  /**
+   * Maps property of a single feature type to a single Feature object with one
+   * or more values, using an attribute to determine the mapped-to feature name
+   * (if this feature has multiple values). Feature is stored as a property of
+   * the supplied model object.
+   * @param {object} model the model object to which the feature will be added
+   * @param {object} inputElem the input data element
+   * @param {object} inputName the  property name in the input data
+   * @param {string} attributeName the attribute to use to get the feature name
+   * @param {boolean} allowUnknownValues flag to indicate if unknown values are allowed
+   */
+  mapFeatureByAttribute (model, inputElem, inputName, attributeName, allowUnknownValues) {
+    const inputItem = inputElem[inputName]
+    let featureName
+    if (inputItem && (Array.isArray(inputItem) || inputItem.$)) {
+      let values = []
+      if (Array.isArray(inputItem)) {
+        // There are multiple values of this feature
+        for (const e of inputItem) {
+          if (featureName && featureName !== e[attributeName]) {
+            console.warn("Mutiple feature values with mismatching attribute value",inputElem)
+          }
+          featureName = e[attributeName]
+          values.push(...this.parseProperty(inputName, e.$))
+        }
+      } else {
+        featureName = inputItem[attributeName]
+        values = this.parseProperty(inputName, inputItem.$)
+      }
+      // `values` is always an array as an array is a return value of `parseProperty`
+      if (values.length > 0) {
+        // There are some values found
+        values = values.map(v => { return { providerValue: v, sortOrder: inputItem.order ? inputItem.order : 1 } })
+        const feature = this[Feature.types[featureName]].getMultiple(values, allowUnknownValues, inputItem.cat)
         model.addFeature(feature)
       }
     }
