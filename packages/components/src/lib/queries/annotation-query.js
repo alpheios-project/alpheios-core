@@ -1,5 +1,5 @@
 import Query from './query.js'
-import { PsEvent } from 'alpheios-data-models'
+import { PsEvent, TreebankDataItem } from 'alpheios-data-models'
 
 /**
  * This is a Query class to encapsulate queries for document specific Annotations
