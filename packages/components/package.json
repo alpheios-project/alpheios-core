@@ -24,8 +24,7 @@
     "code-analysis-dev": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs webpack development vue config.mjs --code-analysis",
     "lint": "eslint --no-eslintrc -c eslint-standard-conf.json --fix src/**/*.js",
     "lint-jsdoc": "eslint --no-eslintrc -c eslint-jsdoc-conf.json src/**/*.js",
-    "lint-vue": "eslint --no-eslintrc --fix-dry-run -c eslint-vue-conf.json src/**/*.vue",
-    "version": "npm run build"
+    "lint-vue": "eslint --no-eslintrc --fix-dry-run -c eslint-vue-conf.json src/**/*.vue"
   },
   "repository": {
     "type": "git",
