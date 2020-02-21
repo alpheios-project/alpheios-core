@@ -17,3 +17,11 @@ deploy:
     script: "npx lerna publish from-package --yes --dist-tag qa"
     on:
       branch: qa
+  - provider: releases
+    api_key:
+      secure: Zb00TY4LiRGVFJdJoBaNLSzmDbRKUVnCcnvBjSX4kwpG3ZIjAi4BgpH8W8VzwA18tFEDpO3ZW95E9U9kUCTkO+qVbxM74/yODwT8RuhPzi1YUfy8W+6nuOY+QWfMXPCUemIbYdAea7t9Qox6z9bTjm/WOnZlsFu3l1bU2ZdUDdG1GVp2SGmZp+IwLmVU8kgnkx+rJvO8ftNRF2SPhuYB8NioUROLZJ5jr7ZFyvYoiLzxdZZ68I2NS4XB5ib9tOd2GOrzStGYUoRIrBgrspkOXODrh5944W2kDbOdIzez/5jXdLBKssW44kuVx800p+utTRwvFYvOmzgBKEeKtBFLCCSf5zvQqSe6LkwewmG6bhHsdLYEaHA+1laaTIX6ny2wA5gXC6O/ppMmQZmHrc7VG/antdvBdtxYoUu4ocA99RcOO2S0H/7FjiaGYuqKi1n+iK7X8F/OW6WZKSUl5taoXuluV7nPB39jl9DQiLggXDJu7qM3RnQ4DWkH4HvA5NnkaYsW6VH3cMCvykBItSMmjRYOMSz6oNS9pZTCC3fLixLiB1QfoHFssNdf5QP/Fw/pkiqOl1iP6LFHOVVZKmtlfqBAEOPl6HlsCWrUQs8+Acml+C7TVpUXGKwEi9vVtECmGAnV6tSZqIK/JRlzEBPCbbclH/6redXm3BjgzujInZs=
+    on:
+      repo: alpheios-project/alpheios-core
+      all_branches: true
+      tags: on
+
