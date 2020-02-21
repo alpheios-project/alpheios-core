@@ -593,7 +593,7 @@ if you want to create a different configuration of a UI controller.
         hasTreebankData (state) {
           // Treebank data is available if we have it for the word or the page
           return Boolean((state.treebankData.page && state.treebankData.page.src) ||
-            (state.treebankData.word && state.treebankData.word.src))
+            (state.treebankData.word && state.treebankData.word.fullUrl))
         },
 
         lexicalRequestInProgress (state) {
