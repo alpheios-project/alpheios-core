@@ -20,7 +20,7 @@
   "author": "The Alpheios Project, Ltd.",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/alpheios-project/res-client/issues"
+    "url": "https://github.com/alpheios-project/alpheios-core/issues"
   },
   "homepage": "https://github.com/alpheios-project/res-client#readme",
   "devDependencies": {
