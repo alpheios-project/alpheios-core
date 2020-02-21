@@ -1355,6 +1355,7 @@ If no URLS are provided, will reset grammar data.
 
   updatePageAnnotationData (data) {
     this.store.commit('app/setPageAnnotationData', data.treebank.page)
+    this.updateWordAnnotationData(data)
   }
 
   updateWordAnnotationData (data) {

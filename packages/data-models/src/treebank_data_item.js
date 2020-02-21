@@ -14,6 +14,7 @@ export default class TreebankDataItem  {
       throw new Error(`Invalid treebank reference ${elem.dataset.alpheios_tb_ref}`)
     }
     const [s, w] = ref.split(/-/)
+    this.doc = doc
     this.sentenceId = s
     this.wordId = w
     this.fullUrl = tbSrcElem.dataset.alpheios_tb_src.replace('DOC', doc).replace('SENTENCE', s).replace('WORD', w)

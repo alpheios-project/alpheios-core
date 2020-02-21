@@ -66,6 +66,7 @@ describe('treebank_data_item.test.js', () => {
     let item = new TreebankDataItem(wdElem)
     expect(item.provider).toEqual("http://example.org")
     expect(item.fullUrl).toEqual("http://example.org/treebank/1/1")
+    expect(item.doc).toEqual('treebank')
     expect(item.sentenceId).toEqual("1")
     expect(item.wordId).toEqual("1")
   })

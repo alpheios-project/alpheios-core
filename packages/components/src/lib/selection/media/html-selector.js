@@ -152,18 +152,15 @@ export default class HTMLSelector extends MediaSelector {
    * Gather any alpheios specific data attributes from the target element
    */
   setDataAttributes () {
-    const tbSrcElem = this.target.ownerDocument.querySelector('[data-alpheios_tb_src]')
-    const tbRef = this.target.dataset.alpheios_tb_ref
     const alignSrcElem = this.target.ownerDocument.querySelector('[data-alpheios_align_src]')
     const alignRef = this.target.dataset.alpheios_align_ref
     this.data = {}
-    if (tbSrcElem && tbRef) {
-      this.data.treebank = {
-        word: {
-          src: tbSrcElem.dataset.alpheios_tb_src,
-          ref: tbRef
-        }
-      }
+    try {
+      const treebankData = new TreebankDataItem(this.target)
+      this.data.treebank = { word: treebankData}
+    } catch (error) {
+      // treebank data is optional
+      // quietly fail
     }
     if (alignSrcElem && alignRef) {
       this.data.translation = {

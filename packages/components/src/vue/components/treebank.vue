@@ -18,29 +18,23 @@ export default {
     If caching will not work effectively, we shall prevent unnecessary page reloads manually.
     */
     srcURL: function () {
-      if (this.$store.getters['ui/isActiveTab']('treebank')) {
+      let newSrcUrl = this.$store.state.app.treebankData.page.src
+      if (this.$store.state.app.treebankData.word &&
+        this.$store.state.app.treebankData.word.fullUrl) {
+          newSrcUrl = this.$store.state.app.treebankData.word.fullUrl
+      }
+      if (! this.$store.getters['ui/isActiveTab']('treebank') &&
+          this.$store.state.app.treebankData.word &&
+          ! this.$store.state.app.treebankData.word.version ) {
         /*
-        The arethusa application can't initialize itself properly
+        Prior to version 3 of treebank integration, which uses the Arethusa api
+        The arethusa application could not initialize itself properly
         if it's not visible, so we wait to update the src url of the
         parent iframe until the tab is visible.
          */
-
-        // Treebank is visible
-        let newSrcUrl = this.$store.state.app.treebankData.page.src
-        if (this.$store.state.app.treebankData.word &&
-          this.$store.state.app.treebankData.word.src &&
-          this.$store.state.app.treebankData.word.ref) {
-          let [doc, ref] = this.$store.state.app.treebankData.word.ref.split(/#/)
-          if (doc && ref) {
-            let [s, w] = ref.split(/-/)
-            newSrcUrl = this.$store.state.app.treebankData.word.src.replace('DOC', doc).replace('SENTENCE', s).replace('WORD', w)
-          }
-        }
-        return newSrcUrl
-      } else {
-        // Treebank is hidden
-        return ''
+        newSrcUrl = ''
       }
+      return newSrcUrl
     }
   }
 }
