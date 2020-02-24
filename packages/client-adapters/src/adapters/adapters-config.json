@@ -11,7 +11,7 @@
       "methods": [ "getHomonym", "refreshView" ],
       "params": {
         "getHomonym" : [ "languageID", "word", "provider", "sentenceId", "wordId" ],
-        "refreshView": [ "targetURL" ]
+        "refreshView": [ "provider" ]
       }
     },
     "tufts": {
