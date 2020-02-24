@@ -14412,7 +14412,7 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
    * This method refreshes the view of the Arethusa application
    */
   async refreshView (provider) {
-    const config = this._getMessageConfig(targetURL)
+    const config = this._getMessageConfig(provider)
     let svc = this.getMessagingService(config)
     const requestBody = { refreshView: { } }
     svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](requestBody))
@@ -14431,9 +14431,8 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   */
   async getHomonym (languageID, word, provider, sentenceId, wordId) {
     try {
-      const origin = new URL(provider).origin
       if (typeof sentenceId !== 'undefined' && typeof wordId !== 'undefined') {
-        const tbRes = await this._fetchArethusaData(origin,sentenceId,wordId)
+        const tbRes = await this._fetchArethusaData(provider,sentenceId,wordId)
         if (! tbRes || Object.keys(tbRes).length === 0) {
           this.addError(this.l10n.messages['MORPH_TREEBANK_NO_ANSWER_FOR_WORD'].get(wordref))
           return
