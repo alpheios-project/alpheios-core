@@ -1213,7 +1213,12 @@ if you want to create a different configuration of a UI controller.
     this.state.changeTab(tabName)
 
     if (tabName === 'treebank' && this.store.state.app.treebankData.word.version) {
-      ClientAdapters.morphology.arethusaTreebank({method: 'refreshView'})
+      ClientAdapters.morphology.arethusaTreebank({
+        method: 'refreshView',
+        params: {
+          provider: this.store.state.app.treebankData.word.provider
+        }
+      })
     }
     const isPortrait = this.store.state.panel && (this.store.state.panel.orientation === Platform.orientations.PORTRAIT)
 

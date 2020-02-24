@@ -8,9 +8,10 @@
     },
     "arethusaTreebank": {
       "adapter": "arethusaAdapter",
-      "methods": [ "getHomonym" ],
+      "methods": [ "getHomonym", "refreshView" ],
       "params": {
-        "getHomonym" : [ "languageID", "word", "provider", "sentenceId", "wordId" ]
+        "getHomonym" : [ "languageID", "word", "provider", "sentenceId", "wordId" ],
+        "refreshView": [ "targetURL" ]
       }
     },
     "tufts": {
