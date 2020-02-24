@@ -41,4 +41,17 @@ describe('arethusa/adapter.test.js', () => {
     expect(res).toBeInstanceOf(Homonym)
   })
 
+  it('3 ArethusaTreebankAdapter - calls refreshView', async () => {
+    let adapter = new ArethusaTreebankAdapter({
+      category: 'morphology',
+      adapterName: 'arethusaTreebank',
+      method: 'refreshView'
+    })
+    adapter.refreshView = jest.fn().mockResolvedValue({})
+    expect(adapter.errors.length).toEqual(0)
+    let res = await adapter.refreshView('http://example.org')
+    expect(adapter.errors.length).toEqual(0)
+    expect(res).toEqual({})
+  })
+
 })

@@ -220,6 +220,10 @@ class ClientAdapters {
         options.params.wordId)
       return { result: homonym, errors: localAdapter.errors }
     }
+    if (options.method === 'refreshView') {
+      const resp = await localAdapter.refreshView(options.params.provider)
+      return { result: resp, errors: localAdapter.errors }
+    }
     return null
   }
 

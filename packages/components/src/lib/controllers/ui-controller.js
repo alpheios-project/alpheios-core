@@ -4,6 +4,7 @@ import { Constants, Feature, LanguageModelFactory, Lexeme } from 'alpheios-data-
 import { Grammars } from 'alpheios-res-client'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
 import { WordlistController, UserDataManager } from 'alpheios-wordlist'
+import { ClientAdapters } from 'alpheios-client-adapters'
 // import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
 import Vue from '@vue-runtime'
 import Vuex from 'vuex'
@@ -1211,6 +1212,9 @@ if you want to create a different configuration of a UI controller.
     // and sends this into to a background script
     this.state.changeTab(tabName)
 
+    if (tabName === 'treebank' && this.store.state.app.treebankData.word.version) {
+      ClientAdapters.morphology.arethusaTreebank({method: 'refreshView'})
+    }
     const isPortrait = this.store.state.panel && (this.store.state.panel.orientation === Platform.orientations.PORTRAIT)
 
     if (['treebank', 'inflections', 'inflectionsbrowser', 'wordUsage'].includes(tabName) && this.platform.isMobile && isPortrait) {

@@ -9586,14 +9586,28 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
         wordId: wordId,
       }
     }
-    let config = {
+    const config = this._getMessageConfig(targetURL)
+    let svc = this.getMessagingService(config)
+    const responseMessage = await svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](requestBody))
+    return responseMessage.body
+  }
+
+  _getMessageConfig(targetURL) {
+    return {
       name: targetURL,
       targetURL: targetURL,
       targetIframeID: 'alpheios-treebank-frame'
     }
+  }
+
+  /**
+   * This method refreshes the view of the Arethusa application
+   */
+  async refreshView (provider) {
+    const config = this._getMessageConfig(targetURL)
     let svc = this.getMessagingService(config)
-    const responseMessage = await svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](requestBody))
-    return responseMessage.body
+    const requestBody = { refreshView: { } }
+    svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](requestBody))
   }
 
   /**
@@ -11590,6 +11604,10 @@ class ClientAdapters {
         options.params.sentenceId,
         options.params.wordId)
       return { result: homonym, errors: localAdapter.errors }
+    }
+    if (options.method === 'refreshView') {
+      const resp = await localAdapter.refreshView(options.params.provider)
+      return { result: resp, errors: localAdapter.errors }
     }
     return null
   }

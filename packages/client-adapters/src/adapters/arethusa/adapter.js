@@ -33,14 +33,28 @@ class ArethusaTreebankAdapter extends BaseAdapter {
         wordId: wordId,
       }
     }
-    let config = {
+    const config = this._getMessageConfig(targetURL)
+    let svc = this.getMessagingService(config)
+    const responseMessage = await svc.sendRequestTo(config.name, new RequestMessage(requestBody))
+    return responseMessage.body
+  }
+
+  _getMessageConfig(targetURL) {
+    return {
       name: targetURL,
       targetURL: targetURL,
       targetIframeID: 'alpheios-treebank-frame'
     }
+  }
+
+  /**
+   * This method refreshes the view of the Arethusa application
+   */
+  async refreshView (provider) {
+    const config = this._getMessageConfig(targetURL)
     let svc = this.getMessagingService(config)
-    const responseMessage = await svc.sendRequestTo(config.name, new RequestMessage(requestBody))
-    return responseMessage.body
+    const requestBody = { refreshView: { } }
+    svc.sendRequestTo(config.name, new RequestMessage(requestBody))
   }
 
   /**
