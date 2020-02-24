@@ -1,6 +1,6 @@
 <template>
   <div class="alpheios-treebank">
-    <iframe :src="srcURL" class="alpheios-treebank__frame"></iframe>
+    <iframe :src="srcURL" class="alpheios-treebank__frame" id="alpheios-treebank-frame"></iframe>
   </div>
 </template>
 <script>
