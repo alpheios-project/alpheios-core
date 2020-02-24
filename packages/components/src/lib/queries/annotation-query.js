@@ -41,7 +41,7 @@ export default class AnnotationQuery extends Query {
       },
     }
     if (siteMatch.length > 0) {
-      data.page.src = siteMatch[0].resourceOptions.items.treebanks.currentValue
+      data.treebank.page.src = siteMatch[0].resourceOptions.items.treebanks.currentValue
     }
 
     const tbSrcElem = this.document.querySelector('[data-alpheios_tb_src]')
@@ -53,7 +53,7 @@ export default class AnnotationQuery extends Query {
     const tbRefElem = this.document.querySelector('[data-alpheios_tb_ref]')
     if (tbRefElem) {
       try {
-        data.word = new TreebankDataItem(tbRefElem)
+        data.treebank.word = new TreebankDataItem(tbRefElem)
       } catch (e) {
         console.warn("Error reading treebank data",e)
       }
