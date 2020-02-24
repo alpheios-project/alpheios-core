@@ -53,7 +53,7 @@ export default class AnnotationQuery extends Query {
     const tbRefElem = this.document.querySelector('[data-alpheios_tb_ref]')
     if (tbRefElem) {
       try {
-        data.word = treebankDataItem = new TreebankDataItem(tbRefElem)
+        data.word = new TreebankDataItem(tbRefElem)
       } catch (e) {
         console.warn("Error reading treebank data",e)
       }
