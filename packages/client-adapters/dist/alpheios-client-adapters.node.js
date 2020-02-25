@@ -9580,15 +9580,19 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   }
 
   async _fetchArethusaData (targetURL, sentenceId, wordId) {
-    const requestBody = {
+    const config = this._getMessageConfig(targetURL)
+    let svc = this.getMessagingService(config)
+    const requestBodyNav = {
+      gotoSentence:  { sentenceId: sentenceId }
+    }
+    await svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](requestBodyNav))
+    const requestBodyMorph = {
       getMorph: {
         sentenceId: sentenceId,
         wordId: wordId,
       }
     }
-    const config = this._getMessageConfig(targetURL)
-    let svc = this.getMessagingService(config)
-    const responseMessage = await svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](requestBody))
+    const responseMessage = await svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](requestBodyMorph))
     return responseMessage.body
   }
 

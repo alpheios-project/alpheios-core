@@ -27,15 +27,19 @@ class ArethusaTreebankAdapter extends BaseAdapter {
   }
 
   async _fetchArethusaData (targetURL, sentenceId, wordId) {
-    const requestBody = {
+    const config = this._getMessageConfig(targetURL)
+    let svc = this.getMessagingService(config)
+    const requestBodyNav = {
+      gotoSentence:  { sentenceId: sentenceId }
+    }
+    await svc.sendRequestTo(config.name, new RequestMessage(requestBodyNav))
+    const requestBodyMorph = {
       getMorph: {
         sentenceId: sentenceId,
         wordId: wordId,
       }
     }
-    const config = this._getMessageConfig(targetURL)
-    let svc = this.getMessagingService(config)
-    const responseMessage = await svc.sendRequestTo(config.name, new RequestMessage(requestBody))
+    const responseMessage = await svc.sendRequestTo(config.name, new RequestMessage(requestBodyMorph))
     return responseMessage.body
   }
 

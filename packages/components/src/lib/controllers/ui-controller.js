@@ -1213,8 +1213,6 @@ if you want to create a different configuration of a UI controller.
     this.state.changeTab(tabName)
 
     if (tabName === 'treebank' && this.store.state.app.treebankData.word.version) {
-      // TODO figure out why this truncates the display sometimes
-      // and maybe only call if the url has changed since it was shown?
       ClientAdapters.morphology.arethusaTreebank({
         method: 'refreshView',
         params: {
