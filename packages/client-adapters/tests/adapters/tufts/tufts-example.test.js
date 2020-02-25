@@ -8,12 +8,12 @@ import { Fixture } from 'alpheios-fixtures'
 
 describe('tufts-example.test.js', () => {
   console.error = function () {}
-  //console.log = function () {}
+  console.log = function () {}
   console.warn = function () {}
 
   beforeEach(() => {
     jest.spyOn(console, 'error')
-   // jest.spyOn(console, 'log')
+    jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
   })
   afterEach(() => {
