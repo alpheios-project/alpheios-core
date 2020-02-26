@@ -36,7 +36,8 @@
     "version-increase-prerelease": "npx lerna version prerelease --preid rel --no-push",
     "version-graduate": "npx lerna version --conventional-commits",
     "publish-ci": "npx lerna publish from-package --yes",
-    "husky-pre-commit": "npm run build-components && git add packages/components"
+    "husky-pre-commit": "npm run build-components && git add packages/components",
+    "tagged-commit": "npm run build-components && git add packages/components && git commit -m\"Commit message\" && git tag test-tag"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -51,6 +52,7 @@
     "chalk": "^3.0.0",
     "commitizen": "^4.0.3",
     "conventional-changelog-eslint": "^3.0.4",
+    "cross-env": "^7.0.0",
     "css-loader": "^3.4.2",
     "cz-conventional-changelog": "^3.1.0",
     "eslint": "^6.8.0",
@@ -92,7 +94,6 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run husky-pre-commit"
     }
   }
 }
