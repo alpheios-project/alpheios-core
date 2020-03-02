@@ -86,12 +86,16 @@
       "group": {
         "grc": {
           "defaultValue": [
-            "https://github.com/alpheios-project/lsj"
+            "https://github.com/alpheios-project/mjp"
           ],
           "labelText": "Greek",
           "labelL10n": "LEXICONS_SHORT_GREEK_TITLE",
           "multiValue": true,
           "values": [
+            {
+              "value": "https://github.com/alpheios-project/majorplus",
+              "text": "Wilfred Major Core Greek Vocabulary + LSJ"
+            },
             {
               "value": "https://github.com/alpheios-project/ml",
               "text": "Middle Liddell"
