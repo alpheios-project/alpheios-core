@@ -5,4 +5,3 @@ node_js:
 cache: npm
 notifications:
   slack: alpheiosproject:9WEA6UNyLr3U0bWIJctp1rqS
-

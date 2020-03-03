@@ -47,6 +47,7 @@
     "command-line-args": "^5.1.1",
     "cross-env": "^7.0.0",
     "css-loader": "^3.4.2",
+    "cz-conventional-changelog": "^3.1.0",
     "eslint": "^6.8.0",
     "eslint-plugin-import": "^2.20.1",
     "fibers": "^4.0.2",
@@ -78,5 +79,10 @@
     "webpack-cleanup-plugin": "^0.5.1",
     "webpack-merge": "^4.2.2"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
