@@ -9,17 +9,17 @@ import SyriacLanguageModel from './syriac_language_model.js'
 import * as Constants from './constants.js'
 
 const MODELS = new Map([
-  [ Constants.STR_LANG_CODE_LA, LatinLanguageModel ],
-  [ Constants.STR_LANG_CODE_LAT, LatinLanguageModel ],
-  [ Constants.STR_LANG_CODE_GRC, GreekLanguageModel ],
-  [ Constants.STR_LANG_CODE_ARA, ArabicLanguageModel ],
-  [ Constants.STR_LANG_CODE_AR, ArabicLanguageModel ],
-  [ Constants.STR_LANG_CODE_PER, PersianLanguageModel ],
-  [ Constants.STR_LANG_CODE_GEZ, GeezLanguageModel ],
-  [ Constants.STR_LANG_CODE_ZHO, ChineseLanguageModel ],
-  [ Constants.STR_LANG_CODE_SYR, SyriacLanguageModel ],
-  [ Constants.STR_LANG_CODE_SYC, SyriacLanguageModel ],
-  [ Constants.STR_LANG_CODE_SYR_SYRJ, SyriacLanguageModel ]
+  [Constants.STR_LANG_CODE_LA, LatinLanguageModel],
+  [Constants.STR_LANG_CODE_LAT, LatinLanguageModel],
+  [Constants.STR_LANG_CODE_GRC, GreekLanguageModel],
+  [Constants.STR_LANG_CODE_ARA, ArabicLanguageModel],
+  [Constants.STR_LANG_CODE_AR, ArabicLanguageModel],
+  [Constants.STR_LANG_CODE_PER, PersianLanguageModel],
+  [Constants.STR_LANG_CODE_GEZ, GeezLanguageModel],
+  [Constants.STR_LANG_CODE_ZHO, ChineseLanguageModel],
+  [Constants.STR_LANG_CODE_SYR, SyriacLanguageModel],
+  [Constants.STR_LANG_CODE_SYC, SyriacLanguageModel],
+  [Constants.STR_LANG_CODE_SYR_SYRJ, SyriacLanguageModel]
 ])
 
 class LanguageModelFactory {
