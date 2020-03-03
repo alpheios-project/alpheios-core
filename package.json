@@ -1,11 +1,11 @@
 {
   "name": "alpheios-core",
-  "version": "1.0.1-dev.0",
+  "version": "1.0.2",
   "private": false,
   "author": "The Alpheios Project, Ltd.",
   "license": "ISC",
   "scripts": {
-    "set-node-build-deps": "npm i -D git://github.com/alpheios-project/node-build.git#v2.0.0 && npx install-peerdeps alpheios-node-build --dev --only-peers && npm un alpheios-node-build",
+    "set-node-build-deps": "npm i -D git://github.com/alpheios-project/node-build.git#v2 && npx install-peerdeps alpheios-node-build --dev --only-peers && npm un alpheios-node-build",
     "bootstrap": "npx lerna bootstrap --hoist --nohoist=alpheios-node-build --nohoist=eslint-config-standard --nohoist=coveralls",
     "clean": "npx lerna clean --yes",
     "list-mismatching-deps": "npx syncpack list-mismatches; exit(0)",
@@ -26,14 +26,11 @@
     "test-inflection-tables": "npm --prefix packages/inflection-tables run test",
     "build-components": "npm --prefix packages/components run build",
     "test-components": "npm --prefix packages/components run test-ci",
-    "version-set-major-dev": "npx lerna version premajor --preid dev --no-push",
-    "version-set-minor-dev": "npx lerna version preminor --preid dev --no-push",
-    "version-set-patch-dev": "npx lerna version prepatch --preid dev --no-push",
-    "version-increase-prerelease-dev": "npx lerna version prerelease --preid dev --no-push",
-    "version-increase-prerelease-qa": "npx lerna version prerelease --preid qa --no-push",
-    "version-increase-prerelease": "npx lerna version prerelease --preid rel --no-push",
-    "version-graduate": "npx lerna version --conventional-commits",
-    "publish-ci": "npx lerna publish from-package --yes"
+    "conventional-commit": "npx git-cz",
+    "version-set-major-dev": "npx lerna version major --no-push",
+    "version-set-minor-dev": "npx lerna version minor --no-push",
+    "version-set-patch-dev": "npx lerna version patch --no-push",
+    "tagged-commit": "node ./tagged-commit.mjs"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
@@ -46,11 +43,15 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-dynamic-import-node": "^2.3.0",
     "chalk": "^3.0.0",
+    "command-line-args": "^5.1.1",
+    "cross-env": "^7.0.0",
     "css-loader": "^3.4.2",
+    "cz-conventional-changelog": "^3.1.0",
     "eslint": "^6.8.0",
     "eslint-plugin-import": "^2.20.1",
     "fibers": "^4.0.2",
     "fs-extra": "^8.1.0",
+    "git-branch": "^2.0.1",
     "imagemin": "^7.0.1",
     "imagemin-jpegtran": "^6.0.0",
     "imagemin-optipng": "^7.1.0",
@@ -77,5 +78,10 @@
     "webpack-cleanup-plugin": "^0.5.1",
     "webpack-merge": "^4.2.2"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
