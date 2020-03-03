@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-/* global LIB_BUILD_NUMBER */
+/* global BUILD_NUMBER */
 import { version as packageVersion, description as packageDescription } from '../../../package'
 import { Constants, Feature, LanguageModelFactory, Lexeme } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
@@ -465,7 +465,7 @@ if you want to create a different configuration of a UI controller.
       clientId: this.options.clientId, // alpheios api client identifier
       libName: UIController.libName, // A name of the components library
       libVersion: UIController.libVersion, // A version of the components library
-      libBuildNumber: LIB_BUILD_NUMBER, // A build number of components that will be injected by Webpack
+      libBuildNumber: BUILD_NUMBER, // A build number of components that will be injected by Webpack
       platform: this.platform,
       mode: this.options.mode, // Mode of an application: `production` or `development`
       defaultTab: this.tabs.DEFAULT, // A name of a default tab (a string)
