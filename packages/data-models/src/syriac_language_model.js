@@ -74,18 +74,18 @@ export default class SyriacLanguageModel extends LanguageModel {
   }
 
   /**
- * Check to see if this language tool can produce an inflection table display
+   * Check to see if this language tool can produce an inflection table display
 for the current node
- *
- * @param node
- */
+   *
+   * @param node
+   */
   static canInflect (node) {
     return false
   }
 
-     *
-/**
+  /**
    * Returns alternate encodings for a word
+   *
    * @param {string} word the word
    * @param {string} preceding optional preceding word
    * @param {string} following optional following word
@@ -97,30 +97,30 @@ for the current node
     return []
   }
 
-     *
-/**
+  /**
    * Get a list of valid puncutation for this language
-   * @returns {String} a string containing valid puncutation symbols
+   *
+   * @returns {string} a string containing valid puncutation symbols
    */
   static getPunctuation () {
     return "፡፨።፣፤፥፦፧፠,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
   }
 
   /**
- * Groups a set of inflections according to a syriac display paradigm
-The default groups according to the following logic:
-1. groups of groups with unique stem, prefix, suffix, part of speech, declension, kaylo or state, and comparison
-2. groups of those groups with unique
-number, if it's an inflection with a grammatical case
-tense, if it's an inflection with tense but no case (i.e. a verb)
-verbs without tense or case
-adverbs
-everything else
-3. groups of those groups with unique voice and tense
-4. groups of inflections with unique gender, person, mood, and sort
- *
- * @param inflections
- */
+   * Groups a set of inflections according to a syriac display paradigm
+    The default groups according to the following logic:
+    1. groups of groups with unique stem, prefix, suffix, part of speech, declension, kaylo or state, and comparison
+    2. groups of those groups with unique
+    number, if it's an inflection with a grammatical case
+    tense, if it's an inflection with tense but no case (i.e. a verb)
+    verbs without tense or case
+    adverbs
+    everything else
+    3. groups of those groups with unique voice and tense
+    4. groups of inflections with unique gender, person, mood, and sort
+   *
+   * @param inflections
+   */
   static groupInflectionsForDisplay (inflections) {
     const grouped = new Map()
     const aggregated = this.aggregateInflectionsForDisplay(inflections)
