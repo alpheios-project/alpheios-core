@@ -176,9 +176,18 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
 
       if (deftexts) {
         for (const d of deftexts) {
+          let text = d.field1
+          let providerCode = d.field2
+          let format = config.format && config.format.short ? config.format.short : 'text/plain'
           try {
-            const provider = new ResourceProvider(config.urls.short, config.rights)
-            const def = new Definition(d, config.langs.target, 'text/plain', lexeme.lemma.word)
+            let rightsText = config.rights
+            let rightsUri = config.urls.short
+            if (providerCode && config.rights_keys && config.rights_keys[providerCode]) {
+              rightsUri = rightsUri + `#${providerCode}`
+              rightsText = config.rights_keys[providerCode]
+            }
+            const provider = new ResourceProvider(rightsUri, rightsText)
+            const def = new Definition(text, config.langs.target, format, lexeme.lemma.word)
             const definition = await ResourceProvider.getProxy(provider, def)
             lexeme.meaning.appendShortDefs(definition)
           } catch (error) {
@@ -216,7 +225,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
       const ids = this.lookupInDataIndex(data, lexeme.lemma, model)
       if (urlFull && ids) {
         for (const id of ids) {
-          requests.push({ url: `${urlFull}&n=${id}`, lexeme: lexeme })
+          requests.push({ url: `${urlFull}&n=${id.field1}`, lexeme: lexeme })
         }
       } else if (urlFull) {
         requests.push({ url: `${urlFull}&l=${encodeURIComponent(lexeme.lemma.word)}`, lexeme: lexeme })
@@ -275,10 +284,14 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   fillMap (rows) {
     let data = new Map() // eslint-disable-line prefer-const
     for (const row of rows) {
+      let def = { field1: row[1], field2: null  }
+      if (row.length > 2) {
+        def.field2 = row[2]
+      }
       if (data.has(row[0])) {
-        data.get(row[0]).push(row[1])
+        data.get(row[0]).push(def)
       } else {
-        data.set(row[0], [row[1]])
+        data.set(row[0], [def])
       }
     }
     return data
@@ -315,10 +328,22 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
     alternatives = [...alternatives, ...altEncodings]
 
     for (const lookup of alternatives) {
-      found = data.get(lookup.toLocaleLowerCase())
-      if (found && found.length === 1 && found[0] === '@') {
+      // let's first just look for the word in its supplied case
+      found = data.get(lookup)
+
+      // and if we don't find it, then try lower case
+      if (!found) {
+        found = data.get(lookup.toLocaleLowerCase())
+      }
+
+      // legacy behavior -  indexes had inserted alternative
+      // index entries in lower case and less aggressive
+      // character normalization, and referred those index entries to
+      // the original ones
+      if (found && found.length === 1 && found[0].field1 === '@') {
         found = data.get(`@${lookup}`)
       }
+
       if (found) {
         break
       }
