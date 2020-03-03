@@ -1,4 +1,4 @@
-import generateBuildNumber from './node_modules/alpheios-node-build/dist/support/build-number.mjs'
+import generateBuildNumber from './packages/components/node_modules/alpheios-node-build/dist/support/build-number.mjs'
 import { execFileSync, execSync } from 'child_process'
 
 const build = generateBuildNumber()
