@@ -26,14 +26,9 @@
     "test-inflection-tables": "npm --prefix packages/inflection-tables run test",
     "build-components": "npm --prefix packages/components run build",
     "test-components": "npm --prefix packages/components run test-ci",
-    "version-set-major-dev": "npx lerna version premajor --preid dev --no-push",
-    "version-set-minor-dev": "npx lerna version preminor --preid dev --no-push",
-    "version-set-patch-dev": "npx lerna version prepatch --preid dev --no-push",
-    "version-increase-prerelease-dev": "npx lerna version prerelease --preid dev --no-push",
-    "version-increase-prerelease-qa": "npx lerna version prerelease --preid qa --no-push",
-    "version-increase-prerelease": "npx lerna version prerelease --preid rel --no-push",
-    "version-graduate": "npx lerna version --conventional-commits",
-    "publish-ci": "npx lerna publish from-package --yes",
+    "version-set-major-dev": "npx lerna version major --no-push",
+    "version-set-minor-dev": "npx lerna version minor --no-push",
+    "version-set-patch-dev": "npx lerna version patch --no-push",
     "tagged-commit": "node ./tagged-commit.mjs"
   },
   "devDependencies": {
