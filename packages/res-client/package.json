@@ -8,9 +8,9 @@
   "scripts": {
     "test": "jest --coverage && shx cat ./coverage/lcov.info | overalls",
     "test-no-coverage": "jest",
-    "build": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all lib",
-    "build-prod": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production lib",
-    "build-dev": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development lib",
+    "build": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p lib",
+    "build-prod": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p lib",
+    "build-dev": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p lib",
     "lint": "eslint --fix src/**/*.js"
   },
   "repository": {
@@ -29,7 +29,7 @@
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.8.4",
     "@babel/runtime": "^7.8.4",
-    "alpheios-node-build": "github:alpheios-project/node-build#v2.0.0",
+    "alpheios-node-build": "github:alpheios-project/node-build#v2",
     "babel-jest": "^21.2.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "coveralls": "^3.0.9",

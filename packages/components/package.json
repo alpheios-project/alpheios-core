@@ -1,6 +1,6 @@
 {
   "name": "alpheios-components",
-  "version": "3.3.0-dvcd.2",
+  "version": "3.3.0-dev.2",
   "description": "Alpheios Components",
   "main": "dist/alpheios-components.min.js",
   "scripts": {
@@ -48,7 +48,7 @@
     "alpheios-fixtures": "github:alpheios-project/fixtures",
     "alpheios-inflection-tables": "^3.3.0-dev.1",
     "alpheios-messaging": "github:alpheios-project/alpheios-messaging",
-    "alpheios-node-build": "github:alpheios-project/node-build#dev-cd",
+    "alpheios-node-build": "github:alpheios-project/node-build#v2",
     "alpheios-res-client": "^3.3.0-dev.2",
     "alpheios-wordlist": "^3.3.0-dev.1",
     "autoprefixer": "^9.7.4",

@@ -10,10 +10,10 @@
     "test-c": "jest tests/morph-fixture.test.js",
     "test-u": "jest tests/adapters/tufts/tufts-example.test.js",
     "build": "npm run build-lib && npm run build-node",
-    "build-lib": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue config.mjs",
-    "build-node": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all node-lib config-node.mjs",
-    "build-prod": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue",
-    "build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue",
+    "build-lib": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p vue -c config.mjs",
+    "build-node": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p node-lib -c config-node.mjs",
+    "build-prod": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p vue",
+    "build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p vue",
     "lint": "eslint --fix src/**/*.js"
   },
   "repository": {
@@ -35,7 +35,7 @@
     "alpheios-data-models": "^3.3.0-dev.1",
     "alpheios-fixtures": "github:alpheios-project/fixtures",
     "alpheios-messaging": "github:alpheios-project/alpheios-messaging",
-    "alpheios-node-build": "github:alpheios-project/node-build#v2.0.0",
+    "alpheios-node-build": "github:alpheios-project/node-build#v2",
     "axios": "^0.19.2",
     "babel-plugin-module-resolver": "^4.0.0",
     "coveralls": "^3.0.9",
