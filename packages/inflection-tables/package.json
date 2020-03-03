@@ -14,6 +14,7 @@
     "test-c": "jest tests/lib/lang/greek-language-dataset.test.js --no-cache --coverage && shx cat ./coverage/lcov.info | coveralls",
     "test-a": "npm run lint && jest tests/data/greek-adjective-paradigm.test.js",
     "test-o": "npm run lint && jest tests/new-paradigm.test.js",
+    "test-gv": "jest tests/data/greek-verb-paradigm.test.js",
     "build": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m webpack -M all -p lib -c config.mjs",
     "build-prod": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m webpack -M production -p lib -c config.mjs",
     "build-dev": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m webpack -M development -p lib -c config.mjs",
