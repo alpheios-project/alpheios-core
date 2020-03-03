@@ -1,27 +1,13 @@
-import { generateBuildNumber } from 'packages/components/node_modules/alpheios-node-build/dist/build.mjs'
-const process = require('process')
-const { execFileSync, execSync } = require('child_process')
-const branch = require('git-branch')
-const { generate } = require('build-number-generator')
-let branchName = branch.sync()
-if (branchName === 'production') {
-  branchName = ''
-} else if (branchName === 'master') {
-  branchName = 'dev.'
-} else {
-  branchName += '.'
-}
-const buildNumber = generate()
-const firstTwoOfYear = new Date().getFullYear().toString(10).substring(0,2)
-const build = `${branchName}${firstTwoOfYear}${buildNumber}`
-console.info(`Starting a ${build} commit`)
+import generateBuildNumber from './packages/components/node_modules/alpheios-node-build/dist/support/build-number.mjs'
+import { execFileSync, execSync } from 'child_process'
 
-generateBuildNumber()
+const build = generateBuildNumber()
+console.info(`Starting a ${build} commit`)
 
 let output
 console.info('Rebuilding a components library. This may take a while')
 try {
-  output = execSync(`cd packages/components && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -module=webpack -mode=all -preset=vue -confFile=config.mjs -libBuildNum='${build}'`)
+  output = execSync(`cd packages/components && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs --module=webpack --mode=all --preset=vue --externalConfig=config.mjs --libBuild=${build}`)
 } catch (error) {
   console.error('Build process failed:', error)
   process.exit(1)

@@ -30,7 +30,7 @@
         {{ app.name }} {{ app.version }}
       </div>
       <div class="alpheios-info__versiontext alpheios-text__smallest">
-        {{ app.libName }} {{ app.libVersion }}
+        {{ app.libName }} {{ app.libVersion }} build {{ app.libBuildNumber }}
       </div>
     </div>
   </div>

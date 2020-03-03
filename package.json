@@ -37,7 +37,7 @@
     "version-graduate": "npx lerna version --conventional-commits",
     "publish-ci": "npx lerna publish from-package --yes",
     "husky-pre-commit": "npm run build-components && git add packages/components",
-    "tagged-commit": "npm run build-components && git add packages/components && git commit -m\"Commit message\" && git tag test-tag"
+    "tagged-commit": "cross-env GIT_BRANCH=\"Joe\" git add packages/components && git commit -m\"Tagged commit: \" && git tag test-tag"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -50,6 +50,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-dynamic-import-node": "^2.3.0",
     "chalk": "^3.0.0",
+    "command-line-args": "^5.1.1",
     "commitizen": "^4.0.3",
     "conventional-changelog-eslint": "^3.0.4",
     "cross-env": "^7.0.0",
@@ -59,6 +60,7 @@
     "eslint-plugin-import": "^2.20.1",
     "fibers": "^4.0.2",
     "fs-extra": "^8.1.0",
+    "git-branch": "^2.0.1",
     "husky": "^4.2.3",
     "imagemin": "^7.0.1",
     "imagemin-jpegtran": "^6.0.0",
