@@ -42,7 +42,7 @@
                 </div>
           </alph-tooltip>
 
-          <div @click="ui.closePopup" class="alpheios-popup__close-btn">
+          <div @click="ui.closePopup" class="alpheios-popup__close-btn" id="alpheios-popup-toolbar-btn-close">
             <close-icon></close-icon>
           </div>
       </div>
