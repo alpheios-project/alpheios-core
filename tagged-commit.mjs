@@ -28,7 +28,7 @@ try {
 
 console.info(`Tagging with ${build}`)
 try {
-  output = execSync(`git tag ${build}"`)
+  output = execSync(`git tag ${build}`)
 } catch (error) {
   console.log('Tag process failed:', error)
 }
