@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+/* global BUILD_NUMBER */
 import { version as packageVersion, description as packageDescription } from '../../../package'
 import { Constants, Feature, LanguageModelFactory, Lexeme } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
@@ -232,7 +233,8 @@ if you want to create a different configuration of a UI controller.
    * @returns {object} An object that contains default options.
    *     {Object} app - A set of app related options with the following properties:
    *          {string} name - An application name;
-   *          {string} version - A version of an application.
+   *          {string} version - A version of an application;
+   *          {string} buildNumber - A build number, if provided.
    *     {Object} storageAdapter - A storage adapter for storing options (see `lib/options`). Is environment dependent.
    *     {boolean} openPanel - whether to open panel when UI controller is activated. Default: panelOnActivate of uiOptions.
    *     {string} textQueryTriggerDesktop - what event will start a lexical query on a selected text on the desktop. If null,
@@ -249,7 +251,8 @@ if you want to create a different configuration of a UI controller.
     return {
       app: {
         name: 'name',
-        version: 'version'
+        version: 'version',
+        buildNumber: false
       },
       mode: 'production', // Controls options available and output. Other possible values: `development`
       appType: Platform.appTypes.OTHER, // A type of application that uses the controller
@@ -461,9 +464,11 @@ if you want to create a different configuration of a UI controller.
     this.api.app = {
       name: this.options.app.name, // A name of a host application (embed lib or webextension)
       version: this.options.app.version, // An version of a host application (embed lib or webextension)
+      buildNumber: this.options.app.buildNumber, // A build number of a host application
       clientId: this.options.clientId, // alpheios api client identifier
       libName: UIController.libName, // A name of the components library
       libVersion: UIController.libVersion, // A version of the components library
+      libBuildNumber: BUILD_NUMBER, // A build number of components that will be injected by Webpack
       platform: this.platform,
       mode: this.options.mode, // Mode of an application: `production` or `development`
       defaultTab: this.tabs.DEFAULT, // A name of a default tab (a string)

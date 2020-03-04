@@ -1,4 +1,20 @@
 {
+  "https://github.com/alpheios-project/majorplus": {
+    "urls": {
+      "short": "https://repos1.alpheios.net/lexdata/majorplus/dat/grc-mjp-defs.dat"
+    },
+    "langs": {
+      "source": "grc",
+      "target": "en"
+    },
+    "format": { "short" :"text/html" },
+    "description": "Definitions derived from Wilfred E. Major's Core Greek Vocabulary, extended with definitions from the LSJ.",
+    "rights_keys": {
+       "LSJ" : "\"A Greek-English Lexicon\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University.",
+       "Major": "Wilfred E. Major, Core Greek Vocabulary for the First Two Years of Greek. CPL Online, Winter 2008.",
+       "VGorman": "Definition edited by Vanessa Gorman, University of Nebraska."
+    }
+  },
   "https://github.com/alpheios-project/lsj": {
     "urls": {
       "short": "https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-defs.dat",
