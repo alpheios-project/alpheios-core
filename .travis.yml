@@ -9,6 +9,7 @@ script:
   - npm run test-ci
 before_deploy:
   - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
+  - npm run set-npm-version
 deploy:
   - provider: script
     script: "npx lerna publish from-package --yes --dist-tag dev"
