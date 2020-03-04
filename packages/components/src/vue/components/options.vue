@@ -27,10 +27,10 @@
     <div class="alpheios-tab-options__aboutcont">
       <h3>{{ l10n.getMsg('TEXT_INFO_ABOUT') }}</h3>
       <div class="alpheios-info__versiontext alpheios-text__smallest">
-        {{ app.name }} {{ app.version }}
+        {{ app.name }} {{ app.version }} build {{ app.buildNumber }}
       </div>
       <div class="alpheios-info__versiontext alpheios-text__smallest">
-        {{ app.libName }} {{ app.libVersion }}
+        {{ app.libName }} {{ app.libVersion }} build {{ app.libBuildNumber }}
       </div>
     </div>
   </div>
