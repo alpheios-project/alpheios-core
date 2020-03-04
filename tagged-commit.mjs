@@ -7,7 +7,7 @@ console.info(`Starting a ${build} commit`)
 let output
 console.info('Rebuilding a components library. This may take a while')
 try {
-  output = execSync(`cd packages/components && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs --module=webpack --mode=all --preset=vue --externalConfig=config.mjs --libBuild=${build}`)
+  output = execSync(`cd packages/components && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs --module=webpack --mode=all --preset=vue --externalConfig=config.mjs --buildNumber=${build}`)
 } catch (error) {
   console.error('Build process failed:', error)
   process.exit(1)
@@ -21,7 +21,7 @@ try {
   console.log('Commit process failed:', error)
 }
 try {
-  output = execFileSync('git', ['commit', '-m', `"Build ${build}"`])
+  output = execFileSync('git', ['commit', '-m', `Build ${build}`])
 } catch (error) {
   console.log('Commit process failed:', error)
 }
