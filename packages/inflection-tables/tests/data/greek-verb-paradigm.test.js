@@ -1475,5 +1475,24 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
 
   })
 
+  it('56 - checked Verb Paradigm 39 - ἐπτάμην', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἐπτάμην', Constants.LANG_GREEK)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'δίδωμι: Aorist System Middle',
+      paradigmID: 'verbpdgm39',
+      hasSuppParadigms: true,
+      suppParadigms: [ 'verbpdgm65' ]
+    })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // no match, b/c of tense
+
+  })
 
 })
