@@ -108,18 +108,6 @@ for the current node
 
   /**
    * Groups a set of inflections according to a syriac display paradigm
-<<<<<<< HEAD
-The default groups according to the following logic:
-1. groups of groups with unique stem, prefix, suffix, part of speech, declension, kaylo or state, and comparison
-2. groups of those groups with unique
-number, if it's an inflection with a grammatical case
-tense, if it's an inflection with tense but no case (i.e. a verb)
-verbs without tense or case
-adverbs
-everything else
-3. groups of those groups with unique voice and tense
-4. groups of inflections with unique gender, person, mood, and sort
-=======
     The default groups according to the following logic:
     1. groups of groups with unique stem, prefix, suffix, part of speech, declension, kaylo or state, and comparison
     2. groups of those groups with unique
@@ -130,7 +118,6 @@ everything else
     everything else
     3. groups of those groups with unique voice and tense
     4. groups of inflections with unique gender, person, mood, and sort
->>>>>>> 5c3318159f8ab3c3e3bfcb93f6f65a2cd19cf7ca
    *
    * @param inflections
    */
