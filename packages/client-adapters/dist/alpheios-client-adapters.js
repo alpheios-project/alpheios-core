@@ -14893,8 +14893,7 @@ const data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_mode
 data.setMeaningParser(function(meaning,targetWord) {
   const lang = meaning.lang ? meaning.lang : alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].STR_LANG_CODE_ENG
   let meaning_text = meaning.$ || ""
-  meaning_text = meaning_text.replace(/<span .*?>(.*?)<\/span>/g,"$1")
-  return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Definition"](meaning_text, lang, 'text/plain', targetWord)
+  return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Definition"](meaning_text, lang, 'text/html', targetWord)
 })
 
 data.setPropertyParser(function (propertyName, propertyValue) {

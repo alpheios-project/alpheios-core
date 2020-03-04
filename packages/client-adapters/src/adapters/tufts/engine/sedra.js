@@ -7,8 +7,7 @@ const data = new ImportData(Models.SyriacLanguageModel, 'sedra')
 data.setMeaningParser(function(meaning,targetWord) {
   const lang = meaning.lang ? meaning.lang : Models.Constants.STR_LANG_CODE_ENG
   let meaning_text = meaning.$ || ""
-  meaning_text = meaning_text.replace(/<span .*?>(.*?)<\/span>/g,"$1")
-  return new Models.Definition(meaning_text, lang, 'text/plain', targetWord)
+  return new Models.Definition(meaning_text, lang, 'text/html', targetWord)
 })
 
 data.setPropertyParser(function (propertyName, propertyValue) {
