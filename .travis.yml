@@ -8,6 +8,8 @@ install:
 script:
   - npm run test-ci
 before_deploy:
+  - echo "Pre-deploy"
+  - env
   - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
   - npm run set-npm-version
 deploy:
