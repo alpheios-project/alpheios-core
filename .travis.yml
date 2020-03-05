@@ -6,6 +6,7 @@ install:
   - npm run set-node-build-deps
   - npm run bootstrap
 script:
+  - env
   - npm run test-ci
 before_deploy:
   - echo "Pre-deploy"
