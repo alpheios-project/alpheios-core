@@ -30,8 +30,7 @@
     "version-set-major-dev": "npx lerna version major --no-push",
     "version-set-minor-dev": "npx lerna version minor --no-push",
     "version-set-patch-dev": "npx lerna version patch --no-push",
-    "tagged-commit": "node ./tagged-commit.mjs",
-    "set-npm-version": "node --experimental-json-modules ./set-npm-version.mjs"
+    "tagged-commit": "node --experimental-modules --experimental-json-modules ./tagged-commit.mjs"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

@@ -9,26 +9,20 @@ script:
   - env
   - npm run test-ci
 before_deploy:
-  - echo "Pre-deploy"
-  - env
   - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
-  - npm run set-npm-version
 deploy:
-  - provider: script
-    script: "npx lerna publish from-package --yes --dist-tag dev"
-    on:
-      branch: master
-      tags: true
   - provider: script
     script: "npx lerna publish from-package --yes --dist-tag qa"
     on:
-      branch: qa
-      tags: true
+      all_branches: true
+      tags: on
+      condition: $TRAVIS_TAG =~ ^qa
   - provider: script
     script: "npx lerna publish from-package --yes --dist-tag ftqa"
     on:
-      branch: ftqa
-      tags: true
+      all_branches: true
+      tags: on
+      condition: $TRAVIS_TAG =~ ^ftqa
   - provider: script
     script: "npx lerna publish from-package --yes --dist-tag latest"
     on:
