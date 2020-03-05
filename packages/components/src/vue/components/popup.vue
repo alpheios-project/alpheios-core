@@ -80,7 +80,7 @@
           {{ l10n.getText('PLACEHOLDER_NO_MORPH_DATA') }}
         </div>
         <div :id="lexicalDataContainerID"
-             v-show="$store.state.app.morphDataReady && app.hasMorphData()"
+             v-show="targetWordHasData"
         >
           <morph
               :id="morphComponentID"
@@ -89,7 +89,7 @@
 
         <div
             class="alpheios-popup__providers"
-            v-show="$store.state.app.morphDataReady && app.hasMorphData() && $store.state.app.providers.length > 0"
+            v-show="targetWordHasData && $store.state.app.providers.length > 0"
         >
           <div class="alpheios-popup__providers-title">
             <a class="alpheios-popup__providers-link" v-on:click="switchProviders">{{ l10n.getText('LABEL_PROVIDERS_CREDITS') }}</a>
@@ -201,6 +201,9 @@ export default {
     })
   },
   computed: {
+    targetWordHasData () {
+      return (this.$store.state.app.shortDefUpdateTime || this.$store.state.app.morphDataReady) && this.app.hasMorphData()
+    },
     showToolbar: function () {
       return Boolean(this.moduleConfig.showNav)
     },

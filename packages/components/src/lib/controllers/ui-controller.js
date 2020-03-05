@@ -502,7 +502,6 @@ if you want to create a different configuration of a UI controller.
         if (!this.store.state.app.homonymDataReady || lexemes.length === 0) {
           return false
         }
-
         if (Array.isArray(lexemes) && lexemes.length > 0 &&
           (lexemes[0].lemma.principalParts.length > 0 || lexemes[0].inflections.length > 0 || lexemes[0].inflections.length > 0 ||
             lexemes[0].meaning.fullDefs.length > 0 || lexemes[0].meaning.shortDefs.length > 0)
@@ -573,7 +572,8 @@ if you want to create a different configuration of a UI controller.
         hasWordListsData: false,
         wordListUpdateTime: 0, // To notify word list panel about data update
         providers: [], // A list of resource providers
-        textSelector: {}
+        textSelector: {},
+        queryStillActive: false // it is for Persian case, when we canReset
       },
 
       getters: {
@@ -755,6 +755,10 @@ if you want to create a different configuration of a UI controller.
 
         setTranslDataReady (state, value = true) {
           state.translationsDataReady = value
+        },
+
+        setQueryStillActive (state, value = true) {
+          state.queryStillActive = value
         }
       }
     })
@@ -1138,8 +1142,7 @@ if you want to create a different configuration of a UI controller.
       !homonym.lexemes ||
       homonym.lexemes.length < 1 ||
       homonym.lexemes.filter((l) => l.isPopulated()).length < 1
-
-    if (notFound) {
+    if (notFound && !this.store.state.app.queryStillActive) {
       let languageName
       if (homonym) {
         languageName = this.api.app.getLanguageName(homonym.languageID).name
@@ -1161,6 +1164,8 @@ if you want to create a different configuration of a UI controller.
           { targetWord: this.store.state.app.targetWord, languageName: languageName })
         this.store.commit('ui/setNotification', { text: message, important: true, showLanguageSwitcher: false })
       }
+    } else if (!this.store.state.app.queryStillActive) {
+      this.store.commit('ui/resetNotification')
     }
   }
 
@@ -1701,6 +1706,7 @@ NB this is Prototype functionality
 
   onMorphDataNotFound () {
     this.store.commit('ui/setNotification', { text: this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_NOTFOUND'), important: true })
+    this.store.commit('app/setQueryStillActive', true)
   }
 
   onHomonymReady (homonym) {
@@ -1766,6 +1772,9 @@ NB this is Prototype functionality
   }
 
   onShortDefinitionsReady (data) {
+    this.api.app.homonym = data.homonym
+    this.store.commit('app/setQueryStillActive', false)
+    this.showLanguageInfo(data.homonym)
     this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
     this.updateProviders(data.homonym)
     this.store.commit('app/shortDefsUpdated')
