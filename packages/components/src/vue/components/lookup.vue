@@ -1,5 +1,5 @@
 <template>
-  <div class="alpheios-lookup__form" data-alpheios-ignore="all">
+  <div class="alpheios-lookup__form" id="alpheios-lookup-form" data-alpheios-ignore="all">
     <div class="alpheios-lookup__form-row">
       <div class="alpheios-lookup__form-element">
         <label class="alpheios-setting__label">Word lookup</label>
@@ -12,10 +12,12 @@
              :class="{ 'alpheios-rtl': directionRtl}"
               type="text"
               v-model="lookuptext"
+              id="alpheios-lookup-form-input"
           >
           <button
               @click.stop="lookup"
               class="alpheios-button-primary"
+              id="alpheios-lookup-form-button"
               tabindex="-1"
               type="button"
           >
@@ -26,8 +28,8 @@
       </div>
     </div>
     <div v-show="! showLangSelector">
-      <span class="alpheios-lookup__lang-hint">{{l10n.getMsg('HINT_LOOKUP_LANGUAGE',{language:lookupLangName})}}</span>
-      <span class="alpheios-lookup__lang-change" @click.stop="toggleLangSelector">{{l10n.getMsg('LABEL_LOOKUP_CHANGE_LANGUAGE')}}</span>
+      <span class="alpheios-lookup__lang-hint" id="alpheios-lookup-form-lang-hint">{{l10n.getMsg('HINT_LOOKUP_LANGUAGE',{language:lookupLangName})}}</span>
+      <span class="alpheios-lookup__lang-change" id="alpheios-lookup-form-lang-change" @click.stop="toggleLangSelector">{{l10n.getMsg('LABEL_LOOKUP_CHANGE_LANGUAGE')}}</span>
     </div>
     <alph-setting
         :classes="['alpheios-panel__options-item', 'alpheios-lookup__form-element', 'alpheios-lookup__lang-control']"
