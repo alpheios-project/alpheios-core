@@ -176,9 +176,9 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
 
       if (deftexts) {
         for (const d of deftexts) {
-          let text = d.field1
-          let providerCode = d.field2
-          let format = config.format && config.format.short ? config.format.short : 'text/plain'
+          const text = d.field1
+          const providerCode = d.field2
+          const format = config.format && config.format.short ? config.format.short : 'text/plain'
           try {
             let rightsText = config.rights
             let rightsUri = config.urls.short
@@ -284,7 +284,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   fillMap (rows) {
     let data = new Map() // eslint-disable-line prefer-const
     for (const row of rows) {
-      let def = { field1: row[1], field2: null  }
+      const def = { field1: row[1], field2: null }
       if (row.length > 2) {
         def.field2 = row[2]
       }

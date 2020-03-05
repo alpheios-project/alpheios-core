@@ -1,4 +1,4 @@
-import { ResourceProvider, Definition, Lexeme, Constants, Feature, Inflection, Homonym } from 'alpheios-data-models'
+import { ResourceProvider, Lexeme, Constants, Feature, Inflection, Homonym } from 'alpheios-data-models'
 
 class TransformAdapter {
   constructor (adapter) {

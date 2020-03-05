@@ -8,7 +8,7 @@
      v-show="this.$store.state.popup.visible"
      data-alpheios-ignore="all"
   >
-    <div class="alpheios-popup__header">
+    <div class="alpheios-popup__header" id="alpheios-popup-header">
       <div class="alpheios-popup__logo">
         <logo-icon class="alpheios-logo-on-dark"/>
       </div>
@@ -16,33 +16,33 @@
       <div class="alpheios-popup__toolbar-buttons">
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-wide"
                         v-show="showToolbar && $store.getters['app/fullDefDataReady']">
-              <div class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('definitions')">
+              <div id="alpheios-popup-toolbar-btn-definitions" class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('definitions')">
                 <definitions-icon  class="alpheios-navbuttons__icon" />
               </div>
           </alph-tooltip>
 
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_INFLECTIONS')" tooltipDirection="bottom-wide"
                         v-show="showToolbar && $store.state.app.hasInflData">
-            <div class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('inflections')">
+            <div id="alpheios-popup-toolbar-btn-inflections" class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('inflections')">
                <inflections-icon class="alpheios-navbuttons__icon" />
             </div>
           </alph-tooltip>
 
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_USAGEEXAMPLES')" tooltipDirection="bottom-wide"
                         v-show="showToolbar && $store.state.app.wordUsageExampleEnabled">
-                <div class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('wordUsage')">
+                <div id="alpheios-popup-toolbar-btn-wordusage" class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('wordUsage')">
                   <word-usage-icon class="alpheios-navbuttons__icon" />
                 </div>
           </alph-tooltip>
 
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
                         v-show="showToolbar && $store.getters['app/hasTreebankData']">
-                <div class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('treebank')">
+                <div id="alpheios-popup-toolbar-btn-treebank" class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('treebank')">
                   <treebank-icon class="alpheios-navbuttons__icon" />
                 </div>
           </alph-tooltip>
 
-          <div @click="ui.closePopup" class="alpheios-popup__close-btn">
+          <div @click="ui.closePopup" class="alpheios-popup__close-btn" id="alpheios-popup-toolbar-btn-close">
             <close-icon></close-icon>
           </div>
       </div>

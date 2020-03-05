@@ -230,7 +230,7 @@ class ImportData {
         // There are multiple values of this feature
         for (const e of inputItem) {
           if (featureName && featureName !== e[attributeName]) {
-            console.warn("Mutiple feature values with mismatching attribute value",inputElem)
+            console.warn('Mutiple feature values with mismatching attribute value', inputElem)
           }
           featureName = e[attributeName]
           values.push(...this.parseProperty(inputName, e.$))
