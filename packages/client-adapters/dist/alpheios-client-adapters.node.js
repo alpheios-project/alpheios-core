@@ -9344,6 +9344,7 @@ var _clAdapters_adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3___names
 
 
 let cachedDefinitions = new Map() // eslint-disable-line prefer-const
+let uploadStarted = new Map() // eslint-disable-line prefer-const
 
 class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_2__["default"] {
   /**
@@ -9486,16 +9487,22 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   * @return {Boolean} - true - if cached is successed
   */
   async checkCachedData (url) {
-    if (!cachedDefinitions.has(url)) {
+    if (!cachedDefinitions.has(url) && !uploadStarted.has(url)) {
       try {
+        uploadStarted.set(url, true)
         const unparsed = await this.fetch(url, { type: 'xml', timeout: this.options.timeout })
         const parsed = papaparse__WEBPACK_IMPORTED_MODULE_1___default.a.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
         const data = this.fillMap(parsed.data)
         cachedDefinitions.set(url, data)
+        uploadStarted.set(url, false)
       } catch (error) {
         this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
         return false
       }
+    } else if (uploadStarted.has(url) && uploadStarted.get(url)) {
+      setTimeout(() => {
+        this.checkCachedData(url)
+      }, this.options.timeout)
     }
     return true
   }

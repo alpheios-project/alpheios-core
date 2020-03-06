@@ -19,7 +19,7 @@ export default class LexicalQuery extends Query {
 
     const langID = this.selector.languageID
     this.canReset = (this.langOpts[langID] && this.langOpts[langID].lookupMorphLast)
-    this.startedDefinitionsQueries = false
+    this.startedDefinitionsQueries = new Map()
 
     if (this.selector.textQuoteSelector) {
       LexicalQuery.evt.TEXT_QUOTE_SELECTOR_RECEIVED.pub(this.selector.textQuoteSelector)
@@ -263,8 +263,8 @@ export default class LexicalQuery extends Query {
 
     yield 'Retrieval of lemma translations completed'
 
-    if (!this.startedDefinitionsQueries) {
-      this.startedDefinitionsQueries = true
+    if (!this.startedDefinitionsQueries.has(this.homonym.targetWord)) {
+      this.startedDefinitionsQueries.set(this.homonym.targetWord, true)
       const adapterLexiconResShort = yield ClientAdapters.lexicon.alpheios({
         method: 'fetchShortDefs',
         clientId: this.clientId,
