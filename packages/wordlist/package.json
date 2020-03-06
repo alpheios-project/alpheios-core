@@ -7,7 +7,7 @@
 	"scripts": {
 		"test": "AUTH_TOKEN='alpheiosMockUserId021d0136-51d6-4e36-9d2d-3b6c96707e80' ENDPOINT='https://userapis-dev.alpheios.net/v1/words' jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
 		"test-no-coverage": "AUTH_TOKEN='alpheiosMockUserId021d0136-51d6-4e36-9d2d-3b6c96707e80' ENDPOINT='https://userapis-dev.alpheios.net/v1/words' jest",
-		"build": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue",
+		"build": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p vue",
 		"build-prod": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p vue",
 		"build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p vue",
 		"lint": "eslint --fix src/**/*.js"
@@ -25,7 +25,12 @@
 	"devDependencies": {
 		"alpheios-node-build": "github:alpheios-project/node-build#v2",
 		"coveralls": "^3.0.9",
+		"eslint": "^6.8.0",
 		"eslint-config-standard": "^14.1.0",
+		"eslint-plugin-import": "^2.20.1",
+		"eslint-plugin-node": "^10.0.0",
+		"eslint-plugin-promise": "^4.2.1",
+		"eslint-plugin-standard": "^4.0.1",
 		"fake-indexeddb": "^3.0.0"
 	},
 	"peerDependencies": {

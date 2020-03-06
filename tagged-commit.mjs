@@ -1,35 +1,48 @@
+import pkg from './lerna.json'
 import generateBuildNumber from './packages/components/node_modules/alpheios-node-build/dist/support/build-number.mjs'
 import { execFileSync, execSync } from 'child_process'
 
 const build = generateBuildNumber()
-console.info(`Starting a ${build} commit`)
+console.log(`Starting a ${build} commit`)
 
+const version = `${pkg.version}-${build}`
+console.log(`Setting a package version to ${version}`)
 let output
-console.info('Rebuilding a components library. This may take a while')
 try {
-  output = execSync(`cd packages/components && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs --module=webpack --mode=all --preset=vue --externalConfig=config.mjs --buildNumber=${build}`)
-} catch (error) {
-  console.error('Build process failed:', error)
+  const output = execSync(`npx lerna version ${version} --no-git-tag-version --no-push --yes`, { encoding: 'utf8' })
+} catch (e) {
+  console.error('Cannot execute npm version:', e)
   process.exit(1)
 }
-console.info('Rebuilding of a components library has been completed')
 
-console.info('Committing components/dist')
+console.log('Rebuilding a components library. This may take a while')
 try {
-  output = execFileSync('git', ['add', 'packages/components/dist'])
+  output = execSync(`cd packages/components && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs --module=webpack --mode=all --preset=vue --externalConfig=config.mjs --buildNumber=${build}`, { encoding: 'utf8' })
 } catch (error) {
-  console.log('Commit process failed:', error)
+  console.error('Build process failed:', error)
+  process.exit(2)
+}
+console.log('Rebuilding of a components library has been completed')
+
+console.log('Committing components/dist')
+try {
+  output = execFileSync('git', ['add', 'lerna.json', 'packages/*/package*.json', 'packages/components/dist'], { encoding: 'utf8' })
+} catch (error) {
+  console.error('Commit process failed:', error)
+  process.exit(3)
 }
 try {
-  output = execFileSync('git', ['commit', '-m', `Build ${build}`])
+  output = execFileSync('git', ['commit', '-m', `Build ${build}`], { encoding: 'utf8' })
 } catch (error) {
-  console.log('Commit process failed:', error)
+  console.error('Commit process failed:', error)
+  process.exit(4)
 }
 
-console.info(`Tagging with ${build}`)
+console.log(`Tagging with ${build}`)
 try {
-  output = execSync(`git tag ${build}`)
+  output = execSync(`git tag ${build}`, { encoding: 'utf8' })
 } catch (error) {
-  console.log('Tag process failed:', error)
+  console.error('Tagging failed:', error)
+  process.exit(5)
 }
-console.info(`Commit has been completed`)
+console.log(`Commit has been completed`)
