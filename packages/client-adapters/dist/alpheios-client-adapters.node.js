@@ -9497,6 +9497,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
         uploadStarted.set(url, false)
       } catch (error) {
         this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
+        uploadStarted.set(url, false)
         return false
       }
     } else if (uploadStarted.has(url) && uploadStarted.get(url)) {
