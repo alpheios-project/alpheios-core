@@ -57,14 +57,15 @@
         class="alpheios-toolbar__header"
         v-show="showNav"
         :class="{ expanded: contentVisible }"
+        @click="contentVisible = !contentVisible"
+        id="alpheios-toolbar-navbuttons-shownav"
     >
       <alph-tooltip
           :tooltip-text="l10n.getText('LABEL_TOOLS_CONTROL')"
           :tooltip-direction="tooltipDirection"
       >
         <span class="alpheios-navbuttons__btn"
-            @click="contentVisible = !contentVisible"
-            id="alpheios-toolbar-navbuttons-shownav"
+            
             :class="{ active: contentVisible }">
           <reading-tools-icon
           />

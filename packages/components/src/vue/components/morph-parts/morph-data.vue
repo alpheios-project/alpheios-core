@@ -122,7 +122,7 @@
     }
   }
 
-  .alpheios-morph-data__pofs {
+  .alpheios-morph-data__morphdata .alpheios-morph-data__pofs {
     span {
       padding-right: 5px;
     }
