@@ -101,7 +101,7 @@
         />
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
-            :standard-form-data="{ langID: constants.LANG_LATIN, viewID: 'latin_verb_irregular_view', form: 'dēsum', title: 'Dēsum (dēesse, dēfui, dēfuturus)' }"
+            :standard-form-data="{ langID: constants.LANG_LATIN, viewID: 'latin_verb_irregular_view', form: 'desum', title: 'Desum (deesse, defui, defuturus)' }"
         />
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
