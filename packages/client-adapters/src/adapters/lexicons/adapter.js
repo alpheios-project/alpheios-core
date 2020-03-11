@@ -161,7 +161,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
           const parsed = papaparse.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
           data = this.fillMap(parsed.data)
         }
-        
+
         cachedDefinitions.set(url, data)
         uploadStarted.set(url, false)
       } catch (error) {
@@ -257,7 +257,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   */
   async updateFullDefs (fullDefsRequests, config, homonym) {
     for (let request of fullDefsRequests) { // eslint-disable-line prefer-const
-      let fullDefDataRes 
+      let fullDefDataRes
       if (cachedDefinitions.has(request.url)) {
         fullDefDataRes = new Promise((resolve, reject) => resolve(cachedDefinitions.get(request.url)))
       } else {
@@ -265,7 +265,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
       }
 
       fullDefDataRes.then(
-        async (fullDefData) => {   
+        async (fullDefData) => {
           if (fullDefData && fullDefData.match(/alph:error|alpheios-lex-error/)) {
             const error = fullDefData.match(/no entries found/i) ? 'No entries found.' : fullDefData
             this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error))
