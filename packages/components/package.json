@@ -47,7 +47,7 @@
     "alpheios-experience": "github:alpheios-project/experience",
     "alpheios-fixtures": "github:alpheios-project/fixtures",
     "alpheios-inflection-tables": "^3.3.0",
-    "alpheios-messaging": "github:alpheios-project/alpheios-messaging",
+    "alpheios-messaging": "github:alpheios-project/alpheios-messaging#i9-lexiscs-lazy-loading",
     "alpheios-node-build": "github:alpheios-project/node-build#v2",
     "alpheios-res-client": "^3.3.0",
     "alpheios-wordlist": "^3.3.0",

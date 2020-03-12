@@ -1,6 +1,13 @@
 import Module from '@/vue/vuex-modules/module.js'
 import Platform from '@/lib/utility/platform.js'
-import { CedictDestinationConfig as CedictConfig } from 'alpheios-messaging'
+// import { CedictDestinationConfig as CedictConfig } from 'alpheios-messaging'
+// region Testing only
+export const CedictConfig = {
+  name: 'cedict',
+  targetURL: 'https://lexis-dev.alpheios.net/index-dev.html',
+  targetIframeID: 'alpheios-lexis-cs'
+}
+// endregion Testing only
 
 export default class Lexis extends Module {
   /**

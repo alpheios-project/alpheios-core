@@ -2,8 +2,16 @@
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 import { ChineseLanguageModel, Lemma, Lexeme, Homonym, Feature, Definition } from 'alpheios-data-models'
 import {
-  MessagingService, WindowIframeDestination as Destination, CedictDestinationConfig as CedictConfig, RequestMessage
+  MessagingService, WindowIframeDestination as Destination, /* CedictDestinationConfig as CedictConfig, */ RequestMessage
 } from 'alpheios-messaging'
+
+// region Testing only
+export const CedictConfig = {
+  name: 'cedict',
+  targetURL: 'https://lexis-dev.alpheios.net/index-dev.html',
+  targetIframeID: 'alpheios-lexis-cs'
+}
+// endregion Testing only
 
 export const CedictCharacterForms = {
   SIMPLIFIED: 'simplified',
@@ -37,6 +45,7 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
       }
     }
     const responseMessage = await this._messagingService.sendRequestTo(CedictConfig.name, new RequestMessage(requestBody))
+    console.info('Response message is', responseMessage)
     return responseMessage.body
   }
 

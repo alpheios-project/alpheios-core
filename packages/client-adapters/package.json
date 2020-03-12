@@ -35,7 +35,7 @@
     "@vue/test-utils": "^1.0.0-beta.31",
     "alpheios-data-models": "^3.3.0",
     "alpheios-fixtures": "github:alpheios-project/fixtures",
-    "alpheios-messaging": "github:alpheios-project/alpheios-messaging",
+    "alpheios-messaging": "github:alpheios-project/alpheios-messaging#i9-lexiscs-lazy-loading",
     "alpheios-node-build": "github:alpheios-project/node-build#v2",
     "axios": "^0.19.2",
     "babel-plugin-module-resolver": "^4.0.0",
