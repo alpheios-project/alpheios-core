@@ -2,7 +2,8 @@
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 import { ChineseLanguageModel, Lemma, Lexeme, Homonym, Feature, Definition } from 'alpheios-data-models'
 import {
-  MessagingService, WindowIframeDestination as Destination, /* CedictDestinationConfig as CedictConfig, */ RequestMessage
+  MessagingService, WindowIframeDestination as Destination, /* CedictDestinationConfig as CedictConfig, */
+  RequestMessage, ResponseMessage
 } from 'alpheios-messaging'
 
 // region Testing only
@@ -38,17 +39,6 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
 
   get languageID () { return ChineseLanguageModel.languageID }
 
-  async _fetchCedictData (targetWord, contextForward) {
-    const requestBody = {
-      getWords: {
-        words: this.constructor._buildWordList(targetWord, contextForward)
-      }
-    }
-    const responseMessage = await this._messagingService.sendRequestTo(CedictConfig.name, new RequestMessage(requestBody))
-    console.info('Response message is', responseMessage)
-    return responseMessage.body
-  }
-
   /**
    * Creates a list of words that will be requested from a CEDICT service.
    * This method builds a list of words that would make sense in a context of a Chinese language
@@ -72,12 +62,25 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
 
   async getHomonym (targetWord, contextForward) {
     try {
-      const cedictRes = await this._fetchCedictData(targetWord, contextForward)
-      if (Object.keys(cedictRes).length === 0) {
+      const requestBody = {
+        getWords: {
+          words: this.constructor._buildWordList(targetWord, contextForward)
+        }
+      }
+      const response = await this._messagingService.sendRequestTo(CedictConfig.name, new RequestMessage(requestBody))
+      if (response.responseCode === ResponseMessage.responseCode.ERROR) {
+        console.info(`CEDICT request failed, error code is ${response.errorCode}`)
+
+        if (response.errorCode === ResponseMessage.errorCodes.SERVICE_UNINITIALIZED) {
+          console.info('CEDICT has not been initialized yet')
+        }
+      }
+
+      if (Object.keys(response.body).length === 0) {
         this.addError(this.l10n.messages.MORPH_NO_HOMONYM.get(targetWord, this.languageID.toString()))
         return
       }
-      const homonym = this._transformData(cedictRes, targetWord)
+      const homonym = this._transformData(response.body, targetWord)
       if (!homonym) {
         this.addError(this.l10n.messages.MORPH_NO_HOMONYM.get(targetWord, this.languageID.toString()))
         return

@@ -13,19 +13,19 @@ export default class SessionAuthenticator {
    *    ENDPOINTS - Alpheios user api endpoints
    */
   constructor (env) {
-      this.sessionUrl = env.SESSION_URL
-      this.tokenUrl = env.TOKEN_URL
-      this.endpoints = env.ENDPOINTS
-      this._loginUrl = env.LOGIN_URL
-      this._logoutUrl = env.LOGOUT_URL
-      this._authData = new AuthData()
+    this.sessionUrl = env.SESSION_URL
+    this.tokenUrl = env.TOKEN_URL
+    this.endpoints = env.ENDPOINTS
+    this._loginUrl = env.LOGIN_URL
+    this._logoutUrl = env.LOGOUT_URL
+    this._authData = new AuthData()
   }
 
   /**
    * Login link for server
    * @return {String} login link from config
    */
-  loginUrl() {
+  loginUrl () {
     return this._loginUrl
   }
 
@@ -33,14 +33,14 @@ export default class SessionAuthenticator {
    * Logout link for server
    * @return {String} logout link from config
    */
-  logoutUrl() {
+  logoutUrl () {
     return this._logoutUrl
   }
 
   session () {
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve, reject) => {
       window.fetch(this.sessionUrl).then((resp) => {
-        if (! resp.ok) {
+        if (!resp.ok) {
           reject(resp.code)
         } else {
           resp.json().then(data => {
@@ -61,6 +61,7 @@ export default class SessionAuthenticator {
           })
         }
       }).catch((error) => {
+        // eslint-disable-next-line prefer-promise-reject-errors
         reject(`Session request failed ${error}`)
       })
     })
@@ -70,19 +71,21 @@ export default class SessionAuthenticator {
     // TODO we should check to see if we already have a valid idToken before
     // initiating authentication
     return new Promise((resolve, reject) => {
-      reject("Server Side Authenticator")
+      // eslint-disable-next-line prefer-promise-reject-errors
+      reject('Server Side Authenticator')
     })
   }
 
   getUserData () {
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve, reject) => {
       window.fetch(this.tokenUrl).then((resp) => {
-        if (! resp.ok) {
+        if (!resp.ok) {
           reject(resp.code)
         } else {
           resolve(resp.json())
         }
       }).catch((error) => {
+        // eslint-disable-next-line prefer-promise-reject-errors
         reject(`token request failed ${error}`)
       })
     })
@@ -99,11 +102,10 @@ export default class SessionAuthenticator {
   /**
    * Respond to a logout request
    */
-  logout() {
+  logout () {
     this._authData.setAuthStatus(false)
     this._authData.userId = ''
     this._authData.name = ''
     this._authData.nickname = ''
   }
-
 }

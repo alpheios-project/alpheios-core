@@ -24,7 +24,7 @@ export default class AppAuthenticator {
    * a link for login external to the alpheios components
    * @return null for client side login
    */
-  loginUrl() {
+  loginUrl () {
     return null
   }
 
@@ -32,18 +32,18 @@ export default class AppAuthenticator {
    * a link for logout external to the alpheios components
    * @return null for client side login
    */
-  logoutUrl() {
+  logoutUrl () {
     return null
   }
 
   /**
    * session request unimplemented for app auth
    */
-   session () {
-     return new Promise((resolve,reject) => {
-       reject(new Error("Session request not supported"))
+  session () {
+    return new Promise((resolve, reject) => {
+      reject(new Error('Session request not supported'))
     })
-   }
+  }
 
   /**
    * Authenticates user with an Auth0.
@@ -55,7 +55,7 @@ export default class AppAuthenticator {
     return new Promise((resolve, reject) => {
       if (!this.auth0Lock) {
         if (!this.env) {
-          let error = `Unable to find Auth0 configuration. Auth0 functionality will be disabled`
+          const error = 'Unable to find Auth0 configuration. Auth0 functionality will be disabled'
           console.error(error)
           reject(error)
         }
@@ -67,7 +67,7 @@ export default class AppAuthenticator {
           const sessionDuration = 3600000 /* One hour */
           const expirationDateTime = new Date(Date.now() + sessionDuration)
           localStorage.setItem('expiration_date_time', expirationDateTime.toJSON())
-          resolve("Authenticated")
+          resolve('Authenticated')
         } else {
           // initialize auth0 lock
           this.auth0Lock = new Auth0Lock(this.env.CLIENT_ID, this.env.DOMAIN, {
@@ -77,8 +77,8 @@ export default class AppAuthenticator {
               primaryColor: '#436476'
             },
             languageDictionary: {
-              title: "Login",
-              signUpTerms: "By signing up, you agree to our <a href=\"https://alpheios.net/pages/userterms\" target=\"_blank\">terms of service</a> and <a href=\"https://alpheios.net/pages/privacy-policy\">privacy policy</a>."
+              title: 'Login',
+              signUpTerms: 'By signing up, you agree to our <a href="https://alpheios.net/pages/userterms" target="_blank">terms of service</a> and <a href="https://alpheios.net/pages/privacy-policy">privacy policy</a>.'
             },
             mustAcceptTerms: true,
             auth: {
@@ -86,7 +86,7 @@ export default class AppAuthenticator {
               params: {
                 audience: this.env.AUDIENCE,
                 scope: 'openid profile email',
-                prompt: 'consent select_account',
+                prompt: 'consent select_account'
               },
               responseType: 'token id_token'
             }
@@ -98,19 +98,21 @@ export default class AppAuthenticator {
             localStorage.setItem('id_token', authResult.idToken)
             const expirationDateTime = new Date(Date.now() + authResult.expiresIn * 1000)
             localStorage.setItem('expiration_date_time', expirationDateTime.toJSON())
-            //localStorage.setItem('profile', JSON.stringify(profile))
-            resolve("Authenticated")
+            // localStorage.setItem('profile', JSON.stringify(profile))
+            resolve('Authenticated')
           })
 
           // Unrecoverable error handler
           this.auth0Lock.on('unrecoverable_error', (error) => {
-            console.error(`Auth0 Lock unrecoverable error: `, error)
+            console.error('Auth0 Lock unrecoverable error: ', error)
+            // eslint-disable-next-line prefer-promise-reject-errors
             reject('Auth0 Lock unrecoverable')
           })
 
           // An authorization error
           this.auth0Lock.on('authorization_error', (error) => {
-            console.error(`Auth0 Lock authorization error: `, error)
+            console.error('Auth0 Lock authorization error: ', error)
+            // eslint-disable-next-line prefer-promise-reject-errors
             reject('Auth0Lock authorization error')
           })
           this.auth0Lock.show()
@@ -129,24 +131,25 @@ export default class AppAuthenticator {
     return new Promise((resolve, reject) => {
       const token = localStorage.getItem('access_token')
       if (!token) {
-       console.error('You must login to call this protected endpoint!')
-       reject('Login required')
+        console.error('You must login to call this protected endpoint!')
+        // eslint-disable-next-line prefer-promise-reject-errors
+        reject('Login required')
       }
       const expirationDateTimeStr = localStorage.getItem('expiration_date_time')
       let authData = new AuthData() // eslint-disable-line prefer-const
       authData.setAuthStatus(true)
       authData.expirationDateTime = new Date(expirationDateTimeStr)
       if (localStorage.getItem('is_test_user')) {
-          let testProfile =  {
-            name: 'Alpheios Test User',
-            nickname: 'testuser',
-            sub: 'testuser'
-          }
-          localStorage.setItem('profile', JSON.stringify(testProfile))
-          authData.userId = testProfile.sub
-          authData.userName = testProfile.name
-          authData.userNickname = testProfile.nickname
-          resolve(authData)
+        const testProfile = {
+          name: 'Alpheios Test User',
+          nickname: 'testuser',
+          sub: 'testuser'
+        }
+        localStorage.setItem('profile', JSON.stringify(testProfile))
+        authData.userId = testProfile.sub
+        authData.userName = testProfile.name
+        authData.userNickname = testProfile.nickname
+        resolve(authData)
       } else {
         this.auth0Lock.getUserInfo(token, (error, profile) => {
           if (error) {
@@ -173,8 +176,9 @@ export default class AppAuthenticator {
 
       // block request from happening if no JWT token present
       if (!token) {
-       console.error('You must login to call this protected endpoint!')
-       reject('Not Authenticated')
+        console.error('You must login to call this protected endpoint!')
+        // eslint-disable-next-line prefer-promise-reject-errors
+        reject('Not Authenticated')
       }
       resolve(token)
     })
@@ -191,7 +195,7 @@ export default class AppAuthenticator {
   /**
    * Respond to a logout request
    */
-  logout() {
+  logout () {
     localStorage.removeItem('id_token')
     localStorage.removeItem('access_token')
     localStorage.removeItem('profile')
@@ -199,5 +203,4 @@ export default class AppAuthenticator {
       returnTo: this.env.LOGOUT_URL
     })
   }
-
 }
