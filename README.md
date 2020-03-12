@@ -52,7 +52,7 @@ There are several script that help to manage dependencies:
 * `fix-mismatching-deps`: if several packages depend on different versions of the same npm package this script will update `package.json` files with older dependencies so that all packages will depend on the the newwest version of the dependency list. For example, if package A depends on webpack v4.0.1 and packages B depends on webpack v4.1.5 then this command will updated both packages so that package A and package B will depend on webpack v4.1.5. This may be not the latest version of webpack available on npm but it will be the latest version specified across all individual packages. `fix-mismatching-deps` does not update dependencies themselves in `node_modules`; one has to run a `bootstrap` command to install an updated dependency version.
 
 ## Installing local packages temporarily
-During development process one may need to install a local version of a package. This can greatly simplify local development and debugging. Unfortunately, Lerna bootstrap does not work with packages installed locally.
+During development process one may need to install a local version of a package that is not part of alpheios-core. This can greatly simplify local development and debugging. Unfortunately, Lerna bootstrap does not work with packages installed locally.
 
 The currently recommended way to install and use a local package is:
 1. Install a local package dependency as a dev dependency to the `package.json` inside an `alpheios-core` root directory: `npm i -D ../package-name`.
