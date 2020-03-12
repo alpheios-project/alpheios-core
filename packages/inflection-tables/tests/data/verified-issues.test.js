@@ -529,11 +529,12 @@ describe('verified-issues.test.js', () => {
 
     inflectionsViewSet = await BaseTestHelp.getInflectionSet('οἷ', Constants.LANG_GREEK)
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(2)
 
     BaseTestHelp.checkView({
       inflectionsViewSet,
-      viewName: 'GreekGenderPronounView',
-      title: 'Relative Pronoun Declension'
+      viewName: 'GreekArticleView',
+      title: 'Article Declension'
     })
 
     BaseTestHelp.checkView({
@@ -546,6 +547,13 @@ describe('verified-issues.test.js', () => {
 
     inflectionsViewSet = await BaseTestHelp.getInflectionSet('οἵ', Constants.LANG_GREEK)
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'GreekArticleView',
+      title: 'Article Declension'
+    })
 
     BaseTestHelp.checkView({
       inflectionsViewSet,

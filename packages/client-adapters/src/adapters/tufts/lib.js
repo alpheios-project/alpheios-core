@@ -47,7 +47,7 @@ class ImportData {
 
     // may be overridden by specific engine use via setPropertyParser - default just returns the property value
     // as a list
-    this.parseProperty = function (propertyName, propertyValue) {
+    this.parseProperty = function (propertyName, propertyValue, inputElem) {
       let propertyValues = []
       if (propertyName === 'decl') {
         propertyValues = propertyValue.split('&').map((p) => p.trim())
@@ -195,10 +195,10 @@ class ImportData {
       if (Array.isArray(inputItem)) {
         // There are multiple values of this feature
         for (const e of inputItem) {
-          values.push(...this.parseProperty(inputName, e.$))
+          values.push(...this.parseProperty(inputName, e.$, inputElem))
         }
       } else {
-        values = this.parseProperty(inputName, inputItem.$)
+        values = this.parseProperty(inputName, inputItem.$, inputElem)
       }
       // `values` is always an array as an array is a return value of `parseProperty`
       if (values.length > 0) {
@@ -233,11 +233,11 @@ class ImportData {
             console.warn('Mutiple feature values with mismatching attribute value', inputElem)
           }
           featureName = e[attributeName]
-          values.push(...this.parseProperty(inputName, e.$))
+          values.push(...this.parseProperty(inputName, e.$, inputElem))
         }
       } else {
         featureName = inputItem[attributeName]
-        values = this.parseProperty(inputName, inputItem.$)
+        values = this.parseProperty(inputName, inputItem.$, inputElem)
       }
       // `values` is always an array as an array is a return value of `parseProperty`
       if (values.length > 0) {

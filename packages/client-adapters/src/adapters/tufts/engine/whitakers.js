@@ -25,7 +25,7 @@ data.addFeature(Models.Feature.types.gender).importer
 data.addFeature(Models.Feature.types.tense).importer
   .map('future_perfect', Models.Constants.TENSE_FUTURE_PERFECT)
 
-data.setPropertyParser(function (propertyName, propertyValue) {
+data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
   let propertyValues = []
   if (propertyName === 'decl') {
     propertyValues = propertyValue.split('&').map((p) => p.trim())

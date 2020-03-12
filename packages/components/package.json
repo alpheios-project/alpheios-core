@@ -45,7 +45,7 @@
     "alpheios-client-adapters": "^3.3.0",
     "alpheios-data-models": "^3.3.0",
     "alpheios-experience": "github:alpheios-project/experience",
-    "alpheios-fixtures": "github:alpheios-project/fixtures",
+    "alpheios-fixtures": "github:alpheios-project/fixtures#i75-add-ti/s",
     "alpheios-inflection-tables": "^3.3.0",
     "alpheios-messaging": "github:alpheios-project/alpheios-messaging",
     "alpheios-node-build": "github:alpheios-project/node-build#v2",

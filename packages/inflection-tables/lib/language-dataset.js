@@ -195,7 +195,8 @@ export default class LanguageDataset {
       The value found will then be attached to an Inflection object.
        */
       // Get a class this inflection belongs to
-      const grmClasses = this.model.getPronounClasses(this.pos.get(partOfSpeech).types.get(Form).items, inflection.getForm())
+      const grmClasses = this.model.getPronounClasses(this.pos.get(partOfSpeech).types.get(Form).items, inflection.getForm(), inflection.lemma.word, true)
+
       if (!grmClasses) {
         console.warn(`Cannot determine a grammar class for a ${inflection.form} pronoun.
               Table construction will probably fail`)
@@ -232,7 +233,6 @@ export default class LanguageDataset {
      suffixBased and fullFormBased flags set to true and we will need to determine
      which one of those makes sense for each particular verb.
      */
-
     let partOfSpeech = inflection[Feature.types.part]
     if (!partOfSpeech) {
       throw new Error('Part of speech data is missing in an inflection')
@@ -306,7 +306,6 @@ export default class LanguageDataset {
     let inflections = new Map() // eslint-disable-line prefer-const
     for (const lexeme of homonym.lexemes) {
       for (let inflection of lexeme.inflections) {
-        // Inflections are grouped by part of speech
         inflection = this.setInflectionData(inflection, lexeme.lemma)
         const pofsValue = inflection[Feature.types.part].value
         if (!inflections.has(pofsValue)) { inflections.set(pofsValue, []) }
@@ -397,7 +396,6 @@ export default class LanguageDataset {
 
       this.createInflectionSetFootnote(inflectionSet, sourceSet)
     }
-
     return inflectionSet
   }
 
@@ -498,7 +496,7 @@ export default class LanguageDataset {
         matchData.matchedFeatures.push(...obligatoryMatches.matchedItems)
       } else {
         // If obligatory features do not match, there is no reason to check other items
-        break
+        continue
       }
 
       /*

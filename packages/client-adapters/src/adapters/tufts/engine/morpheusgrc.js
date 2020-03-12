@@ -17,4 +17,16 @@ data.addFeature(Models.Feature.types.gender).importer
 data.addFeature(Models.Feature.types.declension).importer
   .map('1st & 2nd', [[Models.Constants.ORD_1ST, 1], [Models.Constants.ORD_2ND, 2]])
 
+data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
+  let propertyValues = []
+  if (propertyName === 'pofs' && propertyValue === 'irregular' &&
+    ( inputElem.hdwd && inputElem.hdwd.$ === 'τίς' ) ||
+    ( inputElem.term && inputElem.term.stem && inputElem.term.stem.$ === 'τίς' )) {
+    propertyValues = [ Models.Constants.POFS_PRONOUN ]
+  } else {
+    propertyValues = [propertyValue]
+  }
+  return propertyValues
+})
+
 export default data

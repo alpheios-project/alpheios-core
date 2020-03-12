@@ -10067,6 +10067,18 @@ data.addFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].typ
 data.addFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.declension).importer
   .map('1st & 2nd', [[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].ORD_1ST, 1], [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].ORD_2ND, 2]])
 
+data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
+  let propertyValues = []
+  if (propertyName === 'pofs' && propertyValue === 'irregular' &&
+    ( inputElem.hdwd && inputElem.hdwd.$ === 'τίς' ) ||
+    ( inputElem.term && inputElem.term.stem && inputElem.term.stem.$ === 'τίς' )) {
+    propertyValues = [ alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].POFS_PRONOUN ]
+  } else {
+    propertyValues = [propertyValue]
+  }
+  return propertyValues
+})
+
 /* harmony default export */ __webpack_exports__["default"] = (data);
 
 
@@ -10097,7 +10109,7 @@ data.setMeaningParser(function (meaning, targetWord) {
   return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Definition"](meaningText, lang, 'text/plain', targetWord)
 })
 
-data.setPropertyParser(function (propertyName, propertyValue) {
+data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
   let propertyValues = []
   if (propertyName === 'paradigm') {
     // state has some extra "" around values
@@ -10178,7 +10190,7 @@ data.addFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].typ
 data.addFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.tense).importer
   .map('future_perfect', alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].TENSE_FUTURE_PERFECT)
 
-data.setPropertyParser(function (propertyName, propertyValue) {
+data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
   let propertyValues = []
   if (propertyName === 'decl') {
     propertyValues = propertyValue.split('&').map((p) => p.trim())
@@ -10386,7 +10398,7 @@ class ImportData {
 
     // may be overridden by specific engine use via setPropertyParser - default just returns the property value
     // as a list
-    this.parseProperty = function (propertyName, propertyValue) {
+    this.parseProperty = function (propertyName, propertyValue, inputElem) {
       let propertyValues = []
       if (propertyName === 'decl') {
         propertyValues = propertyValue.split('&').map((p) => p.trim())
@@ -10534,10 +10546,10 @@ class ImportData {
       if (Array.isArray(inputItem)) {
         // There are multiple values of this feature
         for (const e of inputItem) {
-          values.push(...this.parseProperty(inputName, e.$))
+          values.push(...this.parseProperty(inputName, e.$, inputElem))
         }
       } else {
-        values = this.parseProperty(inputName, inputItem.$)
+        values = this.parseProperty(inputName, inputItem.$, inputElem)
       }
       // `values` is always an array as an array is a return value of `parseProperty`
       if (values.length > 0) {
@@ -10572,11 +10584,11 @@ class ImportData {
             console.warn('Mutiple feature values with mismatching attribute value', inputElem)
           }
           featureName = e[attributeName]
-          values.push(...this.parseProperty(inputName, e.$))
+          values.push(...this.parseProperty(inputName, e.$, inputElem))
         }
       } else {
         featureName = inputItem[attributeName]
-        values = this.parseProperty(inputName, inputItem.$)
+        values = this.parseProperty(inputName, inputItem.$, inputElem)
       }
       // `values` is always an array as an array is a return value of `parseProperty`
       if (values.length > 0) {

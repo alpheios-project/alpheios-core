@@ -23,7 +23,7 @@
     "build-client-adapters": "npm --prefix packages/client-adapters run build",
     "test-client-adapters": "npm --prefix packages/client-adapters run test",
     "build-inflection-tables": "npm --prefix packages/inflection-tables run build",
-    "test-inflection-tables": "npm --prefix packages/inflection-tables run test",
+    "test-inflection-tables": "npm --prefix packages/inflection-tables run test-a",
     "build-components": "npm --prefix packages/components run build",
     "test-components": "npm --prefix packages/components run test-ci",
     "conventional-commit": "npx git-cz",

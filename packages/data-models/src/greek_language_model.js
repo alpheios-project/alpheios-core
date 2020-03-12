@@ -265,13 +265,13 @@ for the current node
    * @returns {Feature} Matching classes found within a Feature objects. If no matching classes found,
    * returns undefined.
    */
-  static getPronounClasses (forms, word, normalize = true) {
+  static getPronounClasses (forms, word, hdwd, normalize = true) {
     // eslint-disable-next-line prefer-const
     let matchingValues = new Set() // Will eliminate duplicated values
     const matchingForms = forms.filter(
       form => {
         let match = false
-        if (form.value) {
+        if (form.value && (!form.features[Feature.types.hdwd] || (form.features[Feature.types.hdwd].value === hdwd))) {
           match = GreekLanguageModel.compareWords(form.value, word, normalize)
         }
         return match
