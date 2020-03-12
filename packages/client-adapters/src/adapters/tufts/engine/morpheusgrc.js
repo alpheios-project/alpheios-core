@@ -19,7 +19,11 @@ data.addFeature(Models.Feature.types.declension).importer
 
 data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
   let propertyValues = []
-  if (propertyName === 'pofs' && propertyValue === 'irregular' &&
+  if (propertyName === 'decl') {
+    propertyValues = propertyValue.split('&').map((p) => p.trim())
+  } else if (propertyName === 'comp' && propertyValue === 'positive') {
+    propertyValues = []
+  } else if (propertyName === 'pofs' && propertyValue === 'irregular' &&
     ( inputElem.hdwd && inputElem.hdwd.$ === 'τίς' ) ||
     ( inputElem.term && inputElem.term.stem && inputElem.term.stem.$ === 'τίς' )) {
     propertyValues = [ Models.Constants.POFS_PRONOUN ]

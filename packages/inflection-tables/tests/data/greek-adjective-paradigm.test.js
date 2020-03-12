@@ -30,7 +30,6 @@ describe('greek-adjective-paradigm.test.js', () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀξίου', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
-    console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(2)
     BaseTestHelp.checkParadigm({
@@ -52,7 +51,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[3].cells[7].fullMatch).toBeFalsy() // ἀγαθοῦ
   })
 
-  it.skip('1-2 - checked Adjective1 - ἀξίοιν', async () => {
+  it('1-2 - checked Adjective1 - ἀξίοιν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀξίοιν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -78,7 +77,7 @@ describe('greek-adjective-paradigm.test.js', () => {
 
   })
 
-  it.skip('1-3 - checked Adjective1 - ἀξίους', async () => {
+  it('1-3 - checked Adjective1 - ἀξίους', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀξίους', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -103,7 +102,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[12].cells[7].fullMatch).toBeFalsy() // ἀγαθά
   })
 
-  it.skip('1-4 - checked Adjective1 - ἀξίᾱν', async () => {
+  it('1-4 - checked Adjective1 - ἀξίᾱν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀξίᾱν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -128,7 +127,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[5].cells[7].fullMatch).toBeFalsy() // ἀγαθόν
   })
 
-  it.skip('1-5 - checked Adjective1 - ἀξίων', async () => {
+  it('1-5 - checked Adjective1 - ἀξίων', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀξίων', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -153,7 +152,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[10].cells[7].fullMatch).toBeFalsy() // ἀγαθόν
   })
 
-  it.skip('1-6 - checked Adjective1 - ἀξίω', async () => {
+  it('1-6 - checked Adjective1 - ἀξίω', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀξίω', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -186,7 +185,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[7].cells[7].fullMatch).toBeFalsy() // ἀγαθώ
   })
 
-  it.skip('1-7 - checked Adjective1 - ἀξίοις', async () => {
+  it('1-7 - checked Adjective1 - ἀξίοις', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀξίοις', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -211,7 +210,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[11].cells[7].fullMatch).toBeFalsy() // ἀγαθοῖς
   })
 
-  it.skip('1-8 - checked Adjective1 - ἀγαθοῦ', async () => {
+  it('1-8 - checked Adjective1 - ἀγαθοῦ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀγαθοῦ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -236,7 +235,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[3].cells[7].fullMatch).toBeTruthy() // ἀγαθοῦ
   })
 
-  it.skip('1-9 - checked Adjective1 - ἀγαθοῖν', async () => {
+  it('1-9 - checked Adjective1 - ἀγαθοῖν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀγαθοῖν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -261,7 +260,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[8].cells[7].fullMatch).toBeTruthy() // ἀγαθοῖν
   })
 
-  it.skip('1-10 - checked Adjective1 - ἀγαθήν', async () => {
+  it('1-10 - checked Adjective1 - ἀγαθήν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀγαθήν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -286,7 +285,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[5].cells[7].fullMatch).toBeFalsy() // ἀγαθόν
   })
 
-  it.skip('1-11 - checked Adjective1 - ἀγαθῶν', async () => {
+  it('1-11 - checked Adjective1 - ἀγαθῶν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀγαθῶν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -311,7 +310,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[10].cells[7].fullMatch).toBeTruthy() // ἀγαθόν
   })
 
-  it.skip('1-12 - checked Adjective1 - ἀγαθῷ', async () => {
+  it('1-12 - checked Adjective1 - ἀγαθῷ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀγαθῷ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -336,7 +335,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[4].cells[7].fullMatch).toBeTruthy() // ἀγαθῷ
   })
 
-  it.skip('1-13 - checked Adjective1 - ἀγαθά', async () => {
+  it('1-13 - checked Adjective1 - ἀγαθά', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀγαθά', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -366,7 +365,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[12].cells[7].fullMatch).toBeTruthy() // ἀγαθά
   })
 
-  it.skip('2-1 - checked Adjective2 - ἀδίκου', async () => {
+  it('2-1 - checked Adjective2 - ἀδίκου', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀδίκου', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -388,7 +387,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // ἀδίκῳ
   })
 
-  it.skip('2-2 - checked Adjective2 - ἀδίκων', async () => {
+  it('2-2 - checked Adjective2 - ἀδίκων', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀδίκων', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -410,7 +409,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[10].cells[2].fullMatch).toBeFalsy() // ἀδίκοις
   })
 
-  it.skip('2-3 - checked Adjective2 - ἀδίκοιν', async () => {
+  it('2-3 - checked Adjective2 - ἀδίκοιν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀδίκοιν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -432,7 +431,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[8].cells[2].fullMatch).toBeFalsy() // ἄδικοι
   })
 
-  it.skip('2-4 - checked Adjective2 - ἄδικᾰ', async () => {
+  it('2-4 - checked Adjective2 - ἄδικᾰ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἄδικᾰ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -455,7 +454,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[11].cells[3].fullMatch).toBeTruthy() // ἀδίκους
   })
 
-  it.skip('3-1 - checked Adjective3 - ἀληθοῦς', async () => {
+  it('3-1 - checked Adjective3 - ἀληθοῦς', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀληθοῦς', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -477,7 +476,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[2].cells[5].fullMatch).toBeFalsy() // σώφρονος
   })
 
-  it.skip('3-2 - checked Adjective3 - ἀληθεῖς', async () => {
+  it('3-2 - checked Adjective3 - ἀληθεῖς', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀληθεῖς', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -504,7 +503,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[11].cells[5].fullMatch).toBeFalsy() // σώφρονᾰ
   })
 
-  it.skip('3-3 - checked Adjective3 - ἀληθές', async () => {
+  it('3-3 - checked Adjective3 - ἀληθές', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀληθές', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -530,7 +529,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[5].cells[3].fullMatch).toBeTruthy() // ἀληθές
   })
 
-  it.skip('3-4 - checked Adjective3 - ἀληθοῖν', async () => {
+  it('3-4 - checked Adjective3 - ἀληθοῖν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀληθοῖν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -552,7 +551,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[7].cells[5].fullMatch).toBeFalsy() // σωφρόνοιν
   })
 
-  it.skip('3-5 - checked Adjective3 - σώφρων', async () => {
+  it('3-5 - checked Adjective3 - σώφρων', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('σώφρων', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -574,7 +573,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy() // ἀληθές
   })
 
-  it.skip('3-6 - checked Adjective3 - σώφρονᾰς', async () => {
+  it('3-6 - checked Adjective3 - σώφρονᾰς', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('σώφρονᾰς', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -596,7 +595,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[11].cells[5].fullMatch).toBeFalsy() // σώφρονᾰ
   })
 
-  it.skip('3-7 - checked Adjective3 - σώφρονε', async () => {
+  it('3-7 - checked Adjective3 - σώφρονε', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('σώφρονε', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -618,7 +617,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[6].cells[5].fullMatch).toBeTruthy() // σώφρονε
   })
 
-  it.skip('3-8 - checked Adjective3 - σώφρονᾰ', async () => {
+  it('3-8 - checked Adjective3 - σώφρονᾰ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('σώφρονᾰ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -643,7 +642,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[11].cells[5].fullMatch).toBeTruthy() // σώφρονᾰ
   })
 
-  it.skip('4-1 - checked Adjective4 - ἡδέος', async () => {
+  it('4-1 - checked Adjective4 - ἡδέος', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἡδέος', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -668,7 +667,7 @@ describe('greek-adjective-paradigm.test.js', () => {
 
   })
 
-  it.skip('4-2 - checked Adjective4 - ἡδέοιν', async () => {
+  it('4-2 - checked Adjective4 - ἡδέοιν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἡδέοιν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -693,7 +692,7 @@ describe('greek-adjective-paradigm.test.js', () => {
 
   })
 
-  it.skip('4-3 - checked Adjective4 - ἡδεῖᾰν', async () => {
+  it('4-3 - checked Adjective4 - ἡδεῖᾰν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἡδεῖᾰν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -718,7 +717,7 @@ describe('greek-adjective-paradigm.test.js', () => {
 
   })
 
-  it.skip('4-4 - checked Adjective4 - ἡδείαις', async () => {
+  it('4-4 - checked Adjective4 - ἡδείαις', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἡδείαις', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -742,7 +741,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[11].cells[7].fullMatch).toBeFalsy() // μέλασι(ν)
   })
 
-  it.skip('4-5 - checked Adjective4 - ἡδύ', async () => {
+  it('4-5 - checked Adjective4 - ἡδύ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἡδύ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -770,7 +769,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[6].cells[4].fullMatch).toBeTruthy() // ἡδύ
   })
 
-  it.skip('4-6 - checked Adjective4 - ἡδέᾰ', async () => {
+  it('4-6 - checked Adjective4 - ἡδέᾰ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἡδέᾰ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -799,7 +798,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[12].cells[4].fullMatch).toBeTruthy() // ἡδεῖᾰ
   })
 
-  it.skip('4-7 - checked Adjective4 - μέλανι', async () => {
+  it('4-7 - checked Adjective4 - μέλανι', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('μέλανι', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -823,7 +822,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[4].cells[7].fullMatch).toBeTruthy() // μέλανι
   })
 
-  it.skip('4-8 - checked Adjective4 - μελάνοιν', async () => {
+  it('4-8 - checked Adjective4 - μελάνοιν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('μελάνοιν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -847,7 +846,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[8].cells[7].fullMatch).toBeTruthy() // μελάνοιν
   })
 
-  it.skip('4-9 - checked Adjective4 - μελαίνης', async () => {
+  it('4-9 - checked Adjective4 - μελαίνης', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('μελαίνης', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -871,7 +870,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[3].cells[7].fullMatch).toBeFalsy() // μέλανος
   })
 
-  it.skip('4-10 - checked Adjective4 - μελαίναις', async () => {
+  it('4-10 - checked Adjective4 - μελαίναις', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('μελαίναις', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -895,7 +894,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[11].cells[7].fullMatch).toBeFalsy() // μέλασι(ν)
   })
 
-  it.skip('4-11 - checked Adjective4 - μέλαν', async () => {
+  it('4-11 - checked Adjective4 - μέλαν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('μέλαν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -922,7 +921,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[2].cells[7].fullMatch).toBeTruthy() // μέλαν
   })
 
-  it.skip('4-12 - checked Adjective4 - μέλανᾰ', async () => {
+  it('4-12 - checked Adjective4 - μέλανᾰ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('μέλανᾰ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -949,7 +948,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[12].cells[7].fullMatch).toBeTruthy() // μέλανᾰ
   })
 
-  it.skip('5-1 - checked Adjective5 - χαρίεντος', async () => {
+  it('5-1 - checked Adjective5 - χαρίεντος', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('χαρίεντος', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -974,7 +973,7 @@ describe('greek-adjective-paradigm.test.js', () => {
 
   })
 
-  it.skip('5-2 - checked Adjective5 - χαρίεντε', async () => {
+  it('5-2 - checked Adjective5 - χαρίεντε', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('χαρίεντε', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -999,7 +998,7 @@ describe('greek-adjective-paradigm.test.js', () => {
 
   })
 
-  it.skip('5-3 - checked Adjective5 - χαριέσσαιν', async () => {
+  it('5-3 - checked Adjective5 - χαριέσσαιν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('χαριέσσαιν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1024,7 +1023,7 @@ describe('greek-adjective-paradigm.test.js', () => {
 
   })
 
-  it.skip('5-4 - checked Adjective5 - χαριέσσαις', async () => {
+  it('5-4 - checked Adjective5 - χαριέσσαις', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('χαριέσσαις', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1049,7 +1048,7 @@ describe('greek-adjective-paradigm.test.js', () => {
 
   })
 
-  it.skip('5-5 - checked Adjective5 - χαρίεντι', async () => {
+  it('5-5 - checked Adjective5 - χαρίεντι', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('χαρίεντι', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1074,7 +1073,7 @@ describe('greek-adjective-paradigm.test.js', () => {
 
   })
 
-  it.skip('5-6 - checked Adjective5 - χαρίεντᾰ', async () => {
+  it('5-6 - checked Adjective5 - χαρίεντᾰ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('χαρίεντᾰ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1101,7 +1100,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[5].cells[2].fullMatch).toBeTruthy() // χαρίεντᾰ
   })
 
-  it.skip('5-7 - checked Adjective5 - πᾶς', async () => {
+  it('5-7 - checked Adjective5 - πᾶς', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('πᾶς', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1128,7 +1127,7 @@ describe('greek-adjective-paradigm.test.js', () => {
 
   })
 
-  it.skip('5-8 - checked Adjective5 - πάντες', async () => {
+  it('5-8 - checked Adjective5 - πάντες', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('πάντες', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1152,7 +1151,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[9].cells[7].fullMatch).toBeFalsy() // πάντᾰ
   })
 
-  it.skip('5-9 - checked Adjective5 - πάσῃ', async () => {
+  it('5-9 - checked Adjective5 - πάσῃ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('πάσῃ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1176,7 +1175,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[4].cells[7].fullMatch).toBeFalsy() // παντί
   })
 
-  it.skip('5-10 - checked Adjective5 - πάσᾱς', async () => {
+  it('5-10 - checked Adjective5 - πάσᾱς', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('πάσᾱς', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1202,7 +1201,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[12].cells[6].fullMatch).toBeTruthy() // πάσᾱς
   })
 
-  it.skip('5-11 - checked Adjective5 - παντί', async () => {
+  it('5-11 - checked Adjective5 - παντί', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('παντί', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1226,7 +1225,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[4].cells[7].fullMatch).toBeTruthy() // παντί
   })
 
-  it.skip('5-12 - checked Adjective5 - πάντᾰ', async () => {
+  it('5-12 - checked Adjective5 - πάντᾰ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('πάντᾰ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1254,7 +1253,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[5].cells[5].fullMatch).toBeTruthy() // πάντᾰ
   })
 
-  it.skip('6-1 - checked Adjective6 - χρυσοῦ', async () => {
+  it('6-1 - checked Adjective6 - χρυσοῦ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('χρυσοῦ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1281,7 +1280,7 @@ describe('greek-adjective-paradigm.test.js', () => {
 
   })
 
-  it.skip('6-2 - checked Adjective6 - χρυσοῖν', async () => {
+  it('6-2 - checked Adjective6 - χρυσοῖν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('χρυσοῖν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1305,7 +1304,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[7].cells[7].fullMatch).toBeFalsy() // ἀργυροῖν
   })
 
-  it.skip('6-3 - checked Adjective6 - χρυσῆν', async () => {
+  it('6-3 - checked Adjective6 - χρυσῆν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('χρυσῆν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1329,7 +1328,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[5].cells[7].fullMatch).toBeFalsy() // ἀργυροῦν
   })
 
-  it.skip('6-4 - checked Adjective6 - χρυσαῖς', async () => {
+  it('6-4 - checked Adjective6 - χρυσαῖς', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('χρυσαῖς', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1353,7 +1352,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[10].cells[7].fullMatch).toBeFalsy() // ἀργυροῖς
   })
 
-  it.skip('6-5 - checked Adjective6 - χρυσῷ', async () => {
+  it('6-5 - checked Adjective6 - χρυσῷ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('χρυσῷ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1377,7 +1376,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[4].cells[7].fullMatch).toBeFalsy() // ἀργυρῷ
   })
 
-  it.skip('6-6 - checked Adjective6 - χρυσᾶ', async () => {
+  it('6-6 - checked Adjective6 - χρυσᾶ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('χρυσᾶ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1403,7 +1402,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeTruthy() // χρυσᾶ
   })
 
-  it.skip('6-7 - checked Adjective6 - ἀργυροῦς', async () => {
+  it('6-7 - checked Adjective6 - ἀργυροῦς', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀργυροῦς', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1429,7 +1428,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[2].cells[5].fullMatch).toBeTruthy() // ἀργυροῦς
   })
 
-  it.skip('6-8 - checked Adjective6 - ἀργυροῖν', async () => {
+  it('6-8 - checked Adjective6 - ἀργυροῖν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀργυροῖν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1453,7 +1452,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[7].cells[7].fullMatch).toBeTruthy() // ἀργυροῖν
   })
 
-  it.skip('6-9 - checked Adjective6 - ἀργυρᾶς', async () => {
+  it('6-9 - checked Adjective6 - ἀργυρᾶς', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀργυρᾶς', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1479,7 +1478,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[11].cells[6].fullMatch).toBeTruthy() // ἀργυρᾶς
   })
 
-  it.skip('6-10 - checked Adjective6 - ἀργυρῶν', async () => {
+  it('6-10 - checked Adjective6 - ἀργυρῶν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀργυρῶν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1504,7 +1503,7 @@ describe('greek-adjective-paradigm.test.js', () => {
   })
 
 
-  it.skip('7-1 - checked Adjective7 - εὔνους', async () => {
+  it('7-1 - checked Adjective7 - εὔνους', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('εὔνους', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1529,7 +1528,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[7].cells[2].fullMatch).toBeTruthy() // εὔνοι
   })
 
-  it.skip('7-2 - checked Adjective7 - εὔνοιν', async () => {
+  it('7-2 - checked Adjective7 - εὔνοιν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('εὔνοιν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1552,7 +1551,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[6].cells[6].fullMatch).toBeFalsy() // ἁπλοῖν
   })
 
-  it.skip('7-3 - checked Adjective7 - εὔνοις', async () => {
+  it('7-3 - checked Adjective7 - εὔνοις', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('εὔνοις', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1575,7 +1574,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[9].cells[6].fullMatch).toBeFalsy() // ἁπλοῖς
   })
 
-  it.skip('7-4 - checked Adjective7 - εὔνῳ', async () => {
+  it('7-4 - checked Adjective7 - εὔνῳ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('εὔνῳ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1598,7 +1597,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[3].cells[6].fullMatch).toBeFalsy() // ἁπλῷ
   })
 
-  it.skip('7-5 - checked Adjective7 - ἁπλοῦ', async () => {
+  it('7-5 - checked Adjective7 - ἁπλοῦ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἁπλοῦ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1625,7 +1624,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[2].cells[6].fullMatch).toBeTruthy() // ἁπλοῦ
   })
 
-  it.skip('7-6 - checked Adjective7 - ἁπλοῖν', async () => {
+  it('7-6 - checked Adjective7 - ἁπλοῖν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἁπλοῖν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1648,7 +1647,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[6].cells[6].fullMatch).toBeTruthy() // ἁπλοῖν
   })
 
-  it.skip('7-7 - checked Adjective7 - ἁπλῶν', async () => {
+  it('7-7 - checked Adjective7 - ἁπλῶν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἁπλῶν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1671,7 +1670,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[8].cells[6].fullMatch).toBeTruthy() // ἁπλῶν
   })
 
-  it.skip('7-8 - checked Adjective7 - ἁπλῆς', async () => {
+  it('7-8 - checked Adjective7 - ἁπλῆς', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἁπλῆς', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1694,7 +1693,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[2].cells[6].fullMatch).toBeFalsy() // ἁπλοῦ
   })
 
-  it.skip('7-9 - checked Adjective7 - ἁπλοῦν', async () => {
+  it('7-9 - checked Adjective7 - ἁπλοῦν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἁπλοῦν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1719,7 +1718,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[1].cells[6].fullMatch).toBeTruthy() // ἁπλοῦν
   })
 
-  it.skip('7-10 - checked Adjective7 - ἁπλόᾰ', async () => {
+  it('7-10 - checked Adjective7 - ἁπλόᾰ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἁπλόᾰ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1747,7 +1746,7 @@ describe('greek-adjective-paradigm.test.js', () => {
   })
 
 
-  it.skip('8-1 - checked Adjective8 - ἵλεως', async () => {
+  it('8-1 - checked Adjective8 - ἵλεως', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἵλεως', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1772,7 +1771,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[7].cells[2].fullMatch).toBeTruthy() // ἵλεῳ
   })
 
-  it.skip('8-2 - checked Adjective8 - ἵλεω', async () => {
+  it('8-2 - checked Adjective8 - ἵλεω', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἵλεω', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1798,7 +1797,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[5].cells[3].fullMatch).toBeTruthy() // ἵλεῳ
   })
 
-  it.skip('8-3 - checked Adjective8 - ἵλεων', async () => {
+  it('8-3 - checked Adjective8 - ἵλεων', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἵλεων', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1827,7 +1826,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[8].cells[3].fullMatch).toBeTruthy() // ἵλεων
   })
 
-  it.skip('8-4 - checked Adjective8 - ἵλεᾰ', async () => {
+  it('8-4 - checked Adjective8 - ἵλεᾰ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἵλεᾰ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1853,7 +1852,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[10].cells[3].fullMatch).toBeTruthy() // ἵλεᾰ
   })
 
-  it.skip('8-5 - checked Adjective8 - πλέω', async () => {
+  it('8-5 - checked Adjective8 - πλέω', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('πλέω', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1881,7 +1880,7 @@ describe('greek-adjective-paradigm.test.js', () => {
 
   })
 
-  it.skip('8-6 - checked Adjective8 - πλέῳς', async () => {
+  it('8-6 - checked Adjective8 - πλέῳς', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('πλέῳς', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1904,7 +1903,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[9].cells[6].fullMatch).toBeTruthy() // πλέῳς
   })
 
-  it.skip('8-7 - checked Adjective8 - πλέᾳ', async () => {
+  it('8-7 - checked Adjective8 - πλέᾳ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('πλέᾳ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1929,7 +1928,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[7].cells[5].fullMatch).toBeTruthy() // πλέᾳ
   })
 
-  it.skip('8-8 - checked Adjective8 - πλέαιν', async () => {
+  it('8-8 - checked Adjective8 - πλέαιν', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('πλέαιν', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1952,7 +1951,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[6].cells[6].fullMatch).toBeFalsy() // πλέῳν
   })
 
-  it.skip('8-9 - checked Adjective8 - πλέων', async () => {
+  it('8-9 - checked Adjective8 - πλέων', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('πλέων', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -1981,7 +1980,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[8].cells[6].fullMatch).toBeTruthy() // πλέων
   })
 
-  it.skip('8-10 - checked Adjective8 - πλέᾰ', async () => {
+  it('8-10 - checked Adjective8 - πλέᾰ', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('πλέᾰ', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
