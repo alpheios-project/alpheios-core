@@ -977,7 +977,7 @@ h4.alpheios-principal-parts__groupitem {
 .alpheios-morph-data__principal_parts .feature_source span {
   font-size: smaller !important;
 }
-.alpheios-morph-data__pofs span {
+.alpheios-morph-data__morphdata .alpheios-morph-data__pofs span {
   padding-right: 5px !important;
 }
 /*

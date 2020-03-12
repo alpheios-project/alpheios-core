@@ -27,10 +27,10 @@
     <div class="alpheios-tab-options__aboutcont">
       <h3>{{ l10n.getMsg('TEXT_INFO_ABOUT') }}</h3>
       <div class="alpheios-info__versiontext alpheios-text__smallest">
-        {{ app.name }} {{ app.version }} build {{ app.buildNumber }}
+        {{ app.name }} {{ app.version }} {{ buildNumberForDisplay }}
       </div>
       <div class="alpheios-info__versiontext alpheios-text__smallest">
-        {{ app.libName }} {{ app.libVersion }} build {{ app.libBuildNumber }}
+        {{ app.libName }} {{ app.libVersion }} {{ libBuildNumberForDisplay }}
       </div>
     </div>
   </div>
@@ -69,6 +69,26 @@
       featureSettingsKey() {
         return `${this.$options.prefixName}-settings-feature-${this.$store.state.settings.featureResetCounter}`
       },
+
+      buildNumberForDisplay() {
+        // if the build number is already included in the package version then
+        // don't display it
+        if (this.app.version.indexOf(this.app.buildNumber) == -1) {
+          return `build ${this.app.buildNumber}`
+        } else {
+          return ''
+        }
+      },
+
+      libBuildNumberForDisplay() {
+        // if the build number is already included in the package version then
+        // don't display it
+        if (this.app.libVersion.indexOf(this.app.libBuildNumber) == -1) {
+          return `build ${this.app.libBuildNumber}`
+        } else {
+          return ''
+        }
+      }
     },
     methods: {
       resetAllOptions: function () {

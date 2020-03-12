@@ -7,10 +7,12 @@
 This monorepo contains packages of Alpheios Tools Core. It is managed by [Lerna](https://github.com/lerna/lerna).
 
 The following packages are included:
-* Data models
-* Client adapters
-* Resource client
-* Wordlsts controller
+* components
+* data-models
+* client-adapters
+* res-client
+* wordlists
+* inflection-tables
 
 ## Directory structure
 
@@ -26,7 +28,7 @@ Please note: the name of the package is the value of the `name` field in its `pa
 ## Installing dependencies
 If necessary, run a `set-node-build-deps` npm script to install `node-build` dependencies first (please check an explanation below). Then use a `bootstrap` npm script in `package.json` within the root directory to install or update dependencies of all packages, including the root one, at once. It will use a `--hoist` option that, instead of installing dependencies into folders of individual packages, will install them into the `node_modules` folder of the root directory instead.
 
-Alpheios Core uses a second version of the `node-build` tool. The second version does not install dependencies automatically, but rather lists as peer dependencies. Peer dependencies are not installed by npm. This means that `node-build` dependencies need to be injected into the root `package.json` of Alpheios Core. A `set-node-build-deps` script does just that: it installs `node-build` at the root, uses `install-peerdeps` npm package to inject dependencies, and then removes `node-build` from the root since it is not needed any more. Installation step is required because `node-build` is hosted on GitHub and `install-peerdeps`, not being able to work with GitHub-hosted packages at the moment, requires the package to be installed locally.
+Alpheios Core uses v2 of the [node-build](https://github.com/alpheios-project/node-build) tool. This version does not install dependencies automatically, but rather lists them as peer dependencies. Peer dependencies are not installed by npm. This means that `node-build` dependencies need to be injected into the root `package.json` of Alpheios Core. A `set-node-build-deps` script does just that: it installs `node-build` at the root, uses `install-peerdeps` npm package to inject dependencies, and then removes `node-build` from the root since it is not needed any more. This installation step is required because `node-build` is hosted on GitHub and `install-peerdeps`, not being able to work with GitHub-hosted packages at the moment, requires the package to be installed locally.
 
 `node-build` dependencies do not need to be updated every time `bootstrap` runs: once added to `package.json`, dependencies will stay there. `bootstrap` will pick them up and install during its run. Only if it is known that dependencies of `node-build` are changed it is necessary to re-run `set-node-build-deps` so that the corresponding packages will be updated within `package.json`.
 
@@ -49,32 +51,64 @@ There are several script that help to manage dependencies:
 * `list-outdated-deps` will run `npm outdated` across all packages and will list packages that have outdated dependencies. If there is an outdated version found across one of the packages one might edit that `package.json` file manually to set the dependency to its latest version, run `fix-mismatching-deps` to update the same dependency across other packages to specify the same version and finally run `bootstrap` to install an updated dependency package.
 * `fix-mismatching-deps`: if several packages depend on different versions of the same npm package this script will update `package.json` files with older dependencies so that all packages will depend on the the newwest version of the dependency list. For example, if package A depends on webpack v4.0.1 and packages B depends on webpack v4.1.5 then this command will updated both packages so that package A and package B will depend on webpack v4.1.5. This may be not the latest version of webpack available on npm but it will be the latest version specified across all individual packages. `fix-mismatching-deps` does not update dependencies themselves in `node_modules`; one has to run a `bootstrap` command to install an updated dependency version.
 
+## Developing Code
+When you are fixing a bug or starting a new feature, create a branch off of master and do your development work in there as usual. Name the branch according to the following scheme:
 
-## Starting a new feature
-When you are starting a new feature, create a feature branch for `alpheios-core` and do your development work in there as usual. After your work is completed, merge your changes to master.
+For issues in the alpheios-core repository:
 
-## Run npm scripts
+```
+i<issue-number>-[description]
+```
+
+If the issue is hosted by another repository (in which case ideally there would be a companion issue entered in alpheios-core but
+it could be overlooked):
+
+```
+i<issue-number>-<repo-name>-[description]
+```
+
+After your work is completed, and the PR approved, merge your changes to master.
+
+See also the [Git Workflow Documentation](https://github.com/alpheios-project/documentation/tree/master/development/git-workflow)
+
+### Using Conventional Commits
+
+For at least one commit in your development branch, run `npm run conventional-commit` and follow the prompts to specify the type of change you are making.
+
+## Running npm scripts
 Please do not run scripts related to addition, installation, and upgrade of package dependencies from a package directory. Do it from a root directory (`alpheios-core`) using npm scripts of the root `package.json` or use Lerna's run command (`npx lerna run scipt-to-run`).
 
 To run npm scripts for all packages use `npx lerna run script-name` from the top-level directory (i.e. `alpheios-core`). This will run `script-name` script for all packages that have this script in their `package.json`. See [lerna run documentation](https://github.com/lerna/lerna/tree/master/commands/run#readme) for more information on this command.
 
 To run npm scripts of individual packages in situations other than add, install or update use `npx lerna run --scope package-name script-name` or go to the package directory (i.e. `alpheios-core/packages/package-name`) and run npm scripts from there: `npm run script-name`. Alternatively, you can use `npx lerna run --scope package-name script-name` to run a scoped script from a root directory.
 
-## Setting a version number
-Alpheios Core uses a versioning schema where all packages have the same version. Lerna commands provides an automation that allows to synchronize versions of all packages. The following npm scripts are available in the root directory for that:
-* `version-set-major-dev` will update to the next major development version, e.g. `3.2.1-dev.3` -> `4.0.0-dev.0`.
-* `version-set-minor-dev` will update to the next minor development version, e.g. `3.2.1-dev.3` -> `3.3.0-dev.0`.
-* `version-set-patch-dev` will update to the next patch development version, e.g. `3.2.1-dev.3` -> `3.2.2-dev.0`.
-* `version-increase-prerelease-dev` will increase a pre-release development version, e.g. `3.2.1-dev.3` -> `3.2.1-dev.4`. If the current version has no pre-release development modifier then this command will add one: `3.2.1` -> `3.2.1-dev.0`.
-* `version-increase-prerelease-qa` will increase a pre-release QA version, e.g. `3.2.1-qa.1` -> `3.2.1-qa.2`. If the current version has no pre-release qa modifier then this command will add one: `3.2.1` -> `3.2.1-qa.0`, `3.2.1-dev.3` -> `3.2.1-qa.0`.
-* `version-graduate` will set a production version out of whatever version is set currently, e.g. `3.2.1-qa.1` -> `3.2.1`.
-These scripts will update version in `package.json` files of individual packages, make a commit this change, and tag it with a versioning tag. It will not push the commit, it has to be done manually.
- 
- Please note that for Lerna to set a version number requires all changes to be fully committed. It will fail to work if there are any uncommitted changes in the `alpheios-core` directory.
- 
- ## Claiming an individual package as a dependency (using webpack)
+## Claiming an individual package as a dependency (using webpack)
  To use an individual package as a dependency:
  * Set `alpheios-core` as a dependency in `package.json`.
  * Install `alpheios-core`.
  * Set a webpack alias that will point to an individual package within `alpheios-core`. So if, for example, a package depends on `alpheios-client-adapters` a webpack alias must point to an `alpheios-client-adaptes` package within `alpheios-core`: `alias: { 'alpheios-client-adapters': path.join(projectRoot, 'node_modules/alpheios-core/packages/client-adapters/dist/alpheios-client-adapters.js') }`.
  * Import items from Client Adapters: `import { something } from 'alpehios-client-adapters'`.
+
+## Building for development
+
+Run `npm run build`
+
+This will inject an automatic build number generated from the branch name and date.
+
+Commit built files to the development branch.
+
+## Building for QA
+
+Until the QA build is fully automated, these are the steps to build a package for QA
+
+1. If the `qa` branch is not created, create it, and push it to GitHub
+2. merge `master` to the the `qa` branch.
+3. run `npm clean` && `npm set-node-build-deps` && `npm bootstrap`
+4. run `npm tagged-commit`
+5. run `git push && git push --tag`
+
+See also the [Git Workflow Documentation](https://github.com/alpheios-project/documentation/tree/master/development/git-workflow)
+
+## Versioning and Building for Production
+
+TBD

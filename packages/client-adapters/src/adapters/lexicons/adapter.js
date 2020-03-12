@@ -5,6 +5,7 @@ import BaseAdapter from '@clAdapters/adapters/base-adapter'
 import DefaultConfig from '@clAdapters/adapters/lexicons/config.json'
 
 let cachedDefinitions = new Map() // eslint-disable-line prefer-const
+let uploadStarted = new Map() // eslint-disable-line prefer-const
 
 class AlpheiosLexiconsAdapter extends BaseAdapter {
   /**
@@ -144,19 +145,36 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   /**
   * This method checks if data from url is already cached and if not - it uploads data from url to cache
   * @param {String} url - url from what we need to cache data
+  * @param {Null|Map|String} externalData - data that would be used as fixture for the url
+  * @param {Boolean} skipFetch - when this check is true, then fetch would not be execute in any case, it is used for Full Definitions
   * @return {Boolean} - true - if cached is successed
   */
-  async checkCachedData (url) {
-    if (!cachedDefinitions.has(url)) {
+  async checkCachedData (url, externalData = null, skipFetch = false) {
+    if (!externalData && skipFetch) {
+      return false
+    }
+    if (!cachedDefinitions.has(url) && !uploadStarted.has(url)) {
       try {
-        const unparsed = await this.fetch(url, { type: 'xml', timeout: this.options.timeout })
-        const parsed = papaparse.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
-        const data = this.fillMap(parsed.data)
+        uploadStarted.set(url, true)
+
+        let data = externalData
+        if (!externalData) {
+          const unparsed = await this.fetch(url, { type: 'xml', timeout: this.options.timeout })
+          const parsed = papaparse.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
+          data = this.fillMap(parsed.data)
+        }
+
         cachedDefinitions.set(url, data)
+        uploadStarted.set(url, false)
       } catch (error) {
         this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
+        uploadStarted.set(url, false)
         return false
       }
+    } else if (uploadStarted.has(url) && uploadStarted.get(url)) {
+      setTimeout(() => {
+        this.checkCachedData(url)
+      }, this.options.timeout)
     }
     return true
   }
@@ -173,7 +191,6 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
 
     for (let lexeme of homonym.lexemes) { // eslint-disable-line prefer-const
       const deftexts = this.lookupInDataIndex(data, lexeme.lemma, model)
-
       if (deftexts) {
         for (const d of deftexts) {
           const text = d.field1
@@ -242,7 +259,12 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   */
   async updateFullDefs (fullDefsRequests, config, homonym) {
     for (let request of fullDefsRequests) { // eslint-disable-line prefer-const
-      const fullDefDataRes = this.fetch(request.url, { type: 'xml' })
+      let fullDefDataRes
+      if (cachedDefinitions.has(request.url)) {
+        fullDefDataRes = new Promise((resolve, reject) => resolve(cachedDefinitions.get(request.url)))
+      } else {
+        fullDefDataRes = this.fetch(request.url, { type: 'xml' })
+      }
 
       fullDefDataRes.then(
         async (fullDefData) => {
