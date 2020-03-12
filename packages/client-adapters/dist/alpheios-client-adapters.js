@@ -14292,6 +14292,8 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   /**
   * This method checks if data from url is already cached and if not - it uploads data from url to cache
   * @param {String} url - url from what we need to cache data
+  * @param {Null|Map|String} externalData - data that would be used as fixture for the url
+  * @param {Boolean} skipFetch - when this check is true, then fetch would not be execute in any case, it is used for Full Definitions
   * @return {Boolean} - true - if cached is successed
   */
   async checkCachedData (url, externalData = null, skipFetch = false) {
