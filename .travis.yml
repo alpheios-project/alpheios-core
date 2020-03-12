@@ -7,7 +7,7 @@ install:
   - npm run bootstrap
 script:
   - env
-  - npm run test-ci
+  - npm run test
 before_deploy:
   - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
 deploy:
