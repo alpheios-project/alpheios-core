@@ -76,7 +76,7 @@
           {{ l10n.getText('PLACEHOLDER_NO_LANGUAGE_DATA') }}
         </div>
         <div class="alpheios-popup__definitions--placeholder"
-             v-show="$store.state.app.morphDataReady && !app.hasMorphData() && !noLanguage">
+             v-show="!targetWordHasData">
           {{ l10n.getText('PLACEHOLDER_NO_MORPH_DATA') }}
         </div>
         <div :id="lexicalDataContainerID"
