@@ -1259,7 +1259,6 @@ select.alpheios-setting__control,
   width: calc(var(--alpheios-base-ui-size) * 7.5) !important;
   background-color: var(--alpheios-text-bg-color) !important;
   color: var(--alpheios-text-color) !important;
-  text-align: center !important;
   border: 1px solid var(--alpheios-border-color) !important;
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
   z-index: 1 !important;
@@ -1270,6 +1269,7 @@ select.alpheios-setting__control,
 .alph_tooltip span.tooltiptext {
   padding: calc(var(--alpheios-base-ui-size) * 0.375) 0 !important;
   font-size: calc(var(--alpheios-base-text-size) * 0.75) !important;
+  text-align: center !important;
 }
 .alph_tooltip:hover .tooltiptext {
   visibility: visible !important;
