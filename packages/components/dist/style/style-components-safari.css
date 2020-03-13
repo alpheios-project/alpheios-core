@@ -515,7 +515,7 @@ input.alpheios-input::-ms-input-placeholder {
   min-height: calc(var(--alpheios-base-text-size) * 2.5) !important;
   padding: calc(var(--alpheios-base-text-size) * 0.5) calc(var(--alpheios-base-text-size) * 2.5) 0 calc(var(--alpheios-base-text-size) * 0.5) !important;
 }
-.alpheios-content .multiselect__tag {
+.alpheios-content span.multiselect__tag {
   background-color: var(--alpheios-settings-font-multiselect-bg) !important;
   display: inline-block;
   border-radius: calc(var(--alpheios-base-text-size) * 0.3125) !important;
@@ -525,7 +525,7 @@ input.alpheios-input::-ms-input-placeholder {
   white-space: nowrap !important;
   min-height: calc(var(--alpheios-base-text-size) * 1.5) !important;
 }
-.alpheios-content .multiselect__tag span {
+.alpheios-content span.multiselect__tag span {
   color: var(--alpheios-settings-font-multiselect-font-color) !important;
 }
 .alpheios-content .multiselect__select {
@@ -545,7 +545,7 @@ input.alpheios-input::-ms-input-placeholder {
 .alpheios-content .multiselect__single {
   display: none;
 }
-.alpheios-content .multiselect__option {
+.alpheios-content span.multiselect__option {
   padding: 12px !important;
 }
 .alpheios-content .multiselect__option::after {
@@ -891,7 +891,7 @@ body {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-span.alpheios-morph__attr {
+.alpheios-content span.alpheios-morph__attr {
   font-weight: normal !important;
   padding-right: 0.25em !important;
 }
@@ -1259,15 +1259,17 @@ select.alpheios-setting__control,
   width: calc(var(--alpheios-base-ui-size) * 7.5) !important;
   background-color: var(--alpheios-text-bg-color) !important;
   color: var(--alpheios-text-color) !important;
-  text-align: center !important;
-  padding: calc(var(--alpheios-base-ui-size) * 0.375) 0 !important;
   border: 1px solid var(--alpheios-border-color) !important;
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
   z-index: 1 !important;
   opacity: 0 !important;
   transition: opacity 0.6s !important;
-  font-size: calc(var(--alpheios-base-text-size) * 0.75) !important;
   display: none;
+}
+.alph_tooltip span.tooltiptext {
+  padding: calc(var(--alpheios-base-ui-size) * 0.375) 0 !important;
+  font-size: calc(var(--alpheios-base-text-size) * 0.75) !important;
+  text-align: center !important;
 }
 .alph_tooltip:hover .tooltiptext {
   visibility: visible !important;
