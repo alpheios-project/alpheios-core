@@ -2076,7 +2076,7 @@ UIController.libName = packageDescription
  */
 UIController.libVersion = packageVersion
 
-/** noti
+/**
  * An instance of a warning panel that is shown when UI controller is disabled
  * because an Alpheios embedded lib is active on a page
  *
