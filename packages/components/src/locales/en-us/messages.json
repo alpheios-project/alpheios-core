@@ -380,6 +380,11 @@
     "description": "Resource retrieval is in progress",
     "component": "UI"
   },
+  "TEXT_HINT_MOUSE_MOVE": {
+    "message": "MouseMove Event is enabled for google.docs by default.",
+    "description": "popup hint",
+    "component": "UI"
+  },
   "LABEL_BROWSERACTION_DEACTIVATE": {
     "message": "Deactivate Alpheios",
     "description": "Deactivate browser action title",
