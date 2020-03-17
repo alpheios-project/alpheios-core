@@ -48,7 +48,7 @@
     "alpheios-fixtures": "github:alpheios-project/fixtures",
     "alpheios-inflection-tables": "^3.3.0",
     "alpheios-messaging": "github:alpheios-project/alpheios-messaging",
-    "alpheios-node-build": "github:alpheios-project/node-build#dev-webpack-mode",
+    "alpheios-node-build": "github:alpheios-project/node-build#v2",
     "alpheios-res-client": "^3.3.0",
     "alpheios-wordlist": "^3.3.0",
     "autoprefixer": "^9.7.4",
@@ -103,6 +103,9 @@
   },
   "jest": {
     "verbose": true,
+    "globals": {
+      "DEVELOPMENT_MODE_BUILD": true
+    },
     "testPathIgnorePatterns": [
       "<rootDir>/node_modules/"
     ],
