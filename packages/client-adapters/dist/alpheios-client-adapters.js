@@ -13242,7 +13242,7 @@ else if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () { return xmlToJSON
 /*! exports provided: morphology, lexicon, lemmatranslation, wordusageExamples, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}}}");
+module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\",\"checkCachedData\",\"getConfig\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"],\"checkCachedData\":[\"url\",\"externalData\"],\"getConfig\":[]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}}}");
 
 /***/ }),
 
@@ -15994,9 +15994,9 @@ class ClientAdapters {
       adapterName: 'alpheios',
       method: options.method,
       clientId: options.clientId,
-      timeout: options.params.timeout ? options.params.timeout : 3000,
-      callBackEvtSuccess: options.params.callBackEvtSuccess,
-      callBackEvtFailed: options.params.callBackEvtFailed
+      timeout: options.params && options.params.timeout ? options.params.timeout : 3000,
+      callBackEvtSuccess: options.params ? options.params.callBackEvtSuccess : null,
+      callBackEvtFailed: options.params ? options.params.callBackEvtFailed : null
     }
 
     const localLexiconsAdapter = new _clAdapters_adapters_lexicons_adapter__WEBPACK_IMPORTED_MODULE_4__["default"](adapterParams)
@@ -16008,6 +16008,15 @@ class ClientAdapters {
     if (options.method === 'fetchFullDefs') {
       await localLexiconsAdapter.fetchFullDefs(options.params.homonym, options.params.opts)
       return { errors: localLexiconsAdapter.errors }
+    }
+
+    if (options.method === 'checkCachedData') {
+      await localLexiconsAdapter.checkCachedData(options.params.url, options.params.externalData, options.params.skipFetch)
+      return { errors: localLexiconsAdapter.errors }
+    }
+
+    if (options.method === 'getConfig') {
+      return localLexiconsAdapter.config
     }
     return null
   }
