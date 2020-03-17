@@ -59,6 +59,15 @@ export default class Platform {
   }
 
   /**
+   * Determines if the page is on google.docs.com
+   *
+   * @returns {Boolean} - true if it is on google.docs
+   */
+  static getIsGoogleDocs () {
+    return window.location.hostname === 'docs.google.com'
+  }
+
+  /**
    * Determines a screen orientation of a device.
    *
    * @returns {string} - A name of the screen orientation as defined in {@link Platform@orientations}.
@@ -120,6 +129,10 @@ export default class Platform {
 
   get isEmbeddedLibrary () {
     return this._appType === Platform.appTypes.EMBEDDED_LIBRARY
+  }
+
+  get isGoogleDocs () {
+    return this.constructor.getIsGoogleDocs
   }
 
   /**

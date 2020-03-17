@@ -380,6 +380,11 @@
     "description": "Resource retrieval is in progress",
     "component": "UI"
   },
+  "TEXT_HINT_MOUSE_MOVE": {
+    "message": "MouseMove Event is enabled for google.docs by default.",
+    "description": "popup hint",
+    "component": "UI"
+  },
   "TEXT_CEDICT_LOAD_DATA_NOTICE": {
     "message": "Chinese data has not been loaded yet. Do you want to load it?",
     "description": "A question about whether Chinese data needs to be loaded",

@@ -9,7 +9,7 @@
     "test-no-coverage": "jest",
     "test-c": "jest tests/morph-fixture.test.js",
     "test-u": "jest tests/adapters/tufts/tufts-example.test.js",
-    "test-l": "jest tests/adapters/lexicons/adapter.test.js",
+    "test-l": "jest tests/adapters/concordance/adapter.test.js",
     "build": "npm run build-lib && npm run build-node",
     "build-lib": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p vue -c config.mjs",
     "build-node": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p node-lib -c config-node.mjs",

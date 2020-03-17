@@ -62,7 +62,7 @@ export default class SessionAuthenticator {
         }
       }).catch((error) => {
         // eslint-disable-next-line prefer-promise-reject-errors
-        reject(`Session request failed ${error}`)
+        reject(new Error(`Session request failed ${error}`))
       })
     })
   }
@@ -72,7 +72,7 @@ export default class SessionAuthenticator {
     // initiating authentication
     return new Promise((resolve, reject) => {
       // eslint-disable-next-line prefer-promise-reject-errors
-      reject('Server Side Authenticator')
+      reject(new Error('Server Side Authenticator'))
     })
   }
 
@@ -86,7 +86,7 @@ export default class SessionAuthenticator {
         }
       }).catch((error) => {
         // eslint-disable-next-line prefer-promise-reject-errors
-        reject(`token request failed ${error}`)
+        reject(new Error(`token request failed ${error}`))
       })
     })
   }

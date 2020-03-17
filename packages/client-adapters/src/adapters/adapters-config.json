@@ -26,10 +26,12 @@
   "lexicon": {
     "alpheios": {
       "adapter": "lexicons",
-      "methods": [ "fetchShortDefs", "fetchFullDefs" ],
+      "methods": [ "fetchShortDefs", "fetchFullDefs", "checkCachedData", "getConfig" ],
       "params": {
         "fetchShortDefs" : [ "homonym", "opts" ],
-        "fetchFullDefs" : [ "homonym", "opts" ]
+        "fetchFullDefs" : [ "homonym", "opts" ],
+        "checkCachedData": [ "url", "externalData" ],
+        "getConfig": []
       }
     }
   },

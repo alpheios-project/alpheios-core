@@ -57,7 +57,7 @@ export default class AppAuthenticator {
         if (!this.env) {
           const error = 'Unable to find Auth0 configuration. Auth0 functionality will be disabled'
           console.error(error)
-          reject(error)
+          reject(new Error(error))
         }
         // test environment
         if (this.env.TEST_ID) {
@@ -106,14 +106,14 @@ export default class AppAuthenticator {
           this.auth0Lock.on('unrecoverable_error', (error) => {
             console.error('Auth0 Lock unrecoverable error: ', error)
             // eslint-disable-next-line prefer-promise-reject-errors
-            reject('Auth0 Lock unrecoverable')
+            reject(new Error('Auth0 Lock unrecoverable'))
           })
 
           // An authorization error
           this.auth0Lock.on('authorization_error', (error) => {
             console.error('Auth0 Lock authorization error: ', error)
             // eslint-disable-next-line prefer-promise-reject-errors
-            reject('Auth0Lock authorization error')
+            reject(new Error('Auth0Lock authorization error'))
           })
           this.auth0Lock.show()
           // TODO: Handle a situation when `authenticated` event is never fired (is that ever possible)
@@ -133,7 +133,7 @@ export default class AppAuthenticator {
       if (!token) {
         console.error('You must login to call this protected endpoint!')
         // eslint-disable-next-line prefer-promise-reject-errors
-        reject('Login required')
+        reject(new Error('Login required'))
       }
       const expirationDateTimeStr = localStorage.getItem('expiration_date_time')
       let authData = new AuthData() // eslint-disable-line prefer-const
@@ -178,7 +178,7 @@ export default class AppAuthenticator {
       if (!token) {
         console.error('You must login to call this protected endpoint!')
         // eslint-disable-next-line prefer-promise-reject-errors
-        reject('Not Authenticated')
+        reject(new Error('Not Authenticated'))
       }
       resolve(token)
     })

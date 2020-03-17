@@ -8,6 +8,8 @@ import ClientAdapters from '@clAdapters/client-adapters.js'
 import { LanguageModelFactory as LMF, Constants, Homonym, Lexeme, Lemma } from 'alpheios-data-models'
 import { Fixture, LexiconsFixture } from 'alpheios-fixtures'
 
+import BaseTestHelp from '@tests/base-test-help.js'
+
 describe('lexicons/adapter.test.js', () => {
   console.error = function () {}
   console.log = function () {}
@@ -49,21 +51,6 @@ describe('lexicons/adapter.test.js', () => {
 
   function timeout (ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
-  }
-
-  async function updateCacheWithFixtures (adapter) {  
-    let urls = LexiconsFixture.libUrls
-    let urlsFull = LexiconsFixture.fullUrls
-
-    for (let i = 0; i < urls.length; i++) {
-      let urlKey = adapter.config[urls[i].url].urls[urls[i].type]
-      await adapter.checkCachedData(urlKey, LexiconsFixture.lexData[urlKey])
-    }
-
-    for (let j = 0; j < urlsFull.length; j++) {
-      let urlF = urlsFull[j]
-      await adapter.checkCachedData(urlF, LexiconsFixture.lexFullData[urlF], true)
-    }
   }
 
   function updateObjectWithFixtures (adapter, urlLib, urlType) { 
@@ -123,7 +110,7 @@ describe('lexicons/adapter.test.js', () => {
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
 
-    await updateCacheWithFixtures(adapter)
+    await BaseTestHelp.updateCacheWithFixtures()
 
     jest.spyOn(adapter, 'updateShortDefs')
     adapter.prepareSuccessCallback = jest.fn()
@@ -143,7 +130,7 @@ describe('lexicons/adapter.test.js', () => {
     })
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
-    await updateCacheWithFixtures(adapter)
+    await BaseTestHelp.updateCacheWithFixtures()
 
     adapter.prepareFailedCallback = jest.fn()
 
@@ -159,7 +146,7 @@ describe('lexicons/adapter.test.js', () => {
     })
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
-    await updateCacheWithFixtures(adapter)
+    await BaseTestHelp.updateCacheWithFixtures()
 
     jest.spyOn(adapter, 'collectFullDefURLs')
     jest.spyOn(adapter, 'updateFullDefs')
@@ -331,7 +318,7 @@ describe('lexicons/adapter.test.js', () => {
 
     const cachedDefinitionsIndex = updateObjectWithFixtures(adapter, urlKey, 'index')
 
-    await updateCacheWithFixtures(adapter)
+    await BaseTestHelp.updateCacheWithFixtures()
 
     let fullDefsRequests = adapter.collectFullDefURLs(cachedDefinitionsIndex.get(url), testSuccessHomonym, adapter.config[urlKey])
     expect(fullDefsRequests.length).toEqual(testSuccessHomonym.lexemes.length)
@@ -365,7 +352,7 @@ describe('lexicons/adapter.test.js', () => {
     let url = adapter.config[urlKey].urls.index
     const cachedDefinitionsIndex = updateObjectWithFixtures(adapter, urlKey, 'index')
 
-    await updateCacheWithFixtures(adapter)
+    await BaseTestHelp.updateCacheWithFixtures()
 
     let fullDefsRequests = adapter.collectFullDefURLs(cachedDefinitionsIndex.get(url), testSuccessHomonym, adapter.config[urlKey])
     adapter.prepareSuccessCallback = jest.fn()
@@ -417,7 +404,7 @@ describe('lexicons/adapter.test.js', () => {
       method: 'fetchShortDefs'
     })
 
-    await updateCacheWithFixtures(adapter)
+    await BaseTestHelp.updateCacheWithFixtures()
 
     await adapter.fetchShortDefs(testSuccessHomonym, { allow: ['https://github.com/alpheios-project/lsj'] })
 
@@ -456,7 +443,7 @@ describe('lexicons/adapter.test.js', () => {
       method: 'fetchFullDefs'
     })
 
-    await updateCacheWithFixtures(adapter)
+    await BaseTestHelp.updateCacheWithFixtures()
     
     await adapter.fetchFullDefs(homonymMare, { allow: ['https://github.com/alpheios-project/ls'] })
 
@@ -479,7 +466,7 @@ describe('lexicons/adapter.test.js', () => {
       method: 'fetchFullDefs'
     })
 
-    await updateCacheWithFixtures(adapter)
+    await BaseTestHelp.updateCacheWithFixtures()
 
     let formLexeme = new Lexeme(new Lemma('foo', Constants.LANG_LATIN), [])
     let homonym = new Homonym([formLexeme], 'foo')
@@ -530,7 +517,7 @@ describe('lexicons/adapter.test.js', () => {
       method: 'fetchShortDefs'
     })
 
-    await updateCacheWithFixtures(adapter)
+    await BaseTestHelp.updateCacheWithFixtures()
 
     await adapter.fetchShortDefs(testHomonym, { allow: ['https://github.com/alpheios-project/majorplus'] })
     await timeout(300)

@@ -263,9 +263,9 @@ class ClientAdapters {
       adapterName: 'alpheios',
       method: options.method,
       clientId: options.clientId,
-      timeout: options.params.timeout ? options.params.timeout : 3000,
-      callBackEvtSuccess: options.params.callBackEvtSuccess,
-      callBackEvtFailed: options.params.callBackEvtFailed
+      timeout: options.params && options.params.timeout ? options.params.timeout : 3000,
+      callBackEvtSuccess: options.params ? options.params.callBackEvtSuccess : null,
+      callBackEvtFailed: options.params ? options.params.callBackEvtFailed : null
     }
 
     const localLexiconsAdapter = new AlpheiosLexiconsAdapter(adapterParams)
@@ -277,6 +277,15 @@ class ClientAdapters {
     if (options.method === 'fetchFullDefs') {
       await localLexiconsAdapter.fetchFullDefs(options.params.homonym, options.params.opts)
       return { errors: localLexiconsAdapter.errors }
+    }
+
+    if (options.method === 'checkCachedData') {
+      await localLexiconsAdapter.checkCachedData(options.params.url, options.params.externalData, options.params.skipFetch)
+      return { errors: localLexiconsAdapter.errors }
+    }
+
+    if (options.method === 'getConfig') {
+      return localLexiconsAdapter.config
     }
     return null
   }
