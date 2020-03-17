@@ -15,9 +15,10 @@
     },
     "chineseloc": {
       "adapter": "chineseAdapter",
-      "methods": [ "getHomonym" ],
+      "methods": [ "getHomonym", "loadData" ],
       "params": {
-        "getHomonym" : [ "languageID", "word" ]
+        "getHomonym" : [ "languageID", "word" ],
+        "loadData" : [ "timeout" ]
       }
     }
   },

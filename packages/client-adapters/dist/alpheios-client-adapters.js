@@ -13231,7 +13231,7 @@ else if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () { return xmlToJSON
 /*! exports provided: morphology, lexicon, lemmatranslation, wordusageExamples, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}}}");
+module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\",\"loadData\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"],\"loadData\":[\"timeout\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}}}");
 
 /***/ }),
 
@@ -13398,12 +13398,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/adapter-error */ "./errors/adapter-error.js");
-/* harmony import */ var _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/l10n/l10n */ "./l10n/l10n.js");
-/* harmony import */ var _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/locales/locales.js */ "./locales/locales.js");
-/* harmony import */ var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json");
-var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
-/* harmony import */ var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
-var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+/* harmony import */ var _clAdapters_errors_cedict_error_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/errors/cedict-error.js */ "./errors/cedict-error.js");
+/* harmony import */ var _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/l10n/l10n */ "./l10n/l10n.js");
+/* harmony import */ var _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json");
+var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
+/* harmony import */ var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+
 
 
 
@@ -13418,10 +13420,10 @@ class BaseAdapter {
   */
   constructor () {
     this.errors = []
-    this.l10n = new _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_2__["default"]()
-      .addMessages(_clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_US)
-      .addMessages(_clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_GB)
-      .setLocale(_clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_US)
+    this.l10n = new _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_3__["default"]()
+      .addMessages(_clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_5__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_4__["default"].en_US)
+      .addMessages(_clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_4__["default"].en_GB)
+      .setLocale(_clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_4__["default"].en_US)
   }
 
   /**
@@ -13430,6 +13432,11 @@ class BaseAdapter {
   */
   addError (message) {
     const error = new _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__["default"](this.config.category, this.config.adapterName, this.config.method, message)
+    this.errors.push(error)
+  }
+
+  addCedictError (errorCode, message) {
+    const error = new _clAdapters_errors_cedict_error_js__WEBPACK_IMPORTED_MODULE_2__["default"](this.config.category, this.config.adapterName, this.config.method, errorCode, message)
     this.errors.push(error)
   }
 
@@ -13617,35 +13624,30 @@ class BaseAdapter {
 /*!****************************************!*\
   !*** ./adapters/chineseloc/adapter.js ***!
   \****************************************/
-/*! exports provided: CedictConfig, CedictCharacterForms, default */
+/*! exports provided: CedictCharacterForms, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CedictConfig", function() { return CedictConfig; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CedictCharacterForms", function() { return CedictCharacterForms; });
 /* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-messaging */ "alpheios-messaging");
 /* harmony import */ var alpheios_messaging__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__);
+/* global DEVELOPMENT_MODE_BUILD */
 /* eslint-disable no-unused-vars */
 
 
 
 
-// region Testing only
-const CedictConfig = {
-  name: 'cedict',
-  targetURL: 'https://lexis-dev.alpheios.net/index-dev.html',
-  targetIframeID: 'alpheios-lexis-cs'
-}
-// endregion Testing only
-
 const CedictCharacterForms = {
   SIMPLIFIED: 'simplified',
   TRADITIONAL: 'traditional'
 }
+
+let cedictConfig = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationConfig"]
+if (true) { cedictConfig = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationDevConfig"] }
 
 const msgServiceName = 'AdaptersLexisService'
 
@@ -13660,23 +13662,12 @@ class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPA
     instance of the service that will be created once and reused across consecutive constructor invocations.
      */
     if (!alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].hasService(msgServiceName)) {
-      alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].createService(msgServiceName, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["WindowIframeDestination"](CedictConfig))
+      alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].createService(msgServiceName, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["WindowIframeDestination"](cedictConfig))
     }
     this._messagingService = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].getService(msgServiceName)
   }
 
   get languageID () { return alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["ChineseLanguageModel"].languageID }
-
-  async _fetchCedictData (targetWord, contextForward) {
-    const requestBody = {
-      getWords: {
-        words: this.constructor._buildWordList(targetWord, contextForward)
-      }
-    }
-    const responseMessage = await this._messagingService.sendRequestTo(CedictConfig.name, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["RequestMessage"](requestBody))
-    console.info('Response message is', responseMessage)
-    return responseMessage.body
-  }
 
   /**
    * Creates a list of words that will be requested from a CEDICT service.
@@ -13701,17 +13692,45 @@ class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPA
 
   async getHomonym (targetWord, contextForward) {
     try {
-      const cedictRes = await this._fetchCedictData(targetWord, contextForward)
-      if (Object.keys(cedictRes).length === 0) {
+      const requestBody = {
+        getWords: {
+          words: this.constructor._buildWordList(targetWord, contextForward)
+        }
+      }
+      let response
+      try {
+        response = await this._messagingService.sendRequestTo(cedictConfig.name, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["RequestMessage"](requestBody))
+      } catch (response) {
+        this.addCedictError(response.errorCode, response.body.message)
+        return
+      }
+
+      if (Object.keys(response.body).length === 0) {
         this.addError(this.l10n.messages.MORPH_NO_HOMONYM.get(targetWord, this.languageID.toString()))
         return
       }
-      const homonym = this._transformData(cedictRes, targetWord)
+      const homonym = this._transformData(response.body, targetWord)
       if (!homonym) {
         this.addError(this.l10n.messages.MORPH_NO_HOMONYM.get(targetWord, this.languageID.toString()))
         return
       }
       return homonym
+    } catch (error) {
+      this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
+    }
+  }
+
+  async loadData (timeout) {
+    try {
+      const requestBody = {
+        loadData: {}
+      }
+      let response
+      try {
+        response = await this._messagingService.sendRequestTo(cedictConfig.name, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["RequestMessage"](requestBody), timeout)
+      } catch (response) {
+        this.addCedictError(response.errorCode, response.body.message)
+      }
     } catch (error) {
       this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
     }
@@ -14151,6 +14170,7 @@ var _clAdapters_adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3___names
 
 
 let cachedDefinitions = new Map() // eslint-disable-line prefer-const
+let uploadStarted = new Map() // eslint-disable-line prefer-const
 
 class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_2__["default"] {
   /**
@@ -14290,19 +14310,36 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   /**
   * This method checks if data from url is already cached and if not - it uploads data from url to cache
   * @param {String} url - url from what we need to cache data
+  * @param {Null|Map|String} externalData - data that would be used as fixture for the url
+  * @param {Boolean} skipFetch - when this check is true, then fetch would not be execute in any case, it is used for Full Definitions
   * @return {Boolean} - true - if cached is successed
   */
-  async checkCachedData (url) {
-    if (!cachedDefinitions.has(url)) {
+  async checkCachedData (url, externalData = null, skipFetch = false) {
+    if (!externalData && skipFetch) {
+      return false
+    }
+    if (!cachedDefinitions.has(url) && !uploadStarted.has(url)) {
       try {
-        const unparsed = await this.fetch(url, { type: 'xml', timeout: this.options.timeout })
-        const parsed = papaparse__WEBPACK_IMPORTED_MODULE_1___default.a.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
-        const data = this.fillMap(parsed.data)
+        uploadStarted.set(url, true)
+
+        let data = externalData
+        if (!externalData) {
+          const unparsed = await this.fetch(url, { type: 'xml', timeout: this.options.timeout })
+          const parsed = papaparse__WEBPACK_IMPORTED_MODULE_1___default.a.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
+          data = this.fillMap(parsed.data)
+        }
+
         cachedDefinitions.set(url, data)
+        uploadStarted.set(url, false)
       } catch (error) {
         this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
+        uploadStarted.set(url, false)
         return false
       }
+    } else if (uploadStarted.has(url) && uploadStarted.get(url)) {
+      setTimeout(() => {
+        this.checkCachedData(url)
+      }, this.options.timeout)
     }
     return true
   }
@@ -14319,7 +14356,6 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
 
     for (let lexeme of homonym.lexemes) { // eslint-disable-line prefer-const
       const deftexts = this.lookupInDataIndex(data, lexeme.lemma, model)
-
       if (deftexts) {
         for (const d of deftexts) {
           const text = d.field1
@@ -14388,7 +14424,12 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   */
   async updateFullDefs (fullDefsRequests, config, homonym) {
     for (let request of fullDefsRequests) { // eslint-disable-line prefer-const
-      const fullDefDataRes = this.fetch(request.url, { type: 'xml' })
+      let fullDefDataRes
+      if (cachedDefinitions.has(request.url)) {
+        fullDefDataRes = new Promise((resolve, reject) => resolve(cachedDefinitions.get(request.url)))
+      } else {
+        fullDefDataRes = this.fetch(request.url, { type: 'xml' })
+      }
 
       fullDefDataRes.then(
         async (fullDefData) => {
@@ -15868,6 +15909,10 @@ class ClientAdapters {
       const homonym = await localChineseAdapter.getHomonym(options.params.word, options.params.checkContextForward)
       return { result: homonym, errors: localChineseAdapter.errors }
     }
+    if (options.method === 'loadData') {
+      const result = await localChineseAdapter.loadData(options.params.timeout)
+      return { result, errors: localChineseAdapter.errors }
+    }
     return null
   }
 
@@ -16006,8 +16051,7 @@ class ClientAdapters {
 __webpack_require__.r(__webpack_exports__);
 class AdapterError extends Error {
   constructor (category, adapterName, methodName, messageError) {
-    const message = messageError
-    super(message)
+    super(messageError)
     this.adapter = `${category}.${adapterName}`
     this.methodName = methodName
 
@@ -16017,7 +16061,7 @@ class AdapterError extends Error {
     try {
       Error.captureStackTrace(this, AdapterError)
     } catch (e) {
-      // quietly continue
+      // Continue if environment does not support captureStackTrace.
     }
   }
 
@@ -16031,6 +16075,36 @@ class AdapterError extends Error {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (AdapterError);
+
+
+/***/ }),
+
+/***/ "./errors/cedict-error.js":
+/*!********************************!*\
+  !*** ./errors/cedict-error.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CedictError; });
+class CedictError extends Error {
+  constructor (category, adapterName, methodName, errorCode, errorMessage) {
+    super(errorMessage)
+    this.adapter = `${category}.${adapterName}`
+    this.methodName = methodName
+    this.errorCode = errorCode
+  }
+
+  update (config) {
+    this.adapter = `${config.category}.${config.adapterName}`
+    this.methodName = config.method
+
+    this.message = `${this.errorCode}: ${this.message} (${this.adapter}.${this.methodName})`
+    return this
+  }
+}
 
 
 /***/ }),
@@ -16088,13 +16162,17 @@ class WrongMethodError extends Error {
 /*!******************!*\
   !*** ./index.js ***!
   \******************/
-/*! exports provided: ClientAdapters */
+/*! exports provided: ClientAdapters, CedictError */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/client-adapters.js */ "./client-adapters.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ClientAdapters", function() { return _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+/* harmony import */ var _clAdapters_errors_cedict_error_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/cedict-error.js */ "./errors/cedict-error.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CedictError", function() { return _clAdapters_errors_cedict_error_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+
 
 
 

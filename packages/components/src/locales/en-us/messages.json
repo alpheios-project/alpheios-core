@@ -380,6 +380,26 @@
     "description": "Resource retrieval is in progress",
     "component": "UI"
   },
+  "TEXT_CEDICT_LOAD_DATA_NOTICE": {
+    "message": "Chinese data has not been loaded yet. Do you want to load it?",
+    "description": "A question about whether Chinese data needs to be loaded",
+    "component": "UI"
+  },
+  "LABEL_CEDICT_LOAD_DATA_BTN": {
+    "message": "Load Chinese data",
+    "description": "A message on a button to load Chinese data",
+    "component": "UI"
+  },
+  "TEXT_CEDICT_LOADING_IN_PROGRESS": {
+    "message": "Please wait while Chinese data is loaded ...",
+    "description": "A message about Chinese data retrieval being in progress",
+    "component": "UI"
+  },
+  "TEXT_CEDICT_HAS_BEEN_LOADED": {
+    "message": "Chinese data is finished loading! Please retry your lookup request.",
+    "description": "A message about Chinese data has been loaded",
+    "component": "UI"
+  },
   "LABEL_BROWSERACTION_DEACTIVATE": {
     "message": "Deactivate Alpheios",
     "description": "Deactivate browser action title",

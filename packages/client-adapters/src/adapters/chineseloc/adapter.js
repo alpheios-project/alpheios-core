@@ -1,23 +1,19 @@
+/* global DEVELOPMENT_MODE_BUILD */
 /* eslint-disable no-unused-vars */
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 import { ChineseLanguageModel, Lemma, Lexeme, Homonym, Feature, Definition } from 'alpheios-data-models'
 import {
-  MessagingService, WindowIframeDestination as Destination, /* CedictDestinationConfig as CedictConfig, */
-  RequestMessage, ResponseMessage
+  MessagingService, WindowIframeDestination as Destination, CedictDestinationConfig as CedictProdConfig,
+  CedictDestinationDevConfig as CedictDevConfig, RequestMessage
 } from 'alpheios-messaging'
-
-// region Testing only
-export const CedictConfig = {
-  name: 'cedict',
-  targetURL: 'https://lexis-dev.alpheios.net/index-dev.html',
-  targetIframeID: 'alpheios-lexis-cs'
-}
-// endregion Testing only
 
 export const CedictCharacterForms = {
   SIMPLIFIED: 'simplified',
   TRADITIONAL: 'traditional'
 }
+
+let cedictConfig = CedictProdConfig
+if (DEVELOPMENT_MODE_BUILD) { cedictConfig = CedictDevConfig }
 
 const msgServiceName = 'AdaptersLexisService'
 
@@ -32,7 +28,7 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
     instance of the service that will be created once and reused across consecutive constructor invocations.
      */
     if (!MessagingService.hasService(msgServiceName)) {
-      MessagingService.createService(msgServiceName, new Destination(CedictConfig))
+      MessagingService.createService(msgServiceName, new Destination(cedictConfig))
     }
     this._messagingService = MessagingService.getService(msgServiceName)
   }
@@ -67,13 +63,12 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
           words: this.constructor._buildWordList(targetWord, contextForward)
         }
       }
-      const response = await this._messagingService.sendRequestTo(CedictConfig.name, new RequestMessage(requestBody))
-      if (response.responseCode === ResponseMessage.responseCode.ERROR) {
-        console.info(`CEDICT request failed, error code is ${response.errorCode}`)
-
-        if (response.errorCode === ResponseMessage.errorCodes.SERVICE_UNINITIALIZED) {
-          console.info('CEDICT has not been initialized yet')
-        }
+      let response
+      try {
+        response = await this._messagingService.sendRequestTo(cedictConfig.name, new RequestMessage(requestBody))
+      } catch (response) {
+        this.addCedictError(response.errorCode, response.body.message)
+        return
       }
 
       if (Object.keys(response.body).length === 0) {
@@ -86,6 +81,22 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
         return
       }
       return homonym
+    } catch (error) {
+      this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
+    }
+  }
+
+  async loadData (timeout) {
+    try {
+      const requestBody = {
+        loadData: {}
+      }
+      let response
+      try {
+        response = await this._messagingService.sendRequestTo(cedictConfig.name, new RequestMessage(requestBody), timeout)
+      } catch (response) {
+        this.addCedictError(response.errorCode, response.body.message)
+      }
     } catch (error) {
       this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
     }

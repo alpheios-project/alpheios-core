@@ -1,7 +1,8 @@
 import { LanguageModelFactory as LMF, Lexeme, Lemma, Homonym, PsEvent, Constants } from 'alpheios-data-models'
 import Query from './query.js'
 import Options from '@/lib/options/options.js'
-import { ClientAdapters } from 'alpheios-client-adapters'
+import { ClientAdapters, CedictError } from 'alpheios-client-adapters'
+import { ResponseMessage } from 'alpheios-messaging'
 import Logger from '@/lib/log/logger.js'
 
 export default class LexicalQuery extends Query {
@@ -163,7 +164,16 @@ export default class LexicalQuery extends Query {
       }
 
       if (adapterMorphRes.errors.length > 0) {
-        adapterMorphRes.errors.forEach(error => this.logger.log(error.message))
+        adapterMorphRes.errors.forEach(error => {
+          if (error instanceof CedictError) {
+            // There is an error returned from a CEDICT service
+            if (error.errorCode === ResponseMessage.errorCodes.SERVICE_UNINITIALIZED) {
+              LexicalQuery.evt.CEDICT_SERVICE_UNINITIALIZED.pub()
+              return
+            }
+          }
+          this.logger.log(error.message)
+        })
       }
 
       if (adapterMorphRes.result) {
@@ -441,5 +451,6 @@ LexicalQuery.evt = {
    * }
    */
   TEXT_QUOTE_SELECTOR_RECEIVED: new PsEvent('TextQuoteSelector recieved for the target word', LexicalQuery),
-  WORD_USAGE_EXAMPLES_READY: new PsEvent('Word usage examples ready', LexicalQuery)
+  WORD_USAGE_EXAMPLES_READY: new PsEvent('Word usage examples ready', LexicalQuery),
+  CEDICT_SERVICE_UNINITIALIZED: new PsEvent('CEDICT service is uninitialized', LexicalQuery)
 }

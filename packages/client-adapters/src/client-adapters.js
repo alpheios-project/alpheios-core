@@ -156,6 +156,10 @@ class ClientAdapters {
       const homonym = await localChineseAdapter.getHomonym(options.params.word, options.params.checkContextForward)
       return { result: homonym, errors: localChineseAdapter.errors }
     }
+    if (options.method === 'loadData') {
+      const result = await localChineseAdapter.loadData(options.params.timeout)
+      return { result, errors: localChineseAdapter.errors }
+    }
     return null
   }
 
