@@ -8590,7 +8590,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/adapter-error */ "./errors/adapter-error.js");
-/* harmony import */ var _clAdapters_errors_cedict_error_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/errors/cedict-error.js */ "./errors/cedict-error.js");
+/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
 /* harmony import */ var _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/l10n/l10n */ "./l10n/l10n.js");
 /* harmony import */ var _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/locales/locales.js */ "./locales/locales.js");
 /* harmony import */ var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json");
@@ -8628,7 +8628,7 @@ class BaseAdapter {
   }
 
   addCedictError (errorCode, message) {
-    const error = new _clAdapters_errors_cedict_error_js__WEBPACK_IMPORTED_MODULE_2__["default"](this.config.category, this.config.adapterName, this.config.method, errorCode, message)
+    const error = new _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_2__["default"](this.config.category, this.config.adapterName, this.config.method, errorCode, message)
     this.errors.push(error)
   }
 
@@ -11280,36 +11280,6 @@ class AdapterError extends Error {
 
 /***/ }),
 
-/***/ "./errors/cedict-error.js":
-/*!********************************!*\
-  !*** ./errors/cedict-error.js ***!
-  \********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CedictError; });
-class CedictError extends Error {
-  constructor (category, adapterName, methodName, errorCode, errorMessage) {
-    super(errorMessage)
-    this.adapter = `${category}.${adapterName}`
-    this.methodName = methodName
-    this.errorCode = errorCode
-  }
-
-  update (config) {
-    this.adapter = `${config.category}.${config.adapterName}`
-    this.methodName = config.method
-
-    this.message = `${this.errorCode}: ${this.message} (${this.adapter}.${this.methodName})`
-    return this
-  }
-}
-
-
-/***/ }),
-
 /***/ "./errors/no-required-param-error.js":
 /*!*******************************************!*\
   !*** ./errors/no-required-param-error.js ***!
@@ -11331,6 +11301,36 @@ class NoRequiredParamError extends Error {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (NoRequiredParamError);
+
+
+/***/ }),
+
+/***/ "./errors/remote-error.js":
+/*!********************************!*\
+  !*** ./errors/remote-error.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RemoteError; });
+class RemoteError extends Error {
+  constructor (category, adapterName, methodName, errorCode, errorMessage) {
+    super(errorMessage)
+    this.adapter = `${category}.${adapterName}`
+    this.methodName = methodName
+    this.errorCode = errorCode
+  }
+
+  update (config) {
+    this.adapter = `${config.category}.${config.adapterName}`
+    this.methodName = config.method
+
+    this.message = `${this.errorCode}: ${this.message} (${this.adapter}.${this.methodName})`
+    return this
+  }
+}
 
 
 /***/ }),
@@ -11363,7 +11363,7 @@ class WrongMethodError extends Error {
 /*!******************!*\
   !*** ./index.js ***!
   \******************/
-/*! exports provided: ClientAdapters, CedictError */
+/*! exports provided: ClientAdapters, RemoteError */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11371,8 +11371,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/client-adapters.js */ "./client-adapters.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ClientAdapters", function() { return _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
-/* harmony import */ var _clAdapters_errors_cedict_error_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/cedict-error.js */ "./errors/cedict-error.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CedictError", function() { return _clAdapters_errors_cedict_error_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RemoteError", function() { return _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
 
 

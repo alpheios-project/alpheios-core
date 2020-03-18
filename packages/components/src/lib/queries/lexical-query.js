@@ -1,7 +1,7 @@
 import { LanguageModelFactory as LMF, Lexeme, Lemma, Homonym, PsEvent, Constants } from 'alpheios-data-models'
 import Query from './query.js'
 import Options from '@/lib/options/options.js'
-import { ClientAdapters, CedictError } from 'alpheios-client-adapters'
+import { ClientAdapters, RemoteError } from 'alpheios-client-adapters'
 import { ResponseMessage } from 'alpheios-messaging'
 import Logger from '@/lib/log/logger.js'
 
@@ -165,7 +165,7 @@ export default class LexicalQuery extends Query {
 
       if (adapterMorphRes.errors.length > 0) {
         adapterMorphRes.errors.forEach(error => {
-          if (error instanceof CedictError) {
+          if (error instanceof RemoteError) {
             // There is an error returned from a CEDICT service
             if (error.errorCode === ResponseMessage.errorCodes.SERVICE_UNINITIALIZED) {
               LexicalQuery.evt.CEDICT_SERVICE_UNINITIALIZED.pub()

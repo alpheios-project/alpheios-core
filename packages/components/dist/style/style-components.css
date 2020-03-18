@@ -191,9 +191,9 @@ html {
   --alpheios-notification-important-color: var(--alpheios-important-notification-color);
   --alpheios-notification-important-bg: rgba(198, 73, 6, 0.31);
   --alpheios-notification-important-border-color: var(--alpheios-important-notification-color);
-  --alpheios-notification-imporant-alt-color: #31595E;
-  --alpheios-notification-imporant-alt-bg: #B0C38D;
-  --alpheios-notification-imporant-alt-border-color: #31595E;
+  --alpheios-notification-important-alt-color: #31595E;
+  --alpheios-notification-important-alt-bg: #B0C38D;
+  --alpheios-notification-important-alt-border-color: #31595E;
   --alpheios-hint-color: var(--alpheios-text-color);
   --alpheios-hint-bg: var(--alpheios-color-light);
   --alpheios-hint-border-color: var(--alpheios-hint-color);
@@ -1227,13 +1227,13 @@ select.alpheios-setting__control,
   stroke: var(--alpheios-important-notification-color);
 }
 .alpheios-notification-area__notification--important.alpheios-notification-area__notification--cedict-loaded {
-  color: var(--alpheios-notification-imporant-alt-color);
-  background: var(--alpheios-notification-imporant-alt-bg);
-  border: 1px solid var(--alpheios-notification-imporant-alt-border-color);
+  color: var(--alpheios-notification-important-alt-color);
+  background: var(--alpheios-notification-important-alt-bg);
+  border: 1px solid var(--alpheios-notification-important-alt-border-color);
 }
 .alpheios-notification-area__notification--important.alpheios-notification-area__notification--cedict-loaded .alpheios-notification-area__close-btn {
-  fill: var(--alpheios-notification-imporant-alt-color);
-  stroke: var(--alpheios-notification-imporant-alt-color);
+  fill: var(--alpheios-notification-important-alt-color);
+  stroke: var(--alpheios-notification-important-alt-color);
 }
 .alpheios-notification-area__msg {
   padding-right: calc(var(--alpheios-base-ui-size) * 0.625);

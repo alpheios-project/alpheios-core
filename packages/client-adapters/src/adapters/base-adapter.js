@@ -1,6 +1,6 @@
 import axios from 'axios'
 import AdapterError from '@clAdapters/errors/adapter-error'
-import CedictError from '@clAdapters/errors/cedict-error.js'
+import CedictError from '@clAdapters/errors/remote-error.js'
 
 import L10n from '@clAdapters/l10n/l10n'
 import Locales from '@clAdapters/locales/locales.js'

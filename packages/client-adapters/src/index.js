@@ -1,4 +1,4 @@
 import ClientAdapters from '@clAdapters/client-adapters.js'
-import CedictError from '@clAdapters/errors/cedict-error.js'
+import RemoteError from '@clAdapters/errors/remote-error.js'
 
-export { ClientAdapters, CedictError }
+export { ClientAdapters, RemoteError }

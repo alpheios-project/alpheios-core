@@ -1,4 +1,4 @@
-export default class CedictError extends Error {
+export default class RemoteError extends Error {
   constructor (category, adapterName, methodName, errorCode, errorMessage) {
     super(errorMessage)
     this.adapter = `${category}.${adapterName}`

@@ -289,14 +289,14 @@ export default {
       }
 
       &.alpheios-notification-area__notification--cedict-loaded {
-        color: var(--alpheios-notification-imporant-alt-color);
-        background: var(--alpheios-notification-imporant-alt-bg);
-        border: 1px solid var(--alpheios-notification-imporant-alt-border-color);
+        color: var(--alpheios-notification-important-alt-color);
+        background: var(--alpheios-notification-important-alt-bg);
+        border: 1px solid var(--alpheios-notification-important-alt-border-color);
       }
 
       &.alpheios-notification-area__notification--cedict-loaded .alpheios-notification-area__close-btn {
-        fill: var(--alpheios-notification-imporant-alt-color);
-        stroke: var(--alpheios-notification-imporant-alt-color);
+        fill: var(--alpheios-notification-important-alt-color);
+        stroke: var(--alpheios-notification-important-alt-color);
       }
     }
 

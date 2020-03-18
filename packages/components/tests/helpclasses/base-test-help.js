@@ -316,9 +316,7 @@ export default class BaseTestHelp {
 
   static lexisModule (store, api) {
     return new LexisModule(store, api, {
-      name: 'cedict',
-      targetURL: 'https://lexis-dev.alpheios.net/index-dev.html',
-      targetIframeID: 'alpheios-lexis-cs'
+      name: 'cedict'
     })
   }
 

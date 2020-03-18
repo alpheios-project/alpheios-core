@@ -105,14 +105,12 @@ export default class AppAuthenticator {
           // Unrecoverable error handler
           this.auth0Lock.on('unrecoverable_error', (error) => {
             console.error('Auth0 Lock unrecoverable error: ', error)
-            // eslint-disable-next-line prefer-promise-reject-errors
             reject(new Error('Auth0 Lock unrecoverable'))
           })
 
           // An authorization error
           this.auth0Lock.on('authorization_error', (error) => {
             console.error('Auth0 Lock authorization error: ', error)
-            // eslint-disable-next-line prefer-promise-reject-errors
             reject(new Error('Auth0Lock authorization error'))
           })
           this.auth0Lock.show()
@@ -132,7 +130,6 @@ export default class AppAuthenticator {
       const token = localStorage.getItem('access_token')
       if (!token) {
         console.error('You must login to call this protected endpoint!')
-        // eslint-disable-next-line prefer-promise-reject-errors
         reject(new Error('Login required'))
       }
       const expirationDateTimeStr = localStorage.getItem('expiration_date_time')
@@ -177,7 +174,6 @@ export default class AppAuthenticator {
       // block request from happening if no JWT token present
       if (!token) {
         console.error('You must login to call this protected endpoint!')
-        // eslint-disable-next-line prefer-promise-reject-errors
         reject(new Error('Not Authenticated'))
       }
       resolve(token)

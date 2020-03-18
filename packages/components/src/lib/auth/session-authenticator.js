@@ -61,7 +61,6 @@ export default class SessionAuthenticator {
           })
         }
       }).catch((error) => {
-        // eslint-disable-next-line prefer-promise-reject-errors
         reject(new Error(`Session request failed ${error}`))
       })
     })
@@ -71,7 +70,6 @@ export default class SessionAuthenticator {
     // TODO we should check to see if we already have a valid idToken before
     // initiating authentication
     return new Promise((resolve, reject) => {
-      // eslint-disable-next-line prefer-promise-reject-errors
       reject(new Error('Server Side Authenticator'))
     })
   }
@@ -85,7 +83,6 @@ export default class SessionAuthenticator {
           resolve(resp.json())
         }
       }).catch((error) => {
-        // eslint-disable-next-line prefer-promise-reject-errors
         reject(new Error(`token request failed ${error}`))
       })
     })
