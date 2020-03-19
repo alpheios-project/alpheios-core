@@ -169,9 +169,7 @@ export default class LanguageDataset {
     return { fullMatch: result, matchedItems: matches }
   }
 
-  setBaseInflectionData (inflection, lemma) {
-    inflection.lemma = lemma
-    inflection.addFeature(new Feature(Feature.types.word, lemma.word, lemma.languageID))
+  setBaseInflectionData (inflection) {
     inflection.constraints = Object.assign(inflection.constraints, this.model.getInflectionConstraints(inflection))
     if (inflection.constraints.paradigmBased && inflection.constraints.suffixBased) {
       inflection.constraints.suffixBased = false
@@ -195,7 +193,8 @@ export default class LanguageDataset {
       The value found will then be attached to an Inflection object.
        */
       // Get a class this inflection belongs to
-      const grmClasses = this.model.getPronounClasses(this.pos.get(partOfSpeech).types.get(Form).items, inflection.getForm())
+      const grmClasses = this.model.getPronounClasses(this.pos.get(partOfSpeech).types.get(Form).items, inflection.getForm(), inflection.lemma.word, true)
+
       if (!grmClasses) {
         console.warn(`Cannot determine a grammar class for a ${inflection.form} pronoun.
               Table construction will probably fail`)
@@ -232,7 +231,6 @@ export default class LanguageDataset {
      suffixBased and fullFormBased flags set to true and we will need to determine
      which one of those makes sense for each particular verb.
      */
-
     let partOfSpeech = inflection[Feature.types.part]
     if (!partOfSpeech) {
       throw new Error('Part of speech data is missing in an inflection')
@@ -249,9 +247,13 @@ export default class LanguageDataset {
       return inflection
     }
 
-    this.setBaseInflectionData(inflection, lemma)
-    this.setPronounInflectionData(partOfSpeech, inflection)
+    inflection.lemma = lemma
+    inflection.addFeature(new Feature(Feature.types.word, lemma.word, lemma.languageID))
+    // irregular data must be set first because if a word is irregular
+    // it affects base inflection tests
     this.setIrregularInflectionData(inflection)
+    this.setBaseInflectionData(inflection)
+    this.setPronounInflectionData(partOfSpeech, inflection)
 
     if (inflection.constraints.implemented && !inflection.constraints.paradigmBased) {
       // Set match features data
@@ -306,7 +308,6 @@ export default class LanguageDataset {
     let inflections = new Map() // eslint-disable-line prefer-const
     for (const lexeme of homonym.lexemes) {
       for (let inflection of lexeme.inflections) {
-        // Inflections are grouped by part of speech
         inflection = this.setInflectionData(inflection, lexeme.lemma)
         const pofsValue = inflection[Feature.types.part].value
         if (!inflections.has(pofsValue)) { inflections.set(pofsValue, []) }
@@ -397,7 +398,6 @@ export default class LanguageDataset {
 
       this.createInflectionSetFootnote(inflectionSet, sourceSet)
     }
-
     return inflectionSet
   }
 
@@ -491,14 +491,14 @@ export default class LanguageDataset {
       if (options.findMatches) {
         matchData.suffixMatch = inflection.smartWordCompare(item.value, item.constructor.name, { fuzzySuffix: true })
       }
-
       // Check for obligatory matches
       const obligatoryMatches = this.constructor.getObligatoryMatches(inflection, item, Morpheme.comparisonTypes.PARTIAL)
       if (obligatoryMatches.fullMatch) {
         matchData.matchedFeatures.push(...obligatoryMatches.matchedItems)
       } else {
-        // If obligatory features do not match, there is no reason to check other items
-        break
+        // If obligatory features do not match, there is no reason to do other tests on this inflection
+        // continue to the next one
+        continue
       }
 
       /*

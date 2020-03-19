@@ -8,13 +8,16 @@ import Table from '../../../lib/table'
  * Produces a table grouped into columns by gender.
  */
 export default class GreekGenderPronounView extends GreekPronounView {
-  constructor (homonym, inflectionData) {
-    const grammarClass = GreekPronounView.getClassesFromInflection(inflectionData.inflections).filter(c => GreekGenderPronounView.classes.includes(c))
-    // we should only get 1 class here -- if we get more the view is likely to be wrong
-    if (grammarClass.length > 0) {
-      console.warn('more than one grammarClass found for homonym')
+  constructor (homonym, inflectionData, grammarClass) {
+    if (!grammarClass) {
+      const grammarClasses = GreekPronounView.getClassesFromInflection(inflectionData.inflections).filter(c => GreekGenderPronounView.classes.includes(c))
+      // we should only get 1 class here -- if we get more the view is likely to be wrong
+      if (grammarClasses.length > 1) {
+        console.warn('more than one grammarClass found for homonym')
+      }
+      grammarClass = grammarClasses[0]
     }
-    super(homonym, inflectionData, grammarClass[0])
+    super(homonym, inflectionData, grammarClass)
 
     if (this.isImplemented) {
       this.createTable()
@@ -34,7 +37,6 @@ export default class GreekGenderPronounView extends GreekPronounView {
       Constants.CLASS_GENERAL_RELATIVE,
       Constants.CLASS_INDEFINITE,
       Constants.CLASS_INTENSIVE,
-      Constants.CLASS_INTERROGATIVE,
       Constants.CLASS_RECIPROCAL,
       Constants.CLASS_RELATIVE
     ]

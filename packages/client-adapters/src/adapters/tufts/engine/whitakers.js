@@ -5,7 +5,7 @@ const data = new ImportData(Models.LatinLanguageModel, 'whitakerLat')
 
 // Whitaker's has weird inflection data for conjugation, we prefer
 // the dictionary entry's conjugation if it's available
-data.inflectionOverrides = [Models.Feature.types.conjugation]
+data.inflectionOverrides = { [Models.Feature.types.conjugation]: (i,ls) => true }
 
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
@@ -25,7 +25,7 @@ data.addFeature(Models.Feature.types.gender).importer
 data.addFeature(Models.Feature.types.tense).importer
   .map('future_perfect', Models.Constants.TENSE_FUTURE_PERFECT)
 
-data.setPropertyParser(function (propertyName, propertyValue) {
+data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
   let propertyValues = []
   if (propertyName === 'decl') {
     propertyValues = propertyValue.split('&').map((p) => p.trim())

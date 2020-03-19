@@ -108,15 +108,19 @@ describe('greek_language_model.j', () => {
 
   it('10 GreekLanguageModel - getPronounClasses', () => {
     let featureDative = new Feature(Feature.types.grmClass, Constants.CASE_DATIVE, Constants.LANG_GREEK)
+    let featureHdwd = new Feature(Feature.types.hdwd,'foo', Constants.LANG_GREEK)
 
     let form1 = { value: 'foo1', features: { 'class': featureDative } }
     let form2 = { value: 'foo2', features: {} }
     let form3 = { features: {} }
+    let form_with_hdwd = { value: 'foo1', features: { 'class': featureDative, [Feature.types.hdwd]: featureHdwd } }
 
-    expect(greekModel.getPronounClasses([form1, form2], 'foo1')).toEqual(featureDative)
-    expect(greekModel.getPronounClasses([form1, form2], 'foo3')).toBeUndefined()
-    expect(greekModel.getPronounClasses([form2], 'foo2')).toBeUndefined()
-    expect(greekModel.getPronounClasses([form3], '')).toBeUndefined()
+    expect(greekModel.getPronounClasses([form1, form2], 'foo1', 'foo')).toEqual(featureDative)
+    expect(greekModel.getPronounClasses([form1, form2], 'foo3', 'foo')).toBeUndefined()
+    expect(greekModel.getPronounClasses([form2], 'foo2', 'foo')).toBeUndefined()
+    expect(greekModel.getPronounClasses([form3], '', '')).toBeUndefined()
+    expect(greekModel.getPronounClasses([form_with_hdwd], 'foo1', 'foo')).toEqual(featureDative)
+    expect(greekModel.getPronounClasses([form_with_hdwd], 'foo1', 'bar')).toBeUndefined()
   })
 
   it('11 GreekLanguageModel - alternateWordEncodings - additional encodings strip diacritics for inflections', () => {

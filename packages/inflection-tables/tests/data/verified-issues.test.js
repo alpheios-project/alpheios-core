@@ -529,11 +529,12 @@ describe('verified-issues.test.js', () => {
 
     inflectionsViewSet = await BaseTestHelp.getInflectionSet('οἷ', Constants.LANG_GREEK)
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(2)
 
     BaseTestHelp.checkView({
       inflectionsViewSet,
-      viewName: 'GreekGenderPronounView',
-      title: 'Relative Pronoun Declension'
+      viewName: 'GreekArticleView',
+      title: 'Article Declension'
     })
 
     BaseTestHelp.checkView({
@@ -546,6 +547,13 @@ describe('verified-issues.test.js', () => {
 
     inflectionsViewSet = await BaseTestHelp.getInflectionSet('οἵ', Constants.LANG_GREEK)
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'GreekArticleView',
+      title: 'Article Declension'
+    })
 
     BaseTestHelp.checkView({
       inflectionsViewSet,
@@ -658,5 +666,25 @@ describe('verified-issues.test.js', () => {
 
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // ἄγουσᾰ
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // ἄγων
+  })
+
+  it('15 - issue core 195 irregular verbs are constrained by full form', async() => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('sum', Constants.LANG_LATIN)
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(8)
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'LatinVerbIrregularView',
+      title: 'Verb Conjugation (Irregular)',
+      additionalTitle: 'sum, esse,fui,futurus',
+      linkedViewsLength: 1,
+      linkedViews: [
+        { viewName: 'LatinVerbParticipleIrregularView', title: 'Verb Participle Conjugation (Irregular)' }
+      ]
+    })
+    const irregularViews = inflectionsViewSet.matchingViews.filter(v => v.constructor.name === 'LatinVerbIrregularView')
+    irregularViews[0].render()
+    expect(irregularViews[0].table.rows[0].cells[0].morphemes.length).toEqual(1)
+    expect(irregularViews[0].table.rows[0].cells[0].morphemes[0].value).toEqual('sum')
   })
 })
