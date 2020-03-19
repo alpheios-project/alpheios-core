@@ -24,6 +24,7 @@ const webpack = {
         'alpheios-data-models': path.join(projectRoot, 'node_modules/alpheios-data-models/dist/alpheios-data-models.js'),
         'alpheios-client-adapters': path.join(projectRoot, 'node_modules/alpheios-client-adapters/dist/alpheios-client-adapters.js'),
         'alpheios-wordlist': path.join(projectRoot, 'node_modules/alpheios-wordlist/dist/alpheios-wordlist.js'),
+        'alpheios-messaging': path.join(projectRoot, '../../node_modules/alpheios-messaging/dist/dev/alpheios-messaging.js'),
         'vue-multiselect-css': path.join(projectRoot, '../../node_modules/vue-multiselect/dist/vue-multiselect.min.css'),
         '@vue-runtime': path.join(projectRoot, '../../node_modules/vue/dist/vue.runtime.esm.js'),
         '@': path.join(projectRoot, 'src')

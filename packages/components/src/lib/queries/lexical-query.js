@@ -1,7 +1,8 @@
 import { LanguageModelFactory as LMF, Lexeme, Lemma, Homonym, PsEvent, Constants } from 'alpheios-data-models'
 import Query from './query.js'
 import Options from '@/lib/options/options.js'
-import { ClientAdapters } from 'alpheios-client-adapters'
+import { ClientAdapters, RemoteError } from 'alpheios-client-adapters'
+import { ResponseMessage } from 'alpheios-messaging'
 import Logger from '@/lib/log/logger.js'
 
 export default class LexicalQuery extends Query {
@@ -19,6 +20,7 @@ export default class LexicalQuery extends Query {
 
     const langID = this.selector.languageID
     this.canReset = (this.langOpts[langID] && this.langOpts[langID].lookupMorphLast)
+    this.startedDefinitionsQueries = new Map()
 
     if (this.selector.textQuoteSelector) {
       LexicalQuery.evt.TEXT_QUOTE_SELECTOR_RECEIVED.pub(this.selector.textQuoteSelector)
@@ -178,7 +180,16 @@ export default class LexicalQuery extends Query {
       }
 
       if (adapterMorphRes.errors.length > 0) {
-        adapterMorphRes.errors.forEach(error => this.logger.log(error.message))
+        adapterMorphRes.errors.forEach(error => {
+          if (error instanceof RemoteError) {
+            // There is an error returned from a CEDICT service
+            if (error.errorCode === ResponseMessage.errorCodes.SERVICE_UNINITIALIZED) {
+              LexicalQuery.evt.CEDICT_SERVICE_UNINITIALIZED.pub()
+              return
+            }
+          }
+          this.logger.log(error.message)
+        })
       }
 
       if (adapterMorphRes.result) {
@@ -278,41 +289,47 @@ export default class LexicalQuery extends Query {
 
     yield 'Retrieval of lemma translations completed'
 
-    const adapterLexiconResShort = yield ClientAdapters.lexicon.alpheios({
-      method: 'fetchShortDefs',
-      clientId: this.clientId,
-      params: {
-        opts: lexiconShortOpts,
-        homonym: this.homonym,
-        callBackEvtSuccess: LexicalQuery.evt.SHORT_DEFS_READY,
-        callBackEvtFailed: LexicalQuery.evt.SHORT_DEFS_NOT_FOUND
+    if (!this.startedDefinitionsQueries.has(this.homonym.targetWord)) {
+      this.startedDefinitionsQueries.set(this.homonym.targetWord, true)
+      const adapterLexiconResShort = yield ClientAdapters.lexicon.alpheios({
+        method: 'fetchShortDefs',
+        clientId: this.clientId,
+        params: {
+          opts: lexiconShortOpts,
+          homonym: this.homonym,
+          callBackEvtSuccess: LexicalQuery.evt.SHORT_DEFS_READY,
+          callBackEvtFailed: LexicalQuery.evt.SHORT_DEFS_NOT_FOUND
+        }
+      })
+
+      if (adapterLexiconResShort.errors.length > 0) {
+        adapterLexiconResShort.errors.forEach(error => this.logger.log(error.message))
       }
-    })
 
-    if (adapterLexiconResShort.errors.length > 0) {
-      adapterLexiconResShort.errors.forEach(error => this.logger.log(error.message))
-    }
+      const adapterLexiconResFull = yield ClientAdapters.lexicon.alpheios({
+        method: 'fetchFullDefs',
+        clientId: this.clientId,
+        params: {
+          opts: lexiconFullOpts,
+          homonym: this.homonym,
+          callBackEvtSuccess: LexicalQuery.evt.FULL_DEFS_READY,
+          callBackEvtFailed: LexicalQuery.evt.FULL_DEFS_NOT_FOUND
+        }
+      })
 
-    const adapterLexiconResFull = yield ClientAdapters.lexicon.alpheios({
-      method: 'fetchFullDefs',
-      clientId: this.clientId,
-      params: {
-        opts: lexiconFullOpts,
-        homonym: this.homonym,
-        callBackEvtSuccess: LexicalQuery.evt.FULL_DEFS_READY,
-        callBackEvtFailed: LexicalQuery.evt.FULL_DEFS_NOT_FOUND
+      if (adapterLexiconResFull.errors.length > 0) {
+        adapterLexiconResFull.errors.forEach(error => this.logger.log(error))
       }
-    })
 
-    if (adapterLexiconResFull.errors.length > 0) {
-      adapterLexiconResFull.errors.forEach(error => this.logger.log(error))
-    }
-
-    yield 'Finalizing'
-    if (adapterLexiconResShort.result || adapterLexiconResFull.result) {
-      this.finalize('Success')
-    }
-    if (!adapterLexiconResShort.result && !adapterLexiconResFull.result) {
+      yield 'Finalizing'
+      if (adapterLexiconResShort.result || adapterLexiconResFull.result) {
+        this.finalize('Success')
+      }
+      if (!adapterLexiconResShort.result && !adapterLexiconResFull.result) {
+        this.finalize('Success-NoDefs')
+      }
+    } else {
+      yield 'Finalizing'
       this.finalize('Success-NoDefs')
     }
   }
@@ -450,5 +467,6 @@ LexicalQuery.evt = {
    * }
    */
   TEXT_QUOTE_SELECTOR_RECEIVED: new PsEvent('TextQuoteSelector recieved for the target word', LexicalQuery),
-  WORD_USAGE_EXAMPLES_READY: new PsEvent('Word usage examples ready', LexicalQuery)
+  WORD_USAGE_EXAMPLES_READY: new PsEvent('Word usage examples ready', LexicalQuery),
+  CEDICT_SERVICE_UNINITIALIZED: new PsEvent('CEDICT service is uninitialized', LexicalQuery)
 }

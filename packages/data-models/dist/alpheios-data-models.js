@@ -4105,17 +4105,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const MODELS = new Map([
-  [ _constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_LA"], _latin_language_model_js__WEBPACK_IMPORTED_MODULE_1__["default"] ],
-  [ _constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_LAT"], _latin_language_model_js__WEBPACK_IMPORTED_MODULE_1__["default"] ],
-  [ _constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_GRC"], _greek_language_model_js__WEBPACK_IMPORTED_MODULE_2__["default"] ],
-  [ _constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_ARA"], _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_3__["default"] ],
-  [ _constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_AR"], _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_3__["default"] ],
-  [ _constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_PER"], _persian_language_model_js__WEBPACK_IMPORTED_MODULE_4__["default"] ],
-  [ _constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_GEZ"], _geez_language_model_js__WEBPACK_IMPORTED_MODULE_5__["default"] ],
-  [ _constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_ZHO"], _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_6__["default"] ],
-  [ _constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_SYR"], _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_7__["default"] ],
-  [ _constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_SYC"], _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_7__["default"] ],
-  [ _constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_SYR_SYRJ"], _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_7__["default"] ]
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_LA"], _latin_language_model_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_LAT"], _latin_language_model_js__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_GRC"], _greek_language_model_js__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_ARA"], _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_AR"], _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_PER"], _persian_language_model_js__WEBPACK_IMPORTED_MODULE_4__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_GEZ"], _geez_language_model_js__WEBPACK_IMPORTED_MODULE_5__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_ZHO"], _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_6__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_SYR"], _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_7__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_SYC"], _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_7__["default"]],
+  [_constants_js__WEBPACK_IMPORTED_MODULE_8__["STR_LANG_CODE_SYR_SYRJ"], _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_7__["default"]]
 ])
 
 class LanguageModelFactory {
@@ -5267,7 +5267,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let typeFeatures = new Map()
+const typeFeatures = new Map()
 let typeFeaturesInitialized = false
 
 /**
@@ -5338,7 +5338,9 @@ class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
 
   /**
    * Check to see if this language tool can produce an inflection table display
-   * for the current node
+for the current node
+   *
+   * @param node
    */
   static canInflect (node) {
     return false
@@ -5346,6 +5348,7 @@ class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
 
   /**
    * Returns alternate encodings for a word
+   *
    * @param {string} word the word
    * @param {string} preceding optional preceding word
    * @param {string} following optional following word
@@ -5359,7 +5362,8 @@ class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
 
   /**
    * Get a list of valid puncutation for this language
-   * @returns {String} a string containing valid puncutation symbols
+   *
+   * @returns {string} a string containing valid puncutation symbols
    */
   static getPunctuation () {
     return "፡፨።፣፤፥፦፧፠,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
@@ -5367,24 +5371,26 @@ class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
 
   /**
    * Groups a set of inflections according to a syriac display paradigm
-   * The default groups according to the following logic:
-   *   1. groups of groups with unique stem, prefix, suffix, part of speech, declension, kaylo or state, and comparison
-   *     2. groups of those groups with unique
-   *          number, if it's an inflection with a grammatical case
-   *          tense, if it's an inflection with tense but no case (i.e. a verb)
-   *          verbs without tense or case
-   *          adverbs
-   *          everything else
-   *       3. groups of those groups with unique voice and tense
-   *         4. groups of inflections with unique gender, person, mood, and sort
+    The default groups according to the following logic:
+    1. groups of groups with unique stem, prefix, suffix, part of speech, declension, kaylo or state, and comparison
+    2. groups of those groups with unique
+    number, if it's an inflection with a grammatical case
+    tense, if it's an inflection with tense but no case (i.e. a verb)
+    verbs without tense or case
+    adverbs
+    everything else
+    3. groups of those groups with unique voice and tense
+    4. groups of inflections with unique gender, person, mood, and sort
+   *
+   * @param inflections
    */
   static groupInflectionsForDisplay (inflections) {
-    let grouped = new Map()
-    let aggregated = this.aggregateInflectionsForDisplay(inflections)
+    const grouped = new Map()
+    const aggregated = this.aggregateInflectionsForDisplay(inflections)
 
     // group inflections by part of speech
-    for (let infl of aggregated) {
-      let groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__["default"](infl,
+    for (const infl of aggregated) {
+      const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__["default"](infl,
         [_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.declension, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.kaylo, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.state, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.comparison],
         {
           prefix: infl.prefix,
@@ -5392,7 +5398,7 @@ class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
           stem: infl.stem
         }
       )
-      let groupingKeyStr = groupingKey.toString()
+      const groupingKeyStr = groupingKey.toString()
       if (grouped.has(groupingKeyStr)) {
         grouped.get(groupingKeyStr).append(infl)
       } else {
@@ -5401,9 +5407,9 @@ class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
     }
 
     // iterate through each group key to group the inflections in that group
-    for (let kv of grouped) {
-      let inflgrp = new Map()
-      for (let infl of kv[1].inflections) {
+    for (const kv of grouped) {
+      const inflgrp = new Map()
+      for (const infl of kv[1].inflections) {
         let keyprop
         let isCaseInflectionSet = false
         if (infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.grmCase]) {
@@ -5424,8 +5430,8 @@ class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
           // grouping on adverbs without case or tense
           // everything else
         }
-        let groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__["default"](infl, [keyprop], { isCaseInflectionSet: isCaseInflectionSet })
-        let groupingKeyStr = groupingKey.toString()
+        const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__["default"](infl, [keyprop], { isCaseInflectionSet: isCaseInflectionSet })
+        const groupingKeyStr = groupingKey.toString()
         if (inflgrp.has(groupingKeyStr)) {
           inflgrp.get(groupingKeyStr).append(infl)
         } else {
@@ -5439,13 +5445,13 @@ class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
       //  inflections of adverbs
       //  everything else
       // iterate through each inflection group key to group the inflections in that group by tense and voice
-      for (let kv of inflgrp) {
-        let nextGroup = new Map()
-        let sortOrder = new Map()
-        for (let infl of kv[1].inflections) {
-          let sortkey = infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.grmCase] ? Math.max(infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.grmCase].items.map(f => f.sortOrder)) : 1
-          let groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__["default"](infl, [_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.voice])
-          let groupingKeyStr = groupingKey.toString()
+      for (const kv of inflgrp) {
+        const nextGroup = new Map()
+        const sortOrder = new Map()
+        for (const infl of kv[1].inflections) {
+          const sortkey = infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.grmCase] ? Math.max(infl[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.grmCase].items.map(f => f.sortOrder)) : 1
+          const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__["default"](infl, [_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.voice])
+          const groupingKeyStr = groupingKey.toString()
           if (nextGroup.has(groupingKeyStr)) {
             nextGroup.get(groupingKeyStr).append(infl)
           } else {
@@ -5454,30 +5460,30 @@ class SyriacLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0_
           }
         }
         kv[1].inflections = []
-        let sortedKeys = Array.from(nextGroup.keys()).sort(
+        const sortedKeys = Array.from(nextGroup.keys()).sort(
           (a, b) => {
-            let orderA = sortOrder.get(a)
-            let orderB = sortOrder.get(b)
+            const orderA = sortOrder.get(a)
+            const orderB = sortOrder.get(b)
             return orderA > orderB ? -1 : orderB > orderA ? 1 : 0
           }
         )
-        for (let groupkey of sortedKeys) {
+        for (const groupkey of sortedKeys) {
           kv[1].inflections.push(nextGroup.get(groupkey))
         }
       }
 
       // inflgrp is now a Map of groups of groups of inflections
 
-      for (let kv of inflgrp) {
-        let groups = kv[1]
-        for (let group of groups.inflections) {
-          let nextGroup = new Map()
-          for (let infl of group.inflections) {
+      for (const kv of inflgrp) {
+        const groups = kv[1]
+        for (const group of groups.inflections) {
+          const nextGroup = new Map()
+          for (const infl of group.inflections) {
             // set key is case comp gend pers mood sort
-            let groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__["default"](infl,
+            const groupingKey = new _inflection_grouping_key__WEBPACK_IMPORTED_MODULE_3__["default"](infl,
               [_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.grmCase, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.comparison, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.gender, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.number, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.person,
                 _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.tense, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.mood, _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.voice])
-            let groupingKeyStr = groupingKey.toString()
+            const groupingKeyStr = groupingKey.toString()
             if (nextGroup.has(groupingKeyStr)) {
               nextGroup.get(groupingKeyStr).append(infl)
             } else {

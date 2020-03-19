@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+/* global BUILD_NUMBER */
 import { version as packageVersion, description as packageDescription } from '../../../package'
 import { Constants, Feature, LanguageModelFactory, Lexeme } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
@@ -233,7 +234,8 @@ if you want to create a different configuration of a UI controller.
    * @returns {object} An object that contains default options.
    *     {Object} app - A set of app related options with the following properties:
    *          {string} name - An application name;
-   *          {string} version - A version of an application.
+   *          {string} version - A version of an application;
+   *          {string} buildNumber - A build number, if provided.
    *     {Object} storageAdapter - A storage adapter for storing options (see `lib/options`). Is environment dependent.
    *     {boolean} openPanel - whether to open panel when UI controller is activated. Default: panelOnActivate of uiOptions.
    *     {string} textQueryTriggerDesktop - what event will start a lexical query on a selected text on the desktop. If null,
@@ -250,7 +252,8 @@ if you want to create a different configuration of a UI controller.
     return {
       app: {
         name: 'name',
-        version: 'version'
+        version: 'version',
+        buildNumber: false
       },
       mode: 'production', // Controls options available and output. Other possible values: `development`
       appType: Platform.appTypes.OTHER, // A type of application that uses the controller
@@ -462,9 +465,11 @@ if you want to create a different configuration of a UI controller.
     this.api.app = {
       name: this.options.app.name, // A name of a host application (embed lib or webextension)
       version: this.options.app.version, // An version of a host application (embed lib or webextension)
+      buildNumber: this.options.app.buildNumber, // A build number of a host application
       clientId: this.options.clientId, // alpheios api client identifier
       libName: UIController.libName, // A name of the components library
       libVersion: UIController.libVersion, // A version of the components library
+      libBuildNumber: BUILD_NUMBER, // A build number of components that will be injected by Webpack
       platform: this.platform,
       mode: this.options.mode, // Mode of an application: `production` or `development`
       defaultTab: this.tabs.DEFAULT, // A name of a default tab (a string)
@@ -498,7 +503,6 @@ if you want to create a different configuration of a UI controller.
         if (!this.store.state.app.homonymDataReady || lexemes.length === 0) {
           return false
         }
-
         if (Array.isArray(lexemes) && lexemes.length > 0 &&
           (lexemes[0].lemma.principalParts.length > 0 || lexemes[0].inflections.length > 0 || lexemes[0].inflections.length > 0 ||
             lexemes[0].meaning.fullDefs.length > 0 || lexemes[0].meaning.shortDefs.length > 0)
@@ -569,7 +573,8 @@ if you want to create a different configuration of a UI controller.
         hasWordListsData: false,
         wordListUpdateTime: 0, // To notify word list panel about data update
         providers: [], // A list of resource providers
-        textSelector: {}
+        textSelector: {},
+        queryStillActive: false // it is for Persian case, when we canReset
       },
 
       getters: {
@@ -751,6 +756,10 @@ if you want to create a different configuration of a UI controller.
 
         setTranslDataReady (state, value = true) {
           state.translationsDataReady = value
+        },
+
+        setQueryStillActive (state, value = true) {
+          state.queryStillActive = value
         }
       }
     })
@@ -1134,8 +1143,7 @@ if you want to create a different configuration of a UI controller.
       !homonym.lexemes ||
       homonym.lexemes.length < 1 ||
       homonym.lexemes.filter((l) => l.isPopulated()).length < 1
-
-    if (notFound) {
+    if (notFound && !this.store.state.app.queryStillActive) {
       let languageName
       if (homonym) {
         languageName = this.api.app.getLanguageName(homonym.languageID).name
@@ -1157,6 +1165,8 @@ if you want to create a different configuration of a UI controller.
           { targetWord: this.store.state.app.targetWord, languageName: languageName })
         this.store.commit('ui/setNotification', { text: message, important: true, showLanguageSwitcher: false })
       }
+    } else if (!this.store.state.app.queryStillActive) {
+      this.store.commit('ui/resetNotification')
     }
   }
 
@@ -1225,6 +1235,8 @@ if you want to create a different configuration of a UI controller.
     if (['treebank', 'inflections', 'inflectionsbrowser', 'wordUsage'].includes(tabName) && this.platform.isMobile && isPortrait) {
       const message = this.api.l10n.getMsg('HINT_LANDSCAPE_MODE')
       this.store.commit('ui/setHint', message, tabName)
+    } else if (this.platform.isDesktop && this.platform.isGoogleDocs) {
+      this.store.commit('ui/setHint', this.api.l10n.getMsg('TEXT_HINT_MOUSE_MOVE'))
     } else {
       this.store.commit('ui/resetHint')
     }
@@ -1706,6 +1718,7 @@ NB this is Prototype functionality
 
   onMorphDataNotFound () {
     this.store.commit('ui/setNotification', { text: this.api.l10n.getMsg('TEXT_NOTICE_MORPHDATA_NOTFOUND'), important: true })
+    this.store.commit('app/setQueryStillActive', true)
   }
 
   onHomonymReady (homonym) {
@@ -1771,6 +1784,9 @@ NB this is Prototype functionality
   }
 
   onShortDefinitionsReady (data) {
+    this.api.app.homonym = data.homonym
+    this.store.commit('app/setQueryStillActive', false)
+    this.showLanguageInfo(data.homonym)
     this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DEFSDATA_READY', { requestType: data.requestType, lemma: data.word }))
     this.updateProviders(data.homonym)
     this.store.commit('app/shortDefsUpdated')
@@ -2056,7 +2072,7 @@ NB this is Prototype functionality
   }
 
   enableMouseMoveEvent () {
-    return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride)
+    return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || this.platform.isGoogleDocs)
   }
 }
 

@@ -36,6 +36,7 @@ describe('notification-area.test.js', () => {
 
     BaseTestHelp.authModule(store, api)
     BaseTestHelp.l10nModule(store, api)
+    BaseTestHelp.lexisModule(store, api)
 
   })
 

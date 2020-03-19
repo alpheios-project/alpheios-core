@@ -283,8 +283,11 @@ html {
   --alpheios-notification-important-bg: rgba(198, 73, 6, 0.31);
   --alpheios-notification-important-border-color: var(--alpheios-important-notification-color);
 
-  //Hint
+  --alpheios-notification-important-alt-color: #31595E;
+  --alpheios-notification-important-alt-bg: #B0C38D;
+  --alpheios-notification-important-alt-border-color: #31595E;
 
+  //Hint
   --alpheios-hint-color: var(--alpheios-text-color);
   --alpheios-hint-bg: var(--alpheios-color-light);
   --alpheios-hint-border-color: var(--alpheios-hint-color);

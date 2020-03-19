@@ -191,6 +191,9 @@ html {
   --alpheios-notification-important-color: var(--alpheios-important-notification-color);
   --alpheios-notification-important-bg: rgba(198, 73, 6, 0.31);
   --alpheios-notification-important-border-color: var(--alpheios-important-notification-color);
+  --alpheios-notification-important-alt-color: #31595E;
+  --alpheios-notification-important-alt-bg: #B0C38D;
+  --alpheios-notification-important-alt-border-color: #31595E;
   --alpheios-hint-color: var(--alpheios-text-color);
   --alpheios-hint-bg: var(--alpheios-color-light);
   --alpheios-hint-border-color: var(--alpheios-hint-color);
@@ -515,7 +518,7 @@ input.alpheios-input::-ms-input-placeholder {
   min-height: calc(var(--alpheios-base-text-size) * 2.5);
   padding: calc(var(--alpheios-base-text-size) * 0.5) calc(var(--alpheios-base-text-size) * 2.5) 0 calc(var(--alpheios-base-text-size) * 0.5);
 }
-.alpheios-content .multiselect__tag {
+.alpheios-content span.multiselect__tag {
   background-color: var(--alpheios-settings-font-multiselect-bg);
   display: inline-block;
   border-radius: calc(var(--alpheios-base-text-size) * 0.3125);
@@ -525,7 +528,7 @@ input.alpheios-input::-ms-input-placeholder {
   white-space: nowrap;
   min-height: calc(var(--alpheios-base-text-size) * 1.5);
 }
-.alpheios-content .multiselect__tag span {
+.alpheios-content span.multiselect__tag span {
   color: var(--alpheios-settings-font-multiselect-font-color);
 }
 .alpheios-content .multiselect__select {
@@ -545,7 +548,7 @@ input.alpheios-input::-ms-input-placeholder {
 .alpheios-content .multiselect__single {
   display: none;
 }
-.alpheios-content .multiselect__option {
+.alpheios-content span.multiselect__option {
   padding: 12px;
 }
 .alpheios-content .multiselect__option::after {
@@ -891,7 +894,7 @@ body {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-span.alpheios-morph__attr {
+.alpheios-content span.alpheios-morph__attr {
   font-weight: normal;
   padding-right: 0.25em;
 }
@@ -977,7 +980,7 @@ h4.alpheios-principal-parts__groupitem {
 .alpheios-morph-data__principal_parts .feature_source span {
   font-size: smaller;
 }
-.alpheios-morph-data__pofs span {
+.alpheios-morph-data__morphdata .alpheios-morph-data__pofs span {
   padding-right: 5px;
 }
 /*
@@ -1223,6 +1226,15 @@ select.alpheios-setting__control,
   fill: var(--alpheios-important-notification-color);
   stroke: var(--alpheios-important-notification-color);
 }
+.alpheios-notification-area__notification--important.alpheios-notification-area__notification--cedict-loaded {
+  color: var(--alpheios-notification-important-alt-color);
+  background: var(--alpheios-notification-important-alt-bg);
+  border: 1px solid var(--alpheios-notification-important-alt-border-color);
+}
+.alpheios-notification-area__notification--important.alpheios-notification-area__notification--cedict-loaded .alpheios-notification-area__close-btn {
+  fill: var(--alpheios-notification-important-alt-color);
+  stroke: var(--alpheios-notification-important-alt-color);
+}
 .alpheios-notification-area__msg {
   padding-right: calc(var(--alpheios-base-ui-size) * 0.625);
   flex: 1 1 auto;
@@ -1259,15 +1271,17 @@ select.alpheios-setting__control,
   width: calc(var(--alpheios-base-ui-size) * 7.5);
   background-color: var(--alpheios-text-bg-color);
   color: var(--alpheios-text-color);
-  text-align: center;
-  padding: calc(var(--alpheios-base-ui-size) * 0.375) 0;
   border: 1px solid var(--alpheios-border-color);
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625);
   z-index: 1;
   opacity: 0;
   transition: opacity 0.6s;
-  font-size: calc(var(--alpheios-base-text-size) * 0.75);
   display: none;
+}
+.alph_tooltip span.tooltiptext {
+  padding: calc(var(--alpheios-base-ui-size) * 0.375) 0;
+  font-size: calc(var(--alpheios-base-text-size) * 0.75);
+  text-align: center;
 }
 .alph_tooltip:hover .tooltiptext {
   visibility: visible;

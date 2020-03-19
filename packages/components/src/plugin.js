@@ -41,6 +41,8 @@ import ToolbarModule from '@/vue/vuex-modules/ui/toolbar-module.js'
 import ActionPanelModule from '@/vue/vuex-modules/ui/action-panel-module.js'
 import Platform from '@/lib/utility/platform.js'
 import AuthData from '@/lib/auth/auth-data.js'
+import SessionAuthenticator from '@/lib/auth/session-authenticator.js'
+import AppAuthenticator from '@/lib/auth/app-authenticator.js'
 
 export {
   Popup, Panel, L10n, Locales, enUS, enGB, UIController, UIEventController,
@@ -48,5 +50,5 @@ export {
   LocalStorageArea, ExtensionSyncStorage, FeatureOptionDefaults, LanguageOptionDefaults, UIOptionDefaults,
   DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector,
   HTMLPage, Tab, TabScript, L10nModule, AuthModule, PanelModule, PopupModule, ToolbarModule,
-  ActionPanelModule, Platform, AuthData
+  ActionPanelModule, Platform, AuthData, SessionAuthenticator, AppAuthenticator
 }

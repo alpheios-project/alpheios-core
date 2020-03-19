@@ -11,7 +11,7 @@
       v-show="$store.state.panel.visible"
   >
 
-    <div class="alpheios-panel__header">
+    <div class="alpheios-panel__header" id="alpheios-panel-header">
       <div class="alpheios-panel__header-logo">
         <logo-icon class="alpheios-logo-on-dark"/>
       </div>
@@ -30,7 +30,7 @@
       </div>
 
       <div class="alpheios-panel__header-btn-group--end">
-          <div @click="ui.closePanel" class="alpheios-panel__close-btn">
+          <div @click="ui.closePanel" class="alpheios-panel__close-btn" id="alpheios-panel-close-btn">
               <close-icon></close-icon>
           </div>
       </div>

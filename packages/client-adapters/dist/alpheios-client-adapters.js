@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("alpheios-data-models"));
+		module.exports = factory(require("alpheios-data-models"), require("alpheios-messaging"));
 	else if(typeof define === 'function' && define.amd)
-		define(["alpheios-data-models"], factory);
+		define(["alpheios-data-models", "alpheios-messaging"], factory);
 	else {
-		var a = typeof exports === 'object' ? factory(require("alpheios-data-models")) : factory(root["alpheios-data-models"]);
+		var a = typeof exports === 'object' ? factory(require("alpheios-data-models"), require("alpheios-messaging")) : factory(root["alpheios-data-models"], root["alpheios-messaging"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(window, function(__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__) {
+})(window, function(__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__, __WEBPACK_EXTERNAL_MODULE_alpheios_messaging__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -95,968 +95,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ })
 /************************************************************************/
 /******/ ({
-
-/***/ "../../../node_modules/alpheios-messaging/dist/dev/alpheios-messaging.js":
-/*!***********************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/alpheios-messaging/dist/dev/alpheios-messaging.js ***!
-  \***********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(true)
-		module.exports = factory();
-	else { var i, a; }
-})(window, function() {
-return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./index.js");
-/******/ })
-/************************************************************************/
-/******/ ({
-
-/***/ "./index.js":
-/*!******************!*\
-  !*** ./index.js ***!
-  \******************/
-/*! exports provided: MessagingService, WindowIframeDestination, RequestMessage, ResponseMessage, CedictDestinationConfig */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _messServ_core_messaging_service_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @messServ/core/messaging-service.js */ "./src/core/messaging-service.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MessagingService", function() { return _messServ_core_messaging_service_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
-
-/* harmony import */ var _messServ_destinations_window_iframe_destination_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @messServ/destinations/window-iframe-destination.js */ "./src/destinations/window-iframe-destination.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WindowIframeDestination", function() { return _messServ_destinations_window_iframe_destination_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
-
-/* harmony import */ var _messServ_messages_request_message_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @messServ/messages/request-message.js */ "./src/messages/request-message.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RequestMessage", function() { return _messServ_messages_request_message_js__WEBPACK_IMPORTED_MODULE_2__["default"]; });
-
-/* harmony import */ var _messServ_messages_response_message_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @messServ/messages/response-message.js */ "./src/messages/response-message.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ResponseMessage", function() { return _messServ_messages_response_message_js__WEBPACK_IMPORTED_MODULE_3__["default"]; });
-
-/* harmony import */ var _messServ_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @messServ/configurations/destinations.js */ "./src/configurations/destinations.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CedictDestinationConfig", function() { return _messServ_configurations_destinations_js__WEBPACK_IMPORTED_MODULE_4__["CedictDestinationConfig"]; });
-
-
-
-
-
-
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/uuid/lib/bytesToUuid.js":
-/*!**********************************************!*\
-  !*** ./node_modules/uuid/lib/bytesToUuid.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Convert array of 16 byte values to UUID string format of the form:
- * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
- */
-var byteToHex = [];
-for (var i = 0; i < 256; ++i) {
-  byteToHex[i] = (i + 0x100).toString(16).substr(1);
-}
-
-function bytesToUuid(buf, offset) {
-  var i = offset || 0;
-  var bth = byteToHex;
-  // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
-  return ([
-    bth[buf[i++]], bth[buf[i++]],
-    bth[buf[i++]], bth[buf[i++]], '-',
-    bth[buf[i++]], bth[buf[i++]], '-',
-    bth[buf[i++]], bth[buf[i++]], '-',
-    bth[buf[i++]], bth[buf[i++]], '-',
-    bth[buf[i++]], bth[buf[i++]],
-    bth[buf[i++]], bth[buf[i++]],
-    bth[buf[i++]], bth[buf[i++]]
-  ]).join('');
-}
-
-module.exports = bytesToUuid;
-
-
-/***/ }),
-
-/***/ "./node_modules/uuid/lib/rng-browser.js":
-/*!**********************************************!*\
-  !*** ./node_modules/uuid/lib/rng-browser.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// Unique ID creation requires a high quality random # generator.  In the
-// browser this is a little complicated due to unknown quality of Math.random()
-// and inconsistent support for the `crypto` API.  We do the best we can via
-// feature-detection
-
-// getRandomValues needs to be invoked in a context where "this" is a Crypto
-// implementation. Also, find the complete implementation of crypto on IE11.
-var getRandomValues = (typeof(crypto) != 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto)) ||
-                      (typeof(msCrypto) != 'undefined' && typeof window.msCrypto.getRandomValues == 'function' && msCrypto.getRandomValues.bind(msCrypto));
-
-if (getRandomValues) {
-  // WHATWG crypto RNG - http://wiki.whatwg.org/wiki/Crypto
-  var rnds8 = new Uint8Array(16); // eslint-disable-line no-undef
-
-  module.exports = function whatwgRNG() {
-    getRandomValues(rnds8);
-    return rnds8;
-  };
-} else {
-  // Math.random()-based (RNG)
-  //
-  // If all else fails, use Math.random().  It's fast, but is of unspecified
-  // quality.
-  var rnds = new Array(16);
-
-  module.exports = function mathRNG() {
-    for (var i = 0, r; i < 16; i++) {
-      if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
-      rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
-    }
-
-    return rnds;
-  };
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/uuid/v4.js":
-/*!*********************************!*\
-  !*** ./node_modules/uuid/v4.js ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var rng = __webpack_require__(/*! ./lib/rng */ "./node_modules/uuid/lib/rng-browser.js");
-var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ "./node_modules/uuid/lib/bytesToUuid.js");
-
-function v4(options, buf, offset) {
-  var i = buf && offset || 0;
-
-  if (typeof(options) == 'string') {
-    buf = options === 'binary' ? new Array(16) : null;
-    options = null;
-  }
-  options = options || {};
-
-  var rnds = options.random || (options.rng || rng)();
-
-  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
-  rnds[6] = (rnds[6] & 0x0f) | 0x40;
-  rnds[8] = (rnds[8] & 0x3f) | 0x80;
-
-  // Copy bytes to buffer, if provided
-  if (buf) {
-    for (var ii = 0; ii < 16; ++ii) {
-      buf[i + ii] = rnds[ii];
-    }
-  }
-
-  return buf || bytesToUuid(rnds);
-}
-
-module.exports = v4;
-
-
-/***/ }),
-
-/***/ "./src/configurations/destinations.js":
-/*!********************************************!*\
-  !*** ./src/configurations/destinations.js ***!
-  \********************************************/
-/*! exports provided: CedictDestinationConfig */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CedictDestinationConfig", function() { return CedictDestinationConfig; });
-/**
- * This is a configuration of a WindowsIframeDestination that can be used to connect to CEDICT client service.
- *
- * @type {{targetIframeID: string, name: string, targetURL: string}}
- */
-const CedictDestinationConfig = {
-  name: 'cedict',
-  targetURL: 'https://lexis-dev.alpheios.net',
-  targetIframeID: 'alpheios-lexis-cs'
-}
-
-
-/***/ }),
-
-/***/ "./src/core/messaging-service.js":
-/*!***************************************!*\
-  !*** ./src/core/messaging-service.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MessagingService; });
-/* harmony import */ var _messServ_messages_response_message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @messServ/messages/response-message.js */ "./src/messages/response-message.js");
-/* harmony import */ var _messServ_core_stored_request_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @messServ/core/stored-request.js */ "./src/core/stored-request.js");
-/**
- * @module MessagingService
- */
-
-
-
-/**
- * A map to keep "single" instances of MessagingService objects.
- *
- * @type {Map<string, MessagingService>}
- */
-let services = new Map() // eslint-disable-line prefer-const
-
-/** A messaging for sending and receiving messages to and from various destinations */
-class MessagingService {
-  /**
-   * Creates an instance of a messaging service.
-   *
-   * @param {string} name - A name of a messaging service. Useful in identifying the service when
-   *        several clients need to share the same instance of a service.
-   * @param {Destination || Destination[]} destinations - One or several
-   *        destination objects to be used with the messaging service.
-   */
-  constructor (name, destinations = []) {
-    if (!name) throw new Error(MessagingService.errMsgs.NO_NAME)
-    this.name = name
-    /**
-     * A map object where outgoing messages will be stored. The key is the message ID and the value is an object
-     * that stores details about the message being sent.
-     *
-     * @type {Map<string, StoredRequest>}
-     */
-    this._messages = new Map()
-
-    /**
-     * A map object where outgoing messages will be stored. The key is a destination name and the value is
-     * the Destination object.
-     *
-     * @type {Map<string, Destination>}
-     */
-    this._destinations = new Map()
-
-    // If provided as a singular value convert destination into an array
-    if (!Array.isArray(destinations)) { destinations = [destinations] }
-    destinations.forEach(destination => this.registerDestination(destination))
-  }
-
-  /**
-   * Check if service with a given name has already been created.
-   *
-   * @param {string} name - A name of a service.
-   * @returns {boolean} Returns true if service has already been created or false otherwise.
-   */
-  static hasService (name) {
-    return services.has(name)
-  }
-
-  /**
-   * Returns an instance of a service or `undefined` if service does not exist.
-   *
-   * @param {string} name - A name of a service.
-   * @returns {MessagingService|undefined} If service exists, returns an instance of a service.
-   *          If it does not, returns `undefined`.
-   */
-  static getService (name) {
-    return services.get(name)
-  }
-
-  /**
-   * Creates an instance of a MessagingService and adds it to the map of instances.
-   *
-   * @param {string} name - A map of messaging service to create.
-   * @param {Destination|Destination[]} destinations - One or several
-   *        destination objects to be used with the messaging service.
-   * @returns {MessagingService} An instance of a newly created messaging service.
-   */
-  static createService (name, destinations = []) {
-    const service = new MessagingService(name, destinations)
-    services.set(name, service)
-    return service
-  }
-
-  /**
-   * Removes an instance of a MessagingService form the map of instances.
-   *
-   * @param {string} name - A name of a service to remove.
-   * @returns {boolean} True if a service in the map existed and has been removed,
-   *          or false if the service does not exist.
-   */
-  static deleteService (name) {
-    return services.delete(name)
-  }
-
-  /**
-   * Registers a new destination by adding it to the destinations map and setting a response callback.
-   *
-   * @param {Destination} destination - A destination object to register.
-   */
-  registerDestination (destination) {
-    if (this._destinations.has(destination.name)) {
-      throw new Error('Destination already exists')
-    }
-    this._destinations.set(destination.name, destination)
-    destination.registerResponseCallback(this.dispatchMessage.bind(this))
-  }
-
-  /**
-   * Updates a destinations that is already registered.
-   *
-   * @param {Destination} destination - A destination object to register.
-   */
-  updateDestination (destination) {
-    if (!this._destinations.has(destination.name)) {
-      throw new Error('Cannot update a destination that does not exist')
-    }
-    this._destinations.set(destination.name, destination)
-    destination.registerResponseCallback(this.dispatchMessage.bind(this))
-  }
-
-  /**
-   * A function to handle incoming messages.
-   *
-   * @param {ResponseMessage} message - An incoming response message.
-   */
-  dispatchMessage (message) {
-    if (!_messServ_messages_response_message_js__WEBPACK_IMPORTED_MODULE_0__["default"].isResponse(message)) {
-      console.error('A message not following a response format will be ignored:', message)
-      return
-    }
-
-    if (!this._messages.has(message.requestID)) {
-      /*
-      Silently ignore a message with request ID not registered in the map.
-      It may be a message that is handled by the other messaging service.
-      */
-      return
-    }
-    const requestInfo = this._messages.get(message.requestID)
-    window.clearTimeout(requestInfo.timeoutID) // Clear a timeout
-    const responseCode = message.responseCode
-
-    if (responseCode === _messServ_messages_response_message_js__WEBPACK_IMPORTED_MODULE_0__["default"].responseCodes.ERROR) {
-      // There was an error returned. An error info is in the message body.
-      requestInfo.reject(message.body)
-    } else {
-      // Request was processed without errors
-      requestInfo.resolve(message)
-    }
-    this._messages.delete(message.requestID) // Remove request info from the map
-  }
-
-  /**
-   * Registers an outgoing request within a request map. Returns a promise that will be fulfilled when
-   * a response will be received or rejected when a timeout will expire.
-   *
-   * @param {RequestMessage} request - An outgoing request.
-   * @param {number} timeout - A number of milliseconds we'll wait for response before rejecting a promise.
-   * @returns {Promise} - A promise that will be resolved with the message response or rejected with an error info.
-   */
-  registerRequest (request, timeout = 10000) {
-    if (this._messages.has(request.ID)) throw new Error(`Request with ${request.ID} ID is already registered`)
-    let storedRequest = new _messServ_core_stored_request_js__WEBPACK_IMPORTED_MODULE_1__["default"](request) // eslint-disable-line prefer-const
-    this._messages.set(request.ID, storedRequest)
-    storedRequest.timeoutID = window.setTimeout((requestID) => {
-      storedRequest.reject(new Error(`Timeout has been expired for a message with request ID ${request.ID}`))
-      this._messages.delete(requestID) // Remove request record from the map
-    }, timeout)
-    return storedRequest.promise
-  }
-
-  /**
-   * Sends a request message to a specific destination.
-   *
-   * @param {string} destName - A name of a destination where request will be sent to.
-   * @param {RequestMessage} request - A request message to be sent.
-   * @param {number} timeout - How many milliseconds to wait for a response.
-   * @returns {Promise<ResponseMessage> | Promise<Error> | Promise<object>} - A promise either resolved
-   *          with response message or rejected with the error info.
-   */
-  sendRequestTo (destName, request, timeout = 10000) {
-    if (!destName) {
-      throw new Error('Destination name is not provided')
-    }
-
-    if (!this._destinations.has(destName)) {
-      throw new Error(`Unknown destination ${destName}`)
-    }
-
-    const promise = this.registerRequest(request, timeout)
-    this._destinations.get(destName).sendRequest(request)
-    return promise
-  }
-
-  /**
-   * Sets a function to be called on a destination side every time a message from the origin arrives.
-   *
-   * @param {string} destName - A name of a destination to listen to messages from.
-   * @param {Function} callbackFn - A function to call when message is arrived. A message will be passed
-   *                                to this function as an argument.
-   */
-  registerReceiverCallback (destName, callbackFn) {
-    if (!destName) {
-      throw new Error('No destination name provided')
-    }
-
-    if (!this._destinations.has(destName)) {
-      throw new Error(`Unknown destination ${destName}`)
-    }
-
-    this._destinations.get(destName).registerReceiverCallback(callbackFn)
-  }
-}
-
-MessagingService.errMsgs = {
-  NO_NAME: 'MessagingService must be created with a name'
-}
-
-
-/***/ }),
-
-/***/ "./src/core/stored-request.js":
-/*!************************************!*\
-  !*** ./src/core/stored-request.js ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return StoredRequest; });
-/**
- * @module StoredRequest
- */
-
-/** Stores information about request being sent via the messaging service */
-class StoredRequest {
-  constructor () {
-    /**
-     * A function to resolve the request's promise.
-     *
-     * @type {Function}
-     */
-    this.resolve = null
-
-    /**
-     * A function to reject the request's promise.
-     *
-     * @type {Function}
-     */
-    this.reject = null
-
-    // A promise that will be resolved or rejected when the response will arrive or the timeout will expire
-    this.promise = new Promise(this.executor.bind(this))
-  }
-
-  executor (resolve, reject) {
-    this.resolve = resolve
-    this.reject = reject
-  }
-}
-
-
-/***/ }),
-
-/***/ "./src/destinations/destination.js":
-/*!*****************************************!*\
-  !*** ./src/destinations/destination.js ***!
-  \*****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Destination; });
-/**
- * @module Destination
- */
-
-/** Destination represents a place where messages are sent to and are received from (e.g. a windows) */
-class Destination {
-  /**
-   * Creates an instance of a Destination object. Descendants may take configuration parameters through
-   * a second argument that they can define.
-   *
-   * @param {object} [configuration={}] - A configuration object for a destination.
-   * @param {string} configuration.name - A name of a particular destination.
-   */
-  constructor ({ name } = {}) {
-    if (!name) {
-      throw new Error('Destination name is missing')
-    }
-
-    /**
-     * A name of a destination. Used to refer to it within a messaging service.
-     *
-     * @type {string}
-     * @public
-     */
-    this.name = name
-
-    /**
-     * A function that will be called when a response from destination is received.
-     *
-     * @type {Function}
-     * @private
-     */
-    this._responseCallback = null
-  }
-
-  /**
-   * Registers a function to call when a response from destination is received.
-   *
-   * @param {Function} callbackFn - A function to be called when response is received.
-   */
-  registerResponseCallback (callbackFn) {
-    this._responseCallback = callbackFn
-  }
-}
-
-
-/***/ }),
-
-/***/ "./src/destinations/window-iframe-destination.js":
-/*!*******************************************************!*\
-  !*** ./src/destinations/window-iframe-destination.js ***!
-  \*******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WindowIframeDestination; });
-/* harmony import */ var _messServ_destinations_destination_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @messServ/destinations/destination.js */ "./src/destinations/destination.js");
-/**
- * @module WindowIframeDestination
- */
-
-
-/** WindowIframeDestination represents a content window within an iframe */
-class WindowIframeDestination extends _messServ_destinations_destination_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  /**
-   * @param {object} [configuration={}] - An object containing configuration parameters.
-   * @param {string} configuration.name - A name of a destination (for addressing a destination in a messaging service).
-   * @param {string} configuration.targetURL - A URL of a document within an iframe where messages will be sent.
-   * @param {string} configuration.targetIframeID - An ID of an iframe element (without `#`).
-   */
-  constructor ({ name, targetURL, targetIframeID } = {}) {
-    super({ name })
-
-    if (!targetURL) {
-      throw new Error('Target URL is not provided')
-    }
-
-    if (!targetIframeID) {
-      throw new Error('Target iframe ID is not provided')
-    }
-
-    /**
-     * A URL of a document within an iframe where messages will be sent.
-     *
-     * @type {string}
-     * @private
-     */
-    this._targetURL = targetURL
-
-    /**
-     * An ID of an iframe element (without `#`).
-     *
-     * @type {string}
-     * @private
-     */
-    this._targetIframeID = targetIframeID
-
-    window.addEventListener('message', this._responseHandler.bind(this), false)
-  }
-
-  /**
-   * Registers a function to be called an a receiving side when a message from origin to destination will arrive.
-   * This callback will receive the following arguments: the request object (of `RequestMessage` type)
-   * and the function that can be used to send a response.
-   *
-   * @param {Function} callbackFn - A function that will be called when a request will arrive to its destination.
-   */
-  registerReceiverCallback (callbackFn) {
-    window.addEventListener('message', this._requestHandler.bind(this, callbackFn), false)
-  }
-
-  /**
-   * A function that will be called to send a request from origin to destination.
-   *
-   * @param {RequestMessage} requestMessage - A request message object.
-   */
-  sendRequest (requestMessage) {
-    const iframe = document.querySelector(`#${this._targetIframeID}`)
-    if (!iframe) {
-      throw new Error(`An #${this._targetIframeID} iframe does not exist in the document`)
-    }
-    const iframeWindow = iframe.contentWindow
-    iframeWindow.postMessage(requestMessage, this._targetURL)
-  }
-
-  /**
-   * A function that is used to send a response from destination to origin.
-   *
-   * @param {ResponseMessage} responseMessage - A response message object.
-   */
-  sendResponse (responseMessage) {
-    window.parent.postMessage(responseMessage, responseMessage.requestHeader.origin)
-  }
-
-  /**
-   * An internal handler that is called when request arrives to its destination.
-   *
-   * @param {Function} callbackFn - A client's callback function that will be called and
-   *                                passed a request (a `RequestMessage` object).
-   * @param {Event} event - A browser's event object.
-   * @private
-   */
-  _requestHandler (callbackFn, event) {
-    // `data` prop of an event contains a request message object
-    let request = event.data // eslint-disable-line prefer-const
-    request.header.origin = event.origin
-    callbackFn(request, this.sendResponse.bind(this))
-  }
-
-  /**
-   * An internal handler that is called when response arrives from destination to origin.
-   *
-   * @param {Event} event - A browser's event object.
-   * @private
-   */
-  _responseHandler (event) {
-    if (event.origin !== this._targetURL) {
-      // Message came from a destination we're not listening for
-      return
-    }
-
-    // `data` prop of an event contains a response message object
-    const responseMessage = event.data
-    if (this._responseCallback) {
-      this._responseCallback(responseMessage)
-    }
-  }
-}
-
-
-/***/ }),
-
-/***/ "./src/messages/message.js":
-/*!*********************************!*\
-  !*** ./src/messages/message.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Message; });
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid/v4 */ "./node_modules/uuid/v4.js");
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_0__);
-/**
- * @module Message
- */
-
-
-/** A base class for all types of messages */
-class Message {
-  /**
-   * @param {object} [body={}] - A plain JS object (with no methods) representing a body of the message.
-   */
-  constructor (body = {}) {
-    /**
-     * A message's role (@see {@link Message.roles}). Will be defined in descendants.
-     *
-     * @type {string | undefined}
-     */
-    this.role = undefined
-
-    /**
-     * A type of the message. Used to distinguish one kind of message from the other (@see {@link Message.types}).
-     *
-     * @type {string | undefined}
-     */
-    this.type = Message.types.GENERIC
-
-    /**
-     * A unique identifier of the message.
-     *
-     * @type {string}
-     */
-    this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_0___default()()
-
-    /**
-     * An object with no methods representing a message body.
-     *
-     * @type {object}
-     */
-    this.body = body
-  }
-}
-
-/**
- * Specifies whether a message is request or response.
- */
-Message.roles = {
-  REQUEST: 'Request',
-  RESPONSE: 'Response'
-}
-
-/**
- * Specifies a message type: what kind of message it is and what purpose it serves.
- */
-Message.types = {
-  GENERIC: 'Generic'
-}
-
-
-/***/ }),
-
-/***/ "./src/messages/request-message.js":
-/*!*****************************************!*\
-  !*** ./src/messages/request-message.js ***!
-  \*****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RequestMessage; });
-/* harmony import */ var _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @messServ/messages/message.js */ "./src/messages/message.js");
-/**
- * @module RequestMessage
- */
-
-
-/** A request message */
-class RequestMessage extends _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  /**
-   * @param {object} [body={}] - A plain JS object (with no methods) representing a body of the message.
-   */
-  constructor (body = {}) {
-    super(body)
-    this.role = _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__["default"].roles.REQUEST
-
-    /**
-     * A message header. Will contain routing information usually.
-     *
-     * @type {object}
-     */
-    this.header = {}
-  }
-}
-
-
-/***/ }),
-
-/***/ "./src/messages/response-message.js":
-/*!******************************************!*\
-  !*** ./src/messages/response-message.js ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ResponseMessage; });
-/* harmony import */ var _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @messServ/messages/message.js */ "./src/messages/message.js");
-/* harmony import */ var _messServ_messages_request_message_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @messServ/messages/request-message.js */ "./src/messages/request-message.js");
-/**
- * @module ResponseMessage
- */
-
-
-
-/** A response message that is sent as an answer to the request message. */
-class ResponseMessage extends _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  /**
-   * @param {RequestMessage} request - A request that initiated this response. Used to copy routing information mostly.
-   * @param {object} [body={}] - A body of the response, a plain JS object with no methods.
-   * @param {string} responseCode - A code to indicate results of the request handling: Success, Failure, etc.
-   */
-  constructor (request, body = {}, responseCode = ResponseMessage.responseCodes.UNDEFINED) {
-    super(body)
-    if (!request) throw new Error('Request is not provided')
-    if (!request.ID) throw new Error('Request has no ID')
-    this.role = _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__["default"].roles.RESPONSE
-    this.requestHeader = request.header || {}
-    this.requestID = request.ID // ID of the request to match request and response
-    this.responseCode = responseCode
-  }
-
-  /**
-   * A builder for a response message with a SUCCESS response code.
-   *
-   * @param {RequestMessage} request - An original request.
-   * @param {object} [body={}] - A body of response message.
-   * @returns {ResponseMessage} - A newly created response message with the SUCCESS return code.
-   * @class
-   */
-  static Success (request, body = {}) {
-    return new this(request, body, ResponseMessage.responseCodes.SUCCESS)
-  }
-
-  /**
-   * A builder for a message with an ERROR response code. Error information will be sent within the message body.
-   *
-   * @param {RequestMessage} request - An original request.
-   * @param {Error} error - An error object containing error information.
-   * @returns {ResponseMessage} - A newly created response message with the SUCCESS return code.
-   * @class
-   */
-  static Error (request, error) {
-    return new this(request, error, ResponseMessage.responseCodes.ERROR)
-  }
-
-  /**
-   * Checks if this message is a response (i.e. if it follows a response message format and conventions).
-   *
-   * @param {RequestMessage | ResponseMessage} message - A request or response message to be tested.
-   * @returns {boolean} - True if the message is a response, false otherwise.
-   */
-  static isResponse (message) {
-    return message.role &&
-      message.role === _messServ_messages_message_js__WEBPACK_IMPORTED_MODULE_0__["default"].roles.RESPONSE &&
-      message.requestHeader &&
-      message.requestID
-  }
-}
-
-/**
- * Specifies whether a request was processed successfully or not.
- */
-ResponseMessage.responseCodes = {
-  // Request was processed successfully.
-  // In this case a message body may contain a response data object or be empty.
-  SUCCESS: 'Success',
-
-  // There is no information about what was the outcome of request.
-  UNDEFINED: 'Undefined',
-
-  // Request failed. A message body will have information about an error.
-  ERROR: 'Error'
-}
-
-
-/***/ })
-
-/******/ });
-});
-
-
-/***/ }),
-
-/***/ "../../../node_modules/alpheios-messaging/dist/prod/alpheios-messaging.min.js":
-/*!****************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/alpheios-messaging/dist/prod/alpheios-messaging.min.js ***!
-  \****************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-!function webpackUniversalModuleDefinition(e,s){if(true)module.exports=s();else { var r, t; }}(window,(function(){return function(e){var s={};function __webpack_require__(t){if(s[t])return s[t].exports;var r=s[t]={i:t,l:!1,exports:{}};return e[t].call(r.exports,r,r.exports,__webpack_require__),r.l=!0,r.exports}return __webpack_require__.m=e,__webpack_require__.c=s,__webpack_require__.d=function(e,s,t){__webpack_require__.o(e,s)||Object.defineProperty(e,s,{enumerable:!0,get:t})},__webpack_require__.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},__webpack_require__.t=function(e,s){if(1&s&&(e=__webpack_require__(e)),8&s)return e;if(4&s&&"object"==typeof e&&e&&e.__esModule)return e;var t=Object.create(null);if(__webpack_require__.r(t),Object.defineProperty(t,"default",{enumerable:!0,value:e}),2&s&&"string"!=typeof e)for(var r in e)__webpack_require__.d(t,r,function(s){return e[s]}.bind(null,r));return t},__webpack_require__.n=function(e){var s=e&&e.__esModule?function getDefault(){return e.default}:function getModuleExports(){return e};return __webpack_require__.d(s,"a",s),s},__webpack_require__.o=function(e,s){return Object.prototype.hasOwnProperty.call(e,s)},__webpack_require__.p="",__webpack_require__(__webpack_require__.s=3)}([function(e,s,t){var r=t(1),n=t(2);e.exports=function v4(e,s,t){var i=s&&t||0;"string"==typeof e&&(s="binary"===e?new Array(16):null,e=null);var o=(e=e||{}).random||(e.rng||r)();if(o[6]=15&o[6]|64,o[8]=63&o[8]|128,s)for(var a=0;a<16;++a)s[i+a]=o[a];return s||n(o)}},function(e,s){var t="undefined"!=typeof crypto&&crypto.getRandomValues&&crypto.getRandomValues.bind(crypto)||"undefined"!=typeof msCrypto&&"function"==typeof window.msCrypto.getRandomValues&&msCrypto.getRandomValues.bind(msCrypto);if(t){var r=new Uint8Array(16);e.exports=function whatwgRNG(){return t(r),r}}else{var n=new Array(16);e.exports=function mathRNG(){for(var e,s=0;s<16;s++)0==(3&s)&&(e=4294967296*Math.random()),n[s]=e>>>((3&s)<<3)&255;return n}}},function(e,s){for(var t=[],r=0;r<256;++r)t[r]=(r+256).toString(16).substr(1);e.exports=function bytesToUuid(e,s){var r=s||0,n=t;return[n[e[r++]],n[e[r++]],n[e[r++]],n[e[r++]],"-",n[e[r++]],n[e[r++]],"-",n[e[r++]],n[e[r++]],"-",n[e[r++]],n[e[r++]],"-",n[e[r++]],n[e[r++]],n[e[r++]],n[e[r++]],n[e[r++]],n[e[r++]]].join("")}},function(e,s,t){"use strict";t.r(s);var r=t(0),n=t.n(r);class message_Message{constructor(e={}){this.role=void 0,this.type=message_Message.types.GENERIC,this.ID=n()(),this.body=e}}message_Message.roles={REQUEST:"Request",RESPONSE:"Response"},message_Message.types={GENERIC:"Generic"};class request_message_RequestMessage extends message_Message{constructor(e={}){super(e),this.role=message_Message.roles.REQUEST,this.header={}}}class response_message_ResponseMessage extends message_Message{constructor(e,s={},t=response_message_ResponseMessage.responseCodes.UNDEFINED){if(super(s),!e)throw new Error("Request is not provided");if(!e.ID)throw new Error("Request has no ID");this.role=message_Message.roles.RESPONSE,this.requestHeader=e.header||{},this.requestID=e.ID,this.responseCode=t}static Success(e,s={}){return new this(e,s,response_message_ResponseMessage.responseCodes.SUCCESS)}static Error(e,s){return new this(e,s,response_message_ResponseMessage.responseCodes.ERROR)}static isResponse(e){return e.role&&e.role===message_Message.roles.RESPONSE&&e.requestHeader&&e.requestID}}response_message_ResponseMessage.responseCodes={SUCCESS:"Success",UNDEFINED:"Undefined",ERROR:"Error"};class StoredRequest{constructor(){this.resolve=null,this.reject=null,this.promise=new Promise(this.executor.bind(this))}executor(e,s){this.resolve=e,this.reject=s}}let i=new Map;class messaging_service_MessagingService{constructor(e,s=[]){if(!e)throw new Error(messaging_service_MessagingService.errMsgs.NO_NAME);this.name=e,this._messages=new Map,this._destinations=new Map,Array.isArray(s)||(s=[s]),s.forEach(e=>this.registerDestination(e))}static hasService(e){return i.has(e)}static getService(e){return i.get(e)}static createService(e,s=[]){const t=new messaging_service_MessagingService(e,s);return i.set(e,t),t}static deleteService(e){return i.delete(e)}registerDestination(e){if(this._destinations.has(e.name))throw new Error("Destination already exists");this._destinations.set(e.name,e),e.registerResponseCallback(this.dispatchMessage.bind(this))}updateDestination(e){if(!this._destinations.has(e.name))throw new Error("Cannot update a destination that does not exist");this._destinations.set(e.name,e),e.registerResponseCallback(this.dispatchMessage.bind(this))}dispatchMessage(e){if(!response_message_ResponseMessage.isResponse(e))return void console.error("A message not following a response format will be ignored:",e);if(!this._messages.has(e.requestID))return;const s=this._messages.get(e.requestID);window.clearTimeout(s.timeoutID),e.responseCode===response_message_ResponseMessage.responseCodes.ERROR?s.reject(e.body):s.resolve(e),this._messages.delete(e.requestID)}registerRequest(e,s=1e4){if(this._messages.has(e.ID))throw new Error(`Request with ${e.ID} ID is already registered`);let t=new StoredRequest(e);return this._messages.set(e.ID,t),t.timeoutID=window.setTimeout(s=>{t.reject(new Error(`Timeout has been expired for a message with request ID ${e.ID}`)),this._messages.delete(s)},s),t.promise}sendRequestTo(e,s,t=1e4){if(!e)throw new Error("Destination name is not provided");if(!this._destinations.has(e))throw new Error(`Unknown destination ${e}`);const r=this.registerRequest(s,t);return this._destinations.get(e).sendRequest(s),r}registerReceiverCallback(e,s){if(!e)throw new Error("No destination name provided");if(!this._destinations.has(e))throw new Error(`Unknown destination ${e}`);this._destinations.get(e).registerReceiverCallback(s)}}messaging_service_MessagingService.errMsgs={NO_NAME:"MessagingService must be created with a name"};class window_iframe_destination_WindowIframeDestination extends class Destination{constructor({name:e}={}){if(!e)throw new Error("Destination name is missing");this.name=e,this._responseCallback=null}registerResponseCallback(e){this._responseCallback=e}}{constructor({name:e,targetURL:s,targetIframeID:t}={}){if(super({name:e}),!s)throw new Error("Target URL is not provided");if(!t)throw new Error("Target iframe ID is not provided");this._targetURL=s,this._targetIframeID=t,window.addEventListener("message",this._responseHandler.bind(this),!1)}registerReceiverCallback(e){window.addEventListener("message",this._requestHandler.bind(this,e),!1)}sendRequest(e){const s=document.querySelector(`#${this._targetIframeID}`);if(!s)throw new Error(`An #${this._targetIframeID} iframe does not exist in the document`);s.contentWindow.postMessage(e,this._targetURL)}sendResponse(e){window.parent.postMessage(e,e.requestHeader.origin)}_requestHandler(e,s){let t=s.data;t.header.origin=s.origin,e(t,this.sendResponse.bind(this))}_responseHandler(e){if(e.origin!==this._targetURL)return;const s=e.data;this._responseCallback&&this._responseCallback(s)}}const o={name:"cedict",targetURL:"https://lexis-dev.alpheios.net",targetIframeID:"alpheios-lexis-cs"};t.d(s,"MessagingService",(function(){return messaging_service_MessagingService})),t.d(s,"WindowIframeDestination",(function(){return window_iframe_destination_WindowIframeDestination})),t.d(s,"RequestMessage",(function(){return request_message_RequestMessage})),t.d(s,"ResponseMessage",(function(){return response_message_ResponseMessage})),t.d(s,"CedictDestinationConfig",(function(){return o}))}])}));
-
-/***/ }),
 
 /***/ "../../../node_modules/axios/index.js":
-/*!************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/index.js ***!
-  \************************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/index.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1065,9 +108,9 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/a
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/adapters/xhr.js":
-/*!***********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/adapters/xhr.js ***!
-  \***********************************************************************************/
+/*!*************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/adapters/xhr.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1257,9 +300,9 @@ module.exports = function xhrAdapter(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/axios.js":
-/*!****************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/axios.js ***!
-  \****************************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/axios.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1322,9 +365,9 @@ module.exports.default = axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/Cancel.js":
-/*!************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/cancel/Cancel.js ***!
-  \************************************************************************************/
+/*!**************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/cancel/Cancel.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1353,9 +396,9 @@ module.exports = Cancel;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/CancelToken.js":
-/*!*****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/cancel/CancelToken.js ***!
-  \*****************************************************************************************/
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/cancel/CancelToken.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1422,9 +465,9 @@ module.exports = CancelToken;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/isCancel.js":
-/*!**************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/cancel/isCancel.js ***!
-  \**************************************************************************************/
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/cancel/isCancel.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1439,9 +482,9 @@ module.exports = function isCancel(value) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/Axios.js":
-/*!*********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/Axios.js ***!
-  \*********************************************************************************/
+/*!***********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/Axios.js ***!
+  \***********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1545,9 +588,9 @@ module.exports = Axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/InterceptorManager.js":
-/*!**********************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/InterceptorManager.js ***!
-  \**********************************************************************************************/
+/*!************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/InterceptorManager.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1609,9 +652,9 @@ module.exports = InterceptorManager;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/buildFullPath.js":
-/*!*****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/buildFullPath.js ***!
-  \*****************************************************************************************/
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/buildFullPath.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1641,9 +684,9 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/createError.js":
-/*!***************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/createError.js ***!
-  \***************************************************************************************/
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/createError.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1671,9 +714,9 @@ module.exports = function createError(message, config, code, request, response) 
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/dispatchRequest.js":
-/*!*******************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/dispatchRequest.js ***!
-  \*******************************************************************************************/
+/*!*********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/dispatchRequest.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1762,9 +805,9 @@ module.exports = function dispatchRequest(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/enhanceError.js":
-/*!****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/enhanceError.js ***!
-  \****************************************************************************************/
+/*!******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/enhanceError.js ***!
+  \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1816,9 +859,9 @@ module.exports = function enhanceError(error, config, code, request, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/mergeConfig.js":
-/*!***************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/mergeConfig.js ***!
-  \***************************************************************************************/
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/mergeConfig.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1901,9 +944,9 @@ module.exports = function mergeConfig(config1, config2) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/settle.js":
-/*!**********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/settle.js ***!
-  \**********************************************************************************/
+/*!************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/settle.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1938,9 +981,9 @@ module.exports = function settle(resolve, reject, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/transformData.js":
-/*!*****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/transformData.js ***!
-  \*****************************************************************************************/
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/transformData.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1970,9 +1013,9 @@ module.exports = function transformData(data, headers, fns) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/defaults.js":
-/*!*******************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/defaults.js ***!
-  \*******************************************************************************/
+/*!*********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/defaults.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2080,9 +1123,9 @@ module.exports = defaults;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/bind.js":
-/*!***********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/bind.js ***!
-  \***********************************************************************************/
+/*!*************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/bind.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2103,9 +1146,9 @@ module.exports = function bind(fn, thisArg) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/buildURL.js":
-/*!***************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/buildURL.js ***!
-  \***************************************************************************************/
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/buildURL.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2186,9 +1229,9 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/combineURLs.js":
-/*!******************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/combineURLs.js ***!
-  \******************************************************************************************/
+/*!********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/combineURLs.js ***!
+  \********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2212,9 +1255,9 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/cookies.js":
-/*!**************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/cookies.js ***!
-  \**************************************************************************************/
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/cookies.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2277,9 +1320,9 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isAbsoluteURL.js":
-/*!********************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
-  \********************************************************************************************/
+/*!**********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2303,9 +1346,9 @@ module.exports = function isAbsoluteURL(url) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isURLSameOrigin.js":
-/*!**********************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
-  \**********************************************************************************************/
+/*!************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2383,9 +1426,9 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/normalizeHeaderName.js":
-/*!**************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
-  \**************************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2407,9 +1450,9 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/parseHeaders.js":
-/*!*******************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/parseHeaders.js ***!
-  \*******************************************************************************************/
+/*!*********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/parseHeaders.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2472,9 +1515,9 @@ module.exports = function parseHeaders(headers) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/spread.js":
-/*!*************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/spread.js ***!
-  \*************************************************************************************/
+/*!***************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/spread.js ***!
+  \***************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2511,9 +1554,9 @@ module.exports = function spread(callback) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/utils.js":
-/*!****************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/utils.js ***!
-  \****************************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/utils.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2867,9 +1910,9 @@ module.exports = {
 /***/ }),
 
 /***/ "../../../node_modules/base64-js/index.js":
-/*!****************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/base64-js/index.js ***!
-  \****************************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/base64-js/index.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3031,9 +2074,9 @@ function fromByteArray (uint8) {
 /***/ }),
 
 /***/ "../../../node_modules/core-util-is/lib/util.js":
-/*!**********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/core-util-is/lib/util.js ***!
-  \**********************************************************************************/
+/*!************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/core-util-is/lib/util.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3150,9 +2193,9 @@ function objectToString(o) {
 /***/ }),
 
 /***/ "../../../node_modules/events/events.js":
-/*!**************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/events/events.js ***!
-  \**************************************************************************/
+/*!****************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/events/events.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3608,9 +2651,9 @@ function unwrapListeners(arr) {
 /***/ }),
 
 /***/ "../../../node_modules/ieee754/index.js":
-/*!**************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/ieee754/index.js ***!
-  \**************************************************************************/
+/*!****************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/ieee754/index.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3703,9 +2746,9 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 /***/ }),
 
 /***/ "../../../node_modules/inherits/inherits.js":
-/*!******************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/inherits/inherits.js ***!
-  \******************************************************************************/
+/*!********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/inherits/inherits.js ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3723,9 +2766,9 @@ try {
 /***/ }),
 
 /***/ "../../../node_modules/inherits/inherits_browser.js":
-/*!**************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/inherits/inherits_browser.js ***!
-  \**************************************************************************************/
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/inherits/inherits_browser.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3761,9 +2804,9 @@ if (typeof Object.create === 'function') {
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat-parser/index.js":
-/*!********************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat-parser/index.js ***!
-  \********************************************************************************************/
+/*!**********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat-parser/index.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3777,9 +2820,9 @@ exports['default'] = exports;
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat-parser/lib/parser.js":
-/*!*************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat-parser/lib/parser.js ***!
-  \*************************************************************************************************/
+/*!***************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat-parser/lib/parser.js ***!
+  \***************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5189,9 +4232,9 @@ exports["default"] = (function() {
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/index.js":
-/*!*************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat/index.js ***!
-  \*************************************************************************************/
+/*!***************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/index.js ***!
+  \***************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5216,9 +4259,9 @@ exports['default'] = exports;
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/lib/compiler.js":
-/*!********************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat/lib/compiler.js ***!
-  \********************************************************************************************/
+/*!**********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/compiler.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5436,9 +4479,9 @@ SelectFormat.prototype.getOption = function (value) {
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/lib/core.js":
-/*!****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat/lib/core.js ***!
-  \****************************************************************************************/
+/*!******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/core.js ***!
+  \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5724,9 +4767,9 @@ MessageFormat.prototype._resolveLocale = function (locales) {
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/lib/en.js":
-/*!**************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat/lib/en.js ***!
-  \**************************************************************************************/
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/en.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5740,9 +4783,9 @@ exports["default"] = {"locale":"en","pluralRuleFunction":function (n,ord){var s=
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/lib/es5.js":
-/*!***************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat/lib/es5.js ***!
-  \***************************************************************************************/
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/es5.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5801,9 +4844,9 @@ exports.defineProperty = defineProperty, exports.objCreate = objCreate;
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/lib/main.js":
-/*!****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat/lib/main.js ***!
-  \****************************************************************************************/
+/*!******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/main.js ***!
+  \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5823,9 +4866,9 @@ exports["default"] = src$core$$["default"];
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/lib/utils.js":
-/*!*****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat/lib/utils.js ***!
-  \*****************************************************************************************/
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/utils.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5866,9 +4909,9 @@ exports.hop = hop;
 /***/ }),
 
 /***/ "../../../node_modules/isarray/index.js":
-/*!**************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/isarray/index.js ***!
-  \**************************************************************************/
+/*!****************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/isarray/index.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -5882,9 +4925,9 @@ module.exports = Array.isArray || function (arr) {
 /***/ }),
 
 /***/ "../../../node_modules/node-libs-browser/node_modules/buffer/index.js":
-/*!********************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/buffer/index.js ***!
-  \********************************************************************************************************/
+/*!**********************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/node-libs-browser/node_modules/buffer/index.js ***!
+  \**********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7684,9 +6727,9 @@ function isnan (val) {
 /***/ }),
 
 /***/ "../../../node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits.js":
-/*!*******************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits.js ***!
-  \*******************************************************************************************************************************/
+/*!*********************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits.js ***!
+  \*********************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7702,9 +6745,9 @@ try {
 /***/ }),
 
 /***/ "../../../node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits_browser.js":
-/*!***************************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits_browser.js ***!
-  \***************************************************************************************************************************************/
+/*!*****************************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits_browser.js ***!
+  \*****************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -7736,9 +6779,9 @@ if (typeof Object.create === 'function') {
 /***/ }),
 
 /***/ "../../../node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js":
-/*!************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js ***!
-  \************************************************************************************************************************/
+/*!**************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js ***!
+  \**************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -7752,9 +6795,9 @@ module.exports = function isBuffer(arg) {
 /***/ }),
 
 /***/ "../../../node_modules/node-libs-browser/node_modules/util/util.js":
-/*!*****************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/util/util.js ***!
-  \*****************************************************************************************************/
+/*!*******************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/node-libs-browser/node_modules/util/util.js ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8467,9 +7510,9 @@ exports.callbackify = callbackify;
 /***/ }),
 
 /***/ "../../../node_modules/papaparse/papaparse.js":
-/*!********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/papaparse/papaparse.js ***!
-  \********************************************************************************/
+/*!**********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/papaparse/papaparse.js ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10394,9 +9437,9 @@ License: MIT
 /***/ }),
 
 /***/ "../../../node_modules/process-nextick-args/index.js":
-/*!***************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/process-nextick-args/index.js ***!
-  \***************************************************************************************/
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/process-nextick-args/index.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10452,9 +9495,9 @@ function nextTick(fn, arg1, arg2, arg3) {
 /***/ }),
 
 /***/ "../../../node_modules/process/browser.js":
-/*!****************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/process/browser.js ***!
-  \****************************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/process/browser.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10647,9 +9690,9 @@ process.umask = function() { return 0; };
 /***/ }),
 
 /***/ "../../../node_modules/safe-buffer/index.js":
-/*!******************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/safe-buffer/index.js ***!
-  \******************************************************************************/
+/*!********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/safe-buffer/index.js ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10720,9 +9763,9 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 /***/ }),
 
 /***/ "../../../node_modules/setimmediate/setImmediate.js":
-/*!**************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/setimmediate/setImmediate.js ***!
-  \**************************************************************************************/
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/setimmediate/setImmediate.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10918,9 +9961,9 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/index.js":
-/*!************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/index.js ***!
-  \************************************************************************************/
+/*!**************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/index.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11056,9 +10099,9 @@ Stream.prototype.pipe = function(dest, options) {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/duplex-browser.js":
-/*!**************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/duplex-browser.js ***!
-  \**************************************************************************************************************************/
+/*!****************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/duplex-browser.js ***!
+  \****************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11068,9 +10111,9 @@ module.exports = __webpack_require__(/*! ./lib/_stream_duplex.js */ "../../../no
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js":
-/*!******************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js ***!
-  \******************************************************************************************************************************/
+/*!********************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js ***!
+  \********************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11210,9 +10253,9 @@ Duplex.prototype._destroy = function (err, cb) {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js":
-/*!***********************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js ***!
-  \***********************************************************************************************************************************/
+/*!*************************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js ***!
+  \*************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11268,9 +10311,9 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js":
-/*!********************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js ***!
-  \********************************************************************************************************************************/
+/*!**********************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js ***!
+  \**********************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12299,9 +11342,9 @@ function indexOf(xs, x) {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js":
-/*!*********************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js ***!
-  \*********************************************************************************************************************************/
+/*!***********************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js ***!
+  \***********************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12524,9 +11567,9 @@ function done(stream, er, data) {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js":
-/*!********************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js ***!
-  \********************************************************************************************************************************/
+/*!**********************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js ***!
+  \**********************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13223,9 +12266,9 @@ Writable.prototype._destroy = function (err, cb) {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/BufferList.js":
-/*!*******************************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/BufferList.js ***!
-  \*******************************************************************************************************************************************/
+/*!*********************************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/BufferList.js ***!
+  \*********************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13313,9 +12356,9 @@ if (util && util.inspect && util.inspect.custom) {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js":
-/*!****************************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js ***!
-  \****************************************************************************************************************************************/
+/*!******************************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js ***!
+  \******************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13398,9 +12441,9 @@ module.exports = {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js":
-/*!***********************************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js ***!
-  \***********************************************************************************************************************************************/
+/*!*************************************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js ***!
+  \*************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13410,9 +12453,9 @@ module.exports = __webpack_require__(/*! events */ "../../../node_modules/events
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/passthrough.js":
-/*!***********************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/passthrough.js ***!
-  \***********************************************************************************************************************/
+/*!*************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/passthrough.js ***!
+  \*************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13422,9 +12465,9 @@ module.exports = __webpack_require__(/*! ./readable */ "../../../node_modules/st
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/readable-browser.js":
-/*!****************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/readable-browser.js ***!
-  \****************************************************************************************************************************/
+/*!******************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/readable-browser.js ***!
+  \******************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13440,9 +12483,9 @@ exports.PassThrough = __webpack_require__(/*! ./lib/_stream_passthrough.js */ ".
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/transform.js":
-/*!*********************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/transform.js ***!
-  \*********************************************************************************************************************/
+/*!***********************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/transform.js ***!
+  \***********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13452,9 +12495,9 @@ module.exports = __webpack_require__(/*! ./readable */ "../../../node_modules/st
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/writable-browser.js":
-/*!****************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/writable-browser.js ***!
-  \****************************************************************************************************************************/
+/*!******************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/writable-browser.js ***!
+  \******************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13464,9 +12507,9 @@ module.exports = __webpack_require__(/*! ./lib/_stream_writable.js */ "../../../
 /***/ }),
 
 /***/ "../../../node_modules/string_decoder/lib/string_decoder.js":
-/*!**********************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/string_decoder/lib/string_decoder.js ***!
-  \**********************************************************************************************/
+/*!************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/string_decoder/lib/string_decoder.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13771,9 +12814,9 @@ function simpleEnd(buf) {
 /***/ }),
 
 /***/ "../../../node_modules/timers-browserify/main.js":
-/*!***********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/timers-browserify/main.js ***!
-  \***********************************************************************************/
+/*!*************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/timers-browserify/main.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13846,9 +12889,9 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /***/ }),
 
 /***/ "../../../node_modules/util-deprecate/node.js":
-/*!********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/util-deprecate/node.js ***!
-  \********************************************************************************/
+/*!**********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/util-deprecate/node.js ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13927,9 +12970,9 @@ module.exports = function(module) {
 /***/ }),
 
 /***/ "../../../node_modules/xmltojson/lib/xmlToJSON.js":
-/*!************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/xmltojson/lib/xmlToJSON.js ***!
-  \************************************************************************************/
+/*!**************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/xmltojson/lib/xmlToJSON.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14188,7 +13231,7 @@ else if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () { return xmlToJSON
 /*! exports provided: morphology, lexicon, lemmatranslation, wordusageExamples, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"arethusaTreebank\":{\"adapter\":\"arethusaAdapter\",\"methods\":[\"getHomonym\",\"refreshView\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\",\"provider\",\"sentenceId\",\"wordId\"],\"refreshView\":[\"provider\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}}}");
+module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\",\"loadData\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"],\"loadData\":[\"timeout\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\",\"checkCachedData\",\"getConfig\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"],\"checkCachedData\":[\"url\",\"externalData\"],\"getConfig\":[]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}}}");
 
 /***/ }),
 
@@ -14343,128 +13386,6 @@ module.exports = JSON.parse("{\"servers\":[{\"texts\":[],\"isDefault\":true,\"ur
 
 /***/ }),
 
-/***/ "./adapters/arethusa/adapter.js":
-/*!**************************************!*\
-  !*** ./adapters/arethusa/adapter.js ***!
-  \**************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
-/* harmony import */ var _clAdapters_transformers_alpheios_lexicon_transformer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/transformers/alpheios-lexicon-transformer */ "./transformers/alpheios-lexicon-transformer.js");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
-/* harmony import */ var _clAdapters_adapters_alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/adapters/alpheiostb/config.json */ "./adapters/alpheiostb/config.json");
-var _clAdapters_adapters_alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/adapters/alpheiostb/config.json */ "./adapters/alpheiostb/config.json", 1);
-/* harmony import */ var alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alpheios-messaging/dist/dev/alpheios-messaging.js */ "../../../node_modules/alpheios-messaging/dist/dev/alpheios-messaging.js");
-/* harmony import */ var alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__);
-
-
-
-
-
-
-
-
-class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  /**
-   * Treebank adapter uploads config data and fills model property
-   * @param {Object} config - properties with higher priority
-  */
-  constructor (config = {}) {
-    super()
-    this.engineSet = null
-    this.config = this.uploadConfig(config, _clAdapters_adapters_alpheiostb_config_json__WEBPACK_IMPORTED_MODULE_4__)
-  }
-
-  getMessagingService(config) {
-    if (!alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["MessagingService"].hasService(config.name)) {
-      alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["MessagingService"].createService(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["WindowIframeDestination"](config))
-    }
-    return alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["MessagingService"].getService(config.name)
-  }
-
-  async _fetchArethusaData (targetURL, sentenceId, wordId) {
-    const config = this._getMessageConfig(targetURL)
-    let svc = this.getMessagingService(config)
-    const requestBodyNav = {
-      gotoSentence:  { sentenceId: sentenceId }
-    }
-    await svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](requestBodyNav))
-    const requestBodyMorph = {
-      getMorph: {
-        sentenceId: sentenceId,
-        wordId: wordId,
-      }
-    }
-    const responseMessage = await svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](requestBodyMorph))
-    return responseMessage.body
-  }
-
-  _getMessageConfig(targetURL) {
-    return {
-      name: targetURL,
-      targetURL: targetURL,
-      targetIframeID: 'alpheios-treebank-frame'
-    }
-  }
-
-  /**
-   * This method refreshes the view of the Arethusa application
-   */
-  async refreshView (provider) {
-    const config = this._getMessageConfig(provider)
-    let svc = this.getMessagingService(config)
-    const requestBody = { refreshView: { } }
-    svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](requestBody))
-  }
-
-  /**
-   * This method gets data from adapter's engine. All errors are added to adapter.errors
-   * @param {Symbol} languageID - languageID for getting homonym
-   * @param {String} word - the target word
-   * @param {String} provider - the domain which provides Arethusa
-   * @param {String} sentenceId - the identifier for the sentence
-   * @param {String} wordId - the identifier for the word
-   * Returned values:
-   *      - {Homonym} - if successed
-   *      - {undefined} - if failed
-  */
-  async getHomonym (languageID, word, provider, sentenceId, wordId) {
-    try {
-      if (typeof sentenceId !== 'undefined' && typeof wordId !== 'undefined') {
-        const tbRes = await this._fetchArethusaData(provider,sentenceId,wordId)
-        if (! tbRes || Object.keys(tbRes).length === 0) {
-          this.addError(this.l10n.messages['MORPH_TREEBANK_NO_ANSWER_FOR_WORD'].get(wordref))
-          return
-        }
-        let mappingData
-        let languageModel = alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageModel(languageID)
-        if (!languageModel) {
-          this.addError(this.l10n.messages['MORPH_TREEBANK_UNSUPPORTED_LANGUAGE'].get(languageID))
-          return
-        }
-        const transformAdapter = new _clAdapters_transformers_alpheios_lexicon_transformer__WEBPACK_IMPORTED_MODULE_1__["default"](this, new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_3__["default"](languageModel,'arethusa'))
-        const homonym = transformAdapter.transformData(tbRes, word)
-        return homonym
-      } else {
-        this.addError(this.l10n.messages['MORPH_TREEBANK_MISSING_REF'].get(wordref))
-      }
-    } catch (error) {
-      console.log(error)
-      this.addError(this.l10n.messages['MORPH_TREEBANK_UNKNOWN_ERROR'].get(error.mesage))
-    }
-  }
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (ArethusaTreebankAdapter);
-
-
-/***/ }),
-
 /***/ "./adapters/base-adapter.js":
 /*!**********************************!*\
   !*** ./adapters/base-adapter.js ***!
@@ -14477,12 +13398,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/adapter-error */ "./errors/adapter-error.js");
-/* harmony import */ var _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/l10n/l10n */ "./l10n/l10n.js");
-/* harmony import */ var _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/locales/locales.js */ "./locales/locales.js");
-/* harmony import */ var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json");
-var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
-/* harmony import */ var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
-var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
+/* harmony import */ var _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/l10n/l10n */ "./l10n/l10n.js");
+/* harmony import */ var _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json");
+var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
+/* harmony import */ var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+
 
 
 
@@ -14497,10 +13420,10 @@ class BaseAdapter {
   */
   constructor () {
     this.errors = []
-    this.l10n = new _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_2__["default"]()
-      .addMessages(_clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_US)
-      .addMessages(_clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_GB)
-      .setLocale(_clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_US)
+    this.l10n = new _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_3__["default"]()
+      .addMessages(_clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_5__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_4__["default"].en_US)
+      .addMessages(_clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_4__["default"].en_GB)
+      .setLocale(_clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_4__["default"].en_US)
   }
 
   /**
@@ -14509,6 +13432,11 @@ class BaseAdapter {
   */
   addError (message) {
     const error = new _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__["default"](this.config.category, this.config.adapterName, this.config.method, message)
+    this.errors.push(error)
+  }
+
+  addCedictError (errorCode, message) {
+    const error = new _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_2__["default"](this.config.category, this.config.adapterName, this.config.method, errorCode, message)
     this.errors.push(error)
   }
 
@@ -14705,8 +13633,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-messaging */ "../../../node_modules/alpheios-messaging/dist/prod/alpheios-messaging.min.js");
+/* harmony import */ var alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-messaging */ "alpheios-messaging");
 /* harmony import */ var alpheios_messaging__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__);
+/* global DEVELOPMENT_MODE_BUILD */
 /* eslint-disable no-unused-vars */
 
 
@@ -14716,6 +13645,9 @@ const CedictCharacterForms = {
   SIMPLIFIED: 'simplified',
   TRADITIONAL: 'traditional'
 }
+
+let cedictConfig = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationConfig"]
+if (true) { cedictConfig = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationDevConfig"] }
 
 const msgServiceName = 'AdaptersLexisService'
 
@@ -14730,22 +13662,12 @@ class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPA
     instance of the service that will be created once and reused across consecutive constructor invocations.
      */
     if (!alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].hasService(msgServiceName)) {
-      alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].createService(msgServiceName, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["WindowIframeDestination"](alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationConfig"]))
+      alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].createService(msgServiceName, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["WindowIframeDestination"](cedictConfig))
     }
     this._messagingService = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].getService(msgServiceName)
   }
 
   get languageID () { return alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["ChineseLanguageModel"].languageID }
-
-  async _fetchCedictData (targetWord, contextForward) {
-    const requestBody = {
-      getWords: {
-        words: this.constructor._buildWordList(targetWord, contextForward)
-      }
-    }
-    const responseMessage = await this._messagingService.sendRequestTo(alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationConfig"].name, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["RequestMessage"](requestBody))
-    return responseMessage.body
-  }
 
   /**
    * Creates a list of words that will be requested from a CEDICT service.
@@ -14770,17 +13692,45 @@ class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPA
 
   async getHomonym (targetWord, contextForward) {
     try {
-      const cedictRes = await this._fetchCedictData(targetWord, contextForward)
-      if (Object.keys(cedictRes).length === 0) {
+      const requestBody = {
+        getWords: {
+          words: this.constructor._buildWordList(targetWord, contextForward)
+        }
+      }
+      let response
+      try {
+        response = await this._messagingService.sendRequestTo(cedictConfig.name, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["RequestMessage"](requestBody))
+      } catch (response) {
+        this.addCedictError(response.errorCode, response.body.message)
+        return
+      }
+
+      if (Object.keys(response.body).length === 0) {
         this.addError(this.l10n.messages.MORPH_NO_HOMONYM.get(targetWord, this.languageID.toString()))
         return
       }
-      const homonym = this._transformData(cedictRes, targetWord)
+      const homonym = this._transformData(response.body, targetWord)
       if (!homonym) {
         this.addError(this.l10n.messages.MORPH_NO_HOMONYM.get(targetWord, this.languageID.toString()))
         return
       }
       return homonym
+    } catch (error) {
+      this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
+    }
+  }
+
+  async loadData (timeout) {
+    try {
+      const requestBody = {
+        loadData: {}
+      }
+      let response
+      try {
+        response = await this._messagingService.sendRequestTo(cedictConfig.name, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["RequestMessage"](requestBody), timeout)
+      } catch (response) {
+        this.addCedictError(response.errorCode, response.body.message)
+      }
     } catch (error) {
       this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
     }
@@ -15220,6 +14170,7 @@ var _clAdapters_adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3___names
 
 
 let cachedDefinitions = new Map() // eslint-disable-line prefer-const
+let uploadStarted = new Map() // eslint-disable-line prefer-const
 
 class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_2__["default"] {
   /**
@@ -15359,19 +14310,36 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   /**
   * This method checks if data from url is already cached and if not - it uploads data from url to cache
   * @param {String} url - url from what we need to cache data
+  * @param {Null|Map|String} externalData - data that would be used as fixture for the url
+  * @param {Boolean} skipFetch - when this check is true, then fetch would not be execute in any case, it is used for Full Definitions
   * @return {Boolean} - true - if cached is successed
   */
-  async checkCachedData (url) {
-    if (!cachedDefinitions.has(url)) {
+  async checkCachedData (url, externalData = null, skipFetch = false) {
+    if (!externalData && skipFetch) {
+      return false
+    }
+    if (!cachedDefinitions.has(url) && !uploadStarted.has(url)) {
       try {
-        const unparsed = await this.fetch(url, { type: 'xml', timeout: this.options.timeout })
-        const parsed = papaparse__WEBPACK_IMPORTED_MODULE_1___default.a.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
-        const data = this.fillMap(parsed.data)
+        uploadStarted.set(url, true)
+
+        let data = externalData
+        if (!externalData) {
+          const unparsed = await this.fetch(url, { type: 'xml', timeout: this.options.timeout })
+          const parsed = papaparse__WEBPACK_IMPORTED_MODULE_1___default.a.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
+          data = this.fillMap(parsed.data)
+        }
+
         cachedDefinitions.set(url, data)
+        uploadStarted.set(url, false)
       } catch (error) {
         this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
+        uploadStarted.set(url, false)
         return false
       }
+    } else if (uploadStarted.has(url) && uploadStarted.get(url)) {
+      setTimeout(() => {
+        this.checkCachedData(url)
+      }, this.options.timeout)
     }
     return true
   }
@@ -15388,12 +14356,20 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
 
     for (let lexeme of homonym.lexemes) { // eslint-disable-line prefer-const
       const deftexts = this.lookupInDataIndex(data, lexeme.lemma, model)
-
       if (deftexts) {
         for (const d of deftexts) {
+          const text = d.field1
+          const providerCode = d.field2
+          const format = config.format && config.format.short ? config.format.short : 'text/plain'
           try {
-            const provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](config.urls.short, config.rights)
-            const def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](d, config.langs.target, 'text/plain', lexeme.lemma.word)
+            let rightsText = config.rights
+            let rightsUri = config.urls.short
+            if (providerCode && config.rights_keys && config.rights_keys[providerCode]) {
+              rightsUri = rightsUri + `#${providerCode}`
+              rightsText = config.rights_keys[providerCode]
+            }
+            const provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](rightsUri, rightsText)
+            const def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](text, config.langs.target, format, lexeme.lemma.word)
             const definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, def)
             lexeme.meaning.appendShortDefs(definition)
           } catch (error) {
@@ -15431,7 +14407,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
       const ids = this.lookupInDataIndex(data, lexeme.lemma, model)
       if (urlFull && ids) {
         for (const id of ids) {
-          requests.push({ url: `${urlFull}&n=${id}`, lexeme: lexeme })
+          requests.push({ url: `${urlFull}&n=${id.field1}`, lexeme: lexeme })
         }
       } else if (urlFull) {
         requests.push({ url: `${urlFull}&l=${encodeURIComponent(lexeme.lemma.word)}`, lexeme: lexeme })
@@ -15448,7 +14424,12 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   */
   async updateFullDefs (fullDefsRequests, config, homonym) {
     for (let request of fullDefsRequests) { // eslint-disable-line prefer-const
-      const fullDefDataRes = this.fetch(request.url, { type: 'xml' })
+      let fullDefDataRes
+      if (cachedDefinitions.has(request.url)) {
+        fullDefDataRes = new Promise((resolve, reject) => resolve(cachedDefinitions.get(request.url)))
+      } else {
+        fullDefDataRes = this.fetch(request.url, { type: 'xml' })
+      }
 
       fullDefDataRes.then(
         async (fullDefData) => {
@@ -15490,10 +14471,14 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   fillMap (rows) {
     let data = new Map() // eslint-disable-line prefer-const
     for (const row of rows) {
+      const def = { field1: row[1], field2: null }
+      if (row.length > 2) {
+        def.field2 = row[2]
+      }
       if (data.has(row[0])) {
-        data.get(row[0]).push(row[1])
+        data.get(row[0]).push(def)
       } else {
-        data.set(row[0], [row[1]])
+        data.set(row[0], [def])
       }
     }
     return data
@@ -15530,10 +14515,22 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
     alternatives = [...alternatives, ...altEncodings]
 
     for (const lookup of alternatives) {
-      found = data.get(lookup.toLocaleLowerCase())
-      if (found && found.length === 1 && found[0] === '@') {
+      // let's first just look for the word in its supplied case
+      found = data.get(lookup)
+
+      // and if we don't find it, then try lower case
+      if (!found) {
+        found = data.get(lookup.toLocaleLowerCase())
+      }
+
+      // legacy behavior -  indexes had inserted alternative
+      // index entries in lower case and less aggressive
+      // character normalization, and referred those index entries to
+      // the original ones
+      if (found && found.length === 1 && found[0].field1 === '@') {
         found = data.get(`@${lookup}`)
       }
+
       if (found) {
         break
       }
@@ -15551,10 +14548,10 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
 /*!***************************************!*\
   !*** ./adapters/lexicons/config.json ***!
   \***************************************/
-/*! exports provided: https://github.com/alpheios-project/lsj, https://github.com/alpheios-project/aut, https://github.com/alpheios-project/ml, https://github.com/alpheios-project/as, https://github.com/alpheios-project/dod, https://github.com/alpheios-project/ls, https://github.com/alpheios-project/lan, https://github.com/alpheios-project/sal, https://github.com/alpheios-project/stg, default */
+/*! exports provided: https://github.com/alpheios-project/majorplus, https://github.com/alpheios-project/lsj, https://github.com/alpheios-project/aut, https://github.com/alpheios-project/ml, https://github.com/alpheios-project/as, https://github.com/alpheios-project/dod, https://github.com/alpheios-project/ls, https://github.com/alpheios-project/lan, https://github.com/alpheios-project/sal, https://github.com/alpheios-project/stg, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"https://github.com/alpheios-project/lsj\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lsj&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"A Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott)\",\"rights\":\"\\\"A Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/aut\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/aut/dat/grc-aut-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/aut//dat/grc-aut-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=aut&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Autenrieth Homeric Dictionary\\\" (Geoerge Autenrieth)\",\"rights\":\"\\\"Autenrieth Homeric Dictionary\\\" (Geoerge Autenrieth). Provided by the Perseus Digital Library at Tufts University\"},\"https://github.com/alpheios-project/ml\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/ml/dat/grc-ml-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/ml/dat/grc-ml-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ml&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Middle Liddell\\\"\",\"rights\":\"\\\"An Intermediate Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University\"},\"https://github.com/alpheios-project/as\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/as/dat/grc-as-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/as/dat/grc-as-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=as&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"A Manual Greek Lexicon of the New Testament\\\"\",\"rights\":\"\\\"A Manual Greek Lexicon of the New Testament\\\" (G. Abbott-Smith). Provided by biblicalhumanities.org.\"},\"https://github.com/alpheios-project/dod\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/dod/dat/grc-dod-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/dod/dat/grc-dod-ids.dat\",\"full\":null},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Dodson\\\"\",\"rights\":\"\\\"A Public Domain lexicon by John Jeffrey Dodson (2010)\\\". Provided by biblicalhumanities.org.\"},\"https://github.com/alpheios-project/ls\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html\"},\"langs\":{\"source\":\"lat\",\"target\":\"en\"},\"description\":\"\\\"A Latin Dictionary\\\" (Charlton T. Lewis, Charles Short)\",\"rights\":\"\\\"A Latin Dictionary\\\" (Charlton T. Lewis, Charles Short). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/lan\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/lan/dat/ara-lan-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lan&lg=ara&out=html\"},\"langs\":{\"source\":\"ara\",\"target\":\"en\"},\"description\":\"\\\"The Arabic-English Lexicon\\\" (Edward Lane)\",\"rights\":\"\\\"The Arabic-English Lexicon\\\" (Edward Lane). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/sal\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/sal/dat/ara-sal-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=sal&lg=ara&out=html\"},\"langs\":{\"source\":\"ara\",\"target\":\"en\"},\"description\":\"\\\"An Advanced Learner's Arabic Dictionary\\\" (H. Anthony Salmone)\",\"rights\":\"\\\"An Advanced Learner's Arabic Dictionary\\\" (H. Anthony Salmone). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/stg\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/stg/dat/per-stg-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/stg/dat/per-stg-ids.dat\",\"full\":null},\"langs\":{\"source\":\"per\",\"target\":\"en\"},\"description\":\"\\\"A Comprehensive Persian-English Dictionary\\\" (Francis Joseph Steingass)\",\"rights\":\"\\\"A Comprehensive Persian-English Dictionary\\\" (Francis Joseph Steingass). Provided by the Center for Advanced Study of Language (CASL) at the University of Maryland, College Park.\"}}");
+module.exports = JSON.parse("{\"https://github.com/alpheios-project/majorplus\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/majorplus/dat/grc-mjp-defs.dat\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"format\":{\"short\":\"text/html\"},\"description\":\"Definitions derived from Wilfred E. Major's Core Greek Vocabulary, extended with definitions from the LSJ.\",\"rights_keys\":{\"LSJ\":\"\\\"A Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University.\",\"Major\":\"Wilfred E. Major, Core Greek Vocabulary for the First Two Years of Greek. CPL Online, Winter 2008.\",\"VGorman\":\"Definition edited by Vanessa Gorman, University of Nebraska.\"}},\"https://github.com/alpheios-project/lsj\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lsj&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"A Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott)\",\"rights\":\"\\\"A Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/aut\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/aut/dat/grc-aut-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/aut//dat/grc-aut-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=aut&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Autenrieth Homeric Dictionary\\\" (Geoerge Autenrieth)\",\"rights\":\"\\\"Autenrieth Homeric Dictionary\\\" (Geoerge Autenrieth). Provided by the Perseus Digital Library at Tufts University\"},\"https://github.com/alpheios-project/ml\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/ml/dat/grc-ml-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/ml/dat/grc-ml-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ml&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Middle Liddell\\\"\",\"rights\":\"\\\"An Intermediate Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University\"},\"https://github.com/alpheios-project/as\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/as/dat/grc-as-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/as/dat/grc-as-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=as&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"A Manual Greek Lexicon of the New Testament\\\"\",\"rights\":\"\\\"A Manual Greek Lexicon of the New Testament\\\" (G. Abbott-Smith). Provided by biblicalhumanities.org.\"},\"https://github.com/alpheios-project/dod\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/dod/dat/grc-dod-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/dod/dat/grc-dod-ids.dat\",\"full\":null},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Dodson\\\"\",\"rights\":\"\\\"A Public Domain lexicon by John Jeffrey Dodson (2010)\\\". Provided by biblicalhumanities.org.\"},\"https://github.com/alpheios-project/ls\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html\"},\"langs\":{\"source\":\"lat\",\"target\":\"en\"},\"description\":\"\\\"A Latin Dictionary\\\" (Charlton T. Lewis, Charles Short)\",\"rights\":\"\\\"A Latin Dictionary\\\" (Charlton T. Lewis, Charles Short). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/lan\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/lan/dat/ara-lan-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lan&lg=ara&out=html\"},\"langs\":{\"source\":\"ara\",\"target\":\"en\"},\"description\":\"\\\"The Arabic-English Lexicon\\\" (Edward Lane)\",\"rights\":\"\\\"The Arabic-English Lexicon\\\" (Edward Lane). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/sal\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/sal/dat/ara-sal-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=sal&lg=ara&out=html\"},\"langs\":{\"source\":\"ara\",\"target\":\"en\"},\"description\":\"\\\"An Advanced Learner's Arabic Dictionary\\\" (H. Anthony Salmone)\",\"rights\":\"\\\"An Advanced Learner's Arabic Dictionary\\\" (H. Anthony Salmone). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/stg\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/stg/dat/per-stg-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/stg/dat/per-stg-ids.dat\",\"full\":null},\"langs\":{\"source\":\"per\",\"target\":\"en\"},\"description\":\"\\\"A Comprehensive Persian-English Dictionary\\\" (Francis Joseph Steingass)\",\"rights\":\"\\\"A Comprehensive Persian-English Dictionary\\\" (Francis Joseph Steingass). Provided by the Center for Advanced Study of Language (CASL) at the University of Maryland, College Park.\"}}");
 
 /***/ }),
 
@@ -15706,7 +14703,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
-/* harmony import */ var _clAdapters_transformers_alpheios_lexicon_transformer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/transformers/alpheios-lexicon-transformer */ "./transformers/alpheios-lexicon-transformer.js");
+/* harmony import */ var _clAdapters_adapters_tufts_transform_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/adapters/tufts/transform-adapter */ "./adapters/tufts/transform-adapter.js");
 /* harmony import */ var _clAdapters_adapters_tufts_config_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/adapters/tufts/config.json */ "./adapters/tufts/config.json");
 var _clAdapters_adapters_tufts_config_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/adapters/tufts/config.json */ "./adapters/tufts/config.json", 1);
 /* harmony import */ var _clAdapters_adapters_tufts_engines_set__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/adapters/tufts/engines-set */ "./adapters/tufts/engines-set.js");
@@ -15775,12 +14772,8 @@ class AlpheiosTuftsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IM
       }
 
       if (res) {
-        const mappingData = this.engineSet.getEngineByCode(languageID)
-        if (!mappingData) {
-          this.addError(this.l10n.messages.MORPH_TRANSFORM_NO_MAPPING_DATA.get(languageID.toString()))
-          return
-        }
-        const transformAdapter = new _clAdapters_transformers_alpheios_lexicon_transformer__WEBPACK_IMPORTED_MODULE_2__["default"](this,mappingData,this)
+        const transformAdapter = new _clAdapters_adapters_tufts_transform_adapter__WEBPACK_IMPORTED_MODULE_2__["default"](this)
+
         let homonym = transformAdapter.transformData(res, word) // eslint-disable-line prefer-const
 
         if (!homonym) {
@@ -15845,13 +14838,13 @@ module.exports = JSON.parse("{\"engine\":{\"lat\":[\"whitakerLat\"],\"grc\":[\"m
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib */ "./adapters/tufts/lib.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
-const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["ArabicLanguageModel"],'aramorph')
+const data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["ArabicLanguageModel"], 'aramorph')
 
 /* harmony default export */ __webpack_exports__["default"] = (data);
 
@@ -15867,13 +14860,13 @@ const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib */ "./adapters/tufts/lib.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
-let data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["PersianLanguageModel"],'hazm') // eslint-disable-line prefer-const
+let data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["PersianLanguageModel"], 'hazm') // eslint-disable-line prefer-const
 
 // hazm allow all lemmas in without respect features as all we use it for is lemmatizing
 data.setLexemeFilter(function (lexeme) { return Boolean(lexeme.lemma.word) })
@@ -15892,13 +14885,13 @@ data.setLexemeFilter(function (lexeme) { return Boolean(lexeme.lemma.word) })
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib */ "./adapters/tufts/lib.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
-let data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["GreekLanguageModel"],'morpheusgrc') // eslint-disable-line prefer-const
+let data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["GreekLanguageModel"], 'morpheusgrc') // eslint-disable-line prefer-const
 
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
@@ -15928,31 +14921,31 @@ data.addFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].typ
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib */ "./adapters/tufts/lib.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
-const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["SyriacLanguageModel"], 'sedra')
+const data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["SyriacLanguageModel"], 'sedra')
 
 // the sedra api has some html in the glosses that we want to strip out
-data.setMeaningParser(function(meaning,targetWord) {
+data.setMeaningParser(function (meaning, targetWord) {
   const lang = meaning.lang ? meaning.lang : alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].STR_LANG_CODE_ENG
-  let meaning_text = meaning.$ || ""
-  meaning_text = meaning_text.replace(/<span .*?>(.*?)<\/span>/g,"$1")
-  return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Definition"](meaning_text, lang, 'text/plain', targetWord)
+  let meaningText = meaning.$ || ''
+  meaningText = meaningText.replace(/<span .*?>(.*?)<\/span>/g, '$1')
+  return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Definition"](meaningText, lang, 'text/plain', targetWord)
 })
 
 data.setPropertyParser(function (propertyName, propertyValue) {
   let propertyValues = []
   if (propertyName === 'paradigm') {
-     // state has some extra "" around values
-     propertyValues = [ propertyValue.replace(/"/g,'') ]
+    // state has some extra "" around values
+    propertyValues = [propertyValue.replace(/"/g, '')]
   } else if (propertyName === 'src') {
     // replace the '[from sedra.bethmardutho.org, accessed on XXXXX]' as duplicative
     // with rights
-    propertyValues = [ propertyValue.replace(/\[from sedra.bethmardutho.org, .*?\]/g,'') ]
+    propertyValues = [propertyValue.replace(/\[from sedra.bethmardutho.org, .*?\]/g, '')]
   } else {
     propertyValues = [propertyValue]
   }
@@ -15973,13 +14966,13 @@ data.setPropertyParser(function (propertyName, propertyValue) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib */ "./adapters/tufts/lib.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
-const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["GeezLanguageModel"],'traces')
+const data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["GeezLanguageModel"], 'traces')
 
 /* harmony default export */ __webpack_exports__["default"] = (data);
 
@@ -15995,13 +14988,13 @@ const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/transformers/import-morph-data.js */ "./transformers/import-morph-data.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib */ "./adapters/tufts/lib.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
-const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LatinLanguageModel"],'whitakerLat')
+const data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["LatinLanguageModel"], 'whitakerLat')
 
 // Whitaker's has weird inflection data for conjugation, we prefer
 // the dictionary entry's conjugation if it's available
@@ -16173,6 +15166,572 @@ class EnginesSet {
 
 /***/ }),
 
+/***/ "./adapters/tufts/lib.js":
+/*!*******************************!*\
+  !*** ./adapters/tufts/lib.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/*
+Objects of a morphology analyzer's library
+ */
+
+
+/**
+ * Holds all information required to transform from morphological analyzer's grammatical feature values to the
+ * library standards. There is one ImportData object per language.
+ */
+class ImportData {
+  /**
+     * Creates an ImportData object for the language provided.
+     * @param {Function<LanguageModel>} model - A language model of the import data.
+     * @param {string} engine - engine code
+     */
+  constructor (model, engine) {
+    'use strict'
+    this.model = model
+    this.engine = engine
+    // add all the features that the language supports so that we
+    // can return the default values if we don't need to import a mapping
+    for (const featureName of Object.keys(this.model.features)) {
+      this.addFeature(featureName)
+    }
+    // may be overridden by specific engine to handle vagaries in reporting of dictionary entries
+    // default just returns them as provided
+    this.aggregateLexemes = function (lexemeSet, inflections) {
+      let lexemes = [] // eslint-disable-line prefer-const
+      for (const lex of lexemeSet) {
+        // only process if we have a lemma that differs from the target
+        // word or if we have at least a part of speech
+        if (this.reportLexeme(lex)) {
+          lex.inflections = inflections.map(inflection => inflection.clone())
+          lexemes.push(lex)
+        }
+      }
+      return lexemes
+    }
+    // may be overridden by specific engine use via setLemmaParser
+    this.parseLemma = function (lemma) { return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"](lemma, this.model.languageID) }
+
+    // may be overridden by specific engine use via setMeaningParser
+    this.parseMeaning = function (meaning, targetWord) {
+      const lang = meaning.lang ? meaning.lang : alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_ENG
+      return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](meaning.$, lang, 'text/plain', targetWord)
+    }
+
+    // may be overridden by specific engine use via setPropertyParser - default just returns the property value
+    // as a list
+    this.parseProperty = function (propertyName, propertyValue) {
+      let propertyValues = []
+      if (propertyName === 'decl') {
+        propertyValues = propertyValue.split('&').map((p) => p.trim())
+      } else if (propertyName === 'comp' && propertyValue === 'positive') {
+        propertyValues = []
+      } else {
+        propertyValues = [propertyValue]
+      }
+      return propertyValues
+    }
+
+    // may be overridden by specifc engine use via setLexemeFilter - default assumes we will have a part of speech
+    this.reportLexeme = function (lexeme) {
+      return lexeme.lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]
+    }
+
+    // may be overriden by specific engine use to a list of of featureTypes which
+    // should be overridden in the inflection data from the lemma data
+    this.inflectionOverrides = []
+  }
+
+  /**
+     * Adds a grammatical feature whose values to be mapped.
+     * @param {string} featureName - A name of a grammatical feature (i.e. declension, number, etc.)
+     * @return {Object} An object that represent a newly created grammatical feature.
+     */
+  addFeature (featureName) {
+    this[featureName] = {}
+    const model = this.model
+
+    this[featureName].add = function add (providerValue, alpheiosValue) {
+      this[providerValue] = alpheiosValue
+      return this
+    }
+
+    this[featureName].get = function get (providerValue, sortOrder = 1, allowUnknownValues = false) {
+      let mappedValue = []
+      if (!this.importer.has(providerValue)) {
+        // if the providerValue matches the model value or the model value
+        // is unrestricted, return a feature with the providerValue and order
+        if (model.typeFeature(featureName).hasValue(providerValue) ||
+            model.typeFeature(featureName).valuesUnrestricted) {
+          mappedValue = model.typeFeature(featureName).createFeature(providerValue, sortOrder)
+        } else {
+          const message = `Unknown value "${providerValue}" of feature "${featureName}" for ${model.languageCode} (allowed = ${allowUnknownValues})`
+          if (allowUnknownValues) {
+            mappedValue = model.typeFeature(featureName).createFeature(providerValue, sortOrder)
+          } else {
+            throw new Error(message)
+          }
+        }
+      } else {
+        const tempValue = this.importer.get(providerValue)
+        if (Array.isArray(tempValue)) {
+          mappedValue = model.typeFeature(featureName).createFeatures(tempValue, sortOrder)
+        } else {
+          mappedValue = model.typeFeature(featureName).createFeature(tempValue, sortOrder)
+        }
+      }
+      return mappedValue
+    }
+
+    /**
+     * @param {Object[]} data - An array of objects with `providerData` (an item value) and `sortOrder` fields
+     * @param allowUnknownValues
+     * @return {Feature}
+     */
+    this[featureName].getMultiple = function get (data, allowUnknownValues = false) {
+      let values = [] // Converts values from `data` into `values` array
+      for (const item of data) {
+        if (this.importer.has(item.providerValue)) {
+          const value = this.importer.get(item.providerValue)
+          if (Array.isArray(value)) {
+            // if the import returns an array, it should already have the sortOrder
+            values = value
+          } else {
+            values = [[value, item.sortOrder]]
+          }
+        } else if (model.typeFeature(featureName).hasValue(item.providerValue) ||
+          model.typeFeature(featureName).valuesUnrestricted) {
+          values.push([item.providerValue, item.sortOrder])
+        } else {
+          const message = `Unknown value "${item.providerValue}" of feature "${featureName}" for ${model.languageCode} (allowed = ${allowUnknownValues})`
+          if (allowUnknownValues) {
+            values.push([item.providerValue, item.sortOrder])
+          } else {
+            throw new Error(message)
+          }
+        }
+      }
+      return model.typeFeature(featureName).createFeatures(values)
+    }
+
+    this[featureName].importer = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["FeatureImporter"]()
+
+    return this[featureName]
+  }
+
+  /**
+   * Add an engine-specific lexeme aggregator
+   */
+  setLexemeAggregator (callback) {
+    this.aggregateLexemes = callback
+  }
+
+  /**
+  /**
+   * Add an engine-specific lemma parser
+   */
+  setLemmaParser (callback) {
+    this.parseLemma = callback
+  }
+
+  setMeaningParser (callback) {
+    this.parseMeaning = callback
+  }
+
+  /**
+   * Add an engine-specific property parser
+   */
+  setPropertyParser (callback) {
+    this.parseProperty = callback
+  }
+
+  /**
+   * Add an engine-specific lexeme filter
+   */
+  setLexemeFilter (callback) {
+    this.reportLexeme = callback
+  }
+
+  /**
+   * Maps property of a single feature type to a single Feature object with one or more values
+   * (if this feature has multiple values). Feature is stored as a property of the supplied model object.
+   * @param {object} model the model object to which the feature will be added
+   * @param {object} inputElem the input data element
+   * @param {object} inputName the  property name in the input data
+   * @param {string} featureName the name of the feature it will be mapped to
+   * @param {boolean} allowUnknownValues flag to indicate if unknown values are allowed
+   */
+  mapFeature (model, inputElem, inputName, featureName, allowUnknownValues) {
+    const inputItem = inputElem[inputName]
+    if (inputItem && (Array.isArray(inputItem) || inputItem.$)) {
+      let values = []
+      if (Array.isArray(inputItem)) {
+        // There are multiple values of this feature
+        for (const e of inputItem) {
+          values.push(...this.parseProperty(inputName, e.$))
+        }
+      } else {
+        values = this.parseProperty(inputName, inputItem.$)
+      }
+      // `values` is always an array as an array is a return value of `parseProperty`
+      if (values.length > 0) {
+        // There are some values found
+        values = values.map(v => { return { providerValue: v, sortOrder: inputItem.order ? inputItem.order : 1 } })
+        const feature = this[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types[featureName]].getMultiple(values, allowUnknownValues)
+        model.addFeature(feature)
+      }
+    }
+  }
+
+  /**
+   * Maps property of a single feature type to a single Feature object with one
+   * or more values, using an attribute to determine the mapped-to feature name
+   * (if this feature has multiple values). Feature is stored as a property of
+   * the supplied model object.
+   * @param {object} model the model object to which the feature will be added
+   * @param {object} inputElem the input data element
+   * @param {object} inputName the  property name in the input data
+   * @param {string} attributeName the attribute to use to get the feature name
+   * @param {boolean} allowUnknownValues flag to indicate if unknown values are allowed
+   */
+  mapFeatureByAttribute (model, inputElem, inputName, attributeName, allowUnknownValues) {
+    const inputItem = inputElem[inputName]
+    let featureName
+    if (inputItem && (Array.isArray(inputItem) || inputItem.$)) {
+      let values = []
+      if (Array.isArray(inputItem)) {
+        // There are multiple values of this feature
+        for (const e of inputItem) {
+          if (featureName && featureName !== e[attributeName]) {
+            console.warn('Mutiple feature values with mismatching attribute value', inputElem)
+          }
+          featureName = e[attributeName]
+          values.push(...this.parseProperty(inputName, e.$))
+        }
+      } else {
+        featureName = inputItem[attributeName]
+        values = this.parseProperty(inputName, inputItem.$)
+      }
+      // `values` is always an array as an array is a return value of `parseProperty`
+      if (values.length > 0) {
+        // There are some values found
+        values = values.map(v => { return { providerValue: v, sortOrder: inputItem.order ? inputItem.order : 1 } })
+        const feature = this[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types[featureName]].getMultiple(values, allowUnknownValues, inputItem.cat)
+        model.addFeature(feature)
+      }
+    }
+  }
+
+  /**
+   * Overrides feature data from an inflection with feature data from the lemma
+   * if required by an engine-specific list of featureTypes
+   * @param {String} featureType the feature type name
+   * @param {Inflection} inflection the inflection object
+   * @param {Lemma[]} lemmas the lemma objects
+   */
+  overrideInflectionFeatureIfRequired (featureType, inflection, lemmas) {
+    if (this.inflectionOverrides.includes(featureType)) {
+      for (const lemma of lemmas.filter(l => l.features[featureType])) {
+        inflection.addFeature(lemma.features[featureType])
+      }
+    }
+  }
+}
+/* harmony default export */ __webpack_exports__["default"] = (ImportData);
+
+
+/***/ }),
+
+/***/ "./adapters/tufts/transform-adapter.js":
+/*!*********************************************!*\
+  !*** ./adapters/tufts/transform-adapter.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+
+
+class TransformAdapter {
+  constructor (adapter) {
+    this.engineSet = adapter.engineSet
+    this.config = adapter.config
+    this.adapter = adapter
+  }
+
+  /**
+   * This method extract parameter by defined path
+   * @param {Object} source - json object to retrieve data from
+   * @param {String} nameParam - parameter name that should be retrieved
+   * @return {String|Object} - extracted data
+  */
+  extractData (source, nameParam) {
+    const schema = {
+      providerUri: ['RDF', 'Annotation', 'creator', 'Agent', 'about'],
+      providerRights: ['RDF', 'Annotation', 'rights', '$'],
+      inflections: ['rest', 'entry', 'infl'],
+      dictData: ['rest', 'entry', 'dict']
+    }
+    let res
+
+    if (schema[nameParam]) {
+      res = source
+      for (const pathPart of schema[nameParam]) {
+        if (res[pathPart]) {
+          res = res[pathPart]
+        } else {
+          res = undefined
+          break
+        }
+      }
+    }
+    return res
+  }
+
+  /**
+   * This method checks if data is array, if not - converts to array
+   * @param {?} data - value that should be checked
+   * @param {?} defaultData - default value, if data is null
+   * @return {Array}
+  */
+  checkToBeArray (data, defaultData = []) {
+    let resData = data
+    if (!Array.isArray(data)) {
+      if (data) {
+        resData = [data]
+      } else {
+        resData = defaultData
+      }
+    }
+    return resData
+  }
+
+  /**
+   * This method creates hdwd from source json object
+   * @param {Object} data - jsonObj from adapter
+   * @param {Object} term - data from inflections
+   * @param {Symbol} direction - define the word direction
+   * @return {Array} - array with parts for hdwr
+  */
+  collectHdwdArray (data, term, direction) {
+    let hdwd = [] // eslint-disable-line prefer-const
+
+    if (data && !Array.isArray(data) && (!data.hdwd || !data.hdwd.$) && term) {
+      hdwd.push(term.prefix ? term.prefix.$ : '')
+      hdwd.push(term.stem ? term.stem.$ : '')
+      hdwd.push(term.suff ? term.suff.$ : '')
+
+      if (direction === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_DIR_RTL) {
+        hdwd.reverse()
+      }
+    }
+
+    return hdwd
+  }
+
+  /**
+   * This method defines language from dictData nd inflections data
+   * @param {Object} data - jsonObj from adapter
+   * @param {Object} term - data from inflections
+   * @return {String}  - language code
+  */
+  defineLanguage (data, term) {
+    let lemmaData = Array.isArray(data) ? data[0] : data // eslint-disable-line prefer-const
+    if (!lemmaData.hdwd && term) {
+      lemmaData.hdwd = {}
+      lemmaData.hdwd.lang = term.lang
+    }
+    return lemmaData.hdwd ? lemmaData.hdwd.lang : lemmaData.lang
+  }
+
+  /**
+   * This method defines language from dictData nd inflections data
+   * @param {Object} data - jsonObj from adapter
+   * @param {Object} term - data from inflections
+   * Returned values:
+   *     - {Homonym}
+   *     - {undefined}
+  */
+  transformData (jsonObj, targetWord) {
+    let lexemes = [] // eslint-disable-line prefer-const
+    const annotationBody = this.checkToBeArray(jsonObj.RDF.Annotation.Body)
+
+    const providerUri = this.extractData(jsonObj, 'providerUri')
+    const providerRights = this.extractData(jsonObj, 'providerRights')
+
+    const provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](providerUri, providerRights)
+
+    for (const lexeme of annotationBody) {
+      const inflectionsJSON = this.checkToBeArray(this.extractData(lexeme, 'inflections'))
+      const inflectionsJSONTerm = inflectionsJSON.length > 0 ? inflectionsJSON[0].term : undefined
+
+      const dictData = this.extractData(lexeme, 'dictData')
+
+      const lemmaElements = this.checkToBeArray(dictData, inflectionsJSONTerm ? [inflectionsJSONTerm] : [])
+      const language = this.defineLanguage(lemmaElements, inflectionsJSONTerm)
+      if (!language) {
+        this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_LANGUAGE)
+        continue
+      }
+
+      // Get importer based on the language
+      const mappingData = this.engineSet.getEngineByCodeFromLangCode(language)
+      if (!mappingData) {
+        this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_MAPPING_DATA.get(language))
+        continue
+      }
+
+      const reconstructHdwd = this.collectHdwdArray(dictData, inflectionsJSONTerm, mappingData.model.direction)
+      if (reconstructHdwd.length > 0) {
+        lemmaElements[0].hdwd.$ = reconstructHdwd.join('')
+      }
+
+      let lemmas = [] // eslint-disable-line prefer-const
+      let lexemeSet = [] // eslint-disable-line prefer-const
+
+      for (const entry of lemmaElements.entries()) {
+        const index = entry[0]
+        const elem = entry[1]
+
+        const lemmaText = elem.hdwd ? elem.hdwd.$ : undefined
+        if (!lemmaText) {
+          this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_LEMMA)
+          continue
+        }
+        const lemma = mappingData.parseLemma(lemmaText, language)
+        lemmas.push(lemma)
+
+        const features = this.config.featuresArray
+        for (const feature of features) {
+          mappingData.mapFeature(lemma, elem, ...feature, this.config.allowUnknownValues)
+        }
+
+        let shortdefs = [] // eslint-disable-line prefer-const
+        let meanings = lexeme.rest.entry.mean
+        if (!Array.isArray(meanings)) {
+          meanings = [meanings]
+        }
+        meanings = meanings.filter((m) => m)
+
+        // if we have multiple dictionary elements, take the meaning with the matching index
+        if (lemmaElements.length > 1) {
+          if (meanings && meanings[index] && meanings[index].$) {
+            const meaning = meanings[index]
+            shortdefs.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider,
+              mappingData.parseMeaning(meaning, lemmas[index].word)))
+          }
+        } else {
+          // Changed to prevent some weird "Array Iterator.prototype.next called on incompatible receiver [object Unknown]" error
+          const sDefs = meanings.filter((m) => m.$).map(meaning => {
+            return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider,
+              mappingData.parseMeaning(meaning, lemma.word))
+          })
+          shortdefs.push(...sDefs)
+        }
+        let lexmodel = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lexeme"](lemma, []) // eslint-disable-line prefer-const
+
+        lexmodel.meaning.appendShortDefs(shortdefs)
+        lexemeSet.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, lexmodel))
+      }
+
+      if (lemmas.length === 0) {
+        continue
+      }
+
+      const inflections = []
+      for (const inflectionJSON of inflectionsJSON) {
+        const stem = inflectionJSON.term.stem ? inflectionJSON.term.stem.$ : null
+        const suffix = inflectionJSON.term.suff ? inflectionJSON.term.suff.$ : null
+        const prefix = inflectionJSON.term.pref ? inflectionJSON.term.pref.$ : null
+        const xmpl = inflectionJSON.xmpl ? inflectionJSON.xmpl.$ : null
+        let inflection
+        try {
+          inflection = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Inflection"](stem, mappingData.model.languageID, suffix, prefix, xmpl)
+        } catch (e) {
+          this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_INFLECTION_ERROR.get(e.message))
+          continue
+        }
+        if (targetWord) {
+          inflection.addFeature(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.fullForm, targetWord, mappingData.model.languageID))
+        }
+        // Parse whatever grammatical features we're interested in and are provided
+        for (const f of this.config.featuresArrayAll) {
+          try {
+            mappingData.mapFeature(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
+            mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
+          } catch (e) {
+            // quietly continue
+          }
+        }
+
+        // Parse attribute based features
+        for (const f of this.config.attributeBasedFeatures) {
+          try {
+            mappingData.mapFeatureByAttribute(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
+            mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
+          } catch (e) {
+            // quietly continue
+          }
+        }
+
+        // we only use the inflection if it tells us something the dictionary details do not
+        if (inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmCase] ||
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.tense] ||
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.mood] ||
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice] ||
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.person] ||
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.comparison] ||
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.stemtype] || /** greek - morpheus **/
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.derivtype] || /** greek - morpheus **/
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.dialect] || /** greek **/
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.morph] || /** arabic - aramorph **/
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.kaylo] || /** syriac - sedra **/
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.state] || /** syriac - sedra **/
+          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.example]) {
+          inflections.push(inflection)
+        }
+        // inflection can provide lemma decl, pofs, conj
+        for (const lemma of lemmas) {
+          if (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]) {
+            mappingData.mapFeature(lemma, inflectionJSON, 'pofs', 'part', this.config.allowUnknownValues)
+          }
+          // only take declension from inflection if lemma has no part of speech or its the same as the inflection
+          if (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.declension] &&
+            (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part] || lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].isEqual(inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]))) {
+            mappingData.mapFeature(lemma, inflectionJSON, 'decl', 'declension', this.config.allowUnknownValues)
+          }
+          // only take conjugation from inflection if lemma has a part of speech and its the same as the inflection
+          if (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation] &&
+            (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part] || lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].isEqual(inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]))) {
+            mappingData.mapFeature(lemma, inflectionJSON, 'conj', 'conjugation', this.config.allowUnknownValues)
+          }
+        }
+      }
+      const aggregated = mappingData.aggregateLexemes(lexemeSet, inflections)
+      lexemes.push(...aggregated)
+    }
+    if (lexemes.length > 0) {
+      return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"](lexemes, targetWord)
+    } else {
+      return undefined
+    }
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (TransformAdapter);
+
+
+/***/ }),
+
 /***/ "./client-adapters.js":
 /*!****************************!*\
   !*** ./client-adapters.js ***!
@@ -16188,12 +15747,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_adapters_translations_adapter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/adapters/translations/adapter */ "./adapters/translations/adapter.js");
 /* harmony import */ var _clAdapters_adapters_lexicons_adapter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/adapters/lexicons/adapter */ "./adapters/lexicons/adapter.js");
 /* harmony import */ var _clAdapters_adapters_concordance_adapter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/adapters/concordance/adapter */ "./adapters/concordance/adapter.js");
-/* harmony import */ var _clAdapters_adapters_arethusa_adapter__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @clAdapters/adapters/arethusa/adapter */ "./adapters/arethusa/adapter.js");
-/* harmony import */ var _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @clAdapters/errors/wrong-method-error */ "./errors/wrong-method-error.js");
-/* harmony import */ var _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @clAdapters/errors/no-required-param-error */ "./errors/no-required-param-error.js");
-/* harmony import */ var _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @clAdapters/adapters/adapters-config.json */ "./adapters/adapters-config.json");
-var _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_9___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/adapters/adapters-config.json */ "./adapters/adapters-config.json", 1);
-
+/* harmony import */ var _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @clAdapters/errors/wrong-method-error */ "./errors/wrong-method-error.js");
+/* harmony import */ var _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @clAdapters/errors/no-required-param-error */ "./errors/no-required-param-error.js");
+/* harmony import */ var _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @clAdapters/adapters/adapters-config.json */ "./adapters/adapters-config.json");
+var _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_8___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/adapters/adapters-config.json */ "./adapters/adapters-config.json", 1);
 
 
 
@@ -16215,10 +15772,10 @@ class ClientAdapters {
   */
   static init () {
     if (cachedConfig.size === 0) {
-      for (const category in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_9__) {
+      for (const category in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_8__) {
         let adapters = {} // eslint-disable-line prefer-const
-        for (const adapterKey in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_9__[category]) {
-          const adapterData = _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_9__[category][adapterKey]
+        for (const adapterKey in _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_8__[category]) {
+          const adapterData = _clAdapters_adapters_adapters_config_json__WEBPACK_IMPORTED_MODULE_8__[category][adapterKey]
 
           adapters[adapterKey] = {
             adapter: ClientAdapters[adapterData.adapter],
@@ -16278,7 +15835,7 @@ class ClientAdapters {
   */
   static checkMethod (category, adapterName, methodName) {
     if (!cachedConfig.get(category)[adapterName].methods.includes(methodName)) {
-      throw new _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_7__["default"](category, adapterName, methodName)
+      throw new _clAdapters_errors_wrong_method_error__WEBPACK_IMPORTED_MODULE_6__["default"](category, adapterName, methodName)
     }
   }
 
@@ -16293,7 +15850,7 @@ class ClientAdapters {
     if (cachedConfig.get(category)[adapterName].params) {
       cachedConfig.get(category)[adapterName].params[methodName].forEach(paramName => {
         if (!params[paramName]) {
-          throw new _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_8__["default"](category, adapterName, methodName, paramName)
+          throw new _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_7__["default"](category, adapterName, methodName, paramName)
         }
       })
     }
@@ -16352,6 +15909,10 @@ class ClientAdapters {
       const homonym = await localChineseAdapter.getHomonym(options.params.word, options.params.checkContextForward)
       return { result: homonym, errors: localChineseAdapter.errors }
     }
+    if (options.method === 'loadData') {
+      const result = await localChineseAdapter.loadData(options.params.timeout)
+      return { result, errors: localChineseAdapter.errors }
+    }
     return null
   }
 
@@ -16382,46 +15943,6 @@ class ClientAdapters {
     }
     return null
   }
-
-  /**
-   * it is used for getting data from arethusa
-   * @param {Object} options - object contains parameters:
-   *    @param {String} options.method - for now one value - "getHomonym" - action that should be done wth the help of adapter
-   *    @param {Symbol} options.params.languageID - languageID value for the word
-   *    @param {Symbol} options.params.word - target word
-   *    @param {String} options.params.provider - the provider url for Arethusa
-   *    @param {String} options.params.sentenceId - the sentence identifier
-   *    @param {String} options.params.wordId - the word identifier
-   * Returned values:
-   *    - throw an Error if there is used a wrong metod or not enough required parameters
-   *    - null, method is registered in configuration file but not implemented here
-   *    - { result: Homonym, errors: [AdapterError] }
-*/
-
-  static async arethusaAdapter (options) {
-    ClientAdapters.checkMethodParam('morphology', 'arethusaTreebank', options)
-
-    const localAdapter = new _clAdapters_adapters_arethusa_adapter__WEBPACK_IMPORTED_MODULE_6__["default"]({
-      category: 'morphology',
-      adapterName: 'arethusaTreebank',
-      method: options.method,
-      clientId: options.clientId
-    })
-    if (options.method === 'getHomonym') {
-      const homonym = await localAdapter.getHomonym(options.params.languageID,
-        options.params.word,
-        options.params.provider,
-        options.params.sentenceId,
-        options.params.wordId)
-      return { result: homonym, errors: localAdapter.errors }
-    }
-    if (options.method === 'refreshView') {
-      const resp = await localAdapter.refreshView(options.params.provider)
-      return { result: resp, errors: localAdapter.errors }
-    }
-    return null
-  }
-
 
   /**
    * it is used for getting data from translations adapter
@@ -16495,9 +16016,9 @@ class ClientAdapters {
       adapterName: 'alpheios',
       method: options.method,
       clientId: options.clientId,
-      timeout: options.params.timeout ? options.params.timeout : 3000,
-      callBackEvtSuccess: options.params.callBackEvtSuccess,
-      callBackEvtFailed: options.params.callBackEvtFailed
+      timeout: options.params && options.params.timeout ? options.params.timeout : 3000,
+      callBackEvtSuccess: options.params ? options.params.callBackEvtSuccess : null,
+      callBackEvtFailed: options.params ? options.params.callBackEvtFailed : null
     }
 
     const localLexiconsAdapter = new _clAdapters_adapters_lexicons_adapter__WEBPACK_IMPORTED_MODULE_4__["default"](adapterParams)
@@ -16509,6 +16030,15 @@ class ClientAdapters {
     if (options.method === 'fetchFullDefs') {
       await localLexiconsAdapter.fetchFullDefs(options.params.homonym, options.params.opts)
       return { errors: localLexiconsAdapter.errors }
+    }
+
+    if (options.method === 'checkCachedData') {
+      await localLexiconsAdapter.checkCachedData(options.params.url, options.params.externalData, options.params.skipFetch)
+      return { errors: localLexiconsAdapter.errors }
+    }
+
+    if (options.method === 'getConfig') {
+      return localLexiconsAdapter.config
     }
     return null
   }
@@ -16530,8 +16060,7 @@ class ClientAdapters {
 __webpack_require__.r(__webpack_exports__);
 class AdapterError extends Error {
   constructor (category, adapterName, methodName, messageError) {
-    const message = messageError
-    super(message)
+    super(messageError)
     this.adapter = `${category}.${adapterName}`
     this.methodName = methodName
 
@@ -16541,7 +16070,7 @@ class AdapterError extends Error {
     try {
       Error.captureStackTrace(this, AdapterError)
     } catch (e) {
-      // quietly continue
+      // Continue if environment does not support captureStackTrace.
     }
   }
 
@@ -16584,6 +16113,36 @@ class NoRequiredParamError extends Error {
 
 /***/ }),
 
+/***/ "./errors/remote-error.js":
+/*!********************************!*\
+  !*** ./errors/remote-error.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RemoteError; });
+class RemoteError extends Error {
+  constructor (category, adapterName, methodName, errorCode, errorMessage) {
+    super(errorMessage)
+    this.adapter = `${category}.${adapterName}`
+    this.methodName = methodName
+    this.errorCode = errorCode
+  }
+
+  update (config) {
+    this.adapter = `${config.category}.${config.adapterName}`
+    this.methodName = config.method
+
+    this.message = `${this.errorCode}: ${this.message} (${this.adapter}.${this.methodName})`
+    return this
+  }
+}
+
+
+/***/ }),
+
 /***/ "./errors/wrong-method-error.js":
 /*!**************************************!*\
   !*** ./errors/wrong-method-error.js ***!
@@ -16612,13 +16171,17 @@ class WrongMethodError extends Error {
 /*!******************!*\
   !*** ./index.js ***!
   \******************/
-/*! exports provided: ClientAdapters */
+/*! exports provided: ClientAdapters, RemoteError */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/client-adapters.js */ "./client-adapters.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ClientAdapters", function() { return _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RemoteError", function() { return _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+
 
 
 
@@ -16931,10 +16494,10 @@ module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a t
 /*!*************************************!*\
   !*** ./locales/en-us/messages.json ***!
   \*************************************/
-/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE, MORPH_NO_HOMONYM, MORPH_TUFTS_NO_ANSWER_FOR_WORD, MORPH_UNKNOWN_ERROR, MORPH_TRANSFORM_NO_LANGUAGE, MORPH_TRANSFORM_NO_LEMMA, MORPH_TRANSFORM_NO_MAPPING_DATA, MORPH_TRANSFORM_INFLECTION_ERROR, BASIC_ADAPTER_NO_DATA_FROM_URL, BASIC_ADAPTER_EMPTY_URL, BASIC_ADAPTER_UNKNOWN_ERROR, BASIC_ADAPTER_URL_RESPONSE_FAILED, MORPH_TREEBANK_MISSING_REF, MORPH_TREEBANK_UNSUPPORTED_LANGUAGE, MORPH_TREEBANK_NO_URL, MORPH_TREEBANK_NO_ANSWER_FOR_WORD, MORPH_TREEBANK_UNKNOWN_ERROR, TRANSLATION_INPUT_PREPARE_ERROR, TRANSLATION_UNKNOWN_ERROR, TRANSLATION_INCORRECT_LEXEMES, LEXICONS_NO_ALLOWED_URL, LEXICONS_FAILED_CACHED_DATA, LEXICONS_FAILED_APPEND_DEFS, LEXICONS_NO_FULL_URL, LEXICONS_NO_DATA_FROM_URL, CONCORDANCE_AUTHOR_UPLOAD_ERROR, CONCORDANCE_WORD_USAGE_FETCH_ERROR, default */
+/*! exports provided: COOKIE_TEST_MESSAGE, NUM_LINES_TEST_MESSAGE, MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE, MORPH_NO_HOMONYM, MORPH_TUFTS_NO_ANSWER_FOR_WORD, MORPH_UNKNOWN_ERROR, MORPH_TRANSFORM_NO_LANGUAGE, MORPH_TRANSFORM_NO_LEMMA, MORPH_TRANSFORM_NO_MAPPING_DATA, MORPH_TRANSFORM_INFLECTION_ERROR, BASIC_ADAPTER_NO_DATA_FROM_URL, BASIC_ADAPTER_EMPTY_URL, BASIC_ADAPTER_UNKNOWN_ERROR, BASIC_ADAPTER_URL_RESPONSE_FAILED, MORPH_TREEBANK_NO_URL, MORPH_TREEBANK_NO_ANSWER_FOR_WORD, MORPH_TREEBANK_UNKNOWN_ERROR, TRANSLATION_INPUT_PREPARE_ERROR, TRANSLATION_UNKNOWN_ERROR, TRANSLATION_INCORRECT_LEXEMES, LEXICONS_NO_ALLOWED_URL, LEXICONS_FAILED_CACHED_DATA, LEXICONS_FAILED_APPEND_DEFS, LEXICONS_NO_FULL_URL, LEXICONS_NO_DATA_FROM_URL, CONCORDANCE_AUTHOR_UPLOAD_ERROR, CONCORDANCE_WORD_USAGE_FETCH_ERROR, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a test message about a cookie.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\"},\"NUM_LINES_TEST_MESSAGE\":{\"message\":\"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\",\"params\":[\"numLines\"]},\"MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE\":{\"message\":\"There is no engine for the given languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no engine is found for given languageID\",\"component\":\"morphology.tufts\",\"params\":[\"languageID\"]},\"MORPH_NO_HOMONYM\":{\"message\":\"There is no homonym for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no homonym was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_TUFTS_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no data was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.tufts adapter - unknown\",\"component\":\"morphology.tufts\",\"params\":[\"message\"]},\"MORPH_TRANSFORM_NO_LANGUAGE\":{\"message\":\"No Language was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_LEMMA\":{\"message\":\"No Lemma was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_MAPPING_DATA\":{\"message\":\"No mapping data found for {language}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"language\"]},\"MORPH_TRANSFORM_INFLECTION_ERROR\":{\"message\":\"Error parsing inflection: {error}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"error\"]},\"BASIC_ADAPTER_NO_DATA_FROM_URL\":{\"message\":\"Unable to get data from url - {url}\",\"description\":\"Error message for basic adapter - when no data was returned from the url\",\"component\":\"basic_adapter\",\"params\":[\"url\"]},\"BASIC_ADAPTER_EMPTY_URL\":{\"message\":\"Unable to get data from empty url\",\"description\":\"Error message for basic adapter - when empty url was given\",\"component\":\"basic_adapter\"},\"BASIC_ADAPTER_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"message\"]},\"BASIC_ADAPTER_URL_RESPONSE_FAILED\":{\"message\":\"Request doesn't return data - {statusCode}: {statusText}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"statusCode\",\"statusText\"]},\"MORPH_TREEBANK_MISSING_REF\":{\"message\":\"Reference is missing from treebank request = {request}\",\"description\":\"Missing reference in treebank request\",\"component\":\"morph.treebank\",\"params\":[\"request\"]},\"MORPH_TREEBANK_UNSUPPORTED_LANGUAGE\":{\"message\":\"Unsupported treebank language ${languageId}\",\"description\":\"Unsupported treebank language\",\"component\":\"morph.treebank\",\"params\":[\"languageId\"]},\"MORPH_TREEBANK_NO_URL\":{\"message\":\"There is a problem with creating url for the given word - {word}\",\"description\":\"Error message for morph.treebank - no url for fetching data from treebank\",\"component\":\"morph.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word}\",\"description\":\"Error message for morphology.treebank adapter - when no data was returned from the source\",\"component\":\"morphology.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.treebank adapter - unknown\",\"component\":\"morphology.treebank\",\"params\":[\"message\"]},\"TRANSLATION_INPUT_PREPARE_ERROR\":{\"message\":\"Some problems with preparing input for geting translations - {input}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - problems with input\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"input\"]},\"TRANSLATION_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - unknown\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"message\"]},\"TRANSLATION_INCORRECT_LEXEMES\":{\"message\":\"There is no correct homonym in input\",\"description\":\"Error message for lemmatranslation.alpheios adapter - no lexemes\",\"component\":\"lemmatranslation.alpheios\"},\"LEXICONS_NO_ALLOWED_URL\":{\"message\":\"There are no allowed urls in the options\",\"description\":\"Error message for lexicon.alpheios adapter - no urls were found in options\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_FAILED_CACHED_DATA\":{\"message\":\"There is a problem with catching data from lexicon source - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with getting cached data\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_FAILED_APPEND_DEFS\":{\"message\":\"There is a problem with updating definitions - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with updating definitions\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_NO_FULL_URL\":{\"message\":\"No full url is defined for definitions\",\"description\":\"Error message for lexicon.alpheios adapter - no full url is defined\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_NO_DATA_FROM_URL\":{\"message\":\"No data recieved from url - {url}\",\"description\":\"Error message for lexicon.alpheios adapter - no data from url\",\"component\":\"lexicon.alpheios\",\"params\":[\"url\"]},\"CONCORDANCE_AUTHOR_UPLOAD_ERROR\":{\"message\":\"Some problems with retrieving from author/textWork config file - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with uploading data from author-work config file\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]},\"CONCORDANCE_WORD_USAGE_FETCH_ERROR\":{\"message\":\"Some problems with fetching word usage examples from concordance api - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with fetching word usage examples from concordance api\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]}}");
+module.exports = JSON.parse("{\"COOKIE_TEST_MESSAGE\":{\"message\":\"This is a test message about a cookie.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\"},\"NUM_LINES_TEST_MESSAGE\":{\"message\":\"There {numLines, plural, =0 {are no lines} =1 {is one line} other {are # lines}}.\",\"description\":\"A test message that is shown in a panel\",\"component\":\"Panel\",\"params\":[\"numLines\"]},\"MORPH_TUFTS_NO_ENGINE_FOR_LANGUAGE\":{\"message\":\"There is no engine for the given languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no engine is found for given languageID\",\"component\":\"morphology.tufts\",\"params\":[\"languageID\"]},\"MORPH_NO_HOMONYM\":{\"message\":\"There is no homonym for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no homonym was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_TUFTS_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word} and languageID {languageID}\",\"description\":\"Error message for morphology.tufts adapter - when no data was returned from the source\",\"component\":\"morphology.tufts\",\"params\":[\"word\",\"languageID\"]},\"MORPH_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.tufts adapter - unknown\",\"component\":\"morphology.tufts\",\"params\":[\"message\"]},\"MORPH_TRANSFORM_NO_LANGUAGE\":{\"message\":\"No Language was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_LEMMA\":{\"message\":\"No Lemma was defined from json object\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\"},\"MORPH_TRANSFORM_NO_MAPPING_DATA\":{\"message\":\"No mapping data found for {language}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"language\"]},\"MORPH_TRANSFORM_INFLECTION_ERROR\":{\"message\":\"Error parsing inflection: {error}\",\"description\":\"Error message for morph.tufts adapter - transform problem\",\"component\":\"morphology.tufts\",\"params\":[\"error\"]},\"BASIC_ADAPTER_NO_DATA_FROM_URL\":{\"message\":\"Unable to get data from url - {url}\",\"description\":\"Error message for basic adapter - when no data was returned from the url\",\"component\":\"basic_adapter\",\"params\":[\"url\"]},\"BASIC_ADAPTER_EMPTY_URL\":{\"message\":\"Unable to get data from empty url\",\"description\":\"Error message for basic adapter - when empty url was given\",\"component\":\"basic_adapter\"},\"BASIC_ADAPTER_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"message\"]},\"BASIC_ADAPTER_URL_RESPONSE_FAILED\":{\"message\":\"Request doesn't return data - {statusCode}: {statusText}\",\"description\":\"Error message for basic adapter - unknown\",\"component\":\"basic_adapter\",\"params\":[\"statusCode\",\"statusText\"]},\"MORPH_TREEBANK_NO_URL\":{\"message\":\"There is a problem with creating url for the given word - {word}\",\"description\":\"Error message for morph.treebank - no url for fetching data from treebank\",\"component\":\"morph.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_NO_ANSWER_FOR_WORD\":{\"message\":\"There is no data from the source for the given word - {word}\",\"description\":\"Error message for morphology.treebank adapter - when no data was returned from the source\",\"component\":\"morphology.treebank\",\"params\":[\"word\"]},\"MORPH_TREEBANK_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for morph.treebank adapter - unknown\",\"component\":\"morphology.treebank\",\"params\":[\"message\"]},\"TRANSLATION_INPUT_PREPARE_ERROR\":{\"message\":\"Some problems with preparing input for geting translations - {input}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - problems with input\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"input\"]},\"TRANSLATION_UNKNOWN_ERROR\":{\"message\":\"Unknown error - {message}\",\"description\":\"Error message for lemmatranslation.alpheios adapter - unknown\",\"component\":\"lemmatranslation.alpheios\",\"params\":[\"message\"]},\"TRANSLATION_INCORRECT_LEXEMES\":{\"message\":\"There is no correct homonym in input\",\"description\":\"Error message for lemmatranslation.alpheios adapter - no lexemes\",\"component\":\"lemmatranslation.alpheios\"},\"LEXICONS_NO_ALLOWED_URL\":{\"message\":\"There are no allowed urls in the options\",\"description\":\"Error message for lexicon.alpheios adapter - no urls were found in options\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_FAILED_CACHED_DATA\":{\"message\":\"There is a problem with catching data from lexicon source - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with getting cached data\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_FAILED_APPEND_DEFS\":{\"message\":\"There is a problem with updating definitions - {message}\",\"description\":\"Error message for lexicon.alpheios adapter - some problems with updating definitions\",\"component\":\"lexicon.alpheios\",\"params\":[\"message\"]},\"LEXICONS_NO_FULL_URL\":{\"message\":\"No full url is defined for definitions\",\"description\":\"Error message for lexicon.alpheios adapter - no full url is defined\",\"component\":\"lexicon.alpheios\"},\"LEXICONS_NO_DATA_FROM_URL\":{\"message\":\"No data recieved from url - {url}\",\"description\":\"Error message for lexicon.alpheios adapter - no data from url\",\"component\":\"lexicon.alpheios\",\"params\":[\"url\"]},\"CONCORDANCE_AUTHOR_UPLOAD_ERROR\":{\"message\":\"Some problems with retrieving from author/textWork config file - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with uploading data from author-work config file\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]},\"CONCORDANCE_WORD_USAGE_FETCH_ERROR\":{\"message\":\"Some problems with fetching word usage examples from concordance api - {message}\",\"description\":\"Error message for wordusageExamples.concordance adapter - problems with fetching word usage examples from concordance api\",\"component\":\"wordusageExamples.concordance\",\"params\":[\"message\"]}}");
 
 /***/ }),
 
@@ -16962,610 +16525,6 @@ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/_
     en_GB: _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1__
   }
 });
-
-
-/***/ }),
-
-/***/ "./transformers/alpheios-lexicon-transformer.js":
-/*!******************************************************!*\
-  !*** ./transformers/alpheios-lexicon-transformer.js ***!
-  \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-
-
-/**
- Transforms morphological output adhering to the Alpheios lexicon
- schema to an Alpheios Homonym data model object
-*/
-
-const featuresArray = [
-  ['pofs', 'part'],
-  ['case', 'grmCase'],
-  ['gend', 'gender'],
-  ['decl', 'declension'],
-  ['conj', 'conjugation'],
-  ['area', 'area'],
-  ['age', 'age'],
-  ['geo', 'geo'],
-  ['freq', 'frequency'],
-  ['note', 'note'],
-  ['pron', 'pronunciation'],
-  ['kind', 'kind'],
-  ['src', 'source']
-]
-
-const featuresArrayAll = [
-  ['pofs', 'part'],
-  ['case', 'grmCase'],
-  ['gend', 'gender'],
-  ['decl', 'declension'],
-  ['conj', 'conjugation'],
-  ['num', 'number'],
-  ['tense', 'tense'],
-  ['voice', 'voice'],
-  ['mood', 'mood'],
-  ['pers', 'person'],
-  ['comp', 'comparison'],
-  ['stemtype', 'stemtype'],
-  ['derivtype', 'derivtype'],
-  ['dial', 'dialect'],
-  ['morph', 'morph']
-]
-
-const attributeBasedFeatures = [
-  ['paradigm', 'cat']
-]
-
-class AlpheiosLexiconTransformer {
-  constructor (adapter, mappingData) {
-    this.adapter = adapter
-    this.mappingData = mappingData
-    this.allowUnknownValues = true
-  }
-
-  /**
-   * This method extract parameter by defined path
-   * @param {Object} source - json object to retrieve data from
-   * @param {String} nameParam - parameter name that should be retrieved
-   * @return {String|Object} - extracted data
-  */
-  extractData (source, nameParam) {
-    const schema = {
-      providerUri: ['RDF', 'Annotation', 'creator', 'Agent', 'about'],
-      providerRights: ['RDF', 'Annotation', 'rights', '$'],
-      inflections: ['rest', 'entry', 'infl'],
-      dictData: ['rest', 'entry', 'dict']
-    }
-    let res
-
-    if (schema[nameParam]) {
-      res = source
-      for (const pathPart of schema[nameParam]) {
-        if (res[pathPart]) {
-          res = res[pathPart]
-        } else {
-          res = undefined
-          break
-        }
-      }
-    }
-    return res
-  }
-
-  /**
-   * This method checks if data is array, if not - converts to array
-   * @param {?} data - value that should be checked
-   * @param {?} defaultData - default value, if data is null
-   * @return {Array}
-  */
-  checkToBeArray (data, defaultData = []) {
-    let resData = data
-    if (!Array.isArray(data)) {
-      if (data) {
-        resData = [data]
-      } else {
-        resData = defaultData
-      }
-    }
-    return resData
-  }
-
-  /**
-   * This method creates hdwd from source json object
-   * @param {Object} data - jsonObj from adapter
-   * @param {Object} term - data from inflections
-   * @param {Symbol} direction - define the word direction
-   * @return {Array} - array with parts for hdwr
-  */
-  collectHdwdArray (data, term, direction) {
-    let hdwd = [] // eslint-disable-line prefer-const
-
-    if (data && !Array.isArray(data) && (!data.hdwd || !data.hdwd.$) && term) {
-      hdwd.push(term.prefix ? term.prefix.$ : '')
-      hdwd.push(term.stem ? term.stem.$ : '')
-      hdwd.push(term.suff ? term.suff.$ : '')
-
-      if (direction === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].LANG_DIR_RTL) {
-        hdwd.reverse()
-      }
-    }
-
-    return hdwd
-  }
-
-  /**
-   * This method defines language from dictData nd inflections data
-   * @param {Object} data - jsonObj from adapter
-   * @param {Object} term - data from inflections
-   * @return {String}  - language code
-  */
-  defineLanguage (data, term) {
-    let lemmaData = Array.isArray(data) ? data[0] : data // eslint-disable-line prefer-const
-    if (!lemmaData.hdwd && term) {
-      lemmaData.hdwd = {}
-      lemmaData.hdwd.lang = term.lang
-    }
-    return lemmaData.hdwd ? lemmaData.hdwd.lang : lemmaData.lang
-  }
-
-  /**
-   * This method defines language from dictData nd inflections data
-   * @param {Object} data - jsonObj from adapter
-   * @param {Object} term - data from inflections
-   * Returned values:
-   *     - {Homonym}
-   *     - {undefined}
-  */
-  transformData (jsonObj, targetWord) {
-    let lexemes = [] // eslint-disable-line prefer-const
-    const annotationBody = this.checkToBeArray(jsonObj.RDF.Annotation.Body)
-
-    const providerUri = this.extractData(jsonObj, 'providerUri')
-    const providerRights = this.extractData(jsonObj, 'providerRights')
-
-    const provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](providerUri, providerRights)
-
-    for (const lexeme of annotationBody) {
-      const inflectionsJSON = this.checkToBeArray(this.extractData(lexeme, 'inflections'))
-      const inflectionsJSONTerm = inflectionsJSON.length > 0 ? inflectionsJSON[0].term : undefined
-
-      const dictData = this.extractData(lexeme, 'dictData')
-
-      const lemmaElements = this.checkToBeArray(dictData, inflectionsJSONTerm ? [inflectionsJSONTerm] : [])
-      const language = this.defineLanguage(lemmaElements, inflectionsJSONTerm)
-      if (!language) {
-        this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_LANGUAGE)
-        continue
-      }
-
-      const reconstructHdwd = this.collectHdwdArray(dictData, inflectionsJSONTerm, this.mappingData.model.direction)
-      if (reconstructHdwd.length > 0) {
-        lemmaElements[0].hdwd.$ = reconstructHdwd.join('')
-      }
-
-      let lemmas = [] // eslint-disable-line prefer-const
-      let lexemeSet = [] // eslint-disable-line prefer-const
-
-      for (const entry of lemmaElements.entries()) {
-        const index = entry[0]
-        const elem = entry[1]
-
-        const lemmaText = elem.hdwd ? elem.hdwd.$ : undefined
-        if (!lemmaText) {
-          this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_LEMMA)
-          continue
-        }
-        const lemma = this.mappingData.parseLemma(lemmaText, language)
-        lemmas.push(lemma)
-
-        const features = featuresArray
-        for (const feature of features) {
-          this.mappingData.mapFeature(lemma, elem, ...feature, this.allowUnknownValues)
-        }
-
-        let shortdefs = [] // eslint-disable-line prefer-const
-        let meanings = lexeme.rest.entry.mean
-        if (!Array.isArray(meanings)) {
-          meanings = [meanings]
-        }
-        meanings = meanings.filter((m) => m)
-
-        // if we have multiple dictionary elements, take the meaning with the matching index
-        if (lemmaElements.length > 1) {
-          if (meanings && meanings[index] && meanings[index].$) {
-            const meaning = meanings[index]
-            shortdefs.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider,
-              this.mappingData.parseMeaning(meaning, lemmas[index].word)))
-          }
-        } else {
-          // Changed to prevent some weird "Array Iterator.prototype.next called on incompatible receiver [object Unknown]" error
-          const sDefs = meanings.filter((m) => m.$).map(meaning => {
-            return alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider,
-              this.mappingData.parseMeaning(meaning, lemma.word))
-          })
-          shortdefs.push(...sDefs)
-        }
-        let lexmodel = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lexeme"](lemma, []) // eslint-disable-line prefer-const
-
-        lexmodel.meaning.appendShortDefs(shortdefs)
-        lexemeSet.push(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, lexmodel))
-      }
-
-      if (lemmas.length === 0) {
-        continue
-      }
-
-      const inflections = []
-      for (const inflectionJSON of inflectionsJSON) {
-        const stem = inflectionJSON.term && inflectionJSON.term.stem ? inflectionJSON.term.stem.$ : null
-        const form = inflectionJSON.term && inflectionJSON.term.form ? inflectionJSON.term.form.$ : null
-        const suffix = inflectionJSON.term && inflectionJSON.term.suff ? inflectionJSON.term.suff.$ : null
-        const prefix = inflectionJSON.term && inflectionJSON.term.pref ? inflectionJSON.term.pref.$ : null
-        const xmpl = inflectionJSON.xmpl ? inflectionJSON.xmpl.$ : null
-        const inflWord = stem || form
-        let inflection
-        try {
-          inflection = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Inflection"](inflWord, this.mappingData.model.languageID, suffix, prefix, xmpl)
-        } catch (e) {
-          this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_INFLECTION_ERROR.get(e.message))
-          continue
-        }
-        if (targetWord) {
-          inflection.addFeature(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.fullForm, targetWord, this.mappingData.model.languageID))
-        }
-        // Parse whatever grammatical features we're interested in and are provided
-        for (const f of featuresArrayAll) {
-          try {
-            this.mappingData.mapFeature(inflection, inflectionJSON, ...f, this.allowUnknownValues)
-            this.mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
-          } catch (e) {
-            // quietly continue
-          }
-        }
-
-        // Parse attribute based features
-        for (const f of attributeBasedFeatures) {
-          try {
-            this.mappingData.mapFeatureByAttribute(inflection, inflectionJSON, ...f, this.allowUnknownValues)
-            this.mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
-          } catch (e) {
-            // quietly continue
-          }
-        }
-
-        // we only use the inflection if it tells us something the dictionary details do not
-        if (inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmCase] ||
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.tense] ||
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.mood] ||
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.voice] ||
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.person] ||
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.comparison] ||
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.stemtype] || /** greek - morpheus **/
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.derivtype] || /** greek - morpheus **/
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.dialect] || /** greek **/
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.morph] || /** arabic - aramorph **/
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.kaylo] || /** syriac - sedra **/
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.state] || /** syriac - sedra **/
-          inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.example]) {
-          inflections.push(inflection)
-        }
-        // inflection can provide lemma decl, pofs, conj
-        for (const lemma of lemmas) {
-          if (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]) {
-            this.mappingData.mapFeature(lemma, inflectionJSON, 'pofs', 'part', this.allowUnknownValues)
-          }
-          // only take declension from inflection if lemma has no part of speech or its the same as the inflection
-          if (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.declension] &&
-            (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part] || lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].isEqual(inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]))) {
-            this.mappingData.mapFeature(lemma, inflectionJSON, 'decl', 'declension', this.allowUnknownValues)
-          }
-          // only take conjugation from inflection if lemma has a part of speech and its the same as the inflection
-          if (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.conjugation] &&
-            (!lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part] || lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].isEqual(inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]))) {
-            this.mappingData.mapFeature(lemma, inflectionJSON, 'conj', 'conjugation', this.allowUnknownValues)
-          }
-        }
-      }
-      const aggregated = this.mappingData.aggregateLexemes(lexemeSet, inflections)
-      lexemes.push(...aggregated)
-    }
-    if (lexemes.length > 0) {
-      return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"](lexemes, targetWord)
-    } else {
-      return undefined
-    }
-  }
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (AlpheiosLexiconTransformer);
-
-
-/***/ }),
-
-/***/ "./transformers/import-morph-data.js":
-/*!*******************************************!*\
-  !*** ./transformers/import-morph-data.js ***!
-  \*******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
-/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
-/*
-Objects of a morphology analyzer's library
- */
-
-
-/**
- * Holds all information required to transform from morphological analyzer's grammatical feature values to the
- * library standards. There is one ImportMorphData object per language.
- */
-class ImportMorphData {
-  /**
-     * Creates an ImportMorphData object for the language provided.
-     * @param {Function<LanguageModel>} model - A language model of the import data.
-     * @param {String} engine - a code for the engine that is using this mapping model
-     */
-  constructor (model, engine) {
-    'use strict'
-    this.model = model
-    this.engine = engine
-    // add all the features that the language supports so that we
-    // can return the default values if we don't need to import a mapping
-    for (const featureName of Object.keys(this.model.features)) {
-      this.addFeature(featureName)
-    }
-    // may be overridden by specific engine to handle vagaries in reporting of dictionary entries
-    // default just returns them as provided
-    this.aggregateLexemes = function (lexemeSet, inflections) {
-      let lexemes = [] // eslint-disable-line prefer-const
-      for (const lex of lexemeSet) {
-        // only process if we have a lemma that differs from the target
-        // word or if we have at least a part of speech
-        if (this.reportLexeme(lex)) {
-          lex.inflections = inflections.map(inflection => inflection.clone())
-          lexemes.push(lex)
-        }
-      }
-      return lexemes
-    }
-    // may be overridden by specific engine use via setLemmaParser
-    this.parseLemma = function (lemma) { return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Lemma"](lemma, this.model.languageID) }
-
-    // may be overridden by specific engine use via setMeaningParser
-    this.parseMeaning = function (meaning, targetWord) {
-      const lang = meaning.lang ? meaning.lang : alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].STR_LANG_CODE_ENG
-      return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](meaning.$, lang, 'text/plain', targetWord)
-    }
-
-    // may be overridden by specific engine use via setPropertyParser - default just returns the property value
-    // as a list
-    this.parseProperty = function (propertyName, propertyValue) {
-      let propertyValues = []
-      if (propertyName === 'decl') {
-        propertyValues = propertyValue.split('&').map((p) => p.trim())
-      } else if (propertyName === 'comp' && propertyValue === 'positive') {
-        propertyValues = []
-      } else {
-        propertyValues = [propertyValue]
-      }
-      return propertyValues
-    }
-
-    // may be overridden by specifc engine use via setLexemeFilter - default assumes we will have a part of speech
-    this.reportLexeme = function (lexeme) {
-      return lexeme.lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]
-    }
-
-    // may be overriden by specific engine use to a list of of featureTypes which
-    // should be overridden in the inflection data from the lemma data
-    this.inflectionOverrides = []
-  }
-
-  /**
-     * Adds a grammatical feature whose values to be mapped.
-     * @param {string} featureName - A name of a grammatical feature (i.e. declension, number, etc.)
-     * @return {Object} An object that represent a newly created grammatical feature.
-     */
-  addFeature (featureName) {
-    this[featureName] = {}
-    const model = this.model
-
-    this[featureName].add = function add (providerValue, alpheiosValue) {
-      this[providerValue] = alpheiosValue
-      return this
-    }
-
-    this[featureName].get = function get (providerValue, sortOrder = 1, allowUnknownValues = false) {
-      let mappedValue = []
-      if (!this.importer.has(providerValue)) {
-        // if the providerValue matches the model value or the model value
-        // is unrestricted, return a feature with the providerValue and order
-        if (model.typeFeature(featureName).hasValue(providerValue) ||
-            model.typeFeature(featureName).valuesUnrestricted) {
-          mappedValue = model.typeFeature(featureName).createFeature(providerValue, sortOrder)
-        } else {
-          const message = `Unknown value "${providerValue}" of feature "${featureName}" for ${model.languageCode} (allowed = ${allowUnknownValues})`
-          if (allowUnknownValues) {
-            mappedValue = model.typeFeature(featureName).createFeature(providerValue, sortOrder)
-          } else {
-            throw new Error(message)
-          }
-        }
-      } else {
-        const tempValue = this.importer.get(providerValue)
-        if (Array.isArray(tempValue)) {
-          mappedValue = model.typeFeature(featureName).createFeatures(tempValue, sortOrder)
-        } else {
-          mappedValue = model.typeFeature(featureName).createFeature(tempValue, sortOrder)
-        }
-      }
-      return mappedValue
-    }
-
-    /**
-     * @param {Object[]} data - An array of objects with `providerData` (an item value) and `sortOrder` fields
-     * @param allowUnknownValues
-     * @return {Feature}
-     */
-    this[featureName].getMultiple = function get (data, allowUnknownValues = false) {
-      let values = [] // Converts values from `data` into `values` array
-      for (const item of data) {
-        if (this.importer.has(item.providerValue)) {
-          const value = this.importer.get(item.providerValue)
-          if (Array.isArray(value)) {
-            // if the import returns an array, it should already have the sortOrder
-            values = value
-          } else {
-            values = [[value, item.sortOrder]]
-          }
-        } else if (model.typeFeature(featureName).hasValue(item.providerValue) ||
-          model.typeFeature(featureName).valuesUnrestricted) {
-          values.push([item.providerValue, item.sortOrder])
-        } else {
-          const message = `Unknown value "${item.providerValue}" of feature "${featureName}" for ${model.languageCode} (allowed = ${allowUnknownValues})`
-          if (allowUnknownValues) {
-            values.push([item.providerValue, item.sortOrder])
-          } else {
-            throw new Error(message)
-          }
-        }
-      }
-      return model.typeFeature(featureName).createFeatures(values)
-    }
-
-    this[featureName].importer = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["FeatureImporter"]()
-
-    return this[featureName]
-  }
-
-  /**
-   * Add an engine-specific lexeme aggregator
-   */
-  setLexemeAggregator (callback) {
-    this.aggregateLexemes = callback
-  }
-
-  /**
-  /**
-   * Add an engine-specific lemma parser
-   */
-  setLemmaParser (callback) {
-    this.parseLemma = callback
-  }
-
-  setMeaningParser (callback) {
-    this.parseMeaning = callback
-  }
-
-  /**
-   * Add an engine-specific property parser
-   */
-  setPropertyParser (callback) {
-    this.parseProperty = callback
-  }
-
-  /**
-   * Add an engine-specific lexeme filter
-   */
-  setLexemeFilter (callback) {
-    this.reportLexeme = callback
-  }
-
-  /**
-   * Maps property of a single feature type to a single Feature object with one or more values
-   * (if this feature has multiple values). Feature is stored as a property of the supplied model object.
-   * @param {object} model the model object to which the feature will be added
-   * @param {object} inputElem the input data element
-   * @param {object} inputName the  property name in the input data
-   * @param {string} featureName the name of the feature it will be mapped to
-   * @param {boolean} allowUnknownValues flag to indicate if unknown values are allowed
-   */
-  mapFeature (model, inputElem, inputName, featureName, allowUnknownValues) {
-    const inputItem = inputElem[inputName]
-    if (inputItem && (Array.isArray(inputItem) || inputItem.$)) {
-      let values = []
-      if (Array.isArray(inputItem)) {
-        // There are multiple values of this feature
-        for (const e of inputItem) {
-          values.push(...this.parseProperty(inputName, e.$))
-        }
-      } else {
-        values = this.parseProperty(inputName, inputItem.$)
-      }
-      // `values` is always an array as an array is a return value of `parseProperty`
-      if (values.length > 0) {
-        // There are some values found
-        values = values.map(v => { return { providerValue: v, sortOrder: inputItem.order ? inputItem.order : 1 } })
-        const feature = this[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types[featureName]].getMultiple(values, allowUnknownValues)
-        model.addFeature(feature)
-      }
-    }
-  }
-
-  /**
-   * Maps property of a single feature type to a single Feature object with one
-   * or more values, using an attribute to determine the mapped-to feature name
-   * (if this feature has multiple values). Feature is stored as a property of
-   * the supplied model object.
-   * @param {object} model the model object to which the feature will be added
-   * @param {object} inputElem the input data element
-   * @param {object} inputName the  property name in the input data
-   * @param {string} attributeName the attribute to use to get the feature name
-   * @param {boolean} allowUnknownValues flag to indicate if unknown values are allowed
-   */
-  mapFeatureByAttribute (model, inputElem, inputName, attributeName, allowUnknownValues) {
-    const inputItem = inputElem[inputName]
-    let featureName
-    if (inputItem && (Array.isArray(inputItem) || inputItem.$)) {
-      let values = []
-      if (Array.isArray(inputItem)) {
-        // There are multiple values of this feature
-        for (const e of inputItem) {
-          if (featureName && featureName !== e[attributeName]) {
-            console.warn('Mutiple feature values with mismatching attribute value', inputElem)
-          }
-          featureName = e[attributeName]
-          values.push(...this.parseProperty(inputName, e.$))
-        }
-      } else {
-        featureName = inputItem[attributeName]
-        values = this.parseProperty(inputName, inputItem.$)
-      }
-      // `values` is always an array as an array is a return value of `parseProperty`
-      if (values.length > 0) {
-        // There are some values found
-        values = values.map(v => { return { providerValue: v, sortOrder: inputItem.order ? inputItem.order : 1 } })
-        const feature = this[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types[featureName]].getMultiple(values, allowUnknownValues, inputItem.cat)
-        model.addFeature(feature)
-      }
-    }
-  }
-
-  /**
-   * Overrides feature data from an inflection with feature data from the lemma
-   * if required by an engine-specific list of featureTypes
-   * @param {String} featureType the feature type name
-   * @param {Inflection} inflection the inflection object
-   * @param {Lemma[]} lemmas the lemma objects
-   */
-  overrideInflectionFeatureIfRequired (featureType, inflection, lemmas) {
-    if (this.inflectionOverrides.includes(featureType)) {
-      for (const lemma of lemmas.filter(l => l.features[featureType])) {
-        inflection.addFeature(lemma.features[featureType])
-      }
-    }
-  }
-}
-/* harmony default export */ __webpack_exports__["default"] = (ImportMorphData);
 
 
 /***/ }),
@@ -17611,6 +16570,17 @@ class ImportMorphData {
 /***/ (function(module, exports) {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
+
+/***/ }),
+
+/***/ "alpheios-messaging":
+/*!*************************************!*\
+  !*** external "alpheios-messaging" ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_messaging__;
 
 /***/ })
 

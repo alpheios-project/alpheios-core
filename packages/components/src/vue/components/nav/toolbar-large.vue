@@ -19,6 +19,7 @@
       >
         <span
             @click="showHelp"
+            id="alpheios-toolbar-navbuttons-info"
             class="alpheios-navbuttons__btn"
             :class="{ active: $store.getters['ui/isActiveTab']('info') && $store.state.panel.open }"
         >
@@ -28,13 +29,14 @@
     </div>
     <div
         class="alpheios-toolbar__lookup-control"
-        @click="lookupVisible = !lookupVisible"
     >
       <alph-tooltip
           :tooltip-text="l10n.getText('LABEL_LOOKUP_CONTROL')"
           :tooltip-direction="tooltipDirection"
       >
         <span class="alpheios-navbuttons__btn"
+              id="alpheios-toolbar-navbuttons-lookup"
+              @click="lookupVisible = !lookupVisible"
               :class="{ active: lookupVisible }">
           <lookup-icon></lookup-icon>
         </span>
@@ -56,12 +58,14 @@
         v-show="showNav"
         :class="{ expanded: contentVisible }"
         @click="contentVisible = !contentVisible"
+        id="alpheios-toolbar-navbuttons-shownav"
     >
       <alph-tooltip
           :tooltip-text="l10n.getText('LABEL_TOOLS_CONTROL')"
           :tooltip-direction="tooltipDirection"
       >
         <span class="alpheios-navbuttons__btn"
+            
             :class="{ active: contentVisible }">
           <reading-tools-icon
           />
@@ -98,6 +102,7 @@
       >
         <span
             @click="ui.togglePanelTab('inflectionsbrowser')"
+            id="alpheios-toolbar-navbuttons-inflectionsbrowser"
             class="alpheios-navbuttons__btn"
             :class="{ active: $store.getters['ui/isActiveTab']('inflectionsbrowser') && $store.state.panel.open }"
         >
@@ -112,6 +117,7 @@
         <span
             :class="{ active: $store.getters['ui/isActiveTab']('grammar') && $store.state.panel.open }"
             class="alpheios-navbuttons__btn"
+            id="alpheios-toolbar-navbuttons-grammar"
             @click="ui.togglePanelTab('grammar')"
         >
           <grammar-icon/>
@@ -126,6 +132,7 @@
             :class="{ active: $store.getters['ui/isActiveTab']('wordlist') && $store.state.panel.open, disabled: !$store.state.app.hasWordListsData }"
             class="alpheios-navbuttons__btn"
             @click="ui.togglePanelTab('wordlist')"
+            id="alpheios-toolbar-navbuttons-wordlist"
         >
           <wordlist-icon/>
         </span>
@@ -138,6 +145,7 @@
         <span
             :class="{ active: $store.getters['ui/isActiveTab']('user') && $store.state.panel.open, disabled: !$store.state.auth.enableLogin }"
             class="alpheios-navbuttons__btn"
+            id="alpheios-toolbar-navbuttons-user"
             @click="ui.togglePanelTab('user')"
         >
           <user-icon/>
@@ -152,6 +160,7 @@
             :class="{ active: $store.getters['ui/isActiveTab']('options') && $store.state.panel.open }"
             class="alpheios-navbuttons__btn"
             @click="ui.togglePanelTab('options')"
+            id="alpheios-toolbar-navbuttons-options"
         >
           <options-icon/>
         </span>
@@ -166,6 +175,7 @@
             :class="{ active: $store.getters['ui/isActiveTab']('status') && $store.state.panel.open }"
             class="alpheios-navbuttons__btn"
             @click="ui.togglePanelTab('status')"
+            id="alpheios-toolbar-navbuttons-status"
         >
           <status-icon/>
         </span>

@@ -4,7 +4,7 @@ import * as Constants from './constants.js'
 import InflectionGroupingKey from './inflection_grouping_key'
 import InflectionGroup from './inflection_group'
 
-let typeFeatures = new Map()
+const typeFeatures = new Map()
 let typeFeaturesInitialized = false
 
 /**
@@ -75,7 +75,9 @@ export default class SyriacLanguageModel extends LanguageModel {
 
   /**
    * Check to see if this language tool can produce an inflection table display
-   * for the current node
+for the current node
+   *
+   * @param node
    */
   static canInflect (node) {
     return false
@@ -83,6 +85,7 @@ export default class SyriacLanguageModel extends LanguageModel {
 
   /**
    * Returns alternate encodings for a word
+   *
    * @param {string} word the word
    * @param {string} preceding optional preceding word
    * @param {string} following optional following word
@@ -96,7 +99,8 @@ export default class SyriacLanguageModel extends LanguageModel {
 
   /**
    * Get a list of valid puncutation for this language
-   * @returns {String} a string containing valid puncutation symbols
+   *
+   * @returns {string} a string containing valid puncutation symbols
    */
   static getPunctuation () {
     return "፡፨።፣፤፥፦፧፠,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
@@ -104,24 +108,26 @@ export default class SyriacLanguageModel extends LanguageModel {
 
   /**
    * Groups a set of inflections according to a syriac display paradigm
-   * The default groups according to the following logic:
-   *   1. groups of groups with unique stem, prefix, suffix, part of speech, declension, kaylo or state, and comparison
-   *     2. groups of those groups with unique
-   *          number, if it's an inflection with a grammatical case
-   *          tense, if it's an inflection with tense but no case (i.e. a verb)
-   *          verbs without tense or case
-   *          adverbs
-   *          everything else
-   *       3. groups of those groups with unique voice and tense
-   *         4. groups of inflections with unique gender, person, mood, and sort
+    The default groups according to the following logic:
+    1. groups of groups with unique stem, prefix, suffix, part of speech, declension, kaylo or state, and comparison
+    2. groups of those groups with unique
+    number, if it's an inflection with a grammatical case
+    tense, if it's an inflection with tense but no case (i.e. a verb)
+    verbs without tense or case
+    adverbs
+    everything else
+    3. groups of those groups with unique voice and tense
+    4. groups of inflections with unique gender, person, mood, and sort
+   *
+   * @param inflections
    */
   static groupInflectionsForDisplay (inflections) {
-    let grouped = new Map()
-    let aggregated = this.aggregateInflectionsForDisplay(inflections)
+    const grouped = new Map()
+    const aggregated = this.aggregateInflectionsForDisplay(inflections)
 
     // group inflections by part of speech
-    for (let infl of aggregated) {
-      let groupingKey = new InflectionGroupingKey(infl,
+    for (const infl of aggregated) {
+      const groupingKey = new InflectionGroupingKey(infl,
         [Feature.types.part, Feature.types.declension, Feature.types.kaylo, Feature.types.state, Feature.types.comparison],
         {
           prefix: infl.prefix,
@@ -129,7 +135,7 @@ export default class SyriacLanguageModel extends LanguageModel {
           stem: infl.stem
         }
       )
-      let groupingKeyStr = groupingKey.toString()
+      const groupingKeyStr = groupingKey.toString()
       if (grouped.has(groupingKeyStr)) {
         grouped.get(groupingKeyStr).append(infl)
       } else {
@@ -138,9 +144,9 @@ export default class SyriacLanguageModel extends LanguageModel {
     }
 
     // iterate through each group key to group the inflections in that group
-    for (let kv of grouped) {
-      let inflgrp = new Map()
-      for (let infl of kv[1].inflections) {
+    for (const kv of grouped) {
+      const inflgrp = new Map()
+      for (const infl of kv[1].inflections) {
         let keyprop
         let isCaseInflectionSet = false
         if (infl[Feature.types.grmCase]) {
@@ -161,8 +167,8 @@ export default class SyriacLanguageModel extends LanguageModel {
           // grouping on adverbs without case or tense
           // everything else
         }
-        let groupingKey = new InflectionGroupingKey(infl, [keyprop], { isCaseInflectionSet: isCaseInflectionSet })
-        let groupingKeyStr = groupingKey.toString()
+        const groupingKey = new InflectionGroupingKey(infl, [keyprop], { isCaseInflectionSet: isCaseInflectionSet })
+        const groupingKeyStr = groupingKey.toString()
         if (inflgrp.has(groupingKeyStr)) {
           inflgrp.get(groupingKeyStr).append(infl)
         } else {
@@ -176,13 +182,13 @@ export default class SyriacLanguageModel extends LanguageModel {
       //  inflections of adverbs
       //  everything else
       // iterate through each inflection group key to group the inflections in that group by tense and voice
-      for (let kv of inflgrp) {
-        let nextGroup = new Map()
-        let sortOrder = new Map()
-        for (let infl of kv[1].inflections) {
-          let sortkey = infl[Feature.types.grmCase] ? Math.max(infl[Feature.types.grmCase].items.map(f => f.sortOrder)) : 1
-          let groupingKey = new InflectionGroupingKey(infl, [Feature.types.tense, Feature.types.voice])
-          let groupingKeyStr = groupingKey.toString()
+      for (const kv of inflgrp) {
+        const nextGroup = new Map()
+        const sortOrder = new Map()
+        for (const infl of kv[1].inflections) {
+          const sortkey = infl[Feature.types.grmCase] ? Math.max(infl[Feature.types.grmCase].items.map(f => f.sortOrder)) : 1
+          const groupingKey = new InflectionGroupingKey(infl, [Feature.types.tense, Feature.types.voice])
+          const groupingKeyStr = groupingKey.toString()
           if (nextGroup.has(groupingKeyStr)) {
             nextGroup.get(groupingKeyStr).append(infl)
           } else {
@@ -191,30 +197,30 @@ export default class SyriacLanguageModel extends LanguageModel {
           }
         }
         kv[1].inflections = []
-        let sortedKeys = Array.from(nextGroup.keys()).sort(
+        const sortedKeys = Array.from(nextGroup.keys()).sort(
           (a, b) => {
-            let orderA = sortOrder.get(a)
-            let orderB = sortOrder.get(b)
+            const orderA = sortOrder.get(a)
+            const orderB = sortOrder.get(b)
             return orderA > orderB ? -1 : orderB > orderA ? 1 : 0
           }
         )
-        for (let groupkey of sortedKeys) {
+        for (const groupkey of sortedKeys) {
           kv[1].inflections.push(nextGroup.get(groupkey))
         }
       }
 
       // inflgrp is now a Map of groups of groups of inflections
 
-      for (let kv of inflgrp) {
-        let groups = kv[1]
-        for (let group of groups.inflections) {
-          let nextGroup = new Map()
-          for (let infl of group.inflections) {
+      for (const kv of inflgrp) {
+        const groups = kv[1]
+        for (const group of groups.inflections) {
+          const nextGroup = new Map()
+          for (const infl of group.inflections) {
             // set key is case comp gend pers mood sort
-            let groupingKey = new InflectionGroupingKey(infl,
+            const groupingKey = new InflectionGroupingKey(infl,
               [Feature.types.grmCase, Feature.types.comparison, Feature.types.gender, Feature.types.number, Feature.types.person,
                 Feature.types.tense, Feature.types.mood, Feature.types.voice])
-            let groupingKeyStr = groupingKey.toString()
+            const groupingKeyStr = groupingKey.toString()
             if (nextGroup.has(groupingKeyStr)) {
               nextGroup.get(groupingKeyStr).append(infl)
             } else {

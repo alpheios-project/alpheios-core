@@ -6,6 +6,9 @@ import papaparse from 'papaparse'
 import AlpheiosLexiconsAdapter from '@clAdapters/adapters/lexicons/adapter'
 import ClientAdapters from '@clAdapters/client-adapters.js'
 import { LanguageModelFactory as LMF, Constants, Homonym, Lexeme, Lemma } from 'alpheios-data-models'
+import { Fixture, LexiconsFixture } from 'alpheios-fixtures'
+
+import BaseTestHelp from '@tests/base-test-help.js'
 
 describe('lexicons/adapter.test.js', () => {
   console.error = function () {}
@@ -14,25 +17,30 @@ describe('lexicons/adapter.test.js', () => {
 
   let testSuccessHomonym, testFailedHomonym, testLangID
 
-  beforeAll(async () => {
+  beforeAll(() => { 
+    jest.spyOn(console, 'error')
+    jest.spyOn(console, 'log')
+    jest.spyOn(console, 'warn')
+  })
+
+  beforeEach(async () => {
     ClientAdapters.init()
     testLangID = Constants.LANG_GREEK
+    let sourceJson = Fixture.getFixtureRes({
+      langCode: 'grc', adapter: 'tufts', word: 'μύες'
+    })
 
     let homonymRes1 = await ClientAdapters.maAdapter({
       method: 'getHomonym',
       params: {
         languageID: testLangID,
         word: 'μύες'
-      }
+      },
+      sourceData: sourceJson
     })
     testSuccessHomonym = homonymRes1.result
     let formLexeme = new Lexeme(new Lemma('ινώδους', testLangID), [])
     testFailedHomonym = new Homonym([formLexeme], 'ινώδους')
-  })
-  beforeEach(() => {
-    jest.spyOn(console, 'error')
-    jest.spyOn(console, 'log')
-    jest.spyOn(console, 'warn')
   })
   afterEach(() => {
     jest.resetModules()
@@ -43,6 +51,14 @@ describe('lexicons/adapter.test.js', () => {
 
   function timeout (ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
+  }
+
+  function updateObjectWithFixtures (adapter, urlLib, urlType) { 
+    let urlKey = adapter.config[urlLib].urls[urlType]
+
+    let cachedDefinitions = new Map()
+    cachedDefinitions.set(urlKey, LexiconsFixture.lexData[urlKey])
+    return cachedDefinitions
   }
 
   it('1 AlpheiosLexiconsAdapter - constructor uploads config and options', () => {
@@ -93,18 +109,17 @@ describe('lexicons/adapter.test.js', () => {
     })
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
-    let url = adapter.config[urlKey].urls.short
-    await adapter.checkCachedData(url)
+
+    await BaseTestHelp.updateCacheWithFixtures()
 
     jest.spyOn(adapter, 'updateShortDefs')
     adapter.prepareSuccessCallback = jest.fn()
 
-    adapter.prepareShortDefPromise(testSuccessHomonym, urlKey)
-    let timeoutRes = await timeout(5000)
+    await adapter.prepareShortDefPromise(testSuccessHomonym, urlKey)
 
     expect(adapter.updateShortDefs).toHaveBeenCalled()
     expect(adapter.prepareSuccessCallback).toHaveBeenCalled()
-    return timeoutRes
+
   }, 25000)
 
   it('5 AlpheiosLexiconsAdapter - prepareShortDefPromise, if failed - it executes prepareFailedCallback', async () => {
@@ -115,15 +130,12 @@ describe('lexicons/adapter.test.js', () => {
     })
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
-    let url = adapter.config[urlKey].urls.short
-    await adapter.checkCachedData(url)
+    await BaseTestHelp.updateCacheWithFixtures()
 
     adapter.prepareFailedCallback = jest.fn()
 
-    adapter.prepareShortDefPromise(testFailedHomonym, urlKey)
-    let timeoutRes = await timeout(5000)
+    await adapter.prepareShortDefPromise(testFailedHomonym, urlKey)
     expect(adapter.prepareFailedCallback).toHaveBeenCalled()
-    return timeoutRes
   }, 25000)
 
   it('6 AlpheiosLexiconsAdapter - prepareFullDefPromise, if success - it executes collectFullDefURLs, updateFullDefs, prepareSuccessCallback', async () => {
@@ -134,20 +146,17 @@ describe('lexicons/adapter.test.js', () => {
     })
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
-    let url = adapter.config[urlKey].urls.full
-    await adapter.checkCachedData(url)
+    await BaseTestHelp.updateCacheWithFixtures()
 
     jest.spyOn(adapter, 'collectFullDefURLs')
     jest.spyOn(adapter, 'updateFullDefs')
     adapter.prepareSuccessCallback = jest.fn()
 
-    adapter.prepareFullDefPromise(testSuccessHomonym, urlKey)
-    let timeoutRes = await timeout(25000)
-
+    await adapter.prepareFullDefPromise(testSuccessHomonym, urlKey)
     expect(adapter.collectFullDefURLs).toHaveBeenCalled()
     expect(adapter.updateFullDefs).toHaveBeenCalled()
     expect(adapter.prepareSuccessCallback).toHaveBeenCalled()
-    return timeoutRes
+
   }, 500000)
 
   it('7 AlpheiosLexiconsAdapter - prepareSuccessCallback, if callBackEvtSuccess is defined it would be executed', async () => {
@@ -245,7 +254,7 @@ describe('lexicons/adapter.test.js', () => {
     let testURL = 'https://repos1.alpheios.net/lexdata/as/dat/grc-as-ids.dat'
 
     await adapter.checkCachedData(testURL)
-    await adapter.checkCachedData(testURL)
+
     expect(adapter.fetch).toHaveBeenCalledWith(testURL, { timeout: 0, type: 'xml' })
     expect(adapter.fillMap).toHaveBeenCalled()
 
@@ -277,28 +286,25 @@ describe('lexicons/adapter.test.js', () => {
 
     jest.spyOn(adapter, 'lookupInDataIndex')
 
+    
     let urlKey = 'https://github.com/alpheios-project/lsj'
-    let testURL = 'https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-defs.dat'
-    let unparsed = await adapter.fetch(testURL, { type: 'xml', timeout: adapter.options.timeout })
-    let parsed = papaparse.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
-    let data = adapter.fillMap(parsed.data)
+    let url = adapter.config[urlKey].urls.short
 
-    let cachedDefinitions = new Map()
-    cachedDefinitions.set(testURL, data)
+    const cachedDefinitions = updateObjectWithFixtures(adapter, urlKey, 'short')
 
     let model = LMF.getLanguageModel(testLangID)
 
-    await adapter.updateShortDefs(cachedDefinitions.get(testURL), testSuccessHomonym, adapter.config[urlKey])
+    await adapter.updateShortDefs(cachedDefinitions.get(url), testSuccessHomonym, adapter.config[urlKey])
 
     expect(adapter.lookupInDataIndex).toHaveBeenCalled()
 
     for (let lexeme of testSuccessHomonym.lexemes) {
-      expect(adapter.lookupInDataIndex).toHaveBeenCalledWith(cachedDefinitions.get(testURL), lexeme.lemma, model)
-      let deftexts = adapter.lookupInDataIndex(data, lexeme.lemma, model)
-      expect(lexeme.meaning.shortDefs[0].text).toEqual(deftexts[0])
+      expect(adapter.lookupInDataIndex).toHaveBeenCalledWith(cachedDefinitions.get(url), lexeme.lemma, model)
+      let deftexts = adapter.lookupInDataIndex(cachedDefinitions.get(url), lexeme.lemma, model)
+      expect(lexeme.meaning.shortDefs[0].text).toEqual(deftexts[0].field1)
       expect(lexeme.meaning.shortDefs[0].provider.toString()).toEqual(expect.stringContaining('Liddell'))
     }
-  }, 20000)
+  }, 25000)
 
   it('15 AlpheiosLexiconsAdapter - collectFullDefURLs returns an array of requests', async () => {
     let adapter = new AlpheiosLexiconsAdapter({
@@ -308,21 +314,19 @@ describe('lexicons/adapter.test.js', () => {
     })
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
-    let testURL = 'https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-ids.dat'
-    let unparsed = await adapter.fetch(testURL, { type: 'xml', timeout: adapter.options.timeout })
-    let parsed = papaparse.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
-    let data = adapter.fillMap(parsed.data)
+    let url = adapter.config[urlKey].urls.index
 
-    let cachedDefinitionsIndex = new Map()
-    cachedDefinitionsIndex.set(testURL, data)
+    const cachedDefinitionsIndex = updateObjectWithFixtures(adapter, urlKey, 'index')
 
-    let fullDefsRequests = adapter.collectFullDefURLs(cachedDefinitionsIndex.get(testURL), testSuccessHomonym, adapter.config[urlKey])
+    await BaseTestHelp.updateCacheWithFixtures()
+
+    let fullDefsRequests = adapter.collectFullDefURLs(cachedDefinitionsIndex.get(url), testSuccessHomonym, adapter.config[urlKey])
     expect(fullDefsRequests.length).toEqual(testSuccessHomonym.lexemes.length)
 
     fullDefsRequests.forEach(reqData => {
       expect(reqData.url).toEqual(expect.stringContaining('https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq'))
     })
-  }, 20000)
+  })
 
   it('16 AlpheiosLexiconsAdapter - collectFullDefURLs adds an error if there are no full url in config', async () => {
     let adapter = new AlpheiosLexiconsAdapter({
@@ -345,26 +349,20 @@ describe('lexicons/adapter.test.js', () => {
     })
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
-    let testURL = 'https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-ids.dat'
-    let unparsed = await adapter.fetch(testURL, { type: 'xml', timeout: adapter.options.timeout })
-    let parsed = papaparse.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
-    let data = adapter.fillMap(parsed.data)
+    let url = adapter.config[urlKey].urls.index
+    const cachedDefinitionsIndex = updateObjectWithFixtures(adapter, urlKey, 'index')
 
-    let cachedDefinitionsIndex = new Map()
-    cachedDefinitionsIndex.set(testURL, data)
+    await BaseTestHelp.updateCacheWithFixtures()
 
-    let fullDefsRequests = adapter.collectFullDefURLs(cachedDefinitionsIndex.get(testURL), testSuccessHomonym, adapter.config[urlKey])
-
-    jest.spyOn(adapter, 'fetch')
+    let fullDefsRequests = adapter.collectFullDefURLs(cachedDefinitionsIndex.get(url), testSuccessHomonym, adapter.config[urlKey])
     adapter.prepareSuccessCallback = jest.fn()
     await adapter.updateFullDefs(fullDefsRequests, adapter.config[urlKey], testSuccessHomonym)
 
-    let timeoutRes = await timeout(20000)
+    await timeout(300)
 
     expect(fullDefsRequests.length).toEqual(testSuccessHomonym.lexemes.length)
-    expect(adapter.fetch).toBeCalledTimes(2)
     expect(adapter.prepareSuccessCallback).toBeCalledTimes(2)
-    return timeoutRes
+
   }, 50000)
 
   it('18 AlpheiosLexiconsAdapter - getRequests return available urls from config', async () => {
@@ -375,13 +373,13 @@ describe('lexicons/adapter.test.js', () => {
     })
 
     let res = adapter.getRequests(testLangID)
-    expect(res.length).toEqual(5)
+    expect(res.length).toEqual(6)
     res.forEach(url => {
       expect(url).toEqual(expect.stringContaining('https://github.com/alpheios-project/'))
     })
   })
 
-  it('19 AlpheiosLexiconsAdapter - fillMap creates object from parsed data', async () => {
+  it.skip('19 AlpheiosLexiconsAdapter - fillMap creates object from parsed data', async () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
@@ -390,56 +388,52 @@ describe('lexicons/adapter.test.js', () => {
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
     let testURL = 'https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-ids.dat'
+    
     let unparsed = await adapter.fetch(testURL, { type: 'xml', timeout: adapter.options.timeout })
     let parsed = papaparse.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
     let data = adapter.fillMap(parsed.data)
 
     expect(typeof data).toEqual('object')
     expect(Array.isArray(data.values().next().value)).toBeTruthy()
-  }, 20000)
+  })
 
   it('20 AlpheiosLexiconsAdapter - get shortDefinitions (multiple) - mare', async () => {
-    let homonymTestRes = await ClientAdapters.maAdapter({
-      method: 'getHomonym',
-      params: {
-        languageID: Constants.LANG_GREEK,
-        word: 'μύες'
-      }
-    })
-
-    let homonymTest = homonymTestRes.result
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
       method: 'fetchShortDefs'
     })
 
-    await adapter.fetchShortDefs(homonymTest, { allow: ['https://github.com/alpheios-project/lsj'] })
+    await BaseTestHelp.updateCacheWithFixtures()
 
-    let timeoutRes = await timeout(15000)
+    await adapter.fetchShortDefs(testSuccessHomonym, { allow: ['https://github.com/alpheios-project/lsj'] })
 
-    let testMeaning = homonymTest.lexemes[0].meaning
+    await timeout(300)
+
+    let testMeaning = testSuccessHomonym.lexemes[0].meaning
 
     expect(testMeaning.shortDefs.length).toEqual(1)
     expect(testMeaning.shortDefs[0].text).toEqual('mouse or rat')
     expect(testMeaning.shortDefs[0].lemmaText).toEqual('μῦς')
 
-    let testMeaning2 = homonymTest.lexemes[1].meaning
+    let testMeaning2 = testSuccessHomonym.lexemes[1].meaning
 
     expect(testMeaning2.shortDefs.length).toEqual(1)
     expect(testMeaning2.shortDefs[0].text).toEqual('close, be shut')
     expect(testMeaning2.shortDefs[0].lemmaText).toEqual('μύω')
-
-    return timeoutRes
-  }, 60000)
+  })
 
   it('21 AlpheiosLexiconsAdapter - get fullDefinitions (multiple) - mare', async () => {
+    let sourceJson = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: 'mare'
+    })
     let homonymMareRes = await ClientAdapters.maAdapter({
       method: 'getHomonym',
       params: {
         languageID: Constants.LANG_LATIN,
         word: 'mare'
-      }
+      },
+      sourceData: sourceJson
     })
 
     let homonymMare = homonymMareRes.result
@@ -449,9 +443,11 @@ describe('lexicons/adapter.test.js', () => {
       method: 'fetchFullDefs'
     })
 
+    await BaseTestHelp.updateCacheWithFixtures()
+    
     await adapter.fetchFullDefs(homonymMare, { allow: ['https://github.com/alpheios-project/ls'] })
 
-    let timeoutRes = await timeout(15000)
+    await timeout(300)
 
     let testMeaning = homonymMare.lexemes[0].meaning
 
@@ -461,8 +457,6 @@ describe('lexicons/adapter.test.js', () => {
     let testMeaning2 = homonymMare.lexemes[1].meaning
     expect(testMeaning2.fullDefs[0].text).toBeDefined()
     expect(testMeaning2.fullDefs[0].text).toEqual(expect.stringContaining('mare et femineum sexus,'))
-
-    return timeoutRes
   }, 60000)
 
   it('22 AlpheiosLexiconsAdapter - get fullDefinitions fails on not found', async () => {
@@ -472,13 +466,16 @@ describe('lexicons/adapter.test.js', () => {
       method: 'fetchFullDefs'
     })
 
+    await BaseTestHelp.updateCacheWithFixtures()
+
     let formLexeme = new Lexeme(new Lemma('foo', Constants.LANG_LATIN), [])
     let homonym = new Homonym([formLexeme], 'foo')
     adapter.addError = jest.fn()
+
     await adapter.fetchFullDefs(homonym, { allow: ['https://github.com/alpheios-project/ls'] })
-    let timeoutRes = await timeout(15000)
+    await timeout(1300)
     expect(adapter.addError).toHaveBeenCalledWith('There is a problem with catching data from lexicon source - No entries found.')
-    return timeoutRes
+
   }, 60000)
 
   it('23 AlpheiosLexiconsAdapter - collectFullDefURLs escapes words', async () => {
@@ -499,5 +496,75 @@ describe('lexicons/adapter.test.js', () => {
       expect(reqData.url).toEqual(expect.stringContaining('l=%CF%83%CF%85%CE%BD%CE%AF%CE%B7%CE%BC%CE%B9'))
     })
   }, 20000)
+
+  it('24 AlpheiosLexiconsAdapter - get shortDefinitions with rights', async () => {
+    let sourceJson = Fixture.getFixtureRes({
+      langCode: 'grc', adapter: 'tufts', word: 'μῦθος'
+    })
+    let homonymRes = await ClientAdapters.maAdapter({
+      method: 'getHomonym',
+      params: {
+        languageID: Constants.LANG_GREEK,
+        word: 'μῦθος'
+      },
+      sourceData: sourceJson
+    })
+    let testHomonym = homonymRes.result
+
+    let adapter = new AlpheiosLexiconsAdapter({
+      category: 'lexicon',
+      adapterName: 'alpheios',
+      method: 'fetchShortDefs'
+    })
+
+    await BaseTestHelp.updateCacheWithFixtures()
+
+    await adapter.fetchShortDefs(testHomonym, { allow: ['https://github.com/alpheios-project/majorplus'] })
+    await timeout(300)
+    let testMeaning = testHomonym.lexemes[0].meaning
+
+    expect(testMeaning.shortDefs.length).toEqual(1)
+    expect(testMeaning.shortDefs[0].text).toEqual('story')
+    expect(testMeaning.shortDefs[0].provider.toString()).toEqual(expect.stringContaining('Major'))
+
+    await adapter.fetchShortDefs(testSuccessHomonym, { allow: ['https://github.com/alpheios-project/majorplus'] })
+    let test2Meaning = testSuccessHomonym.lexemes[0].meaning
+    expect(test2Meaning.shortDefs[0].text).toEqual('mouse or rat')
+    expect(test2Meaning.shortDefs[0].provider.toString()).toEqual(expect.stringContaining('Liddell'))
+
+  },25000)
+
+  it('25 AlpheiosLexiconsAdapter - test lookupInDataIndex', async () => {
+
+    let adapter = new AlpheiosLexiconsAdapter({
+            category: 'lexicon',
+      adapterName: 'alpheios',
+      method: 'fetchShortDefs'
+    })
+    const model = LMF.getLanguageModel(Constants.LANG_GREEK)
+
+    let dataRows = [
+      ['@Εὖρος','the East wind','LSJ'],
+      ['εὖρος','@','LSJ'],
+      ['@εὖρος','breadth, width','LSJ'],
+      ['Καῖσαρ','Caesar','VGorman'],
+      ['ἀλέξανδρος','defending men','LSJ'],
+      ['Ἀλέξανδρος', 'Alexander','VGorman']
+    ]
+    let data = adapter.fillMap(dataRows)
+
+    let mockLemma =  {word: "εὖρος", principalParts:[]}
+    expect(adapter.lookupInDataIndex(data,mockLemma,model)[0].field1).toEqual('breadth, width')
+    mockLemma =  {word: "Εὖρος", principalParts:[]}
+    expect(adapter.lookupInDataIndex(data,mockLemma,model)[0].field1).toEqual('the East wind')
+    mockLemma =  {word: "Καῖσαρ", principalParts:[]}
+    expect(adapter.lookupInDataIndex(data,mockLemma,model)[0].field1).toEqual('Caesar')
+    mockLemma =  {word: "καῖσαρ", principalParts:[]}
+    expect(adapter.lookupInDataIndex(data,mockLemma,model)).not.toBeDefined()
+    mockLemma =  {word: "ἀλέξανδρος", principalParts:[]}
+    expect(adapter.lookupInDataIndex(data,mockLemma,model)[0].field1).toEqual('defending men')
+    mockLemma =  {word: "Ἀλέξανδρος", principalParts:[]}
+    expect(adapter.lookupInDataIndex(data,mockLemma,model)[0].field1).toEqual('Alexander')
+  })
 
 })

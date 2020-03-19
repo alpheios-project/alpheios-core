@@ -1,7 +1,6 @@
 class AdapterError extends Error {
   constructor (category, adapterName, methodName, messageError) {
-    const message = messageError
-    super(message)
+    super(messageError)
     this.adapter = `${category}.${adapterName}`
     this.methodName = methodName
 
@@ -11,7 +10,7 @@ class AdapterError extends Error {
     try {
       Error.captureStackTrace(this, AdapterError)
     } catch (e) {
-      // quietly continue
+      // Continue if environment does not support captureStackTrace.
     }
   }
 

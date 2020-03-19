@@ -1,9 +1,9 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
-import { ClientAdapters } from 'alpheios-client-adapters'
 import WordItemRemoteDbDriver from '@wordlist/storage/worditem-remotedb-driver'
 import { WordItem, Constants, TextQuoteSelector } from 'alpheios-data-models'
+import BaseTestHelp from '@wordlist-tests/helpclasses/base-test-help'
 
 describe('worditem-remotedb-driver.test.js', () => {
   console.error = function () {}
@@ -143,24 +143,17 @@ describe('worditem-remotedb-driver.test.js', () => {
     let dbDriverRemote = new WordItemRemoteDbDriver({accessToken:'mockToken',userId:'fooUserId',endpoints:{wordlist: 'http://example.org'}})
 
     let testData = {
-      ID: 'testUserID-lat-beatum',
+      ID: 'testUserID-lat-venit',
       createdDT: '2019/02/12 @ 16:09:04',
       important: false,
       languageCode: 'lat',
       listID: 'testUserID-lat',
-      targetWord: 'beatum',
+      targetWord: 'venit',
       userID: 'testUserID'
     }
     let testWordItem = new WordItem(testData)
 
-    let adapterTuftsRes = await ClientAdapters.morphology.tufts({
-      method: 'getHomonym',
-      params: {
-        languageID: Constants.LANG_LATIN,
-        word: 'caeli'
-      }
-    })
-    let testHomonym = adapterTuftsRes.result
+    let testHomonym = await BaseTestHelp.getHomonym('venit', Constants.LANG_LATIN)
     testWordItem.homonym = testHomonym
 
     let resJsonObj = dbDriverRemote._serialize(testWordItem)
@@ -185,11 +178,11 @@ describe('worditem-remotedb-driver.test.js', () => {
 
     let context = TextQuoteSelector.readObject({
       languageCode: Constants.STR_LANG_CODE_LAT,
-      targetWord: 'caeli',
+      targetWord: 'beatum',
       target: {
         source: 'foosource',
         selector: {
-          exact: 'caeli',
+          exact: 'beatum',
           prefix: 'fooprefix',
           suffix: 'foosuffix'
         }

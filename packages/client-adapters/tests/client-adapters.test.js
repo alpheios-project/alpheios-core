@@ -3,7 +3,6 @@
 import 'whatwg-fetch'
 import ClientAdapters from '@clAdapters/client-adapters.js'
 import { Fixture } from 'alpheios-fixtures'
-
 import { Constants, Homonym, Author, WordUsageExample } from 'alpheios-data-models'
 
 describe('client-adapters.test.js', () => {

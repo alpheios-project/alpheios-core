@@ -1,15 +1,16 @@
 {
 	"name": "alpheios-wordlist",
-	"version": "3.3.0-dev.1",
+	"version": "3.3.0",
 	"description": "Word-In-Context List library for an Alpheios project",
 	"private": true,
 	"main": "dist/alpheios-wordlist.min.js",
 	"scripts": {
-		"test": "AUTH_TOKEN='alpheiosMockUserId021d0136-51d6-4e36-9d2d-3b6c96707e80' ENDPOINT='https://userapis-dev.alpheios.net/v1/words' jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-		"test-no-coverage": "AUTH_TOKEN='alpheiosMockUserId021d0136-51d6-4e36-9d2d-3b6c96707e80' ENDPOINT='https://userapis-dev.alpheios.net/v1/words' jest",
-		"build": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all vue",
-		"build-prod": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all production vue",
-		"build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all development vue",
+		"test": "cross-env AUTH_TOKEN='alpheiosMockUserId021d0136-51d6-4e36-9d2d-3b6c96707e80' ENDPOINT='https://userapis-dev.alpheios.net/v1/words' jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+		"test-no-coverage": "cross-env AUTH_TOKEN='alpheiosMockUserId021d0136-51d6-4e36-9d2d-3b6c96707e80' ENDPOINT='https://userapis-dev.alpheios.net/v1/words' jest",
+		"test-idl": "cross-env AUTH_TOKEN='alpheiosMockUserId021d0136-51d6-4e36-9d2d-3b6c96707e80' ENDPOINT='https://userapis-dev.alpheios.net/v1/words' jest tests/unit/indexed-db-load-process.test.js",
+		"build": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p vue",
+		"build-prod": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p vue",
+		"build-dev": "eslint --fix src/**/*.js && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m all -M development -p vue",
 		"lint": "eslint --fix src/**/*.js"
 	},
 	"repository": {
@@ -23,9 +24,14 @@
 	},
 	"homepage": "https://github.com/alpheios-project/wordlist#readme",
 	"devDependencies": {
-		"alpheios-node-build": "github:alpheios-project/node-build#v2.0.0",
+		"alpheios-node-build": "github:alpheios-project/node-build#v2",
 		"coveralls": "^3.0.9",
+		"eslint": "^6.8.0",
 		"eslint-config-standard": "^14.1.0",
+		"eslint-plugin-import": "^2.20.1",
+		"eslint-plugin-node": "^10.0.0",
+		"eslint-plugin-promise": "^4.2.1",
+		"eslint-plugin-standard": "^4.0.1",
 		"fake-indexeddb": "^3.0.0"
 	},
 	"peerDependencies": {
@@ -35,6 +41,7 @@
 		"verbose": true,
 		"moduleNameMapper": {
 			"^@wordlist[/](.+)": "<rootDir>/src/$1",
+			"^@wordlist-tests[/](.+)": "<rootDir>/tests/$1",
 			"alpheios-data-models": "<rootDir>/../data-models/dist/alpheios-data-models.js",
 			"alpheios-client-adapters": "<rootDir>/../client-adapters/dist/alpheios-client-adapters.js"
 		},

@@ -5,6 +5,7 @@ import BaseAdapter from '@clAdapters/adapters/base-adapter'
 import DefaultConfig from '@clAdapters/adapters/lexicons/config.json'
 
 let cachedDefinitions = new Map() // eslint-disable-line prefer-const
+let uploadStarted = new Map() // eslint-disable-line prefer-const
 
 class AlpheiosLexiconsAdapter extends BaseAdapter {
   /**
@@ -144,19 +145,36 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   /**
   * This method checks if data from url is already cached and if not - it uploads data from url to cache
   * @param {String} url - url from what we need to cache data
+  * @param {Null|Map|String} externalData - data that would be used as fixture for the url
+  * @param {Boolean} skipFetch - when this check is true, then fetch would not be execute in any case, it is used for Full Definitions
   * @return {Boolean} - true - if cached is successed
   */
-  async checkCachedData (url) {
-    if (!cachedDefinitions.has(url)) {
+  async checkCachedData (url, externalData = null, skipFetch = false) {
+    if (!externalData && skipFetch) {
+      return false
+    }
+    if (!cachedDefinitions.has(url) && !uploadStarted.has(url)) {
       try {
-        const unparsed = await this.fetch(url, { type: 'xml', timeout: this.options.timeout })
-        const parsed = papaparse.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
-        const data = this.fillMap(parsed.data)
+        uploadStarted.set(url, true)
+
+        let data = externalData
+        if (!externalData) {
+          const unparsed = await this.fetch(url, { type: 'xml', timeout: this.options.timeout })
+          const parsed = papaparse.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
+          data = this.fillMap(parsed.data)
+        }
+
         cachedDefinitions.set(url, data)
+        uploadStarted.set(url, false)
       } catch (error) {
         this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
+        uploadStarted.set(url, false)
         return false
       }
+    } else if (uploadStarted.has(url) && uploadStarted.get(url)) {
+      setTimeout(() => {
+        this.checkCachedData(url)
+      }, this.options.timeout)
     }
     return true
   }
@@ -173,12 +191,20 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
 
     for (let lexeme of homonym.lexemes) { // eslint-disable-line prefer-const
       const deftexts = this.lookupInDataIndex(data, lexeme.lemma, model)
-
       if (deftexts) {
         for (const d of deftexts) {
+          const text = d.field1
+          const providerCode = d.field2
+          const format = config.format && config.format.short ? config.format.short : 'text/plain'
           try {
-            const provider = new ResourceProvider(config.urls.short, config.rights)
-            const def = new Definition(d, config.langs.target, 'text/plain', lexeme.lemma.word)
+            let rightsText = config.rights
+            let rightsUri = config.urls.short
+            if (providerCode && config.rights_keys && config.rights_keys[providerCode]) {
+              rightsUri = rightsUri + `#${providerCode}`
+              rightsText = config.rights_keys[providerCode]
+            }
+            const provider = new ResourceProvider(rightsUri, rightsText)
+            const def = new Definition(text, config.langs.target, format, lexeme.lemma.word)
             const definition = await ResourceProvider.getProxy(provider, def)
             lexeme.meaning.appendShortDefs(definition)
           } catch (error) {
@@ -216,7 +242,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
       const ids = this.lookupInDataIndex(data, lexeme.lemma, model)
       if (urlFull && ids) {
         for (const id of ids) {
-          requests.push({ url: `${urlFull}&n=${id}`, lexeme: lexeme })
+          requests.push({ url: `${urlFull}&n=${id.field1}`, lexeme: lexeme })
         }
       } else if (urlFull) {
         requests.push({ url: `${urlFull}&l=${encodeURIComponent(lexeme.lemma.word)}`, lexeme: lexeme })
@@ -233,7 +259,12 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   */
   async updateFullDefs (fullDefsRequests, config, homonym) {
     for (let request of fullDefsRequests) { // eslint-disable-line prefer-const
-      const fullDefDataRes = this.fetch(request.url, { type: 'xml' })
+      let fullDefDataRes
+      if (cachedDefinitions.has(request.url)) {
+        fullDefDataRes = new Promise((resolve, reject) => resolve(cachedDefinitions.get(request.url)))
+      } else {
+        fullDefDataRes = this.fetch(request.url, { type: 'xml' })
+      }
 
       fullDefDataRes.then(
         async (fullDefData) => {
@@ -275,10 +306,14 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   fillMap (rows) {
     let data = new Map() // eslint-disable-line prefer-const
     for (const row of rows) {
+      const def = { field1: row[1], field2: null }
+      if (row.length > 2) {
+        def.field2 = row[2]
+      }
       if (data.has(row[0])) {
-        data.get(row[0]).push(row[1])
+        data.get(row[0]).push(def)
       } else {
-        data.set(row[0], [row[1]])
+        data.set(row[0], [def])
       }
     }
     return data
@@ -315,10 +350,22 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
     alternatives = [...alternatives, ...altEncodings]
 
     for (const lookup of alternatives) {
-      found = data.get(lookup.toLocaleLowerCase())
-      if (found && found.length === 1 && found[0] === '@') {
+      // let's first just look for the word in its supplied case
+      found = data.get(lookup)
+
+      // and if we don't find it, then try lower case
+      if (!found) {
+        found = data.get(lookup.toLocaleLowerCase())
+      }
+
+      // legacy behavior -  indexes had inserted alternative
+      // index entries in lower case and less aggressive
+      // character normalization, and referred those index entries to
+      // the original ones
+      if (found && found.length === 1 && found[0].field1 === '@') {
         found = data.get(`@${lookup}`)
       }
+
       if (found) {
         break
       }

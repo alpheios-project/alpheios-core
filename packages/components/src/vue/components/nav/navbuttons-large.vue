@@ -3,6 +3,7 @@
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_HELP')" tooltipDirection="bottom-narrow"
       v-show="! $store.state.ui.overrideHelp">
       <div @click="ui.changeTab('info')" class="alpheios-navbuttons__btn"
+            id="alpheios-panel-navbuttons-info"
             :class="{ active: $store.getters['ui/isActiveTab']('info') }">
         <help-icon />
       </div>
@@ -10,6 +11,7 @@
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_DEFINITIONS')" tooltipDirection="bottom-narrow" v-show="$store.getters['app/fullDefDataReady']">
       <div :class="{ active: $store.getters['ui/isActiveTab']('definitions') }" @click="ui.changeTab('definitions')"
+            id="alpheios-panel-navbuttons-definitions"
             class="alpheios-navbuttons__btn">
         <definitions-icon></definitions-icon>
       </div>
@@ -18,6 +20,7 @@
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_SHOW_INFLECTIONS')" tooltipDirection="bottom-narrow"
                 v-show="$store.state.app.hasInflData">
       <div @click="ui.changeTab('inflections')" class="alpheios-navbuttons__btn"
+            id="alpheios-panel-navbuttons-inflections"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('inflections') }">
         <inflections-icon></inflections-icon>
       </div>
@@ -26,6 +29,7 @@
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-narrow"
                 v-show="$store.getters['app/hasTreebankData']">
       <div @click="ui.changeTab('treebank')" class="alpheios-navbuttons__btn"
+            id="alpheios-panel-navbuttons-treebank"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('treebank') }">
         <treebank-icon></treebank-icon>
       </div>
@@ -35,6 +39,7 @@
                   v-show="$store.state.app.wordUsageExampleEnabled"
     >
       <div @click="ui.changeTab('wordUsage')" class="alpheios-navbuttons__btn"
+          id="alpheios-panel-navbuttons-wordusage"
            v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordUsage') }">
         <word-usage-icon></word-usage-icon>
       </div>
@@ -42,6 +47,7 @@
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_INFLECT_BROWSER')" tooltipDirection="bottom-narrow">
       <div @click="ui.changeTab('inflectionsbrowser')" class="alpheios-navbuttons__btn"
+            id="alpheios-panel-navbuttons-inflectionsbrowser"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('inflectionsbrowser') }">
         <inflections-browser-icon></inflections-browser-icon>
       </div>
@@ -49,6 +55,7 @@
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_GRAMMAR')" tooltipDirection="bottom-narrow" >
       <div @click="ui.changeTab('grammar')" class="alpheios-navbuttons__btn"
+            id="alpheios-panel-navbuttons-grammar"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('grammar') }">
         <grammar-icon></grammar-icon>
       </div>
@@ -56,6 +63,7 @@
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_WORDLIST')" tooltipDirection="bottom-narrow">
       <div @click="ui.changeTab('wordlist')" class="alpheios-navbuttons__btn"
+           id="alpheios-panel-navbuttons-wordlist"
            v-bind:class="{ active: $store.getters['ui/isActiveTab']('wordlist') }"
            v-show="this.$store.state.app.hasWordListsData">
         <wordlist-icon></wordlist-icon>
@@ -65,6 +73,7 @@
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_USER')" tooltipDirection="bottom-narrow"
                 v-show="$store.state.auth.enableLogin">
       <div @click="ui.changeTab('user')" class="alpheios-navbuttons__btn"
+            id="alpheios-panel-navbuttons-user"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('user') }">
         <user-icon></user-icon>
       </div>
@@ -72,6 +81,7 @@
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_OPTIONS')" tooltipDirection="bottom-narrow">
       <div @click="ui.changeTab('options')" class="alpheios-navbuttons__btn"
+           id="alpheios-panel-navbuttons-options"
            v-bind:class="{ active: $store.getters['ui/isActiveTab']('options') }">
         <options-icon></options-icon>
       </div>
@@ -80,6 +90,7 @@
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_STATUS')" tooltipDirection="bottom-narrow">
       <div @click="ui.changeTab('status')" class="alpheios-navbuttons__btn"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('status') }"
+            id="alpheios-panel-navbuttons-status"
             v-show="this.settings.verboseMode()">
         <status-icon></status-icon>
       </div>
