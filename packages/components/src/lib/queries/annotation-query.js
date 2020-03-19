@@ -33,18 +33,17 @@ export default class AnnotationQuery extends Query {
   async getTreebankOptions () {
     const siteMatch = this.siteOptions.filter((s) => this.document.location.href.match(new RegExp(s.uriMatch)) && s.resourceOptions.items.treebanks)
     // TODO eventually this data should be probably be held in a formal data model object. Not sure what the best format
-    // is right now so leaving that for later.
+    //      is right now so leaving that for later.
+    // eslint-disable-next-line prefer-const
     let data = {
       treebank: {
         page: {},
         word: {}
-      },
+      }
     }
     if (siteMatch.length > 0) {
       data.treebank.page.src = siteMatch[0].resourceOptions.items.treebanks.currentValue
     }
-
-    const tbSrcElem = this.document.querySelector('[data-alpheios_tb_src]')
 
     // version 3 uses the messaging service to connect to the treebank for
     // morphology data
@@ -55,7 +54,7 @@ export default class AnnotationQuery extends Query {
       try {
         data.treebank.word = new TreebankDataItem(tbRefElem)
       } catch (e) {
-        console.warn("Error reading treebank data",e)
+        console.warn('Error reading treebank data', e)
       }
     }
     return data

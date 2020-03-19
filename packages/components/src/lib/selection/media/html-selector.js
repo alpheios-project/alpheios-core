@@ -157,7 +157,7 @@ export default class HTMLSelector extends MediaSelector {
     this.data = {}
     try {
       const treebankData = new TreebankDataItem(this.target)
-      this.data.treebank = { word: treebankData}
+      this.data.treebank = { word: treebankData }
     } catch (error) {
       // treebank data is optional
       // quietly fail

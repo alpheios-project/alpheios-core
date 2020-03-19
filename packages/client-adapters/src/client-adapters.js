@@ -231,7 +231,6 @@ class ClientAdapters {
     return null
   }
 
-
   /**
    * it is used for getting data from translations adapter
    * @param {Object} options - object contains parametes:

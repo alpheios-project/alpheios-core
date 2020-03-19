@@ -68,7 +68,7 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
           this.addError(this.l10n.messages.MORPH_TRANSFORM_NO_MAPPING_DATA.get(languageID.toString()))
           return
         }
-        const transformAdapter = new AlpheiosLexiconTransformer(this,mappingData,this)
+        const transformAdapter = new AlpheiosLexiconTransformer(this, mappingData, this)
         let homonym = transformAdapter.transformData(res, word) // eslint-disable-line prefer-const
 
         if (!homonym) {

@@ -1,11 +1,11 @@
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 import AlpheiosLexiconTransformer from '@clAdapters/transformers/alpheios-lexicon-transformer'
-import { Constants, LanguageModelFactory } from 'alpheios-data-models'
+import { LanguageModelFactory } from 'alpheios-data-models'
 import ImportData from '@clAdapters/transformers/import-morph-data.js'
 
 import DefaultConfig from '@clAdapters/adapters/alpheiostb/config.json'
 import {
-  MessagingService, WindowIframeDestination as Destination, ArethusaDestinationConfig as ArethusaConfig, RequestMessage
+  MessagingService, WindowIframeDestination as Destination, RequestMessage
 } from 'alpheios-messaging/dist/dev/alpheios-messaging.js'
 
 class ArethusaTreebankAdapter extends BaseAdapter {
@@ -19,7 +19,7 @@ class ArethusaTreebankAdapter extends BaseAdapter {
     this.config = this.uploadConfig(config, DefaultConfig)
   }
 
-  getMessagingService(config) {
+  getMessagingService (config) {
     if (!MessagingService.hasService(config.name)) {
       MessagingService.createService(config.name, new Destination(config))
     }
@@ -28,22 +28,22 @@ class ArethusaTreebankAdapter extends BaseAdapter {
 
   async _fetchArethusaData (targetURL, sentenceId, wordId) {
     const config = this._getMessageConfig(targetURL)
-    let svc = this.getMessagingService(config)
+    const svc = this.getMessagingService(config)
     const requestBodyNav = {
-      gotoSentence:  { sentenceId: sentenceId }
+      gotoSentence: { sentenceId: sentenceId }
     }
     await svc.sendRequestTo(config.name, new RequestMessage(requestBodyNav))
     const requestBodyMorph = {
       getMorph: {
         sentenceId: sentenceId,
-        wordId: wordId,
+        wordId: wordId
       }
     }
     const responseMessage = await svc.sendRequestTo(config.name, new RequestMessage(requestBodyMorph))
     return responseMessage.body
   }
 
-  _getMessageConfig(targetURL) {
+  _getMessageConfig (targetURL) {
     return {
       name: targetURL,
       targetURL: targetURL,
@@ -56,7 +56,7 @@ class ArethusaTreebankAdapter extends BaseAdapter {
    */
   async refreshView (provider) {
     const config = this._getMessageConfig(provider)
-    let svc = this.getMessagingService(config)
+    const svc = this.getMessagingService(config)
     const requestBody = { refreshView: { } }
     svc.sendRequestTo(config.name, new RequestMessage(requestBody))
   }
@@ -75,22 +75,21 @@ class ArethusaTreebankAdapter extends BaseAdapter {
   async getHomonym (languageID, word, provider, sentenceId, wordId) {
     try {
       if (typeof sentenceId !== 'undefined' && typeof wordId !== 'undefined') {
-        const tbRes = await this._fetchArethusaData(provider,sentenceId,wordId)
-        if (! tbRes || Object.keys(tbRes).length === 0) {
-          this.addError(this.l10n.messages['MORPH_TREEBANK_NO_ANSWER_FOR_WORD'].get(wordref))
+        const tbRes = await this._fetchArethusaData(provider, sentenceId, wordId)
+        if (!tbRes || Object.keys(tbRes).length === 0) {
+          this.addError(this.l10n.messages['MORPH_TREEBANK_NO_ANSWER_FOR_WORD'].get(word))
           return
         }
-        let mappingData
-        let languageModel = LanguageModelFactory.getLanguageModel(languageID)
+        const languageModel = LanguageModelFactory.getLanguageModel(languageID)
         if (!languageModel) {
           this.addError(this.l10n.messages['MORPH_TREEBANK_UNSUPPORTED_LANGUAGE'].get(languageID))
           return
         }
-        const transformAdapter = new AlpheiosLexiconTransformer(this, new ImportData(languageModel,'arethusa'))
+        const transformAdapter = new AlpheiosLexiconTransformer(this, new ImportData(languageModel, 'arethusa'))
         const homonym = transformAdapter.transformData(tbRes, word)
         return homonym
       } else {
-        this.addError(this.l10n.messages['MORPH_TREEBANK_MISSING_REF'].get(wordref))
+        this.addError(this.l10n.messages['MORPH_TREEBANK_MISSING_REF'].get(word))
       }
     } catch (error) {
       console.log(error)
