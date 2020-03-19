@@ -10,6 +10,8 @@ import WordItemRemoteDbDriver from '@wordlist/storage/worditem-remotedb-driver.j
 import IndexedDBAdapter from '@wordlist/storage/indexed-db-adapter.js'
 import RemoteDBAdapter from '@wordlist/storage/remote-db-adapter.js'
 import WordlistController from '@wordlist/controllers/wordlist-controller'
+import BaseTestHelp from '@wordlist-tests/helpclasses/base-test-help'
+
 
 import axios from 'axios'
 
@@ -23,7 +25,7 @@ describe('user-data-manager.test.js', () => {
 
   let localAdapter, remoteAdapter, auth
 
-  beforeAll( () => {
+  beforeAll( async () => {
     window.indexedDB = IndexedDB
     window.IDBKeyRange = IDBKeyRange
     auth  = {
@@ -39,6 +41,8 @@ describe('user-data-manager.test.js', () => {
 
     let dbDriverLocal = new WordItemIndexedDbDriver(auth.userId)
     localAdapter = new IndexedDBAdapter(dbDriverLocal)
+
+    await BaseTestHelp.updateCacheWithFixtures()
   })
 
   beforeEach(() => {
@@ -58,7 +62,7 @@ describe('user-data-manager.test.js', () => {
   function timeout (ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
-
+  
   async function getWordItemStep1 (targetWord, languageCode, contextData = {}) {
     let wordItem = new WordItem({ targetWord, languageCode })
 
@@ -80,14 +84,7 @@ describe('user-data-manager.test.js', () => {
 
   async function getWordItemStep2 (wordItem) {
     let langId = LMF.getLanguageIdFromCode(wordItem.languageCode)
-    let adapterTuftsRes = await ClientAdapters.morphology.tufts({
-      method: 'getHomonym',
-      params: {
-        languageID: langId,
-        word: wordItem.targetWord
-      }
-    })
-    let testHomonym = adapterTuftsRes.result
+    let testHomonym = await BaseTestHelp.getHomonym(wordItem.targetWord, langId)
     wordItem.homonym = testHomonym
   }
 
@@ -105,7 +102,7 @@ describe('user-data-manager.test.js', () => {
     })
   }
 
-  it.skip('1 UserDataManager - update method adds item both to local and remote with only context', async () => {
+  it('1 UserDataManager - update method adds item both to local and remote with only context', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -120,12 +117,6 @@ describe('user-data-manager.test.js', () => {
     expect(res).toBeTruthy()
 
     let resultRemote = await remoteAdapter.query({ languageCode: 'lat' })
-
-    // console.info('*****resultRemote[0].context', resultRemote[0].context)
-    // resultRemote[0].context.forEach(contextItem => {
-    //  console.info('*****resultRemote[0].context', contextItem)
-    // })
-
     expect(resultRemote.length).toEqual(1)
     expect(resultRemote[0].targetWord).toEqual('beautum')
     expect(resultRemote[0].context.length).toEqual(1)
@@ -149,7 +140,7 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
 
-  it.skip('2 UserDataManager - update method adds item both to local and remote - to remote short data about homonym and to local with full homonym data', async () => {
+  it('2 UserDataManager - update method adds item both to local and remote - to remote short data about homonym and to local with full homonym data', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -174,8 +165,6 @@ describe('user-data-manager.test.js', () => {
     expect(resultLocal[0].targetWord).toEqual('cepit')
     expect(resultLocal[0].context.length).toEqual(1)
 
-    await timeout(5000)
-    console.info('****resultLocal[0].homonym.lexemes', resultLocal[0].homonym.lexemes)
     expect(resultLocal[0].homonym.lexemes.length).toEqual(1)
     expect(resultLocal[0].homonym.lexemes[0].meaning.shortDefs.length).toEqual(1)
     expect(resultLocal[0].homonym.lexemes[0].meaning.fullDefs.length).toEqual(0)
@@ -185,7 +174,7 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
 
-  it.skip('3 UserDataManager - update method adds item both to local and remote, merge context items', async () => {
+  it('3 UserDataManager - update method adds item both to local and remote, merge context items', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -241,22 +230,19 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
 
-  it.skip('4 UserDataManager - update method adds item both to local and remote, save full definitions only to local', async () => {
+  it('4 UserDataManager - update method adds item both to local and remote, save full definitions only to local', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
     let testWordItem = await getWordItemStep1('cepit', 'lat')
-    await getWordItemStep2(testWordItem)
+    await getWordItemStep2(testWordItem)   
     await getWordItemStep3(testWordItem)
-
-    await timeout(5000) // wait for definitions
 
     let res = await udm.update({ dataObj: testWordItem })
     expect(res).toBeTruthy()
 
     let resultRemote = await remoteAdapter.query({ languageCode: 'lat' })
-    // console.info('**resultRemote[0].homonym', resultRemote[0].homonym)
 
     expect(resultRemote.length).toEqual(1)
     expect(resultRemote[0].targetWord).toEqual('cepit')
@@ -264,8 +250,6 @@ describe('user-data-manager.test.js', () => {
 
     let resultLocal = await localAdapter.query({ languageCode: 'lat' })
     expect(resultLocal.length).toEqual(1)
-
-    // console.info('****resultLocal[0].homonym.lexemes', resultLocal[0].homonym.lexemes)
     expect(resultLocal[0].homonym.lexemes.length).toEqual(1)
     expect(resultLocal[0].homonym.lexemes[0].meaning.shortDefs.length).toEqual(1)
     expect(resultLocal[0].homonym.lexemes[0].meaning.fullDefs.length).toEqual(1)
@@ -275,7 +259,7 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
 
-  it.skip('5 UserDataManager - update method updates remote with all data, local - with only a given segment (if there is no common, it also updates common)', async () => {
+  it('5 UserDataManager - update method updates remote with all data, local - with only a given segment (if there is no common, it also updates common)', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -304,7 +288,7 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
 
-  it.skip('6 UserDataManager - update method its update for remote if fullHomonym segment is given, but updates local for this segment', async () => {
+  it('6 UserDataManager - update method its update for remote if fullHomonym segment is given, but updates local for this segment', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -314,8 +298,6 @@ describe('user-data-manager.test.js', () => {
 
     await getWordItemStep2(testWordItem)
     await getWordItemStep3(testWordItem)
-
-    await timeout(5000) // wait for definitions
 
     let res = await udm.update({ dataObj: testWordItem, params: { segment: 'fullHomonym' } })
     expect(res).toBeTruthy()
@@ -336,7 +318,7 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
 
-  it.skip('7 UserDataManager - delete method deletes worditem both from local and remote', async () => {
+  it('7 UserDataManager - delete method deletes worditem both from local and remote', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -389,7 +371,7 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
 
-  it.skip('8 UserDataManager - deleteMany method deletes all wordItems from the list both from local and remote', async () => {
+  it('8 UserDataManager - deleteMany method deletes all wordItems from the list both from local and remote', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -427,7 +409,7 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
 
-  it.skip('9 UserDataManager - query gets data from remote with short data about homonym', async () => {
+  it('9 UserDataManager - query gets data from remote with short data about homonym', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -435,7 +417,6 @@ describe('user-data-manager.test.js', () => {
     let testWordItem = await getWordItemStep1('cepit', 'lat')
     await getWordItemStep2(testWordItem)
     await getWordItemStep3(testWordItem)
-    await timeout(5000) // wait for definitions
 
     let res = await udm.update({ dataObj: testWordItem })
     expect(res).toBeTruthy()
@@ -451,7 +432,7 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
 
-  it.skip('10 UserDataManager - query gets data from remote with full data about homonym, if type = full', async () => {
+  it('10 UserDataManager - query gets data from remote with full data about homonym, if type = full', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -459,7 +440,6 @@ describe('user-data-manager.test.js', () => {
     let testWordItem = await getWordItemStep1('cepit', 'lat')
     await getWordItemStep2(testWordItem)
     await getWordItemStep3(testWordItem)
-    await timeout(5000) // wait for definitions
 
     await udm.update({ dataObj: testWordItem })
 
@@ -474,7 +454,7 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
 
-  it.skip('11 UserDataManager - update method with params.source = local creates item only in local', async () => {
+  it('11 UserDataManager - update method with params.source = local creates item only in local', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -492,7 +472,7 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
 
-  it.skip('12 UserDataManager - update method with params.source = remote creates item only in remote', async () => {
+  it('12 UserDataManager - update method with params.source = remote creates item only in remote', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -510,7 +490,7 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
 
-  it.skip('13 UserDataManager - query method with params.source = local selects data only from local, remote - only from remote', async () => {
+  it('13 UserDataManager - query method with params.source = local selects data only from local, remote - only from remote', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -528,7 +508,7 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
 
-  it.skip('14 UserDataManager - query method (source = both or no source, type = full) gets data from remote and merge it to local (if there is no local)', async () => {
+  it('14 UserDataManager - query method (source = both or no source, type = full) gets data from remote and merge it to local (if there is no local)', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -551,7 +531,7 @@ describe('user-data-manager.test.js', () => {
     expect(console.error).not.toHaveBeenCalled()
   }, 50000)
 
-  it.skip('15 UserDataManager - query method (source = both or no source, type != full) gets data only from remote', async () => {
+  it('15 UserDataManager - query method (source = both or no source, type != full) gets data only from remote', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -624,7 +604,7 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 550000)
 
-  it.skip('16 UserDataManager - delete method (source = local) removes data only from local', async () => {
+  it('16 UserDataManager - delete method (source = local) removes data only from local', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -651,7 +631,7 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
 
-  it.skip('17 UserDataManager - delete method (source = remote) removes data only from remote', async () => {
+  it('17 UserDataManager - delete method (source = remote) removes data only from remote', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -790,7 +770,7 @@ describe('user-data-manager.test.js', () => {
     expect(resultQuery.length).toEqual(1)
   }, 50000)
 
-  it.skip('21 UserDataManager - clear unsubscribes events', async () => {
+  it('21 UserDataManager - clear unsubscribes events', async () => {
     let mockUnsub = jest.fn()
     let mockEvent = {
       sub: () => {
@@ -805,4 +785,5 @@ describe('user-data-manager.test.js', () => {
     udm.clear()
     expect(udm.subscriptions.length).toEqual(0)
   })
+
 })

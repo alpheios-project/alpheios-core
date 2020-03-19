@@ -1,14 +1,19 @@
+/* global DEVELOPMENT_MODE_BUILD */
 /* eslint-disable no-unused-vars */
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 import { ChineseLanguageModel, Lemma, Lexeme, Homonym, Feature, Definition } from 'alpheios-data-models'
 import {
-  MessagingService, WindowIframeDestination as Destination, CedictDestinationConfig as CedictConfig, RequestMessage
+  MessagingService, WindowIframeDestination as Destination, CedictDestinationConfig as CedictProdConfig,
+  CedictDestinationDevConfig as CedictDevConfig, RequestMessage
 } from 'alpheios-messaging'
 
 export const CedictCharacterForms = {
   SIMPLIFIED: 'simplified',
   TRADITIONAL: 'traditional'
 }
+
+let cedictConfig = CedictProdConfig
+if (DEVELOPMENT_MODE_BUILD) { cedictConfig = CedictDevConfig }
 
 const msgServiceName = 'AdaptersLexisService'
 
@@ -23,22 +28,12 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
     instance of the service that will be created once and reused across consecutive constructor invocations.
      */
     if (!MessagingService.hasService(msgServiceName)) {
-      MessagingService.createService(msgServiceName, new Destination(CedictConfig))
+      MessagingService.createService(msgServiceName, new Destination(cedictConfig))
     }
     this._messagingService = MessagingService.getService(msgServiceName)
   }
 
   get languageID () { return ChineseLanguageModel.languageID }
-
-  async _fetchCedictData (targetWord, contextForward) {
-    const requestBody = {
-      getWords: {
-        words: this.constructor._buildWordList(targetWord, contextForward)
-      }
-    }
-    const responseMessage = await this._messagingService.sendRequestTo(CedictConfig.name, new RequestMessage(requestBody))
-    return responseMessage.body
-  }
 
   /**
    * Creates a list of words that will be requested from a CEDICT service.
@@ -63,17 +58,45 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
 
   async getHomonym (targetWord, contextForward) {
     try {
-      const cedictRes = await this._fetchCedictData(targetWord, contextForward)
-      if (Object.keys(cedictRes).length === 0) {
+      const requestBody = {
+        getWords: {
+          words: this.constructor._buildWordList(targetWord, contextForward)
+        }
+      }
+      let response
+      try {
+        response = await this._messagingService.sendRequestTo(cedictConfig.name, new RequestMessage(requestBody))
+      } catch (response) {
+        this.addCedictError(response.errorCode, response.body.message)
+        return
+      }
+
+      if (Object.keys(response.body).length === 0) {
         this.addError(this.l10n.messages.MORPH_NO_HOMONYM.get(targetWord, this.languageID.toString()))
         return
       }
-      const homonym = this._transformData(cedictRes, targetWord)
+      const homonym = this._transformData(response.body, targetWord)
       if (!homonym) {
         this.addError(this.l10n.messages.MORPH_NO_HOMONYM.get(targetWord, this.languageID.toString()))
         return
       }
       return homonym
+    } catch (error) {
+      this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
+    }
+  }
+
+  async loadData (timeout) {
+    try {
+      const requestBody = {
+        loadData: {}
+      }
+      let response
+      try {
+        response = await this._messagingService.sendRequestTo(cedictConfig.name, new RequestMessage(requestBody), timeout)
+      } catch (response) {
+        this.addCedictError(response.errorCode, response.body.message)
+      }
     } catch (error) {
       this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
     }

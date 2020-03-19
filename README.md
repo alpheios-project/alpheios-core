@@ -51,6 +51,22 @@ There are several script that help to manage dependencies:
 * `list-outdated-deps` will run `npm outdated` across all packages and will list packages that have outdated dependencies. If there is an outdated version found across one of the packages one might edit that `package.json` file manually to set the dependency to its latest version, run `fix-mismatching-deps` to update the same dependency across other packages to specify the same version and finally run `bootstrap` to install an updated dependency package.
 * `fix-mismatching-deps`: if several packages depend on different versions of the same npm package this script will update `package.json` files with older dependencies so that all packages will depend on the the newwest version of the dependency list. For example, if package A depends on webpack v4.0.1 and packages B depends on webpack v4.1.5 then this command will updated both packages so that package A and package B will depend on webpack v4.1.5. This may be not the latest version of webpack available on npm but it will be the latest version specified across all individual packages. `fix-mismatching-deps` does not update dependencies themselves in `node_modules`; one has to run a `bootstrap` command to install an updated dependency version.
 
+## Installing local packages temporarily
+During development process one may need to install a local version of a package that is not part of alpheios-core. This can greatly simplify local development and debugging. Unfortunately, Lerna bootstrap does not work with packages installed locally.
+
+The currently recommended way to install and use a local package is:
+1. Install a local package dependency as a dev dependency to the `package.json` inside an `alpheios-core` root directory: `npm i -D ../package-name`.
+2. Run `lerna bootstrap` from the root of `alpheios-core`. This step is needed because the previous install step may remove packages previously hoisted by `lerna bootstrap` and we will need to restore them.
+3. Edit webpack configuration files (located usually in the `build` directory) of those alpheios-core packages that need to use a local version of a package being installed. Update an `alias` section and make the alias for the package being installed point to the package instance in the root directory, i.e. replace
+`'package-name': path.join(projectRoot, 'node_modules/package-name/bundle-name')` alias with `'package-name': path.join(projectRoot, '../../node_modules/package-name/bundle-name')`.
+Now the locally installed package is ready to be used.
+
+In order to revert to using a package hosted on npm or GitHub do the following:
+1. Remove the package installed at the root of an `alpheios-core`: `npm un package-name`.
+2. Run `lerna bootstrap` from the root of an `alpheios-core`.
+3. Edit webpack's configuration files of those alpheios-core packages that were changed previously to use a local version of the package. Update an `alias` section and make the alias point to the package instance in the local directory, i.e. replace
+   `'package-name': path.join(projectRoot, '../../node_modules/package-name/bundle-name')` with `'package-name': path.join(projectRoot, 'node_modules/package-name/bundle-name')`.
+
 ## Developing Code
 When you are fixing a bug or starting a new feature, create a branch off of master and do your development work in there as usual. Name the branch according to the following scheme:
 

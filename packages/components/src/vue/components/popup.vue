@@ -76,7 +76,7 @@
           {{ l10n.getText('PLACEHOLDER_NO_LANGUAGE_DATA') }}
         </div>
         <div class="alpheios-popup__definitions--placeholder"
-             v-show="$store.state.app.morphDataReady && !app.hasMorphData() && !noLanguage">
+             v-show="noLexicalResult">
           {{ l10n.getText('PLACEHOLDER_NO_MORPH_DATA') }}
         </div>
         <div :id="lexicalDataContainerID"
@@ -203,6 +203,9 @@ export default {
   computed: {
     targetWordHasData () {
       return (this.$store.state.app.shortDefUpdateTime || this.$store.state.app.morphDataReady) && this.app.hasMorphData()
+    },
+    noLexicalResult () {
+      return (this.$store.state.app.shortDefUpdateTime || this.$store.state.app.morphDataReady) && !this.app.hasMorphData() && !this.noLanguage
     },
     showToolbar: function () {
       return Boolean(this.moduleConfig.showNav)

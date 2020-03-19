@@ -3,10 +3,10 @@
 import 'whatwg-fetch'
 import IndexedDB from 'fake-indexeddb'
 import IDBKeyRange from 'fake-indexeddb/lib/FDBKeyRange'
-import { ClientAdapters } from 'alpheios-client-adapters'
 import { WordItem, Constants, TextQuoteSelector } from 'alpheios-data-models'
 
 import WordItemIndexedDbDriver from '@wordlist/storage/worditem-indexeddb-driver'
+import BaseTestHelp from '@wordlist-tests/helpclasses/base-test-help'
 
 describe('worditem-indexeddb-driver.test.js', () => {
   console.error = function () {}
@@ -385,18 +385,10 @@ describe('worditem-indexeddb-driver.test.js', () => {
 
   it('26 WordItemIndexedDbDriver - _serializeHomonym method returns jsonObj with homonym properties of WordItem', async () => {
     let dbDriverLocal = new WordItemIndexedDbDriver('fooUserId')
-
-    let adapterTuftsRes = await ClientAdapters.morphology.tufts({
-      method: 'getHomonym',
-      params: {
-        languageID: Constants.LANG_LATIN,
-        word: 'caeli'
-      }
-    })
-    let testHomonym = adapterTuftsRes.result
+    let testHomonym = await BaseTestHelp.getHomonym('venit', Constants.LANG_LATIN)
 
     let testWordItem = new WordItem({
-      targetWord: 'caeli', 
+      targetWord: 'venit', 
       languageCode: 'lat',
       important: false,
       homonym: testHomonym
@@ -407,24 +399,17 @@ describe('worditem-indexeddb-driver.test.js', () => {
     expect(res.listID).toBeDefined()
     expect(res.userID).toBeDefined()
     expect(res.languageCode).toEqual('lat')
-    expect(res.targetWord).toEqual('caeli')
+    expect(res.targetWord).toEqual('venit')
     expect(res.homonym).toBeDefined()
   })
 
   it('27 WordItemIndexedDbDriver - _serializeHomonymWithFullDefs executes _serializeHomonym', async () => {
     let dbDriverLocal = new WordItemIndexedDbDriver('fooUserId')
 
-    let adapterTuftsRes = await ClientAdapters.morphology.tufts({
-      method: 'getHomonym',
-      params: {
-        languageID: Constants.LANG_LATIN,
-        word: 'caeli'
-      }
-    })
-    let testHomonym = adapterTuftsRes.result
+    let testHomonym = await BaseTestHelp.getHomonym('venit', Constants.LANG_LATIN)
 
     let testWordItem = new WordItem({
-      targetWord: 'caeli', 
+      targetWord: 'venit', 
       languageCode: 'lat',
       important: false,
       homonym: testHomonym

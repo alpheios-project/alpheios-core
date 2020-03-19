@@ -5,7 +5,8 @@ const webpack = {
   common: {
     entry: './index.js',
     externals: {
-      'alpheios-data-models': 'alpheios-data-models'
+      'alpheios-data-models': 'alpheios-data-models',
+      'alpheios-messaging': 'alpheios-messaging'
     },
     resolve: {
       alias: {

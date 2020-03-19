@@ -5,6 +5,7 @@ import ClientAdapters from '@clAdapters/client-adapters.js'
 import AlpheiosConcordanceAdapter from '@clAdapters/adapters/concordance/adapter'
 
 import { Constants, Author, TextWork, WordUsageExample } from 'alpheios-data-models'
+import BaseTestHelp from '@tests/base-test-help.js'
 
 describe('concordance.test.js', () => {
   console.error = function () {}
@@ -22,35 +23,9 @@ describe('concordance.test.js', () => {
   testTextWork.ID = 3
 
   beforeAll(async () => {
-    let testHomonymRes1 = await ClientAdapters.morphology.tufts({
-      method: 'getHomonym',
-      params: {
-        languageID: Constants.LANG_LATIN,
-        word: testWord1
-      }
-    })
-
-    testHomonym1 = testHomonymRes1.result
-
-    let testHomonymRes2 = await ClientAdapters.morphology.tufts({
-      method: 'getHomonym',
-      params: {
-        languageID: Constants.LANG_LATIN,
-        word: testWord2
-      }
-    })
-
-    testHomonym2 = testHomonymRes2.result
-
-    let testHomonymRes3 = await ClientAdapters.morphology.tufts({
-      method: 'getHomonym',
-      params: {
-        languageID: Constants.LANG_LATIN,
-        word: testWord3
-      }
-    })
-
-    testHomonym3 = testHomonymRes3.result
+    testHomonym1 = await BaseTestHelp.getHomonym(testWord1, Constants.LANG_LATIN)
+    testHomonym2 = await BaseTestHelp.getHomonym(testWord2, Constants.LANG_LATIN)
+    testHomonym3 = await BaseTestHelp.getHomonym(testWord3, Constants.LANG_LATIN)
   })
 
   beforeEach(() => {
