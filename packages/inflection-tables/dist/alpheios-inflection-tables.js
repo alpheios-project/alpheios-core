@@ -11347,9 +11347,11 @@ class LanguageDataset {
       return inflection
     }
 
+    // irregular data must be set first because if a word is irregular
+    // it affects base inflection tests
+    this.setIrregularInflectionData(inflection)
     this.setBaseInflectionData(inflection, lemma)
     this.setPronounInflectionData(partOfSpeech, inflection)
-    this.setIrregularInflectionData(inflection)
 
     if (inflection.constraints.implemented && !inflection.constraints.paradigmBased) {
       // Set match features data
@@ -11587,13 +11589,13 @@ class LanguageDataset {
       if (options.findMatches) {
         matchData.suffixMatch = inflection.smartWordCompare(item.value, item.constructor.name, { fuzzySuffix: true })
       }
-
       // Check for obligatory matches
       const obligatoryMatches = this.constructor.getObligatoryMatches(inflection, item, _morpheme_js__WEBPACK_IMPORTED_MODULE_1__["default"].comparisonTypes.PARTIAL)
       if (obligatoryMatches.fullMatch) {
         matchData.matchedFeatures.push(...obligatoryMatches.matchedItems)
       } else {
-        // If obligatory features do not match, there is no reason to check other items
+        // If obligatory features do not match, there is no reason to do other tests on this inflection
+        // continue to the next one
         continue
       }
 

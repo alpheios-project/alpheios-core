@@ -214,7 +214,7 @@
         />
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
-            :standard-form-data="{ langID: constants.LANG_GREEK, viewID: 'greek_gender_pronoun_view', form: 'τίνε', title: 'Interrogative Pronoun Declension' }"
+            :standard-form-data="{ langID: constants.LANG_GREEK, viewID: 'greek_gender_pronoun_interr_view', form: 'τίνε', title: 'Interrogative Pronoun Declension' }"
         />
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"

@@ -14861,6 +14861,11 @@ __webpack_require__.r(__webpack_exports__);
 
 let data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["GreekLanguageModel"], 'morpheusgrc') // eslint-disable-line prefer-const
 
+// Morpheus uses 'irregular' as pofs for some pronouns, override with lemma
+// the dictionary entry's conjugation if it's available
+data.inflectionOverrides = {
+  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.part]: (i,ls) => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].TYPE_IRREGULAR && ls.filter( l => l.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].POFS_PRONOUN )
+}
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
 Format:
@@ -14882,8 +14887,7 @@ data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
   } else if (propertyName === 'comp' && propertyValue === 'positive') {
     propertyValues = []
   } else if (propertyName === 'pofs' && propertyValue === 'irregular' &&
-    ( inputElem.hdwd && inputElem.hdwd.$ === 'τίς' ) ||
-    ( inputElem.term && inputElem.term.stem && inputElem.term.stem.$ === 'τίς' )) {
+    ( inputElem.hdwd && inputElem.hdwd.$ === 'τίς' ) ) {
     propertyValues = [ alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].POFS_PRONOUN ]
   } else {
     propertyValues = [propertyValue]
@@ -14982,7 +14986,7 @@ const data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_mode
 
 // Whitaker's has weird inflection data for conjugation, we prefer
 // the dictionary entry's conjugation if it's available
-data.inflectionOverrides = [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.conjugation]
+data.inflectionOverrides = { [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.conjugation]: (i,ls) => true }
 
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
@@ -15420,7 +15424,8 @@ class ImportData {
    * @param {Lemma[]} lemmas the lemma objects
    */
   overrideInflectionFeatureIfRequired (featureType, inflection, lemmas) {
-    if (this.inflectionOverrides.includes(featureType)) {
+    if (this.inflectionOverrides[featureType] &&
+        this.inflectionOverrides[featureType](inflection,lemmas)) {
       for (const lemma of lemmas.filter(l => l.features[featureType])) {
         inflection.addFeature(lemma.features[featureType])
       }
@@ -15651,7 +15656,7 @@ class TransformAdapter {
         for (const f of this.config.featuresArrayAll) {
           try {
             mappingData.mapFeature(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
-            mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
+            mappingData.overrideInflectionFeatureIfRequired(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types[f[1]], inflection, lemmas)
           } catch (e) {
             // quietly continue
           }
@@ -15661,7 +15666,7 @@ class TransformAdapter {
         for (const f of this.config.attributeBasedFeatures) {
           try {
             mappingData.mapFeatureByAttribute(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
-            mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
+            mappingData.overrideInflectionFeatureIfRequired(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types[f[1]], inflection, lemmas)
           } catch (e) {
             // quietly continue
           }
