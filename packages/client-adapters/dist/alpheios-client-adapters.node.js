@@ -8839,7 +8839,7 @@ const CedictCharacterForms = {
 }
 
 let cedictConfig = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationConfig"]
-if (DEVELOPMENT_MODE_BUILD) { cedictConfig = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationDevConfig"] }
+if (true) { cedictConfig = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationDevConfig"] }
 
 const msgServiceName = 'AdaptersLexisService'
 
@@ -10111,7 +10111,7 @@ data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
   } else if (propertyName === 'comp' && propertyValue === 'positive') {
     propertyValues = []
   } else if (propertyName === 'pofs' && propertyValue === 'irregular' &&
-    ( inputElem.hdwd && inputElem.hdwd.$ === 'τίς' ) ) {
+    inputElem.hdwd && inputElem.hdwd.$ === 'τίς' ) {
     propertyValues = [ alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].POFS_PRONOUN ]
   } else {
     propertyValues = [propertyValue]

@@ -3,7 +3,7 @@ import GreekPronounView from './greek-pronoun-view.js'
 import GreekGenderPronounView from './greek-gender-pronoun-view.js'
 
 /**
- * Used for several classes of pronouns, see `classes` method for a full list.
+ * Used for greek interrogative pronoun
  * Produces a table grouped into columns by gender.
  */
 export default class GreekGenderPronounInterrogativeView extends GreekGenderPronounView {
@@ -29,15 +29,4 @@ export default class GreekGenderPronounInterrogativeView extends GreekGenderPron
       Constants.CLASS_INTERROGATIVE
     ]
   }
-
-  //  static matchFilter (languageID, inflections) {
-  //    return Boolean(
-  //      this.languageID === languageID && inflections.some(i => this.enabledForInflection(i))
-  //   )
-  // }
-
-//  static enabledForInflection (inflection) {
-  // default returns true
-  //   return inflection.lemma.word === 'τίς'
-//  }
 }

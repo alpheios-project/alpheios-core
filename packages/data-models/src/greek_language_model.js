@@ -271,6 +271,9 @@ for the current node
     const matchingForms = forms.filter(
       form => {
         let match = false
+        // the following test intential looks for an exact equality on the headword rather than
+        // using compareWord because exact match on diacritics matters -- the interrogative and indefinite
+        // pronouns only differ by diacritics
         if (form.value && (!form.features[Feature.types.hdwd] || (form.features[Feature.types.hdwd].value === hdwd))) {
           match = GreekLanguageModel.compareWords(form.value, word, normalize)
         }

@@ -29,7 +29,7 @@ data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
   } else if (propertyName === 'comp' && propertyValue === 'positive') {
     propertyValues = []
   } else if (propertyName === 'pofs' && propertyValue === 'irregular' &&
-    ( inputElem.hdwd && inputElem.hdwd.$ === 'τίς' ) ) {
+    inputElem.hdwd && inputElem.hdwd.$ === 'τίς' ) {
     propertyValues = [ Models.Constants.POFS_PRONOUN ]
   } else {
     propertyValues = [propertyValue]

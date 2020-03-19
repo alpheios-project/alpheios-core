@@ -15349,7 +15349,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
- * Used for several classes of pronouns, see `classes` method for a full list.
+ * Used for greek interrogative pronoun
  * Produces a table grouped into columns by gender.
  */
 class GreekGenderPronounInterrogativeView extends _greek_gender_pronoun_view_js__WEBPACK_IMPORTED_MODULE_2__["default"] {
@@ -15375,17 +15375,6 @@ class GreekGenderPronounInterrogativeView extends _greek_gender_pronoun_view_js_
       alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].CLASS_INTERROGATIVE
     ]
   }
-
-  //  static matchFilter (languageID, inflections) {
-  //    return Boolean(
-  //      this.languageID === languageID && inflections.some(i => this.enabledForInflection(i))
-  //   )
-  // }
-
-//  static enabledForInflection (inflection) {
-  // default returns true
-  //   return inflection.lemma.word === 'τίς'
-//  }
 }
 
 
