@@ -7,18 +7,18 @@ import { Constants, Feature, LanguageModelFactory } from 'alpheios-data-models'
 import BaseTestHelp from '@tests/data/base-test-help.js'
 
 describe('greek-views.test.js', () => {
-  //console.error = function () {}
-  //console.log = function () {}
-  //console.warn = function () {}
+  console.error = function () {}
+  console.log = function () {}
+  console.warn = function () {}
 
   const locale = "en-US"
   beforeAll(async () => {
   })
 
   beforeEach(() => {
-   // jest.spyOn(console, 'error')
-    //jest.spyOn(console, 'log')
-    //jest.spyOn(console, 'warn')
+    jest.spyOn(console, 'error')
+    jest.spyOn(console, 'log')
+    jest.spyOn(console, 'warn')
   })
   afterEach(() => {
     jest.resetModules()

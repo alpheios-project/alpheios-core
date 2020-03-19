@@ -11267,9 +11267,7 @@ class LanguageDataset {
     return { fullMatch: result, matchedItems: matches }
   }
 
-  setBaseInflectionData (inflection, lemma) {
-    inflection.lemma = lemma
-    inflection.addFeature(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.word, lemma.word, lemma.languageID))
+  setBaseInflectionData (inflection) {
     inflection.constraints = Object.assign(inflection.constraints, this.model.getInflectionConstraints(inflection))
     if (inflection.constraints.paradigmBased && inflection.constraints.suffixBased) {
       inflection.constraints.suffixBased = false
@@ -11347,10 +11345,12 @@ class LanguageDataset {
       return inflection
     }
 
+    inflection.lemma = lemma
+    inflection.addFeature(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.word, lemma.word, lemma.languageID))
     // irregular data must be set first because if a word is irregular
     // it affects base inflection tests
     this.setIrregularInflectionData(inflection)
-    this.setBaseInflectionData(inflection, lemma)
+    this.setBaseInflectionData(inflection)
     this.setPronounInflectionData(partOfSpeech, inflection)
 
     if (inflection.constraints.implemented && !inflection.constraints.paradigmBased) {
