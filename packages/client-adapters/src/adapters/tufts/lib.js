@@ -257,7 +257,8 @@ class ImportData {
    * @param {Lemma[]} lemmas the lemma objects
    */
   overrideInflectionFeatureIfRequired (featureType, inflection, lemmas) {
-    if (this.inflectionOverrides.includes(featureType)) {
+    if (this.inflectionOverrides[featureType] &&
+        this.inflectionOverrides[featureType](inflection,lemmas)) {
       for (const lemma of lemmas.filter(l => l.features[featureType])) {
         inflection.addFeature(lemma.features[featureType])
       }

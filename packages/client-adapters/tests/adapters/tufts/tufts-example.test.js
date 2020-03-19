@@ -489,4 +489,23 @@ describe('tufts-example.test.js', () => {
     expect(homonym.lexemes[1].inflections[1]['part of speech'].value).toEqual("pronoun")
   })
 
+  it('25 TuftsExample - correct results for greek τίνος', async () => {
+    let word = 'τίνος'
+    let res = Fixture.getFixtureRes({
+      langCode: 'grc', adapter: 'tufts', word: word
+    })
+    let adapter = new AlpheiosTuftsAdapter({
+      category: 'morphology',
+      adapterName: 'tufts',
+      method: 'getHomonym',
+      sourceData: res
+    })
+    let homonym = await adapter.getHomonym(Constants.LANG_GREEK,word)
+    expect(homonym.lexemes.length).toEqual(2)
+    expect(homonym.lexemes[0].lemma.features['part of speech'].value).toEqual('pronoun')
+    expect(homonym.lexemes[1].lemma.features['part of speech'].value).toEqual('pronoun')
+    expect(homonym.lexemes[0].inflections[0]['part of speech'].value).toEqual("pronoun")
+    expect(homonym.lexemes[1].inflections[0]['part of speech'].value).toEqual("pronoun")
+  })
+
 })

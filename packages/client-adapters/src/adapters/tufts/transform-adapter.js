@@ -206,7 +206,7 @@ class TransformAdapter {
         for (const f of this.config.featuresArrayAll) {
           try {
             mappingData.mapFeature(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
-            mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
+            mappingData.overrideInflectionFeatureIfRequired(Feature.types[f[1]], inflection, lemmas)
           } catch (e) {
             // quietly continue
           }
@@ -216,7 +216,7 @@ class TransformAdapter {
         for (const f of this.config.attributeBasedFeatures) {
           try {
             mappingData.mapFeatureByAttribute(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
-            mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
+            mappingData.overrideInflectionFeatureIfRequired(Feature.types[f[1]], inflection, lemmas)
           } catch (e) {
             // quietly continue
           }
