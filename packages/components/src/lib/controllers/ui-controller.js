@@ -1226,6 +1226,8 @@ if you want to create a different configuration of a UI controller.
     if (['treebank', 'inflections', 'inflectionsbrowser', 'wordUsage'].includes(tabName) && this.platform.isMobile && isPortrait) {
       const message = this.api.l10n.getMsg('HINT_LANDSCAPE_MODE')
       this.store.commit('ui/setHint', message, tabName)
+    } else if (this.platform.isDesktop && this.platform.isGoogleDocs) {
+      this.store.commit('ui/setHint', this.api.l10n.getMsg('TEXT_HINT_MOUSE_MOVE'))
     } else {
       this.store.commit('ui/resetHint')
     }
@@ -2060,7 +2062,7 @@ NB this is Prototype functionality
   }
 
   enableMouseMoveEvent () {
-    return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride)
+    return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || this.platform.isGoogleDocs)
   }
 }
 

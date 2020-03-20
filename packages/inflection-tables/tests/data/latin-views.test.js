@@ -35,7 +35,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(1)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinNounView',
@@ -52,7 +52,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(1)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinAdjectiveView',
@@ -69,7 +69,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(1)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbParticipleView',
@@ -86,7 +86,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(6)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVoiceConjugationMoodView',
@@ -197,7 +197,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews[0])
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(9)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinNounView',
@@ -270,7 +270,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(2)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinNounView',
@@ -294,7 +294,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(1)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbParticipleView',
@@ -311,7 +311,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularView',
@@ -445,7 +445,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularView',
@@ -568,7 +568,7 @@ describe('latin-views.test.js', () => {
       title: 'Verb Conjugation',
       linkedViewsLength: 0
     })
-    
+
   })
 
   it('13 - checked Latin Views - nolo - Latin Verb Conjugation Irregular', async () => {
@@ -579,7 +579,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularView',
@@ -642,7 +642,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularView',
@@ -705,7 +705,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularVoiceView',
@@ -717,7 +717,7 @@ describe('latin-views.test.js', () => {
         { viewName: 'LatinVerbSupineIrregularView', title: 'Verb Supine Conjugation (Irregular)' }
       ]
     })
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVoiceConjugationMoodView',
@@ -769,7 +769,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularVoiceView',
@@ -833,7 +833,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularView',
@@ -897,7 +897,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularVoiceView',
@@ -961,7 +961,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularVoiceView',
@@ -1025,7 +1025,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularView',
@@ -1089,7 +1089,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularVoiceView',
@@ -1153,7 +1153,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularView',
@@ -1216,7 +1216,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularView',
@@ -1279,7 +1279,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularView',
@@ -1342,7 +1342,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularView',
@@ -1405,7 +1405,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularView',
@@ -1468,7 +1468,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularView',
@@ -1531,7 +1531,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularView',
@@ -1594,7 +1594,7 @@ describe('latin-views.test.js', () => {
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews)
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(7)
-    
+
     BaseTestHelp.checkView({
       inflectionsViewSet,
       viewName: 'LatinVerbIrregularView',

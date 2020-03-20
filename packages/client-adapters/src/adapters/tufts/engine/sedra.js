@@ -11,7 +11,7 @@ data.setMeaningParser(function (meaning, targetWord) {
   return new Models.Definition(meaningText, lang, 'text/plain', targetWord)
 })
 
-data.setPropertyParser(function (propertyName, propertyValue) {
+data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
   let propertyValues = []
   if (propertyName === 'paradigm') {
     // state has some extra "" around values

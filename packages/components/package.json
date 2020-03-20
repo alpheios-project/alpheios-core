@@ -103,6 +103,9 @@
   },
   "jest": {
     "verbose": true,
+    "globals": {
+      "DEVELOPMENT_MODE_BUILD": true
+    },
     "testPathIgnorePatterns": [
       "<rootDir>/node_modules/"
     ],

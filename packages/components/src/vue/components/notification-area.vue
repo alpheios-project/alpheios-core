@@ -42,6 +42,32 @@
       </div>
     </div>
     <div
+        class="alpheios-notification-area__notification alpheios-notification-area__notification--important"
+        :class="cedictNotificationClasses"
+        v-show="cedictNotificationIsVisible"
+    >
+      <div
+          class="alpheios-notification-area__msg"
+      >
+        {{ cedictNotificationMessage }}
+      </div>
+      <div class="alpheios-notification-area__controlbox ">
+        <button
+            @click="loadCedictData"
+            class="alpheios-button-primary"
+            v-show="showCedictLoadDataBtn"
+        >
+          {{ l10n.getMsg('LABEL_CEDICT_LOAD_DATA_BTN') }}
+        </button>
+      </div>
+      <div
+          class="alpheios-notification-area__close-btn"
+          @click="hideCedictNotification"
+      >
+        <close-icon/>
+      </div>
+    </div>
+    <div
         class="alpheios-notification-area__notification alpheios-notification-area__notification--important alpheios-notification-area__login-notification"
         v-show="showLoginNotification"
     >
@@ -90,8 +116,8 @@ import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
 export default {
   name: 'NotificationArea',
-  inject: ['app', 'l10n', 'settings','ui'],
-  storeModules: ['ui', 'auth'],
+  inject: ['app', 'l10n', 'settings', 'ui', 'lexis'],
+  storeModules: ['ui', 'auth', 'lexis'],
   mixins: [DependencyCheck],
   components: {
     closeIcon: CloseIcon,
@@ -100,26 +126,27 @@ export default {
   },
   data () {
     return {
-      hintWasShownForTabs: []
+      hintWasShownForTabs: [],
+      showCedictLoadDataBtn: true
     }
   },
 
   computed: {
     notificationClasses: function () {
-      let classes = []
+      let classes = [] // eslint-disable-line prefer-const
       if (this.$store.state.ui.notification.important) {
         classes.push('alpheios-notification-area__notification--important')
       }
       if (!this.showNotification) {
         // The presence of this class will let the login notification set the top margin
-        classes.push(`alpheios-notification-area__notification--hidden`)
+        classes.push('alpheios-notification-area__notification--hidden')
       }
       return classes
     },
 
     showHint () {
-      let showHintForTab = !this.hintWasShownForTabs.includes(this.$store.state.ui.activeTab)
-      let willBeShown = this.$store.state.ui.hint.visible && showHintForTab
+      const showHintForTab = !this.hintWasShownForTabs.includes(this.$store.state.ui.activeTab)
+      const willBeShown = this.$store.state.ui.hint.visible && showHintForTab
 
       if (willBeShown) {
         this.hintWasShownForTabs.push(this.$store.state.ui.activeTab)
@@ -135,22 +162,54 @@ export default {
       return Boolean(
         this.$store.state.auth.notification.visible
       )
+    },
+
+    cedictNotificationIsVisible () {
+      return this.$store.state.lexis.cedictDisplayNotification
+    },
+
+    cedictNotificationMessage () {
+      if (!this.$store.state.lexis.cedictDataLoaded && !this.$store.state.lexis.cedictLoadingInProgress) {
+        return this.l10n.getMsg('TEXT_CEDICT_LOAD_DATA_NOTICE')
+      } else if (!this.$store.state.lexis.cedictDataLoaded && this.$store.state.lexis.cedictLoadingInProgress) {
+        return this.l10n.getMsg('TEXT_CEDICT_LOADING_IN_PROGRESS')
+      } else if (this.$store.state.lexis.cedictDataLoaded) {
+        return this.l10n.getMsg('TEXT_CEDICT_HAS_BEEN_LOADED')
+      }
+      return ''
+    },
+
+    cedictNotificationClasses: function () {
+      let classes = [] // eslint-disable-line prefer-const
+      if (this.$store.state.lexis.cedictDataLoaded) {
+        classes.push('alpheios-notification-area__notification--cedict-loaded')
+      }
+      return classes
     }
   },
 
   methods: {
     featureOptionChanged: function (name, value) {
-      let keyinfo = Options.parseKey(name)
+      const keyinfo = Options.parseKey(name)
       this.app.featureOptionChange(keyinfo.name, value)
     },
 
     hideLoginPrompt: function () {
-      this.ui.optionChange('hideLoginPrompt',true)
+      this.ui.optionChange('hideLoginPrompt', true)
     },
 
     showUserAccount: function () {
       this.ui.showPanelTab('user')
     },
+
+    loadCedictData: function () {
+      this.showCedictLoadDataBtn = false
+      this.lexis.loadCedictData()
+    },
+
+    hideCedictNotification: function () {
+      this.lexis.hideCedictNotification()
+    }
   }
 }
 </script>
@@ -228,6 +287,17 @@ export default {
           stroke: var(--alpheios-important-notification-color);
         }
       }
+
+      &.alpheios-notification-area__notification--cedict-loaded {
+        color: var(--alpheios-notification-important-alt-color);
+        background: var(--alpheios-notification-important-alt-bg);
+        border: 1px solid var(--alpheios-notification-important-alt-border-color);
+      }
+
+      &.alpheios-notification-area__notification--cedict-loaded .alpheios-notification-area__close-btn {
+        fill: var(--alpheios-notification-important-alt-color);
+        stroke: var(--alpheios-notification-important-alt-color);
+      }
     }
 
     &__msg {
@@ -241,6 +311,7 @@ export default {
         width: 140px;
       }
     }
+
     &__controlbox {
       flex-flow: wrap;
     }

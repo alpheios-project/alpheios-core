@@ -21,7 +21,7 @@ export default class BaseTestHelp {
       },
       sourceData: sourceJson
     })
-    
+
     if (adapterTuftsRes.errors.length > 0) {
       console.error(adapterTuftsRes.errors)
     }
@@ -29,7 +29,7 @@ export default class BaseTestHelp {
   }
   static async getInflectionSet(targetWord, languageID) {
     const locale = "en-US"
-      
+
     const testHomonym = await BaseTestHelp.getHomonym(targetWord, languageID)
     const inflectionsViewSet = ViewSetFactory.create(testHomonym, locale)
     return inflectionsViewSet
@@ -59,7 +59,7 @@ export default class BaseTestHelp {
   static checkView(data) {
     const result = data.inflectionsViewSet.matchingViews.filter(view => view.constructor.name === data.viewName)
     expect(result.length).toBeGreaterThanOrEqual(1)
-    
+
     if (data.title) {
       expect(result[0].title).toEqual(data.title)
     }

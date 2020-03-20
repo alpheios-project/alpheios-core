@@ -25,7 +25,7 @@
     padding: textsize(8px) textsize(40px) 0 textsize(8px);
   }
 
-  .multiselect__tag {
+  span.multiselect__tag {
     background-color: var(--alpheios-settings-font-multiselect-bg);
 
     display: inline-block;
@@ -66,7 +66,7 @@
     display: none;
   }
 
-  .multiselect__option {
+  span.multiselect__option {
     padding: 12px;
   }
 

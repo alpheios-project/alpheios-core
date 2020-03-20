@@ -80,17 +80,19 @@ export default {
       width: uisize(120px);
       background-color: var(--alpheios-text-bg-color);
       color: var(--alpheios-text-color);
-      text-align: center;
-      padding: uisize(6px) 0;
       border: 1px solid var(--alpheios-border-color);
       border-radius: uisize(10px);
       z-index: 1;
       opacity: 0;
       transition: opacity .6s;
-
-      font-size: textsize(12px);
       display: none;
     }
+  }
+
+  .alph_tooltip span.tooltiptext {
+    padding: uisize(6px) 0;
+    font-size: textsize(12px);
+    text-align: center;
   }
 
   .alph_tooltip:hover .tooltiptext {

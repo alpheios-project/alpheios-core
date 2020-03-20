@@ -106,7 +106,7 @@ export default {
 </script>
 <style lang="scss">
   @import "../../styles/variables";
-  span.alpheios-morph__attr {
+  #{$alpheios-namespace} span.alpheios-morph__attr {
     font-weight: normal;
     padding-right: .25em;
   }

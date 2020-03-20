@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("alpheios-data-models"));
+		module.exports = factory(require("alpheios-data-models"), require("alpheios-messaging"));
 	else if(typeof define === 'function' && define.amd)
-		define(["alpheios-data-models"], factory);
+		define(["alpheios-data-models", "alpheios-messaging"], factory);
 	else {
-		var a = typeof exports === 'object' ? factory(require("alpheios-data-models")) : factory(root["alpheios-data-models"]);
+		var a = typeof exports === 'object' ? factory(require("alpheios-data-models"), require("alpheios-messaging")) : factory(root["alpheios-data-models"], root["alpheios-messaging"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(window, function(__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__) {
+})(window, function(__WEBPACK_EXTERNAL_MODULE_alpheios_data_models__, __WEBPACK_EXTERNAL_MODULE_alpheios_messaging__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -95,17 +95,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ })
 /************************************************************************/
 /******/ ({
-
-/***/ "../../../node_modules/alpheios-messaging/dist/prod/alpheios-messaging.min.js":
-/*!****************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/alpheios-messaging/dist/prod/alpheios-messaging.min.js ***!
-  \****************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-!function webpackUniversalModuleDefinition(e,s){if(true)module.exports=s();else { var r, t; }}(window,(function(){return function(e){var s={};function __webpack_require__(t){if(s[t])return s[t].exports;var r=s[t]={i:t,l:!1,exports:{}};return e[t].call(r.exports,r,r.exports,__webpack_require__),r.l=!0,r.exports}return __webpack_require__.m=e,__webpack_require__.c=s,__webpack_require__.d=function(e,s,t){__webpack_require__.o(e,s)||Object.defineProperty(e,s,{enumerable:!0,get:t})},__webpack_require__.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},__webpack_require__.t=function(e,s){if(1&s&&(e=__webpack_require__(e)),8&s)return e;if(4&s&&"object"==typeof e&&e&&e.__esModule)return e;var t=Object.create(null);if(__webpack_require__.r(t),Object.defineProperty(t,"default",{enumerable:!0,value:e}),2&s&&"string"!=typeof e)for(var r in e)__webpack_require__.d(t,r,function(s){return e[s]}.bind(null,r));return t},__webpack_require__.n=function(e){var s=e&&e.__esModule?function getDefault(){return e.default}:function getModuleExports(){return e};return __webpack_require__.d(s,"a",s),s},__webpack_require__.o=function(e,s){return Object.prototype.hasOwnProperty.call(e,s)},__webpack_require__.p="",__webpack_require__(__webpack_require__.s=3)}([function(e,s,t){var r=t(1),n=t(2);e.exports=function v4(e,s,t){var i=s&&t||0;"string"==typeof e&&(s="binary"===e?new Array(16):null,e=null);var o=(e=e||{}).random||(e.rng||r)();if(o[6]=15&o[6]|64,o[8]=63&o[8]|128,s)for(var a=0;a<16;++a)s[i+a]=o[a];return s||n(o)}},function(e,s){var t="undefined"!=typeof crypto&&crypto.getRandomValues&&crypto.getRandomValues.bind(crypto)||"undefined"!=typeof msCrypto&&"function"==typeof window.msCrypto.getRandomValues&&msCrypto.getRandomValues.bind(msCrypto);if(t){var r=new Uint8Array(16);e.exports=function whatwgRNG(){return t(r),r}}else{var n=new Array(16);e.exports=function mathRNG(){for(var e,s=0;s<16;s++)0==(3&s)&&(e=4294967296*Math.random()),n[s]=e>>>((3&s)<<3)&255;return n}}},function(e,s){for(var t=[],r=0;r<256;++r)t[r]=(r+256).toString(16).substr(1);e.exports=function bytesToUuid(e,s){var r=s||0,n=t;return[n[e[r++]],n[e[r++]],n[e[r++]],n[e[r++]],"-",n[e[r++]],n[e[r++]],"-",n[e[r++]],n[e[r++]],"-",n[e[r++]],n[e[r++]],"-",n[e[r++]],n[e[r++]],n[e[r++]],n[e[r++]],n[e[r++]],n[e[r++]]].join("")}},function(e,s,t){"use strict";t.r(s);var r=t(0),n=t.n(r);class message_Message{constructor(e={}){this.role=void 0,this.type=message_Message.types.GENERIC,this.ID=n()(),this.body=e}}message_Message.roles={REQUEST:"Request",RESPONSE:"Response"},message_Message.types={GENERIC:"Generic"};class request_message_RequestMessage extends message_Message{constructor(e={}){super(e),this.role=message_Message.roles.REQUEST,this.header={}}}class response_message_ResponseMessage extends message_Message{constructor(e,s={},t=response_message_ResponseMessage.responseCodes.UNDEFINED){if(super(s),!e)throw new Error("Request is not provided");if(!e.ID)throw new Error("Request has no ID");this.role=message_Message.roles.RESPONSE,this.requestHeader=e.header||{},this.requestID=e.ID,this.responseCode=t}static Success(e,s={}){return new this(e,s,response_message_ResponseMessage.responseCodes.SUCCESS)}static Error(e,s){return new this(e,s,response_message_ResponseMessage.responseCodes.ERROR)}static isResponse(e){return e.role&&e.role===message_Message.roles.RESPONSE&&e.requestHeader&&e.requestID}}response_message_ResponseMessage.responseCodes={SUCCESS:"Success",UNDEFINED:"Undefined",ERROR:"Error"};class StoredRequest{constructor(){this.resolve=null,this.reject=null,this.promise=new Promise(this.executor.bind(this))}executor(e,s){this.resolve=e,this.reject=s}}let i=new Map;class messaging_service_MessagingService{constructor(e,s=[]){if(!e)throw new Error(messaging_service_MessagingService.errMsgs.NO_NAME);this.name=e,this._messages=new Map,this._destinations=new Map,Array.isArray(s)||(s=[s]),s.forEach(e=>this.registerDestination(e))}static hasService(e){return i.has(e)}static getService(e){return i.get(e)}static createService(e,s=[]){const t=new messaging_service_MessagingService(e,s);return i.set(e,t),t}static deleteService(e){return i.delete(e)}registerDestination(e){if(this._destinations.has(e.name))throw new Error("Destination already exists");this._destinations.set(e.name,e),e.registerResponseCallback(this.dispatchMessage.bind(this))}updateDestination(e){if(!this._destinations.has(e.name))throw new Error("Cannot update a destination that does not exist");this._destinations.set(e.name,e),e.registerResponseCallback(this.dispatchMessage.bind(this))}dispatchMessage(e){if(!response_message_ResponseMessage.isResponse(e))return void console.error("A message not following a response format will be ignored:",e);if(!this._messages.has(e.requestID))return;const s=this._messages.get(e.requestID);window.clearTimeout(s.timeoutID),e.responseCode===response_message_ResponseMessage.responseCodes.ERROR?s.reject(e.body):s.resolve(e),this._messages.delete(e.requestID)}registerRequest(e,s=1e4){if(this._messages.has(e.ID))throw new Error(`Request with ${e.ID} ID is already registered`);let t=new StoredRequest(e);return this._messages.set(e.ID,t),t.timeoutID=window.setTimeout(s=>{t.reject(new Error(`Timeout has been expired for a message with request ID ${e.ID}`)),this._messages.delete(s)},s),t.promise}sendRequestTo(e,s,t=1e4){if(!e)throw new Error("Destination name is not provided");if(!this._destinations.has(e))throw new Error(`Unknown destination ${e}`);const r=this.registerRequest(s,t);return this._destinations.get(e).sendRequest(s),r}registerReceiverCallback(e,s){if(!e)throw new Error("No destination name provided");if(!this._destinations.has(e))throw new Error(`Unknown destination ${e}`);this._destinations.get(e).registerReceiverCallback(s)}}messaging_service_MessagingService.errMsgs={NO_NAME:"MessagingService must be created with a name"};class window_iframe_destination_WindowIframeDestination extends class Destination{constructor({name:e}={}){if(!e)throw new Error("Destination name is missing");this.name=e,this._responseCallback=null}registerResponseCallback(e){this._responseCallback=e}}{constructor({name:e,targetURL:s,targetIframeID:t}={}){if(super({name:e}),!s)throw new Error("Target URL is not provided");if(!t)throw new Error("Target iframe ID is not provided");this._targetURL=s,this._targetIframeID=t,window.addEventListener("message",this._responseHandler.bind(this),!1)}registerReceiverCallback(e){window.addEventListener("message",this._requestHandler.bind(this,e),!1)}sendRequest(e){const s=document.querySelector(`#${this._targetIframeID}`);if(!s)throw new Error(`An #${this._targetIframeID} iframe does not exist in the document`);s.contentWindow.postMessage(e,this._targetURL)}sendResponse(e){window.parent.postMessage(e,e.requestHeader.origin)}_requestHandler(e,s){let t=s.data;t.header.origin=s.origin,e(t,this.sendResponse.bind(this))}_responseHandler(e){if(e.origin!==this._targetURL)return;const s=e.data;this._responseCallback&&this._responseCallback(s)}}const o={name:"cedict",targetURL:"https://lexis-dev.alpheios.net",targetIframeID:"alpheios-lexis-cs"};t.d(s,"MessagingService",(function(){return messaging_service_MessagingService})),t.d(s,"WindowIframeDestination",(function(){return window_iframe_destination_WindowIframeDestination})),t.d(s,"RequestMessage",(function(){return request_message_RequestMessage})),t.d(s,"ResponseMessage",(function(){return response_message_ResponseMessage})),t.d(s,"CedictDestinationConfig",(function(){return o}))}])}));
-
-/***/ }),
 
 /***/ "../../../node_modules/axios/index.js":
 /*!************************************************************************!*\
@@ -13242,7 +13231,7 @@ else if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () { return xmlToJSON
 /*! exports provided: morphology, lexicon, lemmatranslation, wordusageExamples, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}}}");
+module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\",\"loadData\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"],\"loadData\":[\"timeout\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\",\"checkCachedData\",\"getConfig\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"],\"checkCachedData\":[\"url\",\"externalData\"],\"getConfig\":[]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}}}");
 
 /***/ }),
 
@@ -13409,12 +13398,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../../../node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/adapter-error */ "./errors/adapter-error.js");
-/* harmony import */ var _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/l10n/l10n */ "./l10n/l10n.js");
-/* harmony import */ var _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/locales/locales.js */ "./locales/locales.js");
-/* harmony import */ var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json");
-var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
-/* harmony import */ var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
-var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
+/* harmony import */ var _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @clAdapters/l10n/l10n */ "./l10n/l10n.js");
+/* harmony import */ var _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @clAdapters/locales/locales.js */ "./locales/locales.js");
+/* harmony import */ var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json");
+var _clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-us/messages.json */ "./locales/en-us/messages.json", 1);
+/* harmony import */ var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json");
+var _clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/locales/en-gb/messages.json */ "./locales/en-gb/messages.json", 1);
+
 
 
 
@@ -13429,10 +13420,10 @@ class BaseAdapter {
   */
   constructor () {
     this.errors = []
-    this.l10n = new _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_2__["default"]()
-      .addMessages(_clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_4__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_US)
-      .addMessages(_clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_5__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_GB)
-      .setLocale(_clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_3__["default"].en_US)
+    this.l10n = new _clAdapters_l10n_l10n__WEBPACK_IMPORTED_MODULE_3__["default"]()
+      .addMessages(_clAdapters_locales_en_us_messages_json__WEBPACK_IMPORTED_MODULE_5__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_4__["default"].en_US)
+      .addMessages(_clAdapters_locales_en_gb_messages_json__WEBPACK_IMPORTED_MODULE_6__, _clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_4__["default"].en_GB)
+      .setLocale(_clAdapters_locales_locales_js__WEBPACK_IMPORTED_MODULE_4__["default"].en_US)
   }
 
   /**
@@ -13441,6 +13432,11 @@ class BaseAdapter {
   */
   addError (message) {
     const error = new _clAdapters_errors_adapter_error__WEBPACK_IMPORTED_MODULE_1__["default"](this.config.category, this.config.adapterName, this.config.method, message)
+    this.errors.push(error)
+  }
+
+  addCedictError (errorCode, message) {
+    const error = new _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_2__["default"](this.config.category, this.config.adapterName, this.config.method, errorCode, message)
     this.errors.push(error)
   }
 
@@ -13637,8 +13633,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-messaging */ "../../../node_modules/alpheios-messaging/dist/prod/alpheios-messaging.min.js");
+/* harmony import */ var alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-messaging */ "alpheios-messaging");
 /* harmony import */ var alpheios_messaging__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__);
+/* global DEVELOPMENT_MODE_BUILD */
 /* eslint-disable no-unused-vars */
 
 
@@ -13648,6 +13645,9 @@ const CedictCharacterForms = {
   SIMPLIFIED: 'simplified',
   TRADITIONAL: 'traditional'
 }
+
+let cedictConfig = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationConfig"]
+if (true) { cedictConfig = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationDevConfig"] }
 
 const msgServiceName = 'AdaptersLexisService'
 
@@ -13662,22 +13662,12 @@ class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPA
     instance of the service that will be created once and reused across consecutive constructor invocations.
      */
     if (!alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].hasService(msgServiceName)) {
-      alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].createService(msgServiceName, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["WindowIframeDestination"](alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationConfig"]))
+      alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].createService(msgServiceName, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["WindowIframeDestination"](cedictConfig))
     }
     this._messagingService = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].getService(msgServiceName)
   }
 
   get languageID () { return alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["ChineseLanguageModel"].languageID }
-
-  async _fetchCedictData (targetWord, contextForward) {
-    const requestBody = {
-      getWords: {
-        words: this.constructor._buildWordList(targetWord, contextForward)
-      }
-    }
-    const responseMessage = await this._messagingService.sendRequestTo(alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationConfig"].name, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["RequestMessage"](requestBody))
-    return responseMessage.body
-  }
 
   /**
    * Creates a list of words that will be requested from a CEDICT service.
@@ -13702,17 +13692,45 @@ class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPA
 
   async getHomonym (targetWord, contextForward) {
     try {
-      const cedictRes = await this._fetchCedictData(targetWord, contextForward)
-      if (Object.keys(cedictRes).length === 0) {
+      const requestBody = {
+        getWords: {
+          words: this.constructor._buildWordList(targetWord, contextForward)
+        }
+      }
+      let response
+      try {
+        response = await this._messagingService.sendRequestTo(cedictConfig.name, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["RequestMessage"](requestBody))
+      } catch (response) {
+        this.addCedictError(response.errorCode, response.body.message)
+        return
+      }
+
+      if (Object.keys(response.body).length === 0) {
         this.addError(this.l10n.messages.MORPH_NO_HOMONYM.get(targetWord, this.languageID.toString()))
         return
       }
-      const homonym = this._transformData(cedictRes, targetWord)
+      const homonym = this._transformData(response.body, targetWord)
       if (!homonym) {
         this.addError(this.l10n.messages.MORPH_NO_HOMONYM.get(targetWord, this.languageID.toString()))
         return
       }
       return homonym
+    } catch (error) {
+      this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
+    }
+  }
+
+  async loadData (timeout) {
+    try {
+      const requestBody = {
+        loadData: {}
+      }
+      let response
+      try {
+        response = await this._messagingService.sendRequestTo(cedictConfig.name, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["RequestMessage"](requestBody), timeout)
+      } catch (response) {
+        this.addCedictError(response.errorCode, response.body.message)
+      }
     } catch (error) {
       this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))
     }
@@ -14292,15 +14310,25 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   /**
   * This method checks if data from url is already cached and if not - it uploads data from url to cache
   * @param {String} url - url from what we need to cache data
+  * @param {Null|Map|String} externalData - data that would be used as fixture for the url
+  * @param {Boolean} skipFetch - when this check is true, then fetch would not be execute in any case, it is used for Full Definitions
   * @return {Boolean} - true - if cached is successed
   */
-  async checkCachedData (url) {
+  async checkCachedData (url, externalData = null, skipFetch = false) {
+    if (!externalData && skipFetch) {
+      return false
+    }
     if (!cachedDefinitions.has(url) && !uploadStarted.has(url)) {
       try {
         uploadStarted.set(url, true)
-        const unparsed = await this.fetch(url, { type: 'xml', timeout: this.options.timeout })
-        const parsed = papaparse__WEBPACK_IMPORTED_MODULE_1___default.a.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
-        const data = this.fillMap(parsed.data)
+
+        let data = externalData
+        if (!externalData) {
+          const unparsed = await this.fetch(url, { type: 'xml', timeout: this.options.timeout })
+          const parsed = papaparse__WEBPACK_IMPORTED_MODULE_1___default.a.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
+          data = this.fillMap(parsed.data)
+        }
+
         cachedDefinitions.set(url, data)
         uploadStarted.set(url, false)
       } catch (error) {
@@ -14328,7 +14356,6 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
 
     for (let lexeme of homonym.lexemes) { // eslint-disable-line prefer-const
       const deftexts = this.lookupInDataIndex(data, lexeme.lemma, model)
-
       if (deftexts) {
         for (const d of deftexts) {
           const text = d.field1
@@ -14397,7 +14424,12 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   */
   async updateFullDefs (fullDefsRequests, config, homonym) {
     for (let request of fullDefsRequests) { // eslint-disable-line prefer-const
-      const fullDefDataRes = this.fetch(request.url, { type: 'xml' })
+      let fullDefDataRes
+      if (cachedDefinitions.has(request.url)) {
+        fullDefDataRes = new Promise((resolve, reject) => resolve(cachedDefinitions.get(request.url)))
+      } else {
+        fullDefDataRes = this.fetch(request.url, { type: 'xml' })
+      }
 
       fullDefDataRes.then(
         async (fullDefData) => {
@@ -14861,6 +14893,11 @@ __webpack_require__.r(__webpack_exports__);
 
 let data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["GreekLanguageModel"], 'morpheusgrc') // eslint-disable-line prefer-const
 
+// Morpheus uses 'irregular' as pofs for some pronouns, override with lemma
+// the dictionary entry's conjugation if it's available
+data.inflectionOverrides = {
+  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.part]: (i,ls) => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].TYPE_IRREGULAR && ls.filter( l => l.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].POFS_PRONOUN )
+}
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
 Format:
@@ -14874,6 +14911,21 @@ data.addFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].typ
 
 data.addFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.declension).importer
   .map('1st & 2nd', [[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].ORD_1ST, 1], [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].ORD_2ND, 2]])
+
+data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
+  let propertyValues = []
+  if (propertyName === 'decl') {
+    propertyValues = propertyValue.split('&').map((p) => p.trim())
+  } else if (propertyName === 'comp' && propertyValue === 'positive') {
+    propertyValues = []
+  } else if (propertyName === 'pofs' && propertyValue === 'irregular' &&
+    inputElem.hdwd && inputElem.hdwd.$ === 'τίς' ) {
+    propertyValues = [ alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].POFS_PRONOUN ]
+  } else {
+    propertyValues = [propertyValue]
+  }
+  return propertyValues
+})
 
 /* harmony default export */ __webpack_exports__["default"] = (data);
 
@@ -14905,7 +14957,7 @@ data.setMeaningParser(function (meaning, targetWord) {
   return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Definition"](meaningText, lang, 'text/plain', targetWord)
 })
 
-data.setPropertyParser(function (propertyName, propertyValue) {
+data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
   let propertyValues = []
   if (propertyName === 'paradigm') {
     // state has some extra "" around values
@@ -14966,7 +15018,7 @@ const data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_mode
 
 // Whitaker's has weird inflection data for conjugation, we prefer
 // the dictionary entry's conjugation if it's available
-data.inflectionOverrides = [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.conjugation]
+data.inflectionOverrides = { [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.conjugation]: (i,ls) => true }
 
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
@@ -14986,7 +15038,7 @@ data.addFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].typ
 data.addFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.tense).importer
   .map('future_perfect', alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].TENSE_FUTURE_PERFECT)
 
-data.setPropertyParser(function (propertyName, propertyValue) {
+data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
   let propertyValues = []
   if (propertyName === 'decl') {
     propertyValues = propertyValue.split('&').map((p) => p.trim())
@@ -15194,7 +15246,7 @@ class ImportData {
 
     // may be overridden by specific engine use via setPropertyParser - default just returns the property value
     // as a list
-    this.parseProperty = function (propertyName, propertyValue) {
+    this.parseProperty = function (propertyName, propertyValue, inputElem) {
       let propertyValues = []
       if (propertyName === 'decl') {
         propertyValues = propertyValue.split('&').map((p) => p.trim())
@@ -15342,10 +15394,10 @@ class ImportData {
       if (Array.isArray(inputItem)) {
         // There are multiple values of this feature
         for (const e of inputItem) {
-          values.push(...this.parseProperty(inputName, e.$))
+          values.push(...this.parseProperty(inputName, e.$, inputElem))
         }
       } else {
-        values = this.parseProperty(inputName, inputItem.$)
+        values = this.parseProperty(inputName, inputItem.$, inputElem)
       }
       // `values` is always an array as an array is a return value of `parseProperty`
       if (values.length > 0) {
@@ -15380,11 +15432,11 @@ class ImportData {
             console.warn('Mutiple feature values with mismatching attribute value', inputElem)
           }
           featureName = e[attributeName]
-          values.push(...this.parseProperty(inputName, e.$))
+          values.push(...this.parseProperty(inputName, e.$, inputElem))
         }
       } else {
         featureName = inputItem[attributeName]
-        values = this.parseProperty(inputName, inputItem.$)
+        values = this.parseProperty(inputName, inputItem.$, inputElem)
       }
       // `values` is always an array as an array is a return value of `parseProperty`
       if (values.length > 0) {
@@ -15404,7 +15456,8 @@ class ImportData {
    * @param {Lemma[]} lemmas the lemma objects
    */
   overrideInflectionFeatureIfRequired (featureType, inflection, lemmas) {
-    if (this.inflectionOverrides.includes(featureType)) {
+    if (this.inflectionOverrides[featureType] &&
+        this.inflectionOverrides[featureType](inflection,lemmas)) {
       for (const lemma of lemmas.filter(l => l.features[featureType])) {
         inflection.addFeature(lemma.features[featureType])
       }
@@ -15635,7 +15688,7 @@ class TransformAdapter {
         for (const f of this.config.featuresArrayAll) {
           try {
             mappingData.mapFeature(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
-            mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
+            mappingData.overrideInflectionFeatureIfRequired(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types[f[1]], inflection, lemmas)
           } catch (e) {
             // quietly continue
           }
@@ -15645,7 +15698,7 @@ class TransformAdapter {
         for (const f of this.config.attributeBasedFeatures) {
           try {
             mappingData.mapFeatureByAttribute(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
-            mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
+            mappingData.overrideInflectionFeatureIfRequired(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types[f[1]], inflection, lemmas)
           } catch (e) {
             // quietly continue
           }
@@ -15877,6 +15930,10 @@ class ClientAdapters {
       const homonym = await localChineseAdapter.getHomonym(options.params.word, options.params.checkContextForward)
       return { result: homonym, errors: localChineseAdapter.errors }
     }
+    if (options.method === 'loadData') {
+      const result = await localChineseAdapter.loadData(options.params.timeout)
+      return { result, errors: localChineseAdapter.errors }
+    }
     return null
   }
 
@@ -15980,9 +16037,9 @@ class ClientAdapters {
       adapterName: 'alpheios',
       method: options.method,
       clientId: options.clientId,
-      timeout: options.params.timeout ? options.params.timeout : 3000,
-      callBackEvtSuccess: options.params.callBackEvtSuccess,
-      callBackEvtFailed: options.params.callBackEvtFailed
+      timeout: options.params && options.params.timeout ? options.params.timeout : 3000,
+      callBackEvtSuccess: options.params ? options.params.callBackEvtSuccess : null,
+      callBackEvtFailed: options.params ? options.params.callBackEvtFailed : null
     }
 
     const localLexiconsAdapter = new _clAdapters_adapters_lexicons_adapter__WEBPACK_IMPORTED_MODULE_4__["default"](adapterParams)
@@ -15994,6 +16051,15 @@ class ClientAdapters {
     if (options.method === 'fetchFullDefs') {
       await localLexiconsAdapter.fetchFullDefs(options.params.homonym, options.params.opts)
       return { errors: localLexiconsAdapter.errors }
+    }
+
+    if (options.method === 'checkCachedData') {
+      await localLexiconsAdapter.checkCachedData(options.params.url, options.params.externalData, options.params.skipFetch)
+      return { errors: localLexiconsAdapter.errors }
+    }
+
+    if (options.method === 'getConfig') {
+      return localLexiconsAdapter.config
     }
     return null
   }
@@ -16015,8 +16081,7 @@ class ClientAdapters {
 __webpack_require__.r(__webpack_exports__);
 class AdapterError extends Error {
   constructor (category, adapterName, methodName, messageError) {
-    const message = messageError
-    super(message)
+    super(messageError)
     this.adapter = `${category}.${adapterName}`
     this.methodName = methodName
 
@@ -16026,7 +16091,7 @@ class AdapterError extends Error {
     try {
       Error.captureStackTrace(this, AdapterError)
     } catch (e) {
-      // quietly continue
+      // Continue if environment does not support captureStackTrace.
     }
   }
 
@@ -16069,6 +16134,36 @@ class NoRequiredParamError extends Error {
 
 /***/ }),
 
+/***/ "./errors/remote-error.js":
+/*!********************************!*\
+  !*** ./errors/remote-error.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RemoteError; });
+class RemoteError extends Error {
+  constructor (category, adapterName, methodName, errorCode, errorMessage) {
+    super(errorMessage)
+    this.adapter = `${category}.${adapterName}`
+    this.methodName = methodName
+    this.errorCode = errorCode
+  }
+
+  update (config) {
+    this.adapter = `${config.category}.${config.adapterName}`
+    this.methodName = config.method
+
+    this.message = `${this.errorCode}: ${this.message} (${this.adapter}.${this.methodName})`
+    return this
+  }
+}
+
+
+/***/ }),
+
 /***/ "./errors/wrong-method-error.js":
 /*!**************************************!*\
   !*** ./errors/wrong-method-error.js ***!
@@ -16097,13 +16192,17 @@ class WrongMethodError extends Error {
 /*!******************!*\
   !*** ./index.js ***!
   \******************/
-/*! exports provided: ClientAdapters */
+/*! exports provided: ClientAdapters, RemoteError */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/client-adapters.js */ "./client-adapters.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ClientAdapters", function() { return _clAdapters_client_adapters_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+/* harmony import */ var _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/errors/remote-error.js */ "./errors/remote-error.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RemoteError", function() { return _clAdapters_errors_remote_error_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+
 
 
 
@@ -16492,6 +16591,17 @@ var _en_gb_messages_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/_
 /***/ (function(module, exports) {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_data_models__;
+
+/***/ }),
+
+/***/ "alpheios-messaging":
+/*!*************************************!*\
+  !*** external "alpheios-messaging" ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_alpheios_messaging__;
 
 /***/ })
 

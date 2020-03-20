@@ -101,7 +101,7 @@
         />
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
-            :standard-form-data="{ langID: constants.LANG_LATIN, viewID: 'latin_verb_irregular_view', form: 'dēsum', title: 'Dēsum (dēesse, dēfui, dēfuturus)' }"
+            :standard-form-data="{ langID: constants.LANG_LATIN, viewID: 'latin_verb_irregular_view', form: 'desum', title: 'Desum (deesse, defui, defuturus)' }"
         />
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
@@ -214,7 +214,7 @@
         />
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
-            :standard-form-data="{ langID: constants.LANG_GREEK, viewID: 'greek_gender_pronoun_view', form: 'τίνε', title: 'Interrogative Pronoun Declension' }"
+            :standard-form-data="{ langID: constants.LANG_GREEK, viewID: 'greek_gender_pronoun_interr_view', form: 'τίνε', title: 'Interrogative Pronoun Declension' }"
         />
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
