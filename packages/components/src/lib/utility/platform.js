@@ -132,7 +132,7 @@ export default class Platform {
   }
 
   get isGoogleDocs () {
-    return this.constructor.getIsGoogleDocs
+    return this.constructor.getIsGoogleDocs()
   }
 
   /**
