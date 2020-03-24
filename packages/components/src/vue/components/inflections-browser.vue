@@ -206,7 +206,7 @@
         />
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
-            :standard-form-data="{ langID: constants.LANG_GREEK, viewID: 'greek_gender_pronoun_view', form: 'οἷς', title: 'Relative Pronoun Declension' }"
+            :standard-form-data="{ langID: constants.LANG_GREEK, viewID: 'greek_gender_pronoun_view', form: 'ὅς', title: 'Relative Pronoun Declension' }"
         />
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
