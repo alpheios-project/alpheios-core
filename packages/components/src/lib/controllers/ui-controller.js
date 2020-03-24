@@ -5,8 +5,6 @@ import { Constants, Feature, LanguageModelFactory, Lexeme } from 'alpheios-data-
 import { Grammars } from 'alpheios-res-client'
 import { ViewSetFactory } from 'alpheios-inflection-tables'
 import { WordlistController, UserDataManager } from 'alpheios-wordlist'
-import { ClientAdapters } from 'alpheios-client-adapters'
-// import {ObjectMonitor as ExpObjMon} from 'alpheios-experience'
 import Vue from '@vue-runtime'
 import Vuex from 'vuex'
 import interact from 'interactjs'
@@ -21,12 +19,10 @@ import EmbedLibWarning from '@/vue/components/embed-lib-warning.vue'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import LexicalQueryLookup from '@/lib/queries/lexical-query-lookup.js'
 import ResourceQuery from '@/lib/queries/resource-query.js'
-import AnnotationQuery from '@/lib/queries/annotation-query.js'
 import SiteOptions from '@/settings/site-options.json'
 import FeatureOptionDefaults from '@/settings/feature-options-defaults.json'
 import UIOptionDefaults from '@/settings/ui-options-defaults.json'
 import TextSelector from '@/lib/selection/text-selector'
-import HTMLSelector from '@/lib/selection/media/html-selector.js'
 import HTMLPage from '@/lib/utility/html-page.js'
 import Platform from '@/lib/utility/platform.js'
 import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
@@ -171,9 +167,7 @@ if you want to create a different configuration of a UI controller.
       messageBundles: Locales.bundleArr()
     })
 
-    uiController.registerModule(LexisModule, {
-      getSelectedText: uiController.getSelectedText.bind(uiController)
-    })
+    uiController.registerModule(LexisModule)
 
     /*
     The second parameter of an AuthModule is environment specific.
@@ -198,7 +192,6 @@ if you want to create a different configuration of a UI controller.
     // Creates on configures an event listener
     uiController.evc = new UIEventController()
     uiController.evc.registerListener('HandleEscapeKey', document, uiController.handleEscapeKey.bind(uiController), GenericEvt, 'keydown')
-    uiController.evc.registerListener('AlpheiosPageLoad', 'body', uiController.updateAnnotations.bind(uiController), GenericEvt, 'Alpheios_Page_Load')
 
     // Subscribe to LexicalQuery events
     LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.sub(uiController.onLexicalQueryComplete.bind(uiController))
@@ -216,9 +209,6 @@ if you want to create a different configuration of a UI controller.
     ResourceQuery.evt.RESOURCE_QUERY_COMPLETE.sub(uiController.onResourceQueryComplete.bind(uiController))
     ResourceQuery.evt.GRAMMAR_AVAILABLE.sub(uiController.onGrammarAvailable.bind(uiController))
     ResourceQuery.evt.GRAMMAR_NOT_FOUND.sub(uiController.onGrammarNotFound.bind(uiController))
-
-    // Subscribe to AnnotationQuery events
-    AnnotationQuery.evt.ANNOTATIONS_AVAILABLE.sub(uiController.onAnnotationsAvailable.bind(uiController))
 
     uiController.wordlistC = new WordlistController(LanguageModelFactory.availableLanguages(), LexicalQuery.evt)
     WordlistController.evt.WORDLIST_UPDATED.sub(uiController.onWordListUpdated.bind(uiController))
@@ -521,7 +511,14 @@ if you want to create a different configuration of a UI controller.
       getAllWordLists: () => this.wordlistC ? this.wordlistC.wordLists : [],
 
       enableWordUsageExamples: this.enableWordUsageExamples.bind(this),
+      isGetSelectedTextEnabled: this.isGetSelectedTextEnabled.bind(this),
       newLexicalRequest: this.newLexicalRequest.bind(this),
+      getLemmaTranslationsQueryParams: (textSelector) => {
+        return this.enableLemmaTranslations(textSelector)
+          ? { locale: this.featureOptions.items.locale.currentValue }
+          : null
+      },
+      getWordUsageExamplesQueryParams: this.getWordUsageExamplesQueryParams.bind(this),
 
       restoreGrammarIndex: this.restoreGrammarIndex.bind(this)
     }
@@ -541,11 +538,6 @@ if you want to create a different configuration of a UI controller.
         // A language code that is selected in the language drop-down of a lookup component
         selectedLookupLangCode: '',
         targetWord: '',
-        // An object with x and y props that reflects integer coordinates of a selection target
-        selectionTarget: {
-          x: 0,
-          y: 0
-        },
         homonymDataReady: false,
         wordUsageExampleEnabled: false,
         linkedFeatures: [], // An array of linked features, updated with every new homonym value is written to the store
@@ -564,16 +556,11 @@ if you want to create a different configuration of a UI controller.
 
         updatedGrammar: 0,
 
-        treebankData: {
-          word: {},
-          page: {}
-        },
         wordUsageExamplesReady: false, // Whether word usage examples data is available
         wordUsageAuthorsReady: false, // Whether word usage authors data is available
         hasWordListsData: false,
         wordListUpdateTime: 0, // To notify word list panel about data update
         providers: [], // A list of resource providers
-        textSelector: {},
         queryStillActive: false // it is for Persian case, when we canReset
       },
 
@@ -594,12 +581,6 @@ if you want to create a different configuration of a UI controller.
          */
         fullDefDataReady (state) {
           return state.fullDefUpdateTime > 0
-        },
-
-        hasTreebankData (state) {
-          // Treebank data is available if we have it for the word or the page
-          return Boolean((state.treebankData.page && state.treebankData.page.src) ||
-            (state.treebankData.word && state.treebankData.word.fullUrl))
         },
 
         lexicalRequestInProgress (state) {
@@ -639,10 +620,6 @@ if you want to create a different configuration of a UI controller.
           state.languageName = ''
           state.languageCode = ''
           state.selectedText = ''
-          state.selectionTarget = {
-            x: 0,
-            y: 0
-          }
           state.inflectionsWaitState = true
           state.wordUsageExamplesReady = false
           state.linkedFeatures = []
@@ -653,29 +630,12 @@ if you want to create a different configuration of a UI controller.
           state.morphDataReady = false
           state.translationsDataReady = false
           state.providers = []
-
-          state.treebankData.page = {}
-          state.treebankData.word = {}
         },
 
         lexicalRequestFinished (state) {
           state.inflectionsWaitState = false
           state.morphDataReady = true
           state.lexicalRequest.endTime = Date.now()
-        },
-
-        setHtmlSelector (state, htmlSelector) {
-          if (htmlSelector.targetRect) {
-            state.selectionTarget.x = Math.round(htmlSelector.targetRect.left)
-            state.selectionTarget.y = Math.round(htmlSelector.targetRect.top)
-          }
-        },
-
-        setTextSelector (state, textSelector) {
-          if (textSelector && !textSelector.isEmpty()) {
-            state.textSelector.text = textSelector.text
-            state.textSelector.languageID = textSelector.languageID
-          }
         },
 
         setHomonym (state, homonym) {
@@ -699,19 +659,6 @@ if you want to create a different configuration of a UI controller.
 
         setUpdatedGrammar (state) {
           state.updatedGrammar = state.updatedGrammar + 1
-        },
-
-        setPageAnnotationData (state, pageData) {
-          state.treebankData.page = pageData
-        },
-
-        setWordAnnotationData (state, wordData) {
-          state.treebankData.word = wordData
-        },
-
-        resetTreebankData (state) {
-          state.treebankData.page = {}
-          state.treebankData.word = {}
         },
 
         setWordUsageExamplesReady (state, value = true) {
@@ -779,6 +726,7 @@ if you want to create a different configuration of a UI controller.
       closePanel: this.closePanel.bind(this),
       openPopup: this.openPopup.bind(this),
       closePopup: this.closePopup.bind(this),
+      isPopupVisible: () => this.store.state.popup.visible,
       openActionPanel: this.openActionPanel.bind(this),
       closeActionPanel: this.closeActionPanel.bind(this),
       toggleActionPanel: this.toggleActionPanel.bind(this),
@@ -911,8 +859,6 @@ if you want to create a different configuration of a UI controller.
     this.uiSetFontSize(this.uiOptions)
 
     this.updateLemmaTranslations()
-
-    this.state.setWatcher('uiActive', this.updateAnnotations.bind(this))
 
     // Get selected text must be registered after a Lexis data module is activated because it uses its functionality
     if (!this.isGetSelectedTextRegistered) {
@@ -1195,7 +1141,7 @@ if you want to create a different configuration of a UI controller.
     const tabsCheck = {
       definitions: () => this.store.getters['app/fullDefDataReady'],
       inflections: () => this.store.state.app.hasInflData,
-      treebank: () => this.store.getters['app/hasTreebankData'],
+      treebank: () => this.store.state.lexis.hasTreebankData,
       wordUsage: () => this.store.state.app.wordUsageExampleEnabled,
       status: () => this.api.settings.getUiOptions().items.verboseMode.currentValue === 'verbose',
       wordlist: () => this.store.state.app.hasWordListsData
@@ -1222,13 +1168,9 @@ if you want to create a different configuration of a UI controller.
     // and sends this into to a background script
     this.state.changeTab(tabName)
 
-    if (tabName === 'treebank' && this.store.state.app.treebankData.word.version) {
-      ClientAdapters.morphology.arethusaTreebank({
-        method: 'refreshView',
-        params: {
-          provider: this.store.state.app.treebankData.word.provider
-        }
-      })
+    if (tabName === 'treebank') {
+      // We need to refresh a treebank view if treebank tab became visible
+      this.api.lexis.refreshTreebankView()
     }
     const isPortrait = this.store.state.panel && (this.store.state.panel.orientation === Platform.orientations.PORTRAIT)
 
@@ -1319,8 +1261,11 @@ if you want to create a different configuration of a UI controller.
     this.store.commit('app/setTextData', { text: targetWord, languageID: languageID })
     this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_DATA_RETRIEVAL_IN_PROGRESS'))
     this.updateLanguage(languageID)
-    this.updateWordAnnotationData(data)
+    // this.updateWordAnnotationData(data)
     this.store.commit('app/lexicalRequestStarted', { targetWord: targetWord, source: source })
+
+    // Right now we always need to open a UI with the new Lexical request, but we can make it configurable if needed
+    this.open()
     return this
   }
 
@@ -1372,19 +1317,6 @@ If no URLS are provided, will reset grammar data.
   updateTranslations (homonym) {
     this.store.commit('app/setTranslDataReady')
     this.updateProviders(homonym)
-  }
-
-  updatePageAnnotationData (data) {
-    this.store.commit('app/setPageAnnotationData', data.treebank.page)
-    this.updateWordAnnotationData(data)
-  }
-
-  updateWordAnnotationData (data) {
-    if (data && data.treebank) {
-      this.store.commit('app/setWordAnnotationData', data.treebank.word)
-    } else {
-      this.store.commit('app/resetTreebankData')
-    }
   }
 
   updateLanguage (currentLanguageID) {
@@ -1528,69 +1460,10 @@ If no URLS are provided, will reset grammar data.
     }
   }
 
-  getSelectedText (event, domEvent) {
-    if (this.state.isActive() &&
-        this.state.uiIsActive() &&
-        (!this.options.triggerPreCallback || this.enableMouseMoveEvent() || this.options.triggerPreCallback(domEvent))) {
-      // Open the UI immediately to reduce visual delays
-
-      /*
-      TextSelector conveys text selection information. It is more generic of the two.
-      HTMLSelector conveys page-specific information, such as location of a selection on a page.
-      It's probably better to keep them separated in order to follow a more abstract model.
-       */
-      const defaultLangCode = this.getDefaultLangCode()
-      const htmlSelector = new HTMLSelector(event, defaultLangCode)
-      this.store.commit('app/setHtmlSelector', htmlSelector)
-      const textSelector = htmlSelector.createTextSelector()
-
-      if (textSelector && !textSelector.isEmpty()) {
-        const lastTestSelector = this.store.state.app.textSelector
-        const checkSameTestSelector = (lastTestSelector.text === textSelector.text && lastTestSelector.languageID === textSelector.languageID && this.store.state.popup.visible)
-        if (checkSameTestSelector) {
-          return
-        }
-
-        this.store.commit('app/setTextSelector', textSelector)
-
-        this.open()
-        // TODO: disable experience monitor as it might cause memory leaks
-        /* ExpObjMon.track(
-          LexicalQuery.create(textSelector, {
-            htmlSelector: htmlSelector,
-            uiController: this.ui,
-            maAdapter: this.maAdapter,
-            lexicons: Lexicons,
-            resourceOptions: this.resourceOptions,
-            siteOptions: [],
-            lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { adapter: LemmaTranslations, locale: this.featureOptions.items.locale.currentValue } : null,
-            langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } } // TODO this should be externalized
-          }),
-          {
-            experience: 'Get word data',
-            actions: [
-              { name: 'getData', action: ExpObjMon.actions.START, event: ExpObjMon.events.GET },
-              { name: 'finalize', action: ExpObjMon.actions.STOP, event: ExpObjMon.events.GET }
-            ]
-          })
-          .getData() */
-
-        const lexQuery = LexicalQuery.create(textSelector, {
-          htmlSelector: htmlSelector,
-          clientId: this.api.app.clientId,
-          resourceOptions: this.api.settings.getResourceOptions(),
-          verboseMode: this.api.settings.verboseMode(),
-          siteOptions: [],
-          lemmaTranslations: this.enableLemmaTranslations(textSelector) ? { locale: this.featureOptions.items.locale.currentValue } : null,
-          wordUsageExamples: this.getWordUsageExamplesQueryParams(textSelector),
-          langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
-          checkContextForward: textSelector.checkContextForward
-        })
-
-        this.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data)
-        lexQuery.getData()
-      }
-    }
+  isGetSelectedTextEnabled (domEvent) {
+    return (this.state.isActive() &&
+      this.state.uiIsActive() &&
+      (!this.options.triggerPreCallback || this.enableMouseMoveEvent() || this.options.triggerPreCallback(domEvent)))
   }
 
   getFeatureOptions () {
@@ -1670,18 +1543,6 @@ NB this is Prototype functionality
       }
     }
     return true
-  }
-
-  /**
-   * Issues an AnnotationQuery to find and apply annotations for the currently loaded document
-   */
-  updateAnnotations () {
-    if (this.state.isActive() && this.state.uiIsActive()) {
-      AnnotationQuery.create({
-        document: document,
-        siteOptions: this.siteOptions
-      }).getData()
-    }
   }
 
   startResourceQuery (feature) {
@@ -1817,10 +1678,6 @@ NB this is Prototype functionality
     this.store.commit('ui/addMessage', this.api.l10n.getMsg('TEXT_NOTICE_GRAMMAR_NOTFOUND'))
   }
 
-  onAnnotationsAvailable (data) {
-    this.updatePageAnnotationData(data.annotations)
-  }
-
   async onWordItemSelected (wordItem) {
     if (!this.userDataManager && !wordItem.homonym) {
       this.logger.warn('UserDataManager is not defined, data couldn\'t be loaded from the storage')
@@ -1828,7 +1685,6 @@ NB this is Prototype functionality
     }
     const languageID = LanguageModelFactory.getLanguageIdFromCode(wordItem.languageCode)
     this.newLexicalRequest(wordItem.targetWord, languageID, null, 'wordlist')
-    this.open()
 
     let homonym
     if (this.userDataManager) {
@@ -2060,7 +1916,8 @@ NB this is Prototype functionality
         mouseMoveDelay: this.featureOptions.items.mouseMoveDelay.currentValue,
         mouseMoveAccuracy: this.featureOptions.items.mouseMoveAccuracy.currentValue
       }
-      this.evc.registerListener(listenerName + '-mousemove', selector, this.getSelectedText.bind(this), MouseMove, eventParams)
+      const lexisModule = this.getModule('lexis')
+      this.evc.registerListener(listenerName + '-mousemove', selector, this.api.lexis.getSelectedText.bind(lexisModule), MouseMove, eventParams)
       // when the mousemove event is activated, the regular listener needs to be deactivated
       this.evc.deactivateListener(listenerName)
       this.evc.activateListener(listenerName + '-mousemove')

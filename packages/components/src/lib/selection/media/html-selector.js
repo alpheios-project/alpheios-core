@@ -338,9 +338,12 @@ export default class HTMLSelector extends MediaSelector {
       }
     }
 
-    const prefix = selection.anchorNode.data.substr(0, textSelector.start).trim().replace(/\n/g, '')
-    const suffix = selection.anchorNode.data.substr(textSelector.end).trim().replace(/\n/g, '')
-    textSelector.createTextQuoteSelector(prefix, suffix)
+    if (selection.anchorNode.data) {
+      // TODO: Figure out why data prop can be not available
+      const prefix = selection.anchorNode.data.substr(0, textSelector.start).trim().replace(/\n/g, '')
+      const suffix = selection.anchorNode.data.substr(textSelector.end).trim().replace(/\n/g, '')
+      textSelector.createTextQuoteSelector(prefix, suffix)
+    }
     return textSelector
   }
 

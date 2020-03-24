@@ -258,7 +258,6 @@ export default class LexicalQuery extends Query {
       if (adapterTranslationRes.errors.length > 0) {
         adapterTranslationRes.errors.forEach(error => this.logger.log(error.message))
       }
-
       LexicalQuery.evt.LEMMA_TRANSL_READY.pub(this.homonym)
     }
 

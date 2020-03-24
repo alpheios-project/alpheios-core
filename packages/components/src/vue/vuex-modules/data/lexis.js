@@ -1,8 +1,10 @@
 /* global DEVELOPMENT_MODE_BUILD */
 import Module from '@/vue/vuex-modules/module.js'
 import Platform from '@/lib/utility/platform.js'
+import HTMLSelector from '@/lib/selection/media/html-selector.js'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
+import { Constants, TreebankDataItem } from 'alpheios-data-models'
 import {
   CedictDestinationConfig as CedictProdConfig,
   CedictDestinationDevConfig as CedictDevConfig
@@ -22,11 +24,29 @@ export default class Lexis extends Module {
    */
   constructor (store, api, config = {}) {
     super(store, api, config)
+    // APIs provided by the UI controller
+    this._appApi = api.app
+    this._uiApi = api.ui
+    this._settingsApi = api.settings
+    // A TextSelector of the last lexical query
+    this._lastTextSelector = null
+    // A current TreebankDataItem
+    this._treebankDataItem = null
     // Add an iframe with CEDICT service
     this.createIframe()
 
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
     api[this.constructor.moduleName] = this.constructor.api(this, store)
+
+    // For creating a page's TrrebankDataItem, use page body as a selection target
+    const body = document.querySelector('body')
+    if (!body) { throw new Error('Document body is not available') }
+    try {
+      this._treebankDataItem = new TreebankDataItem(body)
+      store.commit('lexis/setTreebankInfo', this._treebankDataItem)
+    } catch (error) {
+      // Treebank info is not present on a page or is incorrect. Treebank data will not be used.
+    }
 
     LexicalQuery.evt.CEDICT_SERVICE_UNINITIALIZED.sub(this.onCedictServiceUninitialized.bind(this, store))
   }
@@ -53,8 +73,11 @@ Lexis.store = (moduleInstance) => {
     state: {
       cedictDataLoaded: false,
       cedictLoadingInProgress: false,
-      cedictDisplayNotification: false
+      cedictDisplayNotification: false,
+      hasTreebankData: false,
+      treebankSrc: null
     },
+
     mutations: {
       setCedictUninitializedState (state) {
         state.cedictDataLoaded = false
@@ -77,6 +100,44 @@ Lexis.store = (moduleInstance) => {
 
       hideCedictNotification (state) {
         state.cedictDisplayNotification = false
+      },
+
+      /**
+       * Sets treebank information in a Vuex store
+       *
+       * @param {object} state - A Vuex state object
+       * @param {TreebankDataItem} treebankDataItem - A treebank data item element
+       */
+      setTreebankInfo (state, treebankDataItem) {
+        state.hasTreebankData = treebankDataItem.hasTreebankData
+        state.treebankSrc = treebankDataItem.fullUrl
+        // Previous business logic for determining if there is a treebank data was:
+        // Treebank data is available if we have it for the word or the page
+        /* return Boolean((state.treebankData.page && state.treebankData.page.src) ||
+          (state.treebankData.word && state.treebankData.word.fullUrl)) */
+
+        // Previous logic for determining source URL is:
+        /* let newSrcUrl = this.$store.state.app.treebankData.page.src
+        if (this.$store.state.app.treebankData.word &&
+          this.$store.state.app.treebankData.word.fullUrl) {
+          newSrcUrl = this.$store.state.app.treebankData.word.fullUrl
+        }
+        if (!this.$store.getters['ui/isActiveTab']('treebank') &&
+          this.$store.state.app.treebankData.word &&
+          !this.$store.state.app.treebankData.word.version) {
+          /!*
+          Prior to version 3 of treebank integration, which uses the Arethusa api
+          The arethusa application could not initialize itself properly
+          if it's not visible, so we wait to update the src url of the
+          parent iframe until the tab is visible.
+           *!/
+          newSrcUrl = ''
+        } */
+      },
+
+      resetTreebankInfo (state) {
+        state.hasTreebankData = false
+        state.treebankSrc = null
       }
     }
   }
@@ -85,9 +146,50 @@ Lexis.store = (moduleInstance) => {
 Lexis.api = (moduleInstance, store) => {
   return {
     getSelectedText: (event, domEvent) => {
-      moduleInstance.config.getSelectedText(event, domEvent)
-      // Hide CEDICT notification on a new lexical query
-      store.commit('lexis/hideCedictNotification')
+      if (moduleInstance._appApi.isGetSelectedTextEnabled(domEvent)) {
+        const defaultLangCode = moduleInstance._appApi.getDefaultLangCode()
+        const htmlSelector = new HTMLSelector(event, defaultLangCode)
+        const textSelector = htmlSelector.createTextSelector()
+
+        if (textSelector && !textSelector.isEmpty()) {
+          const lastTextSelector = moduleInstance._lastTextSelector || {}
+          const checkSameTestSelector = (
+            lastTextSelector.text === textSelector.text &&
+            lastTextSelector.languageID === textSelector.languageID &&
+            moduleInstance._uiApi.isPopupVisible()
+          )
+          if (checkSameTestSelector) {
+            // Do nothing
+            return
+          }
+          moduleInstance._lastTextSelector = textSelector
+
+          try {
+            moduleInstance._treebankDataItem = new TreebankDataItem(htmlSelector.target)
+            store.commit('lexis/setTreebankInfo', moduleInstance._treebankDataItem)
+          } catch (error) {
+            // Treebank info is not present on a page or is incorrect
+            moduleInstance._treebankDataItem = null
+            store.commit('lexis/resetTreebankInfo')
+          }
+
+          const lexQuery = LexicalQuery.create(textSelector, {
+            clientId: moduleInstance._appApi.clientId,
+            resourceOptions: moduleInstance._settingsApi.getResourceOptions(),
+            siteOptions: [],
+            lemmaTranslations: moduleInstance._appApi.getLemmaTranslationsQueryParams(textSelector),
+            wordUsageExamples: moduleInstance._appApi.getWordUsageExamplesQueryParams(textSelector),
+            langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
+            checkContextForward: textSelector.checkContextForward
+          })
+
+          moduleInstance._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data)
+          lexQuery.getData()
+
+          // Hide a CEDICT notification on a new lexical query
+          store.commit('lexis/hideCedictNotification')
+        }
+      }
     },
 
     loadCedictData: async () => {
@@ -108,6 +210,18 @@ Lexis.api = (moduleInstance, store) => {
 
     hideCedictNotification: () => {
       store.commit('lexis/hideCedictNotification')
+    },
+
+    refreshTreebankView: () => {
+      if (moduleInstance._treebankDataItem && moduleInstance._treebankDataItem.version >= 3) {
+        // Need to refresh a view only for treebank V3 or higher
+        ClientAdapters.morphology.arethusaTreebank({
+          method: 'refreshView',
+          params: {
+            provider: moduleInstance._treebankDataItem.provider
+          }
+        })
+      }
     }
   }
 }

@@ -94,7 +94,7 @@
 
       <div
           class="alpheios-panel__tab-panel alpheios-panel__tab__treebank"
-          v-if="$store.getters['app/hasTreebankData']" v-show="$store.getters['ui/isActiveTab']('treebank')"
+          v-if="$store.state.lexis.hasTreebankData" v-show="$store.getters['ui/isActiveTab']('treebank')"
           data-alpheios-ignore="all">
         <treebank/>
       </div>

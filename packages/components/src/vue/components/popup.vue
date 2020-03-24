@@ -36,7 +36,7 @@
           </alph-tooltip>
 
           <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-wide"
-                        v-show="showToolbar && $store.getters['app/hasTreebankData']">
+                        v-show="showToolbar && $store.state.lexis.hasTreebankData">
                 <div id="alpheios-popup-toolbar-btn-treebank" class="alpheios-popup__toolbar-top__btn" @click="ui.showPanelTab('treebank')">
                   <treebank-icon class="alpheios-navbuttons__icon" />
                 </div>
@@ -132,7 +132,7 @@ import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 export default {
   name: 'Popup',
   inject: ['app', 'ui', 'l10n', 'settings', 'auth'],
-  storeModules: ['app', 'ui', 'popup', 'auth'],
+  storeModules: ['app', 'ui', 'popup', 'auth', 'lexis'],
   mixins: [DependencyCheck],
   components: {
     morph: Morph,

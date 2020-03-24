@@ -27,7 +27,7 @@
     </alph-tooltip>
 
     <alph-tooltip :tooltipText="l10n.getText('TOOLTIP_TREEBANK')" tooltipDirection="bottom-narrow"
-                v-show="$store.getters['app/hasTreebankData']">
+                v-show="$store.state.lexis.hasTreebankData">
       <div @click="ui.changeTab('treebank')" class="alpheios-navbuttons__btn"
             id="alpheios-panel-navbuttons-treebank"
             v-bind:class="{ active: $store.getters['ui/isActiveTab']('treebank') }">
@@ -123,7 +123,7 @@ export default {
     l10n: 'l10n',
     settings: 'settings'
   },
-  storeModules: ['app', 'ui'], // Store modules that are required by this component
+  storeModules: ['app', 'ui', 'lexis'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
     inflectionsBrowserIcon: InflectionsBrowserIcon,

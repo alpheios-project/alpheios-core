@@ -30,7 +30,7 @@
     </div>
 
     <div class="alpheios-navmenu__item" :class="{ active: $store.getters['ui/isActiveTab']('treebank') }"
-         v-show="$store.getters['app/hasTreebankData']" @click="changeTab('treebank')">
+         v-show="$store.state.lexis.hasTreebankData" @click="changeTab('treebank')">
       <div class="alpheios-navbuttons__icon-cont">
         <treebank-icon class="alpheios-navbuttons__icon"></treebank-icon>
       </div>
@@ -124,7 +124,7 @@ export default {
     settings: 'settings',
     auth: { from: 'auth', default: null } // This module is options
   },
-  storeModules: ['app', 'ui'], // Store modules that are required by this component
+  storeModules: ['app', 'ui', 'lexis'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
     morphologyIcon: MorphologyIcon,

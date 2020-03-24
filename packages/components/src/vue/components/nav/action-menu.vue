@@ -62,13 +62,13 @@
       </alph-tooltip>
 
       <alph-tooltip
-          :tooltipText="tooltipText('TOOLTIP_TREEBANK', $store.getters['app/hasTreebankData'])"
+          :tooltipText="tooltipText('TOOLTIP_TREEBANK', $store.state.lexis.hasTreebankData)"
           :tooltipDirection="tooltipDirection"
       >
         <div
             @click.stop="showPanelTab('treebank')"
             class="alpheios-action-menu__navbutton"
-            :class="{ disabled: !$store.getters['app/hasTreebankData'] }"
+            :class="{ disabled: !$store.state.lexis.hasTreebankData }"
         >
           <treebank-icon/>
         </div>
@@ -166,7 +166,7 @@ export default {
     ui: 'ui',
     l10n: 'l10n'
   },
-  storeModules: ['actionPanel', 'app'], // Store modules that are required by this component
+  storeModules: ['actionPanel', 'app', 'lexis'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
     lookup: Lookup,

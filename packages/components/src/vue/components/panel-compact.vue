@@ -43,7 +43,7 @@
           </span>
         </div>
         <div class="alpheios-panel__header-btn alpheios-panel__header-btn--treebank-data"
-           v-show="$store.getters['app/hasTreebankData'] && showMainTabIcons"
+           v-show="$store.state.lexis.hasTreebankData && showMainTabIcons"
            :class="{ 'alpheios-navbuttons__icon-active': currentTab === 'treebank' }"
         >
           <span @click="changeTab('treebank')" class="alpheios-navbuttons__icon-span">
@@ -230,7 +230,7 @@
 
       <div
           class="alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding"
-          v-if="$store.getters['app/hasTreebankData']" v-show="$store.getters['ui/isActiveTab']('treebank')"
+          v-if="$store.state.lexis.hasTreebankData" v-show="$store.getters['ui/isActiveTab']('treebank')"
           data-alpheios-ignore="all">
         <treebank/>
       </div>
@@ -334,7 +334,7 @@ export default {
     settings: 'settings',
     auth: 'auth'
   },
-  storeModules: ['app', 'ui', 'panel', 'auth'], // Store modules that are required by this component
+  storeModules: ['app', 'ui', 'panel', 'auth', 'lexis'], // Store modules that are required by this component
   mixins: [DependencyCheck],
   components: {
     progressBar: ProgressBar,

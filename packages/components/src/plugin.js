@@ -13,7 +13,6 @@ import UIEventController from '@/lib/controllers/ui-event-controller.js'
 import UIStateAPI from '@/lib/state/ui-state-api.js'
 import Language from './lib/controllers/language.js'
 import HTMLSelector from './lib/selection/media/html-selector.js'
-import AnnotationQuery from './lib/queries/annotation-query.js'
 import LexicalQuery from './lib/queries/lexical-query.js'
 import ResourceQuery from './lib/queries/resource-query.js'
 import LocalStorageArea from './lib/options/local-storage-area.js'
@@ -46,7 +45,7 @@ import AppAuthenticator from '@/lib/auth/app-authenticator.js'
 
 export {
   Popup, Panel, L10n, Locales, enUS, enGB, UIController, UIEventController,
-  Language, HTMLSelector, AnnotationQuery, LexicalQuery, ResourceQuery,
+  Language, HTMLSelector, LexicalQuery, ResourceQuery,
   LocalStorageArea, ExtensionSyncStorage, FeatureOptionDefaults, LanguageOptionDefaults, UIOptionDefaults,
   DefaultsLoader, Options, UIStateAPI, Style, Logger, HTMLConsole, MouseDblClick, LongTap, Swipe, GenericEvt, AlignmentSelector,
   HTMLPage, Tab, TabScript, L10nModule, AuthModule, PanelModule, PopupModule, ToolbarModule,
