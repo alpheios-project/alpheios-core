@@ -218,7 +218,7 @@
         />
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
-            :standard-form-data="{ langID: constants.LANG_GREEK, viewID: 'greek_gender_pronoun_view', form: 'τινοῖν', title: 'Indefinite Pronoun Declension' }"
+            :standard-form-data="{ langID: constants.LANG_GREEK, viewID: 'greek_gender_pronoun_view', form: 'τις', title: 'Indefinite Pronoun Declension' }"
         />
         <wide-table
             :collapsed="inflBrowserTablesCollapsed"
