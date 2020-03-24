@@ -1,4 +1,19 @@
 {
+  "https://github.com/alpheios-project/mjm": {
+    "urls": {
+      "short": "https://repos1.alpheios.net/lexdata/mjm/dat/grc-mjm-defs.dat"
+    },
+    "langs": {
+      "source": "grc",
+      "target": "en"
+    },
+    "format": { "short" :"text/html" },
+    "description": "Definitions derived from Wilfred E. Major's Core Greek Vocabulary, extended with definitions from the Middle Liddell.",
+    "rights_keys": {
+       "ML": " \"An Intermediate Greek-English Lexicon\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University. Edits and additions provided by Vanessa Gorman, University of Nebraska.",
+       "Major": " Wilfred E. Major, Core Greek Vocabulary for the First Two Years of Greek. CPL Online, Winter 2008. Edits and additions provided by Vanessa Gorman, University of Nebraska."
+    }
+  },
   "https://github.com/alpheios-project/majorplus": {
     "urls": {
       "short": "https://repos1.alpheios.net/lexdata/majorplus/dat/grc-mjp-defs.dat"
@@ -10,9 +25,8 @@
     "format": { "short" :"text/html" },
     "description": "Definitions derived from Wilfred E. Major's Core Greek Vocabulary, extended with definitions from the LSJ.",
     "rights_keys": {
-       "LSJ" : "\"A Greek-English Lexicon\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University.",
-       "Major": "Wilfred E. Major, Core Greek Vocabulary for the First Two Years of Greek. CPL Online, Winter 2008.",
-       "VGorman": "Definition edited by Vanessa Gorman, University of Nebraska."
+       "LSJ" : " \"A Greek-English Lexicon\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University. Edits and additions provided by Vanessa Gorman, University of Nebraska.",
+       "Major": " Wilfred E. Major, Core Greek Vocabulary for the First Two Years of Greek. CPL Online, Winter 2008. Edits and additions provided by Vanessa Gorman, University of Nebraska."
     }
   },
   "https://github.com/alpheios-project/lsj": {
@@ -26,7 +40,7 @@
       "target": "en"
     },
     "description": "\"A Greek-English Lexicon\" (Henry George Liddell, Robert Scott)",
-    "rights": "\"A Greek-English Lexicon\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University."
+    "rights": " \"A Greek-English Lexicon\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University."
   },
   "https://github.com/alpheios-project/aut": {
     "urls": {
@@ -39,7 +53,7 @@
       "target": "en"
     },
     "description": "\"Autenrieth Homeric Dictionary\" (Geoerge Autenrieth)",
-    "rights": "\"Autenrieth Homeric Dictionary\" (Geoerge Autenrieth). Provided by the Perseus Digital Library at Tufts University"
+    "rights": " \"Autenrieth Homeric Dictionary\" (Geoerge Autenrieth). Provided by the Perseus Digital Library at Tufts University"
   },
   "https://github.com/alpheios-project/ml": {
     "urls": {
@@ -52,7 +66,7 @@
       "target": "en"
     },
     "description": "\"Middle Liddell\"",
-    "rights": "\"An Intermediate Greek-English Lexicon\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University"
+    "rights": " \"An Intermediate Greek-English Lexicon\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University"
   },
   "https://github.com/alpheios-project/as": {
     "urls": {
@@ -65,7 +79,7 @@
       "target": "en"
     },
     "description": "\"A Manual Greek Lexicon of the New Testament\"",
-    "rights": "\"A Manual Greek Lexicon of the New Testament\" (G. Abbott-Smith). Provided by biblicalhumanities.org."
+    "rights": " \"A Manual Greek Lexicon of the New Testament\" (G. Abbott-Smith). Provided by biblicalhumanities.org."
   },
   "https://github.com/alpheios-project/dod": {
     "urls": {
@@ -78,7 +92,7 @@
       "target": "en"
     },
     "description": "\"Dodson\"",
-    "rights": "\"A Public Domain lexicon by John Jeffrey Dodson (2010)\". Provided by biblicalhumanities.org."
+    "rights": " \"A Public Domain lexicon by John Jeffrey Dodson (2010)\". Provided by biblicalhumanities.org."
   },
   "https://github.com/alpheios-project/ls": {
     "urls": {
