@@ -232,7 +232,6 @@ describe('greek-verb-paradigm.test.js', () => {
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy()
     expect(renderedTable.rows[1].cells[4].fullMatch).toBeFalsy()
     expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy()
-    expect(renderedTable.rows[1].cells[6].fullMatch).toBeFalsy()
 
     /// βουλευθῶ
     inflectionsViewSet = await BaseTestHelp.getInflectionSet('βουλευθῶ', Constants.LANG_GREEK)
@@ -253,7 +252,6 @@ describe('greek-verb-paradigm.test.js', () => {
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeTruthy() // βουλευθῶ
     expect(renderedTable.rows[1].cells[4].fullMatch).toBeFalsy()
     expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy()
-    expect(renderedTable.rows[1].cells[6].fullMatch).toBeFalsy()
 
     /// βουλευθείην
     inflectionsViewSet = await BaseTestHelp.getInflectionSet('βουλευθείην', Constants.LANG_GREEK)
@@ -274,7 +272,6 @@ describe('greek-verb-paradigm.test.js', () => {
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy()
     expect(renderedTable.rows[1].cells[4].fullMatch).toBeTruthy() // βουλευθείην
     expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy()
-    expect(renderedTable.rows[1].cells[6].fullMatch).toBeFalsy()
 
     /// ἐγράφην
     inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἐγράφην', Constants.LANG_GREEK)
@@ -295,7 +292,6 @@ describe('greek-verb-paradigm.test.js', () => {
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy()
     expect(renderedTable.rows[1].cells[4].fullMatch).toBeFalsy()
     expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy()
-    expect(renderedTable.rows[1].cells[6].fullMatch).toBeTruthy() //ἐγράφην
   })
 
   it('11 - checked Verb Paradigm11 - λελοίπῃ', async () => {

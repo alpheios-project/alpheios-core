@@ -44,13 +44,6 @@
                 "voice": "passive",
                 "mood": "imperative",
                 "value": "imperative"
-            },
-            {
-                "role": "label",
-                "tense": "aorist",
-                "voice": "passive",
-                "mood": "indicative",
-                "value": "2nd aorist indicative"
             }
         ]},
         {"cells": [
@@ -106,16 +99,6 @@
                 "mood": "imperative",
                 "stemtype": "aor_pass",
                 "value": ""
-            },
-            {
-                "role": "data",
-                "tense": "aorist",
-                "voice": "passive",
-                "number": "singular",
-                "person": "1st",
-                "mood": "indicative",
-                "stemtype": "aor2_pass",
-                "value": "ἐγράφην"
             }
         ]},
         {"cells": [
@@ -171,16 +154,6 @@
                 "mood": "imperative",
                 "stemtype": "aor_pass",
                 "value": "βουλεύθητι"
-            },
-            {
-                "role": "data",
-                "tense": "aorist",
-                "voice": "passive",
-                "number": "singular",
-                "person": "2nd",
-                "mood": "indicative",
-                "stemtype": "aor2_pass",
-                "value": "ἐγράφης"
             }
         ]},
         {"cells": [
@@ -236,16 +209,6 @@
                 "mood": "imperative",
                 "stemtype": "aor_pass",
                 "value": "βουλευθήτω"
-            },
-            {
-                "role": "data",
-                "tense": "aorist",
-                "voice": "passive",
-                "number": "singular",
-                "person": "3rd",
-                "mood": "indicative",
-                "stemtype": "aor2_pass",
-                "value": "ἐγράφη"
             }
         ]},
         {"cells": [
@@ -301,16 +264,6 @@
                 "mood": "imperative",
                 "stemtype": "aor_pass",
                 "value": "βουλεύθητον"
-            },
-            {
-                "role": "data",
-                "tense": "aorist",
-                "voice": "passive",
-                "number": "dual",
-                "person": "2nd",
-                "mood": "indicative",
-                "stemtype": "aor2_pass",
-                "value": "ἐγράφητον"
             }
         ]},
         {"cells": [
@@ -366,16 +319,6 @@
                 "mood": "imperative",
                 "stemtype": "aor_pass",
                 "value": "βουλευθήτων"
-            },
-            {
-                "role": "data",
-                "tense": "aorist",
-                "voice": "passive",
-                "number": "dual",
-                "person": "3rd",
-                "mood": "indicative",
-                "stemtype": "aor2_pass",
-                "value": "ἐγραφήτην"
             }
         ]},
         {"cells": [
@@ -431,16 +374,6 @@
                 "mood": "imperative",
                 "stemtype": "aor_pass",
                 "value": ""
-            },
-            {
-                "role": "data",
-                "tense": "aorist",
-                "voice": "passive",
-                "number": "plural",
-                "person": "1st",
-                "mood": "indicative",
-                "stemtype": "aor2_pass",
-                "value": "ἐγράφημεν"
             }
         ]},
         {"cells": [
@@ -496,16 +429,6 @@
                 "mood": "imperative",
                 "stemtype": "aor_pass",
                 "value": "βουλεύθητε"
-            },
-            {
-                "role": "data",
-                "tense": "aorist",
-                "voice": "passive",
-                "number": "plural",
-                "person": "2nd",
-                "mood": "indicative",
-                "stemtype": "aor2_pass",
-                "value": "ἐγράφητε"
             }
         ]},
         {"cells": [
@@ -561,16 +484,6 @@
                 "mood": "imperative",
                 "stemtype": "aor_pass",
                 "value": "βουλευθέντων"
-            },
-            {
-                "role": "data",
-                "tense": "aorist",
-                "voice": "passive",
-                "number": "plural",
-                "person": "3rd",
-                "mood": "indicative",
-                "stemtype": "aor2_pass",
-                "value": "ἐγράφησαν"
             }
         ]}
     ]},
