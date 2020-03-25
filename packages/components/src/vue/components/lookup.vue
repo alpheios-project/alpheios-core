@@ -42,7 +42,6 @@
 </template>
 <script>
 import TextSelector from '@/lib/selection/text-selector'
-import LexicalQueryLookup from '@/lib/queries/lexical-query-lookup'
 import { LanguageModelFactory, Constants } from 'alpheios-data-models'
 import LookupIcon from '@/images/inline-icons/lookup.svg'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
@@ -52,7 +51,7 @@ import Setting from './setting.vue'
 
 export default {
   name: 'Lookup',
-  inject: ['app', 'ui', 'l10n', 'settings'],
+  inject: ['app', 'ui', 'l10n', 'settings', 'lexis'],
   mixins: [DependencyCheck],
   storeModules: ['app'],
   components: {
@@ -96,7 +95,7 @@ export default {
       return this.app.getLanguageName(this.getLookupLanguage()).name
     },
     directionRtl () {
-      let model = LanguageModelFactory.getLanguageModelFromCode(this.getLookupLanguage())
+      const model = LanguageModelFactory.getLanguageModelFromCode(this.getLookupLanguage())
       return model.direction === Constants.LANG_DIR_RTL
     }
   },
@@ -112,17 +111,17 @@ export default {
     }
   },
   methods: {
-    getLookupLanguage: function() {
+    getLookupLanguage: function () {
       return this.showLangSelector
         ? this.$options.lookupLanguage.currentValue
         : this.$store.state.app.selectedLookupLangCode
     },
 
-    toggleLangSelector: function() {
+    toggleLangSelector: function () {
       this.$emit('toggleLangSelector', true)
     },
 
-    lookup: function () { 
+    lookup: function () {
       this.lookuptext = this.lookuptext.trim()
       if (this.lookuptext.length === 0) {
         return null
@@ -134,23 +133,23 @@ export default {
        */
       const selectedLangCode = this.getLookupLanguage()
       const selectedLangID = LanguageModelFactory.getLanguageIdFromCode(selectedLangCode)
-      let textSelector = TextSelector.createObjectFromText(this.lookuptext, selectedLangID)
+      const textSelector = TextSelector.createObjectFromText(this.lookuptext, selectedLangID)
 
       const resourceOptions = this.settings.getResourceOptions()
       const lemmaTranslationLang = this.app.state.lemmaTranslationLang
-      let featureOptions = this.settings.getFeatureOptions()
+      const featureOptions = this.settings.getFeatureOptions()
 
       const wordUsageExamples = this.app.enableWordUsageExamples(textSelector, 'onLexicalQuery')
-        ? { paginationMax: featureOptions.items.wordUsageExamplesMax.currentValue,
-          paginationAuthMax: featureOptions.items.wordUsageExamplesAuthMax.currentValue }
+        ? {
+          paginationMax: featureOptions.items.wordUsageExamplesMax.currentValue,
+          paginationAuthMax: featureOptions.items.wordUsageExamplesAuthMax.currentValue
+        }
         : null
-  
-      let lexQuery = LexicalQueryLookup
-        .create(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, this.app.clientId, this.settings.verboseMode())
 
       // A newLexicalRequest will call app.updateLanguage(languageID)
       this.app.newLexicalRequest(this.lookuptext, selectedLangID, null, 'lookup')
-      lexQuery.getData()
+      this.lexis.lookupText(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, this.app.clientId,
+        this.settings.verboseMode())
       // Notify parent that the lookup has been started so that the parent can close itself if necessary
       this.$emit('lookup-started')
       this.showLookupResult()

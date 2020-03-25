@@ -17,7 +17,6 @@ import Locales from '@/locales/locales.js'
 import EmbedLibWarning from '@/vue/components/embed-lib-warning.vue'
 
 import LexicalQuery from '@/lib/queries/lexical-query.js'
-import LexicalQueryLookup from '@/lib/queries/lexical-query-lookup.js'
 import ResourceQuery from '@/lib/queries/resource-query.js'
 import SiteOptions from '@/settings/site-options.json'
 import FeatureOptionDefaults from '@/settings/feature-options-defaults.json'
@@ -1708,8 +1707,8 @@ NB this is Prototype functionality
       // otherwise we can query for it as usual
       const textSelector = TextSelector.createObjectFromText(homonym.targetWord, homonym.languageID)
       const wordUsageExamples = this.getWordUsageExamplesQueryParams(textSelector)
-      const lexQuery = LexicalQueryLookup.create(textSelector, this.resourceOptions, this.state.lemmaTranslationLang, wordUsageExamples, this.api.app.clientId)
-      lexQuery.getData()
+      const verboseMode = false
+      this.api.lexis.getSelectedText(textSelector, this.resourceOptions, this.state.lemmaTranslationLang, wordUsageExamples, this.api.app.clientId, verboseMode)
     }
   }
 

@@ -192,6 +192,46 @@ Lexis.api = (moduleInstance, store) => {
       }
     },
 
+    /**
+     * This method starts a lexical query similarly to `getSelectedText`, but it differs in
+     * how query parameters are set.
+     * `lookupText` is intend to be used by lookup components where the user type the word in.
+     *
+     * @param textSelector
+     * @param resourceOptions
+     * @param lemmaTranslationLang
+     * @param wordUsageExamples
+     * @param clientId
+     * @param verboseMode
+     */
+    lookupText: (textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, clientId, verboseMode) => {
+      /*
+      When word is entered in the lookup component, it is out of context and we cannot get any treebank data on it.
+       */
+      moduleInstance._treebankDataItem = null
+      store.commit('lexis/resetTreebankInfo')
+
+      let lemmaTranslations
+      if (textSelector.languageID === Constants.LANG_LATIN && lemmaTranslationLang) {
+        lemmaTranslations = { locale: lemmaTranslationLang }
+      }
+
+      const lexQuery = LexicalQuery.create(textSelector, {
+        htmlSelector: HTMLSelector.getDumpHTMLSelector(),
+        clientId: clientId,
+        verboseMode: verboseMode,
+        lemmaTranslations: lemmaTranslations,
+        wordUsageExamples: wordUsageExamples,
+        resourceOptions: resourceOptions,
+        langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
+        checkContextForward: ''
+      })
+      lexQuery.getData()
+
+      // Hide a CEDICT notification on a new lexical query
+      store.commit('lexis/hideCedictNotification')
+    },
+
     loadCedictData: async () => {
       store.commit('lexis/setCedictInitInProgressState')
       const loadResult = await ClientAdapters.morphology.chineseloc({
