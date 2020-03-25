@@ -44,7 +44,7 @@
     "@babel/runtime": "^7.8.4",
     "alpheios-client-adapters": "^3.3.0",
     "alpheios-data-models": "^3.3.0",
-    "alpheios-fixtures": "github:alpheios-project/fixtures",
+    "alpheios-fixtures": "github:alpheios-project/fixtures#i83-core-forms",
     "alpheios-node-build": "github:alpheios-project/node-build#v2",
     "coveralls": "^3.0.9",
     "eslint": "^6.8.0",

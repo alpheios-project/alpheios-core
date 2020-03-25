@@ -1445,7 +1445,7 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
     })
 
     const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
-    expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy()
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // no derivtype
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeTruthy()
 
   })
@@ -1488,4 +1488,42 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
 
   })
 
+  it('57 - checked Verb Paradigm 11 derivtype - λέλυκα', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('λέλυκα', Constants.LANG_GREEK)
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'Perfect Active System',
+      paradigmID: 'verbpdgm11',
+      hasSuppParadigms: true,
+      suppParadigms: [ 'verbpdgm63' ]
+    })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy()
+    expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() //derivtype reg_conj
+  })
+
+  it('58 - checked Verb Paradigm 11 derivtype - λέλοιπα', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('λέλοιπα', Constants.LANG_GREEK)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'Perfect Active System',
+      paradigmID: 'verbpdgm11',
+      hasSuppParadigms: true,
+      suppParadigms: [ 'verbpdgm63' ]
+    })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // no derivtype
+    expect(renderedTable.rows[1].cells[3].fullMatch).toBeTruthy()
+  })
 })
