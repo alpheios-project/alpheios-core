@@ -123,7 +123,7 @@ describe('greek-verb-paradigm.test.js', () => {
     expect(renderedTable.rows[2].cells[2].fullMatch).toBeTruthy() // ἐβουλεύσω
   })
 
-  it.skip('5 - no matchesx - checked Verb Paradigm5', async () => {
+  it('5 - no matchesx - checked Verb Paradigm5', async () => {
   })
 
   it('6 - checked Verb Paradigm6 - ἀγάγοις', async () => {
@@ -232,7 +232,6 @@ describe('greek-verb-paradigm.test.js', () => {
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy()
     expect(renderedTable.rows[1].cells[4].fullMatch).toBeFalsy()
     expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy()
-    expect(renderedTable.rows[1].cells[6].fullMatch).toBeFalsy()
 
     /// βουλευθῶ
     inflectionsViewSet = await BaseTestHelp.getInflectionSet('βουλευθῶ', Constants.LANG_GREEK)
@@ -253,7 +252,6 @@ describe('greek-verb-paradigm.test.js', () => {
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeTruthy() // βουλευθῶ
     expect(renderedTable.rows[1].cells[4].fullMatch).toBeFalsy()
     expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy()
-    expect(renderedTable.rows[1].cells[6].fullMatch).toBeFalsy()
 
     /// βουλευθείην
     inflectionsViewSet = await BaseTestHelp.getInflectionSet('βουλευθείην', Constants.LANG_GREEK)
@@ -274,7 +272,6 @@ describe('greek-verb-paradigm.test.js', () => {
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy()
     expect(renderedTable.rows[1].cells[4].fullMatch).toBeTruthy() // βουλευθείην
     expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy()
-    expect(renderedTable.rows[1].cells[6].fullMatch).toBeFalsy()
 
     /// ἐγράφην
     inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἐγράφην', Constants.LANG_GREEK)
@@ -295,7 +292,6 @@ describe('greek-verb-paradigm.test.js', () => {
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy()
     expect(renderedTable.rows[1].cells[4].fullMatch).toBeFalsy()
     expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy()
-    expect(renderedTable.rows[1].cells[6].fullMatch).toBeTruthy() //ἐγράφην
   })
 
   it('11 - checked Verb Paradigm11 - λελοίπῃ', async () => {
@@ -990,10 +986,10 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
     expect(renderedTable.rows[5].cells[2].fullMatch).toBeTruthy() // ἵεσθον
   })
 
-  it.skip('34 - no matches - checked Verb Paradigm 34', async () => {
+  it('34 - no matches - checked Verb Paradigm 34', async () => {
   })
 
-  it.skip('35 - no matches - checked Verb Paradigm 35', async () => {
+  it('35 - no matches - checked Verb Paradigm 35', async () => {
   })
 
   it('36 - checked Verb Paradigm 36 - διδῷ', async () => {
@@ -1449,30 +1445,27 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
     })
 
     const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
-    expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy()
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // no derivtype
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeTruthy()
 
   })
 
-  it('55 - checked Verb Paradigm 11 - εἷμαι', async () => {
+  it('55 - checked Verb Paradigm 12 - εἷμαι', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('εἷμαι', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
-    expect(inflectionsViewSet.matchingViews.length).toEqual(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
 
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[1],
+      view: inflectionsViewSet.matchingViews[0],
       viewName: 'GreekVerbParadigmView',
-      viewTitle: 'Perfect Active System',
-      paradigmID: 'verbpdgm11',
-      hasSuppParadigms: true,
-      suppParadigms: [ 'verbpdgm63' ]
+      viewTitle: "Perfect System Middle-Passive: indicative, infinitive, participle",
+      paradigmID: 'verbpdgm12',
+      hasSuppParadigms: false
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[1].render().wideTable
-    expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // no match, b/c of tense
-    expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // no match b/c of tense
-
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy()
   })
 
   it('56 - checked Verb Paradigm 39 - ἐπτάμην', async () => {
@@ -1495,4 +1488,42 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
 
   })
 
+  it('57 - checked Verb Paradigm 11 derivtype - λέλυκα', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('λέλυκα', Constants.LANG_GREEK)
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'Perfect Active System',
+      paradigmID: 'verbpdgm11',
+      hasSuppParadigms: true,
+      suppParadigms: [ 'verbpdgm63' ]
+    })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy()
+    expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() //derivtype reg_conj
+  })
+
+  it('58 - checked Verb Paradigm 11 derivtype - λέλοιπα', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('λέλοιπα', Constants.LANG_GREEK)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'Perfect Active System',
+      paradigmID: 'verbpdgm11',
+      hasSuppParadigms: true,
+      suppParadigms: [ 'verbpdgm63' ]
+    })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // no derivtype
+    expect(renderedTable.rows[1].cells[3].fullMatch).toBeTruthy()
+  })
 })
