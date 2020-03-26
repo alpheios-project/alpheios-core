@@ -16056,8 +16056,6 @@ class LatinView extends _views_lib_view_js__WEBPACK_IMPORTED_MODULE_1__["default
   createTable () {
     this.table = new _views_lib_table_js__WEBPACK_IMPORTED_MODULE_3__["default"]([this.features.declensions, this.features.genders,
       this.features.types, this.features.numbers, this.features.cases])
-
-    console.info('createTable - this.table', this.table)
     let features = this.table.features // eslint-disable-line prefer-const
     features.columns = [
       this.constructor.model.typeFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.declension),
@@ -18552,7 +18550,6 @@ class Table {
     emptyColumnsHidden: true,
     noSuffixMatchesHidden: true
   }) {
-    console.info('Table construct start', options)
     this.morphemes = morphemes
 
     this.hasHeaders = this.features.hasColumnFeatures
@@ -18578,7 +18575,6 @@ class Table {
     } else {
       this.showNoSuffixMatchesGroups()
     }
-    console.info('Table construct this.options', this.options)
     return this
   }
 
