@@ -6,7 +6,7 @@ let data = new ImportData(Models.GreekLanguageModel, 'morpheusgrc') // eslint-di
 // Morpheus uses 'irregular' as pofs for some pronouns, override with lemma
 // the dictionary entry's conjugation if it's available
 data.inflectionOverrides = {
-  [Models.Feature.types.part]: (i,ls) => i[Models.Feature.types.part].value === Models.Constants.TYPE_IRREGULAR && ls.filter( l => l.features[Models.Feature.types.part].value === Models.Constants.POFS_PRONOUN )
+  [Models.Feature.types.part]: (i, ls) => i[Models.Feature.types.part].value === Models.Constants.TYPE_IRREGULAR && ls.filter(l => l.features[Models.Feature.types.part].value === Models.Constants.POFS_PRONOUN)
 }
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
@@ -29,8 +29,8 @@ data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
   } else if (propertyName === 'comp' && propertyValue === 'positive') {
     propertyValues = []
   } else if (propertyName === 'pofs' && propertyValue === 'irregular' &&
-    inputElem.hdwd && inputElem.hdwd.$ === 'τίς' ) {
-    propertyValues = [ Models.Constants.POFS_PRONOUN ]
+    inputElem.hdwd && inputElem.hdwd.$ === 'τίς') {
+    propertyValues = [Models.Constants.POFS_PRONOUN]
   } else {
     propertyValues = [propertyValue]
   }

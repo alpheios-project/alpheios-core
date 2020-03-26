@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import { shallowMount, mount } from '@vue/test-utils'
-import WideSupplementalInflectionsTable from '@/vue/components/inflections-supp-table-wide.vue'
+import WideSupplementalInflectionsTable from '@/vue/components/inflections/inflections-supp-table-wide.vue'
 
 import { ViewSetFactory, LanguageDatasetFactory } from 'alpheios-inflection-tables'
 import { ClientAdapters } from 'alpheios-client-adapters'
