@@ -1644,6 +1644,35 @@ a:not([href]):not([tabindex]).alpheios-popup__providers-link:hover {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.infl-prdgm-tbl {
+  display: table;
+  border-top: 1px solid gray;
+  border-left: 1px solid gray;
+  margin-bottom: 30px;
+}
+.infl-prdgm-tbl__row {
+  display: table-row;
+}
+.infl-prdgm-tbl__cell {
+  display: table-cell;
+  padding: 2px 5px;
+  border-right: 1px solid gray;
+  border-bottom: 1px solid gray;
+}
+.infl-prdgm-tbl__cell--label {
+  font-weight: 700;
+}
+.alpheios-inflections__title {
+  cursor: pointer;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
 .infl-suff-footnote-link {
   position: relative;
 }
@@ -1961,32 +1990,6 @@ div.alpheios-inflections__table-ctrl-cont div.alpheios-inflections__table-ctrl-c
   color: var(--alpheios-inflect-button-control-color-hover);
   background-color: var(--alpheios-inflect-button-control-bg-hover);
   border-color: var(--alpheios-inflect-button-control-border-color-hover);
-}
-/*
- Calculates a size of text elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
- */
-/*
- Calculates a size of UI elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
- */
-.infl-prdgm-tbl {
-  display: table;
-  border-top: 1px solid gray;
-  border-left: 1px solid gray;
-  margin-bottom: 30px;
-}
-.infl-prdgm-tbl__row {
-  display: table-row;
-}
-.infl-prdgm-tbl__cell {
-  display: table-cell;
-  padding: 2px 5px;
-  border-right: 1px solid gray;
-  border-bottom: 1px solid gray;
-}
-.infl-prdgm-tbl__cell--label {
-  font-weight: 700;
 }
 h3.alpheios-inflections__supp-table-title {
   font-size: 1rem;

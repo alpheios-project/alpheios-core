@@ -531,7 +531,7 @@
 <script>
 import { Constants } from 'alpheios-data-models'
 
-import WideTable from './inflections-table-wide.vue'
+import WideTable from './inflection-browser-table.vue'
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 

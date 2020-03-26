@@ -50,8 +50,7 @@
       </div>
       <template v-else>
         <prerendered-table-wide :collapsed="false" :view="selectedView"></prerendered-table-wide>
-        <sub-tables-wide :collapsed="false" :view="selectedView" @navigate="navigate"></sub-tables-wide>
-
+        
         <div class="alpheios-inflections__supp-tables" v-show="selectedView.hasSuppParadigms">
           <template v-for="paradigm of selectedView.suppParadigms">
             <supp-tables-wide
@@ -72,7 +71,7 @@
 // Subcomponents
 import WidePrerenderedTable from './inflections-table-prerendered.vue'
 import WideTableVue from './inflections-table-wide.vue'
-import WideSubTables from './inflections-subtables-wide.vue'
+
 import WideSuppTable from './inflections-supp-table-wide.vue'
 import WordForms from './wordforms.vue'
 import Logger from '@/lib/log/logger'
@@ -88,7 +87,6 @@ export default {
   components: {
     prerenderedTableWide: WidePrerenderedTable,
     mainTableWideVue: WideTableVue,
-    subTablesWide: WideSubTables,
     suppTablesWide: WideSuppTable,
     wordForms: WordForms
   },
