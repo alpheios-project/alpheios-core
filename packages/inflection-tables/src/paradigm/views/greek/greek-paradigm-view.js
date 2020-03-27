@@ -147,12 +147,26 @@ export default class GreekParadigmView extends GreekView {
       if (prop !== 'role' && prop !== 'value') {
         comparativeFeatures.push(prop)
       }
-    })    
+    })
 
     return comparativeFeatures
   }
 
   defineCellFullMatch (cell) {
+    /**
+     * the following default logic is normally used for paradigm cell matches
+     *   if the cell feature is a lemma, then it must be present for the inflection and match
+     *   if the cell feature is either NOT in the inflection or the inflection DOES
+     *   has that feature and one of the inflection feature's values matches
+     * sometimes we want to be able to specify that a feature must be present in the
+     *   the inflection data AND the cell data in order to match, in that case, the cell feature value
+     *   should be specified with a "*" as the first character which will mean if the inflection data doesn't have that
+     *   feature then it cannot be considered a full match
+     * and sometimes we want to be able to specify that a feature can be skipped and still produce a full match
+     *   if the inflection doesn't have that feature. In this case the cell feature value can be set to "!"
+     *   this will prevent words which have that feature from matching on the value  and will allow those
+     *   that don't have that feature to match on it
+     */
     if (cell.role !== 'data') { return }
     if (this.homonym && this.homonym.inflections) {
       const comparativeFeatures = this.defineComparativeFeatures(cell)
@@ -161,14 +175,29 @@ export default class GreekParadigmView extends GreekView {
         let fullMatch = true
 
         for (const feature of comparativeFeatures) {
-          if (inflection.hasOwnProperty(feature) || (feature === 'lemma')) {
+          let requiredFeatureInInflection = false
+          if (cell[feature].value && cell[feature].value.match(/^\*/))   {
+            requiredFeatureInInflection = true
+            let value = cell[feature].getValue(cell[feature].value)
+            //value.value = value.value.replace(/^\*/,'')
+          }
+          let skipRequireMatch = false
+          if (cell[feature].value && cell[feature].value === '!') {
+            skipRequireMatch = true
+          }
+          if (skipRequireMatch && ! inflection.hasOwnProperty(feature)) {
+            continue
+          } else if (requiredFeatureInInflection || inflection.hasOwnProperty(feature) || (feature === 'lemma')) {
 
             if (feature === 'lemma') {
               fullMatch = fullMatch && inflection.word && this.constructor.model.compareWords(cell[feature],inflection.word.value)
+            } else if (requiredFeatureInInflection && ! inflection[feature]) {
+              fullMatch = false
+            } else if (requiredFeatureInInflection) {
+              fullMatch = fullMatch && cell[feature].value.replace(/^\*/,'') === inflection[feature].value
             } else {
               fullMatch = fullMatch && cell[feature].hasValues(inflection[feature].values)
             }
-
             if (!fullMatch) {
               break
             } // If at least one feature does not match, there is no reason to check others
