@@ -1559,4 +1559,54 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
     })
   })
 
+  it('61 - checked Verb Paradigm 30 - ἔθηκα', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἔθηκα', Constants.LANG_GREEK)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'τίθημι: Aorist System Active',
+      paradigmID: 'verbpdgm30',
+      hasSuppParadigms: true,
+      suppParadigms: [ 'verbpdgm60' ]
+    })
+  })
+
+  it('62 - checked Verb Paradigm 30 - ἔθηκε', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἔθηκε', Constants.LANG_GREEK)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'τίθημι: Aorist System Active',
+      paradigmID: 'verbpdgm30',
+      hasSuppParadigms: true,
+      suppParadigms: [ 'verbpdgm60' ]
+    })
+  })
+
+  it('63 - checked Verb Paradigm 29 - τιθεῖτο', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('τιθεῖτο', Constants.LANG_GREEK)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'τίθημι: Present System Middle-Passive',
+      paradigmID: 'verbpdgm29',
+      hasSuppParadigms: true,
+      suppParadigms: [ 'verbpdgm65' ]
+    })
+  })
+
+
+
 })
