@@ -1542,4 +1542,21 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
       suppParadigms: [ 'verbpdgm65' ]
     })
   })
+
+  it('60 - checked Verb Paradigm 46 - ἔσεσθαι', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἔσεσθαι', Constants.LANG_GREEK)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'εἰμί (be): Present System and Future',
+      paradigmID: 'verbpdgm46',
+      hasSuppParadigms: true,
+      suppParadigms: [ 'verbpdgm57', 'verbpdgm65' ]
+    })
+  })
+
 })
