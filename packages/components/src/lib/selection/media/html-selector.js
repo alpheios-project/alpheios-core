@@ -234,6 +234,12 @@ export default class HTMLSelector extends MediaSelector {
     }
     let focus = selection.focusNode // A node where the end of a selection
     let anchorText = anchor.data // A text of an anchor node?
+    /*
+    We'll store `selection.anchorNode.data` for later use because if selection will be recreated
+    in case of an invalid anchor a data property of the anchorNode in a selection will be undefined.
+    We will use this stored value instead of it.
+     */
+    const anchorNodeData = selection.anchorNode.data
     let ro // An offset from the beginning of a selection
     let invalidAnchor = false
     // firefox's implementation of getSelection is buggy and can result
@@ -341,8 +347,8 @@ export default class HTMLSelector extends MediaSelector {
       }
     }
 
-    const prefix = selection.anchorNode.data.substr(0, textSelector.start).trim().replace(/\n/g, '')
-    const suffix = selection.anchorNode.data.substr(textSelector.end).trim().replace(/\n/g, '')
+    const prefix = anchorNodeData.substr(0, textSelector.start).trim().replace(/\n/g, '')
+    const suffix = anchorNodeData.substr(textSelector.end).trim().replace(/\n/g, '')
     textSelector.createTextQuoteSelector(prefix, suffix)
     return textSelector
   }

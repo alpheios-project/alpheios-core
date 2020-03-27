@@ -62,6 +62,7 @@ class AlpheiosTuftsAdapter extends BaseAdapter {
         }
       }
 
+      console.info('Tuft results are', res)
       if (res) {
         const transformAdapter = new TransformAdapter(this)
 
