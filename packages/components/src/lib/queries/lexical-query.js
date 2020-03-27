@@ -129,7 +129,6 @@ export default class LexicalQuery extends Query {
           wordref: this.selector.data.treebank.word.ref
         }
       })
-      console.info('alpheiosTreebank result is:', adapterTreebankRes)
       if (adapterTreebankRes.result) {
         this.annotatedHomonym = adapterTreebankRes.result
       }
@@ -163,7 +162,6 @@ export default class LexicalQuery extends Query {
           }
         })
       }
-      console.info('Morphology result is', adapterMorphRes)
 
       if (adapterMorphRes.errors.length > 0) {
         adapterMorphRes.errors.forEach(error => {

@@ -107,7 +107,8 @@
       "DEVELOPMENT_MODE_BUILD": true
     },
     "testPathIgnorePatterns": [
-      "<rootDir>/node_modules/"
+      "<rootDir>/node_modules/",
+      "<rootDir>/tests/inflections/"
     ],
     "transform": {
       "^.+\\.jsx?$": "babel-jest",
