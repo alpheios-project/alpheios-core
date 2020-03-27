@@ -23,6 +23,7 @@ export default class Lexis extends Module {
    *        UI controller.
    */
   constructor (store, api, config = {}) {
+    console.info('Lexis constructor')
     super(store, api, config)
     // APIs provided by the UI controller
     this._appApi = api.app
@@ -32,6 +33,8 @@ export default class Lexis extends Module {
     this._lastTextSelector = null
     // A current TreebankDataItem
     this._treebankDataItem = null
+    // Whether a treebank service has been loaded
+    this._treebankServiceLoaded = false
     // Add an iframe with CEDICT service
     this.createIframe()
 
@@ -44,6 +47,10 @@ export default class Lexis extends Module {
     try {
       this._treebankDataItem = new TreebankDataItem(body)
       store.commit('lexis/setTreebankInfo', this._treebankDataItem)
+      this.constructor.refreshUntilLoaded(this._treebankDataItem.provider).then(() => {
+        this._treebankServiceLoaded = true
+        console.info('Treebank service has been loaded')
+      })
     } catch (error) {
       // Treebank info is not present on a page or is incorrect. Treebank data will not be used.
     }
@@ -63,6 +70,33 @@ export default class Lexis extends Module {
     store.commit('lexis/setCedictUninitializedState')
     store.commit('lexis/showCedictNotification')
   }
+
+  static timeout (ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
+
+  static async refreshUntilLoaded (provider) {
+    console.info('refreshUntilLoaded')
+    // Need to refresh a view only for treebank V3 or higher
+    let iCount = 20
+    do {
+      const result = await ClientAdapters.morphology.arethusaTreebank({
+        method: 'refreshView',
+        params: {
+          provider
+        }
+      })
+      console.info('refreshUntilLoaded, result returned is:', result)
+      if (result.errors.length === 0) {
+        console.info('refreshUntilLoaded succeeded:', result)
+        return
+      } else {
+        console.error('refreshUntilLoaded failed', result.errors)
+      }
+      await this.timeout(100)
+      console.info('refreshUntilLoaded, timeout expired')
+    } while (iCount--)
+  }
 }
 
 Lexis.store = (moduleInstance) => {
@@ -75,7 +109,8 @@ Lexis.store = (moduleInstance) => {
       cedictLoadingInProgress: false,
       cedictDisplayNotification: false,
       hasTreebankData: false,
-      treebankSrc: null
+      treebankSrc: null,
+      treebankRefreshDT: 0
     },
 
     mutations: {
@@ -109,6 +144,7 @@ Lexis.store = (moduleInstance) => {
        * @param {TreebankDataItem} treebankDataItem - A treebank data item element
        */
       setTreebankInfo (state, treebankDataItem) {
+        console.info(`setTreebankInfo, url is ${treebankDataItem.fullUrl}`)
         state.hasTreebankData = treebankDataItem.hasTreebankData
         state.treebankSrc = treebankDataItem.fullUrl
         // Previous business logic for determining if there is a treebank data was:
@@ -136,8 +172,14 @@ Lexis.store = (moduleInstance) => {
       },
 
       resetTreebankInfo (state) {
+        console.info('resetTreebankInfo')
         state.hasTreebankData = false
         state.treebankSrc = null
+      },
+
+      setTreebankRefreshDT (state) {
+        console.info('setTreebankRefreshDT')
+        state.treebankRefreshDT = Date.now()
       }
     }
   }
@@ -146,6 +188,7 @@ Lexis.store = (moduleInstance) => {
 Lexis.api = (moduleInstance, store) => {
   return {
     getSelectedText: (event, domEvent) => {
+      console.info('getSelectedText')
       if (moduleInstance._appApi.isGetSelectedTextEnabled(domEvent)) {
         const defaultLangCode = moduleInstance._appApi.getDefaultLangCode()
         const htmlSelector = new HTMLSelector(event, defaultLangCode)
@@ -208,6 +251,7 @@ Lexis.api = (moduleInstance, store) => {
       /*
       When word is entered in the lookup component, it is out of context and we cannot get any treebank data on it.
        */
+      console.info('lookupText')
       moduleInstance._treebankDataItem = null
       store.commit('lexis/resetTreebankInfo')
 
@@ -253,7 +297,8 @@ Lexis.api = (moduleInstance, store) => {
     },
 
     refreshTreebankView: () => {
-      if (moduleInstance._treebankDataItem && moduleInstance._treebankDataItem.version >= 3) {
+      console.info('refreshTreebankView')
+      if (moduleInstance._treebankDataItem) {
         // Need to refresh a view only for treebank V3 or higher
         ClientAdapters.morphology.arethusaTreebank({
           method: 'refreshView',
@@ -261,6 +306,7 @@ Lexis.api = (moduleInstance, store) => {
             provider: moduleInstance._treebankDataItem.provider
           }
         })
+        store.commit('lexis/setTreebankRefreshDT')
       }
     }
   }

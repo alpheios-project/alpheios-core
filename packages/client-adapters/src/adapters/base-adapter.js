@@ -1,6 +1,6 @@
 import axios from 'axios'
 import AdapterError from '@clAdapters/errors/adapter-error'
-import CedictError from '@clAdapters/errors/remote-error.js'
+import RemoteError from '@clAdapters/errors/remote-error.js'
 
 import L10n from '@clAdapters/l10n/l10n'
 import Locales from '@clAdapters/locales/locales.js'
@@ -28,8 +28,8 @@ class BaseAdapter {
     this.errors.push(error)
   }
 
-  addCedictError (errorCode, message) {
-    const error = new CedictError(this.config.category, this.config.adapterName, this.config.method, errorCode, message)
+  addRemoteError (errorCode, message) {
+    const error = new RemoteError(this.config.category, this.config.adapterName, this.config.method, errorCode, message)
     this.errors.push(error)
   }
 

@@ -10079,7 +10079,7 @@ class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPA
       try {
         response = await this._messagingService.sendRequestTo(cedictConfig.name, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["RequestMessage"](requestBody))
       } catch (response) {
-        this.addCedictError(response.errorCode, response.body.message)
+        this.addRemoteError(response.errorCode, response.body.message)
         return
       }
 
@@ -10107,7 +10107,7 @@ class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPA
       try {
         response = await this._messagingService.sendRequestTo(cedictConfig.name, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["RequestMessage"](requestBody), timeout)
       } catch (response) {
-        this.addCedictError(response.errorCode, response.body.message)
+        this.addRemoteError(response.errorCode, response.body.message)
       }
     } catch (error) {
       this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))

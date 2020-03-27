@@ -1168,7 +1168,7 @@ if you want to create a different configuration of a UI controller.
     this.state.changeTab(tabName)
 
     if (tabName === 'treebank') {
-      // We need to refresh a treebank view if treebank tab became visible
+      // We need to refresh a treebank view if its tab becomes visible. Otherwise a view may not be displayed correctly
       this.api.lexis.refreshTreebankView()
     }
     const isPortrait = this.store.state.panel && (this.store.state.panel.orientation === Platform.orientations.PORTRAIT)

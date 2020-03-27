@@ -67,7 +67,7 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
       try {
         response = await this._messagingService.sendRequestTo(cedictConfig.name, new RequestMessage(requestBody))
       } catch (response) {
-        this.addCedictError(response.errorCode, response.body.message)
+        this.addRemoteError(response.errorCode, response.body.message)
         return
       }
 
@@ -95,7 +95,7 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
       try {
         response = await this._messagingService.sendRequestTo(cedictConfig.name, new RequestMessage(requestBody), timeout)
       } catch (response) {
-        this.addCedictError(response.errorCode, response.body.message)
+        this.addRemoteError(response.errorCode, response.body.message)
       }
     } catch (error) {
       this.addError(this.l10n.messages.MORPH_UNKNOWN_ERROR.get(error.mesage))

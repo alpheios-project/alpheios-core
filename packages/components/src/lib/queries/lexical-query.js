@@ -121,30 +121,18 @@ export default class LexicalQuery extends Query {
   * iterations () {
     const formLexeme = new Lexeme(new Lemma(this.selector.normalizedText, this.selector.languageID), [])
     if (this.selector.data.treebank && this.selector.data.treebank.word) {
-      let adapterTreebankRes
-      if (this.selector.data.treebank.word.version && this.selector.data.treebank.word.version >= 3) {
-        adapterTreebankRes = yield ClientAdapters.morphology.arethusaTreebank({
-          method: 'getHomonym',
-          clientId: this.clientId,
-          params: {
-            languageID: this.selector.languageID,
-            word: this.selector.normalizedText,
-            provider: this.selector.data.treebank.word.provider,
-            sentenceId: this.selector.data.treebank.word.sentenceId,
-            wordId: this.selector.data.treebank.word.wordId,
-            wordref: `${this.selector.data.treebank.word.doc}#${this.selector.data.treebank.word.sentenceId}-${this.selector.data.treebank.word.wordId}`
-          }
-        })
-      } else {
-        adapterTreebankRes = yield ClientAdapters.morphology.alpheiosTreebank({
-          method: 'getHomonym',
-          clientId: this.clientId,
-          params: {
-            languageID: this.selector.languageID,
-            wordref: `${this.selector.data.treebank.word.doc}#${this.selector.data.treebank.word.sentenceId}-${this.selector.data.treebank.word.wordId}`
-          }
-        })
-      }
+      const adapterTreebankRes = yield ClientAdapters.morphology.arethusaTreebank({
+        method: 'getHomonym',
+        clientId: this.clientId,
+        params: {
+          languageID: this.selector.languageID,
+          word: this.selector.normalizedText,
+          provider: this.selector.data.treebank.word.provider,
+          sentenceId: this.selector.data.treebank.word.sentenceId,
+          wordId: this.selector.data.treebank.word.wordId,
+          wordref: `${this.selector.data.treebank.word.doc}#${this.selector.data.treebank.word.sentenceId}-${this.selector.data.treebank.word.wordId}`
+        }
+      })
       if (adapterTreebankRes.result) {
         this.annotatedHomonym = adapterTreebankRes.result
       }

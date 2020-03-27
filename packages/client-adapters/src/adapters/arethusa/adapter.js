@@ -5,7 +5,7 @@ import ImportData from '@clAdapters/transformers/import-morph-data.js'
 
 import DefaultConfig from '@clAdapters/adapters/alpheiostb/config.json'
 import {
-  MessagingService, WindowIframeDestination as Destination, RequestMessage
+  MessagingService, WindowIframeDestination as Destination, RequestMessage, ResponseMessage
 } from 'alpheios-messaging/dist/dev/alpheios-messaging.js'
 
 class ArethusaTreebankAdapter extends BaseAdapter {
@@ -27,19 +27,26 @@ class ArethusaTreebankAdapter extends BaseAdapter {
   }
 
   async _fetchArethusaData (targetURL, sentenceId, wordId) {
+    console.info('_fetchArethusaData')
     const config = this._getMessageConfig(targetURL)
     const svc = this.getMessagingService(config)
     const requestBodyNav = {
       gotoSentence: { sentenceId: sentenceId }
     }
-    await svc.sendRequestTo(config.name, new RequestMessage(requestBodyNav))
+    let message = new RequestMessage(requestBodyNav)
+    console.info('sending a gotoSentence request:', message)
+    const response = await svc.sendRequestTo(config.name, message)
+    console.info('response from a gotoSentence request:', response)
     const requestBodyMorph = {
       getMorph: {
         sentenceId: sentenceId,
         wordId: wordId
       }
     }
+    message = new RequestMessage(requestBodyMorph)
+    console.info('sending a getMorph request:', message)
     const responseMessage = await svc.sendRequestTo(config.name, new RequestMessage(requestBodyMorph))
+    console.info('response from a getMorph request:', responseMessage)
     return responseMessage.body
   }
 
@@ -58,7 +65,24 @@ class ArethusaTreebankAdapter extends BaseAdapter {
     const config = this._getMessageConfig(provider)
     const svc = this.getMessagingService(config)
     const requestBody = { refreshView: { } }
-    svc.sendRequestTo(config.name, new RequestMessage(requestBody))
+    const message = new RequestMessage(requestBody)
+    console.info('sending a refreshView request:', message)
+    let response
+    try {
+      response = await svc.sendRequestTo(config.name, new RequestMessage(requestBody))
+    } catch (response) {
+      console.info('Response error:', response)
+      if (response instanceof ResponseMessage) {
+        console.info('A remote error occurred')
+        this.addRemoteError(response.errorCode, response.body.message)
+      } else {
+        console.info('A generic error occurred')
+        this.addError(response.message)
+      }
+      return
+    }
+    console.info('response from a refreshView request:', response)
+    return response.body
   }
 
   /**
