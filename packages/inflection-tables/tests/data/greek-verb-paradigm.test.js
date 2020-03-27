@@ -1526,4 +1526,37 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // no derivtype
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeTruthy()
   })
+
+  it('59 - checked Verb Paradigm 31 mediopassive - θέσθαι', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('θέσθαι', Constants.LANG_GREEK)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'τίθημι: Aorist System Middle',
+      paradigmID: 'verbpdgm31',
+      hasSuppParadigms: true,
+      suppParadigms: [ 'verbpdgm65' ]
+    })
+  })
+
+  it('60 - checked Verb Paradigm 46 - ἔσεσθαι', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἔσεσθαι', Constants.LANG_GREEK)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'εἰμί (be): Present System and Future',
+      paradigmID: 'verbpdgm46',
+      hasSuppParadigms: true,
+      suppParadigms: [ 'verbpdgm57', 'verbpdgm65' ]
+    })
+  })
+
 })
