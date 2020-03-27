@@ -4,7 +4,7 @@
 import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
 import BaseTestHelp from '@tests/helpclasses/base-test-help'
 
-import Inflections from '@/vue/components/inflections.vue'
+import Inflections from '@/vue/components/inflections/inflections.vue'
 import Vuex from 'vuex'
 import Vue from 'vue/dist/vue'
 

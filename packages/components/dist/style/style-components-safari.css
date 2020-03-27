@@ -1070,11 +1070,11 @@ h4.alpheios-principal-parts__groupitem {
   margin-left: 0.5em !important;
   margin-top: 0.5em !important;
 }
-div.alpheios-inflections-list__inline {
+.alpheios-inflections-list__inflections div.alpheios-inflections-list__inline {
   display: flex;
   flex-direction: row !important;
 }
-div.alpheios-inflections-list__inline span {
+.alpheios-inflections-list__inflections div.alpheios-inflections-list__inline span {
   padding-right: 0.25em !important;
 }
 div.alpheios-inflections-list__block {
@@ -1644,6 +1644,35 @@ a:not([href]):not([tabindex]).alpheios-popup__providers-link:hover {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.infl-prdgm-tbl {
+  display: table;
+  border-top: 1px solid gray !important;
+  border-left: 1px solid gray !important;
+  margin-bottom: 30px !important;
+}
+.infl-prdgm-tbl__row {
+  display: table-row;
+}
+.infl-prdgm-tbl__cell {
+  display: table-cell;
+  padding: 2px 5px !important;
+  border-right: 1px solid gray !important;
+  border-bottom: 1px solid gray !important;
+}
+.infl-prdgm-tbl__cell--label {
+  font-weight: 700 !important;
+}
+.alpheios-inflections__title {
+  cursor: pointer !important;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
 .infl-suff-footnote-link {
   position: relative !important;
 }
@@ -1961,32 +1990,6 @@ div.alpheios-inflections__table-ctrl-cont div.alpheios-inflections__table-ctrl-c
   color: var(--alpheios-inflect-button-control-color-hover) !important;
   background-color: var(--alpheios-inflect-button-control-bg-hover) !important;
   border-color: var(--alpheios-inflect-button-control-border-color-hover) !important;
-}
-/*
- Calculates a size of text elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
- */
-/*
- Calculates a size of UI elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
- */
-.infl-prdgm-tbl {
-  display: table;
-  border-top: 1px solid gray !important;
-  border-left: 1px solid gray !important;
-  margin-bottom: 30px !important;
-}
-.infl-prdgm-tbl__row {
-  display: table-row;
-}
-.infl-prdgm-tbl__cell {
-  display: table-cell;
-  padding: 2px 5px !important;
-  border-right: 1px solid gray !important;
-  border-bottom: 1px solid gray !important;
-}
-.infl-prdgm-tbl__cell--label {
-  font-weight: 700 !important;
 }
 h3.alpheios-inflections__supp-table-title {
   font-size: 1rem !important;

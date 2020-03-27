@@ -10088,7 +10088,7 @@ let data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models
 // Morpheus uses 'irregular' as pofs for some pronouns, override with lemma
 // the dictionary entry's conjugation if it's available
 data.inflectionOverrides = {
-  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.part]: (i,ls) => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].TYPE_IRREGULAR && ls.filter( l => l.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].POFS_PRONOUN )
+  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.part]: (i, ls) => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].TYPE_IRREGULAR && ls.filter(l => l.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].POFS_PRONOUN)
 }
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
@@ -10111,8 +10111,8 @@ data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
   } else if (propertyName === 'comp' && propertyValue === 'positive') {
     propertyValues = []
   } else if (propertyName === 'pofs' && propertyValue === 'irregular' &&
-    inputElem.hdwd && inputElem.hdwd.$ === 'τίς' ) {
-    propertyValues = [ alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].POFS_PRONOUN ]
+    inputElem.hdwd && inputElem.hdwd.$ === 'τίς') {
+    propertyValues = [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].POFS_PRONOUN]
   } else {
     propertyValues = [propertyValue]
   }
@@ -10210,7 +10210,7 @@ const data = new _lib__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_mode
 
 // Whitaker's has weird inflection data for conjugation, we prefer
 // the dictionary entry's conjugation if it's available
-data.inflectionOverrides = { [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.conjugation]: (i,ls) => true }
+data.inflectionOverrides = { [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.conjugation]: (i, ls) => true }
 
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
@@ -10649,7 +10649,7 @@ class ImportData {
    */
   overrideInflectionFeatureIfRequired (featureType, inflection, lemmas) {
     if (this.inflectionOverrides[featureType] &&
-        this.inflectionOverrides[featureType](inflection,lemmas)) {
+        this.inflectionOverrides[featureType](inflection, lemmas)) {
       for (const lemma of lemmas.filter(l => l.features[featureType])) {
         inflection.addFeature(lemma.features[featureType])
       }

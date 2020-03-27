@@ -182,7 +182,7 @@
     margin-top: .5em;
   }
 
-  div.alpheios-inflections-list__inline {
+  .alpheios-inflections-list__inflections div.alpheios-inflections-list__inline {
     display: flex;
     flex-direction: row;
     span {
