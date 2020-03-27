@@ -13283,9 +13283,7 @@ class AlpheiosTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
       return
     }
     try {
-      console.info('Sending a request to treebank template at ', server.url)
       const res = await this.fetch(server.url, { type: 'xml' })
-      console.info('getHomonym results are', res)
 
       if (res.constructor.name === 'AdapterError') {
         return
@@ -14773,7 +14771,6 @@ class AlpheiosTuftsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IM
         }
       }
 
-      console.info('Tuft results are', res)
       if (res) {
         const transformAdapter = new _clAdapters_adapters_tufts_transform_adapter__WEBPACK_IMPORTED_MODULE_2__["default"](this)
 

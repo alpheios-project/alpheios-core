@@ -30,11 +30,7 @@ class AlpheiosTreebankAdapter extends BaseAdapter {
       return
     }
     try {
-      console.info('Sending a request to treebank template at ', server.url)
-      //const url = 'https://tools.alpheios.net/exist/rest/db/xq/treebank-getmorph.xq?f=on-the-murder-of-eratosthenes-1-50&w=1-1&clientId=undefined' // Testing only
-      const url = 'https://alpheios-project.github.io/exist/rest/db/xq/treebank-getmorph.xq?f=on-the-murder-of-eratosthenes-1-50&w=1-1&clientId=undefined'
       const res = await this.fetch(server.url, { type: 'xml' })
-      console.info('getHomonym results are', res)
 
       if (res.constructor.name === 'AdapterError') {
         return
