@@ -1070,11 +1070,11 @@ h4.alpheios-principal-parts__groupitem {
   margin-left: 0.5em;
   margin-top: 0.5em;
 }
-div.alpheios-inflections-list__inline {
+.alpheios-inflections-list__inflections div.alpheios-inflections-list__inline {
   display: flex;
   flex-direction: row;
 }
-div.alpheios-inflections-list__inline span {
+.alpheios-inflections-list__inflections div.alpheios-inflections-list__inline span {
   padding-right: 0.25em;
 }
 div.alpheios-inflections-list__block {
