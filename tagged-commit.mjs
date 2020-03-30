@@ -5,7 +5,8 @@ import { execFileSync, execSync } from 'child_process'
 const build = generateBuildNumber()
 console.log(`Starting a ${build} commit`)
 
-const version = `${pkg.version}-${build}`
+const baseVersion = pkg.version.split('-')[0]
+const version = `${baseVersion}-${build}`
 console.log(`Setting a package version to ${version}`)
 let output
 try {

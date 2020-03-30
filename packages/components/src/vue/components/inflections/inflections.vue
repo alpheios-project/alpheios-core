@@ -50,8 +50,7 @@
       </div>
       <template v-else>
         <prerendered-table-wide :collapsed="false" :view="selectedView"></prerendered-table-wide>
-        <sub-tables-wide :collapsed="false" :view="selectedView" @navigate="navigate"></sub-tables-wide>
-
+        
         <div class="alpheios-inflections__supp-tables" v-show="selectedView.hasSuppParadigms">
           <template v-for="paradigm of selectedView.suppParadigms">
             <supp-tables-wide
@@ -70,11 +69,11 @@
 </template>
 <script>
 // Subcomponents
-import WidePrerenderedTable from './inflections-table-prerendered.vue'
-import WideTableVue from './inflections-table-wide.vue'
-import WideSubTables from './inflections-subtables-wide.vue'
-import WideSuppTable from './inflections-supp-table-wide.vue'
-import WordForms from './wordforms.vue'
+import WidePrerenderedTable from '@/vue/components/inflections/inflections-table-prerendered.vue'
+import WideTableVue from '@/vue/components/inflections/inflections-table-wide.vue'
+
+import WideSuppTable from '@/vue/components/inflections/inflections-supp-table-wide.vue'
+import WordForms from '@/vue/components/wordforms.vue'
 import Logger from '@/lib/log/logger'
 
 // Modules support
@@ -88,7 +87,6 @@ export default {
   components: {
     prerenderedTableWide: WidePrerenderedTable,
     mainTableWideVue: WideTableVue,
-    subTablesWide: WideSubTables,
     suppTablesWide: WideSuppTable,
     wordForms: WordForms
   },
@@ -230,7 +228,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../styles/variables";
+  @import "../../../styles/variables";
 
   h4.alpheios-inflections__additional_title {
     line-height: 1.6;

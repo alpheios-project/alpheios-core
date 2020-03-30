@@ -2507,25 +2507,29 @@ for the current node
 
   /**
    * Determines a class of a given word (pronoun) by finding a matching word entry(ies)
-   * in a pronoun source info (`forms`) and getting a single or multiple classes of those entries.
-   * Some morphological analyzers provide class information that is unreliable or do not
-   * provide class information at all. However, class information is essential in
-   * deciding in what table should pronouns be grouped. For this, we have to
-   * determine pronoun classes using this method.
+in a pronoun source info (`forms`) and getting a single or multiple classes of those entries.
+Some morphological analyzers provide class information that is unreliable or do not
+provide class information at all. However, class information is essential in
+deciding in what table should pronouns be grouped. For this, we have to
+determine pronoun classes using this method.
    *
    * @param {Form[]} forms - An array of known forms of pronouns.
    * @param {string} word - A word we need to find a matching class for.
+   * @param hdwd
    * @param {boolean} normalize - Whether normalized forms of words shall be used for comparison.
    * @returns {Feature} Matching classes found within a Feature objects. If no matching classes found,
    * returns undefined.
    */
-  static getPronounClasses (forms, word, normalize = true) {
+  static getPronounClasses (forms, word, hdwd, normalize = true) {
     // eslint-disable-next-line prefer-const
     let matchingValues = new Set() // Will eliminate duplicated values
     const matchingForms = forms.filter(
       form => {
         let match = false
-        if (form.value) {
+        // the following test intential looks for an exact equality on the headword rather than
+        // using compareWord because exact match on diacritics matters -- the interrogative and indefinite
+        // pronouns only differ by diacritics
+        if (form.value && (!form.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.hdwd] || (form.features[_feature_js__WEBPACK_IMPORTED_MODULE_3__["default"].types.hdwd].value === hdwd))) {
           match = GreekLanguageModel.compareWords(form.value, word, normalize)
         }
         return match

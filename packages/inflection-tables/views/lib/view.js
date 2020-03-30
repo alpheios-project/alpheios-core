@@ -277,7 +277,7 @@ export default class View {
   }
 
   get isNoSuffixMatchesGroupsHidden () {
-    return this.table.options.noSuffixMatchesHidden
+    return this.table.options ? this.table.options.noSuffixMatchesHidden : null
   }
 
   /**

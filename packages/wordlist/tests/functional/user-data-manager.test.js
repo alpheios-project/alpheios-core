@@ -658,7 +658,7 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
 
-  it.skip('18 UserDataManager - deleteMany method (source = local) deletes all wordItems only from local', async () => {
+  it('18 UserDataManager - deleteMany method (source = local) deletes all wordItems only from local', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -691,7 +691,7 @@ describe('user-data-manager.test.js', () => {
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
   }, 50000)
 
-  it.skip('19 UserDataManager - deleteMany method (source = remote) deletes all wordItems only from remote', async () => {
+  it('19 UserDataManager - deleteMany method (source = remote) deletes all wordItems only from remote', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
@@ -725,7 +725,7 @@ describe('user-data-manager.test.js', () => {
   }, 50000)
 
 
-  it.skip('20 UserDataManager - query with syncDelete parameter will delete items from local that are absent in remote', async () => {
+  it('20 UserDataManager - query with syncDelete parameter will delete items from local that are absent in remote', async () => {
     let udm = new UserDataManager(auth)
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })

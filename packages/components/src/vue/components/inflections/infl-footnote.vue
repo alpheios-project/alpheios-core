@@ -182,7 +182,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "../../styles/variables";
+  @import "../../../styles/variables";
 
   .infl-suff-footnote-link {
     position: relative;

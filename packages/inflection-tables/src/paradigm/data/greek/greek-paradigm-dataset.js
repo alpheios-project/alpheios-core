@@ -158,34 +158,34 @@ export default class GreekParadigmDataset extends LanguageDataset {
     const verbParadigmTables = GreekParadigmData.verbParadigmTables
     const verbParticipleParadigmTables = GreekParadigmData.verbParticipleParadigmTables
     const verbAndParticipleParadigmTables = new Map([...verbParadigmTables, ...verbParticipleParadigmTables])
-    
+
     const partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_VERB_PARTICIPLE)
     const paradigms = this.setVerbParadigmData(
       partOfSpeech, verbParticipleParadigmTables,
       papaparse.parse(GreekParadigmData.verbParticipleParadigmRules, { skipEmptyLines: true }).data, verbAndParticipleParadigmTables)
-    
+
     this.addParadigms(partOfSpeech, paradigms)
   }
 
   loadNounParadigmData () {
     const nounParadigmTables = GreekParadigmData.nounParadigmTables
-    
+
     const partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_NOUN)
     const paradigms = this.setNounParadigmData(
       partOfSpeech, nounParadigmTables,
       papaparse.parse(GreekParadigmData.nounParadigmRules, { skipEmptyLines: true }).data, nounParadigmTables)
-    
+
     this.addParadigms(partOfSpeech, paradigms)
   }
 
   loadAdjectiveParadigmData () {
     const adjectiveParadigmTables = GreekParadigmData.adjectiveParadigmTables
-    
+
     const partOfSpeech = this.typeFeatures.get(Feature.types.part).createFeature(Constants.POFS_ADJECTIVE)
     const paradigms = this.setNounParadigmData(
       partOfSpeech, adjectiveParadigmTables,
       papaparse.parse(GreekParadigmData.adjectiveParadigmRules, { skipEmptyLines: true }).data, adjectiveParadigmTables)
-    
+
     this.addParadigms(partOfSpeech, paradigms)
   }
 
@@ -223,7 +223,7 @@ export default class GreekParadigmDataset extends LanguageDataset {
   }
 
   createInflectionSet (pofsValue, inflections, options) {
-    
+
     let inflectionSet = new InflectionSet(pofsValue, this.languageID) // eslint-disable-line prefer-const
     inflectionSet.inflections = inflections.filter(i => i.constraints.implemented === true)
     inflectionSet.isImplemented = inflectionSet.inflections.length > 0
@@ -233,7 +233,7 @@ export default class GreekParadigmDataset extends LanguageDataset {
       return inflectionSet
     }
 
-    if (inflectionSet.isImplemented) {      
+    if (inflectionSet.isImplemented) {
       const paradigmBased = inflections.some(i => i.constraints.paradigmBased)
       if (paradigmBased) {
         const paradigms = sourceSet.getMatchingItems(Paradigm, inflections)

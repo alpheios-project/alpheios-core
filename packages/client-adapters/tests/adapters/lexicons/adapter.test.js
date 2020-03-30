@@ -17,7 +17,7 @@ describe('lexicons/adapter.test.js', () => {
 
   let testSuccessHomonym, testFailedHomonym, testLangID
 
-  beforeAll(() => { 
+  beforeAll(() => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
@@ -53,7 +53,7 @@ describe('lexicons/adapter.test.js', () => {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
 
-  function updateObjectWithFixtures (adapter, urlLib, urlType) { 
+  function updateObjectWithFixtures (adapter, urlLib, urlType) {
     let urlKey = adapter.config[urlLib].urls[urlType]
 
     let cachedDefinitions = new Map()
@@ -286,7 +286,7 @@ describe('lexicons/adapter.test.js', () => {
 
     jest.spyOn(adapter, 'lookupInDataIndex')
 
-    
+
     let urlKey = 'https://github.com/alpheios-project/lsj'
     let url = adapter.config[urlKey].urls.short
 
@@ -373,7 +373,7 @@ describe('lexicons/adapter.test.js', () => {
     })
 
     let res = adapter.getRequests(testLangID)
-    expect(res.length).toEqual(6)
+    expect(res.length).toEqual(7)
     res.forEach(url => {
       expect(url).toEqual(expect.stringContaining('https://github.com/alpheios-project/'))
     })
@@ -388,7 +388,7 @@ describe('lexicons/adapter.test.js', () => {
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
     let testURL = 'https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-ids.dat'
-    
+
     let unparsed = await adapter.fetch(testURL, { type: 'xml', timeout: adapter.options.timeout })
     let parsed = papaparse.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
     let data = adapter.fillMap(parsed.data)
@@ -444,7 +444,7 @@ describe('lexicons/adapter.test.js', () => {
     })
 
     await BaseTestHelp.updateCacheWithFixtures()
-    
+
     await adapter.fetchFullDefs(homonymMare, { allow: ['https://github.com/alpheios-project/ls'] })
 
     await timeout(300)

@@ -38,7 +38,6 @@ export default class ViewSet {
             }
           }
         }
-
         this.matchingViews.push(...this.constructor.views.reduce(
           (acc, view) => acc.concat(...view.getMatchingInstances(this.homonym)), []))
 

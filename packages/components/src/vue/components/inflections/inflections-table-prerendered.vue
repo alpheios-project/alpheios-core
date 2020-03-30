@@ -14,13 +14,18 @@
           </div>
         </div>
       </div>
+      <sub-tables-wide :view="view" ></sub-tables-wide>
     </template>
   </div>
 </template>
 <script>
+import WideSubTables from '@/vue/components/inflections/inflections-subtables-wide.vue'
 
 export default {
   name: 'InflectionsTablePrerendered',
+  components: {
+    subTablesWide: WideSubTables
+  },
   props: {
     // An inflection table view
     view: {
@@ -76,4 +81,7 @@ export default {
 }
 </script>
 <style lang="scss">
+.alpheios-inflections__title {
+  cursor: pointer;
+}
 </style>

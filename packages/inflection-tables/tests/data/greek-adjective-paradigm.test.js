@@ -5,11 +5,11 @@ import { Constants, Feature, LanguageModelFactory } from 'alpheios-data-models'
 import BaseTestHelp from '@tests/data/base-test-help.js'
 
 describe('greek-adjective-paradigm.test.js', () => {
-  
+
   // console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
-  
+
   const locale = "en-US"
   beforeAll(async () => {
   })
@@ -30,7 +30,6 @@ describe('greek-adjective-paradigm.test.js', () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀξίου', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
-    // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
     expect(inflectionsViewSet.matchingViews.length).toEqual(2)
     BaseTestHelp.checkParadigm({
@@ -737,7 +736,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[11].cells[2].fullMatch).toBeFalsy() // ἡδέσι(ν)
     expect(renderedTable.rows[11].cells[3].fullMatch).toBeTruthy() // ἡδείαις
     expect(renderedTable.rows[11].cells[4].fullMatch).toBeFalsy() // ἡδέσι(ν)
-    expect(renderedTable.rows[11].cells[5].fullMatch).toBeFalsy() // μέλασι(ν)	
+    expect(renderedTable.rows[11].cells[5].fullMatch).toBeFalsy() // μέλασι(ν)
     expect(renderedTable.rows[11].cells[6].fullMatch).toBeFalsy() // μελαίναις
     expect(renderedTable.rows[11].cells[7].fullMatch).toBeFalsy() // μέλασι(ν)
   })
@@ -890,7 +889,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[11].cells[2].fullMatch).toBeFalsy() // ἡδέσι(ν)
     expect(renderedTable.rows[11].cells[3].fullMatch).toBeFalsy() // ἡδείαις
     expect(renderedTable.rows[11].cells[4].fullMatch).toBeFalsy() // ἡδέσι(ν)
-    expect(renderedTable.rows[11].cells[5].fullMatch).toBeFalsy() // μέλασι(ν)	
+    expect(renderedTable.rows[11].cells[5].fullMatch).toBeFalsy() // μέλασι(ν)
     expect(renderedTable.rows[11].cells[6].fullMatch).toBeTruthy() // μελαίναις
     expect(renderedTable.rows[11].cells[7].fullMatch).toBeFalsy() // μέλασι(ν)
   })
@@ -914,7 +913,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[6].cells[2].fullMatch).toBeFalsy() // ἡδύ
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // ἡδεῖᾰ
     expect(renderedTable.rows[6].cells[4].fullMatch).toBeFalsy() // ἡδύ
-    expect(renderedTable.rows[6].cells[5].fullMatch).toBeTruthy() // μέλαν	
+    expect(renderedTable.rows[6].cells[5].fullMatch).toBeTruthy() // μέλαν
     expect(renderedTable.rows[6].cells[6].fullMatch).toBeFalsy() // μέλαινᾰ
     expect(renderedTable.rows[6].cells[7].fullMatch).toBeTruthy() // μέλαν
 
@@ -941,7 +940,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[5].cells[2].fullMatch).toBeFalsy() // ἡδύν
     expect(renderedTable.rows[5].cells[3].fullMatch).toBeFalsy() // ἡδεῖᾰν
     expect(renderedTable.rows[5].cells[4].fullMatch).toBeFalsy() // ἡδύ
-    expect(renderedTable.rows[5].cells[5].fullMatch).toBeTruthy() // μέλανᾰ	
+    expect(renderedTable.rows[5].cells[5].fullMatch).toBeTruthy() // μέλανᾰ
     expect(renderedTable.rows[5].cells[6].fullMatch).toBeFalsy() // μέλαινᾰν
     expect(renderedTable.rows[5].cells[7].fullMatch).toBeFalsy() // μέλαν
 
@@ -968,7 +967,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeTruthy() // χαρίεντος
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeFalsy() // χαριέσσης
     expect(renderedTable.rows[3].cells[4].fullMatch).toBeTruthy() // χαρίεντος
-    expect(renderedTable.rows[3].cells[5].fullMatch).toBeFalsy() // παντός	
+    expect(renderedTable.rows[3].cells[5].fullMatch).toBeFalsy() // παντός
     expect(renderedTable.rows[3].cells[6].fullMatch).toBeFalsy() // πάσης
     expect(renderedTable.rows[3].cells[7].fullMatch).toBeFalsy() // παντός
 
@@ -993,9 +992,9 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[7].cells[2].fullMatch).toBeTruthy() // χαρίεντε
     expect(renderedTable.rows[7].cells[3].fullMatch).toBeFalsy() // χαριέσσᾱ
     expect(renderedTable.rows[7].cells[4].fullMatch).toBeTruthy() // χαρίεντε
-    expect(renderedTable.rows[7].cells[5].fullMatch).toBeFalsy() // 	
+    expect(renderedTable.rows[7].cells[5].fullMatch).toBeFalsy() //
     expect(renderedTable.rows[7].cells[6].fullMatch).toBeFalsy() // μέλαινᾰν
-    expect(renderedTable.rows[7].cells[7].fullMatch).toBeFalsy() // 
+    expect(renderedTable.rows[7].cells[7].fullMatch).toBeFalsy() //
 
   })
 
@@ -1018,9 +1017,9 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[8].cells[2].fullMatch).toBeFalsy() // χαριέντοιν
     expect(renderedTable.rows[8].cells[3].fullMatch).toBeTruthy() // χαριέσσαιν
     expect(renderedTable.rows[8].cells[4].fullMatch).toBeFalsy() // χαριέντοιν
-    expect(renderedTable.rows[8].cells[5].fullMatch).toBeFalsy() // 	
-    expect(renderedTable.rows[8].cells[6].fullMatch).toBeFalsy() // 
-    expect(renderedTable.rows[8].cells[7].fullMatch).toBeFalsy() // 
+    expect(renderedTable.rows[8].cells[5].fullMatch).toBeFalsy() //
+    expect(renderedTable.rows[8].cells[6].fullMatch).toBeFalsy() //
+    expect(renderedTable.rows[8].cells[7].fullMatch).toBeFalsy() //
 
   })
 
@@ -1043,7 +1042,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[11].cells[2].fullMatch).toBeFalsy() // χαρίεσι(ν)
     expect(renderedTable.rows[11].cells[3].fullMatch).toBeTruthy() // χαριέσσαις
     expect(renderedTable.rows[11].cells[4].fullMatch).toBeFalsy() // χαρίεσι(ν)
-    expect(renderedTable.rows[11].cells[5].fullMatch).toBeFalsy() // πᾶσι(ν)	
+    expect(renderedTable.rows[11].cells[5].fullMatch).toBeFalsy() // πᾶσι(ν)
     expect(renderedTable.rows[11].cells[6].fullMatch).toBeFalsy() // πάσαις
     expect(renderedTable.rows[11].cells[7].fullMatch).toBeFalsy() // πᾶσι(ν)
 
@@ -1068,7 +1067,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[4].cells[2].fullMatch).toBeTruthy() // χαρίεντι
     expect(renderedTable.rows[4].cells[3].fullMatch).toBeFalsy() // χαριέσσῃ
     expect(renderedTable.rows[4].cells[4].fullMatch).toBeTruthy() // χαρίεντι
-    expect(renderedTable.rows[4].cells[5].fullMatch).toBeFalsy() // παντί	
+    expect(renderedTable.rows[4].cells[5].fullMatch).toBeFalsy() // παντί
     expect(renderedTable.rows[4].cells[6].fullMatch).toBeFalsy() // πάσῃ
     expect(renderedTable.rows[4].cells[7].fullMatch).toBeFalsy() // παντί
 
@@ -1093,7 +1092,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[12].cells[2].fullMatch).toBeFalsy() // χαρίεντᾰς
     expect(renderedTable.rows[12].cells[3].fullMatch).toBeFalsy() // χαριέσσᾱς
     expect(renderedTable.rows[12].cells[4].fullMatch).toBeTruthy() // χαρίεντᾰ
-    expect(renderedTable.rows[12].cells[5].fullMatch).toBeFalsy() // πάντᾰς	
+    expect(renderedTable.rows[12].cells[5].fullMatch).toBeFalsy() // πάντᾰς
     expect(renderedTable.rows[12].cells[6].fullMatch).toBeFalsy() // πάσᾱς
     expect(renderedTable.rows[12].cells[7].fullMatch).toBeFalsy() // πάντᾰ
 
@@ -1120,11 +1119,11 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[2].cells[2].fullMatch).toBeFalsy() // χαρίεις
     expect(renderedTable.rows[2].cells[3].fullMatch).toBeFalsy() // χαρίεσσᾰ
     expect(renderedTable.rows[2].cells[4].fullMatch).toBeFalsy() // χαρίεν
-    expect(renderedTable.rows[2].cells[5].fullMatch).toBeTruthy() // πᾶς	
+    expect(renderedTable.rows[2].cells[5].fullMatch).toBeTruthy() // πᾶς
     expect(renderedTable.rows[2].cells[6].fullMatch).toBeFalsy() // πᾶσᾰ
     expect(renderedTable.rows[2].cells[7].fullMatch).toBeFalsy() // πᾶν
 
-    expect(renderedTable.rows[6].cells[5].fullMatch).toBeTruthy() // πᾶς	
+    expect(renderedTable.rows[6].cells[5].fullMatch).toBeTruthy() // πᾶς
 
   })
 
@@ -1147,7 +1146,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[9].cells[2].fullMatch).toBeFalsy() // χαρίεντες
     expect(renderedTable.rows[9].cells[3].fullMatch).toBeFalsy() // χαρίεσσαι
     expect(renderedTable.rows[9].cells[4].fullMatch).toBeFalsy() // χαρίεντᾰ
-    expect(renderedTable.rows[9].cells[5].fullMatch).toBeTruthy() // πάντες	
+    expect(renderedTable.rows[9].cells[5].fullMatch).toBeTruthy() // πάντες
     expect(renderedTable.rows[9].cells[6].fullMatch).toBeFalsy() // πᾶσαι
     expect(renderedTable.rows[9].cells[7].fullMatch).toBeFalsy() // πάντᾰ
   })
@@ -1171,7 +1170,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[4].cells[2].fullMatch).toBeFalsy() // χαρίεντι
     expect(renderedTable.rows[4].cells[3].fullMatch).toBeFalsy() // χαριέσσῃ
     expect(renderedTable.rows[4].cells[4].fullMatch).toBeFalsy() // χαρίεντι
-    expect(renderedTable.rows[4].cells[5].fullMatch).toBeFalsy() // παντί	
+    expect(renderedTable.rows[4].cells[5].fullMatch).toBeFalsy() // παντί
     expect(renderedTable.rows[4].cells[6].fullMatch).toBeTruthy() // πάσῃ
     expect(renderedTable.rows[4].cells[7].fullMatch).toBeFalsy() // παντί
   })
@@ -1195,7 +1194,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // χαρίεντος
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeFalsy() // χαριέσσης
     expect(renderedTable.rows[3].cells[4].fullMatch).toBeFalsy() // χαρίεντος
-    expect(renderedTable.rows[3].cells[5].fullMatch).toBeFalsy() // παντός	
+    expect(renderedTable.rows[3].cells[5].fullMatch).toBeFalsy() // παντός
     expect(renderedTable.rows[3].cells[6].fullMatch).toBeTruthy() // πάσης
     expect(renderedTable.rows[3].cells[7].fullMatch).toBeFalsy() // παντός
 
@@ -1221,7 +1220,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[4].cells[2].fullMatch).toBeFalsy() // χαρίεντι
     expect(renderedTable.rows[4].cells[3].fullMatch).toBeFalsy() // χαριέσσῃ
     expect(renderedTable.rows[4].cells[4].fullMatch).toBeFalsy() // χαρίεντι
-    expect(renderedTable.rows[4].cells[5].fullMatch).toBeTruthy() // παντί	
+    expect(renderedTable.rows[4].cells[5].fullMatch).toBeTruthy() // παντί
     expect(renderedTable.rows[4].cells[6].fullMatch).toBeFalsy() // πάσῃ
     expect(renderedTable.rows[4].cells[7].fullMatch).toBeTruthy() // παντί
   })
@@ -1246,7 +1245,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[12].cells[2].fullMatch).toBeFalsy() // χαρίεντᾰς
     expect(renderedTable.rows[12].cells[3].fullMatch).toBeFalsy() // χαριέσσᾱς
     expect(renderedTable.rows[12].cells[4].fullMatch).toBeFalsy() // χαρίεντᾰ
-    expect(renderedTable.rows[12].cells[5].fullMatch).toBeFalsy() // πάντᾰς	
+    expect(renderedTable.rows[12].cells[5].fullMatch).toBeFalsy() // πάντᾰς
     expect(renderedTable.rows[12].cells[6].fullMatch).toBeFalsy() // πάσᾱς
     expect(renderedTable.rows[12].cells[7].fullMatch).toBeTruthy() // πάντᾰ
 
@@ -1275,7 +1274,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeTruthy() // χρυσοῦ
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeFalsy() // χρυσῆς
     expect(renderedTable.rows[3].cells[4].fullMatch).toBeTruthy() // χρυσοῦ
-    expect(renderedTable.rows[3].cells[5].fullMatch).toBeFalsy() // ἀργυροῦ	
+    expect(renderedTable.rows[3].cells[5].fullMatch).toBeFalsy() // ἀργυροῦ
     expect(renderedTable.rows[3].cells[6].fullMatch).toBeFalsy() // ἀργυρᾶς
     expect(renderedTable.rows[3].cells[7].fullMatch).toBeFalsy() // ἀργυροῦ
 
@@ -1300,7 +1299,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[7].cells[2].fullMatch).toBeTruthy() // χρυσοῖν
     expect(renderedTable.rows[7].cells[3].fullMatch).toBeFalsy() // χρυσαῖν
     expect(renderedTable.rows[7].cells[4].fullMatch).toBeTruthy() // χρυσοῖν
-    expect(renderedTable.rows[7].cells[5].fullMatch).toBeFalsy() // ἀργυροῖν	
+    expect(renderedTable.rows[7].cells[5].fullMatch).toBeFalsy() // ἀργυροῖν
     expect(renderedTable.rows[7].cells[6].fullMatch).toBeFalsy() // ἀργυραῖν
     expect(renderedTable.rows[7].cells[7].fullMatch).toBeFalsy() // ἀργυροῖν
   })
@@ -1324,7 +1323,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[5].cells[2].fullMatch).toBeFalsy() // χρυσοῦν
     expect(renderedTable.rows[5].cells[3].fullMatch).toBeTruthy() // χρυσῆν
     expect(renderedTable.rows[5].cells[4].fullMatch).toBeFalsy() // χρυσοῦν
-    expect(renderedTable.rows[5].cells[5].fullMatch).toBeFalsy() // ἀργυροῦν	
+    expect(renderedTable.rows[5].cells[5].fullMatch).toBeFalsy() // ἀργυροῦν
     expect(renderedTable.rows[5].cells[6].fullMatch).toBeFalsy() // ἀργυρᾷν
     expect(renderedTable.rows[5].cells[7].fullMatch).toBeFalsy() // ἀργυροῦν
   })
@@ -1348,7 +1347,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[10].cells[2].fullMatch).toBeFalsy() // χρυσοῖς
     expect(renderedTable.rows[10].cells[3].fullMatch).toBeTruthy() // χρυσαῖς
     expect(renderedTable.rows[10].cells[4].fullMatch).toBeFalsy() // χρυσοῖς
-    expect(renderedTable.rows[10].cells[5].fullMatch).toBeFalsy() // ἀργυροῖς	
+    expect(renderedTable.rows[10].cells[5].fullMatch).toBeFalsy() // ἀργυροῖς
     expect(renderedTable.rows[10].cells[6].fullMatch).toBeFalsy() // ἀργυραῖς
     expect(renderedTable.rows[10].cells[7].fullMatch).toBeFalsy() // ἀργυροῖς
   })
@@ -1372,7 +1371,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[4].cells[2].fullMatch).toBeTruthy() // χρυσῷ
     expect(renderedTable.rows[4].cells[3].fullMatch).toBeFalsy() // χρυσῇ
     expect(renderedTable.rows[4].cells[4].fullMatch).toBeTruthy() // χρυσῷ
-    expect(renderedTable.rows[4].cells[5].fullMatch).toBeFalsy() // ἀργυρῷ	
+    expect(renderedTable.rows[4].cells[5].fullMatch).toBeFalsy() // ἀργυρῷ
     expect(renderedTable.rows[4].cells[6].fullMatch).toBeFalsy() // ἀργυρᾷ
     expect(renderedTable.rows[4].cells[7].fullMatch).toBeFalsy() // ἀργυρῷ
   })
@@ -1396,7 +1395,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[11].cells[2].fullMatch).toBeFalsy() // χρυσοῦς
     expect(renderedTable.rows[11].cells[3].fullMatch).toBeFalsy() // χρυσᾶς
     expect(renderedTable.rows[11].cells[4].fullMatch).toBeTruthy() // χρυσᾶ
-    expect(renderedTable.rows[11].cells[5].fullMatch).toBeFalsy() // ἀργυροῦς	
+    expect(renderedTable.rows[11].cells[5].fullMatch).toBeFalsy() // ἀργυροῦς
     expect(renderedTable.rows[11].cells[6].fullMatch).toBeFalsy() // ἀργυρᾶς
     expect(renderedTable.rows[11].cells[7].fullMatch).toBeFalsy() // ἀργυρᾶ
 
@@ -1422,7 +1421,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[11].cells[2].fullMatch).toBeFalsy() // χρυσοῦς
     expect(renderedTable.rows[11].cells[3].fullMatch).toBeFalsy() // χρυσᾶς
     expect(renderedTable.rows[11].cells[4].fullMatch).toBeFalsy() // χρυσᾶ
-    expect(renderedTable.rows[11].cells[5].fullMatch).toBeTruthy() // ἀργυροῦς	
+    expect(renderedTable.rows[11].cells[5].fullMatch).toBeTruthy() // ἀργυροῦς
     expect(renderedTable.rows[11].cells[6].fullMatch).toBeFalsy() // ἀργυρᾶς
     expect(renderedTable.rows[11].cells[7].fullMatch).toBeFalsy() // ἀργυρᾶ
 
@@ -1448,7 +1447,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[7].cells[2].fullMatch).toBeFalsy() // χρυσοῖν
     expect(renderedTable.rows[7].cells[3].fullMatch).toBeFalsy() // χρυσαῖν
     expect(renderedTable.rows[7].cells[4].fullMatch).toBeFalsy() // χρυσοῖν
-    expect(renderedTable.rows[7].cells[5].fullMatch).toBeTruthy() // ἀργυροῖν	
+    expect(renderedTable.rows[7].cells[5].fullMatch).toBeTruthy() // ἀργυροῖν
     expect(renderedTable.rows[7].cells[6].fullMatch).toBeFalsy() // ἀργυραῖν
     expect(renderedTable.rows[7].cells[7].fullMatch).toBeTruthy() // ἀργυροῖν
   })
@@ -1472,7 +1471,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // χρυσοῦ
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeFalsy() // χρυσῆς
     expect(renderedTable.rows[3].cells[4].fullMatch).toBeFalsy() // χρυσοῦ
-    expect(renderedTable.rows[3].cells[5].fullMatch).toBeFalsy() // ἀργυροῦ	
+    expect(renderedTable.rows[3].cells[5].fullMatch).toBeFalsy() // ἀργυροῦ
     expect(renderedTable.rows[3].cells[6].fullMatch).toBeTruthy() // ἀργυρᾶς
     expect(renderedTable.rows[3].cells[7].fullMatch).toBeFalsy() // ἀργυροῦ
 
@@ -1498,7 +1497,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[9].cells[2].fullMatch).toBeFalsy() // χρυσῶν
     expect(renderedTable.rows[9].cells[3].fullMatch).toBeFalsy() // χρυσῶν
     expect(renderedTable.rows[9].cells[4].fullMatch).toBeFalsy() // χρυσῶν
-    expect(renderedTable.rows[9].cells[5].fullMatch).toBeTruthy() // ἀργυρῶν	
+    expect(renderedTable.rows[9].cells[5].fullMatch).toBeTruthy() // ἀργυρῶν
     expect(renderedTable.rows[9].cells[6].fullMatch).toBeTruthy() // ἀργυρῶν
     expect(renderedTable.rows[9].cells[7].fullMatch).toBeTruthy() // ἀργυρῶν
   })
@@ -1523,7 +1522,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // εὔνους
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // εὔνουν
     expect(renderedTable.rows[1].cells[4].fullMatch).toBeFalsy() // ἁπλοῦς
-    expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy() // ἁπλῆ	
+    expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy() // ἁπλῆ
     expect(renderedTable.rows[1].cells[6].fullMatch).toBeFalsy() // ἁπλοῦν
 
     expect(renderedTable.rows[7].cells[2].fullMatch).toBeTruthy() // εὔνοι
@@ -1548,7 +1547,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[6].cells[2].fullMatch).toBeTruthy() // εὔνοιν
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeTruthy() // εὔνοιν
     expect(renderedTable.rows[6].cells[4].fullMatch).toBeFalsy() // ἁπλοῖν
-    expect(renderedTable.rows[6].cells[5].fullMatch).toBeFalsy() // ἁπλαῖν	
+    expect(renderedTable.rows[6].cells[5].fullMatch).toBeFalsy() // ἁπλαῖν
     expect(renderedTable.rows[6].cells[6].fullMatch).toBeFalsy() // ἁπλοῖν
   })
 
@@ -1571,7 +1570,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[9].cells[2].fullMatch).toBeTruthy() // εὔνοις
     expect(renderedTable.rows[9].cells[3].fullMatch).toBeTruthy() // εὔνοις
     expect(renderedTable.rows[9].cells[4].fullMatch).toBeFalsy() // ἁπλοῖς
-    expect(renderedTable.rows[9].cells[5].fullMatch).toBeFalsy() // ἁπλαῖς	
+    expect(renderedTable.rows[9].cells[5].fullMatch).toBeFalsy() // ἁπλαῖς
     expect(renderedTable.rows[9].cells[6].fullMatch).toBeFalsy() // ἁπλοῖς
   })
 
@@ -1594,7 +1593,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeTruthy() // εὔνῳ
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeTruthy() // εὔνῳ
     expect(renderedTable.rows[3].cells[4].fullMatch).toBeFalsy() // ἁπλῷ
-    expect(renderedTable.rows[3].cells[5].fullMatch).toBeFalsy() // ἁπλῇ	
+    expect(renderedTable.rows[3].cells[5].fullMatch).toBeFalsy() // ἁπλῇ
     expect(renderedTable.rows[3].cells[6].fullMatch).toBeFalsy() // ἁπλῷ
   })
 
@@ -1617,11 +1616,11 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // εὔνους
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // εὔνουν
     expect(renderedTable.rows[1].cells[4].fullMatch).toBeTruthy() // ἁπλοῦς
-    expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy() // ἁπλῆ	
+    expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy() // ἁπλῆ
     expect(renderedTable.rows[1].cells[6].fullMatch).toBeFalsy() // ἁπλοῦν
 
     expect(renderedTable.rows[2].cells[4].fullMatch).toBeTruthy() // ἁπλοῦ
-    expect(renderedTable.rows[2].cells[5].fullMatch).toBeFalsy() // ἁπλῆς	
+    expect(renderedTable.rows[2].cells[5].fullMatch).toBeFalsy() // ἁπλῆς
     expect(renderedTable.rows[2].cells[6].fullMatch).toBeTruthy() // ἁπλοῦ
   })
 
@@ -1644,7 +1643,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[6].cells[2].fullMatch).toBeFalsy() // εὔνοιν
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // εὔνοιν
     expect(renderedTable.rows[6].cells[4].fullMatch).toBeTruthy() // ἁπλοῖν
-    expect(renderedTable.rows[6].cells[5].fullMatch).toBeFalsy() // ἁπλαῖν	
+    expect(renderedTable.rows[6].cells[5].fullMatch).toBeFalsy() // ἁπλαῖν
     expect(renderedTable.rows[6].cells[6].fullMatch).toBeTruthy() // ἁπλοῖν
   })
 
@@ -1667,7 +1666,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[8].cells[2].fullMatch).toBeFalsy() // εὔνων
     expect(renderedTable.rows[8].cells[3].fullMatch).toBeFalsy() // εὔνων
     expect(renderedTable.rows[8].cells[4].fullMatch).toBeTruthy() // ἁπλῶν
-    expect(renderedTable.rows[8].cells[5].fullMatch).toBeTruthy() // ἁπλῶν	
+    expect(renderedTable.rows[8].cells[5].fullMatch).toBeTruthy() // ἁπλῶν
     expect(renderedTable.rows[8].cells[6].fullMatch).toBeTruthy() // ἁπλῶν
   })
 
@@ -1690,7 +1689,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[2].cells[2].fullMatch).toBeFalsy() // εὔνου
     expect(renderedTable.rows[2].cells[3].fullMatch).toBeFalsy() // εὔνου
     expect(renderedTable.rows[2].cells[4].fullMatch).toBeFalsy() // ἁπλοῦ
-    expect(renderedTable.rows[2].cells[5].fullMatch).toBeTruthy() // ἁπλῆς	
+    expect(renderedTable.rows[2].cells[5].fullMatch).toBeTruthy() // ἁπλῆς
     expect(renderedTable.rows[2].cells[6].fullMatch).toBeFalsy() // ἁπλοῦ
   })
 
@@ -1713,7 +1712,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[4].cells[2].fullMatch).toBeFalsy() // εὔνουν
     expect(renderedTable.rows[4].cells[3].fullMatch).toBeFalsy() // εὔνουν
     expect(renderedTable.rows[4].cells[4].fullMatch).toBeTruthy() // ἁπλοῦν
-    expect(renderedTable.rows[4].cells[5].fullMatch).toBeFalsy() // ἁπλῆν	
+    expect(renderedTable.rows[4].cells[5].fullMatch).toBeFalsy() // ἁπλῆν
     expect(renderedTable.rows[4].cells[6].fullMatch).toBeTruthy() // ἁπλοῦν
 
     expect(renderedTable.rows[1].cells[6].fullMatch).toBeTruthy() // ἁπλοῦν
@@ -1738,7 +1737,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // εὔνους
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // εὔνουν
     expect(renderedTable.rows[1].cells[4].fullMatch).toBeFalsy() // ἁπλοῦς
-    expect(renderedTable.rows[1].cells[5].fullMatch).toBeTruthy() // ἁπλῆ	
+    expect(renderedTable.rows[1].cells[5].fullMatch).toBeTruthy() // ἁπλῆ
     expect(renderedTable.rows[1].cells[6].fullMatch).toBeFalsy() // ἁπλοῦν
 
     expect(renderedTable.rows[5].cells[5].fullMatch).toBeTruthy() // ἁπλᾶ
@@ -1766,7 +1765,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // ἵλεως
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // ἵλεων
     expect(renderedTable.rows[1].cells[4].fullMatch).toBeFalsy() // πλέως
-    expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy() // πλέᾱ	
+    expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy() // πλέᾱ
     expect(renderedTable.rows[1].cells[6].fullMatch).toBeFalsy() // πλέων
 
     expect(renderedTable.rows[7].cells[2].fullMatch).toBeTruthy() // ἵλεῳ
@@ -1791,7 +1790,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[2].cells[2].fullMatch).toBeTruthy() // ἵλεω
     expect(renderedTable.rows[2].cells[3].fullMatch).toBeTruthy() // ἵλεω
     expect(renderedTable.rows[2].cells[4].fullMatch).toBeFalsy() // πλέω
-    expect(renderedTable.rows[2].cells[5].fullMatch).toBeFalsy() // πλέᾱς	
+    expect(renderedTable.rows[2].cells[5].fullMatch).toBeFalsy() // πλέᾱς
     expect(renderedTable.rows[2].cells[6].fullMatch).toBeFalsy() // πλέω
 
     expect(renderedTable.rows[5].cells[2].fullMatch).toBeTruthy() // ἵλεω
@@ -1817,7 +1816,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // ἵλεως
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeTruthy() // ἵλεων
     expect(renderedTable.rows[1].cells[4].fullMatch).toBeFalsy() // πλέως
-    expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy() // πλέᾱ	
+    expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy() // πλέᾱ
     expect(renderedTable.rows[1].cells[6].fullMatch).toBeFalsy() // πλέων
 
     expect(renderedTable.rows[4].cells[2].fullMatch).toBeTruthy() // ἵλεων
@@ -1846,7 +1845,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[7].cells[2].fullMatch).toBeTruthy() // ἵλεῳ
     expect(renderedTable.rows[7].cells[3].fullMatch).toBeTruthy() // ἵλεᾰ
     expect(renderedTable.rows[7].cells[4].fullMatch).toBeFalsy() // πλέῳ
-    expect(renderedTable.rows[7].cells[5].fullMatch).toBeFalsy() // πλέαι	
+    expect(renderedTable.rows[7].cells[5].fullMatch).toBeFalsy() // πλέαι
     expect(renderedTable.rows[7].cells[6].fullMatch).toBeFalsy() // πλέᾰ
 
     expect(renderedTable.rows[10].cells[2].fullMatch).toBeTruthy() // ἵλεως
@@ -1872,11 +1871,11 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[2].cells[2].fullMatch).toBeFalsy() // ἵλεω
     expect(renderedTable.rows[2].cells[3].fullMatch).toBeFalsy() // ἵλεω
     expect(renderedTable.rows[2].cells[4].fullMatch).toBeTruthy() // πλέω
-    expect(renderedTable.rows[2].cells[5].fullMatch).toBeTruthy() // πλέᾱς	
+    expect(renderedTable.rows[2].cells[5].fullMatch).toBeTruthy() // πλέᾱς
     expect(renderedTable.rows[2].cells[6].fullMatch).toBeTruthy() // πλέω
 
     expect(renderedTable.rows[5].cells[4].fullMatch).toBeTruthy() // πλέω
-    expect(renderedTable.rows[5].cells[5].fullMatch).toBeTruthy() // πλέᾱ	
+    expect(renderedTable.rows[5].cells[5].fullMatch).toBeTruthy() // πλέᾱ
     expect(renderedTable.rows[5].cells[6].fullMatch).toBeTruthy() // πλέω
 
   })
@@ -1900,7 +1899,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[9].cells[2].fullMatch).toBeFalsy() // ἵλεῳς
     expect(renderedTable.rows[9].cells[3].fullMatch).toBeFalsy() // ἵλεῳς
     expect(renderedTable.rows[9].cells[4].fullMatch).toBeTruthy() // πλέῳς
-    expect(renderedTable.rows[9].cells[5].fullMatch).toBeFalsy() // πλέαις	
+    expect(renderedTable.rows[9].cells[5].fullMatch).toBeFalsy() // πλέαις
     expect(renderedTable.rows[9].cells[6].fullMatch).toBeTruthy() // πλέῳς
   })
 
@@ -1923,10 +1922,10 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // ἵλεῳ
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeFalsy() // ἵλεῳ
     expect(renderedTable.rows[3].cells[4].fullMatch).toBeFalsy() // πλέῳ
-    expect(renderedTable.rows[3].cells[5].fullMatch).toBeTruthy() // πλέᾳ	
+    expect(renderedTable.rows[3].cells[5].fullMatch).toBeTruthy() // πλέᾳ
     expect(renderedTable.rows[3].cells[6].fullMatch).toBeFalsy() // πλέῳ
 
-    expect(renderedTable.rows[7].cells[5].fullMatch).toBeTruthy() // πλέᾳ	
+    expect(renderedTable.rows[7].cells[5].fullMatch).toBeTruthy() // πλέᾳ
   })
 
   it('8-8 - checked Adjective8 - πλέαιν', async () => {
@@ -1948,7 +1947,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[6].cells[2].fullMatch).toBeFalsy() // ἵλεῳν
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // ἵλεῳν
     expect(renderedTable.rows[6].cells[4].fullMatch).toBeFalsy() // πλέῳν
-    expect(renderedTable.rows[6].cells[5].fullMatch).toBeTruthy() // πλέαιν	
+    expect(renderedTable.rows[6].cells[5].fullMatch).toBeTruthy() // πλέαιν
     expect(renderedTable.rows[6].cells[6].fullMatch).toBeFalsy() // πλέῳν
   })
 
@@ -1973,11 +1972,11 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[4].cells[2].fullMatch).toBeFalsy() // ἵλεων
     expect(renderedTable.rows[4].cells[3].fullMatch).toBeFalsy() // ἵλεων
     expect(renderedTable.rows[4].cells[4].fullMatch).toBeTruthy() // πλέων
-    expect(renderedTable.rows[4].cells[5].fullMatch).toBeTruthy() // πλέᾱν	
+    expect(renderedTable.rows[4].cells[5].fullMatch).toBeTruthy() // πλέᾱν
     expect(renderedTable.rows[4].cells[6].fullMatch).toBeTruthy() // πλέων
 
     expect(renderedTable.rows[8].cells[4].fullMatch).toBeTruthy() // πλέων
-    expect(renderedTable.rows[8].cells[5].fullMatch).toBeTruthy() // πλέων	
+    expect(renderedTable.rows[8].cells[5].fullMatch).toBeTruthy() // πλέων
     expect(renderedTable.rows[8].cells[6].fullMatch).toBeTruthy() // πλέων
   })
 
@@ -2002,10 +2001,10 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[5].cells[2].fullMatch).toBeFalsy() // ἵλεω
     expect(renderedTable.rows[5].cells[3].fullMatch).toBeFalsy() // ἵλεω
     expect(renderedTable.rows[5].cells[4].fullMatch).toBeFalsy() // πλέω
-    expect(renderedTable.rows[5].cells[5].fullMatch).toBeTruthy() // πλέᾱ	
+    expect(renderedTable.rows[5].cells[5].fullMatch).toBeTruthy() // πλέᾱ
     expect(renderedTable.rows[5].cells[6].fullMatch).toBeFalsy() // πλέω
 
     expect(renderedTable.rows[7].cells[6].fullMatch).toBeTruthy() // πλέᾰ
-    expect(renderedTable.rows[10].cells[6].fullMatch).toBeTruthy() // πλέᾰ	
+    expect(renderedTable.rows[10].cells[6].fullMatch).toBeTruthy() // πλέᾰ
   })
 })
