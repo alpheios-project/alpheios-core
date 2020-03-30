@@ -35,7 +35,7 @@ describe('panel-compact.test.js', () => {
     jest.spyOn(console, 'warn')
 
     defaultData = { moduleConfig: {} }
-        
+
     store = BaseTestHelp.baseVuexStore()
 
     api = {
@@ -46,15 +46,17 @@ describe('panel-compact.test.js', () => {
 
     BaseTestHelp.authModule(store, api)
     BaseTestHelp.l10nModule(store, api)
-
   })
 
+  /**
+   * @param ms
+   */
   function timeout (ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
 
   it('1 PanelCompact - renders a vue instance (min requirements)', () => {
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -66,7 +68,7 @@ describe('panel-compact.test.js', () => {
   })
 
   it('2 PanelCompact - computed currentTab returns active tab from store.ui', () => {
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -79,7 +81,7 @@ describe('panel-compact.test.js', () => {
   })
 
   it('3 PanelCompact - computed showMainTabIcons checks if show main icons (for some tabs and showNav in moduleConfig is true)', () => {
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return {
           moduleConfig: {
@@ -91,7 +93,7 @@ describe('panel-compact.test.js', () => {
       localVue,
       mocks: api
     })
-    
+
     expect(cmp.vm.showMainTabIcons).toBeFalsy()
 
     store.commit('ui/setTestCurrentTab', 'info')
@@ -104,17 +106,17 @@ describe('panel-compact.test.js', () => {
   })
 
   it('4 PanelCompact - computed showMorphologyIcon returns true if morph data is ready and current tab is grammar, also showNav is not disabled', () => {
-    let api = {
-        ui: BaseTestHelp.uiAPI(),
-        settings: BaseTestHelp.settingsAPI(),
-        app: BaseTestHelp.appAPI({
-          hasMorphData: () => false
-        })
-      }
+    const api = {
+      ui: BaseTestHelp.uiAPI(),
+      settings: BaseTestHelp.settingsAPI(),
+      app: BaseTestHelp.appAPI({
+        hasMorphData: () => false
+      })
+    }
     BaseTestHelp.authModule(store, api)
     BaseTestHelp.l10nModule(store, api)
 
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return {
           moduleConfig: {
@@ -126,13 +128,13 @@ describe('panel-compact.test.js', () => {
       localVue,
       mocks: api
     })
-    
+
     store.commit('ui/setTestCurrentTab', 'info')
     store.commit('app/setTestMorphDataReady', false)
 
     expect(cmp.vm.showMorphologyIcon).toBeFalsy()
-    
-    //all obligatory properties -> true
+
+    // all obligatory properties -> true
 
     cmp.setData({ moduleConfig: { showNav: true } })
     store.commit('ui/setTestCurrentTab', 'grammar')
@@ -141,20 +143,20 @@ describe('panel-compact.test.js', () => {
 
     expect(cmp.vm.showMorphologyIcon).toBeTruthy()
 
-    //will fail one property by one - not correct tab
+    // will fail one property by one - not correct tab
 
     cmp.setData({ moduleConfig: { showNav: false } })
     store.commit('ui/setTestCurrentTab', 'morphology')
     expect(cmp.vm.showMorphologyIcon).toBeFalsy()
 
-    //will fail one property by one - morphData is not ready
+    // will fail one property by one - morphData is not ready
 
     cmp.setData({ moduleConfig: { showNav: true } })
     store.commit('ui/setTestCurrentTab', 'grammar')
     store.commit('app/setTestMorphDataReady', false)
     expect(cmp.vm.showMorphologyIcon).toBeFalsy()
 
-    //will fail one property by one - morphData is ready but there are no morphData
+    // will fail one property by one - morphData is ready but there are no morphData
 
     store.commit('app/setTestMorphDataReady', true)
     api.app.hasMorphData = () => false
@@ -166,7 +168,7 @@ describe('panel-compact.test.js', () => {
       expanded: false
     })
 
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -186,7 +188,7 @@ describe('panel-compact.test.js', () => {
       expanded: true
     })
 
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -203,18 +205,18 @@ describe('panel-compact.test.js', () => {
   })
 
   it('7 PanelCompact - computed componentStyles returns zIndex', () => {
-    let api = {
+    const api = {
       ui: BaseTestHelp.uiAPI({
         zIndex: 10
       }),
       settings: BaseTestHelp.settingsAPI(),
       app: BaseTestHelp.appAPI()
     }
-    
+
     BaseTestHelp.authModule(store, api)
     BaseTestHelp.l10nModule(store, api)
 
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -227,7 +229,7 @@ describe('panel-compact.test.js', () => {
   })
 
   it('8 PanelCompact - computed isLandscape checks oriention and expanded', () => {
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -235,7 +237,7 @@ describe('panel-compact.test.js', () => {
       localVue,
       mocks: api
     })
-    
+
     // it is portrait and not expanded
     store.commit('panel/setTestOrientation', Platform.orientations.PORTRAIT)
 
@@ -261,7 +263,7 @@ describe('panel-compact.test.js', () => {
   })
 
   it('9 PanelCompact - computed isAttachedToLeft checks if current value of panel position is left', () => {
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -280,7 +282,7 @@ describe('panel-compact.test.js', () => {
   })
 
   it('10 PanelCompact - computed isAttachedToRight checks if current value of panel position is right', () => {
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -299,7 +301,7 @@ describe('panel-compact.test.js', () => {
   })
 
   it('11 PanelCompact - computed leftBtnVisible returns true if we want to show left icon for attach (isAttachedToLeft + expanded)', () => {
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -320,7 +322,7 @@ describe('panel-compact.test.js', () => {
   })
 
   it('12 PanelCompact - computed leftBtnVisible returns true if we want to show left icon for attach (isAttachedToRight + !expanded)', () => {
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -341,7 +343,7 @@ describe('panel-compact.test.js', () => {
   })
 
   it('13 PanelCompact - computed rightBtnVisible returns true if we want to show right icon for attach (isAttachedToRight + expanded)', () => {
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -362,7 +364,7 @@ describe('panel-compact.test.js', () => {
   })
 
   it('14 PanelCompact - computed rightBtnVisible returns true if we want to show right icon for attach (isAttachedToRight + !expanded)', () => {
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -383,7 +385,7 @@ describe('panel-compact.test.js', () => {
   })
 
   it('15 PanelCompact - computed hasMorphologyData returns true if morph data is ready and it has morph data', () => {
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -416,7 +418,7 @@ describe('panel-compact.test.js', () => {
   })
 
   it('16 PanelCompact - computed additionalStylesTootipCloseIcon returns props for icon', () => {
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -425,14 +427,14 @@ describe('panel-compact.test.js', () => {
       mocks: api
     })
 
-    let result = cmp.vm.additionalStylesTootipCloseIcon
+    const result = cmp.vm.additionalStylesTootipCloseIcon
 
     expect(result.top).toBeDefined()
     expect(result.right).toBeDefined()
   })
 
   it('17 PanelCompact - computed formattedShortDefinitions returns array with short defs, if they are ready, otherwise it returns an empty array', () => {
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -441,7 +443,7 @@ describe('panel-compact.test.js', () => {
       mocks: api
     })
 
-    let definitions = cmp.vm.formattedShortDefinitions
+    const definitions = cmp.vm.formattedShortDefinitions
     expect(definitions.length).toEqual(0)
 
     store.commit('app/setTestHomonymDataReady', true)
@@ -450,7 +452,7 @@ describe('panel-compact.test.js', () => {
       return homonym ? homonym.lexemes : []
     }
 
-    let definitions2 = cmp.vm.formattedShortDefinitions
+    const definitions2 = cmp.vm.formattedShortDefinitions
 
     expect(definitions2.length).toBeGreaterThan(0)
     definitions2.forEach(definition => {
@@ -459,7 +461,7 @@ describe('panel-compact.test.js', () => {
   })
 
   it('18 PanelCompact - computed formattedFullDefinitions returns a string with content, if they are ready, otherwise it returns an empty string', async () => {
-    let cmp = shallowMount(PanelCompact, {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -468,7 +470,7 @@ describe('panel-compact.test.js', () => {
       mocks: api
     })
 
-    let definitions = cmp.vm.formattedFullDefinitions
+    const definitions = cmp.vm.formattedFullDefinitions
     expect(definitions.length).toEqual(0)
 
     store.commit('app/setTestHomonymDataReady', true)
@@ -478,13 +480,13 @@ describe('panel-compact.test.js', () => {
       return homonym ? homonym.lexemes : []
     }
 
-    let definitions2 = cmp.vm.formattedFullDefinitions
+    const definitions2 = cmp.vm.formattedFullDefinitions
 
     expect(definitions2.length).toBeGreaterThan(0)
   })
 
-  it('19 PanelCompact - computed providersLinkText returns hide creadit label or show credit label',  () => {
-    let cmp = shallowMount(PanelCompact, {
+  it('19 PanelCompact - computed providersLinkText returns hide creadit label or show credit label', () => {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -500,8 +502,8 @@ describe('panel-compact.test.js', () => {
     expect(cmp.vm.providersLinkText).toEqual(expect.stringContaining('Hide'))
   })
 
-  it('20 PanelCompact - method swapPosition executes setPosition with position',  () => {
-    let cmp = shallowMount(PanelCompact, {
+  it('20 PanelCompact - method swapPosition executes setPosition with position', () => {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -521,8 +523,8 @@ describe('panel-compact.test.js', () => {
     expect(cmp.vm.setPosition).toHaveBeenLastCalledWith('left')
   })
 
-  it('21 PanelCompact - method squeezePage sets additional styles and adds a class',  () => {
-    let cmp = shallowMount(PanelCompact, {
+  it('21 PanelCompact - method squeezePage sets additional styles and adds a class', () => {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -546,8 +548,8 @@ describe('panel-compact.test.js', () => {
     cmp.destroy()
   })
 
-  it('22 PanelCompact - method unsqueezePage removes additional styles and a class added by squeeze',  () => {
-    let cmp = shallowMount(PanelCompact, {
+  it('22 PanelCompact - method unsqueezePage removes additional styles and a class added by squeeze', () => {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -574,8 +576,8 @@ describe('panel-compact.test.js', () => {
     cmp.destroy()
   })
 
-  it('22 PanelCompact - method contentOptionChanged executes app.contentOptionChange',  () => {
-    let cmp = shallowMount(PanelCompact, {
+  it('22 PanelCompact - method contentOptionChanged executes app.contentOptionChange', () => {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -593,8 +595,8 @@ describe('panel-compact.test.js', () => {
     cmp.destroy()
   })
 
-  it('23 PanelCompact - method expand updates expanded and prevExpanded to truthy',  () => {
-    let cmp = shallowMount(PanelCompact, {
+  it('23 PanelCompact - method expand updates expanded and prevExpanded to truthy', () => {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -608,14 +610,14 @@ describe('panel-compact.test.js', () => {
     cmp.setData({ prevExpanded: false })
 
     cmp.vm.expand()
-    
+
     expect(cmp.vm.expanded).toBeTruthy()
     expect(cmp.vm.prevExpanded).toBeTruthy()
     cmp.destroy()
   })
 
-  it('23 PanelCompact - method contract updates expanded and prevExpanded to falsy',  () => {
-    let cmp = shallowMount(PanelCompact, {
+  it('23 PanelCompact - method contract updates expanded and prevExpanded to falsy', () => {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -629,14 +631,14 @@ describe('panel-compact.test.js', () => {
     cmp.setData({ prevExpanded: true })
 
     cmp.vm.contract()
-    
+
     expect(cmp.vm.expanded).toBeFalsy()
     expect(cmp.vm.prevExpanded).toBeFalsy()
     cmp.destroy()
   })
 
-  it('24 PanelCompact - method expandOrContract updates expanded and prevExpanded to oposite',  () => {
-    let cmp = shallowMount(PanelCompact, {
+  it('24 PanelCompact - method expandOrContract updates expanded and prevExpanded to oposite', () => {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -650,7 +652,7 @@ describe('panel-compact.test.js', () => {
     cmp.setData({ prevExpanded: true })
 
     cmp.vm.expandOrContract()
-    
+
     expect(cmp.vm.expanded).toBeFalsy()
     expect(cmp.vm.prevExpanded).toBeFalsy()
 
@@ -661,8 +663,8 @@ describe('panel-compact.test.js', () => {
     cmp.destroy()
   })
 
-  it('25 PanelCompact - method closePanel executes ui.closePanel and sets menuVisible to falsy',  () => {
-    let cmp = shallowMount(PanelCompact, {
+  it('25 PanelCompact - method closePanel executes ui.closePanel and sets menuVisible to falsy', () => {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -680,9 +682,8 @@ describe('panel-compact.test.js', () => {
     expect(cmp.vm.menuVisible).toBeFalsy()
   })
 
-
-  it('26 PanelCompact - method switchProviders changes showProviders to oposite',  () => {
-    let cmp = shallowMount(PanelCompact, {
+  it('26 PanelCompact - method switchProviders changes showProviders to oposite', () => {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },
@@ -700,8 +701,8 @@ describe('panel-compact.test.js', () => {
     expect(cmp.vm.showProviders).toBeFalsy()
   })
 
-  it('27 PanelCompact - method changeTab executes ui.changeTab',  () => {
-    let cmp = shallowMount(PanelCompact, {
+  it('27 PanelCompact - method changeTab executes ui.changeTab', () => {
+    const cmp = shallowMount(PanelCompact, {
       data () {
         return defaultData
       },

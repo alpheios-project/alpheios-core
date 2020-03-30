@@ -243,6 +243,12 @@ export default class BaseTestHelp {
               state.notification = Object.assign(currentData, value)
             }
           }
+        },
+        lexis: {
+          namespaced: true,
+          state: {
+            hasTreebankData: false
+          }
         }
       }
     })

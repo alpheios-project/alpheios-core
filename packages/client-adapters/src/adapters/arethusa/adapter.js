@@ -27,26 +27,20 @@ class ArethusaTreebankAdapter extends BaseAdapter {
   }
 
   async _fetchArethusaData (targetURL, sentenceId, wordId) {
-    console.info('_fetchArethusaData')
     const config = this._getMessageConfig(targetURL)
     const svc = this.getMessagingService(config)
     const requestBodyNav = {
       gotoSentence: { sentenceId: sentenceId }
     }
-    let message = new RequestMessage(requestBodyNav)
-    console.info('sending a gotoSentence request:', message)
-    const response = await svc.sendRequestTo(config.name, message)
-    console.info('response from a gotoSentence request:', response)
+    const message = new RequestMessage(requestBodyNav)
+    await svc.sendRequestTo(config.name, message)
     const requestBodyMorph = {
       getMorph: {
         sentenceId: sentenceId,
         wordId: wordId
       }
     }
-    message = new RequestMessage(requestBodyMorph)
-    console.info('sending a getMorph request:', message)
     const responseMessage = await svc.sendRequestTo(config.name, new RequestMessage(requestBodyMorph))
-    console.info('response from a getMorph request:', responseMessage)
     return responseMessage.body
   }
 
@@ -65,23 +59,19 @@ class ArethusaTreebankAdapter extends BaseAdapter {
     const config = this._getMessageConfig(provider)
     const svc = this.getMessagingService(config)
     const requestBody = { refreshView: { } }
-    const message = new RequestMessage(requestBody)
-    console.info('sending a refreshView request:', message)
     let response
     try {
       response = await svc.sendRequestTo(config.name, new RequestMessage(requestBody))
     } catch (response) {
-      console.info('Response error:', response)
       if (response instanceof ResponseMessage) {
-        console.info('A remote error occurred')
+        // This is an error from a treebank template app
         this.addRemoteError(response.errorCode, response.body.message)
       } else {
-        console.info('A generic error occurred')
+        // This is some other error
         this.addError(response.message)
       }
       return
     }
-    console.info('response from a refreshView request:', response)
     return response.body
   }
 
@@ -116,7 +106,6 @@ class ArethusaTreebankAdapter extends BaseAdapter {
         this.addError(this.l10n.messages['MORPH_TREEBANK_MISSING_REF'].get(word))
       }
     } catch (error) {
-      console.log(error)
       this.addError(this.l10n.messages['MORPH_TREEBANK_UNKNOWN_ERROR'].get(error.mesage))
     }
   }

@@ -1,25 +1,19 @@
 <template>
   <div class="alpheios-treebank">
-    <iframe :src="$store.state.lexis.treebankSrc" class="alpheios-treebank__frame" id="alpheios-treebank-frame" :style="{width: `${iframeWidth}px`}"></iframe>
+    <iframe :src="settings.experimentalResetTreebankURL ? treebankSrcUrl : $store.state.lexis.treebankSrc" class="alpheios-treebank__frame" id="alpheios-treebank-frame"></iframe>
   </div>
 </template>
 <script>
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
-/*
-A minimal height of the treebank's iframe, shall be no less than 43em,
-but no more than that because max width of panel's content is 800px and
-treebank frame will not if in if too wide
-*/
-const initialIframeWidth = 690
 
 export default {
   name: 'Treebank',
-  inject: ['l10n'],
+  inject: ['settings'],
   storeModules: ['lexis'],
   mixins: [DependencyCheck],
   data () {
     return {
-      iframeWidth: initialIframeWidth
+      treebankSrcUrl: null
     }
   },
 
@@ -34,7 +28,10 @@ export default {
       To fix this, we will change the width of an iframe by one pixel.
       This will force a treebank view to refresh itself.
        */
-      this.iframeWidth === initialIframeWidth ? this.iframeWidth-- : this.iframeWidth++
+      if (this.settings.experimentalResetTreebankURL) {
+        this.treebankSrcUrl = null
+        this.treebankSrcUrl = this.$store.state.lexis.treebankSrc
+      }
     }
   }
 }

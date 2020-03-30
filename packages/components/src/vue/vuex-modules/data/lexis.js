@@ -23,7 +23,6 @@ export default class Lexis extends Module {
    *        UI controller.
    */
   constructor (store, api, config = {}) {
-    console.info('Lexis constructor')
     super(store, api, config)
     // APIs provided by the UI controller
     this._appApi = api.app
@@ -47,10 +46,14 @@ export default class Lexis extends Module {
     try {
       this._treebankDataItem = new TreebankDataItem(body)
       store.commit('lexis/setTreebankInfo', this._treebankDataItem)
-      this.constructor.refreshUntilLoaded(this._treebankDataItem.provider).then(() => {
-        this._treebankServiceLoaded = true
-        console.info('Treebank service has been loaded')
-      })
+      if (!this._settingsApi.experimentalResetTreebankURL) {
+        // If treebank URL is reset in an iframe we don't need to send a refresh request
+        this.constructor.refreshUntilLoaded(this._treebankDataItem.provider)
+          .then(() => {
+            this._treebankServiceLoaded = true
+          })
+          .catch((err) => console.warn(err.message)) // If refreshUntilLoaded failed treebank will be unavailable
+      }
     } catch (error) {
       // Treebank info is not present on a page or is incorrect. Treebank data will not be used.
     }
@@ -71,14 +74,28 @@ export default class Lexis extends Module {
     store.commit('lexis/showCedictNotification')
   }
 
+  /**
+   * A utility function to delay code execution.
+   *
+   * @param {Number} ms - A number of milliseconds an execution should delayed by.
+   * @returns {Promise} A promise that will be resolved when timeout is expired.
+   */
   static timeout (ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
 
+  /**
+   * A utility function that will send a `refreshView` request to a treebank template
+   * until a non-error response is received or a maximum number of retries is achieved.
+   *
+   * @param {string} provider - A URL of a treebank template app.
+   * @returns {Promise<void> | Promise<Error>} - A promise that is resolved when a `refreshView`
+   *          request succeeds or is reject when it fails after a certain number of retries.
+   */
   static async refreshUntilLoaded (provider) {
-    console.info('refreshUntilLoaded')
+    const retryMax = 20
     // Need to refresh a view only for treebank V3 or higher
-    let iCount = 20
+    let count = retryMax
     do {
       const result = await ClientAdapters.morphology.arethusaTreebank({
         method: 'refreshView',
@@ -86,16 +103,14 @@ export default class Lexis extends Module {
           provider
         }
       })
-      console.info('refreshUntilLoaded, result returned is:', result)
       if (result.errors.length === 0) {
-        console.info('refreshUntilLoaded succeeded:', result)
         return
-      } else {
-        console.error('refreshUntilLoaded failed', result.errors)
       }
+      // refreshView returned an error, let's try again after a timeout
       await this.timeout(100)
-      console.info('refreshUntilLoaded, timeout expired')
-    } while (iCount--)
+    } while (count--)
+    // All attempts to get a response with no errors failed
+    throw new Error(`refreshView request did not succeed in ${retryMax} attempts`)
   }
 }
 
@@ -144,41 +159,16 @@ Lexis.store = (moduleInstance) => {
        * @param {TreebankDataItem} treebankDataItem - A treebank data item element
        */
       setTreebankInfo (state, treebankDataItem) {
-        console.info(`setTreebankInfo, url is ${treebankDataItem.fullUrl}`)
         state.hasTreebankData = treebankDataItem.hasTreebankData
         state.treebankSrc = treebankDataItem.fullUrl
-        // Previous business logic for determining if there is a treebank data was:
-        // Treebank data is available if we have it for the word or the page
-        /* return Boolean((state.treebankData.page && state.treebankData.page.src) ||
-          (state.treebankData.word && state.treebankData.word.fullUrl)) */
-
-        // Previous logic for determining source URL is:
-        /* let newSrcUrl = this.$store.state.app.treebankData.page.src
-        if (this.$store.state.app.treebankData.word &&
-          this.$store.state.app.treebankData.word.fullUrl) {
-          newSrcUrl = this.$store.state.app.treebankData.word.fullUrl
-        }
-        if (!this.$store.getters['ui/isActiveTab']('treebank') &&
-          this.$store.state.app.treebankData.word &&
-          !this.$store.state.app.treebankData.word.version) {
-          /!*
-          Prior to version 3 of treebank integration, which uses the Arethusa api
-          The arethusa application could not initialize itself properly
-          if it's not visible, so we wait to update the src url of the
-          parent iframe until the tab is visible.
-           *!/
-          newSrcUrl = ''
-        } */
       },
 
       resetTreebankInfo (state) {
-        console.info('resetTreebankInfo')
         state.hasTreebankData = false
         state.treebankSrc = null
       },
 
       setTreebankRefreshDT (state) {
-        console.info('setTreebankRefreshDT')
         state.treebankRefreshDT = Date.now()
       }
     }
@@ -188,7 +178,6 @@ Lexis.store = (moduleInstance) => {
 Lexis.api = (moduleInstance, store) => {
   return {
     getSelectedText: (event, domEvent) => {
-      console.info('getSelectedText')
       if (moduleInstance._appApi.isGetSelectedTextEnabled(domEvent)) {
         const defaultLangCode = moduleInstance._appApi.getDefaultLangCode()
         const htmlSelector = new HTMLSelector(event, defaultLangCode)
@@ -251,7 +240,6 @@ Lexis.api = (moduleInstance, store) => {
       /*
       When word is entered in the lookup component, it is out of context and we cannot get any treebank data on it.
        */
-      console.info('lookupText')
       moduleInstance._treebankDataItem = null
       store.commit('lexis/resetTreebankInfo')
 
@@ -297,21 +285,22 @@ Lexis.api = (moduleInstance, store) => {
     },
 
     refreshTreebankView: () => {
-      console.info('refreshTreebankView')
       if (moduleInstance._treebankDataItem) {
-        // Need to refresh a view only for treebank V3 or higher
-        ClientAdapters.morphology.arethusaTreebank({
-          method: 'refreshView',
-          params: {
-            provider: moduleInstance._treebankDataItem.provider
-          }
-        })
-        store.commit('lexis/setTreebankRefreshDT')
+        if (moduleInstance._settingsApi.experimentalResetTreebankURL) {
+          // Update a refresh date time to trigger a URL reset in  a treebank component
+          store.commit('lexis/setTreebankRefreshDT')
+        } else {
+          // If treebank URL is reset in an iframe we don't need to send a refresh request
+          Lexis.refreshUntilLoaded(moduleInstance._treebankDataItem.provider)
+            .then(() => {
+              store.commit('lexis/setTreebankRefreshDT')
+            })
+            .catch((err) => console.warn(err.message)) // If refreshUntilLoaded failed treebank will be unavailable
+        }
       }
     }
   }
 }
-
 Lexis._configDefaults = {
   _moduleName: 'lexis',
   _moduleType: Module.types.DATA,

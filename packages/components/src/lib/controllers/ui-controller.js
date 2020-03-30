@@ -274,7 +274,13 @@ if you want to create a different configuration of a UI controller.
       triggerPreCallback: null,
       // if true, the help button on the toolbar can be controlled by the client, no click handler will
       // be added by the components library
-      overrideHelp: false
+      overrideHelp: false,
+      /*
+      This is an experimental flag that will force treebank iframe URL to be reset every time a treebank tab is
+      opened. It will force a content of an iframe to be reloaded and thus will solve display issues
+      with a treebank view.
+       */
+      experimentalResetTreebankURL: true
     }
   }
 
@@ -421,7 +427,8 @@ if you want to create a different configuration of a UI controller.
       // so they remain out of dynamic state for now - should eventually
       // refactor
       lookupResourceOptions: this.lookupResourceOptions,
-      siteOptions: this.siteOptions
+      siteOptions: this.siteOptions,
+      experimentalResetTreebankURL: this.options.experimentalResetTreebankURL
     }
 
     this.store.registerModule('settings', {

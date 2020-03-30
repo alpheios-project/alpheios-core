@@ -50,7 +50,6 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
       async (result) => {
         if (result) {
           const res = cachedDefinitions.get(url)
-          console.info('prepareShortDefPromise, url is ', url, ' result is ', res)
           await this.updateShortDefs(res, homonym, this.config[urlKey])
           this.prepareSuccessCallback(requestType, homonym)
         }

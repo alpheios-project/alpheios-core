@@ -14496,26 +14496,20 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   }
 
   async _fetchArethusaData (targetURL, sentenceId, wordId) {
-    console.info('_fetchArethusaData')
     const config = this._getMessageConfig(targetURL)
     const svc = this.getMessagingService(config)
     const requestBodyNav = {
       gotoSentence: { sentenceId: sentenceId }
     }
-    let message = new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](requestBodyNav)
-    console.info('sending a gotoSentence request:', message)
-    const response = await svc.sendRequestTo(config.name, message)
-    console.info('response from a gotoSentence request:', response)
+    const message = new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](requestBodyNav)
+    await svc.sendRequestTo(config.name, message)
     const requestBodyMorph = {
       getMorph: {
         sentenceId: sentenceId,
         wordId: wordId
       }
     }
-    message = new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](requestBodyMorph)
-    console.info('sending a getMorph request:', message)
     const responseMessage = await svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](requestBodyMorph))
-    console.info('response from a getMorph request:', responseMessage)
     return responseMessage.body
   }
 
@@ -14534,23 +14528,19 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
     const config = this._getMessageConfig(provider)
     const svc = this.getMessagingService(config)
     const requestBody = { refreshView: { } }
-    const message = new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](requestBody)
-    console.info('sending a refreshView request:', message)
     let response
     try {
       response = await svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](requestBody))
     } catch (response) {
-      console.info('Response error:', response)
       if (response instanceof alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["ResponseMessage"]) {
-        console.info('A remote error occurred')
+        // This is an error from a treebank template app
         this.addRemoteError(response.errorCode, response.body.message)
       } else {
-        console.info('A generic error occurred')
+        // This is some other error
         this.addError(response.message)
       }
       return
     }
-    console.info('response from a refreshView request:', response)
     return response.body
   }
 
@@ -14585,7 +14575,6 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
         this.addError(this.l10n.messages['MORPH_TREEBANK_MISSING_REF'].get(word))
       }
     } catch (error) {
-      console.log(error)
       this.addError(this.l10n.messages['MORPH_TREEBANK_UNKNOWN_ERROR'].get(error.mesage))
     }
   }
@@ -15425,7 +15414,6 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
       async (result) => {
         if (result) {
           const res = cachedDefinitions.get(url)
-          console.info('prepareShortDefPromise, url is ', url, ' result is ', res)
           await this.updateShortDefs(res, homonym, this.config[urlKey])
           this.prepareSuccessCallback(requestType, homonym)
         }
@@ -15760,10 +15748,10 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
 /*!***************************************!*\
   !*** ./adapters/lexicons/config.json ***!
   \***************************************/
-/*! exports provided: https://github.com/alpheios-project/majorplus, https://github.com/alpheios-project/lsj, https://github.com/alpheios-project/aut, https://github.com/alpheios-project/ml, https://github.com/alpheios-project/as, https://github.com/alpheios-project/dod, https://github.com/alpheios-project/ls, https://github.com/alpheios-project/lan, https://github.com/alpheios-project/sal, https://github.com/alpheios-project/stg, default */
+/*! exports provided: https://github.com/alpheios-project/mjm, https://github.com/alpheios-project/majorplus, https://github.com/alpheios-project/lsj, https://github.com/alpheios-project/aut, https://github.com/alpheios-project/ml, https://github.com/alpheios-project/as, https://github.com/alpheios-project/dod, https://github.com/alpheios-project/ls, https://github.com/alpheios-project/lan, https://github.com/alpheios-project/sal, https://github.com/alpheios-project/stg, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"https://github.com/alpheios-project/majorplus\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/majorplus/dat/grc-mjp-defs.dat\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"format\":{\"short\":\"text/html\"},\"description\":\"Definitions derived from Wilfred E. Major's Core Greek Vocabulary, extended with definitions from the LSJ.\",\"rights_keys\":{\"LSJ\":\"\\\"A Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University.\",\"Major\":\"Wilfred E. Major, Core Greek Vocabulary for the First Two Years of Greek. CPL Online, Winter 2008.\",\"VGorman\":\"Definition edited by Vanessa Gorman, University of Nebraska.\"}},\"https://github.com/alpheios-project/lsj\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lsj&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"A Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott)\",\"rights\":\"\\\"A Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/aut\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/aut/dat/grc-aut-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/aut//dat/grc-aut-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=aut&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Autenrieth Homeric Dictionary\\\" (Geoerge Autenrieth)\",\"rights\":\"\\\"Autenrieth Homeric Dictionary\\\" (Geoerge Autenrieth). Provided by the Perseus Digital Library at Tufts University\"},\"https://github.com/alpheios-project/ml\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/ml/dat/grc-ml-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/ml/dat/grc-ml-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ml&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Middle Liddell\\\"\",\"rights\":\"\\\"An Intermediate Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University\"},\"https://github.com/alpheios-project/as\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/as/dat/grc-as-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/as/dat/grc-as-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=as&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"A Manual Greek Lexicon of the New Testament\\\"\",\"rights\":\"\\\"A Manual Greek Lexicon of the New Testament\\\" (G. Abbott-Smith). Provided by biblicalhumanities.org.\"},\"https://github.com/alpheios-project/dod\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/dod/dat/grc-dod-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/dod/dat/grc-dod-ids.dat\",\"full\":null},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Dodson\\\"\",\"rights\":\"\\\"A Public Domain lexicon by John Jeffrey Dodson (2010)\\\". Provided by biblicalhumanities.org.\"},\"https://github.com/alpheios-project/ls\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html\"},\"langs\":{\"source\":\"lat\",\"target\":\"en\"},\"description\":\"\\\"A Latin Dictionary\\\" (Charlton T. Lewis, Charles Short)\",\"rights\":\"\\\"A Latin Dictionary\\\" (Charlton T. Lewis, Charles Short). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/lan\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/lan/dat/ara-lan-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lan&lg=ara&out=html\"},\"langs\":{\"source\":\"ara\",\"target\":\"en\"},\"description\":\"\\\"The Arabic-English Lexicon\\\" (Edward Lane)\",\"rights\":\"\\\"The Arabic-English Lexicon\\\" (Edward Lane). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/sal\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/sal/dat/ara-sal-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=sal&lg=ara&out=html\"},\"langs\":{\"source\":\"ara\",\"target\":\"en\"},\"description\":\"\\\"An Advanced Learner's Arabic Dictionary\\\" (H. Anthony Salmone)\",\"rights\":\"\\\"An Advanced Learner's Arabic Dictionary\\\" (H. Anthony Salmone). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/stg\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/stg/dat/per-stg-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/stg/dat/per-stg-ids.dat\",\"full\":null},\"langs\":{\"source\":\"per\",\"target\":\"en\"},\"description\":\"\\\"A Comprehensive Persian-English Dictionary\\\" (Francis Joseph Steingass)\",\"rights\":\"\\\"A Comprehensive Persian-English Dictionary\\\" (Francis Joseph Steingass). Provided by the Center for Advanced Study of Language (CASL) at the University of Maryland, College Park.\"}}");
+module.exports = JSON.parse("{\"https://github.com/alpheios-project/mjm\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/mjm/dat/grc-mjm-defs.dat\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"format\":{\"short\":\"text/html\"},\"description\":\"Definitions derived from Wilfred E. Major's Core Greek Vocabulary, extended with definitions from the Middle Liddell.\",\"rights_keys\":{\"ML\":\" \\\"An Intermediate Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University. Edits and additions provided by Vanessa Gorman, University of Nebraska.\",\"Major\":\" Wilfred E. Major, Core Greek Vocabulary for the First Two Years of Greek. CPL Online, Winter 2008. Edits and additions provided by Vanessa Gorman, University of Nebraska.\"}},\"https://github.com/alpheios-project/majorplus\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/majorplus/dat/grc-mjp-defs.dat\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"format\":{\"short\":\"text/html\"},\"description\":\"Definitions derived from Wilfred E. Major's Core Greek Vocabulary, extended with definitions from the LSJ.\",\"rights_keys\":{\"LSJ\":\" \\\"A Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University. Edits and additions provided by Vanessa Gorman, University of Nebraska.\",\"Major\":\" Wilfred E. Major, Core Greek Vocabulary for the First Two Years of Greek. CPL Online, Winter 2008. Edits and additions provided by Vanessa Gorman, University of Nebraska.\"}},\"https://github.com/alpheios-project/lsj\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lsj&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"A Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott)\",\"rights\":\" \\\"A Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/aut\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/aut/dat/grc-aut-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/aut//dat/grc-aut-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=aut&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Autenrieth Homeric Dictionary\\\" (Geoerge Autenrieth)\",\"rights\":\" \\\"Autenrieth Homeric Dictionary\\\" (Geoerge Autenrieth). Provided by the Perseus Digital Library at Tufts University\"},\"https://github.com/alpheios-project/ml\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/ml/dat/grc-ml-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/ml/dat/grc-ml-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ml&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Middle Liddell\\\"\",\"rights\":\" \\\"An Intermediate Greek-English Lexicon\\\" (Henry George Liddell, Robert Scott). Provided by the Perseus Digital Library at Tufts University\"},\"https://github.com/alpheios-project/as\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/as/dat/grc-as-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/as/dat/grc-as-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=as&lg=grc&out=html\"},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"A Manual Greek Lexicon of the New Testament\\\"\",\"rights\":\" \\\"A Manual Greek Lexicon of the New Testament\\\" (G. Abbott-Smith). Provided by biblicalhumanities.org.\"},\"https://github.com/alpheios-project/dod\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/dod/dat/grc-dod-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/dod/dat/grc-dod-ids.dat\",\"full\":null},\"langs\":{\"source\":\"grc\",\"target\":\"en\"},\"description\":\"\\\"Dodson\\\"\",\"rights\":\" \\\"A Public Domain lexicon by John Jeffrey Dodson (2010)\\\". Provided by biblicalhumanities.org.\"},\"https://github.com/alpheios-project/ls\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html\"},\"langs\":{\"source\":\"lat\",\"target\":\"en\"},\"description\":\"\\\"A Latin Dictionary\\\" (Charlton T. Lewis, Charles Short)\",\"rights\":\"\\\"A Latin Dictionary\\\" (Charlton T. Lewis, Charles Short). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/lan\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/lan/dat/ara-lan-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=lan&lg=ara&out=html\"},\"langs\":{\"source\":\"ara\",\"target\":\"en\"},\"description\":\"\\\"The Arabic-English Lexicon\\\" (Edward Lane)\",\"rights\":\"\\\"The Arabic-English Lexicon\\\" (Edward Lane). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/sal\":{\"urls\":{\"short\":null,\"index\":\"https://repos1.alpheios.net/lexdata/sal/dat/ara-sal-ids.dat\",\"full\":\"https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=sal&lg=ara&out=html\"},\"langs\":{\"source\":\"ara\",\"target\":\"en\"},\"description\":\"\\\"An Advanced Learner's Arabic Dictionary\\\" (H. Anthony Salmone)\",\"rights\":\"\\\"An Advanced Learner's Arabic Dictionary\\\" (H. Anthony Salmone). Provided by the Perseus Digital Library at Tufts University.\"},\"https://github.com/alpheios-project/stg\":{\"urls\":{\"short\":\"https://repos1.alpheios.net/lexdata/stg/dat/per-stg-defs.dat\",\"index\":\"https://repos1.alpheios.net/lexdata/stg/dat/per-stg-ids.dat\",\"full\":null},\"langs\":{\"source\":\"per\",\"target\":\"en\"},\"description\":\"\\\"A Comprehensive Persian-English Dictionary\\\" (Francis Joseph Steingass)\",\"rights\":\"\\\"A Comprehensive Persian-English Dictionary\\\" (Francis Joseph Steingass). Provided by the Center for Advanced Study of Language (CASL) at the University of Maryland, College Park.\"}}");
 
 /***/ }),
 
@@ -16109,6 +16097,11 @@ __webpack_require__.r(__webpack_exports__);
 
 let data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_0__["default"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["GreekLanguageModel"], 'morpheusgrc') // eslint-disable-line prefer-const
 
+// Morpheus uses 'irregular' as pofs for some pronouns, override with lemma
+// the dictionary entry's conjugation if it's available
+data.inflectionOverrides = {
+  [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.part]: (i, ls) => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].TYPE_IRREGULAR && ls.filter(l => l.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].POFS_PRONOUN)
+}
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
 Format:
@@ -16122,6 +16115,21 @@ data.addFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].typ
 
 data.addFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.declension).importer
   .map('1st & 2nd', [[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].ORD_1ST, 1], [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].ORD_2ND, 2]])
+
+data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
+  let propertyValues = []
+  if (propertyName === 'decl') {
+    propertyValues = propertyValue.split('&').map((p) => p.trim())
+  } else if (propertyName === 'comp' && propertyValue === 'positive') {
+    propertyValues = []
+  } else if (propertyName === 'pofs' && propertyValue === 'irregular' &&
+    inputElem.hdwd && inputElem.hdwd.$ === 'τίς') {
+    propertyValues = [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].POFS_PRONOUN]
+  } else {
+    propertyValues = [propertyValue]
+  }
+  return propertyValues
+})
 
 /* harmony default export */ __webpack_exports__["default"] = (data);
 
@@ -16153,7 +16161,7 @@ data.setMeaningParser(function (meaning, targetWord) {
   return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Definition"](meaningText, lang, 'text/plain', targetWord)
 })
 
-data.setPropertyParser(function (propertyName, propertyValue) {
+data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
   let propertyValues = []
   if (propertyName === 'paradigm') {
     // state has some extra "" around values
@@ -16214,7 +16222,7 @@ const data = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED
 
 // Whitaker's has weird inflection data for conjugation, we prefer
 // the dictionary entry's conjugation if it's available
-data.inflectionOverrides = [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.conjugation]
+data.inflectionOverrides = { [alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.conjugation]: (i, ls) => true }
 
 /*
 Below are value conversion maps for each grammatical feature to be parsed.
@@ -16234,7 +16242,7 @@ data.addFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].typ
 data.addFeature(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.tense).importer
   .map('future_perfect', alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].TENSE_FUTURE_PERFECT)
 
-data.setPropertyParser(function (propertyName, propertyValue) {
+data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
   let propertyValues = []
   if (propertyName === 'decl') {
     propertyValues = propertyValue.split('&').map((p) => p.trim())
@@ -17476,8 +17484,8 @@ class AlpheiosLexiconTransformer {
         // Parse whatever grammatical features we're interested in and are provided
         for (const f of featuresArrayAll) {
           try {
-            this.mappingData.mapFeature(inflection, inflectionJSON, ...f, this.allowUnknownValues)
-            this.mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
+            this.mappingData.mapFeature(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
+            this.mappingData.overrideInflectionFeatureIfRequired(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types[f[1]], inflection, lemmas)
           } catch (e) {
             // quietly continue
           }
@@ -17487,7 +17495,7 @@ class AlpheiosLexiconTransformer {
         for (const f of attributeBasedFeatures) {
           try {
             this.mappingData.mapFeatureByAttribute(inflection, inflectionJSON, ...f, this.allowUnknownValues)
-            this.mappingData.overrideInflectionFeatureIfRequired(f[1], inflection, lemmas)
+            this.mappingData.overrideInflectionFeatureIfRequired(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types[f[1]], inflection, lemmas)
           } catch (e) {
             // quietly continue
           }
@@ -17602,7 +17610,7 @@ class ImportMorphData {
 
     // may be overridden by specific engine use via setPropertyParser - default just returns the property value
     // as a list
-    this.parseProperty = function (propertyName, propertyValue) {
+    this.parseProperty = function (propertyName, propertyValue, inputElem) {
       let propertyValues = []
       if (propertyName === 'decl') {
         propertyValues = propertyValue.split('&').map((p) => p.trim())
@@ -17750,10 +17758,10 @@ class ImportMorphData {
       if (Array.isArray(inputItem)) {
         // There are multiple values of this feature
         for (const e of inputItem) {
-          values.push(...this.parseProperty(inputName, e.$))
+          values.push(...this.parseProperty(inputName, e.$, inputElem))
         }
       } else {
-        values = this.parseProperty(inputName, inputItem.$)
+        values = this.parseProperty(inputName, inputItem.$, inputElem)
       }
       // `values` is always an array as an array is a return value of `parseProperty`
       if (values.length > 0) {
@@ -17788,11 +17796,11 @@ class ImportMorphData {
             console.warn('Mutiple feature values with mismatching attribute value', inputElem)
           }
           featureName = e[attributeName]
-          values.push(...this.parseProperty(inputName, e.$))
+          values.push(...this.parseProperty(inputName, e.$, inputElem))
         }
       } else {
         featureName = inputItem[attributeName]
-        values = this.parseProperty(inputName, inputItem.$)
+        values = this.parseProperty(inputName, inputItem.$, inputElem)
       }
       // `values` is always an array as an array is a return value of `parseProperty`
       if (values.length > 0) {
@@ -17812,7 +17820,8 @@ class ImportMorphData {
    * @param {Lemma[]} lemmas the lemma objects
    */
   overrideInflectionFeatureIfRequired (featureType, inflection, lemmas) {
-    if (this.inflectionOverrides.includes(featureType)) {
+    if (this.inflectionOverrides[featureType] &&
+        this.inflectionOverrides[featureType](inflection, lemmas)) {
       for (const lemma of lemmas.filter(l => l.features[featureType])) {
         inflection.addFeature(lemma.features[featureType])
       }

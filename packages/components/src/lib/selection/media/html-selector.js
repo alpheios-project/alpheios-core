@@ -156,8 +156,11 @@ export default class HTMLSelector extends MediaSelector {
     const alignRef = this.target.dataset.alpheios_align_ref
     this.data = {}
     try {
-      const treebankData = new TreebankDataItem(this.target)
-      this.data.treebank = { word: treebankData }
+      const treebankDataItem = new TreebankDataItem(this.target)
+      if (treebankDataItem.hasTreebankData) {
+        // Add a treebank property only if treebank element has valid data in it
+        this.data.treebank = { word: treebankDataItem }
+      }
     } catch (error) {
       // treebank data is optional
       // quietly fail

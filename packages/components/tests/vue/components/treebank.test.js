@@ -1,6 +1,6 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-import { mount, shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Treebank from '@/vue/components/treebank.vue'
 import L10nModule from '@/vue/vuex-modules/data/l10n-module.js'
 import Locales from '@/locales/locales.js'
@@ -9,6 +9,7 @@ import enUSData from '@/locales/en-us/messages-data.json'
 import enUSInfl from '@/locales/en-us/messages-inflections.json'
 import enGB from '@/locales/en-gb/messages.json'
 import Vuex from 'vuex'
+import BaseTestHelp from '@tests/helpclasses/base-test-help'
 
 describe('treebank.test.js', () => {
   const localVue = createLocalVue()
@@ -25,7 +26,14 @@ describe('treebank.test.js', () => {
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
 
-    api = {}
+    store = BaseTestHelp.baseVuexStore()
+    api = {
+      settings: {
+        experimentalResetTreebankURL: false
+      }
+    }
+
+    BaseTestHelp.lexisModule(store, api)
   })
   afterEach(() => {
     jest.resetModules()
@@ -61,8 +69,9 @@ describe('treebank.test.js', () => {
       [enUSInfl, Locales.en_US],
       [enGB, Locales.en_GB]
     ]))
+    BaseTestHelp.lexisModule(store, api)
 
-    let cmp = shallowMount(Treebank, {
+    const cmp = shallowMount(Treebank, {
       store,
       localVue,
       mocks: api
@@ -70,7 +79,8 @@ describe('treebank.test.js', () => {
     expect(cmp.isVueInstance()).toBeTruthy()
   })
 
-  it('2 Treebank - renders with src', () => {
+  // TODO: Fix after we decide on how URL will be assigned
+  it.skip('2 Treebank - renders with src', () => {
     store = new Vuex.Store({
       modules: {
         app: {
@@ -100,6 +110,8 @@ describe('treebank.test.js', () => {
       [enUSInfl, Locales.en_US],
       [enGB, Locales.en_GB]
     ]))
+
+    BaseTestHelp.lexisModule(store, api)
 
     let cmp = shallowMount(Treebank, {
       store,

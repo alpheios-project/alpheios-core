@@ -135,14 +135,15 @@ describe('html-selector.test.js', () => {
     const alpheios_tb_ref = 'phi0959.phi006.alpheios-text-lat1#1-2'
     const alpheios_tb_src = 'http://alpheios.net/alpheios-treebanks/DOC.html?chunk=SENTENCE&w=WORD'
 
+    testElement.setAttribute('data-alpheios_tb_version', '1')
     testElement.setAttribute('data-alpheios_tb_ref', alpheios_tb_ref)
     testElement.setAttribute('data-alpheios_tb_src', alpheios_tb_src)
     const htmlSel = new HTMLSelector(eventEl, 'lat')
     htmlSel.setDataAttributes()
 
     expect(htmlSel.data.treebank).toBeDefined()
-    expect(htmlSel.data.treebank.word.src).toEqual(alpheios_tb_src)
-    expect(htmlSel.data.treebank.word.ref).toEqual(alpheios_tb_ref)
+    expect(htmlSel.data.treebank.word.sourceUrl).toEqual(alpheios_tb_src)
+    expect(htmlSel.data.treebank.word.reference).toEqual(alpheios_tb_ref)
 
     testElement.removeAttribute('data-alpheios_tb_ref')
     testElement.removeAttribute('data-alpheios_tb_src')
