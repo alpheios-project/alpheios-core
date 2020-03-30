@@ -243,7 +243,7 @@ class AlpheiosLexiconTransformer {
         // Parse whatever grammatical features we're interested in and are provided
         for (const f of featuresArrayAll) {
           try {
-            this.mappingData.mapFeature(inflection, inflectionJSON, ...f, this.config.allowUnknownValues)
+            this.mappingData.mapFeature(inflection, inflectionJSON, ...f, this.allowUnknownValues)
             this.mappingData.overrideInflectionFeatureIfRequired(Feature.types[f[1]], inflection, lemmas)
           } catch (e) {
             // quietly continue

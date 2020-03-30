@@ -280,7 +280,7 @@ if you want to create a different configuration of a UI controller.
       opened. It will force a content of an iframe to be reloaded and thus will solve display issues
       with a treebank view.
        */
-      experimentalResetTreebankURL: true
+      experimentalResetTreebankURL: false
     }
   }
 
