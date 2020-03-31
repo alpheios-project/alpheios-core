@@ -16,18 +16,18 @@ describe('BaseAdapter object', () => {
     jest.clearAllMocks()
   })
 
-  test('default config', () => {
+  it('default config', () => {
     let adapter = new GrammarResAdapter(bennett)
     expect(adapter.getConfig('base_url')).toBeTruthy()
     expect(adapter.getConfig('index_url')).toBeTruthy()
   })
 
-  test('default config', () => {
+  it('default config', () => {
     let adapter = new GrammarResAdapter(bennett, { base_url: 'dummyurl' })
     expect(adapter.getConfig('base_url')).toEqual('dummyurl')
   })
 
-  test('getResource', async () => {
+  it('getResource', async () => {
     let mockFeature = {
       type: 'case',
       value: ['locative']
