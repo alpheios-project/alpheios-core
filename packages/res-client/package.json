@@ -6,7 +6,7 @@
   "main": "dist/alpheios-res-client.min.js",
   "moduleExternal": "dist/alpheios-res-client.module-external.js",
   "scripts": {
-    "test": "jest --coverage && shx cat ./coverage/lcov.info | overalls",
+    "test": "jest --coverage && shx cat ./coverage/lcov.info | coveralls",
     "test-no-coverage": "jest",
     "build": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m all -M all -p lib",
     "build-prod": "npm run lint && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs -m all -M production -p lib",
