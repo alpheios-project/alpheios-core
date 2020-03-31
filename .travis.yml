@@ -37,9 +37,9 @@ deploy:
       tags: true
 jobs:
   include:
-    #- script: npm run test-client-adapters
-    #- script: npm run test-inflection-tables
-    #- script: npm run test-components
-    #- script: npm run test-data-models
+    - script: npm run test-client-adapters
+    - script: npm run test-inflection-tables
+    - script: npm run test-components
+    - script: npm run test-data-models
     - script: npm run test-res-client
-    #- script: npm run test-wordlist
+    - script: npm run test-wordlist
