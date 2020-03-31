@@ -77,8 +77,10 @@ describe('inflections.test.js', () => {
     expect(titles.at(8).text()).toEqual(expect.stringContaining('Verb Paradigms'))
 
     let wideTables = cmp.findAll(InflectionsTableWide)
-    // expect(wideTables.length).toEqual(118)
-    console.info('wideTables - ', wideTables.at(0).props().view.constructor.name)
+    expect(wideTables.length).toEqual(49)
+
+    let prerenderedTables = cmp.findAll(WidePrerenderedTable)
+    expect(prerenderedTables.length).toEqual(69)
   })
 
   it('3 InflectionsBrowser - renders Latin and Greek wide-tables - latin_noun_view', async () => {
