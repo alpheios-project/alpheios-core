@@ -6,8 +6,14 @@ import { Constants } from 'alpheios-data-models'
 
 describe('BaseAdapter object', () => {
   beforeAll(() => {
-    jest.resetModules()
     window.fetch = require('jest-fetch-mock')
+  })
+
+  afterEach(() => {
+    jest.resetModules()
+  })
+  afterAll(() => {
+    jest.clearAllMocks()
   })
 
   test('getGrammarAdapters', () => {
