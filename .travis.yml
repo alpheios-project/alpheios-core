@@ -35,3 +35,7 @@ deploy:
       repo: alpheios-project/alpheios-core
       all_branches: true
       tags: true
+jobs:
+  include:
+    - script: npm run test-client-adapters
+    - script: npm run test-inflection-tables
