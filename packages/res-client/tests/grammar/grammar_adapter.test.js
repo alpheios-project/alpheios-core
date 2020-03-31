@@ -1,27 +1,33 @@
 /* eslint-env jest */
 'use strict'
-import GrammarResAdapter from '../../src/grammar/grammar_adapter.js'
+import GrammarResAdapter from '@resclient/grammar/grammar_adapter.js'
 
 let bennett = 'https://github.com/alpheios-project/grammar-bennett'
 
 describe('BaseAdapter object', () => {
   beforeAll(() => {
-    jest.resetModules()
     window.fetch = require('jest-fetch-mock')
   })
 
-  test('default config', () => {
+  afterEach(() => {
+    jest.resetModules()
+  })
+  afterAll(() => {
+    jest.clearAllMocks()
+  })
+
+  it('default config', () => {
     let adapter = new GrammarResAdapter(bennett)
     expect(adapter.getConfig('base_url')).toBeTruthy()
     expect(adapter.getConfig('index_url')).toBeTruthy()
   })
 
-  test('default config', () => {
+  it('default config', () => {
     let adapter = new GrammarResAdapter(bennett, { base_url: 'dummyurl' })
     expect(adapter.getConfig('base_url')).toEqual('dummyurl')
   })
 
-  test('getResource', async () => {
+  it('getResource', async () => {
     let mockFeature = {
       type: 'case',
       value: ['locative']

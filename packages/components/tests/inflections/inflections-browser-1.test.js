@@ -4,8 +4,9 @@
 import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
 import BaseTestHelp from '@tests/helpclasses/base-test-help'
 
-import InflectionsBrowser from '@/vue/components/inflections-browser.vue'
-import InflectionsTableWide from '@/vue/components/inflections-table-wide.vue'
+import InflectionsBrowser from '@/vue/components/inflections/inflections-browser.vue'
+import InflectionsTableWide from '@/vue/components/inflections/inflections-table-wide.vue'
+import WidePrerenderedTable from '@/vue/components/inflections/inflections-table-prerendered.vue'
 
 import Vuex from 'vuex'
 import Vue from 'vue/dist/vue'
@@ -76,7 +77,10 @@ describe('inflections.test.js', () => {
     expect(titles.at(8).text()).toEqual(expect.stringContaining('Verb Paradigms'))
 
     let wideTables = cmp.findAll(InflectionsTableWide)
-    expect(wideTables.length).toEqual(118)
+    expect(wideTables.length).toEqual(49)
+
+    let prerenderedTables = cmp.findAll(WidePrerenderedTable)
+    expect(prerenderedTables.length).toEqual(69)
   })
 
   it('3 InflectionsBrowser - renders Latin and Greek wide-tables - latin_noun_view', async () => {
@@ -87,12 +91,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(0)
-    expect(wideTable.props().standardFormData.viewID).toEqual('latin_noun_view')
+    expect(wideTable.props().view.constructor.name).toEqual('LatinNounView')
 
+    wideTable.vm.getRenderedView = jest.fn()
+   
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
    })
 
   it('4 InflectionsBrowser - renders Latin and Greek wide-tables - latin_adjective_view', async () => {
@@ -102,12 +106,15 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(InflectionsTableWide).at(1)
-    expect(wideTable.props().standardFormData.viewID).toEqual('latin_adjective_view')
 
+    let wideTable = cmp.findAll(InflectionsTableWide).at(1)
+    expect(wideTable.props().view.constructor.name).toEqual('LatinAdjectiveView')
+
+    wideTable.vm.getRenderedView = jest.fn()
+   
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
+
   })  
 
   it('5 InflectionsBrowser - renders Latin and Greek wide-tables - latin_conjugation_mood_voice_view', async () => {
@@ -118,12 +125,13 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(2)
-    expect(wideTable.props().standardFormData.viewID).toEqual('latin_conjugation_mood_voice_view')
+    expect(wideTable.props().view.constructor.name).toEqual('LatinConjugationMoodVoiceView')
 
+    wideTable.vm.getRenderedView = jest.fn()
+   
     wideTable.findAll('span').at(0).trigger('click')
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
 
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
   })
 
   it('6 InflectionsBrowser - renders Latin and Greek wide-tables - latin_conjugation_voice_mood_view', async () => {
@@ -134,11 +142,13 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(3)
-    expect(wideTable.props().standardFormData.viewID).toEqual('latin_conjugation_voice_mood_view')
+    expect(wideTable.props().view.constructor.name).toEqual('LatinConjugationVoiceMoodView')
 
+    wideTable.vm.getRenderedView = jest.fn()
+   
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
+
  
   })
 
@@ -150,11 +160,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(4)
-    expect(wideTable.props().standardFormData.viewID).toEqual('latin_mood_conjugation_voice_view')
+    expect(wideTable.props().view.constructor.name).toEqual('LatinMoodConjugationVoiceView')
 
+    wideTable.vm.getRenderedView = jest.fn()
+   
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('8 InflectionsBrowser - renders Latin and Greek wide-tables - latin_mood_voice_conjugation_view', async () => {
@@ -165,11 +176,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(5)
-    expect(wideTable.props().standardFormData.viewID).toEqual('latin_mood_voice_conjugation_view')
+    expect(wideTable.props().view.constructor.name).toEqual('LatinMoodVoiceConjugationView')
 
+    wideTable.vm.getRenderedView = jest.fn()
+   
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('9 InflectionsBrowser - renders Latin and Greek wide-tables - latin_voice_conjugation_mood_view', async () => {
@@ -180,11 +192,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(6)
-    expect(wideTable.props().standardFormData.viewID).toEqual('latin_voice_conjugation_mood_view')
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVoiceConjugationMoodView')
 
+    wideTable.vm.getRenderedView = jest.fn()
+   
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('10 InflectionsBrowser - renders Latin and Greek wide-tables - latin_voice_mood_conjugation_view', async () => {
@@ -195,11 +208,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(7)
-    expect(wideTable.props().standardFormData.viewID).toEqual('latin_voice_mood_conjugation_view')
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVoiceMoodConjugationView')
 
+    wideTable.vm.getRenderedView = jest.fn()
+   
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('11 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_participle_view', async () => {
@@ -210,11 +224,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(8)
-    expect(wideTable.props().standardFormData.viewID).toEqual('latin_verb_participle_view')
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbParticipleView')
 
+    wideTable.vm.getRenderedView = jest.fn()
+   
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('12 InflectionsBrowser - renders Latin and Greek wide-tables - latin_infinitive_view', async () => {
@@ -225,11 +240,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(9)
-    expect(wideTable.props().standardFormData.viewID).toEqual('latin_infinitive_view')
+    expect(wideTable.props().view.constructor.name).toEqual('LatinInfinitiveView')
 
+    wideTable.vm.getRenderedView = jest.fn()
+   
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('13 InflectionsBrowser - renders Latin and Greek wide-tables - latin_imperative_view', async () => {
@@ -240,13 +256,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(10)
-    expect(wideTable.props().standardFormData.viewID).toEqual('latin_imperative_view')
+    expect(wideTable.props().view.constructor.name).toEqual('LatinImperativeView')
 
+    wideTable.vm.getRenderedView = jest.fn()
+   
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('14 InflectionsBrowser - renders Latin and Greek wide-tables - latin_supine_view', async () => {
@@ -257,13 +272,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(11)
-    expect(wideTable.props().standardFormData.viewID).toEqual('latin_supine_view')
+    expect(wideTable.props().view.constructor.name).toEqual('LatinSupineView')
 
+    wideTable.vm.getRenderedView = jest.fn()
+   
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(3)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('15 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - sum', async () => {
@@ -274,16 +288,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(12)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'sum'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Sum (esse,fui,futurus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('16 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - fero', async () => {
@@ -294,16 +304,13 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(13)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_voice_view',
-      form: 'fero'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Fero (ferre, tuli, latus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
+   
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('17 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - malo', async () => {
@@ -314,16 +321,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(14)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'malo'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Malo (malle, malui)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('18 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - malo', async () => {
@@ -334,19 +337,15 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(15)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'nolo'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Nolo (nolle, nolui)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
-  it('19 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - malo', async () => {
+  it('19 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - volo', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -354,16 +353,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(16)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'volo'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Volo (velle, volui)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('20 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - eo', async () => {
@@ -374,16 +369,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(17)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'eo'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Eo (ire, ivi(ii), itus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('21 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - absum', async () => {
@@ -394,16 +385,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(18)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'absum'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Absum (abesse, afui, afuturus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('22 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - adsum', async () => {
@@ -414,19 +401,15 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(19)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'adsum'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Adsum (adesse, adfui, adfuturus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
-  it.skip('23 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - dēsum', async () => {
+  it('23 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - dēsum', async () => {
     // This table has not been implemented yet - it is appeared from some change - need to be checked later
     let cmp = mount(InflectionsBrowser, {
       store,
@@ -435,17 +418,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(20)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'dēsum'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Desum (deesse, defui, defuturus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    await Vue.nextTick()
-
-    console.info(wideTable.html())
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('24 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - insum', async () => {
@@ -456,16 +434,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(21)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'insum'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Insum (inesse, infui, infuturus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('25 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - intersum', async () => {
@@ -476,16 +450,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(22)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'intersum'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Intersum (interesse, interfui, interfuturus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('26 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - obsum', async () => {
@@ -496,16 +466,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(23)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'obsum'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Obsum (obesse, obfui, obfuturus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('27 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - possum', async () => {
@@ -516,16 +482,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(24)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'possum'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Possum (posse, potui)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('28 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - prosum', async () => {
@@ -536,16 +498,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(25)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'prosum'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Prosum (prodesse, profui, profuturus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('29 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - praesum', async () => {
@@ -556,16 +514,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(26)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'praesum'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Praesum (praeesse, praefui, praefuturus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('30 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - subsum', async () => {
@@ -576,16 +530,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(27)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'subsum'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Subsum (subesse, subfui, subfuturus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('31 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - supersum', async () => {
@@ -596,16 +546,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(28)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'supersum'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Supersum (superesse, superfui, superfuturus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('32 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - queo', async () => {
@@ -616,16 +562,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(29)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_voice_view',
-      form: 'queo'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Queo (quire, quivi(ii), quitus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('33 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - nequeo', async () => {
@@ -636,16 +578,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(30)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'nequeo'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Nequeo (nequire, nequivi(ii), nequitus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('34 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - adeo', async () => {
@@ -656,16 +594,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(31)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_voice_view',
-      form: 'adeo'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Adeo (adire, adivi(ii), aditus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('35 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_voice_view, form - ineo', async () => {
@@ -676,16 +610,12 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(32)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_voice_view',
-      form: 'ineo'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Ineo (inire, inivi(ii), initus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('36 InflectionsBrowser - renders Latin and Greek wide-tables - latin_verb_irregular_view, form - veneo', async () => {
@@ -696,18 +626,13 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(33)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'latin_verb_irregular_view',
-      form: 'veneo'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('LatinVerbIrregularView')
+    expect(wideTable.props().view.title).toEqual('Veneo (venire, venivi(ii), venitus)')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
-
 
   it('37 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_view', async () => {
     let cmp = mount(InflectionsBrowser, {
@@ -717,13 +642,11 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(34)
-    expect(wideTable.props().standardFormData.viewID).toEqual('greek_noun_view')
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounView')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('38 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_simplified_view', async () => {
@@ -734,13 +657,11 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(35)
-    expect(wideTable.props().standardFormData.viewID).toEqual('greek_noun_simplified_view')
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounSimplifiedView')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('39 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_view', async () => {
@@ -751,13 +672,11 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(36)
-    expect(wideTable.props().standardFormData.viewID).toEqual('greek_adjective_view')
+    expect(wideTable.props().view.constructor.name).toEqual('GreekAdjectiveView')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('40 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_simplified_view', async () => {
@@ -768,13 +687,11 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(37)
-    expect(wideTable.props().standardFormData.viewID).toEqual('greek_adjective_simplified_view')
+    expect(wideTable.props().view.constructor.name).toEqual('GreekAdjectiveSimplifiedView')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('41 InflectionsBrowser - renders Latin and Greek wide-tables - greek_person_pronoun_view, form - νώ', async () => {
@@ -785,16 +702,11 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(38)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'greek_person_pronoun_view',
-      form: 'νώ'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('GreekPersonPronounView')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('42 InflectionsBrowser - renders Latin and Greek wide-tables - greek_person_gender_pronoun_view, form - ἡμᾶς', async () => {
@@ -805,16 +717,11 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(39)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'greek_person_gender_pronoun_view',
-      form: 'ἡμᾶς'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('GreekPersonGenderPronounView')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
 
@@ -826,16 +733,11 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(40)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'greek_gender_pronoun_view',
-      form: 'ἀλλήλᾱ'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('GreekGenderPronounView')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('44 InflectionsBrowser - renders Latin and Greek wide-tables - greek_lemma_gender_pronoun_view, form - τούτω', async () => {
@@ -846,16 +748,11 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(41)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'greek_lemma_gender_pronoun_view',
-      form: 'τούτω'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('GreekLemmaGenderPronounView')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('45 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - οἷς', async () => {
@@ -866,14 +763,11 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(42)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'greek_gender_pronoun_view',
-      form: 'οἷς'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('GreekGenderPronounView')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('46 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - ὥτινε', async () => {
@@ -884,16 +778,11 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(43)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'greek_gender_pronoun_view',
-      form: 'ὥτινε'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('GreekGenderPronounView')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
-
-
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('47 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - τίνε', async () => {
@@ -904,14 +793,11 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(44)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'greek_gender_pronoun_view',
-      form: 'τίνε'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('GreekGenderPronounInterrogativeView')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('48 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - τινοῖν', async () => {
@@ -922,14 +808,11 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(45)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'greek_gender_pronoun_view',
-      form: 'τινοῖν'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('GreekGenderPronounView')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('49 InflectionsBrowser - renders Latin and Greek wide-tables - greek_gender_pronoun_view, form - αὐτά', async () => {
@@ -940,14 +823,11 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(46)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'greek_gender_pronoun_view',
-      form: 'αὐτά'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('GreekGenderPronounView')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
 
@@ -959,14 +839,11 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(47)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'greek_article_view',
-      form: 'τοῦ'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('GreekArticleView')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('51 InflectionsBrowser - renders Latin and Greek wide-tables - greek_numeral_view, form - δύο', async () => {
@@ -977,14 +854,11 @@ describe('inflections.test.js', () => {
     })
 
     let wideTable = cmp.findAll(InflectionsTableWide).at(48)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'greek_numeral_view',
-      form: 'δύο'
-    }))
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNumeralView')
 
+    wideTable.vm.getRenderedView = jest.fn()
     wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-cell').length).toBeGreaterThan(10)
+    expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
   it('52 InflectionsBrowser - renders Latin and Greek wide-tables - greek_verb_paradigm_view, paradigmID - verbpdgm1', async () => {
@@ -994,18 +868,14 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(InflectionsTableWide).at(49)
-    expect(wideTable.props().standardFormData).toEqual(expect.objectContaining({
-      viewID: 'greek_verb_paradigm_view',
-      paradigmID: 'verbpdgm1'
-    }))
-
-    wideTable.findAll('span').at(0).trigger('click')
-    await Vue.nextTick()
-    expect(wideTable.findAll('.infl-prdgm-tbl-cell--data').length).toBeGreaterThan(10)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(0)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm1')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
   })
 
-  
+
   it('119 InflectionsBrowser - method collapseLanguage changes language state for the given languageID', async () => {
     let cmp = shallowMount(InflectionsBrowser, {
       store,
