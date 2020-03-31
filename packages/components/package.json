@@ -5,7 +5,7 @@
   "main": "dist/alpheios-components.min.js",
   "scripts": {
     "test": "jest --coverage  && shx cat ./coverage/lcov.info | coveralls",
-    "test-no-coverage": "jest tests/lib && jest tests/vue && jest tests/inflections",
+    "test-no-coverage": "jest tests/lib && jest tests/vue",
     "test-ci": "npm run test-lib && npm run test-components",
     "test-lib": "jest tests/lib --coverage",
     "test-components": "jest tests/vue --coverage",
