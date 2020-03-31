@@ -1,7 +1,7 @@
 /* eslint-env jest */
 'use strict'
 
-import Grammars from '../src/grammars.js'
+import Grammars from '@resclient/grammars.js'
 import { Constants } from 'alpheios-data-models'
 
 describe('BaseAdapter object', () => {

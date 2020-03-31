@@ -1,6 +1,6 @@
 /* eslint-env jest */
 'use strict'
-import GrammarResAdapter from '../../src/grammar/grammar_adapter.js'
+import GrammarResAdapter from '@resclient/grammar/grammar_adapter.js'
 
 let bennett = 'https://github.com/alpheios-project/grammar-bennett'
 

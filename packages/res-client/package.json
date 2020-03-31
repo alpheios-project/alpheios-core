@@ -54,7 +54,7 @@
   "jest": {
     "verbose": true,
     "moduleNameMapper": {
-      "^@wordlist[/](.+)": "<rootDir>/src/$1",
+      "^@resclient[/](.+)": "<rootDir>/src/$1",
       "alpheios-data-models": "<rootDir>/../data-models/dist/alpheios-data-models.js"
     },
     "transform": {
