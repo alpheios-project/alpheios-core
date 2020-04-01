@@ -477,6 +477,7 @@
                     "role": "data",
                     "tense": "future",
                     "voice": "active",
+                    "part of speech": "verb_participle",
                     "value": "βουλεύσων, βουλεύσουσᾰ, βουλεῦσον",
                     "reflink": {
                         "text": "(see declension)",
@@ -494,6 +495,7 @@
                     "role": "data",
                     "tense": "future",
                     "voice": "middle",
+                    "part of speech": "verb_participle",
                     "value": "βουλευσόμενος, -η, -ον",
                     "reflink": {
                         "text": "(see declension)",
