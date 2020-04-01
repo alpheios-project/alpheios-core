@@ -74,7 +74,7 @@ describe('greek-verb-paradigm.test.js', () => {
 
   })
 
-  it('4, 8, 9 - checked Verb Paradigm4, 8, 9 - βουλεύσω', async () => {
+  it('3, 8, 9 - checked Verb Paradigm3, 8, 9 - βουλεύσω', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('βουλεύσω', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
@@ -97,10 +97,10 @@ describe('greek-verb-paradigm.test.js', () => {
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[1],
       viewName: 'GreekVerbParadigmView',
-      viewTitle: 'Future System (Active and Middle) with contraction in -έω',
-      paradigmID: 'verbpdgm4',
+      viewTitle: 'Future System (without contraction)',
+      paradigmID: 'verbpdgm3',
       hasSuppParadigms: true,
-      suppParadigms: [ 'verbpdgm55', 'verbpdgm65' ]
+      suppParadigms: [ 'verbpdgm54', 'verbpdgm65' ]
     })
 
     renderedTable = inflectionsViewSet.matchingViews[1].render().wideTable
