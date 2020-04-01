@@ -9762,7 +9762,6 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
         }
         let mapper = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_3__["default"](languageModel,'arethusa')
         mapper.setPropertyParser(function (propertyName, propertyValue, inputElem) {
-          let propertyValues = []
           if (propertyName === 'pers') {
             propertyValue = propertyValue.replace('first person',alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Constants"].ORD_1ST)
             propertyValue = propertyValue.replace('second person',alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Constants"].ORD_2ND)

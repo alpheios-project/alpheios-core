@@ -101,7 +101,6 @@ class ArethusaTreebankAdapter extends BaseAdapter {
         }
         let mapper = new ImportData(languageModel,'arethusa')
         mapper.setPropertyParser(function (propertyName, propertyValue, inputElem) {
-          let propertyValues = []
           if (propertyName === 'pers') {
             propertyValue = propertyValue.replace('first person',Constants.ORD_1ST)
             propertyValue = propertyValue.replace('second person',Constants.ORD_2ND)
