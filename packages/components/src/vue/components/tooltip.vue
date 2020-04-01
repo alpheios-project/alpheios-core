@@ -1,5 +1,5 @@
 <template>
-  <div class="alph_tooltip">
+  <div class="alph_tooltip" data-alpheios-ignore="all">
     <slot></slot>
     <span class = "tooltiptext alpheios-text__smaller"
           v-bind:class = "directionClass"

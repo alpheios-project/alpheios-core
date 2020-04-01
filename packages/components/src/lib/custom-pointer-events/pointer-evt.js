@@ -40,13 +40,14 @@ export default class PointerEvt {
     }
     if (!Array.isArray(path)) { path = [path] }
     this[type].path = path
-    this[type].excluded = this[type].path.some(element =>
-      element.dataset && (
+    this[type].excluded = this[type].path.some(element => {
+      return element.dataset && (
         this.constructor.alpheiosIgnoreAllTest(element.dataset) ||
         this.constructor.excludeAllCpeTest(element.dataset) ||
         this.constructor.excludeCpeTest(element.dataset)
       )
-    )
+    })
+
     return this
   }
 

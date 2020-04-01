@@ -23,6 +23,7 @@ export default class MouseMove extends PointerEvt {
       this
         .setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
         .setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
+
       this.evtHandler(this, domEvt)
     }, this.mouseMoveDelay)
   }
