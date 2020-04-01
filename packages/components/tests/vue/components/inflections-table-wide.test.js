@@ -542,10 +542,8 @@ describe('inflections-table-wide.test.js', () => {
     expect(classes['infl-suff--suffix-match']).toBeTruthy()
     expect(classes['infl-suff--full-match']).toBeTruthy()
 
-    cmp.setData({ 
-      state: {
-        standardFormTable: true
-      },
+    cmp.setProps({ 
+      standardFormData: true
     })
 
     classes = cmp.vm.morphemeClasses(morpheme)
