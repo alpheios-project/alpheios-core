@@ -20,15 +20,14 @@
               id="alpheios-lookup-form-button"
               tabindex="-1"
               type="button"
-              data-alpheios-ignore="all"
           >
-            <span class="alpheios-lookup__search-control-label" data-alpheios-ignore="all">{{ l10n.getMsg('LABEL_LOOKUP_BUTTON') }}</span>
+            <span class="alpheios-lookup__search-control-label">{{ l10n.getMsg('LABEL_LOOKUP_BUTTON') }}</span>
             <span class="alpheios-lookup__search-control-icon alpheios-navbuttons__btn"><lookup-icon/></span>
           </button>
         </div>
       </div>
     </div>
-    <div v-show="! showLangSelector" data-alpheios-ignore="all">
+    <div v-show="! showLangSelector">
       <span class="alpheios-lookup__lang-hint" id="alpheios-lookup-form-lang-hint">{{l10n.getMsg('HINT_LOOKUP_LANGUAGE',{language:lookupLangName})}}</span>
       <span class="alpheios-lookup__lang-change" id="alpheios-lookup-form-lang-change" @click.stop="toggleLangSelector">{{l10n.getMsg('LABEL_LOOKUP_CHANGE_LANGUAGE')}}</span>
     </div>

@@ -47,7 +47,6 @@ export default class PointerEvt {
         this.constructor.excludeCpeTest(element.dataset)
       )
     )
-
     return this
   }
 
