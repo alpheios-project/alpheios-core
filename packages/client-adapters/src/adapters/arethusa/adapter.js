@@ -1,6 +1,6 @@
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 import AlpheiosLexiconTransformer from '@clAdapters/transformers/alpheios-lexicon-transformer'
-import { LanguageModelFactory } from 'alpheios-data-models'
+import { LanguageModelFactory, Constants } from 'alpheios-data-models'
 import ImportData from '@clAdapters/transformers/import-morph-data.js'
 
 import DefaultConfig from '@clAdapters/adapters/alpheiostb/config.json'
@@ -99,7 +99,17 @@ class ArethusaTreebankAdapter extends BaseAdapter {
           this.addError(this.l10n.messages['MORPH_TREEBANK_UNSUPPORTED_LANGUAGE'].get(languageID))
           return
         }
-        const transformAdapter = new AlpheiosLexiconTransformer(this, new ImportData(languageModel, 'arethusa'))
+        let mapper = new ImportData(languageModel,'arethusa')
+        mapper.setPropertyParser(function (propertyName, propertyValue, inputElem) {
+          let propertyValues = []
+          if (propertyName === 'pers') {
+            propertyValue = propertyValue.replace('first person',Constants.ORD_1ST)
+            propertyValue = propertyValue.replace('second person',Constants.ORD_2ND)
+            propertyValue = propertyValue.replace('third person',Constants.ORD_3RD)
+          }
+          return [ propertyValue ]
+        })
+        const transformAdapter = new AlpheiosLexiconTransformer(this, mapper, 'arethusa')
         const homonym = transformAdapter.transformData(tbRes, word)
         return homonym
       } else {
