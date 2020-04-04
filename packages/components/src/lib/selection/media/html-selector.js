@@ -292,7 +292,6 @@ export default class HTMLSelector extends MediaSelector {
 
     // extract word
     const word = anchorText.substring(wordStart, wordEnd).trim()
-    console.info('doSpaceSeparatedWordSelection - word', word)
     /* Identify the words preceeding and following the focus word
     * TODO - query the type of node in the selection to see if we are
     * dealing with something other than text nodes

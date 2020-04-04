@@ -22,8 +22,6 @@ export default class MouseMove extends PointerEvt {
     }
 
     mouseMoveTimeout = setTimeout(() => {
-      console.info('eventListener - mousemove execute', domEvt.path)
-      console.info('eventListener - mousemove execute', domEvt)
       const valid = this
         .setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
         .setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)

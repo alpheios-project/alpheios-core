@@ -22,7 +22,6 @@ export default class PointerEvt {
   }
 
   hasLimitedById (element) {
-    console.info('check excluded', element.id, (this.limitedById && element.id === this.limitedById))
     return this.limitedById && element.id === this.limitedById // eslint-disable-line no-prototype-builtins
   }
 
@@ -55,7 +54,6 @@ export default class PointerEvt {
 
     if (!this[type].excluded && this.limitedById) {
       this[type].excluded = this[type].path.every(element => !this.hasLimitedById(element))
-      console.info('/////////// excluded final result', this[type].excluded)
     }
 
     return this

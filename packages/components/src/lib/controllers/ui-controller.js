@@ -1758,8 +1758,6 @@ NB this is Prototype functionality
     let featureOptions = this.api.settings.getFeatureOptions() // eslint-disable-line prefer-const
     // TODO we need to refactor handling of boolean options
     const nonTextFeatures = ['enableLemmaTranslations', 'enableWordUsageExamples', 'wordUsageExamplesMax', 'wordUsageExamplesAuthMax', 'enableMouseMove', 'mouseMoveDelay', 'mouseMoveAccuracy', 'enableMouseMoveLimitedByIdCheck', 'mouseMoveLimitedById']
-
-    console.info('featureOptionChange - ', name, value, nonTextFeatures.includes(name))
     if (nonTextFeatures.includes(name)) {
       featureOptions.items[name].setValue(value)
     } else {
