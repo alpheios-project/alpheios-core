@@ -84,7 +84,6 @@
 
     <div
         class="alpheios-toolbar__lookup"
-        data-alpheios-ignore="all"
         v-show="lookupVisible"
     >
       <lookup
