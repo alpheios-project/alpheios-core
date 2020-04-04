@@ -99,14 +99,14 @@ class ArethusaTreebankAdapter extends BaseAdapter {
           this.addError(this.l10n.messages['MORPH_TREEBANK_UNSUPPORTED_LANGUAGE'].get(languageID))
           return
         }
-        let mapper = new ImportData(languageModel,'arethusa')
+        const mapper = new ImportData(languageModel, 'arethusa')
         mapper.setPropertyParser(function (propertyName, propertyValue, inputElem) {
           if (propertyName === 'pers') {
-            propertyValue = propertyValue.replace('first person',Constants.ORD_1ST)
-            propertyValue = propertyValue.replace('second person',Constants.ORD_2ND)
-            propertyValue = propertyValue.replace('third person',Constants.ORD_3RD)
+            propertyValue = propertyValue.replace('first person', Constants.ORD_1ST)
+            propertyValue = propertyValue.replace('second person', Constants.ORD_2ND)
+            propertyValue = propertyValue.replace('third person', Constants.ORD_3RD)
           }
-          return [ propertyValue ]
+          return [propertyValue]
         })
         const transformAdapter = new AlpheiosLexiconTransformer(this, mapper, 'arethusa')
         const homonym = transformAdapter.transformData(tbRes, word)

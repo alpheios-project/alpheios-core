@@ -197,6 +197,26 @@
       "minValue": 1,
       "maxValue": 5000,
       "values": []
+    },
+    "enableMouseMoveLimitedByIdCheck": {
+      "defaultValue": false,
+      "labelText": "Limit by Id (recommended for Google Docs)",
+      "boolean": true,
+      "values": [
+        {
+          "value": true,
+          "text": "Yes"
+        },
+        {
+          "value": false,
+          "text": "No"
+        }
+      ]
+    },
+    "mouseMoveLimitedById": {
+      "defaultValue": "docs-editor-container",
+      "labelText": "Limited by the id",
+      "text": true
     }
   }
 }

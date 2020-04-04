@@ -11,6 +11,8 @@ export default class MouseMove extends PointerEvt {
     this.boundListener = this.eventListener.bind(this) // A bound event listener of MouseDblClick
     this.mouseMoveDelay = parseInt(eventParams.mouseMoveDelay)
     this.mouseMoveAccuracy = parseInt(eventParams.mouseMoveAccuracy)
+
+    this.limitedById = eventParams.enableMouseMoveLimitedByIdCheck ? eventParams.mouseMoveLimitedById : null
   }
 
   eventListener (domEvt) {
