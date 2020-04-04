@@ -5,6 +5,7 @@
       :class="componentClasses"
       :style="componentStyles"
       v-show="$store.state.toolbar.visible"
+      data-alpheios-ignore="all"
   >
     <div
         id="alpheios-toolbar-drag-handle"
@@ -83,6 +84,7 @@
 
     <div
         class="alpheios-toolbar__lookup"
+        data-alpheios-ignore="all"
         v-show="lookupVisible"
     >
       <lookup

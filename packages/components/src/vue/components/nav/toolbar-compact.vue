@@ -5,6 +5,7 @@
       :style="componentStyles"
       v-show="$store.state.toolbar.visible"
       @click="ui.toggleActionPanel"
+      data-alpheios-ignore="all"
   >
     <toolbar-icon/>
   </div>

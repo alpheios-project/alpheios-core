@@ -183,6 +183,7 @@ Lexis.api = (moduleInstance, store) => {
         const htmlSelector = new HTMLSelector(event, defaultLangCode)
         const textSelector = htmlSelector.createTextSelector()
 
+        console.info('textSelector - ', textSelector)
         if (textSelector && !textSelector.isEmpty()) {
           const lastTextSelector = moduleInstance._lastTextSelector || {}
           const checkSameTestSelector = (
@@ -192,6 +193,7 @@ Lexis.api = (moduleInstance, store) => {
           )
           if (checkSameTestSelector) {
             // Do nothing
+            console.info('***********NO lexQuery - same text selector')
             return
           }
           moduleInstance._lastTextSelector = textSelector
@@ -205,6 +207,8 @@ Lexis.api = (moduleInstance, store) => {
             store.commit('lexis/resetTreebankInfo')
           }
 
+          console.info('***********lexQuery- start lexical query')
+          console.info('***********htmlSelector - ', htmlSelector)
           const lexQuery = LexicalQuery.create(textSelector, {
             clientId: moduleInstance._appApi.clientId,
             resourceOptions: moduleInstance._settingsApi.getResourceOptions(),
@@ -220,6 +224,8 @@ Lexis.api = (moduleInstance, store) => {
 
           // Hide a CEDICT notification on a new lexical query
           store.commit('lexis/hideCedictNotification')
+        } else {
+          console.info('***********NO lexQuery - not valid text selector')
         }
       }
     },
