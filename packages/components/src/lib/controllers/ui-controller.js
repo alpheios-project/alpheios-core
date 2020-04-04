@@ -1935,7 +1935,7 @@ NB this is Prototype functionality
   }
 
   enableMouseMoveEvent () {
-    return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || 1)// this.platform.isGoogleDocs)
+    return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || this.platform.isGoogleDocs)
   }
 }
 
