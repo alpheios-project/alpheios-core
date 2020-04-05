@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import 'whatwg-fetch'
 import ClientAdapters from '@clAdapters/client-adapters.js'
-import { Fixture } from 'alpheios-fixtures'
+import { Fixture, TranslationsFixture } from 'alpheios-fixtures'
 import { Constants, Homonym, Author, WordUsageExample } from 'alpheios-data-models'
 
 describe('client-adapters.test.js', () => {
@@ -191,6 +191,10 @@ describe('client-adapters.test.js', () => {
       params: {
         homonym: reHomonym.result,
         browserLang: 'spa'
+      },
+      sourceData: {
+        langs: TranslationsFixture.allLangs,
+        translations: TranslationsFixture.library['lat-spa-cepit']
       }
     })
 
