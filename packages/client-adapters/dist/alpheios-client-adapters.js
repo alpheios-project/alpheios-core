@@ -15793,6 +15793,7 @@ class AlpheiosLemmaTranslationsAdapter extends _clAdapters_adapters_base_adapter
     this.config = this.uploadConfig(config, _clAdapters_adapters_translations_config_json__WEBPACK_IMPORTED_MODULE_0__)
     this.mapLangUri = {}
     this.provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["ResourceProvider"](this.config.url, this.config.rights)
+    this.sourceData = config.sourceData
   }
 
   /**
@@ -15830,7 +15831,12 @@ class AlpheiosLemmaTranslationsAdapter extends _clAdapters_adapters_base_adapter
       if (input && urlLang) {
         try {
           const url = urlLang + '?input=' + input
-          const translationsList = await this.fetch(url)
+          let translationsList
+          if (this.sourceData && this.sourceData.translations) {
+            translationsList = this.sourceData.translations
+          } else {
+            translationsList = await this.fetch(url)
+          }
           if (translationsList && translationsList.constructor.name === 'AdapterError') {
             return
           }
@@ -15864,7 +15870,14 @@ class AlpheiosLemmaTranslationsAdapter extends _clAdapters_adapters_base_adapter
   async getAvailableResLang (inLang, outLang) {
     if (this.mapLangUri[inLang] === undefined) {
       const urlAvaLangsRes = this.config.url + '/' + inLang + '/'
-      const unparsed = await this.fetch(urlAvaLangsRes)
+
+      let unparsed
+
+      if (!this.sourceData || !this.sourceData.langs) {
+        unparsed = await this.fetch(urlAvaLangsRes)
+      } else {
+        unparsed = this.sourceData.langs
+      }
 
       if (unparsed && unparsed.constructor.name === 'AdapterError') {
         return unparsed
@@ -16670,7 +16683,8 @@ class ClientAdapters {
       category: 'lemmatranslation',
       adapterName: 'alpheios',
       method: options.method,
-      clientId: options.clientId
+      clientId: options.clientId,
+      sourceData: options.sourceData
     })
 
     if (options.method === 'fetchTranslations') {

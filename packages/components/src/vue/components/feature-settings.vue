@@ -75,7 +75,6 @@
       <setting
           class="alpheios-feature-options__item"
           :data="featureOptions.items.enableMouseMoveLimitedByIdCheck"
-          :selectedOverride = "mouseMoveLimitedByIdCheck"
           @change="featureOptionChanged"
       >
       </setting>
