@@ -156,39 +156,6 @@ for the current node
   }
 
   /**
-   * Checks if the word provided has a trailing digit (e.g. αἴγυπτος1).
-   *
-   * @param {string} word - A word to be checked.
-   * @returns {boolean} - True if the word has a trailing digit, false otherwise.
-   */
-  static hasTrailingDigit (word) {
-    return /^.+\d$/.test(word)
-  }
-
-  /**
-   * Checks if the word provided is in an NFC Unicode Normalization Form.
-   * It also checks if the word has the right single quotation (elision).
-   *
-   * @see {@link GreekLanguageModel#normalizeWord}
-   * @param {string} word - A word to be checked.
-   * @returns {boolean} - True if at least one character of the word
-   * is NOT in an Unicode Normalization Form, false otherwise.
-   */
-  static needsNormalization (word) {
-    return Boolean(word.localeCompare(GreekLanguageModel.normalizeWord(word)))
-  }
-
-  /**
-   * Checks if the word provided has any letters in an upper case.
-   *
-   * @param {string} word - A word to be checked.
-   * @returns {boolean} - True if the word at least one letter in upper case, false if all letters are lower case.
-   */
-  static hasUpperCase (word) {
-    return Boolean(word.localeCompare(word.toLocaleLowerCase()))
-  }
-
-  /**
    * @override LanguageModel#alternateWordEncodings
    */
   static alternateWordEncodings (word, preceding = null, following = null, encoding = null) {
@@ -339,7 +306,7 @@ for the current node
    *                  of a trailing digit during comparison.
    */
   static compareWords (wordA, wordB, normalize = true,
-    { normalizeTrailingDigit = false, normalizeWord = false } = {}) {
+    { normalizeTrailingDigit = false } = {}) {
     let matched = false
     if (normalize) {
       if (normalizeTrailingDigit) {

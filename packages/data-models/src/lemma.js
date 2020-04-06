@@ -1,4 +1,3 @@
-import * as Constants from './constants.js'
 import LMF from './language_model_factory.js'
 import Feature from './feature.js'
 import Translation from './translation.js'
@@ -185,7 +184,7 @@ class Lemma {
     // Check if words are the same
     const areSameWords = normalize
       ? LMF.getLanguageModel(this.languageID).compareWords(this.word, lemma.word, true,
-        { normalizeTrailingDigit: true, normalizeWord: true })
+        { normalizeTrailingDigit: true })
       : this.word === lemma.word
 
     return areSameWords
@@ -198,47 +197,48 @@ class Lemma {
    * @returns {string} - A disambiguated word.
    */
   disambiguate (otherLemma) {
-    // Use a special logic for Greek words
-    if (this.languageID === Constants.LANG_GREEK) {
-      const langModel = LMF.getLanguageModel(this.languageID)
+    const langModel = LMF.getLanguageModel(this.languageID)
 
-      const thisHasMixedCase = langModel.hasUpperCase(this.word)
-      const otherHasMixedCase = langModel.hasUpperCase(otherLemma.word)
-      /*
-      If one of the words has both upper and lower case letters, it will be returned right away, without
-      go through other normalizations.
-       */
-      if (otherHasMixedCase) {
-        return otherLemma.word
-      }
-      if (thisHasMixedCase) {
-        return this.word
-      }
+    // Check if words are the same
+    const areSameWords = langModel.compareWords(this.word, otherLemma.word, true, { normalizeTrailingDigit: true })
+    if (!areSameWords) {
+      throw new Error('Words that differ cannot be disambiguated')
+    }
 
-      /*
-      If one of the word has characters that are not in the NFC Unicode Normalization Form,
-      return that word, normalized.
-       */
-      const thisNeesNormalization = langModel.needsNormalization(this.word)
-      const otherNeesNormalization = langModel.needsNormalization(otherLemma.word)
-      if (otherNeesNormalization) {
-        return langModel.normalizeWord(otherLemma.word)
-      }
-      if (thisNeesNormalization) {
-        return langModel.normalizeWord(this.word)
-      }
-
-      /*
-      If one of the words has a trailing digit, return a word with a trailing digit.
-       */
-      const thisHasTrailingDigit = langModel.hasTrailingDigit(this.word)
-      const otherHasTrailingDigit = langModel.hasTrailingDigit(otherLemma.word)
-      if (otherHasTrailingDigit) {
-        return otherLemma.word
-      }
-      if (thisHasTrailingDigit) {
-        return this.word
-      }
+    const thisHasMixedCase = langModel.hasUpperCase(this.word)
+    const otherHasMixedCase = langModel.hasUpperCase(otherLemma.word)
+    /*
+    If one of the words has both upper and lower case letters, it will be returned right away, without
+    go through other normalizations.
+     */
+    if (otherHasMixedCase) {
+      return otherLemma.word
+    }
+    if (thisHasMixedCase) {
+      return this.word
+    }
+    /*
+    If one of the word has characters that are not in the NFC Unicode Normalization Form,
+    return that word, normalized.
+     */
+    const thisNeesNormalization = langModel.needsNormalization(this.word)
+    const otherNeesNormalization = langModel.needsNormalization(otherLemma.word)
+    if (otherNeesNormalization) {
+      return langModel.normalizeWord(otherLemma.word)
+    }
+    if (thisNeesNormalization) {
+      return langModel.normalizeWord(this.word)
+    }
+    /*
+    If one of the words has a trailing digit, return a word with a trailing digit.
+     */
+    const thisHasTrailingDigit = langModel.hasTrailingDigit(this.word)
+    const otherHasTrailingDigit = langModel.hasTrailingDigit(otherLemma.word)
+    if (otherHasTrailingDigit) {
+      return otherLemma.word
+    }
+    if (thisHasTrailingDigit) {
+      return this.word
     }
     return this.word
   }

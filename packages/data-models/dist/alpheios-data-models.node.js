@@ -2410,39 +2410,6 @@ for the current node
   }
 
   /**
-   * Checks if the word provided has a trailing digit (e.g. αἴγυπτος1).
-   *
-   * @param {string} word - A word to be checked.
-   * @returns {boolean} - True if the word has a trailing digit, false otherwise.
-   */
-  static hasTrailingDigit (word) {
-    return /^.+\d$/.test(word)
-  }
-
-  /**
-   * Checks if the word provided is in an NFC Unicode Normalization Form.
-   * It also checks if the word has the right single quotation (elision).
-   *
-   * @see {@link GreekLanguageModel#normalizeWord}
-   * @param {string} word - A word to be checked.
-   * @returns {boolean} - True if at least one character of the word
-   * is NOT in an Unicode Normalization Form, false otherwise.
-   */
-  static needsNormalization (word) {
-    return Boolean(word.localeCompare(GreekLanguageModel.normalizeWord(word)))
-  }
-
-  /**
-   * Checks if the word provided has any letters in an upper case.
-   *
-   * @param {string} word - A word to be checked.
-   * @returns {boolean} - True if the word at least one letter in upper case, false if all letters are lower case.
-   */
-  static hasUpperCase (word) {
-    return Boolean(word.localeCompare(word.toLocaleLowerCase()))
-  }
-
-  /**
    * @override LanguageModel#alternateWordEncodings
    */
   static alternateWordEncodings (word, preceding = null, following = null, encoding = null) {
@@ -2593,7 +2560,7 @@ for the current node
    *                  of a trailing digit during comparison.
    */
   static compareWords (wordA, wordB, normalize = true,
-    { normalizeTrailingDigit = false, normalizeWord = false } = {}) {
+    { normalizeTrailingDigit = false } = {}) {
     let matched = false
     if (normalize) {
       if (normalizeTrailingDigit) {
@@ -3856,6 +3823,39 @@ class LanguageModel {
   }
 
   /**
+   * Checks if the word provided has a trailing digit (e.g. αἴγυπτος1 in Greek).
+   *
+   * @param {string} word - A word to be checked.
+   * @returns {boolean} - True if the word has a trailing digit, false otherwise.
+   */
+  static hasTrailingDigit (word) {
+    return /^.+\d$/.test(word)
+  }
+
+  /**
+   * Checks if the word provided is in a normalized form.
+   * It also checks if the word has the right single quotation (elision).
+   *
+   * @see {@link GreekLanguageModel#normalizeWord}
+   * @param {string} word - A word to be checked.
+   * @returns {boolean} - True if at least one character of the word
+   * is NOT in an Unicode Normalization Form, false otherwise.
+   */
+  static needsNormalization (word) {
+    return Boolean(word.localeCompare(this.normalizeWord(word)))
+  }
+
+  /**
+   * Checks if the word provided has any letters in an upper case.
+   *
+   * @param {string} word - A word to be checked.
+   * @returns {boolean} - True if the word at least one letter in upper case, false if all letters are lower case.
+   */
+  static hasUpperCase (word) {
+    return Boolean(word.localeCompare(word.toLocaleLowerCase()))
+  }
+
+  /**
    * Return a normalized version of a word which can be used to compare the word for equality
    *
    * @param {string} word the source word
@@ -4546,13 +4546,11 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
-/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
-/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
-/* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! uuid/v4 */ "uuid/v4");
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_4__);
-
+/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
+/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
+/* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! uuid/v4 */ "uuid/v4");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
@@ -4584,13 +4582,13 @@ class Lemma {
     // Compatibility code for something providing languageCode instead of languageID
     this.languageID = undefined
     this.languageCode = undefined
-    ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageAttrs(languageID))
+    ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageAttrs(languageID))
 
     this.word = word
     this.principalParts = principalParts
     this.features = {}
 
-    this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_4___default()()
+    this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_3___default()()
   }
 
   get language () {
@@ -4605,12 +4603,12 @@ class Lemma {
 
     if (jsonObject.features && jsonObject.features.length > 0) {
       jsonObject.features.forEach(featureSource => {
-        resLemma.addFeature(_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].readObject(featureSource))
+        resLemma.addFeature(_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].readObject(featureSource))
       })
     }
 
     if (jsonObject.translation) {
-      resLemma.translation = _translation_js__WEBPACK_IMPORTED_MODULE_3__["default"].readObject(jsonObject.translation, resLemma)
+      resLemma.translation = _translation_js__WEBPACK_IMPORTED_MODULE_2__["default"].readObject(jsonObject.translation, resLemma)
     }
     return resLemma
   }
@@ -4653,11 +4651,11 @@ class Lemma {
     const type = data[0].type
     this.features[type] = []
     for (const element of data) {
-      if (!(element instanceof _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"])) {
+      if (!(element instanceof _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"])) {
         throw new Error('feature data must be a Feature object.')
       }
 
-      if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].compareLanguages(element.languageID, this.languageID)) {
+      if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].compareLanguages(element.languageID, this.languageID)) {
         throw new Error('Language "' + element.languageID.toString() + '" of a feature does not match a language "' +
                 this.languageID.toString() + '" of a Lemma object.')
       }
@@ -4676,11 +4674,11 @@ class Lemma {
       throw new Error('feature data cannot be empty.')
     }
 
-    if (!(feature instanceof _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"])) {
+    if (!(feature instanceof _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"])) {
       throw new Error('feature data must be a Feature object.')
     }
 
-    if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].compareLanguages(feature.languageID, this.languageID)) {
+    if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].compareLanguages(feature.languageID, this.languageID)) {
       throw new Error('Language "' + feature.languageID.toString() + '" of a feature does not match a language "' +
         this.languageID.toString() + '" of a Lemma object.')
     }
@@ -4730,16 +4728,16 @@ class Lemma {
    */
   isFullHomonym (lemma, { normalize = false } = {}) {
     // If parts of speech do not match this is not a full homonym
-    if (!this.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part] ||
-      !lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part] ||
-      !this.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part].isEqual(lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part])) {
+    if (!this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part] ||
+      !lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part] ||
+      !this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part].isEqual(lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part])) {
       return false
     }
 
     // Check if words are the same
     const areSameWords = normalize
-      ? _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModel(this.languageID).compareWords(this.word, lemma.word, true,
-        { normalizeTrailingDigit: true, normalizeWord: true })
+      ? _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageModel(this.languageID).compareWords(this.word, lemma.word, true,
+        { normalizeTrailingDigit: true })
       : this.word === lemma.word
 
     return areSameWords
@@ -4752,47 +4750,48 @@ class Lemma {
    * @returns {string} - A disambiguated word.
    */
   disambiguate (otherLemma) {
-    // Use a special logic for Greek words
-    if (this.languageID === _constants_js__WEBPACK_IMPORTED_MODULE_0__["LANG_GREEK"]) {
-      const langModel = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModel(this.languageID)
+    const langModel = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageModel(this.languageID)
 
-      const thisHasMixedCase = langModel.hasUpperCase(this.word)
-      const otherHasMixedCase = langModel.hasUpperCase(otherLemma.word)
-      /*
-      If one of the words has both upper and lower case letters, it will be returned right away, without
-      go through other normalizations.
-       */
-      if (otherHasMixedCase) {
-        return otherLemma.word
-      }
-      if (thisHasMixedCase) {
-        return this.word
-      }
+    // Check if words are the same
+    const areSameWords = langModel.compareWords(this.word, otherLemma.word, true, { normalizeTrailingDigit: true })
+    if (!areSameWords) {
+      throw new Error('Words that differ cannot be disambiguated')
+    }
 
-      /*
-      If one of the word has characters that are not in the NFC Unicode Normalization Form,
-      return that word, normalized.
-       */
-      const thisNeesNormalization = langModel.needsNormalization(this.word)
-      const otherNeesNormalization = langModel.needsNormalization(otherLemma.word)
-      if (otherNeesNormalization) {
-        return langModel.normalizeWord(otherLemma.word)
-      }
-      if (thisNeesNormalization) {
-        return langModel.normalizeWord(this.word)
-      }
-
-      /*
-      If one of the words has a trailing digit, return a word with a trailing digit.
-       */
-      const thisHasTrailingDigit = langModel.hasTrailingDigit(this.word)
-      const otherHasTrailingDigit = langModel.hasTrailingDigit(otherLemma.word)
-      if (otherHasTrailingDigit) {
-        return otherLemma.word
-      }
-      if (thisHasTrailingDigit) {
-        return this.word
-      }
+    const thisHasMixedCase = langModel.hasUpperCase(this.word)
+    const otherHasMixedCase = langModel.hasUpperCase(otherLemma.word)
+    /*
+    If one of the words has both upper and lower case letters, it will be returned right away, without
+    go through other normalizations.
+     */
+    if (otherHasMixedCase) {
+      return otherLemma.word
+    }
+    if (thisHasMixedCase) {
+      return this.word
+    }
+    /*
+    If one of the word has characters that are not in the NFC Unicode Normalization Form,
+    return that word, normalized.
+     */
+    const thisNeesNormalization = langModel.needsNormalization(this.word)
+    const otherNeesNormalization = langModel.needsNormalization(otherLemma.word)
+    if (otherNeesNormalization) {
+      return langModel.normalizeWord(otherLemma.word)
+    }
+    if (thisNeesNormalization) {
+      return langModel.normalizeWord(this.word)
+    }
+    /*
+    If one of the words has a trailing digit, return a word with a trailing digit.
+     */
+    const thisHasTrailingDigit = langModel.hasTrailingDigit(this.word)
+    const otherHasTrailingDigit = langModel.hasTrailingDigit(otherLemma.word)
+    if (otherHasTrailingDigit) {
+      return otherLemma.word
+    }
+    if (thisHasTrailingDigit) {
+      return this.word
     }
     return this.word
   }

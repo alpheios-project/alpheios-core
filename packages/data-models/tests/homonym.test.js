@@ -360,7 +360,7 @@ describe('homonym.test.js', () => {
     expect(disambiguated.lexemes[1]).toEqual(lexemeA2)
   })
 
-  it('7F Homonym disambiguation: case F (4)', () => {
+  it('7F Homonym disambiguation: case F', () => {
     /*
     HomonymA contains 2 Lexemes. Homonym B contains 1 Lexeme.
     HomonymB.Lexeme1 does not match either of the HomonymA Lexemes on lemma.word and lemma.part of speech.
@@ -423,7 +423,7 @@ describe('homonym.test.js', () => {
     expect(disambiguated.isDisambiguated()).toBeTruthy()
   })
 
-  it('7G Homonym disambiguation: case G (5)', () => {
+  it('7G Homonym disambiguation: case G', () => {
     /*
     HomonymA contains 1 Lexeme with 3 inflections. HomonymB contains 1 Lexeme with 1 inflection.
     The only difference between HomonymA.Lexeme1.lemma and HomonymB.Lexeme1.lemma is that
@@ -441,7 +441,7 @@ describe('homonym.test.js', () => {
     infl2.addFeature(new Feature(Feature.types.voice, Constants.VOICE_PASSIVE, Constants.LANG_GREEK))
     let infl3 = new Inflection('stem3', 'grc') // eslint-disable-line prefer-const
     infl3.addFeature(new Feature(Feature.types.voice, Constants.VOICE_MEDIOPASSIVE, Constants.LANG_GREEK))
-    let lemmaA = new Lemma('word', 'grc') // eslint-disable-line prefer-const
+    let lemmaA = new Lemma('χράομαι', 'grc') // eslint-disable-line prefer-const
     lemmaA.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     const lexemeA = new Lexeme(
       lemmaA,
@@ -454,7 +454,7 @@ describe('homonym.test.js', () => {
     // homonym with single lexeme, two possible inflections, disambiguator adds a new lexeme
     let infl6 = new Inflection('stem', 'grc') // eslint-disable-line prefer-const
     infl6.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_GREEK))
-    let lemmaB = new Lemma('Word', 'grc') // eslint-disable-line prefer-const
+    let lemmaB = new Lemma('Χράομαι', 'grc') // eslint-disable-line prefer-const
     lemmaB.addFeature(new Feature(Feature.types.part, Constants.POFS_VERB, Constants.LANG_GREEK))
     const lexemeB = new Lexeme(
       lemmaB,
@@ -476,7 +476,7 @@ describe('homonym.test.js', () => {
     expect(disambiguated.isDisambiguated()).toBeTruthy()
   })
 
-  it('7H Homonym disambiguation: case H (6)', () => {
+  it('7H Homonym disambiguation: case H', () => {
     /*
     HomonymA contains 1 Lexeme with 3 inflections. HomonymB contains 1 Lexeme with 1 inflection.
     The only difference between HomonymA.Lexeme1.lemma and HomonymB.Lexeme1.lemma is that
@@ -531,7 +531,7 @@ describe('homonym.test.js', () => {
     expect(disambiguated.isDisambiguated()).toBeTruthy()
   })
 
-  it('7I Homonym disambiguation: case I (7)', () => {
+  it('7I Homonym disambiguation: case I', () => {
     /*
     HomonymA contains 1 Lexeme with 3 inflections. HomonymB contains 1 Lexeme with 1 inflection.
     The only difference between HomonymA.Lexeme1.lemma and HomonymB.Lexeme1.lemma is that
