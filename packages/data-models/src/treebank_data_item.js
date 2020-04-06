@@ -61,9 +61,8 @@ export default class TreebankDataItem {
   get hasTreebankData () {
     if (this.app && this.version > 0 && this.sourceUrl) {
       return true
-    } else  {
+    } else {
       return false
     }
-
   }
 }

@@ -2410,6 +2410,39 @@ for the current node
   }
 
   /**
+   * Checks if the word provided has a trailing digit (e.g. αἴγυπτος1).
+   *
+   * @param {string} word - A word to be checked.
+   * @returns {boolean} - True if the word has a trailing digit, false otherwise.
+   */
+  static hasTrailingDigit (word) {
+    return /^.+\d$/.test(word)
+  }
+
+  /**
+   * Checks if the word provided is in an NFC Unicode Normalization Form.
+   * It also checks if the word has the right single quotation (elision).
+   *
+   * @see {@link GreekLanguageModel#normalizeWord}
+   * @param {string} word - A word to be checked.
+   * @returns {boolean} - True if at least one character of the word
+   * is NOT in an Unicode Normalization Form, false otherwise.
+   */
+  static needsNormalization (word) {
+    return Boolean(word.localeCompare(GreekLanguageModel.normalizeWord(word)))
+  }
+
+  /**
+   * Checks if the word provided has any letters in an upper case.
+   *
+   * @param {string} word - A word to be checked.
+   * @returns {boolean} - True if the word at least one letter in upper case, false if all letters are lower case.
+   */
+  static hasUpperCase (word) {
+    return Boolean(word.localeCompare(word.toLocaleLowerCase()))
+  }
+
+  /**
    * @override LanguageModel#alternateWordEncodings
    */
   static alternateWordEncodings (word, preceding = null, following = null, encoding = null) {
@@ -2507,11 +2540,11 @@ for the current node
 
   /**
    * Determines a class of a given word (pronoun) by finding a matching word entry(ies)
-in a pronoun source info (`forms`) and getting a single or multiple classes of those entries.
-Some morphological analyzers provide class information that is unreliable or do not
-provide class information at all. However, class information is essential in
-deciding in what table should pronouns be grouped. For this, we have to
-determine pronoun classes using this method.
+   * in a pronoun source info (`forms`) and getting a single or multiple classes of those entries.
+   * Some morphological analyzers provide class information that is unreliable or do not
+   * provide class information at all. However, class information is essential in
+   * deciding in what table should pronouns be grouped. For this, we have to
+   * determine pronoun classes using this method.
    *
    * @param {Form[]} forms - An array of known forms of pronouns.
    * @param {string} word - A word we need to find a matching class for.
@@ -2548,11 +2581,30 @@ determine pronoun classes using this method.
   }
 
   /**
-   * @override LanguageModel#compareWords
+   * Checks if two words are equivalent.
+   *
+   * @override LanguageModel#compareWords.
+   * @param {string} wordA - a first word to be compared.
+   * @param {string} wordB - a second word to be compared.
+   * @param {boolean} normalize - whether or not to apply normalization algorithms
+   *                  with an `alternateWordEncodings()` function.
+   * @param {object} options - Additional comparison criteria.
+   * @param {boolean} options.normalizeTrailingDigit - whether to consider the form
+   *                  of a trailing digit during comparison.
    */
-  static compareWords (wordA, wordB, normalize = true) {
+  static compareWords (wordA, wordB, normalize = true,
+    { normalizeTrailingDigit = false, normalizeWord = false } = {}) {
     let matched = false
     if (normalize) {
+      if (normalizeTrailingDigit) {
+        /*
+        If a trailing digit is `1` (e.g. `αἴγυπτος1`) remove it, because the word with it is an equivalent of
+        a word without (e.g. `αἴγυπτος`).
+         */
+        if (/^.+1$/.test(wordA)) { wordA = wordA.substring(0, wordA.length - 1) }
+        if (/^.+1$/.test(wordB)) { wordB = wordB.substring(0, wordB.length - 1) }
+      }
+
       const altWordA = GreekLanguageModel.alternateWordEncodings(wordA, null, null, 'strippedDiacritics')
       const altWordB = GreekLanguageModel.alternateWordEncodings(wordB, null, null, 'strippedDiacritics')
       for (let i = 0; i < altWordA.length; i++) {
@@ -2915,11 +2967,11 @@ class Homonym {
     for (const otherLexeme of disambiguator.lexemes) {
       let lexemeMatched = false
       for (const lexeme of base.lexemes) {
-        const newLex = _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"].disambiguate(lexeme, otherLexeme)
-        lexemes.push(newLex)
-        if (newLex.disambiguated) {
+        if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
           lexemeMatched = true
         }
+        const newLex = _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"].disambiguate(lexeme, otherLexeme)
+        lexemes.push(newLex)
       }
       // if we couldn't find a matching lexeme, add the disambigutor's lexemes
       // to the list of lexemes for the new Homonym
@@ -3831,11 +3883,12 @@ class LanguageModel {
   /**
    * Compare two words with language specific logic
    *
-   * @param {string} wordA
-   * @param {string} wordB
+   * @param {string} wordA - a first word for comparison.
+   * @param {string} wordB - a second word for comparison.
    * @param {boolean} normalize - whether or not to apply normalization algorithms
+   * @param {object} options - Additional comparison criteria.
    */
-  static compareWords (wordA, wordB, normalize = true) {
+  static compareWords (wordA, wordB, normalize = true, options = {}) {
     if (normalize) {
       return this.normalizeWord(wordA) === this.normalizeWord(wordB)
     } else {
@@ -4493,11 +4546,13 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
-/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
-/* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! uuid/v4 */ "uuid/v4");
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants.js */ "./constants.js");
+/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
+/* harmony import */ var _feature_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./feature.js */ "./feature.js");
+/* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! uuid/v4 */ "uuid/v4");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_4__);
+
 
 
 
@@ -4529,13 +4584,13 @@ class Lemma {
     // Compatibility code for something providing languageCode instead of languageID
     this.languageID = undefined
     this.languageCode = undefined
-    ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].getLanguageAttrs(languageID))
+    ;({ languageID: this.languageID, languageCode: this.languageCode } = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageAttrs(languageID))
 
     this.word = word
     this.principalParts = principalParts
     this.features = {}
 
-    this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_3___default()()
+    this.ID = uuid_v4__WEBPACK_IMPORTED_MODULE_4___default()()
   }
 
   get language () {
@@ -4550,12 +4605,12 @@ class Lemma {
 
     if (jsonObject.features && jsonObject.features.length > 0) {
       jsonObject.features.forEach(featureSource => {
-        resLemma.addFeature(_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].readObject(featureSource))
+        resLemma.addFeature(_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].readObject(featureSource))
       })
     }
 
     if (jsonObject.translation) {
-      resLemma.translation = _translation_js__WEBPACK_IMPORTED_MODULE_2__["default"].readObject(jsonObject.translation, resLemma)
+      resLemma.translation = _translation_js__WEBPACK_IMPORTED_MODULE_3__["default"].readObject(jsonObject.translation, resLemma)
     }
     return resLemma
   }
@@ -4598,11 +4653,11 @@ class Lemma {
     const type = data[0].type
     this.features[type] = []
     for (const element of data) {
-      if (!(element instanceof _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"])) {
+      if (!(element instanceof _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"])) {
         throw new Error('feature data must be a Feature object.')
       }
 
-      if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].compareLanguages(element.languageID, this.languageID)) {
+      if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].compareLanguages(element.languageID, this.languageID)) {
         throw new Error('Language "' + element.languageID.toString() + '" of a feature does not match a language "' +
                 this.languageID.toString() + '" of a Lemma object.')
       }
@@ -4621,11 +4676,11 @@ class Lemma {
       throw new Error('feature data cannot be empty.')
     }
 
-    if (!(feature instanceof _feature_js__WEBPACK_IMPORTED_MODULE_1__["default"])) {
+    if (!(feature instanceof _feature_js__WEBPACK_IMPORTED_MODULE_2__["default"])) {
       throw new Error('feature data must be a Feature object.')
     }
 
-    if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_0__["default"].compareLanguages(feature.languageID, this.languageID)) {
+    if (!_language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].compareLanguages(feature.languageID, this.languageID)) {
       throw new Error('Language "' + feature.languageID.toString() + '" of a feature does not match a language "' +
         this.languageID.toString() + '" of a Lemma object.')
     }
@@ -4666,17 +4721,80 @@ class Lemma {
   }
 
   /**
-   * Test to see if two lemmas are full homonyms
+   * Test to see if two lemmas are full homonyms.
    *
-   * @param {Lemma} lemma the lemma to compare
-   * @returns {boolean} true or false
+   * @param {Lemma} lemma - the lemma to compare.
+   * @param {object} options - Additional comparison options.
+   * @param {boolean} options.normalize - Whether to normalize words before comparison.
+   * @returns {boolean} true or false.
    */
-  isFullHomonym (lemma) {
-    // returns true if the word and part of speech match
-    return this.word === lemma.word &&
-      this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part] &&
-      lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part] &&
-      this.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part].isEqual(lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_1__["default"].types.part])
+  isFullHomonym (lemma, { normalize = false } = {}) {
+    // If parts of speech do not match this is not a full homonym
+    if (!this.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part] ||
+      !lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part] ||
+      !this.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part].isEqual(lemma.features[_feature_js__WEBPACK_IMPORTED_MODULE_2__["default"].types.part])) {
+      return false
+    }
+
+    // Check if words are the same
+    const areSameWords = normalize
+      ? _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModel(this.languageID).compareWords(this.word, lemma.word, true,
+        { normalizeTrailingDigit: true, normalizeWord: true })
+      : this.word === lemma.word
+
+    return areSameWords
+  }
+
+  /**
+   * Disambiguate between this and the other lemma.
+   *
+   * @param {string} otherLemma - The other lemma for disambiguation.
+   * @returns {string} - A disambiguated word.
+   */
+  disambiguate (otherLemma) {
+    // Use a special logic for Greek words
+    if (this.languageID === _constants_js__WEBPACK_IMPORTED_MODULE_0__["LANG_GREEK"]) {
+      const langModel = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_1__["default"].getLanguageModel(this.languageID)
+
+      const thisHasMixedCase = langModel.hasUpperCase(this.word)
+      const otherHasMixedCase = langModel.hasUpperCase(otherLemma.word)
+      /*
+      If one of the words has both upper and lower case letters, it will be returned right away, without
+      go through other normalizations.
+       */
+      if (otherHasMixedCase) {
+        return otherLemma.word
+      }
+      if (thisHasMixedCase) {
+        return this.word
+      }
+
+      /*
+      If one of the word has characters that are not in the NFC Unicode Normalization Form,
+      return that word, normalized.
+       */
+      const thisNeesNormalization = langModel.needsNormalization(this.word)
+      const otherNeesNormalization = langModel.needsNormalization(otherLemma.word)
+      if (otherNeesNormalization) {
+        return langModel.normalizeWord(otherLemma.word)
+      }
+      if (thisNeesNormalization) {
+        return langModel.normalizeWord(this.word)
+      }
+
+      /*
+      If one of the words has a trailing digit, return a word with a trailing digit.
+       */
+      const thisHasTrailingDigit = langModel.hasTrailingDigit(this.word)
+      const otherHasTrailingDigit = langModel.hasTrailingDigit(otherLemma.word)
+      if (otherHasTrailingDigit) {
+        return otherLemma.word
+      }
+      if (thisHasTrailingDigit) {
+        return this.word
+      }
+    }
+    return this.word
   }
 }
 
@@ -4747,7 +4865,7 @@ class Lexeme {
     this.lemma = lemma
     this.altLemmas = []
     this.inflections = []
-    inflections.forEach(i => { this.addInflection(i) })
+    this.addInflections(inflections)
     this.meaning = meaning || new _definition_set__WEBPACK_IMPORTED_MODULE_2__["default"](this.lemma.word, this.lemma.languageID)
     this.disambiguated = false
   }
@@ -4761,6 +4879,17 @@ class Lexeme {
     inflection.lemma = this.lemma
     inflection.lexeme = this
     this.inflections.push(inflection)
+  }
+
+  /**
+   * Adds one or several inflections to a Lexeme object.
+   *
+   * @param {Inflection | Inflection[]} inflections - a single Inflection object or an array of Inflection
+   *        objects to add to a lexeme.
+   */
+  addInflections (inflections) {
+    if (!Array.isArray(inflections)) { inflections = [inflections] }
+    inflections.forEach(i => this.addInflection(i))
   }
 
   /**
@@ -4806,6 +4935,33 @@ class Lexeme {
   }
 
   /**
+   * Checks whether a lemma of a current lexeme is a full homonym of the lemma of the other lexeme.
+   *
+   * @param {Lexeme} otherLexeme - a lexeme whose lemma will be compared with the lemma of a current lexeme.
+   * @param {boolean} normalize - whether to use normalization for word comparison.
+   * @returns {boolean} - true if two aforementioned lemmas are full homonyms, false otherwise.
+   */
+  isFullHomonym (otherLexeme, { normalize = false } = {}) {
+    return this.lemma.isFullHomonym(otherLexeme.lemma, { normalize })
+  }
+
+  /**
+   * Determines whether a lexeme can be disambiguated with the other disambiguator lexeme.
+   *
+   * @param {Lexeme} disambiguator - A possible disambiguator; a lexeme that is checked
+   *         whether it can disambiguate a current lexeme.
+   * @returns {boolean} - True if a current lexeme can be disambiguated with a disambiguator, false otherwise.
+   */
+  canBeDisambiguatedWith (disambiguator) {
+    /*
+    A Lexeme can be used as an disambiguator if:
+    - its lemma is a full homonym of a disambiguator's lemma;
+    - if disambiguators has at least some inflections; it has no value otherwise;
+    */
+    return this.isFullHomonym(disambiguator, { normalize: true }) && disambiguator.inflections.length > 0
+  }
+
+  /**
    * disambiguate with another supplied Lexeme
    *
    * @param {Lexeme} lexeme the lexeme to be disambiguated
@@ -4814,8 +4970,9 @@ class Lexeme {
    */
   static disambiguate (lexeme, disambiguator) {
     let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning) // eslint-disable-line prefer-const
-    if (lexeme.lemma.isFullHomonym(disambiguator.lemma) && disambiguator.inflections.length > 0) {
+    if (lexeme.canBeDisambiguatedWith(disambiguator)) {
       newLexeme.disambiguated = true
+      newLexeme.lemma.word = lexeme.lemma.disambiguate(disambiguator.lemma)
       let keepInflections = [] // eslint-disable-line prefer-const
       // iterate through this lexemes inflections and keep only thoes that are disambiguatedBy by the supplied lexeme's inflection
       // we want to keep the original inflections rather than just replacing them
@@ -4827,7 +4984,9 @@ class Lexeme {
           }
         }
       }
-      newLexeme.inflections = keepInflections
+      // Set greek inflections
+      newLexeme.inflections = [] // Remove inflections before adding new ones
+      newLexeme.addInflections(keepInflections)
       // if we couldn't match any existing inflections, then add the disambiguated one
       if (newLexeme.inflections.length === 0) {
         for (const infl of disambiguator.inflections) {
@@ -5918,10 +6077,9 @@ class TreebankDataItem {
   get hasTreebankData () {
     if (this.app && this.version > 0 && this.sourceUrl) {
       return true
-    } else  {
+    } else {
       return false
     }
-
   }
 }
 

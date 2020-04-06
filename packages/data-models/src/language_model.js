@@ -387,11 +387,12 @@ class LanguageModel {
   /**
    * Compare two words with language specific logic
    *
-   * @param {string} wordA
-   * @param {string} wordB
+   * @param {string} wordA - a first word for comparison.
+   * @param {string} wordB - a second word for comparison.
    * @param {boolean} normalize - whether or not to apply normalization algorithms
+   * @param {object} options - Additional comparison criteria.
    */
-  static compareWords (wordA, wordB, normalize = true) {
+  static compareWords (wordA, wordB, normalize = true, options = {}) {
     if (normalize) {
       return this.normalizeWord(wordA) === this.normalizeWord(wordB)
     } else {
