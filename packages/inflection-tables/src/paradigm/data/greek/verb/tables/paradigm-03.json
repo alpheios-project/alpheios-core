@@ -2,7 +2,7 @@
     "ID": "verbpdgm3",
     "partOfSpeech": "verb",
     "title": "Future System (without contraction)",
-    "credits": "Verb paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.",
+    "credits": "Verb paradigm tables derived from <a target=\"_blank\" href=\"http://ucbclassics.dreamhosters.com/ancgreek/\">Ancient Greek Tutorials<\/a>, by Donald J. Mastronarde, Berkeley Language Center of the University of California, Berkeley.<br>©1999-2005 The Regents of the University of California.<br>Edited by the Alpheios Project, Ltd.",
     "table": {"rows": [
         {"cells": [
             {
@@ -477,6 +477,7 @@
                     "role": "data",
                     "tense": "future",
                     "voice": "active",
+                    "part of speech": "verb_participle",
                     "value": "βουλεύσων, βουλεύσουσᾰ, βουλεῦσον",
                     "reflink": {
                         "text": "(see declension)",
@@ -494,6 +495,7 @@
                     "role": "data",
                     "tense": "future",
                     "voice": "middle",
+                    "part of speech": "verb_participle",
                     "value": "βουλευσόμενος, -η, -ον",
                     "reflink": {
                         "text": "(see declension)",

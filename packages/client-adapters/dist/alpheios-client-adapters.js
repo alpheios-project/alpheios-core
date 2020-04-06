@@ -14568,7 +14568,16 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
           this.addError(this.l10n.messages['MORPH_TREEBANK_UNSUPPORTED_LANGUAGE'].get(languageID))
           return
         }
-        const transformAdapter = new _clAdapters_transformers_alpheios_lexicon_transformer__WEBPACK_IMPORTED_MODULE_1__["default"](this, new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_3__["default"](languageModel, 'arethusa'))
+        let mapper = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_3__["default"](languageModel,'arethusa')
+        mapper.setPropertyParser(function (propertyName, propertyValue, inputElem) {
+          if (propertyName === 'pers') {
+            propertyValue = propertyValue.replace('first person',alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Constants"].ORD_1ST)
+            propertyValue = propertyValue.replace('second person',alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Constants"].ORD_2ND)
+            propertyValue = propertyValue.replace('third person',alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Constants"].ORD_3RD)
+          }
+          return [ propertyValue ]
+        })
+        const transformAdapter = new _clAdapters_transformers_alpheios_lexicon_transformer__WEBPACK_IMPORTED_MODULE_1__["default"](this, mapper, 'arethusa')
         const homonym = transformAdapter.transformData(tbRes, word)
         return homonym
       } else {

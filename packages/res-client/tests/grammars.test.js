@@ -1,16 +1,22 @@
 /* eslint-env jest */
 'use strict'
 
-import Grammars from '../src/grammars.js'
+import Grammars from '@resclient/grammars.js'
 import { Constants } from 'alpheios-data-models'
 
 describe('BaseAdapter object', () => {
   beforeAll(() => {
-    jest.resetModules()
     window.fetch = require('jest-fetch-mock')
   })
 
-  test('getGrammarAdapters', () => {
+  afterEach(() => {
+    jest.resetModules()
+  })
+  afterAll(() => {
+    jest.clearAllMocks()
+  })
+
+  it('getGrammarAdapters', () => {
     let langId = Constants.LANG_LATIN
     let adapters = Grammars.getGrammarAdapters(langId)
     expect(adapters.length).toEqual(1)

@@ -1,7 +1,7 @@
 <template>
     <div class="inflection-browser-table">
         <div v-if="!view.hasPrerenderedTables" class="inflection-browser-table-view">
-            <wide-table :collapsed="collapsed" :view="view" />
+            <wide-table :collapsed="collapsed" :view="view" :standard-form-data="true"/>
 
             <template v-if="view.linkedViews">
             <wide-table

@@ -299,7 +299,7 @@ export default {
         }
       }
 
-      if (this.state.standardFormTable) {
+      if (this.standardFormData) {
         // Do not show full morphology matches in an inflection browser
         classes['infl-cell--morph-match'] = false
       }
@@ -319,7 +319,7 @@ export default {
     },
 
     morphemeClasses: function (morpheme) {
-      if (this.state.standardFormTable) {
+      if (this.standardFormData) {
         return {
           'infl-suff': true
         }
