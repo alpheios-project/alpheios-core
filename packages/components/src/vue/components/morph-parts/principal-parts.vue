@@ -21,6 +21,8 @@
             </span>
         </h4>
 
+        <treebank-icon></treebank-icon>
+
         <inflectionattribute
             :data="lemma.features"
             :decorators="['brackets', 'appendspace', 'chinese']"
@@ -44,71 +46,72 @@
     </div>
 </template>
 <script>
-  import { Feature, LanguageModelFactory } from 'alpheios-data-models'
+import TreebankIcon from '@/images/inline-icons/sitemap.svg'
+import { Feature, LanguageModelFactory } from 'alpheios-data-models'
 
-  import InflectionAttribute from '@/vue/components/infl-attribute.vue'
+import InflectionAttribute from '@/vue/components/infl-attribute.vue'
 
-  export default {
-    name: 'PrincipalParts',
-    components: {
-        inflectionattribute: InflectionAttribute,
+export default {
+  name: 'PrincipalParts',
+  components: {
+    inflectionattribute: InflectionAttribute,
+    treebankIcon: TreebankIcon
+  },
+  props: {
+    lemma: {
+      type: Object,
+      required: true
     },
-    props: {
-      lemma: {
-        type: Object,
-        required: true
-      },
-      lemmaindex: {
-        type: Number,
-        required: true
-      },
-      lexemeslength: {
-        type: Number,
-        required: true
-      },
-      lexemeindex: {
-        type: Number,
-        required: true
-      }
+    lemmaindex: {
+      type: Number,
+      required: true
     },
-    data: function () {
-      return {
-        types: null // These are Feature.types
-      }
+    lexemeslength: {
+      type: Number,
+      required: true
     },
-    computed: {
-      printIndex () {
-        return this.lexemeslength > 1
-      },
-      languageCode () {
-        return LanguageModelFactory.getLanguageCodeFromId(this.lemma.languageID)
-      },
-      hasExtras () {
-        return this.lemma.features && (this.getFeature('frequency') || this.getFeature('age') || this.getFeature('area') || this.getFeature('geo'))
-      },
-      hasSource () {
-        return this.lemma.features && this.getFeature('source')
-      }
-    },
-    methods: {
-      featureList (features, name) {
-        let list = features.map(i => this.lemma.features[i] ? this.lemma.features[i] : null).filter(i => i)
-        list = list.length > 0 ? `(${list.map((f) => f).join(', ')})` : ''
-        let returnObj = {}
-        returnObj[name] = { value: list, values: [list] }
-        return returnObj
-      },
-      getFeature (type) {
-        if (this.lemma.features[type] !== undefined) {
-          return this.lemma.features[type].value
-        }
-        return
-      },
-    },
-    created: function () {
-      this.types = Feature.types
+    lexemeindex: {
+      type: Number,
+      required: true
     }
+  },
+  data: function () {
+    return {
+      types: null // These are Feature.types
+    }
+  },
+  computed: {
+    printIndex () {
+      return this.lexemeslength > 1
+    },
+    languageCode () {
+      return LanguageModelFactory.getLanguageCodeFromId(this.lemma.languageID)
+    },
+    hasExtras () {
+      return this.lemma.features && (this.getFeature('frequency') || this.getFeature('age') || this.getFeature('area') || this.getFeature('geo'))
+    },
+    hasSource () {
+      return this.lemma.features && this.getFeature('source')
+    }
+  },
+  methods: {
+    featureList (features, name) {
+      let list = features.map(i => this.lemma.features[i] ? this.lemma.features[i] : null).filter(i => i)
+      list = list.length > 0 ? `(${list.map((f) => f).join(', ')})` : ''
+      const returnObj = {}
+      returnObj[name] = { value: list, values: [list] }
+      return returnObj
+    },
+    getFeature (type) {
+      if (this.lemma.features[type] !== undefined) {
+        return this.lemma.features[type].value
+      }
+    }
+  },
+  created: function () {
+    this.types = Feature.types
   }
+}
 </script>
 <style lang="scss">
   @import "../../../styles/variables";
