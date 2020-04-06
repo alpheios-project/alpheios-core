@@ -90,8 +90,8 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
   async getAvailableResLang (inLang, outLang) {
     if (this.mapLangUri[inLang] === undefined) {
       const urlAvaLangsRes = this.config.url + '/' + inLang + '/'
-      
-      let unparsed 
+
+      let unparsed
 
       if (!this.sourceData || !this.sourceData.langs) {
         unparsed = await this.fetch(urlAvaLangsRes)

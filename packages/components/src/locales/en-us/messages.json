@@ -686,5 +686,10 @@
     "message": "Show Language Selector",
     "description": "Tooltip for Show Languges Titles Block",
     "component": "Grammar"
+  },
+  "LOOKUP_USE_BETA_CODES_CHECK": {
+    "message": "update beta codes",
+    "description": "Update beta codes to greek chars",
+    "component": "Lookup"
   }
 }
