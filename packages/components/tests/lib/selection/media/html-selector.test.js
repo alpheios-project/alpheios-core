@@ -135,9 +135,10 @@ describe('html-selector.test.js', () => {
     const alpheios_tb_ref = 'phi0959.phi006.alpheios-text-lat1#1-2'
     const alpheios_tb_src = 'http://alpheios.net/alpheios-treebanks/DOC.html?chunk=SENTENCE&w=WORD'
 
-    testElement.setAttribute('data-alpheios_tb_version', '1')
+    testElement.setAttribute('data-alpheios_tb_app', 'perseids-treebank-template')
+    testElement.setAttribute('data-alpheios_tb_app_version', '1')
+    testElement.setAttribute('data-alpheios_tb_app_url', alpheios_tb_src)
     testElement.setAttribute('data-alpheios_tb_ref', alpheios_tb_ref)
-    testElement.setAttribute('data-alpheios_tb_src', alpheios_tb_src)
     const htmlSel = new HTMLSelector(eventEl, 'lat')
     htmlSel.setDataAttributes()
 
@@ -145,8 +146,10 @@ describe('html-selector.test.js', () => {
     expect(htmlSel.data.treebank.word.sourceUrl).toEqual(alpheios_tb_src)
     expect(htmlSel.data.treebank.word.reference).toEqual(alpheios_tb_ref)
 
+    testElement.removeAttribute('data-alpheios_tb_app')
+    testElement.removeAttribute('data-alpheios_tb_app_version')
+    testElement.removeAttribute('data-alpheios_tb_app_url')
     testElement.removeAttribute('data-alpheios_tb_ref')
-    testElement.removeAttribute('data-alpheios_tb_src')
   })
 
   it('6 HTMLSelector - setDataAttributes method doesn\'t add treebank properties to the selection if an element has not data-alpheios_tb_src properties or data-alpheios_tb_ref', () => {
