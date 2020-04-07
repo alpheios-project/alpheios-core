@@ -43,12 +43,12 @@
     </div>
 
     <div v-show="showBetaCodesInfo" class="alpheios-lookup__form-beta-codes-info">
-      <p>! Type in unicode polytonic Greek using beta code as indicated below:</p>
+      <p>{{ l10n.getMsg('LOOKUP_USE_BETA_CODES_INFO_FIRST') }}</p>
       <p><span>/a => ά</span><span>\a => ὰ</span><span>=a => ᾶ</span><span>)a => ἀ</span></p>
       <p><span>(a => ἁ</span><span>!a => ᾳ</span><span>+i => ϊ</span><span>h => η</span></p>
       <p><span>q => θ</span><span>x => χ</span><span>c => ξ</span><span>z = ζ</span></p>
       <p><span>j => ψ</span><span>w => ω</span><span>s => σ, ς</span></p>
-      <p>Combine the signs e.g. )/a => ἄ</p>
+      <p>{{ l10n.getMsg('LOOKUP_USE_BETA_CODES_INFO_LAST') }} )/a => ἄ</p>
     </div>
     <div v-show="! showLangSelector">
       <span class="alpheios-lookup__lang-hint" id="alpheios-lookup-form-lang-hint">{{l10n.getMsg('HINT_LOOKUP_LANGUAGE',{language:lookupLangName})}}</span>

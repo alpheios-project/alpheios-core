@@ -691,5 +691,15 @@
     "message": "update beta codes",
     "description": "Update beta codes to greek chars",
     "component": "Lookup"
+  },
+  "LOOKUP_USE_BETA_CODES_INFO_FIRST": {
+    "message": "Type in unicode polytonic Greek using beta code as indicated below:",
+    "description": "First row inside beta codes info",
+    "component": "Lookup"
+  },
+  "LOOKUP_USE_BETA_CODES_INFO_LAST": {
+    "message": "Combine the signs e.g.",
+    "description": "Last row inside beta codes info",
+    "component": "Lookup"
   }
 }

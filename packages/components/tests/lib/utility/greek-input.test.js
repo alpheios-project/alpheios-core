@@ -24,6 +24,5 @@ describe('greek-input.test.js', () => {
     let result = GreekInput.change(input)
     
     expect(result).toEqual('βουλεύῃς')    
-    console.info(input, ' => ', result)
   })
 })
