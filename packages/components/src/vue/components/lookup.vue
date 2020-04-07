@@ -10,6 +10,7 @@
           <span
               @click="toggleBetaCodesInfo"
               class="alpheios-lookup__form-icon"
+              v-show="app.platform.isDesktop"  
           >
             <help-icon/>
           </span>
