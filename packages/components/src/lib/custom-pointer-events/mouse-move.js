@@ -1,4 +1,5 @@
 import PointerEvt from '@/lib/custom-pointer-events/pointer-evt.js'
+import Platform from '@/lib/utility/platform.js'
 
 let mouseMoveTimeout = null
 
@@ -12,7 +13,7 @@ export default class MouseMove extends PointerEvt {
     this.mouseMoveDelay = parseInt(eventParams.mouseMoveDelay)
     this.mouseMoveAccuracy = parseInt(eventParams.mouseMoveAccuracy)
 
-    this.limitedById = eventParams.enableMouseMoveLimitedByIdCheck ? eventParams.mouseMoveLimitedById : null
+    this.limitedById = Platform.getIsGoogleDocs() && eventParams.enableMouseMoveLimitedByIdCheck ? eventParams.mouseMoveLimitedById : null
   }
 
   eventListener (domEvt) {

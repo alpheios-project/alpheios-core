@@ -99,7 +99,7 @@ class ArethusaTreebankAdapter extends BaseAdapter {
           this.addError(this.l10n.messages['MORPH_TREEBANK_UNSUPPORTED_LANGUAGE'].get(languageID))
           return
         }
-        const mapper = new ImportData(languageModel, 'arethusa')
+        let mapper = new ImportData(languageModel, 'arethusa') // eslint-disable-line prefer-const
         mapper.setPropertyParser(function (propertyName, propertyValue, inputElem) {
           if (propertyName === 'pers') {
             propertyValue = propertyValue.replace('first person', Constants.ORD_1ST)

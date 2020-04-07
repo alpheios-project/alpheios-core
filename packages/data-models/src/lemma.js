@@ -166,17 +166,81 @@ class Lemma {
   }
 
   /**
-   * Test to see if two lemmas are full homonyms
+   * Test to see if two lemmas are full homonyms.
    *
-   * @param {Lemma} lemma the lemma to compare
-   * @returns {boolean} true or false
+   * @param {Lemma} lemma - the lemma to compare.
+   * @param {object} options - Additional comparison options.
+   * @param {boolean} options.normalize - Whether to normalize words before comparison.
+   * @returns {boolean} true or false.
    */
-  isFullHomonym (lemma) {
-    // returns true if the word and part of speech match
-    return this.word === lemma.word &&
-      this.features[Feature.types.part] &&
-      lemma.features[Feature.types.part] &&
-      this.features[Feature.types.part].isEqual(lemma.features[Feature.types.part])
+  isFullHomonym (lemma, { normalize = false } = {}) {
+    // If parts of speech do not match this is not a full homonym
+    if (!this.features[Feature.types.part] ||
+      !lemma.features[Feature.types.part] ||
+      !this.features[Feature.types.part].isEqual(lemma.features[Feature.types.part])) {
+      return false
+    }
+
+    // Check if words are the same
+    const areSameWords = normalize
+      ? LMF.getLanguageModel(this.languageID).compareWords(this.word, lemma.word, true,
+        { normalizeTrailingDigit: true })
+      : this.word === lemma.word
+
+    return areSameWords
+  }
+
+  /**
+   * Disambiguate between this and the other lemma.
+   *
+   * @param {string} otherLemma - The other lemma for disambiguation.
+   * @returns {string} - A disambiguated word.
+   */
+  disambiguate (otherLemma) {
+    const langModel = LMF.getLanguageModel(this.languageID)
+
+    // Check if words are the same
+    const areSameWords = langModel.compareWords(this.word, otherLemma.word, true, { normalizeTrailingDigit: true })
+    if (!areSameWords) {
+      throw new Error('Words that differ cannot be disambiguated')
+    }
+
+    const thisHasMixedCase = langModel.hasUpperCase(this.word)
+    const otherHasMixedCase = langModel.hasUpperCase(otherLemma.word)
+    /*
+    If one of the words has both upper and lower case letters, it will be returned right away, without
+    go through other normalizations.
+     */
+    if (otherHasMixedCase) {
+      return otherLemma.word
+    }
+    if (thisHasMixedCase) {
+      return this.word
+    }
+    /*
+    If one of the word has characters that are not in the NFC Unicode Normalization Form,
+    return that word, normalized.
+     */
+    const thisNeesNormalization = langModel.needsNormalization(this.word)
+    const otherNeesNormalization = langModel.needsNormalization(otherLemma.word)
+    if (otherNeesNormalization) {
+      return langModel.normalizeWord(otherLemma.word)
+    }
+    if (thisNeesNormalization) {
+      return langModel.normalizeWord(this.word)
+    }
+    /*
+    If one of the words has a trailing digit, return a word with a trailing digit.
+     */
+    const thisHasTrailingDigit = langModel.hasTrailingDigit(this.word)
+    const otherHasTrailingDigit = langModel.hasTrailingDigit(otherLemma.word)
+    if (otherHasTrailingDigit) {
+      return otherLemma.word
+    }
+    if (thisHasTrailingDigit) {
+      return this.word
+    }
+    return this.word
   }
 }
 

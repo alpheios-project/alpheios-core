@@ -253,11 +253,11 @@ for the current node
 
   /**
    * Determines a class of a given word (pronoun) by finding a matching word entry(ies)
-in a pronoun source info (`forms`) and getting a single or multiple classes of those entries.
-Some morphological analyzers provide class information that is unreliable or do not
-provide class information at all. However, class information is essential in
-deciding in what table should pronouns be grouped. For this, we have to
-determine pronoun classes using this method.
+   * in a pronoun source info (`forms`) and getting a single or multiple classes of those entries.
+   * Some morphological analyzers provide class information that is unreliable or do not
+   * provide class information at all. However, class information is essential in
+   * deciding in what table should pronouns be grouped. For this, we have to
+   * determine pronoun classes using this method.
    *
    * @param {Form[]} forms - An array of known forms of pronouns.
    * @param {string} word - A word we need to find a matching class for.
@@ -294,11 +294,30 @@ determine pronoun classes using this method.
   }
 
   /**
-   * @override LanguageModel#compareWords
+   * Checks if two words are equivalent.
+   *
+   * @override LanguageModel#compareWords.
+   * @param {string} wordA - a first word to be compared.
+   * @param {string} wordB - a second word to be compared.
+   * @param {boolean} normalize - whether or not to apply normalization algorithms
+   *                  with an `alternateWordEncodings()` function.
+   * @param {object} options - Additional comparison criteria.
+   * @param {boolean} options.normalizeTrailingDigit - whether to consider the form
+   *                  of a trailing digit during comparison.
    */
-  static compareWords (wordA, wordB, normalize = true) {
+  static compareWords (wordA, wordB, normalize = true,
+    { normalizeTrailingDigit = false } = {}) {
     let matched = false
     if (normalize) {
+      if (normalizeTrailingDigit) {
+        /*
+        If a trailing digit is `1` (e.g. `αἴγυπτος1`) remove it, because the word with it is an equivalent of
+        a word without (e.g. `αἴγυπτος`).
+         */
+        if (/^.+1$/.test(wordA)) { wordA = wordA.substring(0, wordA.length - 1) }
+        if (/^.+1$/.test(wordB)) { wordB = wordB.substring(0, wordB.length - 1) }
+      }
+
       const altWordA = GreekLanguageModel.alternateWordEncodings(wordA, null, null, 'strippedDiacritics')
       const altWordB = GreekLanguageModel.alternateWordEncodings(wordB, null, null, 'strippedDiacritics')
       for (let i = 0; i < altWordA.length; i++) {

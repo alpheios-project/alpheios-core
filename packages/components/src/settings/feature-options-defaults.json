@@ -200,7 +200,7 @@
     },
     "enableMouseMoveLimitedByIdCheck": {
       "defaultValue": false,
-      "labelText": "Limit by Id (recommended for Google Docs)",
+      "labelText": "Enable Mouse Move on Google Docs Element Id:",
       "boolean": true,
       "values": [
         {
