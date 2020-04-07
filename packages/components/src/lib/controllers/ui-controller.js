@@ -854,6 +854,10 @@ if you want to create a different configuration of a UI controller.
     this.featureOptions.items.lookupLanguage.setValue(defaultLangCode)
     this.updateLanguage(defaultLangID)
 
+    if (this.platform.isGoogleDocs) {
+      this.featureOptions.items.enableMouseMove.setValue(true)
+      this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+    }
     // Create registered UI modules
     this.createUiModules()
 
@@ -1795,6 +1799,9 @@ NB this is Prototype functionality
       case 'mouseMoveAccuracy':
         this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
         break
+      case 'enableMouseMoveLimitedByIdCheck':
+        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+        break
     }
   }
 
@@ -1937,7 +1944,7 @@ NB this is Prototype functionality
   }
 
   enableMouseMoveEvent () {
-    return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || (this.options.enableMouseMoveOverride && this.platform.isGoogleDocs))
+    return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || this.platform.isGoogleDocs)
   }
 }
 

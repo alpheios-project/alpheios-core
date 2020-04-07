@@ -151,6 +151,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @return {Boolean} - true - if cached is successed
   */
   async checkCachedData (url, externalData = null, skipFetch = false) {
+    console.info('checkCachedData - ', !externalData, skipFetch)
     if (!externalData && skipFetch) {
       return false
     }
