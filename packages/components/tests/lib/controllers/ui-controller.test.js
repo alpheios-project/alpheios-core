@@ -841,8 +841,6 @@ describe('ui-controller.test.js', () => {
 
     let zhoData = UIController.getLanguageName(Constants.LANG_CHINESE)
     expect(zhoData.name).toEqual('Chinese')
-
-    // console.info('latData', latData)
   })
 
 })

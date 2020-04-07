@@ -147,11 +147,11 @@ class Homonym {
     for (const otherLexeme of disambiguator.lexemes) {
       let lexemeMatched = false
       for (const lexeme of base.lexemes) {
-        const newLex = Lexeme.disambiguate(lexeme, otherLexeme)
-        lexemes.push(newLex)
-        if (newLex.disambiguated) {
+        if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
           lexemeMatched = true
         }
+        const newLex = Lexeme.disambiguate(lexeme, otherLexeme)
+        lexemes.push(newLex)
       }
       // if we couldn't find a matching lexeme, add the disambigutor's lexemes
       // to the list of lexemes for the new Homonym

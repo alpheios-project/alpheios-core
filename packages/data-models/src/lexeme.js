@@ -46,7 +46,7 @@ class Lexeme {
     this.lemma = lemma
     this.altLemmas = []
     this.inflections = []
-    inflections.forEach(i => { this.addInflection(i) })
+    this.addInflections(inflections)
     this.meaning = meaning || new DefinitionSet(this.lemma.word, this.lemma.languageID)
     this.disambiguated = false
   }
@@ -60,6 +60,17 @@ class Lexeme {
     inflection.lemma = this.lemma
     inflection.lexeme = this
     this.inflections.push(inflection)
+  }
+
+  /**
+   * Adds one or several inflections to a Lexeme object.
+   *
+   * @param {Inflection | Inflection[]} inflections - a single Inflection object or an array of Inflection
+   *        objects to add to a lexeme.
+   */
+  addInflections (inflections) {
+    if (!Array.isArray(inflections)) { inflections = [inflections] }
+    inflections.forEach(i => this.addInflection(i))
   }
 
   /**
@@ -105,6 +116,33 @@ class Lexeme {
   }
 
   /**
+   * Checks whether a lemma of a current lexeme is a full homonym of the lemma of the other lexeme.
+   *
+   * @param {Lexeme} otherLexeme - a lexeme whose lemma will be compared with the lemma of a current lexeme.
+   * @param {boolean} normalize - whether to use normalization for word comparison.
+   * @returns {boolean} - true if two aforementioned lemmas are full homonyms, false otherwise.
+   */
+  isFullHomonym (otherLexeme, { normalize = false } = {}) {
+    return this.lemma.isFullHomonym(otherLexeme.lemma, { normalize })
+  }
+
+  /**
+   * Determines whether a lexeme can be disambiguated with the other disambiguator lexeme.
+   *
+   * @param {Lexeme} disambiguator - A possible disambiguator; a lexeme that is checked
+   *         whether it can disambiguate a current lexeme.
+   * @returns {boolean} - True if a current lexeme can be disambiguated with a disambiguator, false otherwise.
+   */
+  canBeDisambiguatedWith (disambiguator) {
+    /*
+    A Lexeme can be used as an disambiguator if:
+    - its lemma is a full homonym of a disambiguator's lemma;
+    - if disambiguators has at least some inflections; it has no value otherwise;
+    */
+    return this.isFullHomonym(disambiguator, { normalize: true }) && disambiguator.inflections.length > 0
+  }
+
+  /**
    * disambiguate with another supplied Lexeme
    *
    * @param {Lexeme} lexeme the lexeme to be disambiguated
@@ -113,8 +151,9 @@ class Lexeme {
    */
   static disambiguate (lexeme, disambiguator) {
     let newLexeme = new Lexeme(lexeme.lemma, lexeme.inflections, lexeme.meaning) // eslint-disable-line prefer-const
-    if (lexeme.lemma.isFullHomonym(disambiguator.lemma) && disambiguator.inflections.length > 0) {
+    if (lexeme.canBeDisambiguatedWith(disambiguator)) {
       newLexeme.disambiguated = true
+      newLexeme.lemma.word = lexeme.lemma.disambiguate(disambiguator.lemma)
       let keepInflections = [] // eslint-disable-line prefer-const
       // iterate through this lexemes inflections and keep only thoes that are disambiguatedBy by the supplied lexeme's inflection
       // we want to keep the original inflections rather than just replacing them
@@ -126,7 +165,9 @@ class Lexeme {
           }
         }
       }
-      newLexeme.inflections = keepInflections
+      // Set greek inflections
+      newLexeme.inflections = [] // Remove inflections before adding new ones
+      newLexeme.addInflections(keepInflections)
       // if we couldn't match any existing inflections, then add the disambiguated one
       if (newLexeme.inflections.length === 0) {
         for (const infl of disambiguator.inflections) {

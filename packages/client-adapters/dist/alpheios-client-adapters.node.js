@@ -9760,7 +9760,7 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
           this.addError(this.l10n.messages['MORPH_TREEBANK_UNSUPPORTED_LANGUAGE'].get(languageID))
           return
         }
-        const mapper = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_3__["default"](languageModel, 'arethusa')
+        let mapper = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_3__["default"](languageModel, 'arethusa') // eslint-disable-line prefer-const
         mapper.setPropertyParser(function (propertyName, propertyValue, inputElem) {
           if (propertyName === 'pers') {
             propertyValue = propertyValue.replace('first person', alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Constants"].ORD_1ST)

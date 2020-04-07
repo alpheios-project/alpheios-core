@@ -360,6 +360,39 @@ class LanguageModel {
   }
 
   /**
+   * Checks if the word provided has a trailing digit (e.g. αἴγυπτος1 in Greek).
+   *
+   * @param {string} word - A word to be checked.
+   * @returns {boolean} - True if the word has a trailing digit, false otherwise.
+   */
+  static hasTrailingDigit (word) {
+    return /^.+\d$/.test(word)
+  }
+
+  /**
+   * Checks if the word provided is in a normalized form.
+   * It also checks if the word has the right single quotation (elision).
+   *
+   * @see {@link GreekLanguageModel#normalizeWord}
+   * @param {string} word - A word to be checked.
+   * @returns {boolean} - True if at least one character of the word
+   * is NOT in an Unicode Normalization Form, false otherwise.
+   */
+  static needsNormalization (word) {
+    return Boolean(word.localeCompare(this.normalizeWord(word)))
+  }
+
+  /**
+   * Checks if the word provided has any letters in an upper case.
+   *
+   * @param {string} word - A word to be checked.
+   * @returns {boolean} - True if the word at least one letter in upper case, false if all letters are lower case.
+   */
+  static hasUpperCase (word) {
+    return Boolean(word.localeCompare(word.toLocaleLowerCase()))
+  }
+
+  /**
    * Return a normalized version of a word which can be used to compare the word for equality
    *
    * @param {string} word the source word
@@ -387,11 +420,12 @@ class LanguageModel {
   /**
    * Compare two words with language specific logic
    *
-   * @param {string} wordA
-   * @param {string} wordB
+   * @param {string} wordA - a first word for comparison.
+   * @param {string} wordB - a second word for comparison.
    * @param {boolean} normalize - whether or not to apply normalization algorithms
+   * @param {object} options - Additional comparison criteria.
    */
-  static compareWords (wordA, wordB, normalize = true) {
+  static compareWords (wordA, wordB, normalize = true, options = {}) {
     if (normalize) {
       return this.normalizeWord(wordA) === this.normalizeWord(wordB)
     } else {
