@@ -21,7 +21,10 @@
             </span>
         </h4>
 
-        <treebank-icon></treebank-icon>
+        <disambiguated-icon v-show="disambiguated" class="alpheios-principal-parts__pointer-icn"></disambiguated-icon>
+        <div v-show="disambiguated" class="alpheios-principal-parts__dsmbg-providers">
+            <treebank-icon class="alpheios-principal-parts__dsmbg-providers-icn"></treebank-icon>
+        </div>
 
         <inflectionattribute
             :data="lemma.features"
@@ -47,6 +50,7 @@
 </template>
 <script>
 import TreebankIcon from '@/images/inline-icons/sitemap.svg'
+import DisambiguatedIcon from '@/images/inline-icons/chevron-circle-left.svg'
 import { Feature, LanguageModelFactory } from 'alpheios-data-models'
 
 import InflectionAttribute from '@/vue/components/infl-attribute.vue'
@@ -55,7 +59,8 @@ export default {
   name: 'PrincipalParts',
   components: {
     inflectionattribute: InflectionAttribute,
-    treebankIcon: TreebankIcon
+    treebankIcon: TreebankIcon,
+    disambiguatedIcon: DisambiguatedIcon
   },
   props: {
     lemma: {
@@ -72,6 +77,10 @@ export default {
     },
     lexemeindex: {
       type: Number,
+      required: true
+    },
+    disambiguated: {
+      type: Boolean,
       required: true
     }
   },
@@ -149,5 +158,25 @@ export default {
     font-style: italic;
     font-family: sans-serif;
     font-size: 90%;
+  }
+
+  .alpheios-principal-parts__pointer-icn {
+      // fill: var(--alpheios-color-neutral-dark);
+      fill: var(--alpheios-color-neutral-dark);
+      width: 13px;
+      position: relative;
+      top: 2px;
+  }
+
+  .alpheios-principal-parts__dsmbg-providers {
+    float: right;
+  }
+
+  .alpheios-principal-parts__dsmbg-providers-icn {
+      fill: var(--alpheios-color-neutral-dark);
+      width: 16px;
+      position: relative;
+      top: 2px;
+      left: 5px;
   }
 </style>

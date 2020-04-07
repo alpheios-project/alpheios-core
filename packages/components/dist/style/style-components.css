@@ -963,6 +963,22 @@ h4.alpheios-principal-parts__groupitem {
   font-family: sans-serif;
   font-size: 90%;
 }
+.alpheios-principal-parts__pointer-icn {
+  fill: var(--alpheios-color-neutral-dark);
+  width: 13px;
+  position: relative;
+  top: 2px;
+}
+.alpheios-principal-parts__dsmbg-providers {
+  float: right;
+}
+.alpheios-principal-parts__dsmbg-providers-icn {
+  fill: var(--alpheios-color-neutral-dark);
+  width: 16px;
+  position: relative;
+  top: 2px;
+  left: 5px;
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
