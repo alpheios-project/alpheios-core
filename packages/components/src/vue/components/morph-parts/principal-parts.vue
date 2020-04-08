@@ -21,9 +21,20 @@
             </span>
         </h4>
 
-        <disambiguated-icon v-show="disambiguated" class="alpheios-principal-parts__pointer-icn"></disambiguated-icon>
+        <tooltip
+            :tooltip-text="l10n.getText('TOOLTIP_DISAMBIGUATED')"
+            tooltip-direction="top"
+            class="alpheios-principal-parts__pointer-tooltip"
+        >
+            <disambiguated-icon v-show="disambiguated" class="alpheios-principal-parts__pointer-icn"></disambiguated-icon>
+        </tooltip>
         <div v-show="disambiguated" class="alpheios-principal-parts__dsmbg-providers">
-            <treebank-icon class="alpheios-principal-parts__dsmbg-providers-icn"></treebank-icon>
+            <tooltip
+                :tooltip-text="l10n.getText('TOOLTIP_TREEBANK_SOURCE')"
+                tooltip-direction="top"
+            >
+                <treebank-icon class="alpheios-principal-parts__dsmbg-providers-icn"></treebank-icon>
+            </tooltip>
         </div>
 
         <inflectionattribute
@@ -51,16 +62,19 @@
 <script>
 import TreebankIcon from '@/images/inline-icons/sitemap.svg'
 import DisambiguatedIcon from '@/images/inline-icons/caret-left.svg'
+import Tooltip from '@/vue/components/tooltip.vue'
 import { Feature, LanguageModelFactory } from 'alpheios-data-models'
 
 import InflectionAttribute from '@/vue/components/infl-attribute.vue'
 
 export default {
   name: 'PrincipalParts',
+  inject: ['l10n'], // API modules
   components: {
     inflectionattribute: InflectionAttribute,
     treebankIcon: TreebankIcon,
-    disambiguatedIcon: DisambiguatedIcon
+    disambiguatedIcon: DisambiguatedIcon,
+    tooltip: Tooltip
   },
   props: {
     lemma: {
@@ -107,7 +121,7 @@ export default {
     featureList (features, name) {
       let list = features.map(i => this.lemma.features[i] ? this.lemma.features[i] : null).filter(i => i)
       list = list.length > 0 ? `(${list.map((f) => f).join(', ')})` : ''
-      const returnObj = {}
+      let returnObj = {} // eslint-disable-line prefer-const
       returnObj[name] = { value: list, values: [list] }
       return returnObj
     },
@@ -160,13 +174,16 @@ export default {
     font-size: 90%;
   }
 
+  .alpheios-principal-parts__pointer-tooltip {
+      left: -7px;
+  }
+
   .alpheios-principal-parts__pointer-icn {
       // fill: var(--alpheios-color-neutral-dark);
       fill: var(--alpheios-color-vivid);
       height: 22px;
       position: relative;
       top: 6px;
-      left: -7px;
   }
 
   .alpheios-principal-parts__dsmbg-providers {
