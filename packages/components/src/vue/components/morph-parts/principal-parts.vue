@@ -50,7 +50,7 @@
 </template>
 <script>
 import TreebankIcon from '@/images/inline-icons/sitemap.svg'
-import DisambiguatedIcon from '@/images/inline-icons/chevron-circle-left.svg'
+import DisambiguatedIcon from '@/images/inline-icons/caret-left.svg'
 import { Feature, LanguageModelFactory } from 'alpheios-data-models'
 
 import InflectionAttribute from '@/vue/components/infl-attribute.vue'
@@ -162,21 +162,22 @@ export default {
 
   .alpheios-principal-parts__pointer-icn {
       // fill: var(--alpheios-color-neutral-dark);
-      fill: var(--alpheios-color-neutral-dark);
-      width: 13px;
+      fill: var(--alpheios-color-vivid);
+      height: 22px;
       position: relative;
-      top: 2px;
+      top: 6px;
+      left: -7px;
   }
 
   .alpheios-principal-parts__dsmbg-providers {
-    float: right;
+      display: inline-block;
+      margin-left: -3px;
   }
 
   .alpheios-principal-parts__dsmbg-providers-icn {
       fill: var(--alpheios-color-neutral-dark);
-      width: 16px;
+      display: inline-block;
       position: relative;
-      top: 2px;
-      left: 5px;
+      top: 3px;
   }
 </style>
