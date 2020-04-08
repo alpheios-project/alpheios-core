@@ -64,6 +64,12 @@
                 {{ l10n.getText('WORDLIST_DOWNLOAD_FILTERING_CHECK') }}
               </label>
             </div>
+            <div class="alpheios-wordlist-download-for-quizlet alpheios-checkbox-block" data-alpheios-ignore="all">
+              <input :id="downloadQuizletId" type="checkbox" v-model="downloadForQuizlet">
+              <label :for="downloadQuizletId">
+                {{ l10n.getText('WORDLIST_DOWNLOAD_QUIZLET_CHECK') }}
+              </label>
+            </div>
           </div>
           <div
               class="alpheios-notification-area__close-btn"
@@ -154,13 +160,17 @@ export default {
       sortingState: {
         'targetWord': null
       },
-      downloadWithFilter: false
+      downloadWithFilter: false,
+      downloadForQuizlet: false
     } 
      
   },
   computed: {
     downloadFilterId () {
       return `alpheios-wordlist-download-with-filters-input-${this.languageCode}`
+    },
+    downloadQuizletId () {
+      return `alpheios-wordlist-download-for-quizlet-input-${this.languageCode}`
     },
     hasSeveralItems () {
       return this.wordlist && this.wordlist.values && this.wordlist.values.length > 1
@@ -278,9 +288,9 @@ export default {
         }
       })
     },
-    downloadList () {
+    
+    prepareDownloadListFull () {
       const exportFields = [ 'targetWord', 'languageCode', 'important', 'currentSession', 'lemmasList', 'context' ]
-
       const source = this.downloadWithFilter ? this.wordItems : this.wordlist.values
 
       const wordlistData = source.map(wordItem => {
@@ -293,7 +303,47 @@ export default {
           context: Object.keys(wordItem.formattedContext).join(' ')
         }
       })
-      const result = Download.collectionToCSV(';', exportFields)(wordlistData)
+
+      return {
+        exportFields, wordlistData, delimiter: ';'
+      }
+    },
+
+    prepareDownloadListQuizlet () {
+      const exportFields = [ 'word', 'definition']
+      const source = this.downloadWithFilter ? this.wordItems : this.wordlist.values
+
+      let wordlistData = []
+      source.forEach(wordItem => {
+        if (wordItem.homonym && wordItem.homonym.lexemes) {
+          wordItem.homonym.lexemes.forEach(lexeme => {
+            if (lexeme.hasShortDefs) {
+              lexeme.meaning.shortDefs.forEach(shortDef => {
+                wordlistData.push({
+                  word: `${wordItem.homonym.targetWord} (${lexeme.lemma.word})`,
+                  definition: shortDef.text
+                })
+              })
+            }
+          })
+        }
+      })
+
+      return {
+        exportFields, wordlistData, delimiter: '\t'
+      }
+    },
+
+    downloadList () {
+      let dataForDownload
+
+      if (this.downloadForQuizlet) {
+        dataForDownload = this.prepareDownloadListQuizlet()
+      } else {
+        dataForDownload = this.prepareDownloadListFull()
+      }
+
+      const result = Download.collectionToCSV(dataForDownload.delimiter, dataForDownload.exportFields)(dataForDownload.wordlistData)
       Download.downloadBlob(result, `wordlist-${this.languageCode}.csv`)
       this.showDownloadBox = false
     }

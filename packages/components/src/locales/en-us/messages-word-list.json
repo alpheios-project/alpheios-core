@@ -139,5 +139,10 @@
         "message": "with filtering",
         "description": "Download list filtering check",
         "component": "WordLanguagePanel"
+    },
+    "WORDLIST_DOWNLOAD_QUIZLET_CHECK": {
+        "message": "for quizlet",
+        "description": "Download list for quizlet",
+        "component": "WordLanguagePanel"
     }
 }
