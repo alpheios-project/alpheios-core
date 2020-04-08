@@ -3533,15 +3533,15 @@ span.alpheios-lookup__lang-change:hover {
 }
 .alpheios-lookup__form span.alpheios-lookup__form-beta-codes-check {
   vertical-align: middle !important;
-  padding-left: 20px !important;
+  padding-left: 10px !important;
 }
 .alpheios-lookup__form span.alpheios-lookup__form-beta-codes-check label {
   line-height: 1 !important;
-  padding-left: 5px !important;
+  font-size: 90% !important;
 }
 .alpheios-lookup__form-icon {
-  width: calc(var(--alpheios-base-ui-size) * 2.15) !important;
-  height: calc(var(--alpheios-base-ui-size) * 2.15) !important;
+  width: calc(var(--alpheios-base-ui-size) * 1.5) !important;
+  height: calc(var(--alpheios-base-ui-size) * 1.5) !important;
   box-sizing: border-box !important;
   position: relative !important;
   fill: var(--alpheios-desktop-toolbar-bg) !important;
@@ -3551,7 +3551,7 @@ span.alpheios-lookup__lang-change:hover {
   cursor: pointer !important;
 }
 .alpheios-lookup__form-icon svg {
-  width: 52% !important;
+  width: 92% !important;
   height: auto !important;
   position: relative !important;
   top: 50% !important;
@@ -3708,7 +3708,7 @@ span.alpheios-lookup__lang-change:hover {
   display: inline-block;
 }
 .alpheios-toolbar__lookup.alpheios-toolbar__lookup-beta-codes {
-  height: calc(var(--alpheios-base-ui-size) * 23.75) !important;
+  height: calc(var(--alpheios-base-ui-size) * 26.25) !important;
 }
 .alpheios-toolbar__buttons {
   display: flex;

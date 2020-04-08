@@ -335,17 +335,17 @@ export default {
 
   .alpheios-lookup__form span.alpheios-lookup__form-beta-codes-check {
     vertical-align: middle;
-    padding-left: 20px;
+    padding-left: 10px;
 
     label {
       line-height: 1;
-      padding-left: 5px;
+      font-size: 90%;
     }
   }
 
   .alpheios-lookup__form-icon {
-    width: calc(var(--alpheios-base-ui-size) * 2.15);
-    height: calc(var(--alpheios-base-ui-size) * 2.15);
+    width: calc(var(--alpheios-base-ui-size) * 1.5);
+    height: calc(var(--alpheios-base-ui-size) * 1.5);
     box-sizing: border-box;
     position: relative;
     fill: var(--alpheios-desktop-toolbar-bg);
@@ -355,7 +355,7 @@ export default {
     cursor: pointer;
 
     svg {
-      width: 52%;
+      width: 92%;
       height: auto;
       position: relative;
       top: 50%;
