@@ -390,6 +390,15 @@ if you want to create a different configuration of a UI controller.
     if (this.isInitialized) { return 'Already initialized' }
     // Start loading options as early as possible
     const optionLoadPromises = this.initOptions(this.options.storageAdapter)
+    const configServiceBaseUrl = 'https://4wvouc833c.execute-api.us-east-2.amazonaws.com/prod/config'
+    const configClientId = this.options.clientId
+    const configAppName = this.options.app.name
+    const configAppVersion = this.options.app.version
+    const configBuildBrach = 'qa'
+    const configBuildNumber = '20200401123'
+    const configUrl = `${configServiceBaseUrl}?clientId=${configClientId}&appName=${configAppName}&appVersion=${configAppVersion}&buildBranch=${configBuildBrach}&buildNumber=${configBuildNumber}`
+    console.info(`configURL is ${configUrl}`)
+    const appConfigLoadPromise = this.loadAppConfig(configUrl)
 
     // Create a copy of resource options for the lookup UI component
     // this doesn't get reloaded from the storage adapter because
@@ -405,7 +414,10 @@ if you want to create a different configuration of a UI controller.
     // Inject HTML code of a plugin. Should go in reverse order.
     document.body.classList.add('alpheios')
 
-    await Promise.all(optionLoadPromises)
+    console.info('Before promise.all')
+    const [appConfig, ...options] = await Promise.all([appConfigLoadPromise, ...optionLoadPromises])
+    this.appConfig = appConfig
+    console.info('After promise.all', appConfig, options)
 
     // All options has been loaded after this point
 
@@ -889,6 +901,12 @@ if you want to create a different configuration of a UI controller.
     this.resourceOptions = new Options(this.resourceOptionsDefaults, new StorageAdapter(this.resourceOptionsDefaults.domain, authData))
     this.uiOptions = new Options(this.uiOptionsDefaults, new StorageAdapter(this.uiOptionsDefaults.domain, authData))
     return [this.featureOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
+  }
+
+  async loadAppConfig (configURL) {
+    const request = new Request(configURL)
+    const response = await fetch(request)
+    return response.json()
   }
 
   async initUserDataManager (isAuthenticated) {
