@@ -935,6 +935,187 @@ p.alpheios-lemma__translations-value {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alph_tooltip {
+  position: relative !important;
+  display: inline-block;
+}
+.alph_tooltip .tooltiptext {
+  visibility: hidden !important;
+  position: absolute !important;
+  width: calc(var(--alpheios-base-ui-size) * 7.5) !important;
+  background-color: var(--alpheios-text-bg-color) !important;
+  color: var(--alpheios-text-color) !important;
+  border: 1px solid var(--alpheios-border-color) !important;
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
+  z-index: 1 !important;
+  opacity: 0 !important;
+  transition: opacity 0.6s !important;
+  display: none;
+}
+.alph_tooltip span.tooltiptext {
+  padding: calc(var(--alpheios-base-ui-size) * 0.375) 0 !important;
+  font-size: calc(var(--alpheios-base-text-size) * 0.75) !important;
+  text-align: center !important;
+}
+.alph_tooltip:hover .tooltiptext {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: inline;
+}
+.alph_tooltip-top {
+  bottom: 125% !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+.alph_tooltip-top::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 50% !important;
+  margin-left: -5px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  border-color: var(--alpheios-border-color) transparent transparent transparent !important;
+}
+.alph_tooltip-top-right {
+  bottom: 125% !important;
+  right: 0 !important;
+  margin-left: -50% !important;
+}
+.alph_tooltip-top-right::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 100% !important;
+  right: 15% !important;
+  margin-left: -5px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  border-color: var(--alpheios-border-color) transparent transparent transparent !important;
+}
+.alph_tooltip-top-left {
+  bottom: 125% !important;
+  left: 0 !important;
+}
+.alph_tooltip-top-left::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  margin-left: 5px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  border-color: var(--alpheios-border-color) transparent transparent transparent !important;
+}
+.alph_tooltip-right {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  left: 125% !important;
+}
+.alph_tooltip-right::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  right: 100% !important;
+  margin-top: -5px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  border-color: transparent var(--alpheios-border-color) transparent transparent !important;
+}
+.alph_tooltip-bottom {
+  top: 135% !important;
+  left: 50% !important;
+  margin-left: -50% !important;
+}
+.alph_tooltip-bottom-wide {
+  top: 135% !important;
+  left: -30% !important;
+}
+.alph_tooltip-bottom-narrow {
+  top: 135% !important;
+  left: -75% !important;
+}
+.alph_tooltip-bottom-narrow2 {
+  top: 135% !important;
+  left: -165% !important;
+}
+.alph_tooltip-bottom::after,
+.alph_tooltip-bottom-wide::after,
+.alph_tooltip-bottom-narrow::after,
+.alph_tooltip-bottom-narrow2::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 100% !important;
+  left: 50% !important;
+  margin-left: -5px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  border-color: transparent transparent var(--alpheios-border-color) transparent !important;
+}
+.alph_tooltip-bottom-right {
+  top: 135% !important;
+  right: 0 !important;
+  margin-left: -50% !important;
+}
+.alph_tooltip-bottom-right::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 100% !important;
+  right: 15% !important;
+  margin-left: -5px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  border-color: transparent transparent var(--alpheios-border-color) transparent !important;
+}
+.alph_tooltip-bottom-left {
+  top: 135% !important;
+  right: 0 !important;
+  left: auto !important;
+}
+.alph_tooltip-bottom-left::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 100% !important;
+  right: 15% !important;
+  margin-left: -5px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  border-color: transparent transparent var(--alpheios-border-color) transparent !important;
+}
+.alpheios-panel--right .alph_tooltip-bottom-right {
+  top: 135% !important;
+  right: auto !important;
+  margin-left: 0 !important;
+  left: 0 !important;
+}
+.alpheios-panel--right .alph_tooltip-bottom-right::after {
+  margin-left: 0 !important;
+  right: auto !important;
+  left: 15% !important;
+}
+.alph_tooltip-left {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  bottom: auto !important;
+  right: 128% !important;
+}
+.alph_tooltip-left::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 100% !important;
+  margin-top: -5px !important;
+  border-width: 5px !important;
+  border-style: solid !important;
+  border-color: transparent transparent transparent var(--alpheios-border-color) !important;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
 .alpheios-principal-parts__lemma_index,
 .alpheios-principal-parts__lemma_index_spacer {
   display: inline-block;
@@ -962,6 +1143,25 @@ h4.alpheios-principal-parts__groupitem {
   font-style: italic !important;
   font-family: sans-serif !important;
   font-size: 90% !important;
+}
+.alpheios-principal-parts__pointer-tooltip {
+  left: -7px !important;
+}
+.alpheios-principal-parts__pointer-icn {
+  fill: var(--alpheios-color-vivid) !important;
+  height: 22px !important;
+  position: relative !important;
+  top: 6px !important;
+}
+.alpheios-principal-parts__dsmbg-providers {
+  display: inline-block;
+  margin-left: -3px !important;
+}
+.alpheios-principal-parts__dsmbg-providers-icn {
+  fill: var(--alpheios-color-neutral-dark) !important;
+  display: inline-block;
+  position: relative !important;
+  top: 3px !important;
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -1252,187 +1452,6 @@ select.alpheios-setting__control,
   color: var(--alpheios-hint-color) !important;
   background: var(--alpheios-hint-bg) !important;
   border: 1px solid var(--alpheios-hint-border-color) !important;
-}
-/*
- Calculates a size of text elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
- */
-/*
- Calculates a size of UI elements relative to the base size.
- Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
- */
-.alph_tooltip {
-  position: relative !important;
-  display: inline-block;
-}
-.alph_tooltip .tooltiptext {
-  visibility: hidden !important;
-  position: absolute !important;
-  width: calc(var(--alpheios-base-ui-size) * 7.5) !important;
-  background-color: var(--alpheios-text-bg-color) !important;
-  color: var(--alpheios-text-color) !important;
-  border: 1px solid var(--alpheios-border-color) !important;
-  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
-  z-index: 1 !important;
-  opacity: 0 !important;
-  transition: opacity 0.6s !important;
-  display: none;
-}
-.alph_tooltip span.tooltiptext {
-  padding: calc(var(--alpheios-base-ui-size) * 0.375) 0 !important;
-  font-size: calc(var(--alpheios-base-text-size) * 0.75) !important;
-  text-align: center !important;
-}
-.alph_tooltip:hover .tooltiptext {
-  visibility: visible !important;
-  opacity: 1 !important;
-  display: inline;
-}
-.alph_tooltip-top {
-  bottom: 125% !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-}
-.alph_tooltip-top::after {
-  content: "" !important;
-  position: absolute !important;
-  top: 100% !important;
-  left: 50% !important;
-  margin-left: -5px !important;
-  border-width: 5px !important;
-  border-style: solid !important;
-  border-color: var(--alpheios-border-color) transparent transparent transparent !important;
-}
-.alph_tooltip-top-right {
-  bottom: 125% !important;
-  right: 0 !important;
-  margin-left: -50% !important;
-}
-.alph_tooltip-top-right::after {
-  content: "" !important;
-  position: absolute !important;
-  top: 100% !important;
-  right: 15% !important;
-  margin-left: -5px !important;
-  border-width: 5px !important;
-  border-style: solid !important;
-  border-color: var(--alpheios-border-color) transparent transparent transparent !important;
-}
-.alph_tooltip-top-left {
-  bottom: 125% !important;
-  left: 0 !important;
-}
-.alph_tooltip-top-left::after {
-  content: "" !important;
-  position: absolute !important;
-  top: 100% !important;
-  left: 0 !important;
-  margin-left: 5px !important;
-  border-width: 5px !important;
-  border-style: solid !important;
-  border-color: var(--alpheios-border-color) transparent transparent transparent !important;
-}
-.alph_tooltip-right {
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  left: 125% !important;
-}
-.alph_tooltip-right::after {
-  content: "" !important;
-  position: absolute !important;
-  top: 50% !important;
-  right: 100% !important;
-  margin-top: -5px !important;
-  border-width: 5px !important;
-  border-style: solid !important;
-  border-color: transparent var(--alpheios-border-color) transparent transparent !important;
-}
-.alph_tooltip-bottom {
-  top: 135% !important;
-  left: 50% !important;
-  margin-left: -50% !important;
-}
-.alph_tooltip-bottom-wide {
-  top: 135% !important;
-  left: -30% !important;
-}
-.alph_tooltip-bottom-narrow {
-  top: 135% !important;
-  left: -75% !important;
-}
-.alph_tooltip-bottom-narrow2 {
-  top: 135% !important;
-  left: -165% !important;
-}
-.alph_tooltip-bottom::after,
-.alph_tooltip-bottom-wide::after,
-.alph_tooltip-bottom-narrow::after,
-.alph_tooltip-bottom-narrow2::after {
-  content: "" !important;
-  position: absolute !important;
-  bottom: 100% !important;
-  left: 50% !important;
-  margin-left: -5px !important;
-  border-width: 5px !important;
-  border-style: solid !important;
-  border-color: transparent transparent var(--alpheios-border-color) transparent !important;
-}
-.alph_tooltip-bottom-right {
-  top: 135% !important;
-  right: 0 !important;
-  margin-left: -50% !important;
-}
-.alph_tooltip-bottom-right::after {
-  content: "" !important;
-  position: absolute !important;
-  bottom: 100% !important;
-  right: 15% !important;
-  margin-left: -5px !important;
-  border-width: 5px !important;
-  border-style: solid !important;
-  border-color: transparent transparent var(--alpheios-border-color) transparent !important;
-}
-.alph_tooltip-bottom-left {
-  top: 135% !important;
-  right: 0 !important;
-  left: auto !important;
-}
-.alph_tooltip-bottom-left::after {
-  content: "" !important;
-  position: absolute !important;
-  bottom: 100% !important;
-  right: 15% !important;
-  margin-left: -5px !important;
-  border-width: 5px !important;
-  border-style: solid !important;
-  border-color: transparent transparent var(--alpheios-border-color) transparent !important;
-}
-.alpheios-panel--right .alph_tooltip-bottom-right {
-  top: 135% !important;
-  right: auto !important;
-  margin-left: 0 !important;
-  left: 0 !important;
-}
-.alpheios-panel--right .alph_tooltip-bottom-right::after {
-  margin-left: 0 !important;
-  right: auto !important;
-  left: 15% !important;
-}
-.alph_tooltip-left {
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  bottom: auto !important;
-  right: 128% !important;
-}
-.alph_tooltip-left::after {
-  content: "" !important;
-  position: absolute !important;
-  top: 50% !important;
-  left: 100% !important;
-  margin-top: -5px !important;
-  border-width: 5px !important;
-  border-style: solid !important;
-  border-color: transparent transparent transparent var(--alpheios-border-color) !important;
 }
 /*
  Calculates a size of text elements relative to the base size.

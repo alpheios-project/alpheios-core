@@ -21,6 +21,22 @@
             </span>
         </h4>
 
+        <tooltip
+            :tooltip-text="l10n.getText('TOOLTIP_DISAMBIGUATED')"
+            tooltip-direction="top"
+            class="alpheios-principal-parts__pointer-tooltip"
+        >
+            <disambiguated-icon v-show="disambiguated" class="alpheios-principal-parts__pointer-icn"></disambiguated-icon>
+        </tooltip>
+        <div v-show="disambiguated" class="alpheios-principal-parts__dsmbg-providers">
+            <tooltip
+                :tooltip-text="l10n.getText('TOOLTIP_TREEBANK_SOURCE')"
+                tooltip-direction="top"
+            >
+                <treebank-icon class="alpheios-principal-parts__dsmbg-providers-icn"></treebank-icon>
+            </tooltip>
+        </div>
+
         <inflectionattribute
             :data="lemma.features"
             :decorators="['brackets', 'appendspace', 'chinese']"
@@ -44,71 +60,81 @@
     </div>
 </template>
 <script>
-  import { Feature, LanguageModelFactory } from 'alpheios-data-models'
+import TreebankIcon from '@/images/inline-icons/sitemap.svg'
+import DisambiguatedIcon from '@/images/inline-icons/caret-left.svg'
+import Tooltip from '@/vue/components/tooltip.vue'
+import { Feature, LanguageModelFactory } from 'alpheios-data-models'
 
-  import InflectionAttribute from '@/vue/components/infl-attribute.vue'
+import InflectionAttribute from '@/vue/components/infl-attribute.vue'
 
-  export default {
-    name: 'PrincipalParts',
-    components: {
-        inflectionattribute: InflectionAttribute,
+export default {
+  name: 'PrincipalParts',
+  inject: ['l10n'], // API modules
+  components: {
+    inflectionattribute: InflectionAttribute,
+    treebankIcon: TreebankIcon,
+    disambiguatedIcon: DisambiguatedIcon,
+    tooltip: Tooltip
+  },
+  props: {
+    lemma: {
+      type: Object,
+      required: true
     },
-    props: {
-      lemma: {
-        type: Object,
-        required: true
-      },
-      lemmaindex: {
-        type: Number,
-        required: true
-      },
-      lexemeslength: {
-        type: Number,
-        required: true
-      },
-      lexemeindex: {
-        type: Number,
-        required: true
-      }
+    lemmaindex: {
+      type: Number,
+      required: true
     },
-    data: function () {
-      return {
-        types: null // These are Feature.types
-      }
+    lexemeslength: {
+      type: Number,
+      required: true
     },
-    computed: {
-      printIndex () {
-        return this.lexemeslength > 1
-      },
-      languageCode () {
-        return LanguageModelFactory.getLanguageCodeFromId(this.lemma.languageID)
-      },
-      hasExtras () {
-        return this.lemma.features && (this.getFeature('frequency') || this.getFeature('age') || this.getFeature('area') || this.getFeature('geo'))
-      },
-      hasSource () {
-        return this.lemma.features && this.getFeature('source')
-      }
+    lexemeindex: {
+      type: Number,
+      required: true
     },
-    methods: {
-      featureList (features, name) {
-        let list = features.map(i => this.lemma.features[i] ? this.lemma.features[i] : null).filter(i => i)
-        list = list.length > 0 ? `(${list.map((f) => f).join(', ')})` : ''
-        let returnObj = {}
-        returnObj[name] = { value: list, values: [list] }
-        return returnObj
-      },
-      getFeature (type) {
-        if (this.lemma.features[type] !== undefined) {
-          return this.lemma.features[type].value
-        }
-        return
-      },
-    },
-    created: function () {
-      this.types = Feature.types
+    disambiguated: {
+      type: Boolean,
+      required: true
     }
+  },
+  data: function () {
+    return {
+      types: null // These are Feature.types
+    }
+  },
+  computed: {
+    printIndex () {
+      return this.lexemeslength > 1
+    },
+    languageCode () {
+      return LanguageModelFactory.getLanguageCodeFromId(this.lemma.languageID)
+    },
+    hasExtras () {
+      return this.lemma.features && (this.getFeature('frequency') || this.getFeature('age') || this.getFeature('area') || this.getFeature('geo'))
+    },
+    hasSource () {
+      return this.lemma.features && this.getFeature('source')
+    }
+  },
+  methods: {
+    featureList (features, name) {
+      let list = features.map(i => this.lemma.features[i] ? this.lemma.features[i] : null).filter(i => i)
+      list = list.length > 0 ? `(${list.map((f) => f).join(', ')})` : ''
+      let returnObj = {} // eslint-disable-line prefer-const
+      returnObj[name] = { value: list, values: [list] }
+      return returnObj
+    },
+    getFeature (type) {
+      if (this.lemma.features[type] !== undefined) {
+        return this.lemma.features[type].value
+      }
+    }
+  },
+  created: function () {
+    this.types = Feature.types
   }
+}
 </script>
 <style lang="scss">
   @import "../../../styles/variables";
@@ -146,5 +172,29 @@
     font-style: italic;
     font-family: sans-serif;
     font-size: 90%;
+  }
+
+  .alpheios-principal-parts__pointer-tooltip {
+      left: -7px;
+  }
+
+  .alpheios-principal-parts__pointer-icn {
+      // fill: var(--alpheios-color-neutral-dark);
+      fill: var(--alpheios-color-vivid);
+      height: 22px;
+      position: relative;
+      top: 6px;
+  }
+
+  .alpheios-principal-parts__dsmbg-providers {
+      display: inline-block;
+      margin-left: -3px;
+  }
+
+  .alpheios-principal-parts__dsmbg-providers-icn {
+      fill: var(--alpheios-color-neutral-dark);
+      display: inline-block;
+      position: relative;
+      top: 3px;
   }
 </style>
