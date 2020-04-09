@@ -288,6 +288,13 @@ export default class BaseTestHelp {
         lemmaTranslationLang: 'lat',
         selectedLookupLangCode: 'lat'
       },
+      config: {
+        'lexis-cs': {
+          cedict: {
+            target_url: 'http://target.url'
+          }
+        }
+      },
       wordUsageExamples: null,
 
       hasMorphData: () => false,

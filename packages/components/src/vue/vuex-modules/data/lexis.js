@@ -28,6 +28,8 @@ export default class Lexis extends Module {
     this._appApi = api.app
     this._uiApi = api.ui
     this._settingsApi = api.settings
+    this._lexisConfig = api.app.config['lexis-cs']
+
     // A TextSelector of the last lexical query
     this._lastTextSelector = null
     // A current TreebankDataItem
@@ -65,7 +67,7 @@ export default class Lexis extends Module {
     const iframe = document.createElement('iframe')
     iframe.id = cedictConfig.targetIframeID
     iframe.style.display = 'none'
-    iframe.src = cedictConfig.targetURL
+    iframe.src = this._lexisConfig.cedict.target_url
     document.body.appendChild(iframe)
   }
 
