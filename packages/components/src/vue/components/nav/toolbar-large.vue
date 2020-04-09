@@ -5,6 +5,7 @@
       :class="componentClasses"
       :style="componentStyles"
       v-show="$store.state.toolbar.visible"
+      data-alpheios-ignore="all"
   >
     <div
         id="alpheios-toolbar-drag-handle"
@@ -84,11 +85,13 @@
     <div
         class="alpheios-toolbar__lookup"
         v-show="lookupVisible"
+        :class="{ 'alpheios-toolbar__lookup-beta-codes': showBetaCodesInfo }"
     >
       <lookup
           :name-base="`toolbar`"
           :show-lang-selector="showLangSelector"
           @toggleLangSelector = "toggleLangSelector"
+          @toggleBetaCodesInfo = "toggleBetaCodesInfo"
       />
     </div>
 
@@ -255,7 +258,8 @@ export default {
 
       // An X position of the central point of a toolbar
       xCenter: undefined,
-      showLangSelector: false
+      showLangSelector: false,
+      showBetaCodesInfo: false
     }
   },
 
@@ -404,6 +408,10 @@ export default {
     
     toggleLangSelector (value) {
       this.showLangSelector = true
+    },
+
+    toggleBetaCodesInfo (value) {
+      this.showBetaCodesInfo = value
     }
   },
 
@@ -594,6 +602,10 @@ export default {
 
     .alph_tooltip {
       display: inline-block;
+    }
+
+    &.alpheios-toolbar__lookup-beta-codes {
+      height: uisize(420px);
     }
   }
 

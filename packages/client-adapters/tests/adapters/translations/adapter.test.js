@@ -6,23 +6,30 @@ import AlpheiosLemmaTranslationsAdapter from '@clAdapters/adapters/translations/
 import ClientAdapters from '@clAdapters/client-adapters.js'
 import { LanguageModelFactory as LMF, Constants, Homonym, Lexeme, Lemma } from 'alpheios-data-models'
 
+import { Fixture, TranslationsFixture } from 'alpheios-fixtures'
+
 describe('lexicons/adapter.test.js', () => {
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
 
   let testSuccessHomonym, testLangID
-
+  
   beforeAll(async () => {
     ClientAdapters.init()
     testLangID = Constants.LANG_LATIN
+
+    let sourceJson = Fixture.getFixtureRes({
+      langCode: 'lat', adapter: 'tufts', word: 'mare'
+    })
 
     let homonymRes1 = await ClientAdapters.maAdapter({
       method: 'getHomonym',
       params: {
         languageID: testLangID,
         word: 'mare'
-      }
+      },
+      sourceData: sourceJson
     })
     testSuccessHomonym = homonymRes1.result
   })
@@ -56,16 +63,19 @@ describe('lexicons/adapter.test.js', () => {
     expect(adapter.provider).toBeDefined()
   })
 
-  it.skip('2 AlpheiosLemmaTranslationsAdapter - getTranslationsList gets translations and adds no error', async () => {
+  it('2 AlpheiosLemmaTranslationsAdapter - getTranslationsList gets translations and adds no error', async () => {
     let adapter = new AlpheiosLemmaTranslationsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchTranslations'
+      method: 'fetchTranslations', 
+      sourceData: {
+        langs: TranslationsFixture.allLangs,
+        translations: TranslationsFixture.library['lat-spa-mare']
+      }
     })
 
     adapter.addError = jest.fn()
     await adapter.getTranslationsList(testSuccessHomonym, 'es')
-    let timeoutRes = await timeout(15000)
 
     let translationsCheck = [
       ['mar'], ['varón, macho; varonil, viril'], ['varón, macho; varonil, viril'], ['mar']
@@ -75,8 +85,6 @@ describe('lexicons/adapter.test.js', () => {
       expect(lexeme.lemma.translation).toBeDefined()
       expect(lexeme.lemma.translation.glosses).toEqual(translationsCheck[i])
     })
-
-    return timeoutRes
   }, 30000)
 
   it('3 AlpheiosLemmaTranslationsAdapter - prepareInput creates input string for url', async () => {
@@ -99,13 +107,16 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLemmaTranslationsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchTranslations'
+      method: 'fetchTranslations', 
+      sourceData: {
+        langs: TranslationsFixture.allLangs
+      }
     })
 
-    let resSuccess = await adapter.getAvailableResLang('lat', 'spa')
+    let resSuccess = await adapter.getAvailableResLang('lat', 'spa', TranslationsFixture.allLangs)
     expect(resSuccess).toEqual('https://ats.alpheios.net/lat/spa')
 
-    let resFailed = await adapter.getAvailableResLang('lat', 'foo')
+    let resFailed = await adapter.getAvailableResLang('lat', 'foo', TranslationsFixture.allLangs)
     expect(resFailed).toBeUndefined()
   })
 
