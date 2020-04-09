@@ -64,10 +64,10 @@
                 {{ l10n.getText('WORDLIST_DOWNLOAD_FILTERING_CHECK') }}
               </label>
             </div>
-            <div class="alpheios-wordlist-download-for-quizlet alpheios-checkbox-block" data-alpheios-ignore="all">
-              <input :id="downloadQuizletId" type="checkbox" v-model="downloadForQuizlet">
-              <label :for="downloadQuizletId">
-                {{ l10n.getText('WORDLIST_DOWNLOAD_QUIZLET_CHECK') }}
+            <div class="alpheios-wordlist-download-for-flashcards alpheios-checkbox-block" data-alpheios-ignore="all">
+              <input :id="downloadFlashcardsId" type="checkbox" v-model="downloadForFlashcards">
+              <label :for="downloadFlashcardsId">
+                {{ l10n.getText('WORDLIST_DOWNLOAD_FLASHCARDS_CHECK') }}
               </label>
             </div>
           </div>
@@ -161,7 +161,7 @@ export default {
         'targetWord': null
       },
       downloadWithFilter: false,
-      downloadForQuizlet: false
+      downloadForFlashcards: false
     } 
      
   },
@@ -169,8 +169,8 @@ export default {
     downloadFilterId () {
       return `alpheios-wordlist-download-with-filters-input-${this.languageCode}`
     },
-    downloadQuizletId () {
-      return `alpheios-wordlist-download-for-quizlet-input-${this.languageCode}`
+    downloadFlashcardsId () {
+      return `alpheios-wordlist-download-for-flashcards-input-${this.languageCode}`
     },
     hasSeveralItems () {
       return this.wordlist && this.wordlist.values && this.wordlist.values.length > 1
@@ -309,7 +309,7 @@ export default {
       }
     },
 
-    prepareDownloadListQuizlet () {
+    prepareDownloadListFlashcards () {
       const exportFields = [ 'word', 'definition']
       const source = this.downloadWithFilter ? this.wordItems : this.wordlist.values
 
@@ -320,7 +320,7 @@ export default {
             if (lexeme.hasShortDefs) {
               lexeme.meaning.shortDefs.forEach(shortDef => {
                 wordlistData.push({
-                  word: `${wordItem.homonym.targetWord} (${lexeme.lemma.word})`,
+                  word: `${wordItem.homonym.targetWord} (${lexeme.lemma.wordPrincipalParts})`,
                   definition: shortDef.text
                 })
               })
@@ -337,8 +337,8 @@ export default {
     downloadList () {
       let dataForDownload
 
-      if (this.downloadForQuizlet) {
-        dataForDownload = this.prepareDownloadListQuizlet()
+      if (this.downloadForFlashcards) {
+        dataForDownload = this.prepareDownloadListFlashcards()
       } else {
         dataForDownload = this.prepareDownloadListFull()
       }
