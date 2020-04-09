@@ -179,6 +179,16 @@
     "description": "tooltip for show empty columns button on inflections panel",
     "component": "Panel"
   },
+  "TOOLTIP_DISAMBIGUATED": {
+    "message": "Disambiguated",
+    "description": "A tooltip that will be shown for a disambiguated icon in a popup",
+    "component": "Popup"
+  },
+  "TOOLTIP_TREEBANK_SOURCE": {
+    "message": "Has treebank data",
+    "description": "A tooltip that will be shown for a treebank source icon in a popup",
+    "component": "Popup"
+  },
   "INFLECT_MSG_TABLE_NOT_IMPLEMENTED": {
     "message": "This table has not been implemented yet",
     "description": "tooltip to show instead of inflection table if the latter is not implemented",
