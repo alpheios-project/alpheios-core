@@ -199,8 +199,8 @@
       "values": []
     },
     "enableMouseMoveLimitedByIdCheck": {
-      "defaultValue": false,
-      "labelText": "Enable Mouse Move on Google Docs Element Id:",
+      "defaultValue": true,
+      "labelText": "Limit Mouse Move on Google Docs to top-level container",
       "boolean": true,
       "values": [
         {
@@ -215,7 +215,7 @@
     },
     "mouseMoveLimitedById": {
       "defaultValue": "docs-editor-container",
-      "labelText": "Limited by the id",
+      "labelText": "Google Docs Container Id",
       "text": true
     }
   }

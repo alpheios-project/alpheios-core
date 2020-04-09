@@ -78,6 +78,12 @@
           @change="featureOptionChanged"
       >
       </setting>
+      <setting
+          class="alpheios-feature-options__item"
+          :data="featureOptions.items.mouseMoveLimitedById"
+          @change="featureOptionChanged"
+      >
+      </setting>
     </fieldset>
   </div>
 </template>
