@@ -1,4 +1,5 @@
 import PointerEvt from '@/lib/custom-pointer-events/pointer-evt.js'
+import Platform from '@/lib/utility/platform.js'
 
 let mouseMoveTimeout = null
 
@@ -11,6 +12,8 @@ export default class MouseMove extends PointerEvt {
     this.boundListener = this.eventListener.bind(this) // A bound event listener of MouseDblClick
     this.mouseMoveDelay = parseInt(eventParams.mouseMoveDelay)
     this.mouseMoveAccuracy = parseInt(eventParams.mouseMoveAccuracy)
+
+    this.limitedById = Platform.getIsGoogleDocs() && eventParams.enableMouseMoveLimitedByIdCheck ? eventParams.mouseMoveLimitedById : null
   }
 
   eventListener (domEvt) {
@@ -20,10 +23,10 @@ export default class MouseMove extends PointerEvt {
     }
 
     mouseMoveTimeout = setTimeout(() => {
-      this
+      const valid = this
         .setStartPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
         .setEndPoint(domEvt.clientX, domEvt.clientY, domEvt.target, domEvt.path)
-      this.evtHandler(this, domEvt)
+      if (valid) { this.evtHandler(this, domEvt) }
     }, this.mouseMoveDelay)
   }
 

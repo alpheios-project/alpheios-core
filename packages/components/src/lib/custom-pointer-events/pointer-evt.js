@@ -21,6 +21,10 @@ export default class PointerEvt {
     return false
   }
 
+  hasLimitedById (element) {
+    return this.limitedById && element.id === this.limitedById // eslint-disable-line no-prototype-builtins
+  }
+
   static get pointerEventSupported () {
     return window.PointerEvent
   }
@@ -47,6 +51,11 @@ export default class PointerEvt {
         this.constructor.excludeCpeTest(element.dataset)
       )
     )
+
+    if (!this[type].excluded && this.limitedById) {
+      this[type].excluded = this[type].path.every(element => !this.hasLimitedById(element))
+    }
+
     return this
   }
 

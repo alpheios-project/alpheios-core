@@ -124,8 +124,12 @@ export default class HTMLSelector extends MediaSelector {
 
       range = doc.createRange()
 
-      range.setStart(start.startContainer, start.startOffset)
-      range.setEnd(end.startContainer, end.startOffset)
+      if (start && end) {
+        range.setStart(start.startContainer, start.startOffset)
+        range.setEnd(end.startContainer, end.startOffset)
+      } else {
+        return null
+      }
     }
 
     if (range && typeof window.getSelection === 'function') {
@@ -144,7 +148,6 @@ export default class HTMLSelector extends MediaSelector {
     } else {
       console.warn('Browser does not support the Alpheios word selection code. Support for getSelection() or createTextRange() is required.')
     }
-
     return range
   }
 

@@ -5,6 +5,7 @@
       :class="componentClasses"
       :style="componentStyles"
       v-show="$store.state.toolbar.visible"
+      data-alpheios-ignore="all"
   >
     <div
         id="alpheios-toolbar-drag-handle"
