@@ -284,7 +284,7 @@ if you want to create a different configuration of a UI controller.
        */
       experimentalResetTreebankURL: false,
       // A URL of a server that provides an app configuration
-      configServiceUrl: 'https://4wvouc833c.execute-api.us-east-2.amazonaws.com/prod/config'
+      configServiceUrl: 'https://config.alpheios.net/v1/config'
     }
   }
 
