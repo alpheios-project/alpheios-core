@@ -3550,6 +3550,45 @@ span.alpheios-lookup__lang-change:hover {
   width: 35px !important;
   height: 25px !important;
 }
+.alpheios-lookup__form span.alpheios-lookup__form-beta-codes-check {
+  vertical-align: middle !important;
+  padding-left: 10px !important;
+}
+.alpheios-lookup__form span.alpheios-lookup__form-beta-codes-check label {
+  line-height: 1 !important;
+  font-size: 90% !important;
+}
+.alpheios-lookup__form-icon {
+  width: calc(var(--alpheios-base-ui-size) * 1.5) !important;
+  height: calc(var(--alpheios-base-ui-size) * 1.5) !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  fill: var(--alpheios-desktop-toolbar-bg) !important;
+  stroke: var(--alpheios-desktop-toolbar-bg) !important;
+  display: inline-block;
+  vertical-align: middle !important;
+  cursor: pointer !important;
+}
+.alpheios-lookup__form-icon svg {
+  width: 92% !important;
+  height: auto !important;
+  position: relative !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info {
+  border-bottom: 1px solid var(--alpheios-color-placehoder) !important;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 1.5) !important;
+}
+.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info p {
+  font-size: 94% !important;
+  margin: 0 0 calc(var(--alpheios-base-text-size) * 0.75) !important;
+}
+.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info span {
+  display: inline-block;
+  padding-right: 20px !important;
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3686,6 +3725,9 @@ span.alpheios-lookup__lang-change:hover {
 }
 .alpheios-toolbar__lookup .alph_tooltip {
   display: inline-block;
+}
+.alpheios-toolbar__lookup.alpheios-toolbar__lookup-beta-codes {
+  height: calc(var(--alpheios-base-ui-size) * 26.25) !important;
 }
 .alpheios-toolbar__buttons {
   display: flex;
