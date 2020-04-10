@@ -139,5 +139,10 @@
         "message": "with filtering",
         "description": "Download list filtering check",
         "component": "WordLanguagePanel"
+    },
+    "WORDLIST_DOWNLOAD_FLASHCARDS_CHECK": {
+        "message": "for flashcards",
+        "description": "Download list for flashcards",
+        "component": "WordLanguagePanel"
     }
 }

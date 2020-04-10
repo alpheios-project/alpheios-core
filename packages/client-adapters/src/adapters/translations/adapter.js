@@ -13,6 +13,7 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
     this.config = this.uploadConfig(config, DefaultConfig)
     this.mapLangUri = {}
     this.provider = new ResourceProvider(this.config.url, this.config.rights)
+    this.sourceData = config.sourceData
   }
 
   /**
@@ -50,7 +51,12 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
       if (input && urlLang) {
         try {
           const url = urlLang + '?input=' + input
-          const translationsList = await this.fetch(url)
+          let translationsList
+          if (this.sourceData && this.sourceData.translations) {
+            translationsList = this.sourceData.translations
+          } else {
+            translationsList = await this.fetch(url)
+          }
           if (translationsList && translationsList.constructor.name === 'AdapterError') {
             return
           }
@@ -84,7 +90,14 @@ class AlpheiosLemmaTranslationsAdapter extends BaseAdapter {
   async getAvailableResLang (inLang, outLang) {
     if (this.mapLangUri[inLang] === undefined) {
       const urlAvaLangsRes = this.config.url + '/' + inLang + '/'
-      const unparsed = await this.fetch(urlAvaLangsRes)
+
+      let unparsed
+
+      if (!this.sourceData || !this.sourceData.langs) {
+        unparsed = await this.fetch(urlAvaLangsRes)
+      } else {
+        unparsed = this.sourceData.langs
+      }
 
       if (unparsed && unparsed.constructor.name === 'AdapterError') {
         return unparsed

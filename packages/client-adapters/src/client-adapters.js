@@ -251,7 +251,8 @@ class ClientAdapters {
       category: 'lemmatranslation',
       adapterName: 'alpheios',
       method: options.method,
-      clientId: options.clientId
+      clientId: options.clientId,
+      sourceData: options.sourceData
     })
 
     if (options.method === 'fetchTranslations') {

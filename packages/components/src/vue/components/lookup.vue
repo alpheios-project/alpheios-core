@@ -1,13 +1,27 @@
 <template>
-  <div class="alpheios-lookup__form" id="alpheios-lookup-form" data-alpheios-ignore="all">
+  <div class="alpheios-lookup__form" id="alpheios-lookup-form" data-alpheios-ignore="all" >
     <div class="alpheios-lookup__form-row">
       <div class="alpheios-lookup__form-element">
         <label class="alpheios-setting__label">Word lookup</label>
+        
+        <span class="alpheios-lookup__form-beta-codes-check" v-show="showUseBetaCodes">
+          <input type="checkbox" id="greek-keyboard" v-model="useBetaCodes">
+          <label for="greek-keyboard">{{ l10n.getMsg('LOOKUP_USE_BETA_CODES_CHECK') }}</label>
+          <span
+              @click="toggleBetaCodesInfo"
+              class="alpheios-lookup__form-icon"
+              v-show="app.platform.isDesktop"  
+          >
+            <help-icon/>
+          </span>
+        </span>
+
         <div class="alpheios-lookup__search-control">
           <input
               autocapitalize="off"
               autocorrect="off"
               @keyup.enter="lookup"
+              @keyup="updateBetaCodes"
               class="alpheios-input"
              :class="{ 'alpheios-rtl': directionRtl}"
               type="text"
@@ -27,6 +41,15 @@
         </div>
       </div>
     </div>
+
+    <div v-show="showBetaCodesInfo" class="alpheios-lookup__form-beta-codes-info">
+      <p>{{ l10n.getMsg('LOOKUP_USE_BETA_CODES_INFO_FIRST') }}</p>
+      <p><span>/a => ά</span><span>\a => ὰ</span><span>=a => ᾶ</span><span>)a => ἀ</span></p>
+      <p><span>(a => ἁ</span><span>!a => ᾳ</span><span>+i => ϊ</span><span>h => η</span></p>
+      <p><span>q => θ</span><span>x => χ</span><span>c => ξ</span><span>z = ζ</span></p>
+      <p><span>j => ψ</span><span>w => ω</span><span>s => σ, ς</span></p>
+      <p>{{ l10n.getMsg('LOOKUP_USE_BETA_CODES_INFO_LAST') }} )/a => ἄ</p>
+    </div>
     <div v-show="! showLangSelector">
       <span class="alpheios-lookup__lang-hint" id="alpheios-lookup-form-lang-hint">{{l10n.getMsg('HINT_LOOKUP_LANGUAGE',{language:lookupLangName})}}</span>
       <span class="alpheios-lookup__lang-change" id="alpheios-lookup-form-lang-change" @click.stop="toggleLangSelector">{{l10n.getMsg('LABEL_LOOKUP_CHANGE_LANGUAGE')}}</span>
@@ -42,6 +65,9 @@
 </template>
 <script>
 import TextSelector from '@/lib/selection/text-selector'
+import GreekInput from '@/lib/utility/greek-input.js'
+import HelpIcon from '@/images/inline-icons/help-icon.svg'
+
 import { LanguageModelFactory, Constants } from 'alpheios-data-models'
 import LookupIcon from '@/images/inline-icons/lookup.svg'
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
@@ -56,7 +82,8 @@ export default {
   storeModules: ['app'],
   components: {
     alphSetting: Setting,
-    lookupIcon: LookupIcon
+    lookupIcon: LookupIcon,
+    helpIcon: HelpIcon
   },
   logger: Logger.getInstance(),
   data () {
@@ -64,7 +91,9 @@ export default {
       lookuptext: '',
       // A name of a language currently selected in the language drop-down
       // The following variable is used to signal that language options has been updated
-      langUpdated: Date.now()
+      langUpdated: Date.now(),
+      useBetaCodes: false,
+      showBetaCodesInfo: false
     }
   },
   props: {
@@ -97,6 +126,9 @@ export default {
     directionRtl () {
       const model = LanguageModelFactory.getLanguageModelFromCode(this.getLookupLanguage())
       return model.direction === Constants.LANG_DIR_RTL
+    },
+    showUseBetaCodes () {
+      return this.getLookupLanguage() === GreekInput.langCode
     }
   },
   watch: {
@@ -111,17 +143,17 @@ export default {
     }
   },
   methods: {
-    getLookupLanguage: function () {
+    getLookupLanguage () {
       return this.showLangSelector
         ? this.$options.lookupLanguage.currentValue
         : this.$store.state.app.selectedLookupLangCode
     },
 
-    toggleLangSelector: function () {
+    toggleLangSelector () {
       this.$emit('toggleLangSelector', true)
     },
 
-    lookup: function () {
+    lookup () {
       this.lookuptext = this.lookuptext.trim()
       if (this.lookuptext.length === 0) {
         return null
@@ -172,10 +204,21 @@ export default {
       }
     },
 
-    settingChange: function (name, value) {
+    settingChange (name, value) {
       this.$options.lookupLanguage.setTextValue(value)
       this.$store.commit('app/setSelectedLookupLang', this.$options.lookupLanguage.currentValue)
       this.langUpdated = Date.now()
+    },
+
+    updateBetaCodes (event) {
+      if (event.keyCode !== 13 && this.getLookupLanguage() === GreekInput.langCode && this.useBetaCodes) {
+        this.lookuptext = GreekInput.change(this.lookuptext)
+      }
+    },
+
+    toggleBetaCodesInfo () {
+      this.showBetaCodesInfo = !this.showBetaCodesInfo
+      this.$emit('toggleBetaCodesInfo', this.showBetaCodesInfo)
     }
   }
 }
@@ -292,4 +335,49 @@ export default {
       height: 25px;
     }
   }
+
+  .alpheios-lookup__form span.alpheios-lookup__form-beta-codes-check {
+    vertical-align: middle;
+    padding-left: 10px;
+
+    label {
+      line-height: 1;
+      font-size: 90%;
+    }
+  }
+
+  .alpheios-lookup__form-icon {
+    width: calc(var(--alpheios-base-ui-size) * 1.5);
+    height: calc(var(--alpheios-base-ui-size) * 1.5);
+    box-sizing: border-box;
+    position: relative;
+    fill: var(--alpheios-desktop-toolbar-bg);
+    stroke: var(--alpheios-desktop-toolbar-bg);
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+
+    svg {
+      width: 92%;
+      height: auto;
+      position: relative;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  .alpheios-lookup__form .alpheios-lookup__form-beta-codes-info {
+    border-bottom: 1px solid var(--alpheios-color-placehoder);
+    margin-bottom: calc(var(--alpheios-base-text-size) * 1.5);
+
+    p {
+      font-size: 94%;
+      margin: 0 0 calc(var(--alpheios-base-text-size) * 0.75);
+    }
+    span {
+      display: inline-block;
+      padding-right: 20px;
+    }
+  }
 </style>
+

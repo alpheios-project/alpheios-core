@@ -4795,6 +4795,18 @@ class Lemma {
     }
     return this.word
   }
+
+  /**
+   * extracts lemma.word and all principal parts for flashcards export
+   *
+   */
+  get wordPrincipalParts () {
+    const allParts = [...this.principalParts]
+    if (!this.principalParts.includes(this.word)) {
+      allParts.push(this.word)
+    }
+    return allParts.join(', ')
+  }
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Lemma);

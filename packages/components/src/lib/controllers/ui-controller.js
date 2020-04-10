@@ -868,6 +868,10 @@ if you want to create a different configuration of a UI controller.
     this.featureOptions.items.lookupLanguage.setValue(defaultLangCode)
     this.updateLanguage(defaultLangID)
 
+    if (this.platform.isGoogleDocs) {
+      this.featureOptions.items.enableMouseMove.setValue(true)
+      this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+    }
     // Create registered UI modules
     this.createUiModules()
 
@@ -1801,7 +1805,7 @@ NB this is Prototype functionality
   featureOptionChange (name, value) {
     let featureOptions = this.api.settings.getFeatureOptions() // eslint-disable-line prefer-const
     // TODO we need to refactor handling of boolean options
-    const nonTextFeatures = ['enableLemmaTranslations', 'enableWordUsageExamples', 'wordUsageExamplesMax', 'wordUsageExamplesAuthMax', 'enableMouseMove', 'mouseMoveDelay', 'mouseMoveAccuracy']
+    const nonTextFeatures = ['enableLemmaTranslations', 'enableWordUsageExamples', 'wordUsageExamplesMax', 'wordUsageExamplesAuthMax', 'enableMouseMove', 'mouseMoveDelay', 'mouseMoveAccuracy', 'enableMouseMoveLimitedByIdCheck', 'mouseMoveLimitedById']
     if (nonTextFeatures.includes(name)) {
       featureOptions.items[name].setValue(value)
     } else {
@@ -1837,6 +1841,9 @@ NB this is Prototype functionality
         this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
         break
       case 'mouseMoveAccuracy':
+        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+        break
+      case 'enableMouseMoveLimitedByIdCheck':
         this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
         break
     }
@@ -1964,7 +1971,9 @@ NB this is Prototype functionality
     if (this.enableMouseMoveEvent()) {
       const eventParams = {
         mouseMoveDelay: this.featureOptions.items.mouseMoveDelay.currentValue,
-        mouseMoveAccuracy: this.featureOptions.items.mouseMoveAccuracy.currentValue
+        mouseMoveAccuracy: this.featureOptions.items.mouseMoveAccuracy.currentValue,
+        enableMouseMoveLimitedByIdCheck: this.featureOptions.items.enableMouseMoveLimitedByIdCheck.currentValue,
+        mouseMoveLimitedById: this.featureOptions.items.mouseMoveLimitedById.currentValue
       }
       const lexisModule = this.getModule('lexis')
       this.evc.registerListener(listenerName + '-mousemove', selector, this.api.lexis.getSelectedText.bind(lexisModule), MouseMove, eventParams)

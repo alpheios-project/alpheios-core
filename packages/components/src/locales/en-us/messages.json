@@ -696,5 +696,20 @@
     "message": "Show Language Selector",
     "description": "Tooltip for Show Languges Titles Block",
     "component": "Grammar"
+  },
+  "LOOKUP_USE_BETA_CODES_CHECK": {
+    "message": "Enable input in betacode",
+    "description": "Update beta codes to greek chars",
+    "component": "Lookup"
+  },
+  "LOOKUP_USE_BETA_CODES_INFO_FIRST": {
+    "message": "You can type Greek using the following betacode characters. They will be converted upon input to Unicode.",
+    "description": "First row inside beta codes info",
+    "component": "Lookup"
+  },
+  "LOOKUP_USE_BETA_CODES_INFO_LAST": {
+    "message": "Combine the signs e.g.",
+    "description": "Last row inside beta codes info",
+    "component": "Lookup"
   }
 }
