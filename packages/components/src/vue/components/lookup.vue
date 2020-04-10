@@ -21,7 +21,7 @@
               autocapitalize="off"
               autocorrect="off"
               @keyup.enter="lookup"
-              @keyup="updateBetaCodes"
+              @keyup="checkLookupKeyPress"
               class="alpheios-input"
              :class="{ 'alpheios-rtl': directionRtl}"
               type="text"
@@ -74,6 +74,7 @@ import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 import Logger from '@/lib/log/logger'
 
 import Setting from './setting.vue'
+import { ClientAdapters } from 'alpheios-client-adapters'
 
 export default {
   name: 'Lookup',
@@ -208,7 +209,7 @@ export default {
     },
 
     updateBetaCodes (event) {
-      if (event.keyCode !== 13 && this.getLookupLanguage() === GreekInput.langCode && this.useBetaCodes) {
+      if (this.useBetaCodes && this.getLookupLanguage() === GreekInput.langCode) {
         this.lookuptext = GreekInput.change(this.lookuptext)
       }
     },
@@ -216,6 +217,24 @@ export default {
     toggleBetaCodesInfo () {
       this.showBetaCodesInfo = !this.showBetaCodesInfo
       this.$emit('toggleBetaCodesInfo', this.showBetaCodesInfo)
+    },
+
+    async checkLookupKeyPress (event) {
+      if (event.keyCode === 13) {
+        return this.lookup()
+      } 
+
+      this.updateBetaCodes(event)
+      this.lookuptext = this.lookuptext.trim()
+      if (this.lookuptext.length > 2) {
+        let res = await ClientAdapters.autocompleteWords.logeion({
+          method: 'getWords',
+          params: {
+            text: this.lookuptext,
+            lang: this.getLookupLanguage()
+          }
+        })
+      }
     }
   }
 }

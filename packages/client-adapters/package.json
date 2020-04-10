@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest --coverage && shx cat ./coverage/lcov.info | coveralls",
     "test-no-coverage": "jest",
-    "test-c": "jest tests/morph-fixture.test.js",
+    "test-c": "jest tests/client-adapters.test.js",
     "test-u": "jest tests/adapters/tufts/tufts-example.test.js",
     "test-l": "jest tests/adapters/translations/adapter.test.js",
     "build": "npm run build-lib && npm run build-node",

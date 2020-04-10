@@ -21,7 +21,7 @@ describe('client-adapters.test.js', () => {
   afterAll(() => {
     jest.clearAllMocks()
   })
-
+/*
   it('1 ClientAdapters - morphology executes init and returns object with tufts and alpheiosTreebank', () => {
     jest.spyOn(ClientAdapters, 'init')
 
@@ -354,5 +354,47 @@ describe('client-adapters.test.js', () => {
       expect(resItem.source).toEqual(adapterConcordanceRes.result.wordUsageExamples[i].source)
       i++
     }
+  })
+
+  */
+
+  it('19 ClientAdapters - autocompleteWords - getWords returns array words variants - grc', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.autocompleteWords.logeion({
+      method: 'getWords',
+      params: {
+        text: 'λεξ',
+        lang: 'grc',
+        limit: 15
+      }
+    })
+
+    expect(res.errors).toEqual([])
+
+    expect(res.result.length).toBeGreaterThan(0)
+    expect(res.result.length).toBeLessThan(16)
+
+    expect(Array.isArray(res.result)).toBeTruthy()
+  })
+
+  it('20 ClientAdapters - autocompleteWords - getWords returns array words variants - lat', async () => {
+    ClientAdapters.init()
+
+    let res = await ClientAdapters.autocompleteWords.logeion({
+      method: 'getWords',
+      params: {
+        text: 'mar',
+        lang: 'lat',
+        limit: 15
+      }
+    })
+
+    expect(res.errors).toEqual([])
+
+    expect(res.result.length).toBeGreaterThan(0)
+    expect(res.result.length).toBeLessThan(16)
+
+    expect(Array.isArray(res.result)).toBeTruthy()
   })
 })
