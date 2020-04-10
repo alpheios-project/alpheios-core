@@ -17,6 +17,7 @@ export default class LexicalQuery extends Query {
     this.lemmaTranslations = options.lemmaTranslations
     this.wordUsageExamples = options.wordUsageExamples
     this.checkContextForward = options.checkContextForward
+    this.cedictServiceUrl = options.cedictServiceUrl
 
     const langID = this.selector.languageID
     this.canReset = (this.langOpts[langID] && this.langOpts[langID].lookupMorphLast)
@@ -150,6 +151,7 @@ export default class LexicalQuery extends Query {
         adapterMorphRes = yield ClientAdapters.morphology.chineseloc({
           method: 'getHomonym',
           clientId: this.clientId,
+          serviceUrl: this.cedictServiceUrl,
           params: {
             languageID: this.selector.languageID,
             word: this.selector.normalizedText,

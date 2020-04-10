@@ -28,14 +28,21 @@ export default class Lexis extends Module {
     this._appApi = api.app
     this._uiApi = api.ui
     this._settingsApi = api.settings
+    this._lexisConfig = (api.app.config && api.app.config['lexis-cs']) ? api.app.config['lexis-cs'] : null
+
+    if (!this._lexisConfig) {
+      // If Lexis configuration is not available we will disable any CEDICT-related functionality
+      console.warn('CEDICT functionality will be disabled because LexisCS configuration is not available')
+    }
+
     // A TextSelector of the last lexical query
     this._lastTextSelector = null
     // A current TreebankDataItem
     this._treebankDataItem = null
     // Whether a treebank service has been loaded
     this._treebankServiceLoaded = false
-    // Add an iframe with CEDICT service
-    this.createIframe()
+    // Add an iframe with CEDICT service if Lexis config is available
+    if (this._lexisConfig) { this.createIframe() }
 
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
     api[this.constructor.moduleName] = this.constructor.api(this, store)
@@ -65,7 +72,7 @@ export default class Lexis extends Module {
     const iframe = document.createElement('iframe')
     iframe.id = cedictConfig.targetIframeID
     iframe.style.display = 'none'
-    iframe.src = cedictConfig.targetURL
+    iframe.src = this._lexisConfig.cedict.target_url
     document.body.appendChild(iframe)
   }
 
@@ -77,7 +84,7 @@ export default class Lexis extends Module {
   /**
    * A utility function to delay code execution.
    *
-   * @param {Number} ms - A number of milliseconds an execution should delayed by.
+   * @param {number} ms - A number of milliseconds an execution should delayed by.
    * @returns {Promise} A promise that will be resolved when timeout is expired.
    */
   static timeout (ms) {
@@ -183,6 +190,11 @@ Lexis.api = (moduleInstance, store) => {
         const htmlSelector = new HTMLSelector(event, defaultLangCode)
         const textSelector = htmlSelector.createTextSelector()
 
+        if (textSelector.languageID === Constants.LANG_CHINESE && !moduleInstance._lexisConfig) {
+          console.warn('Lookup request cannot be completed: LexisCS configuration is unavailable')
+          return
+        }
+
         if (textSelector && !textSelector.isEmpty()) {
           const lastTextSelector = moduleInstance._lastTextSelector || {}
           const checkSameTestSelector = (
@@ -212,7 +224,8 @@ Lexis.api = (moduleInstance, store) => {
             lemmaTranslations: moduleInstance._appApi.getLemmaTranslationsQueryParams(textSelector),
             wordUsageExamples: moduleInstance._appApi.getWordUsageExamplesQueryParams(textSelector),
             langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
-            checkContextForward: textSelector.checkContextForward
+            checkContextForward: textSelector.checkContextForward,
+            cedictServiceUrl: moduleInstance._lexisConfig ? moduleInstance._lexisConfig.cedict.target_url : null
           })
 
           moduleInstance._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data)
@@ -248,6 +261,10 @@ Lexis.api = (moduleInstance, store) => {
         lemmaTranslations = { locale: lemmaTranslationLang }
       }
 
+      if (textSelector.languageID === Constants.LANG_CHINESE && !moduleInstance._lexisConfig) {
+        throw new Error('LexisCS configuration is unavailable')
+      }
+
       const lexQuery = LexicalQuery.create(textSelector, {
         htmlSelector: HTMLSelector.getDumpHTMLSelector(),
         clientId: clientId,
@@ -256,8 +273,10 @@ Lexis.api = (moduleInstance, store) => {
         wordUsageExamples: wordUsageExamples,
         resourceOptions: resourceOptions,
         langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
-        checkContextForward: ''
+        checkContextForward: '',
+        cedictServiceUrl: moduleInstance._lexisConfig ? moduleInstance._lexisConfig.cedict.target_url : null
       })
+      moduleInstance._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, null, 'lookup')
       lexQuery.getData()
 
       // Hide a CEDICT notification on a new lexical query
@@ -265,10 +284,12 @@ Lexis.api = (moduleInstance, store) => {
     },
 
     loadCedictData: async () => {
+      if (!moduleInstance._lexisConfig) { return } // Do nothing if Lexis configuration is not available
       store.commit('lexis/setCedictInitInProgressState')
       const loadResult = await ClientAdapters.morphology.chineseloc({
         method: 'loadData',
         clientId,
+        serviceUrl: moduleInstance._lexisConfig ? moduleInstance._lexisConfig.cedict.target_url : null,
         params: {
           timeout: 60000 // Use a long timeout of 10 minutes because loading of CEDICT data may take a while
         }

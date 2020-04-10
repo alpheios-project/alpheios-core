@@ -173,13 +173,16 @@ export default {
         }
         : null
 
-      // A newLexicalRequest will call app.updateLanguage(languageID)
-      this.app.newLexicalRequest(this.lookuptext, selectedLangID, null, 'lookup')
-      this.lexis.lookupText(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, this.app.clientId,
-        this.settings.verboseMode())
-      // Notify parent that the lookup has been started so that the parent can close itself if necessary
-      this.$emit('lookup-started')
-      this.showLookupResult()
+      try {
+        this.lexis.lookupText(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, this.app.clientId,
+          this.settings.verboseMode())
+        // Notify parent that the lookup has been started so that the parent can close itself if necessary
+        this.$emit('lookup-started')
+        this.showLookupResult()
+      } catch (err) {
+        // Lookup request cannot be completed
+        console.warn(`Lookup request cannot be completed: ${err.message}`)
+      }
     },
 
     showLookupResult () {

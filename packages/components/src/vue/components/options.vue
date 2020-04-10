@@ -27,75 +27,75 @@
     <div class="alpheios-tab-options__aboutcont">
       <h3>{{ l10n.getMsg('TEXT_INFO_ABOUT') }}</h3>
       <div class="alpheios-info__versiontext alpheios-text__smallest">
-        {{ app.name }} {{ app.version }} {{ buildNumberForDisplay }}
+        {{ app.name }} {{ app.version }} {{ buildNameForDisplay }}
       </div>
       <div class="alpheios-info__versiontext alpheios-text__smallest">
-        {{ app.libName }} {{ app.libVersion }} {{ libBuildNumberForDisplay }}
+        {{ app.libName }} {{ app.libVersion }} {{ libBuildNameForDisplay }}
       </div>
     </div>
   </div>
 </template>
 <script>
-  import ResourceSettings from '@/vue/components/resource-settings.vue'
-  import FeatureSettings from '@/vue/components/feature-settings.vue'
-  import UISettings from '@/vue/components/ui-settings.vue'
+import ResourceSettings from '@/vue/components/resource-settings.vue'
+import FeatureSettings from '@/vue/components/feature-settings.vue'
+import UISettings from '@/vue/components/ui-settings.vue'
 
-  import Tooltip from '@/vue/components/tooltip.vue'
+import Tooltip from '@/vue/components/tooltip.vue'
 
-  export default {
+export default {
 
-    name: 'OptionsPanel',
-    components: {
-      uiSettings: UISettings,
-      resourceSettings: ResourceSettings,
-      featureSettings: FeatureSettings,
-      alphTooltip: Tooltip
+  name: 'OptionsPanel',
+  components: {
+    uiSettings: UISettings,
+    resourceSettings: ResourceSettings,
+    featureSettings: FeatureSettings,
+    alphTooltip: Tooltip
+  },
+  inject: ['l10n', 'app'],
+  data: function () {
+    return {
+      currentTab: 1
+    }
+  },
+  computed: {
+    uiSettingsKey () {
+      return `${this.$options.prefixName}-settings-ui-${this.$store.state.settings.uiResetCounter}`
     },
-    inject: ['l10n','app'],
-    data: function () {
-      return {
-          currentTab: 1
+
+    resourceSettingsKey () {
+      return `${this.$options.prefixName}-settings-resource-${this.$store.state.settings.resourceResetCounter}`
+    },
+
+    featureSettingsKey () {
+      return `${this.$options.prefixName}-settings-feature-${this.$store.state.settings.featureResetCounter}`
+    },
+
+    buildNameForDisplay () {
+      // if the build number is already included in the package version then
+      // don't display it
+      if (this.app.version.indexOf(this.app.buildName) === -1) {
+        return `build ${this.app.buildName}`
+      } else {
+        return ''
       }
     },
-    computed: {
-      uiSettingsKey() {
-        return `${this.$options.prefixName}-settings-ui-${this.$store.state.settings.uiResetCounter}`
-      },
 
-      resourceSettingsKey() {
-        return `${this.$options.prefixName}-settings-resource-${this.$store.state.settings.resourceResetCounter}`
-      },
-
-      featureSettingsKey() {
-        return `${this.$options.prefixName}-settings-feature-${this.$store.state.settings.featureResetCounter}`
-      },
-
-      buildNumberForDisplay() {
-        // if the build number is already included in the package version then
-        // don't display it
-        if (this.app.version.indexOf(this.app.buildNumber) == -1) {
-          return `build ${this.app.buildNumber}`
-        } else {
-          return ''
-        }
-      },
-
-      libBuildNumberForDisplay() {
-        // if the build number is already included in the package version then
-        // don't display it
-        if (this.app.libVersion.indexOf(this.app.libBuildNumber) == -1) {
-          return `build ${this.app.libBuildNumber}`
-        } else {
-          return ''
-        }
-      }
-    },
-    methods: {
-      resetAllOptions: function () {
-        this.app.resetAllOptions()
+    libBuildNameForDisplay () {
+      // if the build number is already included in the package version then
+      // don't display it
+      if (this.app.libVersion.indexOf(this.app.libBuildName) === -1) {
+        return `build ${this.app.libBuildName}`
+      } else {
+        return ''
       }
     }
+  },
+  methods: {
+    resetAllOptions: function () {
+      this.app.resetAllOptions()
+    }
   }
+}
 </script>
 <style lang="scss">
     @import "../../styles/variables";

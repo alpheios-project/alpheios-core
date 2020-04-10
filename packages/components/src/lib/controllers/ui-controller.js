@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-/* global BUILD_NUMBER */
+/* global BUILD_BRANCH, BUILD_NUMBER, BUILD_NAME */
 import { version as packageVersion, description as packageDescription } from '../../../package'
 import { Constants, Feature, LanguageModelFactory, Lexeme } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
@@ -242,7 +242,9 @@ if you want to create a different configuration of a UI controller.
       app: {
         name: 'name',
         version: 'version',
-        buildNumber: false
+        buildBranch: null,
+        buildNumber: null,
+        buildName: null
       },
       mode: 'production', // Controls options available and output. Other possible values: `development`
       appType: Platform.appTypes.OTHER, // A type of application that uses the controller
@@ -280,7 +282,9 @@ if you want to create a different configuration of a UI controller.
       opened. It will force a content of an iframe to be reloaded and thus will solve display issues
       with a treebank view.
        */
-      experimentalResetTreebankURL: false
+      experimentalResetTreebankURL: false,
+      // A URL of a server that provides an app configuration
+      configServiceUrl: 'https://config.alpheios.net/v1/config'
     }
   }
 
@@ -390,6 +394,14 @@ if you want to create a different configuration of a UI controller.
     if (this.isInitialized) { return 'Already initialized' }
     // Start loading options as early as possible
     const optionLoadPromises = this.initOptions(this.options.storageAdapter)
+    const appConfigLoadPromise = this.loadAppConfig({
+      url: this.options.configServiceUrl,
+      clientId: this.options.clientId,
+      appName: this.options.app.name,
+      appVersion: this.options.app.version,
+      branch: this.options.app.buildBranch,
+      buildNumber: this.options.app.buildNumber
+    })
 
     // Create a copy of resource options for the lookup UI component
     // this doesn't get reloaded from the storage adapter because
@@ -405,7 +417,8 @@ if you want to create a different configuration of a UI controller.
     // Inject HTML code of a plugin. Should go in reverse order.
     document.body.classList.add('alpheios')
 
-    await Promise.all(optionLoadPromises)
+    const [appConfig, ...options] = await Promise.all([appConfigLoadPromise, ...optionLoadPromises])
+    this.appConfig = appConfig
 
     // All options has been loaded after this point
 
@@ -461,11 +474,12 @@ if you want to create a different configuration of a UI controller.
     this.api.app = {
       name: this.options.app.name, // A name of a host application (embed lib or webextension)
       version: this.options.app.version, // An version of a host application (embed lib or webextension)
-      buildNumber: this.options.app.buildNumber, // A build number of a host application
+      buildName: this.options.app.buildName, // A build number of a host application
       clientId: this.options.clientId, // alpheios api client identifier
       libName: UIController.libName, // A name of the components library
       libVersion: UIController.libVersion, // A version of the components library
-      libBuildNumber: BUILD_NUMBER, // A build number of components that will be injected by Webpack
+      libBuildName: BUILD_NAME, // A name of a build of a components library that will be injected by Webpack
+      config: this.appConfig,
       platform: this.platform,
       mode: this.options.mode, // Mode of an application: `production` or `development`
       defaultTab: this.tabs.DEFAULT, // A name of a default tab (a string)
@@ -893,6 +907,36 @@ if you want to create a different configuration of a UI controller.
     this.resourceOptions = new Options(this.resourceOptionsDefaults, new StorageAdapter(this.resourceOptionsDefaults.domain, authData))
     this.uiOptions = new Options(this.uiOptionsDefaults, new StorageAdapter(this.uiOptionsDefaults.domain, authData))
     return [this.featureOptions.load(), this.resourceOptions.load(), this.uiOptions.load()]
+  }
+
+  /**
+   * Loads an application wide configuration file in a JSON format.
+   *
+   * @param {string} url - A URL of an app config server.
+   * @param {string} clientId - A client ID.
+   * @param {string} appName - An application name, such as "Alpheios Reading Tools".
+   * @param {string} appVersion - An application version, following a semver specification.
+   * @param {string} branch - A name of a git branch that was used to build the code.
+   * @param {string} buildNumber - A build number in a YYYYMMDDCCC format.
+   *        See `node-build` package for a generator function.
+   * @returns {Promise<object> | Promise<null>} - A promise that is resolved with an app config in a JSON format
+   *          or is resolved with a `null` value if a config retrieval failed.
+   */
+  async loadAppConfig ({ url, clientId, appName, appVersion, branch, buildNumber } = {}) {
+    if (!url) {
+      throw new Error('An app config server URL is missing')
+    }
+    try {
+      const configUrl = `${url}?clientId=${encodeURIComponent(clientId)}&appName=${encodeURIComponent(appName)}` +
+        `&appVersion=${encodeURIComponent(appVersion)}&buildBranch=${encodeURIComponent(branch)}` +
+        `&buildNumber=${encodeURIComponent(buildNumber)}`
+      const request = new Request(configUrl)
+      const response = await fetch(request)
+      return response.json()
+    } catch (err) {
+      console.error(`Unable to retrieve an app configuration from ${url}: ${err.message}`)
+      return null
+    }
   }
 
   async initUserDataManager (isAuthenticated) {

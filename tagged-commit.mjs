@@ -1,12 +1,13 @@
 import pkg from './lerna.json'
-import generateBuildNumber from './packages/components/node_modules/alpheios-node-build/dist/support/build-number.mjs'
+import generateBuildInfo from './packages/components/node_modules/alpheios-node-build/dist/support/build-info.mjs'
 import { execFileSync, execSync } from 'child_process'
 
-const build = generateBuildNumber()
-console.log(`Starting a ${build} commit`)
+const buildDT = Date.now()
+const buildInfo = generateBuildInfo(buildDT)
+console.log(`Starting a ${buildInfo.name} commit`)
 
 const baseVersion = pkg.version.split('-')[0]
-const version = `${baseVersion}-${build}`
+const version = `${baseVersion}-${buildInfo.name}`
 console.log(`Setting a package version to ${version}`)
 let output
 try {
@@ -18,7 +19,7 @@ try {
 
 console.log('Rebuilding a components library. This may take a while')
 try {
-  output = execSync(`cd packages/components && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs --module=webpack --mode=all --preset=vue --externalConfig=config.mjs --buildNumber=${build}`, { encoding: 'utf8' })
+  output = execSync(`cd packages/components && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs --module=webpack --mode=all --preset=vue --externalConfig=config.mjs --buildTime=${buildDT}`, { encoding: 'utf8' })
 } catch (error) {
   console.error('Build process failed:', error)
   process.exit(2)
@@ -33,15 +34,15 @@ try {
   process.exit(3)
 }
 try {
-  output = execFileSync('git', ['commit', '-m', `Build ${build}`], { encoding: 'utf8' })
+  output = execFileSync('git', ['commit', '-m', `Build ${buildInfo.name}`], { encoding: 'utf8' })
 } catch (error) {
   console.error('Commit process failed:', error)
   process.exit(4)
 }
 
-console.log(`Tagging with ${build}`)
+console.log(`Tagging with ${buildInfo.name}`)
 try {
-  output = execSync(`git tag ${build}`, { encoding: 'utf8' })
+  output = execSync(`git tag ${buildInfo.name}`, { encoding: 'utf8' })
 } catch (error) {
   console.error('Tagging failed:', error)
   process.exit(5)

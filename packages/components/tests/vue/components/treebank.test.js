@@ -30,7 +30,8 @@ describe('treebank.test.js', () => {
     api = {
       settings: {
         experimentalResetTreebankURL: false
-      }
+      },
+      app: BaseTestHelp.appAPI()
     }
 
     BaseTestHelp.lexisModule(store, api)
