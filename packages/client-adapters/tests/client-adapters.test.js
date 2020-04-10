@@ -21,7 +21,7 @@ describe('client-adapters.test.js', () => {
   afterAll(() => {
     jest.clearAllMocks()
   })
-/*
+
   it('1 ClientAdapters - morphology executes init and returns object with tufts and alpheiosTreebank', () => {
     jest.spyOn(ClientAdapters, 'init')
 
@@ -355,8 +355,6 @@ describe('client-adapters.test.js', () => {
       i++
     }
   })
-
-  */
 
   it('19 ClientAdapters - autocompleteWords - getWords returns array words variants - grc', async () => {
     ClientAdapters.init()
