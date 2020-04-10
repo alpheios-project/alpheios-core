@@ -3464,6 +3464,56 @@ p.alpheios-word-usage-filter-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-content .alpheios-input-group input.alpheios-input,
+.alpheios-content .alpheios-input-group input.alpheios-input:focus {
+  width: 100%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  height: 40px;
+  min-width: 0;
+  border-color: var(--alpheios-lookup-input-border-color);
+}
+.alpheios-content .alpheios-input-group input.alpheios-input.alpheios-rtl,
+.alpheios-content .alpheios-input-group input.alpheios-input:focus.alpheios-rtl {
+  direction: rtl;
+  text-align: right;
+}
+.alpheios-input-group {
+  position: relative;
+}
+.alpheios-input-group input.alpheios-input {
+  position: relative;
+  z-index: 10;
+}
+.alpheios-input-group .alpheios-input-autocomplete {
+  position: absolute;
+  width: 100%;
+  border: 1px solid var(--alpheios-lookup-input-border-color);
+  background: #fff;
+  /* border-top: 0; */
+  top: 32px;
+  z-index: 15;
+  box-sizing: border-box;
+  padding: 0 0 10px;
+}
+.alpheios-input-group .alpheios-input-autocomplete .alpheios-input-autocomplete-item {
+  padding: 5px 10px;
+}
+.alpheios-input-autocomplete-item {
+  display: block;
+  cursor: pointer;
+}
+.alpheios-input-autocomplete-item:hover {
+  background: var(--alpheios-color-bright-hover);
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
 .alpheios-lookup__form {
   text-align: left;
   display: flex;
@@ -3505,20 +3555,6 @@ span.alpheios-lookup__lang-change:hover {
 }
 .alpheios-lookup__search-control {
   display: flex;
-}
-.alpheios-lookup__search-control input.alpheios-input,
-.alpheios-lookup__search-control input.alpheios-input:focus {
-  width: 70%;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  height: 40px;
-  min-width: 0;
-  border-color: var(--alpheios-lookup-input-border-color);
-}
-.alpheios-lookup__search-control input.alpheios-input.alpheios-rtl,
-.alpheios-lookup__search-control input.alpheios-input:focus.alpheios-rtl {
-  direction: rtl;
-  text-align: right;
 }
 .alpheios-lookup__search-control button {
   border-top-left-radius: 0;

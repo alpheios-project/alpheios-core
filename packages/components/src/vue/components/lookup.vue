@@ -17,17 +17,13 @@
         </span>
 
         <div class="alpheios-lookup__search-control">
-          <input
-              autocapitalize="off"
-              autocorrect="off"
-              @keyup.enter="lookup"
-              @keyup="checkLookupKeyPress"
-              class="alpheios-input"
-             :class="{ 'alpheios-rtl': directionRtl}"
-              type="text"
-              v-model="lookuptext"
-              id="alpheios-lookup-form-input"
-          >
+          <input-autocomplete
+              :lang = "getLookupLanguage()"
+              :clearValue = "clearLookupText"
+              :useBetaCodes = "useBetaCodes"
+              id="alpheios-lookup-input"
+              @keyPressEnter = "lookup"
+          />
           <button
               @click.stop="lookup"
               class="alpheios-button-primary"
@@ -65,8 +61,8 @@
 </template>
 <script>
 import TextSelector from '@/lib/selection/text-selector'
-import GreekInput from '@/lib/utility/greek-input.js'
 import HelpIcon from '@/images/inline-icons/help-icon.svg'
+import GreekInput from '@/lib/utility/greek-input.js'
 
 import { LanguageModelFactory, Constants } from 'alpheios-data-models'
 import LookupIcon from '@/images/inline-icons/lookup.svg'
@@ -74,7 +70,7 @@ import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 import Logger from '@/lib/log/logger'
 
 import Setting from './setting.vue'
-import { ClientAdapters } from 'alpheios-client-adapters'
+import InputAutocomplete from '@/vue/components/form-components/input-autocomplete.vue'
 
 export default {
   name: 'Lookup',
@@ -84,7 +80,8 @@ export default {
   components: {
     alphSetting: Setting,
     lookupIcon: LookupIcon,
-    helpIcon: HelpIcon
+    helpIcon: HelpIcon,
+    inputAutocomplete: InputAutocomplete
   },
   logger: Logger.getInstance(),
   data () {
@@ -94,7 +91,8 @@ export default {
       // The following variable is used to signal that language options has been updated
       langUpdated: Date.now(),
       useBetaCodes: false,
-      showBetaCodesInfo: false
+      showBetaCodesInfo: false,
+      clearLookupText: 0
     }
   },
   props: {
@@ -124,10 +122,6 @@ export default {
     lookupLangName () {
       return this.app.getLanguageName(this.getLookupLanguage()).name
     },
-    directionRtl () {
-      const model = LanguageModelFactory.getLanguageModelFromCode(this.getLookupLanguage())
-      return model.direction === Constants.LANG_DIR_RTL
-    },
     showUseBetaCodes () {
       return this.getLookupLanguage() === GreekInput.langCode
     }
@@ -139,7 +133,7 @@ export default {
 
     '$store.state.app.morphDataReady' (morphDataReady) {
       if (morphDataReady && this.app.hasMorphData()) {
-        this.lookuptext = ''
+        this.clearLookupText = this.clearLookupText + 1
       }
     }
   },
@@ -154,8 +148,8 @@ export default {
       this.$emit('toggleLangSelector', true)
     },
 
-    lookup () {
-      this.lookuptext = this.lookuptext.trim()
+    lookup (lookuptext) {
+      this.lookuptext = lookuptext.trim()
       if (this.lookuptext.length === 0) {
         return null
       }
@@ -208,33 +202,9 @@ export default {
       this.langUpdated = Date.now()
     },
 
-    updateBetaCodes (event) {
-      if (this.useBetaCodes && this.getLookupLanguage() === GreekInput.langCode) {
-        this.lookuptext = GreekInput.change(this.lookuptext)
-      }
-    },
-
     toggleBetaCodesInfo () {
       this.showBetaCodesInfo = !this.showBetaCodesInfo
       this.$emit('toggleBetaCodesInfo', this.showBetaCodesInfo)
-    },
-
-    async checkLookupKeyPress (event) {
-      if (event.keyCode === 13) {
-        return this.lookup()
-      } 
-
-      this.updateBetaCodes(event)
-      this.lookuptext = this.lookuptext.trim()
-      if (this.lookuptext.length > 2) {
-        let res = await ClientAdapters.autocompleteWords.logeion({
-          method: 'getWords',
-          params: {
-            text: this.lookuptext,
-            lang: this.getLookupLanguage()
-          }
-        })
-      }
     }
   }
 }
@@ -296,21 +266,6 @@ export default {
     display: flex;
 
     // Double selector is used to prevent style leaks from host pages
-
-    input.alpheios-input,
-    input.alpheios-input:focus
-    {
-      width: 70%;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      height: $fieldsetHeight;
-      min-width: 0;
-      border-color: var(--alpheios-lookup-input-border-color);
-      &.alpheios-rtl {
-        direction: rtl;
-        text-align: right;
-      }
-    }
 
     button {
       border-top-left-radius: 0;
