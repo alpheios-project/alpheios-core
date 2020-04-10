@@ -915,19 +915,24 @@ if you want to create a different configuration of a UI controller.
    * @param {string} branch - A name of a git branch that was used to build the code.
    * @param {string} buildNumber - A build number in a YYYYMMDDCCC format.
    *        See `node-build` package for a generator function.
-   * @returns {Promise<any>} - A promise that is resolved with an app config in a JSON format
-   *          or is rejected with an error if a config retrieval failed.
+   * @returns {Promise<object> | Promise<null>} - A promise that is resolved with an app config in a JSON format
+   *          or is resolved with a `null` value if a config retrieval failed.
    */
   async loadAppConfig ({ url, clientId, appName, appVersion, branch, buildNumber } = {}) {
     if (!url) {
       throw new Error('An app config server URL is missing')
     }
-    const configUrl = `${url}?clientId=${encodeURIComponent(clientId)}&appName=${encodeURIComponent(appName)}` +
-      `&appVersion=${encodeURIComponent(appVersion)}&buildBranch=${encodeURIComponent(branch)}` +
-      `&buildNumber=${encodeURIComponent(buildNumber)}`
-    const request = new Request(configUrl)
-    const response = await fetch(request)
-    return response.json()
+    try {
+      const configUrl = `${url}?clientId=${encodeURIComponent(clientId)}&appName=${encodeURIComponent(appName)}` +
+        `&appVersion=${encodeURIComponent(appVersion)}&buildBranch=${encodeURIComponent(branch)}` +
+        `&buildNumber=${encodeURIComponent(buildNumber)}`
+      const request = new Request(configUrl)
+      const response = await fetch(request)
+      return response.json()
+    } catch (err) {
+      console.error(`Unable to retrieve an app configuration from ${url}: ${err.message}`)
+      return null
+    }
   }
 
   async initUserDataManager (isAuthenticated) {

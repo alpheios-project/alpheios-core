@@ -9760,7 +9760,7 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
           this.addError(this.l10n.messages['MORPH_TREEBANK_UNSUPPORTED_LANGUAGE'].get(languageID))
           return
         }
-        const mapper = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_3__["default"](languageModel, 'arethusa')
+        let mapper = new _clAdapters_transformers_import_morph_data_js__WEBPACK_IMPORTED_MODULE_3__["default"](languageModel, 'arethusa') // eslint-disable-line prefer-const
         mapper.setPropertyParser(function (propertyName, propertyValue, inputElem) {
           if (propertyName === 'pers') {
             propertyValue = propertyValue.replace('first person', alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Constants"].ORD_1ST)
@@ -10035,7 +10035,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-messaging */ "alpheios-messaging");
 /* harmony import */ var alpheios_messaging__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__);
-/* global DEVELOPMENT_MODE_BUILD */
 /* eslint-disable no-unused-vars */
 
 
@@ -10046,15 +10045,17 @@ const CedictCharacterForms = {
   TRADITIONAL: 'traditional'
 }
 
-let cedictConfig = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationConfig"]
-if (true) { cedictConfig = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationDevConfig"] }
-
 const msgServiceName = 'AdaptersLexisService'
 
 class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_0__["default"] {
   constructor (config = {}) {
     super()
     this.config = config
+    this.cedictConfig = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["CedictDestinationConfig"]
+    if (!this.config.serviceUrl) {
+      throw new Error('An obligatory serviceUrl parameter is missing')
+    }
+    this.cedictConfig.targetURL = this.config.serviceUrl
 
     /*
     AlpheiosChineseLocAdapter is created every time when a new lexical request for Chinese data comes in.
@@ -10062,7 +10063,7 @@ class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPA
     instance of the service that will be created once and reused across consecutive constructor invocations.
      */
     if (!alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].hasService(msgServiceName)) {
-      alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].createService(msgServiceName, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["WindowIframeDestination"](cedictConfig))
+      alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].createService(msgServiceName, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["WindowIframeDestination"](this.cedictConfig))
     }
     this._messagingService = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].getService(msgServiceName)
   }
@@ -10099,7 +10100,7 @@ class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPA
       }
       let response
       try {
-        response = await this._messagingService.sendRequestTo(cedictConfig.name, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["RequestMessage"](requestBody))
+        response = await this._messagingService.sendRequestTo(this.cedictConfig.name, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["RequestMessage"](requestBody))
       } catch (response) {
         this.addRemoteError(response.errorCode, response.body.message)
         return
@@ -10127,7 +10128,7 @@ class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPA
       }
       let response
       try {
-        response = await this._messagingService.sendRequestTo(cedictConfig.name, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["RequestMessage"](requestBody), timeout)
+        response = await this._messagingService.sendRequestTo(this.cedictConfig.name, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["RequestMessage"](requestBody), timeout)
       } catch (response) {
         this.addRemoteError(response.errorCode, response.body.message)
       }
@@ -11763,7 +11764,9 @@ class ClientAdapters {
     const localChineseAdapter = new _clAdapters_adapters_chineseloc_adapter__WEBPACK_IMPORTED_MODULE_1__["default"]({
       category: 'morphology',
       adapterName: 'chineseloc',
-      method: options.method
+      method: options.method,
+      // A URL of a CEDICT service
+      serviceUrl: options.serviceUrl
     })
 
     if (options.method === 'getHomonym') {

@@ -1,10 +1,8 @@
-/* global DEVELOPMENT_MODE_BUILD */
 /* eslint-disable no-unused-vars */
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 import { ChineseLanguageModel, Lemma, Lexeme, Homonym, Feature, Definition } from 'alpheios-data-models'
 import {
-  MessagingService, WindowIframeDestination as Destination, CedictDestinationConfig as CedictProdConfig,
-  CedictDestinationDevConfig as CedictDevConfig, RequestMessage
+  MessagingService, WindowIframeDestination as Destination, CedictDestinationConfig as CedictConfig, RequestMessage
 } from 'alpheios-messaging'
 
 export const CedictCharacterForms = {
@@ -12,15 +10,17 @@ export const CedictCharacterForms = {
   TRADITIONAL: 'traditional'
 }
 
-let cedictConfig = CedictProdConfig
-if (DEVELOPMENT_MODE_BUILD) { cedictConfig = CedictDevConfig }
-
 const msgServiceName = 'AdaptersLexisService'
 
 class AlpheiosChineseLocAdapter extends BaseAdapter {
   constructor (config = {}) {
     super()
     this.config = config
+    this.cedictConfig = CedictConfig
+    if (!this.config.serviceUrl) {
+      throw new Error('An obligatory serviceUrl parameter is missing')
+    }
+    this.cedictConfig.targetURL = this.config.serviceUrl
 
     /*
     AlpheiosChineseLocAdapter is created every time when a new lexical request for Chinese data comes in.
@@ -28,7 +28,7 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
     instance of the service that will be created once and reused across consecutive constructor invocations.
      */
     if (!MessagingService.hasService(msgServiceName)) {
-      MessagingService.createService(msgServiceName, new Destination(cedictConfig))
+      MessagingService.createService(msgServiceName, new Destination(this.cedictConfig))
     }
     this._messagingService = MessagingService.getService(msgServiceName)
   }
@@ -65,7 +65,7 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
       }
       let response
       try {
-        response = await this._messagingService.sendRequestTo(cedictConfig.name, new RequestMessage(requestBody))
+        response = await this._messagingService.sendRequestTo(this.cedictConfig.name, new RequestMessage(requestBody))
       } catch (response) {
         this.addRemoteError(response.errorCode, response.body.message)
         return
@@ -93,7 +93,7 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
       }
       let response
       try {
-        response = await this._messagingService.sendRequestTo(cedictConfig.name, new RequestMessage(requestBody), timeout)
+        response = await this._messagingService.sendRequestTo(this.cedictConfig.name, new RequestMessage(requestBody), timeout)
       } catch (response) {
         this.addRemoteError(response.errorCode, response.body.message)
       }

@@ -9,6 +9,8 @@ import { Constants } from 'alpheios-data-models'
 import { CedictFixture } from 'alpheios-fixtures'
 
 describe('chineseloc.test.js', () => {
+  const serviceUrl = 'https://some.url'
+
   afterEach(() => {
     jest.resetModules()
   })
@@ -21,7 +23,8 @@ describe('chineseloc.test.js', () => {
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
       adapterName: 'chineseloc',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      serviceUrl
     })
 
     expect(adapter.errors).toEqual([])
@@ -34,7 +37,8 @@ describe('chineseloc.test.js', () => {
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
       adapterName: 'chineseloc',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      serviceUrl
     })
     // Stub the messaging service method
     adapter._messagingService.sendRequestTo = CedictFixture.lexisCedictRequest
@@ -48,7 +52,8 @@ describe('chineseloc.test.js', () => {
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
       adapterName: 'chineseloc',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      serviceUrl
     })
     // Stub the messaging service method
     adapter._messagingService.sendRequestTo = CedictFixture.lexisCedictRequest
@@ -82,7 +87,8 @@ describe('chineseloc.test.js', () => {
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
       adapterName: 'chineseloc',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      serviceUrl
     })
     // Stub the messaging service method
     adapter._messagingService.sendRequestTo = CedictFixture.lexisCedictRequest
@@ -123,7 +129,8 @@ describe('chineseloc.test.js', () => {
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
       adapterName: 'chineseloc',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      serviceUrl
     })
     const sendRequestToMock = jest.fn((name, request) => ({ body: {} }))
     // Stub the messaging service method
@@ -146,7 +153,8 @@ describe('chineseloc.test.js', () => {
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
       adapterName: 'chineseloc',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      serviceUrl
     })
     // Stub the messaging service method
     adapter._messagingService.sendRequestTo = CedictFixture.lexisCedictRequest
@@ -161,7 +169,8 @@ describe('chineseloc.test.js', () => {
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
       adapterName: 'chineseloc',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      serviceUrl
     })
     // Stub the messaging service method
     adapter._messagingService.sendRequestTo = CedictFixture.lexisCedictRequest
@@ -175,7 +184,8 @@ describe('chineseloc.test.js', () => {
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
       adapterName: 'chineseloc',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      serviceUrl
     })
     // Stub the messaging service method
     adapter._messagingService.sendRequestTo = CedictFixture.lexisCedictRequest
@@ -213,7 +223,8 @@ describe('chineseloc.test.js', () => {
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
       adapterName: 'chineseloc',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      serviceUrl
     })
     // Stub the messaging service method
     adapter._messagingService.sendRequestTo = CedictFixture.lexisCedictRequest
@@ -245,7 +256,8 @@ describe('chineseloc.test.js', () => {
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
       adapterName: 'chineseloc',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      serviceUrl
     })
     // Stub the messaging service method
     adapter._messagingService.sendRequestTo = CedictFixture.lexisCedictRequest
@@ -278,7 +290,8 @@ describe('chineseloc.test.js', () => {
     let adapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
       adapterName: 'chineseloc',
-      method: 'getHomonym'
+      method: 'getHomonym',
+      serviceUrl
     })
 
     const homonym = await adapter.getHomonym('FF')

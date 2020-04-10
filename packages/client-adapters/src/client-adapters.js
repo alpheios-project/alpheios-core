@@ -150,7 +150,9 @@ class ClientAdapters {
     const localChineseAdapter = new AlpheiosChineseLocAdapter({
       category: 'morphology',
       adapterName: 'chineseloc',
-      method: options.method
+      method: options.method,
+      // A URL of a CEDICT service
+      serviceUrl: options.serviceUrl
     })
 
     if (options.method === 'getHomonym') {
