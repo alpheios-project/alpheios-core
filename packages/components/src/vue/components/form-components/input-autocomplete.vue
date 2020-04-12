@@ -23,6 +23,7 @@ import GreekInput from '@/lib/utility/greek-input.js'
 
 export default {
   name: 'InputAutocomplete',
+  inject: ['settings'],
   props: {
     lang: {
       type: String,
@@ -57,6 +58,9 @@ export default {
     directionRtl () {
       const model = LanguageModelFactory.getLanguageModelFromCode(this.lang)
       return model.direction === Constants.LANG_DIR_RTL
+    },
+    autocompleteEnabled () {
+      return this.settings.getFeatureOptions().items.enableLogeionAutoComplete.currentValue
     }
   },
   methods: {
@@ -81,22 +85,22 @@ export default {
     },
 
     async getAutocompleteWords () {
-      this.valueText = this.valueText.trim()
-      this.clearWords()
-      if (this.valueText.length > 2) {
+      if (this.autocompleteEnabled) {
+        this.valueText = this.valueText.trim()
+        this.clearWords()
+        if (this.valueText.length > 2) {
 
-        const res = await ClientAdapters.autocompleteWords.logeion({
-          method: 'getWords',
-          params: {
-            text: this.valueText,
-            lang: this.lang
+          const res = await ClientAdapters.autocompleteWords.logeion({
+            method: 'getWords',
+            params: {
+              text: this.valueText,
+              lang: this.lang
+            }
+          })
+
+          if (res.result && res.result.length > 0) {
+            this.words = res.result
           }
-        })
-
-        if (res.result && res.result.length > 0) {
-          this.words = res.result
-
-          console.info('autocomplete words - ', this.words)
         }
       }
     },

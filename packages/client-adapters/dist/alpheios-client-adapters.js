@@ -8583,7 +8583,7 @@ exports.callbackify = callbackify;
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* @license
 Papa Parse
-v5.1.1
+v5.2.0
 https://github.com/mholt/PapaParse
 License: MIT
 */
@@ -9217,7 +9217,7 @@ License: MIT
 				xhr.onerror = bindFunction(this._chunkError, this);
 			}
 
-			xhr.open('GET', this._input, !IS_WORKER);
+			xhr.open(this._config.downloadRequestBody ? 'POST' : 'GET', this._input, !IS_WORKER);
 			// Headers can only be set when once the request state is OPENED
 			if (this._config.downloadRequestHeaders)
 			{
@@ -9236,7 +9236,7 @@ License: MIT
 			}
 
 			try {
-				xhr.send();
+				xhr.send(this._config.downloadRequestBody);
 			}
 			catch (err) {
 				this._chunkError(err.message);
@@ -9581,7 +9581,7 @@ License: MIT
 		// One goal is to minimize the use of regular expressions...
 		var MAX_FLOAT = Math.pow(2, 53);
 		var MIN_FLOAT = -MAX_FLOAT;
-		var FLOAT = /^\s*-?(\d*\.?\d+|\d+\.?\d*)(e[-+]?\d+)?\s*$/i;
+		var FLOAT = /^\s*-?(\d+\.?|\.\d+|\d+\.\d+)(e[-+]?\d+)?\s*$/;
 		var ISO_DATE = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))/;
 		var self = this;
 		var _stepCounter = 0;	// Number of times step was called (number of rows parsed)
@@ -9690,7 +9690,7 @@ License: MIT
 			} else {
 				// Bugfix: #636 In case the processing hasn't halted yet
 				// wait for it to halt in order to resume
-				setTimeout(this.resume, 3);
+				setTimeout(self.resume, 3);
 			}
 		};
 

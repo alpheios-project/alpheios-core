@@ -1,6 +1,7 @@
 <template>
   <div :class="classes" v-if="dataModel && Object.keys(dataModel).length > 0  && !dataModel.hidden">
-    <label class="alpheios-setting__label" v-show="showTitle">{{ labelText}}</label>
+    <label class="alpheios-setting__label" v-show="showTitle" v-if="labelText">{{ labelText}}</label>
+    <label class="alpheios-setting__label" v-show="showTitle" v-if="labelHtml" v-html="labelHtml"></label>
 
     <multiselect
         class="alpheios-setting__control"
@@ -127,6 +128,12 @@ export default {
         return this.l10n.getText(this.dataModel.labelL10n)
       }
       return this.dataModel.labelText
+    },
+    labelHtml() {
+      if (this.dataModel.labelL10n) {
+        return this.l10n.getText(this.dataModel.labelL10n)
+      }
+      return this.dataModel.labelHtml
     }
   },
   methods: {

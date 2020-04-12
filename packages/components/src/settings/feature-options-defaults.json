@@ -217,6 +217,21 @@
       "defaultValue": "docs-editor-container",
       "labelText": "Google Docs Container Id",
       "text": true
+    },
+    "enableLogeionAutoComplete": {
+      "defaultValue": true,
+      "labelHtml": "Enable Autocomplete with <a href=\"https://logeion.uchicago.edu\" target=\"_blank\">Logeion</a>",
+      "boolean": true,
+      "values": [
+        {
+          "value": true,
+          "text": "Yes"
+        },
+        {
+          "value": false,
+          "text": "No"
+        }
+      ]
     }
   }
 }
