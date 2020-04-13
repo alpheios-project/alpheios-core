@@ -30,6 +30,7 @@ describe('setting.test.js', () => {
     expect(cmp.isVueInstance()).toBeTruthy()
     expect(cmp.vm.classes).toEqual([])
     expect(cmp.vm.showLabelText).toBeTruthy()
+    expect(cmp.vm.showCheckboxTitle).toBeFalsy()
   })
 
   it('2 Setting - renders a vue instance (with data)', () => {
@@ -140,6 +141,24 @@ describe('setting.test.js', () => {
 
     expect(cmp.vm.selected).toEqual('footext2')
     expect(cmp.find('select option:checked').text()).toEqual('footext2')
+  })
+
+  it('10 Setting - setting without label and with checkbox label - lookup', () => {
+    let cmp = mount(Setting, {
+      propsData: {
+        data: {
+          name: 'fooname',
+          labelHtml: 'foolabel',
+          boolean: true
+        },
+        showLabelText: false,
+        showCheckboxTitle: true
+      }
+    })
+
+    console.info(cmp.html())
+    expect(cmp.find('.alpheios-setting__label').isVisible()).toBeFalsy()
+    expect(cmp.find('.alpheios-checkbox-block  label').isVisible()).toBeTruthy()
   })
 
 })
