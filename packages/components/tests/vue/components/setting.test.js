@@ -29,7 +29,7 @@ describe('setting.test.js', () => {
     })
     expect(cmp.isVueInstance()).toBeTruthy()
     expect(cmp.vm.classes).toEqual([])
-    expect(cmp.vm.showTitle).toBeTruthy()
+    expect(cmp.vm.showLabelText).toBeTruthy()
   })
 
   it('2 Setting - renders a vue instance (with data)', () => {
