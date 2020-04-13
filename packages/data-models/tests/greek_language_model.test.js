@@ -137,4 +137,12 @@ describe('greek_language_model.j', () => {
   it('13 GreekLanguageModel - normalizes right quotation to koronis', () => {
     expect(greekModel.normalizeWord('ἀλλ’')).toEqual('ἀλλ\u1fbd')
   })
+
+  it('14 GreekLanguageModel - checkCorrespond defines βουλά in unicode as greek', () => {
+    expect(greekModel.checkCorrespond('βουλά')).toBeTruthy()
+  })
+
+  it('15 GreekLanguageModel - checkCorrespond defines mare as not greek', () => {
+    expect(greekModel.checkCorrespond('beatum')).toBeFalsy()
+  })
 })
