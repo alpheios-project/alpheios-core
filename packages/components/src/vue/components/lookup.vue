@@ -21,6 +21,7 @@
               :lang = "getLookupLanguage()"
               :clearValue = "clearLookupText"
               :useBetaCodes = "useBetaCodes"
+              :enableLogeionAutoComplete = "$options.enableLogeionAutoComplete.currentValue"
               id="alpheios-lookup-input"
               @keyPressEnter = "lookup"
           />
@@ -53,8 +54,17 @@
     <alph-setting
         :classes="['alpheios-panel__options-item', 'alpheios-lookup__form-element', 'alpheios-lookup__lang-control']"
         :data="this.$options.lookupLanguage"
-        @change="settingChange"
+        @change="settingChangeLL"
         v-show="showLangSelector"
+    >
+    </alph-setting>
+    <alph-setting
+        v-if="showEnableAutocomplete"
+        class="alpheios-panel__options-item alpheios-lookup__form-element alpheios-lookup__autocomplete"
+        :data="this.$options.enableLogeionAutoComplete"
+        :show-label-text = "enableLogeionAutoCompleteProps.showLabelText"
+        :show-checkbox-title = "enableLogeionAutoCompleteProps.showCheckboxTitle"
+        @change="settingChangeELA"
     >
     </alph-setting>
   </div>
@@ -63,6 +73,7 @@
 import TextSelector from '@/lib/selection/text-selector'
 import HelpIcon from '@/images/inline-icons/help-icon.svg'
 import GreekInput from '@/lib/utility/greek-input.js'
+import Options from '@/lib/options/options.js'
 
 import { LanguageModelFactory, Constants } from 'alpheios-data-models'
 import LookupIcon from '@/images/inline-icons/lookup.svg'
@@ -92,7 +103,11 @@ export default {
       langUpdated: Date.now(),
       useBetaCodes: false,
       showBetaCodesInfo: false,
-      clearLookupText: 0
+      clearLookupText: 0,
+      enableLogeionAutoCompleteProps: {
+        showLabelText: false,
+        showCheckboxTitle: true
+      }
     }
   },
   props: {
@@ -116,6 +131,7 @@ export default {
   },
   created: function () {
     this.$options.lookupLanguage = this.settings.getFeatureOptions().items.lookupLanguage
+    this.$options.enableLogeionAutoComplete = this.settings.getFeatureOptions().items.enableLogeionAutoComplete
   },
 
   computed: {
@@ -124,6 +140,11 @@ export default {
     },
     showUseBetaCodes () {
       return this.getLookupLanguage() === GreekInput.langCode
+    },
+    showEnableAutocomplete () {
+      const check = this.$options.enableLogeionAutoComplete.limitByLangs.includes(this.getLookupLanguage())
+      this.$emit('toggleEnableAutocompleteCheck', check)
+      return check
     }
   },
   watch: {
@@ -199,10 +220,16 @@ export default {
       }
     },
 
-    settingChange (name, value) {
+    settingChangeLL (name, value) {
       this.$options.lookupLanguage.setTextValue(value)
       this.$store.commit('app/setSelectedLookupLang', this.$options.lookupLanguage.currentValue)
       this.langUpdated = Date.now()
+    },
+
+    settingChangeELA (name, value) {
+      let keyinfo = Options.parseKey(name)
+      this.app.featureOptionChange(keyinfo.name, value)
+      this.$options.enableLogeionAutoComplete.setValue(value)
     },
 
     toggleBetaCodesInfo () {
@@ -351,6 +378,13 @@ export default {
     span {
       display: inline-block;
       padding-right: 20px;
+    }
+  }
+
+  .alpheios-lookup__autocomplete {
+    margin-top: 5px;
+    div.alpheios-checkbox-block {
+      max-width: none;
     }
   }
 </style>

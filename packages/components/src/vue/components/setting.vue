@@ -1,7 +1,7 @@
 <template>
   <div :class="classes" v-if="dataModel && Object.keys(dataModel).length > 0  && !dataModel.hidden">
-    <label class="alpheios-setting__label" v-show="showTitle" v-if="labelText">{{ labelText}}</label>
-    <label class="alpheios-setting__label" v-show="showTitle" v-if="labelHtml" v-html="labelHtml"></label>
+    <label class="alpheios-setting__label" v-show="showLabelText" v-if="labelText">{{ labelText}}</label>
+    <label class="alpheios-setting__label" v-show="showLabelText" v-if="labelHtml" v-html="labelHtml"></label>
 
     <multiselect
         class="alpheios-setting__control"
@@ -37,7 +37,9 @@
 
     <div class="alpheios-checkbox-block alpheios-setting__control" v-if="dataModel.boolean">
       <input id="alpheios-checkbox-input" type="checkbox" v-model="selected">
-      <label @click="checkboxClick" for="checkbox">{{ checkboxLabel }}</label>
+      <label @click="checkboxClick" for="checkbox">{{ checkboxLabel }}
+        <span v-html="labelHtml" v-if="showCheckboxTitle"></span>
+      </label>
     </div>
 
     <select
@@ -69,7 +71,7 @@ export default {
       type: String,
       required: false
     },
-    showTitle: {
+    showLabelText: {
       type: Boolean,
       required: false,
       default: true
@@ -80,6 +82,11 @@ export default {
       default: function () {
         return []
       }
+    },
+    showCheckboxTitle: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   /*

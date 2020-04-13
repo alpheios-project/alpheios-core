@@ -37,6 +37,10 @@ export default {
       type: Boolean,
       default: false
     },
+    enableLogeionAutoComplete: {
+      type: Boolean,
+      default: false
+    },
     id: {
       type: String,
       required: true
@@ -52,15 +56,17 @@ export default {
     'clearValue' () {
       this.valueText = ''  
       this.clearWords()
+    },
+    'enableLogeionAutoComplete' (value) {
+      if (!value) { 
+        this.clearWords()
+      }
     }
   },
   computed: {
     directionRtl () {
       const model = LanguageModelFactory.getLanguageModelFromCode(this.lang)
       return model.direction === Constants.LANG_DIR_RTL
-    },
-    autocompleteEnabled () {
-      return this.settings.getFeatureOptions().items.enableLogeionAutoComplete.currentValue
     }
   },
   methods: {
@@ -85,7 +91,7 @@ export default {
     },
 
     async getAutocompleteWords () {
-      if (this.autocompleteEnabled) {
+      if (this.enableLogeionAutoComplete) {
         this.valueText = this.valueText.trim()
         this.clearWords()
         if (this.valueText.length > 2) {

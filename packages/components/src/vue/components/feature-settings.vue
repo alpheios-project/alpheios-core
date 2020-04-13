@@ -84,12 +84,6 @@
           @change="featureOptionChanged"
       >
       </setting>
-      <setting
-          class="alpheios-feature-options__item"
-          :data="featureOptions.items.enableLogeionAutoComplete"
-          @change="featureOptionChanged"
-      >
-      </setting>
     </fieldset>
   </div>
 </template>
