@@ -10986,6 +10986,7 @@ class AlpheiosLogeionAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_
     this.config = this.uploadConfig(config, _clAdapters_adapters_logeion_config_json__WEBPACK_IMPORTED_MODULE_0__)
     this.limit = parseInt(this.config.limit)
     this.available = this.config.availableLangs.includes(this.config.lang)
+    this.sourceData = config.sourceData
   }
 
   /**
@@ -10997,12 +10998,16 @@ class AlpheiosLogeionAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_
     try {
       const url = this.createFetchURL(text)
 
-      const wordsVariants = await this.fetch(url)
-
-      if (wordsVariants.words && Array.isArray(wordsVariants.words)) {
-        return this.filterAndLimitWords(wordsVariants.words)
+      if (this.sourceData) {
+        return this.sourceData
       } else {
-        return []
+        const wordsVariants = await this.fetch(url)
+
+        if (wordsVariants.words && Array.isArray(wordsVariants.words)) {
+          return this.filterAndLimitWords(wordsVariants.words)
+        } else {
+          return []
+        }
       }
     } catch (error) {
       this.addError(this.l10n.messages.LOGEION_FETCH_ERROR.get(error.message))
@@ -12083,7 +12088,8 @@ class ClientAdapters {
       method: options.method,
       clientId: options.clientId,
       limit: options.params.limit,
-      lang: options.params.lang
+      lang: options.params.lang,
+      sourceData: options.sourceData
     })
 
     if (localLogeionAdapter.available && options.method === 'getWords') {

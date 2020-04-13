@@ -13,6 +13,7 @@ class AlpheiosLogeionAdapter extends BaseAdapter {
     this.config = this.uploadConfig(config, DefaultConfig)
     this.limit = parseInt(this.config.limit)
     this.available = this.config.availableLangs.includes(this.config.lang)
+    this.sourceData = config.sourceData
   }
 
   /**
@@ -24,12 +25,16 @@ class AlpheiosLogeionAdapter extends BaseAdapter {
     try {
       const url = this.createFetchURL(text)
 
-      const wordsVariants = await this.fetch(url)
-
-      if (wordsVariants.words && Array.isArray(wordsVariants.words)) {
-        return this.filterAndLimitWords(wordsVariants.words)
+      if (this.sourceData) {
+        return this.sourceData
       } else {
-        return []
+        const wordsVariants = await this.fetch(url)
+
+        if (wordsVariants.words && Array.isArray(wordsVariants.words)) {
+          return this.filterAndLimitWords(wordsVariants.words)
+        } else {
+          return []
+        }
       }
     } catch (error) {
       this.addError(this.l10n.messages.LOGEION_FETCH_ERROR.get(error.message))

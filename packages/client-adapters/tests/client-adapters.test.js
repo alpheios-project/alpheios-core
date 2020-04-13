@@ -384,7 +384,8 @@ describe('client-adapters.test.js', () => {
       params: {
         text: 'mar',
         lang: 'lat',
-        limit: 15
+        limit: 15, 
+        sourceData: ['bar', 'par', 'tar']
       }
     })
 

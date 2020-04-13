@@ -229,7 +229,7 @@ describe('concordance.test.js', () => {
     expect(res6.provider).toBeDefined()
 
     expect(adapter.errors.length).toEqual(0)
-  })
+  }, 25000)
 
   it('5 AlpheiosConcordanceAdapter - getWordUsageExamples adds an error on any problem with fetching data to errors array', async () => {
     let adapter = new AlpheiosConcordanceAdapter({
