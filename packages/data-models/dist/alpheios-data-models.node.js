@@ -2592,7 +2592,7 @@ for the current node
     return matched
   }
 
-  static checkCorrespond (word) {
+  static isValidUnicode (word) {
     return _languages_greek_chars_js__WEBPACK_IMPORTED_MODULE_4__["default"].chars.some(char => word.includes(char))
   }
 }

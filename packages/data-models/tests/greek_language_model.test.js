@@ -138,11 +138,11 @@ describe('greek_language_model.j', () => {
     expect(greekModel.normalizeWord('ἀλλ’')).toEqual('ἀλλ\u1fbd')
   })
 
-  it('14 GreekLanguageModel - checkCorrespond defines βουλά in unicode as greek', () => {
-    expect(greekModel.checkCorrespond('βουλά')).toBeTruthy()
+  it('14 GreekLanguageModel - isValidUnicode defines βουλά in unicode as greek', () => {
+    expect(greekModel.isValidUnicode('βουλά')).toBeTruthy()
   })
 
-  it('15 GreekLanguageModel - checkCorrespond defines mare as not greek', () => {
-    expect(greekModel.checkCorrespond('beatum')).toBeFalsy()
+  it('15 GreekLanguageModel - isValidUnicode defines mare as not greek', () => {
+    expect(greekModel.isValidUnicode('beatum')).toBeFalsy()
   })
 })

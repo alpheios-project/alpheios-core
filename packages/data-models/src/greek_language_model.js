@@ -337,7 +337,7 @@ for the current node
     return matched
   }
 
-  static checkCorrespond (word) {
+  static isValidUnicode (word) {
     return GreekChars.chars.some(char => word.includes(char))
   }
 }

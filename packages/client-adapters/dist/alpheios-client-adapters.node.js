@@ -11034,14 +11034,14 @@ class AlpheiosLogeionAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_
     const otherModels = []
     this.config.availableLangs.forEach(lang => {
       const modelLang = alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageModelFromCode(lang)
-      if (lang !== this.config.lang && modelLang.checkCorrespond) {
+      if (lang !== this.config.lang && modelLang.isValidUnicode) {
         otherModels.push(modelLang)
       }
     })
 
     for (let i = 0; i < words.length; i++) {
-      if ((model.checkCorrespond && model.checkCorrespond(words[i])) ||
-          (!model.checkCorrespond && otherModels.every(modelLang => !modelLang.checkCorrespond(words[i])))) {
+      if ((model.isValidUnicode && model.isValidUnicode(words[i])) ||
+          (!model.isValidUnicode && otherModels.every(modelLang => !modelLang.isValidUnicode(words[i])))) {
         finalWords.push(words[i])
       }
 
@@ -12089,7 +12089,7 @@ class ClientAdapters {
       clientId: options.clientId,
       limit: options.params.limit,
       lang: options.params.lang,
-      sourceData: options.sourceData
+      sourceData: options.params.sourceData
     })
 
     if (localLogeionAdapter.available && options.method === 'getWords') {
