@@ -354,7 +354,7 @@ describe('client-adapters.test.js', () => {
       expect(resItem.source).toEqual(adapterConcordanceRes.result.wordUsageExamples[i].source)
       i++
     }
-  })
+  }, 25000)
 
   it('19 ClientAdapters - autocompleteWords - getWords returns array words variants - grc', async () => {
     ClientAdapters.init()
