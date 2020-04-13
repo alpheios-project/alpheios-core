@@ -3,7 +3,7 @@ import LanguageModelFactory from './language_model_factory.js'
 import * as Constants from './constants.js'
 import Feature from './feature.js'
 
-import GreekChars from '@/languages/greek-chars.js'
+import GreekChars from './languages/greek-chars.js'
 
 let typeFeatures = new Map() // eslint-disable-line prefer-const
 let typeFeaturesInitialized = false
@@ -338,6 +338,6 @@ for the current node
   }
 
   static checkCorrespond (word) {
-    return GreekChars.chars.some(char => word.includes(char)) 
+    return GreekChars.chars.some(char => word.includes(char))
   }
 }

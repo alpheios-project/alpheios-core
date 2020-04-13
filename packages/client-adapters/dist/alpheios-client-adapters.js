@@ -15777,6 +15777,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clAdapters_adapters_logeion_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @clAdapters/adapters/logeion/config.json */ "./adapters/logeion/config.json");
 var _clAdapters_adapters_logeion_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! @clAdapters/adapters/logeion/config.json */ "./adapters/logeion/config.json", 1);
 /* harmony import */ var _clAdapters_adapters_base_adapter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @clAdapters/adapters/base-adapter */ "./adapters/base-adapter.js");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
+/* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__);
+
+
 
 
 
@@ -15788,6 +15792,7 @@ class AlpheiosLogeionAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_
   constructor (config = {}) {
     super()
     this.config = this.uploadConfig(config, _clAdapters_adapters_logeion_config_json__WEBPACK_IMPORTED_MODULE_0__)
+    this.limit = parseInt(this.config.limit)
     this.available = this.config.availableLangs.includes(this.config.lang)
   }
 
@@ -15803,7 +15808,7 @@ class AlpheiosLogeionAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_
       const wordsVariants = await this.fetch(url)
 
       if (wordsVariants.words && Array.isArray(wordsVariants.words)) {
-        return wordsVariants.words.slice(0, this.config.limit)
+        return this.filterAndLimitWords(wordsVariants.words)
       } else {
         return []
       }
@@ -15819,6 +15824,35 @@ class AlpheiosLogeionAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_
   */
   createFetchURL (text) {
     return `${this.config.url}${encodeURIComponent(text)}`
+  }
+
+  /**
+  * This method removes words from the other language - checks two variants - greek and the other
+  * @param {[Array]} words - list of words that should be checked and filtered
+  * @return {Array}
+  */
+  filterAndLimitWords (words) {
+    const finalWords = []
+    const model = alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageModelFromCode(this.config.lang)
+    const otherModels = []
+    this.config.availableLangs.forEach(lang => {
+      const modelLang = alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["LanguageModelFactory"].getLanguageModelFromCode(lang)
+      if (lang !== this.config.lang && modelLang.checkCorrespond) {
+        otherModels.push(modelLang)
+      }
+    })
+
+    for (let i = 0; i < words.length; i++) {
+      if ((model.checkCorrespond && model.checkCorrespond(words[i])) ||
+          (!model.checkCorrespond && otherModels.every(modelLang => !modelLang.checkCorrespond(words[i])))) {
+        finalWords.push(words[i])
+      }
+
+      if (finalWords.length === this.limit) {
+        break
+      }
+    }
+    return finalWords
   }
 }
 
