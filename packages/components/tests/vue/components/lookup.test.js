@@ -249,7 +249,7 @@ describe('lookup.test.js', () => {
     expect(cmp.vm.ui.showPanelTab).toHaveBeenCalledWith('morphology')
   })
 
-  it('9 Lookup\'s -method settingChange changes lookupLanguage, setSelectedLookupLang in store and updates langUpdated', async () => {
+  it('9 Lookup\'s -method settingChangeLL changes lookupLanguage, setSelectedLookupLang in store and updates langUpdated', async () => {
     const cmp = shallowMount(Lookup, {
       propsData: {
         nameBase: nameBase
@@ -262,7 +262,7 @@ describe('lookup.test.js', () => {
     expect(cmp.vm.$options.lookupLanguage.currentValue).toEqual('lat')
     expect(cmp.vm.$store.state.app.selectedLookupLangCode).toEqual('lat')
 
-    cmp.vm.settingChange(null, 'Greek')
+    cmp.vm.settingChangeLL(null, 'Greek')
 
     expect(cmp.vm.$options.lookupLanguage.currentValue).toEqual('grc')
     expect(cmp.vm.$store.state.app.selectedLookupLangCode).toEqual('grc')

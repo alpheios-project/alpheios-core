@@ -85,13 +85,14 @@
     <div
         class="alpheios-toolbar__lookup"
         v-show="lookupVisible"
-        :class="{ 'alpheios-toolbar__lookup-beta-codes': showBetaCodesInfo }"
+        :class = "toolbarLookupClasses"
     >
       <lookup
           :name-base="`toolbar`"
           :show-lang-selector="showLangSelector"
           @toggleLangSelector = "toggleLangSelector"
           @toggleBetaCodesInfo = "toggleBetaCodesInfo"
+          @toggleEnableAutocompleteCheck = "toggleEnableAutocompleteCheck"
       />
     </div>
 
@@ -259,7 +260,8 @@ export default {
       // An X position of the central point of a toolbar
       xCenter: undefined,
       showLangSelector: false,
-      showBetaCodesInfo: false
+      showBetaCodesInfo: false,
+      showEnableAutocompleteCheck: false
     }
   },
 
@@ -294,6 +296,13 @@ export default {
         }
       }
       return styles
+    },
+
+    toolbarLookupClasses () {
+      return { 
+        'alpheios-toolbar__lookup-beta-codes': this.showBetaCodesInfo,
+        'alpheios-toolbar__lookup-change-lang': !this.showBetaCodesInfo && this.showLangSelector && this.showEnableAutocompleteCheck
+      }
     },
 
     isInLeftHalf: function () {
@@ -412,6 +421,10 @@ export default {
 
     toggleBetaCodesInfo (value) {
       this.showBetaCodesInfo = value
+    },
+
+    toggleEnableAutocompleteCheck (value) {
+      this.showEnableAutocompleteCheck = value
     }
   },
 
@@ -605,7 +618,13 @@ export default {
     }
 
     &.alpheios-toolbar__lookup-beta-codes {
-      height: uisize(420px);
+      height: uisize(440px);
+      border-radius: uisize(10px) 0 uisize(10px) uisize(10px);
+    }
+
+    &.alpheios-toolbar__lookup-change-lang {
+      height: uisize(220px);
+      border-radius: uisize(10px) 0 uisize(10px) uisize(10px);
     }
   }
 
