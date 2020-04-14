@@ -220,7 +220,7 @@
     },
     "enableLogeionAutoComplete": {
       "defaultValue": true,
-      "labelHtml": "Enable Autocomplete with <a href=\"https://logeion.uchicago.edu\" target=\"_blank\">Logeion</a>",
+      "labelText": "Enable Autocomplete with <a href=\"https://logeion.uchicago.edu\" target=\"_blank\">Logeion</a>",
       "boolean": true,
       "values": [
         {

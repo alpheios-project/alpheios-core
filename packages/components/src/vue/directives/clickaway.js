@@ -63,7 +63,7 @@ function bind (el, binding, vnode) {
     }
 
     // if neither the popup nor the panel are visible, stop the check
-    if (panel && !visible(panel) && popup && !visible(popup)) {
+    if (panel && !visible(panel) && popup && !visible(popup) && overlayNav && !visible(overlayNav)) {
       return
     }
 
@@ -81,6 +81,7 @@ function bind (el, binding, vnode) {
     // checkStep3 checks if a click was not inside the overlay nav
     const checkStep4 = path ? path.indexOf(overlayNav) < 0 : true
 
+    console.info('inside cickaway')
     if (checkStep1 && checkStep2 && checkStep3 && checkStep4) {
       return callback.call(vm, ev)
     }

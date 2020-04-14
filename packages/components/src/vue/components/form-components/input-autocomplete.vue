@@ -1,5 +1,5 @@
 <template>
-    <div class="alpheios-input-group">
+    <div class="alpheios-input-group" v-on-clickaway="closeAutocompleteList">
         <input
             autocapitalize="off"
             autocorrect="off"
@@ -10,6 +10,7 @@
             type="text"
             v-model="valueText"
             :ref="id"
+            @click="closeAutocompleteList"
         >
         <div class="alpheios-input-autocomplete" v-show="words.length > 0">
             <span class="alpheios-input-autocomplete-item" v-for="(word, index) in words" v-bind:key="index" @click="selectWordFromAutoComplete(word)">{{ word }}</span>
@@ -20,10 +21,14 @@
 import { ClientAdapters } from 'alpheios-client-adapters'
 import { LanguageModelFactory, Constants } from 'alpheios-data-models'
 import GreekInput from '@/lib/utility/greek-input.js'
+import { directive as onClickaway } from '@/vue/directives/clickaway.js'
 
 export default {
   name: 'InputAutocomplete',
   inject: ['settings'],
+  directives: {
+    onClickaway: onClickaway
+  },
   props: {
     lang: {
       type: String,
@@ -115,6 +120,10 @@ export default {
       this.valueText = word
       this.clearWords()
       this.$refs[this.id].focus()
+    },
+
+    closeAutocompleteList () {
+      this.clearWords()
     }
   }
 }
