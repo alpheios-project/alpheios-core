@@ -92,12 +92,14 @@ export default {
     updateBetaCodes () {
       if (this.useBetaCodes && this.lang === GreekInput.langCode) {
         this.valueText = GreekInput.change(this.valueText)
+        this.$emit('updateLookupText', this.valueText)
       }
     },
 
     async getAutocompleteWords () {
       if (this.enableLogeionAutoComplete) {
         this.valueText = this.valueText.trim()
+        this.$emit('updateLookupText', this.valueText)
         this.clearWords()
         if (this.valueText.length > 2) {
 
@@ -118,6 +120,7 @@ export default {
     
     selectWordFromAutoComplete (word) {
       this.valueText = word
+      this.$emit('updateLookupText', this.valueText)
       this.clearWords()
       this.$refs[this.id].focus()
     },

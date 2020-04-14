@@ -24,6 +24,7 @@
               :enableLogeionAutoComplete = "$options.enableLogeionAutoComplete.currentValue"
               id="alpheios-lookup-input"
               @keyPressEnter = "lookup"
+              @updateLookupText = "updateLookupText"
           />
           <button
               @click.stop="lookup"
@@ -169,8 +170,8 @@ export default {
       this.$emit('toggleLangSelector', true)
     },
 
-    lookup (lookuptext) {
-      this.lookuptext = lookuptext.trim()
+    lookup () {
+      this.lookuptext = this.lookuptext.trim()
       if (this.lookuptext.length === 0) {
         return null
       }
@@ -235,6 +236,10 @@ export default {
     toggleBetaCodesInfo () {
       this.showBetaCodesInfo = !this.showBetaCodesInfo
       this.$emit('toggleBetaCodesInfo', this.showBetaCodesInfo)
+    },
+
+    updateLookupText (lookupText) {
+      this.lookuptext = lookupText
     }
   }
 }
