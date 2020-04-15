@@ -982,7 +982,6 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
 
     expect(renderedTable.rows[4].cells[3].fullMatch).toBeFalsy() // ἱῆσθον
     expect(renderedTable.rows[4].cells[2].fullMatch).toBeTruthy() // ἵεσθον
-    expect(renderedTable.rows[4].cells[6].fullMatch).toBeTruthy() // ἵεσθον
     expect(renderedTable.rows[5].cells[2].fullMatch).toBeTruthy() // ἵεσθον
   })
 
