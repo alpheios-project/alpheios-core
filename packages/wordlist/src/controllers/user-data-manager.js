@@ -258,7 +258,7 @@ export default class UserDataManager {
    * @return {WordItem[]}
    */
   async query (data, params = {}) {
-    try {
+    // try {
       params.type = params.type||'short'
       params.source = params.source||'both'
       params.syncDelete = params.syncDelete||false
@@ -300,9 +300,9 @@ export default class UserDataManager {
       this.printErrors(remoteAdapter)
       this.printErrors(localAdapter)
       return finalItems
-    } catch (error) {
+    /*} catch (error) {
       console.error('Alpheios error: unexpected error querying user data.', error.message)
-    }
+    }*/
   }
 
   async deleteAbsentInRemote (localAdapter, remoteItems, languageCode) {

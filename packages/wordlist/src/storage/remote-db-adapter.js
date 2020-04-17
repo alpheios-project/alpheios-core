@@ -172,6 +172,9 @@ export default class RemoteDBAdapter {
           this.errors.push(error)
         }
       }
+      if (error.message === 'Request failed with status code 401') {
+        return []
+      }
       return errorFinal
     }
   }

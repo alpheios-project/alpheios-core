@@ -2104,6 +2104,36 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./common/utility.js":
+/*!***************************!*\
+  !*** ./common/utility.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Utility; });
+class Utility {
+/**
+ * Returns formatted date/time for saving to IndexedDB
+ * @return {String}
+ */
+  static get currentDate () {
+    let dt = new Date()
+    return dt.getFullYear() + '/'
+        + ((dt.getMonth()+1) < 10 ? '0' : '') + (dt.getMonth()+1)  + '/'
+        + ((dt.getDate() < 10) ? '0' : '') + dt.getDate() + ' @ '
+                + ((dt.getHours() < 10) ? '0' : '') + dt.getHours() + ":"
+                + ((dt.getMinutes() < 10) ? '0' : '') + dt.getMinutes() + ":"
+                + ((dt.getSeconds() < 10) ? '0' : '') + dt.getSeconds()
+
+  }
+}
+
+
+/***/ }),
+
 /***/ "./controllers/user-data-manager.js":
 /*!******************************************!*\
   !*** ./controllers/user-data-manager.js ***!
@@ -2378,7 +2408,7 @@ class UserDataManager {
    * @return {WordItem[]}
    */
   async query (data, params = {}) {
-    try {
+    // try {
       params.type = params.type||'short'
       params.source = params.source||'both'
       params.syncDelete = params.syncDelete||false
@@ -2420,9 +2450,9 @@ class UserDataManager {
       this.printErrors(remoteAdapter)
       this.printErrors(localAdapter)
       return finalItems
-    } catch (error) {
+    /*} catch (error) {
       console.error('Alpheios error: unexpected error querying user data.', error.message)
-    }
+    }*/
   }
 
   async deleteAbsentInRemote (localAdapter, remoteItems, languageCode) {
@@ -2497,6 +2527,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordlistController; });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/common/utility.js */ "./common/utility.js");
+
 
 
 class WordlistController {
@@ -2642,6 +2674,10 @@ class WordlistController {
     let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(data.languageID), data.targetWord, true)
     wordItem.homonym = data
     wordItem.currentSession = true
+    console.info('onHomonymReady - worditem.createdDT', data.targetWord, wordItem.createdDT)
+    wordItem.createdDT = wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
+    wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
+    console.info('onHomonymReady - wordItem', data.targetWord, wordItem.createdDT, wordItem)
     WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'shortHomonym'}})
     // emit a wordlist updated event too in case the wordlist was updated
     WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
@@ -3634,6 +3670,9 @@ class RemoteDBAdapter {
           this.errors.push(error)
         }
       }
+      if (error.message === 'Request failed with status code 401') {
+        return []
+      }
       return errorFinal
     }
   }
@@ -3656,6 +3695,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/storage/indexeddbDriver/indexed-db-object-stores-structure */ "./storage/indexeddbDriver/indexed-db-object-stores-structure.js");
 /* harmony import */ var _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordlist/storage/indexeddbDriver/indexed-db-load-process */ "./storage/indexeddbDriver/indexed-db-load-process.js");
+/* harmony import */ var _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordlist/common/utility.js */ "./common/utility.js");
+
 
 
 
@@ -3860,9 +3901,9 @@ class WordItemIndexedDbDriver {
    * @param {WordItem} worditem - worditem
    * @return {WordItem}
    */
-  loadSegment(segment, jsonObj, worditem) {
+  loadSegment(segment, jsonObj, wordItem) {
     if (this.storageMap[segment].load) {
-      return this.storageMap[segment].load(jsonObj, worditem)
+      return this.storageMap[segment].load(jsonObj, wordItem)
     }
   }
 
@@ -3889,9 +3930,9 @@ class WordItemIndexedDbDriver {
    * @param {WordItem} worditem - the worditem object
    * @return {Object} - data for creating IndexedDB Request
    */
-  segmentSelectQuery(segment, worditem) {
+  segmentSelectQuery(segment, wordItem) {
     if (this.storageMap[segment].select) {
-      return this.storageMap[segment].select(segment, worditem)
+      return this.storageMap[segment].select(segment, wordItem)
     }
   }
 
@@ -3901,8 +3942,8 @@ class WordItemIndexedDbDriver {
    * @param {WordItem} worditem - the worditem object
    * @return {Object} - data for creating IndexedDB Request
    */
-  _segmentSelectQueryByWordItemID (segment, worditem) {
-    return this._formatQuery(segment, this._selectByWordItemID(worditem))
+  _segmentSelectQueryByWordItemID (segment, wordItem) {
+    return this._formatQuery(segment, this._selectByWordItemID(wordItem))
   }
 
   /**
@@ -3911,8 +3952,8 @@ class WordItemIndexedDbDriver {
    * @param {WordItem} worditem - the worditem object
    * @return {Object} - data for creating IndexedDB Request
    */
-  _segmentSelectQueryByID (segment, worditem) {
-    return this._formatQuery(segment, this._selectByID(worditem))
+  _segmentSelectQueryByID (segment, wordItem) {
+    return this._formatQuery(segment, this._selectByID(wordItem))
   }
 
   /**
@@ -3921,9 +3962,9 @@ class WordItemIndexedDbDriver {
    * @param {WordItem} worditem - the worditem object
    * @return {Object} - data for creating IndexedDB Request
    */
-  segmentDeleteQuery (segment, worditem) {
+  segmentDeleteQuery (segment, wordItem) {
     if (this.storageMap[segment].delete) {
-      return this.storageMap[segment].delete(segment, worditem)
+      return this.storageMap[segment].delete(segment, wordItem)
     }
   }
 
@@ -3959,15 +4000,16 @@ class WordItemIndexedDbDriver {
    * @param {WordItem} worditem - the worditem object
    * @return {Object[]}
    */
-  _serializeCommon (worditem) {
+  _serializeCommon (wordItem) {
     return [{
-      ID: this._makeStorageID(worditem),
-      listID: this.userId + '-' + worditem.languageCode,
+      ID: this._makeStorageID(wordItem),
+      listID: this.userId + '-' + wordItem.languageCode,
       userID: this.userId,
-      languageCode: worditem.languageCode,
-      targetWord: worditem.targetWord,
-      important: worditem.important,
-      createdDT: WordItemIndexedDbDriver.currentDate
+      languageCode: wordItem.languageCode,
+      targetWord: wordItem.targetWord,
+      important: wordItem.important,
+      createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_3__["default"].currentDate,
+      updatedDT: wordItem.updatedDT ? wordItem.updatedDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_3__["default"].currentDate
     }]
   }
 
@@ -3976,18 +4018,18 @@ class WordItemIndexedDbDriver {
    * @param {WordItem} worditem - the worditem object
    * @return {Object[]}
    */
-  _serializeContext (worditem) {
+  _serializeContext (wordItem) {
     let result = []
     let index = 0
-    let wordItemId = this._makeStorageID(worditem)
-    for (let tq of worditem.context) {
+    let wordItemId = this._makeStorageID(wordItem)
+    for (let tq of wordItem.context) {
       index++
       let resultItem = {
         ID: wordItemId + '-' + index,
-        listID: this.userId + '-' + worditem.languageCode,
+        listID: this.userId + '-' + wordItem.languageCode,
         userID: this.userId,
-        languageCode: worditem.languageCode,
-        targetWord: worditem.targetWord,
+        languageCode: wordItem.languageCode,
+        targetWord: wordItem.targetWord,
         wordItemID: wordItemId,
         target: {
           source: tq.source,
@@ -4013,15 +4055,15 @@ class WordItemIndexedDbDriver {
    * @param {Boolean} [addMeaning = false] - if true it adds definitions
    * @return {Object[]}
    */
-  _serializeHomonym (worditem, addMeaning = false) {
-    let resultHomonym = worditem.homonym && (worditem.homonym instanceof alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"]) ? worditem.homonym.convertToJSONObject(addMeaning) : null
+  _serializeHomonym (wordItem, addMeaning = false) {
+    let resultHomonym = wordItem.homonym && (wordItem.homonym instanceof alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"]) ? wordItem.homonym.convertToJSONObject(addMeaning) : null
     if (resultHomonym) {
       return [{
-        ID: this._makeStorageID(worditem),
-        listID: this.userId + '-' + worditem.languageCode,
+        ID: this._makeStorageID(wordItem),
+        listID: this.userId + '-' + wordItem.languageCode,
         userID: this.userId,
-        languageCode: worditem.languageCode,
-        targetWord: worditem.targetWord,
+        languageCode: wordItem.languageCode,
+        targetWord: wordItem.targetWord,
         homonym: resultHomonym
       }]
     }
@@ -4034,23 +4076,8 @@ class WordItemIndexedDbDriver {
  * @param {WordItem} worditem - the worditem object
  * @return {Object[]}
  */
-_serializeHomonymWithFullDefs (worditem) {
-  return this._serializeHomonym(worditem, true)
-}
-
-/**
- * Returns formatted date/time for saving to IndexedDB
- * @return {String}
- */
-static get currentDate () {
-  let dt = new Date()
-  return dt.getFullYear() + '/'
-      + ((dt.getMonth()+1) < 10 ? '0' : '') + (dt.getMonth()+1)  + '/'
-      + ((dt.getDate() < 10) ? '0' : '') + dt.getDate() + ' @ '
-              + ((dt.getHours() < 10) ? '0' : '') + dt.getHours() + ":"
-              + ((dt.getMinutes() < 10) ? '0' : '') + dt.getMinutes() + ":"
-              + ((dt.getSeconds() < 10) ? '0' : '') + dt.getSeconds()
-
+_serializeHomonymWithFullDefs (wordItem) {
+  return this._serializeHomonym(wordItem, true)
 }
 
   /**
@@ -4058,8 +4085,8 @@ static get currentDate () {
    * @param {WordItem} worditem - the worditem object
    * @return {String}
    */
-  _makeStorageID(worditem) {
-    return this.userId + '-' + worditem.languageCode + '-' + worditem.targetWord
+  _makeStorageID(wordItem) {
+    return this.userId + '-' + wordItem.languageCode + '-' + wordItem.targetWord
   }
 
   /**
@@ -4076,8 +4103,8 @@ static get currentDate () {
    * @param {String} languageCode - languageCode of the wordList
    * @return {String}
    */
-  makeIDCompareWithRemote (worditem) {
-    return worditem.languageCode + '-' + worditem.targetWord
+  makeIDCompareWithRemote (wordItem) {
+    return wordItem.languageCode + '-' + wordItem.targetWord
   }
 
   /**
@@ -4124,6 +4151,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordItemRemoteDbDriver; });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/common/utility.js */ "./common/utility.js");
+
 
 
 class WordItemRemoteDbDriver {
@@ -4294,7 +4323,8 @@ class WordItemRemoteDbDriver {
       languageCode: wordItem.languageCode,
       targetWord: wordItem.targetWord,
       important: wordItem.important,
-      createdDT: WordItemRemoteDbDriver.currentDate
+      createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate,
+      updatedDT: wordItem.updatedDT ? wordItem.updatedDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
     }
 
     let homonym = this._serializeHomonym(wordItem)
@@ -4410,20 +4440,6 @@ class WordItemRemoteDbDriver {
     } else {
       return false
     }
-  }
-
-  /**
-   * Defines date
-   */
-  static get currentDate () {
-    let dt = new Date()
-    return dt.getFullYear() + '/'
-        + ((dt.getMonth()+1) < 10 ? '0' : '') + (dt.getMonth()+1)  + '/'
-        + ((dt.getDate() < 10) ? '0' : '') + dt.getDate() + ' @ '
-                + ((dt.getHours() < 10) ? '0' : '') + dt.getHours() + ":"
-                + ((dt.getMinutes() < 10) ? '0' : '') + dt.getMinutes() + ":"
-                + ((dt.getSeconds() < 10) ? '0' : '') + dt.getSeconds()
-
   }
 
   /**
