@@ -130,7 +130,7 @@ describe('resource-query.test.js', () => {
     }
 
     let query = ResourceQuery.create(testFeature, { uiController: testUi, grammars: testGrammars, resourceOptions:resourceOptions })
-    expect(query.getGrammarOptions(Constants.LANG_LATIN)).toEqual({prefer:"https://grammars.alpheios.net/grammar-allen-greenough/"})
+    expect(query.getGrammarOptions(Constants.LANG_LATIN)).toEqual({prefer:"https://github.com/alpheios-project/grammar-allen-greenough"})
   })
 
 })
