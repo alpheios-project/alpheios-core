@@ -40,6 +40,10 @@
           {
             typeLex: 'lexiconsShort',
             titleDefault: 'Lexicons (short)'
+          },
+          {
+            typeLex: 'grammars',
+            titleDefault: 'Grammars'
           }
         ]
       }
@@ -56,7 +60,7 @@
           }
         }
         return this.titleDefault[typeLex]
-        
+
       },
 
       resourceSettingsLexicons (typeLex) {

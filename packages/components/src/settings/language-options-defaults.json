@@ -138,6 +138,40 @@
         }
       }
     },
+    "grammars": {
+      "labelText": "Grammars",
+      "labelL10n": "GRAMMARS_TITLE",
+      "group": {
+        "lat": {
+          "defaultValue": "https://github.com/alpheios-project/grammar-allen-greenough",
+          "labelText": "Latin",
+          "labelL10n": "GRAMMARS_LATIN_TITLE",
+          "multiValue": false,
+          "values": [
+            {
+              "value": "https://github.com/alpheios-project/grammar-allen-greenough",
+              "text": "Allen and Greenough’s New Latin Grammar for Schools and Colleges (Greenough, et. al.)"
+            },
+            {
+              "value": "https://github.com/alpheios-project/grammar-bennett",
+              "text": "New Latin Grammar (Bennett)"
+            }
+          ]
+        },
+        "grc": {
+          "defaultValue": "https://github.com/alpheios-project/grammar-smyth",
+          "labelText": "Greek",
+          "labelL10n": "GRAMMARS_GREEK_TITLE",
+          "multiValue": false,
+          "values": [
+            {
+              "value" : "https://github.com/alpheios-project/grammar-smyth",
+              "text": "A Greek Grammar for Colleges (Smyth)"
+            }
+          ]
+        }
+      }
+    },
     "treebanks": {
       "labelText": "Treebanks",
       "defaultValue": [],
