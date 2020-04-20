@@ -1606,6 +1606,23 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
     })
   })
 
+  it('64 - checked Verb Paradigm1 - βαλῶ', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('βαλῶ', Constants.LANG_GREEK)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
+
+    // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews[0])
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[2],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'Future System (Active and Middle) with contraction in -έω',
+      paradigmID: 'verbpdgm4',
+      hasSuppParadigms: true,
+      suppParadigms: [ 'verbpdgm55' ]
+    })
+  })
+
 
 
 })
