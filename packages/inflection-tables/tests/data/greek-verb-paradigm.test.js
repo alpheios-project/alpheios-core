@@ -288,10 +288,11 @@ describe('greek-verb-paradigm.test.js', () => {
 
     renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
 
-    expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy()
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy()
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy()
     expect(renderedTable.rows[1].cells[4].fullMatch).toBeFalsy()
     expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy()
+    expect(renderedTable.rows[8].cells[2].fullMatch).toBeTruthy()
   })
 
   it('11 - checked Verb Paradigm11 - λελοίπῃ', async () => {
@@ -1641,7 +1642,7 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
     })
 
     const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
-    expect(renderedTable.rows[3].cells[8].fullMatch).toBeTruthy() 
+    expect(renderedTable.rows[3].cells[8].fullMatch).toBeTruthy()
   })
 
 
