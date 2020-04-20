@@ -62,7 +62,7 @@
             {
                 "role": "label",
                 "tense": "future",
-                "voice": "active",
+                "voice": "middle",
                 "mood": "indicative",
                 "value": "fut. indicative"
             }
@@ -138,7 +138,7 @@
             {
                 "role": "data",
                 "tense": "future",
-                "voice": "active",
+                "voice": "middle",
                 "number": "singular",
                 "person": "1st",
                 "mood": "indicative",
@@ -216,7 +216,7 @@
             {
                 "role": "data",
                 "tense": "future",
-                "voice": "active",
+                "voice": "middle",
                 "number": "singular",
                 "person": "2nd",
                 "mood": "indicative",
@@ -294,7 +294,7 @@
             {
                 "role": "data",
                 "tense": "future",
-                "voice": "active",
+                "voice": "middle",
                 "number": "singular",
                 "person": "3rd",
                 "mood": "indicative",
@@ -372,7 +372,7 @@
             {
                 "role": "data",
                 "tense": "future",
-                "voice": "active",
+                "voice": "middle",
                 "number": "dual",
                 "person": "2nd",
                 "mood": "indicative",
@@ -450,7 +450,7 @@
             {
                 "role": "data",
                 "tense": "future",
-                "voice": "active",
+                "voice": "middle",
                 "number": "dual",
                 "person": "3rd",
                 "mood": "indicative",
@@ -528,7 +528,7 @@
             {
                 "role": "data",
                 "tense": "future",
-                "voice": "active",
+                "voice": "middle",
                 "number": "plural",
                 "person": "1st",
                 "mood": "indicative",
@@ -606,7 +606,7 @@
             {
                 "role": "data",
                 "tense": "future",
-                "voice": "active",
+                "voice": "middle",
                 "number": "plural",
                 "person": "2nd",
                 "mood": "indicative",
@@ -684,7 +684,7 @@
             {
                 "role": "data",
                 "tense": "future",
-                "voice": "active",
+                "voice": "middle",
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
@@ -703,7 +703,6 @@
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
                 "mood": "infinitive",
                 "value": "εἶναι, fut.ἔσεσθαι"
             }
