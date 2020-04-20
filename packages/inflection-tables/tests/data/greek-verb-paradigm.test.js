@@ -1541,6 +1541,8 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+    const renderedSubTables = inflectionsViewSet.matchingViews[0].render().wideSubTables
+    expect(renderedSubTables[0].rows[0].cells[1].fullMatch).toBeTruthy()
   })
 
   it('60 - checked Verb Paradigm 46 - ἔσεσθαι', async () => {
