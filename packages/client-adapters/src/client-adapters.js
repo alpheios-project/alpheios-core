@@ -5,6 +5,7 @@ import AlpheiosLemmaTranslationsAdapter from '@clAdapters/adapters/translations/
 import AlpheiosLexiconsAdapter from '@clAdapters/adapters/lexicons/adapter'
 import AlpheiosConcordanceAdapter from '@clAdapters/adapters/concordance/adapter'
 import ArethusaTreebankAdapter from '@clAdapters/adapters/arethusa/adapter'
+import AlpheiosLogeionAdapter from '@clAdapters/adapters/logeion/adapter'
 
 import WrongMethodError from '@clAdapters/errors/wrong-method-error'
 import NoRequiredParamError from '@clAdapters/errors/no-required-param-error'
@@ -73,6 +74,11 @@ class ClientAdapters {
   static get wordusageExamples () {
     ClientAdapters.init()
     return cachedAdaptersList.get('wordusageExamples')
+  }
+
+  static get autocompleteWords () {
+    ClientAdapters.init()
+    return cachedAdaptersList.get('autocompleteWords')
   }
 
   /**
@@ -329,6 +335,26 @@ class ClientAdapters {
 
     if (options.method === 'getConfig') {
       return localLexiconsAdapter.config
+    }
+    return null
+  }
+
+  static async autoCompleteWords (options) {
+    ClientAdapters.checkMethodParam('autocompleteWords', 'logeion', options)
+
+    const localLogeionAdapter = new AlpheiosLogeionAdapter({
+      category: 'autocompleteWords',
+      adapterName: 'logeion',
+      method: options.method,
+      clientId: options.clientId,
+      limit: options.params.limit,
+      lang: options.params.lang,
+      sourceData: options.params.sourceData
+    })
+
+    if (localLogeionAdapter.available && options.method === 'getWords') {
+      const res = await localLogeionAdapter.getWords(options.params.text)
+      return { result: res, errors: localLogeionAdapter.errors }
     }
     return null
   }

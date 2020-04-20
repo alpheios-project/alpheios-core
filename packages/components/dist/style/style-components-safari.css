@@ -3464,6 +3464,56 @@ p.alpheios-word-usage-filter-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-content .alpheios-input-group input.alpheios-input,
+.alpheios-content .alpheios-input-group input.alpheios-input:focus {
+  width: 100% !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  height: 40px !important;
+  min-width: 0 !important;
+  border-color: var(--alpheios-lookup-input-border-color) !important;
+}
+.alpheios-content .alpheios-input-group input.alpheios-input.alpheios-rtl,
+.alpheios-content .alpheios-input-group input.alpheios-input:focus.alpheios-rtl {
+  direction: rtl !important;
+  text-align: right !important;
+}
+.alpheios-input-group {
+  position: relative !important;
+}
+.alpheios-input-group input.alpheios-input {
+  position: relative !important;
+  z-index: 10 !important;
+}
+.alpheios-input-group .alpheios-input-autocomplete {
+  position: absolute !important;
+  width: 100% !important;
+  border: 1px solid var(--alpheios-lookup-input-border-color) !important;
+  background: #fff !important;
+  /* border-top: 0; */
+  top: 32px !important;
+  z-index: 15 !important;
+  box-sizing: border-box !important;
+  padding: 0 0 10px !important;
+}
+.alpheios-input-group .alpheios-input-autocomplete .alpheios-input-autocomplete-item {
+  padding: 5px 10px !important;
+}
+.alpheios-input-autocomplete-item {
+  display: block;
+  cursor: pointer !important;
+}
+.alpheios-input-autocomplete-item:hover {
+  background: var(--alpheios-color-bright-hover) !important;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
 .alpheios-lookup__form {
   text-align: left !important;
   display: flex;
@@ -3505,20 +3555,6 @@ span.alpheios-lookup__lang-change:hover {
 }
 .alpheios-lookup__search-control {
   display: flex;
-}
-.alpheios-lookup__search-control input.alpheios-input,
-.alpheios-lookup__search-control input.alpheios-input:focus {
-  width: 70% !important;
-  border-top-right-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-  height: 40px !important;
-  min-width: 0 !important;
-  border-color: var(--alpheios-lookup-input-border-color) !important;
-}
-.alpheios-lookup__search-control input.alpheios-input.alpheios-rtl,
-.alpheios-lookup__search-control input.alpheios-input:focus.alpheios-rtl {
-  direction: rtl !important;
-  text-align: right !important;
 }
 .alpheios-lookup__search-control button {
   border-top-left-radius: 0 !important;
@@ -3588,6 +3624,12 @@ span.alpheios-lookup__lang-change:hover {
 .alpheios-lookup__form .alpheios-lookup__form-beta-codes-info span {
   display: inline-block;
   padding-right: 20px !important;
+}
+.alpheios-lookup__autocomplete {
+  margin-top: 5px !important;
+}
+.alpheios-lookup__autocomplete div.alpheios-checkbox-block {
+  max-width: none !important;
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -3727,7 +3769,12 @@ span.alpheios-lookup__lang-change:hover {
   display: inline-block;
 }
 .alpheios-toolbar__lookup.alpheios-toolbar__lookup-beta-codes {
-  height: calc(var(--alpheios-base-ui-size) * 26.25) !important;
+  height: calc(var(--alpheios-base-ui-size) * 27.5) !important;
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) !important;
+}
+.alpheios-toolbar__lookup.alpheios-toolbar__lookup-change-lang {
+  height: calc(var(--alpheios-base-ui-size) * 13.75) !important;
+  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
 .alpheios-toolbar__buttons {
   display: flex;

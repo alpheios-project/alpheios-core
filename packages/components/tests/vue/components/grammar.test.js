@@ -27,7 +27,8 @@ describe('grammar.test.js', () => {
     store = BaseTestHelp.baseVuexStore()
 
     api = {
-      app: BaseTestHelp.appAPI()
+      app: BaseTestHelp.appAPI(),
+      settings: BaseTestHelp.settingsAPI()
     }
 
     BaseTestHelp.l10nModule(store, api)
@@ -48,7 +49,7 @@ describe('grammar.test.js', () => {
   })
 
   it('2 Grammar - languageList is defined on the created state', () => {
-    let cmp = shallowMount(Grammar, {
+    let cmp = mount(Grammar, {
       store,
       localVue,
       mocks: api
@@ -59,7 +60,7 @@ describe('grammar.test.js', () => {
     expect(cmp.vm.languageList.lat).toEqual(expect.objectContaining({
       languageID: Constants.LANG_LATIN,
       languageCode: 'lat',
-      title: 'New Latin Grammar (Bennett)'
+      title: 'Allen and Greenough’s New Latin Grammar for Schools and Colleges (Greenough, et. al.)'
     }))
 
     expect(cmp.vm.languageList.grc).toEqual(expect.objectContaining({
@@ -130,7 +131,7 @@ describe('grammar.test.js', () => {
     store.commit('app/setCurrentLanguage', { languageID: Constants.LANG_LATIN, languageCode: 'lat' })
     expect(cmp.vm.collapseLanguage).toHaveBeenCalledTimes(2) // was not called this time
   })
-  
+
   it('6 Grammar - method checkIfUpdatedCentralLangCode checks if centralLanguageCode should be updated with store.state.app.currentLanguageCode', async () => {
     let cmp = mount(Grammar, {
       store,
@@ -184,7 +185,8 @@ describe('grammar.test.js', () => {
             provider: 'fooGreekProvider'
           }
         }
-      })
+      }),
+      settings: BaseTestHelp.settingsAPI()
     }
 
     BaseTestHelp.l10nModule(store, api)
@@ -329,7 +331,8 @@ describe('grammar.test.js', () => {
     let api = {
       app: BaseTestHelp.appAPI({
         startResourceQuery: jest.fn()
-      })
+      }),
+      settings: BaseTestHelp.settingsAPI()
     }
 
     BaseTestHelp.l10nModule(store, api)
@@ -354,7 +357,8 @@ describe('grammar.test.js', () => {
     let api = {
       app: BaseTestHelp.appAPI({
         restoreGrammarIndex: jest.fn()
-      })
+      }),
+      settings: BaseTestHelp.settingsAPI()
     }
 
     BaseTestHelp.l10nModule(store, api)

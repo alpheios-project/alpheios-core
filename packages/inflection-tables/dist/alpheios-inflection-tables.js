@@ -14526,40 +14526,45 @@ class GreekParadigmView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTE
     if (this.homonym && this.homonym.inflections) {
       const comparativeFeatures = this.defineComparativeFeatures(cell)
 
-      for (const inflection of this.homonym.inflections) {
-        let fullMatch = true
+      const inflections = this.homonym.inflections.filter(i => i.constraints && i.constraints.paradigmBased)
 
-        for (const feature of comparativeFeatures) {
-          let requiredFeatureInInflection = false
-          if (cell[feature].value && cell[feature].value.match(/^\*/))   {
-            requiredFeatureInInflection = true
-            let value = cell[feature].getValue(cell[feature].value)
-            //value.value = value.value.replace(/^\*/,'')
-          }
-          let skipRequireMatch = false
-          if (cell[feature].value && cell[feature].value === '!') {
-            skipRequireMatch = true
-          }
-          if (skipRequireMatch && ! inflection.hasOwnProperty(feature)) {
-            continue
-          } else if (requiredFeatureInInflection || inflection.hasOwnProperty(feature) || (feature === 'lemma')) {
+      for (const inflection of inflections) {
+        const matchingRules = this.paradigm.matchingRules(inflection)
+        if (matchingRules.length > 0) {
+          let fullMatch = true
 
-            if (feature === 'lemma') {
-              fullMatch = fullMatch && inflection.word && this.constructor.model.compareWords(cell[feature],inflection.word.value)
-            } else if (requiredFeatureInInflection && ! inflection[feature]) {
-              fullMatch = false
-            } else if (requiredFeatureInInflection) {
-              fullMatch = fullMatch && cell[feature].value.replace(/^\*/,'') === inflection[feature].value
-            } else {
-              fullMatch = fullMatch && cell[feature].hasValues(inflection[feature].values)
+          for (const feature of comparativeFeatures) {
+            let requiredFeatureInInflection = false
+            if (cell[feature].value && cell[feature].value.match(/^\*/))   {
+              requiredFeatureInInflection = true
+              let value = cell[feature].getValue(cell[feature].value)
+              //value.value = value.value.replace(/^\*/,'')
             }
-            if (!fullMatch) {
-              break
-            } // If at least one feature does not match, there is no reason to check others
-          }
-        }
+            let skipRequireMatch = false
+            if (cell[feature].value && cell[feature].value === '!') {
+              skipRequireMatch = true
+            }
+            if (skipRequireMatch && ! inflection.hasOwnProperty(feature)) {
+              continue
+            } else if (requiredFeatureInInflection || inflection.hasOwnProperty(feature) || (feature === 'lemma')) {
 
-        if (fullMatch) { return true }
+              if (feature === 'lemma') {
+                fullMatch = fullMatch && inflection.word && this.constructor.model.compareWords(cell[feature],inflection.word.value)
+              } else if (requiredFeatureInInflection && ! inflection[feature]) {
+                fullMatch = false
+              } else if (requiredFeatureInInflection) {
+                fullMatch = fullMatch && cell[feature].value.replace(/^\*/,'') === inflection[feature].value
+              } else {
+                fullMatch = fullMatch && cell[feature].hasValues(inflection[feature].values)
+              }
+              if (!fullMatch) {
+                break
+              } // If at least one feature does not match, there is no reason to check others
+            }
+          }
+
+          if (fullMatch) { return true }
+        }
       }
     }
     return false

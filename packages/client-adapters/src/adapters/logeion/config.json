@@ -1,0 +1,5 @@
+{
+  "url": "https://api-v2.logeion.org/search?q=",
+  "limit": 10,
+  "availableLangs": ["lat", "grc"]
+}
