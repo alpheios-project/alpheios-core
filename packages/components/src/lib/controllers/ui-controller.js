@@ -1368,6 +1368,13 @@ If no URLS are provided, will reset grammar data.
     }
   }
 
+  /**
+    (re)initializes grammar data from settings
+  */
+  initGrammar() {
+    this.store.commit('app/setUpdatedGrammar')
+  }
+
   updateTranslations (homonym) {
     this.store.commit('app/setTranslDataReady')
     this.updateProviders(homonym)
@@ -1602,7 +1609,8 @@ NB this is Prototype functionality
   startResourceQuery (feature) {
     // ExpObjMon.track(
     ResourceQuery.create(feature, {
-      grammars: Grammars
+      grammars: Grammars,
+      resourceOptions: this.getResourceOptions()
     }).getData()
     //, {
     // experience: 'Get resource',
@@ -1918,6 +1926,9 @@ NB this is Prototype functionality
     // an array or an individual text value
     const baseKey = Options.parseKey(name)
     this.api.settings.getResourceOptions().items[baseKey.name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
+    if (name === 'grammars') {
+      this.initGrammar()
+    }
   }
 
   registerGetSelectedText (listenerName, selector) {

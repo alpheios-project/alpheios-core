@@ -2,7 +2,7 @@
   <div class="alpheios-grammar">
     <div class="alpheios-grammar__titles" v-show="showTitles">
         <h1 class="alpheios-panel__title">{{ l10n.getText('LABEL_BROWSE_GRAMMAR') }}</h1>
-      <div class="alpheios-grammar__block alpheios-clickable" 
+      <div class="alpheios-grammar__block alpheios-clickable"
           :class="{open: !languageItem.collapsed}"
            v-for="(languageItem, langIndex) in languageList" :key="langIndex">
 
@@ -47,12 +47,13 @@
       each time we recieve new results from ResourceQUery we update languageList url and provider
 
     - $store.state.app.currentLanguageCode
-      each time when the main currentLanguageCode is changed then we store it to local property and open this language 
+      each time when the main currentLanguageCode is changed then we store it to local property and open this language
       if no language is opened or if tab is not visible
 */
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 import { Constants, LanguageModelFactory as LMF } from 'alpheios-data-models'
 import { Grammars } from 'alpheios-res-client'
+import Options from '@/lib/options/options.js'
 
 import Vue from '@vue-runtime'
 
@@ -63,7 +64,7 @@ import ProgressBar from './progress-bar.vue'
 
 export default {
   name: 'Grammar',
-  inject: ['l10n', 'app'],
+  inject: ['l10n', 'app', 'settings'],
   storeModules: ['app'],
   mixins: [DependencyCheck],
   components: {
@@ -82,7 +83,7 @@ export default {
         lat: {
           languageID: Constants.LANG_LATIN,
           languageCode: 'lat',
-          title: 'New Latin Grammar (Bennett)',
+          title: null,
           url: null,
           provider: null,
           collapsed: true
@@ -90,7 +91,7 @@ export default {
         grc: {
           languageID: Constants.LANG_GREEK,
           languageCode: 'grc',
-          title: 'A Greek Grammar for Colleges (Smyth)',
+          title: null,
           url: null,
           provider: null,
           collapsed: true
@@ -100,9 +101,10 @@ export default {
     }
   },
   mounted () {
+    this.initGrammars()
     this.$options.lexrqStartedUnwatch = this.$store.watch((state) => state.app.lexicalRequest.startTime, () => {
       this.clearCurrentData()
-      Object.values(this.languageList).forEach(langData => langData.collapsed = true)
+      Object.values(this.languageList).forEach((langData) => langData.collapsed = true)
     })
   },
   beforeDestroy () {
@@ -123,12 +125,13 @@ export default {
     updatedGrammarData () {
       if (this.$store.state.app.updatedGrammar) {
         this.waitingForGrammar = false
+        this.initGrammars()
         this.updateLanguageList()
         if (this.currentLanguageCode && (!this.currentUrl || this.currentUrl !== this.languageList[this.currentLanguageCode].url) ) {
           this.currentUrl = this.languageList[this.currentLanguageCode].url
         }
       }
-      
+
       if (this.checkIfUpdatedCentralLangCode()) {
         this.centralLanguageCode = this.$store.state.app.currentLanguageCode
         if (!this.currentLanguageCode || !this.$store.getters['ui/isActiveTab']('grammar')) {
@@ -144,6 +147,18 @@ export default {
       return this.$store.state.app.currentLanguageCode && (
         !this.centralLanguageCode || this.centralLanguageCode !== this.$store.state.app.currentLanguageCode || !this.$store.getters['ui/isActiveTab']('grammar')
       )
+    },
+
+    // initialize the grammars from resource settings
+    initGrammars () {
+      let grammarOpts = this.settings.getResourceOptions().items.grammars
+      Object.keys(this.languageList).forEach(langCode => {
+        let langData = this.languageList[langCode]
+        let opts = grammarOpts.filter((g) => Options.parseKey(g.name).group === langData.languageCode)
+        if (opts.length > 0) {
+          this.languageList[langCode].title = opts[0].currentTextValue()
+        }
+      })
     },
 
     // updates languageList from app.grammarData'
@@ -306,12 +321,12 @@ export default {
 
   .alpheios-grammar__button--back-block,
   .alpheios-grammar__button--show-titles-block {
-    
+
     button {
       color: var(--alpheios-grammar-back-button-color);
       background-color: var(--alpheios-grammar-back-button-bg);
       border-color: var(--alpheios-grammar-back-button-border-color);
-      
+
       &:hover {
         color: var(--alpheios-grammar-back-button-color-hover);
         background-color: var(--alpheios-grammar-back-button-bg-hover);

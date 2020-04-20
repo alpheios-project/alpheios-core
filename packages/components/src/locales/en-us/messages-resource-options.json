@@ -38,5 +38,20 @@
     "message": "Persian",
     "description": "The label of the setting for persian short definitions on resource settings tab",
     "component": "Settings Tab"
+  },
+  "GRAMMARS_TITLE": {
+    "message": "Grammars",
+    "description": "The label for the setting of preferred Grammar",
+    "component": "Options Tab"
+  },
+  "GRAMMARS_LATIN_TITLE": {
+    "message": "Latin",
+    "description": "The label for the setting of preferred Latin Grammar",
+    "component": "Options Tab"
+  },
+  "GRAMMARS_GREEK_TITLE": {
+    "message": "Greek",
+    "description": "The label for the setting of preferred Greek Grammar",
+    "component": "Options Tab"
   }
 }

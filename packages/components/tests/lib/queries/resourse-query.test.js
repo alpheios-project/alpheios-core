@@ -6,7 +6,10 @@ import L10n from '@/lib/l10n/l10n'
 import Locales from '@/locales/locales'
 import enUS from '@/locales/en-us/messages.json'
 import enGB from '@/locales/en-gb/messages.json'
-import { Constants } from 'alpheios-data-models'
+import { Constants, Feature } from 'alpheios-data-models'
+import Options from '@/lib/options/options'
+import LanguageOptionDefaults from '@/settings/language-options-defaults.json'
+import LocalStorageArea from '@/lib/options/local-storage-area.js'
 
 describe('resource-query.test.js', () => {
   let l10n = new L10n()
@@ -20,6 +23,11 @@ describe('resource-query.test.js', () => {
     addMessage: function () { },
     l10n: l10n
   }
+
+  let resourceOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
+
+  let testFeature = new Feature(Feature.types.part, 'verb', Constants.LANG_LATIN)
+
 
   console.error = function () {}
   console.log = function () {}
@@ -38,13 +46,13 @@ describe('resource-query.test.js', () => {
   })
 
   it('1 ResourceQuery - create method returns a new ResourceQuery with params', () => {
-    let query = ResourceQuery.create('foo feature', { grammars: 'foo grammars' })
+    let query = ResourceQuery.create(testFeature, { grammars: 'foo grammars', resourceOptions: resourceOptions })
 
     expect(typeof query).toEqual('object')
     expect(query.constructor.name).toEqual('ResourceQuery')
     expect(typeof query.ID).toEqual('string')
 
-    expect(query.feature).toEqual('foo feature')
+    expect(query.feature).toEqual(testFeature)
     expect(query.grammars).toEqual('foo grammars')
   })
 
@@ -57,7 +65,7 @@ describe('resource-query.test.js', () => {
 
     jest.spyOn(ResourceQuery.evt.GRAMMAR_NOT_FOUND, 'pub')
 
-    let query = ResourceQuery.create('foo feature', { grammars: testGrammars })
+    let query = ResourceQuery.create(testFeature, { grammars: testGrammars, resourceOptions: resourceOptions })
     jest.spyOn(query, 'finalize')
 
     await query.getData()
@@ -75,12 +83,12 @@ describe('resource-query.test.js', () => {
       }
     }
 
-    let query = ResourceQuery.create( { languageID: Constants.LANG_GEEK }, { grammars: testGrammars })
+    let query = ResourceQuery.create( testFeature, { grammars: testGrammars, resourceOptions: resourceOptions })
     jest.spyOn(ResourceQuery.evt.GRAMMAR_AVAILABLE, 'pub')
     jest.spyOn(ResourceQuery.evt.RESOURCE_QUERY_COMPLETE, 'pub')
 
     await query.getData()
-    expect(ResourceQuery.evt.GRAMMAR_AVAILABLE.pub).toHaveBeenCalledWith({ urls: 'http:/testurl.com', languageID: Constants.LANG_GEEK })
+    expect(ResourceQuery.evt.GRAMMAR_AVAILABLE.pub).toHaveBeenCalledWith({ urls: 'http:/testurl.com', languageID: Constants.LANG_LATIN })
     expect(ResourceQuery.evt.RESOURCE_QUERY_COMPLETE.pub).toHaveBeenCalled()
   })
 
@@ -94,7 +102,7 @@ describe('resource-query.test.js', () => {
       }
     }
 
-    let query = ResourceQuery.create('foo feature', { uiController: testUi, grammars: testGrammars })
+    let query = ResourceQuery.create(testFeature, { uiController: testUi, grammars: testGrammars, resourceOptions:resourceOptions })
 
     await query.getData()
 
@@ -109,8 +117,20 @@ describe('resource-query.test.js', () => {
     }
 
     jest.spyOn(Query, 'destroy')
-    let query = ResourceQuery.create('foo feature', { uiController: testUi, grammars: testGrammars })
+    let query = ResourceQuery.create(testFeature, { uiController: testUi, grammars: testGrammars, resourceOptions: resourceOptions })
     query.finalize()
     expect(Query.destroy).toHaveBeenCalled()
   })
+
+  it('6 ResourceQuery - getGrammarOptions sets preferred grammar)', async () => {
+    let testGrammars = {
+      fetchResources: function () {
+        return []
+      }
+    }
+
+    let query = ResourceQuery.create(testFeature, { uiController: testUi, grammars: testGrammars, resourceOptions:resourceOptions })
+    expect(query.getGrammarOptions(Constants.LANG_LATIN)).toEqual({prefer:"https://github.com/alpheios-project/grammar-allen-greenough"})
+  })
+
 })
