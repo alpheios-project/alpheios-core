@@ -314,8 +314,8 @@ for the current node
         If a trailing digit is `1` (e.g. `αἴγυπτος1`) remove it, because the word with it is an equivalent of
         a word without (e.g. `αἴγυπτος`).
          */
-        if (/^.+1$/.test(wordA)) { wordA = wordA.substring(0, wordA.length - 1) }
-        if (/^.+1$/.test(wordB)) { wordB = wordB.substring(0, wordB.length - 1) }
+        wordA = this.normalizeTrailingDigit(wordA)
+        wordB = this.normalizeTrailingDigit(wordB)
       }
 
       const altWordA = GreekLanguageModel.alternateWordEncodings(wordA, null, null, 'strippedDiacritics')

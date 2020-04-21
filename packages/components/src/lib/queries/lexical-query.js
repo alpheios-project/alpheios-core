@@ -16,8 +16,9 @@ export default class LexicalQuery extends Query {
     this.siteOptions = options.siteOptions || []
     this.lemmaTranslations = options.lemmaTranslations
     this.wordUsageExamples = options.wordUsageExamples
-    this.checkContextForward = options.checkContextForward
+    this.checkContextForward = options.checkContextForward || ''
     this.cedictServiceUrl = options.cedictServiceUrl
+    this._annotatedHomonyms = options.annotatedHomonyms
 
     const langID = this.selector.languageID
     this.canReset = (this.langOpts[langID] && this.langOpts[langID].lookupMorphLast)
@@ -121,28 +122,6 @@ export default class LexicalQuery extends Query {
 
   * iterations () {
     const formLexeme = new Lexeme(new Lemma(this.selector.normalizedText, this.selector.languageID), [])
-    if (this.selector.data.treebank && this.selector.data.treebank.word) {
-      const adapterTreebankRes = yield ClientAdapters.morphology.arethusaTreebank({
-        method: 'getHomonym',
-        clientId: this.clientId,
-        params: {
-          languageID: this.selector.languageID,
-          word: this.selector.normalizedText,
-          provider: this.selector.data.treebank.word.provider,
-          sentenceId: this.selector.data.treebank.word.sentenceId,
-          wordId: this.selector.data.treebank.word.wordId,
-          wordref: `${this.selector.data.treebank.word.doc}#${this.selector.data.treebank.word.sentenceId}-${this.selector.data.treebank.word.wordId}`
-        }
-      })
-      if (adapterTreebankRes.result) {
-        this.annotatedHomonym = adapterTreebankRes.result
-      }
-
-      if (adapterTreebankRes.errors.length > 0) {
-        adapterTreebankRes.errors.forEach(error => this.logger.log(error.message))
-      }
-    }
-
     if (!this.canReset) {
       // if we can't reset, proceed with full lookup sequence
       let adapterMorphRes
@@ -184,13 +163,13 @@ export default class LexicalQuery extends Query {
 
       if (adapterMorphRes.result) {
         this.homonym = adapterMorphRes.result
-        if (this.annotatedHomonym) {
-          this.homonym = Homonym.disambiguate(this.homonym, [this.annotatedHomonym])
+        if (this._annotatedHomonyms && this._annotatedHomonyms.hasHomonyms) {
+          this.homonym = Homonym.disambiguate(this.homonym, this._annotatedHomonyms.homonyms)
         }
         LexicalQuery.evt.MORPH_DATA_READY.pub()
       } else {
-        if (this.annotatedHomonym) {
-          this.homonym = this.annotatedHomonym
+        if (this._annotatedHomonyms && this._annotatedHomonyms.hasHomonyms) {
+          this.homonym = this._annotatedHomonyms.toHomonym(this.selector.normalizedText)
           LexicalQuery.evt.MORPH_DATA_READY.pub()
         } else {
           this.homonym = new Homonym([formLexeme], this.selector.normalizedText)
@@ -202,8 +181,8 @@ export default class LexicalQuery extends Query {
       }
     } else {
       // if we can reset then start with definitions of the unanalyzed form
-      if (this.annotatedHomonym) {
-        this.homonym = this.annotatedHomonym
+      if (this._annotatedHomonyms && this._annotatedHomonyms.hasHomonyms) {
+        this.homonym = this._annotatedHomonyms.toHomonym(this.selector.normalizedText)
         LexicalQuery.evt.MORPH_DATA_READY.pub()
       } else {
         this.homonym = new Homonym([formLexeme], this.selector.normalizedText)

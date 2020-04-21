@@ -88,8 +88,8 @@ class ClientAdapters {
   }
 
   /**
-  * This method checks if given array with parameteres doesn\'t have required parameters, registered in config file
-  * @param {[String]} params - array of parameter\' names for being checked
+  * This method checks if given array with parameteres doesn't have required parameters, registered in config file
+  * @param {[String]} params - array of parameter's names for being checked
   * @param {String} category - category name - morphology, lemmatranslation, lexicon
   * @param {String} adapterName - adapter name - tufts, treebankAdapter, alpheios
   * @param {String} methodName - method name - method name that should be checked, for example getHomonym, fetchTranslations and etc.
@@ -97,7 +97,8 @@ class ClientAdapters {
   static checkParam (params, category, adapterName, methodName) {
     if (cachedConfig.get(category)[adapterName].params) {
       cachedConfig.get(category)[adapterName].params[methodName].forEach(paramName => {
-        if (!params[paramName]) {
+        // Param values other than `undefined` such as `null` or empty strings could be valid values
+        if (typeof params[paramName] === 'undefined') {
           throw new NoRequiredParamError(category, adapterName, methodName, paramName)
         }
       })
@@ -228,6 +229,24 @@ class ClientAdapters {
     }
     if (options.method === 'refreshView') {
       const resp = await localAdapter.refreshView(options.params.provider)
+      return { result: resp, errors: localAdapter.errors }
+    }
+    if (options.method === 'gotoSentence') {
+      const resp = await localAdapter.gotoSentence(
+        options.params.provider,
+        options.params.sentenceId,
+        options.params.wordIds
+      )
+      return { result: resp, errors: localAdapter.errors }
+    }
+    if (options.method === 'findWord') {
+      const resp = await localAdapter.findWord(
+        options.params.provider,
+        options.params.word,
+        options.params.prefix,
+        options.params.suffix,
+        options.params.sentenceId
+      )
       return { result: resp, errors: localAdapter.errors }
     }
     return null

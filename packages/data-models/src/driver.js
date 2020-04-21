@@ -8,6 +8,7 @@ import FeatureType from './feature_type.js'
 import FeatureList from './feature_list.js'
 import FeatureImporter from './feature_importer.js'
 import LanguageModelFactory from './language_model_factory.js'
+import HomonymGroup from './homonym-group.js'
 import Homonym from './homonym.js'
 import Lexeme from './lexeme.js'
 import Lemma from './lemma.js'
@@ -45,6 +46,7 @@ export {
   FeatureImporter,
   Inflection,
   LanguageModelFactory,
+  HomonymGroup,
   Homonym,
   Lexeme,
   Lemma,

@@ -166,7 +166,10 @@ if you want to create a different configuration of a UI controller.
       messageBundles: Locales.bundleArr()
     })
 
-    uiController.registerModule(LexisModule)
+    uiController.registerModule(LexisModule, {
+      arethusaTbRefreshRetryCount: uiController.options.arethusaTbRefreshRetryCount,
+      arethusaTbRefreshDelay: uiController.options.arethusaTbRefreshDelay
+    })
 
     /*
     The second parameter of an AuthModule is environment specific.
@@ -278,11 +281,10 @@ if you want to create a different configuration of a UI controller.
       // be added by the components library
       overrideHelp: false,
       /*
-      This is an experimental flag that will force treebank iframe URL to be reset every time a treebank tab is
-      opened. It will force a content of an iframe to be reloaded and thus will solve display issues
-      with a treebank view.
+      How many times to retry and what timout to use within an Arethusa treebank app `refreshView` request.
        */
-      experimentalResetTreebankURL: false,
+      arethusaTbRefreshRetryCount: 50,
+      arethusaTbRefreshDelay: 200,
       // A URL of a server that provides an app configuration
       configServiceUrl: 'https://config.alpheios.net/v1/config'
     }
@@ -440,8 +442,7 @@ if you want to create a different configuration of a UI controller.
       // so they remain out of dynamic state for now - should eventually
       // refactor
       lookupResourceOptions: this.lookupResourceOptions,
-      siteOptions: this.siteOptions,
-      experimentalResetTreebankURL: this.options.experimentalResetTreebankURL
+      siteOptions: this.siteOptions
     }
 
     this.store.registerModule('settings', {

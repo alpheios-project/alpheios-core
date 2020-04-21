@@ -4,11 +4,12 @@ import Platform from '@/lib/utility/platform.js'
 import HTMLSelector from '@/lib/selection/media/html-selector.js'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
-import { Constants, TreebankDataItem } from 'alpheios-data-models'
+import { Constants, TreebankDataItem, HomonymGroup } from 'alpheios-data-models'
 import {
   CedictDestinationConfig as CedictProdConfig,
   CedictDestinationDevConfig as CedictDevConfig
 } from 'alpheios-messaging'
+import Vue from '@vue-runtime'
 const clientId = 'alpheios-components'
 let cedictConfig = CedictProdConfig
 if (DEVELOPMENT_MODE_BUILD) { cedictConfig = CedictDevConfig }
@@ -42,33 +43,31 @@ export default class Lexis extends Module {
     // Whether a treebank service has been loaded
     this._treebankServiceLoaded = false
     // Add an iframe with CEDICT service if Lexis config is available
-    if (this._lexisConfig) { this.createIframe() }
+    if (this._lexisConfig) { this.createCedictIframe() }
 
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
     api[this.constructor.moduleName] = this.constructor.api(this, store)
 
-    // For creating a page's TrrebankDataItem, use page body as a selection target
-    const body = document.querySelector('body')
-    if (!body) { throw new Error('Document body is not available') }
-    try {
-      this._treebankDataItem = new TreebankDataItem(body)
-      store.commit('lexis/setTreebankInfo', this._treebankDataItem)
-      if (!this._settingsApi.experimentalResetTreebankURL) {
-        // If treebank URL is reset in an iframe we don't need to send a refresh request
-        this.constructor.refreshUntilLoaded(this._treebankDataItem.provider)
-          .then(() => {
-            this._treebankServiceLoaded = true
-          })
-          .catch((err) => console.warn(err.message)) // If refreshUntilLoaded failed treebank will be unavailable
-      }
-    } catch (error) {
-      // Treebank info is not present on a page or is incorrect. Treebank data will not be used.
+    this._treebankDataItem = TreebankDataItem.getTreebankData()
+    if (this._treebankDataItem) {
+      store.commit('lexis/setTreebankInfo', { treebankDataItem: this._treebankDataItem, isAvailable: false })
+      this.constructor.refreshUntilLoaded(
+        this._treebankDataItem.provider,
+        this.config.arethusaTbRefreshRetryCount,
+        this.config.arethusaTbRefreshDelay)
+        .then(() => {
+          // Treebank app has become available
+          store.commit('lexis/setTreebankInfo', { treebankDataItem: this._treebankDataItem, isAvailable: true })
+        })
+        .catch((err) => {
+          // If refreshUntilLoaded failed treebank data will be unavailable
+          console.warn(err.message)
+        })
     }
-
     LexicalQuery.evt.CEDICT_SERVICE_UNINITIALIZED.sub(this.onCedictServiceUninitialized.bind(this, store))
   }
 
-  createIframe () {
+  createCedictIframe () {
     const iframe = document.createElement('iframe')
     iframe.id = cedictConfig.targetIframeID
     iframe.style.display = 'none'
@@ -96,13 +95,13 @@ export default class Lexis extends Module {
    * until a non-error response is received or a maximum number of retries is achieved.
    *
    * @param {string} provider - A URL of a treebank template app.
+   * @param {number | string} retryCount - How many times to resend a request if a previous attempt failed.
+   * @param {number | string} timeout - A timeout between resend attempts.
    * @returns {Promise<void> | Promise<Error>} - A promise that is resolved when a `refreshView`
    *          request succeeds or is reject when it fails after a certain number of retries.
    */
-  static async refreshUntilLoaded (provider) {
-    const retryMax = 20
-    // Need to refresh a view only for treebank V3 or higher
-    let count = retryMax
+  static async refreshUntilLoaded (provider, retryCount, timeout) {
+    let count = retryCount
     do {
       const result = await ClientAdapters.morphology.arethusaTreebank({
         method: 'refreshView',
@@ -111,13 +110,181 @@ export default class Lexis extends Module {
         }
       })
       if (result.errors.length === 0) {
+        // Request completed successfully
         return
       }
       // refreshView returned an error, let's try again after a timeout
-      await this.timeout(100)
+      await this.timeout(timeout)
     } while (count--)
     // All attempts to get a response with no errors failed
-    throw new Error(`refreshView request did not succeed in ${retryMax} attempts`)
+    throw new Error(`refreshUntilLoaded did not succeed in ${retryCount} attempts`)
+  }
+
+  static async getTreebankWordIds (treebankDataItem, textSelector) {
+    const findWordResult = await ClientAdapters.morphology.arethusaTreebank({
+      method: 'findWord',
+      params: {
+        provider: treebankDataItem.provider,
+        word: textSelector.normalizedText,
+        prefix: textSelector.textQuoteSelector.prefix,
+        suffix: textSelector.textQuoteSelector.suffix,
+        sentenceId: treebankDataItem.sentenceId
+      }
+    })
+    if (findWordResult.errors.length > 0) {
+      findWordResult.errors.forEach(error => console.error(error.message))
+      throw new Error('findWord request failed')
+    }
+    if (findWordResult.result) {
+      return findWordResult.result || []
+    }
+  }
+
+  static async updateTreebankDiagram (treebankDataItem) {
+    const loadResult = await ClientAdapters.morphology.arethusaTreebank({
+      method: 'gotoSentence',
+      params: {
+        provider: treebankDataItem.provider,
+        sentenceId: treebankDataItem.sentenceId,
+        wordIds: treebankDataItem.wordIds
+      }
+    })
+    if (loadResult.errors.length > 0) {
+      loadResult.errors.forEach(error => console.error(error.message))
+      throw new Error('updateTreebankDiagram request failed')
+    }
+  }
+
+  static async getHomonymsFromTreebank (treebankDataItem, textSelector) {
+    let homonyms = await Promise.all(treebankDataItem.wordIds.map(async (wordId) => {
+      const adapterTreebankRes = await ClientAdapters.morphology.arethusaTreebank({
+        method: 'getHomonym',
+        clientId: this.clientId,
+        params: {
+          languageID: textSelector.languageID,
+          word: textSelector.normalizedText,
+          provider: treebankDataItem.provider,
+          sentenceId: treebankDataItem.sentenceId,
+          wordId: wordId
+        }
+      })
+      if (adapterTreebankRes.errors.length > 0) {
+        return undefined
+      }
+      return adapterTreebankRes.result
+    }))
+    // Filter incorrect and empty responses out
+    homonyms = homonyms.filter(homonym => Boolean(homonym))
+    return new HomonymGroup(homonyms)
+  }
+
+  async lexicalQuery ({
+    store,
+    textSelector,
+    siteOptions = [],
+    lemmaTranslations,
+    wordUsageExamples,
+    checkContextForward = '',
+    treebankDataItem = null,
+    source = 'page'
+  } = {}) {
+    if (textSelector.languageID === Constants.LANG_CHINESE && !this._lexisConfig) {
+      console.warn('Lookup request cannot be completed: LexisCS configuration is unavailable')
+      return
+    }
+    this._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data, source)
+    let annotatedHomonyms
+    this._treebankDataItem = treebankDataItem
+
+    if (this._treebankDataItem) {
+      if (store.state.lexis.treebankSrc !== this._treebankDataItem.fullUrl) {
+        /*
+        Treebank's URL has changed. We need to update a treebank app's URL in an iframe
+        and wait for a treebank app to be loaded. The first step is to reset an app's URL
+        and wait for this change to be applied to DOM; that's why the use of `Vue.nextTick()`.
+        Without this step, refreshUntilLoaded()` may succeed but
+         */
+        store.commit('lexis/resetTreebankInfo')
+        await Vue.nextTick()
+
+        store.commit('lexis/setTreebankInfo', { treebankDataItem: this._treebankDataItem, isAvailable: false })
+        try {
+          /*
+          We need to wait until a URL change is applied to the iframe within the treebank Vue component
+          before issuing a refreshUntilLodaed request. Without that, a refresh request will take effect on
+          the old URL, not on the new one. We can use `nextTick()` to wait until the update is completed
+          and call `refreshUntilLoaded()` after that.
+           */
+          await Vue.nextTick()
+          await Lexis.refreshUntilLoaded(
+            this._treebankDataItem.provider,
+            this.config.arethusaTbRefreshRetryCount,
+            this.config.arethusaTbRefreshDelay
+          )
+          store.commit('lexis/setTreebankInfo', {
+            treebankDataItem: this._treebankDataItem,
+            isAvailable: true,
+            hasTreebankData: this._treebankDataItem.hasSentenceData
+          })
+        } catch (err) {
+          // If refreshUntilLoaded failed treebank data will be unavailable
+          console.warn(err.message)
+          store.commit('lexis/resetTreebankInfo')
+        }
+      } else {
+        store.commit('lexis/setTreebankInfo', {
+          treebankDataItem: this._treebankDataItem,
+          isAvailable: true,
+          hasTreebankData: this._treebankDataItem.hasSentenceData
+        })
+      }
+
+      try {
+        if (!this._treebankDataItem.hasWordData) {
+          // Try to get words IDs from an Arethusa treebank app
+          const wordIDs = await Lexis.getTreebankWordIds(this._treebankDataItem, textSelector)
+          if (wordIDs.length > 0) {
+            this._treebankDataItem.setWordData(wordIDs)
+          }
+        }
+        annotatedHomonyms = await Lexis.getHomonymsFromTreebank(this._treebankDataItem, textSelector)
+
+        /*
+        Update a treebank diagram to highlight selected words but don't wait for it to finish
+        (to not hold the following requests back).
+        This must be done as the last call in a chain of other treebank requests because
+        previous calls might send `gotoSentence` request without any `wordIds` data.
+        Such requests will cause no words to be highlighted on a diagram. If they will be executed
+        after `updateTreebankDiagram` request, they will erase a highlighting made by `updateTreebankDiagram`.
+         */
+        try {
+          Lexis.updateTreebankDiagram(this._treebankDataItem)
+        } catch (err) {
+          // Do nothing, we have no resort. An error will be handled in the method itself
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    } else {
+      store.commit('lexis/resetTreebankInfo')
+    }
+
+    const lexQuery = LexicalQuery.create(textSelector, {
+      clientId: this._appApi.clientId,
+      siteOptions,
+      verboseMode: this._settingsApi.verboseMode(),
+      lemmaTranslations,
+      wordUsageExamples,
+      resourceOptions: this._settingsApi.getResourceOptions(),
+      langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
+      checkContextForward,
+      cedictServiceUrl: this._lexisConfig ? this._lexisConfig.cedict.target_url : null,
+      annotatedHomonyms
+    })
+    lexQuery.getData()
+
+    // Hide a CEDICT notification on a new lexical query
+    store.commit('lexis/hideCedictNotification')
   }
 }
 
@@ -130,6 +297,7 @@ Lexis.store = (moduleInstance) => {
       cedictDataLoaded: false,
       cedictLoadingInProgress: false,
       cedictDisplayNotification: false,
+      isTreebankAvailable: false,
       hasTreebankData: false,
       treebankSrc: null,
       treebankRefreshDT: 0
@@ -160,17 +328,27 @@ Lexis.store = (moduleInstance) => {
       },
 
       /**
-       * Sets treebank information in a Vuex store
+       * Sets treebank information in a Vuex store.
        *
-       * @param {object} state - A Vuex state object
-       * @param {TreebankDataItem} treebankDataItem - A treebank data item element
+       * @param {object} state - A Vuex state object.
+       * @param {object} data - A data object.
+       * @param {TreebankDataItem} data.treebankDataItem - A treebank data item element.
+       * @param {boolean} data.isAvailable - Whether treebank application is available.
+       * @param {boolean} data.hasTreebankData - Whether there is any treebank word or sentence data
+       *        to show on a diagram.
        */
-      setTreebankInfo (state, treebankDataItem) {
-        state.hasTreebankData = treebankDataItem.hasTreebankData
-        state.treebankSrc = treebankDataItem.fullUrl
+      setTreebankInfo (state, {
+        treebankDataItem,
+        isAvailable = false,
+        hasTreebankData = false
+      } = {}) {
+        state.isTreebankAvailable = isAvailable
+        state.hasTreebankData = hasTreebankData
+        state.treebankSrc = treebankDataItem.fullUrl || null
       },
 
       resetTreebankInfo (state) {
+        state.isTreebankAvailable = false
         state.hasTreebankData = false
         state.treebankSrc = null
       },
@@ -184,16 +362,17 @@ Lexis.store = (moduleInstance) => {
 
 Lexis.api = (moduleInstance, store) => {
   return {
+    /**
+     * Starts a lexical query from a page.
+     *
+     * @param {EventElement} event - An event that initiated a query.
+     * @param {Event} domEvent - A corresponding DOM event.
+     */
     getSelectedText: (event, domEvent) => {
       if (moduleInstance._appApi.isGetSelectedTextEnabled(domEvent)) {
         const defaultLangCode = moduleInstance._appApi.getDefaultLangCode()
         const htmlSelector = new HTMLSelector(event, defaultLangCode)
         const textSelector = htmlSelector.createTextSelector()
-
-        if (textSelector.languageID === Constants.LANG_CHINESE && !moduleInstance._lexisConfig) {
-          console.warn('Lookup request cannot be completed: LexisCS configuration is unavailable')
-          return
-        }
 
         if (textSelector && !textSelector.isEmpty()) {
           const lastTextSelector = moduleInstance._lastTextSelector || {}
@@ -208,79 +387,32 @@ Lexis.api = (moduleInstance, store) => {
           }
           moduleInstance._lastTextSelector = textSelector
 
-          try {
-            moduleInstance._treebankDataItem = new TreebankDataItem(htmlSelector.target)
-            store.commit('lexis/setTreebankInfo', moduleInstance._treebankDataItem)
-          } catch (error) {
-            // Treebank info is not present on a page or is incorrect
-            moduleInstance._treebankDataItem = null
-            store.commit('lexis/resetTreebankInfo')
-          }
-
-          const lexQuery = LexicalQuery.create(textSelector, {
-            clientId: moduleInstance._appApi.clientId,
-            resourceOptions: moduleInstance._settingsApi.getResourceOptions(),
-            siteOptions: [],
+          moduleInstance.lexicalQuery({
+            store,
+            textSelector,
             lemmaTranslations: moduleInstance._appApi.getLemmaTranslationsQueryParams(textSelector),
             wordUsageExamples: moduleInstance._appApi.getWordUsageExamplesQueryParams(textSelector),
-            langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
             checkContextForward: textSelector.checkContextForward,
-            cedictServiceUrl: moduleInstance._lexisConfig ? moduleInstance._lexisConfig.cedict.target_url : null
+            treebankDataItem: TreebankDataItem.getTreebankData(htmlSelector.target),
+            source: 'page'
           })
-
-          moduleInstance._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data)
-          lexQuery.getData()
-
-          // Hide a CEDICT notification on a new lexical query
-          store.commit('lexis/hideCedictNotification')
         }
       }
     },
 
     /**
-     * This method starts a lexical query similarly to `getSelectedText`, but it differs in
-     * how query parameters are set.
-     * `lookupText` is intend to be used by lookup components where the user type the word in.
+     * Starts a lexical query from a lookup component.
      *
-     * @param textSelector
-     * @param resourceOptions
-     * @param lemmaTranslationLang
+     * @param {TextSelector} textSelector - A text selector object containing information about a lookup word.
+     * @param {string} lemmaTranslationLang - A locale for lemma translations (e.g. 'en-US')
      * @param wordUsageExamples
-     * @param clientId
-     * @param verboseMode
      */
-    lookupText: (textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, clientId, verboseMode) => {
-      /*
-      When word is entered in the lookup component, it is out of context and we cannot get any treebank data on it.
-       */
-      moduleInstance._treebankDataItem = null
-      store.commit('lexis/resetTreebankInfo')
-
+    lookupText: (textSelector, lemmaTranslationLang, wordUsageExamples) => {
       let lemmaTranslations
       if (textSelector.languageID === Constants.LANG_LATIN && lemmaTranslationLang) {
         lemmaTranslations = { locale: lemmaTranslationLang }
       }
-
-      if (textSelector.languageID === Constants.LANG_CHINESE && !moduleInstance._lexisConfig) {
-        throw new Error('LexisCS configuration is unavailable')
-      }
-
-      const lexQuery = LexicalQuery.create(textSelector, {
-        htmlSelector: HTMLSelector.getDumpHTMLSelector(),
-        clientId: clientId,
-        verboseMode: verboseMode,
-        lemmaTranslations: lemmaTranslations,
-        wordUsageExamples: wordUsageExamples,
-        resourceOptions: resourceOptions,
-        langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
-        checkContextForward: '',
-        cedictServiceUrl: moduleInstance._lexisConfig ? moduleInstance._lexisConfig.cedict.target_url : null
-      })
-      moduleInstance._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, null, 'lookup')
-      lexQuery.getData()
-
-      // Hide a CEDICT notification on a new lexical query
-      store.commit('lexis/hideCedictNotification')
+      moduleInstance.lexicalQuery({ store, textSelector, lemmaTranslations, wordUsageExamples, source: 'lookup' })
     },
 
     loadCedictData: async () => {
@@ -307,17 +439,16 @@ Lexis.api = (moduleInstance, store) => {
 
     refreshTreebankView: () => {
       if (moduleInstance._treebankDataItem) {
-        if (moduleInstance._settingsApi.experimentalResetTreebankURL) {
-          // Update a refresh date time to trigger a URL reset in  a treebank component
-          store.commit('lexis/setTreebankRefreshDT')
-        } else {
-          // If treebank URL is reset in an iframe we don't need to send a refresh request
-          Lexis.refreshUntilLoaded(moduleInstance._treebankDataItem.provider)
-            .then(() => {
-              store.commit('lexis/setTreebankRefreshDT')
-            })
-            .catch((err) => console.warn(err.message)) // If refreshUntilLoaded failed treebank will be unavailable
-        }
+        Lexis.refreshUntilLoaded(
+          moduleInstance._treebankDataItem.provider,
+          moduleInstance.arethusaTbRefreshRetryCount,
+          moduleInstance.arethusaTbRefreshDelay
+        ).catch((err) => {
+          // Treebank data is probably not available
+          console.warn(err.message)
+          moduleInstance._treebankDataItem = null
+          store.commit('lexis/resetTreebankInfo')
+        })
       }
     }
   }

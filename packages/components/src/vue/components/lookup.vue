@@ -167,7 +167,6 @@ export default {
       const selectedLangID = LanguageModelFactory.getLanguageIdFromCode(selectedLangCode)
       const textSelector = TextSelector.createObjectFromText(this.lookuptext, selectedLangID)
 
-      const resourceOptions = this.settings.getResourceOptions()
       const lemmaTranslationLang = this.app.state.lemmaTranslationLang
       const featureOptions = this.settings.getFeatureOptions()
 
@@ -179,8 +178,7 @@ export default {
         : null
 
       try {
-        this.lexis.lookupText(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, this.app.clientId,
-          this.settings.verboseMode())
+        this.lexis.lookupText(textSelector, lemmaTranslationLang, wordUsageExamples)
         // Notify parent that the lookup has been started so that the parent can close itself if necessary
         this.$emit('lookup-started')
         this.showLookupResult()

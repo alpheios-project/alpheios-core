@@ -370,6 +370,17 @@ class LanguageModel {
   }
 
   /**
+   * If last trailing digit is "1" it should be stripped during normalization,
+   * because a word with this trailing digit is equivalent of a word without it.
+   *
+   * @param {string} word - A word to normalize.
+   * @returns {string} A normalized word.
+   */
+  static normalizeTrailingDigit (word) {
+    return /^.+1$/.test(word) ? word.substring(0, word.length - 1) : word
+  }
+
+  /**
    * Checks if the word provided is in a normalized form.
    * It also checks if the word has the right single quotation (elision).
    *
@@ -427,6 +438,8 @@ class LanguageModel {
    */
   static compareWords (wordA, wordB, normalize = true, options = {}) {
     if (normalize) {
+      wordA = this.normalizeTrailingDigit(wordA)
+      wordB = this.normalizeTrailingDigit(wordB)
       return this.normalizeWord(wordA) === this.normalizeWord(wordB)
     } else {
       return wordA === wordB

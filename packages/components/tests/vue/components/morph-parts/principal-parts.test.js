@@ -226,6 +226,6 @@ describe('principal-parts.test.js', () => {
     })
 
     expect(cmp.find('.alpheios-principal-parts__lemma_index').text()).toEqual('2')
-    expect(cmp.find('.alpheios-principal-parts__groupitem').text().replace(/(\r\n|\n|\r)/gm, '').replace(/  +/g, ' ')).toEqual('Cupido Cupidinis')
+    expect(cmp.find('.alpheios-principal-parts__groupitem').text().replace(/(\r\n|\n|\r)/gm, '').replace(/  +/g, ' ')).toEqual('CupidoCupidinis')
   })
 })

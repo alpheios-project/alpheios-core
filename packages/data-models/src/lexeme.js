@@ -1,7 +1,8 @@
 import Lemma from './lemma.js'
 import Inflection from './inflection.js'
-import DefinitionSet from './definition-set'
-import LMF from './language_model_factory'
+import DefinitionSet from './definition-set.js'
+import LMF from './language_model_factory.js'
+import LM from './language_model.js'
 import ResourceProvider from './resource_provider.js'
 
 /**
@@ -137,9 +138,12 @@ class Lexeme {
     /*
     A Lexeme can be used as an disambiguator if:
     - its lemma is a full homonym of a disambiguator's lemma;
-    - if disambiguators has at least some inflections; it has no value otherwise;
+    - disambiguator, comparing to a lexeme, has some extra features worth adding such as:
+      - some additional information in a word (e.g. a trailing digit) that lemma has not;
+      - at least one inflection.
     */
-    return this.isFullHomonym(disambiguator, { normalize: true }) && disambiguator.inflections.length > 0
+    const hasExtraFeatures = disambiguator.inflections.length || LM.hasTrailingDigit(disambiguator.lemma.word)
+    return this.isFullHomonym(disambiguator, { normalize: true }) && hasExtraFeatures
   }
 
   /**

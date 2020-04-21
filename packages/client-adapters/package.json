@@ -82,7 +82,8 @@
     "moduleNameMapper": {
       "^@clAdapters[/](.+)": "<rootDir>/src/$1",
       "^@tests[/](.+)": "<rootDir>/tests/$1",
-      "alpheios-messaging": "<rootDir>../../node_modules/alpheios-messaging/dist/dev/alpheios-messaging.js"
+      "alpheios-messaging": "<rootDir>../../node_modules/alpheios-messaging/dist/dev/alpheios-messaging.node.js",
+      "alpheios-fixtures": "<rootDir>../../node_modules/alpheios-fixtures/dist/alpheios-fixtures.js"
     },
     "moduleFileExtensions": [
       "js",

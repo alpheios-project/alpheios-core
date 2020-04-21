@@ -20,14 +20,16 @@ describe('lexical-query.test.js', () => {
   console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
-  // console.info = function () {}
 
-  let l10n = new L10n()
+  const clientID = 'CLIENT_ID'
+  const cedictServiceURL = 'CEDICT_SERVICE_URL'
+
+  const l10n = new L10n()
     .addMessages(enUS, Locales.en_US)
     .addMessages(enGB, Locales.en_GB)
     .setLocale(Locales.en_US)
 
-  let testUI = {
+  const testUI = {
     setTargetRect: function () {
       return {
         newLexicalRequest: function () {
@@ -53,19 +55,19 @@ describe('lexical-query.test.js', () => {
     l10n: l10n
   }
 
-  let testTextSelector = {
+  const testTextSelector = {
     normalizedText: 'foo',
     word: 'foo',
     languageID: Constants.LANG_LATIN,
     data: 'foo data'
   }
-  let testHtmlSelector = {
+  const testHtmlSelector = {
     targetRect: 'foo targetRect'
   }
 
-  let langId = testTextSelector.languageID
+  const langId = testTextSelector.languageID
 
-  let testHomonym = {
+  const testHomonym = {
     targetWord: 'testHomonym',
     languageID: testTextSelector.languageID,
     lexemes: [{
@@ -89,20 +91,20 @@ describe('lexical-query.test.js', () => {
     mockStaticMorphology.mockReturnValue({
       tufts: jest.fn(() => { return { result: testHomonym, errors: [] } }),
       chineseloc: jest.fn(() => { return { result: testHomonym, errors: [] } }),
-      alpheiosTreebank: jest.fn(() => { return { result: testHomonym, errors: [] } }),
+      alpheiosTreebank: jest.fn(() => { return { result: testHomonym, errors: [] } })
     })
     const mockStaticEmpty = jest.fn()
     mockStaticEmpty.mockReturnValue({
       alpheios: jest.fn(() => { return { result: resultForMock, errors: [] } })
     })
-  
-    Object.defineProperty( ClientAdapters, 'morphology', {
+
+    Object.defineProperty(ClientAdapters, 'morphology', {
       get: mockStaticMorphology
     })
-    Object.defineProperty( ClientAdapters, 'lexicon', {
+    Object.defineProperty(ClientAdapters, 'lexicon', {
       get: mockStaticEmpty
     })
-    Object.defineProperty( ClientAdapters, 'lemmatranslation', {
+    Object.defineProperty(ClientAdapters, 'lemmatranslation', {
       get: mockStaticEmpty
     })
   })
@@ -113,19 +115,19 @@ describe('lexical-query.test.js', () => {
     jest.clearAllMocks()
   })
 
-  let testLexicalData = {
+  const testLexicalData = {
     foo: 'bar'
   }
-  let testLDFAdapter = {
+  const testLDFAdapter = {
     getInflectionData: function () { return new Promise((resolve, reject) => { resolve(testLexicalData) }) }
   }
 
-  let testLDFAdapterFailed = {
+  const testLDFAdapterFailed = {
     getInflectionData: function () { return new Promise((resolve, reject) => { reject(new Error('testLDFAdapterFailed error')) }) }
   }
 
   it.skip('1 LexicalQuery - create function returns a new LexicalQuery with params', () => {
-    let query = LexicalQuery.create('foo selector', {})
+    const query = LexicalQuery.create('foo selector', {})
 
     expect(typeof query).toEqual('object')
     expect(query.constructor.name).toEqual('LexicalQuery')
@@ -135,12 +137,12 @@ describe('lexical-query.test.js', () => {
 
   // TODO: Probably removal of iteration of `getInflectionData()` broke it. Need to fix
   it.skip('3 LexicalQuery - getData could make another iterations circle if canReset = true', async () => {
-    let curUI = Object.assign({}, testUI)
-    let query = LexicalQuery.create(testTextSelector, {
+    const curUI = Object.assign({}, testUI)
+    const query = LexicalQuery.create(testTextSelector, {
       uiController: curUI,
       htmlSelector: testHtmlSelector
     })
-    let languageID = LMF.getLanguageIdFromCode(testTextSelector.languageCode)
+    const languageID = LMF.getLanguageIdFromCode(testTextSelector.languageCode)
     query.active = true
     query.canReset = true
 
@@ -156,8 +158,8 @@ describe('lexical-query.test.js', () => {
   })
 
   it('4 LexicalQuery - getData executes iterations: maAdapter.getHomonym and after it updateMorphology, updateDefinitions, showStatusInfo with homonym data', async () => {
-    let curUI = Object.assign({}, testUI)
-    let query = LexicalQuery.create(testTextSelector, {
+    const curUI = Object.assign({}, testUI)
+    const query = LexicalQuery.create(testTextSelector, {
       uiController: curUI,
       htmlSelector: testHtmlSelector
     })
@@ -180,15 +182,18 @@ describe('lexical-query.test.js', () => {
   })
 
   it('5 LexicalQuery - getData executes iterations: chineseLoc.getHomonym and after it updateMorphology for Chinese', async () => {
-    let testTextSelectorChinese = {
+    const testTextSelectorChinese = {
       normalizedText: '培養',
       word: '培養',
       languageID: Constants.LANG_CHINESE,
       data: 'foo data'
     }
 
-    let curUI = Object.assign({}, testUI)
+    const curUI = Object.assign({}, testUI)
+    // eslint-disable-next-line prefer-const
     let query = LexicalQuery.create(testTextSelectorChinese, {
+      clientId: clientID,
+      cedictServiceUrl: cedictServiceURL,
       uiController: curUI,
       htmlSelector: testHtmlSelector
     })
@@ -202,7 +207,10 @@ describe('lexical-query.test.js', () => {
 
     expect(ClientAdapters.morphology.chineseloc).toHaveBeenCalledWith({
       method: 'getHomonym',
+      clientId: clientID,
+      serviceUrl: cedictServiceURL,
       params: {
+        checkContextForward: '',
         languageID: testTextSelectorChinese.languageID,
         word: testTextSelectorChinese.normalizedText
       }
@@ -211,8 +219,8 @@ describe('lexical-query.test.js', () => {
   })
 
   it.skip('8 LexicalQuery - getData executes fetchShortDefs and fetchFullDefs ', async () => {
-    let curUI = Object.assign({}, testUI)
-    let query = LexicalQuery.create(testTextSelector, {
+    const curUI = Object.assign({}, testUI)
+    const query = LexicalQuery.create(testTextSelector, {
       uiController: curUI,
       htmlSelector: testHtmlSelector
     })
@@ -244,10 +252,10 @@ describe('lexical-query.test.js', () => {
   })
 
   it.skip('9 LexicalQuery - getData executes fetchTranslations and it executes updateTranslations', async () => {
-    let curUI = Object.assign({}, testUI)
+    const curUI = Object.assign({}, testUI)
 
-    let userLang = 'fr'
-    let query = LexicalQuery.create(testTextSelector, {
+    const userLang = 'fr'
+    const query = LexicalQuery.create(testTextSelector, {
       uiController: curUI,
       htmlSelector: testHtmlSelector,
       lemmaTranslations: { locale: userLang }
@@ -275,26 +283,26 @@ describe('lexical-query.test.js', () => {
   })
 
   it.skip('10 LexicalQuery - getLexiconOptions parses lexicons', () => {
-    let mockSelector = {
+    const mockSelector = {
       location: 'http://example.org',
       languageID: Constants.LANG_LATIN
     }
 
-    let emptyPromise = () => { return new Promise((resolve, reject) => {}) }
+    const emptyPromise = () => { return new Promise((resolve, reject) => {}) }
 
-    let allSiteOptions = []
-    for (let site of SiteOptions) {
-      for (let domain of site.options) {
-        let siteOpts = new Options(domain, LocalStorageArea)
+    const allSiteOptions = []
+    for (const site of SiteOptions) {
+      for (const domain of site.options) {
+        const siteOpts = new Options(domain, LocalStorageArea)
         siteOpts.storageAdapter.get = emptyPromise
         siteOpts.storageAdapter.set = emptyPromise
         allSiteOptions.push({ uriMatch: site.uriMatch, resourceOptions: siteOpts })
       }
     }
 
-    let languageOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
+    const languageOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
 
-    let query = LexicalQuery.create(mockSelector, {
+    const query = LexicalQuery.create(mockSelector, {
       resourceOptions: languageOptions,
       siteOptions: allSiteOptions,
       langOpts: {}
@@ -303,12 +311,12 @@ describe('lexical-query.test.js', () => {
   })
 
   it.skip('11 LexicalQuery - getLexiconOptions parses empty lexicons and returns {}', () => {
-    let mockSelector = {
+    const mockSelector = {
       location: 'http://example.org',
       languageID: Constants.LANG_LATIN
     }
-    let languageOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
-    let query = LexicalQuery.create(mockSelector, {
+    const languageOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
+    const query = LexicalQuery.create(mockSelector, {
       resourceOptions: languageOptions,
       siteOptions: [],
       langOpts: {}
@@ -318,15 +326,15 @@ describe('lexical-query.test.js', () => {
   })
 
   it.skip('12 LexicalQuery - calls tbAdapter if treebank data is present in selector', async () => {
-    let curUI = Object.assign({}, testUI)
-    let mockSelector = {
+    const curUI = Object.assign({}, testUI)
+    const mockSelector = {
       normalizedText: 'foo',
       word: 'foo',
       languageID: Constants.LANG_LATIN,
       data: { treebank: { word: { src: '', ref: 'mockref' } } }
     }
-    let languageOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
-    let query = LexicalQuery.create(mockSelector, {
+    const languageOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
+    const query = LexicalQuery.create(mockSelector, {
       uiController: curUI,
       resourceOptions: languageOptions,
       htmlSelector: testHtmlSelector,
@@ -355,15 +363,15 @@ describe('lexical-query.test.js', () => {
   })
 
   it.skip('13 LexicalQuery - does not call tbAdapter if treebank data is not present in selector', async () => {
-    let curUI = Object.assign({}, testUI)
-    let mockSelector = {
+    const curUI = Object.assign({}, testUI)
+    const mockSelector = {
       normalizedText: 'foo',
       word: 'foo',
       languageID: Constants.LANG_LATIN,
       data: { treebank: { } }
     }
-    let languageOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
-    let query = LexicalQuery.create(mockSelector, {
+    const languageOptions = new Options(LanguageOptionDefaults, LocalStorageArea)
+    const query = LexicalQuery.create(mockSelector, {
       uiController: curUI,
       resourceOptions: languageOptions,
       htmlSelector: testHtmlSelector,
@@ -383,8 +391,8 @@ describe('lexical-query.test.js', () => {
   })
 
   it.skip('14 LexicalQuery - it finalizes if no definition requests are made', async () => {
-    let curUI = Object.assign({}, testUI)
-    let query = LexicalQuery.create(testTextSelector, {
+    const curUI = Object.assign({}, testUI)
+    const query = LexicalQuery.create(testTextSelector, {
       uiController: curUI,
       htmlSelector: testHtmlSelector
     })
@@ -402,8 +410,8 @@ describe('lexical-query.test.js', () => {
   })
 
   it.skip('15 LexicalQuery - it finalizes if definition requests are made', async () => {
-    let curUI = Object.assign({}, testUI)
-    let query = LexicalQuery.create(testTextSelector, {
+    const curUI = Object.assign({}, testUI)
+    const query = LexicalQuery.create(testTextSelector, {
       uiController: curUI,
       htmlSelector: testHtmlSelector
     })
@@ -420,5 +428,4 @@ describe('lexical-query.test.js', () => {
     expect(LexicalQuery.evt.DEFS_READY.pub).toHaveBeenCalled()
     expect(query.finalize).toHaveBeenCalledWith('Success')
   })
-
 })
