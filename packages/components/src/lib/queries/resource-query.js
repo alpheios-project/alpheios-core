@@ -36,8 +36,8 @@ export default class ResourceQuery extends Query {
     }
   }
 
-  getGrammarOptions(languageID) {
-    let allOptions = this.resourceOptions.items['grammars'] || []
+  getGrammarOptions (languageID) {
+    const allOptions = this.resourceOptions.items.grammars || []
     const languageCode = LanguageModelFactory.getLanguageCodeFromId(languageID)
     let grammarOpts = allOptions.filter((g) => Options.parseKey(g.name).group === languageCode
     ).map((g) => { return { prefer: g.currentValue } }
@@ -51,8 +51,8 @@ export default class ResourceQuery extends Query {
   }
 
   * iterations () {
-    let options = this.getGrammarOptions(this.feature.languageID)
-    this.grammarResources = yield this.grammars.fetchResources(this.feature,options)
+    const options = this.getGrammarOptions(this.feature.languageID)
+    this.grammarResources = yield this.grammars.fetchResources(this.feature, options)
     yield 'Retrieval of grammar info complete'
 
     let grammarRequests = []

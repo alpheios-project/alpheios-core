@@ -1,6 +1,8 @@
 <template>
   <div class="alpheios-ui-options__cont">
     <font-size></font-size>
+    <label for="volume">Volume</label>
+    <input type="range" id="volume" name="volume" min="400" max="1200" step="100">
     <setting
         :classes="['alpheios-ui-options__item']"
         :data="uiOptions.items.panelPosition"
@@ -22,37 +24,37 @@
   </div>
 </template>
 <script>
-  import FontSize from './font-size.vue'
-  import Setting from './setting.vue'
-  import Options from '@/lib/options/options.js'
-  import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
-  export default {
-    name: 'UISettings',
-    // API modules that are required for this component
-    inject: {
-      app: 'app',
-      ui: 'ui',
-      l10n: 'l10n',
-      settings: 'settings'
-    },
-    storeModules: ['app','ui'], // Store modules that are required by this component
-    mixins: [DependencyCheck],
-    components: {
-      setting: Setting,
-      fontSize: FontSize
-    },
-    computed: {
-      uiOptions: function() {
-        return this.settings.getUiOptions()
-      }
-    },
-    methods: {
-      uiOptionChanged: function (name, value) {
-        let keyinfo = Options.parseKey(name)
-        this.ui.optionChange(keyinfo.name, value)
-      }
+import FontSize from './font-size.vue'
+import Setting from './setting.vue'
+import Options from '@/lib/options/options.js'
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
+export default {
+  name: 'UISettings',
+  // API modules that are required for this component
+  inject: {
+    app: 'app',
+    ui: 'ui',
+    l10n: 'l10n',
+    settings: 'settings'
+  },
+  storeModules: ['app', 'ui'], // Store modules that are required by this component
+  mixins: [DependencyCheck],
+  components: {
+    setting: Setting,
+    fontSize: FontSize
+  },
+  computed: {
+    uiOptions: function () {
+      return this.settings.getUiOptions()
+    }
+  },
+  methods: {
+    uiOptionChanged: function (name, value) {
+      const keyinfo = Options.parseKey(name)
+      this.ui.optionChange(keyinfo.name, value)
     }
   }
+}
 </script>
 <style lang="scss">
   @import "../../styles/variables";

@@ -36,7 +36,7 @@
 
     <div class="alpheios-checkbox-block alpheios-setting__control" v-if="dataModel.boolean">
       <input id="alpheios-checkbox-input" type="checkbox" v-model="selected">
-      <label @click="checkboxClick" for="checkbox">{{ checkboxLabel }}
+      <label @click="checkboxClick" for="alpheios-checkbox-input">{{ checkboxLabel }}
         <span v-html="labelText" v-if="showCheckboxTitle"></span>
       </label>
     </div>
@@ -45,7 +45,7 @@
         class="alpheios-select alpheios-setting__control"
         v-if="!dataModel.multiValue && !dataModel.boolean && !dataModel.number && !dataModel.text"
         v-model="selected">
-      <option v-for="item in values">{{item}}</option>
+      <option v-for="item in values" :key="item">{{item}}</option>
     </select>
 
   </div>
@@ -102,9 +102,9 @@ export default {
     selected: {
       get: function () {
         let rv
-        if (typeof this.selectedOverride === "string") {
-          if (this.dataModel.boolean == true) {
-            rv = this.selectedOverried === "true" ? true : false
+        if (typeof this.selectedOverride === 'string') {
+          if (this.dataModel.boolean === true) {
+            rv = this.selectedOverried === 'true'
           } else {
             rv = this.selectedOverride
           }
@@ -114,7 +114,7 @@ export default {
           rv = this.dataModel.currentValue
         } else if (this.dataModel.number === true) {
           rv = parseInt(this.dataModel.currentValue)
-        } 
+        }
         return rv
       },
       set: function (newValue) {

@@ -20,6 +20,20 @@
         }
       ]
     },
+    "maxPopupWidth": {
+      "defaultValue": "1200",
+      "labelText": "Maximum panel size:",
+      "values": [
+        {
+          "value": "left",
+          "text": "Left"
+        },
+        {
+          "value": "right",
+          "text": "Right"
+        }
+      ]
+    },
     "panelPosition": {
       "defaultValue": "left",
       "labelText": "Panel position:",
