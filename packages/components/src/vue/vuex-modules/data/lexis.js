@@ -203,6 +203,7 @@ export default class Lexis extends Module {
         and wait for a treebank app to be loaded. The first step is to reset an app's URL
         and wait for this change to be applied to DOM; that's why the use of `Vue.nextTick()`.
         Without this step, refreshUntilLoaded()` may succeed but
+        for the previous treebank URL, not for the current one. This is not what we want.
          */
         store.commit('lexis/resetTreebankInfo')
         await Vue.nextTick()

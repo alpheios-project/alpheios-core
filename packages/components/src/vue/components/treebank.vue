@@ -10,12 +10,7 @@ export default {
   name: 'Treebank',
   inject: ['settings'],
   storeModules: ['lexis'],
-  mixins: [DependencyCheck],
-  data () {
-    return {
-      treebankSrcUrl: null
-    }
-  }
+  mixins: [DependencyCheck]
 }
 </script>
 <style lang="scss">

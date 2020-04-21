@@ -3887,8 +3887,8 @@ class LanguageModel {
   }
 
   /**
-   * If last trailing digit is "1" it should be stripped during normalization,
-   * because a word with this trailing digit is equivalent of a word without it.
+   * Morphological parsers and dictionary indexes may add a trailing digit to disambiguate homonyms.
+   * These can be ignored for purposes of string comparison.
    *
    * @param {string} word - A word to normalize.
    * @returns {string} A normalized word.
