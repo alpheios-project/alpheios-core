@@ -26,7 +26,8 @@ export default class Grammars {
 
     let requests = []
     try {
-      let adapters = Grammars.getGrammarAdapters(feature.languageID)
+      let adapters = Grammars.getGrammarAdapters(feature.languageID, options)
+
       if (!adapters || adapters.length === 0) { return [] } // No adapters found for this language
       requests = adapters.map(adapter => {
         return new Promise((resolve, reject) => {
@@ -63,9 +64,10 @@ export default class Grammars {
   /**
    * Returns a list of suitable lexicon adapters for a given language ID.
    * @param {Symbol} languageID - A language ID of adapters returned.
+   * @param {Object} options - request options
    * @return {BaseLexiconAdapter[]} An array of lexicon adapters for a given language.
    */
-  static getGrammarAdapters (languageID) {
+  static getGrammarAdapters (languageID, options) {
     if (!grammars.has(languageID)) {
       // As getLexicons need a language code, let's convert a language ID to a code
       let languageCode = LanguageModelFactory.getLanguageCodeFromId(languageID)
@@ -73,6 +75,11 @@ export default class Grammars {
       let grammarsList = GrammarResAdapter.getProviders(languageCode)
       grammars.set(languageID, Array.from(grammarsList.keys()).map(id => new GrammarResAdapter(id)))
     }
-    return grammars.get(languageID)
+    const allGrammars =grammars.get(languageID)
+    if (options.prefer) {
+      return allGrammars.filter(g => g.resid === options.prefer)
+    } else {
+      return allGrammars
+    }
   }
 }

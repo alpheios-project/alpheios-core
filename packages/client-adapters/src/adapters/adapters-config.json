@@ -64,6 +64,17 @@
         "getAuthorsWorks": [],
         "getWordUsageExamples" : [ "homonym"]
       }
+
+    }
+  },
+
+  "autocompleteWords": {
+    "logeion": {
+      "adapter": "autoCompleteWords",
+      "methods": "getWords",
+      "params": {
+        "getWords": ["text", "lang"]
+      }
     }
   }
 }

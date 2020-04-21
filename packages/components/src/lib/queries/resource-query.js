@@ -1,11 +1,13 @@
 import Query from './query.js'
-import { PsEvent } from 'alpheios-data-models'
+import Options from '@/lib/options/options.js'
+import { PsEvent, LanguageModelFactory } from 'alpheios-data-models'
 
 export default class ResourceQuery extends Query {
   constructor (name, feature, options) {
     super(name)
     this.feature = feature
     this.grammars = options.grammars
+    this.resourceOptions = options.resourceOptions || []
   }
 
   static create (feature, options) {
@@ -34,8 +36,23 @@ export default class ResourceQuery extends Query {
     }
   }
 
+  getGrammarOptions(languageID) {
+    let allOptions = this.resourceOptions.items['grammars'] || []
+    const languageCode = LanguageModelFactory.getLanguageCodeFromId(languageID)
+    let grammarOpts = allOptions.filter((g) => Options.parseKey(g.name).group === languageCode
+    ).map((g) => { return { prefer: g.currentValue } }
+    )
+    if (grammarOpts.length > 0) {
+      grammarOpts = grammarOpts[0]
+    } else {
+      grammarOpts = {}
+    }
+    return grammarOpts
+  }
+
   * iterations () {
-    this.grammarResources = yield this.grammars.fetchResources(this.feature)
+    let options = this.getGrammarOptions(this.feature.languageID)
+    this.grammarResources = yield this.grammars.fetchResources(this.feature,options)
     yield 'Retrieval of grammar info complete'
 
     let grammarRequests = []

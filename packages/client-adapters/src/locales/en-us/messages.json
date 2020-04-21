@@ -165,5 +165,11 @@
     "description": "Error message for wordusageExamples.concordance adapter - problems with fetching word usage examples from concordance api",
     "component": "wordusageExamples.concordance",
     "params": ["message"]
+  },
+  "LOGEION_FETCH_ERROR": {
+    "message": "Some problems with fetching words from logeion api - {message}",
+    "description": "Error message for autoCompleteWords.logeion adapter - problems with fetching words from logeion api",
+    "component": "autoCompleteWords.logeion",
+    "params": ["message"]
   }
 }

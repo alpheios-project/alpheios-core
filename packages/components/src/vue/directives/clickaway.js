@@ -63,7 +63,7 @@ function bind (el, binding, vnode) {
     }
 
     // if neither the popup nor the panel are visible, stop the check
-    if (panel && !visible(panel) && popup && !visible(popup)) {
+    if (panel && !visible(panel) && popup && !visible(popup) && overlayNav && !visible(overlayNav)) {
       return
     }
 

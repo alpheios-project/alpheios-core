@@ -67,7 +67,6 @@
                 "number": "singular",
                 "person": "1st",
                 "mood": "indicative",
-                "stemtype": "aor_pass",
                 "value": "ἐβουλεύθην"
             },
             {
@@ -77,7 +76,6 @@
                 "number": "singular",
                 "person": "1st",
                 "mood": "subjunctive",
-                "stemtype": "aor_pass",
                 "value": "βουλευθῶ"
             },
             {
@@ -87,7 +85,6 @@
                 "number": "singular",
                 "person": "1st",
                 "mood": "optative",
-                "stemtype": "aor_pass",
                 "value": "βουλευθείην"
             },
             {
@@ -97,7 +94,6 @@
                 "number": "singular",
                 "person": "1st",
                 "mood": "imperative",
-                "stemtype": "aor_pass",
                 "value": ""
             }
         ]},
@@ -122,7 +118,6 @@
                 "number": "singular",
                 "person": "2nd",
                 "mood": "indicative",
-                "stemtype": "aor_pass",
                 "value": "ἐβουλεύθης"
             },
             {
@@ -132,7 +127,6 @@
                 "number": "singular",
                 "person": "2nd",
                 "mood": "subjunctive",
-                "stemtype": "aor_pass",
                 "value": "βουλευθῇς"
             },
             {
@@ -142,7 +136,6 @@
                 "number": "singular",
                 "person": "2nd",
                 "mood": "optative",
-                "stemtype": "aor_pass",
                 "value": "βουλευθείης"
             },
             {
@@ -152,7 +145,6 @@
                 "number": "singular",
                 "person": "2nd",
                 "mood": "imperative",
-                "stemtype": "aor_pass",
                 "value": "βουλεύθητι"
             }
         ]},
@@ -177,7 +169,6 @@
                 "number": "singular",
                 "person": "3rd",
                 "mood": "indicative",
-                "stemtype": "aor_pass",
                 "value": "ἐβουλεύθη"
             },
             {
@@ -187,7 +178,6 @@
                 "number": "singular",
                 "person": "3rd",
                 "mood": "subjunctive",
-                "stemtype": "aor_pass",
                 "value": "βουλευθῇ"
             },
             {
@@ -197,7 +187,6 @@
                 "number": "singular",
                 "person": "3rd",
                 "mood": "optative",
-                "stemtype": "aor_pass",
                 "value": "βουλευθείη"
             },
             {
@@ -207,7 +196,6 @@
                 "number": "singular",
                 "person": "3rd",
                 "mood": "imperative",
-                "stemtype": "aor_pass",
                 "value": "βουλευθήτω"
             }
         ]},
@@ -232,7 +220,6 @@
                 "number": "dual",
                 "person": "2nd",
                 "mood": "indicative",
-                "stemtype": "aor_pass",
                 "value": "ἐβουλεύθητον"
             },
             {
@@ -242,7 +229,6 @@
                 "number": "dual",
                 "person": "2nd",
                 "mood": "subjunctive",
-                "stemtype": "aor_pass",
                 "value": "βουλευθῆτον"
             },
             {
@@ -252,7 +238,6 @@
                 "number": "dual",
                 "person": "2nd",
                 "mood": "optative",
-                "stemtype": "aor_pass",
                 "value": "βουλευθείητον (-θεῖτον)"
             },
             {
@@ -262,7 +247,6 @@
                 "number": "dual",
                 "person": "2nd",
                 "mood": "imperative",
-                "stemtype": "aor_pass",
                 "value": "βουλεύθητον"
             }
         ]},
@@ -287,7 +271,6 @@
                 "number": "dual",
                 "person": "3rd",
                 "mood": "indicative",
-                "stemtype": "aor_pass",
                 "value": "ἐβουλευθήτην"
             },
             {
@@ -297,7 +280,6 @@
                 "number": "dual",
                 "person": "3rd",
                 "mood": "subjunctive",
-                "stemtype": "aor_pass",
                 "value": "βουλευθῆτον"
             },
             {
@@ -307,7 +289,6 @@
                 "number": "dual",
                 "person": "3rd",
                 "mood": "optative",
-                "stemtype": "aor_pass",
                 "value": "βουλευθειήτην (-θείτην)"
             },
             {
@@ -317,7 +298,6 @@
                 "number": "dual",
                 "person": "3rd",
                 "mood": "imperative",
-                "stemtype": "aor_pass",
                 "value": "βουλευθήτων"
             }
         ]},
@@ -342,7 +322,6 @@
                 "number": "plural",
                 "person": "1st",
                 "mood": "indicative",
-                "stemtype": "aor_pass",
                 "value": "ἐβουλεύθημεν"
             },
             {
@@ -352,7 +331,6 @@
                 "number": "plural",
                 "person": "1st",
                 "mood": "subjunctive",
-                "stemtype": "aor_pass",
                 "value": "βουλευθῶμεν"
             },
             {
@@ -362,7 +340,6 @@
                 "number": "plural",
                 "person": "1st",
                 "mood": "optative",
-                "stemtype": "aor_pass",
                 "value": "βουλευθείημεν (-θεῖμεν)"
             },
             {
@@ -372,7 +349,6 @@
                 "number": "plural",
                 "person": "1st",
                 "mood": "imperative",
-                "stemtype": "aor_pass",
                 "value": ""
             }
         ]},
@@ -397,7 +373,6 @@
                 "number": "plural",
                 "person": "2nd",
                 "mood": "indicative",
-                "stemtype": "aor_pass",
                 "value": "ἐβουλεύθητε"
             },
             {
@@ -407,7 +382,6 @@
                 "number": "plural",
                 "person": "2nd",
                 "mood": "subjunctive",
-                "stemtype": "aor_pass",
                 "value": "βουλευθῆτε"
             },
             {
@@ -417,7 +391,6 @@
                 "number": "plural",
                 "person": "2nd",
                 "mood": "optative",
-                "stemtype": "aor_pass",
                 "value": "βουλευθείητε (-θεῖτε)"
             },
             {
@@ -427,7 +400,6 @@
                 "number": "plural",
                 "person": "2nd",
                 "mood": "imperative",
-                "stemtype": "aor_pass",
                 "value": "βουλεύθητε"
             }
         ]},
@@ -452,7 +424,6 @@
                 "number": "plural",
                 "person": "3rd",
                 "mood": "indicative",
-                "stemtype": "aor_pass",
                 "value": "ἐβουλεύθησαν"
             },
             {
@@ -462,7 +433,6 @@
                 "number": "plural",
                 "person": "3rd",
                 "mood": "subjunctive",
-                "stemtype": "aor_pass",
                 "value": "βουλευθῶσῐ(ν)"
             },
             {
@@ -472,7 +442,6 @@
                 "number": "plural",
                 "person": "3rd",
                 "mood": "optative",
-                "stemtype": "aor_pass",
                 "value": "βουλευθείησαν (-θεῖεν)"
             },
             {
@@ -482,7 +451,6 @@
                 "number": "plural",
                 "person": "3rd",
                 "mood": "imperative",
-                "stemtype": "aor_pass",
                 "value": "βουλευθέντων"
             }
         ]}

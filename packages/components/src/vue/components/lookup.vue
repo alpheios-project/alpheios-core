@@ -17,17 +17,15 @@
         </span>
 
         <div class="alpheios-lookup__search-control">
-          <input
-              autocapitalize="off"
-              autocorrect="off"
-              @keyup.enter="lookup"
-              @keyup="updateBetaCodes"
-              class="alpheios-input"
-             :class="{ 'alpheios-rtl': directionRtl}"
-              type="text"
-              v-model="lookuptext"
-              id="alpheios-lookup-form-input"
-          >
+          <input-autocomplete
+              :lang = "getLookupLanguage()"
+              :clearValue = "clearLookupText"
+              :useBetaCodes = "useBetaCodes"
+              :enableLogeionAutoComplete = "$options.enableLogeionAutoComplete.currentValue"
+              id="alpheios-lookup-input"
+              @keyPressEnter = "lookup"
+              @updateLookupText = "updateLookupText"
+          />
           <button
               @click.stop="lookup"
               class="alpheios-button-primary"
@@ -57,16 +55,26 @@
     <alph-setting
         :classes="['alpheios-panel__options-item', 'alpheios-lookup__form-element', 'alpheios-lookup__lang-control']"
         :data="this.$options.lookupLanguage"
-        @change="settingChange"
+        @change="settingChangeLL"
         v-show="showLangSelector"
+    >
+    </alph-setting>
+    <alph-setting
+        v-if="showEnableAutocomplete"
+        class="alpheios-panel__options-item alpheios-lookup__form-element alpheios-lookup__autocomplete"
+        :data="this.$options.enableLogeionAutoComplete"
+        :show-label-text = "enableLogeionAutoCompleteProps.showLabelText"
+        :show-checkbox-title = "enableLogeionAutoCompleteProps.showCheckboxTitle"
+        @change="settingChangeELA"
     >
     </alph-setting>
   </div>
 </template>
 <script>
 import TextSelector from '@/lib/selection/text-selector'
-import GreekInput from '@/lib/utility/greek-input.js'
 import HelpIcon from '@/images/inline-icons/help-icon.svg'
+import GreekInput from '@/lib/utility/greek-input.js'
+import Options from '@/lib/options/options.js'
 
 import { LanguageModelFactory, Constants } from 'alpheios-data-models'
 import LookupIcon from '@/images/inline-icons/lookup.svg'
@@ -74,6 +82,7 @@ import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 import Logger from '@/lib/log/logger'
 
 import Setting from './setting.vue'
+import InputAutocomplete from '@/vue/components/form-components/input-autocomplete.vue'
 
 export default {
   name: 'Lookup',
@@ -83,7 +92,8 @@ export default {
   components: {
     alphSetting: Setting,
     lookupIcon: LookupIcon,
-    helpIcon: HelpIcon
+    helpIcon: HelpIcon,
+    inputAutocomplete: InputAutocomplete
   },
   logger: Logger.getInstance(),
   data () {
@@ -93,7 +103,12 @@ export default {
       // The following variable is used to signal that language options has been updated
       langUpdated: Date.now(),
       useBetaCodes: false,
-      showBetaCodesInfo: false
+      showBetaCodesInfo: false,
+      clearLookupText: 0,
+      enableLogeionAutoCompleteProps: {
+        showLabelText: false,
+        showCheckboxTitle: true
+      }
     }
   },
   props: {
@@ -117,18 +132,20 @@ export default {
   },
   created: function () {
     this.$options.lookupLanguage = this.settings.getFeatureOptions().items.lookupLanguage
+    this.$options.enableLogeionAutoComplete = this.settings.getFeatureOptions().items.enableLogeionAutoComplete
   },
 
   computed: {
     lookupLangName () {
       return this.app.getLanguageName(this.getLookupLanguage()).name
     },
-    directionRtl () {
-      const model = LanguageModelFactory.getLanguageModelFromCode(this.getLookupLanguage())
-      return model.direction === Constants.LANG_DIR_RTL
-    },
     showUseBetaCodes () {
       return this.getLookupLanguage() === GreekInput.langCode
+    },
+    showEnableAutocomplete () {
+      const check = this.$options.enableLogeionAutoComplete.limitByLangs.includes(this.getLookupLanguage())
+      this.$emit('toggleEnableAutocompleteCheck', check)
+      return check
     }
   },
   watch: {
@@ -138,7 +155,7 @@ export default {
 
     '$store.state.app.morphDataReady' (morphDataReady) {
       if (morphDataReady && this.app.hasMorphData()) {
-        this.lookuptext = ''
+        this.clearLookupText = this.clearLookupText + 1
       }
     }
   },
@@ -179,7 +196,7 @@ export default {
 
       try {
         this.lexis.lookupText(textSelector, lemmaTranslationLang, wordUsageExamples)
-        // Notify parent that the lookup has been started so that the parent can close itself if necessary
+        // Notify parent  that the lookup has been started so that the parent can close itself if necessary
         this.$emit('lookup-started')
         this.showLookupResult()
       } catch (err) {
@@ -202,21 +219,25 @@ export default {
       }
     },
 
-    settingChange (name, value) {
+    settingChangeLL (name, value) {
       this.$options.lookupLanguage.setTextValue(value)
       this.$store.commit('app/setSelectedLookupLang', this.$options.lookupLanguage.currentValue)
       this.langUpdated = Date.now()
     },
 
-    updateBetaCodes (event) {
-      if (event.keyCode !== 13 && this.getLookupLanguage() === GreekInput.langCode && this.useBetaCodes) {
-        this.lookuptext = GreekInput.change(this.lookuptext)
-      }
+    settingChangeELA (name, value) {
+      let keyinfo = Options.parseKey(name)
+      this.app.featureOptionChange(keyinfo.name, value)
+      this.$options.enableLogeionAutoComplete.setValue(value)
     },
 
     toggleBetaCodesInfo () {
       this.showBetaCodesInfo = !this.showBetaCodesInfo
       this.$emit('toggleBetaCodesInfo', this.showBetaCodesInfo)
+    },
+
+    updateLookupText (lookupText) {
+      this.lookuptext = lookupText
     }
   }
 }
@@ -278,21 +299,6 @@ export default {
     display: flex;
 
     // Double selector is used to prevent style leaks from host pages
-
-    input.alpheios-input,
-    input.alpheios-input:focus
-    {
-      width: 70%;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      height: $fieldsetHeight;
-      min-width: 0;
-      border-color: var(--alpheios-lookup-input-border-color);
-      &.alpheios-rtl {
-        direction: rtl;
-        text-align: right;
-      }
-    }
 
     button {
       border-top-left-radius: 0;
@@ -375,6 +381,13 @@ export default {
     span {
       display: inline-block;
       padding-right: 20px;
+    }
+  }
+
+  .alpheios-lookup__autocomplete {
+    margin-top: 5px;
+    div.alpheios-checkbox-block {
+      max-width: none;
     }
   }
 </style>
