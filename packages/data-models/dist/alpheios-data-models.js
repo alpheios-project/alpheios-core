@@ -2811,9 +2811,16 @@ class HomonymGroup {
   }
 
   toHomonym (targetWord) {
-    const lexemes = this._homonyms.map(homonym => homonym.lexemes).flatten()
+    if (!targetWord) {
+      throw new Error(HomonymGroup.errors.NO_TARGET_WORD)
+    }
+    const lexemes = this._homonyms.map(homonym => homonym.lexemes).flat()
     return new _homonym_js__WEBPACK_IMPORTED_MODULE_0__["default"](lexemes, targetWord)
   }
+}
+
+HomonymGroup.errors = {
+  NO_TARGET_WORD: 'Target word is not provided'
 }
 
 

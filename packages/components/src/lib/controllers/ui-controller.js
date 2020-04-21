@@ -1372,7 +1372,7 @@ If no URLS are provided, will reset grammar data.
   /**
     (re)initializes grammar data from settings
   */
-  initGrammar() {
+  initGrammar () {
     this.store.commit('app/setUpdatedGrammar')
   }
 

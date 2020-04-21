@@ -97,9 +97,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ({
 
 /***/ "../../../node_modules/alpheios-messaging/dist/dev/alpheios-messaging.js":
-/*!***********************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/alpheios-messaging/dist/dev/alpheios-messaging.js ***!
-  \***********************************************************************************************************/
+/*!*************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/alpheios-messaging/dist/dev/alpheios-messaging.js ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1744,9 +1744,9 @@ ResponseMessage.errorCodes = {
 /***/ }),
 
 /***/ "../../../node_modules/axios/index.js":
-/*!************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/index.js ***!
-  \************************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/index.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1755,9 +1755,9 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/a
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/adapters/xhr.js":
-/*!***********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/adapters/xhr.js ***!
-  \***********************************************************************************/
+/*!*************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/adapters/xhr.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1947,9 +1947,9 @@ module.exports = function xhrAdapter(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/axios.js":
-/*!****************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/axios.js ***!
-  \****************************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/axios.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2012,9 +2012,9 @@ module.exports.default = axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/Cancel.js":
-/*!************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/cancel/Cancel.js ***!
-  \************************************************************************************/
+/*!**************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/cancel/Cancel.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2043,9 +2043,9 @@ module.exports = Cancel;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/CancelToken.js":
-/*!*****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/cancel/CancelToken.js ***!
-  \*****************************************************************************************/
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/cancel/CancelToken.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2112,9 +2112,9 @@ module.exports = CancelToken;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/isCancel.js":
-/*!**************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/cancel/isCancel.js ***!
-  \**************************************************************************************/
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/cancel/isCancel.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2129,9 +2129,9 @@ module.exports = function isCancel(value) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/Axios.js":
-/*!*********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/Axios.js ***!
-  \*********************************************************************************/
+/*!***********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/Axios.js ***!
+  \***********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2235,9 +2235,9 @@ module.exports = Axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/InterceptorManager.js":
-/*!**********************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/InterceptorManager.js ***!
-  \**********************************************************************************************/
+/*!************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/InterceptorManager.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2299,9 +2299,9 @@ module.exports = InterceptorManager;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/buildFullPath.js":
-/*!*****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/buildFullPath.js ***!
-  \*****************************************************************************************/
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/buildFullPath.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2331,9 +2331,9 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/createError.js":
-/*!***************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/createError.js ***!
-  \***************************************************************************************/
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/createError.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2361,9 +2361,9 @@ module.exports = function createError(message, config, code, request, response) 
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/dispatchRequest.js":
-/*!*******************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/dispatchRequest.js ***!
-  \*******************************************************************************************/
+/*!*********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/dispatchRequest.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2452,9 +2452,9 @@ module.exports = function dispatchRequest(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/enhanceError.js":
-/*!****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/enhanceError.js ***!
-  \****************************************************************************************/
+/*!******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/enhanceError.js ***!
+  \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2506,9 +2506,9 @@ module.exports = function enhanceError(error, config, code, request, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/mergeConfig.js":
-/*!***************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/mergeConfig.js ***!
-  \***************************************************************************************/
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/mergeConfig.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2591,9 +2591,9 @@ module.exports = function mergeConfig(config1, config2) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/settle.js":
-/*!**********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/settle.js ***!
-  \**********************************************************************************/
+/*!************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/settle.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2628,9 +2628,9 @@ module.exports = function settle(resolve, reject, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/transformData.js":
-/*!*****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/transformData.js ***!
-  \*****************************************************************************************/
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/core/transformData.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2660,9 +2660,9 @@ module.exports = function transformData(data, headers, fns) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/defaults.js":
-/*!*******************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/defaults.js ***!
-  \*******************************************************************************/
+/*!*********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/defaults.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2770,9 +2770,9 @@ module.exports = defaults;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/bind.js":
-/*!***********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/bind.js ***!
-  \***********************************************************************************/
+/*!*************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/bind.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2793,9 +2793,9 @@ module.exports = function bind(fn, thisArg) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/buildURL.js":
-/*!***************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/buildURL.js ***!
-  \***************************************************************************************/
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/buildURL.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2876,9 +2876,9 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/combineURLs.js":
-/*!******************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/combineURLs.js ***!
-  \******************************************************************************************/
+/*!********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/combineURLs.js ***!
+  \********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2902,9 +2902,9 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/cookies.js":
-/*!**************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/cookies.js ***!
-  \**************************************************************************************/
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/cookies.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2967,9 +2967,9 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isAbsoluteURL.js":
-/*!********************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
-  \********************************************************************************************/
+/*!**********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2993,9 +2993,9 @@ module.exports = function isAbsoluteURL(url) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isURLSameOrigin.js":
-/*!**********************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
-  \**********************************************************************************************/
+/*!************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3073,9 +3073,9 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/normalizeHeaderName.js":
-/*!**************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
-  \**************************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3097,9 +3097,9 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/parseHeaders.js":
-/*!*******************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/parseHeaders.js ***!
-  \*******************************************************************************************/
+/*!*********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/parseHeaders.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3162,9 +3162,9 @@ module.exports = function parseHeaders(headers) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/spread.js":
-/*!*************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/spread.js ***!
-  \*************************************************************************************/
+/*!***************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/helpers/spread.js ***!
+  \***************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3201,9 +3201,9 @@ module.exports = function spread(callback) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/utils.js":
-/*!****************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/utils.js ***!
-  \****************************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/axios/lib/utils.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3557,9 +3557,9 @@ module.exports = {
 /***/ }),
 
 /***/ "../../../node_modules/base64-js/index.js":
-/*!****************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/base64-js/index.js ***!
-  \****************************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/base64-js/index.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3721,9 +3721,9 @@ function fromByteArray (uint8) {
 /***/ }),
 
 /***/ "../../../node_modules/core-util-is/lib/util.js":
-/*!**********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/core-util-is/lib/util.js ***!
-  \**********************************************************************************/
+/*!************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/core-util-is/lib/util.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3840,9 +3840,9 @@ function objectToString(o) {
 /***/ }),
 
 /***/ "../../../node_modules/events/events.js":
-/*!**************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/events/events.js ***!
-  \**************************************************************************/
+/*!****************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/events/events.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4298,9 +4298,9 @@ function unwrapListeners(arr) {
 /***/ }),
 
 /***/ "../../../node_modules/ieee754/index.js":
-/*!**************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/ieee754/index.js ***!
-  \**************************************************************************/
+/*!****************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/ieee754/index.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -4393,9 +4393,9 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 /***/ }),
 
 /***/ "../../../node_modules/inherits/inherits.js":
-/*!******************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/inherits/inherits.js ***!
-  \******************************************************************************/
+/*!********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/inherits/inherits.js ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4413,9 +4413,9 @@ try {
 /***/ }),
 
 /***/ "../../../node_modules/inherits/inherits_browser.js":
-/*!**************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/inherits/inherits_browser.js ***!
-  \**************************************************************************************/
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/inherits/inherits_browser.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -4451,9 +4451,9 @@ if (typeof Object.create === 'function') {
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat-parser/index.js":
-/*!********************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat-parser/index.js ***!
-  \********************************************************************************************/
+/*!**********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat-parser/index.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4467,9 +4467,9 @@ exports['default'] = exports;
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat-parser/lib/parser.js":
-/*!*************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat-parser/lib/parser.js ***!
-  \*************************************************************************************************/
+/*!***************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat-parser/lib/parser.js ***!
+  \***************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5879,9 +5879,9 @@ exports["default"] = (function() {
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/index.js":
-/*!*************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat/index.js ***!
-  \*************************************************************************************/
+/*!***************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/index.js ***!
+  \***************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5906,9 +5906,9 @@ exports['default'] = exports;
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/lib/compiler.js":
-/*!********************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat/lib/compiler.js ***!
-  \********************************************************************************************/
+/*!**********************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/compiler.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6126,9 +6126,9 @@ SelectFormat.prototype.getOption = function (value) {
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/lib/core.js":
-/*!****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat/lib/core.js ***!
-  \****************************************************************************************/
+/*!******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/core.js ***!
+  \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6414,9 +6414,9 @@ MessageFormat.prototype._resolveLocale = function (locales) {
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/lib/en.js":
-/*!**************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat/lib/en.js ***!
-  \**************************************************************************************/
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/en.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6430,9 +6430,9 @@ exports["default"] = {"locale":"en","pluralRuleFunction":function (n,ord){var s=
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/lib/es5.js":
-/*!***************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat/lib/es5.js ***!
-  \***************************************************************************************/
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/es5.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6491,9 +6491,9 @@ exports.defineProperty = defineProperty, exports.objCreate = objCreate;
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/lib/main.js":
-/*!****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat/lib/main.js ***!
-  \****************************************************************************************/
+/*!******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/main.js ***!
+  \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6513,9 +6513,9 @@ exports["default"] = src$core$$["default"];
 /***/ }),
 
 /***/ "../../../node_modules/intl-messageformat/lib/utils.js":
-/*!*****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/intl-messageformat/lib/utils.js ***!
-  \*****************************************************************************************/
+/*!*******************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/intl-messageformat/lib/utils.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6556,9 +6556,9 @@ exports.hop = hop;
 /***/ }),
 
 /***/ "../../../node_modules/isarray/index.js":
-/*!**************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/isarray/index.js ***!
-  \**************************************************************************/
+/*!****************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/isarray/index.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -6572,9 +6572,9 @@ module.exports = Array.isArray || function (arr) {
 /***/ }),
 
 /***/ "../../../node_modules/node-libs-browser/node_modules/buffer/index.js":
-/*!********************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/buffer/index.js ***!
-  \********************************************************************************************************/
+/*!**********************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/node-libs-browser/node_modules/buffer/index.js ***!
+  \**********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8374,9 +8374,9 @@ function isnan (val) {
 /***/ }),
 
 /***/ "../../../node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits.js":
-/*!*******************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits.js ***!
-  \*******************************************************************************************************************************/
+/*!*********************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits.js ***!
+  \*********************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8392,9 +8392,9 @@ try {
 /***/ }),
 
 /***/ "../../../node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits_browser.js":
-/*!***************************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits_browser.js ***!
-  \***************************************************************************************************************************************/
+/*!*****************************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits_browser.js ***!
+  \*****************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -8426,9 +8426,9 @@ if (typeof Object.create === 'function') {
 /***/ }),
 
 /***/ "../../../node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js":
-/*!************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js ***!
-  \************************************************************************************************************************/
+/*!**************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js ***!
+  \**************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -8442,9 +8442,9 @@ module.exports = function isBuffer(arg) {
 /***/ }),
 
 /***/ "../../../node_modules/node-libs-browser/node_modules/util/util.js":
-/*!*****************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/util/util.js ***!
-  \*****************************************************************************************************/
+/*!*******************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/node-libs-browser/node_modules/util/util.js ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9157,9 +9157,9 @@ exports.callbackify = callbackify;
 /***/ }),
 
 /***/ "../../../node_modules/papaparse/papaparse.js":
-/*!********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/papaparse/papaparse.js ***!
-  \********************************************************************************/
+/*!**********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/papaparse/papaparse.js ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11084,9 +11084,9 @@ License: MIT
 /***/ }),
 
 /***/ "../../../node_modules/process-nextick-args/index.js":
-/*!***************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/process-nextick-args/index.js ***!
-  \***************************************************************************************/
+/*!*****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/process-nextick-args/index.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11142,9 +11142,9 @@ function nextTick(fn, arg1, arg2, arg3) {
 /***/ }),
 
 /***/ "../../../node_modules/process/browser.js":
-/*!****************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/process/browser.js ***!
-  \****************************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/process/browser.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -11337,9 +11337,9 @@ process.umask = function() { return 0; };
 /***/ }),
 
 /***/ "../../../node_modules/safe-buffer/index.js":
-/*!******************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/safe-buffer/index.js ***!
-  \******************************************************************************/
+/*!********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/safe-buffer/index.js ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11410,9 +11410,9 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 /***/ }),
 
 /***/ "../../../node_modules/setimmediate/setImmediate.js":
-/*!**************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/setimmediate/setImmediate.js ***!
-  \**************************************************************************************/
+/*!****************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/setimmediate/setImmediate.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11608,9 +11608,9 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/index.js":
-/*!************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/index.js ***!
-  \************************************************************************************/
+/*!**************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/index.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11746,9 +11746,9 @@ Stream.prototype.pipe = function(dest, options) {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/duplex-browser.js":
-/*!**************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/duplex-browser.js ***!
-  \**************************************************************************************************************************/
+/*!****************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/duplex-browser.js ***!
+  \****************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11758,9 +11758,9 @@ module.exports = __webpack_require__(/*! ./lib/_stream_duplex.js */ "../../../no
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js":
-/*!******************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js ***!
-  \******************************************************************************************************************************/
+/*!********************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js ***!
+  \********************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11900,9 +11900,9 @@ Duplex.prototype._destroy = function (err, cb) {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js":
-/*!***********************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js ***!
-  \***********************************************************************************************************************************/
+/*!*************************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js ***!
+  \*************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11958,9 +11958,9 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js":
-/*!********************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js ***!
-  \********************************************************************************************************************************/
+/*!**********************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js ***!
+  \**********************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12989,9 +12989,9 @@ function indexOf(xs, x) {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js":
-/*!*********************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js ***!
-  \*********************************************************************************************************************************/
+/*!***********************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js ***!
+  \***********************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13214,9 +13214,9 @@ function done(stream, er, data) {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js":
-/*!********************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js ***!
-  \********************************************************************************************************************************/
+/*!**********************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js ***!
+  \**********************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13913,9 +13913,9 @@ Writable.prototype._destroy = function (err, cb) {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/BufferList.js":
-/*!*******************************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/BufferList.js ***!
-  \*******************************************************************************************************************************************/
+/*!*********************************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/BufferList.js ***!
+  \*********************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14003,9 +14003,9 @@ if (util && util.inspect && util.inspect.custom) {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js":
-/*!****************************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js ***!
-  \****************************************************************************************************************************************/
+/*!******************************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js ***!
+  \******************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14088,9 +14088,9 @@ module.exports = {
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js":
-/*!***********************************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js ***!
-  \***********************************************************************************************************************************************/
+/*!*************************************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js ***!
+  \*************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14100,9 +14100,9 @@ module.exports = __webpack_require__(/*! events */ "../../../node_modules/events
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/passthrough.js":
-/*!***********************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/passthrough.js ***!
-  \***********************************************************************************************************************/
+/*!*************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/passthrough.js ***!
+  \*************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14112,9 +14112,9 @@ module.exports = __webpack_require__(/*! ./readable */ "../../../node_modules/st
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/readable-browser.js":
-/*!****************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/readable-browser.js ***!
-  \****************************************************************************************************************************/
+/*!******************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/readable-browser.js ***!
+  \******************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14130,9 +14130,9 @@ exports.PassThrough = __webpack_require__(/*! ./lib/_stream_passthrough.js */ ".
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/transform.js":
-/*!*********************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/transform.js ***!
-  \*********************************************************************************************************************/
+/*!***********************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/transform.js ***!
+  \***********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14142,9 +14142,9 @@ module.exports = __webpack_require__(/*! ./readable */ "../../../node_modules/st
 /***/ }),
 
 /***/ "../../../node_modules/stream-browserify/node_modules/readable-stream/writable-browser.js":
-/*!****************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/writable-browser.js ***!
-  \****************************************************************************************************************************/
+/*!******************************************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/writable-browser.js ***!
+  \******************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14154,9 +14154,9 @@ module.exports = __webpack_require__(/*! ./lib/_stream_writable.js */ "../../../
 /***/ }),
 
 /***/ "../../../node_modules/string_decoder/lib/string_decoder.js":
-/*!**********************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/string_decoder/lib/string_decoder.js ***!
-  \**********************************************************************************************/
+/*!************************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/string_decoder/lib/string_decoder.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14461,9 +14461,9 @@ function simpleEnd(buf) {
 /***/ }),
 
 /***/ "../../../node_modules/timers-browserify/main.js":
-/*!***********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/timers-browserify/main.js ***!
-  \***********************************************************************************/
+/*!*************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/timers-browserify/main.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14536,9 +14536,9 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /***/ }),
 
 /***/ "../../../node_modules/util-deprecate/node.js":
-/*!********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/util-deprecate/node.js ***!
-  \********************************************************************************/
+/*!**********************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/util-deprecate/node.js ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14617,9 +14617,9 @@ module.exports = function(module) {
 /***/ }),
 
 /***/ "../../../node_modules/xmltojson/lib/xmlToJSON.js":
-/*!************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/xmltojson/lib/xmlToJSON.js ***!
-  \************************************************************************************/
+/*!**************************************************************************************!*\
+  !*** C:/uds/projects/alpheios/alpheios-core/node_modules/xmltojson/lib/xmlToJSON.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14878,7 +14878,7 @@ else if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () { return xmlToJSON
 /*! exports provided: morphology, lexicon, lemmatranslation, wordusageExamples, autocompleteWords, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"arethusaTreebank\":{\"adapter\":\"arethusaAdapter\",\"methods\":[\"getHomonym\",\"refreshView\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\",\"provider\",\"sentenceId\",\"wordId\"],\"refreshView\":[\"provider\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\",\"loadData\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"],\"loadData\":[\"timeout\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\",\"checkCachedData\",\"getConfig\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"],\"checkCachedData\":[\"url\",\"externalData\"],\"getConfig\":[]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}},\"autocompleteWords\":{\"logeion\":{\"adapter\":\"autoCompleteWords\",\"methods\":\"getWords\",\"params\":{\"getWords\":[\"text\",\"lang\"]}}}}");
+module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"arethusaTreebank\":{\"adapter\":\"arethusaAdapter\",\"methods\":[\"getHomonym\",\"refreshView\",\"gotoSentence\",\"findWord\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\",\"provider\",\"sentenceId\",\"wordId\"],\"refreshView\":[\"provider\"],\"gotoSentence\":[\"provider\",\"sentenceId\",\"wordIds\"],\"findWord\":[\"provider\",\"word\",\"prefix\",\"suffix\",\"sentenceId\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\",\"loadData\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"],\"loadData\":[\"timeout\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\",\"checkCachedData\",\"getConfig\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"],\"checkCachedData\":[\"url\",\"externalData\"],\"getConfig\":[]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}},\"autocompleteWords\":{\"logeion\":{\"adapter\":\"autoCompleteWords\",\"methods\":\"getWords\",\"params\":{\"getWords\":[\"text\",\"lang\"]}}}}");
 
 /***/ }),
 
@@ -15169,6 +15169,48 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
       this.addError(this.l10n.messages['MORPH_TREEBANK_UNKNOWN_ERROR'].get(error.mesage))
     }
   }
+
+  async findWord (provider, word, prefix, suffix, sentenceId) {
+    const config = this._getMessageConfig(provider)
+    const svc = this.getMessagingService(config)
+    const gotoSentenceBody = {
+      gotoSentence: { sentenceId }
+    }
+    try {
+      await svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](gotoSentenceBody))
+      const findWordBody = { findWord: { sentenceId, word, prefix, suffix } }
+      const response = await svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](findWordBody))
+      return response.body
+    } catch (response) {
+      if (response instanceof alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["ResponseMessage"]) {
+        // This is an error from a treebank template app
+        this.addRemoteError(response.errorCode, response.body.message)
+      } else {
+        // This is some other error
+        this.addError(response.message)
+      }
+    }
+  }
+
+  async gotoSentence (provider, sentenceId, wordIds = []) {
+    const config = this._getMessageConfig(provider)
+    const svc = this.getMessagingService(config)
+    const gotoSentenceBody = {
+      gotoSentence: { sentenceId, wordIds }
+    }
+    try {
+      const response = await svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](gotoSentenceBody))
+      return response.body
+    } catch (response) {
+      if (response instanceof alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["ResponseMessage"]) {
+        // This is an error from a treebank template app
+        this.addRemoteError(response.errorCode, response.body.message)
+      } else {
+        // This is some other error
+        this.addError(response.message)
+      }
+    }
+  }
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (ArethusaTreebankAdapter);
@@ -15453,7 +15495,12 @@ class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPA
     instance of the service that will be created once and reused across consecutive constructor invocations.
      */
     if (!alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].hasService(msgServiceName)) {
-      alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].createService(msgServiceName, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["WindowIframeDestination"](this.cedictConfig))
+      alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].createService(msgServiceName, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["WindowIframeDestination"]({
+        name: this.cedictConfig.name,
+        targetURL: this.cedictConfig.targetURL,
+        targetIframeID: this.cedictConfig.targetIframeID,
+        commModes: [alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["WindowIframeDestination"].commModes.SEND]
+      }))
     }
     this._messagingService = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].getService(msgServiceName)
   }
@@ -17224,8 +17271,8 @@ class ClientAdapters {
   }
 
   /**
-  * This method checks if given array with parameteres doesn\'t have required parameters, registered in config file
-  * @param {[String]} params - array of parameter\' names for being checked
+  * This method checks if given array with parameteres doesn't have required parameters, registered in config file
+  * @param {[String]} params - array of parameter's names for being checked
   * @param {String} category - category name - morphology, lemmatranslation, lexicon
   * @param {String} adapterName - adapter name - tufts, treebankAdapter, alpheios
   * @param {String} methodName - method name - method name that should be checked, for example getHomonym, fetchTranslations and etc.
@@ -17233,7 +17280,8 @@ class ClientAdapters {
   static checkParam (params, category, adapterName, methodName) {
     if (cachedConfig.get(category)[adapterName].params) {
       cachedConfig.get(category)[adapterName].params[methodName].forEach(paramName => {
-        if (!params[paramName]) {
+        // Param values other than `undefined` such as `null` or empty strings could be valid values
+        if (typeof params[paramName] === 'undefined') {
           throw new _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_9__["default"](category, adapterName, methodName, paramName)
         }
       })
@@ -17364,6 +17412,24 @@ class ClientAdapters {
     }
     if (options.method === 'refreshView') {
       const resp = await localAdapter.refreshView(options.params.provider)
+      return { result: resp, errors: localAdapter.errors }
+    }
+    if (options.method === 'gotoSentence') {
+      const resp = await localAdapter.gotoSentence(
+        options.params.provider,
+        options.params.sentenceId,
+        options.params.wordIds
+      )
+      return { result: resp, errors: localAdapter.errors }
+    }
+    if (options.method === 'findWord') {
+      const resp = await localAdapter.findWord(
+        options.params.provider,
+        options.params.word,
+        options.params.prefix,
+        options.params.suffix,
+        options.params.sentenceId
+      )
       return { result: resp, errors: localAdapter.errors }
     }
     return null
