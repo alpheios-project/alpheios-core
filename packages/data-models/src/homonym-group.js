@@ -14,7 +14,14 @@ export default class HomonymGroup {
   }
 
   toHomonym (targetWord) {
-    const lexemes = this._homonyms.map(homonym => homonym.lexemes).flatten()
+    if (!targetWord) {
+      throw new Error(HomonymGroup.errors.NO_TARGET_WORD)
+    }
+    const lexemes = this._homonyms.map(homonym => homonym.lexemes).flat()
     return new Homonym(lexemes, targetWord)
   }
+}
+
+HomonymGroup.errors = {
+  NO_TARGET_WORD: 'Target word is not provided'
 }
