@@ -140,21 +140,21 @@ for the current node
   }
 
   /**
-   * Return a normalized version of a word which can be used to compare the word for equality
+   * Return a normalized version of a text string which can be used to compare the word for equality
    *
-   * @param {string} word the source word
+   * @param {string} text the source word or the source text
    * @returns {string} the normalized form of the word (default version just returns the same word,
    *          override in language-specific subclass)
    * @type string
    */
-  static normalizeWord (word) {
+  static normalizeText (text) {
     // we normalize greek to NFC - Normalization Form Canonical Composition
-    if (word) {
-      word = word.normalize('NFC')
+    if (text) {
+      text = text.normalize('NFC')
       // normalize the right single quotation at the end (elision) to Greek Koronois \u1fbd
-      word = word.replace(/\u2019$/, '\u1fbd')
+      text = text.replace(/\u2019$/, '\u1fbd')
     }
-    return word
+    return text
   }
 
   /**
@@ -174,7 +174,7 @@ for the current node
       return []
     }
     // make sure it's normalized to NFC and in lower case
-    const normalized = GreekLanguageModel.normalizeWord(word).toLocaleLowerCase()
+    const normalized = GreekLanguageModel.normalizeText(word).toLocaleLowerCase()
     const strippedVowelLength = normalized.replace(
       /[\u{1FB0}\u{1FB1}]/ug, '\u{03B1}').replace(
       /[\u{1FB8}\u{1FB9}]/ug, '\u{0391}').replace(
@@ -329,7 +329,7 @@ for the current node
         }
       }
       if (!matched) {
-        matched = GreekLanguageModel.normalizeWord(wordA) === GreekLanguageModel.normalizeWord(wordB)
+        matched = GreekLanguageModel.normalizeText(wordA) === GreekLanguageModel.normalizeText(wordB)
       }
     } else {
       matched = wordA === wordB

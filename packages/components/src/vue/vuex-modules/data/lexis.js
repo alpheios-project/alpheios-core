@@ -127,8 +127,8 @@ export default class Lexis extends Module {
       params: {
         provider: treebankDataItem.provider,
         word: textSelector.normalizedText,
-        prefix: lm.normalizeWord(textSelector.textQuoteSelector.prefix),
-        suffix: lm.normalizeWord(textSelector.textQuoteSelector.suffix),
+        prefix: lm.normalizeText(textSelector.textQuoteSelector.prefix),
+        suffix: lm.normalizeText(textSelector.textQuoteSelector.suffix),
         sentenceId: treebankDataItem.sentenceId
       }
     })
@@ -193,23 +193,10 @@ export default class Lexis extends Module {
       console.warn('Lookup request cannot be completed: LexisCS configuration is unavailable')
       return
     }
-    const featureOptions = this._settingsApi.getFeatureOptions()
 
-    if (!lemmaTranslations) {
-      // Use our own rules if lemmaTranslations are not provided
-      if (source === 'lookup') {
-        // For requests initiated by a lookup component:
-        if (textSelector.languageID === Constants.LANG_LATIN && this.app.state.lemmaTranslationLang) {
-          lemmaTranslations = { locale: this.app.state.lemmaTranslationLang }
-        }
-      } else {
-        // For requests initiated by text selection on a page
-        if (textSelector.languageID === Constants.LANG_LATIN &&
-          featureOptions.items.enableLemmaTranslations.currentValue &&
-          !featureOptions.items.locale.currentValue.match(/^en-/)) {
-          lemmaTranslations = { locale: featureOptions.items.locale.currentValue }
-        }
-      }
+    if (!lemmaTranslations && textSelector.languageID === Constants.LANG_LATIN && store.state.app.lemmaTranslationLang) {
+      // Use our own rules if lemmaTranslations is not provided
+      lemmaTranslations = { locale: store.state.app.lemmaTranslationLang }
     }
     if (!wordUsageExamples) { wordUsageExamples = this._appApi.getWordUsageExamplesQueryParams(textSelector) }
 

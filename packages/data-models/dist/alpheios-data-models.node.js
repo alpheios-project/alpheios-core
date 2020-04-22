@@ -2399,21 +2399,21 @@ for the current node
   }
 
   /**
-   * Return a normalized version of a word which can be used to compare the word for equality
+   * Return a normalized version of a text string which can be used to compare the word for equality
    *
-   * @param {string} word the source word
+   * @param {string} text the source word or the source text
    * @returns {string} the normalized form of the word (default version just returns the same word,
    *          override in language-specific subclass)
    * @type string
    */
-  static normalizeWord (word) {
+  static normalizeText (text) {
     // we normalize greek to NFC - Normalization Form Canonical Composition
-    if (word) {
-      word = word.normalize('NFC')
+    if (text) {
+      text = text.normalize('NFC')
       // normalize the right single quotation at the end (elision) to Greek Koronois \u1fbd
-      word = word.replace(/\u2019$/, '\u1fbd')
+      text = text.replace(/\u2019$/, '\u1fbd')
     }
-    return word
+    return text
   }
 
   /**
@@ -2433,7 +2433,7 @@ for the current node
       return []
     }
     // make sure it's normalized to NFC and in lower case
-    const normalized = GreekLanguageModel.normalizeWord(word).toLocaleLowerCase()
+    const normalized = GreekLanguageModel.normalizeText(word).toLocaleLowerCase()
     const strippedVowelLength = normalized.replace(
       /[\u{1FB0}\u{1FB1}]/ug, '\u{03B1}').replace(
       /[\u{1FB8}\u{1FB9}]/ug, '\u{0391}').replace(
@@ -2588,7 +2588,7 @@ for the current node
         }
       }
       if (!matched) {
-        matched = GreekLanguageModel.normalizeWord(wordA) === GreekLanguageModel.normalizeWord(wordB)
+        matched = GreekLanguageModel.normalizeText(wordA) === GreekLanguageModel.normalizeText(wordB)
       }
     } else {
       matched = wordA === wordB
@@ -3901,13 +3901,13 @@ class LanguageModel {
    * Checks if the word provided is in a normalized form.
    * It also checks if the word has the right single quotation (elision).
    *
-   * @see {@link GreekLanguageModel#normalizeWord}
-   * @param {string} word - A word to be checked.
+   * @see {@link GreekLanguageModel#normalizeText}
+   * @param {string} text - A word or a text string to be checked.
    * @returns {boolean} - True if at least one character of the word
    * is NOT in an Unicode Normalization Form, false otherwise.
    */
-  static needsNormalization (word) {
-    return Boolean(word.localeCompare(this.normalizeWord(word)))
+  static needsNormalization (text) {
+    return Boolean(text.localeCompare(this.normalizeText(text)))
   }
 
   /**
@@ -3921,14 +3921,14 @@ class LanguageModel {
   }
 
   /**
-   * Return a normalized version of a word which can be used to compare the word for equality
+   * Return a normalized version of a text string which can be used to compare the word for equality
    *
    * @param {string} word the source word
    * @returns string normalized form of the word (default version just returns the same word,
    *          override in language-specific subclass)
    * @type string
    */
-  static normalizeWord (word) {
+  static normalizeText (word) {
     return word
   }
 
@@ -3957,7 +3957,7 @@ class LanguageModel {
     if (normalize) {
       wordA = this.normalizeTrailingDigit(wordA)
       wordB = this.normalizeTrailingDigit(wordB)
-      return this.normalizeWord(wordA) === this.normalizeWord(wordB)
+      return this.normalizeText(wordA) === this.normalizeText(wordB)
     } else {
       return wordA === wordB
     }
@@ -4850,30 +4850,30 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
   }
 
   /**
-   * Return a normalized version of a word which can be used to compare the word for equality
+   * Return a normalized version of a text string which can be used to compare the word for equality
    *
-   * @param {string} word the source word
+   * @param {string} text the source word or a text string
    * @returns the normalized form of the word (Latin replaces accents and special chars)
    * @type String
    */
-  static normalizeWord (word) {
-    if (word) {
-      word = word.replace(/[\u00c0\u00c1\u00c2\u00c3\u00c4\u0100\u0102]/g, 'A')
-      word = word.replace(/[\u00c8\u00c9\u00ca\u00cb\u0112\u0114]/g, 'E')
-      word = word.replace(/[\u00cc\u00cd\u00ce\u00cf\u012a\u012c]/g, 'I')
-      word = word.replace(/[\u00d2\u00d3\u00d4\u00df\u00d6\u014c\u014e]/g, 'O')
-      word = word.replace(/[\u00d9\u00da\u00db\u00dc\u016a\u016c]/g, 'U')
-      word = word.replace(/[\u00c6\u01e2]/g, 'AE')
-      word = word.replace(/[\u0152]/g, 'OE')
-      word = word.replace(/[\u00e0\u00e1\u00e2\u00e3\u00e4\u0101\u0103]/g, 'a')
-      word = word.replace(/[\u00e8\u00e9\u00ea\u00eb\u0113\u0115]/g, 'e')
-      word = word.replace(/[\u00ec\u00ed\u00ee\u00ef\u012b\u012d\u0129]/g, 'i')
-      word = word.replace(/[\u00f2\u00f3\u00f4\u00f5\u00f6\u014d\u014f]/g, 'o')
-      word = word.replace(/[\u00f9\u00fa\u00fb\u00fc\u016b\u016d]/g, 'u')
-      word = word.replace(/[\u00e6\u01e3]/g, 'ae')
-      word = word.replace(/[\u0153]/g, 'oe')
+  static normalizeText (text) {
+    if (text) {
+      text = text.replace(/[\u00c0\u00c1\u00c2\u00c3\u00c4\u0100\u0102]/g, 'A')
+      text = text.replace(/[\u00c8\u00c9\u00ca\u00cb\u0112\u0114]/g, 'E')
+      text = text.replace(/[\u00cc\u00cd\u00ce\u00cf\u012a\u012c]/g, 'I')
+      text = text.replace(/[\u00d2\u00d3\u00d4\u00df\u00d6\u014c\u014e]/g, 'O')
+      text = text.replace(/[\u00d9\u00da\u00db\u00dc\u016a\u016c]/g, 'U')
+      text = text.replace(/[\u00c6\u01e2]/g, 'AE')
+      text = text.replace(/[\u0152]/g, 'OE')
+      text = text.replace(/[\u00e0\u00e1\u00e2\u00e3\u00e4\u0101\u0103]/g, 'a')
+      text = text.replace(/[\u00e8\u00e9\u00ea\u00eb\u0113\u0115]/g, 'e')
+      text = text.replace(/[\u00ec\u00ed\u00ee\u00ef\u012b\u012d\u0129]/g, 'i')
+      text = text.replace(/[\u00f2\u00f3\u00f4\u00f5\u00f6\u014d\u014f]/g, 'o')
+      text = text.replace(/[\u00f9\u00fa\u00fb\u00fc\u016b\u016d]/g, 'u')
+      text = text.replace(/[\u00e6\u01e3]/g, 'ae')
+      text = text.replace(/[\u0153]/g, 'oe')
     }
-    return word
+    return text
   }
 
   /**
@@ -5172,10 +5172,10 @@ class Lemma {
     const thisNeesNormalization = langModel.needsNormalization(this.word)
     const otherNeesNormalization = langModel.needsNormalization(otherLemma.word)
     if (otherNeesNormalization) {
-      return langModel.normalizeWord(otherLemma.word)
+      return langModel.normalizeText(otherLemma.word)
     }
     if (thisNeesNormalization) {
-      return langModel.normalizeWord(this.word)
+      return langModel.normalizeText(this.word)
     }
     /*
     If one of the words has a trailing digit, return a word with a trailing digit.

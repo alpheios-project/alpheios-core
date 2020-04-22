@@ -224,10 +224,10 @@ class Lemma {
     const thisNeesNormalization = langModel.needsNormalization(this.word)
     const otherNeesNormalization = langModel.needsNormalization(otherLemma.word)
     if (otherNeesNormalization) {
-      return langModel.normalizeWord(otherLemma.word)
+      return langModel.normalizeText(otherLemma.word)
     }
     if (thisNeesNormalization) {
-      return langModel.normalizeWord(this.word)
+      return langModel.normalizeText(this.word)
     }
     /*
     If one of the words has a trailing digit, return a word with a trailing digit.

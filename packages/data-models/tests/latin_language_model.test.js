@@ -41,8 +41,8 @@ describe('latin_language_model.js', () => {
   })
 
   it('2 LatinLanguageModel - normalizes accents', () => {
-    expect(latinModel.normalizeWord('tantulō')).toEqual('tantulo')
-    expect(latinModel.normalizeWord(null)).toBeNull()
+    expect(latinModel.normalizeText('tantulō')).toEqual('tantulo')
+    expect(latinModel.normalizeText(null)).toBeNull()
   })
 
   it('3 LatinLanguageModel - grammar features', () => {
@@ -53,7 +53,7 @@ describe('latin_language_model.js', () => {
   it('4 LatinLanguageModel - Uses default features with correct language', () => {
     expect(latinModel.typeFeatures.size).toBeGreaterThan(0)
 
-    let noun = latinModel.typeFeature(Feature.types.part).createFeature(Constants.POFS_NOUN)
+    const noun = latinModel.typeFeature(Feature.types.part).createFeature(Constants.POFS_NOUN)
     expect(noun).toBeDefined()
     expect(noun.languageID).toEqual(Constants.LANG_LATIN)
   })
