@@ -4,7 +4,7 @@ import Platform from '@/lib/utility/platform.js'
 import HTMLSelector from '@/lib/selection/media/html-selector.js'
 import LexicalQuery from '@/lib/queries/lexical-query.js'
 import { ClientAdapters } from 'alpheios-client-adapters'
-import { Constants, TreebankDataItem, HomonymGroup } from 'alpheios-data-models'
+import { Constants, TreebankDataItem, HomonymGroup, LanguageModelFactory as LMF } from 'alpheios-data-models'
 import {
   CedictDestinationConfig as CedictProdConfig,
   CedictDestinationDevConfig as CedictDevConfig
@@ -121,13 +121,14 @@ export default class Lexis extends Module {
   }
 
   static async getTreebankWordIds (treebankDataItem, textSelector) {
+    const lm = LMF.getLanguageModel(textSelector.languageID)
     const findWordResult = await ClientAdapters.morphology.arethusaTreebank({
       method: 'findWord',
       params: {
         provider: treebankDataItem.provider,
         word: textSelector.normalizedText,
-        prefix: textSelector.textQuoteSelector.prefix,
-        suffix: textSelector.textQuoteSelector.suffix,
+        prefix: lm.normalizeWord(textSelector.textQuoteSelector.prefix),
+        suffix: lm.normalizeWord(textSelector.textQuoteSelector.suffix),
         sentenceId: treebankDataItem.sentenceId
       }
     })
@@ -182,8 +183,8 @@ export default class Lexis extends Module {
     store,
     textSelector,
     siteOptions = [],
-    lemmaTranslations,
-    wordUsageExamples,
+    lemmaTranslations = null,
+    wordUsageExamples = null,
     checkContextForward = '',
     treebankDataItem = null,
     source = 'page'
@@ -192,6 +193,26 @@ export default class Lexis extends Module {
       console.warn('Lookup request cannot be completed: LexisCS configuration is unavailable')
       return
     }
+    const featureOptions = this._settingsApi.getFeatureOptions()
+
+    if (!lemmaTranslations) {
+      // Use our own rules if lemmaTranslations are not provided
+      if (source === 'lookup') {
+        // For requests initiated by a lookup component:
+        if (textSelector.languageID === Constants.LANG_LATIN && this.app.state.lemmaTranslationLang) {
+          lemmaTranslations = { locale: this.app.state.lemmaTranslationLang }
+        }
+      } else {
+        // For requests initiated by text selection on a page
+        if (textSelector.languageID === Constants.LANG_LATIN &&
+          featureOptions.items.enableLemmaTranslations.currentValue &&
+          !featureOptions.items.locale.currentValue.match(/^en-/)) {
+          lemmaTranslations = { locale: featureOptions.items.locale.currentValue }
+        }
+      }
+    }
+    if (!wordUsageExamples) { wordUsageExamples = this._appApi.getWordUsageExamplesQueryParams(textSelector) }
+
     this._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data, source)
     let annotatedHomonyms
     this._treebankDataItem = treebankDataItem
@@ -391,7 +412,6 @@ Lexis.api = (moduleInstance, store) => {
           moduleInstance.lexicalQuery({
             store,
             textSelector,
-            lemmaTranslations: moduleInstance._appApi.getLemmaTranslationsQueryParams(textSelector),
             wordUsageExamples: moduleInstance._appApi.getWordUsageExamplesQueryParams(textSelector),
             checkContextForward: textSelector.checkContextForward,
             treebankDataItem: TreebankDataItem.getTreebankData(htmlSelector.target),
@@ -409,11 +429,7 @@ Lexis.api = (moduleInstance, store) => {
      * @param wordUsageExamples
      */
     lookupText: (textSelector, lemmaTranslationLang, wordUsageExamples) => {
-      let lemmaTranslations
-      if (textSelector.languageID === Constants.LANG_LATIN && lemmaTranslationLang) {
-        lemmaTranslations = { locale: lemmaTranslationLang }
-      }
-      moduleInstance.lexicalQuery({ store, textSelector, lemmaTranslations, wordUsageExamples, source: 'lookup' })
+      moduleInstance.lexicalQuery({ store, textSelector, source: 'lookup' })
     },
 
     loadCedictData: async () => {

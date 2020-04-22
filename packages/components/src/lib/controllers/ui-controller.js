@@ -534,11 +534,6 @@ if you want to create a different configuration of a UI controller.
       enableWordUsageExamples: this.enableWordUsageExamples.bind(this),
       isGetSelectedTextEnabled: this.isGetSelectedTextEnabled.bind(this),
       newLexicalRequest: this.newLexicalRequest.bind(this),
-      getLemmaTranslationsQueryParams: (textSelector) => {
-        return this.enableLemmaTranslations(textSelector)
-          ? { locale: this.featureOptions.items.locale.currentValue }
-          : null
-      },
       getWordUsageExamplesQueryParams: this.getWordUsageExamplesQueryParams.bind(this),
 
       restoreGrammarIndex: this.restoreGrammarIndex.bind(this)
@@ -1562,18 +1557,6 @@ If no URLS are provided, will reset grammar data.
       : null
 
     await LexicalQuery.getWordUsageData(homonym, wordUsageExamples, params)
-  }
-
-  /**
-   * Check to see if Lemma Translations should be enabled for a query
-NB this is Prototype functionality
-   *
-   * @param textSelector
-   */
-  enableLemmaTranslations (textSelector) {
-    return textSelector.languageID === Constants.LANG_LATIN &&
-      this.featureOptions.items.enableLemmaTranslations.currentValue &&
-      !this.featureOptions.items.locale.currentValue.match(/^en-/)
   }
 
   enableWordUsageExamples (textSelector, requestType) {

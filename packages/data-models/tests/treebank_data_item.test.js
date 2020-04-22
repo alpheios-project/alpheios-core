@@ -30,7 +30,6 @@ describe('treebank_data_item.test.js', () => {
     wdElem.setAttribute('data-alpheios_tb_app', 'perseids-treebank-template')
     wdElem.setAttribute('data-alpheios_tb_app_version', '1')
     wdElem.setAttribute('data-alpheios_tb_app_url', 'http://example.org/DOC/SENTENCE/WORD')
-    wdElem.setAttribute('data-alpheios_tb_doc', 'document')
     wdElem.setAttribute('data-alpheios_tb_ref', 'treebank#1-1')
     document.body.appendChild(wdElem)
     const item = new TreebankDataItem(wdElem)
@@ -44,7 +43,6 @@ describe('treebank_data_item.test.js', () => {
     srcElem.setAttribute('data-alpheios_tb_app_url', 'http://example.org/DOC/SENTENCE/WORD')
     document.body.appendChild(srcElem)
     const wdElem = document.createElement('span')
-    wdElem.setAttribute('data-alpheios_tb_doc', 'document')
     srcElem.appendChild(wdElem)
     expect.assertions(1)
     try {
@@ -62,7 +60,6 @@ describe('treebank_data_item.test.js', () => {
     document.body.appendChild(srcElem)
     const wdElem = document.createElement('span')
     wdElem.setAttribute('data-alpheios_tb_ref', 'treebank')
-    wdElem.setAttribute('data-alpheios_tb_doc', 'document')
     srcElem.appendChild(wdElem)
     expect.assertions(1)
     try {
@@ -79,7 +76,6 @@ describe('treebank_data_item.test.js', () => {
     srcElem.setAttribute('data-alpheios_tb_app_url', 'http://example.org/DOC/SENTENCE/WORD')
     document.body.appendChild(srcElem)
     const wdElem = document.createElement('span')
-    wdElem.setAttribute('data-alpheios_tb_doc', 'document')
     wdElem.setAttribute('data-alpheios_tb_ref', 'treebank#1-1')
     srcElem.appendChild(wdElem)
     expect.assertions(1)
@@ -90,14 +86,13 @@ describe('treebank_data_item.test.js', () => {
     }
   })
 
-  it('5 TreebankDataItem - constructs full item', () => {
+  it('5 TreebankDataItem - constructs full item with data-alpheios_tb_ref and a single word', () => {
     const srcElem = document.createElement('div')
     srcElem.setAttribute('data-alpheios_tb_app', 'perseids-treebank-template')
     srcElem.setAttribute('data-alpheios_tb_app_version', '1')
     srcElem.setAttribute('data-alpheios_tb_app_url', 'http://example.org/DOC/SENTENCE/')
     document.body.appendChild(srcElem)
     const wdElem = document.createElement('span')
-    wdElem.setAttribute('data-alpheios_tb_doc', 'document')
     wdElem.setAttribute('data-alpheios_tb_ref', 'treebank#1-1')
     srcElem.appendChild(wdElem)
     const item = new TreebankDataItem(wdElem)
@@ -106,5 +101,71 @@ describe('treebank_data_item.test.js', () => {
     expect(item.doc).toEqual('treebank')
     expect(item.sentenceId).toEqual('1')
     expect(item.wordIds).toMatchObject(['1'])
+  })
+
+  it('6 TreebankDataItem - constructs full item with data-alpheios_tb_ref and multiple words', () => {
+    const docID = 'treebank'
+    const sentID = '3'
+    const wordID1 = '1'
+    const wordID2 = '2'
+    const srcElem = document.createElement('div')
+    srcElem.setAttribute('data-alpheios_tb_app', 'perseids-treebank-template')
+    srcElem.setAttribute('data-alpheios_tb_app_version', '1')
+    srcElem.setAttribute('data-alpheios_tb_app_url', 'http://example.org/DOC/SENTENCE/')
+    document.body.appendChild(srcElem)
+    const wdElem = document.createElement('span')
+    wdElem.setAttribute('data-alpheios_tb_ref', `${docID}#${sentID}-${wordID1} ${docID}#${sentID}-${wordID2}`)
+    srcElem.appendChild(wdElem)
+    const item = new TreebankDataItem(wdElem)
+    expect(item.provider).toEqual('http://example.org')
+    expect(item.fullUrl).toEqual(`http://example.org/${docID}/${sentID}/`)
+    expect(item.doc).toEqual(docID)
+    expect(item.sentenceId).toEqual(sentID)
+    expect(item.wordIds).toMatchObject([wordID1, wordID2])
+  })
+
+  it('7 TreebankDataItem - constructs full item with single-valued data-alpheios_tb_word', () => {
+    const docID = 'treebank'
+    const sentID = '3'
+    const wordID = '5'
+    const srcElem = document.createElement('div')
+    srcElem.setAttribute('data-alpheios_tb_app', 'perseids-treebank-template')
+    srcElem.setAttribute('data-alpheios_tb_app_version', '1')
+    srcElem.setAttribute('data-alpheios_tb_app_url', 'http://example.org/DOC/SENTENCE/')
+    document.body.appendChild(srcElem)
+    const wdElem = document.createElement('span')
+    wdElem.setAttribute('data-alpheios_tb_doc', docID)
+    wdElem.setAttribute('data-alpheios_tb_sent', sentID)
+    wdElem.setAttribute('data-alpheios_tb_word', wordID)
+    srcElem.appendChild(wdElem)
+    const item = new TreebankDataItem(wdElem)
+    expect(item.provider).toEqual('http://example.org')
+    expect(item.fullUrl).toEqual(`http://example.org/${docID}/${sentID}/`)
+    expect(item.doc).toEqual(docID)
+    expect(item.sentenceId).toEqual(sentID)
+    expect(item.wordIds).toMatchObject([wordID])
+  })
+
+  it('8 TreebankDataItem - constructs full item with multiple-valued data-alpheios_tb_word', () => {
+    const docID = 'treebank'
+    const sentID = '3'
+    const wordID1 = '5'
+    const wordID2 = '12'
+    const srcElem = document.createElement('div')
+    srcElem.setAttribute('data-alpheios_tb_app', 'perseids-treebank-template')
+    srcElem.setAttribute('data-alpheios_tb_app_version', '1')
+    srcElem.setAttribute('data-alpheios_tb_app_url', 'http://example.org/DOC/SENTENCE/')
+    document.body.appendChild(srcElem)
+    const wdElem = document.createElement('span')
+    wdElem.setAttribute('data-alpheios_tb_doc', docID)
+    wdElem.setAttribute('data-alpheios_tb_sent', sentID)
+    wdElem.setAttribute('data-alpheios_tb_word', `${wordID1} ${wordID2}`)
+    srcElem.appendChild(wdElem)
+    const item = new TreebankDataItem(wdElem)
+    expect(item.provider).toEqual('http://example.org')
+    expect(item.fullUrl).toEqual(`http://example.org/${docID}/${sentID}/`)
+    expect(item.doc).toEqual(docID)
+    expect(item.sentenceId).toEqual(sentID)
+    expect(item.wordIds).toMatchObject([wordID1, wordID2])
   })
 })
