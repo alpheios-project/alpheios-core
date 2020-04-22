@@ -8,10 +8,12 @@
     },
     "arethusaTreebank": {
       "adapter": "arethusaAdapter",
-      "methods": [ "getHomonym", "refreshView" ],
+      "methods": [ "getHomonym", "refreshView", "gotoSentence", "findWord" ],
       "params": {
         "getHomonym" : [ "languageID", "word", "provider", "sentenceId", "wordId" ],
-        "refreshView": [ "provider" ]
+        "refreshView": [ "provider" ],
+        "gotoSentence": [ "provider", "sentenceId", "wordIds" ],
+        "findWord": [ "provider", "word", "prefix", "suffix", "sentenceId" ]
       }
     },
     "tufts": {

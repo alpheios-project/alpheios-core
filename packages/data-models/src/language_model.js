@@ -370,16 +370,27 @@ class LanguageModel {
   }
 
   /**
+   * Morphological parsers and dictionary indexes may add a trailing digit to disambiguate homonyms.
+   * These can be ignored for purposes of string comparison.
+   *
+   * @param {string} word - A word to normalize.
+   * @returns {string} A normalized word.
+   */
+  static normalizeTrailingDigit (word) {
+    return /^.+1$/.test(word) ? word.substring(0, word.length - 1) : word
+  }
+
+  /**
    * Checks if the word provided is in a normalized form.
    * It also checks if the word has the right single quotation (elision).
    *
-   * @see {@link GreekLanguageModel#normalizeWord}
-   * @param {string} word - A word to be checked.
+   * @see {@link GreekLanguageModel#normalizeText}
+   * @param {string} text - A word or a text string to be checked.
    * @returns {boolean} - True if at least one character of the word
    * is NOT in an Unicode Normalization Form, false otherwise.
    */
-  static needsNormalization (word) {
-    return Boolean(word.localeCompare(this.normalizeWord(word)))
+  static needsNormalization (text) {
+    return Boolean(text.localeCompare(this.normalizeText(text)))
   }
 
   /**
@@ -393,14 +404,14 @@ class LanguageModel {
   }
 
   /**
-   * Return a normalized version of a word which can be used to compare the word for equality
+   * Return a normalized version of a text string which can be used to compare the word for equality
    *
    * @param {string} word the source word
    * @returns string normalized form of the word (default version just returns the same word,
    *          override in language-specific subclass)
    * @type string
    */
-  static normalizeWord (word) {
+  static normalizeText (word) {
     return word
   }
 
@@ -427,7 +438,9 @@ class LanguageModel {
    */
   static compareWords (wordA, wordB, normalize = true, options = {}) {
     if (normalize) {
-      return this.normalizeWord(wordA) === this.normalizeWord(wordB)
+      wordA = this.normalizeTrailingDigit(wordA)
+      wordB = this.normalizeTrailingDigit(wordB)
+      return this.normalizeText(wordA) === this.normalizeText(wordB)
     } else {
       return wordA === wordB
     }

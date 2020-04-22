@@ -7,18 +7,14 @@
             class="alpheios-principal-parts__groupitem"
             :lang="languageCode"
             v-if="! lemma.principalParts.includes(lemma.word)"
-        >
-            {{ lemma.word }}
-        </h4>
+        >{{lemma.word}}</h4>
 
         <h4 class="alpheios-principal-parts__groupitem">
             <span
                 :lang="languageCode"
                 class="alpheios-principal-parts__listitem"
                 v-for="(part, partIndex) in lemma.principalParts" v-bind:key="partIndex"
-            >
-                {{ part }}
-            </span>
+            >{{part}}</span>
         </h4>
 
         <tooltip

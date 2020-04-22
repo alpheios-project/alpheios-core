@@ -74,7 +74,7 @@ export default class TextSelector {
   }
 
   get normalizedText () {
-    return this.model.normalizeWord(this.text)
+    return this.model.normalizeText(this.text)
   }
 
   createTextQuoteSelector (prefix, suffix) {

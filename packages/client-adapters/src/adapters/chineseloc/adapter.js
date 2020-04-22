@@ -28,7 +28,12 @@ class AlpheiosChineseLocAdapter extends BaseAdapter {
     instance of the service that will be created once and reused across consecutive constructor invocations.
      */
     if (!MessagingService.hasService(msgServiceName)) {
-      MessagingService.createService(msgServiceName, new Destination(this.cedictConfig))
+      MessagingService.createService(msgServiceName, new Destination({
+        name: this.cedictConfig.name,
+        targetURL: this.cedictConfig.targetURL,
+        targetIframeID: this.cedictConfig.targetIframeID,
+        commModes: [Destination.commModes.SEND]
+      }))
     }
     this._messagingService = MessagingService.getService(msgServiceName)
   }

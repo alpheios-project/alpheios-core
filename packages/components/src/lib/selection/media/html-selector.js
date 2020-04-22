@@ -1,5 +1,5 @@
 import 'element-closest' // To polyfill Element.closest() if required
-import { Constants, LanguageModelFactory, TreebankDataItem } from 'alpheios-data-models'
+import { Constants, LanguageModelFactory } from 'alpheios-data-models'
 import TextSelector from '../text-selector'
 import MediaSelector from './media-selector'
 
@@ -158,16 +158,6 @@ export default class HTMLSelector extends MediaSelector {
     const alignSrcElem = this.target.ownerDocument.querySelector('[data-alpheios_align_src]')
     const alignRef = this.target.dataset.alpheios_align_ref
     this.data = {}
-    try {
-      const treebankDataItem = new TreebankDataItem(this.target)
-      if (treebankDataItem.hasTreebankData) {
-        // Add a treebank property only if treebank element has valid data in it
-        this.data.treebank = { word: treebankDataItem }
-      }
-    } catch (error) {
-      // treebank data is optional
-      // quietly fail
-    }
     if (alignSrcElem && alignRef) {
       this.data.translation = {
         src: alignSrcElem.dataset.alpheios_align_src,

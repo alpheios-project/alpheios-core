@@ -523,7 +523,7 @@ describe('homonym.test.js', () => {
     expect(disambiguated.lexemes.length).toEqual(1)
     expect(disambiguated.lexemes[0]).toEqual(
       expect.objectContaining({
-        lemma: expect.objectContaining({ word: langModel.normalizeWord(lemmaB.word) }),
+        lemma: expect.objectContaining({ word: langModel.normalizeText(lemmaB.word) }),
         inflections: [infl1],
         disambiguated: true
       })
