@@ -60,7 +60,7 @@ describe('grammar.test.js', () => {
     expect(cmp.vm.languageList.lat).toEqual(expect.objectContaining({
       languageID: Constants.LANG_LATIN,
       languageCode: 'lat',
-      title: 'Allen and Greenough’s New Latin Grammar for Schools and Colleges (Greenough, et. al.)'
+      title: 'New Latin Grammar (Greenough, et. al.)'
     }))
 
     expect(cmp.vm.languageList.grc).toEqual(expect.objectContaining({
