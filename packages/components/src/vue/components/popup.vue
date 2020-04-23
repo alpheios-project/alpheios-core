@@ -221,6 +221,7 @@ export default {
         height: this.heightDm,
         zIndex: this.ui.zIndex,
         maxWidth: maxWidthVal,
+        maxHeight: `${this.maxHeight}px`,
         transform: `translate(${this.shift.x}px, ${this.shift.y}px)`
       }
     },
