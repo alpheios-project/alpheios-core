@@ -14,11 +14,14 @@ export default {
 <style lang="scss">
   @import "../../styles/variables";
 
-  .alpheios-definition__short {
-    .alpheios-definition__text {
-      color: var(--alpheios-definition-short-color);
-      font-size: textsize(18px);
-      font-weight: bold;
+  #{$alpheios-namespace} {
+    // These rules intentionally use an increased specificity to fight the style leakage
+    .alpheios-definition__short {
+      .alpheios-definition__text {
+        color: var(--alpheios-definition-short-color);
+        font-size: textsize(18px);
+        font-weight: bold;
+      }
     }
   }
 </style>
