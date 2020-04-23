@@ -1,8 +1,30 @@
 <template>
   <div class="alpheios-ui-options__cont">
     <font-size></font-size>
-    <label for="volume">Volume</label>
-    <input type="range" id="volume" name="volume" min="400" max="1200" step="100">
+    <div class="alpheios-ui-options__popup-size-item">
+      <label
+          class="alpheios-ui-options__popup-size-item_top-label"
+          for="alpheios-ui-options-popup-max-width"
+      >{{uiOptions.items.maxPopupWidth.labelText}}</label>
+      <input
+          type="range"
+          id="alpheios-ui-options-popup-max-width"
+          v-model="maxPopupWidth"
+          name="volume"
+          :min="uiOptions.items.maxPopupWidth.values.min"
+          :max="uiOptions.items.maxPopupWidth.values.max"
+          :step="uiOptions.items.maxPopupWidth.values.step"
+      >
+      <label
+          class="alpheios-ui-options__popup-size-item_bottom-label"
+          for="alpheios-ui-options-popup-max-width"
+      >
+        <span class="alpheios-ui-options__popup-size-item_bottom-label-item">{{uiOptions.items.maxPopupWidth.labels.min}}</span>
+        <span class="alpheios-ui-options__popup-size-item_bottom-label-item">{{uiOptions.items.maxPopupWidth.labels.mid}}</span>
+        <span class="alpheios-ui-options__popup-size-item_bottom-label-item">{{uiOptions.items.maxPopupWidth.labels.max}}</span>
+      </label>
+    </div>
+
     <setting
         :classes="['alpheios-ui-options__item']"
         :data="uiOptions.items.panelPosition"
@@ -43,9 +65,20 @@ export default {
     setting: Setting,
     fontSize: FontSize
   },
+  data: function () {
+    return {
+      maxPopupWidth: this.settings.getUiOptions().items.maxPopupWidth.currentValue
+    }
+  },
   computed: {
     uiOptions: function () {
       return this.settings.getUiOptions()
+    }
+  },
+  watch: {
+    maxPopupWidth: function (value) {
+      // A value of maxPopupWidth has changed
+      this.ui.optionChange('maxPopupWidth', value)
     }
   },
   methods: {
@@ -62,10 +95,26 @@ export default {
     display: flex;
     flex-direction: column;
   }
+
   .alpheios-ui-options__item {
     margin-bottom: textsize(15px);
     display: flex;
     align-items: flex-start;
     flex: 1 1 auto;
+  }
+
+  .alpheios-ui-options__popup-size-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: textsize(20px);
+
+    &_top-label {
+      margin-bottom: textsize(5px);
+    }
+
+    &_bottom-label {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 </style>

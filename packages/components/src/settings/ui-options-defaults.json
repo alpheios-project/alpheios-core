@@ -22,17 +22,17 @@
     },
     "maxPopupWidth": {
       "defaultValue": "1200",
-      "labelText": "Maximum panel size:",
-      "values": [
-        {
-          "value": "left",
-          "text": "Left"
-        },
-        {
-          "value": "right",
-          "text": "Right"
-        }
-      ]
+      "labelText": "Maximum popup width:",
+      "values": {
+        "min": "400",
+        "max": "1200",
+        "step": "100"
+      },
+      "labels": {
+        "min": "small",
+        "mid": "medium",
+        "max": "unrestricted"
+      }
     },
     "panelPosition": {
       "defaultValue": "left",

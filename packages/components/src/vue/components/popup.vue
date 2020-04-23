@@ -212,12 +212,15 @@ export default {
     },
 
     componentStyles: function () {
+      let maxWidthVal = this.settings.getUiOptions().items.maxPopupWidth.currentValue
+      maxWidthVal = (maxWidthVal === this.settings.getUiOptions().items.maxPopupWidth.values.max) ? null : `${maxWidthVal}px`
       return {
         left: this.positionLeftDm,
         top: this.positionTopDm,
         width: this.widthDm,
         height: this.heightDm,
         zIndex: this.ui.zIndex,
+        maxWidth: maxWidthVal,
         transform: `translate(${this.shift.x}px, ${this.shift.y}px)`
       }
     },
@@ -300,7 +303,7 @@ export default {
     },
 
     verboseMode () {
-      return this.settings.getUiOptions().items.verboseMode.currentValue === `verbose`
+      return this.settings.getUiOptions().items.verboseMode.currentValue === 'verbose'
     }
   },
 
@@ -381,7 +384,7 @@ export default {
         this.resizedHeight = event.rect.height
 
         // Update popup position when resizing from top or left edges
-        
+
         this.shift.x += (event.deltaRect.left || 0)
         this.shift.y += (event.deltaRect.top || 0)
       }

@@ -1852,7 +1852,7 @@ If no URLS are provided, will reset grammar data.
     // TODO this should really be handled within OptionsItem
     // the difference between value and textValues is a little confusing
     // see issue #73
-    if (name === 'fontSize' || name === 'hideLoginPrompt') {
+    if (name === 'fontSize' || name === 'hideLoginPrompt' || name === 'maxPopupWidth') {
       uiOptions.items[name].setValue(value)
     } else {
       uiOptions.items[name].setTextValue(value)
