@@ -881,7 +881,7 @@ body {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-definition__short .alpheios-definition__text {
+.alpheios-content .alpheios-definition__short .alpheios-definition__text {
   color: var(--alpheios-definition-short-color) !important;
   font-size: calc(var(--alpheios-base-text-size) * 1.125) !important;
   font-weight: bold !important;
@@ -894,20 +894,21 @@ body {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-content span.alpheios-morph__attr {
-  font-weight: normal !important;
+.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__attr {
+  font-weight: 400 !important;
   padding-right: 0.25em !important;
 }
-.alpheios-content .alpheios-morph__linkedattr {
+.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr {
   color: var(--alpheios-color-muted) !important;
   cursor: pointer !important;
   font-weight: 700 !important;
   color: var(--alpheios-desktop-popup-link-color) !important;
+  padding-right: 0.25em !important;
 }
-.alpheios-content .alpheios-morph__linkedattr:hover, .alpheios-content .alpheios-morph__linkedattr:active {
+.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:hover, .alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:active {
   text-decoration: underline !important;
 }
-.alpheios-content .alpheios-morph__linkedattr:hover {
+.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:hover {
   color: var(--alpheios-desktop-popup-link-color-hover) !important;
 }
 /*
@@ -1171,6 +1172,22 @@ h4.alpheios-principal-parts__groupitem {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph-data__pofs,
+.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr {
+  color: var(--alpheios-color-muted) !important;
+  cursor: pointer !important;
+  font-weight: 700 !important;
+  color: var(--alpheios-desktop-popup-link-color) !important;
+}
+.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph-data__pofs:hover, .alpheios-content .alpheios-morph-data__morphdata .alpheios-morph-data__pofs:active,
+.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr:hover,
+.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr:active {
+  text-decoration: underline !important;
+}
+.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph-data__pofs:hover,
+.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr:hover {
+  color: var(--alpheios-desktop-popup-link-color-hover) !important;
+}
 .alpheios-morph-data__pofs span:last-child:after {
   content: ";" !important;
 }

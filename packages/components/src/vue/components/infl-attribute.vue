@@ -6,8 +6,6 @@
 // Modules support
 import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 
-import { Feature } from 'alpheios-data-models'
-
 export default {
   name: 'InflectionAttribute',
   inject: ['app', 'l10n'],
@@ -35,7 +33,7 @@ export default {
   },
   methods: {
     attributeClass (featureType, ...extras) {
-      let classList = []
+      let classList = [] // eslint-disable-line prefer-const
       if (this.$store.state.app.linkedFeatures.includes(featureType)) {
         classList.push('alpheios-morph__linkedattr')
       } else {
@@ -46,19 +44,19 @@ export default {
     },
     decorate (data, type) {
       let baseValues = []
-      let decoratedValues = []
+      let decoratedValues = [] // eslint-disable-line prefer-const
       if (typeof (data[type]) === 'string') {
         baseValues = [data[type]]
       } else {
         baseValues = data[type].values
       }
-      for (let v of baseValues) {
+      for (const v of baseValues) {
         let decorated = v
         if (this.decorators.includes('abbreviate') && this.l10n.hasMsg(v)) {
           decorated = this.l10n.getAbbr(v)
         }
         if (this.decorators.includes('link') && decorated.match(/^http/)) {
-          let linkText = this.l10n.hasMsg(`INFL_ATTRIBUTE_LINK_TEXT_TYPE`) ? this.l10n.getMsg(`INFL_ATTRIBUTE_LINK_TEXT_TYPE`) : type
+          const linkText = this.l10n.hasMsg('INFL_ATTRIBUTE_LINK_TEXT_TYPE') ? this.l10n.getMsg('INFL_ATTRIBUTE_LINK_TEXT_TYPE') : type
           decorated = `<a class="alpheios-morph__linkedattr" target="_blank" href="${decorated}">${linkText}</a>`
         }
         decoratedValues.push(decorated)
@@ -77,7 +75,7 @@ export default {
         if (!this.decorators.includes('appendspace')) {
           decorated = `[${decorated}]`
         } else {
-          let formattedDecoratedArr = decoratedValues.map(val => `[${val}]`)
+          const formattedDecoratedArr = decoratedValues.map(val => `[${val}]`)
           decorated = formattedDecoratedArr.join(' ')
         }
       }
@@ -106,20 +104,24 @@ export default {
 </script>
 <style lang="scss">
   @import "../../styles/variables";
-  #{$alpheios-namespace} span.alpheios-morph__attr {
-    font-weight: normal;
-    padding-right: .25em;
-  }
+  #{$alpheios-namespace} {
+    // These rules intentionally use an increased specificity to fight the style leakage
+    .alpheios-inflections-list__inflgroup {
+      span.alpheios-morph__attr {
+        font-weight: 400;
+        padding-right: .25em;
+      }
 
-  // We have to use namespace to override increased specificity of content styles, that, in turn, had
-  // specificity increased to fight style leakage from some problematic websites
-  #{$alpheios-namespace} .alpheios-morph__linkedattr {
-    @include alpheios-interactive;
-    font-weight: 700;
+      span.alpheios-morph__linkedattr {
+        @include alpheios-interactive;
+        font-weight: 700;
+        color: var(--alpheios-desktop-popup-link-color);
+        padding-right: .25em;
 
-    color: var(--alpheios-desktop-popup-link-color);
-    &:hover {
-      color: var(--alpheios-desktop-popup-link-color-hover);
+        &:hover {
+          color: var(--alpheios-desktop-popup-link-color-hover);
+        }
+      }
     }
   }
 </style>
