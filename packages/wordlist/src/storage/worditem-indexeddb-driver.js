@@ -303,7 +303,7 @@ export default class WordItemIndexedDbDriver {
    * @return {Object[]}
    */
   _serializeCommon (wordItem) {
-    return [{
+    const res = [{
       ID: this._makeStorageID(wordItem),
       listID: this.userId + '-' + wordItem.languageCode,
       userID: this.userId,
@@ -311,8 +311,10 @@ export default class WordItemIndexedDbDriver {
       targetWord: wordItem.targetWord,
       important: wordItem.important,
       createdDT: wordItem.createdDT ? wordItem.createdDT : Utility.currentDate,
-      updatedDT: wordItem.updatedDT ? wordItem.updatedDT : Utility.currentDate
+      updatedDT: wordItem.updatedDT ? wordItem.updatedDT : Utility.currentDate,
+      frequency: wordItem.frequency ? wordItem.frequency : 1
     }]
+    return res
   }
 
   /**

@@ -110,6 +110,7 @@ export default class UserDataManager {
     }
     try {
       params.source = params.source||'both'
+      // params.source = 'local'
       let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
 
       let localAdapter = this._localStorageAdapter(finalConstrName)
@@ -158,7 +159,9 @@ export default class UserDataManager {
       })
       return
     }
+    
     try {
+      // params.source = 'local'
       this.blocked = true
       let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
 
@@ -211,6 +214,7 @@ export default class UserDataManager {
       return
     }
     try {
+      // params.source = 'local'
 
       let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
       let localAdapter = this._localStorageAdapter(data.dataType)
@@ -258,9 +262,10 @@ export default class UserDataManager {
    * @return {WordItem[]}
    */
   async query (data, params = {}) {
-    // try {
+    try {
       params.type = params.type||'short'
       params.source = params.source||'both'
+      // params.source = 'local'
       params.syncDelete = params.syncDelete||false
 
       let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
@@ -300,9 +305,9 @@ export default class UserDataManager {
       this.printErrors(remoteAdapter)
       this.printErrors(localAdapter)
       return finalItems
-    /*} catch (error) {
+    } catch (error) {
       console.error('Alpheios error: unexpected error querying user data.', error.message)
-    }*/
+    }
   }
 
   async deleteAbsentInRemote (localAdapter, remoteItems, languageCode) {

@@ -233,6 +233,22 @@
         }
       ],
       "limitByLangs": ["lat", "grc"]
+    },
+    "wordlistMaxFlashcardExport": {
+      "defaultValue": 25,
+      "labelText": "Wordlist Flashcard Max export",
+      "number": true,
+      "minValue": 1,
+      "maxValue": 5000,
+      "values": []
+    },
+    "wordlistFilterAmountDefault": {
+      "defaultValue": 10,
+      "labelText": "Wordlist Filter Amount default",
+      "number": true,
+      "minValue": 1,
+      "maxValue": 25,
+      "values": []
     }
   }
 }

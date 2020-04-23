@@ -48,36 +48,10 @@
         <!-- end delete all confirmation -->
 
         <!-- download confirmation -->
-        <div class="alpheios-wordlist-download-confirmation alpheios-notification-area__notification alpheios-notification-area__notification--important"
-             v-show="showDownloadBox">
-          <div class="alpheios-notification-area__msg">{{ l10n.getText('WORDLIST_DOWNLOAD_NOTICE') }}</div>
-
-          <div class="alpheios-wordlist-download-confirmation__buttons alpheios-notification-area__control">
-            <alph-tooltip :tooltipText="l10n.getText('WORDLIST_TOOLTIP_DOWNLOAD', { lang: languageCode })" tooltipDirection="bottom-wide">
-              <button @click="downloadList()" class="alpheios-button-primary">
-                {{ l10n.getText('WORDLIST_DOWNLOAD_BUTTON') }}
-              </button>
-            </alph-tooltip>
-            <div class="alpheios-wordlist-download-with-filters alpheios-checkbox-block" data-alpheios-ignore="all">
-              <input :id="downloadFilterId" type="checkbox" v-model="downloadWithFilter">
-              <label :for="downloadFilterId">
-                {{ l10n.getText('WORDLIST_DOWNLOAD_FILTERING_CHECK') }}
-              </label>
-            </div>
-            <div class="alpheios-wordlist-download-for-flashcards alpheios-checkbox-block" data-alpheios-ignore="all">
-              <input :id="downloadFlashcardsId" type="checkbox" v-model="downloadForFlashcards">
-              <label :for="downloadFlashcardsId">
-                {{ l10n.getText('WORDLIST_DOWNLOAD_FLASHCARDS_CHECK') }}
-              </label>
-            </div>
-          </div>
-          <div
-              class="alpheios-notification-area__close-btn"
-              @click="cancelDownloadList()"
-          >
-            <close-icon/>
-          </div>
-        </div>
+        <download-confirmation :language-code="languageCode" v-show="showDownloadBox" 
+          :filtered-word-items="wordItems" :all-word-items="wordlist.values"
+          @changeShowDownloadBox = "changeShowDownloadBox"
+          />
         <!-- end download confirmation -->
 
         <div class="alpheios-wordlist-filter-panel">
@@ -121,7 +95,7 @@ import WordItemPanel from '@/vue/components/word-list/word-item-panel.vue'
 import WordFilterPanel from '@/vue/components/word-list/word-filter-panel.vue'
 import WordSortingPanel from '@/vue/components/word-list/word-sorting-panel.vue'
 
-import Download from '@/lib/utility/download.js'
+import DownloadConfirmation from '@/vue/components/word-list/download-confirmation.vue'
 
 export default {
   name: 'WordLanguagePanel',
@@ -133,9 +107,10 @@ export default {
     wordItem: WordItemPanel,
     wordFilterPanel: WordFilterPanel,
     wordSortingPanel: WordSortingPanel,
+    downloadConfirmation: DownloadConfirmation,
     alphTooltip: Tooltip
   },
-  inject: ['l10n', 'app'],
+  inject: ['l10n', 'app', 'settings'],
   props: {
     languageCode: {
       type: String,
@@ -158,42 +133,55 @@ export default {
       },
       clearFilters: 0,
       sortingState: {
-        'targetWord': null
+        'targetWord': null,
+        'frequency': null,
+        'updatedDT': null
       },
-      downloadWithFilter: false,
-      downloadForFlashcards: false
+      selectedFilterBy2: null,
+      filterAmount: 0
     } 
      
   },
+  mounted () {
+    this.filterAmount = this.settings.getFeatureOptions().items.wordlistFilterAmountDefault.currentValue
+  },
+  watch: {
+    '$store.state.app.wordListUpdateTime' () {
+      this.clearFilters = this.clearFilters + 1
+      this.changedFilterBy(null, null, null)
+    }
+  },
   computed: {
-    downloadFilterId () {
-      return `alpheios-wordlist-download-with-filters-input-${this.languageCode}`
-    },
-    downloadFlashcardsId () {
-      return `alpheios-wordlist-download-for-flashcards-input-${this.languageCode}`
-    },
     hasSeveralItems () {
       return this.wordlist && this.wordlist.values && this.wordlist.values.length > 1
     },
     wordlist () {
-      this.clearFilters = this.clearFilters + 1
-      this.changedFilterBy(null, null)
       return this.$store.state.app.wordListUpdateTime && this.reloadList ? this.app.getWordList(this.languageCode) : { items: {}, values: {} }
     },
     wordItems () {
+      let result = []
       if (this.$store.state.app.wordListUpdateTime && this.reloadList) {
-        if (!this.selectedFilterBy) {
-          let result = this.wordlist.values
-          this.applySorting(result)
-          return result
-        }
-        if (this.filterMethods[this.selectedFilterBy]) {
-          let result = this.wordlist.values.filter(this.filterMethods[this.selectedFilterBy])
-          this.applySorting(result)
-          return result
+        result = this.wordlist.values
+        if (this.selectedFilterBy || this.selectedFilterBy2) {
+          if (this.filterMethods[this.selectedFilterBy]) {
+            result = this.wordlist.values.filter(this.filterMethods[this.selectedFilterBy])
+          }
+          if (this.selectedFilterBy2) {
+            if (this.selectedFilterBy2 === 'byMostRecent') {
+              this.applySorting(result, 'updatedDT', 'desc')
+              result = result.slice(0, this.filterAmount)
+            }
+            if (this.selectedFilterBy2 === 'byMostOften') {
+              this.applySorting(result, 'frequency', 'desc')
+              result = result.slice(0, this.filterAmount)
+            }
+          }
         }
       }
-      return []
+      if (result.length > 0) {
+        this.applySorting(result)
+      }
+      return result
     },
     wordExactForms () {
       let exactForms = this.wordlist.values.reduce((acc, wordItem) => {
@@ -221,6 +209,9 @@ export default {
       // TODO with upcoming merge, this can be retrived from utility library
       // so just return the code for now
       return this.languageCode
+    },
+    maxItems () {
+      return this.settings.getFeatureOptions().items.wordlistMaxDownload
     }
   },
   methods: {
@@ -253,15 +244,14 @@ export default {
     cancelDeleteAll () {
       this.showDeleteAllBox = false
     },
-    cancelDownloadList () {
-      this.showDownloadBox = false
-    },
     showContexts (targetWord) {
       this.$emit('showContexts', targetWord, this.languageCode)
     },
-    changedFilterBy (selectedFilterBy, textInput) {
+    changedFilterBy (selectedFilterBy, textInput, selectedFilterBy2, filterAmount) {
       this.selectedFilterBy = selectedFilterBy
+      this.selectedFilterBy2 = selectedFilterBy2
       this.textInput = textInput
+      this.filterAmount = filterAmount
     },
     setLemmaFilterByClick (lemma) {
       if (!this.clickedLemma && lemma) {
@@ -275,77 +265,29 @@ export default {
       this.sortingState[part] = type
       this.reloadList = this.reloadList + 1
     },
-    applySorting (items) {
-      let part = 'targetWord'
-      return items.sort( (item1, item2) => {
-        let compared = item1[part].localeCompare(item2[part],this.languageCode,{sensitivity: 'accent'})
-        if (this.sortingState[part] === 'asc') {
+    applySorting (items, partIn, directionIn) {
+      const part = partIn ? partIn : Object.keys(this.sortingState).find(sortPart => this.sortingState[sortPart] !== null)
+      const direction = directionIn ? directionIn : this.sortingState[part]
+
+      return !part ? items : items.sort( (item1, item2) => {
+        let compared
+        if (typeof item1[part] === 'string') {
+          compared = item1[part].localeCompare(item2[part], this.languageCode, {sensitivity: 'accent'})
+        } else {
+          compared = item1[part] - item2[part]
+        }
+
+        if (direction === 'asc') {
           return compared
-        } else if (this.sortingState[part] === 'desc') {
+        } else if (direction === 'desc') {
           return -compared
         } else {
           return 0 // default state is unsorted
         }
       })
     },
-    
-    prepareDownloadListFull () {
-      const exportFields = [ 'targetWord', 'languageCode', 'important', 'currentSession', 'lemmasList', 'context' ]
-      const source = this.downloadWithFilter ? this.wordItems : this.wordlist.values
-
-      const wordlistData = source.map(wordItem => {
-        return {
-          targetWord: wordItem.targetWord,
-          languageCode: wordItem.languageCode,
-          important: wordItem.important,
-          currentSession: wordItem.currentSession,
-          lemmasList: wordItem.lemmasList,
-          context: Object.keys(wordItem.formattedContext).join(' ')
-        }
-      })
-
-      return {
-        exportFields, wordlistData, delimiter: ';'
-      }
-    },
-
-    prepareDownloadListFlashcards () {
-      const exportFields = [ 'word', 'definition']
-      const source = this.downloadWithFilter ? this.wordItems : this.wordlist.values
-
-      let wordlistData = []
-      source.forEach(wordItem => {
-        if (wordItem.homonym && wordItem.homonym.lexemes) {
-          wordItem.homonym.lexemes.forEach(lexeme => {
-            if (lexeme.hasShortDefs) {
-              lexeme.meaning.shortDefs.forEach(shortDef => {
-                wordlistData.push({
-                  word: `${wordItem.homonym.targetWord} (${lexeme.lemma.wordPrincipalParts})`,
-                  definition: shortDef.text
-                })
-              })
-            }
-          })
-        }
-      })
-
-      return {
-        exportFields, wordlistData, delimiter: '\t'
-      }
-    },
-
-    downloadList () {
-      let dataForDownload
-
-      if (this.downloadForFlashcards) {
-        dataForDownload = this.prepareDownloadListFlashcards()
-      } else {
-        dataForDownload = this.prepareDownloadListFull()
-      }
-
-      const result = Download.collectionToCSV(dataForDownload.delimiter, dataForDownload.exportFields)(dataForDownload.wordlistData)
-      Download.downloadBlob(result, `wordlist-${this.languageCode}.csv`)
-      this.showDownloadBox = false
+    changeShowDownloadBox (value) {
+      this.showDownloadBox = value
     }
   }
 }
@@ -392,16 +334,7 @@ export default {
       stroke: var(--alpheios-word-list-delete-item-color);
     }
 
-    .alpheios-wordlist-delete-all-confirmation,
-    .alpheios-wordlist-download-confirmation {
+    .alpheios-wordlist-delete-all-confirmation {
       margin-top: 10px;
     }
-
-  .alpheios-wordlist-download-with-filters {
-    margin-top: 5px;
-  }
-
-  .alpheios-wordlist-download-with-filters label {
-    color: var(--alpheios-usage-link-color)
-  }
 </style>

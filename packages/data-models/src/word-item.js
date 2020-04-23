@@ -12,7 +12,7 @@ export default class WordItem {
    * {TextQuoteSelector[]} context
    * {Homonym} homonym
    */
-  constructor (data = { targetWord: null, languageCode: null, important: false, currentSession: true, context: [], homonym: {} }) {
+  constructor (data = { targetWord: null, languageCode: null, important: false, currentSession: true, context: [], homonym: {}, createdDT: null, updatedDT: null, frequency: null }) {
     // TODO handling of version
     this.version = 1
     this.targetWord = data.targetWord
@@ -24,6 +24,10 @@ export default class WordItem {
     this.currentSession = data.currentSession === undefined ? true : data.currentSession
     this.context = data.context || []
     this.homonym = data.homonym || {}
+
+    this.createdDT = data.createdDT
+    this.updatedDT = data.updatedDT
+    this.frequency = data.frequency
   }
 
   /**

@@ -1,34 +1,19 @@
 <template>
     <div class="alpheios-wordlist-sorting" >
-        
-        
-          <div class="alpheios-worditem__data alpheios-worditem__icon">
-          </div>
-
-          <div class="alpheios-worditem__data alpheios-worditem__icon">
-          </div>
-
-
-          <div class="alpheios-worditem__data alpheios-worditem__icon">
-                
-          </div>
-
-          <div class="alpheios-worditem__data alpheios-worditem__icon">
-          </div>
-
-        <div
-          class="alpheios-worditem__data alpheios-worditem__targetWord"
-        >
+          <div class="alpheios-worditem__data alpheios-worditem__icon" 
+               v-for="(field, index) in sortingFields" :key="index"
+               :class="fieldClass(field.name)"
+               @click = "changeSort(field.name)"
+          >
             <sort-asc-icon 
-                :class = "{ 'alpheios-icon-active': sortingState['targetWord'] === 'asc' }"
-                @click = "changeSort('targetWord', 'asc')"
+                :class = "{ 'alpheios-icon-active': sortingState[field.name] === 'asc' }"
+                v-if = "field.sorting && showSort(field.name, 'asc')"
             />
             <sort-desc-icon 
-                :class = "{ 'alpheios-icon-active': sortingState['targetWord'] === 'desc' }"
-                @click = "changeSort('targetWord', 'desc')"
+                :class = "{ 'alpheios-icon-active': sortingState[field.name] === 'desc' }"
+                v-if = "field.sorting && showSort(field.name, 'desc')"
             />
-        </div>
-
+          </div>
     </div>
 </template>
 
@@ -44,17 +29,62 @@
     },
     data () {
       return {
-          sortingState: {
-            'targetWord': null
-          }
+        sortingFields: [
+          { name: 'controlIcon', sorting: false },
+          { name: 'controlIcon', sorting: false },
+          { name: 'controlIcon', sorting: false },
+          { name: 'controlIcon', sorting: false },
+          { name: 'targetWord', sorting: true },
+          { name: 'lemmasList', sorting: false },
+          { name: 'frequency', sorting: true },
+          { name: 'updatedDT', sorting: true }
+        ],
+        defaultSortingShownType: 'asc',
+        sortingState: {
+          'targetWord': null,
+          'frequency': null,
+          'updatedDT': null
+        },
+        sortingOrder: [ null, 'asc', 'desc' ]
       }
     },
     computed: {
     },
     methods: {
       changeSort (part, type) {
-        this.sortingState[part] = this.sortingState[part] !== type ? type : null
+        const sortingData = this.sortingFields.find(field => field.name === part)
+
+        if (!sortingData.sorting) {
+          return
+        }
+
+        if (type) {
+          this.sortingState[part] = this.sortingState[part] !== type ? type : null
+        } else {
+          this.sortingState[part] = this.defineNextSorting(part)
+        }
+
+        Object.keys(this.sortingState).forEach(sortPart => {
+          if (sortPart !== part) {
+            this.sortingState[sortPart] = null
+            this.$emit('changeSorting', sortPart, null)
+          }
+        })
         this.$emit('changeSorting', part, this.sortingState[part])
+      },
+      defineNextSorting (part) {
+        const currentSortingIndex = this.sortingOrder.indexOf(this.sortingState[part])
+        const newSortingIndex = (currentSortingIndex + 1) < this.sortingOrder.length ? (currentSortingIndex + 1) : 0
+        return this.sortingOrder[newSortingIndex]
+      },
+      showSort(part, type) {
+        if (!this.sortingState[part]) {
+          return type === this.defaultSortingShownType
+        }
+        return this.sortingState[part] === type
+      },
+      fieldClass(field) {
+        return `alpheios-worditem__${field}`
       }
     }
   }
@@ -69,14 +99,13 @@
       padding-bottom: 5px;
       border-bottom: 1px solid var(--alpheios-color-neutral-dark);
 
-      .alpheios-worditem__icon {
+      .alpheios-worditem__controlIcon {
           width: $iconsize;
-          margin: 5px;          
+          margin: 0 5px;          
       }
 
-      .alpheios-worditem__targetWord {
-          width: 28%;
-          
+      .alpheios-worditem__icon {      
+          text-align: left;   
           svg {
             width: $iconsize;
             height: $iconsize;
@@ -95,14 +124,13 @@
           }
           
       }
+
+      .alpheios-worditem__icon.alpheios-worditem__frequency {
+        svg {
+          padding: 7px 0;
+        }
+      }
   }
 
-  .alpheios-layout-compact { 
-    .alpheios-wordlist-sorting {
-      .alpheios-worditem__targetWord {
-        width: 25%;
-      }
-    }
-  }
 
 </style>

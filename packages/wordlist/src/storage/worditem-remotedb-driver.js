@@ -170,7 +170,8 @@ export default class WordItemRemoteDbDriver {
       targetWord: wordItem.targetWord,
       important: wordItem.important,
       createdDT: wordItem.createdDT ? wordItem.createdDT : Utility.currentDate,
-      updatedDT: wordItem.updatedDT ? wordItem.updatedDT : Utility.currentDate
+      updatedDT: wordItem.updatedDT ? wordItem.updatedDT : Utility.currentDate,
+      frequency: wordItem.frequency ? parseInt(wordItem.frequency) : 1
     }
 
     let homonym = this._serializeHomonym(wordItem)
@@ -185,6 +186,8 @@ export default class WordItemRemoteDbDriver {
     } else {
       result.context = []
     }
+    // console.info('remote _serialize wordItem', wordItem.frequency, wordItem)
+    // console.info('remote _serialize result', result.frequency, result)
     return result
   }
 

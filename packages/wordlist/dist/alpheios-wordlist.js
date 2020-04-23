@@ -2260,6 +2260,7 @@ class UserDataManager {
     }
     try {
       params.source = params.source||'both'
+      // params.source = 'local'
       let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
 
       let localAdapter = this._localStorageAdapter(finalConstrName)
@@ -2308,7 +2309,9 @@ class UserDataManager {
       })
       return
     }
+    
     try {
+      // params.source = 'local'
       this.blocked = true
       let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
 
@@ -2361,6 +2364,7 @@ class UserDataManager {
       return
     }
     try {
+      // params.source = 'local'
 
       let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
       let localAdapter = this._localStorageAdapter(data.dataType)
@@ -2408,9 +2412,10 @@ class UserDataManager {
    * @return {WordItem[]}
    */
   async query (data, params = {}) {
-    // try {
+    try {
       params.type = params.type||'short'
       params.source = params.source||'both'
+      // params.source = 'local'
       params.syncDelete = params.syncDelete||false
 
       let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
@@ -2450,9 +2455,9 @@ class UserDataManager {
       this.printErrors(remoteAdapter)
       this.printErrors(localAdapter)
       return finalItems
-    /*} catch (error) {
+    } catch (error) {
       console.error('Alpheios error: unexpected error querying user data.', error.message)
-    }*/
+    }
   }
 
   async deleteAbsentInRemote (localAdapter, remoteItems, languageCode) {
@@ -2562,7 +2567,7 @@ class WordlistController {
         delete this.wordLists[languageCode]
         let wordItems = await dataManager.query({dataType: 'WordItem', params: {languageCode: languageCode}}, { syncDelete: true })
         if (wordItems.length > 0) {
-          this.wordLists[languageCode] = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordList"](languageCode,wordItems)
+          this.wordLists[languageCode] = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordList"](languageCode, wordItems)
           WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
         }
         if (cachedList) {
@@ -2674,10 +2679,10 @@ class WordlistController {
     let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(data.languageID), data.targetWord, true)
     wordItem.homonym = data
     wordItem.currentSession = true
-    console.info('onHomonymReady - worditem.createdDT', data.targetWord, wordItem.createdDT)
     wordItem.createdDT = wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
     wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
-    console.info('onHomonymReady - wordItem', data.targetWord, wordItem.createdDT, wordItem)
+    wordItem.frequency = wordItem.frequency ? wordItem.frequency + 1 : 1
+    WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
     WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'shortHomonym'}})
     // emit a wordlist updated event too in case the wordlist was updated
     WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
@@ -2913,11 +2918,7 @@ class IndexedDBAdapter {
     if (!segment) {
       segment = this.dbDriver.segmentsSync
     }
-
-    let currentLocalItems = await this.query({ wordItem })
-    if (currentLocalItems.length === 0 && segment && segment !== 'common') {
-      await this.update(wordItem, { segment: 'common' })
-    }
+    await this.update(wordItem, { segment: 'common' })
 
     let result = await this.update(wordItem, { segment })
 
@@ -4001,7 +4002,7 @@ class WordItemIndexedDbDriver {
    * @return {Object[]}
    */
   _serializeCommon (wordItem) {
-    return [{
+    const res = [{
       ID: this._makeStorageID(wordItem),
       listID: this.userId + '-' + wordItem.languageCode,
       userID: this.userId,
@@ -4009,8 +4010,10 @@ class WordItemIndexedDbDriver {
       targetWord: wordItem.targetWord,
       important: wordItem.important,
       createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_3__["default"].currentDate,
-      updatedDT: wordItem.updatedDT ? wordItem.updatedDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_3__["default"].currentDate
+      updatedDT: wordItem.updatedDT ? wordItem.updatedDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_3__["default"].currentDate,
+      frequency: wordItem.frequency ? wordItem.frequency : 1
     }]
+    return res
   }
 
   /**
@@ -4324,7 +4327,8 @@ class WordItemRemoteDbDriver {
       targetWord: wordItem.targetWord,
       important: wordItem.important,
       createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate,
-      updatedDT: wordItem.updatedDT ? wordItem.updatedDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
+      updatedDT: wordItem.updatedDT ? wordItem.updatedDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate,
+      frequency: wordItem.frequency ? parseInt(wordItem.frequency) : 1
     }
 
     let homonym = this._serializeHomonym(wordItem)
@@ -4339,6 +4343,8 @@ class WordItemRemoteDbDriver {
     } else {
       result.context = []
     }
+    // console.info('remote _serialize wordItem', wordItem.frequency, wordItem)
+    // console.info('remote _serialize result', result.frequency, result)
     return result
   }
 
