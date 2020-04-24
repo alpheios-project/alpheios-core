@@ -2,13 +2,30 @@
   <div class="alpheios-definition__short">
     <span :lang="languageCode"
           class="alpheios-definition__lemma">{{ definition.lemmaText }}:</span>
-    <span class="alpheios-definition__text" v-html="definition.text"></span>
+    <span v-if='alpheiosEnabled' data-alpheios-ignore="none" class="alpheios-definition__text" v-html="definition.text" :lang="definition.language"></span>
+    <span v-else data-alpheios-ignore="none" class="alpheios-definition__text" v-html="definition.text" :lang="definition.language"></span>
   </div>
 </template>
 <script>
+import { LanguageModelFactory } from 'alpheios-data-models'
+import DependencyCheck from '@/vue/vuex-modules/support/dependency-check.js'
 export default {
   name: 'ShortDef',
-  props: ['definition', 'languageCode']
+  inject: ['ui'],
+  mixins: [DependencyCheck],
+  props: ['definition', 'languageCode'],
+  computed: {
+    alpheiosEnabled () {
+      return LanguageModelFactory.supportsLanguage(this.definition.language)
+    }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      if (LanguageModelFactory.supportsLanguage(this.definition.language)) {
+        this.ui.registerAndActivateGetSelectedText('getSelectedText-shortDefinitions', '.alpheios-definition__short')
+      }
+    })
+  }
 }
 </script>
 <style lang="scss">
