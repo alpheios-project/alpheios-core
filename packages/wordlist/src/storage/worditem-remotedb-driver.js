@@ -239,7 +239,7 @@ export default class WordItemRemoteDbDriver {
       },
       languageCode: wordItem.languageCode,
       targetWord: wordItem.targetWord,
-      createdDT: WordItemRemoteDbDriver.currentDate
+      createdDT: Utility.currentDate
     }
   }
 

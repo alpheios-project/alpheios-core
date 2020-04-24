@@ -2413,7 +2413,7 @@ class UserDataManager {
    */
   async query (data, params = {}) {
     try {
-      params.type = params.type||'short'
+      params.type = params.type||'full'
       params.source = params.source||'both'
       // params.source = 'local'
       params.syncDelete = params.syncDelete||false
@@ -3599,7 +3599,6 @@ class RemoteDBAdapter {
         content = this.dbDriver.storageMap.put.serialize(data)
       }
 
-
       let result = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.put(url, content, this.dbDriver.requestsParams)
       let updated = this.dbDriver.storageMap.put.checkResult(result)
       return updated
@@ -4396,7 +4395,7 @@ class WordItemRemoteDbDriver {
       },
       languageCode: wordItem.languageCode,
       targetWord: wordItem.targetWord,
-      createdDT: WordItemRemoteDbDriver.currentDate
+      createdDT: _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
     }
   }
 

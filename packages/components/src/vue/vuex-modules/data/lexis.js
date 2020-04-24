@@ -249,7 +249,7 @@ Lexis.api = (moduleInstance, store) => {
      * @param clientId
      * @param verboseMode
      */
-    lookupText: (textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, clientId, verboseMode) => {
+    lookupText: (textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, clientId, verboseMode, forWordlist = false) => {
       /*
       When word is entered in the lookup component, it is out of context and we cannot get any treebank data on it.
        */
@@ -276,11 +276,14 @@ Lexis.api = (moduleInstance, store) => {
         checkContextForward: '',
         cedictServiceUrl: moduleInstance._lexisConfig ? moduleInstance._lexisConfig.cedict.target_url : null
       })
-      moduleInstance._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, null, 'lookup')
-      lexQuery.getData()
+      if (!forWordlist) {
+        moduleInstance._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, null, 'lookup')
+      }
+      const result = lexQuery.getData()
 
       // Hide a CEDICT notification on a new lexical query
       store.commit('lexis/hideCedictNotification')
+      return result
     },
 
     loadCedictData: async () => {

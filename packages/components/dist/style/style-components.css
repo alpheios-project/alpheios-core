@@ -2789,8 +2789,9 @@ p.alpheios-word-usage-filter-title {
 .alpheios-wordlist-download-with-filters label {
   color: var(--alpheios-usage-link-color);
 }
-.alpheios-wordlist-download-confirmation__buttons {
-  min-width: 115px;
+.alpheios-wordlist-download-confirmation__buttons.alpheios-notification-area__control {
+  min-width: 120px;
+  display: inline-block;
 }
 .alpheios-wordlist-download-amount .alpheios-feature-options__item {
   display: block;
@@ -2804,6 +2805,16 @@ p.alpheios-word-usage-filter-title {
 }
 .alpheios-wordlist-download-amount .alpheios-feature-options__item label {
   font-size: 90%;
+}
+.alpheios-wordlist-download-confirmation-loading {
+  padding: 10px 20px 0 0;
+  color: var(--alpheios-color-bright);
+}
+.alpheios-wordlist-download-confirmation-loading .alpheios-popup-lexdataloading__progress-inner {
+  border-color: var(--alpheios-color-vivid);
+}
+.alpheios-wordlist-download-confirmation-loading .alpheios-popup-lexdataloading__progress-line {
+  background: var(--alpheios-color-vivid-hover);
 }
 /*
  Calculates a size of text elements relative to the base size.

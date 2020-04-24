@@ -263,7 +263,7 @@ export default class UserDataManager {
    */
   async query (data, params = {}) {
     try {
-      params.type = params.type||'short'
+      params.type = params.type||'full'
       params.source = params.source||'both'
       // params.source = 'local'
       params.syncDelete = params.syncDelete||false

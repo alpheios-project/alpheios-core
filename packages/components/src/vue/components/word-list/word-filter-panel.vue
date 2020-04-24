@@ -154,6 +154,7 @@
       currentClickedLemma () {
         if (this.clickedLemma) {
           this.setClickedLemmaFilter()
+          this.showFilterDetails = true
         }
         return true
       },
