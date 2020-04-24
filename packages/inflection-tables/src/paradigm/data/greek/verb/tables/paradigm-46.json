@@ -697,7 +697,6 @@
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
                 "value": "infinitives"
             },
             {
@@ -711,13 +710,11 @@
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
                 "value": "participles"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
                 "part of speech": "verb_participle",
                 "value": "ὤν, οὖσᾰ, ὄν",
                 "reflink": {
@@ -730,13 +727,11 @@
             {
                 "role": "label",
                 "tense": "present",
-                "voice": "active",
                 "value": "future participles"
             },
             {
                 "role": "data",
                 "tense": "present",
-                "voice": "active",
                 "part of speech": "verb_participle",
                 "value": "ἐσόμενος, -η, -ον",
                 "reflink": {
