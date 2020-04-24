@@ -27,7 +27,7 @@
                 </label>
             </div>
 
-            <div class="alpheios-wordlist-download-amount" data-alpheios-ignore="all" v-show="downloadForFlashcards">
+            <div class="alpheios-wordlist-download-amount" data-alpheios-ignore="all" v-show="downloadForFlashcards" v-if="featureOptions">
               <setting
                   class="alpheios-feature-options__item"
                   :data="featureOptions.items.wordlistMaxFlashcardExport"

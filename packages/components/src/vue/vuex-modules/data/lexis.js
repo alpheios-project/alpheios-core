@@ -419,8 +419,8 @@ Lexis.api = (moduleInstance, store) => {
      * @param {string} lemmaTranslationLang - A locale for lemma translations (e.g. 'en-US')
      * @param wordUsageExamples
      */
-    lookupText: (textSelector, forWordlist = false) => {
-      moduleInstance.lexicalQuery({ store, textSelector, source: 'lookup' }, forWordlist)
+    lookupText: async (textSelector, forWordlist = false) => {
+      return moduleInstance.lexicalQuery({ store, textSelector, source: 'lookup' }, forWordlist)
     },
 
     loadCedictData: async () => {
