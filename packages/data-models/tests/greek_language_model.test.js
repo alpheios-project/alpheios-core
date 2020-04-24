@@ -62,8 +62,8 @@ describe('greek_language_model.j', () => {
   })
 
   it('5 GreekLanguageModel - normalizes accents', () => {
-    expect(greekModel.normalizeWord('ferāmus')).toEqual('ferāmus')
-    expect(greekModel.normalizeWord(null)).toBeNull()
+    expect(greekModel.normalizeText('ferāmus')).toEqual('ferāmus')
+    expect(greekModel.normalizeText(null)).toBeNull()
   })
 
   it('6 GreekLanguageModel - getInflectionConstraints - no part of speach', () => {
@@ -135,7 +135,7 @@ describe('greek_language_model.j', () => {
   })
 
   it('13 GreekLanguageModel - normalizes right quotation to koronis', () => {
-    expect(greekModel.normalizeWord('ἀλλ’')).toEqual('ἀλλ\u1fbd')
+    expect(greekModel.normalizeText('ἀλλ’')).toEqual('ἀλλ\u1fbd')
   })
 
   it('14 GreekLanguageModel - isValidUnicode defines βουλά in unicode as greek', () => {

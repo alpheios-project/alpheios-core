@@ -75,7 +75,7 @@ describe('text-selector.test.js', () => {
     const testModel = LMF.getLanguageModel(testLangId)
 
     const testTSelector = TextSelector.createObjectFromText('caelis', testLangId)
-    expect(testTSelector.normalizedText).toEqual(testModel.normalizeWord('caelis'))
+    expect(testTSelector.normalizedText).toEqual(testModel.normalizeText('caelis'))
   })
 
   it('9 TextSelector - createTextQuoteSelector creates textQuoteSelector from args', () => {

@@ -1031,7 +1031,7 @@ class Definition {
 /*!*******************!*\
   !*** ./driver.js ***!
   \*******************/
-/*! exports provided: Constants, Definition, DefinitionSet, Feature, GrmFeature, FeatureType, FeatureList, FeatureImporter, Inflection, LanguageModelFactory, Homonym, Lexeme, Lemma, LatinLanguageModel, GreekLanguageModel, ArabicLanguageModel, PersianLanguageModel, GeezLanguageModel, ChineseLanguageModel, SyriacLanguageModel, ResourceProvider, Translation, PsEvent, PsEventData, TextQuoteSelector, WordUsageExample, Author, TextWork, WordItem, WordList, TreebankDataItem */
+/*! exports provided: Constants, Definition, DefinitionSet, Feature, GrmFeature, FeatureType, FeatureList, FeatureImporter, Inflection, LanguageModelFactory, HomonymGroup, Homonym, Lexeme, Lemma, LatinLanguageModel, GreekLanguageModel, ArabicLanguageModel, PersianLanguageModel, GeezLanguageModel, ChineseLanguageModel, SyriacLanguageModel, ResourceProvider, Translation, PsEvent, PsEventData, TextQuoteSelector, WordUsageExample, Author, TextWork, WordItem, WordList, TreebankDataItem */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1062,71 +1062,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LanguageModelFactory", function() { return _language_model_factory_js__WEBPACK_IMPORTED_MODULE_8__["default"]; });
 
-/* harmony import */ var _homonym_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./homonym.js */ "./homonym.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Homonym", function() { return _homonym_js__WEBPACK_IMPORTED_MODULE_9__["default"]; });
+/* harmony import */ var _homonym_group_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./homonym-group.js */ "./homonym-group.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HomonymGroup", function() { return _homonym_group_js__WEBPACK_IMPORTED_MODULE_9__["default"]; });
 
-/* harmony import */ var _lexeme_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./lexeme.js */ "./lexeme.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Lexeme", function() { return _lexeme_js__WEBPACK_IMPORTED_MODULE_10__["default"]; });
+/* harmony import */ var _homonym_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./homonym.js */ "./homonym.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Homonym", function() { return _homonym_js__WEBPACK_IMPORTED_MODULE_10__["default"]; });
 
-/* harmony import */ var _lemma_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./lemma.js */ "./lemma.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Lemma", function() { return _lemma_js__WEBPACK_IMPORTED_MODULE_11__["default"]; });
+/* harmony import */ var _lexeme_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./lexeme.js */ "./lexeme.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Lexeme", function() { return _lexeme_js__WEBPACK_IMPORTED_MODULE_11__["default"]; });
 
-/* harmony import */ var _inflection_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./inflection.js */ "./inflection.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Inflection", function() { return _inflection_js__WEBPACK_IMPORTED_MODULE_12__["default"]; });
+/* harmony import */ var _lemma_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./lemma.js */ "./lemma.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Lemma", function() { return _lemma_js__WEBPACK_IMPORTED_MODULE_12__["default"]; });
 
-/* harmony import */ var _latin_language_model_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./latin_language_model.js */ "./latin_language_model.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LatinLanguageModel", function() { return _latin_language_model_js__WEBPACK_IMPORTED_MODULE_13__["default"]; });
+/* harmony import */ var _inflection_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./inflection.js */ "./inflection.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Inflection", function() { return _inflection_js__WEBPACK_IMPORTED_MODULE_13__["default"]; });
 
-/* harmony import */ var _greek_language_model_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./greek_language_model.js */ "./greek_language_model.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GreekLanguageModel", function() { return _greek_language_model_js__WEBPACK_IMPORTED_MODULE_14__["default"]; });
+/* harmony import */ var _latin_language_model_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./latin_language_model.js */ "./latin_language_model.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LatinLanguageModel", function() { return _latin_language_model_js__WEBPACK_IMPORTED_MODULE_14__["default"]; });
 
-/* harmony import */ var _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./arabic_language_model.js */ "./arabic_language_model.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ArabicLanguageModel", function() { return _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_15__["default"]; });
+/* harmony import */ var _greek_language_model_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./greek_language_model.js */ "./greek_language_model.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GreekLanguageModel", function() { return _greek_language_model_js__WEBPACK_IMPORTED_MODULE_15__["default"]; });
 
-/* harmony import */ var _persian_language_model_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./persian_language_model.js */ "./persian_language_model.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PersianLanguageModel", function() { return _persian_language_model_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
+/* harmony import */ var _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./arabic_language_model.js */ "./arabic_language_model.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ArabicLanguageModel", function() { return _arabic_language_model_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
 
-/* harmony import */ var _geez_language_model_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./geez_language_model.js */ "./geez_language_model.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GeezLanguageModel", function() { return _geez_language_model_js__WEBPACK_IMPORTED_MODULE_17__["default"]; });
+/* harmony import */ var _persian_language_model_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./persian_language_model.js */ "./persian_language_model.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PersianLanguageModel", function() { return _persian_language_model_js__WEBPACK_IMPORTED_MODULE_17__["default"]; });
 
-/* harmony import */ var _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./chinese_language_model.js */ "./chinese_language_model.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ChineseLanguageModel", function() { return _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_18__["default"]; });
+/* harmony import */ var _geez_language_model_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./geez_language_model.js */ "./geez_language_model.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GeezLanguageModel", function() { return _geez_language_model_js__WEBPACK_IMPORTED_MODULE_18__["default"]; });
 
-/* harmony import */ var _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./syriac_language_model.js */ "./syriac_language_model.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SyriacLanguageModel", function() { return _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_19__["default"]; });
+/* harmony import */ var _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./chinese_language_model.js */ "./chinese_language_model.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ChineseLanguageModel", function() { return _chinese_language_model_js__WEBPACK_IMPORTED_MODULE_19__["default"]; });
 
-/* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ResourceProvider", function() { return _resource_provider_js__WEBPACK_IMPORTED_MODULE_20__["default"]; });
+/* harmony import */ var _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./syriac_language_model.js */ "./syriac_language_model.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SyriacLanguageModel", function() { return _syriac_language_model_js__WEBPACK_IMPORTED_MODULE_20__["default"]; });
 
-/* harmony import */ var _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./ps-events/ps-event.js */ "./ps-events/ps-event.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PsEvent", function() { return _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_21__["default"]; });
+/* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ResourceProvider", function() { return _resource_provider_js__WEBPACK_IMPORTED_MODULE_21__["default"]; });
 
-/* harmony import */ var _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ps-events/ps-event-data.js */ "./ps-events/ps-event-data.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PsEventData", function() { return _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_22__["default"]; });
+/* harmony import */ var _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ps-events/ps-event.js */ "./ps-events/ps-event.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PsEvent", function() { return _ps_events_ps_event_js__WEBPACK_IMPORTED_MODULE_22__["default"]; });
 
-/* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Translation", function() { return _translation_js__WEBPACK_IMPORTED_MODULE_23__["default"]; });
+/* harmony import */ var _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ps-events/ps-event-data.js */ "./ps-events/ps-event-data.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PsEventData", function() { return _ps_events_ps_event_data_js__WEBPACK_IMPORTED_MODULE_23__["default"]; });
 
-/* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TextQuoteSelector", function() { return _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_24__["default"]; });
+/* harmony import */ var _translation_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./translation.js */ "./translation.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Translation", function() { return _translation_js__WEBPACK_IMPORTED_MODULE_24__["default"]; });
 
-/* harmony import */ var _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./texts/word-usage-example.js */ "./texts/word-usage-example.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WordUsageExample", function() { return _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_25__["default"]; });
+/* harmony import */ var _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./w3c/text-quote-selector.js */ "./w3c/text-quote-selector.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TextQuoteSelector", function() { return _w3c_text_quote_selector_js__WEBPACK_IMPORTED_MODULE_25__["default"]; });
 
-/* harmony import */ var _texts_author_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./texts/author.js */ "./texts/author.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Author", function() { return _texts_author_js__WEBPACK_IMPORTED_MODULE_26__["default"]; });
+/* harmony import */ var _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./texts/word-usage-example.js */ "./texts/word-usage-example.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WordUsageExample", function() { return _texts_word_usage_example_js__WEBPACK_IMPORTED_MODULE_26__["default"]; });
 
-/* harmony import */ var _texts_text_work_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./texts/text-work.js */ "./texts/text-work.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TextWork", function() { return _texts_text_work_js__WEBPACK_IMPORTED_MODULE_27__["default"]; });
+/* harmony import */ var _texts_author_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./texts/author.js */ "./texts/author.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Author", function() { return _texts_author_js__WEBPACK_IMPORTED_MODULE_27__["default"]; });
 
-/* harmony import */ var _word_item_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./word-item.js */ "./word-item.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WordItem", function() { return _word_item_js__WEBPACK_IMPORTED_MODULE_28__["default"]; });
+/* harmony import */ var _texts_text_work_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./texts/text-work.js */ "./texts/text-work.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TextWork", function() { return _texts_text_work_js__WEBPACK_IMPORTED_MODULE_28__["default"]; });
 
-/* harmony import */ var _word_list_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./word-list.js */ "./word-list.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WordList", function() { return _word_list_js__WEBPACK_IMPORTED_MODULE_29__["default"]; });
+/* harmony import */ var _word_item_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./word-item.js */ "./word-item.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WordItem", function() { return _word_item_js__WEBPACK_IMPORTED_MODULE_29__["default"]; });
 
-/* harmony import */ var _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./treebank_data_item.js */ "./treebank_data_item.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TreebankDataItem", function() { return _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_30__["default"]; });
+/* harmony import */ var _word_list_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./word-list.js */ "./word-list.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WordList", function() { return _word_list_js__WEBPACK_IMPORTED_MODULE_30__["default"]; });
+
+/* harmony import */ var _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./treebank_data_item.js */ "./treebank_data_item.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TreebankDataItem", function() { return _treebank_data_item_js__WEBPACK_IMPORTED_MODULE_31__["default"]; });
+
 
 
 
@@ -2395,21 +2399,21 @@ for the current node
   }
 
   /**
-   * Return a normalized version of a word which can be used to compare the word for equality
+   * Return a normalized version of a text string which can be used to compare the word for equality
    *
-   * @param {string} word the source word
+   * @param {string} text the source word or the source text
    * @returns {string} the normalized form of the word (default version just returns the same word,
    *          override in language-specific subclass)
    * @type string
    */
-  static normalizeWord (word) {
+  static normalizeText (text) {
     // we normalize greek to NFC - Normalization Form Canonical Composition
-    if (word) {
-      word = word.normalize('NFC')
+    if (text) {
+      text = text.normalize('NFC')
       // normalize the right single quotation at the end (elision) to Greek Koronois \u1fbd
-      word = word.replace(/\u2019$/, '\u1fbd')
+      text = text.replace(/\u2019$/, '\u1fbd')
     }
-    return word
+    return text
   }
 
   /**
@@ -2429,7 +2433,7 @@ for the current node
       return []
     }
     // make sure it's normalized to NFC and in lower case
-    const normalized = GreekLanguageModel.normalizeWord(word).toLocaleLowerCase()
+    const normalized = GreekLanguageModel.normalizeText(word).toLocaleLowerCase()
     const strippedVowelLength = normalized.replace(
       /[\u{1FB0}\u{1FB1}]/ug, '\u{03B1}').replace(
       /[\u{1FB8}\u{1FB9}]/ug, '\u{0391}').replace(
@@ -2571,8 +2575,8 @@ for the current node
         If a trailing digit is `1` (e.g. `αἴγυπτος1`) remove it, because the word with it is an equivalent of
         a word without (e.g. `αἴγυπτος`).
          */
-        if (/^.+1$/.test(wordA)) { wordA = wordA.substring(0, wordA.length - 1) }
-        if (/^.+1$/.test(wordB)) { wordB = wordB.substring(0, wordB.length - 1) }
+        wordA = this.normalizeTrailingDigit(wordA)
+        wordB = this.normalizeTrailingDigit(wordB)
       }
 
       const altWordA = GreekLanguageModel.alternateWordEncodings(wordA, null, null, 'strippedDiacritics')
@@ -2584,7 +2588,7 @@ for the current node
         }
       }
       if (!matched) {
-        matched = GreekLanguageModel.normalizeWord(wordA) === GreekLanguageModel.normalizeWord(wordB)
+        matched = GreekLanguageModel.normalizeText(wordA) === GreekLanguageModel.normalizeText(wordB)
       }
     } else {
       matched = wordA === wordB
@@ -2780,6 +2784,48 @@ GrmFeature.types = {
 
 /***/ }),
 
+/***/ "./homonym-group.js":
+/*!**************************!*\
+  !*** ./homonym-group.js ***!
+  \**************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return HomonymGroup; });
+/* harmony import */ var _homonym_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./homonym.js */ "./homonym.js");
+
+
+class HomonymGroup {
+  constructor (homonyms = []) {
+    this._homonyms = homonyms
+  }
+
+  get homonyms () {
+    return this._homonyms
+  }
+
+  get hasHomonyms () {
+    return this._homonyms.length > 0
+  }
+
+  toHomonym (targetWord) {
+    if (!targetWord) {
+      throw new Error(HomonymGroup.errors.NO_TARGET_WORD)
+    }
+    const lexemes = this._homonyms.map(homonym => homonym.lexemes).flat()
+    return new _homonym_js__WEBPACK_IMPORTED_MODULE_0__["default"](lexemes, targetWord)
+  }
+}
+
+HomonymGroup.errors = {
+  NO_TARGET_WORD: 'Target word is not provided'
+}
+
+
+/***/ }),
+
 /***/ "./homonym.js":
 /*!********************!*\
   !*** ./homonym.js ***!
@@ -2944,7 +2990,8 @@ class Homonym {
         if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
           lexemeMatched = true
         }
-        const newLex = _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"].disambiguate(lexeme, otherLexeme)
+        // Do not try to disambiguate lexemes that can't: it will erase a `disambiguated` flag
+        const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ? _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"].disambiguate(lexeme, otherLexeme) : lexeme
         lexemes.push(newLex)
       }
       // if we couldn't find a matching lexeme, add the disambigutor's lexemes
@@ -3840,16 +3887,27 @@ class LanguageModel {
   }
 
   /**
+   * Morphological parsers and dictionary indexes may add a trailing digit to disambiguate homonyms.
+   * These can be ignored for purposes of string comparison.
+   *
+   * @param {string} word - A word to normalize.
+   * @returns {string} A normalized word.
+   */
+  static normalizeTrailingDigit (word) {
+    return /^.+1$/.test(word) ? word.substring(0, word.length - 1) : word
+  }
+
+  /**
    * Checks if the word provided is in a normalized form.
    * It also checks if the word has the right single quotation (elision).
    *
-   * @see {@link GreekLanguageModel#normalizeWord}
-   * @param {string} word - A word to be checked.
+   * @see {@link GreekLanguageModel#normalizeText}
+   * @param {string} text - A word or a text string to be checked.
    * @returns {boolean} - True if at least one character of the word
    * is NOT in an Unicode Normalization Form, false otherwise.
    */
-  static needsNormalization (word) {
-    return Boolean(word.localeCompare(this.normalizeWord(word)))
+  static needsNormalization (text) {
+    return Boolean(text.localeCompare(this.normalizeText(text)))
   }
 
   /**
@@ -3863,14 +3921,14 @@ class LanguageModel {
   }
 
   /**
-   * Return a normalized version of a word which can be used to compare the word for equality
+   * Return a normalized version of a text string which can be used to compare the word for equality
    *
    * @param {string} word the source word
    * @returns string normalized form of the word (default version just returns the same word,
    *          override in language-specific subclass)
    * @type string
    */
-  static normalizeWord (word) {
+  static normalizeText (word) {
     return word
   }
 
@@ -3897,7 +3955,9 @@ class LanguageModel {
    */
   static compareWords (wordA, wordB, normalize = true, options = {}) {
     if (normalize) {
-      return this.normalizeWord(wordA) === this.normalizeWord(wordB)
+      wordA = this.normalizeTrailingDigit(wordA)
+      wordB = this.normalizeTrailingDigit(wordB)
+      return this.normalizeText(wordA) === this.normalizeText(wordB)
     } else {
       return wordA === wordB
     }
@@ -4790,30 +4850,30 @@ class LatinLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
   }
 
   /**
-   * Return a normalized version of a word which can be used to compare the word for equality
+   * Return a normalized version of a text string which can be used to compare the word for equality
    *
-   * @param {string} word the source word
+   * @param {string} text the source word or a text string
    * @returns the normalized form of the word (Latin replaces accents and special chars)
    * @type String
    */
-  static normalizeWord (word) {
-    if (word) {
-      word = word.replace(/[\u00c0\u00c1\u00c2\u00c3\u00c4\u0100\u0102]/g, 'A')
-      word = word.replace(/[\u00c8\u00c9\u00ca\u00cb\u0112\u0114]/g, 'E')
-      word = word.replace(/[\u00cc\u00cd\u00ce\u00cf\u012a\u012c]/g, 'I')
-      word = word.replace(/[\u00d2\u00d3\u00d4\u00df\u00d6\u014c\u014e]/g, 'O')
-      word = word.replace(/[\u00d9\u00da\u00db\u00dc\u016a\u016c]/g, 'U')
-      word = word.replace(/[\u00c6\u01e2]/g, 'AE')
-      word = word.replace(/[\u0152]/g, 'OE')
-      word = word.replace(/[\u00e0\u00e1\u00e2\u00e3\u00e4\u0101\u0103]/g, 'a')
-      word = word.replace(/[\u00e8\u00e9\u00ea\u00eb\u0113\u0115]/g, 'e')
-      word = word.replace(/[\u00ec\u00ed\u00ee\u00ef\u012b\u012d\u0129]/g, 'i')
-      word = word.replace(/[\u00f2\u00f3\u00f4\u00f5\u00f6\u014d\u014f]/g, 'o')
-      word = word.replace(/[\u00f9\u00fa\u00fb\u00fc\u016b\u016d]/g, 'u')
-      word = word.replace(/[\u00e6\u01e3]/g, 'ae')
-      word = word.replace(/[\u0153]/g, 'oe')
+  static normalizeText (text) {
+    if (text) {
+      text = text.replace(/[\u00c0\u00c1\u00c2\u00c3\u00c4\u0100\u0102]/g, 'A')
+      text = text.replace(/[\u00c8\u00c9\u00ca\u00cb\u0112\u0114]/g, 'E')
+      text = text.replace(/[\u00cc\u00cd\u00ce\u00cf\u012a\u012c]/g, 'I')
+      text = text.replace(/[\u00d2\u00d3\u00d4\u00df\u00d6\u014c\u014e]/g, 'O')
+      text = text.replace(/[\u00d9\u00da\u00db\u00dc\u016a\u016c]/g, 'U')
+      text = text.replace(/[\u00c6\u01e2]/g, 'AE')
+      text = text.replace(/[\u0152]/g, 'OE')
+      text = text.replace(/[\u00e0\u00e1\u00e2\u00e3\u00e4\u0101\u0103]/g, 'a')
+      text = text.replace(/[\u00e8\u00e9\u00ea\u00eb\u0113\u0115]/g, 'e')
+      text = text.replace(/[\u00ec\u00ed\u00ee\u00ef\u012b\u012d\u0129]/g, 'i')
+      text = text.replace(/[\u00f2\u00f3\u00f4\u00f5\u00f6\u014d\u014f]/g, 'o')
+      text = text.replace(/[\u00f9\u00fa\u00fb\u00fc\u016b\u016d]/g, 'u')
+      text = text.replace(/[\u00e6\u01e3]/g, 'ae')
+      text = text.replace(/[\u0153]/g, 'oe')
     }
-    return word
+    return text
   }
 
   /**
@@ -5112,10 +5172,10 @@ class Lemma {
     const thisNeesNormalization = langModel.needsNormalization(this.word)
     const otherNeesNormalization = langModel.needsNormalization(otherLemma.word)
     if (otherNeesNormalization) {
-      return langModel.normalizeWord(otherLemma.word)
+      return langModel.normalizeText(otherLemma.word)
     }
     if (thisNeesNormalization) {
-      return langModel.normalizeWord(this.word)
+      return langModel.normalizeText(this.word)
     }
     /*
     If one of the words has a trailing digit, return a word with a trailing digit.
@@ -5160,9 +5220,11 @@ class Lemma {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lemma_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lemma.js */ "./lemma.js");
 /* harmony import */ var _inflection_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inflection.js */ "./inflection.js");
-/* harmony import */ var _definition_set__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./definition-set */ "./definition-set.js");
-/* harmony import */ var _language_model_factory__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./language_model_factory */ "./language_model_factory.js");
-/* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
+/* harmony import */ var _definition_set_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./definition-set.js */ "./definition-set.js");
+/* harmony import */ var _language_model_factory_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./language_model_factory.js */ "./language_model_factory.js");
+/* harmony import */ var _language_model_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./language_model.js */ "./language_model.js");
+/* harmony import */ var _resource_provider_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./resource_provider.js */ "./resource_provider.js");
+
 
 
 
@@ -5204,7 +5266,7 @@ class Lexeme {
       }
     }
 
-    if (meaning !== null && !(meaning instanceof _definition_set__WEBPACK_IMPORTED_MODULE_2__["default"])) {
+    if (meaning !== null && !(meaning instanceof _definition_set_js__WEBPACK_IMPORTED_MODULE_2__["default"])) {
       throw new Error('Meaning should be of DefinitionSet object type.')
     }
 
@@ -5212,7 +5274,7 @@ class Lexeme {
     this.altLemmas = []
     this.inflections = []
     this.addInflections(inflections)
-    this.meaning = meaning || new _definition_set__WEBPACK_IMPORTED_MODULE_2__["default"](this.lemma.word, this.lemma.languageID)
+    this.meaning = meaning || new _definition_set_js__WEBPACK_IMPORTED_MODULE_2__["default"](this.lemma.word, this.lemma.languageID)
     this.disambiguated = false
   }
 
@@ -5302,9 +5364,12 @@ class Lexeme {
     /*
     A Lexeme can be used as an disambiguator if:
     - its lemma is a full homonym of a disambiguator's lemma;
-    - if disambiguators has at least some inflections; it has no value otherwise;
+    - disambiguator, comparing to a lexeme, has some extra features worth adding such as:
+      - some additional information in a word (e.g. a trailing digit) that lemma has not;
+      - at least one inflection.
     */
-    return this.isFullHomonym(disambiguator, { normalize: true }) && disambiguator.inflections.length > 0
+    const hasExtraFeatures = disambiguator.inflections.length || _language_model_js__WEBPACK_IMPORTED_MODULE_4__["default"].hasTrailingDigit(disambiguator.lemma.word)
+    return this.isFullHomonym(disambiguator, { normalize: true }) && hasExtraFeatures
   }
 
   /**
@@ -5344,7 +5409,7 @@ class Lexeme {
   }
 
   getGroupedInflections () {
-    const lm = _language_model_factory__WEBPACK_IMPORTED_MODULE_3__["default"].getLanguageModel(this.lemma.languageID)
+    const lm = _language_model_factory_js__WEBPACK_IMPORTED_MODULE_3__["default"].getLanguageModel(this.lemma.languageID)
     return lm.groupInflectionsForDisplay(this.inflections)
   }
 
@@ -5357,12 +5422,12 @@ class Lexeme {
 
     const lexeme = new Lexeme(lemma, inflections)
     if (jsonObject.meaning) {
-      lexeme.meaning = _definition_set__WEBPACK_IMPORTED_MODULE_2__["default"].readObject(jsonObject.meaning)
+      lexeme.meaning = _definition_set_js__WEBPACK_IMPORTED_MODULE_2__["default"].readObject(jsonObject.meaning)
     }
 
     if (jsonObject.provider) {
-      const provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_4__["default"].readObject(jsonObject.provider)
-      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_4__["default"].getProxy(provider, lexeme)
+      const provider = _resource_provider_js__WEBPACK_IMPORTED_MODULE_5__["default"].readObject(jsonObject.provider)
+      return _resource_provider_js__WEBPACK_IMPORTED_MODULE_5__["default"].getProxy(provider, lexeme)
     } else {
       return lexeme
     }
@@ -6361,11 +6426,25 @@ class Translation {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return TreebankDataItem; });
 class TreebankDataItem {
-  constructor (elem) {
+  /**
+   * Creates a treebank item. It can be created for either a specific text element (i.e. a selected word)
+   * or for the document (a web page) that has treebank data.
+   * If it is created for a text element, an 'elem' parameter will be provided and it will contain
+   * a selected text element.
+   * If a treebank item is created for a document (as when a web page with treebank data in it is loaded
+   * but a specific word is not selected) an 'elem' parameter will be skipped. In that case constructor
+   * will scan document in a search of any document ID and sentence ID that are required to be in a URL
+   * to load a treebank diagram.
+   *
+   * @param {node} [elem=null] - An HTML node that contains a selected word (optional).
+   */
+  constructor (elem = null) {
     this.version = 0
     this.app = null
     this.sourceUrl = null
-    this.reference = null
+    this.wordIds = []
+    this.sentenceId = null
+    this.doc = null
 
     /*
       Treebank data on a page must have an element with the following obligatory data attributes:
@@ -6382,7 +6461,9 @@ class TreebankDataItem {
       HTML elements that are surrounding words must have a `data-alpheios_tb_ref` ref attribute.
       It will tie a word to its position in a tree.
       */
-    const tbSrcElem = elem.ownerDocument.querySelector('[data-alpheios_tb_app]')
+    const tbSrcElem = elem
+      ? elem.closest('[data-alpheios_tb_app]')
+      : document.querySelector('[data-alpheios_tb_app]')
     if (tbSrcElem) {
       this.app = tbSrcElem.dataset.alpheios_tb_app
       if (this.app !== 'perseids-treebank-template') {
@@ -6390,42 +6471,122 @@ class TreebankDataItem {
       }
       if (tbSrcElem.dataset.alpheios_tb_app_version) {
         this.version = Number.parseInt(tbSrcElem.dataset.alpheios_tb_app_version, 10)
-        if (Number.isNaN(this.version)) { throw new Error(`Treebank version is incorrect in: ${tbSrcElem.outerHTML}`) }
+        if (!Number.isInteger(this.version)) { throw new Error(`Treebank version is incorrect in: ${tbSrcElem.outerHTML}`) }
       }
 
       if (!tbSrcElem.dataset.alpheios_tb_app_url) { throw new Error(`Missing treebank source URL in: ${tbSrcElem.outerHTML}`) }
       this.sourceUrl = tbSrcElem.dataset.alpheios_tb_app_url
 
-      const tbRefElem = elem.closest('[data-alpheios_tb_ref]')
-      if (!tbRefElem || !tbRefElem.dataset.alpheios_tb_ref) {
-        throw new Error('Cannot find an element with the data-alpheios_tb_ref data attribute among the ancestors')
+      // We'll search for any element with the treebank tags if `elem` is not provided.
+      const tbRefElem = elem ? elem.closest('[data-alpheios_tb_ref]') : document.querySelector('[data-alpheios_tb_ref]')
+      // If TreebankDataItem is created for a page (i.e. `elem` is not provided) we need just a sentence ID, not word ID
+      let wordElem = null
+      let sentElem
+      if (elem) {
+        // TreebankDataItem is created for a text element
+        wordElem = elem.closest('[data-alpheios_tb_word]')
+        sentElem = wordElem ? wordElem.closest('[data-alpheios_tb_sent]') : elem.closest('[data-alpheios_tb_sent]')
+      } else {
+        // TreebankDataItem is created for a page, we don't need a word ID
+        sentElem = document.querySelector('[data-alpheios_tb_sent]')
       }
-      this.reference = tbRefElem.dataset.alpheios_tb_ref
+      if (!tbRefElem && !(wordElem || sentElem)) {
+        throw new Error('An element does not have data-alpheios_tb_ref, data-alpheios_tb_word or data-alpheios_tb_sent attributes')
+      }
+
+      /*
+      If both `data-alpheios_tb_word` and `data-alpheios_tb_ref` data attributes are present, the former will
+      have priority because it belongs to a newer tagging schema.
+       */
+      if (wordElem || sentElem) {
+        /*
+        Data is using `data-alpheios_tb_sent` and `data-alpheios_tb_word` attributes. There could be multiple
+        word combinations specified there. In that case they will be separated by spaces:
+        `data-alpheios_tb_word="3 4"`.
+         */
+        if (!sentElem) {
+          throw new Error('Sentence ID is undefined: there is no parent element with data-alpheios_tb_sent attribute')
+        }
+        const docElem = wordElem ? wordElem.closest('[data-alpheios_tb_doc]') : sentElem.closest('[data-alpheios_tb_doc]')
+        if (!docElem) {
+          throw new Error('Document ID is undefined: there is no parent element with data-alpheios_tb_doc attribute')
+        }
+        if (wordElem) {
+          this.wordIds = wordElem.dataset.alpheios_tb_word.split(' ')
+        }
+        this.sentenceId = sentElem.dataset.alpheios_tb_sent
+        this.doc = docElem.dataset.alpheios_tb_doc
+      } else {
+        /*
+        Data is using `data-alpheios_tb_ref` attributes. There could be multiple
+        sentence and word combinations specified there. In that case they will be separated by spaces:
+        `data-alpheios_tb_ref="phi0959.phi006.alpheios-text-lat1#2-13 phi0959.phi006.alpheios-text-lat1#2-14"`.
+        We, however, do not support multiple references with different sentence ID. In that case the first
+        reference will be used and others with sentence IDs not matching the first one will be ignored.
+         */
+        const reference = tbRefElem.dataset.alpheios_tb_ref
+        let refs
+        try {
+          refs = reference.split(' ').map(ref => TreebankDataItem.parseReference(ref))
+        } catch (err) {
+          throw new Error(`${err.message} in: ${tbSrcElem.outerHTML}`)
+        }
+        refs = refs.filter(i => i.doc === refs[0].doc && i.sent === refs[0].sent)
+        this.doc = refs[0].doc
+        this.sentenceId = refs[0].sent
+        this.wordIds = refs.map(i => i.word)
+      }
     }
 
-    if (this.hasTreebankData) {
-      const [doc, ref] = this.reference.split(/#/)
-      if (!doc || !ref) { throw new Error(`Invalid treebank reference in: ${tbSrcElem.outerHTML}`) }
-      const [s, w] = ref.split(/-/)
-      if (!s) { throw new Error(`Invalid treebank sentence ID in: ${tbSrcElem.outerHTML}`) }
-      if (!w) { throw new Error(`Invalid treebank word ID in: ${tbSrcElem.outerHTML}`) }
-      this.doc = doc
-      this.sentenceId = s
-      this.wordId = w
-      this.fullUrl = this.sourceUrl.replace('DOC', doc).replace('SENTENCE', s).replace('WORD', w)
+    if (!this.doc) { throw new Error('Document data is missing') }
+    if (!this.sentenceId) { throw new Error('Sentence data is missing') }
+  }
+
+  static getTreebankData (elem = null) {
+    try {
+      return new TreebankDataItem(elem)
+    } catch (err) {
+      return null
     }
+  }
+
+  /**
+   * Parse a reference in a "phi0959.phi006.alpheios-text-lat1#2-13" format to document, sentence ID, and word ID.
+   *
+   * @param {string} reference - A reference value to parse.
+   * @returns {{doc: string, sent: string, word: string}} - An object containing parsed values.
+   */
+  static parseReference (reference) {
+    const [doc, sentWordRef] = reference.split(/#/)
+    if (!doc || !sentWordRef) { throw new Error('Invalid treebank reference') }
+    const [sent, word] = sentWordRef.split(/-/)
+    if (!sent) { throw new Error('Invalid treebank sent ID') }
+    if (!word) { throw new Error('Invalid treebank word ID') }
+    return { doc, sent, word }
+  }
+
+  setWordData (wordIds) {
+    this.wordIds = wordIds
+  }
+
+  removeWordData () {
+    this.wordIds = []
+  }
+
+  get fullUrl () {
+    return this.sourceUrl.replace('DOC', this.doc).replace('SENTENCE', this.sentenceId)
   }
 
   get provider () {
     return new URL(this.fullUrl).origin
   }
 
-  get hasTreebankData () {
-    if (this.app && this.version > 0 && this.sourceUrl) {
-      return true
-    } else {
-      return false
-    }
+  get hasWordData () {
+    return this.wordIds.length > 0
+  }
+
+  get hasSentenceData () {
+    return Boolean(this.sentenceId)
   }
 }
 

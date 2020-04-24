@@ -9,6 +9,16 @@
       "target": "en"
     }
   },
+  "https://github.com/alpheios-project/grammar-allen-greenough": {
+    "base_url": "https://grammars.alpheios.net/allen-greenough/",
+    "index_url": "https://grammars.alpheios.net/allen-greenough/index/alph-index-allen-greenough",
+    "description": "Allen and Greenough’s New Latin Grammar for Schools and Colleges",
+    "rights": "Allen and Greenough’s New Latin Grammar for Schools and Colleges, edited by J.B. Greenough, G.L. Kittredge, A.A. Howard, and Benjamin L. D’Ooge. Boston: Ginn &amp; Company, 1903.",
+    "langs": {
+      "source": "lat",
+      "target": "en"
+    }
+  },
   "https://github.com/alpheios-project/grammar-smyth": {
     "base_url": "https://grammars.alpheios.net/smyth/xhtml/",
     "index_url": "https://grammars.alpheios.net/smyth/index/alph-index-smyth",

@@ -166,7 +166,10 @@ if you want to create a different configuration of a UI controller.
       messageBundles: Locales.bundleArr()
     })
 
-    uiController.registerModule(LexisModule)
+    uiController.registerModule(LexisModule, {
+      arethusaTbRefreshRetryCount: uiController.options.arethusaTbRefreshRetryCount,
+      arethusaTbRefreshDelay: uiController.options.arethusaTbRefreshDelay
+    })
 
     /*
     The second parameter of an AuthModule is environment specific.
@@ -278,11 +281,10 @@ if you want to create a different configuration of a UI controller.
       // be added by the components library
       overrideHelp: false,
       /*
-      This is an experimental flag that will force treebank iframe URL to be reset every time a treebank tab is
-      opened. It will force a content of an iframe to be reloaded and thus will solve display issues
-      with a treebank view.
+      How many times to retry and what timout to use within an Arethusa treebank app `refreshView` request.
        */
-      experimentalResetTreebankURL: false,
+      arethusaTbRefreshRetryCount: 50,
+      arethusaTbRefreshDelay: 200,
       // A URL of a server that provides an app configuration
       configServiceUrl: 'https://config.alpheios.net/v1/config'
     }
@@ -440,8 +442,7 @@ if you want to create a different configuration of a UI controller.
       // so they remain out of dynamic state for now - should eventually
       // refactor
       lookupResourceOptions: this.lookupResourceOptions,
-      siteOptions: this.siteOptions,
-      experimentalResetTreebankURL: this.options.experimentalResetTreebankURL
+      siteOptions: this.siteOptions
     }
 
     this.store.registerModule('settings', {
@@ -533,11 +534,6 @@ if you want to create a different configuration of a UI controller.
       enableWordUsageExamples: this.enableWordUsageExamples.bind(this),
       isGetSelectedTextEnabled: this.isGetSelectedTextEnabled.bind(this),
       newLexicalRequest: this.newLexicalRequest.bind(this),
-      getLemmaTranslationsQueryParams: (textSelector) => {
-        return this.enableLemmaTranslations(textSelector)
-          ? { locale: this.featureOptions.items.locale.currentValue }
-          : null
-      },
       getWordUsageExamplesQueryParams: this.getWordUsageExamplesQueryParams.bind(this),
 
       restoreGrammarIndex: this.restoreGrammarIndex.bind(this)
@@ -1368,6 +1364,13 @@ If no URLS are provided, will reset grammar data.
     }
   }
 
+  /**
+    (re)initializes grammar data from settings
+  */
+  initGrammar () {
+    this.store.commit('app/setUpdatedGrammar')
+  }
+
   updateTranslations (homonym) {
     this.store.commit('app/setTranslDataReady')
     this.updateProviders(homonym)
@@ -1556,18 +1559,6 @@ If no URLS are provided, will reset grammar data.
     await LexicalQuery.getWordUsageData(homonym, wordUsageExamples, params)
   }
 
-  /**
-   * Check to see if Lemma Translations should be enabled for a query
-NB this is Prototype functionality
-   *
-   * @param textSelector
-   */
-  enableLemmaTranslations (textSelector) {
-    return textSelector.languageID === Constants.LANG_LATIN &&
-      this.featureOptions.items.enableLemmaTranslations.currentValue &&
-      !this.featureOptions.items.locale.currentValue.match(/^en-/)
-  }
-
   enableWordUsageExamples (textSelector, requestType) {
     const checkType = requestType === 'onLexicalQuery' ? this.featureOptions.items.wordUsageExamplesON.currentValue === requestType : true
     return textSelector.languageID === Constants.LANG_LATIN &&
@@ -1602,7 +1593,8 @@ NB this is Prototype functionality
   startResourceQuery (feature) {
     // ExpObjMon.track(
     ResourceQuery.create(feature, {
-      grammars: Grammars
+      grammars: Grammars,
+      resourceOptions: this.getResourceOptions()
     }).getData()
     //, {
     // experience: 'Get resource',
@@ -1862,7 +1854,7 @@ NB this is Prototype functionality
     // TODO this should really be handled within OptionsItem
     // the difference between value and textValues is a little confusing
     // see issue #73
-    if (name === 'fontSize' || name === 'hideLoginPrompt') {
+    if (name === 'fontSize' || name === 'hideLoginPrompt' || name === 'maxPopupWidth') {
       uiOptions.items[name].setValue(value)
     } else {
       uiOptions.items[name].setTextValue(value)
@@ -1920,6 +1912,9 @@ NB this is Prototype functionality
     // an array or an individual text value
     const baseKey = Options.parseKey(name)
     this.api.settings.getResourceOptions().items[baseKey.name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
+    if (name === 'grammars') {
+      this.initGrammar()
+    }
   }
 
   registerGetSelectedText (listenerName, selector) {

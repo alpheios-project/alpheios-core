@@ -135,13 +135,11 @@
           const wordItem = source[i]
           if (!wordItem.homonym || !wordItem.homonym.lexemes || !wordItem.homonym.hasShortDefs) {
             this.showProgress = true
-            console.info('PDLF - ', this.languageCode, this.languageID)
+
             const textSelector = TextSelector.createObjectFromText(wordItem.targetWord, this.languageID)
             const resourceOptions = this.settings.getResourceOptions()
-            await this.lexis.lookupText(textSelector, resourceOptions, null, null, this.app.clientId,
-                 this.settings.verboseMode(), true)
 
-            console.info('wordItem.homonym.lexemes - looked up', wordItem.homonym.lexemes)
+            await this.lexis.lookupText(textSelector, true)
           }
         }
 

@@ -118,6 +118,48 @@ class ArethusaTreebankAdapter extends BaseAdapter {
       this.addError(this.l10n.messages['MORPH_TREEBANK_UNKNOWN_ERROR'].get(error.mesage))
     }
   }
+
+  async findWord (provider, word, prefix, suffix, sentenceId) {
+    const config = this._getMessageConfig(provider)
+    const svc = this.getMessagingService(config)
+    const gotoSentenceBody = {
+      gotoSentence: { sentenceId }
+    }
+    try {
+      await svc.sendRequestTo(config.name, new RequestMessage(gotoSentenceBody))
+      const findWordBody = { findWord: { sentenceId, word, prefix, suffix } }
+      const response = await svc.sendRequestTo(config.name, new RequestMessage(findWordBody))
+      return response.body
+    } catch (response) {
+      if (response instanceof ResponseMessage) {
+        // This is an error from a treebank template app
+        this.addRemoteError(response.errorCode, response.body.message)
+      } else {
+        // This is some other error
+        this.addError(response.message)
+      }
+    }
+  }
+
+  async gotoSentence (provider, sentenceId, wordIds = []) {
+    const config = this._getMessageConfig(provider)
+    const svc = this.getMessagingService(config)
+    const gotoSentenceBody = {
+      gotoSentence: { sentenceId, wordIds }
+    }
+    try {
+      const response = await svc.sendRequestTo(config.name, new RequestMessage(gotoSentenceBody))
+      return response.body
+    } catch (response) {
+      if (response instanceof ResponseMessage) {
+        // This is an error from a treebank template app
+        this.addRemoteError(response.errorCode, response.body.message)
+      } else {
+        // This is some other error
+        this.addError(response.message)
+      }
+    }
+  }
 }
 
 export default ArethusaTreebankAdapter

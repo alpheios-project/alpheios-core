@@ -230,7 +230,7 @@
 
       <div
           class="alpheios-panel__tab-panel alpheios-panel__tab__treebank alpheios-panel__tab-panel--no-padding"
-          v-if="$store.state.lexis.hasTreebankData" v-show="$store.getters['ui/isActiveTab']('treebank')"
+          v-if="$store.state.lexis.treebankSrc" v-show="$store.getters['ui/isActiveTab']('treebank')"
           data-alpheios-ignore="all">
         <treebank/>
       </div>

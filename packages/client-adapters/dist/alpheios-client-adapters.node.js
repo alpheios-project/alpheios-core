@@ -9488,7 +9488,7 @@ else if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () { return xmlToJSON
 /*! exports provided: morphology, lexicon, lemmatranslation, wordusageExamples, autocompleteWords, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"arethusaTreebank\":{\"adapter\":\"arethusaAdapter\",\"methods\":[\"getHomonym\",\"refreshView\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\",\"provider\",\"sentenceId\",\"wordId\"],\"refreshView\":[\"provider\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\",\"loadData\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"],\"loadData\":[\"timeout\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\",\"checkCachedData\",\"getConfig\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"],\"checkCachedData\":[\"url\",\"externalData\"],\"getConfig\":[]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}},\"autocompleteWords\":{\"logeion\":{\"adapter\":\"autoCompleteWords\",\"methods\":\"getWords\",\"params\":{\"getWords\":[\"text\",\"lang\"]}}}}");
+module.exports = JSON.parse("{\"morphology\":{\"alpheiosTreebank\":{\"adapter\":\"tbAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"wordref\"]}},\"arethusaTreebank\":{\"adapter\":\"arethusaAdapter\",\"methods\":[\"getHomonym\",\"refreshView\",\"gotoSentence\",\"findWord\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\",\"provider\",\"sentenceId\",\"wordId\"],\"refreshView\":[\"provider\"],\"gotoSentence\":[\"provider\",\"sentenceId\",\"wordIds\"],\"findWord\":[\"provider\",\"word\",\"prefix\",\"suffix\",\"sentenceId\"]}},\"tufts\":{\"adapter\":\"maAdapter\",\"methods\":[\"getHomonym\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"]}},\"chineseloc\":{\"adapter\":\"chineseAdapter\",\"methods\":[\"getHomonym\",\"loadData\"],\"params\":{\"getHomonym\":[\"languageID\",\"word\"],\"loadData\":[\"timeout\"]}}},\"lexicon\":{\"alpheios\":{\"adapter\":\"lexicons\",\"methods\":[\"fetchShortDefs\",\"fetchFullDefs\",\"checkCachedData\",\"getConfig\"],\"params\":{\"fetchShortDefs\":[\"homonym\",\"opts\"],\"fetchFullDefs\":[\"homonym\",\"opts\"],\"checkCachedData\":[\"url\",\"externalData\"],\"getConfig\":[]}}},\"lemmatranslation\":{\"alpheios\":{\"adapter\":\"lemmaTranslations\",\"methods\":\"fetchTranslations\",\"params\":{\"fetchTranslations\":[\"homonym\",\"browserLang\"]}}},\"wordusageExamples\":{\"concordance\":{\"adapter\":\"wordUsageExamples\",\"methods\":[\"getAuthorsWorks\",\"getWordUsageExamples\"],\"params\":{\"getAuthorsWorks\":[],\"getWordUsageExamples\":[\"homonym\"]}}},\"autocompleteWords\":{\"logeion\":{\"adapter\":\"autoCompleteWords\",\"methods\":\"getWords\",\"params\":{\"getWords\":[\"text\",\"lang\"]}}}}");
 
 /***/ }),
 
@@ -9779,6 +9779,48 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
       this.addError(this.l10n.messages['MORPH_TREEBANK_UNKNOWN_ERROR'].get(error.mesage))
     }
   }
+
+  async findWord (provider, word, prefix, suffix, sentenceId) {
+    const config = this._getMessageConfig(provider)
+    const svc = this.getMessagingService(config)
+    const gotoSentenceBody = {
+      gotoSentence: { sentenceId }
+    }
+    try {
+      await svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](gotoSentenceBody))
+      const findWordBody = { findWord: { sentenceId, word, prefix, suffix } }
+      const response = await svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](findWordBody))
+      return response.body
+    } catch (response) {
+      if (response instanceof alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["ResponseMessage"]) {
+        // This is an error from a treebank template app
+        this.addRemoteError(response.errorCode, response.body.message)
+      } else {
+        // This is some other error
+        this.addError(response.message)
+      }
+    }
+  }
+
+  async gotoSentence (provider, sentenceId, wordIds = []) {
+    const config = this._getMessageConfig(provider)
+    const svc = this.getMessagingService(config)
+    const gotoSentenceBody = {
+      gotoSentence: { sentenceId, wordIds }
+    }
+    try {
+      const response = await svc.sendRequestTo(config.name, new alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["RequestMessage"](gotoSentenceBody))
+      return response.body
+    } catch (response) {
+      if (response instanceof alpheios_messaging_dist_dev_alpheios_messaging_js__WEBPACK_IMPORTED_MODULE_5__["ResponseMessage"]) {
+        // This is an error from a treebank template app
+        this.addRemoteError(response.errorCode, response.body.message)
+      } else {
+        // This is some other error
+        this.addError(response.message)
+      }
+    }
+  }
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (ArethusaTreebankAdapter);
@@ -10063,7 +10105,12 @@ class AlpheiosChineseLocAdapter extends _clAdapters_adapters_base_adapter__WEBPA
     instance of the service that will be created once and reused across consecutive constructor invocations.
      */
     if (!alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].hasService(msgServiceName)) {
-      alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].createService(msgServiceName, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["WindowIframeDestination"](this.cedictConfig))
+      alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].createService(msgServiceName, new alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["WindowIframeDestination"]({
+        name: this.cedictConfig.name,
+        targetURL: this.cedictConfig.targetURL,
+        targetIframeID: this.cedictConfig.targetIframeID,
+        commModes: [alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["WindowIframeDestination"].commModes.SEND]
+      }))
     }
     this._messagingService = alpheios_messaging__WEBPACK_IMPORTED_MODULE_2__["MessagingService"].getService(msgServiceName)
   }
@@ -11834,8 +11881,8 @@ class ClientAdapters {
   }
 
   /**
-  * This method checks if given array with parameteres doesn\'t have required parameters, registered in config file
-  * @param {[String]} params - array of parameter\' names for being checked
+  * This method checks if given array with parameteres doesn't have required parameters, registered in config file
+  * @param {[String]} params - array of parameter's names for being checked
   * @param {String} category - category name - morphology, lemmatranslation, lexicon
   * @param {String} adapterName - adapter name - tufts, treebankAdapter, alpheios
   * @param {String} methodName - method name - method name that should be checked, for example getHomonym, fetchTranslations and etc.
@@ -11843,7 +11890,8 @@ class ClientAdapters {
   static checkParam (params, category, adapterName, methodName) {
     if (cachedConfig.get(category)[adapterName].params) {
       cachedConfig.get(category)[adapterName].params[methodName].forEach(paramName => {
-        if (!params[paramName]) {
+        // Param values other than `undefined` such as `null` or empty strings could be valid values
+        if (typeof params[paramName] === 'undefined') {
           throw new _clAdapters_errors_no_required_param_error__WEBPACK_IMPORTED_MODULE_9__["default"](category, adapterName, methodName, paramName)
         }
       })
@@ -11974,6 +12022,24 @@ class ClientAdapters {
     }
     if (options.method === 'refreshView') {
       const resp = await localAdapter.refreshView(options.params.provider)
+      return { result: resp, errors: localAdapter.errors }
+    }
+    if (options.method === 'gotoSentence') {
+      const resp = await localAdapter.gotoSentence(
+        options.params.provider,
+        options.params.sentenceId,
+        options.params.wordIds
+      )
+      return { result: resp, errors: localAdapter.errors }
+    }
+    if (options.method === 'findWord') {
+      const resp = await localAdapter.findWord(
+        options.params.provider,
+        options.params.word,
+        options.params.prefix,
+        options.params.suffix,
+        options.params.sentenceId
+      )
       return { result: resp, errors: localAdapter.errors }
     }
     return null

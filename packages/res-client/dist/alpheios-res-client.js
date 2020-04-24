@@ -9076,10 +9076,10 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************!*\
   !*** ./grammar/config.json ***!
   \*****************************/
-/*! exports provided: https://github.com/alpheios-project/grammar-bennett, https://github.com/alpheios-project/grammar-smyth, default */
+/*! exports provided: https://github.com/alpheios-project/grammar-bennett, https://github.com/alpheios-project/grammar-allen-greenough, https://github.com/alpheios-project/grammar-smyth, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"https://github.com/alpheios-project/grammar-bennett\":{\"base_url\":\"https://grammars.alpheios.net/bennett/\",\"index_url\":\"https://grammars.alpheios.net/bennett/index/alph-index-bennett\",\"description\":\"New Latin Grammar, by Charles E. Bennett\",\"rights\":\"New Latin Grammar, by Charles E. Bennett. Copyright 1895; 1908; 1918.\",\"langs\":{\"source\":\"lat\",\"target\":\"en\"}},\"https://github.com/alpheios-project/grammar-smyth\":{\"base_url\":\"https://grammars.alpheios.net/smyth/xhtml/\",\"index_url\":\"https://grammars.alpheios.net/smyth/index/alph-index-smyth\",\"description\":\"Smyth's Greek Grammar For Colleges\",\"rights\":\"Smyth's Greek Grammar for Colleges, by Herbert Weir Smyth.\",\"langs\":{\"source\":\"grc\",\"target\":\"en\"}}}");
+module.exports = JSON.parse("{\"https://github.com/alpheios-project/grammar-bennett\":{\"base_url\":\"https://grammars.alpheios.net/bennett/\",\"index_url\":\"https://grammars.alpheios.net/bennett/index/alph-index-bennett\",\"description\":\"New Latin Grammar, by Charles E. Bennett\",\"rights\":\"New Latin Grammar, by Charles E. Bennett. Copyright 1895; 1908; 1918.\",\"langs\":{\"source\":\"lat\",\"target\":\"en\"}},\"https://github.com/alpheios-project/grammar-allen-greenough\":{\"base_url\":\"https://grammars.alpheios.net/allen-greenough/\",\"index_url\":\"https://grammars.alpheios.net/allen-greenough/index/alph-index-allen-greenough\",\"description\":\"Allen and Greenough’s New Latin Grammar for Schools and Colleges\",\"rights\":\"Allen and Greenough’s New Latin Grammar for Schools and Colleges, edited by J.B. Greenough, G.L. Kittredge, A.A. Howard, and Benjamin L. D’Ooge. Boston: Ginn &amp; Company, 1903.\",\"langs\":{\"source\":\"lat\",\"target\":\"en\"}},\"https://github.com/alpheios-project/grammar-smyth\":{\"base_url\":\"https://grammars.alpheios.net/smyth/xhtml/\",\"index_url\":\"https://grammars.alpheios.net/smyth/index/alph-index-smyth\",\"description\":\"Smyth's Greek Grammar For Colleges\",\"rights\":\"Smyth's Greek Grammar for Colleges, by Herbert Weir Smyth.\",\"langs\":{\"source\":\"grc\",\"target\":\"en\"}}}");
 
 /***/ }),
 
@@ -9313,7 +9313,8 @@ class Grammars {
 
     let requests = []
     try {
-      let adapters = Grammars.getGrammarAdapters(feature.languageID)
+      let adapters = Grammars.getGrammarAdapters(feature.languageID, options)
+
       if (!adapters || adapters.length === 0) { return [] } // No adapters found for this language
       requests = adapters.map(adapter => {
         return new Promise((resolve, reject) => {
@@ -9350,9 +9351,10 @@ class Grammars {
   /**
    * Returns a list of suitable lexicon adapters for a given language ID.
    * @param {Symbol} languageID - A language ID of adapters returned.
+   * @param {Object} options - request options
    * @return {BaseLexiconAdapter[]} An array of lexicon adapters for a given language.
    */
-  static getGrammarAdapters (languageID) {
+  static getGrammarAdapters (languageID, options) {
     if (!grammars.has(languageID)) {
       // As getLexicons need a language code, let's convert a language ID to a code
       let languageCode = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(languageID)
@@ -9360,7 +9362,12 @@ class Grammars {
       let grammarsList = _grammar_grammar_adapter__WEBPACK_IMPORTED_MODULE_1__["default"].getProviders(languageCode)
       grammars.set(languageID, Array.from(grammarsList.keys()).map(id => new _grammar_grammar_adapter__WEBPACK_IMPORTED_MODULE_1__["default"](id)))
     }
-    return grammars.get(languageID)
+    const allGrammars =grammars.get(languageID)
+    if (options.prefer) {
+      return allGrammars.filter(g => g.resid === options.prefer)
+    } else {
+      return allGrammars
+    }
   }
 }
 

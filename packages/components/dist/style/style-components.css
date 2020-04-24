@@ -881,7 +881,7 @@ body {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-definition__short .alpheios-definition__text {
+.alpheios-content .alpheios-definition__short .alpheios-definition__text {
   color: var(--alpheios-definition-short-color);
   font-size: calc(var(--alpheios-base-text-size) * 1.125);
   font-weight: bold;
@@ -894,20 +894,21 @@ body {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-content span.alpheios-morph__attr {
-  font-weight: normal;
+.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__attr {
+  font-weight: 400;
   padding-right: 0.25em;
 }
-.alpheios-content .alpheios-morph__linkedattr {
+.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr {
   color: var(--alpheios-color-muted);
   cursor: pointer;
   font-weight: 700;
   color: var(--alpheios-desktop-popup-link-color);
+  padding-right: 0.25em;
 }
-.alpheios-content .alpheios-morph__linkedattr:hover, .alpheios-content .alpheios-morph__linkedattr:active {
+.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:hover, .alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:active {
   text-decoration: underline;
 }
-.alpheios-content .alpheios-morph__linkedattr:hover {
+.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:hover {
   color: var(--alpheios-desktop-popup-link-color-hover);
 }
 /*
@@ -1171,6 +1172,22 @@ h4.alpheios-principal-parts__groupitem {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph-data__pofs,
+.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr {
+  color: var(--alpheios-color-muted);
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--alpheios-desktop-popup-link-color);
+}
+.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph-data__pofs:hover, .alpheios-content .alpheios-morph-data__morphdata .alpheios-morph-data__pofs:active,
+.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr:hover,
+.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr:active {
+  text-decoration: underline;
+}
+.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph-data__pofs:hover,
+.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr:hover {
+  color: var(--alpheios-desktop-popup-link-color-hover);
+}
 .alpheios-morph-data__pofs span:last-child:after {
   content: ";";
 }
@@ -3015,6 +3032,18 @@ p.alpheios-word-usage-filter-title {
   display: flex;
   align-items: flex-start;
   flex: 1 1 auto;
+}
+.alpheios-ui-options__popup-size-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 1.25);
+}
+.alpheios-ui-options__popup-size-item_top-label {
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.3125);
+}
+.alpheios-ui-options__popup-size-item_bottom-label {
+  display: flex;
+  justify-content: space-between;
 }
 /*
  Calculates a size of text elements relative to the base size.

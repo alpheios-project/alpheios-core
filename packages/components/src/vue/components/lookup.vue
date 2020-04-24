@@ -3,14 +3,14 @@
     <div class="alpheios-lookup__form-row">
       <div class="alpheios-lookup__form-element">
         <label class="alpheios-setting__label">Word lookup</label>
-        
+
         <span class="alpheios-lookup__form-beta-codes-check" v-show="showUseBetaCodes">
           <input type="checkbox" id="greek-keyboard" v-model="useBetaCodes">
           <label for="greek-keyboard">{{ l10n.getMsg('LOOKUP_USE_BETA_CODES_CHECK') }}</label>
           <span
               @click="toggleBetaCodesInfo"
               class="alpheios-lookup__form-icon"
-              v-show="app.platform.isDesktop"  
+              v-show="app.platform.isDesktop"
           >
             <help-icon/>
           </span>
@@ -184,20 +184,8 @@ export default {
       const selectedLangID = LanguageModelFactory.getLanguageIdFromCode(selectedLangCode)
       const textSelector = TextSelector.createObjectFromText(this.lookuptext, selectedLangID)
 
-      const resourceOptions = this.settings.getResourceOptions()
-      const lemmaTranslationLang = this.app.state.lemmaTranslationLang
-      const featureOptions = this.settings.getFeatureOptions()
-
-      const wordUsageExamples = this.app.enableWordUsageExamples(textSelector, 'onLexicalQuery')
-        ? {
-          paginationMax: featureOptions.items.wordUsageExamplesMax.currentValue,
-          paginationAuthMax: featureOptions.items.wordUsageExamplesAuthMax.currentValue
-        }
-        : null
-
       try {
-        this.lexis.lookupText(textSelector, resourceOptions, lemmaTranslationLang, wordUsageExamples, this.app.clientId,
-          this.settings.verboseMode())
+        this.lexis.lookupText(textSelector)
         // Notify parent  that the lookup has been started so that the parent can close itself if necessary
         this.$emit('lookup-started')
         this.showLookupResult()

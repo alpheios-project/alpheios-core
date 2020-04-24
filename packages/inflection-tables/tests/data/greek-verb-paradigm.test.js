@@ -288,10 +288,11 @@ describe('greek-verb-paradigm.test.js', () => {
 
     renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
 
-    expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy()
+    expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy()
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy()
     expect(renderedTable.rows[1].cells[4].fullMatch).toBeFalsy()
     expect(renderedTable.rows[1].cells[5].fullMatch).toBeFalsy()
+    expect(renderedTable.rows[8].cells[2].fullMatch).toBeTruthy()
   })
 
   it('11 - checked Verb Paradigm11 - λελοίπῃ', async () => {
@@ -1540,6 +1541,8 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+    const renderedSubTables = inflectionsViewSet.matchingViews[0].render().wideSubTables
+    expect(renderedSubTables[0].rows[0].cells[1].fullMatch).toBeTruthy()
   })
 
   it('60 - checked Verb Paradigm 46 - ἔσεσθαι', async () => {
@@ -1556,6 +1559,7 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm57', 'verbpdgm65' ]
     })
+
   })
 
   it('61 - checked Verb Paradigm 30 - ἔθηκα', async () => {
@@ -1604,6 +1608,43 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
       hasSuppParadigms: true,
       suppParadigms: [ 'verbpdgm65' ]
     })
+  })
+
+  it('64 - checked Verb Paradigm1 - βαλῶ', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('βαλῶ', Constants.LANG_GREEK)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
+
+    // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews[0])
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[2],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'Future System (Active and Middle) with contraction in -έω',
+      paradigmID: 'verbpdgm4',
+      hasSuppParadigms: true,
+      suppParadigms: [ 'verbpdgm55' ]
+    })
+  })
+
+  it('65 - checked Verb Paradigm 46 ἔσται - ', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἔσται', Constants.LANG_GREEK)
+    // console.info(inflectionsViewSet.matchingViews)
+
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'εἰμί (be): Present System and Future',
+      paradigmID: 'verbpdgm46',
+      hasSuppParadigms: true,
+      suppParadigms: [ 'verbpdgm57', 'verbpdgm65' ]
+    })
+
+    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    expect(renderedTable.rows[3].cells[8].fullMatch).toBeTruthy()
   })
 
 
