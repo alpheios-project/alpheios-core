@@ -219,7 +219,7 @@
           if (this.selectedFilterBy === 'byLemma' && !this.wordLemmaForms.includes(this.textInput)) {
             return
           }
-          this.$emit('changedFilterBy', this.selectedFilterBy, this.textInput, this.selectedFilterBy2)
+          this.$emit('changedFilterBy', this.selectedFilterBy, this.textInput, this.selectedFilterBy2, this.filterAmount)
           this.shownVariantsSelect = false
         }
       },
@@ -234,7 +234,7 @@
         this.$emit('clearClickedLemma')
       },
       clearFilterEvent () {
-        this.$emit('changedFilterBy', null)
+        this.$emit('changedFilterBy', null, null, null, null)
       },
       setClickedLemmaFilter () {
         this.selectedFilterBy = 'byLemma'

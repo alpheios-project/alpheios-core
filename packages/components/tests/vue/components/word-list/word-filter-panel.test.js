@@ -52,7 +52,8 @@ describe('word-filter-panel.test.js', () => {
     api = {
       app: BaseTestHelp.appAPI({
         getWordList: () => testWordList
-      })
+      }),
+      settings: BaseTestHelp.settingsAPI()
     }
     BaseTestHelp.l10nModule(store, api)
     store.commit('app/setTestWordListUpdateTime', 1)
@@ -264,7 +265,7 @@ describe('word-filter-panel.test.js', () => {
     cmp.vm.selectedFilterBy = 'byImportant'
 
     cmp.vm.changedFilterBy()
-    expect(cmp.emitted()['changedFilterBy'][0]).toEqual(['byImportant'])
+    expect(cmp.emitted()['changedFilterBy'][0]).toEqual(['byImportant', null, null, cmp.vm.filterAmount])
   })
 
   it('12 WordFilterPanel - method changedFilterBy executes clearFilteringText if currentTypeFilter is not defined and does not have onChange event', () => {
@@ -357,7 +358,6 @@ describe('word-filter-panel.test.js', () => {
     expect(cmp.emitted()['changedFilterBy']).toBeUndefined()
   })
 
-  // it('16 WordFilterPanel - method clickFilterBy checks if type filter could be activated by click and emitts changedFilterBy (not proper selectedFilterBy)', () => {
   it('16 WordFilterPanel - method clickFilterBy does nothing if selectedFilterBy = byExactForm but textInput is empty or is not included in wordExactForms', () => {
     let cmp = shallowMount(WordFilterPanel, {
       store,
@@ -425,7 +425,7 @@ describe('word-filter-panel.test.js', () => {
 
     cmp.vm.clickFilterBy()
 
-    expect(cmp.emitted()['changedFilterBy'][0]).toEqual(['byExactForm', 'cupidinibus'])
+    expect(cmp.emitted()['changedFilterBy'][0]).toEqual(['byExactForm', 'cupidinibus', null, cmp.vm.filterAmount])
     expect(cmp.vm.shownVariantsSelect).toBeFalsy()
   })
 
@@ -448,7 +448,7 @@ describe('word-filter-panel.test.js', () => {
 
     cmp.vm.clickFilterBy()
 
-    expect(cmp.emitted()['changedFilterBy'][0]).toEqual(['byLemma', 'cupido'])
+    expect(cmp.emitted()['changedFilterBy'][0]).toEqual(['byLemma', 'cupido', null, cmp.vm.filterAmount])
     expect(cmp.vm.shownVariantsSelect).toBeFalsy()
   })
 
@@ -517,7 +517,7 @@ describe('word-filter-panel.test.js', () => {
     }) 
 
     cmp.vm.clearFilterEvent()
-    expect(cmp.emitted()['changedFilterBy'][0]).toEqual([null])
+    expect(cmp.emitted()['changedFilterBy'][0]).toEqual([null, null, null, null])
   })
 
   it('23 WordFilterPanel - method setClickedLemmaFilter defines selectedFilterBy, textInput and executes clickFilterBy', () => {
@@ -641,7 +641,7 @@ describe('word-filter-panel.test.js', () => {
 
     cmp.vm.selectedFilterBy = 'byImportant'
 
-    let result = cmp.vm.calcTitle(cmp.vm.typeFiltersList[0])// type filter with null value
+    let result = cmp.vm.calcTitle(cmp.vm.typeFiltersList[0], 'selectedFilterBy')// type filter with null value
     expect(result).toEqual(expect.stringContaining('Clear'))
   })
 
@@ -668,4 +668,5 @@ describe('word-filter-panel.test.js', () => {
     expect(cmp.vm.selectedFilterBy).toBeNull()
     expect(cmp.vm.textInput).toBeNull()
   })
+
 })

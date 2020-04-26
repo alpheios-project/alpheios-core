@@ -178,7 +178,8 @@ export default {
           }
         }
       }
-      if (result.length > 0) {
+
+      if (result.length > 1) {
         this.applySorting(result)
       }
       return result
