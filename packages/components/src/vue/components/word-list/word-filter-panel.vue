@@ -1,9 +1,7 @@
 <template>
     <div class="alpheios-wordlist-filters" >
-        <p class="alpheios-wordlist-header-title" :class="{ 'alpheios-wordlist-filters__hidden': !showFilterDetails }"
-           @click = "changeShowFilterDetails"
-        >{{ l10n.getText('WORDLIST_FILTER_BY') }}</p>
-        <div v-show="showFilterDetails">
+        <p class="alpheios-wordlist-header-title">{{ l10n.getText('WORDLIST_FILTER_BY') }}</p>
+        <div>
           <div class="alpheios-wordlist-header-select-filterBy-first">
             <div class="alpheios-wordlist-header-select-filterBy-block">
               <select class="alpheios-select alpheios-wordlist-header-select-filterBy"
@@ -114,9 +112,9 @@
             textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL_PLACEHOLDER')
           },
           { value: 'byMostRecent', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTRECENT'), showNumberInput: true,
-            textInputPlaceholder: 'amount' },
+            textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_AMOUNT_PLACEHOLDER') },
           { value: 'byMostOften', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTOFTEN'), showNumberInput: true,
-            textInputPlaceholder: 'Top amount' }
+            textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_AMOUNT_PLACEHOLDER') }
         ],
         textInput: null,
         shownVariantsSelect: false,
@@ -124,7 +122,6 @@
           start: '<span class="alpheios-select-input-filter-part">',
           end: '</span>'
         },
-        showFilterDetails: false,
         filterAmount: 0
       }
     },
@@ -138,7 +135,6 @@
       currentClickedLemma () {
         if (this.clickedLemma) {
           this.setClickedLemmaFilter()
-          this.showFilterDetails = true
         }
         return true
       },
@@ -250,11 +246,6 @@
           }
         }        
       },
-
-      changeShowFilterDetails () {
-        this.showFilterDetails = !this.showFilterDetails 
-      },
-
       changeFilterAmount () {
         if (this.filterAmount === null) {
           this.filterAmount = 0
