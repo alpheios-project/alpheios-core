@@ -28,12 +28,7 @@
             </div>
 
             <div class="alpheios-wordlist-download-amount" data-alpheios-ignore="all" v-show="downloadForFlashcards" v-if="featureOptions">
-              <setting
-                  class="alpheios-feature-options__item"
-                  :data="featureOptions.items.wordlistMaxFlashcardExport"
-                  @change="featureOptionChanged"
-              >
-              </setting>
+              <p>{{ this.maxFlashCardItemsNote }}</p>
             </div>
         </div>
         <div
@@ -99,6 +94,9 @@
       },
       maxFlashCardItems () {
         return this.$store.state.settings.featureResetCounter ? this.featureOptions.items.wordlistMaxFlashcardExport.currentValue : null
+      },
+      maxFlashCardItemsNote () {
+        return this.maxFlashCardItems ? this.l10n.getText('WORDLIST_FLASHCARD_MAXDOWNLOAD_AMOUNT', { maxFlashCardItems: this.maxFlashCardItems }) : ''
       },
       languageID () {
         return LanguageModelFactory.getLanguageIdFromCode(this.languageCode)
@@ -210,22 +208,9 @@
         display: inline-block;
     }
 
-    .alpheios-wordlist-download-amount {
-      .alpheios-feature-options__item {
-        display: block;
-        flex: none;
-        padding-top: 10px;
-
-        label, 
-        input.alpheios-input.alpheios-setting__control {
-          display: block;
-          width: 100%;
-        }
-
-        label {
-          font-size: 90%;
-        }
-      }
+    .alpheios-wordlist-download-confirmation .alpheios-wordlist-download-amount p {
+      font-size: 90%;
+      margin: 10px 0 0;
     }
 
     .alpheios-wordlist-download-confirmation-loading {

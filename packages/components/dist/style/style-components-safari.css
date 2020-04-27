@@ -2810,18 +2810,9 @@ p.alpheios-word-usage-filter-title {
   min-width: 120px !important;
   display: inline-block;
 }
-.alpheios-wordlist-download-amount .alpheios-feature-options__item {
-  display: block;
-  flex: none !important;
-  padding-top: 10px !important;
-}
-.alpheios-wordlist-download-amount .alpheios-feature-options__item label,
-.alpheios-wordlist-download-amount .alpheios-feature-options__item input.alpheios-input.alpheios-setting__control {
-  display: block;
-  width: 100% !important;
-}
-.alpheios-wordlist-download-amount .alpheios-feature-options__item label {
+.alpheios-wordlist-download-confirmation .alpheios-wordlist-download-amount p {
   font-size: 90% !important;
+  margin: 10px 0 0 !important;
 }
 .alpheios-wordlist-download-confirmation-loading {
   padding: 10px 20px 0 0 !important;

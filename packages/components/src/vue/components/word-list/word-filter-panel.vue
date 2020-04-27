@@ -15,7 +15,7 @@
               </select>
             </div>
             <div class="alpheios-wordlist-header-input-filterBy-block"
-              v-if="currentClickedLemma && currentTypeFilter && currentTypeFilter.showTextInput"
+              v-if="currentClickedLemma && currentTypeFilter && (currentTypeFilter.showTextInput || currentTypeFilter.showNumberInput)"
             >
               <div class="alpheios-select-input-group"
                   :class = '{ "alpheios-select-input-group-show-select": shownVariantsSelect }'
@@ -28,6 +28,7 @@
                       v-on:blur = "hideAutocomplete"
                       autocapitalize = "off"
                       autocorrect = "off"
+                      v-if="currentTypeFilter.showTextInput"
                       >
 
                 <ul class="alpheios-select-list"
@@ -47,28 +48,18 @@
                       @click="selectLemmaForm(lemmaForm)" v-html="lemmaForm"
                   ></li>
                 </ul>
-              </div>
-            </div>
-          </div>
-          <div class="alpheios-wordlist-header-select-filterBy-second">
-            <div class="alpheios-wordlist-header-select-filterBy-block">
-              <select class="alpheios-select alpheios-wordlist-header-select-filterBy"
-                      v-model="selectedFilterBy2" @change="changedFilterBy">
-                <option v-for="typeFiltering in typeFiltersList2" v-bind:key="typeFiltering.value"
-                        :value="typeFiltering.value"
-                        :class="{ 'alpheios-select-disabled-option': !typeFiltering.value }"
-                >{{ calcTitle(typeFiltering, 'selectedFilterBy2') }}</option>
-              </select>
-            </div>
 
-            <div class="alpheios-wordlist-header-input-filterBy-block"
-              v-if="currentTypeFilter2 && currentTypeFilter2.showTextInput"
-            >
-              <input v-model="filterAmount"  class="alpheios-input alpheios-wordlist-header-input-filterBy"
-                type = "number"
-                :placeholder="currentTypeFilter2.textInputPlaceholder"
-                v-on:input = "changeFilterAmount"
+                <div class="alpheios-wordlist-header-input-filterBy-block"
+                  v-if="currentTypeFilter.showNumberInput"
                 >
+                  <input v-model="filterAmount"  class="alpheios-input alpheios-wordlist-header-input-filterBy"
+                    type = "number"
+                    :placeholder="currentTypeFilter.textInputPlaceholder"
+                    v-on:input = "changeFilterAmount"
+                    min = "0"
+                    >
+                </div>
+              </div>
             </div>
           </div>
       </div>
@@ -121,7 +112,11 @@
             title: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL'),
             onClick: true, showTextInput: true,
             textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL_PLACEHOLDER')
-          }
+          },
+          { value: 'byMostRecent', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTRECENT'), showNumberInput: true,
+            textInputPlaceholder: 'amount' },
+          { value: 'byMostOften', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTOFTEN'), showNumberInput: true,
+            textInputPlaceholder: 'Top amount' }
         ],
         textInput: null,
         shownVariantsSelect: false,
@@ -130,14 +125,6 @@
           end: '</span>'
         },
         showFilterDetails: false,
-        selectedFilterBy2: null,
-        typeFiltersList2: [
-          { value: null },
-          { value: 'byMostRecent', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTRECENT'), showTextInput: true,
-            textInputPlaceholder: 'amount' },
-          { value: 'byMostOften', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTOFTEN'), showTextInput: true,
-            textInputPlaceholder: 'amount' }
-        ],
         filterAmount: 0
       }
     },
@@ -148,15 +135,15 @@
       currentTypeFilter () {
         return this.selectedFilterBy ? this.typeFiltersList.find(typeFilter => typeFilter.value === this.selectedFilterBy) : null
       },
-      currentTypeFilter2 () {
-        return this.selectedFilterBy2 ? this.typeFiltersList2.find(typeFilter => typeFilter.value === this.selectedFilterBy2) : null
-      },
       currentClickedLemma () {
         if (this.clickedLemma) {
           this.setClickedLemmaFilter()
           this.showFilterDetails = true
         }
         return true
+      },
+      currentAdditionalField () {
+        return this.currentTypeFilter ? (this.currentTypeFilter.showTextInput ? this.textInput : this.filterAmount || 0) : null
       },
       wordExactFormsFiltered () {
         if (this.selectedFilterBy === 'byExactForm') {
@@ -193,8 +180,8 @@
     },
     methods: {
       changedFilterBy () {
-        if ((this.currentTypeFilter && this.currentTypeFilter.onChange) || (this.selectedFilterBy2)) {
-          this.$emit('changedFilterBy', this.selectedFilterBy, this.textInput, this.selectedFilterBy2, this.filterAmount)
+        if (this.currentTypeFilter && this.currentTypeFilter.onChange) {
+          this.$emit('changedFilterBy', this.selectedFilterBy, this.currentAdditionalField)
         } else {
           this.clearFilteringText()
         }
@@ -202,13 +189,11 @@
       selectExactForm (selectedExactForm) {
         let formattedExactForm = selectedExactForm
         this.textInput = formattedExactForm.replace(this.markLayout.start,'').replace(this.markLayout.end,'')
-
         this.clickFilterBy()
       },
       selectLemmaForm (selectedLemmaForm) {
         let formattedLemmaForm = selectedLemmaForm
         this.textInput = formattedLemmaForm.replace(this.markLayout.start,'').replace(this.markLayout.end,'')
-
         this.clickFilterBy()
       },
       clickFilterBy () {
@@ -219,7 +204,7 @@
           if (this.selectedFilterBy === 'byLemma' && !this.wordLemmaForms.includes(this.textInput)) {
             return
           }
-          this.$emit('changedFilterBy', this.selectedFilterBy, this.textInput, this.selectedFilterBy2, this.filterAmount)
+          this.$emit('changedFilterBy', this.selectedFilterBy, this.currentAdditionalField)
           this.shownVariantsSelect = false
         }
       },
@@ -234,7 +219,7 @@
         this.$emit('clearClickedLemma')
       },
       clearFilterEvent () {
-        this.$emit('changedFilterBy', null, null, null, null)
+        this.$emit('changedFilterBy', null, null)
       },
       setClickedLemmaFilter () {
         this.selectedFilterBy = 'byLemma'
@@ -271,8 +256,12 @@
       },
 
       changeFilterAmount () {
-        if (this.selectedFilterBy2 && this.filterAmount) {
-          this.$emit('changedFilterBy', this.selectedFilterBy, this.textInput, this.selectedFilterBy2, this.filterAmount)
+        if (this.filterAmount === null) {
+          this.filterAmount = 0
+        }
+
+        if (this.selectedFilterBy) {
+          this.$emit('changedFilterBy', this.selectedFilterBy, this.currentAdditionalField)
         }
       }
     }

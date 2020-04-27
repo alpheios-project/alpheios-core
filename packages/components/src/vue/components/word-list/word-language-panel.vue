@@ -137,8 +137,15 @@ export default {
         'frequency': null,
         'updatedDT': null
       },
-      selectedFilterBy2: null,
-      filterAmount: 0
+      filterAmount: 0,
+      typeFilterMethods: {
+        'byCurrentSession': 'textInput',
+        'byImportant': 'textInput',
+        'byExactForm': 'textInput',
+        'byLemma': 'textInput',
+        'byMostRecent': 'filterAmount',
+        'byMostOften': 'filterAmount'
+      }
     } 
      
   },
@@ -147,8 +154,10 @@ export default {
   },
   watch: {
     '$store.state.app.wordListUpdateTime' () {
-      this.clearFilters = this.clearFilters + 1
-      this.changedFilterBy(null, null, null)
+      if (!this.$store.state.panel.visible) {
+        this.clearFilters = this.clearFilters + 1
+        this.changedFilterBy(null, null)
+      }
     }
   },
   computed: {
@@ -162,16 +171,15 @@ export default {
       let result = []
       if (this.$store.state.app.wordListUpdateTime && this.reloadList) {
         result = this.wordlist.values
-        if (this.selectedFilterBy || this.selectedFilterBy2) {
+        if (this.selectedFilterBy) {
           if (this.filterMethods[this.selectedFilterBy]) {
             result = this.wordlist.values.filter(this.filterMethods[this.selectedFilterBy])
-          }
-          if (this.selectedFilterBy2) {
-            if (this.selectedFilterBy2 === 'byMostRecent') {
+          } else {
+            if (this.selectedFilterBy === 'byMostRecent') {
               this.applySorting(result, 'updatedDT', 'desc')
               result = result.slice(0, this.filterAmount)
             }
-            if (this.selectedFilterBy2 === 'byMostOften') {
+            if (this.selectedFilterBy === 'byMostOften') {
               this.applySorting(result, 'frequency', 'desc')
               result = result.slice(0, this.filterAmount)
             }
@@ -248,11 +256,9 @@ export default {
     showContexts (targetWord) {
       this.$emit('showContexts', targetWord, this.languageCode)
     },
-    changedFilterBy (selectedFilterBy, textInput, selectedFilterBy2, filterAmount) {
+    changedFilterBy (selectedFilterBy, fieldValue) {
       this.selectedFilterBy = selectedFilterBy
-      this.selectedFilterBy2 = selectedFilterBy2
-      this.textInput = textInput
-      this.filterAmount = filterAmount
+      this[this.typeFilterMethods[selectedFilterBy]] = fieldValue
     },
     setLemmaFilterByClick (lemma) {
       if (!this.clickedLemma && lemma) {

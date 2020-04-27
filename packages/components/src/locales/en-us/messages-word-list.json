@@ -154,5 +154,11 @@
         "message": "by most often",
         "description": "Filter by max amount with sorting by frequency desc",
         "component": "WordFilterPanel"
+    },
+    "WORDLIST_FLASHCARD_MAXDOWNLOAD_AMOUNT": {
+        "message": "Note: the Flashcard export is limited to a maximum of {maxFlashCardItems} words.",
+        "description": "Max download for flashcard",
+        "component": "DownloadConfirmation",
+        "params": ["maxFlashCardItems"]
     }
 }
