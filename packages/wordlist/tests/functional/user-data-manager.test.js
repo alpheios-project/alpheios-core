@@ -421,7 +421,7 @@ describe('user-data-manager.test.js', () => {
     let res = await udm.update({ dataObj: testWordItem })
     expect(res).toBeTruthy()
 
-    let resultItems = await udm.query({ dataType: 'WordItem', params: { languageCode: 'lat' } })
+    let resultItems = await udm.query({ dataType: 'WordItem', params: { languageCode: 'lat' } }, { type: 'short' })
 
     expect(resultItems.length).toEqual(1)
     expect(resultItems[0].homonym.lexemes).toBeDefined()
@@ -539,17 +539,17 @@ describe('user-data-manager.test.js', () => {
     let testWordItem = await getWordItemStep1('cepit', 'lat')
     await udm.update({ dataObj: testWordItem }, { source: 'remote' })
 
-    let resultQuery = await udm.query({ dataType: 'WordItem', params: { languageCode: 'lat' } }, { source: 'local' })
+    let resultQuery = await udm.query({ dataType: 'WordItem', params: { languageCode: 'lat' } }, { source: 'local', type: 'short' })
     expect(resultQuery.length).toEqual(0)
 
-    resultQuery = await udm.query({ dataType: 'WordItem', params: { languageCode: 'lat' } }, { source: 'remote' })
+    resultQuery = await udm.query({ dataType: 'WordItem', params: { languageCode: 'lat' } }, { source: 'remote', type: 'short' })
     expect(resultQuery.length).toEqual(1)
 
-    resultQuery = await udm.query({ dataType: 'WordItem', params: { languageCode: 'lat' } })
+    resultQuery = await udm.query({ dataType: 'WordItem', params: { languageCode: 'lat' } }, { type: 'short' })
     expect(resultQuery.length).toEqual(1)
 
-    resultQuery = await udm.query({ dataType: 'WordItem', params: { languageCode: 'lat' } }, { source: 'local' })
-    expect(resultQuery.length).toEqual(0)
+    resultQuery = await udm.query({ dataType: 'WordItem', params: { languageCode: 'lat' } }, { source: 'local', type: 'short' })
+    expect(resultQuery.length).toEqual(1)
 
     expect(console.error).not.toHaveBeenCalled()
 
