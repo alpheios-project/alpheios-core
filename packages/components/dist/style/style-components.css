@@ -2780,14 +2780,21 @@ p.alpheios-word-usage-filter-title {
   vertical-align: top;
   cursor: pointer;
   padding: 7px;
-  fill: var(--alpheios-word-list-sorting-link-color);
   box-sizing: content-box;
 }
-.alpheios-wordlist-sorting .alpheios-worditem__icon svg.alpheios-icon-active {
-  fill: var(--alpheios-word-list-sorting-link-color-hover);
+.alpheios-wordlist-sorting .alpheios-worditem__icon.alpheios-worditem__frequency,
+.alpheios-wordlist-sorting .alpheios-worditem__icon.alpheios-updatedDT {
+  padding: 0 10px;
 }
-.alpheios-wordlist-sorting .alpheios-worditem__icon.alpheios-worditem__frequency svg {
+.alpheios-wordlist-sorting .alpheios-worditem__icon.alpheios-worditem__frequency svg,
+.alpheios-wordlist-sorting .alpheios-worditem__icon.alpheios-updatedDT svg {
   padding: 7px 0;
+}
+.alpheios-wordlist-sorting .alpheios-icon-asc .sort-arrow-down {
+  fill: var(--alpheios-link-color-on-light);
+}
+.alpheios-wordlist-sorting .alpheios-icon-desc .sort-arrow-up {
+  fill: var(--alpheios-link-color-on-light);
 }
 /*
  Calculates a size of text elements relative to the base size.

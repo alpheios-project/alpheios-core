@@ -5,27 +5,25 @@
                :class="fieldClass(field.name)"
                @click = "changeSort(field.name)"
           >
-            <sort-asc-icon 
-                :class = "{ 'alpheios-icon-active': sortingState[field.name] === 'asc' }"
-                v-if = "field.sorting && showSort(field.name, 'asc')"
-            />
-            <sort-desc-icon 
-                :class = "{ 'alpheios-icon-active': sortingState[field.name] === 'desc' }"
-                v-if = "field.sorting && showSort(field.name, 'desc')"
-            />
+
+          <sort-icon 
+            v-if="field.sorting"
+            :class = "{ 
+              'alpheios-icon-asc': sortingState[field.name] === 'asc',
+              'alpheios-icon-desc': sortingState[field.name] === 'desc'  
+            }"
+          />
           </div>
     </div>
 </template>
 
 <script>
-  import SortAscIcon from '@/images/inline-icons/sort-asc-icon.svg'
-  import SortDescIcon from '@/images/inline-icons/sort-desc-icon.svg'
+  import SortIcon from '@/images/inline-icons/sort-arrow.svg'
 
   export default {
     name: 'WordSortingPanel',
     components: {
-      sortAscIcon: SortAscIcon,
-      sortDescIcon: SortDescIcon
+      sortIcon: SortIcon
     },
     data () {
       return {
@@ -114,20 +112,29 @@
 
             cursor: pointer;
             padding: 7px;
-            fill: var(--alpheios-word-list-sorting-link-color);
             
             box-sizing: content-box;
-
-            &.alpheios-icon-active {
-                fill: var(--alpheios-word-list-sorting-link-color-hover);
-            }
           }
           
       }
 
-      .alpheios-worditem__icon.alpheios-worditem__frequency {
+      .alpheios-worditem__icon.alpheios-worditem__frequency,
+      .alpheios-worditem__icon.alpheios-updatedDT {
+        padding: 0 10px;
         svg {
           padding: 7px 0;
+        }
+      }
+
+      .alpheios-icon-asc {
+        .sort-arrow-down {
+          fill: var(--alpheios-link-color-on-light);
+        }
+      }
+
+      .alpheios-icon-desc {
+        .sort-arrow-up {
+          fill: var(--alpheios-link-color-on-light);
         }
       }
   }
