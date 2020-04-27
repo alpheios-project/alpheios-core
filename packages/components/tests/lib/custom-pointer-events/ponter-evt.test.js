@@ -256,12 +256,12 @@ describe('pointer-evt.test.js', () => {
     expect(testElement.addEventListener).toHaveBeenCalledWith('touchend', expect.anything(), expect.anything())
   })
 
-  it('21 PointerEvt - static alpheiosIgnoreNoneTest', () => {
+  it('21 PointerEvt - static alpheiosEnableAllTest', () => {
     let testElement = document.createElement("div")
     let node = document.createTextNode("Test new div")
     testElement.appendChild(node)
-    testElement.setAttribute('data-alpheios-ignore', 'none')
-    expect(PointerEvt.alpheiosIgnoreNoneTest(testElement.dataset)).toBeTruthy()
+    testElement.setAttribute('data-alpheios-enable', 'all')
+    expect(PointerEvt.alpheiosEnableAllTest(testElement.dataset)).toBeTruthy()
   })
 
   it('22 PointerEvt - handles ignore none embedded in ignore all', () => {
@@ -269,7 +269,7 @@ describe('pointer-evt.test.js', () => {
     let testElementParent = document.createElement("div")
     testElementParent.setAttribute('data-alpheios-ignore', 'all')
     let testElement = document.createElement("div")
-    testElement.setAttribute('data-alpheios-ignore','none')
+    testElement.setAttribute('data-alpheios-enable','all')
     testElementParent.appendChild(testElement)
     let testElementSibling = document.createElement("div")
     testElementParent.appendChild(testElementSibling)

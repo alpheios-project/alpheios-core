@@ -2,8 +2,8 @@
   <div class="alpheios-definition__short">
     <span :lang="languageCode"
           class="alpheios-definition__lemma">{{ definition.lemmaText }}:</span>
-    <span v-if='alpheiosEnabled' data-alpheios-ignore="none" class="alpheios-definition__text" v-html="definition.text" :lang="definition.language"></span>
-    <span v-else data-alpheios-ignore="none" class="alpheios-definition__text" v-html="definition.text" :lang="definition.language"></span>
+    <span v-if='alpheiosEnabled' data-alpheios-enable="all" class="alpheios-definition__text" v-html="definition.text" :lang="definition.language"></span>
+    <span v-else class="alpheios-definition__text" v-html="definition.text" :lang="definition.language"></span>
   </div>
 </template>
 <script>

@@ -13,9 +13,9 @@ export default class PointerEvt {
     return dataset.hasOwnProperty(attrName) && dataset[attrName] === attrValue // eslint-disable-line no-prototype-builtins
   }
 
-  static alpheiosIgnoreNoneTest (dataset) {
-    const attrName = 'alpheiosIgnore'
-    const attrValue = 'none'
+  static alpheiosEnableAllTest (dataset) {
+    const attrName = 'alpheiosEnable'
+    const attrValue = 'all'
     return dataset.hasOwnProperty(attrName) && dataset[attrName] === attrValue // eslint-disable-line no-prototype-builtins
   }
 
@@ -38,9 +38,9 @@ export default class PointerEvt {
   alpheiosIgnoreThis (path) {
     const ignoredAll = path.some(element =>
       this.constructor.alpheiosIgnoreAllTest(element.dataset || {}))
-    const ignoredNone = path.some(element =>
-      this.constructor.alpheiosIgnoreNoneTest(element.dataset || {}))
-    return ignoredAll && ! ignoredNone
+    const enableAll = path.some(element =>
+      this.constructor.alpheiosEnableAllTest(element.dataset || {}))
+    return ignoredAll && ! enableAll
   }
 
   setPoint (type, clientX, clientY, target, path) {
