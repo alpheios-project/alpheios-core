@@ -13,6 +13,12 @@ export default class PointerEvt {
     return dataset.hasOwnProperty(attrName) && dataset[attrName] === attrValue // eslint-disable-line no-prototype-builtins
   }
 
+  static alpheiosEnableAllTest (dataset) {
+    const attrName = 'alpheiosEnable'
+    const attrValue = 'all'
+    return dataset.hasOwnProperty(attrName) && dataset[attrName] === attrValue // eslint-disable-line no-prototype-builtins
+  }
+
   static excludeAllCpeTest (dataset) {
     return dataset.hasOwnProperty('alphExcludeAllCpe') // eslint-disable-line no-prototype-builtins
   }
@@ -27,6 +33,14 @@ export default class PointerEvt {
 
   static get pointerEventSupported () {
     return window.PointerEvent
+  }
+
+  alpheiosIgnoreThis (path) {
+    const ignoredAll = path.some(element =>
+      this.constructor.alpheiosIgnoreAllTest(element.dataset || {}))
+    const enableAll = path.some(element =>
+      this.constructor.alpheiosEnableAllTest(element.dataset || {}))
+    return ignoredAll && ! enableAll
   }
 
   setPoint (type, clientX, clientY, target, path) {
@@ -44,13 +58,12 @@ export default class PointerEvt {
     }
     if (!Array.isArray(path)) { path = [path] }
     this[type].path = path
-    this[type].excluded = this[type].path.some(element =>
-      element.dataset && (
-        this.constructor.alpheiosIgnoreAllTest(element.dataset) ||
-        this.constructor.excludeAllCpeTest(element.dataset) ||
-        this.constructor.excludeCpeTest(element.dataset)
-      )
-    )
+    this[type].excluded = this.alpheiosIgnoreThis(this[type].path) ||
+      this[type].path.some(element =>
+        element.dataset && (
+          this.constructor.excludeAllCpeTest(element.dataset) ||
+          this.constructor.excludeCpeTest(element.dataset)
+      ))
 
     if (!this[type].excluded && this.limitedById) {
       this[type].excluded = this[type].path.every(element => !this.hasLimitedById(element))
