@@ -1137,6 +1137,9 @@ h4.alpheios-principal-parts__groupitem {
 .alpheios-principal-parts__groupitem:last-child:after {
   content: ":" !important;
 }
+.alpheios-principal-parts__item {
+  display: flex;
+}
 .alpheios-morph-data__chinese p {
   margin-bottom: 0 !important;
 }
@@ -1146,23 +1149,26 @@ h4.alpheios-principal-parts__groupitem {
   font-size: 90% !important;
 }
 .alpheios-principal-parts__pointer-tooltip {
-  left: -7px !important;
+  display: block;
+  height: 22px !important;
+  margin-left: -5px !important;
 }
 .alpheios-principal-parts__pointer-icn {
+  display: block;
   fill: var(--alpheios-color-vivid) !important;
   height: 22px !important;
-  position: relative !important;
-  top: 6px !important;
 }
 .alpheios-principal-parts__dsmbg-providers {
-  display: inline-block;
-  margin-left: -3px !important;
+  display: block;
+  height: 22px !important;
+}
+.alpheios-principal-parts__dsmbg-providers-tooltip {
+  margin-left: 5px !important;
 }
 .alpheios-principal-parts__dsmbg-providers-icn {
   fill: var(--alpheios-color-neutral-dark) !important;
-  display: inline-block;
-  position: relative !important;
-  top: 3px !important;
+  display: block;
+  height: 22px !important;
 }
 /*
  Calculates a size of text elements relative to the base size.

@@ -28,6 +28,7 @@
             <tooltip
                 :tooltip-text="l10n.getText('TOOLTIP_TREEBANK_SOURCE')"
                 tooltip-direction="top"
+                class="alpheios-principal-parts__dsmbg-providers-tooltip"
             >
                 <treebank-icon class="alpheios-principal-parts__dsmbg-providers-icn"></treebank-icon>
             </tooltip>
@@ -160,6 +161,10 @@ export default {
     content: ':';
   }
 
+  .alpheios-principal-parts__item {
+      display: flex;
+  }
+
   .alpheios-morph-data__chinese p {
     margin-bottom: 0;
   }
@@ -170,27 +175,32 @@ export default {
     font-size: 90%;
   }
 
-  .alpheios-principal-parts__pointer-tooltip {
-      left: -7px;
-  }
+  .alpheios-principal-parts__pointer {
+      &-tooltip {
+          display: block;
+          height: 22px;
+          margin-left: -5px;
+      }
 
-  .alpheios-principal-parts__pointer-icn {
-      // fill: var(--alpheios-color-neutral-dark);
-      fill: var(--alpheios-color-vivid);
-      height: 22px;
-      position: relative;
-      top: 6px;
+      &-icn {
+          display: block;
+          fill: var(--alpheios-color-vivid);
+          height: 22px;
+      }
   }
 
   .alpheios-principal-parts__dsmbg-providers {
-      display: inline-block;
-      margin-left: -3px;
-  }
+      display: block;
+      height: 22px;
 
-  .alpheios-principal-parts__dsmbg-providers-icn {
-      fill: var(--alpheios-color-neutral-dark);
-      display: inline-block;
-      position: relative;
-      top: 3px;
+      &-tooltip {
+        margin-left: 5px;
+      }
+
+      &-icn {
+          fill: var(--alpheios-color-neutral-dark);
+          display: block;
+          height: 22px;
+      }
   }
 </style>
