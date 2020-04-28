@@ -139,6 +139,10 @@ export default {
         }
       }
       return true
+    },
+    mustShowTitles () {
+      // if all the grammars are collapsed then we should always show the titles
+      return this.showTitles || Object.values(this.languageList).filter((langData) => ! langData.collapsed).length === 0
     }
   },
   methods: {
@@ -222,7 +226,8 @@ export default {
     },
     showHideTitles () {
       this.showTitles = !this.showTitles
-    }
+    },
+
   }
 }
 </script>

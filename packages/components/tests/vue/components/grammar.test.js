@@ -221,6 +221,7 @@ describe('grammar.test.js', () => {
     cmp.vm.collapseLanguage('ara')
 
     expect(cmp.vm.collapseOthers).toHaveBeenLastCalledWith()
+    expect(cmp.vm.mustShowTitles).toBeTruthy()
   })
 
   it('9 Grammar - method collapseLanguage sets collapseValue if defined otherwise it toggles collapse property', () => {
@@ -236,6 +237,7 @@ describe('grammar.test.js', () => {
 
     cmp.vm.collapseLanguage('lat')
     expect(cmp.vm.languageList.lat.collapsed).toBeFalsy()
+    expect(cmp.vm.mustShowTitles).toBeFalsy()
 
     cmp.vm.collapseLanguage('lat', false)
     expect(cmp.vm.languageList.lat.collapsed).toBeFalsy()
