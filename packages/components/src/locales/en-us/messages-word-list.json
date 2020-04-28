@@ -144,5 +144,26 @@
         "message": "for flashcards",
         "description": "Download list for flashcards",
         "component": "WordLanguagePanel"
+    },
+    "WORDLIST_FILTER_BYMOSTRECENT": {
+        "message": "by most recent",
+        "description": "Filter by max amount with sorting by updatedDT desc",
+        "component": "WordFilterPanel"
+    },
+    "WORDLIST_FILTER_AMOUNT_PLACEHOLDER": {
+        "message": "number of words to show",
+        "description": "Placeholder for filter amount",
+        "component": "WordFilterPanel"
+    },
+    "WORDLIST_FILTER_BYMOSTOFTEN": {
+        "message": "by most often",
+        "description": "Filter by max amount with sorting by frequency desc",
+        "component": "WordFilterPanel"
+    },
+    "WORDLIST_FLASHCARD_MAXDOWNLOAD_AMOUNT": {
+        "message": "Note: the Flashcard export is limited to a maximum of {maxFlashCardItems} words.",
+        "description": "Max download for flashcard",
+        "component": "DownloadConfirmation",
+        "params": ["maxFlashCardItems"]
     }
 }

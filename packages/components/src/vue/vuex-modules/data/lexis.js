@@ -190,7 +190,7 @@ export default class Lexis extends Module {
     checkContextForward = '',
     treebankDataItem = null,
     source = 'page'
-  } = {}) {
+  } = {}, forWordlist = false) {
     if (textSelector.languageID === Constants.LANG_CHINESE && !this._lexisConfig) {
       console.warn('Lookup request cannot be completed: LexisCS configuration is unavailable')
       return
@@ -202,7 +202,10 @@ export default class Lexis extends Module {
     }
     if (!wordUsageExamples) { wordUsageExamples = this._appApi.getWordUsageExamplesQueryParams(textSelector) }
 
-    this._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data, source)
+    if (!forWordlist) {
+      this._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data, source)
+    }
+
     let annotatedHomonyms
     const prevTreebankDataItem = this._treebankDataItem || {}
     this._treebankDataItem = treebankDataItem
@@ -304,10 +307,11 @@ export default class Lexis extends Module {
       cedictServiceUrl: this._lexisConfig ? this._lexisConfig.cedict.target_url : null,
       annotatedHomonyms
     })
-    lexQuery.getData()
+    const result = lexQuery.getData()
 
     // Hide a CEDICT notification on a new lexical query
     store.commit('lexis/hideCedictNotification')
+    return result
   }
 }
 
@@ -420,8 +424,8 @@ Lexis.api = (moduleInstance, store) => {
      * @param {string} lemmaTranslationLang - A locale for lemma translations (e.g. 'en-US')
      * @param wordUsageExamples
      */
-    lookupText: (textSelector, lemmaTranslationLang, wordUsageExamples) => {
-      moduleInstance.lexicalQuery({ store, textSelector, source: 'lookup' })
+    lookupText: async (textSelector, forWordlist = false) => {
+      return moduleInstance.lexicalQuery({ store, textSelector, source: 'lookup' }, forWordlist)
     },
 
     loadCedictData: async () => {
