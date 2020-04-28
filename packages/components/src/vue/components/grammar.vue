@@ -1,6 +1,6 @@
 <template>
   <div class="alpheios-grammar">
-    <div class="alpheios-grammar__titles" v-show="showTitles">
+    <div class="alpheios-grammar__titles" v-show="mustShowTitles">
         <h1 class="alpheios-panel__title">{{ l10n.getText('LABEL_BROWSE_GRAMMAR') }}</h1>
       <div class="alpheios-grammar__block alpheios-clickable"
           :class="{open: !languageItem.collapsed}"
