@@ -1647,6 +1647,29 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
     expect(renderedTable.rows[3].cells[8].fullMatch).toBeTruthy()
   })
 
+  it('66 - checked Verb Paradigm 50 active', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('δοίμην', Constants.LANG_GREEK)
+    // console.info(inflectionsViewSet.matchingViews)
 
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(2)
 
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[0],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'Present System Middle-Passive of Contract Verbs in -έω',
+      paradigmID: 'verbpdgm20',
+      hasSuppParadigms: true,
+      suppParadigms: [ 'verbpdgm65' ]
+    })
+
+    BaseTestHelp.checkParadigm({
+      view: inflectionsViewSet.matchingViews[1],
+      viewName: 'GreekVerbParadigmView',
+      viewTitle: 'δίδωμι: Aorist System Middle',
+      paradigmID: 'verbpdgm39',
+      hasSuppParadigms: true,
+      suppParadigms: [ 'verbpdgm65' ]
+    })
+  })
 })
