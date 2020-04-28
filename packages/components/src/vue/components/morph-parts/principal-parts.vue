@@ -4,12 +4,12 @@
         <span class="alpheios-principal-parts__lemma_index_spacer" v-else-if="lemmaindex > 0 && printIndex"> </span>
 
         <h4
-            class="alpheios-principal-parts__groupitem"
+            class="alpheios-principal-parts__groupitem alpheios-principal-parts__groupitem--lemma-word"
             :lang="languageCode"
             v-if="! lemma.principalParts.includes(lemma.word)"
         >{{lemma.word}}</h4>
 
-        <h4 class="alpheios-principal-parts__groupitem">
+        <h4 class="alpheios-principal-parts__groupitem" v-if="lemma.principalParts && lemma.principalParts.length > 0">
             <span
                 :lang="languageCode"
                 class="alpheios-principal-parts__listitem"
@@ -21,8 +21,9 @@
             :tooltip-text="l10n.getText('TOOLTIP_DISAMBIGUATED')"
             tooltip-direction="top"
             class="alpheios-principal-parts__pointer-tooltip"
+            v-show="disambiguated"
         >
-            <disambiguated-icon v-show="disambiguated" class="alpheios-principal-parts__pointer-icn"></disambiguated-icon>
+            <disambiguated-icon class="alpheios-principal-parts__pointer-icn"></disambiguated-icon>
         </tooltip>
         <div v-show="disambiguated" class="alpheios-principal-parts__dsmbg-providers">
             <tooltip
@@ -40,20 +41,20 @@
             :type="types.pronunciation"
         />
 
-        <span class="feature_extras" v-if="hasExtras" >
+        <div class="feature_extras" v-if="hasExtras" >
             <inflectionattribute
                 :data="featureList(['age','area','geo', 'frequency'],'extras')"
                 :type="'extras'"
             />
-        </span>
+        </div>
 
-        <span class="feature_source" v-if="hasSource">
+        <div class="feature_source" v-if="hasSource">
             <inflectionattribute
                 :data="lemma.features"
                 :decorators="['link','brackets']"
                 :type="types.source"
             />
-        </span>
+        </div>
     </div>
 </template>
 <script>
@@ -155,6 +156,11 @@ export default {
   h4.alpheios-principal-parts__groupitem {
     display: inline;
     font-weight: 700;
+    margin-right: 5px;
+  }
+
+  h4.alpheios-principal-parts__groupitem:last-of-type {
+    margin-right: 0;
   }
 
   .alpheios-principal-parts__groupitem:last-child:after {
@@ -163,6 +169,14 @@ export default {
 
   .alpheios-principal-parts__item {
       display: flex;
+
+      .feature_extras {
+          margin-left: 5px;
+      }
+
+      .feature_source {
+          margin-left: 5px;
+      }
   }
 
   .alpheios-morph-data__chinese p {

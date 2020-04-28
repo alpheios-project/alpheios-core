@@ -38,6 +38,8 @@ export default class Lexis extends Module {
 
     // A TextSelector of the last lexical query
     this._lastTextSelector = null
+    // Whether a treebank application has been initialized
+    this._treebankReady = false
     // A current TreebankDataItem
     this._treebankDataItem = null
     // Whether a treebank service has been loaded
@@ -50,14 +52,14 @@ export default class Lexis extends Module {
 
     this._treebankDataItem = TreebankDataItem.getTreebankData()
     if (this._treebankDataItem) {
-      store.commit('lexis/setTreebankInfo', { treebankDataItem: this._treebankDataItem, isAvailable: false })
+      store.commit('lexis/setTreebankInfo', { treebankSrc: this._treebankDataItem.fullUrl, hasTreebankData: false })
       this.constructor.refreshUntilLoaded(
         this._treebankDataItem.provider,
         this.config.arethusaTbRefreshRetryCount,
         this.config.arethusaTbRefreshDelay)
         .then(() => {
           // Treebank app has become available
-          store.commit('lexis/setTreebankInfo', { treebankDataItem: this._treebankDataItem, isAvailable: true })
+          this._treebankReady = true
         })
         .catch((err) => {
           // If refreshUntilLoaded failed treebank data will be unavailable
@@ -202,21 +204,34 @@ export default class Lexis extends Module {
 
     this._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data, source)
     let annotatedHomonyms
+    const prevTreebankDataItem = this._treebankDataItem || {}
     this._treebankDataItem = treebankDataItem
 
-    if (this._treebankDataItem) {
-      if (store.state.lexis.treebankSrc !== this._treebankDataItem.fullUrl) {
+    if (this._treebankReady && this._treebankDataItem) {
+      if (prevTreebankDataItem.doc !== this._treebankDataItem.doc) {
         /*
-        Treebank's URL has changed. We need to update a treebank app's URL in an iframe
-        and wait for a treebank app to be loaded. The first step is to reset an app's URL
+        Treebank's doc has changed. A treebank app's URL in an iframe needs to be updated
+        only when a document ID changes. If document ID stayed the same and only a sentence ID changed,
+        we can keep an iframe URL the same: `gotoSentence` request will navigate to the
+        correct sentence sentence regardless of what sentence ID is in the URL. After a URL is chanted,
+        we need to wait for a treebank app to be loaded. The first step is to reset an app's URL
         and wait for this change to be applied to DOM; that's why the use of `Vue.nextTick()`.
         Without this step, refreshUntilLoaded()` may succeed but
         for the previous treebank URL, not for the current one. This is not what we want.
+        As a next step, we set a new URL, wait for the next tick, and issue a `refreshView` request.
          */
-        store.commit('lexis/resetTreebankInfo')
-        await Vue.nextTick()
 
-        store.commit('lexis/setTreebankInfo', { treebankDataItem: this._treebankDataItem, isAvailable: false })
+        /*
+        Reset a treebank source URL but keep a previous `hasTreebankData` state var value.
+        `hasTreebankData` controls whether a treebank icon is shown. If we reset it here and then set to true
+        a several moments later, when treebank is loaded, an icon will flash. We want to avoid that
+        to keep a user experience as smooth as possible. That's why we keep it in its previous
+        state until a `refreshView` request is completed.
+         */
+        store.commit('lexis/setTreebankInfo', { treebankSrc: null })
+        this._treebankReady = false
+        await Vue.nextTick()
+        store.commit('lexis/setTreebankInfo', { treebankSrc: this._treebankDataItem.fullUrl })
         try {
           /*
           We need to wait until a URL change is applied to the iframe within the treebank Vue component
@@ -230,22 +245,18 @@ export default class Lexis extends Module {
             this.config.arethusaTbRefreshRetryCount,
             this.config.arethusaTbRefreshDelay
           )
-          store.commit('lexis/setTreebankInfo', {
-            treebankDataItem: this._treebankDataItem,
-            isAvailable: true,
-            hasTreebankData: this._treebankDataItem.hasSentenceData
-          })
+          this._treebankReady = true
+          // No need to update treebank sourceURL
+          store.commit('lexis/setTreebankInfo', { hasTreebankData: this._treebankDataItem.hasSentenceData })
         } catch (err) {
           // If refreshUntilLoaded failed treebank data will be unavailable
           console.warn(err.message)
-          store.commit('lexis/resetTreebankInfo')
+          this._treebankReady = false
+          store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
         }
       } else {
-        store.commit('lexis/setTreebankInfo', {
-          treebankDataItem: this._treebankDataItem,
-          isAvailable: true,
-          hasTreebankData: this._treebankDataItem.hasSentenceData
-        })
+        // Do not update a treebankSrc in a store, it has not changed
+        store.commit('lexis/setTreebankInfo', { hasTreebankData: this._treebankDataItem.hasSentenceData })
       }
 
       try {
@@ -257,8 +268,11 @@ export default class Lexis extends Module {
           }
         }
         annotatedHomonyms = await Lexis.getHomonymsFromTreebank(this._treebankDataItem, textSelector)
+      } catch (err) {
+        console.error(err)
+      }
 
-        /*
+      /*
         Update a treebank diagram to highlight selected words but don't wait for it to finish
         (to not hold the following requests back).
         This must be done as the last call in a chain of other treebank requests because
@@ -266,16 +280,16 @@ export default class Lexis extends Module {
         Such requests will cause no words to be highlighted on a diagram. If they will be executed
         after `updateTreebankDiagram` request, they will erase a highlighting made by `updateTreebankDiagram`.
          */
-        try {
-          Lexis.updateTreebankDiagram(this._treebankDataItem)
-        } catch (err) {
-          // Do nothing, we have no resort. An error will be handled in the method itself
-        }
+      try {
+        Lexis.updateTreebankDiagram(this._treebankDataItem)
       } catch (err) {
         console.error(err)
+        // Mark treebank data as unavailable
+        store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
       }
-    } else {
+    } else if (this._treebankReady) {
       store.commit('lexis/resetTreebankInfo')
+      this._treebankReady = false
     }
 
     const lexQuery = LexicalQuery.create(textSelector, {
@@ -306,10 +320,8 @@ Lexis.store = (moduleInstance) => {
       cedictDataLoaded: false,
       cedictLoadingInProgress: false,
       cedictDisplayNotification: false,
-      isTreebankAvailable: false,
-      hasTreebankData: false,
-      treebankSrc: null,
-      treebankRefreshDT: 0
+      hasTreebankData: false, // Whether treebank has any word or sentence data
+      treebankSrc: null
     },
 
     mutations: {
@@ -341,29 +353,22 @@ Lexis.store = (moduleInstance) => {
        *
        * @param {object} state - A Vuex state object.
        * @param {object} data - A data object.
-       * @param {TreebankDataItem} data.treebankDataItem - A treebank data item element.
-       * @param {boolean} data.isAvailable - Whether treebank application is available.
+       * @param {string} data.treebankSrc - A URL of a treebank app.
        * @param {boolean} data.hasTreebankData - Whether there is any treebank word or sentence data
        *        to show on a diagram.
        */
       setTreebankInfo (state, {
-        treebankDataItem,
-        isAvailable = false,
-        hasTreebankData = false
+        treebankSrc = undefined,
+        hasTreebankData = undefined
       } = {}) {
-        state.isTreebankAvailable = isAvailable
-        state.hasTreebankData = hasTreebankData
-        state.treebankSrc = treebankDataItem.fullUrl || null
+        // Update store variables only if some meaningful values are provided
+        if (typeof hasTreebankData !== 'undefined') { state.hasTreebankData = hasTreebankData }
+        if (typeof treebankSrc !== 'undefined') { state.treebankSrc = treebankSrc }
       },
 
       resetTreebankInfo (state) {
-        state.isTreebankAvailable = false
         state.hasTreebankData = false
         state.treebankSrc = null
-      },
-
-      setTreebankRefreshDT (state) {
-        state.treebankRefreshDT = Date.now()
       }
     }
   }

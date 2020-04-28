@@ -1133,12 +1133,22 @@ p.alpheios-lemma__translations-value {
 h4.alpheios-principal-parts__groupitem {
   display: inline;
   font-weight: 700 !important;
+  margin-right: 5px !important;
+}
+h4.alpheios-principal-parts__groupitem:last-of-type {
+  margin-right: 0 !important;
 }
 .alpheios-principal-parts__groupitem:last-child:after {
   content: ":" !important;
 }
 .alpheios-principal-parts__item {
   display: flex;
+}
+.alpheios-principal-parts__item .feature_extras {
+  margin-left: 5px !important;
+}
+.alpheios-principal-parts__item .feature_source {
+  margin-left: 5px !important;
 }
 .alpheios-morph-data__chinese p {
   margin-bottom: 0 !important;
