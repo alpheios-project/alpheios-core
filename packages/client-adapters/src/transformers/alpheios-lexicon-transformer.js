@@ -177,7 +177,9 @@ class AlpheiosLexiconTransformer {
         const index = entry[0]
         const elem = entry[1]
 
-        const lemmaText = elem.hdwd ? elem.hdwd.$ : undefined
+        // if the parser has a number in the hdwd the JSON will have it as a number
+        // and not a String
+        const lemmaText = elem.hdwd ? `${elem.hdwd.$}` : undefined
         if (!lemmaText) {
           this.adapter.addError(this.adapter.l10n.messages.MORPH_TRANSFORM_NO_LEMMA)
           continue
