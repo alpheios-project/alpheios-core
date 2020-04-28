@@ -146,7 +146,12 @@
         return true
       },
       currentAdditionalField () {
-        return this.currentTypeFilter ? (this.currentTypeFilter.showTextInput ? this.textInput : this.filterAmount || 0) : null
+        if (this.currentTypeFilter) {
+          if (this.currentTypeFilter.showTextInput || this.currentTypeFilter.showNumberInput) {
+            return this.currentTypeFilter.showTextInput ? this.textInput : this.filterAmount || 0
+          }
+        } 
+        return null
       },
       wordExactFormsFiltered () {
         if (this.selectedFilterBy === 'byExactForm') {

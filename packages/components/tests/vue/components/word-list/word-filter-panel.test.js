@@ -265,7 +265,7 @@ describe('word-filter-panel.test.js', () => {
     cmp.vm.selectedFilterBy = 'byImportant'
 
     cmp.vm.changedFilterBy()
-    expect(cmp.emitted()['changedFilterBy'][0]).toEqual(['byImportant', null, null, cmp.vm.filterAmount])
+    expect(cmp.emitted()['changedFilterBy'][0]).toEqual(['byImportant', null])
   })
 
   it('12 WordFilterPanel - method changedFilterBy executes clearFilteringText if currentTypeFilter is not defined and does not have onChange event', () => {
@@ -425,7 +425,7 @@ describe('word-filter-panel.test.js', () => {
 
     cmp.vm.clickFilterBy()
 
-    expect(cmp.emitted()['changedFilterBy'][0]).toEqual(['byExactForm', 'cupidinibus', null, cmp.vm.filterAmount])
+    expect(cmp.emitted()['changedFilterBy'][0]).toEqual(['byExactForm', 'cupidinibus'])
     expect(cmp.vm.shownVariantsSelect).toBeFalsy()
   })
 
@@ -448,7 +448,7 @@ describe('word-filter-panel.test.js', () => {
 
     cmp.vm.clickFilterBy()
 
-    expect(cmp.emitted()['changedFilterBy'][0]).toEqual(['byLemma', 'cupido', null, cmp.vm.filterAmount])
+    expect(cmp.emitted()['changedFilterBy'][0]).toEqual(['byLemma', 'cupido'])
     expect(cmp.vm.shownVariantsSelect).toBeFalsy()
   })
 
@@ -517,7 +517,7 @@ describe('word-filter-panel.test.js', () => {
     }) 
 
     cmp.vm.clearFilterEvent()
-    expect(cmp.emitted()['changedFilterBy'][0]).toEqual([null, null, null, null])
+    expect(cmp.emitted()['changedFilterBy'][0]).toEqual([null, null])
   })
 
   it('23 WordFilterPanel - method setClickedLemmaFilter defines selectedFilterBy, textInput and executes clickFilterBy', () => {
