@@ -673,7 +673,7 @@ if you want to create a different configuration of a UI controller.
           state.hasInflData = false
         },
 
-        setUpdatedGrammar (state) {
+        setUpdatedGrammar (state, url) {
           state.updatedGrammar = state.updatedGrammar + 1
         },
 
@@ -1367,7 +1367,8 @@ If no URLS are provided, will reset grammar data.
   /**
     (re)initializes grammar data from settings
   */
-  initGrammar () {
+  initGrammar (langCode) {
+    this.api.app.grammarData[langCode] = null
     this.store.commit('app/setUpdatedGrammar')
   }
 
@@ -1912,8 +1913,8 @@ If no URLS are provided, will reset grammar data.
     // an array or an individual text value
     const baseKey = Options.parseKey(name)
     this.api.settings.getResourceOptions().items[baseKey.name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
-    if (name === 'grammars') {
-      this.initGrammar()
+    if (baseKey.name === 'grammars') {
+      this.initGrammar(baseKey.group)
     }
   }
 
