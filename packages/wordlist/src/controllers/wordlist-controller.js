@@ -1,4 +1,5 @@
 import { PsEvent, WordList, WordItem, TextQuoteSelector, LanguageModelFactory } from 'alpheios-data-models'
+import Utility from '@wordlist/common/utility.js'
 
 export default class WordlistController {
   /**
@@ -31,7 +32,7 @@ export default class WordlistController {
         delete this.wordLists[languageCode]
         let wordItems = await dataManager.query({dataType: 'WordItem', params: {languageCode: languageCode}}, { syncDelete: true })
         if (wordItems.length > 0) {
-          this.wordLists[languageCode] = new WordList(languageCode,wordItems)
+          this.wordLists[languageCode] = new WordList(languageCode, wordItems)
           WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
         }
         if (cachedList) {
@@ -143,6 +144,10 @@ export default class WordlistController {
     let wordItem = this.getWordListItem(LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord, true)
     wordItem.homonym = data
     wordItem.currentSession = true
+    wordItem.createdDT = wordItem.createdDT ? wordItem.createdDT : Utility.currentDate
+    wordItem.updatedDT = Utility.currentDate
+    wordItem.frequency = wordItem.frequency ? wordItem.frequency + 1 : 1
+    WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
     WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'shortHomonym'}})
     // emit a wordlist updated event too in case the wordlist was updated
     WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)

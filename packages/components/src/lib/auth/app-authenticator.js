@@ -140,7 +140,7 @@ export default class AppAuthenticator {
         const testProfile = {
           name: 'Alpheios Test User',
           nickname: 'testuser',
-          sub: 'testuser'
+          sub: 'dev|mockUserId'
         }
         localStorage.setItem('profile', JSON.stringify(testProfile))
         authData.userId = testProfile.sub

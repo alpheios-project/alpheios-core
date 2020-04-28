@@ -97,9 +97,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ({
 
 /***/ "../../../node_modules/axios/index.js":
-/*!************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/index.js ***!
-  \************************************************************************/
+/*!**************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/index.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -108,9 +108,9 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "../../../node_modules/a
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/adapters/xhr.js":
-/*!***********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/adapters/xhr.js ***!
-  \***********************************************************************************/
+/*!*************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/adapters/xhr.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -300,9 +300,9 @@ module.exports = function xhrAdapter(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/axios.js":
-/*!****************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/axios.js ***!
-  \****************************************************************************/
+/*!******************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/axios.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -365,9 +365,9 @@ module.exports.default = axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/Cancel.js":
-/*!************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/cancel/Cancel.js ***!
-  \************************************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/cancel/Cancel.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -396,9 +396,9 @@ module.exports = Cancel;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/CancelToken.js":
-/*!*****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/cancel/CancelToken.js ***!
-  \*****************************************************************************************/
+/*!*******************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/cancel/CancelToken.js ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -465,9 +465,9 @@ module.exports = CancelToken;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/cancel/isCancel.js":
-/*!**************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/cancel/isCancel.js ***!
-  \**************************************************************************************/
+/*!****************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/cancel/isCancel.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -482,9 +482,9 @@ module.exports = function isCancel(value) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/Axios.js":
-/*!*********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/Axios.js ***!
-  \*********************************************************************************/
+/*!***********************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/Axios.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -588,9 +588,9 @@ module.exports = Axios;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/InterceptorManager.js":
-/*!**********************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/InterceptorManager.js ***!
-  \**********************************************************************************************/
+/*!************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/InterceptorManager.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -652,9 +652,9 @@ module.exports = InterceptorManager;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/buildFullPath.js":
-/*!*****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/buildFullPath.js ***!
-  \*****************************************************************************************/
+/*!*******************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/buildFullPath.js ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -684,9 +684,9 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/createError.js":
-/*!***************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/createError.js ***!
-  \***************************************************************************************/
+/*!*****************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/createError.js ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -714,9 +714,9 @@ module.exports = function createError(message, config, code, request, response) 
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/dispatchRequest.js":
-/*!*******************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/dispatchRequest.js ***!
-  \*******************************************************************************************/
+/*!*********************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/dispatchRequest.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -805,9 +805,9 @@ module.exports = function dispatchRequest(config) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/enhanceError.js":
-/*!****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/enhanceError.js ***!
-  \****************************************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/enhanceError.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -859,9 +859,9 @@ module.exports = function enhanceError(error, config, code, request, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/mergeConfig.js":
-/*!***************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/mergeConfig.js ***!
-  \***************************************************************************************/
+/*!*****************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/mergeConfig.js ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -944,9 +944,9 @@ module.exports = function mergeConfig(config1, config2) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/settle.js":
-/*!**********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/settle.js ***!
-  \**********************************************************************************/
+/*!************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/settle.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -981,9 +981,9 @@ module.exports = function settle(resolve, reject, response) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/core/transformData.js":
-/*!*****************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/core/transformData.js ***!
-  \*****************************************************************************************/
+/*!*******************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/core/transformData.js ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1013,9 +1013,9 @@ module.exports = function transformData(data, headers, fns) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/defaults.js":
-/*!*******************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/defaults.js ***!
-  \*******************************************************************************/
+/*!*********************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/defaults.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1123,9 +1123,9 @@ module.exports = defaults;
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/bind.js":
-/*!***********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/bind.js ***!
-  \***********************************************************************************/
+/*!*************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/bind.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1146,9 +1146,9 @@ module.exports = function bind(fn, thisArg) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/buildURL.js":
-/*!***************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/buildURL.js ***!
-  \***************************************************************************************/
+/*!*****************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/buildURL.js ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1229,9 +1229,9 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/combineURLs.js":
-/*!******************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/combineURLs.js ***!
-  \******************************************************************************************/
+/*!********************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/combineURLs.js ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1255,9 +1255,9 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/cookies.js":
-/*!**************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/cookies.js ***!
-  \**************************************************************************************/
+/*!****************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/cookies.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1320,9 +1320,9 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isAbsoluteURL.js":
-/*!********************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
-  \********************************************************************************************/
+/*!**********************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1346,9 +1346,9 @@ module.exports = function isAbsoluteURL(url) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/isURLSameOrigin.js":
-/*!**********************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
-  \**********************************************************************************************/
+/*!************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1426,9 +1426,9 @@ module.exports = (
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/normalizeHeaderName.js":
-/*!**************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
-  \**************************************************************************************************/
+/*!****************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1450,9 +1450,9 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/parseHeaders.js":
-/*!*******************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/parseHeaders.js ***!
-  \*******************************************************************************************/
+/*!*********************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/parseHeaders.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1515,9 +1515,9 @@ module.exports = function parseHeaders(headers) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/helpers/spread.js":
-/*!*************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/helpers/spread.js ***!
-  \*************************************************************************************/
+/*!***************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/helpers/spread.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1554,9 +1554,9 @@ module.exports = function spread(callback) {
 /***/ }),
 
 /***/ "../../../node_modules/axios/lib/utils.js":
-/*!****************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/axios/lib/utils.js ***!
-  \****************************************************************************/
+/*!******************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/axios/lib/utils.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1910,9 +1910,9 @@ module.exports = {
 /***/ }),
 
 /***/ "../../../node_modules/process/browser.js":
-/*!****************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/process/browser.js ***!
-  \****************************************************************************/
+/*!******************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/process/browser.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2104,6 +2104,36 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./common/utility.js":
+/*!***************************!*\
+  !*** ./common/utility.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Utility; });
+class Utility {
+/**
+ * Returns formatted date/time for saving to IndexedDB
+ * @return {String}
+ */
+  static get currentDate () {
+    let dt = new Date()
+    return dt.getFullYear() + '/'
+        + ((dt.getMonth()+1) < 10 ? '0' : '') + (dt.getMonth()+1)  + '/'
+        + ((dt.getDate() < 10) ? '0' : '') + dt.getDate() + ' @ '
+                + ((dt.getHours() < 10) ? '0' : '') + dt.getHours() + ":"
+                + ((dt.getMinutes() < 10) ? '0' : '') + dt.getMinutes() + ":"
+                + ((dt.getSeconds() < 10) ? '0' : '') + dt.getSeconds()
+
+  }
+}
+
+
+/***/ }),
+
 /***/ "./controllers/user-data-manager.js":
 /*!******************************************!*\
   !*** ./controllers/user-data-manager.js ***!
@@ -2278,6 +2308,7 @@ class UserDataManager {
       })
       return
     }
+    
     try {
       this.blocked = true
       let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
@@ -2331,7 +2362,6 @@ class UserDataManager {
       return
     }
     try {
-
       let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
       let localAdapter = this._localStorageAdapter(data.dataType)
 
@@ -2379,7 +2409,7 @@ class UserDataManager {
    */
   async query (data, params = {}) {
     try {
-      params.type = params.type||'short'
+      params.type = params.type||'full'
       params.source = params.source||'both'
       params.syncDelete = params.syncDelete||false
 
@@ -2497,6 +2527,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordlistController; });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/common/utility.js */ "./common/utility.js");
+
 
 
 class WordlistController {
@@ -2530,7 +2562,7 @@ class WordlistController {
         delete this.wordLists[languageCode]
         let wordItems = await dataManager.query({dataType: 'WordItem', params: {languageCode: languageCode}}, { syncDelete: true })
         if (wordItems.length > 0) {
-          this.wordLists[languageCode] = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordList"](languageCode,wordItems)
+          this.wordLists[languageCode] = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["WordList"](languageCode, wordItems)
           WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
         }
         if (cachedList) {
@@ -2642,6 +2674,10 @@ class WordlistController {
     let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(data.languageID), data.targetWord, true)
     wordItem.homonym = data
     wordItem.currentSession = true
+    wordItem.createdDT = wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
+    wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
+    wordItem.frequency = wordItem.frequency ? wordItem.frequency + 1 : 1
+    WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
     WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'shortHomonym'}})
     // emit a wordlist updated event too in case the wordlist was updated
     WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
@@ -2877,11 +2913,7 @@ class IndexedDBAdapter {
     if (!segment) {
       segment = this.dbDriver.segmentsSync
     }
-
-    let currentLocalItems = await this.query({ wordItem })
-    if (currentLocalItems.length === 0 && segment && segment !== 'common') {
-      await this.update(wordItem, { segment: 'common' })
-    }
+    await this.update(wordItem, { segment: 'common' })
 
     let result = await this.update(wordItem, { segment })
 
@@ -3562,7 +3594,6 @@ class RemoteDBAdapter {
         content = this.dbDriver.storageMap.put.serialize(data)
       }
 
-
       let result = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.put(url, content, this.dbDriver.requestsParams)
       let updated = this.dbDriver.storageMap.put.checkResult(result)
       return updated
@@ -3634,6 +3665,9 @@ class RemoteDBAdapter {
           this.errors.push(error)
         }
       }
+      if (error.message === 'Request failed with status code 401') {
+        return []
+      }
       return errorFinal
     }
   }
@@ -3656,6 +3690,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordlist_storage_indexeddbDriver_indexed_db_object_stores_structure__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/storage/indexeddbDriver/indexed-db-object-stores-structure */ "./storage/indexeddbDriver/indexed-db-object-stores-structure.js");
 /* harmony import */ var _wordlist_storage_indexeddbDriver_indexed_db_load_process__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordlist/storage/indexeddbDriver/indexed-db-load-process */ "./storage/indexeddbDriver/indexed-db-load-process.js");
+/* harmony import */ var _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordlist/common/utility.js */ "./common/utility.js");
+
 
 
 
@@ -3860,9 +3896,9 @@ class WordItemIndexedDbDriver {
    * @param {WordItem} worditem - worditem
    * @return {WordItem}
    */
-  loadSegment(segment, jsonObj, worditem) {
+  loadSegment(segment, jsonObj, wordItem) {
     if (this.storageMap[segment].load) {
-      return this.storageMap[segment].load(jsonObj, worditem)
+      return this.storageMap[segment].load(jsonObj, wordItem)
     }
   }
 
@@ -3889,9 +3925,9 @@ class WordItemIndexedDbDriver {
    * @param {WordItem} worditem - the worditem object
    * @return {Object} - data for creating IndexedDB Request
    */
-  segmentSelectQuery(segment, worditem) {
+  segmentSelectQuery(segment, wordItem) {
     if (this.storageMap[segment].select) {
-      return this.storageMap[segment].select(segment, worditem)
+      return this.storageMap[segment].select(segment, wordItem)
     }
   }
 
@@ -3901,8 +3937,8 @@ class WordItemIndexedDbDriver {
    * @param {WordItem} worditem - the worditem object
    * @return {Object} - data for creating IndexedDB Request
    */
-  _segmentSelectQueryByWordItemID (segment, worditem) {
-    return this._formatQuery(segment, this._selectByWordItemID(worditem))
+  _segmentSelectQueryByWordItemID (segment, wordItem) {
+    return this._formatQuery(segment, this._selectByWordItemID(wordItem))
   }
 
   /**
@@ -3911,8 +3947,8 @@ class WordItemIndexedDbDriver {
    * @param {WordItem} worditem - the worditem object
    * @return {Object} - data for creating IndexedDB Request
    */
-  _segmentSelectQueryByID (segment, worditem) {
-    return this._formatQuery(segment, this._selectByID(worditem))
+  _segmentSelectQueryByID (segment, wordItem) {
+    return this._formatQuery(segment, this._selectByID(wordItem))
   }
 
   /**
@@ -3921,9 +3957,9 @@ class WordItemIndexedDbDriver {
    * @param {WordItem} worditem - the worditem object
    * @return {Object} - data for creating IndexedDB Request
    */
-  segmentDeleteQuery (segment, worditem) {
+  segmentDeleteQuery (segment, wordItem) {
     if (this.storageMap[segment].delete) {
-      return this.storageMap[segment].delete(segment, worditem)
+      return this.storageMap[segment].delete(segment, wordItem)
     }
   }
 
@@ -3959,16 +3995,19 @@ class WordItemIndexedDbDriver {
    * @param {WordItem} worditem - the worditem object
    * @return {Object[]}
    */
-  _serializeCommon (worditem) {
-    return [{
-      ID: this._makeStorageID(worditem),
-      listID: this.userId + '-' + worditem.languageCode,
+  _serializeCommon (wordItem) {
+    const res = [{
+      ID: this._makeStorageID(wordItem),
+      listID: this.userId + '-' + wordItem.languageCode,
       userID: this.userId,
-      languageCode: worditem.languageCode,
-      targetWord: worditem.targetWord,
-      important: worditem.important,
-      createdDT: WordItemIndexedDbDriver.currentDate
+      languageCode: wordItem.languageCode,
+      targetWord: wordItem.targetWord,
+      important: wordItem.important,
+      createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_3__["default"].currentDate,
+      updatedDT: wordItem.updatedDT ? wordItem.updatedDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_3__["default"].currentDate,
+      frequency: wordItem.frequency ? wordItem.frequency : 1
     }]
+    return res
   }
 
   /**
@@ -3976,18 +4015,18 @@ class WordItemIndexedDbDriver {
    * @param {WordItem} worditem - the worditem object
    * @return {Object[]}
    */
-  _serializeContext (worditem) {
+  _serializeContext (wordItem) {
     let result = []
     let index = 0
-    let wordItemId = this._makeStorageID(worditem)
-    for (let tq of worditem.context) {
+    let wordItemId = this._makeStorageID(wordItem)
+    for (let tq of wordItem.context) {
       index++
       let resultItem = {
         ID: wordItemId + '-' + index,
-        listID: this.userId + '-' + worditem.languageCode,
+        listID: this.userId + '-' + wordItem.languageCode,
         userID: this.userId,
-        languageCode: worditem.languageCode,
-        targetWord: worditem.targetWord,
+        languageCode: wordItem.languageCode,
+        targetWord: wordItem.targetWord,
         wordItemID: wordItemId,
         target: {
           source: tq.source,
@@ -4013,15 +4052,15 @@ class WordItemIndexedDbDriver {
    * @param {Boolean} [addMeaning = false] - if true it adds definitions
    * @return {Object[]}
    */
-  _serializeHomonym (worditem, addMeaning = false) {
-    let resultHomonym = worditem.homonym && (worditem.homonym instanceof alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"]) ? worditem.homonym.convertToJSONObject(addMeaning) : null
+  _serializeHomonym (wordItem, addMeaning = false) {
+    let resultHomonym = wordItem.homonym && (wordItem.homonym instanceof alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Homonym"]) ? wordItem.homonym.convertToJSONObject(addMeaning) : null
     if (resultHomonym) {
       return [{
-        ID: this._makeStorageID(worditem),
-        listID: this.userId + '-' + worditem.languageCode,
+        ID: this._makeStorageID(wordItem),
+        listID: this.userId + '-' + wordItem.languageCode,
         userID: this.userId,
-        languageCode: worditem.languageCode,
-        targetWord: worditem.targetWord,
+        languageCode: wordItem.languageCode,
+        targetWord: wordItem.targetWord,
         homonym: resultHomonym
       }]
     }
@@ -4034,23 +4073,8 @@ class WordItemIndexedDbDriver {
  * @param {WordItem} worditem - the worditem object
  * @return {Object[]}
  */
-_serializeHomonymWithFullDefs (worditem) {
-  return this._serializeHomonym(worditem, true)
-}
-
-/**
- * Returns formatted date/time for saving to IndexedDB
- * @return {String}
- */
-static get currentDate () {
-  let dt = new Date()
-  return dt.getFullYear() + '/'
-      + ((dt.getMonth()+1) < 10 ? '0' : '') + (dt.getMonth()+1)  + '/'
-      + ((dt.getDate() < 10) ? '0' : '') + dt.getDate() + ' @ '
-              + ((dt.getHours() < 10) ? '0' : '') + dt.getHours() + ":"
-              + ((dt.getMinutes() < 10) ? '0' : '') + dt.getMinutes() + ":"
-              + ((dt.getSeconds() < 10) ? '0' : '') + dt.getSeconds()
-
+_serializeHomonymWithFullDefs (wordItem) {
+  return this._serializeHomonym(wordItem, true)
 }
 
   /**
@@ -4058,8 +4082,8 @@ static get currentDate () {
    * @param {WordItem} worditem - the worditem object
    * @return {String}
    */
-  _makeStorageID(worditem) {
-    return this.userId + '-' + worditem.languageCode + '-' + worditem.targetWord
+  _makeStorageID(wordItem) {
+    return this.userId + '-' + wordItem.languageCode + '-' + wordItem.targetWord
   }
 
   /**
@@ -4076,8 +4100,8 @@ static get currentDate () {
    * @param {String} languageCode - languageCode of the wordList
    * @return {String}
    */
-  makeIDCompareWithRemote (worditem) {
-    return worditem.languageCode + '-' + worditem.targetWord
+  makeIDCompareWithRemote (wordItem) {
+    return wordItem.languageCode + '-' + wordItem.targetWord
   }
 
   /**
@@ -4124,6 +4148,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WordItemRemoteDbDriver; });
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpheios-data-models */ "alpheios-data-models");
 /* harmony import */ var alpheios_data_models__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordlist/common/utility.js */ "./common/utility.js");
+
 
 
 class WordItemRemoteDbDriver {
@@ -4294,7 +4320,9 @@ class WordItemRemoteDbDriver {
       languageCode: wordItem.languageCode,
       targetWord: wordItem.targetWord,
       important: wordItem.important,
-      createdDT: WordItemRemoteDbDriver.currentDate
+      createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate,
+      updatedDT: wordItem.updatedDT ? wordItem.updatedDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate,
+      frequency: wordItem.frequency ? parseInt(wordItem.frequency) : 1
     }
 
     let homonym = this._serializeHomonym(wordItem)
@@ -4360,7 +4388,7 @@ class WordItemRemoteDbDriver {
       },
       languageCode: wordItem.languageCode,
       targetWord: wordItem.targetWord,
-      createdDT: WordItemRemoteDbDriver.currentDate
+      createdDT: _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
     }
   }
 
@@ -4410,20 +4438,6 @@ class WordItemRemoteDbDriver {
     } else {
       return false
     }
-  }
-
-  /**
-   * Defines date
-   */
-  static get currentDate () {
-    let dt = new Date()
-    return dt.getFullYear() + '/'
-        + ((dt.getMonth()+1) < 10 ? '0' : '') + (dt.getMonth()+1)  + '/'
-        + ((dt.getDate() < 10) ? '0' : '') + dt.getDate() + ' @ '
-                + ((dt.getHours() < 10) ? '0' : '') + dt.getHours() + ":"
-                + ((dt.getMinutes() < 10) ? '0' : '') + dt.getMinutes() + ":"
-                + ((dt.getSeconds() < 10) ? '0' : '') + dt.getSeconds()
-
   }
 
   /**

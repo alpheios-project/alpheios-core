@@ -1797,7 +1797,9 @@ If no URLS are provided, will reset grammar data.
   featureOptionChange (name, value) {
     let featureOptions = this.api.settings.getFeatureOptions() // eslint-disable-line prefer-const
     // TODO we need to refactor handling of boolean options
-    const nonTextFeatures = ['enableLemmaTranslations', 'enableWordUsageExamples', 'wordUsageExamplesMax', 'wordUsageExamplesAuthMax', 'enableMouseMove', 'mouseMoveDelay', 'mouseMoveAccuracy', 'enableMouseMoveLimitedByIdCheck', 'mouseMoveLimitedById']
+    const nonTextFeatures = ['enableLemmaTranslations', 'enableWordUsageExamples', 'wordUsageExamplesMax', 'wordUsageExamplesAuthMax',
+      'enableMouseMove', 'mouseMoveDelay', 'mouseMoveAccuracy', 'enableMouseMoveLimitedByIdCheck', 'mouseMoveLimitedById',
+      'wordlistMaxFlashcardExport']
     if (nonTextFeatures.includes(name)) {
       featureOptions.items[name].setValue(value)
     } else {

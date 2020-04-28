@@ -1,4 +1,5 @@
 import { TextQuoteSelector } from 'alpheios-data-models'
+import Utility from '@wordlist/common/utility.js'
 
 export default class WordItemRemoteDbDriver {
   /**
@@ -168,7 +169,9 @@ export default class WordItemRemoteDbDriver {
       languageCode: wordItem.languageCode,
       targetWord: wordItem.targetWord,
       important: wordItem.important,
-      createdDT: WordItemRemoteDbDriver.currentDate
+      createdDT: wordItem.createdDT ? wordItem.createdDT : Utility.currentDate,
+      updatedDT: wordItem.updatedDT ? wordItem.updatedDT : Utility.currentDate,
+      frequency: wordItem.frequency ? parseInt(wordItem.frequency) : 1
     }
 
     let homonym = this._serializeHomonym(wordItem)
@@ -234,7 +237,7 @@ export default class WordItemRemoteDbDriver {
       },
       languageCode: wordItem.languageCode,
       targetWord: wordItem.targetWord,
-      createdDT: WordItemRemoteDbDriver.currentDate
+      createdDT: Utility.currentDate
     }
   }
 
@@ -284,20 +287,6 @@ export default class WordItemRemoteDbDriver {
     } else {
       return false
     }
-  }
-
-  /**
-   * Defines date
-   */
-  static get currentDate () {
-    let dt = new Date()
-    return dt.getFullYear() + '/'
-        + ((dt.getMonth()+1) < 10 ? '0' : '') + (dt.getMonth()+1)  + '/'
-        + ((dt.getDate() < 10) ? '0' : '') + dt.getDate() + ' @ '
-                + ((dt.getHours() < 10) ? '0' : '') + dt.getHours() + ":"
-                + ((dt.getMinutes() < 10) ? '0' : '') + dt.getMinutes() + ":"
-                + ((dt.getSeconds() < 10) ? '0' : '') + dt.getSeconds()
-
   }
 
   /**

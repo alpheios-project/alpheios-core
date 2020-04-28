@@ -40,7 +40,7 @@ export default class PointerEvt {
       this.constructor.alpheiosIgnoreAllTest(element.dataset || {}))
     const enableAll = path.some(element =>
       this.constructor.alpheiosEnableAllTest(element.dataset || {}))
-    return ignoredAll && ! enableAll
+    return ignoredAll && !enableAll
   }
 
   setPoint (type, clientX, clientY, target, path) {
@@ -63,7 +63,7 @@ export default class PointerEvt {
         element.dataset && (
           this.constructor.excludeAllCpeTest(element.dataset) ||
           this.constructor.excludeCpeTest(element.dataset)
-      ))
+        ))
 
     if (!this[type].excluded && this.limitedById) {
       this[type].excluded = this[type].path.every(element => !this.hasLimitedById(element))

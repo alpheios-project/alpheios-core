@@ -44,7 +44,9 @@ describe('word-sorting-panel.test.js', () => {
     cmp.vm.changeSort('targetWord', 'asc')
 
     expect(cmp.vm.sortingState.targetWord).toEqual('asc')
-    expect(cmp.emitted()['changeSorting'][0]).toEqual(['targetWord', 'asc'])
+    expect(cmp.emitted()['changeSorting'][0]).toEqual(['frequency', null])
+    expect(cmp.emitted()['changeSorting'][1]).toEqual(['updatedDT', null])
+    expect(cmp.emitted()['changeSorting'][2]).toEqual(['targetWord', 'asc'])
   })
 
   it('3 WordSortingPanel - method changeSort clears sortingState and emitts changeSorting if it equal current sortingState', () => {
@@ -55,6 +57,8 @@ describe('word-sorting-panel.test.js', () => {
     cmp.vm.changeSort('targetWord', 'asc')
 
     expect(cmp.vm.sortingState.targetWord).toBeNull()
-    expect(cmp.emitted()['changeSorting'][0]).toEqual(['targetWord', null])
+    expect(cmp.emitted()['changeSorting'][0]).toEqual(['frequency', null])
+    expect(cmp.emitted()['changeSorting'][1]).toEqual(['updatedDT', null])
+    expect(cmp.emitted()['changeSorting'][2]).toEqual(['targetWord', null])
   })
 })

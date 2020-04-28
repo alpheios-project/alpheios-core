@@ -85,6 +85,13 @@
       >
       </setting>
     </fieldset>
+
+    <setting
+        class="alpheios-feature-options__item"
+        :data="featureOptions.items.wordlistMaxFlashcardExport"
+        @change="featureOptionChanged"
+    >
+    </setting>
   </div>
 </template>
 <script>

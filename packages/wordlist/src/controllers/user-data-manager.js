@@ -158,6 +158,7 @@ export default class UserDataManager {
       })
       return
     }
+    
     try {
       this.blocked = true
       let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
@@ -211,7 +212,6 @@ export default class UserDataManager {
       return
     }
     try {
-
       let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
       let localAdapter = this._localStorageAdapter(data.dataType)
 
@@ -259,7 +259,7 @@ export default class UserDataManager {
    */
   async query (data, params = {}) {
     try {
-      params.type = params.type||'short'
+      params.type = params.type||'full'
       params.source = params.source||'both'
       params.syncDelete = params.syncDelete||false
 

@@ -33,11 +33,19 @@
           @dblclick="selectWordItem()"
           @click="selectWordItemMobile()"
         >{{ worditem.targetWord }}</div>
+
         <div class="alpheios-worditem__data alpheios-worditem__lemmasList">
           <span v-for="(lemma, lemmaIndex) in lemmasList" 
                 @click="setLemmaFilterByClick(lemma)"
                 class="alpheios-worditem__lemmasList-lemmaitem"
           >{{ lemma }}<span v-if="lemmaIndex < lemmasList.length-1">, </span></span>
+        </div>
+        
+        <div class="alpheios-worditem__data alpheios-worditem__frequency">
+          {{ worditem.frequency }}
+        </div>
+        <div class="alpheios-worditem__data alpheios-worditem__updatedDT">
+          {{ worditem.updatedDT }}
         </div>
     </div>
 </template>
@@ -129,7 +137,8 @@ export default {
   $iconsize: 22px;
 
   .alpheios-wordlist-language__worditem {
-    .alpheios-worditem__icon {
+    .alpheios-worditem__icon,
+    .alpheios-worditem__controlIcon {
         width: $iconsize;
         height: $iconsize;
         text-align: center;
@@ -172,11 +181,20 @@ export default {
 
   .alpheios-worditem__targetWord {
       font-weight: bold;
-      width: calc((100% - 150px)/2);
+      width: calc((100% - 250px)/2);
       cursor: pointer;
   }
   .alpheios-worditem__lemmasList {
-      width: calc((100% - 150px)/2);
+      width: calc((100% - 250px)/2);
+  }
+
+  .alpheios-worditem__frequency {
+    width: 20px;
+  }
+
+  .alpheios-worditem__updatedDT {
+    width: 70px;
+    font-size: 80%;
   }
 
   .alpheios-visibility__hidden {
