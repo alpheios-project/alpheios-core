@@ -298,9 +298,8 @@ export default {
     },
 
     maxHeight () {
-      const viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-      const horizontalScrollbarWidth = window.innerHeight - document.documentElement.clientHeight
-      return viewportHeight - 2 * (this.moduleConfig.viewportMargin || 0) - horizontalScrollbarWidth
+      return this.app.platform.viewport.height - this.app.platform.scrollbars.horizontal.width -
+        2 * this.moduleConfig.viewportMargin
     },
 
     verboseMode () {
@@ -524,7 +523,7 @@ export default {
       if (!boundsCheck.withinBounds) {
         this.shift.x += boundsCheck.adjX
         this.shift.y += boundsCheck.adjY
-        this.$options.logger.log(`Popup position has been adjusted to stay within the viewport`)
+        this.$options.logger.log('Popup position has been adjusted to stay within the viewport')
       }
     }
 

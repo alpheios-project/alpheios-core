@@ -32,14 +32,34 @@ export default class Platform {
       this.constructor.evt.ORIENTATION_CHANGE.pub({ orientation: this.orientation })
     }
 
+    /*
+    If document is in a quirks mode (see https://www.w3.org/TR/2016/WD-cssom-view-1-20160317/#dom-element-clientheight)
+    then `document.body.clientHeight` should be used instead of `document.documentElement.clientHeight`.
+    In a quirks mode a value of `document.compatMode` will be "BackCompat"
+    (see https://developer.mozilla.org/en-US/docs/Web/API/Document/compatMode)
+     */
+    const clientHeight = (document.compatMode === 'BackCompat')
+      ? document.body.clientHeight
+      : document.documentElement.clientHeight
+
     this.viewport = {
       width: window.innerWidth && document.documentElement.clientWidth && document.body.clientWidth
         ? Math.min(window.innerWidth, document.documentElement.clientWidth, document.body.clientWidth)
         : document.body.clientWidth || window.innerWidth || document.documentElement.clientWidth,
 
+      // The following should calculate a viewport height correctly in both quirks and non-quirks modes
       height: window.innerHeight && document.documentElement.clientHeight
         ? Math.min(window.innerHeight, document.documentElement.clientHeight)
         : window.innerHeight || document.documentElement.clientHeight
+    }
+
+    this.scrollbars = {
+      horizontal: {
+        width: window.innerHeight - clientHeight
+      },
+      vertical: {
+        width: window.innerWidth - document.documentElement.clientWidth
+      }
     }
 
     this.dpr = window.devicePixelRatio
@@ -61,7 +81,7 @@ export default class Platform {
   /**
    * Determines if the page is on google.docs.com
    *
-   * @returns {Boolean} - true if it is on google.docs
+   * @returns {boolean} - true if it is on google.docs
    */
   static getIsGoogleDocs () {
     return window.location.hostname === 'docs.google.com'
