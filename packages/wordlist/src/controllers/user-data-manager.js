@@ -110,7 +110,6 @@ export default class UserDataManager {
     }
     try {
       params.source = params.source||'both'
-      // params.source = 'local'
       let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
 
       let localAdapter = this._localStorageAdapter(finalConstrName)
@@ -161,7 +160,6 @@ export default class UserDataManager {
     }
     
     try {
-      // params.source = 'local'
       this.blocked = true
       let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
 
@@ -214,8 +212,6 @@ export default class UserDataManager {
       return
     }
     try {
-      // params.source = 'local'
-
       let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
       let localAdapter = this._localStorageAdapter(data.dataType)
 
@@ -265,7 +261,6 @@ export default class UserDataManager {
     try {
       params.type = params.type||'full'
       params.source = params.source||'both'
-      // params.source = 'local'
       params.syncDelete = params.syncDelete||false
 
       let remoteAdapter =  this._remoteStorageAdapter(data.dataType)

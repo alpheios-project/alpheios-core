@@ -2260,7 +2260,6 @@ class UserDataManager {
     }
     try {
       params.source = params.source||'both'
-      // params.source = 'local'
       let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
 
       let localAdapter = this._localStorageAdapter(finalConstrName)
@@ -2311,7 +2310,6 @@ class UserDataManager {
     }
     
     try {
-      // params.source = 'local'
       this.blocked = true
       let finalConstrName = this.defineConstructorName(data.dataObj.constructor.name)
 
@@ -2364,8 +2362,6 @@ class UserDataManager {
       return
     }
     try {
-      // params.source = 'local'
-
       let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
       let localAdapter = this._localStorageAdapter(data.dataType)
 
@@ -2415,7 +2411,6 @@ class UserDataManager {
     try {
       params.type = params.type||'full'
       params.source = params.source||'both'
-      // params.source = 'local'
       params.syncDelete = params.syncDelete||false
 
       let remoteAdapter =  this._remoteStorageAdapter(data.dataType)
@@ -4342,8 +4337,6 @@ class WordItemRemoteDbDriver {
     } else {
       result.context = []
     }
-    // console.info('remote _serialize wordItem', wordItem.frequency, wordItem)
-    // console.info('remote _serialize result', result.frequency, result)
     return result
   }
 

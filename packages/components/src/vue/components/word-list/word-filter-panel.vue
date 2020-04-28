@@ -47,16 +47,16 @@
                   ></li>
                 </ul>
 
-                <div class="alpheios-wordlist-header-input-filterBy-block"
+                <div class="alpheios-number-input"
                   v-if="currentTypeFilter.showNumberInput"
                 >
                   <input v-model="filterAmount"  class="alpheios-input alpheios-wordlist-header-input-filterBy"
                     type = "number"
-                    :placeholder="currentTypeFilter.textInputPlaceholder"
                     v-on:input = "changeFilterAmount"
                     :min = "wordlistFilterAmountDefault.minValue"
                     :max = "wordlistFilterAmountDefault.maxValue"
                     >
+                  <span class="alpheios-number-input-description">{{ currentTypeFilter.textInputPlaceholder }}</span>
                 </div>
               </div>
             </div>
@@ -310,7 +310,7 @@
       .alpheios-wordlist-header-input-filterBy-block {
           width: 48%;
           display: inline-block;
-          vertical-align: middle;
+          vertical-align: top;
           margin: 7px 0;
       }
 
@@ -415,6 +415,12 @@
       direction: rtl;   
       text-align: right;
     }
+  }
+
+  .alpheios-number-input span.alpheios-number-input-description {
+    padding: 5px;
+    color: #acacac;
+    font-size: 90%;
   }
 
 </style>

@@ -2675,7 +2675,7 @@ p.alpheios-word-usage-filter-title {
 .alpheios-wordlist-filters .alpheios-wordlist-header-input-filterBy-block {
   width: 48%;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: top;
   margin: 7px 0;
 }
 .alpheios-wordlist-filters .alpheios-wordlist-header-input-filterBy-block {
@@ -2759,6 +2759,11 @@ p.alpheios-word-usage-filter-title {
 .alpheios-rtl .alpheios-select-list {
   direction: rtl;
   text-align: right;
+}
+.alpheios-number-input span.alpheios-number-input-description {
+  padding: 5px;
+  color: #acacac;
+  font-size: 90%;
 }
 /*
  Calculates a size of text elements relative to the base size.

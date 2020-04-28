@@ -186,8 +186,6 @@ export default class WordItemRemoteDbDriver {
     } else {
       result.context = []
     }
-    // console.info('remote _serialize wordItem', wordItem.frequency, wordItem)
-    // console.info('remote _serialize result', result.frequency, result)
     return result
   }
 

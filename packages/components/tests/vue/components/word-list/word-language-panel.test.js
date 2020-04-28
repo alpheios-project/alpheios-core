@@ -72,7 +72,7 @@ describe('word-language-panel.test.js', () => {
   function timeout (ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
-/*
+
   it('1 WordLanguagePanel - renders a vue instance (min requirements)', () => {
     let cmp = shallowMount(WordLanguagePanel, {
       store,
@@ -142,7 +142,7 @@ describe('word-language-panel.test.js', () => {
     cmp.vm.reloadList = 0
     expect(cmp.vm.wordItems).toEqual([])
   })
-*/
+
   it('5 WordLanguagePanel - computed wordItems returns filtered wordList items if the filter is selected and applySorting', () => {
     let testWordList2 = new WordList('lat', [ testWordItem1, testWordItem2, testWordItem3 ])
 
@@ -608,8 +608,8 @@ describe('word-language-panel.test.js', () => {
     expect(result[2].targetWord).toEqual('cupidinibus')
   })
 
-  it.skip('26 WordLanguagePanel - method downloadList executes Download.collectionToCSV, Download.downloadBlob and hides downloadAll confirmation box', () => {
-    let cmp = shallowMount(WordLanguagePanel, {
+  it('26 WordLanguagePanel - method downloadList executes Download.collectionToCSV, Download.downloadBlob and hides downloadAll confirmation box', async () => {
+    let cmp = mount(WordLanguagePanel, {
       store,
       localVue,
       mocks: api,
@@ -623,9 +623,11 @@ describe('word-language-panel.test.js', () => {
     })
     Download.downloadBlob = jest.fn()
 
+    const downloadConfComponent = cmp.find(DownloadConfirmation)
+
     cmp.vm.showDownloadList()
 
-    cmp.vm.downloadList()
+    await downloadConfComponent.vm.downloadList()
 
     expect(Download.collectionToCSV).toHaveBeenCalledWith(';', ['targetWord', 'languageCode', 'important', 'currentSession', 'lemmasList', 'context'])
     expect(Download.downloadBlob).toHaveBeenCalled()

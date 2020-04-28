@@ -181,8 +181,6 @@
       },
       featureOptionChanged (name, value) {
         let keyinfo = Options.parseKey(name)
-
-        console.info('featureOptionChanged - ', keyinfo.name, value)
         this.app.featureOptionChange(keyinfo.name, value)
       }
     }

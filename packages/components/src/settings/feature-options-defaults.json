@@ -243,7 +243,7 @@
       "values": []
     },
     "wordlistFilterAmountDefault": {
-      "defaultValue": 10,
+      "defaultValue": 25,
       "labelText": "Wordlist Default: Number of Top Results",
       "number": true,
       "minValue": 1,
