@@ -151,7 +151,7 @@
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_AMOUNT_PLACEHOLDER": {
-        "message": "top amount",
+        "message": "number of words to show",
         "description": "Placeholder for filter amount",
         "component": "WordFilterPanel"
     },

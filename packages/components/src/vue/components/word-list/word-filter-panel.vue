@@ -54,7 +54,8 @@
                     type = "number"
                     :placeholder="currentTypeFilter.textInputPlaceholder"
                     v-on:input = "changeFilterAmount"
-                    min = "0"
+                    :min = "wordlistFilterAmountDefault.minValue"
+                    :max = "wordlistFilterAmountDefault.maxValue"
                     >
                 </div>
               </div>
@@ -105,7 +106,7 @@
             title: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_FULL'),
             onClick: true, showTextInput: true,
             textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_FULL_PLACEHOLDER')
-          },
+          }, 
           { value: 'byLemma',
             title: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL'),
             onClick: true, showTextInput: true,
@@ -126,9 +127,15 @@
       }
     },
     mounted () {
-      this.filterAmount = this.settings.getFeatureOptions().items.wordlistFilterAmountDefault.currentValue
+      this.filterAmount = this.featureOptions ? this.wordlistFilterAmountDefault.currentValue : 0
     },
     computed: {
+      featureOptions () {
+        return this.$store.state.settings.featureResetCounter + 1 ? this.settings.getFeatureOptions() : null
+      },
+      wordlistFilterAmountDefault () {
+        return this.featureOptions ? this.featureOptions.items.wordlistFilterAmountDefault : null
+      },
       currentTypeFilter () {
         return this.selectedFilterBy ? this.typeFiltersList.find(typeFilter => typeFilter.value === this.selectedFilterBy) : null
       },
@@ -247,12 +254,25 @@
         }        
       },
       changeFilterAmount () {
+        this.checkNumberField()
         if (this.filterAmount === null) {
           this.filterAmount = 0
         }
 
         if (this.selectedFilterBy) {
           this.$emit('changedFilterBy', this.selectedFilterBy, this.currentAdditionalField)
+        }
+      },
+      checkNumberField () {
+        if (this.wordlistFilterAmountDefault.number && this.wordlistFilterAmountDefault.minValue) {
+          if (this.filterAmount < this.wordlistFilterAmountDefault.minValue) {
+            this.filterAmount = this.wordlistFilterAmountDefault.minValue
+          }
+        }
+        if (this.wordlistFilterAmountDefault.number && this.wordlistFilterAmountDefault.maxValue) {
+          if (this.filterAmount > this.wordlistFilterAmountDefault.maxValue) {
+            this.filterAmount = this.wordlistFilterAmountDefault.maxValue
+          }
         }
       }
     }

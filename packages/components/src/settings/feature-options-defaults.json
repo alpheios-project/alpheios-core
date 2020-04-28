@@ -236,18 +236,18 @@
     },
     "wordlistMaxFlashcardExport": {
       "defaultValue": 25,
-      "labelText": "Wordlist Flashcard Max export",
+      "labelText": "Flashcard Export - Maximum Number of Word",
       "number": true,
       "minValue": 1,
-      "maxValue": 5000,
+      "maxValue": 100,
       "values": []
     },
     "wordlistFilterAmountDefault": {
       "defaultValue": 10,
-      "labelText": "Wordlist Filter Amount default",
+      "labelText": "Wordlist Default: Number of Top Results",
       "number": true,
       "minValue": 1,
-      "maxValue": 25,
+      "maxValue": 100,
       "values": []
     }
   }
