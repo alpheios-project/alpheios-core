@@ -26,7 +26,7 @@ describe('greek-noun-paradigm.test.js', () => {
   })
 
 
-  it('1-1 - checked Noun1 - βουλεύῃς', async () => {
+  it('1-1 - checked Noun1 - ἄνθρωπος', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἄνθρωπος', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
