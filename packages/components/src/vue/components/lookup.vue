@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <div v-show="showBetaCodesInfo" class="alpheios-lookup__form-beta-codes-info">
+    <div v-show="showUseBetaCodes && showBetaCodesInfo" class="alpheios-lookup__form-beta-codes-info">
       <p>{{ l10n.getMsg('LOOKUP_USE_BETA_CODES_INFO_FIRST') }}</p>
       <p><span>/a => ά</span><span>\a => ὰ</span><span>=a => ᾶ</span><span>)a => ἀ</span></p>
       <p><span>(a => ἁ</span><span>!a => ᾳ</span><span>+i => ϊ</span><span>h => η</span></p>
@@ -332,17 +332,23 @@ export default {
 
   .alpheios-lookup__form span.alpheios-lookup__form-beta-codes-check {
     vertical-align: middle;
-    padding-left: 10px;
+    padding-left: uisize(10px);
+    margin-bottom: uisize(6px);
+    display: inline-block;
 
     label {
       line-height: 1;
       font-size: 90%;
+      display: inline-block;
+    }
+    input {
+      display: inline-block;
     }
   }
 
   .alpheios-lookup__form-icon {
-    width: calc(var(--alpheios-base-ui-size) * 1.5);
-    height: calc(var(--alpheios-base-ui-size) * 1.5);
+    width: uisize(15px);
+    height: uisize(15px);
     box-sizing: border-box;
     position: relative;
     fill: var(--alpheios-desktop-toolbar-bg);
@@ -362,7 +368,7 @@ export default {
   }
   .alpheios-lookup__form .alpheios-lookup__form-beta-codes-info {
     border-bottom: 1px solid var(--alpheios-color-placehoder);
-    margin-bottom: calc(var(--alpheios-base-text-size) * 1.5);
+    margin-bottom: textsize(10px);
 
     p {
       font-size: 94%;
@@ -370,7 +376,7 @@ export default {
     }
     span {
       display: inline-block;
-      padding-right: 20px;
+      padding-right: textsize(10px);
     }
   }
 
