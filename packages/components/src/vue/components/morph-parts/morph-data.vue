@@ -110,11 +110,10 @@ export default {
       // We have to use namespace to override increased specificity of content styles, that, in turn, had
       // specificity increased to fight style leakage from some problematic websites.
       .alpheios-morph-data__morphdata {
-          .alpheios-morph-data__pofs,
           .alpheios-morph__linkedattr {
               @include alpheios-interactive;
-              font-weight: 700;
               color: var(--alpheios-desktop-popup-link-color);
+              font-weight: 700;
 
               &:hover {
                   color: var(--alpheios-desktop-popup-link-color-hover);

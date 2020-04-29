@@ -1188,19 +1188,15 @@ h4.alpheios-principal-parts__groupitem:last-of-type {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph-data__pofs,
 .alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr {
   color: var(--alpheios-color-muted);
   cursor: pointer;
-  font-weight: 700;
   color: var(--alpheios-desktop-popup-link-color);
+  font-weight: 700;
 }
-.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph-data__pofs:hover, .alpheios-content .alpheios-morph-data__morphdata .alpheios-morph-data__pofs:active,
-.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr:hover,
-.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr:active {
+.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr:hover, .alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr:active {
   text-decoration: underline;
 }
-.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph-data__pofs:hover,
 .alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr:hover {
   color: var(--alpheios-desktop-popup-link-color-hover);
 }
