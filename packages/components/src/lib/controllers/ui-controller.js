@@ -673,7 +673,7 @@ if you want to create a different configuration of a UI controller.
           state.hasInflData = false
         },
 
-        setUpdatedGrammar (state, url) {
+        setUpdatedGrammar (state) {
           state.updatedGrammar = state.updatedGrammar + 1
         },
 
