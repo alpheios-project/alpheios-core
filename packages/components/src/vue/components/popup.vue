@@ -292,14 +292,11 @@ export default {
     },
 
     maxWidth () {
-      const viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
-      const verticalScrollbarWidth = window.innerWidth - document.documentElement.clientWidth
-      return viewportWidth - 2 * (this.moduleConfig.viewportMargin || 0) - verticalScrollbarWidth
+      return this.app.platform.viewport.innerWidth - 2 * this.moduleConfig.viewportMargin
     },
 
     maxHeight () {
-      return this.app.platform.viewport.height - this.app.platform.scrollbars.horizontal.width -
-        2 * this.moduleConfig.viewportMargin
+      return this.app.platform.viewport.innerHeight - 2 * this.moduleConfig.viewportMargin
     },
 
     verboseMode () {

@@ -42,17 +42,6 @@ export default class Platform {
       ? document.body.clientHeight
       : document.documentElement.clientHeight
 
-    this.viewport = {
-      width: window.innerWidth && document.documentElement.clientWidth && document.body.clientWidth
-        ? Math.min(window.innerWidth, document.documentElement.clientWidth, document.body.clientWidth)
-        : document.body.clientWidth || window.innerWidth || document.documentElement.clientWidth,
-
-      // The following should calculate a viewport height correctly in both quirks and non-quirks modes
-      height: window.innerHeight && document.documentElement.clientHeight
-        ? Math.min(window.innerHeight, document.documentElement.clientHeight)
-        : window.innerHeight || document.documentElement.clientHeight
-    }
-
     this.scrollbars = {
       horizontal: {
         width: window.innerHeight - clientHeight
@@ -60,6 +49,25 @@ export default class Platform {
       vertical: {
         width: window.innerWidth - document.documentElement.clientWidth
       }
+    }
+
+    this.viewport = {
+      // A width of the viewport that includes the width of the scrollbars, if they are shown
+      width: window.innerWidth,
+      // A height of the viewport that includes the width of the scrollbars, if they are shown
+      height: window.innerHeight,
+      /*
+      A width of the viewport that does not include the width of the scrollbars.
+      If a vertical scrollbar is shown, `innerWidth` will be smaller than `width`.
+      If a vertical scrollbar is hidden, `innerWidth` will have the same value as `width`.
+       */
+      innerWidth: window.innerWidth - this.scrollbars.vertical.width,
+      /*
+      A height of the viewport that does not include the width of the scrollbars.
+      If a horizontal scrollbar is shown, `innerHeight` will be smaller than `height`.
+      If a horizontal scrollbar is hidden, `innerHeight` will have the same value as `height`.
+       */
+      innerHeight: window.innerHeight - this.scrollbars.horizontal.width
     }
 
     this.dpr = window.devicePixelRatio
