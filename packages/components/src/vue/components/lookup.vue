@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <div v-show="showBetaCodesInfo" class="alpheios-lookup__form-beta-codes-info">
+    <div v-show="showUseBetaCodes && showBetaCodesInfo" class="alpheios-lookup__form-beta-codes-info">
       <p>{{ l10n.getMsg('LOOKUP_USE_BETA_CODES_INFO_FIRST') }}</p>
       <p><span>/a => ά</span><span>\a => ὰ</span><span>=a => ᾶ</span><span>)a => ἀ</span></p>
       <p><span>(a => ἁ</span><span>!a => ᾳ</span><span>+i => ϊ</span><span>h => η</span></p>
