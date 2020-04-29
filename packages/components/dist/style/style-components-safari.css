@@ -2211,6 +2211,27 @@ p.alpheios-grammar__block__title.open {
   right: 20px !important;
   z-index: 1000 !important;
 }
+.alpheios-grammar__button--back-block button,
+.alpheios-grammar__button--show-titles-block button {
+  color: var(--alpheios-grammar-back-button-color) !important;
+  background-color: var(--alpheios-grammar-back-button-bg) !important;
+  border-color: var(--alpheios-grammar-back-button-border-color) !important;
+  width: 30px !important;
+  height: 30px !important;
+  padding: 0 !important;
+  position: relative !important;
+}
+.alpheios-grammar__button--back-block button:hover,
+.alpheios-grammar__button--show-titles-block button:hover {
+  color: var(--alpheios-grammar-back-button-color-hover) !important;
+  background-color: var(--alpheios-grammar-back-button-bg-hover) !important;
+  border-color: var(--alpheios-grammar-back-button-border-color-hover) !important;
+}
+.alpheios-grammar__button--back-block button svg,
+.alpheios-grammar__button--show-titles-block button svg {
+  position: relative !important;
+  top: 1px !important;
+}
 .alpheios-grammar__button--show-titles-block {
   right: 60px !important;
 }
@@ -2229,18 +2250,6 @@ p.alpheios-grammar__block__title.open {
   width: 22px !important;
   height: auto !important;
   fill: var(--alpheios-btn-primary-font-color) !important;
-}
-.alpheios-grammar__button--back-block button,
-.alpheios-grammar__button--show-titles-block button {
-  color: var(--alpheios-grammar-back-button-color) !important;
-  background-color: var(--alpheios-grammar-back-button-bg) !important;
-  border-color: var(--alpheios-grammar-back-button-border-color) !important;
-}
-.alpheios-grammar__button--back-block button:hover,
-.alpheios-grammar__button--show-titles-block button:hover {
-  color: var(--alpheios-grammar-back-button-color-hover) !important;
-  background-color: var(--alpheios-grammar-back-button-bg-hover) !important;
-  border-color: var(--alpheios-grammar-back-button-border-color-hover) !important;
 }
 .alpheios-grammar__frame-progress {
   padding: 20px !important;
@@ -3021,6 +3030,7 @@ p.alpheios-word-usage-filter-title {
   flex: 1 !important;
   margin: 0 !important;
   border-radius: 0 !important;
+  height: auto !important;
 }
 .alpheios-setting__button-group button:last-child {
   border-right: none !important;
