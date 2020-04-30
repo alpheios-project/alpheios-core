@@ -3720,14 +3720,11 @@ span.alpheios-lookup__lang-change:hover {
 .alpheios-lookup__form .alpheios-lookup__form-beta-codes-info {
   border-bottom: 1px solid var(--alpheios-color-placehoder);
   margin-bottom: calc(var(--alpheios-base-text-size) * 1.5);
-}
-.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info p {
   font-size: 94%;
-  margin: 0 0 calc(var(--alpheios-base-text-size) * 0.75);
 }
-.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info span {
-  display: inline-block;
-  padding-right: 20px;
+.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info div {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 .alpheios-lookup__autocomplete {
   margin-top: 5px;
