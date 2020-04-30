@@ -101,8 +101,9 @@ export default {
       height: 44px;
 
       svg {
-        width: uisize(20px);
-        height: uisize(20px);
+        width: textsize(30px);
+        height: auto;
+        padding-right: textsize(10px);
         position: relative;
         fill: var(--alpheios-compact-toolbar-bg);
         stroke: var(--alpheios-compact-toolbar-bg);

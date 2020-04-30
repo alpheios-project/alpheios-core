@@ -299,6 +299,27 @@ export default {
     top: 5px;
     right: 20px;
     z-index: 1000;
+
+    button {
+      color: var(--alpheios-grammar-back-button-color);
+      background-color: var(--alpheios-grammar-back-button-bg);
+      border-color: var(--alpheios-grammar-back-button-border-color);
+      width: 30px;
+      height: 30px !important; // To override specific height set on Loeb Classics
+      padding: 0 !important; // To override values set on Loeb Classics
+      position: relative;
+
+      &:hover {
+        color: var(--alpheios-grammar-back-button-color-hover);
+        background-color: var(--alpheios-grammar-back-button-bg-hover);
+        border-color: var(--alpheios-grammar-back-button-border-color-hover);
+      }
+
+      svg {
+        position: relative;
+        top: 1px;
+      }
+    }
   }
 
   .alpheios-grammar__button--show-titles-block {
@@ -324,21 +345,6 @@ export default {
     }
   }
 
-  .alpheios-grammar__button--back-block,
-  .alpheios-grammar__button--show-titles-block {
-
-    button {
-      color: var(--alpheios-grammar-back-button-color);
-      background-color: var(--alpheios-grammar-back-button-bg);
-      border-color: var(--alpheios-grammar-back-button-border-color);
-
-      &:hover {
-        color: var(--alpheios-grammar-back-button-color-hover);
-        background-color: var(--alpheios-grammar-back-button-bg-hover);
-        border-color: var(--alpheios-grammar-back-button-border-color-hover);
-      }
-    }
-  }
   .alpheios-grammar__frame-progress {
     padding: 20px;
   }

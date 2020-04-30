@@ -33,7 +33,16 @@ describe('popup.test.js', () => {
         zIndex: 50
       }),
       settings: BaseTestHelp.settingsAPI(),
-      app: BaseTestHelp.appAPI()
+      app: BaseTestHelp.appAPI({
+        platform: {
+          viewport: {
+            width: 800,
+            height: 600,
+            innerWidth: 790,
+            innerHeight: 590
+          }
+        }
+      })
     }
 
     BaseTestHelp.authModule(store, api)
@@ -299,18 +308,6 @@ describe('popup.test.js', () => {
   })
 
   it('14 Popup - computed maxWidth calculates max available width according to the document and viewport margin', () => {
-    Object.defineProperty(document.documentElement, 'clientWidth', {
-      get () {
-        return 190
-      }
-    })
-
-    Object.defineProperty(window, 'innerWidth', {
-      get () {
-        return 200
-      }
-    })
-
     Object.assign(defaultData.moduleConfig, {
       viewportMargin: 20
     })
@@ -325,24 +322,12 @@ describe('popup.test.js', () => {
       attachToDocument: true
     })
 
-    expect(cmp.vm.maxWidth).toEqual(150) // max - 2*viewport - scroll
+    expect(cmp.vm.maxWidth).toEqual(750) // platform.viewport.innerWidth - 2 * margin
 
     cmp.destroy()
   })
 
   it('15 Popup - computed maxWidth calculates max available width according to the document and viewport margin', () => {
-    Object.defineProperty(document.documentElement, 'clientHeight', {
-      get () {
-        return 190
-      }
-    })
-
-    Object.defineProperty(window, 'innerHeight', {
-      get () {
-        return 200
-      }
-    })
-
     Object.assign(defaultData.moduleConfig, {
       viewportMargin: 30
     })
@@ -357,8 +342,7 @@ describe('popup.test.js', () => {
       attachToDocument: true
     })
 
-    expect(cmp.vm.maxHeight).toEqual(130) // max - 2*viewport - scroll
-
+    expect(cmp.vm.maxHeight).toEqual(530) // platform.viewport.innerHeight - 2 * margin
     cmp.destroy()
   })
 
@@ -465,6 +449,14 @@ describe('popup.test.js', () => {
           viewport: {
             width: 10,
             height: 10
+          },
+          scrollbars: {
+            horizontal: {
+              width: 17
+            },
+            vertical: {
+              width: 17
+            }
           }
         }
       })
