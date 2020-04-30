@@ -181,34 +181,14 @@ export default class Lexis extends Module {
     return new HomonymGroup(homonyms)
   }
 
-  async lexicalQuery ({
+  async getTreebankData ({
     store,
     textSelector,
-    siteOptions = [],
-    lemmaTranslations = null,
-    wordUsageExamples = null,
-    checkContextForward = '',
-    treebankDataItem = null,
-    source = 'page'
-  } = {}, forWordlist = false) {
-    if (textSelector.languageID === Constants.LANG_CHINESE && !this._lexisConfig) {
-      console.warn('Lookup request cannot be completed: LexisCS configuration is unavailable')
-      return
-    }
-
-    if (!lemmaTranslations && textSelector.languageID === Constants.LANG_LATIN && store.state.app.lemmaTranslationLang) {
-      // Use our own rules if lemmaTranslations is not provided
-      lemmaTranslations = { locale: store.state.app.lemmaTranslationLang }
-    }
-    if (!wordUsageExamples) { wordUsageExamples = this._appApi.getWordUsageExamplesQueryParams(textSelector) }
-
-    if (!forWordlist) {
-      this._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data, source)
-    }
-
-    let annotatedHomonyms
+    treebankDataItem = null
+  } = {}) {
     const prevTreebankDataItem = this._treebankDataItem || {}
     this._treebankDataItem = treebankDataItem
+    let annotatedHomonyms
 
     if (this._treebankReady && this._treebankDataItem) {
       if (prevTreebankDataItem.doc !== this._treebankDataItem.doc) {
@@ -261,7 +241,6 @@ export default class Lexis extends Module {
         // Do not update a treebankSrc in a store, it has not changed
         store.commit('lexis/setTreebankInfo', { hasTreebankData: this._treebankDataItem.hasSentenceData })
       }
-
       try {
         if (!this._treebankDataItem.hasWordData) {
           // Try to get words IDs from an Arethusa treebank app
@@ -293,6 +272,40 @@ export default class Lexis extends Module {
     } else if (this._treebankReady) {
       store.commit('lexis/resetTreebankInfo')
       this._treebankReady = false
+    }
+    return annotatedHomonyms
+  }
+
+  async lexicalQuery ({
+    store,
+    textSelector,
+    siteOptions = [],
+    lemmaTranslations = null,
+    wordUsageExamples = null,
+    checkContextForward = '',
+    treebankDataItem = null,
+    source = 'page'
+  } = {}) {
+    if (textSelector.languageID === Constants.LANG_CHINESE && !this._lexisConfig) {
+      console.warn('Lookup request cannot be completed: LexisCS configuration is unavailable')
+      return
+    }
+
+    if (!lemmaTranslations && textSelector.languageID === Constants.LANG_LATIN && store.state.app.lemmaTranslationLang) {
+      // Use our own rules if lemmaTranslations is not provided
+      lemmaTranslations = { locale: store.state.app.lemmaTranslationLang }
+    }
+    if (!wordUsageExamples) { wordUsageExamples = this._appApi.getWordUsageExamplesQueryParams(textSelector) }
+
+    if (source === 'wordlist') {
+      this._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data, source)
+    }
+
+    let annotatedHomonyms
+    if (source === 'page') {
+      annotatedHomonyms = this.getTreebankData({
+        store, textSelector, treebankDataItem
+      })
     }
 
     const lexQuery = LexicalQuery.create(textSelector, {
@@ -424,8 +437,19 @@ Lexis.api = (moduleInstance, store) => {
      * @param {string} lemmaTranslationLang - A locale for lemma translations (e.g. 'en-US')
      * @param wordUsageExamples
      */
-    lookupText: async (textSelector, forWordlist = false) => {
-      return moduleInstance.lexicalQuery({ store, textSelector, source: 'lookup' }, forWordlist)
+    lookupText: async (textSelector) => {
+      return moduleInstance.lexicalQuery({ store, textSelector, source: 'lookup' })
+    },
+
+    /**
+     * Starts a lexical query from a lookup component.
+     *
+     * @param {TextSelector} textSelector - A text selector object containing information about a lookup word.
+     * @param {string} lemmaTranslationLang - A locale for lemma translations (e.g. 'en-US')
+     * @param wordUsageExamples
+     */
+    lookupForWordlist: async (textSelector) => {
+      return moduleInstance.lexicalQuery({ store, textSelector, source: 'wordlist' })
     },
 
     loadCedictData: async () => {
