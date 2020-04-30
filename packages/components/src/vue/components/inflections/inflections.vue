@@ -49,7 +49,7 @@
         </div>
       </div>
       <template v-else>
-        <prerendered-table-wide :collapsed="false" :view="selectedView"></prerendered-table-wide>
+        <prerendered-table-wide :collapsed="false" :view="selectedView" @navigate="navigate"></prerendered-table-wide>
         
         <div class="alpheios-inflections__supp-tables" v-show="selectedView.hasSuppParadigms">
           <template v-for="paradigm of selectedView.suppParadigms">
@@ -182,7 +182,9 @@ export default {
     },
 
     navigate (reflink) {
+      console.info('inflections navigate reflink', reflink)
       let panel = document.querySelector(`#${this.elementIDs.panelInner}`)
+      console.info('inflections navigate panel', panel)
       if (!panel) {
         this.$options.logger.warn(`Cannot find panel's inner element #${this.elementIDs.panelInner}. Scroll is cancelled`)
         return
@@ -194,6 +196,7 @@ export default {
       } else {
         // Navigate to one of the supplemental tables
         el = document.querySelector(`#${reflink}`)
+         console.info('inflections navigate el', el)
       }
       if (el) {
         el.scrollIntoView()

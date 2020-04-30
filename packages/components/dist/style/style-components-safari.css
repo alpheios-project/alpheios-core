@@ -1710,6 +1710,10 @@ a:not([href]):not([tabindex]).alpheios-popup__providers-link:hover {
 .infl-prdgm-tbl__cell--label {
   font-weight: 700 !important;
 }
+.infl-prdgm-tbl a.infl-prdgm-tbl__cell-reflink {
+  color: var(--alpheios-link-color-on-medium) !important;
+  text-decoration: underline !important;
+}
 .alpheios-inflections__title {
   cursor: pointer !important;
 }

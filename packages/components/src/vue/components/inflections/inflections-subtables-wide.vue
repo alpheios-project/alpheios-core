@@ -44,6 +44,7 @@ export default {
     },
 
     navigate: function (reflink) {
+      console.info('navigate reflink', reflink)
       this.$emit('navigate', reflink)
     }
   }
@@ -72,5 +73,10 @@ export default {
 
   .infl-prdgm-tbl__cell--label {
     font-weight: 700;
+  }
+
+  .infl-prdgm-tbl a.infl-prdgm-tbl__cell-reflink {
+    color: var(--alpheios-link-color-on-medium);
+    text-decoration: underline;
   }
 </style>
