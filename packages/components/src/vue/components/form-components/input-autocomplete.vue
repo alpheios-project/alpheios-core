@@ -81,6 +81,7 @@ export default {
     },
 
     checkLookupKeyPress (event) {
+      this.$emit('updateLookupText', this.valueText)
       if (event.keyCode === 13) {
         this.$emit('keyPressEnter', this.valueText)
         return

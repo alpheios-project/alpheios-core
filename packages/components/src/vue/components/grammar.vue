@@ -1,6 +1,6 @@
 <template>
   <div class="alpheios-grammar">
-    <div class="alpheios-grammar__titles" v-show="showTitles">
+    <div class="alpheios-grammar__titles" v-show="mustShowTitles">
         <h1 class="alpheios-panel__title">{{ l10n.getText('LABEL_BROWSE_GRAMMAR') }}</h1>
       <div class="alpheios-grammar__block alpheios-clickable"
           :class="{open: !languageItem.collapsed}"
@@ -139,6 +139,10 @@ export default {
         }
       }
       return true
+    },
+    mustShowTitles () {
+      // if all the grammars are collapsed then we should always show the titles
+      return this.showTitles || Object.values(this.languageList).filter((langData) => ! langData.collapsed).length === 0
     }
   },
   methods: {
@@ -222,7 +226,8 @@ export default {
     },
     showHideTitles () {
       this.showTitles = !this.showTitles
-    }
+    },
+
   }
 }
 </script>
@@ -294,6 +299,27 @@ export default {
     top: 5px;
     right: 20px;
     z-index: 1000;
+
+    button {
+      color: var(--alpheios-grammar-back-button-color);
+      background-color: var(--alpheios-grammar-back-button-bg);
+      border-color: var(--alpheios-grammar-back-button-border-color);
+      width: 30px;
+      height: 30px !important; // To override specific height set on Loeb Classics
+      padding: 0 !important; // To override values set on Loeb Classics
+      position: relative;
+
+      &:hover {
+        color: var(--alpheios-grammar-back-button-color-hover);
+        background-color: var(--alpheios-grammar-back-button-bg-hover);
+        border-color: var(--alpheios-grammar-back-button-border-color-hover);
+      }
+
+      svg {
+        position: relative;
+        top: 1px;
+      }
+    }
   }
 
   .alpheios-grammar__button--show-titles-block {
@@ -319,21 +345,6 @@ export default {
     }
   }
 
-  .alpheios-grammar__button--back-block,
-  .alpheios-grammar__button--show-titles-block {
-
-    button {
-      color: var(--alpheios-grammar-back-button-color);
-      background-color: var(--alpheios-grammar-back-button-bg);
-      border-color: var(--alpheios-grammar-back-button-border-color);
-
-      &:hover {
-        color: var(--alpheios-grammar-back-button-color-hover);
-        background-color: var(--alpheios-grammar-back-button-bg-hover);
-        border-color: var(--alpheios-grammar-back-button-border-color-hover);
-      }
-    }
-  }
   .alpheios-grammar__frame-progress {
     padding: 20px;
   }
