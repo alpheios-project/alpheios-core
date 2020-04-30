@@ -79,7 +79,6 @@ export default {
     },
 
     navigate: function (reflink) {
-      console.info('navigate reflink', reflink)
       this.$emit('navigate', reflink)
     }
   }
