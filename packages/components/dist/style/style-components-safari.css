@@ -657,7 +657,7 @@ div.alpheios-checkbox-block {
   content: "" !important;
 }
 
-.alpheios-button-tertiary, button.alpheios-button-tertiary, .alpheios-button-secondary, .alpheios-button-primary {
+.alpheios-button-tertiary, button.alpheios-button-tertiary, .alpheios-button-secondary, .alpheios-button-primary, .alpheios-button {
   font-family: var(--alpheios-sans-font-face) !important;
   font-size: var(--alpheios-base-text-size) !important;
   font-weight: 700 !important;
@@ -675,14 +675,14 @@ div.alpheios-checkbox-block {
   border-radius: 0.6em !important;
   cursor: pointer !important;
 }
-.alpheios-button-tertiary::-moz-focus-inner, .alpheios-button-secondary::-moz-focus-inner, .alpheios-button-primary::-moz-focus-inner {
+.alpheios-button-tertiary::-moz-focus-inner, .alpheios-button-secondary::-moz-focus-inner, .alpheios-button-primary::-moz-focus-inner, .alpheios-button::-moz-focus-inner {
   border: 0 !important;
   padding: 0 !important;
 }
-.alpheios-button-tertiary:hover, .alpheios-button-secondary:hover, .alpheios-button-primary:hover {
+.alpheios-button-tertiary:hover, .alpheios-button-secondary:hover, .alpheios-button-primary:hover, .alpheios-button:hover {
   text-decoration: none !important;
 }
-.alpheios-button-tertiary:focus, .alpheios-button-secondary:focus, .alpheios-button-primary:focus {
+.alpheios-button-tertiary:focus, .alpheios-button-secondary:focus, .alpheios-button-primary:focus, .alpheios-button:focus {
   outline: none !important;
 }
 
@@ -1481,6 +1481,17 @@ select.alpheios-setting__control,
   color: var(--alpheios-hint-color) !important;
   background: var(--alpheios-hint-bg) !important;
   border: 1px solid var(--alpheios-hint-border-color) !important;
+}
+.alpheios-notification-area__hint-btn, button.alpheios-notification-area__hint-btn {
+  color: var(--alpheios-color-neutral-lightest) !important;
+  background: var(--alpheios-color-muted) !important;
+  border-color: var(--alpheios-color-muted) !important;
+}
+.alpheios-notification-area__hint-btn:hover, .alpheios-notification-area__hint-btn:focus, button.alpheios-notification-area__hint-btn:hover, button.alpheios-notification-area__hint-btn:focus {
+  box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25) !important;
+}
+.alpheios-notification-area__hint-btn:active, button.alpheios-notification-area__hint-btn:active {
+  box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1) !important;
 }
 /*
  Calculates a size of text elements relative to the base size.

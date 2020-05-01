@@ -422,6 +422,7 @@ Lexis.api = (moduleInstance, store) => {
      *
      * @param {TextSelector} textSelector - A text selector object containing information about a lookup word.
      * @param {string} lemmaTranslationLang - A locale for lemma translations (e.g. 'en-US')
+     * @param forWordlist
      * @param wordUsageExamples
      */
     lookupText: async (textSelector, forWordlist = false) => {

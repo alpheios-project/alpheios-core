@@ -31,6 +31,11 @@
   }
 }
 
+// A button with no color styles to serve as a base for custom buttons
+.alpheios-button {
+  @extend %alpheios-button;
+}
+
 .alpheios-button-primary {
   @extend %alpheios-button;
   color: var(--alpheios-btn-primary-font-color) !important; // To override styles on Loeb Classics
