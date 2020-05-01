@@ -31,7 +31,7 @@ describe('greek-adjective-paradigm.test.js', () => {
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(4)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekAdjectiveParadigmView',
@@ -57,7 +57,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -83,7 +83,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(4)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekAdjectiveParadigmView',
@@ -108,7 +108,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(6)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(6)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[5],
       viewName: 'GreekAdjectiveParadigmView',
@@ -133,7 +133,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(4)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(6)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[5],
       viewName: 'GreekAdjectiveParadigmView',
@@ -158,7 +158,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(3)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(5)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[4],
       viewName: 'GreekAdjectiveParadigmView',
@@ -191,7 +191,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekAdjectiveParadigmView',
@@ -216,7 +216,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekAdjectiveParadigmView',
@@ -241,7 +241,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -266,7 +266,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -291,7 +291,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(3)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(5)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[4],
       viewName: 'GreekAdjectiveParadigmView',
@@ -316,7 +316,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -341,7 +341,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -371,7 +371,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -393,7 +393,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -415,7 +415,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -437,7 +437,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -460,7 +460,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -482,7 +482,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -509,7 +509,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -535,7 +535,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -557,7 +557,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -579,7 +579,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -601,7 +601,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -623,7 +623,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -648,7 +648,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(3)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -673,7 +673,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -698,7 +698,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -723,7 +723,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -747,7 +747,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(3)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -775,7 +775,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(3)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -804,7 +804,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -828,7 +828,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -852,7 +852,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(3)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(5)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[4],
       viewName: 'GreekAdjectiveParadigmView',
@@ -876,7 +876,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(3)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(5)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[4],
       viewName: 'GreekAdjectiveParadigmView',
@@ -900,7 +900,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(3)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(5)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[4],
       viewName: 'GreekAdjectiveParadigmView',
@@ -927,7 +927,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -954,7 +954,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -979,7 +979,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1004,7 +1004,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1029,7 +1029,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1054,7 +1054,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1079,7 +1079,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1106,7 +1106,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1133,7 +1133,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1157,7 +1157,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(5)
+    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(7)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[7],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1181,7 +1181,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1207,7 +1207,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1231,7 +1231,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1259,7 +1259,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(3)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(6)
 
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[5],
@@ -1286,7 +1286,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(5)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[4],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1310,7 +1310,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1334,7 +1334,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1358,7 +1358,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(3)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(5)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[4],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1382,7 +1382,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1408,7 +1408,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1434,7 +1434,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1458,7 +1458,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1484,7 +1484,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(5)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[4],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1509,7 +1509,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1534,7 +1534,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1557,7 +1557,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1580,7 +1580,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1603,7 +1603,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(4)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1630,7 +1630,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(3)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1653,7 +1653,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(5)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(5)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[4],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1676,7 +1676,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(3)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1699,7 +1699,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(3)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(5)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[4],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1724,7 +1724,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1751,7 +1751,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1776,7 +1776,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1802,7 +1802,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1831,7 +1831,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(3)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1857,7 +1857,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(4)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1885,7 +1885,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1908,7 +1908,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(4)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1933,7 +1933,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(3)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1956,7 +1956,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(4)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekAdjectiveParadigmView',
@@ -1985,7 +1985,7 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThanOrEqual(3)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(3)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekAdjectiveParadigmView',
@@ -2006,5 +2006,5 @@ describe('greek-adjective-paradigm.test.js', () => {
     expect(renderedTable.rows[7].cells[6].fullMatch).toBeTruthy() // πλέᾰ
     expect(renderedTable.rows[10].cells[6].fullMatch).toBeTruthy() // πλέᾰ
   })
-  
+
 })
