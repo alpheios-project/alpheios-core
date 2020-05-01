@@ -49,7 +49,7 @@
         </div>
       </div>
       <template v-else>
-        <prerendered-table-wide :collapsed="false" :view="selectedView"></prerendered-table-wide>
+        <prerendered-table-wide :collapsed="false" :view="selectedView" @navigate="navigate"></prerendered-table-wide>
         
         <div class="alpheios-inflections__supp-tables" v-show="selectedView.hasSuppParadigms">
           <template v-for="paradigm of selectedView.suppParadigms">
