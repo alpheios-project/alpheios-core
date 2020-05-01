@@ -1672,4 +1672,5 @@ it('12-1 - checked Verb Paradigm12 - λελύσθαι', async () => {
       suppParadigms: [ 'verbpdgm65' ]
     })
   })
+
 })

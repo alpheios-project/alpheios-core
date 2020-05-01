@@ -137,7 +137,7 @@
             const textSelector = TextSelector.createObjectFromText(wordItem.targetWord, this.languageID)
             const resourceOptions = this.settings.getResourceOptions()
 
-            await this.lexis.lookupText(textSelector, true)
+            await this.lexis.lookupForWordlist(textSelector)
           }
         }
 

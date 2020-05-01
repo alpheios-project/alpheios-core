@@ -25,7 +25,7 @@
     "build-inflection-tables": "npm --prefix packages/inflection-tables run build",
     "test-inflection-tables": "npm --prefix packages/inflection-tables run test",
     "build-components": "npm --prefix packages/components run build",
-    "test-components": "npm --prefix packages/components run test",
+    "test-components": "npm --prefix packages/components run test-g",
     "conventional-commit": "npx git-cz",
     "version-set-major-dev": "npx lerna version major --no-push",
     "version-set-minor-dev": "npx lerna version minor --no-push",

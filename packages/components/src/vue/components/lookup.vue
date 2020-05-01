@@ -40,13 +40,15 @@
       </div>
     </div>
 
-    <div v-show="showUseBetaCodes && showBetaCodesInfo" class="alpheios-lookup__form-beta-codes-info">
-      <p>{{ l10n.getMsg('LOOKUP_USE_BETA_CODES_INFO_FIRST') }}</p>
-      <p><span>/a => ά</span><span>\a => ὰ</span><span>=a => ᾶ</span><span>)a => ἀ</span></p>
-      <p><span>(a => ἁ</span><span>!a => ᾳ</span><span>+i => ϊ</span><span>h => η</span></p>
-      <p><span>q => θ</span><span>x => χ</span><span>c => ξ</span><span>z = ζ</span></p>
-      <p><span>j => ψ</span><span>w => ω</span><span>s => σ, ς</span></p>
-      <p>{{ l10n.getMsg('LOOKUP_USE_BETA_CODES_INFO_LAST') }} )/a => ἄ</p>
+    <div v-show="showBetaCodesInfo" class="alpheios-lookup__form-beta-codes-info">
+      <p v-html="l10n.getMsg('LOOKUP_USE_BETA_CODES_INFO_FIRST')"></p>
+      <div><span>a => α</span><span>b => β</span><span>c => ξ</span><span>d => δ</span><span>e => ε</span>
+      <span>f => φ</span><span>g => γ</span><span>h => η</span><span>i => ι</span><span>k => κ</span>
+      <span>l => λ</span><span>m => μ</span><span>n => ν</span><span>o => ο</span><span>p => π</span>
+      <span>q => θ</span><span>r => ρ</span><span>s => σ, ς</span><span>t => τ</span><span>u => υ</span>
+      <span>v => ϝ</span><span>w => ω</span><span>x => χ</span><span>y => ψ</span><span>z => ζ</span>
+      <span>/a => ά</span><span>\a => ὰ</span><span>=a => ᾶ</span><span>)a => ἀ</span><span>)a => ἁ</span>
+      <span>|a => ᾳ</span><span>_a => ᾱ</span><span>^a => ᾰ</span><span>+i => ϊ</span><span>(/|a => ᾅ</span></div>
     </div>
     <div v-show="! showLangSelector">
       <span class="alpheios-lookup__lang-hint" id="alpheios-lookup-form-lang-hint">{{l10n.getMsg('HINT_LOOKUP_LANGUAGE',{language:lookupLangName})}}</span>
@@ -245,12 +247,14 @@ export default {
       display: inline-block;
       margin-bottom: uisize(6px);
       width: auto;
+      vertical-align: middle;
     }
   }
 
   // Placed here to have a double selector to override .alpheios-content input margin
   .alpheios-lookup__form-element {
     margin-bottom: uisize(10px);
+    padding-top: uisize(10px);
 
     &.alpheios-lookup__lang-control {
       flex-direction: column;
@@ -340,9 +344,11 @@ export default {
       line-height: 1;
       font-size: 90%;
       display: inline-block;
+      vertical-align: middle;
     }
     input {
       display: inline-block;
+      vertical-align: middle;
     }
   }
 
@@ -368,15 +374,12 @@ export default {
   }
   .alpheios-lookup__form .alpheios-lookup__form-beta-codes-info {
     border-bottom: 1px solid var(--alpheios-color-placehoder);
-    margin-bottom: textsize(10px);
+    margin-bottom: calc(var(--alpheios-base-text-size) * 1.5);
+    font-size: 94%;
 
-    p {
-      font-size: 94%;
-      margin: 0 0 calc(var(--alpheios-base-text-size) * 0.75);
-    }
-    span {
-      display: inline-block;
-      padding-right: textsize(10px);
+    div {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
     }
   }
 

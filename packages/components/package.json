@@ -13,6 +13,7 @@
     "test-inflections-2": "jest tests/inflections/inflections-browser-2.test.js --coverage",
     "test-c": "jest tests/vue/components/word-list/word-filter-panel.test.js",
     "test-a": "jest tests/lib/queries/resourse-query.test.js --coverage && shx cat ./coverage/lcov.info | coveralls && shx rm -rf ./coverage",
+    "test-g": "jest tests/lib/utility/greek-input.test.js",
     "test-s": "AUTH_TOKEN=alpheiosMockUserIdlP0DWnmNxe ENDPOINT='https://8wkx9pxc55.execute-api.us-east-2.amazonaws.com/prod/settings' jest tests/lib/options --coverage && shx cat ./coverage/lcov.info | coveralls",
     "test-m": "jest tests/lib/custom-pointer-events/ponter-evt.test.js ",
     "build": "npm run build-safari && npm run build-regular",

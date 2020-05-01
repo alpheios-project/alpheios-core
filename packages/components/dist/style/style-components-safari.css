@@ -1721,6 +1721,13 @@ a:not([href]):not([tabindex]).alpheios-popup__providers-link:hover {
 .infl-prdgm-tbl__cell--label {
   font-weight: 700 !important;
 }
+.infl-prdgm-tbl a.infl-prdgm-tbl__cell-reflink {
+  color: var(--alpheios-link-color) !important;
+  text-decoration: underline !important;
+}
+.infl-prdgm-tbl a.infl-prdgm-tbl__cell-reflink:hover {
+  color: var(--alpheios-link-color-hover) !important;
+}
 .alpheios-inflections__title {
   cursor: pointer !important;
 }
@@ -2063,8 +2070,13 @@ h3.alpheios-inflections__supp-table-title {
 .infl-prdgm-tbl--supp {
   margin-bottom: 10px !important;
 }
-a.infl-supp-tbl__reflink {
+.infl-supp-tbl__cont a.infl-supp-tbl__reflink {
   float: right !important;
+  color: var(--alpheios-link-color) !important;
+  text-decoration: underline !important;
+}
+.infl-supp-tbl__cont a.infl-supp-tbl__reflink:hover {
+  color: var(--alpheios-link-color-hover) !important;
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -3646,9 +3658,11 @@ p.alpheios-word-usage-filter-title {
   display: inline-block;
   margin-bottom: calc(var(--alpheios-base-ui-size) * 0.375) !important;
   width: auto !important;
+  vertical-align: middle !important;
 }
 .alpheios-lookup__form-element {
   margin-bottom: calc(var(--alpheios-base-ui-size) * 0.625) !important;
+  padding-top: calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
 .alpheios-lookup__form-element.alpheios-lookup__lang-control {
   flex-direction: column !important;
@@ -3718,9 +3732,11 @@ span.alpheios-lookup__lang-change:hover {
   line-height: 1 !important;
   font-size: 90% !important;
   display: inline-block;
+  vertical-align: middle !important;
 }
 .alpheios-lookup__form span.alpheios-lookup__form-beta-codes-check input {
   display: inline-block;
+  vertical-align: middle !important;
 }
 .alpheios-lookup__form-icon {
   width: calc(var(--alpheios-base-ui-size) * 0.9375) !important;
@@ -3743,15 +3759,12 @@ span.alpheios-lookup__lang-change:hover {
 }
 .alpheios-lookup__form .alpheios-lookup__form-beta-codes-info {
   border-bottom: 1px solid var(--alpheios-color-placehoder) !important;
-  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625) !important;
-}
-.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info p {
+  margin-bottom: calc(var(--alpheios-base-text-size) * 1.5) !important;
   font-size: 94% !important;
-  margin: 0 0 calc(var(--alpheios-base-text-size) * 0.75) !important;
 }
-.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info span {
-  display: inline-block;
-  padding-right: calc(var(--alpheios-base-text-size) * 0.625) !important;
+.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info div {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 .alpheios-lookup__autocomplete {
   margin-top: 5px !important;
@@ -3897,7 +3910,7 @@ span.alpheios-lookup__lang-change:hover {
   display: inline-block;
 }
 .alpheios-toolbar__lookup.alpheios-toolbar__lookup-beta-codes {
-  height: calc(var(--alpheios-base-text-size) * 28.125) !important;
+  height: calc(var(--alpheios-base-text-size) * 33.75) !important;
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
 .alpheios-toolbar__lookup.alpheios-toolbar__lookup-change-lang {

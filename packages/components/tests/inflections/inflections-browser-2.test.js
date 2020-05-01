@@ -50,7 +50,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(1)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(27)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm2')
     
@@ -64,7 +64,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(2)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(28)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm3')
     
@@ -78,7 +78,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(3)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(29)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm4')
     
@@ -92,7 +92,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(4)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(30)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm5')
     
@@ -106,7 +106,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(5)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(31)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm6')
     
@@ -120,7 +120,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(6)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(32)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm7')
     
@@ -134,7 +134,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(7)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(33)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm8')
     
@@ -148,7 +148,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(8)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(34)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm9')
     
@@ -162,7 +162,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(9)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(35)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm10')
     
@@ -177,7 +177,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(10)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(36)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm11')
     
@@ -191,7 +191,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(11)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(37)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm12')
     
@@ -205,7 +205,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(12)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(38)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm13')
     
@@ -219,7 +219,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(13)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(39)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm14')
     
@@ -233,7 +233,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(14)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(40)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm15')
     
@@ -247,7 +247,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(15)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(41)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm16')
     
@@ -261,7 +261,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(16)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(42)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm17')
     
@@ -275,7 +275,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(17)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(43)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm17b')
     
@@ -289,7 +289,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(18)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(44)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm17c')
     
@@ -303,7 +303,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(19)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(45)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm18')
     
@@ -317,7 +317,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(20)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(46)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm19')
     
@@ -331,7 +331,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(21)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(47)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm20')
     
@@ -345,7 +345,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(22)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(48)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm21')
     
@@ -359,7 +359,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(23)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(49)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm22')
     
@@ -375,7 +375,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(24)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(50)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm23')
     
@@ -389,7 +389,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(25)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(51)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm24')
     
@@ -403,7 +403,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(26)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(52)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm25')
     
@@ -417,7 +417,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(27)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(53)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm26')
     
@@ -431,7 +431,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(28)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(54)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm27')
     
@@ -445,7 +445,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(29)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(55)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm28')
     
@@ -459,7 +459,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(30)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(56)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm29')
     
@@ -473,7 +473,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(31)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(57)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm30')
     
@@ -487,7 +487,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(32)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(58)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm31')
     
@@ -501,7 +501,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(33)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(59)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm32')
     
@@ -515,7 +515,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(34)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(60)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm33')
     
@@ -529,7 +529,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(35)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(61)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm34')
     
@@ -543,7 +543,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(36)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(62)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm35')
     
@@ -557,7 +557,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(37)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(63)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm36')
     
@@ -571,7 +571,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(38)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(64)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm37')
     
@@ -585,7 +585,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(39)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(65)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm38')
     
@@ -599,7 +599,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(40)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(66)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm39')
     
@@ -613,7 +613,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(41)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(67)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm40')
     
@@ -627,7 +627,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(42)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(68)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm41')
     
@@ -641,7 +641,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(43)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(69)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm42')
     
@@ -655,7 +655,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(44)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(70)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm43')
     
@@ -669,7 +669,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(45)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(71)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm43b')
     
@@ -683,7 +683,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(46)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(72)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm44')
     
@@ -697,7 +697,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(47)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(73)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm45')
     
@@ -711,7 +711,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(48)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(74)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm46')
     
@@ -725,7 +725,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(49)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(75)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm47')
     
@@ -739,7 +739,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(50)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(76)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm48')
     
@@ -753,7 +753,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(51)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(77)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm49')
     
@@ -767,7 +767,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(52)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(78)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm50')
     
@@ -781,7 +781,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(53)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(79)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm51')
     
@@ -795,7 +795,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(54)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(80)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm52')
     
@@ -809,7 +809,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(55)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(81)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm53')
     
@@ -823,7 +823,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(56)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(82)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParticipleParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm54')
     
@@ -837,7 +837,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(57)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(83)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParticipleParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm55')
     
@@ -851,7 +851,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(58)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(84)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParticipleParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm56')
     
@@ -865,7 +865,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(59)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(85)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParticipleParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm57')
     
@@ -879,7 +879,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(60)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(86)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParticipleParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm58')
     
@@ -893,7 +893,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(61)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(87)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParticipleParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm59')
     
@@ -907,7 +907,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(62)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(88)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParticipleParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm60')
     
@@ -921,7 +921,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(63)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(89)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParticipleParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm61')
     
@@ -935,7 +935,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(64)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(90)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParticipleParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm62')
     
@@ -949,7 +949,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(65)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(91)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParticipleParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm63')
     
@@ -963,7 +963,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(66)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(92)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParticipleParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm64')
     
@@ -977,7 +977,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(67)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(93)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParticipleParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm65')
     
@@ -991,7 +991,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(68)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(94)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParticipleParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm66')
     
