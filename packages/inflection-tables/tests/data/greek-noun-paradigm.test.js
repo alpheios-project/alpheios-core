@@ -26,21 +26,21 @@ describe('greek-noun-paradigm.test.js', () => {
   })
 
 
-  it('1-1 - checked Noun1 - βουλεύῃς', async () => {
+  it('1-1 - checked Noun1 - ἄνθρωπος', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἄνθρωπος', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Omicron-Declension Nouns',
       paradigmID: 'nounpdgm1'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[0].cells[2].fullMatch).toBeTruthy() // βουλεύεις
     expect(renderedTable.rows[0].cells[3].fullMatch).toBeFalsy() // βουλεύῃς
@@ -53,15 +53,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(5)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[1],
+      view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Omicron-Declension Nouns',
       paradigmID: 'nounpdgm1'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[1].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[3].render().wideTable
 
     // console.info('renderedTable.rows[1].cells - ', renderedTable.rows[0])
 
@@ -78,15 +78,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(5)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[1],
+      view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Alpha-Declension Nouns: long-vowel feminines',
       paradigmID: 'nounpdgm2'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[1].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[3].render().wideTable
 
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // χώρᾱς
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // γνώμης
@@ -101,15 +101,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Alpha-Declension Nouns: long-vowel feminines',
       paradigmID: 'nounpdgm2'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[6].cells[2].fullMatch).toBeTruthy() // χώραιν
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // γνώμαιν
@@ -121,15 +121,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Alpha-Declension Nouns: long-vowel feminines',
       paradigmID: 'nounpdgm2'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[8].cells[2].fullMatch).toBeFalsy() // χωρῶν
     expect(renderedTable.rows[8].cells[3].fullMatch).toBeTruthy() // γνωμῶν
@@ -141,15 +141,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Alpha-Declension Nouns: long-vowel feminines',
       paradigmID: 'nounpdgm2'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // χώρᾱν
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeTruthy() // γνώμην
@@ -161,15 +161,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Alpha-Declension Nouns: short-vowel feminines',
       paradigmID: 'nounpdgm3'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[2].cells[3].fullMatch).toBeFalsy() // θαλάττῃ
     expect(renderedTable.rows[2].cells[2].fullMatch).toBeTruthy() // ὑγιείᾳ
@@ -182,15 +182,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Alpha-Declension Nouns: short-vowel feminines',
       paradigmID: 'nounpdgm3'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // θαλάτταιν
     expect(renderedTable.rows[6].cells[2].fullMatch).toBeTruthy() // ὑγιείαιν
@@ -203,15 +203,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Alpha-Declension Nouns: short-vowel feminines',
       paradigmID: 'nounpdgm3'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // ὑγίειᾰν
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeTruthy() // θάλαττᾰν
@@ -224,15 +224,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Alpha-Declension Nouns: short-vowel feminines',
       paradigmID: 'nounpdgm3'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // ὑγιείᾱς
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeTruthy() // θαλάττης
@@ -247,15 +247,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Alpha-Declension Nouns: masculines',
       paradigmID: 'nounpdgm4'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // νεανίου
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // στρατιώτου
@@ -267,15 +267,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Alpha-Declension Nouns: masculines',
       paradigmID: 'nounpdgm4'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[6].cells[2].fullMatch).toBeTruthy() // νεανίαιν
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // στρατιώταιν
@@ -287,15 +287,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Alpha-Declension Nouns: masculines',
       paradigmID: 'nounpdgm4'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeTruthy() // στρατιώτην
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // νεανίᾱν
@@ -307,15 +307,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Alpha-Declension Nouns: masculines',
       paradigmID: 'nounpdgm4'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[9].cells[3].fullMatch).toBeTruthy() // στρατιώταις
     expect(renderedTable.rows[9].cells[2].fullMatch).toBeFalsy() // νεανίαις
@@ -327,15 +327,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: labial and velar plosive stems',
       paradigmID: 'nounpdgm5'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[0].cells[2].fullMatch).toBeTruthy() // κλώψ
     expect(renderedTable.rows[0].cells[3].fullMatch).toBeFalsy() // φύλαξ
@@ -348,15 +348,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: labial and velar plosive stems',
       paradigmID: 'nounpdgm5'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[5].cells[2].fullMatch).toBeTruthy() // κλῶπε
     expect(renderedTable.rows[5].cells[3].fullMatch).toBeFalsy() // φύλακε
@@ -368,7 +368,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -388,15 +388,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: labial and velar plosive stems',
       paradigmID: 'nounpdgm5'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[0].cells[3].fullMatch).toBeTruthy() // φύλαξ
     expect(renderedTable.rows[0].cells[2].fullMatch).toBeFalsy() // κλώψ
@@ -410,15 +410,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: dental plosive stems (masc. and fem.)',
       paradigmID: 'nounpdgm6'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[0].cells[2].fullMatch).toBeTruthy() // χάρις
     expect(renderedTable.rows[0].cells[3].fullMatch).toBeFalsy() // ἀσπίς
@@ -431,15 +431,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: dental plosive stems (masc. and fem.)',
       paradigmID: 'nounpdgm6'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[7].cells[2].fullMatch).toBeTruthy() // χάριτες
     expect(renderedTable.rows[7].cells[3].fullMatch).toBeFalsy() // ἀσπίδες
@@ -452,15 +452,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: dental plosive stems (masc. and fem.)',
       paradigmID: 'nounpdgm6'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[6].cells[2].fullMatch).toBeFalsy() // χαρίτοιν
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeTruthy() // ἀσπίδοιν
@@ -473,15 +473,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: dental plosive stems (masc. and fem.)',
       paradigmID: 'nounpdgm6'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[10].cells[2].fullMatch).toBeFalsy() // χάριτᾰς
     expect(renderedTable.rows[10].cells[3].fullMatch).toBeTruthy() // ἀσπίδᾰς
@@ -494,15 +494,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: dental plosive stems (masc. and fem.)',
       paradigmID: 'nounpdgm6'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // χάριν
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeFalsy() // ἀσπίδᾰ
@@ -515,15 +515,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: dental plosive stems (masc. and fem.)',
       paradigmID: 'nounpdgm6'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[6].cells[2].fullMatch).toBeFalsy() // χαρίτοιν
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // ἀσπίδοιν
@@ -537,15 +537,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: ντ-stems',
       paradigmID: 'nounpdgm7'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // γέροντος
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // γίγαντος
@@ -558,15 +558,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: ντ-stems',
       paradigmID: 'nounpdgm7'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[8].cells[2].fullMatch).toBeTruthy() // γερόντων
     expect(renderedTable.rows[8].cells[3].fullMatch).toBeFalsy() // γιγάντων
@@ -579,15 +579,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: ντ-stems',
       paradigmID: 'nounpdgm7'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // γέροντᾰ
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeTruthy() // γίγαντᾰ
@@ -600,15 +600,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: ντ-stems',
       paradigmID: 'nounpdgm7'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[8].cells[2].fullMatch).toBeFalsy() // γερόντων
     expect(renderedTable.rows[8].cells[3].fullMatch).toBeTruthy() // γιγάντων
@@ -621,7 +621,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -642,7 +642,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -664,15 +664,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: neuter τ-stems',
       paradigmID: 'nounpdgm8'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // πράγματος
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // τέρατος
@@ -684,15 +684,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: neuter τ-stems',
       paradigmID: 'nounpdgm8'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[6].cells[2].fullMatch).toBeTruthy() // πραγμάτοιν
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // τεράτοιν
@@ -704,15 +704,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: neuter τ-stems',
       paradigmID: 'nounpdgm8'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[2].cells[2].fullMatch).toBeFalsy() // πράγματι
     expect(renderedTable.rows[2].cells[3].fullMatch).toBeTruthy() // τέρατι
@@ -724,7 +724,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -744,15 +744,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: liquid and nasal stems',
       paradigmID: 'nounpdgm9'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // ῥήτορος
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // δαίμονος
@@ -766,15 +766,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: liquid and nasal stems',
       paradigmID: 'nounpdgm9'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[7].cells[2].fullMatch).toBeTruthy() // ῥήτορες
     expect(renderedTable.rows[7].cells[3].fullMatch).toBeFalsy() // δαίμονες
@@ -788,15 +788,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: liquid and nasal stems',
       paradigmID: 'nounpdgm9'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[4].cells[2].fullMatch).toBeFalsy() // ῥῆτορ
     expect(renderedTable.rows[4].cells[3].fullMatch).toBeTruthy() // δαῖμον
@@ -810,15 +810,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: liquid and nasal stems',
       paradigmID: 'nounpdgm9'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[10].cells[2].fullMatch).toBeFalsy() // ῥήτορᾰς
     expect(renderedTable.rows[10].cells[3].fullMatch).toBeTruthy() // δαίμονᾰς
@@ -832,15 +832,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: liquid and nasal stems',
       paradigmID: 'nounpdgm9'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // ῥήτορᾰ
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeFalsy() // δαίμονᾰ
@@ -854,15 +854,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(6)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[2],
+      view: inflectionsViewSet.matchingViews[4],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: liquid and nasal stems',
       paradigmID: 'nounpdgm9'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[4].render().wideTable
 
     expect(renderedTable.rows[8].cells[2].fullMatch).toBeFalsy() // ῥητόρων
     expect(renderedTable.rows[8].cells[3].fullMatch).toBeFalsy() // δαιμόνων
@@ -876,7 +876,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -898,15 +898,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(6)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[2],
+      view: inflectionsViewSet.matchingViews[4],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: liquid and nasal stems',
       paradigmID: 'nounpdgm9'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[4].render().wideTable
 
     expect(renderedTable.rows[6].cells[2].fullMatch).toBeFalsy() // ῥητόροιν
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // δαιμόνοιν
@@ -921,7 +921,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -943,7 +943,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -965,15 +965,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: irregular ρ-stems',
       paradigmID: 'nounpdgm10'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // πατέρᾰ
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeTruthy() // μητέρᾰ
@@ -987,15 +987,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: irregular ρ-stems',
       paradigmID: 'nounpdgm10'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[8].cells[2].fullMatch).toBeFalsy() // πατέρων
     expect(renderedTable.rows[8].cells[3].fullMatch).toBeTruthy() // μητέρων
@@ -1009,15 +1009,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: irregular ρ-stems',
       paradigmID: 'nounpdgm10'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // πατέρᾰ
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeFalsy() // μητέρᾰ
@@ -1031,15 +1031,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: irregular ρ-stems',
       paradigmID: 'nounpdgm10'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[6].cells[2].fullMatch).toBeFalsy() // πατέροιν
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // μητέροιν
@@ -1053,7 +1053,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -1075,15 +1075,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(6)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[2],
+      view: inflectionsViewSet.matchingViews[4],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: irregular ρ-stems',
       paradigmID: 'nounpdgm10'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[4].render().wideTable
 
     expect(renderedTable.rows[8].cells[2].fullMatch).toBeFalsy() // πατέρων
     expect(renderedTable.rows[8].cells[3].fullMatch).toBeFalsy() // μητέρων
@@ -1097,15 +1097,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: σ-stems',
       paradigmID: 'nounpdgm11'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // τριήρους
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // γένους
@@ -1118,15 +1118,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: σ-stems',
       paradigmID: 'nounpdgm11'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[7].cells[2].fullMatch).toBeTruthy() // τριήρεις
     expect(renderedTable.rows[7].cells[3].fullMatch).toBeFalsy() // γένη
@@ -1139,15 +1139,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: σ-stems',
       paradigmID: 'nounpdgm11'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[2].cells[2].fullMatch).toBeFalsy() // τριήρει
     expect(renderedTable.rows[2].cells[3].fullMatch).toBeTruthy() // γένει
@@ -1164,15 +1164,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: σ-stems',
       paradigmID: 'nounpdgm11'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[5].cells[2].fullMatch).toBeFalsy() // τριήρει
     expect(renderedTable.rows[5].cells[3].fullMatch).toBeTruthy() // γένει
@@ -1193,15 +1193,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: σ-stems',
       paradigmID: 'nounpdgm11'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[5].cells[2].fullMatch).toBeFalsy() // τριήρει
     expect(renderedTable.rows[5].cells[3].fullMatch).toBeFalsy() // γένει
@@ -1222,15 +1222,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(5)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[1],
+      view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: σ-stems',
       paradigmID: 'nounpdgm11'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[1].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[3].render().wideTable
 
     expect(renderedTable.rows[8].cells[2].fullMatch).toBeFalsy() // τριήρων
     expect(renderedTable.rows[8].cells[3].fullMatch).toBeFalsy() // γενῶν
@@ -1243,15 +1243,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: irregular nouns',
       paradigmID: 'nounpdgm12'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[2].cells[2].fullMatch).toBeTruthy() // γυναικί
     expect(renderedTable.rows[2].cells[3].fullMatch).toBeFalsy() // χειρί
@@ -1264,15 +1264,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: irregular nouns',
       paradigmID: 'nounpdgm12'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[10].cells[2].fullMatch).toBeTruthy() // γυναῖκᾰς
     expect(renderedTable.rows[10].cells[3].fullMatch).toBeFalsy() // χεῖρᾰς
@@ -1285,15 +1285,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: irregular nouns',
       paradigmID: 'nounpdgm12'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[5].cells[2].fullMatch).toBeFalsy() // γυναῖκε
     expect(renderedTable.rows[5].cells[3].fullMatch).toBeTruthy() // χεῖρε
@@ -1306,15 +1306,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: irregular nouns',
       paradigmID: 'nounpdgm12'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[10].cells[2].fullMatch).toBeFalsy() // γυναῖκᾰς
     expect(renderedTable.rows[10].cells[3].fullMatch).toBeTruthy() // χεῖρᾰς
@@ -1327,7 +1327,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -1348,15 +1348,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: irregular nouns',
       paradigmID: 'nounpdgm12'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // γυναικός
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // χειρός
@@ -1369,7 +1369,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -1390,15 +1390,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: stems in ι or υ',
       paradigmID: 'nounpdgm13'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // πατρός
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // μητρός
@@ -1412,15 +1412,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: stems in ι or υ',
       paradigmID: 'nounpdgm13'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[6].cells[2].fullMatch).toBeTruthy() // πατέροιν
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // μητέροιν
@@ -1434,15 +1434,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: stems in ι or υ',
       paradigmID: 'nounpdgm13'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // πατέρᾰ
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeTruthy() // μητέρᾰ
@@ -1456,15 +1456,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: stems in ι or υ',
       paradigmID: 'nounpdgm13'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[8].cells[2].fullMatch).toBeFalsy() // πατέρων
     expect(renderedTable.rows[8].cells[3].fullMatch).toBeTruthy() // μητέρων
@@ -1478,15 +1478,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: stems in ι or υ',
       paradigmID: 'nounpdgm13'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[2].cells[2].fullMatch).toBeFalsy() // πατρί
     expect(renderedTable.rows[2].cells[3].fullMatch).toBeFalsy() // μητρί
@@ -1505,15 +1505,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: stems in ι or υ',
       paradigmID: 'nounpdgm13'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[8].cells[2].fullMatch).toBeFalsy() // πατέρων
     expect(renderedTable.rows[8].cells[3].fullMatch).toBeFalsy() // μητέρων
@@ -1527,15 +1527,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: stems in ι or υ',
       paradigmID: 'nounpdgm13'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // πατρός
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // μητρός
@@ -1549,15 +1549,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: stems in ι or υ',
       paradigmID: 'nounpdgm13'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[7].cells[2].fullMatch).toBeFalsy() // πατέρες
     expect(renderedTable.rows[7].cells[3].fullMatch).toBeFalsy() // μητέρες
@@ -1571,15 +1571,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: stems in ευ, αυ, or ου',
       paradigmID: 'nounpdgm14'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[0].cells[2].fullMatch).toBeTruthy() // ἱππεύς
     expect(renderedTable.rows[0].cells[3].fullMatch).toBeFalsy() // γραῦς
@@ -1598,15 +1598,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: stems in ευ, αυ, or ου',
       paradigmID: 'nounpdgm14'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[6].cells[2].fullMatch).toBeTruthy() // ἱππέοιν
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // γρᾱοῖν
@@ -1620,15 +1620,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: stems in ευ, αυ, or ου',
       paradigmID: 'nounpdgm14'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // ἱππέᾱ
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeTruthy() // γραῦν
@@ -1642,15 +1642,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: stems in ευ, αυ, or ου',
       paradigmID: 'nounpdgm14'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[6].cells[2].fullMatch).toBeFalsy() // ἱππέοιν
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeTruthy() // γρᾱοῖν
@@ -1664,15 +1664,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: stems in ευ, αυ, or ου',
       paradigmID: 'nounpdgm14'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // ἱππέᾱ
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeFalsy() // γραῦν
@@ -1686,7 +1686,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(5)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(9)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[6],
       viewName: 'GreekNounParadigmView',
@@ -1708,15 +1708,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Consonant-Declension Nouns: stems in ευ, αυ, or ου',
       paradigmID: 'nounpdgm14'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // ἱππέᾱ
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeFalsy() // γραῦν
@@ -1730,7 +1730,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(7)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(9)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[7],
       viewName: 'GreekNounParadigmView',
@@ -1752,15 +1752,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(5)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[1],
+      view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Nouns with Contraction: O-Declension',
       paradigmID: 'nounpdgm15'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[1].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[3].render().wideTable
 
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeTruthy() // νοῦ
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // περίπλου
@@ -1777,15 +1777,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Nouns with Contraction: O-Declension',
       paradigmID: 'nounpdgm15'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[6].cells[2].fullMatch).toBeTruthy() // νοῖν
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // περίπλοιν
@@ -1798,15 +1798,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(5)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[1],
+      view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Nouns with Contraction: O-Declension',
       paradigmID: 'nounpdgm15'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[1].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[3].render().wideTable
 
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // νοῦ
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // περίπλου
@@ -1819,15 +1819,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Nouns with Contraction: O-Declension',
       paradigmID: 'nounpdgm15'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[6].cells[2].fullMatch).toBeFalsy() // νοῖν
     expect(renderedTable.rows[6].cells[3].fullMatch).toBeFalsy() // περίπλου
@@ -1840,7 +1840,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -1862,7 +1862,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -1884,15 +1884,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(5)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[1],
+      view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Nouns with Contraction: A-Declension',
       paradigmID: 'nounpdgm16'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[1].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[3].render().wideTable
 
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // γῆς
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeTruthy() // συκῆς
@@ -1906,15 +1906,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Nouns with Contraction: A-Declension',
       paradigmID: 'nounpdgm16'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[7].cells[2].fullMatch).toBeFalsy() // νοῖν
     expect(renderedTable.rows[7].cells[3].fullMatch).toBeTruthy() // περίπλου
@@ -1928,15 +1928,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Nouns with Contraction: A-Declension',
       paradigmID: 'nounpdgm16'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[1].cells[2].fullMatch).toBeFalsy() // γῆς
     expect(renderedTable.rows[1].cells[3].fullMatch).toBeFalsy() // συκῆς
@@ -1955,15 +1955,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Nouns with Contraction: A-Declension',
       paradigmID: 'nounpdgm16'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[9].cells[2].fullMatch).toBeFalsy() // 
     expect(renderedTable.rows[9].cells[3].fullMatch).toBeFalsy() // συκαῖς
@@ -1977,15 +1977,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Nouns with Contraction: A-Declension',
       paradigmID: 'nounpdgm16'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // γῆν
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeFalsy() // συκῆν
@@ -2004,15 +2004,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(1)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(5)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[1],
+      view: inflectionsViewSet.matchingViews[3],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Nouns with Contraction: A-Declension',
       paradigmID: 'nounpdgm16'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[1].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[3].render().wideTable
 
     expect(renderedTable.rows[10].cells[2].fullMatch).toBeFalsy() // 
     expect(renderedTable.rows[10].cells[3].fullMatch).toBeFalsy() // συκᾶς
@@ -2026,7 +2026,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -2048,7 +2048,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -2070,15 +2070,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Nouns: Attic Declension',
       paradigmID: 'nounpdgm17'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // νεών
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeTruthy() // λεών
@@ -2092,7 +2092,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -2124,15 +2124,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Nouns: Attic Declension',
       paradigmID: 'nounpdgm17'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[0].cells[2].fullMatch).toBeFalsy() // νεώς
     expect(renderedTable.rows[0].cells[3].fullMatch).toBeFalsy() // λεώς
@@ -2146,15 +2146,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Nouns: Attic Declension',
       paradigmID: 'nounpdgm17'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[3].cells[2].fullMatch).toBeFalsy() // νεών
     expect(renderedTable.rows[3].cells[3].fullMatch).toBeFalsy() // λεών
@@ -2168,7 +2168,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -2190,7 +2190,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -2217,7 +2217,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -2237,15 +2237,15 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(0)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
-      view: inflectionsViewSet.matchingViews[0],
+      view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
       viewTitle: 'Nouns in -ως',
       paradigmID: 'nounpdgm18'
     })
 
-    const renderedTable = inflectionsViewSet.matchingViews[0].render().wideTable
+    const renderedTable = inflectionsViewSet.matchingViews[2].render().wideTable
 
     expect(renderedTable.rows[0].cells[2].fullMatch).toBeTruthy() // αἰδώς
     expect(renderedTable.rows[0].cells[3].fullMatch).toBeFalsy() // ἥρως
@@ -2257,7 +2257,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -2277,7 +2277,7 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(2)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(4)
     BaseTestHelp.checkParadigm({
       view: inflectionsViewSet.matchingViews[2],
       viewName: 'GreekNounParadigmView',
@@ -2290,4 +2290,5 @@ describe('greek-noun-paradigm.test.js', () => {
     expect(renderedTable.rows[8].cells[2].fullMatch).toBeFalsy() // 
     expect(renderedTable.rows[8].cells[3].fullMatch).toBeTruthy() // ἡρώων
   })
+
 })

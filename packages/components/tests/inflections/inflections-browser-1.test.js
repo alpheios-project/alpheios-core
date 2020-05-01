@@ -80,7 +80,7 @@ describe('inflections.test.js', () => {
     expect(wideTables.length).toEqual(49)
 
     let prerenderedTables = cmp.findAll(WidePrerenderedTable)
-    expect(prerenderedTables.length).toEqual(69)
+    expect(prerenderedTables.length).toEqual(95)
   })
 
   it('3 InflectionsBrowser - renders Latin and Greek wide-tables - latin_noun_view', async () => {
@@ -664,7 +664,259 @@ describe('inflections.test.js', () => {
     expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
-  it('39 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_view', async () => {
+  it('39 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm1', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(0)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm1')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('40 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm2', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(1)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm2')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('41 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm3', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(2)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm3')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('42 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm4', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(3)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm4')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('43 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm5', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(4)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm5')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('44 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm6', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(5)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm6')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('45 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm7', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(6)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm7')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('46 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm8', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(7)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm8')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('47 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm9', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(8)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm9')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('48 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm10', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(9)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm10')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('49 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm11', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(10)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm11')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('50 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm12', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(11)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm12')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('51 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm13', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(12)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm13')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('52 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm14', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(13)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm14')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('53 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm15', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(14)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm15')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('54 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm16', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(15)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm16')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('55 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm17', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(16)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm17')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('56 InflectionsBrowser - renders Latin and Greek wide-tables - greek_noun_paradigm_view, paradigmID - nounpdgm18', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(17)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekNounParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('nounpdgm18')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('57 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -679,7 +931,7 @@ describe('inflections.test.js', () => {
     expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
-  it('40 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_simplified_view', async () => {
+  it('58 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_simplified_view', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
       localVue,
@@ -694,6 +946,118 @@ describe('inflections.test.js', () => {
     expect(wideTable.vm.getRenderedView).toHaveBeenCalled()
   })
 
+  it('59 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_paradigm_view, paradigmID - adjpdgm1', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(18)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekAdjectiveParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('adjpdgm1')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('60 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_paradigm_view, paradigmID - adjpdgm2', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(19)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekAdjectiveParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('adjpdgm2')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('61 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_paradigm_view, paradigmID - adjpdgm3', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(20)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekAdjectiveParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('adjpdgm3')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('62 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_paradigm_view, paradigmID - adjpdgm4', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(21)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekAdjectiveParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('adjpdgm4')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('63 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_paradigm_view, paradigmID - adjpdgm5', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(22)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekAdjectiveParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('adjpdgm5')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('64 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_paradigm_view, paradigmID - adjpdgm6', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(23)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekAdjectiveParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('adjpdgm6')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('65 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_paradigm_view, paradigmID - adjpdgm7', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(24)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekAdjectiveParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('adjpdgm7')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+
+  it('65 InflectionsBrowser - renders Latin and Greek wide-tables - greek_adjective_paradigm_view, paradigmID - adjpdgm8', async () => {
+    let cmp = mount(InflectionsBrowser, {
+      store,
+      localVue,
+      mocks: api
+    })
+
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(25)
+    expect(wideTable.props().view.constructor.name).toEqual('GreekAdjectiveParadigmView')
+    expect(wideTable.props().view.paradigm.paradigmID).toEqual('adjpdgm8')
+    
+    expect(wideTable.props().view.wideTable.rows.length).toBeGreaterThan(0)
+  })
+  
   it('41 InflectionsBrowser - renders Latin and Greek wide-tables - greek_person_pronoun_view, form - νώ', async () => {
     let cmp = mount(InflectionsBrowser, {
       store,
@@ -868,7 +1232,7 @@ describe('inflections.test.js', () => {
       mocks: api
     })
 
-    let wideTable = cmp.findAll(WidePrerenderedTable).at(0)
+    let wideTable = cmp.findAll(WidePrerenderedTable).at(26)
     expect(wideTable.props().view.constructor.name).toEqual('GreekVerbParadigmView')
     expect(wideTable.props().view.paradigm.paradigmID).toEqual('verbpdgm1')
     

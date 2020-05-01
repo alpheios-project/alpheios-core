@@ -34,7 +34,7 @@ describe('greek-views.test.js', () => {
 
     // console.info('inflectionsViewSet.matchingViews - ', inflectionsViewSet.matchingViews.map(view => view.constructor.name))
 
-    expect(inflectionsViewSet.matchingViews.length).toBeGreaterThan(3)
+    expect(inflectionsViewSet.matchingViews.length).toEqual(8)
 
     BaseTestHelp.checkView({
       inflectionsViewSet,

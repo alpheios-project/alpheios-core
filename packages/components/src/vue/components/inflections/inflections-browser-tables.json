@@ -156,6 +156,78 @@
             { 
                 "viewID": "greek_noun_simplified_view", 
                 "title": "Noun declension (simplified)"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm1", "title": "Omicron-Declension Nouns"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm2", "title": "Alpha-Declension Nouns: long-vowel feminines"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm3", "title": "Alpha-Declension Nouns: short-vowel feminines"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm4", "title": "Alpha-Declension Nouns: masculines"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm5", "title": "Consonant-Declension Nouns: labial and velar plosive stems"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm6", "title": "Consonant-Declension Nouns: dental plosive stems (masc. and fem.)"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm7", "title": "Consonant-Declension Nouns: ντ-stems"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm8", "title": "Consonant-Declension Nouns: neuter τ-stems"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm9", "title": "Consonant-Declension Nouns: liquid and nasal stems"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm10", "title": "Consonant-Declension Nouns: irregular ρ-stems"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm11", "title": "Consonant-Declension Nouns: σ-stems"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm12", "title": "Consonant-Declension Nouns: irregular nouns"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm13", "title": "Consonant-Declension Nouns: stems in ι or υ"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm14", "title": "Consonant-Declension Nouns: stems in ευ, αυ, or ου"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm15", "title": "Nouns with Contraction: O-Declension"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm16", "title": "Nouns with Contraction: A-Declension"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm17", "title": "Nouns: Attic Declension"
+            },
+            { 
+                "viewID": "greek_noun_paradigm_view", 
+                "paradigmID": "nounpdgm18", "title": "Nouns in -ως"
             }
         ],
         "adjective": [
@@ -166,6 +238,38 @@
             { 
                 "viewID": "greek_adjective_simplified_view", 
                 "title": "Adjective declension (simplified)"
+            },
+            { 
+                "viewID": "greek_adjective_paradigm_view", 
+                "paradigmID": "adjpdgm1", "title": "Vowel-Declension Adjectives with Three Endings"
+            },
+            { 
+                "viewID": "greek_adjective_paradigm_view", 
+                "paradigmID": "adjpdgm2", "title": "Vowel-Declension Adjectives with Two Endings"
+            },
+            { 
+                "viewID": "greek_adjective_paradigm_view", 
+                "paradigmID": "adjpdgm3", "title": "Consonant-Declension Adjectives with Two Endings"
+            },
+            { 
+                "viewID": "greek_adjective_paradigm_view", 
+                "paradigmID": "adjpdgm4", "title": "Consonant-Declension Adjectives with Three Endings"
+            },
+            { 
+                "viewID": "greek_adjective_paradigm_view", 
+                "paradigmID": "adjpdgm5", "title": "Consonant-Declension Adjectives with Three Endings"
+            },
+            { 
+                "viewID": "greek_adjective_paradigm_view", 
+                "paradigmID": "adjpdgm6", "title": "Vowel-Declension Adjectives with Contraction (-εος)"
+            },
+            { 
+                "viewID": "greek_adjective_paradigm_view", 
+                "paradigmID": "adjpdgm7", "title": "Vowel-Declension Adjectives with Contraction (-οος)"
+            },
+            { 
+                "viewID": "greek_adjective_paradigm_view", 
+                "paradigmID": "adjpdgm8", "title": "Adjectives with Attic Declension"
             }
         ],
         "pronoun": [
