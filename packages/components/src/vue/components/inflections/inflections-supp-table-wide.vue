@@ -75,7 +75,13 @@ export default {
     margin-bottom: 10px;
   }
 
-  a.infl-supp-tbl__reflink {
+  .infl-supp-tbl__cont a.infl-supp-tbl__reflink {
     float: right;
+    color: var(--alpheios-link-color);
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--alpheios-link-color-hover);
+    }
   }
 </style>

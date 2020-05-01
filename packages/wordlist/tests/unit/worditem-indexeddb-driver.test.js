@@ -6,7 +6,11 @@ import IDBKeyRange from 'fake-indexeddb/lib/FDBKeyRange'
 import { WordItem, Constants, TextQuoteSelector } from 'alpheios-data-models'
 
 import WordItemIndexedDbDriver from '@wordlist/storage/worditem-indexeddb-driver'
+import Utility from '@wordlist/common/utility'
+
 import BaseTestHelp from '@wordlist-tests/helpclasses/base-test-help'
+
+
 
 describe('worditem-indexeddb-driver.test.js', () => {
   console.error = function () {}
@@ -421,8 +425,8 @@ describe('worditem-indexeddb-driver.test.js', () => {
     expect(dbDriverLocal._serializeHomonym).toHaveBeenCalledWith(testWordItem, true)
   })
 
-  it('28 WordItemIndexedDbDriver - currentDate returns format date', () => {
-    let curDate = WordItemIndexedDbDriver.currentDate
+  it('28 Utility - currentDate returns format date', () => {
+    let curDate = Utility.currentDate
 
     expect(curDate.match(/\d+\/\d+\/\d+/))
     expect(curDate.match(/\d+:\d+:\d+/))

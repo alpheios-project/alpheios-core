@@ -57,13 +57,14 @@ export default {
       border: none;
       border-right: 1px solid var(--alpheios-settings-font-size-dark-color);
       background: transparent;
-      padding: textsize(6px) textsize(12px);
+      padding: textsize(6px) textsize(12px) !important; // To override styles on Loeb Classics
       font-size: textsize(10px);
       cursor: pointer;
       flex: 1;
       // Need below to override default styles of Safari
       margin: 0;
       border-radius: 0;
+      height: auto !important; // To override specific height set on Loeb Classics
     }
 
     button:last-child {
@@ -71,7 +72,7 @@ export default {
     }
 
     button.active {
-      color: var(--alpheios-settings-font-size-light-color);
+      color: var(--alpheios-settings-font-size-light-color) !important; // To override styles on Loeb Classics
       background: var(--alpheios-settings-font-size-dark-color);
       box-shadow: inset 0 textsize(4px) textsize(4px) rgba(0, 0, 0, 0.1);
     }

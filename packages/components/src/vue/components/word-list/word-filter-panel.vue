@@ -2,50 +2,65 @@
     <div class="alpheios-wordlist-filters" >
         <p class="alpheios-wordlist-header-title">{{ l10n.getText('WORDLIST_FILTER_BY') }}</p>
         <div>
-        <div class="alpheios-wordlist-header-select-filterBy-block">
-          <select class="alpheios-select alpheios-wordlist-header-select-filterBy"
-                  v-model="selectedFilterBy" @change="changedFilterBy">
-            <option v-for="typeFiltering in typeFiltersList" v-bind:key="typeFiltering.value"
-                    v-bind:value="typeFiltering.value"
-                    :class="{ 'alpheios-select-disabled-option': !typeFiltering.value }"
-            >{{ calcTitle(typeFiltering) }}</option>
-          </select>
-        </div>
-        <div class="alpheios-wordlist-header-input-filterBy-block"
-          v-if="currentClickedLemma && currentTypeFilter && currentTypeFilter.showTextInput"
-        >
-          <div class="alpheios-select-input-group"
-               :class = '{ "alpheios-select-input-group-show-select": shownVariantsSelect }'
-          >
-            <input v-model="textInput"  class="alpheios-input alpheios-wordlist-header-input-filterBy"
-                  :placeholder="currentTypeFilter.textInputPlaceholder"
-                  v-on:keyup.enter = "clickFilterBy"
-                  v-on:input = "filterVariants"
-                  v-on:focus = "filterVariants"
-                  v-on:blur = "hideAutocomplete"
-                  autocapitalize = "off"
-                  autocorrect = "off"
-                  >
+          <div class="alpheios-wordlist-header-select-filterBy-first">
+            <div class="alpheios-wordlist-header-select-filterBy-block">
+              <select class="alpheios-select alpheios-wordlist-header-select-filterBy"
+                      v-model="selectedFilterBy" @change="changedFilterBy">
+                <option v-for="typeFiltering in typeFiltersList" v-bind:key="typeFiltering.value"
+                        v-bind:value="typeFiltering.value"
+                        :class="{ 'alpheios-select-disabled-option': !typeFiltering.value }"
+                >{{ calcTitle(typeFiltering, 'selectedFilterBy') }}</option>
+              </select>
+            </div>
+            <div class="alpheios-wordlist-header-input-filterBy-block"
+              v-if="currentClickedLemma && currentTypeFilter && (currentTypeFilter.showTextInput || currentTypeFilter.showNumberInput)"
+            >
+              <div class="alpheios-select-input-group"
+                  :class = '{ "alpheios-select-input-group-show-select": shownVariantsSelect }'
+              >
+                <input v-model="textInput"  class="alpheios-input alpheios-wordlist-header-input-filterBy"
+                      :placeholder="currentTypeFilter.textInputPlaceholder"
+                      v-on:keyup.enter = "clickFilterBy"
+                      v-on:input = "filterVariants"
+                      v-on:focus = "filterVariants"
+                      v-on:blur = "hideAutocomplete"
+                      autocapitalize = "off"
+                      autocorrect = "off"
+                      v-if="currentTypeFilter.showTextInput"
+                      >
 
-            <ul class="alpheios-select-list"
-                    v-model="selectedExactForm"
-                    v-if = "selectedFilterBy === 'byExactForm'"
-                    >
-              <li v-for="(exactForm, exactFormIndex) in wordExactFormsFiltered" v-bind:key="exactFormIndex"
-                  @click="selectExactForm(exactForm)" v-html="exactForm"
-              ></li>
-            </ul>
+                <ul class="alpheios-select-list"
+                        v-model="selectedExactForm"
+                        v-if = "selectedFilterBy === 'byExactForm'"
+                        >
+                  <li v-for="(exactForm, exactFormIndex) in wordExactFormsFiltered" v-bind:key="exactFormIndex"
+                      @click="selectExactForm(exactForm)" v-html="exactForm"
+                  ></li>
+                </ul>
 
-            <ul class="alpheios-select-list"
-                    v-model="selectedLemma"
-                    v-if = "selectedFilterBy === 'byLemma'"
+                <ul class="alpheios-select-list"
+                        v-model="selectedLemma"
+                        v-if = "selectedFilterBy === 'byLemma'"
+                        >
+                  <li v-for="(lemmaForm, lemmaFormIndex) in wordLemmaFormsFiltered" v-bind:key="lemmaFormIndex"
+                      @click="selectLemmaForm(lemmaForm)" v-html="lemmaForm"
+                  ></li>
+                </ul>
+
+                <div class="alpheios-number-input"
+                  v-if="currentTypeFilter.showNumberInput"
+                >
+                  <input v-model="filterAmount"  class="alpheios-input alpheios-wordlist-header-input-filterBy"
+                    type = "number"
+                    v-on:input = "changeFilterAmount"
+                    :min = "wordlistFilterAmountDefault.minValue"
+                    :max = "wordlistFilterAmountDefault.maxValue"
                     >
-              <li v-for="(lemmaForm, lemmaFormIndex) in wordLemmaFormsFiltered" v-bind:key="lemmaFormIndex"
-                  @click="selectLemmaForm(lemmaForm)" v-html="lemmaForm"
-              ></li>
-            </ul>
+                  <span class="alpheios-number-input-description">{{ currentTypeFilter.textInputPlaceholder }}</span>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
       </div>
     </div>
 </template>
@@ -54,7 +69,7 @@
 
   export default {
     name: 'WordFilterPanel',
-    inject: ['app', 'l10n'],
+    inject: ['app', 'l10n', 'settings'],
     components: {
       alphTooltip: Tooltip
     },
@@ -91,31 +106,52 @@
             title: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_FULL'),
             onClick: true, showTextInput: true,
             textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYWORDFORM_FULL_PLACEHOLDER')
-          },
+          }, 
           { value: 'byLemma',
             title: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL'),
             onClick: true, showTextInput: true,
             textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL_PLACEHOLDER')
-          }
+          },
+          { value: 'byMostRecent', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTRECENT'), showNumberInput: true,
+            textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_AMOUNT_PLACEHOLDER') },
+          { value: 'byMostOften', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTOFTEN'), showNumberInput: true,
+            textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_AMOUNT_PLACEHOLDER') }
         ],
         textInput: null,
         shownVariantsSelect: false,
         markLayout: {
           start: '<span class="alpheios-select-input-filter-part">',
           end: '</span>'
-        }
+        },
+        filterAmount: 0
       }
     },
+    mounted () {
+      this.filterAmount = this.featureOptions ? this.wordlistFilterAmountDefault.currentValue : 0
+    },
     computed: {
+      featureOptions () {
+        return this.$store.state.settings.featureResetCounter + 1 ? this.settings.getFeatureOptions() : null
+      },
+      wordlistFilterAmountDefault () {
+        return this.featureOptions ? this.featureOptions.items.wordlistFilterAmountDefault : null
+      },
       currentTypeFilter () {
-        let curFilter = this.selectedFilterBy ? this.typeFiltersList.find(typeFilter => typeFilter.value === this.selectedFilterBy) : null
-        return curFilter
+        return this.selectedFilterBy ? this.typeFiltersList.find(typeFilter => typeFilter.value === this.selectedFilterBy) : null
       },
       currentClickedLemma () {
         if (this.clickedLemma) {
           this.setClickedLemmaFilter()
         }
         return true
+      },
+      currentAdditionalField () {
+        if (this.currentTypeFilter) {
+          if (this.currentTypeFilter.showTextInput || this.currentTypeFilter.showNumberInput) {
+            return this.currentTypeFilter.showTextInput ? this.textInput : this.filterAmount || 0
+          }
+        } 
+        return null
       },
       wordExactFormsFiltered () {
         if (this.selectedFilterBy === 'byExactForm') {
@@ -153,7 +189,7 @@
     methods: {
       changedFilterBy () {
         if (this.currentTypeFilter && this.currentTypeFilter.onChange) {
-          this.$emit('changedFilterBy', this.selectedFilterBy)
+          this.$emit('changedFilterBy', this.selectedFilterBy, this.currentAdditionalField)
         } else {
           this.clearFilteringText()
         }
@@ -161,13 +197,11 @@
       selectExactForm (selectedExactForm) {
         let formattedExactForm = selectedExactForm
         this.textInput = formattedExactForm.replace(this.markLayout.start,'').replace(this.markLayout.end,'')
-
         this.clickFilterBy()
       },
       selectLemmaForm (selectedLemmaForm) {
         let formattedLemmaForm = selectedLemmaForm
         this.textInput = formattedLemmaForm.replace(this.markLayout.start,'').replace(this.markLayout.end,'')
-
         this.clickFilterBy()
       },
       clickFilterBy () {
@@ -178,7 +212,7 @@
           if (this.selectedFilterBy === 'byLemma' && !this.wordLemmaForms.includes(this.textInput)) {
             return
           }
-          this.$emit('changedFilterBy', this.selectedFilterBy, this.textInput)
+          this.$emit('changedFilterBy', this.selectedFilterBy, this.currentAdditionalField)
           this.shownVariantsSelect = false
         }
       },
@@ -193,7 +227,7 @@
         this.$emit('clearClickedLemma')
       },
       clearFilterEvent () {
-        this.$emit('changedFilterBy', null)
+        this.$emit('changedFilterBy', null, null)
       },
       setClickedLemmaFilter () {
         this.selectedFilterBy = 'byLemma'
@@ -213,16 +247,38 @@
           this.shownVariantsSelect = false
         }, 300)
       },
-      calcTitle (typeFiltering) {
+      calcTitle (typeFiltering, selectedFilterByName) {
         if (typeFiltering.value) {
           return typeFiltering.title
         } else {
-          if (this.selectedFilterBy) {
+          if (this[selectedFilterByName]) {
             return this.l10n.getText('WORDLIST_FILTER_CLEAR')
           } else {
             return this.l10n.getText('WORDLIST_FILTER_PLACEHOLDER')
           }
         }        
+      },
+      changeFilterAmount () {
+        this.checkNumberField()
+        if (this.filterAmount === null) {
+          this.filterAmount = 0
+        }
+
+        if (this.selectedFilterBy) {
+          this.$emit('changedFilterBy', this.selectedFilterBy, this.currentAdditionalField)
+        }
+      },
+      checkNumberField () {
+        if (this.wordlistFilterAmountDefault.number && this.wordlistFilterAmountDefault.minValue) {
+          if (this.filterAmount < this.wordlistFilterAmountDefault.minValue) {
+            this.filterAmount = this.wordlistFilterAmountDefault.minValue
+          }
+        }
+        if (this.wordlistFilterAmountDefault.number && this.wordlistFilterAmountDefault.maxValue) {
+          if (this.filterAmount > this.wordlistFilterAmountDefault.maxValue) {
+            this.filterAmount = this.wordlistFilterAmountDefault.maxValue
+          }
+        }
       }
     }
   }
@@ -239,17 +295,28 @@
         }
       }
 
-      .alpheios-wordlist-header-title {
+      p.alpheios-wordlist-header-title {
           margin: 0;
           font-weight: bold;
-          padding-bottom: 10px;
+          // padding-bottom: 20px;
+          cursor: pointer;
+
+          &.alpheios-wordlist-filters__hidden {
+            text-decoration: underline;
+            color: var(--alpheios-link-color);
+
+            &:hover {
+              color: var(--alpheios-link-color-hover);
+            }
+          }
       }
 
       .alpheios-wordlist-header-select-filterBy-block,
       .alpheios-wordlist-header-input-filterBy-block {
           width: 48%;
           display: inline-block;
-          vertical-align: middle;
+          vertical-align: top;
+          margin: 7px 0;
       }
 
       .alpheios-wordlist-header-input-filterBy-block {
@@ -353,6 +420,12 @@
       direction: rtl;   
       text-align: right;
     }
+  }
+
+  .alpheios-number-input span.alpheios-number-input-description {
+    padding: 5px;
+    color: #acacac;
+    font-size: 90%;
   }
 
 </style>

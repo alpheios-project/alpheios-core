@@ -1367,7 +1367,8 @@ If no URLS are provided, will reset grammar data.
   /**
     (re)initializes grammar data from settings
   */
-  initGrammar () {
+  initGrammar (langCode) {
+    this.api.app.grammarData[langCode] = null
     this.store.commit('app/setUpdatedGrammar')
   }
 
@@ -1797,7 +1798,9 @@ If no URLS are provided, will reset grammar data.
   featureOptionChange (name, value) {
     let featureOptions = this.api.settings.getFeatureOptions() // eslint-disable-line prefer-const
     // TODO we need to refactor handling of boolean options
-    const nonTextFeatures = ['enableLemmaTranslations', 'enableWordUsageExamples', 'wordUsageExamplesMax', 'wordUsageExamplesAuthMax', 'enableMouseMove', 'mouseMoveDelay', 'mouseMoveAccuracy', 'enableMouseMoveLimitedByIdCheck', 'mouseMoveLimitedById']
+    const nonTextFeatures = ['enableLemmaTranslations', 'enableWordUsageExamples', 'wordUsageExamplesMax', 'wordUsageExamplesAuthMax',
+      'enableMouseMove', 'mouseMoveDelay', 'mouseMoveAccuracy', 'enableMouseMoveLimitedByIdCheck', 'mouseMoveLimitedById',
+      'wordlistMaxFlashcardExport']
     if (nonTextFeatures.includes(name)) {
       featureOptions.items[name].setValue(value)
     } else {
@@ -1910,8 +1913,8 @@ If no URLS are provided, will reset grammar data.
     // an array or an individual text value
     const baseKey = Options.parseKey(name)
     this.api.settings.getResourceOptions().items[baseKey.name].filter((f) => f.name === name).forEach((f) => { f.setTextValue(value) })
-    if (name === 'grammars') {
-      this.initGrammar()
+    if (baseKey.name === 'grammars') {
+      this.initGrammar(baseKey.group)
     }
   }
 

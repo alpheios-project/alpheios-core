@@ -1,4 +1,4 @@
-import { Feature, LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { Feature, LanguageModelFactory as LMF, Constants } from 'alpheios-data-models'
 import Morpheme from './morpheme.js'
 import Suffix from './suffix.js'
 import Form from './form.js'
@@ -172,7 +172,9 @@ export default class LanguageDataset {
   setBaseInflectionData (inflection) {
     inflection.constraints = Object.assign(inflection.constraints, this.model.getInflectionConstraints(inflection))
     if (inflection.constraints.paradigmBased && inflection.constraints.suffixBased) {
-      inflection.constraints.suffixBased = false
+      if (inflection[Feature.types.part].value === Constants.POFS_VERB) {
+        inflection.constraints.suffixBased = false
+      }
     }
 
     inflection.constraints.implemented = this.isImplemented(inflection)

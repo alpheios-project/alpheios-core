@@ -54,16 +54,17 @@ export default {
   data () {
     return {
       valueText: '',
+      origText: '',
       words: []
     }
   },
   watch: {
     'clearValue' () {
-      this.valueText = ''  
+      this.valueText = ''
       this.clearWords()
     },
     'enableLogeionAutoComplete' (value) {
-      if (!value) { 
+      if (!value) {
         this.clearWords()
       }
     }
@@ -80,11 +81,12 @@ export default {
     },
 
     checkLookupKeyPress (event) {
+      this.$emit('updateLookupText', this.valueText)
       if (event.keyCode === 13) {
         this.$emit('keyPressEnter', this.valueText)
         return
-      } 
-      
+      }
+
       this.updateBetaCodes()
       this.getAutocompleteWords()
     },
@@ -117,7 +119,7 @@ export default {
         }
       }
     },
-    
+
     selectWordFromAutoComplete (word) {
       this.valueText = word
       this.$emit('updateLookupText', this.valueText)
@@ -158,7 +160,7 @@ export default {
 
   .alpheios-input-group {
     position: relative;
-    
+
     input.alpheios-input {
         position: relative;
         z-index: 10;

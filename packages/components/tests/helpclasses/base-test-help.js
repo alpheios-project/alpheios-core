@@ -249,6 +249,12 @@ export default class BaseTestHelp {
           state: {
             hasTreebankData: false
           }
+        },
+        settings: {
+          namespaced: true,
+          state: {
+            featureResetCounter: 1
+          }
         }
       }
     })

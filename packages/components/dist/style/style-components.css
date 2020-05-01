@@ -607,7 +607,7 @@ div.alpheios-checkbox-block {
   line-height: calc(var(--alpheios-base-text-size) * 1.375);
   max-width: calc(var(--alpheios-base-text-size) * 14.6875);
   vertical-align: top;
-  min-height: calc(var(--alpheios-base-ui-size) * 1.375);
+  min-height: calc(var(--alpheios-base-ui-size) * 1.7);
 }
 
 .alpheios-checkbox-block input[type=checkbox] {
@@ -657,7 +657,7 @@ div.alpheios-checkbox-block {
   content: "";
 }
 
-.alpheios-button-tertiary, button.alpheios-button-tertiary, .alpheios-button-secondary, .alpheios-button-primary {
+.alpheios-button-tertiary, button.alpheios-button-tertiary, .alpheios-button-secondary, .alpheios-button-primary, .alpheios-button {
   font-family: var(--alpheios-sans-font-face);
   font-size: var(--alpheios-base-text-size);
   font-weight: 700;
@@ -675,30 +675,30 @@ div.alpheios-checkbox-block {
   border-radius: 0.6em;
   cursor: pointer;
 }
-.alpheios-button-tertiary::-moz-focus-inner, .alpheios-button-secondary::-moz-focus-inner, .alpheios-button-primary::-moz-focus-inner {
+.alpheios-button-tertiary::-moz-focus-inner, .alpheios-button-secondary::-moz-focus-inner, .alpheios-button-primary::-moz-focus-inner, .alpheios-button::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
-.alpheios-button-tertiary:hover, .alpheios-button-secondary:hover, .alpheios-button-primary:hover {
+.alpheios-button-tertiary:hover, .alpheios-button-secondary:hover, .alpheios-button-primary:hover, .alpheios-button:hover {
   text-decoration: none;
 }
-.alpheios-button-tertiary:focus, .alpheios-button-secondary:focus, .alpheios-button-primary:focus {
+.alpheios-button-tertiary:focus, .alpheios-button-secondary:focus, .alpheios-button-primary:focus, .alpheios-button:focus {
   outline: none;
 }
 
 .alpheios-button-primary {
-  color: var(--alpheios-btn-primary-font-color);
+  color: var(--alpheios-btn-primary-font-color) !important;
   background-color: var(--alpheios-btn-primary-bg-color);
   border-color: var(--alpheios-btn-primary-border-color);
 }
 .alpheios-button-primary:hover, .alpheios-button-primary:focus {
-  color: var(--alpheios-btn-primary-font-color-hover);
+  color: var(--alpheios-btn-primary-font-color-hover) !important;
   background-color: var(--alpheios-btn-primary-bg-color-hover);
   border-color: var(--alpheios-btn-primary-border-color-hover);
   box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25);
 }
 .alpheios-button-primary:active {
-  color: var(--alpheios-btn-primary-font-color-pressed);
+  color: var(--alpheios-btn-primary-font-color-pressed) !important;
   background-color: var(--alpheios-btn-primary-bg-color-pressed);
   border-color: var(--alpheios-btn-primary-border-color-pressed);
   box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1);
@@ -1133,9 +1133,22 @@ p.alpheios-lemma__translations-value {
 h4.alpheios-principal-parts__groupitem {
   display: inline;
   font-weight: 700;
+  margin-right: 5px;
+}
+h4.alpheios-principal-parts__groupitem:last-of-type {
+  margin-right: 0;
 }
 .alpheios-principal-parts__groupitem:last-child:after {
   content: ":";
+}
+.alpheios-principal-parts__item {
+  display: flex;
+}
+.alpheios-principal-parts__item .feature_extras {
+  margin-left: 5px;
+}
+.alpheios-principal-parts__item .feature_source {
+  margin-left: 5px;
 }
 .alpheios-morph-data__chinese p {
   margin-bottom: 0;
@@ -1146,23 +1159,26 @@ h4.alpheios-principal-parts__groupitem {
   font-size: 90%;
 }
 .alpheios-principal-parts__pointer-tooltip {
-  left: -7px;
+  display: block;
+  height: 22px;
+  margin-left: -5px;
 }
 .alpheios-principal-parts__pointer-icn {
+  display: block;
   fill: var(--alpheios-color-vivid);
   height: 22px;
-  position: relative;
-  top: 6px;
 }
 .alpheios-principal-parts__dsmbg-providers {
-  display: inline-block;
-  margin-left: -3px;
+  display: block;
+  height: 22px;
+}
+.alpheios-principal-parts__dsmbg-providers-tooltip {
+  margin-left: 5px;
 }
 .alpheios-principal-parts__dsmbg-providers-icn {
   fill: var(--alpheios-color-neutral-dark);
-  display: inline-block;
-  position: relative;
-  top: 3px;
+  display: block;
+  height: 22px;
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -1172,19 +1188,15 @@ h4.alpheios-principal-parts__groupitem {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph-data__pofs,
 .alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr {
   color: var(--alpheios-color-muted);
   cursor: pointer;
-  font-weight: 700;
   color: var(--alpheios-desktop-popup-link-color);
+  font-weight: 700;
 }
-.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph-data__pofs:hover, .alpheios-content .alpheios-morph-data__morphdata .alpheios-morph-data__pofs:active,
-.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr:hover,
-.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr:active {
+.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr:hover, .alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr:active {
   text-decoration: underline;
 }
-.alpheios-content .alpheios-morph-data__morphdata .alpheios-morph-data__pofs:hover,
 .alpheios-content .alpheios-morph-data__morphdata .alpheios-morph__linkedattr:hover {
   color: var(--alpheios-desktop-popup-link-color-hover);
 }
@@ -1470,6 +1482,17 @@ select.alpheios-setting__control,
   background: var(--alpheios-hint-bg);
   border: 1px solid var(--alpheios-hint-border-color);
 }
+.alpheios-notification-area__hint-btn, button.alpheios-notification-area__hint-btn {
+  color: var(--alpheios-color-neutral-lightest);
+  background: var(--alpheios-color-muted);
+  border-color: var(--alpheios-color-muted);
+}
+.alpheios-notification-area__hint-btn:hover, .alpheios-notification-area__hint-btn:focus, button.alpheios-notification-area__hint-btn:hover, button.alpheios-notification-area__hint-btn:focus {
+  box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25);
+}
+.alpheios-notification-area__hint-btn:active, button.alpheios-notification-area__hint-btn:active {
+  box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1);
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -1697,6 +1720,13 @@ a:not([href]):not([tabindex]).alpheios-popup__providers-link:hover {
 }
 .infl-prdgm-tbl__cell--label {
   font-weight: 700;
+}
+.infl-prdgm-tbl a.infl-prdgm-tbl__cell-reflink {
+  color: var(--alpheios-link-color);
+  text-decoration: underline;
+}
+.infl-prdgm-tbl a.infl-prdgm-tbl__cell-reflink:hover {
+  color: var(--alpheios-link-color-hover);
 }
 .alpheios-inflections__title {
   cursor: pointer;
@@ -2040,8 +2070,13 @@ h3.alpheios-inflections__supp-table-title {
 .infl-prdgm-tbl--supp {
   margin-bottom: 10px;
 }
-a.infl-supp-tbl__reflink {
+.infl-supp-tbl__cont a.infl-supp-tbl__reflink {
   float: right;
+  color: var(--alpheios-link-color);
+  text-decoration: underline;
+}
+.infl-supp-tbl__cont a.infl-supp-tbl__reflink:hover {
+  color: var(--alpheios-link-color-hover);
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -2199,6 +2234,27 @@ p.alpheios-grammar__block__title.open {
   right: 20px;
   z-index: 1000;
 }
+.alpheios-grammar__button--back-block button,
+.alpheios-grammar__button--show-titles-block button {
+  color: var(--alpheios-grammar-back-button-color);
+  background-color: var(--alpheios-grammar-back-button-bg);
+  border-color: var(--alpheios-grammar-back-button-border-color);
+  width: 30px;
+  height: 30px !important;
+  padding: 0 !important;
+  position: relative;
+}
+.alpheios-grammar__button--back-block button:hover,
+.alpheios-grammar__button--show-titles-block button:hover {
+  color: var(--alpheios-grammar-back-button-color-hover);
+  background-color: var(--alpheios-grammar-back-button-bg-hover);
+  border-color: var(--alpheios-grammar-back-button-border-color-hover);
+}
+.alpheios-grammar__button--back-block button svg,
+.alpheios-grammar__button--show-titles-block button svg {
+  position: relative;
+  top: 1px;
+}
 .alpheios-grammar__button--show-titles-block {
   right: 60px;
 }
@@ -2217,18 +2273,6 @@ p.alpheios-grammar__block__title.open {
   width: 22px;
   height: auto;
   fill: var(--alpheios-btn-primary-font-color);
-}
-.alpheios-grammar__button--back-block button,
-.alpheios-grammar__button--show-titles-block button {
-  color: var(--alpheios-grammar-back-button-color);
-  background-color: var(--alpheios-grammar-back-button-bg);
-  border-color: var(--alpheios-grammar-back-button-border-color);
-}
-.alpheios-grammar__button--back-block button:hover,
-.alpheios-grammar__button--show-titles-block button:hover {
-  color: var(--alpheios-grammar-back-button-color-hover);
-  background-color: var(--alpheios-grammar-back-button-bg-hover);
-  border-color: var(--alpheios-grammar-back-button-border-color-hover);
 }
 .alpheios-grammar__frame-progress {
   padding: 20px;
@@ -2576,7 +2620,8 @@ p.alpheios-word-usage-filter-title {
   vertical-align: middle;
   padding: 7px 0;
 }
-.alpheios-wordlist-language__worditem .alpheios-worditem__icon {
+.alpheios-wordlist-language__worditem .alpheios-worditem__icon,
+.alpheios-wordlist-language__worditem .alpheios-worditem__controlIcon {
   width: 22px;
   height: 22px;
   text-align: center;
@@ -2585,18 +2630,21 @@ p.alpheios-word-usage-filter-title {
   stroke: var(--alpheios-word-list-default-item-color);
   margin: 5px;
 }
-.alpheios-wordlist-language__worditem .alpheios-worditem__icon svg {
+.alpheios-wordlist-language__worditem .alpheios-worditem__icon svg,
+.alpheios-wordlist-language__worditem .alpheios-worditem__controlIcon svg {
   width: 22px;
   height: 22px;
   display: inline-block;
   vertical-align: top;
   padding: 2px;
 }
-.alpheios-wordlist-language__worditem .alpheios-worditem__icon.alpheios-worditem__delete_icon {
+.alpheios-wordlist-language__worditem .alpheios-worditem__icon.alpheios-worditem__delete_icon,
+.alpheios-wordlist-language__worditem .alpheios-worditem__controlIcon.alpheios-worditem__delete_icon {
   fill: var(--alpheios-word-list-delete-item-color);
   stroke: var(--alpheios-word-list-delete-item-color);
 }
-.alpheios-wordlist-language__worditem .alpheios-worditem__icon.alpheios-worditem__current_session_icon {
+.alpheios-wordlist-language__worditem .alpheios-worditem__icon.alpheios-worditem__current_session_icon,
+.alpheios-wordlist-language__worditem .alpheios-worditem__controlIcon.alpheios-worditem__current_session_icon {
   stroke: var(--alpheios-word-list-current-item-color);
   fill: var(--alpheios-word-list-current-item-color);
 }
@@ -2611,11 +2659,18 @@ p.alpheios-word-usage-filter-title {
 }
 .alpheios-worditem__targetWord {
   font-weight: bold;
-  width: calc((100% - 150px)/2);
+  width: calc((100% - 250px)/2);
   cursor: pointer;
 }
 .alpheios-worditem__lemmasList {
-  width: calc((100% - 150px)/2);
+  width: calc((100% - 250px)/2);
+}
+.alpheios-worditem__frequency {
+  width: 20px;
+}
+.alpheios-worditem__updatedDT {
+  width: 70px;
+  font-size: 80%;
 }
 .alpheios-visibility__hidden {
   visibility: hidden;
@@ -2642,16 +2697,24 @@ p.alpheios-word-usage-filter-title {
 .alpheios-wordlist-filters .alpheios-select.alpheios-wordlist-header-select-filterBy option.alpheios-select-disabled-option {
   color: var(--alpheios-color-placehoder);
 }
-.alpheios-wordlist-filters .alpheios-wordlist-header-title {
+.alpheios-wordlist-filters p.alpheios-wordlist-header-title {
   margin: 0;
   font-weight: bold;
-  padding-bottom: 10px;
+  cursor: pointer;
+}
+.alpheios-wordlist-filters p.alpheios-wordlist-header-title.alpheios-wordlist-filters__hidden {
+  text-decoration: underline;
+  color: var(--alpheios-link-color);
+}
+.alpheios-wordlist-filters p.alpheios-wordlist-header-title.alpheios-wordlist-filters__hidden:hover {
+  color: var(--alpheios-link-color-hover);
 }
 .alpheios-wordlist-filters .alpheios-wordlist-header-select-filterBy-block,
 .alpheios-wordlist-filters .alpheios-wordlist-header-input-filterBy-block {
   width: 48%;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: top;
+  margin: 7px 0;
 }
 .alpheios-wordlist-filters .alpheios-wordlist-header-input-filterBy-block {
   margin-left: 1%;
@@ -2735,6 +2798,11 @@ p.alpheios-word-usage-filter-title {
   direction: rtl;
   text-align: right;
 }
+.alpheios-number-input span.alpheios-number-input-description {
+  padding: 5px;
+  color: #acacac;
+  font-size: 90%;
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -2747,28 +2815,70 @@ p.alpheios-word-usage-filter-title {
   padding-bottom: 5px;
   border-bottom: 1px solid var(--alpheios-color-neutral-dark);
 }
-.alpheios-wordlist-sorting .alpheios-worditem__icon {
+.alpheios-wordlist-sorting .alpheios-worditem__controlIcon {
   width: 22px;
-  margin: 5px;
+  margin: 0 5px;
 }
-.alpheios-wordlist-sorting .alpheios-worditem__targetWord {
-  width: 28%;
+.alpheios-wordlist-sorting .alpheios-worditem__icon {
+  text-align: left;
 }
-.alpheios-wordlist-sorting .alpheios-worditem__targetWord svg {
+.alpheios-wordlist-sorting .alpheios-worditem__icon svg {
   width: 22px;
   height: 22px;
   display: inline-block;
   vertical-align: top;
   cursor: pointer;
   padding: 7px;
-  fill: var(--alpheios-word-list-sorting-link-color);
   box-sizing: content-box;
 }
-.alpheios-wordlist-sorting .alpheios-worditem__targetWord svg.alpheios-icon-active {
-  fill: var(--alpheios-word-list-sorting-link-color-hover);
+.alpheios-wordlist-sorting .alpheios-worditem__icon.alpheios-worditem__frequency,
+.alpheios-wordlist-sorting .alpheios-worditem__icon.alpheios-updatedDT {
+  padding: 0 10px;
 }
-.alpheios-layout-compact .alpheios-wordlist-sorting .alpheios-worditem__targetWord {
-  width: 25%;
+.alpheios-wordlist-sorting .alpheios-worditem__icon.alpheios-worditem__frequency svg,
+.alpheios-wordlist-sorting .alpheios-worditem__icon.alpheios-updatedDT svg {
+  padding: 7px 0;
+}
+.alpheios-wordlist-sorting .alpheios-icon-asc .sort-arrow-down {
+  fill: var(--alpheios-link-color-on-light);
+}
+.alpheios-wordlist-sorting .alpheios-icon-desc .sort-arrow-up {
+  fill: var(--alpheios-link-color-on-light);
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
+.alpheios-wordlist-download-confirmation {
+  margin-top: 10px;
+}
+.alpheios-wordlist-download-with-filters {
+  margin-top: 5px;
+}
+.alpheios-wordlist-download-with-filters label {
+  color: var(--alpheios-usage-link-color);
+}
+.alpheios-wordlist-download-confirmation__buttons.alpheios-notification-area__control {
+  min-width: 120px;
+  display: inline-block;
+}
+.alpheios-wordlist-download-confirmation .alpheios-wordlist-download-amount p {
+  font-size: 90%;
+  margin: 10px 0 0;
+}
+.alpheios-wordlist-download-confirmation-loading {
+  padding: 10px 20px 0 0;
+  color: var(--alpheios-color-bright);
+}
+.alpheios-wordlist-download-confirmation-loading .alpheios-popup-lexdataloading__progress-inner {
+  border-color: var(--alpheios-color-vivid);
+}
+.alpheios-wordlist-download-confirmation-loading .alpheios-popup-lexdataloading__progress-line {
+  background: var(--alpheios-color-vivid-hover);
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -2810,15 +2920,8 @@ p.alpheios-word-usage-filter-title {
   fill: var(--alpheios-word-list-delete-item-color);
   stroke: var(--alpheios-word-list-delete-item-color);
 }
-.alpheios-wordlist-delete-all-confirmation,
-.alpheios-wordlist-download-confirmation {
+.alpheios-wordlist-delete-all-confirmation {
   margin-top: 10px;
-}
-.alpheios-wordlist-download-with-filters {
-  margin-top: 5px;
-}
-.alpheios-wordlist-download-with-filters label {
-  color: var(--alpheios-usage-link-color);
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -2944,18 +3047,19 @@ p.alpheios-word-usage-filter-title {
   border: none;
   border-right: 1px solid var(--alpheios-settings-font-size-dark-color);
   background: transparent;
-  padding: calc(var(--alpheios-base-text-size) * 0.375) calc(var(--alpheios-base-text-size) * 0.75);
+  padding: calc(var(--alpheios-base-text-size) * 0.375) calc(var(--alpheios-base-text-size) * 0.75) !important;
   font-size: calc(var(--alpheios-base-text-size) * 0.625);
   cursor: pointer;
   flex: 1;
   margin: 0;
   border-radius: 0;
+  height: auto !important;
 }
 .alpheios-setting__button-group button:last-child {
   border-right: none;
 }
 .alpheios-setting__button-group button.active {
-  color: var(--alpheios-settings-font-size-light-color);
+  color: var(--alpheios-settings-font-size-light-color) !important;
   background: var(--alpheios-settings-font-size-dark-color);
   box-shadow: inset 0 calc(var(--alpheios-base-text-size) * 0.25) calc(var(--alpheios-base-text-size) * 0.25) rgba(0, 0, 0, 0.1);
 }
@@ -3330,8 +3434,9 @@ p.alpheios-word-usage-filter-title {
   height: 44px;
 }
 .alpheios-info__helpitem .alpheios-info__helpicon svg {
-  width: calc(var(--alpheios-base-ui-size) * 1.25);
-  height: calc(var(--alpheios-base-ui-size) * 1.25);
+  width: calc(var(--alpheios-base-text-size) * 1.875);
+  height: auto;
+  padding-right: calc(var(--alpheios-base-text-size) * 0.625);
   position: relative;
   fill: var(--alpheios-compact-toolbar-bg);
   stroke: var(--alpheios-compact-toolbar-bg);
@@ -3553,9 +3658,11 @@ p.alpheios-word-usage-filter-title {
   display: inline-block;
   margin-bottom: calc(var(--alpheios-base-ui-size) * 0.375);
   width: auto;
+  vertical-align: middle;
 }
 .alpheios-lookup__form-element {
   margin-bottom: calc(var(--alpheios-base-ui-size) * 0.625);
+  padding-top: calc(var(--alpheios-base-ui-size) * 0.625);
 }
 .alpheios-lookup__form-element.alpheios-lookup__lang-control {
   flex-direction: column;
@@ -3617,15 +3724,23 @@ span.alpheios-lookup__lang-change:hover {
 }
 .alpheios-lookup__form span.alpheios-lookup__form-beta-codes-check {
   vertical-align: middle;
-  padding-left: 10px;
+  padding-left: calc(var(--alpheios-base-ui-size) * 0.625);
+  margin-bottom: calc(var(--alpheios-base-ui-size) * 0.375);
+  display: inline-block;
 }
 .alpheios-lookup__form span.alpheios-lookup__form-beta-codes-check label {
   line-height: 1;
   font-size: 90%;
+  display: inline-block;
+  vertical-align: middle;
+}
+.alpheios-lookup__form span.alpheios-lookup__form-beta-codes-check input {
+  display: inline-block;
+  vertical-align: middle;
 }
 .alpheios-lookup__form-icon {
-  width: calc(var(--alpheios-base-ui-size) * 1.5);
-  height: calc(var(--alpheios-base-ui-size) * 1.5);
+  width: calc(var(--alpheios-base-ui-size) * 0.9375);
+  height: calc(var(--alpheios-base-ui-size) * 0.9375);
   box-sizing: border-box;
   position: relative;
   fill: var(--alpheios-desktop-toolbar-bg);
@@ -3645,14 +3760,11 @@ span.alpheios-lookup__lang-change:hover {
 .alpheios-lookup__form .alpheios-lookup__form-beta-codes-info {
   border-bottom: 1px solid var(--alpheios-color-placehoder);
   margin-bottom: calc(var(--alpheios-base-text-size) * 1.5);
-}
-.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info p {
   font-size: 94%;
-  margin: 0 0 calc(var(--alpheios-base-text-size) * 0.75);
 }
-.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info span {
-  display: inline-block;
-  padding-right: 20px;
+.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info div {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 .alpheios-lookup__autocomplete {
   margin-top: 5px;
@@ -3776,7 +3888,7 @@ span.alpheios-lookup__lang-change:hover {
   display: flex;
   position: absolute;
   width: calc(var(--alpheios-base-ui-size) * 20.625);
-  height: calc(var(--alpheios-base-ui-size) * 10);
+  height: calc(var(--alpheios-base-text-size) * 10);
   background: var(--alpheios-lookup-bg);
   left: calc(var(--alpheios-base-ui-size) * -20);
   top: 0;
@@ -3798,11 +3910,11 @@ span.alpheios-lookup__lang-change:hover {
   display: inline-block;
 }
 .alpheios-toolbar__lookup.alpheios-toolbar__lookup-beta-codes {
-  height: calc(var(--alpheios-base-ui-size) * 27.5);
+  height: calc(var(--alpheios-base-text-size) * 33.75);
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625);
 }
 .alpheios-toolbar__lookup.alpheios-toolbar__lookup-change-lang {
-  height: calc(var(--alpheios-base-ui-size) * 13.75);
+  height: calc(var(--alpheios-base-text-size) * 13.75);
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625);
 }
 .alpheios-toolbar__buttons {

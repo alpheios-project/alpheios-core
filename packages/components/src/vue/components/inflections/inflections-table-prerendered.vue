@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-      <sub-tables-wide :view="view" ></sub-tables-wide>
+      <sub-tables-wide :view="view" @navigate="navigate"></sub-tables-wide>
     </template>
   </div>
 </template>
@@ -76,6 +76,10 @@ export default {
         'infl-prdgm-tbl-cell--data': (cell.role === 'data'),
         'infl-prdgm-tbl-cell--full-match': (cell.role === 'data') && cell.fullMatch
       }
+    },
+
+    navigate: function (reflink) {
+      this.$emit('navigate', reflink)
     }
   }
 }

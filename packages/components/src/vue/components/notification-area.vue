@@ -42,7 +42,7 @@
       </div>
     </div>
     <div
-        class="alpheios-notification-area__notification alpheios-notification-area__notification--important"
+        class="alpheios-notification-area__hint"
         :class="cedictNotificationClasses"
         v-show="cedictNotificationIsVisible"
     >
@@ -54,7 +54,7 @@
       <div class="alpheios-notification-area__controlbox ">
         <button
             @click="loadCedictData"
-            class="alpheios-button-primary"
+            class="alpheios-button alpheios-notification-area__hint-btn"
             v-show="showCedictLoadDataBtn"
         >
           {{ l10n.getMsg('LABEL_CEDICT_LOAD_DATA_BTN') }}
@@ -321,5 +321,20 @@ export default {
     color: var(--alpheios-hint-color);
     background: var(--alpheios-hint-bg);
     border: 1px solid var(--alpheios-hint-border-color);
+  }
+
+  .alpheios-notification-area__hint-btn, button.alpheios-notification-area__hint-btn {
+    color: var(--alpheios-color-neutral-lightest);
+    background: var(--alpheios-color-muted);
+    border-color: var(--alpheios-color-muted);
+
+    &:hover,
+    &:focus {
+      box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25);
+    }
+
+    &:active {
+      box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1);
+    }
   }
 </style>

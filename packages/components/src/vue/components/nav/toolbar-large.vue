@@ -592,7 +592,7 @@ export default {
     display: flex;
     position: absolute;
     width: uisize(330px);
-    height: uisize(160px);
+    height: textsize(160px);
     background: var(--alpheios-lookup-bg);
     left: uisize(-320px);
     top: 0;
@@ -618,12 +618,12 @@ export default {
     }
 
     &.alpheios-toolbar__lookup-beta-codes {
-      height: uisize(440px);
+      height: textsize(540px);
       border-radius: uisize(10px) 0 uisize(10px) uisize(10px);
     }
 
     &.alpheios-toolbar__lookup-change-lang {
-      height: uisize(220px);
+      height: textsize(220px);
       border-radius: uisize(10px) 0 uisize(10px) uisize(10px);
     }
   }

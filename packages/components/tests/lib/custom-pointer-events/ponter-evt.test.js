@@ -8,7 +8,7 @@ describe('pointer-evt.test.js', () => {
   // console.error = function () {}
   console.log = function () {}
   console.warn = function () {}
-  
+
   beforeEach(() => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
@@ -32,20 +32,10 @@ describe('pointer-evt.test.js', () => {
     let testElement = document.createElement("div")
     let node = document.createTextNode("Test new div")
     testElement.appendChild(node)
-    
+
     expect(PointerEvt.alpheiosIgnoreAllTest(testElement.dataset)).toBeFalsy()
     testElement.setAttribute('data-alpheios-ignore', 'all')
     expect(PointerEvt.alpheiosIgnoreAllTest(testElement.dataset)).toBeTruthy()
-  })
-
-  it('3 PointerEvt - static excludeAllCpeTest checks if DOMStringMap has alphExcludeAllCpe', () => {
-    let testElement = document.createElement("div")
-    let node = document.createTextNode("Test new div")
-    testElement.appendChild(node)
-    
-    expect(PointerEvt.excludeAllCpeTest(testElement.dataset)).toBeFalsy()
-    testElement.setAttribute('data-alph-exclude-all-cpe', 'yes')
-    expect(PointerEvt.excludeAllCpeTest(testElement.dataset)).toBeTruthy()
   })
 
   it('4 PointerEvt - setPoint method defines time, x, y, target, pathe and excluded for the given type', () => {
@@ -141,7 +131,7 @@ describe('pointer-evt.test.js', () => {
     eventEl.start.time = 10
     eventEl.end.time = 20
 
-    expect(eventEl.duration).toEqual(10)    
+    expect(eventEl.duration).toEqual(10)
   })
 
   it('10 PointerEvt - mvmntX method returns difference between start.x and end.x, mvmntXAbs - returns abs of it', () => {
@@ -149,10 +139,10 @@ describe('pointer-evt.test.js', () => {
 
     let eventEl = new PointerEvt()
     eventEl.setStartPoint(110, 150, testElement)
-    eventEl.setEndPoint(10, 20, testElement)    
+    eventEl.setEndPoint(10, 20, testElement)
 
     expect(eventEl.mvmntX).toEqual(-100)
-    expect(eventEl.mvmntXAbs).toEqual(100)   
+    expect(eventEl.mvmntXAbs).toEqual(100)
   })
 
   it('11 PointerEvt - mvmntY method returns difference between start.y and end.y, mvmntYAbs - returns abs of it', () => {
@@ -160,11 +150,11 @@ describe('pointer-evt.test.js', () => {
 
     let eventEl = new PointerEvt()
     eventEl.setStartPoint(110, 150, testElement)
-    eventEl.setEndPoint(10, 20, testElement)    
+    eventEl.setEndPoint(10, 20, testElement)
 
     expect(eventEl.mvmntY).toEqual(-130)
     expect(eventEl.mvmntYAbs).toEqual(130)
-    expect(Math.ceil(eventEl.mvmntDist)).toEqual(165)    
+    expect(Math.ceil(eventEl.mvmntDist)).toEqual(165)
   })
 
   it('12 PointerEvt - mvmntDist method returns distance between points', () => {
@@ -172,17 +162,17 @@ describe('pointer-evt.test.js', () => {
 
     let eventEl = new PointerEvt()
     eventEl.setStartPoint(110, 150, testElement)
-    eventEl.setEndPoint(10, 20, testElement)    
+    eventEl.setEndPoint(10, 20, testElement)
 
-    expect(Math.ceil(eventEl.mvmntDist)).toEqual(165)    
+    expect(Math.ceil(eventEl.mvmntDist)).toEqual(165)
   })
 
   it('13 PointerEvt - static pointerDownListener method saves start data from domEvt to the current event (could be any type of PointerEvt,but currently used for Swipe)', () => {
     let testElement = document.createElement("div")
     let eventEl = new PointerEvt()
     jest.spyOn(eventEl, 'setStartPoint')
-    
-    PointerEvt.pointerDownListener(eventEl, { clientX: 10, clientY: 20, target: testElement })   
+
+    PointerEvt.pointerDownListener(eventEl, { clientX: 10, clientY: 20, target: testElement })
 
     expect(eventEl.setStartPoint).toHaveBeenCalledWith(10, 20, testElement, undefined)
   })
@@ -191,8 +181,8 @@ describe('pointer-evt.test.js', () => {
     let testElement = document.createElement("div")
     let eventEl = new PointerEvt()
     jest.spyOn(eventEl, 'setEndPoint')
-    
-    PointerEvt.pointerUpListener(eventEl, { clientX: 10, clientY: 20, target: testElement })   
+
+    PointerEvt.pointerUpListener(eventEl, { clientX: 10, clientY: 20, target: testElement })
 
     expect(eventEl.setEndPoint).toHaveBeenCalledWith(10, 20, testElement, undefined)
   })
@@ -202,8 +192,8 @@ describe('pointer-evt.test.js', () => {
     let evtHandler = jest.fn(() => {})
     let eventEl = new Swipe(testElement, evtHandler)
     let domEvt = { clientX: 10, clientY: 120, target: testElement }
-    
-    PointerEvt.pointerUpListener(eventEl, domEvt)   
+
+    PointerEvt.pointerUpListener(eventEl, domEvt)
     expect(evtHandler).toHaveBeenCalledWith(eventEl, domEvt)
   })
 
@@ -214,7 +204,7 @@ describe('pointer-evt.test.js', () => {
 
     let domEvt = { changedTouches: [{ clientX: 10, clientY: 110 }], target: testElement }
 
-    PointerEvt.touchStartListener(eventEl, domEvt)   
+    PointerEvt.touchStartListener(eventEl, domEvt)
 
     expect(eventEl.setStartPoint).toHaveBeenCalledWith(10, 110, testElement, undefined)
   })
@@ -223,9 +213,9 @@ describe('pointer-evt.test.js', () => {
     let testElement = document.createElement("div")
     let eventEl = new PointerEvt()
     jest.spyOn(eventEl, 'setEndPoint')
-    
+
     let domEvt = { changedTouches: [{ clientX: 10, clientY: 110 }], target: testElement }
-    PointerEvt.touchEndListener(eventEl, domEvt)   
+    PointerEvt.touchEndListener(eventEl, domEvt)
 
     expect(eventEl.setEndPoint).toHaveBeenCalledWith(10, 110, testElement, undefined)
   })
@@ -235,8 +225,8 @@ describe('pointer-evt.test.js', () => {
     let evtHandler = jest.fn(() => {})
     let eventEl = new Swipe(testElement, evtHandler)
     let domEvt = { changedTouches: [{ clientX: 10, clientY: 110 }], target: testElement }
-    
-    PointerEvt.touchEndListener(eventEl, domEvt)   
+
+    PointerEvt.touchEndListener(eventEl, domEvt)
     expect(evtHandler).toHaveBeenCalledWith(eventEl, domEvt)
   })
 
@@ -248,7 +238,7 @@ describe('pointer-evt.test.js', () => {
     testElement.addEventListener = jest.fn(() => {})
 
     PointerEvt.addUpDownListeners(testElement, eventEl)
-    
+
     expect(testElement.addEventListener).toHaveBeenCalledWith('pointerdown', expect.anything(), expect.anything())
     expect(testElement.addEventListener).toHaveBeenCalledWith('pointerup', expect.anything(), expect.anything())
   })
@@ -261,9 +251,32 @@ describe('pointer-evt.test.js', () => {
     testElement.addEventListener = jest.fn(() => {})
 
     PointerEvt.addUpDownListeners(testElement, eventEl)
-    
+
     expect(testElement.addEventListener).toHaveBeenCalledWith('touchstart', expect.anything(), expect.anything())
     expect(testElement.addEventListener).toHaveBeenCalledWith('touchend', expect.anything(), expect.anything())
+  })
+
+  it('21 PointerEvt - static alpheiosEnableAllTest', () => {
+    let testElement = document.createElement("div")
+    let node = document.createTextNode("Test new div")
+    testElement.appendChild(node)
+    testElement.setAttribute('data-alpheios-enable', 'all')
+    expect(PointerEvt.alpheiosEnableAllTest(testElement.dataset)).toBeTruthy()
+  })
+
+  it('22 PointerEvt - handles ignore none embedded in ignore all', () => {
+    let eventEl = new PointerEvt()
+    let testElementParent = document.createElement("div")
+    testElementParent.setAttribute('data-alpheios-ignore', 'all')
+    let testElement = document.createElement("div")
+    testElement.setAttribute('data-alpheios-enable','all')
+    testElementParent.appendChild(testElement)
+    let testElementSibling = document.createElement("div")
+    testElementParent.appendChild(testElementSibling)
+    let enabledPath = PointerEvt.buildPath(testElement)
+    let ignoredPath = PointerEvt.buildPath(testElementSibling)
+    expect(eventEl.alpheiosIgnoreThis(enabledPath)).toBeFalsy()
+    expect(eventEl.alpheiosIgnoreThis(ignoredPath)).toBeTruthy()
   })
 
 })

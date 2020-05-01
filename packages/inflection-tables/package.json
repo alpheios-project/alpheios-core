@@ -12,7 +12,7 @@
     "test-no-coverage": "jest",
     "test-data": "jest tests/data/*",
     "test-c": "jest tests/lib/lang/greek-language-dataset.test.js --no-cache --coverage && shx cat ./coverage/lcov.info | coveralls",
-    "test-a": "npm run lint && jest tests/data/greek-adjective-paradigm.test.js",
+    "test-a": "npm run lint && jest tests/data/greek-verb-paradigm.test.js",
     "test-o": "npm run lint && jest tests/new-paradigm.test.js",
     "test-gv": "jest tests/data/greek-verb-paradigm.test.js",
     "test-gv2": "jest tests/data/greek-views.test.js",
