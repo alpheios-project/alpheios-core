@@ -435,18 +435,15 @@ Lexis.api = (moduleInstance, store) => {
      *
      * @param {TextSelector} textSelector - A text selector object containing information about a lookup word.
      * @param {string} lemmaTranslationLang - A locale for lemma translations (e.g. 'en-US')
-     * @param wordUsageExamples
      */
     lookupText: async (textSelector) => {
       return moduleInstance.lexicalQuery({ store, textSelector, source: 'lookup' })
     },
 
     /**
-     * Starts a lexical query from a lookup component.
+     * Starts a lexical query for adding data to wordlist.
      *
-     * @param {TextSelector} textSelector - A text selector object containing information about a lookup word.
-     * @param {string} lemmaTranslationLang - A locale for lemma translations (e.g. 'en-US')
-     * @param wordUsageExamples
+     * @param {TextSelector} textSelector - A text selector object containing information about a word from the wordlist.
      */
     lookupForWordlist: async (textSelector) => {
       return moduleInstance.lexicalQuery({ store, textSelector, source: 'wordlist' })
