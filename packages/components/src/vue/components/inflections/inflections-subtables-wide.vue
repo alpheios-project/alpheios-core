@@ -75,7 +75,11 @@ export default {
   }
 
   .infl-prdgm-tbl a.infl-prdgm-tbl__cell-reflink {
-    color: var(--alpheios-link-color-on-medium);
+    color: var(--alpheios-link-color);
     text-decoration: underline;
+
+    &:hover {
+      color: var(--alpheios-link-color-hover);
+    }
   }
 </style>
