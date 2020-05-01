@@ -73,4 +73,13 @@ export default {
   .infl-prdgm-tbl__cell--label {
     font-weight: 700;
   }
+
+  .infl-prdgm-tbl a.infl-prdgm-tbl__cell-reflink {
+    color: var(--alpheios-link-color);
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--alpheios-link-color-hover);
+    }
+  }
 </style>

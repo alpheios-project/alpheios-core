@@ -1710,6 +1710,13 @@ a:not([href]):not([tabindex]).alpheios-popup__providers-link:hover {
 .infl-prdgm-tbl__cell--label {
   font-weight: 700;
 }
+.infl-prdgm-tbl a.infl-prdgm-tbl__cell-reflink {
+  color: var(--alpheios-link-color);
+  text-decoration: underline;
+}
+.infl-prdgm-tbl a.infl-prdgm-tbl__cell-reflink:hover {
+  color: var(--alpheios-link-color-hover);
+}
 .alpheios-inflections__title {
   cursor: pointer;
 }
@@ -2052,8 +2059,13 @@ h3.alpheios-inflections__supp-table-title {
 .infl-prdgm-tbl--supp {
   margin-bottom: 10px;
 }
-a.infl-supp-tbl__reflink {
+.infl-supp-tbl__cont a.infl-supp-tbl__reflink {
   float: right;
+  color: var(--alpheios-link-color);
+  text-decoration: underline;
+}
+.infl-supp-tbl__cont a.infl-supp-tbl__reflink:hover {
+  color: var(--alpheios-link-color-hover);
 }
 /*
  Calculates a size of text elements relative to the base size.
