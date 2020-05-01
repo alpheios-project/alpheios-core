@@ -145,4 +145,12 @@ describe('greek_language_model.j', () => {
   it('15 GreekLanguageModel - isValidUnicode defines mare as not greek', () => {
     expect(greekModel.isValidUnicode('beatum')).toBeFalsy()
   })
+
+  it('19 GreekLanguageModel - alternateWordEncodings tonosToOxia', () => {
+    let word = 'ἐκπ\u03AFπτω'
+    let alt = greekModel.alternateWordEncodings(word)
+    expect(alt.length).toEqual(2)
+    expect(alt[1]).toEqual('ἐκπ\u1F77πτω')
+  })
+
 })

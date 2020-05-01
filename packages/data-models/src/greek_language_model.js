@@ -157,6 +157,19 @@ for the current node
     return text
   }
 
+  static _tonosToOxia (word) {
+    return word.replace(
+      /\u{03AC}/ug, '\u{1F71}').replace( // alpha
+      /\u{03AD}/ug, '\u{1F73}').replace( // epsilon
+      /\u{03AE}/ug, '\u{1F75}').replace( // eta
+      /\u{03AF}/ug, '\u{1F77}').replace( // iota
+      /\u{03CC}/ug, '\u{1F79}').replace( // omicron
+      /\u{03CD}/ug, '\u{1F7B}').replace( // upsilon
+      /\u{03CE}/ug, '\u{1F7D}').replace( // omega
+      /\u{0390}/ug, '\u{1FD3}').replace( //iota with dialytika and tonos
+      /\u{03B0}/ug, '\u{1FE3}') // upsilon with dialytika and tonos
+  }
+
   /**
    * @override LanguageModel#alternateWordEncodings
    */
@@ -183,6 +196,14 @@ for the current node
       /[\u{1FE0}\u{1FE1}]/ug, '\u{03C5}').replace(
       /[\u{1FE8}\u{1FE9}]/ug, '\u{03A5}').replace(
       /[\u{00AF}\u{0304}\u{0306}]/ug, '') // eslint-disable-line no-misleading-character-class
+
+    // Per https://wiki.digitalclassicist.org/Greek_Unicode_duplicated_vowels
+    // oxia and tonos are semantically identical and tonos should be preferred over oxia
+    // both both should be processed as equivalent. the normalize('NFC') function will
+    // normalize oxia to tonos, but some of our dictionary indicies may use oxia so
+    // we should allow oxia back in as an alternate encoding
+    const tonosToOxia = GreekLanguageModel._tonosToOxia(normalized)
+
     const strippedDiaeresis = normalized.replace(
       /\u{0390}/ug, '\u{03AF}').replace(
       /\u{03AA}/ug, '\u{0399}').replace(
@@ -209,7 +230,11 @@ for the current node
     } else if (encoding === 'strippedDiacritics') {
       return [strippedDiacritics]
     } else {
-      return [strippedVowelLength]
+      let alternates = [strippedVowelLength]
+      if (tonosToOxia !== strippedVowelLength) {
+        alternates.push(tonosToOxia)
+      }
+      return alternates
     }
   }
 
