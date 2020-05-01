@@ -247,12 +247,14 @@ export default {
       display: inline-block;
       margin-bottom: uisize(6px);
       width: auto;
+      vertical-align: middle;
     }
   }
 
   // Placed here to have a double selector to override .alpheios-content input margin
   .alpheios-lookup__form-element {
     margin-bottom: uisize(10px);
+    padding-top: uisize(10px);
 
     &.alpheios-lookup__lang-control {
       flex-direction: column;
@@ -342,9 +344,11 @@ export default {
       line-height: 1;
       font-size: 90%;
       display: inline-block;
+      vertical-align: middle;
     }
     input {
       display: inline-block;
+      vertical-align: middle;
     }
   }
 

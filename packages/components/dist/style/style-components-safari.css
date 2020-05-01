@@ -3635,9 +3635,11 @@ p.alpheios-word-usage-filter-title {
   display: inline-block;
   margin-bottom: calc(var(--alpheios-base-ui-size) * 0.375) !important;
   width: auto !important;
+  vertical-align: middle !important;
 }
 .alpheios-lookup__form-element {
   margin-bottom: calc(var(--alpheios-base-ui-size) * 0.625) !important;
+  padding-top: calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
 .alpheios-lookup__form-element.alpheios-lookup__lang-control {
   flex-direction: column !important;
@@ -3707,9 +3709,11 @@ span.alpheios-lookup__lang-change:hover {
   line-height: 1 !important;
   font-size: 90% !important;
   display: inline-block;
+  vertical-align: middle !important;
 }
 .alpheios-lookup__form span.alpheios-lookup__form-beta-codes-check input {
   display: inline-block;
+  vertical-align: middle !important;
 }
 .alpheios-lookup__form-icon {
   width: calc(var(--alpheios-base-ui-size) * 0.9375) !important;
@@ -3883,7 +3887,7 @@ span.alpheios-lookup__lang-change:hover {
   display: inline-block;
 }
 .alpheios-toolbar__lookup.alpheios-toolbar__lookup-beta-codes {
-  height: calc(var(--alpheios-base-text-size) * 28.125) !important;
+  height: calc(var(--alpheios-base-text-size) * 33.75) !important;
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
 .alpheios-toolbar__lookup.alpheios-toolbar__lookup-change-lang {
