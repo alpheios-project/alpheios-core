@@ -618,7 +618,7 @@ export default {
     }
 
     &.alpheios-toolbar__lookup-beta-codes {
-      height: textsize(450px);
+      height: textsize(540px);
       border-radius: uisize(10px) 0 uisize(10px) uisize(10px);
     }
 

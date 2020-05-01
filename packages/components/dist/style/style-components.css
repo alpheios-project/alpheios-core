@@ -3647,9 +3647,11 @@ p.alpheios-word-usage-filter-title {
   display: inline-block;
   margin-bottom: calc(var(--alpheios-base-ui-size) * 0.375);
   width: auto;
+  vertical-align: middle;
 }
 .alpheios-lookup__form-element {
   margin-bottom: calc(var(--alpheios-base-ui-size) * 0.625);
+  padding-top: calc(var(--alpheios-base-ui-size) * 0.625);
 }
 .alpheios-lookup__form-element.alpheios-lookup__lang-control {
   flex-direction: column;
@@ -3719,9 +3721,11 @@ span.alpheios-lookup__lang-change:hover {
   line-height: 1;
   font-size: 90%;
   display: inline-block;
+  vertical-align: middle;
 }
 .alpheios-lookup__form span.alpheios-lookup__form-beta-codes-check input {
   display: inline-block;
+  vertical-align: middle;
 }
 .alpheios-lookup__form-icon {
   width: calc(var(--alpheios-base-ui-size) * 0.9375);
@@ -3744,15 +3748,12 @@ span.alpheios-lookup__lang-change:hover {
 }
 .alpheios-lookup__form .alpheios-lookup__form-beta-codes-info {
   border-bottom: 1px solid var(--alpheios-color-placehoder);
-  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
-}
-.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info p {
+  margin-bottom: calc(var(--alpheios-base-text-size) * 1.5);
   font-size: 94%;
-  margin: 0 0 calc(var(--alpheios-base-text-size) * 0.75);
 }
-.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info span {
-  display: inline-block;
-  padding-right: calc(var(--alpheios-base-text-size) * 0.625);
+.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info div {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 .alpheios-lookup__autocomplete {
   margin-top: 5px;
@@ -3898,7 +3899,7 @@ span.alpheios-lookup__lang-change:hover {
   display: inline-block;
 }
 .alpheios-toolbar__lookup.alpheios-toolbar__lookup-beta-codes {
-  height: calc(var(--alpheios-base-text-size) * 28.125);
+  height: calc(var(--alpheios-base-text-size) * 33.75);
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625);
 }
 .alpheios-toolbar__lookup.alpheios-toolbar__lookup-change-lang {

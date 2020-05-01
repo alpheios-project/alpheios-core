@@ -698,18 +698,13 @@
     "component": "Grammar"
   },
   "LOOKUP_USE_BETA_CODES_CHECK": {
-    "message": "Enable input in betacode",
+    "message": "Input Betacode",
     "description": "Update beta codes to greek chars",
     "component": "Lookup"
   },
   "LOOKUP_USE_BETA_CODES_INFO_FIRST": {
-    "message": "You can type Greek using the following betacode characters. They will be converted upon input to Unicode.",
+    "message": "Betacode input will be converted to Greek Unicode. Use upper-case for capitals letters. Apply diacritics <b>before</b> vowels and combine as shown.",
     "description": "First row inside beta codes info",
-    "component": "Lookup"
-  },
-  "LOOKUP_USE_BETA_CODES_INFO_LAST": {
-    "message": "Combine the signs e.g.",
-    "description": "Last row inside beta codes info",
     "component": "Lookup"
   }
 }
