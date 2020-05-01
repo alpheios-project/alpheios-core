@@ -1,6 +1,6 @@
 <template>
   <div class="alpheios-grammar">
-    <div class="alpheios-grammar__titles" v-show="showTitles">
+    <div class="alpheios-grammar__titles" v-show="mustShowTitles">
         <h1 class="alpheios-panel__title">{{ l10n.getText('LABEL_BROWSE_GRAMMAR') }}</h1>
       <div class="alpheios-grammar__block alpheios-clickable"
           :class="{open: !languageItem.collapsed}"
@@ -139,6 +139,10 @@ export default {
         }
       }
       return true
+    },
+    mustShowTitles () {
+      // if all the grammars are collapsed then we should always show the titles
+      return this.showTitles || Object.values(this.languageList).filter((langData) => ! langData.collapsed).length === 0
     }
   },
   methods: {
@@ -222,7 +226,8 @@ export default {
     },
     showHideTitles () {
       this.showTitles = !this.showTitles
-    }
+    },
+
   }
 }
 </script>
