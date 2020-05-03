@@ -42,7 +42,8 @@
 <script>
   import Download from '@/lib/utility/download.js'
   import CloseIcon from '@/images/inline-icons/x-close.svg'
-  
+  import Tooltip from '@/vue/components/tooltip.vue'
+
   import Options from '@/lib/options/options.js'
   import TextSelector from '@/lib/selection/text-selector'
 
@@ -59,7 +60,8 @@
     components: {
       closeIcon: CloseIcon,
       setting: Setting,
-      progressBar: ProgressBar
+      progressBar: ProgressBar,
+      alphTooltip: Tooltip
     },
     props: {
       languageCode: {
