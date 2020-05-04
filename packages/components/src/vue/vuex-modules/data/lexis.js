@@ -338,7 +338,8 @@ Lexis.store = (moduleInstance) => {
       cedictLoadingInProgress: false,
       cedictDisplayNotification: false,
       hasTreebankData: false, // Whether treebank has any word or sentence data
-      treebankSrc: null
+      treebankSrc: null,
+      treebankDisplayNotification: true // Whether to display a notification about treebank being not available
     },
 
     mutations: {
@@ -386,6 +387,10 @@ Lexis.store = (moduleInstance) => {
       resetTreebankInfo (state) {
         state.hasTreebankData = false
         state.treebankSrc = null
+      },
+
+      hideTreebankNotification (state) {
+        state.treebankDisplayNotification = false
       }
     }
   }
@@ -465,6 +470,10 @@ Lexis.api = (moduleInstance, store) => {
       } else {
         console.error('Load CEDICT data request failed', loadResult.errors)
       }
+    },
+
+    hideTreebankNotification: () => {
+      store.commit('lexis/hideTreebankNotification')
     },
 
     hideCedictNotification: () => {

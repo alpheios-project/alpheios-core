@@ -43,6 +43,22 @@
     </div>
     <div
         class="alpheios-notification-area__hint"
+        v-show="$store.state.lexis.treebankDisplayNotification"
+    >
+      <div
+          class="alpheios-notification-area__msg"
+      >
+        {{ l10n.getMsg('TEXT_TREEBANK_NOT_AVAILABLE') }}
+      </div>
+      <div
+          class="alpheios-notification-area__close-btn"
+          @click="hideTreebankNotification"
+      >
+        <close-icon/>
+      </div>
+    </div>
+    <div
+        class="alpheios-notification-area__hint"
         :class="cedictNotificationClasses"
         v-show="cedictNotificationIsVisible"
     >
@@ -209,6 +225,10 @@ export default {
 
     hideCedictNotification: function () {
       this.lexis.hideCedictNotification()
+    },
+
+    hideTreebankNotification: function () {
+      this.lexis.hideTreebankNotification()
     }
   }
 }
