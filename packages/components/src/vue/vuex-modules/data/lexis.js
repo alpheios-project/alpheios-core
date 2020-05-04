@@ -52,7 +52,6 @@ export default class Lexis extends Module {
     store.registerModule(this.constructor.moduleName, this.constructor.store(this))
     api[this.constructor.moduleName] = this.constructor.api(this, store)
 
-    console.info('constructor')
     this._treebankDataItem = TreebankDataItem.getTreebankData()
     if (this._treebankDataItem) {
       store.commit('lexis/setTreebankInfo', { treebankSrc: this._treebankDataItem.fullUrl, hasTreebankData: false })
@@ -110,7 +109,6 @@ export default class Lexis extends Module {
    */
   static async refreshUntilLoaded (provider, retryCount, timeout) {
     let count = retryCount
-    console.info('refreshUntilLoaded: started')
     do {
       const result = await ClientAdapters.morphology.arethusaTreebank({
         method: 'refreshView',
@@ -119,16 +117,13 @@ export default class Lexis extends Module {
         }
       })
       if (result.errors.length === 0) {
-        console.info('refreshUntilLoaded: successful attempt')
         // Request completed successfully
         return
       }
-      console.info('refreshUntilLoaded: failed attempt')
       // refreshView returned an error, let's try again after a timeout
       await this.timeout(timeout)
     } while (--count > 0)
     // All attempts to get a response with no errors failed
-    console.info('refreshUntilLoaded: failed ultimately')
     throw new Error(`refreshUntilLoaded did not succeed in ${retryCount} attempts`)
   }
 
