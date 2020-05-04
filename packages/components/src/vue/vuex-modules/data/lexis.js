@@ -297,7 +297,7 @@ export default class Lexis extends Module {
     }
     if (!wordUsageExamples) { wordUsageExamples = this._appApi.getWordUsageExamplesQueryParams(textSelector) }
 
-    if (source === 'wordlist') {
+    if (source !== 'wordlist') {
       this._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data, source)
     }
 
