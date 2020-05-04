@@ -43,7 +43,7 @@
     </div>
     <div
         class="alpheios-notification-area__hint"
-        v-show="$store.state.lexis.treebankDisplayNotification"
+        v-show="$store.state.lexis.treebankRefreshFailed"
     >
       <div
           class="alpheios-notification-area__msg"
@@ -228,7 +228,7 @@ export default {
     },
 
     hideTreebankNotification: function () {
-      this.lexis.hideTreebankNotification()
+      this.$store.commit('lexis/hideTreebankFailedNotification')
     }
   }
 }
