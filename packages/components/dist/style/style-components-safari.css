@@ -1468,11 +1468,18 @@ select.alpheios-setting__control,
   padding-right: calc(var(--alpheios-base-ui-size) * 0.625) !important;
   flex: 1 1 auto !important;
 }
+.alpheios-notification-area__control-cont {
+  display: flex;
+  flex: 0 !important;
+}
 .alpheios-notification-area__control {
   display: inline;
 }
 .alpheios-notification-area__control .alpheios-setting__control {
   width: 140px !important;
+}
+.alpheios-notification-area__control button {
+  margin-bottom: 5px !important;
 }
 .alpheios-notification-area__controlbox {
   flex-flow: wrap !important;
