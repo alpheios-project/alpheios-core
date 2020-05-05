@@ -67,7 +67,7 @@ export default {
       required: true
     },
     selectedOverride: {
-      type: String,
+      type: [String, Boolean],
       required: false
     },
     showLabelText: {
@@ -101,11 +101,24 @@ export default {
   computed: {
     selected: {
       get: function () {
+        if (this.data.labelText === 'Use Mouseover to Select Words (recommended for Chinese)') {
+          console.info('settings data', this.data.labelText, this.data.currentValue)
+          console.info('this.selectedOverride', this.selectedOverride)
+        }
         let rv
         if (typeof this.selectedOverride === 'string') {
+          if (this.data.labelText === 'Use Mouseover to Select Words (recommended for Chinese)') {
+            console.info('inside rv 1')
+          }
           if (this.dataModel.boolean == true) {
-            rv = this.selectedOverried === 'true'
+            if (this.data.labelText === 'Use Mouseover to Select Words (recommended for Chinese)') {
+              console.info('inside rv 2', this.selectedOverride, this.selectedOverride === 'true')
+            }
+            rv = this.selectedOverride === 'true'
           } else {
+            if (this.data.labelText === 'Use Mouseover to Select Words (recommended for Chinese)') {
+              console.info('inside rv 3')
+            }
             rv = this.selectedOverride
           }
         } else if (typeof this.dataModel.currentTextValue === 'function' && this.dataModel.boolean !== true && this.dataModel.number !== true && this.dataModel.text !== true) {
@@ -115,11 +128,15 @@ export default {
         } else if (this.dataModel.number === true) {
           rv = parseInt(this.dataModel.currentValue)
         }
+        if (this.data.labelText === 'Use Mouseover to Select Words (recommended for Chinese)') {
+          console.info('final rv - ', rv)
+          console.info('*******************************************')
+        }
         return rv
       },
       set: function (newValue) {
         this.$emit('change', this.data.name, newValue)
-        this.selectedOverride = undefined
+        this.$emit('clearSelectedOverride')
         this.dataModel = this.data // To force Vue.js to redraw
       }
     },

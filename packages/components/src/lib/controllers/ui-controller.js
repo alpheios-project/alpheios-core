@@ -500,6 +500,7 @@ if you want to create a different configuration of a UI controller.
       // TODO: Some of the functions below should probably belong to other API groups.
       getDefaultLangCode: this.getDefaultLangCode.bind(this),
       getMouseMoveOverride: this.getMouseMoveOverride.bind(this),
+      clearMouseMoveOverride: this.clearMouseMoveOverride.bind(this),
       featureOptionChange: this.featureOptionChange.bind(this),
       resetAllOptions: this.resetAllOptions.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
@@ -577,7 +578,9 @@ if you want to create a different configuration of a UI controller.
         hasWordListsData: false,
         wordListUpdateTime: 0, // To notify word list panel about data update
         providers: [], // A list of resource providers
-        queryStillActive: false // it is for Persian case, when we canReset
+        queryStillActive: false, // it is for Persian case, when we canReset
+
+        mouseMoveOverrideUpdate: 1
       },
 
       getters: {
@@ -723,6 +726,10 @@ if you want to create a different configuration of a UI controller.
 
         setQueryStillActive (state, value = true) {
           state.queryStillActive = value
+        },
+
+        setMouseMoveOverrideUpdate (state) {
+          state.mouseMoveOverrideUpdate = state.mouseMoveOverrideUpdate + 1
         }
       }
     })
@@ -1017,7 +1024,13 @@ if you want to create a different configuration of a UI controller.
   }
 
   getMouseMoveOverride () {
+    console.info('this.options.enableMouseMoveOverride - ', this.options.enableMouseMoveOverride)
     return this.options.enableMouseMoveOverride
+  }
+
+  clearMouseMoveOverride () {
+    this.options.enableMouseMoveOverride = undefined
+    this.store.commit('app/setMouseMoveOverrideUpdate')
   }
 
   /**
@@ -1828,9 +1841,11 @@ If no URLS are provided, will reset grammar data.
         this.updateLemmaTranslations()
         break
       case 'enableMouseMove':
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+        console.info('featureOptionStateChange enableMouseMove registerAndActivateMouseMove')
         // If user manually sets the mouse move option then this takes priority over the page override
         this.options.enableMouseMoveOverride = false
+        this.store.commit('app/setMouseMoveOverrideUpdate')
+        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
         break
       case 'mouseMoveDelay':
         this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
@@ -1966,7 +1981,9 @@ If no URLS are provided, will reset grammar data.
   }
 
   registerAndActivateMouseMove (listenerName, selector) {
+    console.info('*********************registerAndActivateMouseMove - start')
     if (this.enableMouseMoveEvent()) {
+      console.info('registerAndActivateMouseMove - enableMouseMoveEvent inside')
       const eventParams = {
         mouseMoveDelay: this.featureOptions.items.mouseMoveDelay.currentValue,
         mouseMoveAccuracy: this.featureOptions.items.mouseMoveAccuracy.currentValue,
@@ -1986,6 +2003,11 @@ If no URLS are provided, will reset grammar data.
   }
 
   enableMouseMoveEvent () {
+    console.info('this.platform.isDesktop - ', this.platform.isDesktop)
+    console.info('this.featureOptions.items.enableMouseMove.currentValue - ', this.featureOptions.items.enableMouseMove.currentValue)
+    console.info('this.options.enableMouseMoveOverride - ', this.options.enableMouseMoveOverride)
+    console.info('this.platform.isGoogleDocs - ', this.platform.isGoogleDocs)
+    console.info('******************************************')
     return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || this.platform.isGoogleDocs)
   }
 }

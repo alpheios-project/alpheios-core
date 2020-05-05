@@ -54,10 +54,11 @@
     <fieldset class="alpheios-feature-options__cont-wordselect">
       <legend>{{ l10n.getText("LABEL_FIELDSET_WORDSELECT") }}</legend>
       <setting
-          class="alpheios-feature-options__item"
-          :data="featureOptions.items.enableMouseMove"
+          class = "alpheios-feature-options__item"
+          :data = "featureOptions.items.enableMouseMove"
           :selectedOverride = "mouseMoveChecked"
-          @change="featureOptionChanged"
+          @change = "featureOptionChanged"
+          @clearSelectedOverride =  "clearMouseMoveOverride"
       >
       </setting>
        <setting
@@ -114,7 +115,9 @@
     computed: {
 
       mouseMoveChecked: function() {
-        return this.app.getMouseMoveOverride() ? 'true' : 'false'
+        let res = this.app.getMouseMoveOverride()
+        console.info('mouseMoveChecked - res', res)
+        return this.$store.state.app.mouseMoveOverrideUpdate &&  res ? 'true' : false
       },
       featureOptions: function() {
         return this.settings.getFeatureOptions()
@@ -124,6 +127,9 @@
       featureOptionChanged: function (name, value) {
         let keyinfo = Options.parseKey(name)
         this.app.featureOptionChange(keyinfo.name, value)
+      },
+      clearMouseMoveOverride () {
+        this.app.clearMouseMoveOverride()
       }
     }
   }
