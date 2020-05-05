@@ -303,7 +303,7 @@ export default class Lexis extends Module {
 
     let annotatedHomonyms
     if (source === 'page') {
-      annotatedHomonyms = this.getTreebankData({
+      annotatedHomonyms = await this.getTreebankData({
         store, textSelector, treebankDataItem
       })
     }
