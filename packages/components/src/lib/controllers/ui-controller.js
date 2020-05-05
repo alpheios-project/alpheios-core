@@ -500,6 +500,7 @@ if you want to create a different configuration of a UI controller.
       // TODO: Some of the functions below should probably belong to other API groups.
       getDefaultLangCode: this.getDefaultLangCode.bind(this),
       getMouseMoveOverride: this.getMouseMoveOverride.bind(this),
+      clearMouseMoveOverride: this.clearMouseMoveOverride.bind(this),
       featureOptionChange: this.featureOptionChange.bind(this),
       resetAllOptions: this.resetAllOptions.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
@@ -577,7 +578,9 @@ if you want to create a different configuration of a UI controller.
         hasWordListsData: false,
         wordListUpdateTime: 0, // To notify word list panel about data update
         providers: [], // A list of resource providers
-        queryStillActive: false // it is for Persian case, when we canReset
+        queryStillActive: false, // it is for Persian case, when we canReset
+
+        mouseMoveOverrideUpdate: 1
       },
 
       getters: {
@@ -723,6 +726,10 @@ if you want to create a different configuration of a UI controller.
 
         setQueryStillActive (state, value = true) {
           state.queryStillActive = value
+        },
+
+        setMouseMoveOverrideUpdate (state) {
+          state.mouseMoveOverrideUpdate = state.mouseMoveOverrideUpdate + 1
         }
       }
     })
@@ -1018,6 +1025,11 @@ if you want to create a different configuration of a UI controller.
 
   getMouseMoveOverride () {
     return this.options.enableMouseMoveOverride
+  }
+
+  clearMouseMoveOverride () {
+    this.options.enableMouseMoveOverride = undefined
+    this.store.commit('app/setMouseMoveOverrideUpdate')
   }
 
   /**
@@ -1828,9 +1840,10 @@ If no URLS are provided, will reset grammar data.
         this.updateLemmaTranslations()
         break
       case 'enableMouseMove':
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
         // If user manually sets the mouse move option then this takes priority over the page override
         this.options.enableMouseMoveOverride = false
+        this.store.commit('app/setMouseMoveOverrideUpdate')
+        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
         break
       case 'mouseMoveDelay':
         this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)

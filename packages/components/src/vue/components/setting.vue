@@ -67,7 +67,7 @@ export default {
       required: true
     },
     selectedOverride: {
-      type: String,
+      type: [String, Boolean],
       required: false
     },
     showLabelText: {
@@ -104,7 +104,7 @@ export default {
         let rv
         if (typeof this.selectedOverride === 'string') {
           if (this.dataModel.boolean == true) {
-            rv = this.selectedOverried === 'true'
+            rv = this.selectedOverride === 'true'
           } else {
             rv = this.selectedOverride
           }
@@ -119,7 +119,7 @@ export default {
       },
       set: function (newValue) {
         this.$emit('change', this.data.name, newValue)
-        this.selectedOverride = undefined
+        this.$emit('clearSelectedOverride')
         this.dataModel = this.data // To force Vue.js to redraw
       }
     },
