@@ -173,7 +173,7 @@ for the current node
   /**
    * @override LanguageModel#alternateWordEncodings
    */
-  static alternateWordEncodings (word, preceding = null, following = null, encoding = null) {
+  static alternateWordEncodings (word, preceding = null, following = null, encoding = null, preserveCase = false) {
     // the original alpheios code used the following normalizations
     // 1. When looking up a lemma
     //    stripped vowel length
@@ -186,8 +186,12 @@ for the current node
     if (!word) {
       return []
     }
-    // make sure it's normalized to NFC and in lower case
-    const normalized = GreekLanguageModel.normalizeText(word).toLocaleLowerCase()
+    // make sure it's normalized to NFC
+    let normalized = GreekLanguageModel.normalizeText(word) // eslint-disable-line prefer-const
+    // and in lower case unless explicitly requested otherwise
+    if (! preserveCase) {
+      normalized = normalized.toLocaleLowerCase()
+    }
     const strippedVowelLength = normalized.replace(
       /[\u{1FB0}\u{1FB1}]/ug, '\u{03B1}').replace(
       /[\u{1FB8}\u{1FB9}]/ug, '\u{0391}').replace(

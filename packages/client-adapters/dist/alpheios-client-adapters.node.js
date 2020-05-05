@@ -11532,11 +11532,13 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
     let altEncodings = [] // eslint-disable-line prefer-const
     for (const l of [lemma.word, ...lemma.principalParts]) {
       alternatives.push(l)
-      for (const a of model.alternateWordEncodings(l)) {
+      for (const a of model.alternateWordEncodings(l,null,null,null,true)) {
         // we gather altEncodings separately because they should
         // be tried last after the lemma and principalParts in their
         // original form
-        altEncodings.push(a)
+        if (a !== l) {
+          altEncodings.push(a)
+        }
       }
       const nosense = l.replace(/_?\d+$/, '')
       if (l !== nosense) {
@@ -11544,7 +11546,6 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
       }
     }
     alternatives = [...alternatives, ...altEncodings]
-
     for (const lookup of alternatives) {
       // let's first just look for the word in its supplied case
       found = data.get(lookup)
@@ -11554,19 +11555,56 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
         found = data.get(lookup.toLocaleLowerCase())
       }
 
-      // legacy behavior -  indexes had inserted alternative
-      // index entries in lower case and less aggressive
-      // character normalization, and referred those index entries to
-      // the original ones
-      if (found && found.length === 1 && found[0].field1 === '@') {
-        found = data.get(`@${lookup}`)
+      if (found) {
+        found = this._lookupSpecial(data,lookup,found)
       }
-
       if (found) {
         break
       }
     }
+
+    // if we still don't have a match, we can do a last ditch check without
+    // any diacritics at all in those languages that support it
+    if (!found) {
+      let lastAlt = []
+      for (const l of [lemma.word, ...lemma.principalParts]) {
+        let strippedAll = model.alternateWordEncodings(l,null,null,'strippedAll',true)
+        if (strippedAll.length > 0 && strippedAll[0] !== l) {
+          lastAlt.push(strippedAll[0])
+        }
+      }
+      if (lastAlt.length > 0) {
+        for (const l of lastAlt) {
+          for ( const entry of data.entries() )   {
+            const originalKey = entry[0].replace(/^@/,'')
+            const value = entry[1]
+            let strippedKey = model.alternateWordEncodings(originalKey,null,null,'strippedAll',true)
+            if (strippedKey && strippedKey[0] === l) {
+              found = this._lookupSpecial(data,originalKey,value)
+              if (found) {
+                break
+              }
+            }
+          }
+          if (found) {
+            break
+          }
+        }
+      }
+    }
     return found
+  }
+
+  // legacy behavior -  indexes had inserted alternative
+  // index entries in lower case and less aggressive
+  // character normalization, and referred those index entries to
+  // the original ones
+  _lookupSpecial(data,lookup,lemmas) {
+    if (lemmas.length === 1 && lemmas[0].field1 === '@') {
+      return data.get(`@${lookup}`)
+    } else {
+      return lemmas
+    }
   }
 }
 
