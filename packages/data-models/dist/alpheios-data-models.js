@@ -2467,6 +2467,9 @@ for the current node
       return [strippedDiaeresis]
     } else if (encoding === 'strippedDiacritics') {
       return [strippedDiacritics]
+    } else if (encoding === 'strippedAll') {
+      return [strippedDiaeresis.normalize('NFD').replace(
+        /[\u{300}\u{0301}\u{0304}\u{0306},\u{342}\u{314}\u{313}\u{345}]/ug, '').normalize('NFC')] // eslint-disable-line no-misleading-character-class
     } else {
       return [strippedVowelLength]
     }
