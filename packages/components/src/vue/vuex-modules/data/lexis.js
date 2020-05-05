@@ -38,14 +38,14 @@ export default class Lexis extends Module {
 
     // A TextSelector of the last lexical query
     this._lastTextSelector = null
-    // Whether a treebank application has been initialized
-    this._treebankReady = false
+    // Whether a treebank application has been initialized successfully
+    this._treebankAvailable = false
     // A current TreebankDataItem
     this._treebankDataItem = null
+    // A treebank data item of a last request, either successful or not
+    this._lastTreebankDataItem = null
     // Whether a treebank service has been loaded
     this._treebankServiceLoaded = false
-    // The URL of a last failed treebank refresh request. If last request was successful, it will be `null`
-    this._treebankFailedUrl = null
     // Add an iframe with CEDICT service if Lexis config is available
     if (this._lexisConfig) { this.createCedictIframe() }
 
@@ -61,14 +61,14 @@ export default class Lexis extends Module {
         this.config.arethusaTbRefreshDelay)
         .then(() => {
           // Treebank app has become available
-          this._treebankReady = true
-          this._treebankFailedUrl = null
+          this._treebankAvailable = true
+          this._lastTreebankDataItem = this._treebankDataItem
         })
         .catch((err) => {
           // If refreshUntilLoaded failed treebank data will be unavailable
           console.warn(err.message)
           store.commit('lexis/showTreebankFailedNotification')
-          this._treebankFailedUrl = this._treebankDataItem.provider
+          this._lastTreebankDataItem = this._treebankDataItem
         })
     }
     LexicalQuery.evt.CEDICT_SERVICE_UNINITIALIZED.sub(this.onCedictServiceUninitialized.bind(this, store))
@@ -186,19 +186,21 @@ export default class Lexis extends Module {
     return new HomonymGroup(homonyms)
   }
 
-  /**
-   * Checks if the previous request to a specific provider failed.
-   *
-   * @param {TreebankDataItem} treebankDataItem - A current treebank data item.
-   * @returns {boolean} - True if request failed previously, false otherwise.
-   */
-  isFailedProvider (treebankDataItem) {
-    /*
-    In order for it to be a failed provider a previous request must fail (i.e. `this._treebankFailedUrl`
-    must be not null and a provider of the current request must be the same as a provider of the previous
-    failed one.
-     */
-    return Boolean(!this._treebankFailedUrl && treebankDataItem.provider === this._treebankFailedUrl)
+  _isFailedTreebank (treebankDataItem) {
+    // If there were no previous requests we cannot say if the provider is failing
+    if (!this._lastTreebankDataItem) { return false }
+    // If we already tried to load this treebank and it failed then provider is failing
+    if (this._lastTreebankDataItem.provider === treebankDataItem.provider &&
+      !this._treebankAvailable) {
+      return true
+    }
+    return false
+  }
+
+  _isTreebankLoaded (treebankDataItem) {
+    // Not enough information to say or loading failed
+    if (!this._lastTreebankDataItem || !this._treebankAvailable) { return false }
+    return this._lastTreebankDataItem.provider === treebankDataItem.provider
   }
 
   async getTreebankData ({
@@ -206,12 +208,13 @@ export default class Lexis extends Module {
     textSelector,
     treebankDataItem = null
   } = {}) {
-    const prevTreebankDataItem = this._treebankDataItem || {}
-    this._treebankDataItem = treebankDataItem
     let annotatedHomonyms
 
-    if (this._treebankReady && this._treebankDataItem && !this.isFailedProvider(this._treebankDataItem)) {
-      if (prevTreebankDataItem.doc !== this._treebankDataItem.doc) {
+    this._treebankDataItem = treebankDataItem
+
+    if (treebankDataItem && !this._isFailedTreebank(treebankDataItem)) {
+      store.commit('lexis/hideTreebankFailedNotification')
+      if (!this._isTreebankLoaded(treebankDataItem)) {
         /*
         Treebank's doc has changed. A treebank app's URL in an iframe needs to be updated
         only when a document ID changes. If document ID stayed the same and only a sentence ID changed,
@@ -232,9 +235,8 @@ export default class Lexis extends Module {
         state until a `refreshView` request is completed.
          */
         store.commit('lexis/setTreebankInfo', { treebankSrc: null })
-        this._treebankReady = false
         await Vue.nextTick()
-        store.commit('lexis/setTreebankInfo', { treebankSrc: this._treebankDataItem.fullUrl })
+        store.commit('lexis/setTreebankInfo', { treebankSrc: treebankDataItem.fullUrl })
         try {
           /*
           We need to wait until a URL change is applied to the iframe within the treebank Vue component
@@ -244,35 +246,37 @@ export default class Lexis extends Module {
            */
           await Vue.nextTick()
           await Lexis.refreshUntilLoaded(
-            this._treebankDataItem.provider,
+            treebankDataItem.provider,
             this.config.arethusaTbRefreshRetryCount,
             this.config.arethusaTbRefreshDelay
           )
-          this._treebankReady = true
+          this._treebankAvailable = true
+          this._lastTreebankDataItem = treebankDataItem
           // No need to update treebank sourceURL
-          store.commit('lexis/setTreebankInfo', { hasTreebankData: this._treebankDataItem.hasSentenceData })
-          this._treebankFailedUrl = null
+          store.commit('lexis/setTreebankInfo', { hasTreebankData: treebankDataItem.hasSentenceData })
         } catch (err) {
           // If refreshUntilLoaded failed treebank data will be unavailable
           console.warn(err.message)
-          this._treebankReady = false
-          this._treebankFailedUrl = this._treebankDataItem.provider
+          this._treebankAvailable = false
+          this._treebankDataItem = null
+          this._lastTreebankDataItem = treebankDataItem
           store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
           store.commit('lexis/showTreebankFailedNotification')
         }
       } else {
         // Do not update a treebankSrc in a store, it has not changed
-        store.commit('lexis/setTreebankInfo', { hasTreebankData: this._treebankDataItem.hasSentenceData })
+        this._lastTreebankDataItem = treebankDataItem
+        store.commit('lexis/setTreebankInfo', { hasTreebankData: treebankDataItem.hasSentenceData })
       }
       try {
-        if (!this._treebankDataItem.hasWordData) {
+        if (!treebankDataItem.hasWordData) {
           // Try to get words IDs from an Arethusa treebank app
-          const wordIDs = await Lexis.getTreebankWordIds(this._treebankDataItem, textSelector)
+          const wordIDs = await Lexis.getTreebankWordIds(treebankDataItem, textSelector)
           if (wordIDs.length > 0) {
-            this._treebankDataItem.setWordData(wordIDs)
+            treebankDataItem.setWordData(wordIDs)
           }
         }
-        annotatedHomonyms = await Lexis.getHomonymsFromTreebank(this._treebankDataItem, textSelector)
+        annotatedHomonyms = await Lexis.getHomonymsFromTreebank(treebankDataItem, textSelector)
       } catch (err) {
         console.error(err)
       }
@@ -286,15 +290,16 @@ export default class Lexis extends Module {
         after `updateTreebankDiagram` request, they will erase a highlighting made by `updateTreebankDiagram`.
          */
       try {
-        Lexis.updateTreebankDiagram(this._treebankDataItem)
+        Lexis.updateTreebankDiagram(treebankDataItem)
       } catch (err) {
         console.error(err)
         // Mark treebank data as unavailable
         store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
       }
-    } else if (this._treebankReady) {
+    } else if (this._treebankAvailable) {
       store.commit('lexis/resetTreebankInfo')
-      this._treebankReady = false
+      this._treebankAvailable = false
+      this._treebankDataItem = null
     }
     return annotatedHomonyms
   }
@@ -505,18 +510,18 @@ Lexis.api = (moduleInstance, store) => {
     },
 
     refreshTreebankView: async () => {
-      if (moduleInstance._treebankDataItem && !moduleInstance.isFailedProvider(moduleInstance._treebankDataItem)) {
+      if (moduleInstance._treebankDataItem && !moduleInstance._isFailedTreebank(moduleInstance._treebankDataItem)) {
         try {
           await Lexis.refreshUntilLoaded(
             moduleInstance._treebankDataItem.provider,
             moduleInstance.arethusaTbRefreshRetryCount,
             moduleInstance.arethusaTbRefreshDelay
           )
-          moduleInstance._treebankFailedUrl = null
         } catch (err) {
           // Treebank data is probably not available
           console.warn(err.message)
-          moduleInstance._treebankFailedUrl = moduleInstance._treebankDataItem.provider
+          moduleInstance._treebankAvailable = false
+          moduleInstance._lastTreebankDataItem = moduleInstance._treebankDataItem
           moduleInstance._treebankDataItem = null
           store.commit('lexis/resetTreebankInfo')
           store.commit('lexis/showTreebankFailedNotification')
