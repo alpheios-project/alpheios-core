@@ -27,18 +27,20 @@
           class="alpheios-notification-area__msg"
           v-html="$store.state.ui.notification.text"
       />
-      <setting
-          :classes="['alpheios-notification-area__control']"
-          :data="settings.getFeatureOptions().items.preferredLanguage"
-          :selected-override="$store.state.app.currentLanguageName"
-          :show-title="false" @change="featureOptionChanged"
-          v-show="$store.state.ui.notification.showLanguageSwitcher"
-      />
-      <div
-          class="alpheios-notification-area__close-btn"
-          @click="$store.commit(`ui/resetNotification`)"
-      >
+      <div class="alpheios-notification-area__control-cont">
+        <setting
+                :classes="['alpheios-notification-area__control']"
+                :data="settings.getFeatureOptions().items.preferredLanguage"
+                :selected-override="$store.state.app.currentLanguageName"
+                :show-title="false" @change="featureOptionChanged"
+                v-show="$store.state.ui.notification.showLanguageSwitcher"
+        />
+        <div
+                class="alpheios-notification-area__close-btn"
+                @click="$store.commit(`ui/resetNotification`)"
+        >
           <close-icon/>
+        </div>
       </div>
     </div>
     <div
@@ -325,10 +327,19 @@ export default {
       flex: 1 1 auto;
     }
 
+    &__control-cont {
+      display: flex;
+      flex: 0;
+    }
+
     &__control {
       display: inline;
       .alpheios-setting__control {
         width: 140px;
+      }
+
+      button {
+        margin-bottom: 5px;
       }
     }
 
