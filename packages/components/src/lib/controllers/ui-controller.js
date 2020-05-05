@@ -1309,6 +1309,7 @@ if you want to create a different configuration of a UI controller.
     this.api.app.homonym = null
     this.store.commit('app/resetWordData')
     this.resetInflData()
+
     this.store.commit('ui/resetNotification')
     this.store.commit('ui/resetMessages')
     /*
