@@ -220,4 +220,12 @@ describe('greek_language_model.j', () => {
     expect(greekModel.alternateWordEncodings("ῥῶ",null,null,'strippedAll')[0]).toEqual("ρω")
     expect(greekModel.alternateWordEncodings("ἡρῷος",null,null,'strippedAll')[0]).toEqual("ηρωος")
   })
+
+  it('17 GreekLanguageModel - alternateWordEncodings tonosToOxia', () => {
+    let word = 'ἐκπ\u03AFπτω'
+    let alt = greekModel.alternateWordEncodings(word)
+    expect(alt.length).toEqual(2)
+    expect(alt[1]).toEqual('ἐκπ\u1F77πτω')
+  })
+
 })
