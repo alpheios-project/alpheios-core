@@ -1024,7 +1024,6 @@ if you want to create a different configuration of a UI controller.
   }
 
   getMouseMoveOverride () {
-    console.info('this.options.enableMouseMoveOverride - ', this.options.enableMouseMoveOverride)
     return this.options.enableMouseMoveOverride
   }
 
@@ -1841,7 +1840,6 @@ If no URLS are provided, will reset grammar data.
         this.updateLemmaTranslations()
         break
       case 'enableMouseMove':
-        console.info('featureOptionStateChange enableMouseMove registerAndActivateMouseMove')
         // If user manually sets the mouse move option then this takes priority over the page override
         this.options.enableMouseMoveOverride = false
         this.store.commit('app/setMouseMoveOverrideUpdate')
@@ -1981,9 +1979,7 @@ If no URLS are provided, will reset grammar data.
   }
 
   registerAndActivateMouseMove (listenerName, selector) {
-    console.info('*********************registerAndActivateMouseMove - start')
     if (this.enableMouseMoveEvent()) {
-      console.info('registerAndActivateMouseMove - enableMouseMoveEvent inside')
       const eventParams = {
         mouseMoveDelay: this.featureOptions.items.mouseMoveDelay.currentValue,
         mouseMoveAccuracy: this.featureOptions.items.mouseMoveAccuracy.currentValue,
@@ -2003,11 +1999,6 @@ If no URLS are provided, will reset grammar data.
   }
 
   enableMouseMoveEvent () {
-    console.info('this.platform.isDesktop - ', this.platform.isDesktop)
-    console.info('this.featureOptions.items.enableMouseMove.currentValue - ', this.featureOptions.items.enableMouseMove.currentValue)
-    console.info('this.options.enableMouseMoveOverride - ', this.options.enableMouseMoveOverride)
-    console.info('this.platform.isGoogleDocs - ', this.platform.isGoogleDocs)
-    console.info('******************************************')
     return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || this.platform.isGoogleDocs)
   }
 }

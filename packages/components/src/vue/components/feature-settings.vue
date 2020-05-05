@@ -115,9 +115,7 @@
     computed: {
 
       mouseMoveChecked: function() {
-        let res = this.app.getMouseMoveOverride()
-        console.info('mouseMoveChecked - res', res)
-        return this.$store.state.app.mouseMoveOverrideUpdate &&  res ? 'true' : false
+        return this.$store.state.app.mouseMoveOverrideUpdate &&  this.app.getMouseMoveOverride() ? 'true' : false
       },
       featureOptions: function() {
         return this.settings.getFeatureOptions()
