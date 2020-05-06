@@ -103,7 +103,7 @@
     },
     "mouseMoveDelay": {
       "defaultValue": 1000,
-      "labelText": "Mouseover delay (ms)",
+      "labelText": "Mouse Move delay (ms)",
       "number": true,
       "minValue": 1,
       "maxValue": 5000,
@@ -111,7 +111,7 @@
     },
     "mouseMoveAccuracy": {
       "defaultValue": 10,
-      "labelText": "Mouseover accuracy (pixels)",
+      "labelText": "Mouse Move accuracy (pixels)",
       "number": true,
       "minValue": 1,
       "maxValue": 5000,
