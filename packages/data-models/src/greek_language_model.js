@@ -19,6 +19,7 @@ export default class GreekLanguageModel extends LanguageModel {
   static get direction () { return Constants.LANG_DIR_LTR }
   static get baseUnit () { return Constants.LANG_UNIT_WORD }
 
+
   static get featureValues () {
     /*
     This could be a static variable, but then it will create a circular reference:
@@ -157,10 +158,24 @@ for the current node
     return text
   }
 
+  static _tonosToOxia (word) {
+    return word.replace(
+      /\u{03AC}/ug, '\u{1F71}').replace( // alpha
+      /\u{03AD}/ug, '\u{1F73}').replace( // epsilon
+      /\u{03AE}/ug, '\u{1F75}').replace( // eta
+      /\u{03AF}/ug, '\u{1F77}').replace( // iota
+      /\u{03CC}/ug, '\u{1F79}').replace( // omicron
+      /\u{03CD}/ug, '\u{1F7B}').replace( // upsilon
+      /\u{03CE}/ug, '\u{1F7D}').replace( // omega
+      /\u{0390}/ug, '\u{1FD3}').replace( //iota with dialytika and tonos
+      /\u{03B0}/ug, '\u{1FE3}') // upsilon with dialytika and tonos
+  }
+
   /**
    * @override LanguageModel#alternateWordEncodings
    */
-  static alternateWordEncodings (word, preceding = null, following = null, encoding = null) {
+  static alternateWordEncodings ({ word=null, preceding=null, following=null,
+    encoding=null, preserveCase=false, includeOriginal=false} = {}) {
     // the original alpheios code used the following normalizations
     // 1. When looking up a lemma
     //    stripped vowel length
@@ -173,8 +188,12 @@ for the current node
     if (!word) {
       return []
     }
-    // make sure it's normalized to NFC and in lower case
-    const normalized = GreekLanguageModel.normalizeText(word).toLocaleLowerCase()
+    // make sure it's normalized to NFC
+    let normalized = GreekLanguageModel.normalizeText(word) // eslint-disable-line prefer-const
+    // and in lower case unless explicitly requested otherwise
+    if (! preserveCase) {
+      normalized = normalized.toLocaleLowerCase()
+    }
     const strippedVowelLength = normalized.replace(
       /[\u{1FB0}\u{1FB1}]/ug, '\u{03B1}').replace(
       /[\u{1FB8}\u{1FB9}]/ug, '\u{0391}').replace(
@@ -183,6 +202,14 @@ for the current node
       /[\u{1FE0}\u{1FE1}]/ug, '\u{03C5}').replace(
       /[\u{1FE8}\u{1FE9}]/ug, '\u{03A5}').replace(
       /[\u{00AF}\u{0304}\u{0306}]/ug, '') // eslint-disable-line no-misleading-character-class
+
+    // Per https://wiki.digitalclassicist.org/Greek_Unicode_duplicated_vowels
+    // oxia and tonos are semantically identical and tonos should be preferred over oxia
+    // both both should be processed as equivalent. the normalize('NFC') function will
+    // normalize oxia to tonos, but some of our dictionary indicies may use oxia so
+    // we should allow oxia back in as an alternate encoding
+    const tonosToOxia = GreekLanguageModel._tonosToOxia(normalized)
+
     const strippedDiaeresis = normalized.replace(
       /\u{0390}/ug, '\u{03AF}').replace(
       /\u{03AA}/ug, '\u{0399}').replace(
@@ -204,13 +231,26 @@ for the current node
     // diacritis, decompose, remove the combining accents, and then recompose
     const strippedDiacritics = normalized.normalize('NFD').replace(
       /[\u{300}\u{0301}\u{0304}\u{0306},\u{342}]/ug, '').normalize('NFC') // eslint-disable-line no-misleading-character-class
+
+    let alternates = []
     if (encoding === 'strippedDiaeresis') {
-      return [strippedDiaeresis]
+      alternates.push(strippedDiaeresis)
     } else if (encoding === 'strippedDiacritics') {
-      return [strippedDiacritics]
+      alternates.push(strippedDiacritics)
+    } else if (encoding === 'strippedAll') {
+      alternates.push(strippedDiaeresis.normalize('NFD').replace(
+        /[\u{300}\u{0301}\u{0304}\u{0306},\u{342}\u{314}\u{313}\u{345}]/ug, '').normalize('NFC')) // eslint-disable-line no-misleading-character-class
     } else {
-      return [strippedVowelLength]
+      // default is to strip vowel lengths and replace tonos with oxia
+      alternates.push(strippedVowelLength)
+      if (tonosToOxia !== strippedVowelLength) {
+        alternates.push(tonosToOxia)
+      }
     }
+    if (! includeOriginal) {
+      alternates = alternates.filter(w => w !== word)
+    }
+    return alternates
   }
 
   /**
@@ -320,8 +360,10 @@ for the current node
         wordB = this.normalizeTrailingDigit(wordB)
       }
 
-      const altWordA = GreekLanguageModel.alternateWordEncodings(wordA, null, null, 'strippedDiacritics')
-      const altWordB = GreekLanguageModel.alternateWordEncodings(wordB, null, null, 'strippedDiacritics')
+      const altWordA = GreekLanguageModel.alternateWordEncodings({word:wordA,
+        encoding:'strippedDiacritics', includeOriginal: true})
+      const altWordB = GreekLanguageModel.alternateWordEncodings({word: wordB,
+        encoding:'strippedDiacritics', includeOriginal: true})
       for (let i = 0; i < altWordA.length; i++) {
         matched = altWordA[i] === altWordB[i]
         if (matched) {
