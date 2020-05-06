@@ -25,6 +25,7 @@
         :min="dataModel.minValue"
         :max="dataModel.maxValue"
         @change="checkNumberField"
+        :id="inputId"
     >
 
     <input
@@ -32,11 +33,12 @@
         type="text"
         v-if="dataModel.text"
         v-model="selected"
+        :id="inputId"
     >
 
     <div class="alpheios-checkbox-block alpheios-setting__control" v-if="dataModel.boolean">
-      <input id="alpheios-checkbox-input" type="checkbox" v-model="selected">
-      <label @click="checkboxClick" for="alpheios-checkbox-input">{{ checkboxLabel }}
+      <input type="checkbox" v-model="selected" :id="inputId">
+      <label :for="inputId">{{ checkboxLabel }}
         <span v-html="labelText" v-if="showCheckboxTitle"></span>
       </label>
     </div>
@@ -44,7 +46,7 @@
     <select
         class="alpheios-select alpheios-setting__control"
         v-if="!dataModel.multiValue && !dataModel.boolean && !dataModel.number && !dataModel.text"
-        v-model="selected">
+        v-model="selected" :id="inputId">
       <option v-for="item in values" :key="item">{{item}}</option>
     </select>
 
@@ -67,7 +69,7 @@ export default {
       required: true
     },
     selectedOverride: {
-      type: String,
+      type: [String, Boolean],
       required: false
     },
     showLabelText: {
@@ -99,12 +101,15 @@ export default {
     }
   },
   computed: {
+    inputId () {
+      return `${this.data.name}-id`
+    },
     selected: {
       get: function () {
         let rv
         if (typeof this.selectedOverride === 'string') {
           if (this.dataModel.boolean == true) {
-            rv = this.selectedOverried === 'true'
+            rv = this.selectedOverride === 'true'
           } else {
             rv = this.selectedOverride
           }
@@ -119,7 +124,7 @@ export default {
       },
       set: function (newValue) {
         this.$emit('change', this.data.name, newValue)
-        this.selectedOverride = undefined
+        this.$emit('clearSelectedOverride')
         this.dataModel = this.data // To force Vue.js to redraw
       }
     },
@@ -137,11 +142,6 @@ export default {
     }
   },
   methods: {
-    checkboxClick () {
-      if (this.data.boolean === true) {
-        this.selected = !this.selected
-      }
-    },
     checkNumberField () {
       if (this.dataModel.number && this.dataModel.minValue) {
         if (this.selected < this.dataModel.minValue) {

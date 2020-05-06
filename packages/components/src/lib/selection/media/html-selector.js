@@ -256,8 +256,8 @@ export default class HTMLSelector extends MediaSelector {
     }
     // clean string:
     //   convert punctuation to spaces
-    anchorText = anchorText.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']', 'g'), ' ')
 
+    anchorText = anchorText.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']+', 'g'), ' ')
     // Determine word boundaries
     let wordStart = anchorText.lastIndexOf(' ', ro) + 1 // Try to find a space char before a beginning of a selection
     let wordEnd = anchorText.indexOf(' ', wordStart + 1) // Try to find a space char after a beginning of a selection

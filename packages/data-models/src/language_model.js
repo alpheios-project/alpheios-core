@@ -418,14 +418,18 @@ class LanguageModel {
   /**
    * Returns alternate encodings for a word
    *
-   * @param {string} word the word
-   * @param {string} preceding optional preceding word
-   * @param {string} following optional following word
-   * @param {string} encoding optional encoding name to filter the response to
-   * @returns {Array} an array of alternate encodings
+   * @param {Object} params paramaters {}
+   *   @param {string} word the word
+   *   @param {string} preceding preceding word (optional)
+   *   @param {string} following following word (optional)
+   *   @param {string} encoding encoding name to filter the response to (optional)
+   *   @param {boolean} preserveCase if true will preserve the case (default is false)
+   *   @param {boolean} includeOriginal if true will include the original word even if it is unchanged (default is false)
+   * @returns {Array} an array of alternate encodings if they differ from the original
    */
-  static alternateWordEncodings (word, preceding = null, following = null, encoding = null) {
-    return []
+  static alternateWordEncodings ({word=null, preceding=null, following=null, encoding=null,
+      preserveCase=false, includeOriginal=false} = {}) {
+    return includeOriginal ? [word] : []
   }
 
   /**
@@ -444,11 +448,6 @@ class LanguageModel {
     } else {
       return wordA === wordB
     }
-  }
-
-  alternateWordEncodings (word, preceding, following, encoding) {
-    console.warn('Please use static "alternateWordEncodings" instead')
-    return this.constructor.alternateWordEncodings(word, preceding, following, encoding)
   }
 
   /**

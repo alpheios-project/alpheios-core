@@ -104,8 +104,6 @@ describe('setting.test.js', () => {
     expect(cmp.vm.checkboxLabel).toEqual('footext1')
     expect(cmp.vm.selected).toBeFalsy()
 
-    cmp.vm.checkboxClick()
-    expect(cmp.emitted()['change']).toBeTruthy()
   })
 
   it('8 Setting - selected from data model', () => {

@@ -42,7 +42,8 @@ for the current node
   /**
    * @override LanguageModel#alternateWordEncodings
    */
-  static alternateWordEncodings (word, preceding = null, following = null, encoding = null) {
+  static alternateWordEncodings ({ word=null, preceding=null, following=null, encoding=null,
+      preserveCase=false, includeOriginal=false} = {}) {
     // tanwin (& tatweel) - drop FATHATAN, DAMMATAN, KASRATAN, TATWEEL
     const tanwin = word.replace(/[\u{064B}\u{064C}\u{064D}\u{0640}]/ug, '')
     // hamzas - replace ALEF WITH MADDA ABOVE, ALEF WITH HAMZA ABOVE/BELOW with ALEF
@@ -63,11 +64,16 @@ for the current node
       ['sukun', sukun],
       ['alef', alef]
     ])
+    let fullList = []  // eslint-disable-line prefer-const
     if (encoding !== null && alternates.has(encoding)) {
-      return [alternates.get(encoding)]
+      fullList = [alternates.get(encoding)]
     } else {
-      return Array.from(alternates.values())
+      fullList = Array.from(alternates.values())
     }
+    if (! includeOriginal) {
+      fullList = fullList.filter(w => w !== word)
+    }
+    return fullList
   }
 
   /**

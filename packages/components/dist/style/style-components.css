@@ -1468,11 +1468,18 @@ select.alpheios-setting__control,
   padding-right: calc(var(--alpheios-base-ui-size) * 0.625);
   flex: 1 1 auto;
 }
+.alpheios-notification-area__control-cont {
+  display: flex;
+  flex: 0;
+}
 .alpheios-notification-area__control {
   display: inline;
 }
 .alpheios-notification-area__control .alpheios-setting__control {
   width: 140px;
+}
+.alpheios-notification-area__control button {
+  margin-bottom: 5px;
 }
 .alpheios-notification-area__controlbox {
   flex-flow: wrap;
@@ -3027,6 +3034,9 @@ p.alpheios-word-usage-filter-title {
   padding: 10px;
   border: 2px groove var(--alpheios-color-placehoder);
 }
+.alpheios-ui-options__cont-wordselect {
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3135,7 +3145,6 @@ p.alpheios-word-usage-filter-title {
   color: inherit;
 }
 .alpheios-tab-options-reset-all-block {
-  border-top: 1px solid;
   display: flex;
   align-items: baseline;
   flex: 1 1 auto;

@@ -415,6 +415,11 @@
     "description": "A message about Chinese data has been loaded",
     "component": "UI"
   },
+  "TEXT_TREEBANK_NOT_AVAILABLE": {
+    "message": "Some of the resources referenced by this page for refining lookup results are not responding. Results may be less precise than expected.",
+    "description": "A notification shown when a treebank remote resource is not available",
+    "component": "UI"
+  },
   "LABEL_BROWSERACTION_DEACTIVATE": {
     "message": "Deactivate Alpheios",
     "description": "Deactivate browser action title",
@@ -644,6 +649,11 @@
   },
   "LABEL_FIELDSET_WORDSELECT": {
     "message": "Word Selection",
+    "description": "Legend for options fieldset",
+    "component": "Options Tab"
+  },
+  "LABEL_FIELDSET_MOUSEMOVE": {
+    "message": "Mouse Move Options",
     "description": "Legend for options fieldset",
     "component": "Options Tab"
   },
