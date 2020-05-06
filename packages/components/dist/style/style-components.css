@@ -3034,6 +3034,9 @@ p.alpheios-word-usage-filter-title {
   padding: 10px;
   border: 2px groove var(--alpheios-color-placehoder);
 }
+.alpheios-ui-options__cont-wordselect {
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3142,7 +3145,6 @@ p.alpheios-word-usage-filter-title {
   color: inherit;
 }
 .alpheios-tab-options-reset-all-block {
-  border-top: 1px solid;
   display: flex;
   align-items: baseline;
   flex: 1 1 auto;

@@ -1811,8 +1811,7 @@ If no URLS are provided, will reset grammar data.
     let featureOptions = this.api.settings.getFeatureOptions() // eslint-disable-line prefer-const
     // TODO we need to refactor handling of boolean options
     const nonTextFeatures = ['enableLemmaTranslations', 'enableWordUsageExamples', 'wordUsageExamplesMax', 'wordUsageExamplesAuthMax',
-      'enableMouseMove', 'mouseMoveDelay', 'mouseMoveAccuracy', 'enableMouseMoveLimitedByIdCheck', 'mouseMoveLimitedById',
-      'wordlistMaxFlashcardExport']
+      'enableMouseMove', 'wordlistMaxFlashcardExport']
     if (nonTextFeatures.includes(name)) {
       featureOptions.items[name].setValue(value)
     } else {
@@ -1845,15 +1844,6 @@ If no URLS are provided, will reset grammar data.
         this.store.commit('app/setMouseMoveOverrideUpdate')
         this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
         break
-      case 'mouseMoveDelay':
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
-        break
-      case 'mouseMoveAccuracy':
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
-        break
-      case 'enableMouseMoveLimitedByIdCheck':
-        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
-        break
     }
   }
 
@@ -1868,7 +1858,8 @@ If no URLS are provided, will reset grammar data.
     // TODO this should really be handled within OptionsItem
     // the difference between value and textValues is a little confusing
     // see issue #73
-    if (name === 'fontSize' || name === 'hideLoginPrompt' || name === 'maxPopupWidth') {
+    const nonTextFeatures = ['fontSize', 'hideLoginPrompt', 'maxPopupWidth', 'mouseMoveDelay', 'mouseMoveAccuracy', 'enableMouseMoveLimitedByIdCheck', 'mouseMoveLimitedById']
+    if (nonTextFeatures.includes(name)) {
       uiOptions.items[name].setValue(value)
     } else {
       uiOptions.items[name].setTextValue(value)
@@ -1898,6 +1889,15 @@ If no URLS are provided, will reset grammar data.
         if (this.api.auth) {
           this.store.commit('auth/setHideLoginPrompt', uiOptions.items.hideLoginPrompt.currentValue)
         }
+        break
+      case 'mouseMoveDelay':
+        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+        break
+      case 'mouseMoveAccuracy':
+        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+        break
+      case 'enableMouseMoveLimitedByIdCheck':
+        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
         break
     }
   }
@@ -1980,11 +1980,13 @@ If no URLS are provided, will reset grammar data.
 
   registerAndActivateMouseMove (listenerName, selector) {
     if (this.enableMouseMoveEvent()) {
+      const uiOptions = this.api.settings.getUiOptions()
+
       const eventParams = {
-        mouseMoveDelay: this.featureOptions.items.mouseMoveDelay.currentValue,
-        mouseMoveAccuracy: this.featureOptions.items.mouseMoveAccuracy.currentValue,
-        enableMouseMoveLimitedByIdCheck: this.featureOptions.items.enableMouseMoveLimitedByIdCheck.currentValue,
-        mouseMoveLimitedById: this.featureOptions.items.mouseMoveLimitedById.currentValue
+        mouseMoveDelay: uiOptions.items.mouseMoveDelay.currentValue,
+        mouseMoveAccuracy: uiOptions.items.mouseMoveAccuracy.currentValue,
+        enableMouseMoveLimitedByIdCheck: uiOptions.items.enableMouseMoveLimitedByIdCheck.currentValue,
+        mouseMoveLimitedById: uiOptions.items.mouseMoveLimitedById.currentValue
       }
       const lexisModule = this.getModule('lexis')
       this.evc.registerListener(listenerName + '-mousemove', selector, this.api.lexis.getSelectedText.bind(lexisModule), MouseMove, eventParams)

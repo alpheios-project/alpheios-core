@@ -450,12 +450,12 @@ Lexis.api = (moduleInstance, store) => {
             lastTextSelector.languageID === textSelector.languageID &&
             moduleInstance._uiApi.isPopupVisible()
           )
+
           if (checkSameTestSelector) {
             // Do nothing
             return
           }
           moduleInstance._lastTextSelector = textSelector
-
           moduleInstance.lexicalQuery({
             store,
             textSelector,

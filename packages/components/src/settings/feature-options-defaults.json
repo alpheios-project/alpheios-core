@@ -182,42 +182,6 @@
         }
       ]
     },
-    "mouseMoveDelay": {
-      "defaultValue": 1000,
-      "labelText": "Mouseover delay (ms)",
-      "number": true,
-      "minValue": 1,
-      "maxValue": 5000,
-      "values": []
-    },
-    "mouseMoveAccuracy": {
-      "defaultValue": 10,
-      "labelText": "Mouseover accuracy (pixels)",
-      "number": true,
-      "minValue": 1,
-      "maxValue": 5000,
-      "values": []
-    },
-    "enableMouseMoveLimitedByIdCheck": {
-      "defaultValue": true,
-      "labelText": "Limit Mouse Move on Google Docs to top-level container",
-      "boolean": true,
-      "values": [
-        {
-          "value": true,
-          "text": "Yes"
-        },
-        {
-          "value": false,
-          "text": "No"
-        }
-      ]
-    },
-    "mouseMoveLimitedById": {
-      "defaultValue": "docs-editor-container",
-      "labelText": "Google Docs Container Id",
-      "text": true
-    },
     "enableLogeionAutoComplete": {
       "defaultValue": true,
       "labelText": "Enable Autocomplete with <a href=\"https://logeion.uchicago.edu\" target=\"_blank\">Logeion</a>",
