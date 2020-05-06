@@ -142,7 +142,6 @@ export default {
     }
 
     .alpheios-tab-options-reset-all-block {
-      border-top: 1px solid;
       display: flex;
       align-items: baseline;
       flex: 1 1 auto;
