@@ -16340,13 +16340,11 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
     let altEncodings = [] // eslint-disable-line prefer-const
     for (const l of [lemma.word, ...lemma.principalParts]) {
       alternatives.push(l)
-      for (const a of model.alternateWordEncodings(l,null,null,null,true)) {
+      for (const a of model.alternateWordEncodings({word:l, preserveCase:true})) {
         // we gather altEncodings separately because they should
         // be tried last after the lemma and principalParts in their
         // original form
-        if (a !== l) {
-          altEncodings.push(a)
-        }
+        altEncodings.push(a)
       }
       const nosense = l.replace(/_?\d+$/, '')
       if (l !== nosense) {
@@ -16376,8 +16374,9 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
     if (!found) {
       let lastAlt = []
       for (const l of [lemma.word, ...lemma.principalParts]) {
-        let strippedAll = model.alternateWordEncodings(l,null,null,'strippedAll',true)
-        if (strippedAll.length > 0 && strippedAll[0] !== l) {
+        let strippedAll = model.alternateWordEncodings({ word: l,
+          encoding:'strippedAll',preserveCase:true})
+        if (strippedAll.length > 0) {
           lastAlt.push(strippedAll[0])
         }
       }
@@ -16386,8 +16385,9 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
           for ( const entry of data.entries() )   {
             const originalKey = entry[0].replace(/^@/,'')
             const value = entry[1]
-            let strippedKey = model.alternateWordEncodings(originalKey,null,null,'strippedAll',true)
-            if (strippedKey && strippedKey[0] === l) {
+            let strippedKey = model.alternateWordEncodings({word: originalKey,
+              encoding:'strippedAll',preserveCase:true})
+            if (strippedKey.length >0 && strippedKey[0] === l) {
               found = this._lookupSpecial(data,originalKey,value)
               if (found) {
                 break

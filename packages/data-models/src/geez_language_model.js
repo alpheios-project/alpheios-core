@@ -75,20 +75,6 @@ for the current node
   }
 
   /**
-   * Returns alternate encodings for a word
-   *
-   * @param {string} word the word
-   * @param {string} preceding optional preceding word
-   * @param {string} following optional following word
-   * @param {string} encoding optional encoding name to filter the response to
-   * @returns {Array} an array of alternate encodings
-   */
-  static alternateWordEncodings (word, preceding = null, following = null, encoding = null) {
-    // Not implemented yet
-    return []
-  }
-
-  /**
    * Get a list of valid puncutation for this language
    *
    * @returns {string} a string containing valid puncutation symbols
