@@ -148,6 +148,7 @@ export default class HTMLSelector extends MediaSelector {
     } else {
       console.warn('Browser does not support the Alpheios word selection code. Support for getSelection() or createTextRange() is required.')
     }
+
     return range
   }
 
@@ -256,8 +257,8 @@ export default class HTMLSelector extends MediaSelector {
     }
     // clean string:
     //   convert punctuation to spaces
-    anchorText = anchorText.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']', 'g'), ' ')
 
+    anchorText = anchorText.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']+', 'g'), ' ')
     // Determine word boundaries
     let wordStart = anchorText.lastIndexOf(' ', ro) + 1 // Try to find a space char before a beginning of a selection
     let wordEnd = anchorText.indexOf(' ', wordStart + 1) // Try to find a space char after a beginning of a selection
@@ -282,6 +283,7 @@ export default class HTMLSelector extends MediaSelector {
 
     // extract word
     const word = anchorText.substring(wordStart, wordEnd).trim()
+
     /* Identify the words preceeding and following the focus word
     * TODO - query the type of node in the selection to see if we are
     * dealing with something other than text nodes
