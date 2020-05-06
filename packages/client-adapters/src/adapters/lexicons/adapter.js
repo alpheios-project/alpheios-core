@@ -380,6 +380,11 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
       if (lastAlt.length > 0) {
         for (const l of lastAlt) {
           for ( const entry of data.entries() )   {
+            // a normal lookup in the dataset map would only return
+            // an entry preceding with '@' as a result of the _lookupSpecial
+            // test but because we are looping through and testing each entry
+            // the test on case without any diacritics will find those matches
+            // and we need to remove the @ flag to make sure it doesn't fail them
             const originalKey = entry[0].replace(/^@/,'')
             const value = entry[1]
             let strippedKey = model.alternateWordEncodings({word: originalKey,
@@ -400,10 +405,18 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
     return found
   }
 
-  // legacy behavior -  indexes had inserted alternative
-  // index entries in lower case and less aggressive
-  // character normalization, and referred those index entries to
-  // the original ones
+  /**
+   * When we created the lexicon indices we normalized the lemmas
+   * as all lower case and applied some additional character normalizations
+   * in the case of homonyms however, sometimes the normalization meant 1
+   * index entry for two distinct words. In these cases, we created a "special"
+   * syntax, whereby we set the value of the normalized index entry to '@'
+   * which mean to look for the word under it's pre-normalized entry,
+   * which was kept and made available in an entry prefixed with '@'
+   * @param {Map} data the dataset to search in
+   * @param {lookup} lookup the original pre-normalized lemma
+   * @param {lemmas} the value returned by the lookup on the normalized lemma
+   **/
   _lookupSpecial(data,lookup,lemmas) {
     if (lemmas.length === 1 && lemmas[0].field1 === '@') {
       return data.get(`@${lookup}`)
