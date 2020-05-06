@@ -438,13 +438,10 @@ Lexis.api = (moduleInstance, store) => {
      * @param {Event} domEvent - A corresponding DOM event.
      */
     getSelectedText: (event, domEvent) => {
-      console.info('lexis getSelectedText start')
       if (moduleInstance._appApi.isGetSelectedTextEnabled(domEvent)) {
         const defaultLangCode = moduleInstance._appApi.getDefaultLangCode()
         const htmlSelector = new HTMLSelector(event, defaultLangCode)
         const textSelector = htmlSelector.createTextSelector()
-
-        console.info('lexis textSelector', textSelector, textSelector.isEmpty())
 
         if (textSelector && !textSelector.isEmpty()) {
           const lastTextSelector = moduleInstance._lastTextSelector || {}
@@ -454,13 +451,11 @@ Lexis.api = (moduleInstance, store) => {
             moduleInstance._uiApi.isPopupVisible()
           )
 
-          console.info('lexis checkSameTestSelector', checkSameTestSelector)
           if (checkSameTestSelector) {
             // Do nothing
             return
           }
           moduleInstance._lastTextSelector = textSelector
-          console.info('lexis lexicalQuery started')
           moduleInstance.lexicalQuery({
             store,
             textSelector,
