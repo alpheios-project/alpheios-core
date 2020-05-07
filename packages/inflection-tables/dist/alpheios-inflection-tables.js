@@ -97,9 +97,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ({
 
 /***/ "../../node_modules/base64-js/index.js":
-/*!****************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/base64-js/index.js ***!
-  \****************************************************************************/
+/*!******************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/base64-js/index.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -261,9 +261,9 @@ function fromByteArray (uint8) {
 /***/ }),
 
 /***/ "../../node_modules/core-util-is/lib/util.js":
-/*!**********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/core-util-is/lib/util.js ***!
-  \**********************************************************************************/
+/*!************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/core-util-is/lib/util.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -380,9 +380,9 @@ function objectToString(o) {
 /***/ }),
 
 /***/ "../../node_modules/events/events.js":
-/*!**************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/events/events.js ***!
-  \**************************************************************************/
+/*!****************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/events/events.js ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -838,9 +838,9 @@ function unwrapListeners(arr) {
 /***/ }),
 
 /***/ "../../node_modules/ieee754/index.js":
-/*!**************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/ieee754/index.js ***!
-  \**************************************************************************/
+/*!****************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/ieee754/index.js ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -933,9 +933,9 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 /***/ }),
 
 /***/ "../../node_modules/inherits/inherits.js":
-/*!******************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/inherits/inherits.js ***!
-  \******************************************************************************/
+/*!********************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/inherits/inherits.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -953,9 +953,9 @@ try {
 /***/ }),
 
 /***/ "../../node_modules/inherits/inherits_browser.js":
-/*!**************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/inherits/inherits_browser.js ***!
-  \**************************************************************************************/
+/*!****************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/inherits/inherits_browser.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -991,9 +991,9 @@ if (typeof Object.create === 'function') {
 /***/ }),
 
 /***/ "../../node_modules/isarray/index.js":
-/*!**************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/isarray/index.js ***!
-  \**************************************************************************/
+/*!****************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/isarray/index.js ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -1007,9 +1007,9 @@ module.exports = Array.isArray || function (arr) {
 /***/ }),
 
 /***/ "../../node_modules/node-libs-browser/node_modules/buffer/index.js":
-/*!********************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/buffer/index.js ***!
-  \********************************************************************************************************/
+/*!**********************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/node-libs-browser/node_modules/buffer/index.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2809,9 +2809,9 @@ function isnan (val) {
 /***/ }),
 
 /***/ "../../node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits.js":
-/*!*******************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits.js ***!
-  \*******************************************************************************************************************************/
+/*!*********************************************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits.js ***!
+  \*********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2827,9 +2827,9 @@ try {
 /***/ }),
 
 /***/ "../../node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits_browser.js":
-/*!***************************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits_browser.js ***!
-  \***************************************************************************************************************************************/
+/*!*****************************************************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits_browser.js ***!
+  \*****************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2861,9 +2861,9 @@ if (typeof Object.create === 'function') {
 /***/ }),
 
 /***/ "../../node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js":
-/*!************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js ***!
-  \************************************************************************************************************************/
+/*!**************************************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js ***!
+  \**************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2877,9 +2877,9 @@ module.exports = function isBuffer(arg) {
 /***/ }),
 
 /***/ "../../node_modules/node-libs-browser/node_modules/util/util.js":
-/*!*****************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/util/util.js ***!
-  \*****************************************************************************************************/
+/*!*******************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/node-libs-browser/node_modules/util/util.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3592,9 +3592,9 @@ exports.callbackify = callbackify;
 /***/ }),
 
 /***/ "../../node_modules/papaparse/papaparse.js":
-/*!********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/papaparse/papaparse.js ***!
-  \********************************************************************************/
+/*!**********************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/papaparse/papaparse.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5519,9 +5519,9 @@ License: MIT
 /***/ }),
 
 /***/ "../../node_modules/process-nextick-args/index.js":
-/*!***************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/process-nextick-args/index.js ***!
-  \***************************************************************************************/
+/*!*****************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/process-nextick-args/index.js ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5577,9 +5577,9 @@ function nextTick(fn, arg1, arg2, arg3) {
 /***/ }),
 
 /***/ "../../node_modules/process/browser.js":
-/*!****************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/process/browser.js ***!
-  \****************************************************************************/
+/*!******************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/process/browser.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -5772,9 +5772,9 @@ process.umask = function() { return 0; };
 /***/ }),
 
 /***/ "../../node_modules/safe-buffer/index.js":
-/*!******************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/safe-buffer/index.js ***!
-  \******************************************************************************/
+/*!********************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/safe-buffer/index.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5845,9 +5845,9 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 /***/ }),
 
 /***/ "../../node_modules/setimmediate/setImmediate.js":
-/*!**************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/setimmediate/setImmediate.js ***!
-  \**************************************************************************************/
+/*!****************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/setimmediate/setImmediate.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6043,9 +6043,9 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 /***/ }),
 
 /***/ "../../node_modules/stream-browserify/index.js":
-/*!************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/index.js ***!
-  \************************************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/stream-browserify/index.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6181,9 +6181,9 @@ Stream.prototype.pipe = function(dest, options) {
 /***/ }),
 
 /***/ "../../node_modules/stream-browserify/node_modules/readable-stream/duplex-browser.js":
-/*!**************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/duplex-browser.js ***!
-  \**************************************************************************************************************************/
+/*!****************************************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/duplex-browser.js ***!
+  \****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6193,9 +6193,9 @@ module.exports = __webpack_require__(/*! ./lib/_stream_duplex.js */ "../../node_
 /***/ }),
 
 /***/ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js":
-/*!******************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js ***!
-  \******************************************************************************************************************************/
+/*!********************************************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js ***!
+  \********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6335,9 +6335,9 @@ Duplex.prototype._destroy = function (err, cb) {
 /***/ }),
 
 /***/ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js":
-/*!***********************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js ***!
-  \***********************************************************************************************************************************/
+/*!*************************************************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js ***!
+  \*************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6393,9 +6393,9 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 /***/ }),
 
 /***/ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js":
-/*!********************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js ***!
-  \********************************************************************************************************************************/
+/*!**********************************************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js ***!
+  \**********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7424,9 +7424,9 @@ function indexOf(xs, x) {
 /***/ }),
 
 /***/ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js":
-/*!*********************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js ***!
-  \*********************************************************************************************************************************/
+/*!***********************************************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js ***!
+  \***********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7649,9 +7649,9 @@ function done(stream, er, data) {
 /***/ }),
 
 /***/ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js":
-/*!********************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js ***!
-  \********************************************************************************************************************************/
+/*!**********************************************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js ***!
+  \**********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8348,9 +8348,9 @@ Writable.prototype._destroy = function (err, cb) {
 /***/ }),
 
 /***/ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/BufferList.js":
-/*!*******************************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/BufferList.js ***!
-  \*******************************************************************************************************************************************/
+/*!*********************************************************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/BufferList.js ***!
+  \*********************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8438,9 +8438,9 @@ if (util && util.inspect && util.inspect.custom) {
 /***/ }),
 
 /***/ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js":
-/*!****************************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js ***!
-  \****************************************************************************************************************************************/
+/*!******************************************************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js ***!
+  \******************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8523,9 +8523,9 @@ module.exports = {
 /***/ }),
 
 /***/ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js":
-/*!***********************************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js ***!
-  \***********************************************************************************************************************************************/
+/*!*************************************************************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js ***!
+  \*************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8535,9 +8535,9 @@ module.exports = __webpack_require__(/*! events */ "../../node_modules/events/ev
 /***/ }),
 
 /***/ "../../node_modules/stream-browserify/node_modules/readable-stream/passthrough.js":
-/*!***********************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/passthrough.js ***!
-  \***********************************************************************************************************************/
+/*!*************************************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/passthrough.js ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8547,9 +8547,9 @@ module.exports = __webpack_require__(/*! ./readable */ "../../node_modules/strea
 /***/ }),
 
 /***/ "../../node_modules/stream-browserify/node_modules/readable-stream/readable-browser.js":
-/*!****************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/readable-browser.js ***!
-  \****************************************************************************************************************************/
+/*!******************************************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/readable-browser.js ***!
+  \******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8565,9 +8565,9 @@ exports.PassThrough = __webpack_require__(/*! ./lib/_stream_passthrough.js */ ".
 /***/ }),
 
 /***/ "../../node_modules/stream-browserify/node_modules/readable-stream/transform.js":
-/*!*********************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/transform.js ***!
-  \*********************************************************************************************************************/
+/*!***********************************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/transform.js ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8577,9 +8577,9 @@ module.exports = __webpack_require__(/*! ./readable */ "../../node_modules/strea
 /***/ }),
 
 /***/ "../../node_modules/stream-browserify/node_modules/readable-stream/writable-browser.js":
-/*!****************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/writable-browser.js ***!
-  \****************************************************************************************************************************/
+/*!******************************************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/writable-browser.js ***!
+  \******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8589,9 +8589,9 @@ module.exports = __webpack_require__(/*! ./lib/_stream_writable.js */ "../../nod
 /***/ }),
 
 /***/ "../../node_modules/string_decoder/lib/string_decoder.js":
-/*!**********************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/string_decoder/lib/string_decoder.js ***!
-  \**********************************************************************************************/
+/*!************************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/string_decoder/lib/string_decoder.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8896,9 +8896,9 @@ function simpleEnd(buf) {
 /***/ }),
 
 /***/ "../../node_modules/timers-browserify/main.js":
-/*!***********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/timers-browserify/main.js ***!
-  \***********************************************************************************/
+/*!*************************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/timers-browserify/main.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8971,9 +8971,9 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /***/ }),
 
 /***/ "../../node_modules/util-deprecate/node.js":
-/*!********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/util-deprecate/node.js ***!
-  \********************************************************************************/
+/*!**********************************************************************!*\
+  !*** C:/_Alpheios/alpheios-core/node_modules/util-deprecate/node.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10030,16 +10030,21 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
   }
 
   static getObligatoryMatchList (inflection) {
+    console.info('getObligatoryMatchList - started')
     if (inflection.hasFeatureValue(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_PRONOUN)) {
+      console.info('getObligatoryMatchList 1')
       // If it is a pronoun, it must match a grammatical class
       return [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmClass]
     } else if ([alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_NUMERAL, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_ARTICLE].includes(inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value)) {
+      console.info('getObligatoryMatchList 2')
       // If it is a numeral, it must match a part of speach
       return [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]
     } else if (inflection.constraints.fullFormBased) {
+      console.info('getObligatoryMatchList 3')
       // Not a pronoun, but the other form-based word
       return [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.fullForm]
     } else {
+      console.info('getObligatoryMatchList 4')
       // Default value for suffix matching
       return [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]
     }
@@ -11106,6 +11111,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+let shown = 1
 /**
  * Stores inflection language data
  */
@@ -11255,7 +11261,11 @@ class LanguageDataset {
         If either inflection or item does not have a certain feature,
         this feature is excluded from a comparison
          */
-        fullMatchQty--
+        if (inflection.constraints.pronounClassRequired && f === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmClass) {
+
+        } else {
+          fullMatchQty--
+        }
       }
       return acc
     }, [])
@@ -11278,6 +11288,7 @@ class LanguageDataset {
     inflection.constraints.implemented = this.isImplemented(inflection)
     if (inflection.constraints.implemented) {
       inflection.constraints.obligatoryMatches = this.constructor.getObligatoryMatchList(inflection)
+      console.info('inflection.constraints.obligatoryMatches - ', inflection.constraints.obligatoryMatches)
       inflection.constraints.optionalMatches = this.constructor.getOptionalMatchList(inflection)
       inflection.constraints.morphologyMatches = this.constructor.getMorphologyMatchList(inflection)
     }
@@ -11491,6 +11502,7 @@ class LanguageDataset {
         // Match against form based inflection only
         const formInflections = inflectionSet.inflections.filter(i => i.constraints.fullFormBased)
         const items = sourceSet.types.get(_form_js__WEBPACK_IMPORTED_MODULE_3__["default"]).items.reduce(this.reducerGen(formInflections, options), [])
+        // console.info('createInflectionSet items', items)
         if (items.length > 0) {
           inflectionSet.addInflectionItems(items)
         }
@@ -11593,6 +11605,9 @@ class LanguageDataset {
       }
       // Check for obligatory matches
       const obligatoryMatches = this.constructor.getObligatoryMatches(inflection, item, _morpheme_js__WEBPACK_IMPORTED_MODULE_1__["default"].comparisonTypes.PARTIAL)
+      if (shown < 5) {
+        console.info('obligatoryMatches - ', obligatoryMatches)
+      }
       if (obligatoryMatches.fullMatch) {
         matchData.matchedFeatures.push(...obligatoryMatches.matchedItems)
       } else {
@@ -11606,6 +11621,9 @@ class LanguageDataset {
       as multiple values in inflection and morpheme can go in different order.
        */
       const optionalMatches = this.constructor.getOptionalMatches(inflection, item, _morpheme_js__WEBPACK_IMPORTED_MODULE_1__["default"].comparisonTypes.PARTIAL)
+      if (shown < 5) {
+        console.info('optionalMatches - ', optionalMatches)
+      }
       matchData.matchedFeatures.push(...optionalMatches.matchedItems)
 
       if (options.findMorphologyMatches) {
@@ -11613,6 +11631,11 @@ class LanguageDataset {
         matchData.morphologyMatch = morphologyMatches.fullMatch
       } else {
         matchData.morphologyMatch = false
+      }
+
+      if (shown < 5) {
+        console.info('matchData - ', matchData)
+        shown = shown + 1
       }
 
       if (matchData.suffixMatch && obligatoryMatches.fullMatch && optionalMatches.fullMatch) {
@@ -11623,7 +11646,7 @@ class LanguageDataset {
         if (options.findMatches) {
           item.match = matchData
         }
-
+        // console.info('matcher - fullMatch', item)
         return item
       }
       bestMatchData = this.bestMatch(bestMatchData, matchData)
@@ -11634,6 +11657,7 @@ class LanguageDataset {
       if (options.findMatches) {
         item.match = bestMatchData
       }
+      // console.info('matcher - bestMatchData', item)
       return item
     }
     return null
@@ -15791,6 +15815,8 @@ class GreekPronounView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED
         }
       })
     }
+
+    console.info('getClassesFromInflection - ', allClasses)
     return Array.from(allClasses)
   }
 
@@ -15830,17 +15856,26 @@ class GreekPronounView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED
    * @return {boolean}
    */
   static matchFilter (languageID, inflections, inflectionData) {
+    console.info('matchFilter - this.classes', this.classes, languageID, inflections, inflectionData)
     if (this.languageID === languageID && inflections.some(i => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part] && i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.mainPartOfSpeech)) {
       if (inflectionData.types.has(this.inflectionType)) {
         const inflections = inflectionData.types.get(this.inflectionType)
+        // console.info('matchFilter - inflections after', inflections)
+
         const found = inflections.items.find(form => {
           let match = false
+          // console.info('matchFilter - form.features[Feature.types.grmClass].values', form.features[Feature.types.grmClass].values)
+          /* if (form.features[Feature.types.grmClass].values) {
+            console.info('form.features[Feature.types.grmClass].values - ', form.features[Feature.types.grmClass].values)
+          } */
           for (const value of form.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmClass].values) {
             match = match || this.classes.includes(value)
           }
           return match
         })
+
         if (found) {
+          console.info('************************matchFilter - found', this.name, found)
           return true
         }
       }
@@ -19511,6 +19546,7 @@ class View {
    * @return {View[] | []} Array of view instances or an empty array if view instance does not match inflection data.
    */
   static getMatchingInstances (homonym) {
+    console.info('getMatchingInstances', this.name)
     if (this.matchFilter(homonym.languageID, homonym.inflections)) {
       const inflectionData = this.getInflectionsData(homonym)
 

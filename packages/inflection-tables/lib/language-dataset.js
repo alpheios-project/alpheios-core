@@ -8,6 +8,7 @@ import InflectionSet from './inflection-set.js'
 import InflectionData from './inflection-data.js'
 import MatchData from './match-data.js'
 
+let shown = 1
 /**
  * Stores inflection language data
  */
@@ -157,7 +158,11 @@ export default class LanguageDataset {
         If either inflection or item does not have a certain feature,
         this feature is excluded from a comparison
          */
-        fullMatchQty--
+        if (inflection.constraints.pronounClassRequired && f === Feature.types.grmClass) {
+
+        } else {
+          fullMatchQty--
+        }
       }
       return acc
     }, [])
@@ -180,6 +185,7 @@ export default class LanguageDataset {
     inflection.constraints.implemented = this.isImplemented(inflection)
     if (inflection.constraints.implemented) {
       inflection.constraints.obligatoryMatches = this.constructor.getObligatoryMatchList(inflection)
+      console.info('inflection.constraints.obligatoryMatches - ', inflection.constraints.obligatoryMatches)
       inflection.constraints.optionalMatches = this.constructor.getOptionalMatchList(inflection)
       inflection.constraints.morphologyMatches = this.constructor.getMorphologyMatchList(inflection)
     }
@@ -393,6 +399,7 @@ export default class LanguageDataset {
         // Match against form based inflection only
         const formInflections = inflectionSet.inflections.filter(i => i.constraints.fullFormBased)
         const items = sourceSet.types.get(Form).items.reduce(this.reducerGen(formInflections, options), [])
+        // console.info('createInflectionSet items', items)
         if (items.length > 0) {
           inflectionSet.addInflectionItems(items)
         }
@@ -495,6 +502,9 @@ export default class LanguageDataset {
       }
       // Check for obligatory matches
       const obligatoryMatches = this.constructor.getObligatoryMatches(inflection, item, Morpheme.comparisonTypes.PARTIAL)
+      if (shown < 5) {
+        console.info('obligatoryMatches - ', obligatoryMatches)
+      }
       if (obligatoryMatches.fullMatch) {
         matchData.matchedFeatures.push(...obligatoryMatches.matchedItems)
       } else {
@@ -508,6 +518,9 @@ export default class LanguageDataset {
       as multiple values in inflection and morpheme can go in different order.
        */
       const optionalMatches = this.constructor.getOptionalMatches(inflection, item, Morpheme.comparisonTypes.PARTIAL)
+      if (shown < 5) {
+        console.info('optionalMatches - ', optionalMatches)
+      }
       matchData.matchedFeatures.push(...optionalMatches.matchedItems)
 
       if (options.findMorphologyMatches) {
@@ -515,6 +528,11 @@ export default class LanguageDataset {
         matchData.morphologyMatch = morphologyMatches.fullMatch
       } else {
         matchData.morphologyMatch = false
+      }
+
+      if (shown < 5) {
+        console.info('matchData - ', matchData)
+        shown = shown + 1
       }
 
       if (matchData.suffixMatch && obligatoryMatches.fullMatch && optionalMatches.fullMatch) {
@@ -525,7 +543,7 @@ export default class LanguageDataset {
         if (options.findMatches) {
           item.match = matchData
         }
-
+        // console.info('matcher - fullMatch', item)
         return item
       }
       bestMatchData = this.bestMatch(bestMatchData, matchData)
@@ -536,6 +554,7 @@ export default class LanguageDataset {
       if (options.findMatches) {
         item.match = bestMatchData
       }
+      // console.info('matcher - bestMatchData', item)
       return item
     }
     return null
