@@ -51,7 +51,7 @@
     >
     </setting>
 
-    <fieldset class="alpheios-feature-options__cont-wordselect">
+    <fieldset class="alpheios-ui-options__cont-wordselect">
       <legend>{{ l10n.getText("LABEL_FIELDSET_WORDSELECT") }}</legend>
       <setting
           class = "alpheios-feature-options__item"
@@ -59,30 +59,6 @@
           :selectedOverride = "mouseMoveChecked"
           @change = "featureOptionChanged"
           @clearSelectedOverride =  "clearMouseMoveOverride"
-      >
-      </setting>
-       <setting
-          class="alpheios-feature-options__item"
-          :data="featureOptions.items.mouseMoveDelay"
-          @change="featureOptionChanged"
-      >
-      </setting>
-       <setting
-          class="alpheios-feature-options__item"
-          :data="featureOptions.items.mouseMoveAccuracy"
-          @change="featureOptionChanged"
-      >
-      </setting>
-      <setting
-          class="alpheios-feature-options__item"
-          :data="featureOptions.items.enableMouseMoveLimitedByIdCheck"
-          @change="featureOptionChanged"
-      >
-      </setting>
-      <setting
-          class="alpheios-feature-options__item"
-          :data="featureOptions.items.mouseMoveLimitedById"
-          @change="featureOptionChanged"
       >
       </setting>
     </fieldset>
@@ -151,5 +127,9 @@
     padding: 10px;
 
     border: 2px groove var(--alpheios-color-placehoder);
+  }
+
+  .alpheios-ui-options__cont-wordselect {
+    margin-bottom: textsize(10px);
   }
 </style>

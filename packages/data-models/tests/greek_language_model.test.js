@@ -46,11 +46,8 @@ describe('greek_language_model.j', () => {
 
   it('3 GreekLanguageModel - alternateWordEncodings - additional encodings strip vowel length', () => {
     let word = '\u1FB0\u03B2\u1FB0\u1FB1'
-    let alt = greekModel.alternateWordEncodings(word)
+    let alt = greekModel.alternateWordEncodings({word:word})
     expect(alt[0]).toEqual('\u03B1\u03B2\u03B1\u03B1')
-
-    let alt2 = greekModel.alternateWordEncodings(word, null, null, 'strippedDiaeresis')
-    expect(alt2[0]).toEqual('\u1FB0\u03B2\u1FB0\u1FB1')
   })
 
   it('4 GreekLanguageModel - Uses default features with correct language', () => {
@@ -125,7 +122,7 @@ describe('greek_language_model.j', () => {
 
   it('11 GreekLanguageModel - alternateWordEncodings - additional encodings strip diacritics for inflections', () => {
     let word = 'συνεχής'.normalize('NFD')
-    expect(greekModel.alternateWordEncodings(word, null, null, 'strippedDiacritics')).toEqual(['συνεχης'])
+    expect(greekModel.alternateWordEncodings({word: word, encoding:'strippedDiacritics'})).toEqual(['συνεχης'])
   })
 
   it('12 compareWords respects normalization', () => {
@@ -145,4 +142,95 @@ describe('greek_language_model.j', () => {
   it('15 GreekLanguageModel - isValidUnicode defines mare as not greek', () => {
     expect(greekModel.isValidUnicode('beatum')).toBeFalsy()
   })
+
+  it('16 GreekLanguageModel - alternateWordEncodings supports strippedAll diacritics', () => {
+    // these test cases were taking from the mjm defs file at
+    // https://github.com/alpheios-project/mjm/blob/master/dat/grc-mjm-defs.dat
+    // by searching for each of the chars with diacritics per our uni-beta-transform mapping
+    // in https://github.com/alpheios-project/xml_ctl_files/blob/master/xslt/trunk/beta2unicode.xsl
+    expect(greekModel.alternateWordEncodings({word: "ῥωγάς", encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ρωγας")
+    expect(greekModel.alternateWordEncodings({word: "ῥᾳθυμέω",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ραθυμεω")
+    expect(greekModel.alternateWordEncodings({word: "ῥωπήιον",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ρωπηιον")
+    expect(greekModel.alternateWordEncodings({word: "ῥυτίς",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ρυτις")
+    expect(greekModel.alternateWordEncodings({word: "ῥῶπος",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ρωπος")
+    expect(greekModel.alternateWordEncodings({word: "ῥῆσις",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ρησις")
+    expect(greekModel.alternateWordEncodings({word: "ῥᾳδιουργός",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ραδιουργος")
+    expect(greekModel.alternateWordEncodings({word: "ῥᾳδιούργημα",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ραδιουργημα")
+    expect(greekModel.alternateWordEncodings({word: "ὁμογνώμων",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ομογνωμων")
+    expect(greekModel.alternateWordEncodings({word: "ἀωρία",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("αωρια")
+    expect(greekModel.alternateWordEncodings({word: "ἁψιμαχία",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("αψιμαχια")
+    expect(greekModel.alternateWordEncodings({word: "ἄωτον",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("αωτον")
+    expect(greekModel.alternateWordEncodings({word: "ἅτε",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ατε")
+    expect(greekModel.alternateWordEncodings({word: "ἆρα",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("αρα")
+    expect(greekModel.alternateWordEncodings({word: "ἇς",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ας")
+    expect(greekModel.alternateWordEncodings({word: "Ἀλέξανδρος",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("Αλεξανδρος")
+    expect(greekModel.alternateWordEncodings({word: "ἐκπίτνω",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("εκπιτνω")
+    expect(greekModel.alternateWordEncodings({word: "ἑῶμεν",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("εωμεν")
+    expect(greekModel.alternateWordEncodings({word: "ἒ",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ε")
+    expect(greekModel.alternateWordEncodings({word: "ἔωμεν",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("εωμεν")
+    expect(greekModel.alternateWordEncodings({word: "ἕωθεν",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("εωθεν")
+    expect(greekModel.alternateWordEncodings({word: "ἠῶθεν",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ηωθεν")
+    expect(greekModel.alternateWordEncodings({word: "ἡμι",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ημι")
+    expect(greekModel.alternateWordEncodings({word: "ἤχημα",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ηχημα")
+    expect(greekModel.alternateWordEncodings({word: "ἥττημα",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ηττημα")
+    expect(greekModel.alternateWordEncodings({word: "ἦχος",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ηχος")
+    expect(greekModel.alternateWordEncodings({word: "ἧχι",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ηχι")
+    expect(greekModel.alternateWordEncodings({word: "ἰῶτα2",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ιωτα2")
+    expect(greekModel.alternateWordEncodings({word: "ἱππών",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ιππων")
+    expect(greekModel.alternateWordEncodings({word: "ἴων",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ιων")
+    expect(greekModel.alternateWordEncodings({word: "ἵππουρις",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ιππουρις")
+    expect(greekModel.alternateWordEncodings({word: "ἶψ",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ιψ")
+    expect(greekModel.alternateWordEncodings({word: "οἷπερ",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("οιπερ")
+    expect(greekModel.alternateWordEncodings({word: "@Ἰώ",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("@Ιω")
+    expect(greekModel.alternateWordEncodings({word: "@Ἴλιος2",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("@Ιλιος2")
+    expect(greekModel.alternateWordEncodings({word: "ὁ",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ο")
+    expect(greekModel.alternateWordEncodings({word: "ὄψον",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("οψον")
+    expect(greekModel.alternateWordEncodings({word: "ὅτι",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("οτι")
+    expect(greekModel.alternateWordEncodings({word: "@Ὅμηρος",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("@Ομηρος")
+    expect(greekModel.alternateWordEncodings({word: "οὐχ",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ουχ")
+    expect(greekModel.alternateWordEncodings({word: "ὑψοῦ",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("υψου")
+    expect(greekModel.alternateWordEncodings({word: "ὒ",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("υ")
+    expect(greekModel.alternateWordEncodings({word: "ὔρχα",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("υρχα")
+    expect(greekModel.alternateWordEncodings({word: "ὕω",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("υω")
+    expect(greekModel.alternateWordEncodings({word: "οὖρον2",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ουρον2")
+    expect(greekModel.alternateWordEncodings({word: "ὗς1",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("υς1")
+    expect(greekModel.alternateWordEncodings({word: "ὠτώεις",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ωτωεις")
+    expect(greekModel.alternateWordEncodings({word: "ὡς",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ως")
+    expect(greekModel.alternateWordEncodings({word: "ὤψ",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ωψ")
+    expect(greekModel.alternateWordEncodings({word: "ὥρα",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ωρα")
+    expect(greekModel.alternateWordEncodings({word: "ὦχρος",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ωχρος")
+    expect(greekModel.alternateWordEncodings({word: "ὧρος1",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ωρος1")
+    expect(greekModel.alternateWordEncodings({word: "μὴπώποτε",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("μηπωποτε")
+    expect(greekModel.alternateWordEncodings({word: "καὶ5",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("και5")
+    expect(greekModel.alternateWordEncodings({word: "ᾄδω",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("αδω")
+    expect(greekModel.alternateWordEncodings({word: "ᾅδης",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("αδης")
+    expect(greekModel.alternateWordEncodings({word: "ᾖ",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("η")
+    expect(greekModel.alternateWordEncodings({word: "ᾗπερ",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ηπερ")
+    expect(greekModel.alternateWordEncodings({word: "ᾠδεῖον",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ωδειον")
+    expect(greekModel.alternateWordEncodings({word: "ἐγᾦμαι",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("εγωμαι")
+    expect(greekModel.alternateWordEncodings({word: "ῥᾳθυμία",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ραθυμια")
+    expect(greekModel.alternateWordEncodings({word: "ῥᾴθυμος",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ραθυμος")
+    expect(greekModel.alternateWordEncodings({word: "ἐλεᾶς",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ελεας")
+    expect(greekModel.alternateWordEncodings({word: "θρᾷξ",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("θραξ")
+    expect(greekModel.alternateWordEncodings({word: "ἀμφοτέρῃ",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("αμφοτερη")
+    expect(greekModel.alternateWordEncodings({word: "ἐγχρῄζω",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("εγχρηζω")
+    expect(greekModel.alternateWordEncodings({word: "ῥῆξις",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ρηξις")
+    expect(greekModel.alternateWordEncodings({word: "ὁμαρτῇ",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ομαρτη")
+    expect(greekModel.alternateWordEncodings({word: "ῥῖψις",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ριψις")
+    expect(greekModel.alternateWordEncodings({word: "ῥῶ",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ρω")
+    expect(greekModel.alternateWordEncodings({word: "ῥῦμα2",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ρυμα2")
+    expect(greekModel.alternateWordEncodings({word: "κωμῳδοποιητής",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("κωμωδοποιητης")
+    expect(greekModel.alternateWordEncodings({word: "πρῴραθεν",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("πρωραθεν")
+    expect(greekModel.alternateWordEncodings({word: "ὁμῶλαξ",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ομωλαξ")
+    expect(greekModel.alternateWordEncodings({word: "ἡρῷος",encoding: 'strippedAll', preserveCase: true})[0]).toEqual("ηρωος")
+  })
+
+  it('17 GreekLanguageModel - alternateWordEncodings tonosToOxia', () => {
+    let word = 'ἐκπ\u03AFπτω'
+    expect(greekModel._tonosToOxia(word)).toEqual('ἐκπ\u1F77πτω')
+    let alt = greekModel.alternateWordEncodings({word:word})
+    expect(alt.length).toEqual(1)
+    expect(alt[0]).toEqual('ἐκπ\u1F77πτω')
+  })
+
 })

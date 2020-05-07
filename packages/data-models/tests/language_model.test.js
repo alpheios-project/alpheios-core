@@ -64,4 +64,10 @@ describe('Language Model object', () => {
     expect(active[0].inflections[0].inflections.length).toEqual(1)
     expect(active[0].inflections[0].inflections[0]).toEqual(one)
   })
+
+  test('alternateWordEncodings',() => {
+    let basemodel = LanguageModelFactory.getLanguageModel(Constants.LANG_LATIN)
+    expect(basemodel.alternateWordEncodings({word:'foo'})).toEqual([])
+    expect(basemodel.alternateWordEncodings({word: 'foo', includeOriginal:true})).toEqual(['foo'])
+  })
 })

@@ -43,6 +43,34 @@
         @change="uiOptionChanged"
     >
     </setting>
+
+    <fieldset class="alpheios-ui-options__cont-wordselect">
+      <legend>{{ l10n.getText("LABEL_FIELDSET_MOUSEMOVE") }}</legend>
+       <setting
+          class="alpheios-feature-options__item"
+          :data="uiOptions.items.mouseMoveDelay"
+          @change="uiOptionChanged"
+      >
+      </setting>
+       <setting
+          class="alpheios-feature-options__item"
+          :data="uiOptions.items.mouseMoveAccuracy"
+          @change="uiOptionChanged"
+      >
+      </setting>
+      <setting
+          class="alpheios-feature-options__item"
+          :data="uiOptions.items.enableMouseMoveLimitedByIdCheck"
+          @change="uiOptionChanged"
+      >
+      </setting>
+      <setting
+          class="alpheios-feature-options__item"
+          :data="uiOptions.items.mouseMoveLimitedById"
+          @change="uiOptionChanged"
+      >
+      </setting>
+    </fieldset>
   </div>
 </template>
 <script>

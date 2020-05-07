@@ -10030,21 +10030,16 @@ class GreekLanguageDataset extends _lib_language_dataset_js__WEBPACK_IMPORTED_MO
   }
 
   static getObligatoryMatchList (inflection) {
-    console.info('getObligatoryMatchList - started')
     if (inflection.hasFeatureValue(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_PRONOUN)) {
-      console.info('getObligatoryMatchList 1')
       // If it is a pronoun, it must match a grammatical class
       return [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmClass]
     } else if ([alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_NUMERAL, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Constants"].POFS_ARTICLE].includes(inflection[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value)) {
-      console.info('getObligatoryMatchList 2')
       // If it is a numeral, it must match a part of speach
       return [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]
     } else if (inflection.constraints.fullFormBased) {
-      console.info('getObligatoryMatchList 3')
       // Not a pronoun, but the other form-based word
       return [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part, alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.fullForm]
     } else {
-      console.info('getObligatoryMatchList 4')
       // Default value for suffix matching
       return [alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part]
     }
@@ -11111,7 +11106,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let shown = 1
 /**
  * Stores inflection language data
  */
@@ -11288,7 +11282,6 @@ class LanguageDataset {
     inflection.constraints.implemented = this.isImplemented(inflection)
     if (inflection.constraints.implemented) {
       inflection.constraints.obligatoryMatches = this.constructor.getObligatoryMatchList(inflection)
-      console.info('inflection.constraints.obligatoryMatches - ', inflection.constraints.obligatoryMatches)
       inflection.constraints.optionalMatches = this.constructor.getOptionalMatchList(inflection)
       inflection.constraints.morphologyMatches = this.constructor.getMorphologyMatchList(inflection)
     }
@@ -11502,7 +11495,6 @@ class LanguageDataset {
         // Match against form based inflection only
         const formInflections = inflectionSet.inflections.filter(i => i.constraints.fullFormBased)
         const items = sourceSet.types.get(_form_js__WEBPACK_IMPORTED_MODULE_3__["default"]).items.reduce(this.reducerGen(formInflections, options), [])
-        // console.info('createInflectionSet items', items)
         if (items.length > 0) {
           inflectionSet.addInflectionItems(items)
         }
@@ -11605,9 +11597,6 @@ class LanguageDataset {
       }
       // Check for obligatory matches
       const obligatoryMatches = this.constructor.getObligatoryMatches(inflection, item, _morpheme_js__WEBPACK_IMPORTED_MODULE_1__["default"].comparisonTypes.PARTIAL)
-      if (shown < 5) {
-        console.info('obligatoryMatches - ', obligatoryMatches)
-      }
       if (obligatoryMatches.fullMatch) {
         matchData.matchedFeatures.push(...obligatoryMatches.matchedItems)
       } else {
@@ -11621,9 +11610,6 @@ class LanguageDataset {
       as multiple values in inflection and morpheme can go in different order.
        */
       const optionalMatches = this.constructor.getOptionalMatches(inflection, item, _morpheme_js__WEBPACK_IMPORTED_MODULE_1__["default"].comparisonTypes.PARTIAL)
-      if (shown < 5) {
-        console.info('optionalMatches - ', optionalMatches)
-      }
       matchData.matchedFeatures.push(...optionalMatches.matchedItems)
 
       if (options.findMorphologyMatches) {
@@ -11631,11 +11617,6 @@ class LanguageDataset {
         matchData.morphologyMatch = morphologyMatches.fullMatch
       } else {
         matchData.morphologyMatch = false
-      }
-
-      if (shown < 5) {
-        console.info('matchData - ', matchData)
-        shown = shown + 1
       }
 
       if (matchData.suffixMatch && obligatoryMatches.fullMatch && optionalMatches.fullMatch) {
@@ -11646,7 +11627,6 @@ class LanguageDataset {
         if (options.findMatches) {
           item.match = matchData
         }
-        // console.info('matcher - fullMatch', item)
         return item
       }
       bestMatchData = this.bestMatch(bestMatchData, matchData)
@@ -11657,7 +11637,6 @@ class LanguageDataset {
       if (options.findMatches) {
         item.match = bestMatchData
       }
-      // console.info('matcher - bestMatchData', item)
       return item
     }
     return null
@@ -15816,7 +15795,6 @@ class GreekPronounView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED
       })
     }
 
-    console.info('getClassesFromInflection - ', allClasses)
     return Array.from(allClasses)
   }
 
@@ -15856,18 +15834,12 @@ class GreekPronounView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED
    * @return {boolean}
    */
   static matchFilter (languageID, inflections, inflectionData) {
-    console.info('matchFilter - this.classes', this.classes, languageID, inflections, inflectionData)
     if (this.languageID === languageID && inflections.some(i => i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part] && i[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.part].value === this.mainPartOfSpeech)) {
       if (inflectionData.types.has(this.inflectionType)) {
         const inflections = inflectionData.types.get(this.inflectionType)
-        // console.info('matchFilter - inflections after', inflections)
 
         const found = inflections.items.find(form => {
           let match = false
-          // console.info('matchFilter - form.features[Feature.types.grmClass].values', form.features[Feature.types.grmClass].values)
-          /* if (form.features[Feature.types.grmClass].values) {
-            console.info('form.features[Feature.types.grmClass].values - ', form.features[Feature.types.grmClass].values)
-          } */
           for (const value of form.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmClass].values) {
             match = match || this.classes.includes(value)
           }
@@ -15875,7 +15847,6 @@ class GreekPronounView extends _views_lang_greek_greek_view_js__WEBPACK_IMPORTED
         })
 
         if (found) {
-          console.info('************************matchFilter - found', this.name, found)
           return true
         }
       }
@@ -19546,7 +19517,6 @@ class View {
    * @return {View[] | []} Array of view instances or an empty array if view instance does not match inflection data.
    */
   static getMatchingInstances (homonym) {
-    console.info('getMatchingInstances', this.name)
     if (this.matchFilter(homonym.languageID, homonym.inflections)) {
       const inflectionData = this.getInflectionsData(homonym)
 

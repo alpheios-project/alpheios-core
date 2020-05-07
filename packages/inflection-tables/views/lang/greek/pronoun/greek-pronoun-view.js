@@ -63,7 +63,6 @@ export default class GreekPronounView extends GreekView {
       })
     }
 
-    console.info('getClassesFromInflection - ', allClasses)
     return Array.from(allClasses)
   }
 
@@ -103,18 +102,12 @@ export default class GreekPronounView extends GreekView {
    * @return {boolean}
    */
   static matchFilter (languageID, inflections, inflectionData) {
-    console.info('matchFilter - this.classes', this.classes, languageID, inflections, inflectionData)
     if (this.languageID === languageID && inflections.some(i => i[Feature.types.part] && i[Feature.types.part].value === this.mainPartOfSpeech)) {
       if (inflectionData.types.has(this.inflectionType)) {
         const inflections = inflectionData.types.get(this.inflectionType)
-        // console.info('matchFilter - inflections after', inflections)
 
         const found = inflections.items.find(form => {
           let match = false
-          // console.info('matchFilter - form.features[Feature.types.grmClass].values', form.features[Feature.types.grmClass].values)
-          /* if (form.features[Feature.types.grmClass].values) {
-            console.info('form.features[Feature.types.grmClass].values - ', form.features[Feature.types.grmClass].values)
-          } */
           for (const value of form.features[Feature.types.grmClass].values) {
             match = match || this.classes.includes(value)
           }
@@ -122,7 +115,6 @@ export default class GreekPronounView extends GreekView {
         })
 
         if (found) {
-          console.info('************************matchFilter - found', this.name, found)
           return true
         }
       }

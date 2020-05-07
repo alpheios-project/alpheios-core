@@ -379,7 +379,7 @@ describe('lexicons/adapter.test.js', () => {
     })
   })
 
-  it.skip('19 AlpheiosLexiconsAdapter - fillMap creates object from parsed data', async () => {
+  it('19 AlpheiosLexiconsAdapter - fillMap creates object from parsed data', async () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
@@ -566,5 +566,31 @@ describe('lexicons/adapter.test.js', () => {
     mockLemma =  {word: "Ἀλέξανδρος", principalParts:[]}
     expect(adapter.lookupInDataIndex(data,mockLemma,model)[0].field1).toEqual('Alexander')
   })
+
+  it('26 AlpheiosLexiconsAdapter - test fallback lookup stripped of diacritics', async () => {
+
+    let adapter = new AlpheiosLexiconsAdapter({
+            category: 'lexicon',
+      adapterName: 'alpheios',
+      method: 'fetchShortDefs'
+    })
+    const model = LMF.getLanguageModel(Constants.LANG_GREEK)
+
+    let dataRows = [
+      ['@Εὖρος','the East wind','LSJ'],
+      ['εὖρος','@','LSJ'],
+      ['@εὖρος','breadth, width','LSJ'],
+      ['Καῖσαρ','Caesar','VGorman']
+    ]
+    let data = adapter.fillMap(dataRows)
+
+    let mockLemma =  {word: "εῦρος", principalParts:[]}
+    expect(adapter.lookupInDataIndex(data,mockLemma,model)[0].field1).toEqual('breadth, width')
+    mockLemma =  {word: "Εῦρος", principalParts:[]}
+    expect(adapter.lookupInDataIndex(data,mockLemma,model)[0].field1).toEqual('the East wind')
+    mockLemma =  {word: "Καῑσαρ", principalParts:[]}
+    expect(adapter.lookupInDataIndex(data,mockLemma,model)[0].field1).toEqual('Caesar')
+  })
+
 
 })

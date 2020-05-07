@@ -376,21 +376,16 @@ export default class GreekLanguageDataset extends LanguageDataset {
   }
 
   static getObligatoryMatchList (inflection) {
-    console.info('getObligatoryMatchList - started')
     if (inflection.hasFeatureValue(Feature.types.part, Constants.POFS_PRONOUN)) {
-      console.info('getObligatoryMatchList 1')
       // If it is a pronoun, it must match a grammatical class
       return [Feature.types.part, Feature.types.grmClass]
     } else if ([Constants.POFS_NUMERAL, Constants.POFS_ARTICLE].includes(inflection[Feature.types.part].value)) {
-      console.info('getObligatoryMatchList 2')
       // If it is a numeral, it must match a part of speach
       return [Feature.types.part]
     } else if (inflection.constraints.fullFormBased) {
-      console.info('getObligatoryMatchList 3')
       // Not a pronoun, but the other form-based word
       return [Feature.types.part, Feature.types.fullForm]
     } else {
-      console.info('getObligatoryMatchList 4')
       // Default value for suffix matching
       return [Feature.types.part]
     }
