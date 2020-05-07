@@ -11255,9 +11255,7 @@ class LanguageDataset {
         If either inflection or item does not have a certain feature,
         this feature is excluded from a comparison
          */
-        if (inflection.constraints.pronounClassRequired && f === alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmClass) {
-
-        } else {
+        if (!inflection.constraints.pronounClassRequired || f !== alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Feature"].types.grmClass) {
           fullMatchQty--
         }
       }
