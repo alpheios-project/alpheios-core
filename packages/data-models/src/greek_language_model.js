@@ -19,7 +19,6 @@ export default class GreekLanguageModel extends LanguageModel {
   static get direction () { return Constants.LANG_DIR_LTR }
   static get baseUnit () { return Constants.LANG_UNIT_WORD }
 
-
   static get featureValues () {
     /*
     This could be a static variable, but then it will create a circular reference:
@@ -133,7 +132,7 @@ for the current node
   }
 
   /**
-   * @override LanguageModel#grammarFeatures
+   * @override
    */
   static grammarFeatures () {
     // TODO this ideally might be grammar specific
@@ -167,15 +166,17 @@ for the current node
       /\u{03CC}/ug, '\u{1F79}').replace( // omicron
       /\u{03CD}/ug, '\u{1F7B}').replace( // upsilon
       /\u{03CE}/ug, '\u{1F7D}').replace( // omega
-      /\u{0390}/ug, '\u{1FD3}').replace( //iota with dialytika and tonos
+      /\u{0390}/ug, '\u{1FD3}').replace( // iota with dialytika and tonos
       /\u{03B0}/ug, '\u{1FE3}') // upsilon with dialytika and tonos
   }
 
   /**
-   * @override LanguageModel#alternateWordEncodings
+   * @override
    */
-  static alternateWordEncodings ({ word=null, preceding=null, following=null,
-    encoding=null, preserveCase=false, includeOriginal=false} = {}) {
+  static alternateWordEncodings ({
+    word = null, preceding = null, following = null,
+    encoding = null, preserveCase = false, includeOriginal = false
+  } = {}) {
     // the original alpheios code used the following normalizations
     // 1. When looking up a lemma
     //    stripped vowel length
@@ -191,7 +192,7 @@ for the current node
     // make sure it's normalized to NFC
     let normalized = GreekLanguageModel.normalizeText(word) // eslint-disable-line prefer-const
     // and in lower case unless explicitly requested otherwise
-    if (! preserveCase) {
+    if (!preserveCase) {
       normalized = normalized.toLocaleLowerCase()
     }
     const strippedVowelLength = normalized.replace(
@@ -247,7 +248,7 @@ for the current node
         alternates.push(tonosToOxia)
       }
     }
-    if (! includeOriginal) {
+    if (!includeOriginal) {
       alternates = alternates.filter(w => w !== word)
     }
     return alternates
@@ -338,14 +339,14 @@ for the current node
   /**
    * Checks if two words are equivalent.
    *
-   * @override LanguageModel#compareWords.
+   * @override
    * @param {string} wordA - a first word to be compared.
    * @param {string} wordB - a second word to be compared.
    * @param {boolean} normalize - whether or not to apply normalization algorithms
-   *                  with an `alternateWordEncodings()` function.
+   * with an `alternateWordEncodings()` function.
    * @param {object} options - Additional comparison criteria.
    * @param {boolean} options.normalizeTrailingDigit - whether to consider the form
-   *                  of a trailing digit during comparison.
+   * of a trailing digit during comparison.
    */
   static compareWords (wordA, wordB, normalize = true,
     { normalizeTrailingDigit = false } = {}) {
@@ -360,10 +361,16 @@ for the current node
         wordB = this.normalizeTrailingDigit(wordB)
       }
 
-      const altWordA = GreekLanguageModel.alternateWordEncodings({word:wordA,
-        encoding:'strippedDiacritics', includeOriginal: true})
-      const altWordB = GreekLanguageModel.alternateWordEncodings({word: wordB,
-        encoding:'strippedDiacritics', includeOriginal: true})
+      const altWordA = GreekLanguageModel.alternateWordEncodings({
+        word: wordA,
+        encoding: 'strippedDiacritics',
+        includeOriginal: true
+      })
+      const altWordB = GreekLanguageModel.alternateWordEncodings({
+        word: wordB,
+        encoding: 'strippedDiacritics',
+        includeOriginal: true
+      })
       for (let i = 0; i < altWordA.length; i++) {
         matched = altWordA[i] === altWordB[i]
         if (matched) {

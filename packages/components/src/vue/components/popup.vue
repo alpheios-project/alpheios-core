@@ -568,6 +568,7 @@ export default {
     top: 100px;
     // Required for Interact.js to take element size with paddings and work correctly
     box-sizing: border-box;
+    touch-action: none; // Required by Interact.js
     overflow: auto;
     @include alpheios-ui-border;
 
@@ -581,6 +582,7 @@ export default {
     justify-content: space-between;
     height: uisize(44px);
     background: var(--alpheios-desktop-popup-header-bg);
+    touch-action: auto; // Required by Interact.js
   }
 
   .alpheios-popup__logo {

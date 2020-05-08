@@ -122,7 +122,7 @@ export default class LatinLanguageModel extends LanguageModel {
   }
 
   /**
-   * @override LanguageModel#grammarFeatures
+   * @override
    */
   static grammarFeatures () {
     // TODO this ideally might be grammar specific

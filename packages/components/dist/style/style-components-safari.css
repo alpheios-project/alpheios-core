@@ -1518,6 +1518,7 @@ select.alpheios-setting__control,
   left: 200px !important;
   top: 100px !important;
   box-sizing: border-box !important;
+  touch-action: none !important;
   overflow: auto !important;
   border: 1px solid var(--alpheios-border-color) !important;
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) !important;
@@ -1530,6 +1531,7 @@ select.alpheios-setting__control,
   justify-content: space-between !important;
   height: calc(var(--alpheios-base-ui-size) * 2.75) !important;
   background: var(--alpheios-desktop-popup-header-bg) !important;
+  touch-action: auto !important;
 }
 .alpheios-popup__logo {
   position: relative !important;
