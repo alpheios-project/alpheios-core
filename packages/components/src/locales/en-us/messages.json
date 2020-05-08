@@ -657,6 +657,11 @@
     "description": "Legend for options fieldset",
     "component": "Options Tab"
   },
+  "LABEL_FIELDSET_BETACODES": {
+    "message": "Greek Betacodes Options",
+    "description": "Legend for options fieldset",
+    "component": "Options Tab"
+  },
   "OPTIONS_TAB_UI": {
     "message": "User Interface Options",
     "description": "Tooltip for the show UI options icon",

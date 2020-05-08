@@ -213,6 +213,36 @@
       "minValue": 1,
       "maxValue": 100,
       "values": []
+    },
+    "showBetaCodesInfo": {
+      "defaultValue": false,
+      "labelText": "Show Betacode to Unicode Mappings inside Lookup box",
+      "boolean": true,
+      "values": [
+        {
+          "value": true,
+          "text": "Yes"
+        },
+        {
+          "value": false,
+          "text": "No"
+        }
+      ]
+    },
+    "useBetaCodes": {
+      "defaultValue": true,
+      "labelText": "Use Betacodes for typing greek inside Lookup box",
+      "boolean": true,
+      "values": [
+        {
+          "value": true,
+          "text": "Yes"
+        },
+        {
+          "value": false,
+          "text": "No"
+        }
+      ]
     }
   }
 }

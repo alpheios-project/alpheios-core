@@ -91,8 +91,7 @@
           :name-base="`toolbar`"
           :show-lang-selector="showLangSelector"
           @toggleLangSelector = "toggleLangSelector"
-          @toggleBetaCodesInfo = "toggleBetaCodesInfo"
-          @toggleEnableAutocompleteCheck = "toggleEnableAutocompleteCheck"
+          @updateAvailableUseBetaCodes = "updateAvailableUseBetaCodes"
       />
     </div>
 
@@ -260,8 +259,7 @@ export default {
       // An X position of the central point of a toolbar
       xCenter: undefined,
       showLangSelector: false,
-      showBetaCodesInfo: false,
-      showEnableAutocompleteCheck: false
+      availableUseBetaCodes: false
     }
   },
 
@@ -300,8 +298,8 @@ export default {
 
     toolbarLookupClasses () {
       return { 
-        'alpheios-toolbar__lookup-beta-codes': this.showBetaCodesInfo,
-        'alpheios-toolbar__lookup-change-lang': !this.showBetaCodesInfo && this.showLangSelector && this.showEnableAutocompleteCheck
+        'alpheios-toolbar__lookup-beta-codes': this.currentShowBetaCodesInfo,
+        'alpheios-toolbar__lookup-change-lang': !this.currentShowBetaCodesInfo && this.showLangSelector && this.currentEnableLogeionAutoComplete
       }
     },
 
@@ -319,6 +317,15 @@ export default {
 
     tooltipDirection: function () {
       return this.isInLeftHalf ? 'right' : 'left'
+    },
+    featureOptions () {
+      return this.$store.state.settings.featureResetCounter + 1 ? this.settings.getFeatureOptions() : null
+    },
+    currentShowBetaCodesInfo () {
+      return this.featureOptions ? this.availableUseBetaCodes && this.featureOptions.items.showBetaCodesInfo.currentValue : null
+    },
+    currentEnableLogeionAutoComplete () {
+      return this.featureOptions ? this.featureOptions.items.enableLogeionAutoComplete.currentValue : null
     }
   },
 
@@ -419,13 +426,10 @@ export default {
       this.showLangSelector = true
     },
 
-    toggleBetaCodesInfo (value) {
-      this.showBetaCodesInfo = value
-    },
-
-    toggleEnableAutocompleteCheck (value) {
-      this.showEnableAutocompleteCheck = value
+    updateAvailableUseBetaCodes (value) {
+      this.availableUseBetaCodes = value
     }
+
   },
 
   mounted: function () {
@@ -618,7 +622,7 @@ export default {
     }
 
     &.alpheios-toolbar__lookup-beta-codes {
-      height: textsize(540px);
+      height: textsize(500px);
       border-radius: uisize(10px) 0 uisize(10px) uisize(10px);
     }
 

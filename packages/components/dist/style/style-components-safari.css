@@ -3657,6 +3657,23 @@ p.alpheios-word-usage-filter-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info {
+  border-bottom: 1px solid var(--alpheios-color-placehoder) !important;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 1.5) !important;
+  font-size: 94% !important;
+}
+.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info div {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
 .alpheios-lookup__form {
   text-align: left !important;
   display: flex;
@@ -3731,22 +3748,6 @@ span.alpheios-lookup__lang-change:hover {
   width: 35px !important;
   height: 25px !important;
 }
-.alpheios-lookup__form span.alpheios-lookup__form-beta-codes-check {
-  vertical-align: middle !important;
-  padding-left: calc(var(--alpheios-base-ui-size) * 0.625) !important;
-  margin-bottom: calc(var(--alpheios-base-ui-size) * 0.375) !important;
-  display: inline-block;
-}
-.alpheios-lookup__form span.alpheios-lookup__form-beta-codes-check label {
-  line-height: 1 !important;
-  font-size: 90% !important;
-  display: inline-block;
-  vertical-align: middle !important;
-}
-.alpheios-lookup__form span.alpheios-lookup__form-beta-codes-check input {
-  display: inline-block;
-  vertical-align: middle !important;
-}
 .alpheios-lookup__form-icon {
   width: calc(var(--alpheios-base-ui-size) * 0.9375) !important;
   height: calc(var(--alpheios-base-ui-size) * 0.9375) !important;
@@ -3765,21 +3766,6 @@ span.alpheios-lookup__lang-change:hover {
   top: 50% !important;
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
-}
-.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info {
-  border-bottom: 1px solid var(--alpheios-color-placehoder) !important;
-  margin-bottom: calc(var(--alpheios-base-text-size) * 1.5) !important;
-  font-size: 94% !important;
-}
-.alpheios-lookup__form .alpheios-lookup__form-beta-codes-info div {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-.alpheios-lookup__autocomplete {
-  margin-top: 5px !important;
-}
-.alpheios-lookup__autocomplete div.alpheios-checkbox-block {
-  max-width: none !important;
 }
 /*
  Calculates a size of text elements relative to the base size.
@@ -3919,7 +3905,7 @@ span.alpheios-lookup__lang-change:hover {
   display: inline-block;
 }
 .alpheios-toolbar__lookup.alpheios-toolbar__lookup-beta-codes {
-  height: calc(var(--alpheios-base-text-size) * 33.75) !important;
+  height: calc(var(--alpheios-base-text-size) * 31.25) !important;
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
 .alpheios-toolbar__lookup.alpheios-toolbar__lookup-change-lang {

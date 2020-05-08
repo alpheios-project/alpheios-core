@@ -12,7 +12,7 @@
             :ref="id"
             @click="closeAutocompleteList"
         >
-        <div class="alpheios-input-autocomplete" v-show="words.length > 0">
+        <div class="alpheios-input-autocomplete" v-show="currentEnableLogeionAutoComplete && words.length > 0">
             <span class="alpheios-input-autocomplete-item" v-for="(word, index) in words" v-bind:key="index" @click="selectWordFromAutoComplete(word)">{{ word }}</span>
         </div>
     </div>
@@ -38,14 +38,6 @@ export default {
       type: Number,
       default: 0
     },
-    useBetaCodes: {
-      type: Boolean,
-      default: false
-    },
-    enableLogeionAutoComplete: {
-      type: Boolean,
-      default: false
-    },
     id: {
       type: String,
       required: true
@@ -62,17 +54,24 @@ export default {
     'clearValue' () {
       this.valueText = ''
       this.clearWords()
-    },
-    'enableLogeionAutoComplete' (value) {
-      if (!value) {
-        this.clearWords()
-      }
     }
   },
   computed: {
     directionRtl () {
       const model = LanguageModelFactory.getLanguageModelFromCode(this.lang)
       return model.direction === Constants.LANG_DIR_RTL
+    },
+    featureOptions () {
+      return this.$store.state.settings.featureResetCounter + 1 ? this.settings.getFeatureOptions() : null
+    },
+    currentEnableLogeionAutoComplete () {
+      return this.featureOptions ? this.featureOptions.items.enableLogeionAutoComplete.currentValue : null
+    },
+    currentUseBetaCodes () {
+      return this.featureOptions ? this.availableUseBetaCodes && this.featureOptions.items.useBetaCodes.currentValue : null
+    },
+    availableUseBetaCodes () {
+      return this.lang === GreekInput.langCode
     }
   },
   methods: {
@@ -92,14 +91,14 @@ export default {
     },
 
     updateBetaCodes () {
-      if (this.useBetaCodes && this.lang === GreekInput.langCode) {
+      if (this.currentUseBetaCodes && this.availableUseBetaCodes) {
         this.valueText = GreekInput.change(this.valueText)
         this.$emit('updateLookupText', this.valueText)
       }
     },
 
     async getAutocompleteWords () {
-      if (this.enableLogeionAutoComplete) {
+      if (this.currentEnableLogeionAutoComplete) {
         this.valueText = this.valueText.trim()
         this.$emit('updateLookupText', this.valueText)
         this.clearWords()
