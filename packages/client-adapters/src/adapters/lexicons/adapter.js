@@ -369,7 +369,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
     // if we still don't have a match, we can do a last ditch check without
     // any diacritics at all in those languages that support it
     if (!found) {
-      const lastAlt = []
+      let lastAlt = [] // eslint-disable-line prefer-const
       for (const l of [lemma.word, ...lemma.principalParts]) {
         const strippedAll = model.alternateWordEncodings({
           word: l,
