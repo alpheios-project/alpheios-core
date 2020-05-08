@@ -216,7 +216,7 @@
     },
     "showBetaCodesInfo": {
       "defaultValue": false,
-      "labelText": "Show Betacode to Unicode Mappings inside Lookup box",
+      "labelText": "Show Betacode to Unicode Mapping Help",
       "boolean": true,
       "values": [
         {
@@ -231,7 +231,7 @@
     },
     "useBetaCodes": {
       "defaultValue": true,
-      "labelText": "Use Betacodes for typing greek inside Lookup box",
+      "labelText": "Convert Greek Betacode to Unicode",
       "boolean": true,
       "values": [
         {
