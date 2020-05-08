@@ -382,7 +382,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
       }
       if (lastAlt.length > 0) {
         for (const l of lastAlt) {
-          for (const entry of data.entries()) {
+          for (let entry of data.entries()) { // eslint-disable-line prefer-const
             // a normal lookup in the dataset map would only return
             // an entry preceding with '@' as a result of the _lookupSpecial
             // test but because we are looping through and testing each entry
