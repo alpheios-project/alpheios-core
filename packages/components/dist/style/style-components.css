@@ -3111,6 +3111,36 @@ p.alpheios-word-usage-filter-title {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
+.alpheios-adv-options__cont {
+  display: flex;
+  flex-direction: column;
+}
+.alpheios-adv-options__item {
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.9375);
+  display: flex;
+  align-items: flex-start;
+  flex: 1 1 auto;
+}
+.alpheios-adv-options__popup-size-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 1.25);
+}
+.alpheios-adv-options__popup-size-item_top-label {
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.3125);
+}
+.alpheios-adv-options__popup-size-item_bottom-label {
+  display: flex;
+  justify-content: space-between;
+}
+/*
+ Calculates a size of text elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
+ */
+/*
+ Calculates a size of UI elements relative to the base size.
+ Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
+ */
 .alpheios-tab-options {
   display: flex;
   flex-direction: column;

@@ -11,11 +11,15 @@
           <alph-tooltip :tooltipText="l10n.getText('OPTIONS_TAB_RESOURCE')" tooltipDirection="bottom-left">
             <div class="alpheios-tab-options-switch--item" :class="{ 'alpheios-active': currentTab === 3 }" @click="currentTab = 3">R<span class="alpheios-tab-options-switch--item__smaller">esources</span></div>
           </alph-tooltip>
+          <alph-tooltip :tooltipText="l10n.getText('OPTIONS_TAB_ADVANCED')" tooltipDirection="bottom-left">
+            <div class="alpheios-tab-options-switch--item" :class="{ 'alpheios-active': currentTab === 4 }" @click="currentTab = 4">A<span class="alpheios-tab-options-switch--item__smaller">dvanced</span></div>
+          </alph-tooltip>
       </div>
 
           <ui-settings :key="uiSettingsKey" v-show="currentTab === 1"></ui-settings>
           <feature-settings :key="featureSettingsKey" v-show="currentTab === 2"></feature-settings>
           <resource-settings :key="resourceSettingsKey" v-show="currentTab === 3"></resource-settings>
+          <advanced-settings :key="advancedSettingsKey" v-show="currentTab === 4"></advanced-settings>
       <div class="alpheios-tab-options-reset-all-block">
           <button @click="resetAllOptions"
               class="alpheios-button-primary">{{l10n.getText('LABEL_RESET_OPTIONS')}}
@@ -39,6 +43,7 @@
 import ResourceSettings from '@/vue/components/resource-settings.vue'
 import FeatureSettings from '@/vue/components/feature-settings.vue'
 import UISettings from '@/vue/components/ui-settings.vue'
+import AdvancedSettings from '@/vue/components/advanced-settings.vue'
 
 import Tooltip from '@/vue/components/tooltip.vue'
 
@@ -49,6 +54,7 @@ export default {
     uiSettings: UISettings,
     resourceSettings: ResourceSettings,
     featureSettings: FeatureSettings,
+    advancedSettings: AdvancedSettings,
     alphTooltip: Tooltip
   },
   inject: ['l10n', 'app'],
@@ -68,6 +74,10 @@ export default {
 
     featureSettingsKey () {
       return `${this.$options.prefixName}-settings-feature-${this.$store.state.settings.featureResetCounter}`
+    },
+
+    advancedSettingsKey () {
+      return `${this.$options.prefixName}-settings-ui-${10 + this.$store.state.settings.uiResetCounter}`
     },
 
     buildNameForDisplay () {
