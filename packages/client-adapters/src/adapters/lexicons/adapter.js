@@ -337,7 +337,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
     let altEncodings = [] // eslint-disable-line prefer-const
     for (const l of [lemma.word, ...lemma.principalParts]) {
       alternatives.push(l)
-      for (const a of model.alternateWordEncodings({word:l, preserveCase:true})) {
+      for (const a of model.alternateWordEncodings({ word: l, preserveCase: true })) {
         // we gather altEncodings separately because they should
         // be tried last after the lemma and principalParts in their
         // original form
@@ -359,7 +359,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
       }
 
       if (found) {
-        found = this._lookupSpecial(data,lookup,found)
+        found = this._lookupSpecial(data, lookup, found)
       }
       if (found) {
         break
@@ -369,28 +369,34 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
     // if we still don't have a match, we can do a last ditch check without
     // any diacritics at all in those languages that support it
     if (!found) {
-      let lastAlt = []
+      let lastAlt = [] // eslint-disable-line prefer-const
       for (const l of [lemma.word, ...lemma.principalParts]) {
-        let strippedAll = model.alternateWordEncodings({ word: l,
-          encoding:'strippedAll',preserveCase:true})
+        const strippedAll = model.alternateWordEncodings({
+          word: l,
+          encoding: 'strippedAll',
+          preserveCase: true
+        })
         if (strippedAll.length > 0) {
           lastAlt.push(strippedAll[0])
         }
       }
       if (lastAlt.length > 0) {
         for (const l of lastAlt) {
-          for ( const entry of data.entries() )   {
+          for (let entry of data.entries()) { // eslint-disable-line prefer-const
             // a normal lookup in the dataset map would only return
             // an entry preceding with '@' as a result of the _lookupSpecial
             // test but because we are looping through and testing each entry
             // the test on case without any diacritics will find those matches
             // and we need to remove the @ flag to make sure it doesn't fail them
-            const originalKey = entry[0].replace(/^@/,'')
+            const originalKey = entry[0].replace(/^@/, '')
             const value = entry[1]
-            let strippedKey = model.alternateWordEncodings({word: originalKey,
-              encoding:'strippedAll',preserveCase:true})
-            if (strippedKey.length >0 && strippedKey[0] === l) {
-              found = this._lookupSpecial(data,originalKey,value)
+            const strippedKey = model.alternateWordEncodings({
+              word: originalKey,
+              encoding: 'strippedAll',
+              preserveCase: true
+            })
+            if (strippedKey.length > 0 && strippedKey[0] === l) {
+              found = this._lookupSpecial(data, originalKey, value)
               if (found) {
                 break
               }
@@ -417,7 +423,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
    * @param {lookup} lookup the original pre-normalized lemma
    * @param {lemmas} the value returned by the lookup on the normalized lemma
    **/
-  _lookupSpecial(data,lookup,lemmas) {
+  _lookupSpecial (data, lookup, lemmas) {
     if (lemmas.length === 1 && lemmas[0].field1 === '@') {
       return data.get(`@${lookup}`)
     } else {

@@ -157,7 +157,9 @@ export default class LanguageDataset {
         If either inflection or item does not have a certain feature,
         this feature is excluded from a comparison
          */
-        fullMatchQty--
+        if (!inflection.constraints.pronounClassRequired || f !== Feature.types.grmClass) {
+          fullMatchQty--
+        }
       }
       return acc
     }, [])
@@ -525,7 +527,6 @@ export default class LanguageDataset {
         if (options.findMatches) {
           item.match = matchData
         }
-
         return item
       }
       bestMatchData = this.bestMatch(bestMatchData, matchData)

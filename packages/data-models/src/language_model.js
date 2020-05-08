@@ -418,7 +418,7 @@ class LanguageModel {
   /**
    * Returns alternate encodings for a word
    *
-   * @param {Object} params paramaters {}
+   * @param {object} params paramaters {}
    *   @param {string} word the word
    *   @param {string} preceding preceding word (optional)
    *   @param {string} following following word (optional)
@@ -427,8 +427,10 @@ class LanguageModel {
    *   @param {boolean} includeOriginal if true will include the original word even if it is unchanged (default is false)
    * @returns {Array} an array of alternate encodings if they differ from the original
    */
-  static alternateWordEncodings ({word=null, preceding=null, following=null, encoding=null,
-      preserveCase=false, includeOriginal=false} = {}) {
+  static alternateWordEncodings ({
+    word = null, preceding = null, following = null, encoding = null,
+    preserveCase = false, includeOriginal = false
+  } = {}) {
     return includeOriginal ? [word] : []
   }
 

@@ -153,8 +153,10 @@ for the current node
   /**
    * @override LanguageModel#alternateWordEncodings
    */
-  static alternateWordEncodings ({ word=null, preceding=null, following=null, encoding=null,
-      preserveCase=false, includeOriginal=false} = {}) {
+  static alternateWordEncodings ({
+    word = null, preceding = null, following = null, encoding = null,
+    preserveCase = false, includeOriginal = false
+  } = {}) {
     // tanwin (& tatweel) - drop FATHATAN, DAMMATAN, KASRATAN, TATWEEL
     const tanwin = word.replace(/[\u{064B}\u{064C}\u{064D}\u{0640}]/ug, '')
     // hamzas - replace ALEF WITH MADDA ABOVE, ALEF WITH HAMZA ABOVE/BELOW with ALEF
@@ -175,13 +177,13 @@ for the current node
       ['sukun', sukun],
       ['alef', alef]
     ])
-    let fullList = []  // eslint-disable-line prefer-const
+    let fullList = [] // eslint-disable-line prefer-const
     if (encoding !== null && alternates.has(encoding)) {
       fullList = [alternates.get(encoding)]
     } else {
       fullList = Array.from(alternates.values())
     }
-    if (! includeOriginal) {
+    if (!includeOriginal) {
       fullList = fullList.filter(w => w !== word)
     }
     return fullList
@@ -2270,7 +2272,6 @@ class GreekLanguageModel extends _language_model_js__WEBPACK_IMPORTED_MODULE_0__
   static get direction () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__["LANG_DIR_LTR"] }
   static get baseUnit () { return _constants_js__WEBPACK_IMPORTED_MODULE_2__["LANG_UNIT_WORD"] }
 
-
   static get featureValues () {
     /*
     This could be a static variable, but then it will create a circular reference:
@@ -2418,15 +2419,17 @@ for the current node
       /\u{03CC}/ug, '\u{1F79}').replace( // omicron
       /\u{03CD}/ug, '\u{1F7B}').replace( // upsilon
       /\u{03CE}/ug, '\u{1F7D}').replace( // omega
-      /\u{0390}/ug, '\u{1FD3}').replace( //iota with dialytika and tonos
+      /\u{0390}/ug, '\u{1FD3}').replace( // iota with dialytika and tonos
       /\u{03B0}/ug, '\u{1FE3}') // upsilon with dialytika and tonos
   }
 
   /**
    * @override LanguageModel#alternateWordEncodings
    */
-  static alternateWordEncodings ({ word=null, preceding=null, following=null,
-    encoding=null, preserveCase=false, includeOriginal=false} = {}) {
+  static alternateWordEncodings ({
+    word = null, preceding = null, following = null,
+    encoding = null, preserveCase = false, includeOriginal = false
+  } = {}) {
     // the original alpheios code used the following normalizations
     // 1. When looking up a lemma
     //    stripped vowel length
@@ -2442,7 +2445,7 @@ for the current node
     // make sure it's normalized to NFC
     let normalized = GreekLanguageModel.normalizeText(word) // eslint-disable-line prefer-const
     // and in lower case unless explicitly requested otherwise
-    if (! preserveCase) {
+    if (!preserveCase) {
       normalized = normalized.toLocaleLowerCase()
     }
     const strippedVowelLength = normalized.replace(
@@ -2498,7 +2501,7 @@ for the current node
         alternates.push(tonosToOxia)
       }
     }
-    if (! includeOriginal) {
+    if (!includeOriginal) {
       alternates = alternates.filter(w => w !== word)
     }
     return alternates
@@ -2611,10 +2614,16 @@ for the current node
         wordB = this.normalizeTrailingDigit(wordB)
       }
 
-      const altWordA = GreekLanguageModel.alternateWordEncodings({word:wordA,
-        encoding:'strippedDiacritics', includeOriginal: true})
-      const altWordB = GreekLanguageModel.alternateWordEncodings({word: wordB,
-        encoding:'strippedDiacritics', includeOriginal: true})
+      const altWordA = GreekLanguageModel.alternateWordEncodings({
+        word: wordA,
+        encoding: 'strippedDiacritics',
+        includeOriginal: true
+      })
+      const altWordB = GreekLanguageModel.alternateWordEncodings({
+        word: wordB,
+        encoding: 'strippedDiacritics',
+        includeOriginal: true
+      })
       for (let i = 0; i < altWordA.length; i++) {
         matched = altWordA[i] === altWordB[i]
         if (matched) {
@@ -3969,7 +3978,7 @@ class LanguageModel {
   /**
    * Returns alternate encodings for a word
    *
-   * @param {Object} params paramaters {}
+   * @param {object} params paramaters {}
    *   @param {string} word the word
    *   @param {string} preceding preceding word (optional)
    *   @param {string} following following word (optional)
@@ -3978,8 +3987,10 @@ class LanguageModel {
    *   @param {boolean} includeOriginal if true will include the original word even if it is unchanged (default is false)
    * @returns {Array} an array of alternate encodings if they differ from the original
    */
-  static alternateWordEncodings ({word=null, preceding=null, following=null, encoding=null,
-      preserveCase=false, includeOriginal=false} = {}) {
+  static alternateWordEncodings ({
+    word = null, preceding = null, following = null, encoding = null,
+    preserveCase = false, includeOriginal = false
+  } = {}) {
     return includeOriginal ? [word] : []
   }
 

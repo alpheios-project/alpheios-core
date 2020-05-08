@@ -62,6 +62,7 @@ export default class GreekPronounView extends GreekView {
         }
       })
     }
+
     return Array.from(allClasses)
   }
 
@@ -104,6 +105,7 @@ export default class GreekPronounView extends GreekView {
     if (this.languageID === languageID && inflections.some(i => i[Feature.types.part] && i[Feature.types.part].value === this.mainPartOfSpeech)) {
       if (inflectionData.types.has(this.inflectionType)) {
         const inflections = inflectionData.types.get(this.inflectionType)
+
         const found = inflections.items.find(form => {
           let match = false
           for (const value of form.features[Feature.types.grmClass].values) {
@@ -111,6 +113,7 @@ export default class GreekPronounView extends GreekView {
           }
           return match
         })
+
         if (found) {
           return true
         }
