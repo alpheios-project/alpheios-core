@@ -132,7 +132,7 @@ for the current node
   }
 
   /**
-   * @override LanguageModel#grammarFeatures
+   * @override
    */
   static grammarFeatures () {
     // TODO this ideally might be grammar specific
@@ -171,7 +171,7 @@ for the current node
   }
 
   /**
-   * @override LanguageModel#alternateWordEncodings
+   * @override
    */
   static alternateWordEncodings ({
     word = null, preceding = null, following = null,
@@ -339,14 +339,14 @@ for the current node
   /**
    * Checks if two words are equivalent.
    *
-   * @override LanguageModel#compareWords.
+   * @override
    * @param {string} wordA - a first word to be compared.
    * @param {string} wordB - a second word to be compared.
    * @param {boolean} normalize - whether or not to apply normalization algorithms
-   *                  with an `alternateWordEncodings()` function.
+   * with an `alternateWordEncodings()` function.
    * @param {object} options - Additional comparison criteria.
    * @param {boolean} options.normalizeTrailingDigit - whether to consider the form
-   *                  of a trailing digit during comparison.
+   * of a trailing digit during comparison.
    */
   static compareWords (wordA, wordB, normalize = true,
     { normalizeTrailingDigit = false } = {}) {

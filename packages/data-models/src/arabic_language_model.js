@@ -40,7 +40,7 @@ for the current node
   }
 
   /**
-   * @override LanguageModel#alternateWordEncodings
+   * @override
    */
   static alternateWordEncodings ({
     word = null, preceding = null, following = null, encoding = null,
