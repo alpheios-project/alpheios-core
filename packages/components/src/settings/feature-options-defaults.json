@@ -213,6 +213,36 @@
       "minValue": 1,
       "maxValue": 100,
       "values": []
+    },
+    "showBetaCodesInfo": {
+      "defaultValue": false,
+      "labelText": "Show Betacode to Unicode Mapping Help",
+      "boolean": true,
+      "values": [
+        {
+          "value": true,
+          "text": "Yes"
+        },
+        {
+          "value": false,
+          "text": "No"
+        }
+      ]
+    },
+    "useBetaCodes": {
+      "defaultValue": true,
+      "labelText": "Convert Greek Betacode to Unicode",
+      "boolean": true,
+      "values": [
+        {
+          "value": true,
+          "text": "Yes"
+        },
+        {
+          "value": false,
+          "text": "No"
+        }
+      ]
     }
   }
 }

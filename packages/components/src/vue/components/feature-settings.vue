@@ -69,6 +69,31 @@
         @change="featureOptionChanged"
     >
     </setting>
+
+    <fieldset class="alpheios-ui-options__cont-wordselect">
+      <legend>{{ l10n.getText("LABEL_FIELDSET_BETACODES") }}</legend>
+      <setting
+        class="alpheios-feature-options__item"
+        :data="featureOptions.items.useBetaCodes"
+        @change="featureOptionChanged"
+      >
+      </setting>
+      
+      <setting
+        class="alpheios-feature-options__item"
+        :data="featureOptions.items.showBetaCodesInfo"
+        @change="featureOptionChanged"
+      >
+      </setting>
+    </fieldset>
+
+    <setting
+      class="alpheios-feature-options__item"
+      :data="featureOptions.items.enableLogeionAutoComplete"
+      @change="featureOptionChanged"
+    >
+    </setting>
+
   </div>
 </template>
 <script>
@@ -89,12 +114,11 @@
       setting: Setting,
     },
     computed: {
-
       mouseMoveChecked: function() {
         return this.$store.state.app.mouseMoveOverrideUpdate &&  this.app.getMouseMoveOverride() ? 'true' : false
       },
-      featureOptions: function() {
-        return this.settings.getFeatureOptions()
+      featureOptions () {
+        return this.$store.state.settings.featureResetCounter + 1 ? this.settings.getFeatureOptions() : null
       }
     },
     methods: {
