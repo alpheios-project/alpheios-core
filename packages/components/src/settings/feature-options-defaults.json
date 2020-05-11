@@ -124,11 +124,11 @@
         },
         {
           "value": "syr",
-          "text": "Syriac"
+          "text": "Syriac (Experimental)"
         },
         {
           "value": "zho",
-          "text": "Chinese"
+          "text": "Chinese (Experimental)"
 
         }
       ]
@@ -158,11 +158,11 @@
           "text": "Ancient Ethiopic (Ge'ez - Experimental)"
         },
         { "value": "syr",
-          "text": "Syriac"
+          "text": "Syriac (Experimental)"
         },
         {
           "value": "zho",
-          "text": "Chinese"
+          "text": "Chinese (Experimental)"
 
         }
       ]
