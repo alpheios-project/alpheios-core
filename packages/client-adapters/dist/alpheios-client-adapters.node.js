@@ -11623,18 +11623,21 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
     alternatives = [...alternatives, ...altEncodings]
     for (const lookup of alternatives) {
       // let's first just look for the word in its supplied case
-      found = data.get(lookup)
+      found = false
+      if (data && lookup) {
+        found = data.get(lookup)
 
-      // and if we don't find it, then try lower case
-      if (!found) {
-        found = data.get(lookup.toLocaleLowerCase())
-      }
+        // and if we don't find it, then try lower case
+        if (!found) {
+          found = data.get(lookup.toLocaleLowerCase())
+        }
 
-      if (found) {
-        found = this._lookupSpecial(data, lookup, found)
-      }
-      if (found) {
-        break
+        if (found) {
+          found = this._lookupSpecial(data, lookup, found)
+        }
+        if (found) {
+          break
+        }
       }
     }
 

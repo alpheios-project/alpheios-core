@@ -299,19 +299,23 @@ export default class LexicalQuery extends Query {
         adapterLexiconResShort.errors.forEach(error => this.logger.log(error.message))
       }
 
-      const adapterLexiconResFull = yield ClientAdapters.lexicon.alpheios({
-        method: 'fetchFullDefs',
-        clientId: this.clientId,
-        params: {
-          opts: lexiconFullOpts,
-          homonym: this.homonym,
-          callBackEvtSuccess: LexicalQuery.evt.FULL_DEFS_READY,
-          callBackEvtFailed: LexicalQuery.evt.FULL_DEFS_NOT_FOUND
-        }
-      })
+      let adapterLexiconResFull = {}
+      // Do not retrieve full definition for wordlist requests
+      if (this._source !== LexicalQuery.sources.WORDLIST) {
+        adapterLexiconResFull = yield ClientAdapters.lexicon.alpheios({
+          method: 'fetchFullDefs',
+          clientId: this.clientId,
+          params: {
+            opts: lexiconFullOpts,
+            homonym: this.homonym,
+            callBackEvtSuccess: LexicalQuery.evt.FULL_DEFS_READY,
+            callBackEvtFailed: LexicalQuery.evt.FULL_DEFS_NOT_FOUND
+          }
+        })
 
-      if (adapterLexiconResFull.errors.length > 0) {
-        adapterLexiconResFull.errors.forEach(error => this.logger.log(error))
+        if (adapterLexiconResFull.errors.length > 0) {
+          adapterLexiconResFull.errors.forEach(error => this.logger.log(error))
+        }
       }
 
       yield 'Finalizing'
