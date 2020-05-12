@@ -1160,7 +1160,7 @@ if you want to create a different configuration of a UI controller.
       } else {
         languageName = this.api.l10n.getMsg('TEXT_NOTICE_LANGUAGE_UNKNOWN')
       }
-      if (this.store.state.app.lexicalRequest.source === 'page') {
+      if (this.store.state.app.lexicalRequest.source === LexicalQuery.sources.PAGE) {
         // we offer change language here when the lookup was from the page because the language used for the
         // lookup is deduced from the page and might be wrong
         const message = this.api.l10n.getMsg('TEXT_NOTICE_CHANGE_LANGUAGE',
@@ -1301,10 +1301,10 @@ if you want to create a different configuration of a UI controller.
    * @param {string} targetWord - the word to query
    * @param {string} languageID - the language identifier for the query
    * @param {object} data - extra annotation data attributes from the selection, if any
-   * @param {string} source - source of the request. Possible values: 'page', 'lookup', or 'wordlist'
+   * @param {LexicalQuery.sources} source - source of the request. Possible values: 'page', 'lookup', or 'wordlist'
    *                          default is 'page'
    */
-  newLexicalRequest (targetWord, languageID, data = null, source = 'page') {
+  newLexicalRequest (targetWord, languageID, data = null, source = LexicalQuery.sources.PAGE) {
     // Reset old word-related data
     this.api.app.homonym = null
     this.store.commit('app/resetWordData')
