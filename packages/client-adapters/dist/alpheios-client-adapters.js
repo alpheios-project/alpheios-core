@@ -17057,12 +17057,11 @@ data.setLexemeFilter(function (lexeme) {
     lexeme.lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Feature"].types.part])
 })
 
-// the sedra api has some html in the glosses that we want to strip out
+//
 data.setMeaningParser(function (meaning, targetWord) {
   const lang = meaning.lang ? meaning.lang : alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Constants"].STR_LANG_CODE_ENG
   let meaningText = meaning.$ || ''
-  meaningText = meaningText.replace(/<span .*?>(.*?)<\/span>/g, '$1')
-  return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Definition"](meaningText, lang, 'text/plain', targetWord)
+  return new alpheios_data_models__WEBPACK_IMPORTED_MODULE_1__["Definition"](meaningText, lang, 'text/html', targetWord)
 })
 
 data.setPropertyParser(function (propertyName, propertyValue, inputElem) {
