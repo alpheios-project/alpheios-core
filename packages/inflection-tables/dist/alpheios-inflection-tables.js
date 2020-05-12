@@ -260,756 +260,10 @@ function fromByteArray (uint8) {
 
 /***/ }),
 
-/***/ "../../node_modules/core-util-is/lib/util.js":
-/*!**********************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/core-util-is/lib/util.js ***!
-  \**********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(Buffer) {// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-// NOTE: These type checking functions intentionally don't use `instanceof`
-// because it is fragile and can be easily faked with `Object.create()`.
-
-function isArray(arg) {
-  if (Array.isArray) {
-    return Array.isArray(arg);
-  }
-  return objectToString(arg) === '[object Array]';
-}
-exports.isArray = isArray;
-
-function isBoolean(arg) {
-  return typeof arg === 'boolean';
-}
-exports.isBoolean = isBoolean;
-
-function isNull(arg) {
-  return arg === null;
-}
-exports.isNull = isNull;
-
-function isNullOrUndefined(arg) {
-  return arg == null;
-}
-exports.isNullOrUndefined = isNullOrUndefined;
-
-function isNumber(arg) {
-  return typeof arg === 'number';
-}
-exports.isNumber = isNumber;
-
-function isString(arg) {
-  return typeof arg === 'string';
-}
-exports.isString = isString;
-
-function isSymbol(arg) {
-  return typeof arg === 'symbol';
-}
-exports.isSymbol = isSymbol;
-
-function isUndefined(arg) {
-  return arg === void 0;
-}
-exports.isUndefined = isUndefined;
-
-function isRegExp(re) {
-  return objectToString(re) === '[object RegExp]';
-}
-exports.isRegExp = isRegExp;
-
-function isObject(arg) {
-  return typeof arg === 'object' && arg !== null;
-}
-exports.isObject = isObject;
-
-function isDate(d) {
-  return objectToString(d) === '[object Date]';
-}
-exports.isDate = isDate;
-
-function isError(e) {
-  return (objectToString(e) === '[object Error]' || e instanceof Error);
-}
-exports.isError = isError;
-
-function isFunction(arg) {
-  return typeof arg === 'function';
-}
-exports.isFunction = isFunction;
-
-function isPrimitive(arg) {
-  return arg === null ||
-         typeof arg === 'boolean' ||
-         typeof arg === 'number' ||
-         typeof arg === 'string' ||
-         typeof arg === 'symbol' ||  // ES6 symbol
-         typeof arg === 'undefined';
-}
-exports.isPrimitive = isPrimitive;
-
-exports.isBuffer = Buffer.isBuffer;
-
-function objectToString(o) {
-  return Object.prototype.toString.call(o);
-}
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node-libs-browser/node_modules/buffer/index.js */ "../../node_modules/node-libs-browser/node_modules/buffer/index.js").Buffer))
-
-/***/ }),
-
-/***/ "../../node_modules/events/events.js":
-/*!**************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/events/events.js ***!
-  \**************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-var R = typeof Reflect === 'object' ? Reflect : null
-var ReflectApply = R && typeof R.apply === 'function'
-  ? R.apply
-  : function ReflectApply(target, receiver, args) {
-    return Function.prototype.apply.call(target, receiver, args);
-  }
-
-var ReflectOwnKeys
-if (R && typeof R.ownKeys === 'function') {
-  ReflectOwnKeys = R.ownKeys
-} else if (Object.getOwnPropertySymbols) {
-  ReflectOwnKeys = function ReflectOwnKeys(target) {
-    return Object.getOwnPropertyNames(target)
-      .concat(Object.getOwnPropertySymbols(target));
-  };
-} else {
-  ReflectOwnKeys = function ReflectOwnKeys(target) {
-    return Object.getOwnPropertyNames(target);
-  };
-}
-
-function ProcessEmitWarning(warning) {
-  if (console && console.warn) console.warn(warning);
-}
-
-var NumberIsNaN = Number.isNaN || function NumberIsNaN(value) {
-  return value !== value;
-}
-
-function EventEmitter() {
-  EventEmitter.init.call(this);
-}
-module.exports = EventEmitter;
-
-// Backwards-compat with node 0.10.x
-EventEmitter.EventEmitter = EventEmitter;
-
-EventEmitter.prototype._events = undefined;
-EventEmitter.prototype._eventsCount = 0;
-EventEmitter.prototype._maxListeners = undefined;
-
-// By default EventEmitters will print a warning if more than 10 listeners are
-// added to it. This is a useful default which helps finding memory leaks.
-var defaultMaxListeners = 10;
-
-function checkListener(listener) {
-  if (typeof listener !== 'function') {
-    throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
-  }
-}
-
-Object.defineProperty(EventEmitter, 'defaultMaxListeners', {
-  enumerable: true,
-  get: function() {
-    return defaultMaxListeners;
-  },
-  set: function(arg) {
-    if (typeof arg !== 'number' || arg < 0 || NumberIsNaN(arg)) {
-      throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + arg + '.');
-    }
-    defaultMaxListeners = arg;
-  }
-});
-
-EventEmitter.init = function() {
-
-  if (this._events === undefined ||
-      this._events === Object.getPrototypeOf(this)._events) {
-    this._events = Object.create(null);
-    this._eventsCount = 0;
-  }
-
-  this._maxListeners = this._maxListeners || undefined;
-};
-
-// Obviously not all Emitters should be limited to 10. This function allows
-// that to be increased. Set to zero for unlimited.
-EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
-  if (typeof n !== 'number' || n < 0 || NumberIsNaN(n)) {
-    throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + n + '.');
-  }
-  this._maxListeners = n;
-  return this;
-};
-
-function _getMaxListeners(that) {
-  if (that._maxListeners === undefined)
-    return EventEmitter.defaultMaxListeners;
-  return that._maxListeners;
-}
-
-EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
-  return _getMaxListeners(this);
-};
-
-EventEmitter.prototype.emit = function emit(type) {
-  var args = [];
-  for (var i = 1; i < arguments.length; i++) args.push(arguments[i]);
-  var doError = (type === 'error');
-
-  var events = this._events;
-  if (events !== undefined)
-    doError = (doError && events.error === undefined);
-  else if (!doError)
-    return false;
-
-  // If there is no 'error' event listener then throw.
-  if (doError) {
-    var er;
-    if (args.length > 0)
-      er = args[0];
-    if (er instanceof Error) {
-      // Note: The comments on the `throw` lines are intentional, they show
-      // up in Node's output if this results in an unhandled exception.
-      throw er; // Unhandled 'error' event
-    }
-    // At least give some kind of context to the user
-    var err = new Error('Unhandled error.' + (er ? ' (' + er.message + ')' : ''));
-    err.context = er;
-    throw err; // Unhandled 'error' event
-  }
-
-  var handler = events[type];
-
-  if (handler === undefined)
-    return false;
-
-  if (typeof handler === 'function') {
-    ReflectApply(handler, this, args);
-  } else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i)
-      ReflectApply(listeners[i], this, args);
-  }
-
-  return true;
-};
-
-function _addListener(target, type, listener, prepend) {
-  var m;
-  var events;
-  var existing;
-
-  checkListener(listener);
-
-  events = target._events;
-  if (events === undefined) {
-    events = target._events = Object.create(null);
-    target._eventsCount = 0;
-  } else {
-    // To avoid recursion in the case that type === "newListener"! Before
-    // adding it to the listeners, first emit "newListener".
-    if (events.newListener !== undefined) {
-      target.emit('newListener', type,
-                  listener.listener ? listener.listener : listener);
-
-      // Re-assign `events` because a newListener handler could have caused the
-      // this._events to be assigned to a new object
-      events = target._events;
-    }
-    existing = events[type];
-  }
-
-  if (existing === undefined) {
-    // Optimize the case of one listener. Don't need the extra array object.
-    existing = events[type] = listener;
-    ++target._eventsCount;
-  } else {
-    if (typeof existing === 'function') {
-      // Adding the second element, need to change to array.
-      existing = events[type] =
-        prepend ? [listener, existing] : [existing, listener];
-      // If we've already got an array, just append.
-    } else if (prepend) {
-      existing.unshift(listener);
-    } else {
-      existing.push(listener);
-    }
-
-    // Check for listener leak
-    m = _getMaxListeners(target);
-    if (m > 0 && existing.length > m && !existing.warned) {
-      existing.warned = true;
-      // No error code for this since it is a Warning
-      // eslint-disable-next-line no-restricted-syntax
-      var w = new Error('Possible EventEmitter memory leak detected. ' +
-                          existing.length + ' ' + String(type) + ' listeners ' +
-                          'added. Use emitter.setMaxListeners() to ' +
-                          'increase limit');
-      w.name = 'MaxListenersExceededWarning';
-      w.emitter = target;
-      w.type = type;
-      w.count = existing.length;
-      ProcessEmitWarning(w);
-    }
-  }
-
-  return target;
-}
-
-EventEmitter.prototype.addListener = function addListener(type, listener) {
-  return _addListener(this, type, listener, false);
-};
-
-EventEmitter.prototype.on = EventEmitter.prototype.addListener;
-
-EventEmitter.prototype.prependListener =
-    function prependListener(type, listener) {
-      return _addListener(this, type, listener, true);
-    };
-
-function onceWrapper() {
-  if (!this.fired) {
-    this.target.removeListener(this.type, this.wrapFn);
-    this.fired = true;
-    if (arguments.length === 0)
-      return this.listener.call(this.target);
-    return this.listener.apply(this.target, arguments);
-  }
-}
-
-function _onceWrap(target, type, listener) {
-  var state = { fired: false, wrapFn: undefined, target: target, type: type, listener: listener };
-  var wrapped = onceWrapper.bind(state);
-  wrapped.listener = listener;
-  state.wrapFn = wrapped;
-  return wrapped;
-}
-
-EventEmitter.prototype.once = function once(type, listener) {
-  checkListener(listener);
-  this.on(type, _onceWrap(this, type, listener));
-  return this;
-};
-
-EventEmitter.prototype.prependOnceListener =
-    function prependOnceListener(type, listener) {
-      checkListener(listener);
-      this.prependListener(type, _onceWrap(this, type, listener));
-      return this;
-    };
-
-// Emits a 'removeListener' event if and only if the listener was removed.
-EventEmitter.prototype.removeListener =
-    function removeListener(type, listener) {
-      var list, events, position, i, originalListener;
-
-      checkListener(listener);
-
-      events = this._events;
-      if (events === undefined)
-        return this;
-
-      list = events[type];
-      if (list === undefined)
-        return this;
-
-      if (list === listener || list.listener === listener) {
-        if (--this._eventsCount === 0)
-          this._events = Object.create(null);
-        else {
-          delete events[type];
-          if (events.removeListener)
-            this.emit('removeListener', type, list.listener || listener);
-        }
-      } else if (typeof list !== 'function') {
-        position = -1;
-
-        for (i = list.length - 1; i >= 0; i--) {
-          if (list[i] === listener || list[i].listener === listener) {
-            originalListener = list[i].listener;
-            position = i;
-            break;
-          }
-        }
-
-        if (position < 0)
-          return this;
-
-        if (position === 0)
-          list.shift();
-        else {
-          spliceOne(list, position);
-        }
-
-        if (list.length === 1)
-          events[type] = list[0];
-
-        if (events.removeListener !== undefined)
-          this.emit('removeListener', type, originalListener || listener);
-      }
-
-      return this;
-    };
-
-EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
-
-EventEmitter.prototype.removeAllListeners =
-    function removeAllListeners(type) {
-      var listeners, events, i;
-
-      events = this._events;
-      if (events === undefined)
-        return this;
-
-      // not listening for removeListener, no need to emit
-      if (events.removeListener === undefined) {
-        if (arguments.length === 0) {
-          this._events = Object.create(null);
-          this._eventsCount = 0;
-        } else if (events[type] !== undefined) {
-          if (--this._eventsCount === 0)
-            this._events = Object.create(null);
-          else
-            delete events[type];
-        }
-        return this;
-      }
-
-      // emit removeListener for all listeners on all events
-      if (arguments.length === 0) {
-        var keys = Object.keys(events);
-        var key;
-        for (i = 0; i < keys.length; ++i) {
-          key = keys[i];
-          if (key === 'removeListener') continue;
-          this.removeAllListeners(key);
-        }
-        this.removeAllListeners('removeListener');
-        this._events = Object.create(null);
-        this._eventsCount = 0;
-        return this;
-      }
-
-      listeners = events[type];
-
-      if (typeof listeners === 'function') {
-        this.removeListener(type, listeners);
-      } else if (listeners !== undefined) {
-        // LIFO order
-        for (i = listeners.length - 1; i >= 0; i--) {
-          this.removeListener(type, listeners[i]);
-        }
-      }
-
-      return this;
-    };
-
-function _listeners(target, type, unwrap) {
-  var events = target._events;
-
-  if (events === undefined)
-    return [];
-
-  var evlistener = events[type];
-  if (evlistener === undefined)
-    return [];
-
-  if (typeof evlistener === 'function')
-    return unwrap ? [evlistener.listener || evlistener] : [evlistener];
-
-  return unwrap ?
-    unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
-}
-
-EventEmitter.prototype.listeners = function listeners(type) {
-  return _listeners(this, type, true);
-};
-
-EventEmitter.prototype.rawListeners = function rawListeners(type) {
-  return _listeners(this, type, false);
-};
-
-EventEmitter.listenerCount = function(emitter, type) {
-  if (typeof emitter.listenerCount === 'function') {
-    return emitter.listenerCount(type);
-  } else {
-    return listenerCount.call(emitter, type);
-  }
-};
-
-EventEmitter.prototype.listenerCount = listenerCount;
-function listenerCount(type) {
-  var events = this._events;
-
-  if (events !== undefined) {
-    var evlistener = events[type];
-
-    if (typeof evlistener === 'function') {
-      return 1;
-    } else if (evlistener !== undefined) {
-      return evlistener.length;
-    }
-  }
-
-  return 0;
-}
-
-EventEmitter.prototype.eventNames = function eventNames() {
-  return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
-};
-
-function arrayClone(arr, n) {
-  var copy = new Array(n);
-  for (var i = 0; i < n; ++i)
-    copy[i] = arr[i];
-  return copy;
-}
-
-function spliceOne(list, index) {
-  for (; index + 1 < list.length; index++)
-    list[index] = list[index + 1];
-  list.pop();
-}
-
-function unwrapListeners(arr) {
-  var ret = new Array(arr.length);
-  for (var i = 0; i < ret.length; ++i) {
-    ret[i] = arr[i].listener || arr[i];
-  }
-  return ret;
-}
-
-
-/***/ }),
-
-/***/ "../../node_modules/ieee754/index.js":
-/*!**************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/ieee754/index.js ***!
-  \**************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-exports.read = function (buffer, offset, isLE, mLen, nBytes) {
-  var e, m
-  var eLen = (nBytes * 8) - mLen - 1
-  var eMax = (1 << eLen) - 1
-  var eBias = eMax >> 1
-  var nBits = -7
-  var i = isLE ? (nBytes - 1) : 0
-  var d = isLE ? -1 : 1
-  var s = buffer[offset + i]
-
-  i += d
-
-  e = s & ((1 << (-nBits)) - 1)
-  s >>= (-nBits)
-  nBits += eLen
-  for (; nBits > 0; e = (e * 256) + buffer[offset + i], i += d, nBits -= 8) {}
-
-  m = e & ((1 << (-nBits)) - 1)
-  e >>= (-nBits)
-  nBits += mLen
-  for (; nBits > 0; m = (m * 256) + buffer[offset + i], i += d, nBits -= 8) {}
-
-  if (e === 0) {
-    e = 1 - eBias
-  } else if (e === eMax) {
-    return m ? NaN : ((s ? -1 : 1) * Infinity)
-  } else {
-    m = m + Math.pow(2, mLen)
-    e = e - eBias
-  }
-  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
-}
-
-exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
-  var e, m, c
-  var eLen = (nBytes * 8) - mLen - 1
-  var eMax = (1 << eLen) - 1
-  var eBias = eMax >> 1
-  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
-  var i = isLE ? 0 : (nBytes - 1)
-  var d = isLE ? 1 : -1
-  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
-
-  value = Math.abs(value)
-
-  if (isNaN(value) || value === Infinity) {
-    m = isNaN(value) ? 1 : 0
-    e = eMax
-  } else {
-    e = Math.floor(Math.log(value) / Math.LN2)
-    if (value * (c = Math.pow(2, -e)) < 1) {
-      e--
-      c *= 2
-    }
-    if (e + eBias >= 1) {
-      value += rt / c
-    } else {
-      value += rt * Math.pow(2, 1 - eBias)
-    }
-    if (value * c >= 2) {
-      e++
-      c /= 2
-    }
-
-    if (e + eBias >= eMax) {
-      m = 0
-      e = eMax
-    } else if (e + eBias >= 1) {
-      m = ((value * c) - 1) * Math.pow(2, mLen)
-      e = e + eBias
-    } else {
-      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
-      e = 0
-    }
-  }
-
-  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
-
-  e = (e << mLen) | m
-  eLen += mLen
-  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
-
-  buffer[offset + i - d] |= s * 128
-}
-
-
-/***/ }),
-
-/***/ "../../node_modules/inherits/inherits.js":
-/*!******************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/inherits/inherits.js ***!
-  \******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-try {
-  var util = __webpack_require__(/*! util */ "../../node_modules/node-libs-browser/node_modules/util/util.js");
-  /* istanbul ignore next */
-  if (typeof util.inherits !== 'function') throw '';
-  module.exports = util.inherits;
-} catch (e) {
-  /* istanbul ignore next */
-  module.exports = __webpack_require__(/*! ./inherits_browser.js */ "../../node_modules/inherits/inherits_browser.js");
-}
-
-
-/***/ }),
-
-/***/ "../../node_modules/inherits/inherits_browser.js":
-/*!**************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/inherits/inherits_browser.js ***!
-  \**************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-if (typeof Object.create === 'function') {
-  // implementation from standard node.js 'util' module
-  module.exports = function inherits(ctor, superCtor) {
-    if (superCtor) {
-      ctor.super_ = superCtor
-      ctor.prototype = Object.create(superCtor.prototype, {
-        constructor: {
-          value: ctor,
-          enumerable: false,
-          writable: true,
-          configurable: true
-        }
-      })
-    }
-  };
-} else {
-  // old school shim for old browsers
-  module.exports = function inherits(ctor, superCtor) {
-    if (superCtor) {
-      ctor.super_ = superCtor
-      var TempCtor = function () {}
-      TempCtor.prototype = superCtor.prototype
-      ctor.prototype = new TempCtor()
-      ctor.prototype.constructor = ctor
-    }
-  }
-}
-
-
-/***/ }),
-
-/***/ "../../node_modules/isarray/index.js":
-/*!**************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/isarray/index.js ***!
-  \**************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-module.exports = Array.isArray || function (arr) {
-  return toString.call(arr) == '[object Array]';
-};
-
-
-/***/ }),
-
-/***/ "../../node_modules/node-libs-browser/node_modules/buffer/index.js":
-/*!********************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/buffer/index.js ***!
-  \********************************************************************************************************/
+/***/ "../../node_modules/buffer/index.js":
+/*!*************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/buffer/index.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2804,86 +2058,18 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "../../node_modules/webpack/buildin/global.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "../../node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
-/***/ "../../node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits.js":
-/*!*******************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits.js ***!
-  \*******************************************************************************************************************************/
+/***/ "../../node_modules/core-util-is/lib/util.js":
+/*!**********************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/core-util-is/lib/util.js ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-try {
-  var util = __webpack_require__(/*! util */ "../../node_modules/node-libs-browser/node_modules/util/util.js");
-  if (typeof util.inherits !== 'function') throw '';
-  module.exports = util.inherits;
-} catch (e) {
-  module.exports = __webpack_require__(/*! ./inherits_browser.js */ "../../node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits_browser.js");
-}
-
-
-/***/ }),
-
-/***/ "../../node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits_browser.js":
-/*!***************************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits_browser.js ***!
-  \***************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-if (typeof Object.create === 'function') {
-  // implementation from standard node.js 'util' module
-  module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    ctor.prototype = Object.create(superCtor.prototype, {
-      constructor: {
-        value: ctor,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-  };
-} else {
-  // old school shim for old browsers
-  module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    var TempCtor = function () {}
-    TempCtor.prototype = superCtor.prototype
-    ctor.prototype = new TempCtor()
-    ctor.prototype.constructor = ctor
-  }
-}
-
-
-/***/ }),
-
-/***/ "../../node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js":
-/*!************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js ***!
-  \************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function isBuffer(arg) {
-  return arg && typeof arg === 'object'
-    && typeof arg.copy === 'function'
-    && typeof arg.fill === 'function'
-    && typeof arg.readUInt8 === 'function';
-}
-
-/***/ }),
-
-/***/ "../../node_modules/node-libs-browser/node_modules/util/util.js":
-/*!*****************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/node-libs-browser/node_modules/util/util.js ***!
-  \*****************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
+/* WEBPACK VAR INJECTION */(function(Buffer) {// Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the
@@ -2904,446 +2090,14 @@ module.exports = function isBuffer(arg) {
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors ||
-  function getOwnPropertyDescriptors(obj) {
-    var keys = Object.keys(obj);
-    var descriptors = {};
-    for (var i = 0; i < keys.length; i++) {
-      descriptors[keys[i]] = Object.getOwnPropertyDescriptor(obj, keys[i]);
-    }
-    return descriptors;
-  };
-
-var formatRegExp = /%[sdj%]/g;
-exports.format = function(f) {
-  if (!isString(f)) {
-    var objects = [];
-    for (var i = 0; i < arguments.length; i++) {
-      objects.push(inspect(arguments[i]));
-    }
-    return objects.join(' ');
-  }
-
-  var i = 1;
-  var args = arguments;
-  var len = args.length;
-  var str = String(f).replace(formatRegExp, function(x) {
-    if (x === '%%') return '%';
-    if (i >= len) return x;
-    switch (x) {
-      case '%s': return String(args[i++]);
-      case '%d': return Number(args[i++]);
-      case '%j':
-        try {
-          return JSON.stringify(args[i++]);
-        } catch (_) {
-          return '[Circular]';
-        }
-      default:
-        return x;
-    }
-  });
-  for (var x = args[i]; i < len; x = args[++i]) {
-    if (isNull(x) || !isObject(x)) {
-      str += ' ' + x;
-    } else {
-      str += ' ' + inspect(x);
-    }
-  }
-  return str;
-};
-
-
-// Mark that a method should not be used.
-// Returns a modified function which warns once by default.
-// If --no-deprecation is set, then it is a no-op.
-exports.deprecate = function(fn, msg) {
-  if (typeof process !== 'undefined' && process.noDeprecation === true) {
-    return fn;
-  }
-
-  // Allow for deprecating things in the process of starting up.
-  if (typeof process === 'undefined') {
-    return function() {
-      return exports.deprecate(fn, msg).apply(this, arguments);
-    };
-  }
-
-  var warned = false;
-  function deprecated() {
-    if (!warned) {
-      if (process.throwDeprecation) {
-        throw new Error(msg);
-      } else if (process.traceDeprecation) {
-        console.trace(msg);
-      } else {
-        console.error(msg);
-      }
-      warned = true;
-    }
-    return fn.apply(this, arguments);
-  }
-
-  return deprecated;
-};
-
-
-var debugs = {};
-var debugEnviron;
-exports.debuglog = function(set) {
-  if (isUndefined(debugEnviron))
-    debugEnviron = process.env.NODE_DEBUG || '';
-  set = set.toUpperCase();
-  if (!debugs[set]) {
-    if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {
-      var pid = process.pid;
-      debugs[set] = function() {
-        var msg = exports.format.apply(exports, arguments);
-        console.error('%s %d: %s', set, pid, msg);
-      };
-    } else {
-      debugs[set] = function() {};
-    }
-  }
-  return debugs[set];
-};
-
-
-/**
- * Echos the value of a value. Trys to print the value out
- * in the best way possible given the different types.
- *
- * @param {Object} obj The object to print out.
- * @param {Object} opts Optional options object that alters the output.
- */
-/* legacy: obj, showHidden, depth, colors*/
-function inspect(obj, opts) {
-  // default options
-  var ctx = {
-    seen: [],
-    stylize: stylizeNoColor
-  };
-  // legacy...
-  if (arguments.length >= 3) ctx.depth = arguments[2];
-  if (arguments.length >= 4) ctx.colors = arguments[3];
-  if (isBoolean(opts)) {
-    // legacy...
-    ctx.showHidden = opts;
-  } else if (opts) {
-    // got an "options" object
-    exports._extend(ctx, opts);
-  }
-  // set default options
-  if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
-  if (isUndefined(ctx.depth)) ctx.depth = 2;
-  if (isUndefined(ctx.colors)) ctx.colors = false;
-  if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
-  if (ctx.colors) ctx.stylize = stylizeWithColor;
-  return formatValue(ctx, obj, ctx.depth);
-}
-exports.inspect = inspect;
-
-
-// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
-inspect.colors = {
-  'bold' : [1, 22],
-  'italic' : [3, 23],
-  'underline' : [4, 24],
-  'inverse' : [7, 27],
-  'white' : [37, 39],
-  'grey' : [90, 39],
-  'black' : [30, 39],
-  'blue' : [34, 39],
-  'cyan' : [36, 39],
-  'green' : [32, 39],
-  'magenta' : [35, 39],
-  'red' : [31, 39],
-  'yellow' : [33, 39]
-};
-
-// Don't use 'blue' not visible on cmd.exe
-inspect.styles = {
-  'special': 'cyan',
-  'number': 'yellow',
-  'boolean': 'yellow',
-  'undefined': 'grey',
-  'null': 'bold',
-  'string': 'green',
-  'date': 'magenta',
-  // "name": intentionally not styling
-  'regexp': 'red'
-};
-
-
-function stylizeWithColor(str, styleType) {
-  var style = inspect.styles[styleType];
-
-  if (style) {
-    return '\u001b[' + inspect.colors[style][0] + 'm' + str +
-           '\u001b[' + inspect.colors[style][1] + 'm';
-  } else {
-    return str;
-  }
-}
-
-
-function stylizeNoColor(str, styleType) {
-  return str;
-}
-
-
-function arrayToHash(array) {
-  var hash = {};
-
-  array.forEach(function(val, idx) {
-    hash[val] = true;
-  });
-
-  return hash;
-}
-
-
-function formatValue(ctx, value, recurseTimes) {
-  // Provide a hook for user-specified inspect functions.
-  // Check that value is an object with an inspect function on it
-  if (ctx.customInspect &&
-      value &&
-      isFunction(value.inspect) &&
-      // Filter out the util module, it's inspect function is special
-      value.inspect !== exports.inspect &&
-      // Also filter out any prototype objects using the circular check.
-      !(value.constructor && value.constructor.prototype === value)) {
-    var ret = value.inspect(recurseTimes, ctx);
-    if (!isString(ret)) {
-      ret = formatValue(ctx, ret, recurseTimes);
-    }
-    return ret;
-  }
-
-  // Primitive types cannot have properties
-  var primitive = formatPrimitive(ctx, value);
-  if (primitive) {
-    return primitive;
-  }
-
-  // Look up the keys of the object.
-  var keys = Object.keys(value);
-  var visibleKeys = arrayToHash(keys);
-
-  if (ctx.showHidden) {
-    keys = Object.getOwnPropertyNames(value);
-  }
-
-  // IE doesn't make error fields non-enumerable
-  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
-  if (isError(value)
-      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
-    return formatError(value);
-  }
-
-  // Some type of object without properties can be shortcutted.
-  if (keys.length === 0) {
-    if (isFunction(value)) {
-      var name = value.name ? ': ' + value.name : '';
-      return ctx.stylize('[Function' + name + ']', 'special');
-    }
-    if (isRegExp(value)) {
-      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
-    }
-    if (isDate(value)) {
-      return ctx.stylize(Date.prototype.toString.call(value), 'date');
-    }
-    if (isError(value)) {
-      return formatError(value);
-    }
-  }
-
-  var base = '', array = false, braces = ['{', '}'];
-
-  // Make Array say that they are Array
-  if (isArray(value)) {
-    array = true;
-    braces = ['[', ']'];
-  }
-
-  // Make functions say that they are functions
-  if (isFunction(value)) {
-    var n = value.name ? ': ' + value.name : '';
-    base = ' [Function' + n + ']';
-  }
-
-  // Make RegExps say that they are RegExps
-  if (isRegExp(value)) {
-    base = ' ' + RegExp.prototype.toString.call(value);
-  }
-
-  // Make dates with properties first say the date
-  if (isDate(value)) {
-    base = ' ' + Date.prototype.toUTCString.call(value);
-  }
-
-  // Make error with message first say the error
-  if (isError(value)) {
-    base = ' ' + formatError(value);
-  }
-
-  if (keys.length === 0 && (!array || value.length == 0)) {
-    return braces[0] + base + braces[1];
-  }
-
-  if (recurseTimes < 0) {
-    if (isRegExp(value)) {
-      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
-    } else {
-      return ctx.stylize('[Object]', 'special');
-    }
-  }
-
-  ctx.seen.push(value);
-
-  var output;
-  if (array) {
-    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
-  } else {
-    output = keys.map(function(key) {
-      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
-    });
-  }
-
-  ctx.seen.pop();
-
-  return reduceToSingleString(output, base, braces);
-}
-
-
-function formatPrimitive(ctx, value) {
-  if (isUndefined(value))
-    return ctx.stylize('undefined', 'undefined');
-  if (isString(value)) {
-    var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
-                                             .replace(/'/g, "\\'")
-                                             .replace(/\\"/g, '"') + '\'';
-    return ctx.stylize(simple, 'string');
-  }
-  if (isNumber(value))
-    return ctx.stylize('' + value, 'number');
-  if (isBoolean(value))
-    return ctx.stylize('' + value, 'boolean');
-  // For some reason typeof null is "object", so special case here.
-  if (isNull(value))
-    return ctx.stylize('null', 'null');
-}
-
-
-function formatError(value) {
-  return '[' + Error.prototype.toString.call(value) + ']';
-}
-
-
-function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
-  var output = [];
-  for (var i = 0, l = value.length; i < l; ++i) {
-    if (hasOwnProperty(value, String(i))) {
-      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
-          String(i), true));
-    } else {
-      output.push('');
-    }
-  }
-  keys.forEach(function(key) {
-    if (!key.match(/^\d+$/)) {
-      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
-          key, true));
-    }
-  });
-  return output;
-}
-
-
-function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
-  var name, str, desc;
-  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
-  if (desc.get) {
-    if (desc.set) {
-      str = ctx.stylize('[Getter/Setter]', 'special');
-    } else {
-      str = ctx.stylize('[Getter]', 'special');
-    }
-  } else {
-    if (desc.set) {
-      str = ctx.stylize('[Setter]', 'special');
-    }
-  }
-  if (!hasOwnProperty(visibleKeys, key)) {
-    name = '[' + key + ']';
-  }
-  if (!str) {
-    if (ctx.seen.indexOf(desc.value) < 0) {
-      if (isNull(recurseTimes)) {
-        str = formatValue(ctx, desc.value, null);
-      } else {
-        str = formatValue(ctx, desc.value, recurseTimes - 1);
-      }
-      if (str.indexOf('\n') > -1) {
-        if (array) {
-          str = str.split('\n').map(function(line) {
-            return '  ' + line;
-          }).join('\n').substr(2);
-        } else {
-          str = '\n' + str.split('\n').map(function(line) {
-            return '   ' + line;
-          }).join('\n');
-        }
-      }
-    } else {
-      str = ctx.stylize('[Circular]', 'special');
-    }
-  }
-  if (isUndefined(name)) {
-    if (array && key.match(/^\d+$/)) {
-      return str;
-    }
-    name = JSON.stringify('' + key);
-    if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
-      name = name.substr(1, name.length - 2);
-      name = ctx.stylize(name, 'name');
-    } else {
-      name = name.replace(/'/g, "\\'")
-                 .replace(/\\"/g, '"')
-                 .replace(/(^"|"$)/g, "'");
-      name = ctx.stylize(name, 'string');
-    }
-  }
-
-  return name + ': ' + str;
-}
-
-
-function reduceToSingleString(output, base, braces) {
-  var numLinesEst = 0;
-  var length = output.reduce(function(prev, cur) {
-    numLinesEst++;
-    if (cur.indexOf('\n') >= 0) numLinesEst++;
-    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
-  }, 0);
-
-  if (length > 60) {
-    return braces[0] +
-           (base === '' ? '' : base + '\n ') +
-           ' ' +
-           output.join(',\n  ') +
-           ' ' +
-           braces[1];
-  }
-
-  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
-}
-
-
 // NOTE: These type checking functions intentionally don't use `instanceof`
 // because it is fragile and can be easily faked with `Object.create()`.
-function isArray(ar) {
-  return Array.isArray(ar);
+
+function isArray(arg) {
+  if (Array.isArray) {
+    return Array.isArray(arg);
+  }
+  return objectToString(arg) === '[object Array]';
 }
 exports.isArray = isArray;
 
@@ -3383,7 +2137,7 @@ function isUndefined(arg) {
 exports.isUndefined = isUndefined;
 
 function isRegExp(re) {
-  return isObject(re) && objectToString(re) === '[object RegExp]';
+  return objectToString(re) === '[object RegExp]';
 }
 exports.isRegExp = isRegExp;
 
@@ -3393,13 +2147,12 @@ function isObject(arg) {
 exports.isObject = isObject;
 
 function isDate(d) {
-  return isObject(d) && objectToString(d) === '[object Date]';
+  return objectToString(d) === '[object Date]';
 }
 exports.isDate = isDate;
 
 function isError(e) {
-  return isObject(e) &&
-      (objectToString(e) === '[object Error]' || e instanceof Error);
+  return (objectToString(e) === '[object Error]' || e instanceof Error);
 }
 exports.isError = isError;
 
@@ -3418,176 +2171,640 @@ function isPrimitive(arg) {
 }
 exports.isPrimitive = isPrimitive;
 
-exports.isBuffer = __webpack_require__(/*! ./support/isBuffer */ "../../node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js");
+exports.isBuffer = Buffer.isBuffer;
 
 function objectToString(o) {
   return Object.prototype.toString.call(o);
 }
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../buffer/index.js */ "../../node_modules/buffer/index.js").Buffer))
 
-function pad(n) {
-  return n < 10 ? '0' + n.toString(10) : n.toString(10);
+/***/ }),
+
+/***/ "../../node_modules/events/events.js":
+/*!**************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/events/events.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+var R = typeof Reflect === 'object' ? Reflect : null
+var ReflectApply = R && typeof R.apply === 'function'
+  ? R.apply
+  : function ReflectApply(target, receiver, args) {
+    return Function.prototype.apply.call(target, receiver, args);
+  }
+
+var ReflectOwnKeys
+if (R && typeof R.ownKeys === 'function') {
+  ReflectOwnKeys = R.ownKeys
+} else if (Object.getOwnPropertySymbols) {
+  ReflectOwnKeys = function ReflectOwnKeys(target) {
+    return Object.getOwnPropertyNames(target)
+      .concat(Object.getOwnPropertySymbols(target));
+  };
+} else {
+  ReflectOwnKeys = function ReflectOwnKeys(target) {
+    return Object.getOwnPropertyNames(target);
+  };
 }
 
-
-var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
-              'Oct', 'Nov', 'Dec'];
-
-// 26 Feb 16:19:34
-function timestamp() {
-  var d = new Date();
-  var time = [pad(d.getHours()),
-              pad(d.getMinutes()),
-              pad(d.getSeconds())].join(':');
-  return [d.getDate(), months[d.getMonth()], time].join(' ');
+function ProcessEmitWarning(warning) {
+  if (console && console.warn) console.warn(warning);
 }
 
+var NumberIsNaN = Number.isNaN || function NumberIsNaN(value) {
+  return value !== value;
+}
 
-// log is just a thin wrapper to console.log that prepends a timestamp
-exports.log = function() {
-  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
+function EventEmitter() {
+  EventEmitter.init.call(this);
+}
+module.exports = EventEmitter;
+
+// Backwards-compat with node 0.10.x
+EventEmitter.EventEmitter = EventEmitter;
+
+EventEmitter.prototype._events = undefined;
+EventEmitter.prototype._eventsCount = 0;
+EventEmitter.prototype._maxListeners = undefined;
+
+// By default EventEmitters will print a warning if more than 10 listeners are
+// added to it. This is a useful default which helps finding memory leaks.
+var defaultMaxListeners = 10;
+
+function checkListener(listener) {
+  if (typeof listener !== 'function') {
+    throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
+  }
+}
+
+Object.defineProperty(EventEmitter, 'defaultMaxListeners', {
+  enumerable: true,
+  get: function() {
+    return defaultMaxListeners;
+  },
+  set: function(arg) {
+    if (typeof arg !== 'number' || arg < 0 || NumberIsNaN(arg)) {
+      throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + arg + '.');
+    }
+    defaultMaxListeners = arg;
+  }
+});
+
+EventEmitter.init = function() {
+
+  if (this._events === undefined ||
+      this._events === Object.getPrototypeOf(this)._events) {
+    this._events = Object.create(null);
+    this._eventsCount = 0;
+  }
+
+  this._maxListeners = this._maxListeners || undefined;
 };
 
-
-/**
- * Inherit the prototype methods from one constructor into another.
- *
- * The Function.prototype.inherits from lang.js rewritten as a standalone
- * function (not on Function.prototype). NOTE: If this file is to be loaded
- * during bootstrapping this function needs to be rewritten using some native
- * functions as prototype setup using normal JavaScript does not work as
- * expected during bootstrapping (see mirror.js in r114903).
- *
- * @param {function} ctor Constructor function which needs to inherit the
- *     prototype.
- * @param {function} superCtor Constructor function to inherit prototype from.
- */
-exports.inherits = __webpack_require__(/*! inherits */ "../../node_modules/node-libs-browser/node_modules/util/node_modules/inherits/inherits.js");
-
-exports._extend = function(origin, add) {
-  // Don't do anything if add isn't an object
-  if (!add || !isObject(add)) return origin;
-
-  var keys = Object.keys(add);
-  var i = keys.length;
-  while (i--) {
-    origin[keys[i]] = add[keys[i]];
+// Obviously not all Emitters should be limited to 10. This function allows
+// that to be increased. Set to zero for unlimited.
+EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
+  if (typeof n !== 'number' || n < 0 || NumberIsNaN(n)) {
+    throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + n + '.');
   }
-  return origin;
+  this._maxListeners = n;
+  return this;
 };
 
-function hasOwnProperty(obj, prop) {
-  return Object.prototype.hasOwnProperty.call(obj, prop);
+function _getMaxListeners(that) {
+  if (that._maxListeners === undefined)
+    return EventEmitter.defaultMaxListeners;
+  return that._maxListeners;
 }
 
-var kCustomPromisifiedSymbol = typeof Symbol !== 'undefined' ? Symbol('util.promisify.custom') : undefined;
+EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
+  return _getMaxListeners(this);
+};
 
-exports.promisify = function promisify(original) {
-  if (typeof original !== 'function')
-    throw new TypeError('The "original" argument must be of type Function');
+EventEmitter.prototype.emit = function emit(type) {
+  var args = [];
+  for (var i = 1; i < arguments.length; i++) args.push(arguments[i]);
+  var doError = (type === 'error');
 
-  if (kCustomPromisifiedSymbol && original[kCustomPromisifiedSymbol]) {
-    var fn = original[kCustomPromisifiedSymbol];
-    if (typeof fn !== 'function') {
-      throw new TypeError('The "util.promisify.custom" argument must be of type Function');
+  var events = this._events;
+  if (events !== undefined)
+    doError = (doError && events.error === undefined);
+  else if (!doError)
+    return false;
+
+  // If there is no 'error' event listener then throw.
+  if (doError) {
+    var er;
+    if (args.length > 0)
+      er = args[0];
+    if (er instanceof Error) {
+      // Note: The comments on the `throw` lines are intentional, they show
+      // up in Node's output if this results in an unhandled exception.
+      throw er; // Unhandled 'error' event
     }
-    Object.defineProperty(fn, kCustomPromisifiedSymbol, {
-      value: fn, enumerable: false, writable: false, configurable: true
-    });
-    return fn;
+    // At least give some kind of context to the user
+    var err = new Error('Unhandled error.' + (er ? ' (' + er.message + ')' : ''));
+    err.context = er;
+    throw err; // Unhandled 'error' event
   }
 
-  function fn() {
-    var promiseResolve, promiseReject;
-    var promise = new Promise(function (resolve, reject) {
-      promiseResolve = resolve;
-      promiseReject = reject;
-    });
+  var handler = events[type];
 
-    var args = [];
-    for (var i = 0; i < arguments.length; i++) {
-      args.push(arguments[i]);
-    }
-    args.push(function (err, value) {
-      if (err) {
-        promiseReject(err);
-      } else {
-        promiseResolve(value);
-      }
-    });
+  if (handler === undefined)
+    return false;
 
-    try {
-      original.apply(this, args);
-    } catch (err) {
-      promiseReject(err);
-    }
-
-    return promise;
+  if (typeof handler === 'function') {
+    ReflectApply(handler, this, args);
+  } else {
+    var len = handler.length;
+    var listeners = arrayClone(handler, len);
+    for (var i = 0; i < len; ++i)
+      ReflectApply(listeners[i], this, args);
   }
 
-  Object.setPrototypeOf(fn, Object.getPrototypeOf(original));
+  return true;
+};
 
-  if (kCustomPromisifiedSymbol) Object.defineProperty(fn, kCustomPromisifiedSymbol, {
-    value: fn, enumerable: false, writable: false, configurable: true
-  });
-  return Object.defineProperties(
-    fn,
-    getOwnPropertyDescriptors(original)
-  );
+function _addListener(target, type, listener, prepend) {
+  var m;
+  var events;
+  var existing;
+
+  checkListener(listener);
+
+  events = target._events;
+  if (events === undefined) {
+    events = target._events = Object.create(null);
+    target._eventsCount = 0;
+  } else {
+    // To avoid recursion in the case that type === "newListener"! Before
+    // adding it to the listeners, first emit "newListener".
+    if (events.newListener !== undefined) {
+      target.emit('newListener', type,
+                  listener.listener ? listener.listener : listener);
+
+      // Re-assign `events` because a newListener handler could have caused the
+      // this._events to be assigned to a new object
+      events = target._events;
+    }
+    existing = events[type];
+  }
+
+  if (existing === undefined) {
+    // Optimize the case of one listener. Don't need the extra array object.
+    existing = events[type] = listener;
+    ++target._eventsCount;
+  } else {
+    if (typeof existing === 'function') {
+      // Adding the second element, need to change to array.
+      existing = events[type] =
+        prepend ? [listener, existing] : [existing, listener];
+      // If we've already got an array, just append.
+    } else if (prepend) {
+      existing.unshift(listener);
+    } else {
+      existing.push(listener);
+    }
+
+    // Check for listener leak
+    m = _getMaxListeners(target);
+    if (m > 0 && existing.length > m && !existing.warned) {
+      existing.warned = true;
+      // No error code for this since it is a Warning
+      // eslint-disable-next-line no-restricted-syntax
+      var w = new Error('Possible EventEmitter memory leak detected. ' +
+                          existing.length + ' ' + String(type) + ' listeners ' +
+                          'added. Use emitter.setMaxListeners() to ' +
+                          'increase limit');
+      w.name = 'MaxListenersExceededWarning';
+      w.emitter = target;
+      w.type = type;
+      w.count = existing.length;
+      ProcessEmitWarning(w);
+    }
+  }
+
+  return target;
 }
 
-exports.promisify.custom = kCustomPromisifiedSymbol
+EventEmitter.prototype.addListener = function addListener(type, listener) {
+  return _addListener(this, type, listener, false);
+};
 
-function callbackifyOnRejected(reason, cb) {
-  // `!reason` guard inspired by bluebird (Ref: https://goo.gl/t5IS6M).
-  // Because `null` is a special error value in callbacks which means "no error
-  // occurred", we error-wrap so the callback consumer can distinguish between
-  // "the promise rejected with null" or "the promise fulfilled with undefined".
-  if (!reason) {
-    var newReason = new Error('Promise was rejected with a falsy value');
-    newReason.reason = reason;
-    reason = newReason;
-  }
-  return cb(reason);
-}
+EventEmitter.prototype.on = EventEmitter.prototype.addListener;
 
-function callbackify(original) {
-  if (typeof original !== 'function') {
-    throw new TypeError('The "original" argument must be of type Function');
-  }
-
-  // We DO NOT return the promise as it gives the user a false sense that
-  // the promise is actually somehow related to the callback's execution
-  // and that the callback throwing will reject the promise.
-  function callbackified() {
-    var args = [];
-    for (var i = 0; i < arguments.length; i++) {
-      args.push(arguments[i]);
-    }
-
-    var maybeCb = args.pop();
-    if (typeof maybeCb !== 'function') {
-      throw new TypeError('The last argument must be of type Function');
-    }
-    var self = this;
-    var cb = function() {
-      return maybeCb.apply(self, arguments);
+EventEmitter.prototype.prependListener =
+    function prependListener(type, listener) {
+      return _addListener(this, type, listener, true);
     };
-    // In true node style we process the callback on `nextTick` with all the
-    // implications (stack, `uncaughtException`, `async_hooks`)
-    original.apply(this, args)
-      .then(function(ret) { process.nextTick(cb, null, ret) },
-            function(rej) { process.nextTick(callbackifyOnRejected, rej, cb) });
+
+function onceWrapper() {
+  if (!this.fired) {
+    this.target.removeListener(this.type, this.wrapFn);
+    this.fired = true;
+    if (arguments.length === 0)
+      return this.listener.call(this.target);
+    return this.listener.apply(this.target, arguments);
+  }
+}
+
+function _onceWrap(target, type, listener) {
+  var state = { fired: false, wrapFn: undefined, target: target, type: type, listener: listener };
+  var wrapped = onceWrapper.bind(state);
+  wrapped.listener = listener;
+  state.wrapFn = wrapped;
+  return wrapped;
+}
+
+EventEmitter.prototype.once = function once(type, listener) {
+  checkListener(listener);
+  this.on(type, _onceWrap(this, type, listener));
+  return this;
+};
+
+EventEmitter.prototype.prependOnceListener =
+    function prependOnceListener(type, listener) {
+      checkListener(listener);
+      this.prependListener(type, _onceWrap(this, type, listener));
+      return this;
+    };
+
+// Emits a 'removeListener' event if and only if the listener was removed.
+EventEmitter.prototype.removeListener =
+    function removeListener(type, listener) {
+      var list, events, position, i, originalListener;
+
+      checkListener(listener);
+
+      events = this._events;
+      if (events === undefined)
+        return this;
+
+      list = events[type];
+      if (list === undefined)
+        return this;
+
+      if (list === listener || list.listener === listener) {
+        if (--this._eventsCount === 0)
+          this._events = Object.create(null);
+        else {
+          delete events[type];
+          if (events.removeListener)
+            this.emit('removeListener', type, list.listener || listener);
+        }
+      } else if (typeof list !== 'function') {
+        position = -1;
+
+        for (i = list.length - 1; i >= 0; i--) {
+          if (list[i] === listener || list[i].listener === listener) {
+            originalListener = list[i].listener;
+            position = i;
+            break;
+          }
+        }
+
+        if (position < 0)
+          return this;
+
+        if (position === 0)
+          list.shift();
+        else {
+          spliceOne(list, position);
+        }
+
+        if (list.length === 1)
+          events[type] = list[0];
+
+        if (events.removeListener !== undefined)
+          this.emit('removeListener', type, originalListener || listener);
+      }
+
+      return this;
+    };
+
+EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
+
+EventEmitter.prototype.removeAllListeners =
+    function removeAllListeners(type) {
+      var listeners, events, i;
+
+      events = this._events;
+      if (events === undefined)
+        return this;
+
+      // not listening for removeListener, no need to emit
+      if (events.removeListener === undefined) {
+        if (arguments.length === 0) {
+          this._events = Object.create(null);
+          this._eventsCount = 0;
+        } else if (events[type] !== undefined) {
+          if (--this._eventsCount === 0)
+            this._events = Object.create(null);
+          else
+            delete events[type];
+        }
+        return this;
+      }
+
+      // emit removeListener for all listeners on all events
+      if (arguments.length === 0) {
+        var keys = Object.keys(events);
+        var key;
+        for (i = 0; i < keys.length; ++i) {
+          key = keys[i];
+          if (key === 'removeListener') continue;
+          this.removeAllListeners(key);
+        }
+        this.removeAllListeners('removeListener');
+        this._events = Object.create(null);
+        this._eventsCount = 0;
+        return this;
+      }
+
+      listeners = events[type];
+
+      if (typeof listeners === 'function') {
+        this.removeListener(type, listeners);
+      } else if (listeners !== undefined) {
+        // LIFO order
+        for (i = listeners.length - 1; i >= 0; i--) {
+          this.removeListener(type, listeners[i]);
+        }
+      }
+
+      return this;
+    };
+
+function _listeners(target, type, unwrap) {
+  var events = target._events;
+
+  if (events === undefined)
+    return [];
+
+  var evlistener = events[type];
+  if (evlistener === undefined)
+    return [];
+
+  if (typeof evlistener === 'function')
+    return unwrap ? [evlistener.listener || evlistener] : [evlistener];
+
+  return unwrap ?
+    unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
+}
+
+EventEmitter.prototype.listeners = function listeners(type) {
+  return _listeners(this, type, true);
+};
+
+EventEmitter.prototype.rawListeners = function rawListeners(type) {
+  return _listeners(this, type, false);
+};
+
+EventEmitter.listenerCount = function(emitter, type) {
+  if (typeof emitter.listenerCount === 'function') {
+    return emitter.listenerCount(type);
+  } else {
+    return listenerCount.call(emitter, type);
+  }
+};
+
+EventEmitter.prototype.listenerCount = listenerCount;
+function listenerCount(type) {
+  var events = this._events;
+
+  if (events !== undefined) {
+    var evlistener = events[type];
+
+    if (typeof evlistener === 'function') {
+      return 1;
+    } else if (evlistener !== undefined) {
+      return evlistener.length;
+    }
   }
 
-  Object.setPrototypeOf(callbackified, Object.getPrototypeOf(original));
-  Object.defineProperties(callbackified,
-                          getOwnPropertyDescriptors(original));
-  return callbackified;
+  return 0;
 }
-exports.callbackify = callbackify;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../process/browser.js */ "../../node_modules/process/browser.js")))
+EventEmitter.prototype.eventNames = function eventNames() {
+  return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
+};
+
+function arrayClone(arr, n) {
+  var copy = new Array(n);
+  for (var i = 0; i < n; ++i)
+    copy[i] = arr[i];
+  return copy;
+}
+
+function spliceOne(list, index) {
+  for (; index + 1 < list.length; index++)
+    list[index] = list[index + 1];
+  list.pop();
+}
+
+function unwrapListeners(arr) {
+  var ret = new Array(arr.length);
+  for (var i = 0; i < ret.length; ++i) {
+    ret[i] = arr[i].listener || arr[i];
+  }
+  return ret;
+}
+
+
+/***/ }),
+
+/***/ "../../node_modules/ieee754/index.js":
+/*!**************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/ieee754/index.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+exports.read = function (buffer, offset, isLE, mLen, nBytes) {
+  var e, m
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var nBits = -7
+  var i = isLE ? (nBytes - 1) : 0
+  var d = isLE ? -1 : 1
+  var s = buffer[offset + i]
+
+  i += d
+
+  e = s & ((1 << (-nBits)) - 1)
+  s >>= (-nBits)
+  nBits += eLen
+  for (; nBits > 0; e = (e * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  m = e & ((1 << (-nBits)) - 1)
+  e >>= (-nBits)
+  nBits += mLen
+  for (; nBits > 0; m = (m * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  if (e === 0) {
+    e = 1 - eBias
+  } else if (e === eMax) {
+    return m ? NaN : ((s ? -1 : 1) * Infinity)
+  } else {
+    m = m + Math.pow(2, mLen)
+    e = e - eBias
+  }
+  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
+}
+
+exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
+  var e, m, c
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
+  var i = isLE ? 0 : (nBytes - 1)
+  var d = isLE ? 1 : -1
+  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
+
+  value = Math.abs(value)
+
+  if (isNaN(value) || value === Infinity) {
+    m = isNaN(value) ? 1 : 0
+    e = eMax
+  } else {
+    e = Math.floor(Math.log(value) / Math.LN2)
+    if (value * (c = Math.pow(2, -e)) < 1) {
+      e--
+      c *= 2
+    }
+    if (e + eBias >= 1) {
+      value += rt / c
+    } else {
+      value += rt * Math.pow(2, 1 - eBias)
+    }
+    if (value * c >= 2) {
+      e++
+      c /= 2
+    }
+
+    if (e + eBias >= eMax) {
+      m = 0
+      e = eMax
+    } else if (e + eBias >= 1) {
+      m = ((value * c) - 1) * Math.pow(2, mLen)
+      e = e + eBias
+    } else {
+      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
+      e = 0
+    }
+  }
+
+  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
+
+  e = (e << mLen) | m
+  eLen += mLen
+  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
+
+  buffer[offset + i - d] |= s * 128
+}
+
+
+/***/ }),
+
+/***/ "../../node_modules/inherits/inherits.js":
+/*!******************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/inherits/inherits.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+try {
+  var util = __webpack_require__(/*! util */ "../../node_modules/util/util.js");
+  /* istanbul ignore next */
+  if (typeof util.inherits !== 'function') throw '';
+  module.exports = util.inherits;
+} catch (e) {
+  /* istanbul ignore next */
+  module.exports = __webpack_require__(/*! ./inherits_browser.js */ "../../node_modules/inherits/inherits_browser.js");
+}
+
+
+/***/ }),
+
+/***/ "../../node_modules/inherits/inherits_browser.js":
+/*!**************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/inherits/inherits_browser.js ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    if (superCtor) {
+      ctor.super_ = superCtor
+      ctor.prototype = Object.create(superCtor.prototype, {
+        constructor: {
+          value: ctor,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      })
+    }
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    if (superCtor) {
+      ctor.super_ = superCtor
+      var TempCtor = function () {}
+      TempCtor.prototype = superCtor.prototype
+      ctor.prototype = new TempCtor()
+      ctor.prototype.constructor = ctor
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "../../node_modules/isarray/index.js":
+/*!**************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/isarray/index.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var toString = {}.toString;
+
+module.exports = Array.isArray || function (arr) {
+  return toString.call(arr) == '[object Array]';
+};
+
 
 /***/ }),
 
@@ -5771,431 +4988,22 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "../../node_modules/safe-buffer/index.js":
-/*!******************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/safe-buffer/index.js ***!
-  \******************************************************************************/
+/***/ "../../node_modules/readable-stream/duplex-browser.js":
+/*!*******************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/readable-stream/duplex-browser.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* eslint-disable node/no-deprecated-api */
-var buffer = __webpack_require__(/*! buffer */ "../../node_modules/node-libs-browser/node_modules/buffer/index.js")
-var Buffer = buffer.Buffer
-
-// alternative to using Object.keys for old browsers
-function copyProps (src, dst) {
-  for (var key in src) {
-    dst[key] = src[key]
-  }
-}
-if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
-  module.exports = buffer
-} else {
-  // Copy properties from require('buffer')
-  copyProps(buffer, exports)
-  exports.Buffer = SafeBuffer
-}
-
-function SafeBuffer (arg, encodingOrOffset, length) {
-  return Buffer(arg, encodingOrOffset, length)
-}
-
-// Copy static methods from Buffer
-copyProps(Buffer, SafeBuffer)
-
-SafeBuffer.from = function (arg, encodingOrOffset, length) {
-  if (typeof arg === 'number') {
-    throw new TypeError('Argument must not be a number')
-  }
-  return Buffer(arg, encodingOrOffset, length)
-}
-
-SafeBuffer.alloc = function (size, fill, encoding) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
-  }
-  var buf = Buffer(size)
-  if (fill !== undefined) {
-    if (typeof encoding === 'string') {
-      buf.fill(fill, encoding)
-    } else {
-      buf.fill(fill)
-    }
-  } else {
-    buf.fill(0)
-  }
-  return buf
-}
-
-SafeBuffer.allocUnsafe = function (size) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
-  }
-  return Buffer(size)
-}
-
-SafeBuffer.allocUnsafeSlow = function (size) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
-  }
-  return buffer.SlowBuffer(size)
-}
+module.exports = __webpack_require__(/*! ./lib/_stream_duplex.js */ "../../node_modules/readable-stream/lib/_stream_duplex.js");
 
 
 /***/ }),
 
-/***/ "../../node_modules/setimmediate/setImmediate.js":
-/*!**************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/setimmediate/setImmediate.js ***!
-  \**************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
-    "use strict";
-
-    if (global.setImmediate) {
-        return;
-    }
-
-    var nextHandle = 1; // Spec says greater than zero
-    var tasksByHandle = {};
-    var currentlyRunningATask = false;
-    var doc = global.document;
-    var registerImmediate;
-
-    function setImmediate(callback) {
-      // Callback can either be a function or a string
-      if (typeof callback !== "function") {
-        callback = new Function("" + callback);
-      }
-      // Copy function arguments
-      var args = new Array(arguments.length - 1);
-      for (var i = 0; i < args.length; i++) {
-          args[i] = arguments[i + 1];
-      }
-      // Store and register the task
-      var task = { callback: callback, args: args };
-      tasksByHandle[nextHandle] = task;
-      registerImmediate(nextHandle);
-      return nextHandle++;
-    }
-
-    function clearImmediate(handle) {
-        delete tasksByHandle[handle];
-    }
-
-    function run(task) {
-        var callback = task.callback;
-        var args = task.args;
-        switch (args.length) {
-        case 0:
-            callback();
-            break;
-        case 1:
-            callback(args[0]);
-            break;
-        case 2:
-            callback(args[0], args[1]);
-            break;
-        case 3:
-            callback(args[0], args[1], args[2]);
-            break;
-        default:
-            callback.apply(undefined, args);
-            break;
-        }
-    }
-
-    function runIfPresent(handle) {
-        // From the spec: "Wait until any invocations of this algorithm started before this one have completed."
-        // So if we're currently running a task, we'll need to delay this invocation.
-        if (currentlyRunningATask) {
-            // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
-            // "too much recursion" error.
-            setTimeout(runIfPresent, 0, handle);
-        } else {
-            var task = tasksByHandle[handle];
-            if (task) {
-                currentlyRunningATask = true;
-                try {
-                    run(task);
-                } finally {
-                    clearImmediate(handle);
-                    currentlyRunningATask = false;
-                }
-            }
-        }
-    }
-
-    function installNextTickImplementation() {
-        registerImmediate = function(handle) {
-            process.nextTick(function () { runIfPresent(handle); });
-        };
-    }
-
-    function canUsePostMessage() {
-        // The test against `importScripts` prevents this implementation from being installed inside a web worker,
-        // where `global.postMessage` means something completely different and can't be used for this purpose.
-        if (global.postMessage && !global.importScripts) {
-            var postMessageIsAsynchronous = true;
-            var oldOnMessage = global.onmessage;
-            global.onmessage = function() {
-                postMessageIsAsynchronous = false;
-            };
-            global.postMessage("", "*");
-            global.onmessage = oldOnMessage;
-            return postMessageIsAsynchronous;
-        }
-    }
-
-    function installPostMessageImplementation() {
-        // Installs an event handler on `global` for the `message` event: see
-        // * https://developer.mozilla.org/en/DOM/window.postMessage
-        // * http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#crossDocumentMessages
-
-        var messagePrefix = "setImmediate$" + Math.random() + "$";
-        var onGlobalMessage = function(event) {
-            if (event.source === global &&
-                typeof event.data === "string" &&
-                event.data.indexOf(messagePrefix) === 0) {
-                runIfPresent(+event.data.slice(messagePrefix.length));
-            }
-        };
-
-        if (global.addEventListener) {
-            global.addEventListener("message", onGlobalMessage, false);
-        } else {
-            global.attachEvent("onmessage", onGlobalMessage);
-        }
-
-        registerImmediate = function(handle) {
-            global.postMessage(messagePrefix + handle, "*");
-        };
-    }
-
-    function installMessageChannelImplementation() {
-        var channel = new MessageChannel();
-        channel.port1.onmessage = function(event) {
-            var handle = event.data;
-            runIfPresent(handle);
-        };
-
-        registerImmediate = function(handle) {
-            channel.port2.postMessage(handle);
-        };
-    }
-
-    function installReadyStateChangeImplementation() {
-        var html = doc.documentElement;
-        registerImmediate = function(handle) {
-            // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
-            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
-            var script = doc.createElement("script");
-            script.onreadystatechange = function () {
-                runIfPresent(handle);
-                script.onreadystatechange = null;
-                html.removeChild(script);
-                script = null;
-            };
-            html.appendChild(script);
-        };
-    }
-
-    function installSetTimeoutImplementation() {
-        registerImmediate = function(handle) {
-            setTimeout(runIfPresent, 0, handle);
-        };
-    }
-
-    // If supported, we should attach to the prototype of global, since that is where setTimeout et al. live.
-    var attachTo = Object.getPrototypeOf && Object.getPrototypeOf(global);
-    attachTo = attachTo && attachTo.setTimeout ? attachTo : global;
-
-    // Don't get fooled by e.g. browserify environments.
-    if ({}.toString.call(global.process) === "[object process]") {
-        // For Node.js before 0.9
-        installNextTickImplementation();
-
-    } else if (canUsePostMessage()) {
-        // For non-IE10 modern browsers
-        installPostMessageImplementation();
-
-    } else if (global.MessageChannel) {
-        // For web workers, where supported
-        installMessageChannelImplementation();
-
-    } else if (doc && "onreadystatechange" in doc.createElement("script")) {
-        // For IE 6–8
-        installReadyStateChangeImplementation();
-
-    } else {
-        // For older browsers
-        installSetTimeoutImplementation();
-    }
-
-    attachTo.setImmediate = setImmediate;
-    attachTo.clearImmediate = clearImmediate;
-}(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "../../node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../process/browser.js */ "../../node_modules/process/browser.js")))
-
-/***/ }),
-
-/***/ "../../node_modules/stream-browserify/index.js":
-/*!************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/index.js ***!
-  \************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-module.exports = Stream;
-
-var EE = __webpack_require__(/*! events */ "../../node_modules/events/events.js").EventEmitter;
-var inherits = __webpack_require__(/*! inherits */ "../../node_modules/inherits/inherits.js");
-
-inherits(Stream, EE);
-Stream.Readable = __webpack_require__(/*! readable-stream/readable.js */ "../../node_modules/stream-browserify/node_modules/readable-stream/readable-browser.js");
-Stream.Writable = __webpack_require__(/*! readable-stream/writable.js */ "../../node_modules/stream-browserify/node_modules/readable-stream/writable-browser.js");
-Stream.Duplex = __webpack_require__(/*! readable-stream/duplex.js */ "../../node_modules/stream-browserify/node_modules/readable-stream/duplex-browser.js");
-Stream.Transform = __webpack_require__(/*! readable-stream/transform.js */ "../../node_modules/stream-browserify/node_modules/readable-stream/transform.js");
-Stream.PassThrough = __webpack_require__(/*! readable-stream/passthrough.js */ "../../node_modules/stream-browserify/node_modules/readable-stream/passthrough.js");
-
-// Backwards-compat with node 0.4.x
-Stream.Stream = Stream;
-
-
-
-// old-style streams.  Note that the pipe method (the only relevant
-// part of this class) is overridden in the Readable class.
-
-function Stream() {
-  EE.call(this);
-}
-
-Stream.prototype.pipe = function(dest, options) {
-  var source = this;
-
-  function ondata(chunk) {
-    if (dest.writable) {
-      if (false === dest.write(chunk) && source.pause) {
-        source.pause();
-      }
-    }
-  }
-
-  source.on('data', ondata);
-
-  function ondrain() {
-    if (source.readable && source.resume) {
-      source.resume();
-    }
-  }
-
-  dest.on('drain', ondrain);
-
-  // If the 'end' option is not supplied, dest.end() will be called when
-  // source gets the 'end' or 'close' events.  Only dest.end() once.
-  if (!dest._isStdio && (!options || options.end !== false)) {
-    source.on('end', onend);
-    source.on('close', onclose);
-  }
-
-  var didOnEnd = false;
-  function onend() {
-    if (didOnEnd) return;
-    didOnEnd = true;
-
-    dest.end();
-  }
-
-
-  function onclose() {
-    if (didOnEnd) return;
-    didOnEnd = true;
-
-    if (typeof dest.destroy === 'function') dest.destroy();
-  }
-
-  // don't leave dangling pipes when there are errors.
-  function onerror(er) {
-    cleanup();
-    if (EE.listenerCount(this, 'error') === 0) {
-      throw er; // Unhandled stream error in pipe.
-    }
-  }
-
-  source.on('error', onerror);
-  dest.on('error', onerror);
-
-  // remove all the event listeners that were added.
-  function cleanup() {
-    source.removeListener('data', ondata);
-    dest.removeListener('drain', ondrain);
-
-    source.removeListener('end', onend);
-    source.removeListener('close', onclose);
-
-    source.removeListener('error', onerror);
-    dest.removeListener('error', onerror);
-
-    source.removeListener('end', cleanup);
-    source.removeListener('close', cleanup);
-
-    dest.removeListener('close', cleanup);
-  }
-
-  source.on('end', cleanup);
-  source.on('close', cleanup);
-
-  dest.on('close', cleanup);
-
-  dest.emit('pipe', source);
-
-  // Allow for unix-like usage: A.pipe(B).pipe(C)
-  return dest;
-};
-
-
-/***/ }),
-
-/***/ "../../node_modules/stream-browserify/node_modules/readable-stream/duplex-browser.js":
-/*!**************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/duplex-browser.js ***!
-  \**************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(/*! ./lib/_stream_duplex.js */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js");
-
-
-/***/ }),
-
-/***/ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js":
-/*!******************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js ***!
-  \******************************************************************************************************************************/
+/***/ "../../node_modules/readable-stream/lib/_stream_duplex.js":
+/*!***********************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/readable-stream/lib/_stream_duplex.js ***!
+  \***********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6249,8 +5057,8 @@ var util = Object.create(__webpack_require__(/*! core-util-is */ "../../node_mod
 util.inherits = __webpack_require__(/*! inherits */ "../../node_modules/inherits/inherits.js");
 /*</replacement>*/
 
-var Readable = __webpack_require__(/*! ./_stream_readable */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js");
-var Writable = __webpack_require__(/*! ./_stream_writable */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js");
+var Readable = __webpack_require__(/*! ./_stream_readable */ "../../node_modules/readable-stream/lib/_stream_readable.js");
+var Writable = __webpack_require__(/*! ./_stream_writable */ "../../node_modules/readable-stream/lib/_stream_writable.js");
 
 util.inherits(Duplex, Readable);
 
@@ -6334,10 +5142,10 @@ Duplex.prototype._destroy = function (err, cb) {
 
 /***/ }),
 
-/***/ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js":
-/*!***********************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js ***!
-  \***********************************************************************************************************************************/
+/***/ "../../node_modules/readable-stream/lib/_stream_passthrough.js":
+/*!****************************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/readable-stream/lib/_stream_passthrough.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6371,7 +5179,7 @@ Duplex.prototype._destroy = function (err, cb) {
 
 module.exports = PassThrough;
 
-var Transform = __webpack_require__(/*! ./_stream_transform */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js");
+var Transform = __webpack_require__(/*! ./_stream_transform */ "../../node_modules/readable-stream/lib/_stream_transform.js");
 
 /*<replacement>*/
 var util = Object.create(__webpack_require__(/*! core-util-is */ "../../node_modules/core-util-is/lib/util.js"));
@@ -6392,10 +5200,10 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 
 /***/ }),
 
-/***/ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js":
-/*!********************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js ***!
-  \********************************************************************************************************************************/
+/***/ "../../node_modules/readable-stream/lib/_stream_readable.js":
+/*!*************************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/readable-stream/lib/_stream_readable.js ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6449,7 +5257,7 @@ var EElistenerCount = function (emitter, type) {
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(/*! ./internal/streams/stream */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js");
+var Stream = __webpack_require__(/*! ./internal/streams/stream */ "../../node_modules/readable-stream/lib/internal/streams/stream-browser.js");
 /*</replacement>*/
 
 /*<replacement>*/
@@ -6480,8 +5288,8 @@ if (debugUtil && debugUtil.debuglog) {
 }
 /*</replacement>*/
 
-var BufferList = __webpack_require__(/*! ./internal/streams/BufferList */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/BufferList.js");
-var destroyImpl = __webpack_require__(/*! ./internal/streams/destroy */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js");
+var BufferList = __webpack_require__(/*! ./internal/streams/BufferList */ "../../node_modules/readable-stream/lib/internal/streams/BufferList.js");
+var destroyImpl = __webpack_require__(/*! ./internal/streams/destroy */ "../../node_modules/readable-stream/lib/internal/streams/destroy.js");
 var StringDecoder;
 
 util.inherits(Readable, Stream);
@@ -6501,7 +5309,7 @@ function prependListener(emitter, event, fn) {
 }
 
 function ReadableState(options, stream) {
-  Duplex = Duplex || __webpack_require__(/*! ./_stream_duplex */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js");
+  Duplex = Duplex || __webpack_require__(/*! ./_stream_duplex */ "../../node_modules/readable-stream/lib/_stream_duplex.js");
 
   options = options || {};
 
@@ -6578,7 +5386,7 @@ function ReadableState(options, stream) {
 }
 
 function Readable(options) {
-  Duplex = Duplex || __webpack_require__(/*! ./_stream_duplex */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js");
+  Duplex = Duplex || __webpack_require__(/*! ./_stream_duplex */ "../../node_modules/readable-stream/lib/_stream_duplex.js");
 
   if (!(this instanceof Readable)) return new Readable(options);
 
@@ -7419,14 +6227,14 @@ function indexOf(xs, x) {
   }
   return -1;
 }
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../webpack/buildin/global.js */ "../../node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../../../../process/browser.js */ "../../node_modules/process/browser.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "../../node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../../process/browser.js */ "../../node_modules/process/browser.js")))
 
 /***/ }),
 
-/***/ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js":
-/*!*********************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js ***!
-  \*********************************************************************************************************************************/
+/***/ "../../node_modules/readable-stream/lib/_stream_transform.js":
+/*!**************************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/readable-stream/lib/_stream_transform.js ***!
+  \**************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7498,7 +6306,7 @@ function indexOf(xs, x) {
 
 module.exports = Transform;
 
-var Duplex = __webpack_require__(/*! ./_stream_duplex */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js");
+var Duplex = __webpack_require__(/*! ./_stream_duplex */ "../../node_modules/readable-stream/lib/_stream_duplex.js");
 
 /*<replacement>*/
 var util = Object.create(__webpack_require__(/*! core-util-is */ "../../node_modules/core-util-is/lib/util.js"));
@@ -7648,10 +6456,10 @@ function done(stream, er, data) {
 
 /***/ }),
 
-/***/ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js":
-/*!********************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js ***!
-  \********************************************************************************************************************************/
+/***/ "../../node_modules/readable-stream/lib/_stream_writable.js":
+/*!*************************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/readable-stream/lib/_stream_writable.js ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7733,7 +6541,7 @@ var internalUtil = {
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(/*! ./internal/streams/stream */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js");
+var Stream = __webpack_require__(/*! ./internal/streams/stream */ "../../node_modules/readable-stream/lib/internal/streams/stream-browser.js");
 /*</replacement>*/
 
 /*<replacement>*/
@@ -7749,14 +6557,14 @@ function _isUint8Array(obj) {
 
 /*</replacement>*/
 
-var destroyImpl = __webpack_require__(/*! ./internal/streams/destroy */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js");
+var destroyImpl = __webpack_require__(/*! ./internal/streams/destroy */ "../../node_modules/readable-stream/lib/internal/streams/destroy.js");
 
 util.inherits(Writable, Stream);
 
 function nop() {}
 
 function WritableState(options, stream) {
-  Duplex = Duplex || __webpack_require__(/*! ./_stream_duplex */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js");
+  Duplex = Duplex || __webpack_require__(/*! ./_stream_duplex */ "../../node_modules/readable-stream/lib/_stream_duplex.js");
 
   options = options || {};
 
@@ -7906,7 +6714,7 @@ if (typeof Symbol === 'function' && Symbol.hasInstance && typeof Function.protot
 }
 
 function Writable(options) {
-  Duplex = Duplex || __webpack_require__(/*! ./_stream_duplex */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js");
+  Duplex = Duplex || __webpack_require__(/*! ./_stream_duplex */ "../../node_modules/readable-stream/lib/_stream_duplex.js");
 
   // Writable ctor is applied to Duplexes, too.
   // `realHasInstance` is necessary because using plain `instanceof`
@@ -8343,14 +7151,14 @@ Writable.prototype._destroy = function (err, cb) {
   this.end();
   cb(err);
 };
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../process/browser.js */ "../../node_modules/process/browser.js"), __webpack_require__(/*! ./../../../../timers-browserify/main.js */ "../../node_modules/timers-browserify/main.js").setImmediate, __webpack_require__(/*! ./../../../../webpack/buildin/global.js */ "../../node_modules/webpack/buildin/global.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "../../node_modules/process/browser.js"), __webpack_require__(/*! ./../../timers-browserify/main.js */ "../../node_modules/timers-browserify/main.js").setImmediate, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "../../node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
-/***/ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/BufferList.js":
-/*!*******************************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/BufferList.js ***!
-  \*******************************************************************************************************************************************/
+/***/ "../../node_modules/readable-stream/lib/internal/streams/BufferList.js":
+/*!************************************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/readable-stream/lib/internal/streams/BufferList.js ***!
+  \************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8437,10 +7245,10 @@ if (util && util.inspect && util.inspect.custom) {
 
 /***/ }),
 
-/***/ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js":
-/*!****************************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js ***!
-  \****************************************************************************************************************************************/
+/***/ "../../node_modules/readable-stream/lib/internal/streams/destroy.js":
+/*!*********************************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/readable-stream/lib/internal/streams/destroy.js ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8522,10 +7330,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js":
-/*!***********************************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js ***!
-  \***********************************************************************************************************************************************/
+/***/ "../../node_modules/readable-stream/lib/internal/streams/stream-browser.js":
+/*!****************************************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/readable-stream/lib/internal/streams/stream-browser.js ***!
+  \****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8534,56 +7342,465 @@ module.exports = __webpack_require__(/*! events */ "../../node_modules/events/ev
 
 /***/ }),
 
-/***/ "../../node_modules/stream-browserify/node_modules/readable-stream/passthrough.js":
-/*!***********************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/passthrough.js ***!
-  \***********************************************************************************************************************/
+/***/ "../../node_modules/readable-stream/passthrough.js":
+/*!****************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/readable-stream/passthrough.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./readable */ "../../node_modules/stream-browserify/node_modules/readable-stream/readable-browser.js").PassThrough
+module.exports = __webpack_require__(/*! ./readable */ "../../node_modules/readable-stream/readable-browser.js").PassThrough
 
 
 /***/ }),
 
-/***/ "../../node_modules/stream-browserify/node_modules/readable-stream/readable-browser.js":
-/*!****************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/readable-browser.js ***!
-  \****************************************************************************************************************************/
+/***/ "../../node_modules/readable-stream/readable-browser.js":
+/*!*********************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/readable-stream/readable-browser.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(/*! ./lib/_stream_readable.js */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js");
+exports = module.exports = __webpack_require__(/*! ./lib/_stream_readable.js */ "../../node_modules/readable-stream/lib/_stream_readable.js");
 exports.Stream = exports;
 exports.Readable = exports;
-exports.Writable = __webpack_require__(/*! ./lib/_stream_writable.js */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js");
-exports.Duplex = __webpack_require__(/*! ./lib/_stream_duplex.js */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js");
-exports.Transform = __webpack_require__(/*! ./lib/_stream_transform.js */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js");
-exports.PassThrough = __webpack_require__(/*! ./lib/_stream_passthrough.js */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js");
+exports.Writable = __webpack_require__(/*! ./lib/_stream_writable.js */ "../../node_modules/readable-stream/lib/_stream_writable.js");
+exports.Duplex = __webpack_require__(/*! ./lib/_stream_duplex.js */ "../../node_modules/readable-stream/lib/_stream_duplex.js");
+exports.Transform = __webpack_require__(/*! ./lib/_stream_transform.js */ "../../node_modules/readable-stream/lib/_stream_transform.js");
+exports.PassThrough = __webpack_require__(/*! ./lib/_stream_passthrough.js */ "../../node_modules/readable-stream/lib/_stream_passthrough.js");
 
 
 /***/ }),
 
-/***/ "../../node_modules/stream-browserify/node_modules/readable-stream/transform.js":
-/*!*********************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/transform.js ***!
-  \*********************************************************************************************************************/
+/***/ "../../node_modules/readable-stream/transform.js":
+/*!**************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/readable-stream/transform.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./readable */ "../../node_modules/stream-browserify/node_modules/readable-stream/readable-browser.js").Transform
+module.exports = __webpack_require__(/*! ./readable */ "../../node_modules/readable-stream/readable-browser.js").Transform
 
 
 /***/ }),
 
-/***/ "../../node_modules/stream-browserify/node_modules/readable-stream/writable-browser.js":
-/*!****************************************************************************************************************************!*\
-  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/node_modules/readable-stream/writable-browser.js ***!
-  \****************************************************************************************************************************/
+/***/ "../../node_modules/readable-stream/writable-browser.js":
+/*!*********************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/readable-stream/writable-browser.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./lib/_stream_writable.js */ "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js");
+module.exports = __webpack_require__(/*! ./lib/_stream_writable.js */ "../../node_modules/readable-stream/lib/_stream_writable.js");
+
+
+/***/ }),
+
+/***/ "../../node_modules/safe-buffer/index.js":
+/*!******************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/safe-buffer/index.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* eslint-disable node/no-deprecated-api */
+var buffer = __webpack_require__(/*! buffer */ "../../node_modules/buffer/index.js")
+var Buffer = buffer.Buffer
+
+// alternative to using Object.keys for old browsers
+function copyProps (src, dst) {
+  for (var key in src) {
+    dst[key] = src[key]
+  }
+}
+if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
+  module.exports = buffer
+} else {
+  // Copy properties from require('buffer')
+  copyProps(buffer, exports)
+  exports.Buffer = SafeBuffer
+}
+
+function SafeBuffer (arg, encodingOrOffset, length) {
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+// Copy static methods from Buffer
+copyProps(Buffer, SafeBuffer)
+
+SafeBuffer.from = function (arg, encodingOrOffset, length) {
+  if (typeof arg === 'number') {
+    throw new TypeError('Argument must not be a number')
+  }
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+SafeBuffer.alloc = function (size, fill, encoding) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  var buf = Buffer(size)
+  if (fill !== undefined) {
+    if (typeof encoding === 'string') {
+      buf.fill(fill, encoding)
+    } else {
+      buf.fill(fill)
+    }
+  } else {
+    buf.fill(0)
+  }
+  return buf
+}
+
+SafeBuffer.allocUnsafe = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return Buffer(size)
+}
+
+SafeBuffer.allocUnsafeSlow = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return buffer.SlowBuffer(size)
+}
+
+
+/***/ }),
+
+/***/ "../../node_modules/setimmediate/setImmediate.js":
+/*!**************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/setimmediate/setImmediate.js ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
+    "use strict";
+
+    if (global.setImmediate) {
+        return;
+    }
+
+    var nextHandle = 1; // Spec says greater than zero
+    var tasksByHandle = {};
+    var currentlyRunningATask = false;
+    var doc = global.document;
+    var registerImmediate;
+
+    function setImmediate(callback) {
+      // Callback can either be a function or a string
+      if (typeof callback !== "function") {
+        callback = new Function("" + callback);
+      }
+      // Copy function arguments
+      var args = new Array(arguments.length - 1);
+      for (var i = 0; i < args.length; i++) {
+          args[i] = arguments[i + 1];
+      }
+      // Store and register the task
+      var task = { callback: callback, args: args };
+      tasksByHandle[nextHandle] = task;
+      registerImmediate(nextHandle);
+      return nextHandle++;
+    }
+
+    function clearImmediate(handle) {
+        delete tasksByHandle[handle];
+    }
+
+    function run(task) {
+        var callback = task.callback;
+        var args = task.args;
+        switch (args.length) {
+        case 0:
+            callback();
+            break;
+        case 1:
+            callback(args[0]);
+            break;
+        case 2:
+            callback(args[0], args[1]);
+            break;
+        case 3:
+            callback(args[0], args[1], args[2]);
+            break;
+        default:
+            callback.apply(undefined, args);
+            break;
+        }
+    }
+
+    function runIfPresent(handle) {
+        // From the spec: "Wait until any invocations of this algorithm started before this one have completed."
+        // So if we're currently running a task, we'll need to delay this invocation.
+        if (currentlyRunningATask) {
+            // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
+            // "too much recursion" error.
+            setTimeout(runIfPresent, 0, handle);
+        } else {
+            var task = tasksByHandle[handle];
+            if (task) {
+                currentlyRunningATask = true;
+                try {
+                    run(task);
+                } finally {
+                    clearImmediate(handle);
+                    currentlyRunningATask = false;
+                }
+            }
+        }
+    }
+
+    function installNextTickImplementation() {
+        registerImmediate = function(handle) {
+            process.nextTick(function () { runIfPresent(handle); });
+        };
+    }
+
+    function canUsePostMessage() {
+        // The test against `importScripts` prevents this implementation from being installed inside a web worker,
+        // where `global.postMessage` means something completely different and can't be used for this purpose.
+        if (global.postMessage && !global.importScripts) {
+            var postMessageIsAsynchronous = true;
+            var oldOnMessage = global.onmessage;
+            global.onmessage = function() {
+                postMessageIsAsynchronous = false;
+            };
+            global.postMessage("", "*");
+            global.onmessage = oldOnMessage;
+            return postMessageIsAsynchronous;
+        }
+    }
+
+    function installPostMessageImplementation() {
+        // Installs an event handler on `global` for the `message` event: see
+        // * https://developer.mozilla.org/en/DOM/window.postMessage
+        // * http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#crossDocumentMessages
+
+        var messagePrefix = "setImmediate$" + Math.random() + "$";
+        var onGlobalMessage = function(event) {
+            if (event.source === global &&
+                typeof event.data === "string" &&
+                event.data.indexOf(messagePrefix) === 0) {
+                runIfPresent(+event.data.slice(messagePrefix.length));
+            }
+        };
+
+        if (global.addEventListener) {
+            global.addEventListener("message", onGlobalMessage, false);
+        } else {
+            global.attachEvent("onmessage", onGlobalMessage);
+        }
+
+        registerImmediate = function(handle) {
+            global.postMessage(messagePrefix + handle, "*");
+        };
+    }
+
+    function installMessageChannelImplementation() {
+        var channel = new MessageChannel();
+        channel.port1.onmessage = function(event) {
+            var handle = event.data;
+            runIfPresent(handle);
+        };
+
+        registerImmediate = function(handle) {
+            channel.port2.postMessage(handle);
+        };
+    }
+
+    function installReadyStateChangeImplementation() {
+        var html = doc.documentElement;
+        registerImmediate = function(handle) {
+            // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
+            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
+            var script = doc.createElement("script");
+            script.onreadystatechange = function () {
+                runIfPresent(handle);
+                script.onreadystatechange = null;
+                html.removeChild(script);
+                script = null;
+            };
+            html.appendChild(script);
+        };
+    }
+
+    function installSetTimeoutImplementation() {
+        registerImmediate = function(handle) {
+            setTimeout(runIfPresent, 0, handle);
+        };
+    }
+
+    // If supported, we should attach to the prototype of global, since that is where setTimeout et al. live.
+    var attachTo = Object.getPrototypeOf && Object.getPrototypeOf(global);
+    attachTo = attachTo && attachTo.setTimeout ? attachTo : global;
+
+    // Don't get fooled by e.g. browserify environments.
+    if ({}.toString.call(global.process) === "[object process]") {
+        // For Node.js before 0.9
+        installNextTickImplementation();
+
+    } else if (canUsePostMessage()) {
+        // For non-IE10 modern browsers
+        installPostMessageImplementation();
+
+    } else if (global.MessageChannel) {
+        // For web workers, where supported
+        installMessageChannelImplementation();
+
+    } else if (doc && "onreadystatechange" in doc.createElement("script")) {
+        // For IE 6–8
+        installReadyStateChangeImplementation();
+
+    } else {
+        // For older browsers
+        installSetTimeoutImplementation();
+    }
+
+    attachTo.setImmediate = setImmediate;
+    attachTo.clearImmediate = clearImmediate;
+}(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "../../node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../process/browser.js */ "../../node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "../../node_modules/stream-browserify/index.js":
+/*!************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/stream-browserify/index.js ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+module.exports = Stream;
+
+var EE = __webpack_require__(/*! events */ "../../node_modules/events/events.js").EventEmitter;
+var inherits = __webpack_require__(/*! inherits */ "../../node_modules/inherits/inherits.js");
+
+inherits(Stream, EE);
+Stream.Readable = __webpack_require__(/*! readable-stream/readable.js */ "../../node_modules/readable-stream/readable-browser.js");
+Stream.Writable = __webpack_require__(/*! readable-stream/writable.js */ "../../node_modules/readable-stream/writable-browser.js");
+Stream.Duplex = __webpack_require__(/*! readable-stream/duplex.js */ "../../node_modules/readable-stream/duplex-browser.js");
+Stream.Transform = __webpack_require__(/*! readable-stream/transform.js */ "../../node_modules/readable-stream/transform.js");
+Stream.PassThrough = __webpack_require__(/*! readable-stream/passthrough.js */ "../../node_modules/readable-stream/passthrough.js");
+
+// Backwards-compat with node 0.4.x
+Stream.Stream = Stream;
+
+
+
+// old-style streams.  Note that the pipe method (the only relevant
+// part of this class) is overridden in the Readable class.
+
+function Stream() {
+  EE.call(this);
+}
+
+Stream.prototype.pipe = function(dest, options) {
+  var source = this;
+
+  function ondata(chunk) {
+    if (dest.writable) {
+      if (false === dest.write(chunk) && source.pause) {
+        source.pause();
+      }
+    }
+  }
+
+  source.on('data', ondata);
+
+  function ondrain() {
+    if (source.readable && source.resume) {
+      source.resume();
+    }
+  }
+
+  dest.on('drain', ondrain);
+
+  // If the 'end' option is not supplied, dest.end() will be called when
+  // source gets the 'end' or 'close' events.  Only dest.end() once.
+  if (!dest._isStdio && (!options || options.end !== false)) {
+    source.on('end', onend);
+    source.on('close', onclose);
+  }
+
+  var didOnEnd = false;
+  function onend() {
+    if (didOnEnd) return;
+    didOnEnd = true;
+
+    dest.end();
+  }
+
+
+  function onclose() {
+    if (didOnEnd) return;
+    didOnEnd = true;
+
+    if (typeof dest.destroy === 'function') dest.destroy();
+  }
+
+  // don't leave dangling pipes when there are errors.
+  function onerror(er) {
+    cleanup();
+    if (EE.listenerCount(this, 'error') === 0) {
+      throw er; // Unhandled stream error in pipe.
+    }
+  }
+
+  source.on('error', onerror);
+  dest.on('error', onerror);
+
+  // remove all the event listeners that were added.
+  function cleanup() {
+    source.removeListener('data', ondata);
+    dest.removeListener('drain', ondrain);
+
+    source.removeListener('end', onend);
+    source.removeListener('close', onclose);
+
+    source.removeListener('error', onerror);
+    dest.removeListener('error', onerror);
+
+    source.removeListener('end', cleanup);
+    source.removeListener('close', cleanup);
+
+    dest.removeListener('close', cleanup);
+  }
+
+  source.on('end', cleanup);
+  source.on('close', cleanup);
+
+  dest.on('close', cleanup);
+
+  dest.emit('pipe', source);
+
+  // Allow for unix-like usage: A.pipe(B).pipe(C)
+  return dest;
+};
 
 
 /***/ }),
@@ -8982,8 +8199,791 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
  * For Node.js, simply re-export the core `util.deprecate` function.
  */
 
-module.exports = __webpack_require__(/*! util */ "../../node_modules/node-libs-browser/node_modules/util/util.js").deprecate;
+module.exports = __webpack_require__(/*! util */ "../../node_modules/util/util.js").deprecate;
 
+
+/***/ }),
+
+/***/ "../../node_modules/util/node_modules/inherits/inherits.js":
+/*!************************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/util/node_modules/inherits/inherits.js ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+try {
+  var util = __webpack_require__(/*! util */ "../../node_modules/util/util.js");
+  if (typeof util.inherits !== 'function') throw '';
+  module.exports = util.inherits;
+} catch (e) {
+  module.exports = __webpack_require__(/*! ./inherits_browser.js */ "../../node_modules/util/node_modules/inherits/inherits_browser.js");
+}
+
+
+/***/ }),
+
+/***/ "../../node_modules/util/node_modules/inherits/inherits_browser.js":
+/*!********************************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/util/node_modules/inherits/inherits_browser.js ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    var TempCtor = function () {}
+    TempCtor.prototype = superCtor.prototype
+    ctor.prototype = new TempCtor()
+    ctor.prototype.constructor = ctor
+  }
+}
+
+
+/***/ }),
+
+/***/ "../../node_modules/util/support/isBufferBrowser.js":
+/*!*****************************************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/util/support/isBufferBrowser.js ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function isBuffer(arg) {
+  return arg && typeof arg === 'object'
+    && typeof arg.copy === 'function'
+    && typeof arg.fill === 'function'
+    && typeof arg.readUInt8 === 'function';
+}
+
+/***/ }),
+
+/***/ "../../node_modules/util/util.js":
+/*!**********************************************************************!*\
+  !*** /home/balmas/workspace/alpheios-core/node_modules/util/util.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors ||
+  function getOwnPropertyDescriptors(obj) {
+    var keys = Object.keys(obj);
+    var descriptors = {};
+    for (var i = 0; i < keys.length; i++) {
+      descriptors[keys[i]] = Object.getOwnPropertyDescriptor(obj, keys[i]);
+    }
+    return descriptors;
+  };
+
+var formatRegExp = /%[sdj%]/g;
+exports.format = function(f) {
+  if (!isString(f)) {
+    var objects = [];
+    for (var i = 0; i < arguments.length; i++) {
+      objects.push(inspect(arguments[i]));
+    }
+    return objects.join(' ');
+  }
+
+  var i = 1;
+  var args = arguments;
+  var len = args.length;
+  var str = String(f).replace(formatRegExp, function(x) {
+    if (x === '%%') return '%';
+    if (i >= len) return x;
+    switch (x) {
+      case '%s': return String(args[i++]);
+      case '%d': return Number(args[i++]);
+      case '%j':
+        try {
+          return JSON.stringify(args[i++]);
+        } catch (_) {
+          return '[Circular]';
+        }
+      default:
+        return x;
+    }
+  });
+  for (var x = args[i]; i < len; x = args[++i]) {
+    if (isNull(x) || !isObject(x)) {
+      str += ' ' + x;
+    } else {
+      str += ' ' + inspect(x);
+    }
+  }
+  return str;
+};
+
+
+// Mark that a method should not be used.
+// Returns a modified function which warns once by default.
+// If --no-deprecation is set, then it is a no-op.
+exports.deprecate = function(fn, msg) {
+  if (typeof process !== 'undefined' && process.noDeprecation === true) {
+    return fn;
+  }
+
+  // Allow for deprecating things in the process of starting up.
+  if (typeof process === 'undefined') {
+    return function() {
+      return exports.deprecate(fn, msg).apply(this, arguments);
+    };
+  }
+
+  var warned = false;
+  function deprecated() {
+    if (!warned) {
+      if (process.throwDeprecation) {
+        throw new Error(msg);
+      } else if (process.traceDeprecation) {
+        console.trace(msg);
+      } else {
+        console.error(msg);
+      }
+      warned = true;
+    }
+    return fn.apply(this, arguments);
+  }
+
+  return deprecated;
+};
+
+
+var debugs = {};
+var debugEnviron;
+exports.debuglog = function(set) {
+  if (isUndefined(debugEnviron))
+    debugEnviron = process.env.NODE_DEBUG || '';
+  set = set.toUpperCase();
+  if (!debugs[set]) {
+    if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {
+      var pid = process.pid;
+      debugs[set] = function() {
+        var msg = exports.format.apply(exports, arguments);
+        console.error('%s %d: %s', set, pid, msg);
+      };
+    } else {
+      debugs[set] = function() {};
+    }
+  }
+  return debugs[set];
+};
+
+
+/**
+ * Echos the value of a value. Trys to print the value out
+ * in the best way possible given the different types.
+ *
+ * @param {Object} obj The object to print out.
+ * @param {Object} opts Optional options object that alters the output.
+ */
+/* legacy: obj, showHidden, depth, colors*/
+function inspect(obj, opts) {
+  // default options
+  var ctx = {
+    seen: [],
+    stylize: stylizeNoColor
+  };
+  // legacy...
+  if (arguments.length >= 3) ctx.depth = arguments[2];
+  if (arguments.length >= 4) ctx.colors = arguments[3];
+  if (isBoolean(opts)) {
+    // legacy...
+    ctx.showHidden = opts;
+  } else if (opts) {
+    // got an "options" object
+    exports._extend(ctx, opts);
+  }
+  // set default options
+  if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
+  if (isUndefined(ctx.depth)) ctx.depth = 2;
+  if (isUndefined(ctx.colors)) ctx.colors = false;
+  if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
+  if (ctx.colors) ctx.stylize = stylizeWithColor;
+  return formatValue(ctx, obj, ctx.depth);
+}
+exports.inspect = inspect;
+
+
+// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
+inspect.colors = {
+  'bold' : [1, 22],
+  'italic' : [3, 23],
+  'underline' : [4, 24],
+  'inverse' : [7, 27],
+  'white' : [37, 39],
+  'grey' : [90, 39],
+  'black' : [30, 39],
+  'blue' : [34, 39],
+  'cyan' : [36, 39],
+  'green' : [32, 39],
+  'magenta' : [35, 39],
+  'red' : [31, 39],
+  'yellow' : [33, 39]
+};
+
+// Don't use 'blue' not visible on cmd.exe
+inspect.styles = {
+  'special': 'cyan',
+  'number': 'yellow',
+  'boolean': 'yellow',
+  'undefined': 'grey',
+  'null': 'bold',
+  'string': 'green',
+  'date': 'magenta',
+  // "name": intentionally not styling
+  'regexp': 'red'
+};
+
+
+function stylizeWithColor(str, styleType) {
+  var style = inspect.styles[styleType];
+
+  if (style) {
+    return '\u001b[' + inspect.colors[style][0] + 'm' + str +
+           '\u001b[' + inspect.colors[style][1] + 'm';
+  } else {
+    return str;
+  }
+}
+
+
+function stylizeNoColor(str, styleType) {
+  return str;
+}
+
+
+function arrayToHash(array) {
+  var hash = {};
+
+  array.forEach(function(val, idx) {
+    hash[val] = true;
+  });
+
+  return hash;
+}
+
+
+function formatValue(ctx, value, recurseTimes) {
+  // Provide a hook for user-specified inspect functions.
+  // Check that value is an object with an inspect function on it
+  if (ctx.customInspect &&
+      value &&
+      isFunction(value.inspect) &&
+      // Filter out the util module, it's inspect function is special
+      value.inspect !== exports.inspect &&
+      // Also filter out any prototype objects using the circular check.
+      !(value.constructor && value.constructor.prototype === value)) {
+    var ret = value.inspect(recurseTimes, ctx);
+    if (!isString(ret)) {
+      ret = formatValue(ctx, ret, recurseTimes);
+    }
+    return ret;
+  }
+
+  // Primitive types cannot have properties
+  var primitive = formatPrimitive(ctx, value);
+  if (primitive) {
+    return primitive;
+  }
+
+  // Look up the keys of the object.
+  var keys = Object.keys(value);
+  var visibleKeys = arrayToHash(keys);
+
+  if (ctx.showHidden) {
+    keys = Object.getOwnPropertyNames(value);
+  }
+
+  // IE doesn't make error fields non-enumerable
+  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
+  if (isError(value)
+      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
+    return formatError(value);
+  }
+
+  // Some type of object without properties can be shortcutted.
+  if (keys.length === 0) {
+    if (isFunction(value)) {
+      var name = value.name ? ': ' + value.name : '';
+      return ctx.stylize('[Function' + name + ']', 'special');
+    }
+    if (isRegExp(value)) {
+      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+    }
+    if (isDate(value)) {
+      return ctx.stylize(Date.prototype.toString.call(value), 'date');
+    }
+    if (isError(value)) {
+      return formatError(value);
+    }
+  }
+
+  var base = '', array = false, braces = ['{', '}'];
+
+  // Make Array say that they are Array
+  if (isArray(value)) {
+    array = true;
+    braces = ['[', ']'];
+  }
+
+  // Make functions say that they are functions
+  if (isFunction(value)) {
+    var n = value.name ? ': ' + value.name : '';
+    base = ' [Function' + n + ']';
+  }
+
+  // Make RegExps say that they are RegExps
+  if (isRegExp(value)) {
+    base = ' ' + RegExp.prototype.toString.call(value);
+  }
+
+  // Make dates with properties first say the date
+  if (isDate(value)) {
+    base = ' ' + Date.prototype.toUTCString.call(value);
+  }
+
+  // Make error with message first say the error
+  if (isError(value)) {
+    base = ' ' + formatError(value);
+  }
+
+  if (keys.length === 0 && (!array || value.length == 0)) {
+    return braces[0] + base + braces[1];
+  }
+
+  if (recurseTimes < 0) {
+    if (isRegExp(value)) {
+      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+    } else {
+      return ctx.stylize('[Object]', 'special');
+    }
+  }
+
+  ctx.seen.push(value);
+
+  var output;
+  if (array) {
+    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
+  } else {
+    output = keys.map(function(key) {
+      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
+    });
+  }
+
+  ctx.seen.pop();
+
+  return reduceToSingleString(output, base, braces);
+}
+
+
+function formatPrimitive(ctx, value) {
+  if (isUndefined(value))
+    return ctx.stylize('undefined', 'undefined');
+  if (isString(value)) {
+    var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
+                                             .replace(/'/g, "\\'")
+                                             .replace(/\\"/g, '"') + '\'';
+    return ctx.stylize(simple, 'string');
+  }
+  if (isNumber(value))
+    return ctx.stylize('' + value, 'number');
+  if (isBoolean(value))
+    return ctx.stylize('' + value, 'boolean');
+  // For some reason typeof null is "object", so special case here.
+  if (isNull(value))
+    return ctx.stylize('null', 'null');
+}
+
+
+function formatError(value) {
+  return '[' + Error.prototype.toString.call(value) + ']';
+}
+
+
+function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
+  var output = [];
+  for (var i = 0, l = value.length; i < l; ++i) {
+    if (hasOwnProperty(value, String(i))) {
+      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+          String(i), true));
+    } else {
+      output.push('');
+    }
+  }
+  keys.forEach(function(key) {
+    if (!key.match(/^\d+$/)) {
+      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+          key, true));
+    }
+  });
+  return output;
+}
+
+
+function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
+  var name, str, desc;
+  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
+  if (desc.get) {
+    if (desc.set) {
+      str = ctx.stylize('[Getter/Setter]', 'special');
+    } else {
+      str = ctx.stylize('[Getter]', 'special');
+    }
+  } else {
+    if (desc.set) {
+      str = ctx.stylize('[Setter]', 'special');
+    }
+  }
+  if (!hasOwnProperty(visibleKeys, key)) {
+    name = '[' + key + ']';
+  }
+  if (!str) {
+    if (ctx.seen.indexOf(desc.value) < 0) {
+      if (isNull(recurseTimes)) {
+        str = formatValue(ctx, desc.value, null);
+      } else {
+        str = formatValue(ctx, desc.value, recurseTimes - 1);
+      }
+      if (str.indexOf('\n') > -1) {
+        if (array) {
+          str = str.split('\n').map(function(line) {
+            return '  ' + line;
+          }).join('\n').substr(2);
+        } else {
+          str = '\n' + str.split('\n').map(function(line) {
+            return '   ' + line;
+          }).join('\n');
+        }
+      }
+    } else {
+      str = ctx.stylize('[Circular]', 'special');
+    }
+  }
+  if (isUndefined(name)) {
+    if (array && key.match(/^\d+$/)) {
+      return str;
+    }
+    name = JSON.stringify('' + key);
+    if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
+      name = name.substr(1, name.length - 2);
+      name = ctx.stylize(name, 'name');
+    } else {
+      name = name.replace(/'/g, "\\'")
+                 .replace(/\\"/g, '"')
+                 .replace(/(^"|"$)/g, "'");
+      name = ctx.stylize(name, 'string');
+    }
+  }
+
+  return name + ': ' + str;
+}
+
+
+function reduceToSingleString(output, base, braces) {
+  var numLinesEst = 0;
+  var length = output.reduce(function(prev, cur) {
+    numLinesEst++;
+    if (cur.indexOf('\n') >= 0) numLinesEst++;
+    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
+  }, 0);
+
+  if (length > 60) {
+    return braces[0] +
+           (base === '' ? '' : base + '\n ') +
+           ' ' +
+           output.join(',\n  ') +
+           ' ' +
+           braces[1];
+  }
+
+  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
+}
+
+
+// NOTE: These type checking functions intentionally don't use `instanceof`
+// because it is fragile and can be easily faked with `Object.create()`.
+function isArray(ar) {
+  return Array.isArray(ar);
+}
+exports.isArray = isArray;
+
+function isBoolean(arg) {
+  return typeof arg === 'boolean';
+}
+exports.isBoolean = isBoolean;
+
+function isNull(arg) {
+  return arg === null;
+}
+exports.isNull = isNull;
+
+function isNullOrUndefined(arg) {
+  return arg == null;
+}
+exports.isNullOrUndefined = isNullOrUndefined;
+
+function isNumber(arg) {
+  return typeof arg === 'number';
+}
+exports.isNumber = isNumber;
+
+function isString(arg) {
+  return typeof arg === 'string';
+}
+exports.isString = isString;
+
+function isSymbol(arg) {
+  return typeof arg === 'symbol';
+}
+exports.isSymbol = isSymbol;
+
+function isUndefined(arg) {
+  return arg === void 0;
+}
+exports.isUndefined = isUndefined;
+
+function isRegExp(re) {
+  return isObject(re) && objectToString(re) === '[object RegExp]';
+}
+exports.isRegExp = isRegExp;
+
+function isObject(arg) {
+  return typeof arg === 'object' && arg !== null;
+}
+exports.isObject = isObject;
+
+function isDate(d) {
+  return isObject(d) && objectToString(d) === '[object Date]';
+}
+exports.isDate = isDate;
+
+function isError(e) {
+  return isObject(e) &&
+      (objectToString(e) === '[object Error]' || e instanceof Error);
+}
+exports.isError = isError;
+
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+exports.isFunction = isFunction;
+
+function isPrimitive(arg) {
+  return arg === null ||
+         typeof arg === 'boolean' ||
+         typeof arg === 'number' ||
+         typeof arg === 'string' ||
+         typeof arg === 'symbol' ||  // ES6 symbol
+         typeof arg === 'undefined';
+}
+exports.isPrimitive = isPrimitive;
+
+exports.isBuffer = __webpack_require__(/*! ./support/isBuffer */ "../../node_modules/util/support/isBufferBrowser.js");
+
+function objectToString(o) {
+  return Object.prototype.toString.call(o);
+}
+
+
+function pad(n) {
+  return n < 10 ? '0' + n.toString(10) : n.toString(10);
+}
+
+
+var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
+              'Oct', 'Nov', 'Dec'];
+
+// 26 Feb 16:19:34
+function timestamp() {
+  var d = new Date();
+  var time = [pad(d.getHours()),
+              pad(d.getMinutes()),
+              pad(d.getSeconds())].join(':');
+  return [d.getDate(), months[d.getMonth()], time].join(' ');
+}
+
+
+// log is just a thin wrapper to console.log that prepends a timestamp
+exports.log = function() {
+  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
+};
+
+
+/**
+ * Inherit the prototype methods from one constructor into another.
+ *
+ * The Function.prototype.inherits from lang.js rewritten as a standalone
+ * function (not on Function.prototype). NOTE: If this file is to be loaded
+ * during bootstrapping this function needs to be rewritten using some native
+ * functions as prototype setup using normal JavaScript does not work as
+ * expected during bootstrapping (see mirror.js in r114903).
+ *
+ * @param {function} ctor Constructor function which needs to inherit the
+ *     prototype.
+ * @param {function} superCtor Constructor function to inherit prototype from.
+ */
+exports.inherits = __webpack_require__(/*! inherits */ "../../node_modules/util/node_modules/inherits/inherits.js");
+
+exports._extend = function(origin, add) {
+  // Don't do anything if add isn't an object
+  if (!add || !isObject(add)) return origin;
+
+  var keys = Object.keys(add);
+  var i = keys.length;
+  while (i--) {
+    origin[keys[i]] = add[keys[i]];
+  }
+  return origin;
+};
+
+function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+var kCustomPromisifiedSymbol = typeof Symbol !== 'undefined' ? Symbol('util.promisify.custom') : undefined;
+
+exports.promisify = function promisify(original) {
+  if (typeof original !== 'function')
+    throw new TypeError('The "original" argument must be of type Function');
+
+  if (kCustomPromisifiedSymbol && original[kCustomPromisifiedSymbol]) {
+    var fn = original[kCustomPromisifiedSymbol];
+    if (typeof fn !== 'function') {
+      throw new TypeError('The "util.promisify.custom" argument must be of type Function');
+    }
+    Object.defineProperty(fn, kCustomPromisifiedSymbol, {
+      value: fn, enumerable: false, writable: false, configurable: true
+    });
+    return fn;
+  }
+
+  function fn() {
+    var promiseResolve, promiseReject;
+    var promise = new Promise(function (resolve, reject) {
+      promiseResolve = resolve;
+      promiseReject = reject;
+    });
+
+    var args = [];
+    for (var i = 0; i < arguments.length; i++) {
+      args.push(arguments[i]);
+    }
+    args.push(function (err, value) {
+      if (err) {
+        promiseReject(err);
+      } else {
+        promiseResolve(value);
+      }
+    });
+
+    try {
+      original.apply(this, args);
+    } catch (err) {
+      promiseReject(err);
+    }
+
+    return promise;
+  }
+
+  Object.setPrototypeOf(fn, Object.getPrototypeOf(original));
+
+  if (kCustomPromisifiedSymbol) Object.defineProperty(fn, kCustomPromisifiedSymbol, {
+    value: fn, enumerable: false, writable: false, configurable: true
+  });
+  return Object.defineProperties(
+    fn,
+    getOwnPropertyDescriptors(original)
+  );
+}
+
+exports.promisify.custom = kCustomPromisifiedSymbol
+
+function callbackifyOnRejected(reason, cb) {
+  // `!reason` guard inspired by bluebird (Ref: https://goo.gl/t5IS6M).
+  // Because `null` is a special error value in callbacks which means "no error
+  // occurred", we error-wrap so the callback consumer can distinguish between
+  // "the promise rejected with null" or "the promise fulfilled with undefined".
+  if (!reason) {
+    var newReason = new Error('Promise was rejected with a falsy value');
+    newReason.reason = reason;
+    reason = newReason;
+  }
+  return cb(reason);
+}
+
+function callbackify(original) {
+  if (typeof original !== 'function') {
+    throw new TypeError('The "original" argument must be of type Function');
+  }
+
+  // We DO NOT return the promise as it gives the user a false sense that
+  // the promise is actually somehow related to the callback's execution
+  // and that the callback throwing will reject the promise.
+  function callbackified() {
+    var args = [];
+    for (var i = 0; i < arguments.length; i++) {
+      args.push(arguments[i]);
+    }
+
+    var maybeCb = args.pop();
+    if (typeof maybeCb !== 'function') {
+      throw new TypeError('The last argument must be of type Function');
+    }
+    var self = this;
+    var cb = function() {
+      return maybeCb.apply(self, arguments);
+    };
+    // In true node style we process the callback on `nextTick` with all the
+    // implications (stack, `uncaughtException`, `async_hooks`)
+    original.apply(this, args)
+      .then(function(ret) { process.nextTick(cb, null, ret) },
+            function(rej) { process.nextTick(callbackifyOnRejected, rej, cb) });
+  }
+
+  Object.setPrototypeOf(callbackified, Object.getPrototypeOf(original));
+  Object.defineProperties(callbackified,
+                          getOwnPropertyDescriptors(original));
+  return callbackified;
+}
+exports.callbackify = callbackify;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../process/browser.js */ "../../node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -9621,7 +9621,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("Form,Headword,Class,Person,Number,Case,Gender,Type,Primary,Dialects,Footnote\nτούτω,οὗτος,demonstrative,,dual,accusative,masculine feminine neuter,regular,primary,,\nτούτοιν,οὗτος,demonstrative,,dual,dative,masculine feminine neuter,regular,primary,,\nτούτοιν,οὗτος,demonstrative,,dual,genitive,masculine feminine neuter,regular,primary,,\nτούτω,οὗτος,demonstrative,,dual,nominative,masculine feminine neuter,regular,primary,,\nταύτᾱς,οὗτος,demonstrative,,plural,accusative,feminine,regular,primary,,\nταύταις,οὗτος,demonstrative,,plural,dative,feminine,regular,primary,,\nτούτων,οὗτος,demonstrative,,plural,genitive,feminine,regular,primary,,\nαὗται,οὗτος,demonstrative,,plural,nominative,feminine,regular,primary,,\nτούτους,οὗτος,demonstrative,,plural,accusative,masculine,regular,primary,,\nτούτοις,οὗτος,demonstrative,,plural,dative,masculine,regular,primary,,\nτούτων,οὗτος,demonstrative,,plural,genitive,masculine,regular,primary,,\nοὗτοι,οὗτος,demonstrative,,plural,nominative,masculine,regular,primary,,\nταῦτα,οὗτος,demonstrative,,plural,accusative,neuter,regular,primary,,\nτούτοις,οὗτος,demonstrative,,plural,dative,neuter,regular,primary,,\nτούτων,οὗτος,demonstrative,,plural,genitive,neuter,regular,primary,,\nταῦτα,οὗτος,demonstrative,,plural,nominative,neuter,regular,primary,,\nταύτην,οὗτος,demonstrative,,singular,accusative,feminine,regular,primary,,\nταύτῃ,οὗτος,demonstrative,,singular,dative,feminine,regular,primary,,\nταύτης,οὗτος,demonstrative,,singular,genitive,feminine,regular,primary,,\nαὕτη,οὗτος,demonstrative,,singular,nominative,feminine,regular,primary,,\nτοῦτον,οὗτος,demonstrative,,singular,accusative,masculine,regular,primary,,\nτούτῳ,οὗτος,demonstrative,,singular,dative,masculine,regular,primary,,\nτούτου,οὗτος,demonstrative,,singular,genitive,masculine,regular,primary,,\nοὗτος,οὗτος,demonstrative,,singular,nominative,masculine,regular,primary,,\nτοῦτο,οὗτος,demonstrative,,singular,accusative,neuter,regular,primary,,\nτούτῳ,οὗτος,demonstrative,,singular,dative,neuter,regular,primary,,\nτούτου,οὗτος,demonstrative,,singular,genitive,neuter,regular,primary,,\nτοῦτο,οὗτος,demonstrative,,singular,nominative,neuter,regular,primary,,\nἐκείνω,ἐκεῖνος,demonstrative,,dual,accusative,masculine feminine neuter,regular,primary,,\nἐκείνοιν,ἐκεῖνος,demonstrative,,dual,dative,masculine feminine neuter,regular,primary,,\nἐκείνοιν,ἐκεῖνος,demonstrative,,dual,genitive,masculine feminine neuter,regular,primary,,\nἐκείνω,ἐκεῖνος,demonstrative,,dual,nominative,masculine feminine neuter,regular,primary,,\nἐκείνᾱς,ἐκεῖνος,demonstrative,,plural,accusative,feminine,regular,primary,,\nἐκείναις,ἐκεῖνος,demonstrative,,plural,dative,feminine,regular,primary,,\nἐκείνων,ἐκεῖνος,demonstrative,,plural,genitive,feminine,regular,primary,,\nἐκεῖναι,ἐκεῖνος,demonstrative,,plural,nominative,feminine,regular,primary,,\nἐκείνους,ἐκεῖνος,demonstrative,,plural,accusative,masculine,regular,primary,,\nἐκείνοις,ἐκεῖνος,demonstrative,,plural,dative,masculine,regular,primary,,\nἐκείνων,ἐκεῖνος,demonstrative,,plural,genitive,masculine,regular,primary,,\nἐκεῖνοι,ἐκεῖνος,demonstrative,,plural,nominative,masculine,regular,primary,,\nἐκεῖνα,ἐκεῖνος,demonstrative,,plural,accusative,neuter,regular,primary,,\nἐκείνοις,ἐκεῖνος,demonstrative,,plural,dative,neuter,regular,primary,,\nἐκείνων,ἐκεῖνος,demonstrative,,plural,genitive,neuter,regular,primary,,\nἐκεῖνα,ἐκεῖνος,demonstrative,,plural,nominative,neuter,regular,primary,,\nἐκείνην,ἐκεῖνος,demonstrative,,singular,accusative,feminine,regular,primary,,\nἐκείνῃ,ἐκεῖνος,demonstrative,,singular,dative,feminine,regular,primary,,\nἐκείνης,ἐκεῖνος,demonstrative,,singular,genitive,feminine,regular,primary,,\nἐκείνη,ἐκεῖνος,demonstrative,,singular,nominative,feminine,regular,primary,,\nἐκεῖνον,ἐκεῖνος,demonstrative,,singular,accusative,masculine,regular,primary,,\nἐκείνῳ,ἐκεῖνος,demonstrative,,singular,dative,masculine,regular,primary,,\nἐκείνου,ἐκεῖνος,demonstrative,,singular,genitive,masculine,regular,primary,,\nἐκεῖνος,ἐκεῖνος,demonstrative,,singular,nominative,masculine,regular,primary,,\nἐκεῖνο,ἐκεῖνος,demonstrative,,singular,accusative,neuter,regular,primary,,\nἐκείνῳ,ἐκεῖνος,demonstrative,,singular,dative,neuter,regular,primary,,\nἐκείνου,ἐκεῖνος,demonstrative,,singular,genitive,neuter,regular,primary,,\nἐκεῖνο,ἐκεῖνος,demonstrative,,singular,nominative,neuter,regular,primary,,\nτώδε,ὅδε,demonstrative,,dual,accusative,masculine feminine neuter,regular,primary,,\nτοῖνδε,ὅδε,demonstrative,,dual,dative,masculine feminine neuter,regular,primary,,\nτοῖνδε,ὅδε,demonstrative,,dual,genitive,masculine feminine neuter,regular,primary,,\nτώδε,ὅδε,demonstrative,,dual,nominative,masculine feminine neuter,regular,primary,,\nτά̄σδε,ὅδε,demonstrative,,plural,accusative,feminine,regular,primary,,\nταῖσδε,ὅδε,demonstrative,,plural,dative,feminine,regular,primary,,\nτῶνδε,ὅδε,demonstrative,,plural,genitive,feminine,regular,primary,,\nαἵδε,ὅδε,demonstrative,,plural,nominative,feminine,regular,primary,,\nτούσδε,ὅδε,demonstrative,,plural,accusative,masculine,regular,primary,,\nτοῖσδε,ὅδε,demonstrative,,plural,dative,masculine,regular,primary,,\nτῶνδε,ὅδε,demonstrative,,plural,genitive,masculine,regular,primary,,\nοἵδε,ὅδε,demonstrative,,plural,nominative,masculine,regular,primary,,\nτάδε,ὅδε,demonstrative,,plural,accusative,neuter,regular,primary,,\nτοῖσδε,ὅδε,demonstrative,,plural,dative,neuter,regular,primary,,\nτῶνδε,ὅδε,demonstrative,,plural,genitive,neuter,regular,primary,,\nτάδε,ὅδε,demonstrative,,plural,nominative,neuter,regular,primary,,\nτήνδε,ὅδε,demonstrative,,singular,accusative,feminine,regular,primary,,\nτῇδε,ὅδε,demonstrative,,singular,dative,feminine,regular,primary,,\nτῆσδε,ὅδε,demonstrative,,singular,genitive,feminine,regular,primary,,\nἥδε,ὅδε,demonstrative,,singular,nominative,feminine,regular,primary,,\nτόνδε,ὅδε,demonstrative,,singular,accusative,masculine,regular,primary,,\nτῷδε,ὅδε,demonstrative,,singular,dative,masculine,regular,primary,,\nτοῦδε,ὅδε,demonstrative,,singular,genitive,masculine,regular,primary,,\nὅδε,ὅδε,demonstrative,,singular,nominative,masculine,regular,primary,,\nτόδε,ὅδε,demonstrative,,singular,accusative,neuter,regular,primary,,\nτῷδε,ὅδε,demonstrative,,singular,dative,neuter,regular,primary,,\nτοῦδε,ὅδε,demonstrative,,singular,genitive,neuter,regular,primary,,\nτόδε,ὅδε,demonstrative,,singular,nominative,neuter,regular,primary,,\nὥτινε,,general relative,,dual,accusative,masculine feminine neuter,regular,primary,,\nοἷντινοιν,,general relative,,dual,dative,masculine feminine neuter,regular,primary,,\nοἷντινοιν,,general relative,,dual,genitive,masculine feminine neuter,regular,primary,,\nὥτινε,,general relative,,dual,nominative,masculine feminine neuter,regular,primary,,\nἅ̄στινας,,general relative,,plural,accusative,feminine,regular,primary,,\nαἷστισι,,general relative,,plural,dative,feminine,regular,primary,,\nαἷστισιν,,general relative,,plural,dative,feminine,regular,primary,,\nὁτέοισι,,general relative,,plural,dative,feminine,irregular,,\"Homer,Herodotus\",\nὧντινων,,general relative,,plural,genitive,feminine,regular,primary,,\nὅτεων,,general relative,,plural,genitive,feminine,irregular,,\"Homer,Herodotus\",\nαἵτινες,,general relative,,plural,nominative,feminine,regular,primary,,\nοὕστινας,,general relative,,plural,accusative,masculine,regular,primary,,\nὅτινας,,general relative,,plural,accusative,masculine,irregular,,Homer,\nοἷστισι,,general relative,,plural,dative,masculine,regular,primary,,\nοἷστισιν,,general relative,,plural,dative,masculine,regular,primary,,\nὅτοις,,general relative,,plural,dative,masculine,regular,primary,,\nὧντινων,,general relative,,plural,genitive,masculine,regular,primary,,\nὅτων,,general relative,,plural,genitive,masculine,regular,primary,,\nοἵτινες,,general relative,,plural,nominative,masculine,regular,primary,,\nἅτινα,,general relative,,plural,accusative,neuter,regular,primary,,\nἅττα,,general relative,,plural,accusative,neuter,regular,primary,,\nἅσσα,,general relative,,plural,accusative,neuter,irregular,,\"Homer,Herodotus\",\nοἷστισι,,general relative,,plural,dative,neuter,regular,primary,,\nοἷστισιν,,general relative,,plural,dative,neuter,regular,primary,,\nὅτοις,,general relative,,plural,dative,neuter,regular,primary,,\nὧντινων,,general relative,,plural,genitive,neuter,regular,primary,,\nὅτων,,general relative,,plural,genitive,neuter,regular,primary,,\nἅτινα,,general relative,,plural,nominative,neuter,regular,primary,,\nἅττα,,general relative,,plural,nominative,neuter,regular,primary,,\nἅσσα,,general relative,,plural,nominative,neuter,irregular,,\"Homer,Herodotus\",\nἥντινα,,general relative,,singular,accusative,feminine,regular,primary,,\nᾗτινι,,general relative,,singular,dative,feminine,regular,primary,,\nὅτεῳ,,general relative,,singular,dative,feminine,irregular,,\"Homer,Herodotus\",\nἧστινος,,general relative,,singular,genitive,feminine,regular,primary,,\nὅττεο,,general relative,,singular,genitive,feminine,irregular,,Homer,\nὅττευ,,general relative,,singular,genitive,feminine,irregular,,Homer,\nὅτευ,,general relative,,singular,genitive,feminine,irregular,,\"Homer,Herodotus\",\nἥτις,,general relative,,singular,nominative,feminine,regular,primary,,\nὅντινα,,general relative,,singular,accusative,masculine,regular,primary,,\nὅτινα,,general relative,,singular,accusative,masculine,irregular,,Homer,\nᾧτινι,,general relative,,singular,dative,masculine,regular,primary,,\nὅτῳ,,general relative,,singular,dative,masculine,regular,primary,,\nοὗτινος,,general relative,,singular,genitive,masculine,regular,primary,,\nὅτου,,general relative,,singular,genitive,masculine,regular,primary,,\nὅστις,,general relative,,singular,nominative,masculine,regular,primary,,\nὅτις,,general relative,,singular,nominative,masculine,irregular,,Homer,\nὅ τι,,general relative,,singular,accusative,neuter,regular,primary,,\nὅ ττι,,general relative,,singular,accusative,neuter,irregular,,Homer,\nᾧτινι,,general relative,,singular,dative,neuter,regular,primary,,\nὅτῳ,,general relative,,singular,dative,neuter,regular,primary,,\nοὗτινος,,general relative,,singular,genitive,neuter,regular,primary,,\nὅτου,,general relative,,singular,genitive,neuter,regular,primary,,\nὅ τι,,general relative,,singular,nominative,neuter,regular,primary,,\nὅ ττι,,general relative,,singular,nominative,neuter,irregular,,Homer,\nτινέ,τις,indefinite,,dual,accusative,masculine feminine,regular,primary,,\nτινοῖν,τις,indefinite,,dual,dative,masculine feminine,regular,primary,,\nτινοῖν,τις,indefinite,,dual,genitive,masculine feminine,regular,primary,,\nτινέ,τις,indefinite,,dual,nominative,masculine feminine,regular,primary,,\nτινέ,τις,indefinite,,dual,vocative,masculine feminine,regular,primary,,\nτινέ,τις,indefinite,,dual,accusative,neuter,regular,primary,,\nτινοῖν,τις,indefinite,,dual,dative,neuter,regular,primary,,\nτινοῖν,τις,indefinite,,dual,genitive,neuter,regular,primary,,\nτινέ,τις,indefinite,,dual,nominative,neuter,regular,primary,,\nτινέ,τις,indefinite,,dual,vocative,neuter,regular,primary,,\nτινάς,τις,indefinite,,plural,accusative,masculine feminine,regular,primary,,\nτισί,τις,indefinite,,plural,dative,masculine feminine,regular,primary,,\nτισίν,τις,indefinite,,plural,dative,masculine feminine,regular,primary,,\nτινῶν,τις,indefinite,,plural,genitive,masculine feminine,regular,primary,,\nτινές,τις,indefinite,,plural,nominative,masculine feminine,regular,primary,,\nτινά,τις,indefinite,,plural,accusative,neuter,regular,primary,,\nἄττα,τις,indefinite,,plural,accusative,neuter,regular,,,2\nτισί,τις,indefinite,,plural,dative,neuter,regular,primary,,\nτισίν,τις,indefinite,,plural,dative,neuter,regular,primary,,\nτινῶν,τις,indefinite,,plural,genitive,neuter,regular,primary,,\nτινά,τις,indefinite,,plural,nominative,neuter,regular,primary,,\nἄττα,τις,indefinite,,plural,nominative,neuter,regular,,,2\nτινά,τις,indefinite,,singular,accusative,masculine feminine,regular,primary,,\nἄττα,τις,indefinite,,singular,accusative,masculine feminine,regular,,,2\nτινί,τις,indefinite,,singular,dative,masculine feminine,regular,primary,,\nτῳ,τις,indefinite,,singular,dative,masculine feminine,regular,primary,,\nτινός,τις,indefinite,,singular,genitive,masculine feminine,regular,primary,,\nτου,τις,indefinite,,singular,genitive,masculine feminine,regular,primary,,\nτις,τις,indefinite,,singular,nominative,masculine feminine,regular,primary,,\nτι,τις,indefinite,,singular,accusative,neuter,regular,primary,,\nτινί,τις,indefinite,,singular,dative,neuter,regular,primary,,\nτῳ,τις,indefinite,,singular,dative,neuter,regular,primary,,\nτινός,τις,indefinite,,singular,genitive,neuter,regular,primary,,\nτου,τις,indefinite,,singular,genitive,neuter,regular,primary,,\nτι,τις,indefinite,,singular,nominative,neuter,regular,primary,,\nαὐτά,,intensive,,dual,accusative,feminine,regular,primary,,\nαὐταῖν,,intensive,,dual,dative,feminine,regular,primary,,\nαὐταῖν,,intensive,,dual,genitive,feminine,regular,primary,,\nαὐτά,,intensive,,dual,nominative,feminine,regular,primary,,\nαὐτώ,,intensive,,dual,accusative,masculine,regular,primary,,\nαὐτοῖν,,intensive,,dual,dative,masculine,regular,primary,,\nαὐτοῖν,,intensive,,dual,genitive,masculine,regular,primary,,\nαὐτώ,,intensive,,dual,nominative,masculine,regular,primary,,\nαὐτώ,,intensive,,dual,accusative,neuter,regular,primary,,\nαὐτοῖν,,intensive,,dual,dative,neuter,regular,primary,,\nαὐτοῖν,,intensive,,dual,genitive,neuter,regular,primary,,\nαὐτώ,,intensive,,dual,nominative,neuter,regular,primary,,\nαὐτά̄ς,,intensive,,plural,accusative,feminine,regular,primary,,\nαὐταῖς,,intensive,,plural,dative,feminine,regular,primary,,\nαὐτῶν,,intensive,,plural,genitive,feminine,regular,primary,,\nαὐτέων,,intensive,,plural,genitive,feminine,irregular,,Herodotus,\nαὐταί,,intensive,,plural,nominative,feminine,regular,primary,,\nαὐτούς,,intensive,,plural,accusative,masculine,regular,primary,,\nαὐτοῖς,,intensive,,plural,dative,masculine,regular,primary,,\nαὐτῶν,,intensive,,plural,genitive,masculine,regular,primary,,\nαὐτέων,,intensive,,plural,genitive,masculine,irregular,,Herodotus,\nαὐτοί,,intensive,,plural,nominative,masculine,regular,primary,,\nαὐτά,,intensive,,plural,accusative,neuter,regular,primary,,\nαὐτοῖς,,intensive,,plural,dative,neuter,regular,primary,,\nαὐτῶν,,intensive,,plural,genitive,neuter,regular,primary,,\nαὐτέων,,intensive,,plural,genitive,neuter,irregular,,Herodotus,\nαὐτά,,intensive,,plural,nominative,neuter,regular,primary,,\nαὐτήν,,intensive,,singular,accusative,feminine,regular,primary,,\nαὐτῇ,,intensive,,singular,dative,feminine,regular,primary,,\nαὐτῆς,,intensive,,singular,genitive,feminine,regular,primary,,\nαὐτή,,intensive,,singular,nominative,feminine,regular,primary,,\nαὐτόν,,intensive,,singular,accusative,masculine,regular,primary,,\nαὐτῷ,,intensive,,singular,dative,masculine,regular,primary,,\nαὐτοῦ,,intensive,,singular,genitive,masculine,regular,primary,,\nαὐτός,,intensive,,singular,nominative,masculine,regular,primary,,\nαὐτό,,intensive,,singular,accusative,neuter,regular,primary,,\nαὐτῷ,,intensive,,singular,dative,neuter,regular,primary,,\nαὐτοῦ,,intensive,,singular,genitive,neuter,regular,primary,,\nαὐτό,,intensive,,singular,nominative,neuter,regular,primary,,\nτίνε,τίς,interrogative,,dual,accusative,masculine feminine,regular,primary,,\nτίνοιν,τίς,interrogative,,dual,dative,masculine feminine,regular,primary,,\nτίνοιν,τίς,interrogative,,dual,genitive,masculine feminine,regular,primary,,\nτίνε,τίς,interrogative,,dual,nominative,masculine feminine,regular,primary,,\nτίνε,τίς,interrogative,,dual,vocative,masculine feminine,regular,primary,,\nτίνε,τίς,interrogative,,dual,accusative,neuter,regular,primary,,\nτίνοιν,τίς,interrogative,,dual,dative,neuter,regular,primary,,\nτίνοιν,τίς,interrogative,,dual,genitive,neuter,regular,primary,,\nτίνε,τίς,interrogative,,dual,nominative,neuter,regular,primary,,\nτίνε,τίς,interrogative,,dual,vocative,neuter,regular,primary,,\nτίνας,τίς,interrogative,,plural,accusative,masculine feminine,regular,primary,,\nτίσι,τίς,interrogative,,plural,dative,masculine feminine,regular,primary,,\nτίσιv,τίς,interrogative,,plural,dative,masculine feminine,regular,primary,,\nτίνων,τίς,interrogative,,plural,genitive,masculine feminine,regular,primary,,\nτίνες,τίς,interrogative,,plural,nominative,masculine feminine,regular,primary,,\nτίνα,τίς,interrogative,,plural,accusative,neuter,regular,primary,,\nτίσι,τίς,interrogative,,plural,dative,neuter,regular,primary,,\nτίσιv,τίς,interrogative,,plural,dative,neuter,regular,primary,,\nτίνων,τίς,interrogative,,plural,genitive,neuter,regular,primary,,\nτίνα,τίς,interrogative,,plural,nominative,neuter,regular,primary,,\nτίνα,τίς,interrogative,,singular,accusative,masculine feminine,regular,primary,,\nτίνι,τίς,interrogative,,singular,dative,masculine feminine,regular,primary,,\nτῷ,τίς,interrogative,,singular,dative,masculine feminine,regular,primary,,\nτίνος,τίς,interrogative,,singular,genitive,masculine feminine,regular,primary,,\nτοῦ,τίς,interrogative,,singular,genitive,masculine feminine,regular,primary,,\nτίς,τίς,interrogative,,singular,nominative,masculine feminine,regular,primary,,\nτί,τίς,interrogative,,singular,accusative,neuter,regular,primary,,\nτίνι,τίς,interrogative,,singular,dative,neuter,regular,primary,,\nτῷ,τίς,interrogative,,singular,dative,neuter,regular,primary,,\nτίνος,τίς,interrogative,,singular,genitive,neuter,regular,primary,,\nτοῦ,τίς,interrogative,,singular,genitive,neuter,regular,primary,,\nτί,τίς,interrogative,,singular,nominative,neuter,regular,primary,,\nνώ,,personal,1st,dual,accusative,,regular,primary,,\nνῷν,,personal,1st,dual,dative,,regular,primary,,\nνῷν,,personal,1st,dual,genitive,,regular,primary,,\nνώ,,personal,1st,dual,nominative,,regular,primary,,\nσφώ,,personal,2nd,dual,accusative,,regular,primary,,\nσφῷν,,personal,2nd,dual,dative,,regular,primary,,\nσφῷν,,personal,2nd,dual,genitive,,regular,primary,,\nσφώ,,personal,2nd,dual,nominative,,regular,primary,,\nἡμᾶς,,personal,1st,plural,accusative,,regular,primary,,\nἡμῖν,,personal,1st,plural,dative,,regular,primary,,\nἡμῶν,,personal,1st,plural,genitive,,regular,primary,,\nἡμεῖς,,personal,1st,plural,nominative,,regular,primary,,\nὑμᾶς,,personal,2nd,plural,accusative,,regular,primary,,\nὑμῖν,,personal,2nd,plural,dative,,regular,primary,,\nὑμῶν,,personal,2nd,plural,genitive,,regular,primary,,\nὑμεῖς,,personal,2nd,plural,nominative,,regular,primary,,\nσφᾶς,,personal,3rd,plural,accusative,,regular,primary,,\nσφίσι,,personal,3rd,plural,dative,,regular,primary,,\nσφίσιν,,personal,3rd,plural,dative,,regular,primary,,\nσφῶν,,personal,3rd,plural,genitive,,regular,primary,,\nσφεῖς,,personal,3rd,plural,nominative,,regular,primary,,\nἐμέ,,personal,1st,singular,accusative,,regular,primary,,\nμε,,personal,1st,singular,accusative,,regular,primary,,3\nἐμοί,,personal,1st,singular,dative,,regular,primary,,\nμοι,,personal,1st,singular,dative,,regular,primary,,3\nἐμοῦ,,personal,1st,singular,genitive,,regular,primary,,\nμου,,personal,1st,singular,genitive,,regular,primary,,3\nἐγώ,,personal,1st,singular,nominative,,regular,primary,,\nσέ,,personal,2nd,singular,accusative,,regular,primary,,\nσε,,personal,2nd,singular,accusative,,regular,primary,,3\nσοί,,personal,2nd,singular,dative,,regular,primary,,\nσοι,,personal,2nd,singular,dative,,regular,primary,,3\nσοῦ,,personal,2nd,singular,genitive,,regular,primary,,\nσου,,personal,2nd,singular,genitive,,regular,primary,,3\nσύ,,personal,2nd,singular,nominative,,regular,primary,,\nἕ,,personal,3rd,singular,accusative,,regular,primary,,\nἑ,,personal,3rd,singular,accusative,,regular,primary,,3\nοἷ,,personal,3rd,singular,dative,,regular,primary,,\nοἱ,,personal,3rd,singular,dative,,regular,primary,,3\nοὗ,,personal,3rd,singular,genitive,,regular,primary,,\nοὑ,,personal,3rd,singular,genitive,,regular,primary,,3\n-,,personal,3rd,singular,nominative,,regular,primary,,\nἀλλήλᾱ,,reciprocal,,dual,accusative,feminine,regular,primary,,\nἀλλήλαιν,,reciprocal,,dual,dative,feminine,regular,primary,,\nἀλλήλαιν,,reciprocal,,dual,genitive,feminine,regular,primary,,\nἀλλήλω,,reciprocal,,dual,accusative,masculine,regular,primary,,\nἀλλήλοιν,,reciprocal,,dual,dative,masculine,regular,primary,,\nἀλλήλοιν,,reciprocal,,dual,genitive,masculine,regular,primary,,\nἀλλήλω,,reciprocal,,dual,accusative,neuter,regular,primary,,\nἀλλήλοιν,,reciprocal,,dual,dative,neuter,regular,primary,,\nἀλλήλοιν,,reciprocal,,dual,genitive,neuter,regular,primary,,\nἀλλήλᾱς,,reciprocal,,plural,accusative,feminine,regular,primary,,\nἀλλήλαις,,reciprocal,,plural,dative,feminine,regular,primary,,\nἀλλήλων,,reciprocal,,plural,genitive,feminine,regular,primary,,\nἀλλήλους,,reciprocal,,plural,accusative,masculine,regular,primary,,\nἀλλήλοις,,reciprocal,,plural,dative,masculine,regular,primary,,\nἀλλήλων,,reciprocal,,plural,genitive,masculine,regular,primary,,\nἄλληλα,,reciprocal,,plural,accusative,neuter,regular,primary,,\nἀλλήλοις,,reciprocal,,plural,dative,neuter,regular,primary,,\nἀλλήλων,,reciprocal,,plural,genitive,neuter,regular,primary,,\nἡμᾶς,,reflexive,1st,plural,accusative,feminine,regular,primary,,\nαὐτά̄ς,,reflexive,1st,plural,accusative,feminine,regular,primary,,\nἡμῖν,,reflexive,1st,plural,dative,feminine,regular,primary,,\nαὐταῖς,,reflexive,1st,plural,dative,feminine,regular,primary,,\nἡμῶν,,reflexive,1st,plural,genitive,feminine,regular,primary,,\nαὐτῶν,,reflexive,1st,plural,genitive,feminine,regular,primary,,\nὑ̄μᾶς,,reflexive,2nd,plural,accusative,feminine,regular,primary,,\nαὐτά̄ς,,reflexive,2nd,plural,accusative,feminine,regular,primary,,\nὑ̄μῖν,,reflexive,2nd,plural,dative,feminine,regular,primary,,\nαὐταῖς,,reflexive,2nd,plural,dative,feminine,regular,primary,,\nὑ̄μῶν,,reflexive,2nd,plural,genitive,feminine,regular,primary,,\nαὐτῶν,,reflexive,2nd,plural,genitive,feminine,regular,primary,,\nἑαυτά̄ς,,reflexive,3rd,plural,accusative,feminine,regular,primary,,\nσφᾶς,,reflexive,3rd,plural,accusative,feminine,regular,primary,,\nαὑτά̄ς,,reflexive,3rd,plural,accusative,feminine,regular,primary,,\nἑαυταῖς,,reflexive,3rd,plural,dative,feminine,regular,primary,,\nσφίσιν,,reflexive,3rd,plural,dative,feminine,regular,primary,,\nαὑταῖς,,reflexive,3rd,plural,dative,feminine,regular,primary,,\nἑαυτῶν,,reflexive,3rd,plural,genitive,feminine,regular,primary,,\nσφῶν,,reflexive,3rd,plural,genitive,feminine,regular,primary,,\nαὑτῶν,,reflexive,3rd,plural,genitive,feminine,regular,primary,,\nἡμᾶς,,reflexive,1st,plural,accusative,masculine,regular,primary,,\nαὐτούς,,reflexive,1st,plural,accusative,masculine,regular,primary,,\nἡμῖν,,reflexive,1st,plural,dative,masculine,regular,primary,,\nαὐτοῖς,,reflexive,1st,plural,dative,masculine,regular,primary,,\nἡμῶν,,reflexive,1st,plural,genitive,masculine,regular,primary,,\nαὐτῶν,,reflexive,1st,plural,genitive,masculine,regular,primary,,\nὑ̄μᾶς,,reflexive,2nd,plural,accusative,masculine,regular,primary,,\nαὐτούς,,reflexive,2nd,plural,accusative,masculine,regular,primary,,\nὑ̄μῖν,,reflexive,2nd,plural,dative,masculine,regular,primary,,\nαὐτοῖς,,reflexive,2nd,plural,dative,masculine,regular,primary,,\nὑ̄μῶν,,reflexive,2nd,plural,genitive,masculine,regular,primary,,\nαὐτῶν,,reflexive,2nd,plural,genitive,masculine,regular,primary,,\nἑαυτούς,,reflexive,3rd,plural,accusative,masculine,regular,primary,,\nσφᾶς,,reflexive,3rd,plural,accusative,masculine,regular,primary,,\nαὑτούς,,reflexive,3rd,plural,accusative,masculine,regular,primary,,\nἑαυτοῖς,,reflexive,3rd,plural,dative,masculine,regular,primary,,\nσφίσιν,,reflexive,3rd,plural,dative,masculine,regular,primary,,\nαὑτοῖς,,reflexive,3rd,plural,dative,masculine,regular,primary,,\nἑαυτῶν,,reflexive,3rd,plural,genitive,masculine,regular,primary,,\nσφῶν,,reflexive,3rd,plural,genitive,masculine,regular,primary,,\nαὑτῶν,,reflexive,3rd,plural,genitive,masculine,regular,primary,,\nἑαυτά,,reflexive,3rd,plural,accusative,neuter,regular,primary,,\nσφέα,,reflexive,3rd,plural,accusative,neuter,regular,primary,,\nαὑτά,,reflexive,3rd,plural,accusative,neuter,regular,primary,,\nἑαυτοῖς,,reflexive,3rd,plural,dative,neuter,regular,primary,,\nσφίσιν,,reflexive,3rd,plural,dative,neuter,regular,primary,,\nαὑτοῖς,,reflexive,3rd,plural,dative,neuter,regular,primary,,\nἑαυτῶν,,reflexive,3rd,plural,genitive,neuter,regular,primary,,\nσφῶν,,reflexive,3rd,plural,genitive,neuter,regular,primary,,\nαὑτῶν,,reflexive,3rd,plural,genitive,neuter,regular,primary,,\nἐμαυτήν,,reflexive,1st,singular,accusative,feminine,regular,primary,,\nἐμαυτῇ,,reflexive,1st,singular,dative,feminine,regular,primary,,\nἐμαυτῆς,,reflexive,1st,singular,genitive,feminine,regular,primary,,\nσεαυτήν,,reflexive,2nd,singular,accusative,feminine,regular,primary,,\nσαυτήν,,reflexive,2nd,singular,accusative,feminine,regular,primary,,\nσεαυτῇ,,reflexive,2nd,singular,dative,feminine,regular,primary,,\nσαυτῇ,,reflexive,2nd,singular,dative,feminine,regular,primary,,\nσεαυτῆς,,reflexive,2nd,singular,genitive,feminine,regular,primary,,\nσαυτῆς,,reflexive,2nd,singular,genitive,feminine,regular,primary,,\nἑαυτήν,,reflexive,3rd,singular,accusative,feminine,regular,primary,,\nαὑτήν,,reflexive,3rd,singular,accusative,feminine,regular,primary,,\nἑαυτῇ,,reflexive,3rd,singular,dative,feminine,regular,primary,,\nαὑτῇ,,reflexive,3rd,singular,dative,feminine,regular,primary,,\nἑαυτῆς,,reflexive,3rd,singular,genitive,feminine,regular,primary,,\nαὑτῆς,,reflexive,3rd,singular,genitive,feminine,regular,primary,,\nἐμαυτόν,,reflexive,1st,singular,accusative,masculine,regular,primary,,\nἐμαυτῷ,,reflexive,1st,singular,dative,masculine,regular,primary,,\nἐμαυτοῦ,,reflexive,1st,singular,genitive,masculine,regular,primary,,\nσεαυτόν,,reflexive,2nd,singular,accusative,masculine,regular,primary,,\nσαυτόν,,reflexive,2nd,singular,accusative,masculine,regular,primary,,\nσεαυτῷ,,reflexive,2nd,singular,dative,masculine,regular,primary,,\nσαυτῷ,,reflexive,2nd,singular,dative,masculine,regular,primary,,\nσεαυτοῦ,,reflexive,2nd,singular,genitive,masculine,regular,primary,,\nσαυτοῦ,,reflexive,2nd,singular,genitive,masculine,regular,primary,,\nἑαυτόν,,reflexive,3rd,singular,accusative,masculine,regular,primary,,\nαὑτόν,,reflexive,3rd,singular,accusative,masculine,regular,primary,,\nἑαυτῷ,,reflexive,3rd,singular,dative,masculine,regular,primary,,\nαὑτῷ,,reflexive,3rd,singular,dative,masculine,regular,primary,,\nἑαυτοῦ,,reflexive,3rd,singular,genitive,masculine,regular,primary,,\nαὑτοῦ,,reflexive,3rd,singular,genitive,masculine,regular,primary,,\nἑαυτό,,reflexive,3rd,singular,accusative,neuter,regular,primary,,\nαὑτό,,reflexive,3rd,singular,accusative,neuter,regular,primary,,\nἑαυτῷ,,reflexive,3rd,singular,dative,neuter,regular,primary,,\nαὑτῷ,,reflexive,3rd,singular,dative,neuter,regular,primary,,\nἑαυτοῦ,,reflexive,3rd,singular,genitive,neuter,regular,primary,,\nαὑτοῦ,,reflexive,3rd,singular,genitive,neuter,regular,primary,,\nὥ,ὅς,relative,,dual,accusative,feminine,regular,primary,,\nἅ̄,ὅς,relative,,dual,accusative,feminine,irregular,,Attic,\nοἷν,ὅς,relative,,dual,dative,feminine,regular,primary,,\nαἷν,ὅς,relative,,dual,dative,feminine,irregular,,Attic,\nοἷν,ὅς,relative,,dual,genitive,feminine,regular,primary,,\nαἷν,ὅς,relative,,dual,genitive,feminine,irregular,,Attic,\nὥ,ὅς,relative,,dual,nominative,feminine,regular,primary,,\nἅ̄,ὅς,relative,,dual,nominative,feminine,irregular,,Attic,\nὥ,ὅς,relative,,dual,accusative,masculine,regular,primary,,\nοἷν,ὅς,relative,,dual,dative,masculine,regular,primary,,\nοἷν,ὅς,relative,,dual,genitive,masculine,regular,primary,,\nὥ,ὅς,relative,,dual,nominative,masculine,regular,primary,,\nὥ,ὅς,relative,,dual,accusative,neuter,regular,primary,,\nοἷν,ὅς,relative,,dual,dative,neuter,regular,primary,,\nοἷν,ὅς,relative,,dual,genitive,neuter,regular,primary,,\nὥ,ὅς,relative,,dual,nominative,neuter,regular,primary,,\nἅ̄ς,ὅς,relative,,plural,accusative,feminine,regular,primary,,\nαἷς,ὅς,relative,,plural,dative,feminine,regular,primary,,\nὧν,ὅς,relative,,plural,genitive,feminine,regular,primary,,\nαἵ,ὅς,relative,,plural,nominative,feminine,regular,primary,,\nοὕς,ὅς,relative,,plural,accusative,masculine,regular,primary,,\nοἷς,ὅς,relative,,plural,dative,masculine,regular,primary,,\nὧν,ὅς,relative,,plural,genitive,masculine,regular,primary,,\nοἵ,ὅς,relative,,plural,nominative,masculine,regular,primary,,\nἅ,ὅς,relative,,plural,accusative,neuter,regular,primary,,\nοἷς,ὅς,relative,,plural,dative,neuter,regular,primary,,\nὧν,ὅς,relative,,plural,genitive,neuter,regular,primary,,\nἅ,ὅς,relative,,plural,nominative,neuter,regular,primary,,\nἥν,ὅς,relative,,singular,accusative,feminine,regular,primary,,\nᾗ,ὅς,relative,,singular,dative,feminine,regular,primary,,\nἧς,ὅς,relative,,singular,genitive,feminine,regular,primary,,\nἥ,ὅς,relative,,singular,nominative,feminine,regular,primary,,\nὅν,ὅς,relative,,singular,accusative,masculine,regular,primary,,\nᾧ,ὅς,relative,,singular,dative,masculine,regular,primary,,\nοὗ,ὅς,relative,,singular,genitive,masculine,regular,primary,,\nὅς,ὅς,relative,,singular,nominative,masculine,regular,primary,,\nὅ,ὅς,relative,,singular,accusative,neuter,regular,primary,,\nᾧ,ὅς,relative,,singular,dative,neuter,regular,primary,,\nοὗ,ὅς,relative,,singular,genitive,neuter,regular,primary,,\nὅ,ὅς,relative,,singular,nominative,neuter,regular,primary,,");
+/* harmony default export */ __webpack_exports__["default"] = ("Form,Headword,Class,Person,Number,Case,Gender,Type,Primary,Dialects,Footnote\nτούτω,οὗτος,demonstrative,,dual,accusative,masculine feminine neuter,regular,primary,,\nτούτοιν,οὗτος,demonstrative,,dual,dative,masculine feminine neuter,regular,primary,,\nτούτοιν,οὗτος,demonstrative,,dual,genitive,masculine feminine neuter,regular,primary,,\nτούτω,οὗτος,demonstrative,,dual,nominative,masculine feminine neuter,regular,primary,,\nταύτᾱς,οὗτος,demonstrative,,plural,accusative,feminine,regular,primary,,\nταύταις,οὗτος,demonstrative,,plural,dative,feminine,regular,primary,,\nτούτων,οὗτος,demonstrative,,plural,genitive,feminine,regular,primary,,\nαὗται,οὗτος,demonstrative,,plural,nominative,feminine,regular,primary,,\nτούτους,οὗτος,demonstrative,,plural,accusative,masculine,regular,primary,,\nτούτοις,οὗτος,demonstrative,,plural,dative,masculine,regular,primary,,\nτούτων,οὗτος,demonstrative,,plural,genitive,masculine,regular,primary,,\nοὗτοι,οὗτος,demonstrative,,plural,nominative,masculine,regular,primary,,\nταῦτα,οὗτος,demonstrative,,plural,accusative,neuter,regular,primary,,\nτούτοις,οὗτος,demonstrative,,plural,dative,neuter,regular,primary,,\nτούτων,οὗτος,demonstrative,,plural,genitive,neuter,regular,primary,,\nταῦτα,οὗτος,demonstrative,,plural,nominative,neuter,regular,primary,,\nταύτην,οὗτος,demonstrative,,singular,accusative,feminine,regular,primary,,\nταύτῃ,οὗτος,demonstrative,,singular,dative,feminine,regular,primary,,\nταύτης,οὗτος,demonstrative,,singular,genitive,feminine,regular,primary,,\nαὕτη,οὗτος,demonstrative,,singular,nominative,feminine,regular,primary,,\nτοῦτον,οὗτος,demonstrative,,singular,accusative,masculine,regular,primary,,\nτούτῳ,οὗτος,demonstrative,,singular,dative,masculine,regular,primary,,\nτούτου,οὗτος,demonstrative,,singular,genitive,masculine,regular,primary,,\nοὗτος,οὗτος,demonstrative,,singular,nominative,masculine,regular,primary,,\nτοῦτο,οὗτος,demonstrative,,singular,accusative,neuter,regular,primary,,\nτούτῳ,οὗτος,demonstrative,,singular,dative,neuter,regular,primary,,\nτούτου,οὗτος,demonstrative,,singular,genitive,neuter,regular,primary,,\nτοῦτο,οὗτος,demonstrative,,singular,nominative,neuter,regular,primary,,\nἐκείνω,ἐκεῖνος,demonstrative,,dual,accusative,masculine feminine neuter,regular,primary,,\nἐκείνοιν,ἐκεῖνος,demonstrative,,dual,dative,masculine feminine neuter,regular,primary,,\nἐκείνοιν,ἐκεῖνος,demonstrative,,dual,genitive,masculine feminine neuter,regular,primary,,\nἐκείνω,ἐκεῖνος,demonstrative,,dual,nominative,masculine feminine neuter,regular,primary,,\nἐκείνᾱς,ἐκεῖνος,demonstrative,,plural,accusative,feminine,regular,primary,,\nἐκείναις,ἐκεῖνος,demonstrative,,plural,dative,feminine,regular,primary,,\nἐκείνων,ἐκεῖνος,demonstrative,,plural,genitive,feminine,regular,primary,,\nἐκεῖναι,ἐκεῖνος,demonstrative,,plural,nominative,feminine,regular,primary,,\nἐκείνους,ἐκεῖνος,demonstrative,,plural,accusative,masculine,regular,primary,,\nἐκείνοις,ἐκεῖνος,demonstrative,,plural,dative,masculine,regular,primary,,\nἐκείνων,ἐκεῖνος,demonstrative,,plural,genitive,masculine,regular,primary,,\nἐκεῖνοι,ἐκεῖνος,demonstrative,,plural,nominative,masculine,regular,primary,,\nἐκεῖνα,ἐκεῖνος,demonstrative,,plural,accusative,neuter,regular,primary,,\nἐκείνοις,ἐκεῖνος,demonstrative,,plural,dative,neuter,regular,primary,,\nἐκείνων,ἐκεῖνος,demonstrative,,plural,genitive,neuter,regular,primary,,\nἐκεῖνα,ἐκεῖνος,demonstrative,,plural,nominative,neuter,regular,primary,,\nἐκείνην,ἐκεῖνος,demonstrative,,singular,accusative,feminine,regular,primary,,\nἐκείνῃ,ἐκεῖνος,demonstrative,,singular,dative,feminine,regular,primary,,\nἐκείνης,ἐκεῖνος,demonstrative,,singular,genitive,feminine,regular,primary,,\nἐκείνη,ἐκεῖνος,demonstrative,,singular,nominative,feminine,regular,primary,,\nἐκεῖνον,ἐκεῖνος,demonstrative,,singular,accusative,masculine,regular,primary,,\nἐκείνῳ,ἐκεῖνος,demonstrative,,singular,dative,masculine,regular,primary,,\nἐκείνου,ἐκεῖνος,demonstrative,,singular,genitive,masculine,regular,primary,,\nἐκεῖνος,ἐκεῖνος,demonstrative,,singular,nominative,masculine,regular,primary,,\nἐκεῖνο,ἐκεῖνος,demonstrative,,singular,accusative,neuter,regular,primary,,\nἐκείνῳ,ἐκεῖνος,demonstrative,,singular,dative,neuter,regular,primary,,\nἐκείνου,ἐκεῖνος,demonstrative,,singular,genitive,neuter,regular,primary,,\nἐκεῖνο,ἐκεῖνος,demonstrative,,singular,nominative,neuter,regular,primary,,\nτώδε,ὅδε,demonstrative,,dual,accusative,masculine feminine neuter,regular,primary,,\nτοῖνδε,ὅδε,demonstrative,,dual,dative,masculine feminine neuter,regular,primary,,\nτοῖνδε,ὅδε,demonstrative,,dual,genitive,masculine feminine neuter,regular,primary,,\nτώδε,ὅδε,demonstrative,,dual,nominative,masculine feminine neuter,regular,primary,,\nτά̄σδε,ὅδε,demonstrative,,plural,accusative,feminine,regular,primary,,\nταῖσδε,ὅδε,demonstrative,,plural,dative,feminine,regular,primary,,\nτῶνδε,ὅδε,demonstrative,,plural,genitive,feminine,regular,primary,,\nαἵδε,ὅδε,demonstrative,,plural,nominative,feminine,regular,primary,,\nτούσδε,ὅδε,demonstrative,,plural,accusative,masculine,regular,primary,,\nτοῖσδε,ὅδε,demonstrative,,plural,dative,masculine,regular,primary,,\nτῶνδε,ὅδε,demonstrative,,plural,genitive,masculine,regular,primary,,\nοἵδε,ὅδε,demonstrative,,plural,nominative,masculine,regular,primary,,\nτάδε,ὅδε,demonstrative,,plural,accusative,neuter,regular,primary,,\nτοῖσδε,ὅδε,demonstrative,,plural,dative,neuter,regular,primary,,\nτῶνδε,ὅδε,demonstrative,,plural,genitive,neuter,regular,primary,,\nτάδε,ὅδε,demonstrative,,plural,nominative,neuter,regular,primary,,\nτήνδε,ὅδε,demonstrative,,singular,accusative,feminine,regular,primary,,\nτῇδε,ὅδε,demonstrative,,singular,dative,feminine,regular,primary,,\nτῆσδε,ὅδε,demonstrative,,singular,genitive,feminine,regular,primary,,\nἥδε,ὅδε,demonstrative,,singular,nominative,feminine,regular,primary,,\nτόνδε,ὅδε,demonstrative,,singular,accusative,masculine,regular,primary,,\nτῷδε,ὅδε,demonstrative,,singular,dative,masculine,regular,primary,,\nτοῦδε,ὅδε,demonstrative,,singular,genitive,masculine,regular,primary,,\nὅδε,ὅδε,demonstrative,,singular,nominative,masculine,regular,primary,,\nτόδε,ὅδε,demonstrative,,singular,accusative,neuter,regular,primary,,\nτῷδε,ὅδε,demonstrative,,singular,dative,neuter,regular,primary,,\nτοῦδε,ὅδε,demonstrative,,singular,genitive,neuter,regular,primary,,\nτόδε,ὅδε,demonstrative,,singular,nominative,neuter,regular,primary,,\nὥτινε,,general relative,,dual,accusative,masculine feminine neuter,regular,primary,,\nοἷντινοιν,,general relative,,dual,dative,masculine feminine neuter,regular,primary,,\nοἷντινοιν,,general relative,,dual,genitive,masculine feminine neuter,regular,primary,,\nὥτινε,,general relative,,dual,nominative,masculine feminine neuter,regular,primary,,\nἅ̄στινας,,general relative,,plural,accusative,feminine,regular,primary,,\nαἷστισι,,general relative,,plural,dative,feminine,regular,primary,,\nαἷστισιν,,general relative,,plural,dative,feminine,regular,primary,,\nὁτέοισι,,general relative,,plural,dative,feminine,irregular,,\"Homer,Herodotus\",\nὧντινων,,general relative,,plural,genitive,feminine,regular,primary,,\nὅτεων,,general relative,,plural,genitive,feminine,irregular,,\"Homer,Herodotus\",\nαἵτινες,,general relative,,plural,nominative,feminine,regular,primary,,\nοὕστινας,,general relative,,plural,accusative,masculine,regular,primary,,\nὅτινας,,general relative,,plural,accusative,masculine,irregular,,Homer,\nοἷστισι,,general relative,,plural,dative,masculine,regular,primary,,\nοἷστισιν,,general relative,,plural,dative,masculine,regular,primary,,\nὅτοις,,general relative,,plural,dative,masculine,regular,primary,,\nὧντινων,,general relative,,plural,genitive,masculine,regular,primary,,\nὅτων,,general relative,,plural,genitive,masculine,regular,primary,,\nοἵτινες,,general relative,,plural,nominative,masculine,regular,primary,,\nἅτινα,,general relative,,plural,accusative,neuter,regular,primary,,\nἅττα,,general relative,,plural,accusative,neuter,regular,primary,,\nἅσσα,,general relative,,plural,accusative,neuter,irregular,,\"Homer,Herodotus\",\nἄσσα,,general relative,,plural,accusative,neuter,irregular,,\"Ionic\",\nοἷστισι,,general relative,,plural,dative,neuter,regular,primary,,\nοἷστισιν,,general relative,,plural,dative,neuter,regular,primary,,\nὅτοις,,general relative,,plural,dative,neuter,regular,primary,,\nὧντινων,,general relative,,plural,genitive,neuter,regular,primary,,\nὅτων,,general relative,,plural,genitive,neuter,regular,primary,,\nἅτινα,,general relative,,plural,nominative,neuter,regular,primary,,\nἅττα,,general relative,,plural,nominative,neuter,regular,primary,,\nἅσσα,,general relative,,plural,nominative,neuter,irregular,,\"Homer,Herodotus\",\nἥντινα,,general relative,,singular,accusative,feminine,regular,primary,,\nᾗτινι,,general relative,,singular,dative,feminine,regular,primary,,\nὅτεῳ,,general relative,,singular,dative,feminine,irregular,,\"Homer,Herodotus\",\nἧστινος,,general relative,,singular,genitive,feminine,regular,primary,,\nὅττεο,,general relative,,singular,genitive,feminine,irregular,,Homer,\nὅττευ,,general relative,,singular,genitive,feminine,irregular,,Homer,\nὅτευ,,general relative,,singular,genitive,feminine,irregular,,\"Homer,Herodotus\",\nἥτις,,general relative,,singular,nominative,feminine,regular,primary,,\nὅντινα,,general relative,,singular,accusative,masculine,regular,primary,,\nὅτινα,,general relative,,singular,accusative,masculine,irregular,,Homer,\nᾧτινι,,general relative,,singular,dative,masculine,regular,primary,,\nὅτῳ,,general relative,,singular,dative,masculine,regular,primary,,\nοὗτινος,,general relative,,singular,genitive,masculine,regular,primary,,\nὅτου,,general relative,,singular,genitive,masculine,regular,primary,,\nὅστις,,general relative,,singular,nominative,masculine,regular,primary,,\nὅτις,,general relative,,singular,nominative,masculine,irregular,,Homer,\nὅ τι,,general relative,,singular,accusative,neuter,regular,primary,,\nὅ ττι,,general relative,,singular,accusative,neuter,irregular,,Homer,\nᾧτινι,,general relative,,singular,dative,neuter,regular,primary,,\nὅτῳ,,general relative,,singular,dative,neuter,regular,primary,,\nοὗτινος,,general relative,,singular,genitive,neuter,regular,primary,,\nὅτου,,general relative,,singular,genitive,neuter,regular,primary,,\nὅ τι,,general relative,,singular,nominative,neuter,regular,primary,,\nὅ ττι,,general relative,,singular,nominative,neuter,irregular,,Homer,\nτινέ,τις,indefinite,,dual,accusative,masculine feminine,regular,primary,,\nτινοῖν,τις,indefinite,,dual,dative,masculine feminine,regular,primary,,\nτινοῖν,τις,indefinite,,dual,genitive,masculine feminine,regular,primary,,\nτινέ,τις,indefinite,,dual,nominative,masculine feminine,regular,primary,,\nτινέ,τις,indefinite,,dual,vocative,masculine feminine,regular,primary,,\nτινέ,τις,indefinite,,dual,accusative,neuter,regular,primary,,\nτινοῖν,τις,indefinite,,dual,dative,neuter,regular,primary,,\nτινοῖν,τις,indefinite,,dual,genitive,neuter,regular,primary,,\nτινέ,τις,indefinite,,dual,nominative,neuter,regular,primary,,\nτινέ,τις,indefinite,,dual,vocative,neuter,regular,primary,,\nτινάς,τις,indefinite,,plural,accusative,masculine feminine,regular,primary,,\nτισί,τις,indefinite,,plural,dative,masculine feminine,regular,primary,,\nτισίν,τις,indefinite,,plural,dative,masculine feminine,regular,primary,,\nτινῶν,τις,indefinite,,plural,genitive,masculine feminine,regular,primary,,\nτινές,τις,indefinite,,plural,nominative,masculine feminine,regular,primary,,\nτινά,τις,indefinite,,plural,accusative,neuter,regular,primary,,\nἄττα,τις,indefinite,,plural,accusative,neuter,regular,,,2\nτισί,τις,indefinite,,plural,dative,neuter,regular,primary,,\nτισίν,τις,indefinite,,plural,dative,neuter,regular,primary,,\nτινῶν,τις,indefinite,,plural,genitive,neuter,regular,primary,,\nτινά,τις,indefinite,,plural,nominative,neuter,regular,primary,,\nἄττα,τις,indefinite,,plural,nominative,neuter,regular,,,2\nτινά,τις,indefinite,,singular,accusative,masculine feminine,regular,primary,,\nἄττα,τις,indefinite,,singular,accusative,masculine feminine,regular,,,2\nτινί,τις,indefinite,,singular,dative,masculine feminine,regular,primary,,\nτῳ,τις,indefinite,,singular,dative,masculine feminine,regular,primary,,\nτινός,τις,indefinite,,singular,genitive,masculine feminine,regular,primary,,\nτου,τις,indefinite,,singular,genitive,masculine feminine,regular,primary,,\nτις,τις,indefinite,,singular,nominative,masculine feminine,regular,primary,,\nτι,τις,indefinite,,singular,accusative,neuter,regular,primary,,\nτινί,τις,indefinite,,singular,dative,neuter,regular,primary,,\nτῳ,τις,indefinite,,singular,dative,neuter,regular,primary,,\nτινός,τις,indefinite,,singular,genitive,neuter,regular,primary,,\nτου,τις,indefinite,,singular,genitive,neuter,regular,primary,,\nτι,τις,indefinite,,singular,nominative,neuter,regular,primary,,\nαὐτά,,intensive,,dual,accusative,feminine,regular,primary,,\nαὐταῖν,,intensive,,dual,dative,feminine,regular,primary,,\nαὐταῖν,,intensive,,dual,genitive,feminine,regular,primary,,\nαὐτά,,intensive,,dual,nominative,feminine,regular,primary,,\nαὐτώ,,intensive,,dual,accusative,masculine,regular,primary,,\nαὐτοῖν,,intensive,,dual,dative,masculine,regular,primary,,\nαὐτοῖν,,intensive,,dual,genitive,masculine,regular,primary,,\nαὐτώ,,intensive,,dual,nominative,masculine,regular,primary,,\nαὐτώ,,intensive,,dual,accusative,neuter,regular,primary,,\nαὐτοῖν,,intensive,,dual,dative,neuter,regular,primary,,\nαὐτοῖν,,intensive,,dual,genitive,neuter,regular,primary,,\nαὐτώ,,intensive,,dual,nominative,neuter,regular,primary,,\nαὐτά̄ς,,intensive,,plural,accusative,feminine,regular,primary,,\nαὐταῖς,,intensive,,plural,dative,feminine,regular,primary,,\nαὐτῶν,,intensive,,plural,genitive,feminine,regular,primary,,\nαὐτέων,,intensive,,plural,genitive,feminine,irregular,,Herodotus,\nαὐταί,,intensive,,plural,nominative,feminine,regular,primary,,\nαὐτούς,,intensive,,plural,accusative,masculine,regular,primary,,\nαὐτοῖς,,intensive,,plural,dative,masculine,regular,primary,,\nαὐτῶν,,intensive,,plural,genitive,masculine,regular,primary,,\nαὐτέων,,intensive,,plural,genitive,masculine,irregular,,Herodotus,\nαὐτοί,,intensive,,plural,nominative,masculine,regular,primary,,\nαὐτά,,intensive,,plural,accusative,neuter,regular,primary,,\nαὐτοῖς,,intensive,,plural,dative,neuter,regular,primary,,\nαὐτῶν,,intensive,,plural,genitive,neuter,regular,primary,,\nαὐτέων,,intensive,,plural,genitive,neuter,irregular,,Herodotus,\nαὐτά,,intensive,,plural,nominative,neuter,regular,primary,,\nαὐτήν,,intensive,,singular,accusative,feminine,regular,primary,,\nαὐτῇ,,intensive,,singular,dative,feminine,regular,primary,,\nαὐτῆς,,intensive,,singular,genitive,feminine,regular,primary,,\nαὐτή,,intensive,,singular,nominative,feminine,regular,primary,,\nαὐτόν,,intensive,,singular,accusative,masculine,regular,primary,,\nαὐτῷ,,intensive,,singular,dative,masculine,regular,primary,,\nαὐτοῦ,,intensive,,singular,genitive,masculine,regular,primary,,\nαὐτός,,intensive,,singular,nominative,masculine,regular,primary,,\nαὐτό,,intensive,,singular,accusative,neuter,regular,primary,,\nαὐτῷ,,intensive,,singular,dative,neuter,regular,primary,,\nαὐτοῦ,,intensive,,singular,genitive,neuter,regular,primary,,\nαὐτό,,intensive,,singular,nominative,neuter,regular,primary,,\nτίνε,τίς,interrogative,,dual,accusative,masculine feminine,regular,primary,,\nτίνοιν,τίς,interrogative,,dual,dative,masculine feminine,regular,primary,,\nτίνοιν,τίς,interrogative,,dual,genitive,masculine feminine,regular,primary,,\nτίνε,τίς,interrogative,,dual,nominative,masculine feminine,regular,primary,,\nτίνε,τίς,interrogative,,dual,vocative,masculine feminine,regular,primary,,\nτίνε,τίς,interrogative,,dual,accusative,neuter,regular,primary,,\nτίνοιν,τίς,interrogative,,dual,dative,neuter,regular,primary,,\nτίνοιν,τίς,interrogative,,dual,genitive,neuter,regular,primary,,\nτίνε,τίς,interrogative,,dual,nominative,neuter,regular,primary,,\nτίνε,τίς,interrogative,,dual,vocative,neuter,regular,primary,,\nτίνας,τίς,interrogative,,plural,accusative,masculine feminine,regular,primary,,\nτίσι,τίς,interrogative,,plural,dative,masculine feminine,regular,primary,,\nτίσιv,τίς,interrogative,,plural,dative,masculine feminine,regular,primary,,\nτίνων,τίς,interrogative,,plural,genitive,masculine feminine,regular,primary,,\nτίνες,τίς,interrogative,,plural,nominative,masculine feminine,regular,primary,,\nτίνα,τίς,interrogative,,plural,accusative,neuter,regular,primary,,\nτίσι,τίς,interrogative,,plural,dative,neuter,regular,primary,,\nτίσιv,τίς,interrogative,,plural,dative,neuter,regular,primary,,\nτίνων,τίς,interrogative,,plural,genitive,neuter,regular,primary,,\nτίνα,τίς,interrogative,,plural,nominative,neuter,regular,primary,,\nτίνα,τίς,interrogative,,singular,accusative,masculine feminine,regular,primary,,\nτίνι,τίς,interrogative,,singular,dative,masculine feminine,regular,primary,,\nτῷ,τίς,interrogative,,singular,dative,masculine feminine,regular,primary,,\nτίνος,τίς,interrogative,,singular,genitive,masculine feminine,regular,primary,,\nτοῦ,τίς,interrogative,,singular,genitive,masculine feminine,regular,primary,,\nτίς,τίς,interrogative,,singular,nominative,masculine feminine,regular,primary,,\nτί,τίς,interrogative,,singular,accusative,neuter,regular,primary,,\nτίνι,τίς,interrogative,,singular,dative,neuter,regular,primary,,\nτῷ,τίς,interrogative,,singular,dative,neuter,regular,primary,,\nτίνος,τίς,interrogative,,singular,genitive,neuter,regular,primary,,\nτοῦ,τίς,interrogative,,singular,genitive,neuter,regular,primary,,\nτί,τίς,interrogative,,singular,nominative,neuter,regular,primary,,\nνώ,,personal,1st,dual,accusative,,regular,primary,,\nνῷν,,personal,1st,dual,dative,,regular,primary,,\nνῷν,,personal,1st,dual,genitive,,regular,primary,,\nνώ,,personal,1st,dual,nominative,,regular,primary,,\nσφώ,,personal,2nd,dual,accusative,,regular,primary,,\nσφῷν,,personal,2nd,dual,dative,,regular,primary,,\nσφῷν,,personal,2nd,dual,genitive,,regular,primary,,\nσφώ,,personal,2nd,dual,nominative,,regular,primary,,\nἡμᾶς,,personal,1st,plural,accusative,,regular,primary,,\nἡμῖν,,personal,1st,plural,dative,,regular,primary,,\nἡμῶν,,personal,1st,plural,genitive,,regular,primary,,\nἡμεῖς,,personal,1st,plural,nominative,,regular,primary,,\nὑμᾶς,,personal,2nd,plural,accusative,,regular,primary,,\nὑμῖν,,personal,2nd,plural,dative,,regular,primary,,\nὑμῶν,,personal,2nd,plural,genitive,,regular,primary,,\nὑμεῖς,,personal,2nd,plural,nominative,,regular,primary,,\nσφᾶς,,personal,3rd,plural,accusative,,regular,primary,,\nσφίσι,,personal,3rd,plural,dative,,regular,primary,,\nσφίσιν,,personal,3rd,plural,dative,,regular,primary,,\nσφῶν,,personal,3rd,plural,genitive,,regular,primary,,\nσφεῖς,,personal,3rd,plural,nominative,,regular,primary,,\nἐμέ,,personal,1st,singular,accusative,,regular,primary,,\nμε,,personal,1st,singular,accusative,,regular,primary,,3\nἐμοί,,personal,1st,singular,dative,,regular,primary,,\nμοι,,personal,1st,singular,dative,,regular,primary,,3\nἐμοῦ,,personal,1st,singular,genitive,,regular,primary,,\nμου,,personal,1st,singular,genitive,,regular,primary,,3\nἐγώ,,personal,1st,singular,nominative,,regular,primary,,\nσέ,,personal,2nd,singular,accusative,,regular,primary,,\nσε,,personal,2nd,singular,accusative,,regular,primary,,3\nσοί,,personal,2nd,singular,dative,,regular,primary,,\nσοι,,personal,2nd,singular,dative,,regular,primary,,3\nσοῦ,,personal,2nd,singular,genitive,,regular,primary,,\nσου,,personal,2nd,singular,genitive,,regular,primary,,3\nσύ,,personal,2nd,singular,nominative,,regular,primary,,\nἕ,,personal,3rd,singular,accusative,,regular,primary,,\nἑ,,personal,3rd,singular,accusative,,regular,primary,,3\nοἷ,,personal,3rd,singular,dative,,regular,primary,,\nοἱ,,personal,3rd,singular,dative,,regular,primary,,3\nοὗ,,personal,3rd,singular,genitive,,regular,primary,,\nοὑ,,personal,3rd,singular,genitive,,regular,primary,,3\n-,,personal,3rd,singular,nominative,,regular,primary,,\nἀλλήλᾱ,,reciprocal,,dual,accusative,feminine,regular,primary,,\nἀλλήλαιν,,reciprocal,,dual,dative,feminine,regular,primary,,\nἀλλήλαιν,,reciprocal,,dual,genitive,feminine,regular,primary,,\nἀλλήλω,,reciprocal,,dual,accusative,masculine,regular,primary,,\nἀλλήλοιν,,reciprocal,,dual,dative,masculine,regular,primary,,\nἀλλήλοιν,,reciprocal,,dual,genitive,masculine,regular,primary,,\nἀλλήλω,,reciprocal,,dual,accusative,neuter,regular,primary,,\nἀλλήλοιν,,reciprocal,,dual,dative,neuter,regular,primary,,\nἀλλήλοιν,,reciprocal,,dual,genitive,neuter,regular,primary,,\nἀλλήλᾱς,,reciprocal,,plural,accusative,feminine,regular,primary,,\nἀλλήλαις,,reciprocal,,plural,dative,feminine,regular,primary,,\nἀλλήλων,,reciprocal,,plural,genitive,feminine,regular,primary,,\nἀλλήλους,,reciprocal,,plural,accusative,masculine,regular,primary,,\nἀλλήλοις,,reciprocal,,plural,dative,masculine,regular,primary,,\nἀλλήλων,,reciprocal,,plural,genitive,masculine,regular,primary,,\nἄλληλα,,reciprocal,,plural,accusative,neuter,regular,primary,,\nἀλλήλοις,,reciprocal,,plural,dative,neuter,regular,primary,,\nἀλλήλων,,reciprocal,,plural,genitive,neuter,regular,primary,,\nἡμᾶς,,reflexive,1st,plural,accusative,feminine,regular,primary,,\nαὐτά̄ς,,reflexive,1st,plural,accusative,feminine,regular,primary,,\nἡμῖν,,reflexive,1st,plural,dative,feminine,regular,primary,,\nαὐταῖς,,reflexive,1st,plural,dative,feminine,regular,primary,,\nἡμῶν,,reflexive,1st,plural,genitive,feminine,regular,primary,,\nαὐτῶν,,reflexive,1st,plural,genitive,feminine,regular,primary,,\nὑ̄μᾶς,,reflexive,2nd,plural,accusative,feminine,regular,primary,,\nαὐτά̄ς,,reflexive,2nd,plural,accusative,feminine,regular,primary,,\nὑ̄μῖν,,reflexive,2nd,plural,dative,feminine,regular,primary,,\nαὐταῖς,,reflexive,2nd,plural,dative,feminine,regular,primary,,\nὑ̄μῶν,,reflexive,2nd,plural,genitive,feminine,regular,primary,,\nαὐτῶν,,reflexive,2nd,plural,genitive,feminine,regular,primary,,\nἑαυτά̄ς,,reflexive,3rd,plural,accusative,feminine,regular,primary,,\nσφᾶς,,reflexive,3rd,plural,accusative,feminine,regular,primary,,\nαὑτά̄ς,,reflexive,3rd,plural,accusative,feminine,regular,primary,,\nἑαυταῖς,,reflexive,3rd,plural,dative,feminine,regular,primary,,\nσφίσιν,,reflexive,3rd,plural,dative,feminine,regular,primary,,\nαὑταῖς,,reflexive,3rd,plural,dative,feminine,regular,primary,,\nἑαυτῶν,,reflexive,3rd,plural,genitive,feminine,regular,primary,,\nσφῶν,,reflexive,3rd,plural,genitive,feminine,regular,primary,,\nαὑτῶν,,reflexive,3rd,plural,genitive,feminine,regular,primary,,\nἡμᾶς,,reflexive,1st,plural,accusative,masculine,regular,primary,,\nαὐτούς,,reflexive,1st,plural,accusative,masculine,regular,primary,,\nἡμῖν,,reflexive,1st,plural,dative,masculine,regular,primary,,\nαὐτοῖς,,reflexive,1st,plural,dative,masculine,regular,primary,,\nἡμῶν,,reflexive,1st,plural,genitive,masculine,regular,primary,,\nαὐτῶν,,reflexive,1st,plural,genitive,masculine,regular,primary,,\nὑ̄μᾶς,,reflexive,2nd,plural,accusative,masculine,regular,primary,,\nαὐτούς,,reflexive,2nd,plural,accusative,masculine,regular,primary,,\nὑ̄μῖν,,reflexive,2nd,plural,dative,masculine,regular,primary,,\nαὐτοῖς,,reflexive,2nd,plural,dative,masculine,regular,primary,,\nὑ̄μῶν,,reflexive,2nd,plural,genitive,masculine,regular,primary,,\nαὐτῶν,,reflexive,2nd,plural,genitive,masculine,regular,primary,,\nἑαυτούς,,reflexive,3rd,plural,accusative,masculine,regular,primary,,\nσφᾶς,,reflexive,3rd,plural,accusative,masculine,regular,primary,,\nαὑτούς,,reflexive,3rd,plural,accusative,masculine,regular,primary,,\nἑαυτοῖς,,reflexive,3rd,plural,dative,masculine,regular,primary,,\nσφίσιν,,reflexive,3rd,plural,dative,masculine,regular,primary,,\nαὑτοῖς,,reflexive,3rd,plural,dative,masculine,regular,primary,,\nἑαυτῶν,,reflexive,3rd,plural,genitive,masculine,regular,primary,,\nσφῶν,,reflexive,3rd,plural,genitive,masculine,regular,primary,,\nαὑτῶν,,reflexive,3rd,plural,genitive,masculine,regular,primary,,\nἑαυτά,,reflexive,3rd,plural,accusative,neuter,regular,primary,,\nσφέα,,reflexive,3rd,plural,accusative,neuter,regular,primary,,\nαὑτά,,reflexive,3rd,plural,accusative,neuter,regular,primary,,\nἑαυτοῖς,,reflexive,3rd,plural,dative,neuter,regular,primary,,\nσφίσιν,,reflexive,3rd,plural,dative,neuter,regular,primary,,\nαὑτοῖς,,reflexive,3rd,plural,dative,neuter,regular,primary,,\nἑαυτῶν,,reflexive,3rd,plural,genitive,neuter,regular,primary,,\nσφῶν,,reflexive,3rd,plural,genitive,neuter,regular,primary,,\nαὑτῶν,,reflexive,3rd,plural,genitive,neuter,regular,primary,,\nἐμαυτήν,,reflexive,1st,singular,accusative,feminine,regular,primary,,\nἐμαυτῇ,,reflexive,1st,singular,dative,feminine,regular,primary,,\nἐμαυτῆς,,reflexive,1st,singular,genitive,feminine,regular,primary,,\nσεαυτήν,,reflexive,2nd,singular,accusative,feminine,regular,primary,,\nσαυτήν,,reflexive,2nd,singular,accusative,feminine,regular,primary,,\nσεαυτῇ,,reflexive,2nd,singular,dative,feminine,regular,primary,,\nσαυτῇ,,reflexive,2nd,singular,dative,feminine,regular,primary,,\nσεαυτῆς,,reflexive,2nd,singular,genitive,feminine,regular,primary,,\nσαυτῆς,,reflexive,2nd,singular,genitive,feminine,regular,primary,,\nἑαυτήν,,reflexive,3rd,singular,accusative,feminine,regular,primary,,\nαὑτήν,,reflexive,3rd,singular,accusative,feminine,regular,primary,,\nἑαυτῇ,,reflexive,3rd,singular,dative,feminine,regular,primary,,\nαὑτῇ,,reflexive,3rd,singular,dative,feminine,regular,primary,,\nἑαυτῆς,,reflexive,3rd,singular,genitive,feminine,regular,primary,,\nαὑτῆς,,reflexive,3rd,singular,genitive,feminine,regular,primary,,\nἐμαυτόν,,reflexive,1st,singular,accusative,masculine,regular,primary,,\nἐμαυτῷ,,reflexive,1st,singular,dative,masculine,regular,primary,,\nἐμαυτοῦ,,reflexive,1st,singular,genitive,masculine,regular,primary,,\nσεαυτόν,,reflexive,2nd,singular,accusative,masculine,regular,primary,,\nσαυτόν,,reflexive,2nd,singular,accusative,masculine,regular,primary,,\nσεαυτῷ,,reflexive,2nd,singular,dative,masculine,regular,primary,,\nσαυτῷ,,reflexive,2nd,singular,dative,masculine,regular,primary,,\nσεαυτοῦ,,reflexive,2nd,singular,genitive,masculine,regular,primary,,\nσαυτοῦ,,reflexive,2nd,singular,genitive,masculine,regular,primary,,\nἑαυτόν,,reflexive,3rd,singular,accusative,masculine,regular,primary,,\nαὑτόν,,reflexive,3rd,singular,accusative,masculine,regular,primary,,\nἑαυτῷ,,reflexive,3rd,singular,dative,masculine,regular,primary,,\nαὑτῷ,,reflexive,3rd,singular,dative,masculine,regular,primary,,\nἑαυτοῦ,,reflexive,3rd,singular,genitive,masculine,regular,primary,,\nαὑτοῦ,,reflexive,3rd,singular,genitive,masculine,regular,primary,,\nἑαυτό,,reflexive,3rd,singular,accusative,neuter,regular,primary,,\nαὑτό,,reflexive,3rd,singular,accusative,neuter,regular,primary,,\nἑαυτῷ,,reflexive,3rd,singular,dative,neuter,regular,primary,,\nαὑτῷ,,reflexive,3rd,singular,dative,neuter,regular,primary,,\nἑαυτοῦ,,reflexive,3rd,singular,genitive,neuter,regular,primary,,\nαὑτοῦ,,reflexive,3rd,singular,genitive,neuter,regular,primary,,\nὥ,ὅς,relative,,dual,accusative,feminine,regular,primary,,\nἅ̄,ὅς,relative,,dual,accusative,feminine,irregular,,Attic,\nοἷν,ὅς,relative,,dual,dative,feminine,regular,primary,,\nαἷν,ὅς,relative,,dual,dative,feminine,irregular,,Attic,\nοἷν,ὅς,relative,,dual,genitive,feminine,regular,primary,,\nαἷν,ὅς,relative,,dual,genitive,feminine,irregular,,Attic,\nὥ,ὅς,relative,,dual,nominative,feminine,regular,primary,,\nἅ̄,ὅς,relative,,dual,nominative,feminine,irregular,,Attic,\nὥ,ὅς,relative,,dual,accusative,masculine,regular,primary,,\nοἷν,ὅς,relative,,dual,dative,masculine,regular,primary,,\nοἷν,ὅς,relative,,dual,genitive,masculine,regular,primary,,\nὥ,ὅς,relative,,dual,nominative,masculine,regular,primary,,\nὥ,ὅς,relative,,dual,accusative,neuter,regular,primary,,\nοἷν,ὅς,relative,,dual,dative,neuter,regular,primary,,\nοἷν,ὅς,relative,,dual,genitive,neuter,regular,primary,,\nὥ,ὅς,relative,,dual,nominative,neuter,regular,primary,,\nἅ̄ς,ὅς,relative,,plural,accusative,feminine,regular,primary,,\nαἷς,ὅς,relative,,plural,dative,feminine,regular,primary,,\nὧν,ὅς,relative,,plural,genitive,feminine,regular,primary,,\nαἵ,ὅς,relative,,plural,nominative,feminine,regular,primary,,\nοὕς,ὅς,relative,,plural,accusative,masculine,regular,primary,,\nοἷς,ὅς,relative,,plural,dative,masculine,regular,primary,,\nὧν,ὅς,relative,,plural,genitive,masculine,regular,primary,,\nοἵ,ὅς,relative,,plural,nominative,masculine,regular,primary,,\nἅ,ὅς,relative,,plural,accusative,neuter,regular,primary,,\nοἷς,ὅς,relative,,plural,dative,neuter,regular,primary,,\nὧν,ὅς,relative,,plural,genitive,neuter,regular,primary,,\nἅ,ὅς,relative,,plural,nominative,neuter,regular,primary,,\nἥν,ὅς,relative,,singular,accusative,feminine,regular,primary,,\nᾗ,ὅς,relative,,singular,dative,feminine,regular,primary,,\nἧς,ὅς,relative,,singular,genitive,feminine,regular,primary,,\nἥ,ὅς,relative,,singular,nominative,feminine,regular,primary,,\nὅν,ὅς,relative,,singular,accusative,masculine,regular,primary,,\nᾧ,ὅς,relative,,singular,dative,masculine,regular,primary,,\nοὗ,ὅς,relative,,singular,genitive,masculine,regular,primary,,\nὅς,ὅς,relative,,singular,nominative,masculine,regular,primary,,\nὅ,ὅς,relative,,singular,accusative,neuter,regular,primary,,\nᾧ,ὅς,relative,,singular,dative,neuter,regular,primary,,\nοὗ,ὅς,relative,,singular,genitive,neuter,regular,primary,,\nὅ,ὅς,relative,,singular,nominative,neuter,regular,primary,,");
 
 /***/ }),
 
