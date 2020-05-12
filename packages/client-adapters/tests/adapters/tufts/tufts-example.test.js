@@ -490,4 +490,22 @@ describe('tufts-example.test.js', () => {
     expect(homonym.lexemes[1].inflections[0]['part of speech'].value).toEqual("pronoun")
   })
 
+  it('26 TuftsExample - syriac homonym with at least a meaning', async () => {
+    let word = 'ܐܒܪܐ'
+    let res = Fixture.getFixtureRes({
+      langCode: 'syr', adapter: 'tufts', word: word
+    })
+    let adapter = new AlpheiosTuftsAdapter({
+      category: 'morphology',
+      adapterName: 'tufts',
+      method: 'getHomonym',
+      sourceData: res
+    })
+
+    let homonym = await adapter.getHomonym(Constants.LANG_SYRIAC,word)
+    expect(homonym.lexemes.length).toEqual(2)
+    expect(homonym.lexemes[0].meaning).toBeTruthy()
+    expect(homonym.lexemes[1].meaning).toBeTruthy()
+  })
+
 })
