@@ -7,13 +7,13 @@
             <progress-bar :text="l10n.getText('PLACEHOLDER_LEX_DATA_LOADING')" />
         </div>
 
-        <div :data-lemmakey="lexeme.lemma.ID"  class="alpheios-morph-definitions_list__definition" 
+        <div :data-lemmakey="lexeme.lemma.ID"  class="alpheios-morph-definitions_list__definition"
             v-for="(definition, dindex) in definitions" :key="definition.ID"
             v-show="$store.getters['app/shortDefDataReady']"
         >
 
             <span class="alpheios-morph-definitions_list__definition_index" v-if="definitions.length > 1">{{ definitionIndex(dindex) }}</span>
-            <shortdef :definition="definition"></shortdef>
+            <shortdef :definition="definition" :languageCode="lexeme.lemma.languageCode"></shortdef>
 
         </div>
     </div>
@@ -45,7 +45,7 @@
           definitionsLocal = this.lexeme.meaning.shortDefs
         } else if (this.lexeme && this.lexeme.lemma.features && Object.entries(this.lexeme.lemma.features).length > 0) {
           definitionsLocal = [new Definition(this.l10n.getMsg('TEXT_NOTICE_NO_DEFS_FOUND'), 'en-US', 'text/plain', this.lexeme.lemma.word)]
-        } 
+        }
         return definitionsLocal
       }
     },
@@ -67,7 +67,7 @@
   .alpheios-panel__tab-panel .alpheios-morph__lexemes {
     font-size: .75rem;
   }
-  
+
   .alpheios-morph-definitions_list {
     .alpheios-morph-definitions_list__definition {
         margin-bottom: 5px;
@@ -83,5 +83,5 @@
       display: inline-block;
     }
   }
-  
+
 </style>

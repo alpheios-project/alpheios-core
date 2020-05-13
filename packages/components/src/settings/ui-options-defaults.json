@@ -21,7 +21,7 @@
       ]
     },
     "maxPopupWidth": {
-      "defaultValue": "1200",
+      "defaultValue": "800",
       "labelText": "Maximum popup width:",
       "values": {
         "min": "400",
