@@ -8,7 +8,7 @@
           <input-autocomplete
               :lang = "getLookupLanguage()"
               :clearValue = "clearLookupText"
-              id="alpheios-lookup-input"
+              id="alpheios-lookup-form-input"
               @keyPressEnter = "lookup"
               @updateLookupText = "updateLookupText"
           />

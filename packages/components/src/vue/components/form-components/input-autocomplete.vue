@@ -11,6 +11,7 @@
             v-model="valueText"
             :ref="id"
             @click="closeAutocompleteList"
+            :id="id"
         >
         <div class="alpheios-input-autocomplete" v-show="currentEnableLogeionAutoComplete && words.length > 0">
             <span class="alpheios-input-autocomplete-item" v-for="(word, index) in words" v-bind:key="index" @click="selectWordFromAutoComplete(word)">{{ word }}</span>
