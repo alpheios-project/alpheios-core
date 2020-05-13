@@ -60,20 +60,20 @@
 
 .alpheios-button-secondary {
   @extend %alpheios-button;
-  color: var(--alpheios-btn-secondary-font-color);
+  color: var(--alpheios-btn-secondary-font-color) !important; // To override styles on Loeb Classics
   background-color: var(--alpheios-btn-secondary-bg-color);
   border-color: var(--alpheios-btn-secondary-border-color);
 
   &:hover,
   &:focus {
-    color: var(--alpheios-btn-secondary-font-color-hover);
+    color: var(--alpheios-btn-secondary-font-color-hover) !important; // To override styles on Loeb Classics
     background-color: var(--alpheios-btn-secondary-bg-color-hover);
     border-color: var(--alpheios-btn-secondary-border-color-hover);
     box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25);
   }
 
   &:active {
-    color: var(--alpheios-btn-secondary-font-color-pressed);
+    color: var(--alpheios-btn-secondary-font-color-pressed) !important; // To override styles on Loeb Classics
     background-color: var(--alpheios-btn-secondary-bg-color-pressed);
     border-color: var(--alpheios-btn-secondary-border-color-pressed);
     box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1);
@@ -82,20 +82,20 @@
 
 .alpheios-button-tertiary, button.alpheios-button-tertiary {
   @extend %alpheios-button;
-  color: var(--alpheios-btn-tertiary-font-color);
+  color: var(--alpheios-btn-tertiary-font-color) !important; // To override styles on Loeb Classics
   background: var(--alpheios-btn-tertiary-bg-color);
   border-color: var(--alpheios-btn-tertiary-border-color);
 
   &:hover,
   &:focus {
-    color: var(--alpheios-btn-tertiary-font-color-hover);
+    color: var(--alpheios-btn-tertiary-font-color-hover) !important; // To override styles on Loeb Classics
     background: var(--alpheios-btn-tertiary-bg-color-hover);
     border-color: var(--alpheios-btn-tertiary-border-color-hover);
     box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25);
   }
 
   &:active {
-    color: var(--alpheios-btn-tertiary-font-color-pressed);
+    color: var(--alpheios-btn-tertiary-font-color-pressed) !important; // To override styles on Loeb Classics
     background: var(--alpheios-btn-tertiary-bg-color-pressed);
     border-color: var(--alpheios-btn-tertiary-border-color-pressed);
     box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1);
