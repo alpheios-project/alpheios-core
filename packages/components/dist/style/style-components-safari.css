@@ -1130,10 +1130,11 @@ p.alpheios-lemma__translations-value {
 .alpheios-principal-parts__listitem:last-child:after {
   content: "" !important;
 }
-h4.alpheios-principal-parts__groupitem {
+.alpheios-principal-parts__item h4.alpheios-principal-parts__groupitem {
   display: inline;
   font-weight: 700 !important;
   margin-right: 5px !important;
+  margin-bottom: 0 !important;
 }
 h4.alpheios-principal-parts__groupitem:last-of-type {
   margin-right: 0 !important;

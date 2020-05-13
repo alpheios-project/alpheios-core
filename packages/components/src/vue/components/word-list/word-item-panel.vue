@@ -45,7 +45,7 @@
           {{ worditem.frequency }}
         </div>
         <div class="alpheios-worditem__data alpheios-worditem__updatedDT">
-          {{ worditem.updatedDT }}
+          {{ updatedDT }}
         </div>
     </div>
 </template>
@@ -89,6 +89,9 @@ export default {
     },
     lemmasList () {
       return this.$store.state.app.wordListUpdateTime ? this.worditem.lemmasList.split(',') : []
+    }, 
+    updatedDT () {
+      return this.$store.state.app.wordListUpdateTime && this.worditem.updatedDT ? this.worditem.updatedDT.substr(0, this.worditem.updatedDT.indexOf('@')) : null
     }
   },
   methods: {
