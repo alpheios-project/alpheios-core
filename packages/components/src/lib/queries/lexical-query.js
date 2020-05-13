@@ -19,12 +19,14 @@ export default class LexicalQuery extends Query {
     this.checkContextForward = options.checkContextForward || ''
     this.cedictServiceUrl = options.cedictServiceUrl
     this._annotatedHomonyms = options.annotatedHomonyms
+    this._source = options.source
 
     const langID = this.selector.languageID
     this.canReset = (this.langOpts[langID] && this.langOpts[langID].lookupMorphLast)
     this.startedDefinitionsQueries = new Map()
 
-    if (this.selector.textQuoteSelector) {
+    // Suppress events that will trigger UI messages if source is wordlist
+    if (this.selector.textQuoteSelector && this._source !== LexicalQuery.sources.WORDLIST) {
       LexicalQuery.evt.TEXT_QUOTE_SELECTOR_RECEIVED.pub(this.selector.textQuoteSelector)
     }
     this.logger = Logger.getInstance()
@@ -72,10 +74,9 @@ export default class LexicalQuery extends Query {
         if (adapterConcordanceRes.errors.length > 0) {
           adapterConcordanceRes.errors.forEach(error => this.logger.log(error))
         }
-
         LexicalQuery.evt.WORD_USAGE_EXAMPLES_READY.pub(adapterConcordanceRes.result)
       } catch (error) {
-        this.logger.log('Some strange eror inside getWordUsageData', error)
+        this.logger.log('Some strange error inside getWordUsageData', error)
       }
     }
   }
@@ -166,30 +167,45 @@ export default class LexicalQuery extends Query {
         if (this._annotatedHomonyms && this._annotatedHomonyms.hasHomonyms) {
           this.homonym = Homonym.disambiguate(this.homonym, this._annotatedHomonyms.homonyms)
         }
-        LexicalQuery.evt.MORPH_DATA_READY.pub()
+        // Suppress events that will trigger UI messages if source is wordlist
+        if (this._source !== LexicalQuery.sources.WORDLIST) {
+          LexicalQuery.evt.MORPH_DATA_READY.pub()
+        }
       } else {
         if (this._annotatedHomonyms && this._annotatedHomonyms.hasHomonyms) {
           this.homonym = this._annotatedHomonyms.toHomonym(this.selector.normalizedText)
-          LexicalQuery.evt.MORPH_DATA_READY.pub()
+          // Suppress events that will trigger UI messages if source is wordlist
+          if (this._source !== LexicalQuery.sources.WORDLIST) {
+            LexicalQuery.evt.MORPH_DATA_READY.pub()
+          }
         } else {
           this.homonym = new Homonym([formLexeme], this.selector.normalizedText)
-          LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.pub({
-            targetWord: this.selector.normalizedText,
-            languageId: this.selector.languageID
-          })
+          // Suppress events that will trigger UI messages if source is wordlist
+          if (this._source !== LexicalQuery.sources.WORDLIST) {
+            LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.pub({
+              targetWord: this.selector.normalizedText,
+              languageId: this.selector.languageID
+            })
+          }
         }
       }
     } else {
       // if we can reset then start with definitions of the unanalyzed form
       if (this._annotatedHomonyms && this._annotatedHomonyms.hasHomonyms) {
         this.homonym = this._annotatedHomonyms.toHomonym(this.selector.normalizedText)
-        LexicalQuery.evt.MORPH_DATA_READY.pub()
+        // Suppress events that will trigger UI messages if source is wordlist
+        if (this._source !== LexicalQuery.sources.WORDLIST) {
+          LexicalQuery.evt.MORPH_DATA_READY.pub()
+        }
       } else {
         this.homonym = new Homonym([formLexeme], this.selector.normalizedText)
-        LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.pub({
-          targetWord: this.selector.normalizedText,
-          languageId: this.selector.languageID
-        })
+        // Suppress events that will trigger UI messages if source is wordlist
+        if (this._source !== LexicalQuery.sources.WORDLIST) {
+          LexicalQuery.evt.MORPH_DATA_NOTAVAILABLE.pub({
+            targetWord: this.selector.normalizedText,
+            languageId: this.selector.languageID
+          })
+        }
       }
     }
 
@@ -200,19 +216,25 @@ export default class LexicalQuery extends Query {
     // short definitions provided by the maAdapter
     if (lexiconShortOpts.allow && lexiconShortOpts.allow.length > 0) {
       this.homonym.lexemes.forEach((l) => { l.meaning.clearShortDefs() })
-      LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
+      // Suppress events that will trigger UI messages if source is wordlist
+      if (this._source !== LexicalQuery.sources.WORDLIST) {
+        LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
+      }
     } else {
       // we won't have any remaining valid short definition requests
       // so go ahead and publish the SHORT_DEFS_READY event so that the UI
       // can update itself
       // but issue the HOMONYM_READY event first otherwise we get errors
       // from the wordlist which expects to see the homonym before definitions
-      LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
-      LexicalQuery.evt.SHORT_DEFS_READY.pub({
-        requestType: 'short',
-        homonym: this.homonym,
-        word: this.homonym.lexemes.length > 0 ? this.homonym.lexemes[0].lemma.word : ''
-      })
+      // Suppress events that will trigger UI messages if source is wordlist
+      if (this._source !== LexicalQuery.sources.WORDLIST) {
+        LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
+        LexicalQuery.evt.SHORT_DEFS_READY.pub({
+          requestType: 'short',
+          homonym: this.homonym,
+          word: this.homonym.lexemes.length > 0 ? this.homonym.lexemes[0].lemma.word : ''
+        })
+      }
     }
 
     if (this.lemmaTranslations) {
@@ -227,7 +249,10 @@ export default class LexicalQuery extends Query {
       if (adapterTranslationRes.errors.length > 0) {
         adapterTranslationRes.errors.forEach(error => this.logger.log(error.message))
       }
-      LexicalQuery.evt.LEMMA_TRANSL_READY.pub(this.homonym)
+      // Suppress events that will trigger UI messages if source is wordlist
+      if (this._source !== LexicalQuery.sources.WORDLIST) {
+        LexicalQuery.evt.LEMMA_TRANSL_READY.pub(this.homonym)
+      }
     }
 
     if (this.wordUsageExamples) {
@@ -274,19 +299,23 @@ export default class LexicalQuery extends Query {
         adapterLexiconResShort.errors.forEach(error => this.logger.log(error.message))
       }
 
-      const adapterLexiconResFull = yield ClientAdapters.lexicon.alpheios({
-        method: 'fetchFullDefs',
-        clientId: this.clientId,
-        params: {
-          opts: lexiconFullOpts,
-          homonym: this.homonym,
-          callBackEvtSuccess: LexicalQuery.evt.FULL_DEFS_READY,
-          callBackEvtFailed: LexicalQuery.evt.FULL_DEFS_NOT_FOUND
-        }
-      })
+      let adapterLexiconResFull = {}
+      // Do not retrieve full definition for wordlist requests
+      if (this._source !== LexicalQuery.sources.WORDLIST) {
+        adapterLexiconResFull = yield ClientAdapters.lexicon.alpheios({
+          method: 'fetchFullDefs',
+          clientId: this.clientId,
+          params: {
+            opts: lexiconFullOpts,
+            homonym: this.homonym,
+            callBackEvtSuccess: LexicalQuery.evt.FULL_DEFS_READY,
+            callBackEvtFailed: LexicalQuery.evt.FULL_DEFS_NOT_FOUND
+          }
+        })
 
-      if (adapterLexiconResFull.errors.length > 0) {
-        adapterLexiconResFull.errors.forEach(error => this.logger.log(error))
+        if (adapterLexiconResFull.errors.length > 0) {
+          adapterLexiconResFull.errors.forEach(error => this.logger.log(error))
+        }
       }
 
       yield 'Finalizing'
@@ -324,10 +353,13 @@ export default class LexicalQuery extends Query {
     } else {
       resultStatus = LexicalQuery.resultStatus.CANCELED
     }
-    LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.pub({
-      resultStatus: resultStatus,
-      homonym: this.homonym
-    })
+    // Suppress events that will trigger UI messages if source is wordlist
+    if (this._source !== LexicalQuery.sources.WORDLIST) {
+      LexicalQuery.evt.LEXICAL_QUERY_COMPLETE.pub({
+        resultStatus: resultStatus,
+        homonym: this.homonym
+      })
+    }
     Query.destroy(this)
     return result
   }
@@ -351,6 +383,20 @@ export default class LexicalQuery extends Query {
     }
     return lexiconOpts
   }
+}
+
+/**
+ * Designates an originator of a lexical query.
+ *
+ * @type {{LOOKUP: string, WORDLIST: string, PAGE: string}}
+ */
+LexicalQuery.sources = {
+  // Request originated from a page, where user selected some text
+  PAGE: 'page',
+  // Request originated from a lookup components, a word was entered into a lookup component's input field
+  LOOKUP: 'lookup',
+  // Request was originated from a wordlist code, it is a machine originated query
+  WORDLIST: 'wordlist'
 }
 
 /**

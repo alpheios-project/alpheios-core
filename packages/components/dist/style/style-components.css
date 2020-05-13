@@ -705,36 +705,36 @@ div.alpheios-checkbox-block {
 }
 
 .alpheios-button-secondary {
-  color: var(--alpheios-btn-secondary-font-color);
+  color: var(--alpheios-btn-secondary-font-color) !important;
   background-color: var(--alpheios-btn-secondary-bg-color);
   border-color: var(--alpheios-btn-secondary-border-color);
 }
 .alpheios-button-secondary:hover, .alpheios-button-secondary:focus {
-  color: var(--alpheios-btn-secondary-font-color-hover);
+  color: var(--alpheios-btn-secondary-font-color-hover) !important;
   background-color: var(--alpheios-btn-secondary-bg-color-hover);
   border-color: var(--alpheios-btn-secondary-border-color-hover);
   box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25);
 }
 .alpheios-button-secondary:active {
-  color: var(--alpheios-btn-secondary-font-color-pressed);
+  color: var(--alpheios-btn-secondary-font-color-pressed) !important;
   background-color: var(--alpheios-btn-secondary-bg-color-pressed);
   border-color: var(--alpheios-btn-secondary-border-color-pressed);
   box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1);
 }
 
 .alpheios-button-tertiary, button.alpheios-button-tertiary {
-  color: var(--alpheios-btn-tertiary-font-color);
+  color: var(--alpheios-btn-tertiary-font-color) !important;
   background: var(--alpheios-btn-tertiary-bg-color);
   border-color: var(--alpheios-btn-tertiary-border-color);
 }
 .alpheios-button-tertiary:hover, .alpheios-button-tertiary:focus, button.alpheios-button-tertiary:hover, button.alpheios-button-tertiary:focus {
-  color: var(--alpheios-btn-tertiary-font-color-hover);
+  color: var(--alpheios-btn-tertiary-font-color-hover) !important;
   background: var(--alpheios-btn-tertiary-bg-color-hover);
   border-color: var(--alpheios-btn-tertiary-border-color-hover);
   box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25);
 }
 .alpheios-button-tertiary:active, button.alpheios-button-tertiary:active {
-  color: var(--alpheios-btn-tertiary-font-color-pressed);
+  color: var(--alpheios-btn-tertiary-font-color-pressed) !important;
   background: var(--alpheios-btn-tertiary-bg-color-pressed);
   border-color: var(--alpheios-btn-tertiary-border-color-pressed);
   box-shadow: inset 0 0.25em 0.25em rgba(0, 0, 0, 0.1);
@@ -1474,16 +1474,19 @@ select.alpheios-setting__control,
   flex: 0;
 }
 .alpheios-notification-area__control {
-  display: inline;
+  display: flex;
 }
 .alpheios-notification-area__control .alpheios-setting__control {
   width: 140px;
 }
-.alpheios-notification-area__control button {
-  margin-bottom: 5px;
-}
 .alpheios-notification-area__controlbox {
   flex-flow: wrap;
+  display: flex;
+  justify-content: flex-start;
+}
+.alpheios-notification-area__controlbox button {
+  margin-bottom: 5px;
+  margin-right: 3px;
 }
 .alpheios-notification-area__hint {
   color: var(--alpheios-hint-color);

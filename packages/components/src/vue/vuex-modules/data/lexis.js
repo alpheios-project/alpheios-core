@@ -312,7 +312,7 @@ export default class Lexis extends Module {
     wordUsageExamples = null,
     checkContextForward = '',
     treebankDataItem = null,
-    source = 'page'
+    source = LexicalQuery.sources.PAGE // Values that are possible currently are: 'page', 'lookup', 'wordlist'
   } = {}) {
     if (textSelector.languageID === Constants.LANG_CHINESE && !this._lexisConfig) {
       console.warn('Lookup request cannot be completed: LexisCS configuration is unavailable')
@@ -325,12 +325,12 @@ export default class Lexis extends Module {
     }
     if (!wordUsageExamples) { wordUsageExamples = this._appApi.getWordUsageExamplesQueryParams(textSelector) }
 
-    if (source !== 'wordlist') {
+    if (source !== LexicalQuery.sources.WORDLIST) {
       this._appApi.newLexicalRequest(textSelector.normalizedText, textSelector.languageID, textSelector.data, source)
     }
 
     let annotatedHomonyms
-    if (source === 'page') {
+    if (source === LexicalQuery.sources.PAGE) {
       annotatedHomonyms = await this.getTreebankData({
         store, textSelector, treebankDataItem
       })
@@ -346,7 +346,8 @@ export default class Lexis extends Module {
       langOpts: { [Constants.LANG_PERSIAN]: { lookupMorphLast: true } }, // TODO this should be externalized
       checkContextForward,
       cedictServiceUrl: this._lexisConfig ? this._lexisConfig.cedict.target_url : null,
-      annotatedHomonyms
+      annotatedHomonyms,
+      source
     })
     const result = lexQuery.getData()
 
@@ -462,7 +463,7 @@ Lexis.api = (moduleInstance, store) => {
             wordUsageExamples: moduleInstance._appApi.getWordUsageExamplesQueryParams(textSelector),
             checkContextForward: textSelector.checkContextForward,
             treebankDataItem: TreebankDataItem.getTreebankData(htmlSelector.target),
-            source: 'page'
+            source: LexicalQuery.sources.PAGE
           })
         }
       }
@@ -475,7 +476,7 @@ Lexis.api = (moduleInstance, store) => {
      * @param {string} lemmaTranslationLang - A locale for lemma translations (e.g. 'en-US')
      */
     lookupText: async (textSelector) => {
-      return moduleInstance.lexicalQuery({ store, textSelector, source: 'lookup' })
+      return moduleInstance.lexicalQuery({ store, textSelector, source: LexicalQuery.sources.LOOKUP })
     },
 
     /**
@@ -484,7 +485,7 @@ Lexis.api = (moduleInstance, store) => {
      * @param {TextSelector} textSelector - A text selector object containing information about a word from the wordlist.
      */
     lookupForWordlist: async (textSelector) => {
-      return moduleInstance.lexicalQuery({ store, textSelector, source: 'wordlist' })
+      return moduleInstance.lexicalQuery({ store, textSelector, source: LexicalQuery.sources.WORDLIST })
     },
 
     loadCedictData: async () => {

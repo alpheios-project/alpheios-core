@@ -3,12 +3,17 @@ import * as Models from 'alpheios-data-models'
 
 const data = new ImportData(Models.SyriacLanguageModel, 'sedra')
 
-// the sedra api has some html in the glosses that we want to strip out
+// allow lexemes  if they have at least a meaning or a part of speech
+data.setLexemeFilter(function (lexeme) {
+  return Boolean(lexeme.meaning.shortDefs.length > 0 ||
+    lexeme.lemma.features[Models.Feature.types.part])
+})
+
+//
 data.setMeaningParser(function (meaning, targetWord) {
   const lang = meaning.lang ? meaning.lang : Models.Constants.STR_LANG_CODE_ENG
-  let meaningText = meaning.$ || ''
-  meaningText = meaningText.replace(/<span .*?>(.*?)<\/span>/g, '$1')
-  return new Models.Definition(meaningText, lang, 'text/plain', targetWord)
+  const meaningText = meaning.$ || ''
+  return new Models.Definition(meaningText, lang, 'text/html', targetWord)
 })
 
 data.setPropertyParser(function (propertyName, propertyValue, inputElem) {

@@ -333,18 +333,22 @@ export default {
     }
 
     &__control {
-      display: inline;
+      display: flex;
+
       .alpheios-setting__control {
         width: 140px;
-      }
-
-      button {
-        margin-bottom: 5px;
       }
     }
 
     &__controlbox {
       flex-flow: wrap;
+      display: flex;
+      justify-content: flex-start;
+
+      button {
+        margin-bottom: 5px;
+        margin-right: 3px;
+      }
     }
   }
 

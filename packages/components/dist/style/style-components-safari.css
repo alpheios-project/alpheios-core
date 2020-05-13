@@ -1474,16 +1474,19 @@ select.alpheios-setting__control,
   flex: 0 !important;
 }
 .alpheios-notification-area__control {
-  display: inline;
+  display: flex;
 }
 .alpheios-notification-area__control .alpheios-setting__control {
   width: 140px !important;
 }
-.alpheios-notification-area__control button {
-  margin-bottom: 5px !important;
-}
 .alpheios-notification-area__controlbox {
   flex-flow: wrap !important;
+  display: flex;
+  justify-content: flex-start !important;
+}
+.alpheios-notification-area__controlbox button {
+  margin-bottom: 5px !important;
+  margin-right: 3px !important;
 }
 .alpheios-notification-area__hint {
   color: var(--alpheios-hint-color) !important;
