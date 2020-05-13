@@ -12,7 +12,7 @@ data.setLexemeFilter(function (lexeme) {
 //
 data.setMeaningParser(function (meaning, targetWord) {
   const lang = meaning.lang ? meaning.lang : Models.Constants.STR_LANG_CODE_ENG
-  let meaningText = meaning.$ || ''
+  const meaningText = meaning.$ || ''
   return new Models.Definition(meaningText, lang, 'text/html', targetWord)
 })
 
