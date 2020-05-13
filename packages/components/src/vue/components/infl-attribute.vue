@@ -106,7 +106,8 @@ export default {
   @import "../../styles/variables";
   #{$alpheios-namespace} {
     // These rules intentionally use an increased specificity to fight the style leakage
-    .alpheios-inflections-list__inflgroup {
+    .alpheios-inflections-list__inflgroup,
+    .alpheios-inflections-list__inflections {
       span.alpheios-morph__attr {
         font-weight: 400;
         padding-right: .25em;

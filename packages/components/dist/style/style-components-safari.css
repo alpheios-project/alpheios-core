@@ -894,21 +894,26 @@ body {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__attr {
+.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__attr,
+.alpheios-content .alpheios-inflections-list__inflections span.alpheios-morph__attr {
   font-weight: 400 !important;
   padding-right: 0.25em !important;
 }
-.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr {
+.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr,
+.alpheios-content .alpheios-inflections-list__inflections span.alpheios-morph__linkedattr {
   color: var(--alpheios-color-muted) !important;
   cursor: pointer !important;
   font-weight: 700 !important;
   color: var(--alpheios-desktop-popup-link-color) !important;
   padding-right: 0.25em !important;
 }
-.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:hover, .alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:active {
+.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:hover, .alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:active,
+.alpheios-content .alpheios-inflections-list__inflections span.alpheios-morph__linkedattr:hover,
+.alpheios-content .alpheios-inflections-list__inflections span.alpheios-morph__linkedattr:active {
   text-decoration: underline !important;
 }
-.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:hover {
+.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:hover,
+.alpheios-content .alpheios-inflections-list__inflections span.alpheios-morph__linkedattr:hover {
   color: var(--alpheios-desktop-popup-link-color-hover) !important;
 }
 /*
@@ -1138,8 +1143,9 @@ h4.alpheios-principal-parts__groupitem {
 h4.alpheios-principal-parts__groupitem:last-of-type {
   margin-right: 0 !important;
 }
-.alpheios-principal-parts__groupitem:last-child:after {
+h4.alpheios-principal-parts__groupitem:last-of-type:after {
   content: ":" !important;
+  margin-left: 3px !important;
 }
 .alpheios-principal-parts__item {
   display: flex;

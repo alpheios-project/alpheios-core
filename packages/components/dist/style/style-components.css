@@ -894,21 +894,26 @@ body {
  Calculates a size of UI elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-ui-size` custom prop.
  */
-.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__attr {
+.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__attr,
+.alpheios-content .alpheios-inflections-list__inflections span.alpheios-morph__attr {
   font-weight: 400;
   padding-right: 0.25em;
 }
-.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr {
+.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr,
+.alpheios-content .alpheios-inflections-list__inflections span.alpheios-morph__linkedattr {
   color: var(--alpheios-color-muted);
   cursor: pointer;
   font-weight: 700;
   color: var(--alpheios-desktop-popup-link-color);
   padding-right: 0.25em;
 }
-.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:hover, .alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:active {
+.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:hover, .alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:active,
+.alpheios-content .alpheios-inflections-list__inflections span.alpheios-morph__linkedattr:hover,
+.alpheios-content .alpheios-inflections-list__inflections span.alpheios-morph__linkedattr:active {
   text-decoration: underline;
 }
-.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:hover {
+.alpheios-content .alpheios-inflections-list__inflgroup span.alpheios-morph__linkedattr:hover,
+.alpheios-content .alpheios-inflections-list__inflections span.alpheios-morph__linkedattr:hover {
   color: var(--alpheios-desktop-popup-link-color-hover);
 }
 /*
@@ -1138,8 +1143,9 @@ h4.alpheios-principal-parts__groupitem {
 h4.alpheios-principal-parts__groupitem:last-of-type {
   margin-right: 0;
 }
-.alpheios-principal-parts__groupitem:last-child:after {
+h4.alpheios-principal-parts__groupitem:last-of-type:after {
   content: ":";
+  margin-left: 3px;
 }
 .alpheios-principal-parts__item {
   display: flex;

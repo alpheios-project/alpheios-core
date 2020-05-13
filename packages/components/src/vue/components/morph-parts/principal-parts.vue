@@ -160,11 +160,13 @@ export default {
   }
 
   h4.alpheios-principal-parts__groupitem:last-of-type {
-    margin-right: 0;
-  }
+      margin-right: 0;
 
-  .alpheios-principal-parts__groupitem:last-child:after {
-    content: ':';
+      // Comment the following rule out if colons are not required after headword(s)
+      &:after {
+          content: ':';
+          margin-left: 3px;
+      }
   }
 
   .alpheios-principal-parts__item {
