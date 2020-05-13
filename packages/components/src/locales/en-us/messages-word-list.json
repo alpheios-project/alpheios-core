@@ -55,32 +55,32 @@
         "component": "WordLanguagePanel"
     },
     "WORDLIST_FILTER_BYCURRENTSESSION": {
-        "message": "by this session",
+        "message": "this session",
         "description": "Filter only those words that were selected in the current session",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYIMPORTANT": {
-        "message": "by important",
+        "message": "important",
         "description": "Filter only those words that has an important flag",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYWORDFORM_FULL": {
-        "message": "by exact word",
+        "message": "exact word",
         "description": "Filter only those words that has this word word",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYWORDFORM_PART": {
-        "message": "by word form (part)",
+        "message": "word form (part)",
         "description": "Filter only those words that has this part of word form",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYLEMMA_FULL": {
-        "message": "by lemma",
+        "message": "lemma",
         "description": "Filter only those words that has this lemma",
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYLEMMA_PART": {
-        "message": "by lemma (part)",
+        "message": "lemma (part)",
         "description": "Filter only those words that has this part of lemma",
         "component": "WordFilterPanel"
     },
@@ -146,7 +146,7 @@
         "component": "WordLanguagePanel"
     },
     "WORDLIST_FILTER_BYMOSTRECENT": {
-        "message": "by most recent",
+        "message": "most recent",
         "description": "Filter by max amount with sorting by updatedDT desc",
         "component": "WordFilterPanel"
     },
@@ -156,7 +156,7 @@
         "component": "WordFilterPanel"
     },
     "WORDLIST_FILTER_BYMOSTOFTEN": {
-        "message": "by most often",
+        "message": "most often",
         "description": "Filter by max amount with sorting by frequency desc",
         "component": "WordFilterPanel"
     },

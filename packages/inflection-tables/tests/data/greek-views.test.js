@@ -263,7 +263,7 @@ describe('greek-views.test.js', () => {
     })
   })
 
-  it('13 - checked Greek Views - ἀττα  - no GreekPronounView', async () => {
+  it.skip('13 - checked Greek Views - ἀττα  - no GreekPronounView', async () => {
     const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀττα', Constants.LANG_GREEK)
 
     expect(inflectionsViewSet.hasMatchingViews).toBeFalsy()
