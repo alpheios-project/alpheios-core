@@ -263,10 +263,18 @@ describe('greek-views.test.js', () => {
     })
   })
 
-  it.skip('13 - checked Greek Views - ἀττα  - no GreekPronounView', async () => {
-    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('ἀττα', Constants.LANG_GREEK)
+  it('13 - checked Greek Views - τά  - no GreekPronounView', async () => {
+    const inflectionsViewSet = await BaseTestHelp.getInflectionSet('τά', Constants.LANG_GREEK)
 
-    expect(inflectionsViewSet.hasMatchingViews).toBeFalsy()
+    expect(inflectionsViewSet.hasMatchingViews).toBeTruthy()
+    expect(inflectionsViewSet.matchingViews.length).toEqual(1)
+
+    BaseTestHelp.checkView({
+      inflectionsViewSet,
+      viewName: 'GreekArticleView',
+      title: 'Article Declension',
+      linkedViewsLength: 0
+    })
   })
 
 })

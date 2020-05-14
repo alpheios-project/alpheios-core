@@ -153,10 +153,11 @@ export default {
     content: "";
   }
 
-  h4.alpheios-principal-parts__groupitem {
+  .alpheios-principal-parts__item h4.alpheios-principal-parts__groupitem {
     display: inline;
     font-weight: 700;
     margin-right: 5px;
+    margin-bottom: 0;
   }
 
   h4.alpheios-principal-parts__groupitem:last-of-type {
