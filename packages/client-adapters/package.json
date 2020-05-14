@@ -36,7 +36,7 @@
     "alpheios-data-models": "^3.3.0",
     "alpheios-fixtures": "github:alpheios-project/fixtures",
     "alpheios-messaging": "github:alpheios-project/alpheios-messaging",
-    "alpheios-node-build": "github:alpheios-project/node-build#i32-script-optimization",
+    "alpheios-node-build": "github:alpheios-project/node-build#v3",
     "axios": "^0.19.2",
     "babel-plugin-module-resolver": "^4.0.0",
     "coveralls": "^3.1.0",

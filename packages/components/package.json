@@ -49,7 +49,7 @@
     "alpheios-fixtures": "github:alpheios-project/fixtures",
     "alpheios-inflection-tables": "^3.3.0",
     "alpheios-messaging": "github:alpheios-project/alpheios-messaging",
-    "alpheios-node-build": "github:alpheios-project/node-build#i32-script-optimization",
+    "alpheios-node-build": "github:alpheios-project/node-build#v3",
     "alpheios-res-client": "^3.3.0",
     "alpheios-wordlist": "^3.3.0",
     "autoprefixer": "^9.7.4",

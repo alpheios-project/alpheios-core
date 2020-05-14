@@ -29,7 +29,7 @@
     "@babel/plugin-transform-runtime": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "@babel/runtime": "^7.9.6",
-    "alpheios-node-build": "github:alpheios-project/node-build#i32-script-optimization",
+    "alpheios-node-build": "github:alpheios-project/node-build#v3",
     "babel-jest": "^21.2.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "coveralls": "^3.1.0",
