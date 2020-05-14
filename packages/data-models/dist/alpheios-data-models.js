@@ -6579,6 +6579,10 @@ class TreebankDataItem {
     return this.sourceUrl.replace('DOC', this.doc).replace('SENTENCE', this.sentenceId)
   }
 
+  get docUrl () {
+    return this.sourceUrl.replace('DOC', this.doc)
+  }
+
   get provider () {
     return new URL(this.fullUrl).origin
   }
