@@ -13,7 +13,7 @@ import { execFileSync, execSync } from 'child_process'
   console.log(`Setting a package version to ${version}`)
   let output
   try {
-    //const output = execSync(`npx lerna version ${version} --no-git-tag-version --no-push --yes`, { encoding: 'utf8' })
+    const output = execSync(`npx lerna version ${version} --no-git-tag-version --no-push --yes`, { encoding: 'utf8' })
   } catch (e) {
     console.error('Cannot execute npm version:', e)
     process.exit(1)
@@ -31,7 +31,6 @@ import { execFileSync, execSync } from 'child_process'
     })
     await builder.importConfig('config-tagged-commit.mjs', 'packages/components/build')
     await builder.runModules()
-    // output = execSync(`cd packages/components && node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs --module=webpack --mode=all --preset=vue --externalConfig=config.mjs --buildTime=${buildDT}`, { encoding: 'utf8' })
   } catch (error) {
     console.error('Build process failed:', error)
     process.exit(2)
@@ -40,13 +39,13 @@ import { execFileSync, execSync } from 'child_process'
 
   console.log('Committing components/dist')
   try {
-    //output = execFileSync('git', ['add', 'lerna.json', 'packages/*/package*.json', 'packages/components/dist'], { encoding: 'utf8' })
+    output = execFileSync('git', ['add', 'lerna.json', 'packages/*/package*.json', 'packages/components/dist'], { encoding: 'utf8' })
   } catch (error) {
     console.error('Commit process failed:', error)
     process.exit(3)
   }
   try {
-    //output = execFileSync('git', ['commit', '-m', `Build ${buildInfo.name}`], { encoding: 'utf8' })
+    output = execFileSync('git', ['commit', '-m', `Build ${buildInfo.name}`], { encoding: 'utf8' })
   } catch (error) {
     console.error('Commit process failed:', error)
     process.exit(4)
@@ -54,7 +53,7 @@ import { execFileSync, execSync } from 'child_process'
 
   console.log(`Tagging with ${buildInfo.name}`)
   try {
-    //output = execSync(`git tag ${buildInfo.name}`, { encoding: 'utf8' })
+    output = execSync(`git tag ${buildInfo.name}`, { encoding: 'utf8' })
   } catch (error) {
     console.error('Tagging failed:', error)
     process.exit(5)
