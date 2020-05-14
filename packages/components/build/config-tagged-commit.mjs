@@ -1,5 +1,5 @@
 /*
-A configuration file for a tagged commit script. Same as config.mjs with an exception of paths
+A configuration file for a tagged commit script. Same as config.mjs except paths
  */
 import VueLoaderPlugin from 'vue-loader/lib/plugin.js'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
