@@ -190,7 +190,8 @@ export default class Lexis extends Module {
     // If there were no previous requests we cannot say if the provider is failing
     if (!this._lastTreebankDataItem) { return false }
     // If we already tried to load this treebank and it failed then provider is failing
-    if (this._lastTreebankDataItem.provider === treebankDataItem.provider &&
+    // for this document
+    if (this._lastTreebankDataItem.docUrl === treebankDataItem.docUrl &&
       !this._treebankAvailable) {
       return true
     }
@@ -200,7 +201,7 @@ export default class Lexis extends Module {
   _isTreebankLoaded (treebankDataItem) {
     // Not enough information to say or loading failed
     if (!this._lastTreebankDataItem || !this._treebankAvailable) { return false }
-    return this._lastTreebankDataItem.provider === treebankDataItem.provider
+    return this._lastTreebankDataItem.docUrl === treebankDataItem.docUrl
   }
 
   async getTreebankData ({
