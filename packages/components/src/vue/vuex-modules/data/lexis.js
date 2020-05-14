@@ -113,7 +113,8 @@ export default class Lexis extends Module {
       const result = await ClientAdapters.morphology.arethusaTreebank({
         method: 'refreshView',
         params: {
-          provider
+          provider,
+          timeout: 10 // be explicit about timeout because it will be retried
         }
       })
       if (result.errors.length === 0) {
