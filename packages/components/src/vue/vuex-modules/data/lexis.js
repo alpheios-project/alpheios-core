@@ -114,7 +114,7 @@ export default class Lexis extends Module {
         method: 'refreshView',
         params: {
           provider,
-          timeout: 10 // be explicit about timeout because it will be retried
+          timeout: 10000 // set timeout explicitly to 10 seconds
         }
       })
       if (result.errors.length === 0) {
