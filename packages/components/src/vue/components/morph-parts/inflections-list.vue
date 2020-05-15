@@ -185,6 +185,7 @@
   .alpheios-inflections-list__inflections div.alpheios-inflections-list__inline {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     span {
       padding-right: .25em;
     }
