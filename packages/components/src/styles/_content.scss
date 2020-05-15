@@ -18,11 +18,13 @@
   [lang='ara'] {
     // `Important` below is required to override aggressive styling on pages
     font-family: var(--alpheios-arabic-font-face) !important;
+    font-variant-ligatures: normal;
   }
 
   [lang='syr'] {
     // `Important` below is required to override aggressive styling on pages
     font-family: var(--alpheios-syriac-font-face) !important;
+    font-variant-ligatures: normal;
   }
 
   h1, h2, h3, h4, h5, h6, p, span, a {
