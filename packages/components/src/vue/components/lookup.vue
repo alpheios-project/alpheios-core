@@ -6,7 +6,7 @@
 
         <div class="alpheios-lookup__search-control">
           <input-autocomplete
-              :lang = "getLookupLanguage()"
+              :lang = "lookupLanguage"
               :clearValue = "clearLookupText"
               id="alpheios-lookup-form-input"
               @keyPressEnter = "lookup"
@@ -102,11 +102,16 @@ export default {
   },
 
   computed: {
+    lookupLanguage () {
+      return this.showLangSelector
+        ? this.$options.lookupLanguage.currentValue
+        : this.$store.state.app.selectedLookupLangCode
+    },
     lookupLangName () {
-      return this.app.getLanguageName(this.getLookupLanguage()).name
+      return this.app.getLanguageName(this.lookupLanguage).name
     },
     showEnableAutocomplete () {
-      const check = this.featureOptions.enableLogeionAutoComplete.limitByLangs.includes(this.getLookupLanguage())
+      const check = this.featureOptions.enableLogeionAutoComplete.limitByLangs.includes(this.lookupLanguage)
       this.$emit('toggleEnableAutocompleteCheck', check)
       return check
     },
@@ -114,7 +119,7 @@ export default {
       return this.$store.state.settings.featureResetCounter + 1 ? this.settings.getFeatureOptions() : null
     },
     availableUseBetaCodes () {
-      const value = this.getLookupLanguage() === GreekInput.langCode
+      const value = this.lookupLanguage === GreekInput.langCode
       this.$emit('updateAvailableUseBetaCodes', value)
       return value
     }
@@ -131,12 +136,6 @@ export default {
     }
   },
   methods: {
-    getLookupLanguage () {
-      return this.showLangSelector
-        ? this.$options.lookupLanguage.currentValue
-        : this.$store.state.app.selectedLookupLangCode
-    },
-
     toggleLangSelector () {
       this.$emit('toggleLangSelector', true)
     },
@@ -151,7 +150,7 @@ export default {
       If we override the language with the value selected, then the lookup language must be a current value of our `lookupLanguage` prop,
       otherwise it must be a value of panel's options `preferredLanguage` options item
        */
-      const selectedLangCode = this.getLookupLanguage()
+      const selectedLangCode = this.lookupLanguage
       const selectedLangID = LanguageModelFactory.getLanguageIdFromCode(selectedLangCode)
       const textSelector = TextSelector.createObjectFromText(this.lookuptext, selectedLangID)
 
