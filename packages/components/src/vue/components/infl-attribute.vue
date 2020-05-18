@@ -1,6 +1,8 @@
 <template>
   <span :class="attributeClass(type)" :data-feature="type" :data-grouplevel="grouplevel"
-        @click="sendFeature(data[type])" v-html="decorate(data,type)" v-if="data[type]"></span>
+        @click="sendFeature(data[type])" v-html="decorate(data,type)" v-if="data[type]"
+        :lang="lang"
+        ></span>
 </template>
 <script>
 // Modules support
@@ -29,6 +31,10 @@ export default {
       type: Array,
       required: false,
       default: () => ['']
+    },
+    lang: {
+      type: String,
+      required: false
     }
   },
   methods: {

@@ -221,9 +221,11 @@ html {
 }
 .alpheios-content [lang=ara] {
   font-family: var(--alpheios-arabic-font-face) !important;
+  font-variant-ligatures: normal !important;
 }
 .alpheios-content [lang=syr] {
   font-family: var(--alpheios-syriac-font-face) !important;
+  font-variant-ligatures: normal !important;
 }
 .alpheios-content h1, .alpheios-content h2, .alpheios-content h3, .alpheios-content h4, .alpheios-content h5, .alpheios-content h6, .alpheios-content p, .alpheios-content span, .alpheios-content a {
   line-height: 1.15 !important;
@@ -3948,10 +3950,6 @@ span.alpheios-lookup__lang-change:hover {
 }
 .alpheios-toolbar__lookup.alpheios-toolbar__lookup-beta-codes {
   height: calc(var(--alpheios-base-text-size) * 31.25) !important;
-  border-radius: calc(var(--alpheios-base-ui-size) * 0.625) 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) !important;
-}
-.alpheios-toolbar__lookup.alpheios-toolbar__lookup-change-lang {
-  height: calc(var(--alpheios-base-text-size) * 13.75) !important;
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
 .alpheios-toolbar__buttons {

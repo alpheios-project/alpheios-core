@@ -53,6 +53,7 @@
                 :data="lemma.features"
                 :decorators="['link','brackets']"
                 :type="types.source"
+                :lang="languageCode"
             />
         </div>
     </div>
