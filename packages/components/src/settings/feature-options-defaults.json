@@ -119,16 +119,16 @@
         },
         {
           "value": "gez",
-          "text": "Ancient Ethiopic (Ge'ez - Experimental)"
+          "text": "Ancient Ethiopic (Ge'ez)"
 
         },
         {
           "value": "syr",
-          "text": "Syriac (Experimental)"
+          "text": "Syriac"
         },
         {
           "value": "zho",
-          "text": "Chinese (Experimental)"
+          "text": "Chinese"
 
         }
       ]
@@ -155,14 +155,14 @@
         },
         {
           "value": "gez",
-          "text": "Ancient Ethiopic (Ge'ez - Experimental)"
+          "text": "Ancient Ethiopic (Ge'ez)"
         },
         { "value": "syr",
-          "text": "Syriac (Experimental)"
+          "text": "Syriac"
         },
         {
           "value": "zho",
-          "text": "Chinese (Experimental)"
+          "text": "Chinese"
 
         }
       ]

@@ -504,6 +504,7 @@ if you want to create a different configuration of a UI controller.
       featureOptionChange: this.featureOptionChange.bind(this),
       resetAllOptions: this.resetAllOptions.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
+      notifyExperimental: this.notifyExperimental.bind(this),
       getLanguageName: UIController.getLanguageName,
       startResourceQuery: this.startResourceQuery.bind(this),
       sendFeature: this.sendFeature.bind(this),
@@ -1389,6 +1390,17 @@ If no URLS are provided, will reset grammar data.
     this.updateProviders(homonym)
   }
 
+  notifyExperimental (languageID) {
+    if (typeof languageID !== 'symbol') {
+      languageID = LanguageModelFactory.getLanguageIdFromCode(languageID)
+    }
+    if (LanguageModelFactory.isExperimentalLanguage(languageID)) {
+      const langDetails = UIController.getLanguageName(languageID)
+      this.store.commit('ui/setNotification',
+        { text: this.api.l10n.getMsg('TEXT_NOTICE_EXPIRIMENTAL_LANGUAGE', { languageName: langDetails.name}), important: true })
+    }
+  }
+
   updateLanguage (currentLanguageID) {
     // the code which follows assumes we have been passed a languageID symbol
     // we can try to recover gracefully if we accidentally get passed a string value
@@ -1397,6 +1409,7 @@ If no URLS are provided, will reset grammar data.
       currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(currentLanguageID)
     }
     this.store.commit('app/setCurrentLanguage', currentLanguageID)
+    this.notifyExperimental(currentLanguageID)
     const newLanguageCode = LanguageModelFactory.getLanguageCodeFromId(currentLanguageID)
     if (this.state.currentLanguage !== newLanguageCode) {
       this.state.setItem('currentLanguage', newLanguageCode)

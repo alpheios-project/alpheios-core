@@ -306,6 +306,11 @@
     "description": "label for hide credits link on popup",
     "component": "Popup"
   },
+  "TEXT_NOTICE_EXPIRIMENTAL_LANGUAGE": {
+    "message": "Support for {languageName} is experimental.",
+    "description": "Notice when changing to an experimental language",
+    "params": ["languageName"]
+  },
   "TEXT_NOTICE_SUGGEST_LOGIN": {
     "message": "Login to save your words to your wordlist.",
     "description": "login notification",
