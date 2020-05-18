@@ -283,7 +283,7 @@ if you want to create a different configuration of a UI controller.
       /*
       How many times to retry and what timout to use within an Arethusa treebank app `refreshView` request.
        */
-      arethusaTbRefreshRetryCount: 50,
+      arethusaTbRefreshRetryCount: 5,
       arethusaTbRefreshDelay: 200,
       // A URL of a server that provides an app configuration
       configServiceUrl: 'https://config.alpheios.net/v1/config'
