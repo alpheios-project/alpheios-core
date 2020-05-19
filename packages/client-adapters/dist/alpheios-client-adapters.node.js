@@ -10430,6 +10430,14 @@ class ArethusaTreebankAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
         })
         const transformAdapter = new _clAdapters_transformers_alpheios_lexicon_transformer__WEBPACK_IMPORTED_MODULE_1__["default"](this, mapper, 'arethusa')
         const homonym = transformAdapter.transformData(tbRes, word)
+        // handle verb participles in a way consistent with the morpheus parser
+        // which reports the pofs of the lemma as verb and pofs of the inflection as verb participle
+        if (homonym.lexemes.length == 1 &&
+           homonym.lexemes[0].lemma.features[alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Feature"].types.part].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Constants"].POFS_VERB &&
+           homonym.lexemes[0].inflections.length == 1 &&
+           homonym.lexemes[0].inflections[0][alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Feature"].types.mood].value === alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Constants"].MOOD_PARTICIPLE) {
+             homonym.lexemes[0].inflections[0].addFeature(new alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Feature"](alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Feature"].types.part,alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Constants"].POFS_VERB_PARTICIPLE,languageModel.languageID))
+        }
         return homonym
       } else {
         this.addError(this.l10n.messages['MORPH_TREEBANK_MISSING_REF'].get(word))
