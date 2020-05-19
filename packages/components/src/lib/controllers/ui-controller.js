@@ -1397,7 +1397,7 @@ If no URLS are provided, will reset grammar data.
     if (LanguageModelFactory.isExperimentalLanguage(languageID)) {
       const langDetails = UIController.getLanguageName(languageID)
       this.store.commit('ui/setNotification',
-        { text: this.api.l10n.getMsg('TEXT_NOTICE_EXPIRIMENTAL_LANGUAGE', { languageName: langDetails.name}), important: true })
+        { text: this.api.l10n.getMsg('TEXT_NOTICE_EXPIRIMENTAL_LANGUAGE', { languageName: langDetails.name }), important: true })
     }
   }
 

@@ -1311,6 +1311,7 @@ h4.alpheios-principal-parts__groupitem:last-of-type:after {
 .alpheios-inflections-list__inflections div.alpheios-inflections-list__inline {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 .alpheios-inflections-list__inflections div.alpheios-inflections-list__inline span {
   padding-right: 0.25em;

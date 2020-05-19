@@ -5947,6 +5947,7 @@ for the current node
 
   /**
    * Get a list of valid puncutation for this language
+   * Taken from  the list at https://en.wikipedia.org/wiki/Syriac_(Unicode_block)
    *
    * @returns {string} a string containing valid puncutation symbols
    */
