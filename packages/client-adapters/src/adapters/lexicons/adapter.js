@@ -16,6 +16,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
     super()
     this.config = this.uploadConfig(config, DefaultConfig)
     this.options = { timeout: this.config.timeout ? this.config.timeout : 0 }
+    this.async = Boolean(this.config.callBackEvtSuccess)
   }
 
   /**
@@ -130,6 +131,39 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
       this.addError(this.l10n.messages.LEXICONS_NO_ALLOWED_URL)
       return
     }
+    
+    if (this.async) {
+      return this.fetchDefsWithCallbacks(homonym, lookupFunction)
+    } else {
+      if (lookupFunction === 'short') {
+        return this.fetchShortDefsSync(homonym, lookupFunction)
+      }
+    }
+  }
+
+  async fetchShortDefsSync (homonym) {
+    const languageID = homonym.lexemes[0].lemma.languageID
+    const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
+
+    for (const urlKey of urlKeys) {
+      const url = this.config[urlKey].urls.short
+      const result = await this.checkCachedData(url)
+
+      if (result) {
+        const res = cachedDefinitions.get(url)
+        await this.updateShortDefs(res, homonym, this.config[urlKey])
+      }
+    }
+  }
+
+  /**
+  * This is an async method that retrieves definitions for homonym with getting result inside callbacks
+  * @param {Homonym} homonym - homonym for retrieving definitions
+  * @param {Object} lookupFunction - type of definitions - short, full
+  * @return {Boolean} - result of fetching
+  */
+
+  fetchDefsWithCallbacks (homonym, lookupFunction) {
     const languageID = homonym.lexemes[0].lemma.languageID
     const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
 

@@ -17,11 +17,23 @@ describe('lexicons/adapter.test.js', () => {
 
   let testSuccessHomonym, testFailedHomonym, testLangID
 
-  beforeAll(() => {
+  beforeAll(async () => {
     jest.spyOn(console, 'error')
     jest.spyOn(console, 'log')
     jest.spyOn(console, 'warn')
-  })
+
+    const adapter = new AlpheiosLexiconsAdapter({
+      category: 'lexicon',
+      adapterName: 'alpheios',
+      method: 'fetchShortDefs'
+    })
+
+    const urlKey = 'https://github.com/alpheios-project/lsj'
+    const url = adapter.config[urlKey].urls.short
+    const result = await adapter.checkCachedData(url, LexiconsFixture.lexData[url])
+
+    return result
+  }, 50000)
 
   beforeEach(async () => {
     ClientAdapters.init()
@@ -65,7 +77,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchFullDefs'
+      method: 'fetchFullDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     expect(adapter.errors).toEqual([])
@@ -79,7 +92,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchShortDefs'
+      method: 'fetchShortDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     adapter.fetchDefinitions = jest.fn()
@@ -92,7 +106,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchFullDefs'
+      method: 'fetchFullDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     adapter.fetchDefinitions = jest.fn()
@@ -105,7 +120,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchShortDefs'
+      method: 'fetchShortDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
@@ -126,7 +142,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchShortDefs'
+      method: 'fetchShortDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
@@ -142,7 +159,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchFullDefs'
+      method: 'fetchFullDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
@@ -193,7 +211,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchFullDefs'
+      method: 'fetchFullDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
     adapter.addError = jest.fn()
 
@@ -205,7 +224,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchFullDefs'
+      method: 'fetchShortDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
     jest.spyOn(adapter, 'getRequests')
     adapter.prepareShortDefPromise = jest.fn()
@@ -225,7 +245,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchFullDefs'
+      method: 'fetchFullDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
     jest.spyOn(adapter, 'getRequests')
     adapter.prepareFullDefPromise = jest.fn()
@@ -245,7 +266,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchFullDefs'
+      method: 'fetchFullDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     jest.spyOn(adapter, 'fetch')
@@ -266,7 +288,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchFullDefs'
+      method: 'fetchFullDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     jest.spyOn(adapter, 'addError')
@@ -281,7 +304,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchShortDefs'
+      method: 'fetchShortDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     jest.spyOn(adapter, 'lookupInDataIndex')
@@ -310,7 +334,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchFullDefs'
+      method: 'fetchFullDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
@@ -332,7 +357,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchFullDefs'
+      method: 'fetchFullDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     let urlKey = 'https://github.com/alpheios-project/dod'
@@ -345,7 +371,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchFullDefs'
+      method: 'fetchFullDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
@@ -369,7 +396,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchFullDefs'
+      method: 'fetchFullDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     let res = adapter.getRequests(testLangID)
@@ -383,25 +411,29 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchFullDefs'
+      method: 'fetchFullDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
-    let urlKey = 'https://github.com/alpheios-project/lsj'
+    const url = 'https://github.com/alpheios-project/lsj'
     let testURL = 'https://repos1.alpheios.net/lexdata/lsj/dat/grc-lsj-ids.dat'
 
-    let unparsed = await adapter.fetch(testURL, { type: 'xml', timeout: adapter.options.timeout })
+    let unparsed = LexiconsFixture.libUrls.find(sourceData => sourceData.url === url && sourceData.type === 'short' ).source
+    unparsed = unparsed.join("\n")
+
     let parsed = papaparse.parse(unparsed, { quoteChar: '\u{0000}', delimiter: '|' })
     let data = adapter.fillMap(parsed.data)
 
     expect(typeof data).toEqual('object')
     expect(Array.isArray(data.values().next().value)).toBeTruthy()
-  })
+  }, 50000)
 
   it('20 AlpheiosLexiconsAdapter - get shortDefinitions (multiple) - mare', async () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchShortDefs'
+      method: 'fetchShortDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     await BaseTestHelp.updateCacheWithFixtures()
@@ -440,7 +472,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchFullDefs'
+      method: 'fetchFullDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     await BaseTestHelp.updateCacheWithFixtures()
@@ -463,7 +496,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchFullDefs'
+      method: 'fetchFullDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     await BaseTestHelp.updateCacheWithFixtures()
@@ -482,7 +516,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchFullDefs'
+      method: 'fetchFullDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     let urlKey = 'https://github.com/alpheios-project/lsj'
@@ -514,7 +549,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchShortDefs'
+      method: 'fetchShortDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
 
     await BaseTestHelp.updateCacheWithFixtures()
@@ -537,9 +573,10 @@ describe('lexicons/adapter.test.js', () => {
   it('25 AlpheiosLexiconsAdapter - test lookupInDataIndex', async () => {
 
     let adapter = new AlpheiosLexiconsAdapter({
-            category: 'lexicon',
+      category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchShortDefs'
+      method: 'fetchShortDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
     const model = LMF.getLanguageModel(Constants.LANG_GREEK)
 
@@ -572,7 +609,8 @@ describe('lexicons/adapter.test.js', () => {
     let adapter = new AlpheiosLexiconsAdapter({
             category: 'lexicon',
       adapterName: 'alpheios',
-      method: 'fetchShortDefs'
+      method: 'fetchShortDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
     })
     const model = LMF.getLanguageModel(Constants.LANG_GREEK)
 
@@ -592,5 +630,43 @@ describe('lexicons/adapter.test.js', () => {
     expect(adapter.lookupInDataIndex(data,mockLemma,model)[0].field1).toEqual('Caesar')
   })
 
+  it('27 AlpheiosLexiconsAdapter - async fetchShortDefs', async () => {
+    let adapter = new AlpheiosLexiconsAdapter({
+      category: 'lexicon',
+      adapterName: 'alpheios',
+      method: 'fetchShortDefs',
+      callBackEvtSuccess: { pub: () => jest.fn() }
+    })
+
+    expect(adapter.async).toBeTruthy()
+    
+    jest.spyOn(adapter, 'getRequests')
+    jest.spyOn(adapter, 'prepareShortDefPromise')
+
+    let options = { allow: ['https://github.com/alpheios-project/lsj'] }
+    await adapter.fetchDefinitions(testSuccessHomonym, options, 'short')
+
+    expect(adapter.prepareShortDefPromise).toHaveBeenCalled()
+
+    await timeout(6000)
+    expect(testSuccessHomonym.lexemes[0].meaning.shortDefs.length).toEqual(1)
+    expect(testSuccessHomonym.lexemes[0].meaning.shortDefs[0].text).toEqual('mouse or rat')
+  }, 50000)
+
+  it('28 AlpheiosLexiconsAdapter - sync fetchShortDefs', async () => {
+    let adapter = new AlpheiosLexiconsAdapter({
+      category: 'lexicon',
+      adapterName: 'alpheios',
+      method: 'fetchShortDefs'
+    })
+
+    expect(adapter.async).toBeFalsy()
+
+    let options = { allow: ['https://github.com/alpheios-project/lsj'] }
+    await adapter.fetchDefinitions(testSuccessHomonym, options, 'short')
+
+    expect(testSuccessHomonym.lexemes[0].meaning.shortDefs.length).toEqual(1)
+    expect(testSuccessHomonym.lexemes[0].meaning.shortDefs[0].text).toEqual('mouse or rat')
+  }, 500000)
 
 })
