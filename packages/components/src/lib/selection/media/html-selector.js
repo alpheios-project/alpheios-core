@@ -234,14 +234,20 @@ export default class HTMLSelector extends MediaSelector {
      */
     const anchorNodeData = selection.anchorNode.data
     let ro // An offset from the beginning of a selection
+    let focusEmpty = false // True if selection spans over two nodes and a focus node is empty
     let invalidAnchor = false
-    // firefox's implementation of getSelection is buggy and can result
-    // in incomplete data - sometimes the anchor text doesn't contain the focus data
-    // and sometimes the focus data and anchor text is just whitespaces
-    // in these cases we just use the target textContent
 
-    if ((focus.data && !anchorText.match(this._escapeRegExp(focus.data))) ||
+    if (!anchor.isEqualNode(focus) && focus.data && focus.data.match(/^\s*$/)) {
+      focusEmpty = true
+      ro = selection.anchorOffset
+    } else if ((focus.data && !anchorText.match(this._escapeRegExp(focus.data))) ||
       (focus.data && focus.data.match(/^\s*$/))) {
+      /*
+      firefox's implementation of getSelection is buggy and can result
+      in incomplete data - sometimes the anchor text doesn't contain the focus data
+      and sometimes the focus data and anchor text is just whitespaces
+      in these cases we just use the target textContent
+       */
       anchorText = this.target.textContent
       ro = 0
       invalidAnchor = true
@@ -330,7 +336,13 @@ export default class HTMLSelector extends MediaSelector {
 
     if (!textSelector.isEmpty()) {
       // Reset a selection
-      if (invalidAnchor) {
+      if (focusEmpty) {
+        /*
+        If focus node is empty we can exclude it from a selection.
+        As a result, selection will span over an anchor node only.
+         */
+        selection.setBaseAndExtent(anchor, wordStart, anchor, wordEnd)
+      } else if (invalidAnchor) {
         selection.removeAllRanges()
         let range = document.createRange() // eslint-disable-line prefer-const
         range.selectNode(anchor)

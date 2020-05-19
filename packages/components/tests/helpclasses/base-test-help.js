@@ -433,7 +433,8 @@ export default class BaseTestHelp {
     testElement2.ownerDocument.getSelection = jest.fn(() => {
       return {
         anchorNode: {
-          data: text
+          data: text,
+          isEqualNode: (node) => node.data === text
         },
         anchorOffset: start,
         focusNode: {
