@@ -24,20 +24,22 @@ describe('html-selector.test.js', () => {
     document.body.appendChild(parentElement)
 
     testElement.ownerDocument.getSelection = jest.fn(() => {
+      const text = 'a bene placito'
       return {
         anchorNode: {
-          data: 'a bene placito'
+          data: text,
+          isEqualNode: (node) => node.data === text
         },
         anchorOffset: 7,
         focusNode: {
-          data: 'a bene placito'
+          data: text
         },
         focusOffset: 14,
         baseNode: {
-          data: 'a bene placito'
+          data: text
         },
         extentNode: {
-          data: 'a bene placito'
+          data: text
         },
         baseOffset: 14,
         extentOffset: 14,
@@ -103,6 +105,7 @@ describe('html-selector.test.js', () => {
   })
 
   it('2 HTMLSelector - static getSelector creates HTMLSelector from given event and languageCode and returns textSelector', () => {
+    eventEl.isEqualNode = () => false
     const textSel = HTMLSelector.getSelector(eventEl, 'lat')
     expect(textSel.text).toEqual('placito')
     expect(textSel.languageID).toEqual(Constants.LANG_LATIN)
