@@ -88,4 +88,17 @@ describe('LanguageModelFactory object', () => {
       Constants.STR_LANG_CODE_SYR
     ])
   })
+
+  test('Should return true for experimental languages', () => {
+    expect(LanguageModelFactory.isExperimentalLanguage(Constants.LANG_SYRIAC)).toBeTruthy()
+    expect(LanguageModelFactory.isExperimentalLanguage(Constants.LANG_CHINESE)).toBeTruthy()
+    expect(LanguageModelFactory.isExperimentalLanguage(Constants.LANG_GEEZ)).toBeTruthy()
+  })
+
+  test('Should return false for production languages', () => {
+    expect(LanguageModelFactory.isExperimentalLanguage(Constants.LANG_LATIN)).toBeFalsy()
+    expect(LanguageModelFactory.isExperimentalLanguage(Constants.LANG_GREEK)).toBeFalsy()
+    expect(LanguageModelFactory.isExperimentalLanguage(Constants.LANG_ARABIC)).toBeFalsy()
+    expect(LanguageModelFactory.isExperimentalLanguage(Constants.LANG_PERSIAN)).toBeFalsy()
+  })
 })

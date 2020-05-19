@@ -149,7 +149,7 @@ class LanguageModelFactory {
    * @returns {boolean}
    */
   static isExperimentalLanguage(languageID) {
-    return Boolean(languageID === Constants.LANG_GEEZ || languageID === Constants.LANG_SYRIAC || languageID === Constants.LANG_CHINESE)
+    return [Constants.LANG_GEEZ, Constants.LANG_SYRIAC, Constants.LANG_CHINESE].includes(languageID)
   }
 }
 export default LanguageModelFactory

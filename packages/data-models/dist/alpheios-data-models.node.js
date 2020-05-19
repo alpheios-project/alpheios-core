@@ -4413,7 +4413,7 @@ class LanguageModelFactory {
    * @returns {boolean}
    */
   static isExperimentalLanguage(languageID) {
-    return Boolean(languageID === _constants_js__WEBPACK_IMPORTED_MODULE_8__["LANG_GEEZ"] || languageID === _constants_js__WEBPACK_IMPORTED_MODULE_8__["LANG_SYRIAC"] || languageID === _constants_js__WEBPACK_IMPORTED_MODULE_8__["LANG_CHINESE"])
+    return [_constants_js__WEBPACK_IMPORTED_MODULE_8__["LANG_GEEZ"], _constants_js__WEBPACK_IMPORTED_MODULE_8__["LANG_SYRIAC"], _constants_js__WEBPACK_IMPORTED_MODULE_8__["LANG_CHINESE"]].includes(languageID)
   }
 }
 /* harmony default export */ __webpack_exports__["default"] = (LanguageModelFactory);
