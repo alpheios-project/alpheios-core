@@ -63,7 +63,6 @@ describe('arethusa/adapter.test.js', () => {
     // stub the service request
     adapter._fetchArethusaData = ArethusaFixture.treebankServiceRequest
     const res = await adapter.getHomonym(Constants.LANG_GREEK, 'ἐμπρέποντας', 'http://example.org', '1', '2')
-    console.log(adapter.errors)
     expect(adapter.errors.length).toEqual(0)
     expect(res).toBeInstanceOf(Homonym)
     expect(res.lexemes.length).toEqual(1)
