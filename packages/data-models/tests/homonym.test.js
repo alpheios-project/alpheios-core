@@ -586,9 +586,9 @@ describe('homonym.test.js', () => {
 
   it('7J Homonym disambiguation: case J', () => {
     /*
-    Homonym A contains 2 Lexemes. Homonym B contains 1 Lexeme.
+    HomonymA contains 2 Lexemes. HomonymB contains 1 Lexeme.
     HomonymB.Lexeme1 matches either of the HomonymA Lexeme1 on lemma.word and lemma.part of speech.
-    Neither Homonym A. Lexeme1 nor HomonymB.Lexeme1 contain any inflection data.
+    Neither HomonymA.Lexeme1 nor HomonymB.Lexeme1 contain any inflection data.
     Resulting homonym should contain 2 Lexemes: Lexeme1 should be identical to HomonymA.Lexeme1
     except that it should be flagged as disambiguated.
     Lexeme2 should be identical to HomonymA.Lexeme2.
@@ -612,6 +612,43 @@ describe('homonym.test.js', () => {
       expect.objectContaining({
         lemma: expect.objectContaining({ word: lemmaA.word }),
         inflections: [],
+        disambiguated: true
+      })
+    )
+    expect(disambiguated.lexemes[1]).toEqual(lexemeB)
+    expect(disambiguated.isDisambiguated()).toBeTruthy()
+  })
+
+  it('7K Homonym disambiguation: case K', () => {
+    /*
+    Homonym A contains 2 Lexemes. HomonymB contains 1 Lexeme.
+    HomonymB.Lexeme1 matches either of the HomonymA Lexeme1 on lemma.word and lemma.part of speech.
+    HomonymA.Lexeme1 has some inflections data. HomonymB.Lexeme1 contains no inflection data.
+    Resulting homonym should contain 2 Lexemes: Lexeme1 should be identical to HomonymA.Lexeme1
+    except that it should be flagged as disambiguated.
+    Lexeme2 should be identical to HomonymA.Lexeme2.
+     */
+    let lemmaA = new Lemma('παρ᾽', 'grc') // eslint-disable-line prefer-const
+    lemmaA.addFeature(new Feature(Feature.types.part, Constants.POFS_PREPOSITION, Constants.LANG_GREEK))
+    let infl1 = new Inflection('stem', 'grc') // eslint-disable-line prefer-const
+    infl1.addFeature(new Feature(Feature.types.voice, Constants.VOICE_ACTIVE, Constants.LANG_GREEK))
+    const lexemeA = new Lexeme(lemmaA, [infl1])
+    let lemmaB = new Lemma('παρ᾽', 'grc') // eslint-disable-line prefer-const
+    lemmaB.addFeature(new Feature(Feature.types.part, Constants.POFS_ADJECTIVE, Constants.LANG_GREEK))
+    const lexemeB = new Lexeme(lemmaB, [])
+    const homonymA = new Homonym([lexemeA, lexemeB])
+
+    let lemmaC = new Lemma('παρ᾽', 'grc') // eslint-disable-line prefer-const
+    lemmaC.addFeature(new Feature(Feature.types.part, Constants.POFS_PREPOSITION, Constants.LANG_GREEK))
+    const lexemeC = new Lexeme(lemmaC, [])
+    const homonymB = new Homonym([lexemeC])
+    const disambiguated = Homonym.disambiguate(homonymA, [homonymB])
+
+    expect(disambiguated.lexemes.length).toEqual(2)
+    expect(disambiguated.lexemes[0]).toEqual(
+      expect.objectContaining({
+        lemma: expect.objectContaining({ word: lemmaA.word }),
+        inflections: [infl1],
         disambiguated: true
       })
     )

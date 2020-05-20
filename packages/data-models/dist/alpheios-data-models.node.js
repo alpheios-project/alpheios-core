@@ -2853,11 +2853,23 @@ class HomonymGroup {
     return this._homonyms.length > 0
   }
 
-  toHomonym (targetWord) {
+  /**
+   * Converts a homonyms form a HomonymGroup into a single Homonym.
+   * This function was created to provide backward compatibility with the code that
+   * does not work with homonym groups.
+   *
+   * @param {string} targetWord - A target word that will be set for all lemmas within a resulting homonym.
+   * @param {boolean} disambiguated - Whether lemmas in a resulting homonyms should be disambiguated.
+   * @returns {Homonym} - A resulting homonym.
+   */
+  toHomonym (targetWord, { disambiguated = false } = {}) {
     if (!targetWord) {
       throw new Error(HomonymGroup.errors.NO_TARGET_WORD)
     }
     const lexemes = this._homonyms.map(homonym => homonym.lexemes).flat()
+    if (disambiguated) {
+      lexemes.forEach(lexeme => { lexeme.disambiguated = true })
+    }
     return new _homonym_js__WEBPACK_IMPORTED_MODULE_0__["default"](lexemes, targetWord)
   }
 }
@@ -3035,13 +3047,8 @@ class Homonym {
 
         if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
           lexemeMatched = true
-          /*
-          If both lexemes has no inflection a lexeme needs to be marked as disambiguated.
-          It will serve as an indication that the other lexeme verifies a current one.
-           */
-          if (lexeme.inflections.length === 0 && otherLexeme.inflections.length === 0) {
-            newLex.disambiguated = true
-          }
+          // If lexeme is a full homonym with a disambiguator, it should always be marked as disambiguated
+          newLex.disambiguated = true
         }
         lexemes.push(newLex)
       }

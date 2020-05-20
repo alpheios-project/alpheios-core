@@ -152,13 +152,8 @@ class Homonym {
 
         if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
           lexemeMatched = true
-          /*
-          If both lexemes has no inflection a lexeme needs to be marked as disambiguated.
-          It will serve as an indication that the other lexeme verifies a current one.
-           */
-          if (lexeme.inflections.length === 0 && otherLexeme.inflections.length === 0) {
-            newLex.disambiguated = true
-          }
+          // If lexeme is a full homonym with a disambiguator, it should always be marked as disambiguated
+          newLex.disambiguated = true
         }
         lexemes.push(newLex)
       }
