@@ -3030,11 +3030,19 @@ class Homonym {
     for (const otherLexeme of disambiguator.lexemes) {
       let lexemeMatched = false
       for (const lexeme of base.lexemes) {
-        if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
-          lexemeMatched = true
-        }
         // Do not try to disambiguate lexemes that can't: it will erase a `disambiguated` flag
         const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ? _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"].disambiguate(lexeme, otherLexeme) : lexeme
+
+        if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
+          lexemeMatched = true
+          /*
+          If both lexemes has no inflection a lexeme needs to be marked as disambiguated.
+          It will serve as an indication that the other lexeme verifies a current one.
+           */
+          if (lexeme.inflections.length === 0 && otherLexeme.inflections.length === 0) {
+            newLex.disambiguated = true
+          }
+        }
         lexemes.push(newLex)
       }
       // if we couldn't find a matching lexeme, add the disambigutor's lexemes
@@ -4409,10 +4417,11 @@ class LanguageModelFactory {
 
   /**
    * returns true if support for the requested language id is in an experimental state
+   *
    * @param {symbol} languageID - Language as a language ID (symbol)
    * @returns {boolean}
    */
-  static isExperimentalLanguage(languageID) {
+  static isExperimentalLanguage (languageID) {
     return [_constants_js__WEBPACK_IMPORTED_MODULE_8__["LANG_GEEZ"], _constants_js__WEBPACK_IMPORTED_MODULE_8__["LANG_SYRIAC"], _constants_js__WEBPACK_IMPORTED_MODULE_8__["LANG_CHINESE"]].includes(languageID)
   }
 }
