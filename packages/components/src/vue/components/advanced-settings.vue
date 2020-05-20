@@ -23,6 +23,12 @@
       </setting>
       <setting
           class="alpheios-adv-options__item"
+          :data="uiOptions.items.forceMouseMoveGoogleDocs"
+          @change="uiOptionChanged"
+      >
+      </setting>
+      <setting
+          class="alpheios-adv-options__item"
           :data="uiOptions.items.enableMouseMoveLimitedByIdCheck"
           @change="uiOptionChanged"
       >
