@@ -4406,6 +4406,15 @@ class LanguageModelFactory {
     languageB = (typeof languageB === 'symbol') ? LanguageModelFactory.getLanguageCodeFromId(languageB) : languageB
     return languageA === languageB
   }
+
+  /**
+   * returns true if support for the requested language id is in an experimental state
+   * @param {symbol} languageID - Language as a language ID (symbol)
+   * @returns {boolean}
+   */
+  static isExperimentalLanguage(languageID) {
+    return [_constants_js__WEBPACK_IMPORTED_MODULE_8__["LANG_GEEZ"], _constants_js__WEBPACK_IMPORTED_MODULE_8__["LANG_SYRIAC"], _constants_js__WEBPACK_IMPORTED_MODULE_8__["LANG_CHINESE"]].includes(languageID)
+  }
 }
 /* harmony default export */ __webpack_exports__["default"] = (LanguageModelFactory);
 
@@ -5938,11 +5947,12 @@ for the current node
 
   /**
    * Get a list of valid puncutation for this language
+   * Taken from  the list at https://en.wikipedia.org/wiki/Syriac_(Unicode_block)
    *
    * @returns {string} a string containing valid puncutation symbols
    */
   static getPunctuation () {
-    return "፡፨።፣፤፥፦፧፠,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\u0387\u00B7\n\r\u200C\u200D"
+    return "\u0700\u0701\u0702\u0703\u0704\u0705\u0706\u0707\u0708\u0709\u070A\u070B\u070C\u070D\u070F.,;:!?'\"(){}\\[\\]<>/\\\u00A0\u2010\u2011\u2012\u2013\u2014\u2015\u2018\u2019\u201C\u201D\n\r\u200C\u200D"
   }
 
   /**

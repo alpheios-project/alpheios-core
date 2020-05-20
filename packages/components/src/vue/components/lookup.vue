@@ -127,6 +127,7 @@ export default {
   watch: {
     '$store.state.app.selectedLookupLangCode' (langCode) {
       this.$options.lookupLanguage.setValue(langCode)
+      this.app.notifyExperimental(langCode)
     },
 
     '$store.state.app.morphDataReady' (morphDataReady) {
