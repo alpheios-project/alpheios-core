@@ -1,6 +1,6 @@
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 import AlpheiosLexiconTransformer from '@clAdapters/transformers/alpheios-lexicon-transformer'
-import { LanguageModelFactory, Constants } from 'alpheios-data-models'
+import { LanguageModelFactory, Constants, Feature } from 'alpheios-data-models'
 import ImportData from '@clAdapters/transformers/import-morph-data.js'
 
 import DefaultConfig from '@clAdapters/adapters/alpheiostb/config.json'
@@ -110,6 +110,14 @@ class ArethusaTreebankAdapter extends BaseAdapter {
         })
         const transformAdapter = new AlpheiosLexiconTransformer(this, mapper, 'arethusa')
         const homonym = transformAdapter.transformData(tbRes, word)
+        // handle verb participles in a way consistent with the morpheus parser
+        // which reports the pofs of the lemma as verb and pofs of the inflection as verb participle
+        if (homonym.lexemes.length == 1 &&
+           homonym.lexemes[0].lemma.features[Feature.types.part].value === Constants.POFS_VERB &&
+           homonym.lexemes[0].inflections.length == 1 &&
+           homonym.lexemes[0].inflections[0][Feature.types.mood].value === Constants.MOOD_PARTICIPLE) {
+             homonym.lexemes[0].inflections[0].addFeature(new Feature(Feature.types.part,Constants.POFS_VERB_PARTICIPLE,languageModel.languageID))
+        }
         return homonym
       } else {
         this.addError(this.l10n.messages['MORPH_TREEBANK_MISSING_REF'].get(word))
