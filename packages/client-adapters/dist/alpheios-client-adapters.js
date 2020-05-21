@@ -16231,21 +16231,33 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
     }
   }
 
+  /**
+  * This is a sync method that retrieves short definitions for homonym synchronously
+  * @param {Homonym} homonym - homonym for retrieving definitions
+  */
   async fetchShortDefsSync (homonym) {
-    const languageID = homonym.lexemes[0].lemma.languageID
-    const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
+    try {
+      const languageID = homonym.lexemes[0].lemma.languageID
+      const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
 
-    for (const urlKey of urlKeys) {
-      const url = this.config[urlKey].urls.short
-      const result = await this.checkCachedData(url)
+      for (const urlKey of urlKeys) {
+        const url = this.config[urlKey].urls.short
+        const result = await this.checkCachedData(url)
 
-      if (result) {
-        const res = cachedDefinitions.get(url)
-        await this.updateShortDefs(res, homonym, this.config[urlKey])
+        if (result) {
+          const res = cachedDefinitions.get(url)
+          await this.updateShortDefs(res, homonym, this.config[urlKey])
+        }
       }
+    } catch (error) {
+      this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
     }
   }
 
+  /**
+  * This is a sync method that retrieves full definitions for homonym synchronously
+  * @param {Homonym} homonym - homonym for retrieving definitions
+  */
   async fetchFullDefsSync (homonym) {
     const languageID = homonym.lexemes[0].lemma.languageID
     const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
@@ -16427,6 +16439,12 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
     }
   }
 
+  /**
+  * This method fetches data from request and update homonym with full definition synchronously
+  * @param {[String]} fullDefsRequests - array of full definitions url
+  * @param {Object} config - config data for url
+  * @param {Homonym} homonym - homonym we search definitions for
+  */
   async updateFullDefsSync (fullDefsRequests, config, homonym) {
     for (let request of fullDefsRequests) { // eslint-disable-line prefer-const
       let fullDefData
@@ -16436,14 +16454,18 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
         fullDefData = await this.fetch(request.url, { type: 'xml' })
       }
 
-      if (fullDefData && fullDefData.match(/alph:error|alpheios-lex-error/)) {
-        const error = fullDefData.match(/no entries found/i) ? 'No entries found.' : fullDefData
-        this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error))
-      } else {
-        const provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](config.urls.full, config.rights)
-        const def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
-        const definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, def)
-        request.lexeme.meaning.appendFullDefs(definition)
+      try {
+        if (fullDefData && fullDefData.match(/alph:error|alpheios-lex-error/)) {
+          const error = fullDefData.match(/no entries found/i) ? 'No entries found.' : fullDefData
+          this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error))
+        } else {
+          const provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](config.urls.full, config.rights)
+          const def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
+          const definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, def)
+          request.lexeme.meaning.appendFullDefs(definition)
+        }
+      } catch (error) {
+        this.addError(this.l10n.messages.LEXICONS_FAILED_APPEND_DEFS.get(error.message))
       }
     }
   }
