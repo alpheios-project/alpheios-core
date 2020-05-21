@@ -2681,17 +2681,17 @@ p.alpheios-word-usage-filter-title {
 }
 .alpheios-worditem__targetWord {
   font-weight: bold !important;
-  width: calc((100% - 250px)/2) !important;
+  width: calc((100% - 260px)/2) !important;
   cursor: pointer !important;
 }
 .alpheios-worditem__lemmasList {
-  width: calc((100% - 250px)/2) !important;
+  width: calc((100% - 260px)/2) !important;
 }
 .alpheios-worditem__frequency {
   width: 20px !important;
 }
 .alpheios-worditem__updatedDT {
-  width: 70px !important;
+  width: 80px !important;
   font-size: 80% !important;
 }
 .alpheios-visibility__hidden {

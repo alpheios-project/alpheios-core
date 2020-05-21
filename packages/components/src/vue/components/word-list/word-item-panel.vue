@@ -184,11 +184,11 @@ export default {
 
   .alpheios-worditem__targetWord {
       font-weight: bold;
-      width: calc((100% - 250px)/2);
+      width: calc((100% - 260px)/2);
       cursor: pointer;
   }
   .alpheios-worditem__lemmasList {
-      width: calc((100% - 250px)/2);
+      width: calc((100% - 260px)/2);
   }
 
   .alpheios-worditem__frequency {
@@ -196,7 +196,7 @@ export default {
   }
 
   .alpheios-worditem__updatedDT {
-    width: 70px;
+    width: 80px;
     font-size: 80%;
   }
 
