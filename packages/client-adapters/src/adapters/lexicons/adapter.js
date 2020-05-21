@@ -138,7 +138,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
       if (lookupFunction === 'short') {
         return this.fetchShortDefsSync(homonym)
       } else if (lookupFunction === 'full') {
-        await this.fetchFullDefsSync(homonym)
+        return this.fetchFullDefsSync(homonym)
       }
     }
   }
