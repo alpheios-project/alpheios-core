@@ -2640,6 +2640,7 @@ p.alpheios-word-usage-filter-title {
 .alpheios-worditem__data {
   display: inline-block;
   vertical-align: middle;
+  box-sizing: border-box;
   padding: 7px 0;
 }
 .alpheios-wordlist-language__worditem .alpheios-worditem__icon,
@@ -2681,18 +2682,19 @@ p.alpheios-word-usage-filter-title {
 }
 .alpheios-worditem__targetWord {
   font-weight: bold;
-  width: calc((100% - 260px)/2);
+  width: calc((100% - 250px)/2);
   cursor: pointer;
 }
 .alpheios-worditem__lemmasList {
-  width: calc((100% - 260px)/2);
+  width: calc((100% - 250px)/2);
 }
 .alpheios-worditem__frequency {
   width: 20px;
 }
 .alpheios-worditem__updatedDT {
-  width: 80px;
+  width: 70px;
   font-size: 80%;
+  white-space: nowrap;
 }
 .alpheios-visibility__hidden {
   visibility: hidden;
@@ -2842,7 +2844,8 @@ p.alpheios-word-usage-filter-title {
   margin: 0 5px;
 }
 .alpheios-wordlist-sorting .alpheios-worditem__icon {
-  text-align: left;
+  text-align: center;
+  box-sizing: border-box;
 }
 .alpheios-wordlist-sorting .alpheios-worditem__icon svg {
   width: 22px;
@@ -2866,6 +2869,9 @@ p.alpheios-word-usage-filter-title {
 }
 .alpheios-wordlist-sorting .alpheios-icon-desc .sort-arrow-up {
   fill: var(--alpheios-link-color-on-light);
+}
+.alpheios-wordlist-sorting .alpheios-worditem__icon.alpheios-worditem__frequency {
+  width: 40px;
 }
 /*
  Calculates a size of text elements relative to the base size.
