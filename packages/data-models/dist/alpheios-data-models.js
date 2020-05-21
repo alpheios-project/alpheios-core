@@ -2853,11 +2853,23 @@ class HomonymGroup {
     return this._homonyms.length > 0
   }
 
-  toHomonym (targetWord) {
+  /**
+   * Converts a homonyms form a HomonymGroup into a single Homonym.
+   * This function was created to provide backward compatibility with the code that
+   * does not work with homonym groups.
+   *
+   * @param {string} targetWord - A target word that will be set for all lemmas within a resulting homonym.
+   * @param {boolean} disambiguated - Whether lemmas in a resulting homonyms should be disambiguated.
+   * @returns {Homonym} - A resulting homonym.
+   */
+  toHomonym (targetWord, { disambiguated = false } = {}) {
     if (!targetWord) {
       throw new Error(HomonymGroup.errors.NO_TARGET_WORD)
     }
     const lexemes = this._homonyms.map(homonym => homonym.lexemes).flat()
+    if (disambiguated) {
+      lexemes.forEach(lexeme => { lexeme.disambiguated = true })
+    }
     return new _homonym_js__WEBPACK_IMPORTED_MODULE_0__["default"](lexemes, targetWord)
   }
 }
@@ -3030,11 +3042,14 @@ class Homonym {
     for (const otherLexeme of disambiguator.lexemes) {
       let lexemeMatched = false
       for (const lexeme of base.lexemes) {
-        if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
-          lexemeMatched = true
-        }
         // Do not try to disambiguate lexemes that can't: it will erase a `disambiguated` flag
         const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ? _lexeme_js__WEBPACK_IMPORTED_MODULE_1__["default"].disambiguate(lexeme, otherLexeme) : lexeme
+
+        if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
+          lexemeMatched = true
+          // If lexeme is a full homonym with a disambiguator, it should always be marked as disambiguated
+          newLex.disambiguated = true
+        }
         lexemes.push(newLex)
       }
       // if we couldn't find a matching lexeme, add the disambigutor's lexemes

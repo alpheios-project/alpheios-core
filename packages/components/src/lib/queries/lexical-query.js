@@ -173,7 +173,8 @@ export default class LexicalQuery extends Query {
         }
       } else {
         if (this._annotatedHomonyms && this._annotatedHomonyms.hasHomonyms) {
-          this.homonym = this._annotatedHomonyms.toHomonym(this.selector.normalizedText)
+          // If there is no results from a morhpological analyzer, a resulting homonym should always be disambiguated
+          this.homonym = this._annotatedHomonyms.toHomonym(this.selector.normalizedText, { disambiguated: true })
           // Suppress events that will trigger UI messages if source is wordlist
           if (this._source !== LexicalQuery.sources.WORDLIST) {
             LexicalQuery.evt.MORPH_DATA_READY.pub()
