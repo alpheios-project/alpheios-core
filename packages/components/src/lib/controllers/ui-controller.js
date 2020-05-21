@@ -1655,6 +1655,8 @@ If no URLS are provided, will reset grammar data.
   }
 
   onHomonymReady (homonym, source) {
+    // if we have a request for updating wordlist for download then we need this event,
+    // but it is needed to be catched only by WordlistController, and we want to skip all UI events here
     if (this._source === LexicalQuery.sources.WORDLIST) {
       return
     }

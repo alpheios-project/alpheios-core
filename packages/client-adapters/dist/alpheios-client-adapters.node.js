@@ -11418,7 +11418,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
       if (lookupFunction === 'short') {
         return this.fetchShortDefsSync(homonym)
       } else if (lookupFunction === 'full') {
-        await this.fetchFullDefsSync(homonym)
+        return this.fetchFullDefsSync(homonym)
       }
     }
   }
