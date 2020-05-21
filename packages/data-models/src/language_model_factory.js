@@ -145,10 +145,11 @@ class LanguageModelFactory {
 
   /**
    * returns true if support for the requested language id is in an experimental state
+   *
    * @param {symbol} languageID - Language as a language ID (symbol)
    * @returns {boolean}
    */
-  static isExperimentalLanguage(languageID) {
+  static isExperimentalLanguage (languageID) {
     return [Constants.LANG_GEEZ, Constants.LANG_SYRIAC, Constants.LANG_CHINESE].includes(languageID)
   }
 }

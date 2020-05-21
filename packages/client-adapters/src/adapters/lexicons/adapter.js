@@ -76,7 +76,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
       async (result) => {
         if (result) {
           const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
-          const resFullDefs = this.updateFullDefs(fullDefsRequests, this.config[urlKey], homonym)
+          const resFullDefs = this.updateFullDefsWithCallbacks(fullDefsRequests, this.config[urlKey], homonym)
           resFullDefs.catch(error => {
             this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
             this.prepareFailedCallback(requestType, homonym)
@@ -131,12 +131,14 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
       this.addError(this.l10n.messages.LEXICONS_NO_ALLOWED_URL)
       return
     }
-    
+
     if (this.async) {
       return this.fetchDefsWithCallbacks(homonym, lookupFunction)
     } else {
       if (lookupFunction === 'short') {
-        return this.fetchShortDefsSync(homonym, lookupFunction)
+        return this.fetchShortDefsSync(homonym)
+      } else if (lookupFunction === 'full') {
+        await this.fetchFullDefsSync(homonym)
       }
     }
   }
@@ -152,6 +154,21 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
       if (result) {
         const res = cachedDefinitions.get(url)
         await this.updateShortDefs(res, homonym, this.config[urlKey])
+      }
+    }
+  }
+
+  async fetchFullDefsSync (homonym) {
+    const languageID = homonym.lexemes[0].lemma.languageID
+    const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
+
+    for (const urlKey of urlKeys) {
+      const url = this.config[urlKey].urls.index
+      const result = await this.checkCachedData(url)
+
+      if (result) {
+        const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
+        await this.updateFullDefsSync(fullDefsRequests, this.config[urlKey], homonym)
       }
     }
   }
@@ -292,7 +309,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @param {Object} config - config data for url
   * @param {Homonym} homonym - homonym we search definitions for
   */
-  async updateFullDefs (fullDefsRequests, config, homonym) {
+  async updateFullDefsWithCallbacks (fullDefsRequests, config, homonym) {
     for (let request of fullDefsRequests) { // eslint-disable-line prefer-const
       let fullDefDataRes
       if (cachedDefinitions.has(request.url)) {
@@ -319,6 +336,27 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
           this.addError(this.l10n.messages.LEXICONS_FAILED_APPEND_DEFS.get(error.message))
         }
       )
+    }
+  }
+
+  async updateFullDefsSync (fullDefsRequests, config, homonym) {
+    for (let request of fullDefsRequests) { // eslint-disable-line prefer-const
+      let fullDefData
+      if (cachedDefinitions.has(request.url)) {
+        fullDefData = cachedDefinitions.get(request.url)
+      } else {
+        fullDefData = await this.fetch(request.url, { type: 'xml' })
+      }
+
+      if (fullDefData && fullDefData.match(/alph:error|alpheios-lex-error/)) {
+        const error = fullDefData.match(/no entries found/i) ? 'No entries found.' : fullDefData
+        this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error))
+      } else {
+        const provider = new ResourceProvider(config.urls.full, config.rights)
+        const def = new Definition(fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
+        const definition = await ResourceProvider.getProxy(provider, def)
+        request.lexeme.meaning.appendFullDefs(definition)
+      }
     }
   }
 

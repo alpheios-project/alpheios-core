@@ -4409,10 +4409,11 @@ class LanguageModelFactory {
 
   /**
    * returns true if support for the requested language id is in an experimental state
+   *
    * @param {symbol} languageID - Language as a language ID (symbol)
    * @returns {boolean}
    */
-  static isExperimentalLanguage(languageID) {
+  static isExperimentalLanguage (languageID) {
     return [_constants_js__WEBPACK_IMPORTED_MODULE_8__["LANG_GEEZ"], _constants_js__WEBPACK_IMPORTED_MODULE_8__["LANG_SYRIAC"], _constants_js__WEBPACK_IMPORTED_MODULE_8__["LANG_CHINESE"]].includes(languageID)
   }
 }
