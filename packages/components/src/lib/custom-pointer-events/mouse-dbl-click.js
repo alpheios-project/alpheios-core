@@ -9,6 +9,7 @@ export default class MouseDblClick extends PointerEvt {
    */
   constructor (element, evtHandler) {
     super()
+    console.info('doubleClick constructor')
     this.evtType = 'dblclick'
     this.element = element
     this.evtHandler = evtHandler // A client's event handler

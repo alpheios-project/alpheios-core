@@ -75,7 +75,8 @@
       "allowImportExportEverywhere": true
     },
     "rules": {
-      "no-prototype-builtins": "off"
+      "no-prototype-builtins": "off",
+      "accessor-pairs": "warn"
     }
   },
   "eslintIgnore": [
