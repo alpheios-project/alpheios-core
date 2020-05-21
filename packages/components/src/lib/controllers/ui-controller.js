@@ -1654,7 +1654,10 @@ If no URLS are provided, will reset grammar data.
     this.store.commit('app/setQueryStillActive', true)
   }
 
-  onHomonymReady (homonym) {
+  onHomonymReady (homonym, source) {
+    if (this._source === LexicalQuery.sources.WORDLIST) {
+      return
+    }
     homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
 
     // Update status info with data from a morphological analyzer
