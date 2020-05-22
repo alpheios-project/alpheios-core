@@ -103,7 +103,8 @@
       }
 
       .alpheios-worditem__icon {      
-          text-align: left;   
+          text-align: center;   
+          box-sizing: border-box;
           svg {
             width: $iconsize;
             height: $iconsize;
@@ -136,6 +137,10 @@
         .sort-arrow-up {
           fill: var(--alpheios-link-color-on-light);
         }
+      }
+
+      .alpheios-worditem__icon.alpheios-worditem__frequency {
+        width: 40px;
       }
   }
 

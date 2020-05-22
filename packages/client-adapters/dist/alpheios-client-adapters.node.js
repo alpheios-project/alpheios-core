@@ -11296,6 +11296,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
     super()
     this.config = this.uploadConfig(config, _clAdapters_adapters_lexicons_config_json__WEBPACK_IMPORTED_MODULE_3__)
     this.options = { timeout: this.config.timeout ? this.config.timeout : 0 }
+    this.async = Boolean(this.config.callBackEvtSuccess)
   }
 
   /**
@@ -11355,7 +11356,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
       async (result) => {
         if (result) {
           const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
-          const resFullDefs = this.updateFullDefs(fullDefsRequests, this.config[urlKey], homonym)
+          const resFullDefs = this.updateFullDefsAsync(fullDefsRequests, this.config[urlKey], homonym)
           resFullDefs.catch(error => {
             this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
             this.prepareFailedCallback(requestType, homonym)
@@ -11410,6 +11411,68 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
       this.addError(this.l10n.messages.LEXICONS_NO_ALLOWED_URL)
       return
     }
+
+    if (this.async) {
+      return this.fetchDefsAsync(homonym, lookupFunction)
+    } else {
+      if (lookupFunction === 'short') {
+        return this.fetchShortDefsSync(homonym)
+      } else if (lookupFunction === 'full') {
+        return this.fetchFullDefsSync(homonym)
+      }
+    }
+  }
+
+  /**
+  * This is a sync method that retrieves short definitions for homonym synchronously
+  * @param {Homonym} homonym - homonym for retrieving definitions
+  */
+  async fetchShortDefsSync (homonym) {
+    try {
+      const languageID = homonym.lexemes[0].lemma.languageID
+      const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
+
+      for (const urlKey of urlKeys) {
+        const url = this.config[urlKey].urls.short
+        const result = await this.checkCachedData(url)
+
+        if (result) {
+          const res = cachedDefinitions.get(url)
+          await this.updateShortDefs(res, homonym, this.config[urlKey])
+        }
+      }
+    } catch (error) {
+      this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
+    }
+  }
+
+  /**
+  * This is a sync method that retrieves full definitions for homonym synchronously
+  * @param {Homonym} homonym - homonym for retrieving definitions
+  */
+  async fetchFullDefsSync (homonym) {
+    const languageID = homonym.lexemes[0].lemma.languageID
+    const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
+
+    for (const urlKey of urlKeys) {
+      const url = this.config[urlKey].urls.index
+      const result = await this.checkCachedData(url)
+
+      if (result) {
+        const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
+        await this.updateFullDefs(fullDefsRequests, this.config[urlKey], homonym)
+      }
+    }
+  }
+
+  /**
+  * This is an async method that retrieves definitions for homonym with getting result inside callbacks
+  * @param {Homonym} homonym - homonym for retrieving definitions
+  * @param {Object} lookupFunction - type of definitions - short, full
+  * @return {Boolean} - result of fetching
+  */
+
+  fetchDefsAsync (homonym, lookupFunction) {
     const languageID = homonym.lexemes[0].lemma.languageID
     const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
 
@@ -11486,7 +11549,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
             }
             const provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](rightsUri, rightsText)
             const def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](text, config.langs.target, format, lexeme.lemma.word)
-            const definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, def)
+            const definition = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, def)
             lexeme.meaning.appendShortDefs(definition)
           } catch (error) {
             this.addError(this.l10n.messages.LEXICONS_FAILED_APPEND_DEFS.get(error.message))
@@ -11538,7 +11601,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   * @param {Object} config - config data for url
   * @param {Homonym} homonym - homonym we search definitions for
   */
-  async updateFullDefs (fullDefsRequests, config, homonym) {
+  async updateFullDefsAsync (fullDefsRequests, config, homonym) {
     for (let request of fullDefsRequests) { // eslint-disable-line prefer-const
       let fullDefDataRes
       if (cachedDefinitions.has(request.url)) {
@@ -11556,7 +11619,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
           } else {
             const provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](config.urls.full, config.rights)
             const def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
-            const definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, def)
+            const definition = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, def)
             request.lexeme.meaning.appendFullDefs(definition)
             this.prepareSuccessCallback('fullDefs', homonym)
           }
@@ -11565,6 +11628,37 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
           this.addError(this.l10n.messages.LEXICONS_FAILED_APPEND_DEFS.get(error.message))
         }
       )
+    }
+  }
+
+  /**
+  * This method fetches data from request and update homonym with full definition synchronously
+  * @param {[String]} fullDefsRequests - array of full definitions url
+  * @param {Object} config - config data for url
+  * @param {Homonym} homonym - homonym we search definitions for
+  */
+  async updateFullDefs (fullDefsRequests, config, homonym) {
+    for (let request of fullDefsRequests) { // eslint-disable-line prefer-const
+      let fullDefData
+      if (cachedDefinitions.has(request.url)) {
+        fullDefData = cachedDefinitions.get(request.url)
+      } else {
+        fullDefData = await this.fetch(request.url, { type: 'xml' })
+      }
+
+      try {
+        if (fullDefData && fullDefData.match(/alph:error|alpheios-lex-error/)) {
+          const error = fullDefData.match(/no entries found/i) ? 'No entries found.' : fullDefData
+          this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error))
+        } else {
+          const provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](config.urls.full, config.rights)
+          const def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
+          const definition = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, def)
+          request.lexeme.meaning.appendFullDefs(definition)
+        }
+      } catch (error) {
+        this.addError(this.l10n.messages.LEXICONS_FAILED_APPEND_DEFS.get(error.message))
+      }
     }
   }
 

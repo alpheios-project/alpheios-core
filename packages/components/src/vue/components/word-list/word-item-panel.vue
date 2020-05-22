@@ -134,6 +134,7 @@ export default {
   .alpheios-worditem__data {
       display: inline-block;
       vertical-align: middle;
+      box-sizing: border-box;
       padding: 7px 0;
   }
 
@@ -198,6 +199,7 @@ export default {
   .alpheios-worditem__updatedDT {
     width: 70px;
     font-size: 80%;
+    white-space: nowrap;
   }
 
   .alpheios-visibility__hidden {
