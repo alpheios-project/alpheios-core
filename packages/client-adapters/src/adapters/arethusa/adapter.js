@@ -112,11 +112,11 @@ class ArethusaTreebankAdapter extends BaseAdapter {
         const homonym = transformAdapter.transformData(tbRes, word)
         // handle verb participles in a way consistent with the morpheus parser
         // which reports the pofs of the lemma as verb and pofs of the inflection as verb participle
-        if (homonym.lexemes.length == 1 &&
+        if (homonym.lexemes.length === 1 &&
            homonym.lexemes[0].lemma.features[Feature.types.part].value === Constants.POFS_VERB &&
-           homonym.lexemes[0].inflections.length == 1 &&
+           homonym.lexemes[0].inflections.length === 1 &&
            homonym.lexemes[0].inflections[0][Feature.types.mood].value === Constants.MOOD_PARTICIPLE) {
-             homonym.lexemes[0].inflections[0].addFeature(new Feature(Feature.types.part,Constants.POFS_VERB_PARTICIPLE,languageModel.languageID))
+          homonym.lexemes[0].inflections[0].addFeature(new Feature(Feature.types.part, Constants.POFS_VERB_PARTICIPLE, languageModel.languageID))
         }
         return homonym
       } else {

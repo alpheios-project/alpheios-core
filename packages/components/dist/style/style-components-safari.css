@@ -2640,6 +2640,7 @@ p.alpheios-word-usage-filter-title {
 .alpheios-worditem__data {
   display: inline-block;
   vertical-align: middle !important;
+  box-sizing: border-box !important;
   padding: 7px 0 !important;
 }
 .alpheios-wordlist-language__worditem .alpheios-worditem__icon,
@@ -2693,6 +2694,7 @@ p.alpheios-word-usage-filter-title {
 .alpheios-worditem__updatedDT {
   width: 70px !important;
   font-size: 80% !important;
+  white-space: nowrap !important;
 }
 .alpheios-visibility__hidden {
   visibility: hidden !important;
@@ -2842,7 +2844,8 @@ p.alpheios-word-usage-filter-title {
   margin: 0 5px !important;
 }
 .alpheios-wordlist-sorting .alpheios-worditem__icon {
-  text-align: left !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
 }
 .alpheios-wordlist-sorting .alpheios-worditem__icon svg {
   width: 22px !important;
@@ -2866,6 +2869,9 @@ p.alpheios-word-usage-filter-title {
 }
 .alpheios-wordlist-sorting .alpheios-icon-desc .sort-arrow-up {
   fill: var(--alpheios-link-color-on-light) !important;
+}
+.alpheios-wordlist-sorting .alpheios-worditem__icon.alpheios-worditem__frequency {
+  width: 40px !important;
 }
 /*
  Calculates a size of text elements relative to the base size.
