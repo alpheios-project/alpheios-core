@@ -76,7 +76,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
       async (result) => {
         if (result) {
           const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
-          const resFullDefs = this.updateFullDefsWithCallbacks(fullDefsRequests, this.config[urlKey], homonym)
+          const resFullDefs = this.updateFullDefsAsync(fullDefsRequests, this.config[urlKey], homonym)
           resFullDefs.catch(error => {
             this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
             this.prepareFailedCallback(requestType, homonym)
@@ -133,7 +133,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
     }
 
     if (this.async) {
-      return this.fetchDefsWithCallbacks(homonym, lookupFunction)
+      return this.fetchDefsAsync(homonym, lookupFunction)
     } else {
       if (lookupFunction === 'short') {
         return this.fetchShortDefsSync(homonym)
@@ -180,7 +180,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
 
       if (result) {
         const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
-        await this.updateFullDefsSync(fullDefsRequests, this.config[urlKey], homonym)
+        await this.updateFullDefs(fullDefsRequests, this.config[urlKey], homonym)
       }
     }
   }
@@ -192,7 +192,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @return {Boolean} - result of fetching
   */
 
-  fetchDefsWithCallbacks (homonym, lookupFunction) {
+  fetchDefsAsync (homonym, lookupFunction) {
     const languageID = homonym.lexemes[0].lemma.languageID
     const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
 
@@ -269,7 +269,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
             }
             const provider = new ResourceProvider(rightsUri, rightsText)
             const def = new Definition(text, config.langs.target, format, lexeme.lemma.word)
-            const definition = await ResourceProvider.getProxy(provider, def)
+            const definition = ResourceProvider.getProxy(provider, def)
             lexeme.meaning.appendShortDefs(definition)
           } catch (error) {
             this.addError(this.l10n.messages.LEXICONS_FAILED_APPEND_DEFS.get(error.message))
@@ -321,7 +321,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @param {Object} config - config data for url
   * @param {Homonym} homonym - homonym we search definitions for
   */
-  async updateFullDefsWithCallbacks (fullDefsRequests, config, homonym) {
+  async updateFullDefsAsync (fullDefsRequests, config, homonym) {
     for (let request of fullDefsRequests) { // eslint-disable-line prefer-const
       let fullDefDataRes
       if (cachedDefinitions.has(request.url)) {
@@ -339,7 +339,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
           } else {
             const provider = new ResourceProvider(config.urls.full, config.rights)
             const def = new Definition(fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
-            const definition = await ResourceProvider.getProxy(provider, def)
+            const definition = ResourceProvider.getProxy(provider, def)
             request.lexeme.meaning.appendFullDefs(definition)
             this.prepareSuccessCallback('fullDefs', homonym)
           }
@@ -357,7 +357,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
   * @param {Object} config - config data for url
   * @param {Homonym} homonym - homonym we search definitions for
   */
-  async updateFullDefsSync (fullDefsRequests, config, homonym) {
+  async updateFullDefs (fullDefsRequests, config, homonym) {
     for (let request of fullDefsRequests) { // eslint-disable-line prefer-const
       let fullDefData
       if (cachedDefinitions.has(request.url)) {
@@ -373,7 +373,7 @@ class AlpheiosLexiconsAdapter extends BaseAdapter {
         } else {
           const provider = new ResourceProvider(config.urls.full, config.rights)
           const def = new Definition(fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
-          const definition = await ResourceProvider.getProxy(provider, def)
+          const definition = ResourceProvider.getProxy(provider, def)
           request.lexeme.meaning.appendFullDefs(definition)
         }
       } catch (error) {
