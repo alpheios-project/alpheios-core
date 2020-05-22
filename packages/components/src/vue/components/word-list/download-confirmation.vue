@@ -81,7 +81,8 @@
       return {
         downloadWithFilter: false,
         downloadForFlashcards: false,
-        showProgress: false
+        showProgress: false,
+        defaultWordlistMaxFlashcardExport: 25
       }
     },
     computed: {
@@ -95,7 +96,7 @@
         return this.$store.state.settings.featureResetCounter ? this.settings.getFeatureOptions() : null
       },
       maxFlashCardItems () {
-        return this.$store.state.settings.featureResetCounter ? this.featureOptions.items.wordlistMaxFlashcardExport.currentValue : null
+        return this.$store.state.settings.featureResetCounter ? this.featureOptions.items.wordlistMaxFlashcardExport.currentValue : this.defaultWordlistMaxFlashcardExport
       },
       maxFlashCardItemsNote () {
         return this.maxFlashCardItems ? this.l10n.getText('WORDLIST_FLASHCARD_MAXDOWNLOAD_AMOUNT', { maxFlashCardItems: this.maxFlashCardItems }) : ''

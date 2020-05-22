@@ -625,11 +625,6 @@ export default {
       height: textsize(500px);
       border-radius: uisize(10px) 0 uisize(10px) uisize(10px);
     }
-
-    &.alpheios-toolbar__lookup-change-lang {
-      height: textsize(220px);
-      border-radius: uisize(10px) 0 uisize(10px) uisize(10px);
-    }
   }
 
   .alpheios-toolbar__buttons {

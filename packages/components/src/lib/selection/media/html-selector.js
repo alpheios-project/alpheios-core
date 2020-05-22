@@ -26,6 +26,7 @@ export default class HTMLSelector extends MediaSelector {
      * Pointer event has two elements: `start` (where a pointer was down) and
      * `end` (where a pointer was up). If pointer was moved, they will be different.
      * It makes more sense to use `end` for our purposes.
+     *
      * @type {HTMLElement}
      */
 
@@ -84,11 +85,13 @@ export default class HTMLSelector extends MediaSelector {
   /**
    * Creates a selection from start and end coordinates. If no end coordinates given,
    * they will be set to the same position as start point and an empty selection will be created.
+   *
    * @param {number} startX
    * @param {number} startY
    * @param {number} endX
+   * @param event
    * @param {number} endY
-   * @return {Range | null} A range if one is successfully created or null in case of failure.
+   * @returns {Range | null} A range if one is successfully created or null in case of failure.
    */
   static createSelectionFromPoint (event, startX, startY, endX = startX, endY = startY) {
     const doc = window.document
@@ -169,7 +172,8 @@ export default class HTMLSelector extends MediaSelector {
   /**
    * Returns a language code of a text piece defined by target. Scans for a `lang` attribute of a selection target
    * or, if not found, all parents of a target.
-   * @return {string | undefined} Language code of a text piece or undefined if language cannot be determined.
+   *
+   * @returns {string | undefined} Language code of a text piece or undefined if language cannot be determined.
    */
   getLanguageCodeFromSource () {
     let languageCode = typeof this.target.getAttribute === 'function' ? this.target.getAttribute('lang') || this.target.getAttribute('xml:lang') : null
@@ -196,8 +200,9 @@ export default class HTMLSelector extends MediaSelector {
    * e.g.<span alpheios-word-node="default"><b>f</b>ero</span> (word is evaluated as fero)
    * e.g.<span alpheios-word-node="default">f{ero}</span> (word is evaluated as fero)
    * e.g.<span alpheios-word-node="exact">f{ero}</span> (word is evaluated as f{ero})
-   * @see #findSelection
    *
+   * @see #findSelection
+   * @param textSelector
    */
   doFromTargetWordSelection (textSelector) {
     textSelector.text = this.target.textContent
@@ -215,8 +220,10 @@ export default class HTMLSelector extends MediaSelector {
    * surrounding context for languages whose words are space-separated.
    * It does not use an end point of a selection. It takes a beginning of a selection
    * and obtains a word where a start selection position is.
+   *
    * @see #findSelection
    * @private
+   * @param textSelector
    */
   doSpaceSeparatedWordSelection (textSelector) {
     const selection = HTMLSelector.getSelection(this.target)
@@ -234,14 +241,20 @@ export default class HTMLSelector extends MediaSelector {
      */
     const anchorNodeData = selection.anchorNode.data
     let ro // An offset from the beginning of a selection
+    let focusEmpty = false // True if selection spans over two nodes and a focus node is empty
     let invalidAnchor = false
-    // firefox's implementation of getSelection is buggy and can result
-    // in incomplete data - sometimes the anchor text doesn't contain the focus data
-    // and sometimes the focus data and anchor text is just whitespaces
-    // in these cases we just use the target textContent
 
-    if ((focus.data && !anchorText.match(this._escapeRegExp(focus.data))) ||
+    if (!anchor.isEqualNode(focus) && focus.data && focus.data.match(/^\s*$/)) {
+      focusEmpty = true
+      ro = selection.anchorOffset
+    } else if ((focus.data && !anchorText.match(this._escapeRegExp(focus.data))) ||
       (focus.data && focus.data.match(/^\s*$/))) {
+      /*
+      firefox's implementation of getSelection is buggy and can result
+      in incomplete data - sometimes the anchor text doesn't contain the focus data
+      and sometimes the focus data and anchor text is just whitespaces
+      in these cases we just use the target textContent
+       */
       anchorText = this.target.textContent
       ro = 0
       invalidAnchor = true
@@ -257,7 +270,7 @@ export default class HTMLSelector extends MediaSelector {
     // clean string:
     //   convert punctuation to spaces
 
-    anchorText = anchorText.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']+', 'g'), ' ')
+    anchorText = anchorText.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']', 'g'), ' ')
     // Determine word boundaries
     let wordStart = anchorText.lastIndexOf(' ', ro) + 1 // Try to find a space char before a beginning of a selection
     let wordEnd = anchorText.indexOf(' ', wordStart + 1) // Try to find a space char after a beginning of a selection
@@ -330,7 +343,13 @@ export default class HTMLSelector extends MediaSelector {
 
     if (!textSelector.isEmpty()) {
       // Reset a selection
-      if (invalidAnchor) {
+      if (focusEmpty) {
+        /*
+        If focus node is empty we can exclude it from a selection.
+        As a result, selection will span over an anchor node only.
+         */
+        selection.setBaseAndExtent(anchor, wordStart, anchor, wordEnd)
+      } else if (invalidAnchor) {
         selection.removeAllRanges()
         let range = document.createRange() // eslint-disable-line prefer-const
         range.selectNode(anchor)
@@ -350,8 +369,10 @@ export default class HTMLSelector extends MediaSelector {
    * Helper method for {@link #findSelection} which identifies
    * target word and surrounding context for languages
    * whose words are character based
+   *
    * @see #findSelection
    * @private
+   * @param textSelector
    */
   doCharacterBasedWordSelection (textSelector) {
     const selection = HTMLSelector.getSelection(this.target)

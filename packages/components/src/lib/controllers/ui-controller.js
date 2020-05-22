@@ -283,7 +283,7 @@ if you want to create a different configuration of a UI controller.
       /*
       How many times to retry and what timout to use within an Arethusa treebank app `refreshView` request.
        */
-      arethusaTbRefreshRetryCount: 50,
+      arethusaTbRefreshRetryCount: 5,
       arethusaTbRefreshDelay: 200,
       // A URL of a server that provides an app configuration
       configServiceUrl: 'https://config.alpheios.net/v1/config'
@@ -504,6 +504,7 @@ if you want to create a different configuration of a UI controller.
       featureOptionChange: this.featureOptionChange.bind(this),
       resetAllOptions: this.resetAllOptions.bind(this),
       updateLanguage: this.updateLanguage.bind(this),
+      notifyExperimental: this.notifyExperimental.bind(this),
       getLanguageName: UIController.getLanguageName,
       startResourceQuery: this.startResourceQuery.bind(this),
       sendFeature: this.sendFeature.bind(this),
@@ -1389,6 +1390,17 @@ If no URLS are provided, will reset grammar data.
     this.updateProviders(homonym)
   }
 
+  notifyExperimental (languageID) {
+    if (typeof languageID !== 'symbol') {
+      languageID = LanguageModelFactory.getLanguageIdFromCode(languageID)
+    }
+    if (LanguageModelFactory.isExperimentalLanguage(languageID)) {
+      const langDetails = UIController.getLanguageName(languageID)
+      this.store.commit('ui/setNotification',
+        { text: this.api.l10n.getMsg('TEXT_NOTICE_EXPIRIMENTAL_LANGUAGE', { languageName: langDetails.name }), important: true })
+    }
+  }
+
   updateLanguage (currentLanguageID) {
     // the code which follows assumes we have been passed a languageID symbol
     // we can try to recover gracefully if we accidentally get passed a string value
@@ -1397,6 +1409,7 @@ If no URLS are provided, will reset grammar data.
       currentLanguageID = LanguageModelFactory.getLanguageIdFromCode(currentLanguageID)
     }
     this.store.commit('app/setCurrentLanguage', currentLanguageID)
+    this.notifyExperimental(currentLanguageID)
     const newLanguageCode = LanguageModelFactory.getLanguageCodeFromId(currentLanguageID)
     if (this.state.currentLanguage !== newLanguageCode) {
       this.state.setItem('currentLanguage', newLanguageCode)
@@ -1641,7 +1654,12 @@ If no URLS are provided, will reset grammar data.
     this.store.commit('app/setQueryStillActive', true)
   }
 
-  onHomonymReady (homonym) {
+  onHomonymReady (homonym, source) {
+    // if we have a request for updating wordlist for download then we need this event,
+    // but it is needed to be catched only by WordlistController, and we want to skip all UI events here
+    if (this._source === LexicalQuery.sources.WORDLIST) {
+      return
+    }
     homonym.lexemes.sort(Lexeme.getSortByTwoLemmaFeatures(Feature.types.frequency, Feature.types.part))
 
     // Update status info with data from a morphological analyzer

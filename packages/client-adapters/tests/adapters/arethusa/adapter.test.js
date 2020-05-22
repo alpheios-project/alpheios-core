@@ -27,9 +27,7 @@ describe('arethusa/adapter.test.js', () => {
     expect(adapter.config).toBeDefined()
   })
 
-  // TODO: Figure out a reason for an error listed below:
-  //       There is no data from the source for the given word - aberis (morphology.arethusaTreebank.getHomonym)
-  it.skip('2 ArethusaTreebankAdapter - getHomonym returns Homonym', async () => {
+  it('2 ArethusaTreebankAdapter - getHomonym returns Homonym', async () => {
     const adapter = new ArethusaTreebankAdapter({
       category: 'morphology',
       adapterName: 'arethusaTreebank',
@@ -38,7 +36,7 @@ describe('arethusa/adapter.test.js', () => {
     expect(adapter.errors.length).toEqual(0)
     // stub the service request
     adapter._fetchArethusaData = ArethusaFixture.treebankServiceRequest
-    const res = await adapter.getHomonym(Constants.LANG_LATIN, 'aberis', 'http://example.org/treebank-template', '1', '1')
+    const res = await adapter.getHomonym(Constants.LANG_LATIN, 'aberis', 'http://example.org', '1', '1')
     expect(adapter.errors.length).toEqual(0)
     expect(res).toBeInstanceOf(Homonym)
   })
@@ -54,5 +52,21 @@ describe('arethusa/adapter.test.js', () => {
     const res = await adapter.refreshView('http://example.org')
     expect(adapter.errors.length).toEqual(0)
     expect(res).toEqual({})
+  })
+
+  it('3 ArethusaTreebankAdapter - getHomonym maps participles properly', async () => {
+    const adapter = new ArethusaTreebankAdapter({
+      category: 'morphology',
+      adapterName: 'arethusaTreebank',
+      method: 'getHomonym'
+    })
+    // stub the service request
+    adapter._fetchArethusaData = ArethusaFixture.treebankServiceRequest
+    const res = await adapter.getHomonym(Constants.LANG_GREEK, 'ἐμπρέποντας', 'http://example.org', '1', '2')
+    expect(adapter.errors.length).toEqual(0)
+    expect(res).toBeInstanceOf(Homonym)
+    expect(res.lexemes.length).toEqual(1)
+    expect(res.lexemes[0].inflections[0]["part of speech"].value).toEqual('verb participle')
+    expect(res.lexemes[0].lemma.features["part of speech"].value).toEqual('verb')
   })
 })

@@ -1,6 +1,8 @@
 <template>
   <span :class="attributeClass(type)" :data-feature="type" :data-grouplevel="grouplevel"
-        @click="sendFeature(data[type])" v-html="decorate(data,type)" v-if="data[type]"></span>
+        @click="sendFeature(data[type])" v-html="decorate(data,type)" v-if="data[type]"
+        :lang="lang"
+        ></span>
 </template>
 <script>
 // Modules support
@@ -29,6 +31,10 @@ export default {
       type: Array,
       required: false,
       default: () => ['']
+    },
+    lang: {
+      type: String,
+      required: false
     }
   },
   methods: {
@@ -43,6 +49,9 @@ export default {
       return classList.join(' ')
     },
     decorate (data, type) {
+      // Values that contain no information should not be shown in the UI
+      const valuesToSkip = ['(null)']
+
       let baseValues = []
       let decoratedValues = [] // eslint-disable-line prefer-const
       if (typeof (data[type]) === 'string') {
@@ -50,6 +59,8 @@ export default {
       } else {
         baseValues = data[type].values
       }
+      // Skip empty values
+      baseValues = baseValues.filter(value => !valuesToSkip.includes(value))
       for (const v of baseValues) {
         let decorated = v
         if (this.decorators.includes('abbreviate') && this.l10n.hasMsg(v)) {

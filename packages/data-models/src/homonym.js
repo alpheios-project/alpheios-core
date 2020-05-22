@@ -147,11 +147,14 @@ class Homonym {
     for (const otherLexeme of disambiguator.lexemes) {
       let lexemeMatched = false
       for (const lexeme of base.lexemes) {
-        if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
-          lexemeMatched = true
-        }
         // Do not try to disambiguate lexemes that can't: it will erase a `disambiguated` flag
         const newLex = lexeme.canBeDisambiguatedWith(otherLexeme) ? Lexeme.disambiguate(lexeme, otherLexeme) : lexeme
+
+        if (lexeme.isFullHomonym(otherLexeme, { normalize: true })) {
+          lexemeMatched = true
+          // If lexeme is a full homonym with a disambiguator, it should always be marked as disambiguated
+          newLex.disambiguated = true
+        }
         lexemes.push(newLex)
       }
       // if we couldn't find a matching lexeme, add the disambigutor's lexemes

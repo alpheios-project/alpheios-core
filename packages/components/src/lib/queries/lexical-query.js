@@ -173,7 +173,8 @@ export default class LexicalQuery extends Query {
         }
       } else {
         if (this._annotatedHomonyms && this._annotatedHomonyms.hasHomonyms) {
-          this.homonym = this._annotatedHomonyms.toHomonym(this.selector.normalizedText)
+          // If there is no results from a morhpological analyzer, a resulting homonym should always be disambiguated
+          this.homonym = this._annotatedHomonyms.toHomonym(this.selector.normalizedText, { disambiguated: true })
           // Suppress events that will trigger UI messages if source is wordlist
           if (this._source !== LexicalQuery.sources.WORDLIST) {
             LexicalQuery.evt.MORPH_DATA_READY.pub()
@@ -216,19 +217,17 @@ export default class LexicalQuery extends Query {
     // short definitions provided by the maAdapter
     if (lexiconShortOpts.allow && lexiconShortOpts.allow.length > 0) {
       this.homonym.lexemes.forEach((l) => { l.meaning.clearShortDefs() })
-      // Suppress events that will trigger UI messages if source is wordlist
-      if (this._source !== LexicalQuery.sources.WORDLIST) {
-        LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
-      }
+
+      LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
     } else {
       // we won't have any remaining valid short definition requests
       // so go ahead and publish the SHORT_DEFS_READY event so that the UI
       // can update itself
       // but issue the HOMONYM_READY event first otherwise we get errors
       // from the wordlist which expects to see the homonym before definitions
-      // Suppress events that will trigger UI messages if source is wordlist
+
+      LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
       if (this._source !== LexicalQuery.sources.WORDLIST) {
-        LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
         LexicalQuery.evt.SHORT_DEFS_READY.pub({
           requestType: 'short',
           homonym: this.homonym,
@@ -284,15 +283,22 @@ export default class LexicalQuery extends Query {
 
     if (!this.startedDefinitionsQueries.has(this.homonym.targetWord)) {
       this.startedDefinitionsQueries.set(this.homonym.targetWord, true)
+
+      let params = {
+        opts: lexiconShortOpts,
+        homonym: this.homonym
+      }
+
+      if (this._source !== LexicalQuery.sources.WORDLIST) {
+        params = Object.assign(params, {
+          callBackEvtSuccess: LexicalQuery.evt.SHORT_DEFS_READY,
+          callBackEvtFailed: LexicalQuery.evt.SHORT_DEFS_NOT_FOUND
+        })
+      }
       const adapterLexiconResShort = yield ClientAdapters.lexicon.alpheios({
         method: 'fetchShortDefs',
         clientId: this.clientId,
-        params: {
-          opts: lexiconShortOpts,
-          homonym: this.homonym,
-          callBackEvtSuccess: LexicalQuery.evt.SHORT_DEFS_READY,
-          callBackEvtFailed: LexicalQuery.evt.SHORT_DEFS_NOT_FOUND
-        }
+        params
       })
 
       if (adapterLexiconResShort.errors.length > 0) {
