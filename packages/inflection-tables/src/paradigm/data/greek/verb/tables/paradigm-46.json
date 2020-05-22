@@ -701,7 +701,7 @@
             },
             {
                 "role": "data",
-                "tense": "present",
+                "tense": "present future",
                 "mood": "infinitive",
                 "value": "εἶναι, fut.ἔσεσθαι"
             }
