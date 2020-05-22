@@ -276,7 +276,8 @@ describe('client-adapters.test.js', () => {
       method: 'fetchShortDefs',
       params: {
         homonym: reHomonym.result,
-        opts: {}
+        opts: {},
+        callBackEvtSuccess: { pub: () => jest.fn() }
       }
     })
 
