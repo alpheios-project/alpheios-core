@@ -26,6 +26,7 @@ export default class HTMLSelector extends MediaSelector {
      * Pointer event has two elements: `start` (where a pointer was down) and
      * `end` (where a pointer was up). If pointer was moved, they will be different.
      * It makes more sense to use `end` for our purposes.
+     *
      * @type {HTMLElement}
      */
 
@@ -46,7 +47,7 @@ export default class HTMLSelector extends MediaSelector {
       //  let the browser select this word
       this.browserSelector = true
     } else {
-      HTMLSelector.createSelectionFromPoint(this.event, this.targetRect.left, this.targetRect.top)
+      HTMLSelector.createSelectionFromPoint(this.event, this.languageID, this.targetRect.left, this.targetRect.top)
     }
     this.setDataAttributes()
     this.wordSeparator = new Map()
@@ -84,13 +85,16 @@ export default class HTMLSelector extends MediaSelector {
   /**
    * Creates a selection from start and end coordinates. If no end coordinates given,
    * they will be set to the same position as start point and an empty selection will be created.
-   * @param {number} startX
-   * @param {number} startY
-   * @param {number} endX
-   * @param {number} endY
-   * @return {Range | null} A range if one is successfully created or null in case of failure.
+   *
+   * @param {Event} event - An event object.
+   * @param {symbol} languageID - An assumed language ID of a selection.
+   * @param {number} startX - Start position of a selection on an x-axis.
+   * @param {number} startY - Start position of a selection on an y-axis.
+   * @param {number} endX - End position of a selection on an x-axis.
+   * @param {number} endY - End position of a selection on an y-axis.
+   * @returns {Range | null} A range if one is successfully created or null in case of failure.
    */
-  static createSelectionFromPoint (event, startX, startY, endX = startX, endY = startY) {
+  static createSelectionFromPoint (event, languageID, startX, startY, endX = startX, endY = startY) {
     const doc = window.document
     let start
     let end
@@ -134,7 +138,22 @@ export default class HTMLSelector extends MediaSelector {
 
     if (range && typeof window.getSelection === 'function') {
       let sel = window.getSelection() // eslint-disable-line prefer-const
-      if (range.startOffset !== range.endOffset) {
+      if (!(languageID === Constants.LANG_CHINESE && range.startOffset === range.endOffset)) {
+        /*
+        If startOffset is the same as endOffset it usually means that nothing is selected.
+        However, there might be a few special cases.
+
+        For Chinese, it is often typical that a startOffset is the same as an endOffset. In such cases a selection
+        made by the browser is more precise that what we can achieve. So we will not force
+        our selection upon the browser's.
+
+        On Google Docs, startOffset and endOffset are the same too. In that case we, however,
+        would want to use our selection: the one made by Google docs will in most cases be incorrect.
+
+        So, in the current implementation, we will not use our selection if language is Chinese. This will
+        lead to selection with double click not working for Chinese texts on Google Docs, but we would
+        prefer to use mouse move selection for cases like that anyway.
+        */
         sel.removeAllRanges()
         sel.addRange(range)
       }
@@ -169,7 +188,8 @@ export default class HTMLSelector extends MediaSelector {
   /**
    * Returns a language code of a text piece defined by target. Scans for a `lang` attribute of a selection target
    * or, if not found, all parents of a target.
-   * @return {string | undefined} Language code of a text piece or undefined if language cannot be determined.
+   *
+   * @returns {string | undefined} Language code of a text piece or undefined if language cannot be determined.
    */
   getLanguageCodeFromSource () {
     let languageCode = typeof this.target.getAttribute === 'function' ? this.target.getAttribute('lang') || this.target.getAttribute('xml:lang') : null
@@ -196,8 +216,9 @@ export default class HTMLSelector extends MediaSelector {
    * e.g.<span alpheios-word-node="default"><b>f</b>ero</span> (word is evaluated as fero)
    * e.g.<span alpheios-word-node="default">f{ero}</span> (word is evaluated as fero)
    * e.g.<span alpheios-word-node="exact">f{ero}</span> (word is evaluated as f{ero})
-   * @see #findSelection
    *
+   * @see #findSelection
+   * @param textSelector
    */
   doFromTargetWordSelection (textSelector) {
     textSelector.text = this.target.textContent
@@ -215,8 +236,10 @@ export default class HTMLSelector extends MediaSelector {
    * surrounding context for languages whose words are space-separated.
    * It does not use an end point of a selection. It takes a beginning of a selection
    * and obtains a word where a start selection position is.
+   *
    * @see #findSelection
    * @private
+   * @param {TextSelector} textSelector - An original text selector object.
    */
   doSpaceSeparatedWordSelection (textSelector) {
     const selection = HTMLSelector.getSelection(this.target)
@@ -262,8 +285,7 @@ export default class HTMLSelector extends MediaSelector {
     }
     // clean string:
     //   convert punctuation to spaces
-
-    anchorText = anchorText.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']+', 'g'), ' ')
+    anchorText = anchorText.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']', 'g'), ' ')
     // Determine word boundaries
     let wordStart = anchorText.lastIndexOf(' ', ro) + 1 // Try to find a space char before a beginning of a selection
     let wordEnd = anchorText.indexOf(' ', wordStart + 1) // Try to find a space char after a beginning of a selection
@@ -362,8 +384,10 @@ export default class HTMLSelector extends MediaSelector {
    * Helper method for {@link #findSelection} which identifies
    * target word and surrounding context for languages
    * whose words are character based
+   *
    * @see #findSelection
    * @private
+   * @param {TextSelector} textSelector - An original text selector object.
    */
   doCharacterBasedWordSelection (textSelector) {
     const selection = HTMLSelector.getSelection(this.target)

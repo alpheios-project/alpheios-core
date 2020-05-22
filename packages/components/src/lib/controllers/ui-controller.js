@@ -1377,8 +1377,10 @@ If no URLS are provided, will reset grammar data.
   }
 
   /**
-    (re)initializes grammar data from settings
-  */
+   * (re)initializes grammar data from settings
+   *
+   * @param langCode
+   */
   initGrammar (langCode) {
     this.api.app.grammarData[langCode] = null
     this.store.commit('app/setUpdatedGrammar')
@@ -1979,7 +1981,6 @@ If no URLS are provided, will reset grammar data.
       }
     }
     const lexisModule = this.getModule('lexis')
-    console.info(`Event type is ${ev ? ev.name : customEv.name}`)
     if (ev) {
       this.evc.registerListener(listenerName, selector, this.api.lexis.getSelectedText.bind(lexisModule), ev)
     } else {
@@ -1989,16 +1990,13 @@ If no URLS are provided, will reset grammar data.
   }
 
   registerAndActivateGetSelectedText (listenerName, selector) {
-    console.info('registerAndActivateGetSelectedText')
     this.registerGetSelectedText(listenerName, selector)
     this.evc.activateListener(listenerName)
     this.registerAndActivateMouseMove(listenerName, selector)
   }
 
   registerAndActivateMouseMove (listenerName, selector) {
-    console.info('registerAndActivateMouseMove')
     if (this.enableMouseMoveEvent()) {
-      console.info('activating')
       const uiOptions = this.api.settings.getUiOptions()
 
       const eventParams = {
@@ -2013,7 +2011,6 @@ If no URLS are provided, will reset grammar data.
       this.evc.deactivateListener(listenerName)
       this.evc.activateListener(listenerName + '-mousemove')
     } else {
-      console.info('deactivating')
       // when the mousemove event is deactivated, the regular listener needs to be reactivated
       this.evc.deactivateListener(listenerName + '-mousemove')
       this.evc.activateListener(listenerName)
