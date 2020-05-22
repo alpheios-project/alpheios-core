@@ -16164,7 +16164,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
       async (result) => {
         if (result) {
           const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
-          const resFullDefs = this.updateFullDefsWithCallbacks(fullDefsRequests, this.config[urlKey], homonym)
+          const resFullDefs = this.updateFullDefsAsync(fullDefsRequests, this.config[urlKey], homonym)
           resFullDefs.catch(error => {
             this.addError(this.l10n.messages.LEXICONS_FAILED_CACHED_DATA.get(error.message))
             this.prepareFailedCallback(requestType, homonym)
@@ -16221,7 +16221,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
     }
 
     if (this.async) {
-      return this.fetchDefsWithCallbacks(homonym, lookupFunction)
+      return this.fetchDefsAsync(homonym, lookupFunction)
     } else {
       if (lookupFunction === 'short') {
         return this.fetchShortDefsSync(homonym)
@@ -16268,7 +16268,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
 
       if (result) {
         const fullDefsRequests = this.collectFullDefURLs(cachedDefinitions.get(url), homonym, this.config[urlKey])
-        await this.updateFullDefsSync(fullDefsRequests, this.config[urlKey], homonym)
+        await this.updateFullDefs(fullDefsRequests, this.config[urlKey], homonym)
       }
     }
   }
@@ -16280,7 +16280,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   * @return {Boolean} - result of fetching
   */
 
-  fetchDefsWithCallbacks (homonym, lookupFunction) {
+  fetchDefsAsync (homonym, lookupFunction) {
     const languageID = homonym.lexemes[0].lemma.languageID
     const urlKeys = this.getRequests(languageID).filter(url => this.options.allow.includes(url))
 
@@ -16357,7 +16357,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
             }
             const provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](rightsUri, rightsText)
             const def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](text, config.langs.target, format, lexeme.lemma.word)
-            const definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, def)
+            const definition = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, def)
             lexeme.meaning.appendShortDefs(definition)
           } catch (error) {
             this.addError(this.l10n.messages.LEXICONS_FAILED_APPEND_DEFS.get(error.message))
@@ -16409,7 +16409,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   * @param {Object} config - config data for url
   * @param {Homonym} homonym - homonym we search definitions for
   */
-  async updateFullDefsWithCallbacks (fullDefsRequests, config, homonym) {
+  async updateFullDefsAsync (fullDefsRequests, config, homonym) {
     for (let request of fullDefsRequests) { // eslint-disable-line prefer-const
       let fullDefDataRes
       if (cachedDefinitions.has(request.url)) {
@@ -16427,7 +16427,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
           } else {
             const provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](config.urls.full, config.rights)
             const def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
-            const definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, def)
+            const definition = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, def)
             request.lexeme.meaning.appendFullDefs(definition)
             this.prepareSuccessCallback('fullDefs', homonym)
           }
@@ -16445,7 +16445,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
   * @param {Object} config - config data for url
   * @param {Homonym} homonym - homonym we search definitions for
   */
-  async updateFullDefsSync (fullDefsRequests, config, homonym) {
+  async updateFullDefs (fullDefsRequests, config, homonym) {
     for (let request of fullDefsRequests) { // eslint-disable-line prefer-const
       let fullDefData
       if (cachedDefinitions.has(request.url)) {
@@ -16461,7 +16461,7 @@ class AlpheiosLexiconsAdapter extends _clAdapters_adapters_base_adapter__WEBPACK
         } else {
           const provider = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"](config.urls.full, config.rights)
           const def = new alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["Definition"](fullDefData, config.langs.target, 'text/plain', request.lexeme.lemma.word)
-          const definition = await alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, def)
+          const definition = alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["ResourceProvider"].getProxy(provider, def)
           request.lexeme.meaning.appendFullDefs(definition)
         }
       } catch (error) {

@@ -159,7 +159,7 @@ describe('lexicons/adapter.test.js', () => {
     expect(adapter.prepareFailedCallback).toHaveBeenCalled()
   }, 25000)
 
-  it('6 AlpheiosLexiconsAdapter - prepareFullDefPromise, if success - it executes collectFullDefURLs, updateFullDefsWithCallbacks, prepareSuccessCallback', async () => {
+  it('6 AlpheiosLexiconsAdapter - prepareFullDefPromise, if success - it executes collectFullDefURLs, updateFullDefsAsync, prepareSuccessCallback', async () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
@@ -171,12 +171,12 @@ describe('lexicons/adapter.test.js', () => {
     await BaseTestHelp.updateCacheWithFixtures()
 
     jest.spyOn(adapter, 'collectFullDefURLs')
-    jest.spyOn(adapter, 'updateFullDefsWithCallbacks')
+    jest.spyOn(adapter, 'updateFullDefsAsync')
     adapter.prepareSuccessCallback = jest.fn()
 
     await adapter.prepareFullDefPromise(testSuccessHomonym, urlKey)
     expect(adapter.collectFullDefURLs).toHaveBeenCalled()
-    expect(adapter.updateFullDefsWithCallbacks).toHaveBeenCalled()
+    expect(adapter.updateFullDefsAsync).toHaveBeenCalled()
     expect(adapter.prepareSuccessCallback).toHaveBeenCalled()
 
   }, 500000)
@@ -371,7 +371,7 @@ describe('lexicons/adapter.test.js', () => {
     expect(adapter.addError).toHaveBeenCalledWith(adapter.l10n.messages['LEXICONS_NO_FULL_URL'])
   })
 
-  it('17 AlpheiosLexiconsAdapter - updateFullDefsWithCallbacks fetches each request and adds full definition to lexeme', async () => {
+  it('17 AlpheiosLexiconsAdapter - updateFullDefsAsync fetches each request and adds full definition to lexeme', async () => {
     let adapter = new AlpheiosLexiconsAdapter({
       category: 'lexicon',
       adapterName: 'alpheios',
@@ -387,7 +387,7 @@ describe('lexicons/adapter.test.js', () => {
 
     let fullDefsRequests = adapter.collectFullDefURLs(cachedDefinitionsIndex.get(url), testSuccessHomonym, adapter.config[urlKey])
     adapter.prepareSuccessCallback = jest.fn()
-    await adapter.updateFullDefsWithCallbacks(fullDefsRequests, adapter.config[urlKey], testSuccessHomonym)
+    await adapter.updateFullDefsAsync(fullDefsRequests, adapter.config[urlKey], testSuccessHomonym)
 
     await timeout(300)
 
@@ -683,7 +683,7 @@ describe('lexicons/adapter.test.js', () => {
 
     expect(adapter.async).toBeTruthy()
     
-    jest.spyOn(adapter, 'updateFullDefsWithCallbacks')
+    jest.spyOn(adapter, 'updateFullDefsAsync')
     jest.spyOn(adapter, 'prepareFullDefPromise')
     
 
@@ -693,7 +693,7 @@ describe('lexicons/adapter.test.js', () => {
     expect(adapter.prepareFullDefPromise).toHaveBeenCalled()
     await timeout(6000)
 
-    expect(adapter.updateFullDefsWithCallbacks).toHaveBeenCalled()
+    expect(adapter.updateFullDefsAsync).toHaveBeenCalled()
 
     expect(testSuccessHomonym.lexemes[0].meaning.fullDefs.length).toEqual(1)
     expect(testSuccessHomonym.lexemes[0].meaning.fullDefs[0].text).toEqual(expect.stringContaining('Anaxandr.41.61'))
@@ -708,12 +708,12 @@ describe('lexicons/adapter.test.js', () => {
 
     expect(adapter.async).toBeFalsy()
     
-    jest.spyOn(adapter, 'updateFullDefsSync')
+    jest.spyOn(adapter, 'updateFullDefs')
     
     let options = { allow: ['https://github.com/alpheios-project/lsj'] }
     await adapter.fetchDefinitions(testSuccessHomonym, options, 'full')
 
-    expect(adapter.updateFullDefsSync).toHaveBeenCalled()
+    expect(adapter.updateFullDefs).toHaveBeenCalled()
 
     expect(testSuccessHomonym.lexemes[0].meaning.fullDefs.length).toEqual(1)
     expect(testSuccessHomonym.lexemes[0].meaning.fullDefs[0].text).toEqual(expect.stringContaining('Anaxandr.41.61'))
