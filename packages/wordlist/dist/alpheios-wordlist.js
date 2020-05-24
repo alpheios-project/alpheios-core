@@ -4328,7 +4328,7 @@ class WordItemRemoteDbDriver {
       languageCode: wordItem.languageCode,
       targetWord: wordItem.targetWord,
       important: wordItem.important,
-      createdDT: wordItem.createdDT,
+      createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate,
       updatedDT: wordItem.updatedDT, 
       frequency: wordItem.frequency ? parseInt(wordItem.frequency) : 1
     }

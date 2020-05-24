@@ -169,7 +169,7 @@ export default class WordItemRemoteDbDriver {
       languageCode: wordItem.languageCode,
       targetWord: wordItem.targetWord,
       important: wordItem.important,
-      createdDT: wordItem.createdDT,
+      createdDT: wordItem.createdDT ? wordItem.createdDT : Utility.currentDate,
       updatedDT: wordItem.updatedDT, 
       frequency: wordItem.frequency ? parseInt(wordItem.frequency) : 1
     }
