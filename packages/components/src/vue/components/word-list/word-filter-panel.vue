@@ -184,6 +184,7 @@
       clearFilters (value) {
         this.selectedFilterBy = null
         this.textInput = null
+        this.filterAmount = 0
       }
     },
     methods: {

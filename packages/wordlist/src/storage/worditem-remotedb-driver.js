@@ -28,7 +28,7 @@ export default class WordItemRemoteDbDriver {
       },
       put: {
         url: this._constructPostURL.bind(this),
-        serialize: this._serialize.bind(this),
+        serialize: this._serializePut.bind(this),
         checkResult: this._checkPutResult.bind(this)
       },
       get: {
@@ -170,7 +170,7 @@ export default class WordItemRemoteDbDriver {
       targetWord: wordItem.targetWord,
       important: wordItem.important,
       createdDT: wordItem.createdDT ? wordItem.createdDT : Utility.currentDate,
-      updatedDT: wordItem.updatedDT ? wordItem.updatedDT : Utility.currentDate,
+      updatedDT: wordItem.updatedDT, 
       frequency: wordItem.frequency ? parseInt(wordItem.frequency) : 1
     }
 
@@ -186,6 +186,12 @@ export default class WordItemRemoteDbDriver {
     } else {
       result.context = []
     }
+    return result
+  }
+
+  _serializePut (wordItem) {
+    let result = this._serialize(wordItem)
+    result.updatedDT = wordItem.updatedDT ? wordItem.updatedDT : Utility.currentDate
     return result
   }
 

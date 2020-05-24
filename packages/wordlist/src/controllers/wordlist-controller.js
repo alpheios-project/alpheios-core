@@ -126,6 +126,9 @@ export default class WordlistController {
     let wordItem
     if (wordList) {
       wordItem = wordList.getWordItem(targetWord, create, WordlistController.evt.WORDITEM_UPDATED)
+      if (create) {
+        wordItem.createdDT = Utility.currentDate
+      }
     }
     if (!wordItem) {
       console.error(`Alpheios error: wordlist item not found: ${languageCode} ${targetWord}`)
@@ -144,7 +147,6 @@ export default class WordlistController {
     let wordItem = this.getWordListItem(LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord, true)
     wordItem.homonym = data
     wordItem.currentSession = true
-    wordItem.createdDT = wordItem.createdDT ? wordItem.createdDT : Utility.currentDate
     wordItem.updatedDT = Utility.currentDate
     wordItem.frequency = wordItem.frequency ? wordItem.frequency + 1 : 1
     WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
@@ -162,6 +164,7 @@ export default class WordlistController {
     let wordItem = this.getWordListItem(LanguageModelFactory.getLanguageCodeFromId(data.homonym.languageID),data.homonym.targetWord)
     if (wordItem) {
       wordItem.currentSession = true
+      wordItem.updatedDT = Utility.currentDate
       wordItem.homonym = data.homonym
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
     } else {
@@ -180,6 +183,7 @@ export default class WordlistController {
     let wordItem = this.getWordListItem(LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord)
     if (wordItem) {
       wordItem.currentSession = true
+      wordItem.updatedDT = Utility.currentDate
       wordItem.homonym = data
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
     } else {
@@ -198,6 +202,7 @@ export default class WordlistController {
     let wordItem = this.getWordListItem(data.languageCode, data.normalizedText, true)
     if (wordItem) {
       wordItem.currentSession = true
+      wordItem.updatedDT = Utility.currentDate
       wordItem.addContext([data])
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'context'}})
       // emit a wordlist updated event too in case the wordlist was updated
@@ -219,6 +224,7 @@ export default class WordlistController {
     let wordItem = this.getWordListItem(languageCode, targetWord,false)
     if (wordItem) {
       wordItem.important = important
+      wordItem.updatedDT = Utility.currentDate
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
     } else {
       console.error("Alpheios error: unexpected error updating user word list: request to set important flag on non-existent item")
@@ -235,6 +241,7 @@ export default class WordlistController {
     let wordList = this.getWordList(languageCode, false)
     wordList.values.forEach(wordItem => {
       wordItem.important = important
+      wordItem.updatedDT = Utility.currentDate
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
     })
   }

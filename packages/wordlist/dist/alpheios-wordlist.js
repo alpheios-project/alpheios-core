@@ -2656,6 +2656,9 @@ class WordlistController {
     let wordItem
     if (wordList) {
       wordItem = wordList.getWordItem(targetWord, create, WordlistController.evt.WORDITEM_UPDATED)
+      if (create) {
+        wordItem.createdDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
+      }
     }
     if (!wordItem) {
       console.error(`Alpheios error: wordlist item not found: ${languageCode} ${targetWord}`)
@@ -2674,7 +2677,6 @@ class WordlistController {
     let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(data.languageID), data.targetWord, true)
     wordItem.homonym = data
     wordItem.currentSession = true
-    wordItem.createdDT = wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
     wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
     wordItem.frequency = wordItem.frequency ? wordItem.frequency + 1 : 1
     WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
@@ -2692,6 +2694,7 @@ class WordlistController {
     let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(data.homonym.languageID),data.homonym.targetWord)
     if (wordItem) {
       wordItem.currentSession = true
+      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       wordItem.homonym = data.homonym
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
     } else {
@@ -2710,6 +2713,7 @@ class WordlistController {
     let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(data.languageID), data.targetWord)
     if (wordItem) {
       wordItem.currentSession = true
+      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       wordItem.homonym = data
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
     } else {
@@ -2728,6 +2732,7 @@ class WordlistController {
     let wordItem = this.getWordListItem(data.languageCode, data.normalizedText, true)
     if (wordItem) {
       wordItem.currentSession = true
+      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       wordItem.addContext([data])
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'context'}})
       // emit a wordlist updated event too in case the wordlist was updated
@@ -2749,6 +2754,7 @@ class WordlistController {
     let wordItem = this.getWordListItem(languageCode, targetWord,false)
     if (wordItem) {
       wordItem.important = important
+      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
     } else {
       console.error("Alpheios error: unexpected error updating user word list: request to set important flag on non-existent item")
@@ -2765,6 +2771,7 @@ class WordlistController {
     let wordList = this.getWordList(languageCode, false)
     wordList.values.forEach(wordItem => {
       wordItem.important = important
+      wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
     })
   }
@@ -3657,6 +3664,7 @@ class RemoteDBAdapter {
       let url = this.dbDriver.storageMap.get.url(data)
       let result = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url, this.dbDriver.requestsParams)
       let final = this.dbDriver.storageMap.get.checkResult(result)
+
       return final
     } catch (error) {
       let errorFinal = this.dbDriver.storageMap.get.checkErrorResult(error)
@@ -4179,7 +4187,7 @@ class WordItemRemoteDbDriver {
       },
       put: {
         url: this._constructPostURL.bind(this),
-        serialize: this._serialize.bind(this),
+        serialize: this._serializePut.bind(this),
         checkResult: this._checkPutResult.bind(this)
       },
       get: {
@@ -4321,7 +4329,7 @@ class WordItemRemoteDbDriver {
       targetWord: wordItem.targetWord,
       important: wordItem.important,
       createdDT: wordItem.createdDT ? wordItem.createdDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate,
-      updatedDT: wordItem.updatedDT ? wordItem.updatedDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate,
+      updatedDT: wordItem.updatedDT, 
       frequency: wordItem.frequency ? parseInt(wordItem.frequency) : 1
     }
 
@@ -4337,6 +4345,12 @@ class WordItemRemoteDbDriver {
     } else {
       result.context = []
     }
+    return result
+  }
+
+  _serializePut (wordItem) {
+    let result = this._serialize(wordItem)
+    result.updatedDT = wordItem.updatedDT ? wordItem.updatedDT : _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
     return result
   }
 

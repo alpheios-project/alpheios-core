@@ -281,7 +281,13 @@ export default {
         if (typeof item1[part] === 'string') {
           compared = item1[part].localeCompare(item2[part], this.languageCode, {sensitivity: 'accent'})
         } else {
-          compared = item1[part] - item2[part]
+          if (!item1[part]) {
+            compared = -1
+          } else if (!item2[part]) {
+            compared = 1
+          } else {
+            compared = item1[part] - item2[part]
+          }
         }
 
         if (direction === 'asc') {
