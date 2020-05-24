@@ -49,6 +49,9 @@ export default {
       return classList.join(' ')
     },
     decorate (data, type) {
+      // Values that contain no information should not be shown in the UI
+      const valuesToSkip = ['(null)']
+
       let baseValues = []
       let decoratedValues = [] // eslint-disable-line prefer-const
       if (typeof (data[type]) === 'string') {
@@ -56,6 +59,8 @@ export default {
       } else {
         baseValues = data[type].values
       }
+      // Skip empty values
+      baseValues = baseValues.filter(value => !valuesToSkip.includes(value))
       for (const v of baseValues) {
         let decorated = v
         if (this.decorators.includes('abbreviate') && this.l10n.hasMsg(v)) {
