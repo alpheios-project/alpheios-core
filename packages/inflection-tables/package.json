@@ -117,6 +117,10 @@
       "ecmaVersion": 2019,
       "sourceType": "module",
       "allowImportExportEverywhere": true
+    },
+    "rules": {
+      "no-prototype-builtins": "warn",
+      "accessor-pairs": "warn"
     }
   },
   "eslintIgnore": [
