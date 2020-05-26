@@ -265,10 +265,12 @@ describe('word-filter-panel.test.js', () => {
     cmp.vm.selectedFilterBy = 'byImportant'
 
     cmp.vm.changedFilterBy()
-    expect(cmp.emitted()['changedFilterBy'][0]).toEqual(['byImportant', null])
+
+    expect(cmp.emitted()['changedFilterBy'][0]).toEqual([null, null]) // first clear filters
+    expect(cmp.emitted()['changedFilterBy'][1]).toEqual(['byImportant', null]) // then apply new one
   })
 
-  it('12 WordFilterPanel - method changedFilterBy executes clearFilteringText if currentTypeFilter is not defined and does not have onChange event', () => {
+  it('12 WordFilterPanel - method changedFilterBy executes clearFilteringAdditionalField if currentTypeFilter is not defined and does not have onChange event', () => {
     let cmp = shallowMount(WordFilterPanel, {
       store,
       localVue,
@@ -281,11 +283,11 @@ describe('word-filter-panel.test.js', () => {
       }
     }) 
 
-    cmp.vm.clearFilteringText = jest.fn()
+    cmp.vm.clearFilteringAdditionalField = jest.fn()
     cmp.vm.selectedFilterBy = 'byLemma'
 
     cmp.vm.changedFilterBy()
-    expect(cmp.vm.clearFilteringText).toHaveBeenCalled()
+    expect(cmp.vm.clearFilteringAdditionalField).toHaveBeenCalled()
   })
 
   it('13 WordFilterPanel - method selectExactForm uploads clear exactForm to textInput and executes clickFilterBy', () => {
@@ -495,7 +497,7 @@ describe('word-filter-panel.test.js', () => {
     cmp.vm.selectedFilterBy = 'byLemma'
     cmp.vm.textInput = 'malus'
 
-    cmp.vm.clearFilteringText()
+    cmp.vm.clearFilteringAdditionalField()
 
     expect(cmp.vm.selectedFilterBy).toEqual('byLemma')
     expect(cmp.vm.textInput).toBeNull()
