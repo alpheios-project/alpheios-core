@@ -168,4 +168,9 @@ export default {
       padding-top: 10px;
       font-size: textsize(12px);
     }
+
+  .alpheios-panel__tab-panel--options fieldset {
+    padding: textsize(10px) textsize(20px) textsize(20px);
+    border: 2px groove threedface;
+  }
 </style>
