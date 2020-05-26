@@ -73,6 +73,7 @@
     },
     "rules": {
       "no-prototype-builtins": "warn",
+      "dot-notation": "warn",
       "accessor-pairs": "warn"
     }
   },
