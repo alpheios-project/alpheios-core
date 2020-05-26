@@ -112,9 +112,11 @@
             onClick: true, showTextInput: true,
             textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL_PLACEHOLDER')
           },
-          { value: 'byMostRecent', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTRECENT'), showNumberInput: true,
+          { value: 'byMostRecent', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTRECENT'), 
+            showNumberInput: true, onChange: true,
             textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_AMOUNT_PLACEHOLDER') },
-          { value: 'byMostOften', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTOFTEN'), showNumberInput: true,
+          { value: 'byMostOften', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTOFTEN'), 
+            showNumberInput: true, onChange: true,
             textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_AMOUNT_PLACEHOLDER') }
         ],
         textInput: null,
@@ -191,6 +193,7 @@
       changedFilterBy () {
         if (this.currentTypeFilter && this.currentTypeFilter.onChange) {
           this.$emit('changedFilterBy', this.selectedFilterBy, this.currentAdditionalField)
+          console.info('changedFilterBy - ', this.selectedFilterBy, this.currentAdditionalField)
         } else {
           this.clearFilteringText()
         }
@@ -214,6 +217,7 @@
             return
           }
           this.$emit('changedFilterBy', this.selectedFilterBy, this.currentAdditionalField)
+          console.info('clickFilterBy - ', this.selectedFilterBy, this.currentAdditionalField)
           this.shownVariantsSelect = false
         }
       },
@@ -267,6 +271,7 @@
 
         if (this.selectedFilterBy) {
           this.$emit('changedFilterBy', this.selectedFilterBy, this.currentAdditionalField)
+          console.info('changeFilterAmount - ', this.selectedFilterBy, this.currentAdditionalField)
         }
       },
       checkNumberField () {
