@@ -3710,7 +3710,8 @@ p.alpheios-word-usage-filter-title {
  */
 .alpheios-lookup__form .alpheios-lookup__form-beta-codes-info {
   border-bottom: 1px solid var(--alpheios-color-placehoder);
-  margin-bottom: calc(var(--alpheios-base-text-size) * 1.5);
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
+  padding-bottom: calc(var(--alpheios-base-text-size) * 1.25);
   font-size: 94%;
 }
 .alpheios-lookup__form .alpheios-lookup__form-beta-codes-info div {
@@ -3956,7 +3957,7 @@ span.alpheios-lookup__lang-change:hover {
   display: inline-block;
 }
 .alpheios-toolbar__lookup.alpheios-toolbar__lookup-beta-codes {
-  height: calc(var(--alpheios-base-text-size) * 31.25);
+  height: calc(var(--alpheios-base-text-size) * 28.125);
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625);
 }
 .alpheios-toolbar__buttons {
