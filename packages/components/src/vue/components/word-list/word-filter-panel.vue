@@ -129,14 +129,14 @@
       }
     },
     mounted () {
-      this.filterAmount = this.featureOptions ? this.wordlistFilterAmountDefault.currentValue : 0
+      this.filterAmount = this.wordlistFilterAmountDefault
     },
     computed: {
       featureOptions () {
         return this.$store.state.settings.featureResetCounter + 1 ? this.settings.getFeatureOptions() : null
       },
       wordlistFilterAmountDefault () {
-        return this.featureOptions ? this.featureOptions.items.wordlistFilterAmountDefault : null
+        return this.featureOptions ? this.featureOptions.items.wordlistFilterAmountDefault.currentValue : 0
       },
       currentTypeFilter () {
         return this.selectedFilterBy ? this.typeFiltersList.find(typeFilter => typeFilter.value === this.selectedFilterBy) : null
@@ -191,10 +191,9 @@
     },
     methods: {
       changedFilterBy () {
+        this.clearFilteringAdditionalField()
         if (this.currentTypeFilter && this.currentTypeFilter.onChange) {
           this.$emit('changedFilterBy', this.selectedFilterBy, this.currentAdditionalField)
-        } else {
-          this.clearFilteringText()
         }
       },
       selectExactForm (selectedExactForm) {
@@ -224,8 +223,9 @@
         this.textInput = null
         this.clearFilterEvent()
       },
-      clearFilteringText () {
+      clearFilteringAdditionalField () {
         this.textInput = null
+        this.filterAmount = this.wordlistFilterAmountDefault
         this.clearFilterEvent()
         this.$emit('clearClickedLemma')
       },
