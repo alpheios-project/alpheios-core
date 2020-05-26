@@ -36,7 +36,8 @@ export default {
   @import "../../styles/variables";
   .alpheios-lookup__form .alpheios-lookup__form-beta-codes-info {
     border-bottom: 1px solid var(--alpheios-color-placehoder);
-    margin-bottom: calc(var(--alpheios-base-text-size) * 1.5);
+    margin-bottom: textsize(10px);
+    padding-bottom: textsize(20px);
     font-size: 94%;
 
     div {
