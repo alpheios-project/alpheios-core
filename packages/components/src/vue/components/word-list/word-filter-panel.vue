@@ -112,9 +112,11 @@
             onClick: true, showTextInput: true,
             textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_BYLEMMA_FULL_PLACEHOLDER')
           },
-          { value: 'byMostRecent', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTRECENT'), showNumberInput: true,
+          { value: 'byMostRecent', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTRECENT'), 
+            showNumberInput: true, onChange: true,
             textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_AMOUNT_PLACEHOLDER') },
-          { value: 'byMostOften', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTOFTEN'), showNumberInput: true,
+          { value: 'byMostOften', title: this.l10n.getText('WORDLIST_FILTER_BYMOSTOFTEN'), 
+            showNumberInput: true, onChange: true,
             textInputPlaceholder: this.l10n.getText('WORDLIST_FILTER_AMOUNT_PLACEHOLDER') }
         ],
         textInput: null,

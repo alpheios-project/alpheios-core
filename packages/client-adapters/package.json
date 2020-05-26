@@ -106,7 +106,8 @@
     },
     "rules": {
       "no-prototype-builtins": "off",
-      "dot-notation": "off"
+      "dot-notation": "off",
+      "accessor-pairs": "warn"
     }
   },
   "eslintIgnore": [
