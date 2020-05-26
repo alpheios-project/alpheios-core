@@ -3210,7 +3210,7 @@ p.alpheios-word-usage-filter-title {
   padding-top: 10px !important;
   font-size: calc(var(--alpheios-base-text-size) * 0.75) !important;
 }
-.alpheios-panel__tab-panel--options .fieldset {
+.alpheios-panel__tab-panel--options fieldset {
   padding: calc(var(--alpheios-base-text-size) * 0.625) calc(var(--alpheios-base-text-size) * 1.25) calc(var(--alpheios-base-text-size) * 1.25) !important;
   border: 2px groove threedface !important;
 }
