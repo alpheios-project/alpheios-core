@@ -105,8 +105,9 @@
       "experimentalObjectRestSpread": true
     },
     "rules": {
-      "no-prototype-builtins": "off",
-      "dot-notation": "off"
+      "no-prototype-builtins": "warn",
+      "dot-notation": "warn",
+      "accessor-pairs": "warn"
     }
   },
   "eslintIgnore": [

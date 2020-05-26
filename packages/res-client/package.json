@@ -70,6 +70,10 @@
     "parserOptions": {
       "ecmaVersion": 2019,
       "sourceType": "module"
+    },
+    "rules": {
+      "no-prototype-builtins": "warn",
+      "accessor-pairs": "warn"
     }
   },
   "standard": {

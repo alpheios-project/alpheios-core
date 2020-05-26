@@ -75,7 +75,7 @@
       "allowImportExportEverywhere": true
     },
     "rules": {
-      "no-prototype-builtins": "off",
+      "no-prototype-builtins": "warn",
       "accessor-pairs": "warn"
     }
   },
