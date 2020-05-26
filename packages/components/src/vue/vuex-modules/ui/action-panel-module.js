@@ -6,7 +6,6 @@ import Platform from '@/lib/utility/platform.js'
 export default class ActionPanelModule extends Module {
   constructor (store, api, config) {
     super(store, api, config)
-    console.info('ActionPanelModule constructor')
 
     // Create the mount point as the last child of the page's body
     const el = document.createElement('div')
