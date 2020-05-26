@@ -117,6 +117,21 @@
       "maxValue": 5000,
       "values": []
     },
+    "forceMouseMoveGoogleDocs": {
+      "defaultValue": false,
+      "labelText": "Force Use of Mouse Move on Google Docs",
+      "boolean": true,
+      "values": [
+        {
+          "value": true,
+          "text": "Yes"
+        },
+        {
+          "value": false,
+          "text": "No"
+        }
+      ]
+    },
     "enableMouseMoveLimitedByIdCheck": {
       "defaultValue": true,
       "labelText": "Limit Mouse Move on Google Docs to top-level container",
