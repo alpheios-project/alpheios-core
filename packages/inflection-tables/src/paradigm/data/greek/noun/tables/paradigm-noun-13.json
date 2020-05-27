@@ -21,7 +21,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_ews",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "πόλις",
@@ -30,7 +29,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "πῆχυς",
@@ -39,7 +37,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "ἄστυ",
@@ -48,7 +45,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "uLs_uos",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "ἰχθύς",
@@ -72,7 +68,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_ews",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "πόλις",
@@ -81,7 +76,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "πῆχυς",
@@ -90,7 +84,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "ἄστυ",
@@ -99,7 +92,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "uLs_uos",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "ἰχθύς",
@@ -123,7 +115,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_ews",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "πόλις",
@@ -132,7 +123,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "πῆχυς",
@@ -141,7 +131,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "ἄστυ",
@@ -150,7 +139,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "uLs_uos",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "ἰχθύς",
@@ -174,7 +162,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_ews",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "πόλις",
@@ -183,7 +170,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "πῆχυς",
@@ -192,7 +178,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "ἄστυ",
@@ -201,7 +186,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "uLs_uos",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "ἰχθύς",
@@ -225,7 +209,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_ews",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "πόλις",
@@ -234,7 +217,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "πῆχυς",
@@ -243,7 +225,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "ἄστυ",
@@ -252,7 +233,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "uLs_uos",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "ἰχθύς",
@@ -276,7 +256,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_ews",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "πόλις",
@@ -285,7 +264,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "πῆχυς",
@@ -294,7 +272,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "ἄστυ",
@@ -303,7 +280,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "uLs_uos",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "ἰχθύς",
@@ -327,7 +303,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_ews",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "πόλις",
@@ -336,7 +311,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "πῆχυς",
@@ -345,7 +319,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "ἄστυ",
@@ -354,7 +327,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "uLs_uos",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "ἰχθύς",
@@ -378,7 +350,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_ews",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "πόλις",
@@ -387,7 +358,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "πῆχυς",
@@ -396,7 +366,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "ἄστυ",
@@ -405,7 +374,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "uLs_uos",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "ἰχθύς",
@@ -429,7 +397,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_ews",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "πόλις",
@@ -438,7 +405,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "πῆχυς",
@@ -447,7 +413,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "ἄστυ",
@@ -456,7 +421,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "uLs_uos",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "ἰχθύς",
@@ -480,7 +444,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_ews",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "πόλις",
@@ -489,7 +452,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "πῆχυς",
@@ -498,7 +460,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "ἄστυ",
@@ -507,7 +468,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "uLs_uos",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "ἰχθύς",
@@ -531,7 +491,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_ews",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "πόλις",
@@ -540,7 +499,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "πῆχυς",
@@ -549,7 +507,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "us_ews",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "ἄστυ",
@@ -558,7 +515,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "uLs_uos",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "ἰχθύς",

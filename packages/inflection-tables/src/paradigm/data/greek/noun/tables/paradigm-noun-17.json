@@ -21,7 +21,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "ναός",
@@ -30,7 +29,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_wos",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "λαός",
@@ -39,7 +37,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_oos",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "ἠώς",
@@ -48,7 +45,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "λαγῶς",
@@ -72,7 +68,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "ναός",
@@ -81,7 +76,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_wos",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "λαός",
@@ -90,7 +84,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_oos",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "ἠώς",
@@ -99,7 +92,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "λαγῶς",
@@ -123,7 +115,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "ναός",
@@ -132,7 +123,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_wos",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "λαός",
@@ -141,7 +131,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_oos",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "ἠώς",
@@ -150,7 +139,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "λαγῶς",
@@ -174,7 +162,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "ναός",
@@ -183,7 +170,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_wos",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "λαός",
@@ -192,7 +178,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_oos",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "ἠώς",
@@ -201,7 +186,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "λαγῶς",
@@ -225,7 +209,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "ναός",
@@ -234,7 +217,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_wos",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "λαός",
@@ -243,7 +225,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_oos",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "ἠώς",
@@ -252,7 +233,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "λαγῶς",
@@ -276,7 +256,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "ναός",
@@ -285,7 +264,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_wos",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "λαός",
@@ -294,7 +272,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_oos",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "ἠώς",
@@ -303,7 +280,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "λαγῶς",
@@ -327,7 +303,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "ναός",
@@ -336,7 +311,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_wos",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "λαός",
@@ -345,7 +319,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_oos",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "ἠώς",
@@ -354,7 +327,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "λαγῶς",
@@ -378,7 +350,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "ναός",
@@ -387,7 +358,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_wos",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "λαός",
@@ -396,7 +366,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_oos",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "ἠώς",
@@ -405,7 +374,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "λαγῶς",
@@ -429,7 +397,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "ναός",
@@ -438,7 +405,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_wos",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "λαός",
@@ -447,7 +413,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_oos",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "ἠώς",
@@ -456,7 +421,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "λαγῶς",
@@ -480,7 +444,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "ναός",
@@ -489,7 +452,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_wos",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "λαός",
@@ -498,7 +460,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_oos",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "ἠώς",
@@ -507,7 +468,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "λαγῶς",
@@ -531,7 +491,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "ναός",
@@ -540,7 +499,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_wos",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "λαός",
@@ -549,7 +507,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_oos",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "ἠώς",
@@ -558,7 +515,6 @@
             {
                 "role": "data",
                 "declension": "2nd 3rd",
-                "stemtype": "ws_w",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "λαγῶς",
