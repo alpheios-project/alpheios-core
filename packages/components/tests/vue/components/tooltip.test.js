@@ -84,7 +84,7 @@ describe('tooltip.test.js', () => {
       }
     })
 
-    expect(cmp.find('.tooltiptext').text()).toEqual('foo tooltip')
+    expect(cmp.find('.alpheios-tooltiptext').text()).toEqual('foo tooltip')
     expect(cmp.vm.tooltipDirection).toEqual('bottom')
     expect(cmp.vm.directionClass).toEqual({ 'alph_tooltip-bottom': true })
 

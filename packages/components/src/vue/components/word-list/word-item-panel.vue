@@ -41,12 +41,19 @@
           >{{ lemma }}<span v-if="lemmaIndex < lemmasList.length-1">, </span></span>
         </div>
         
-        <div class="alpheios-worditem__data alpheios-worditem__frequency">
-          {{ worditem.frequency }}
-        </div>
-        <div class="alpheios-worditem__data alpheios-worditem__updatedDT">
-          {{ updatedDT }}
-        </div>
+        <alph-tooltip tooltipDirection="top-right"
+          :tooltipText="l10n.getMsg('WORDLIST_TOOLTIP_FREQUENCY')">
+          <div class="alpheios-worditem__data alpheios-worditem__frequency">
+            {{ worditem.frequency }}
+          </div>
+        </alph-tooltip>
+
+         <alph-tooltip tooltipDirection="top-right"
+          :tooltipText="l10n.getMsg('WORDLIST_TOOLTIP_UPDATEDDT')">
+          <div class="alpheios-worditem__data alpheios-worditem__updatedDT">
+            {{ updatedDT }}
+          </div>
+        </alph-tooltip>
     </div>
 </template>
 <script>

@@ -30,7 +30,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "singular",
                 "value": "singular"
@@ -38,7 +37,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "singular",
                 "case": "nominative",
@@ -47,7 +45,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "masculine feminine",
                 "number": "singular",
@@ -57,7 +54,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "neuter",
                 "number": "singular",
@@ -70,7 +66,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "singular",
                 "value": "singular"
@@ -78,7 +73,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "singular",
                 "case": "genitive",
@@ -87,7 +81,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "masculine feminine",
                 "number": "singular",
@@ -97,7 +90,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "neuter",
                 "number": "singular",
@@ -109,7 +101,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "singular",
                 "value": "singular"
@@ -117,7 +108,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "singular",
                 "case": "dative",
@@ -126,7 +116,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "masculine feminine",
                 "number": "singular",
@@ -136,7 +125,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "neuter",
                 "number": "singular",
@@ -148,7 +136,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "singular",
                 "value": "singular"
@@ -156,7 +143,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "singular",
                 "case": "accusative",
@@ -165,7 +151,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "masculine feminine",
                 "number": "singular",
@@ -175,7 +160,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "neuter",
                 "number": "singular",
@@ -187,7 +171,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "singular",
                 "value": "singular"
@@ -195,7 +178,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "singular",
                 "case": "vocative",
@@ -204,7 +186,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "masculine feminine",
                 "number": "singular",
@@ -214,7 +195,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "neuter",
                 "number": "singular",
@@ -226,7 +206,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "dual",
                 "value": "dual"
@@ -234,7 +213,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "dual",
                 "case": "nominative accusative vocative",
@@ -243,7 +221,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "masculine feminine",
                 "number": "dual",
@@ -253,7 +230,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "neuter",
                 "number": "dual",
@@ -265,7 +241,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "dual",
                 "value": "dual"
@@ -273,7 +248,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "dual",
                 "case": "genitive dative",
@@ -282,7 +256,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "masculine feminine",
                 "number": "dual",
@@ -292,7 +265,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "neuter",
                 "number": "dual",
@@ -304,7 +276,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "plural",
                 "value": "plural"
@@ -312,7 +283,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "plural",
                 "case": "nominative vocative",
@@ -321,7 +291,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "masculine feminine",
                 "number": "plural",
@@ -331,7 +300,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "neuter",
                 "number": "plural",
@@ -343,7 +311,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "plural",
                 "value": "plural"
@@ -351,7 +318,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "plural",
                 "case": "genitive",
@@ -360,7 +326,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "masculine feminine",
                 "number": "plural",
@@ -370,7 +335,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "neuter",
                 "number": "plural",
@@ -382,7 +346,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "plural",
                 "value": "plural"
@@ -390,7 +353,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "plural",
                 "case": "dative",
@@ -399,7 +361,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "masculine feminine",
                 "number": "plural",
@@ -409,7 +370,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "neuter",
                 "number": "plural",
@@ -421,7 +381,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "plural",
                 "value": "plural"
@@ -429,7 +388,6 @@
             {
                 "role": "label",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "number": "plural",
                 "case": "accusative",
@@ -438,7 +396,6 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "masculine feminine",
                 "number": "plural",
@@ -448,12 +405,11 @@
             {
                 "role": "data",
                 "declension": "1st 2nd",
-                "stemtype": "os_on",
                 "lemma": "ἄδικος",
                 "gender": "neuter",
                 "number": "plural",
                 "case": "accusative",
-                "value": "ἀδίκους"
+                "value": "ἄδικᾰ"
             }
         ]}
 

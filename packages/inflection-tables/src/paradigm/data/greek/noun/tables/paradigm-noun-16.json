@@ -21,7 +21,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "γῆ",
@@ -30,7 +29,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "συκῆ",
@@ -39,7 +37,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ah_ahs",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "μνᾶ",
@@ -48,7 +45,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ehs_eou",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "Ἑρμῆς",
@@ -72,7 +68,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "γῆ",
@@ -81,7 +76,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "συκῆ",
@@ -90,7 +84,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ah_ahs",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "μνᾶ",
@@ -99,7 +92,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ehs_eou",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "Ἑρμῆς",
@@ -123,7 +115,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "γῆ",
@@ -132,7 +123,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "συκῆ",
@@ -141,7 +131,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ah_ahs",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "μνᾶ",
@@ -150,7 +139,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ehs_eou",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "Ἑρμῆς",
@@ -174,7 +162,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "γῆ",
@@ -183,7 +170,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "συκῆ",
@@ -192,7 +178,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ah_ahs",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "μνᾶ",
@@ -201,7 +186,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ehs_eou",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "Ἑρμῆς",
@@ -225,7 +209,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "γῆ",
@@ -234,7 +217,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "συκῆ",
@@ -243,7 +225,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ah_ahs",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "μνᾶ",
@@ -252,7 +233,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ehs_eou",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "Ἑρμῆς",
@@ -276,7 +256,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "γῆ",
@@ -285,7 +264,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "συκῆ",
@@ -294,7 +272,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ah_ahs",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "μνᾶ",
@@ -303,7 +280,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ehs_eou",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "Ἑρμῆς",
@@ -327,7 +303,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "γῆ",
@@ -336,7 +311,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "συκῆ",
@@ -345,7 +319,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ah_ahs",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "μνᾶ",
@@ -354,7 +327,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ehs_eou",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "Ἑρμῆς",
@@ -378,7 +350,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "γῆ",
@@ -387,7 +358,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "συκῆ",
@@ -396,7 +366,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ah_ahs",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "μνᾶ",
@@ -405,7 +374,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ehs_eou",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "Ἑρμῆς",
@@ -429,7 +397,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "γῆ",
@@ -438,7 +405,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "συκῆ",
@@ -447,7 +413,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ah_ahs",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "μνᾶ",
@@ -456,7 +421,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ehs_eou",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "Ἑρμῆς",
@@ -480,7 +444,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "γῆ",
@@ -489,7 +452,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "συκῆ",
@@ -498,7 +460,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ah_ahs",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "μνᾶ",
@@ -507,7 +468,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ehs_eou",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "Ἑρμῆς",
@@ -531,7 +491,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "γῆ",
@@ -540,7 +499,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "eh_ehs",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "συκῆ",
@@ -549,7 +507,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ah_ahs",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "μνᾶ",
@@ -558,7 +515,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "ehs_eou",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "Ἑρμῆς",
