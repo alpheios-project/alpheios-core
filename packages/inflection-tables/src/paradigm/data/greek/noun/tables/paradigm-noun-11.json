@@ -21,7 +21,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "τριήρης",
@@ -30,7 +29,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "γένος",
@@ -39,7 +37,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_aos",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "γέρας",
@@ -63,7 +60,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "τριήρης",
@@ -72,7 +68,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "γένος",
@@ -81,7 +76,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_aos",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "γέρας",
@@ -105,7 +99,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "τριήρης",
@@ -114,7 +107,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "γένος",
@@ -123,7 +115,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_aos",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "γέρας",
@@ -147,7 +138,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "τριήρης",
@@ -156,7 +146,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "γένος",
@@ -165,7 +154,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_aos",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "γέρας",
@@ -189,7 +177,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "τριήρης",
@@ -198,7 +185,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "γένος",
@@ -207,7 +193,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_aos",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "γέρας",
@@ -231,7 +216,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "τριήρης",
@@ -240,7 +224,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "γένος",
@@ -249,7 +232,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_aos",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "γέρας",
@@ -273,7 +255,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "τριήρης",
@@ -282,7 +263,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "γένος",
@@ -291,7 +271,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_aos",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "γέρας",
@@ -315,7 +294,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "τριήρης",
@@ -324,7 +302,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "γένος",
@@ -333,7 +310,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_aos",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "γέρας",
@@ -357,7 +333,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "τριήρης",
@@ -366,7 +341,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "γένος",
@@ -375,7 +349,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_aos",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "γέρας",
@@ -399,7 +372,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "τριήρης",
@@ -408,7 +380,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "γένος",
@@ -417,7 +388,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_aos",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "γέρας",
@@ -441,7 +411,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "τριήρης",
@@ -450,7 +419,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hs_eos",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "γένος",
@@ -459,7 +427,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_aos",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "γέρας",

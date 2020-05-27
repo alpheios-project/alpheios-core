@@ -21,7 +21,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_oos",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "αἰδώς",
@@ -30,7 +29,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_wos",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "ἥρως",
@@ -54,7 +52,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_oos",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "αἰδώς",
@@ -63,7 +60,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_wos",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "ἥρως",
@@ -87,7 +83,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_oos",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "αἰδώς",
@@ -96,7 +91,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_wos",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "ἥρως",
@@ -120,7 +114,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_oos",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "αἰδώς",
@@ -129,7 +122,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_wos",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "ἥρως",
@@ -153,7 +145,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_oos",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "αἰδώς",
@@ -162,7 +153,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_wos",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "ἥρως",
@@ -186,7 +176,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_oos",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "αἰδώς",
@@ -195,7 +184,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_wos",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "ἥρως",
@@ -219,7 +207,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_oos",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "αἰδώς",
@@ -228,7 +215,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_wos",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "ἥρως",
@@ -252,7 +238,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_oos",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "αἰδώς",
@@ -261,7 +246,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_wos",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "ἥρως",
@@ -285,7 +269,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_oos",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "αἰδώς",
@@ -294,7 +277,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_wos",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "ἥρως",
@@ -318,7 +300,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_oos",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "αἰδώς",
@@ -327,7 +308,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_wos",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "ἥρως",
@@ -351,7 +331,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_oos",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "αἰδώς",
@@ -360,7 +339,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ws_wos",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "ἥρως",

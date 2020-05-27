@@ -163,6 +163,7 @@ export default class RemoteDBAdapter {
       let url = this.dbDriver.storageMap.get.url(data)
       let result = await axios.get(url, this.dbDriver.requestsParams)
       let final = this.dbDriver.storageMap.get.checkResult(result)
+
       return final
     } catch (error) {
       let errorFinal = this.dbDriver.storageMap.get.checkErrorResult(error)

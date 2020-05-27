@@ -75,7 +75,9 @@
       "allowImportExportEverywhere": true
     },
     "rules": {
-      "no-prototype-builtins": "off"
+      "no-prototype-builtins": "warn",
+      "dot-notation": "warn",
+      "accessor-pairs": "warn"
     }
   },
   "eslintIgnore": [

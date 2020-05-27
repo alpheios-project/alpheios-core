@@ -8,7 +8,7 @@
           <input-autocomplete
               :lang = "lookupLanguage"
               :clearValue = "clearLookupText"
-              id="alpheios-lookup-form-input"
+              :id="lookupInputName"
               @keyPressEnter = "lookup"
               @updateLookupText = "updateLookupText"
           />
@@ -102,6 +102,9 @@ export default {
   },
 
   computed: {
+    lookupInputName () {
+      return `alpheios-lookup-form-input__${this.nameBase}`
+    },
     lookupLanguage () {
       return this.showLangSelector
         ? this.$options.lookupLanguage.currentValue

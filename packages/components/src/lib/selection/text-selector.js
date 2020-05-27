@@ -16,6 +16,12 @@ export default class TextSelector {
     this.languageID = languageID || null
     this.model = undefined
     this.location = ''
+
+    /**
+     * Some additional data about selector such as translation alignment data.
+     *
+     * @type {{}}
+     */
     this.data = {}
     // this.language = undefined
 

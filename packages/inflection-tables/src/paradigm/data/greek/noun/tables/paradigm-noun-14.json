@@ -21,7 +21,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "ἱππεύς",
@@ -30,7 +29,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "γραῦς",
@@ -39,7 +37,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "ναῦς",
@@ -48,7 +45,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "βοῦς",
@@ -72,7 +68,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "ἱππεύς",
@@ -81,7 +76,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "γραῦς",
@@ -90,7 +84,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "ναῦς",
@@ -99,7 +92,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "βοῦς",
@@ -123,7 +115,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "ἱππεύς",
@@ -132,7 +123,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "γραῦς",
@@ -141,7 +131,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "ναῦς",
@@ -150,7 +139,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "βοῦς",
@@ -174,7 +162,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "ἱππεύς",
@@ -183,7 +170,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "γραῦς",
@@ -192,7 +178,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "ναῦς",
@@ -201,7 +186,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "βοῦς",
@@ -225,7 +209,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "ἱππεύς",
@@ -234,7 +217,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "γραῦς",
@@ -243,7 +225,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "ναῦς",
@@ -252,7 +233,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "βοῦς",
@@ -276,7 +256,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "ἱππεύς",
@@ -285,7 +264,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "γραῦς",
@@ -294,7 +272,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "ναῦς",
@@ -303,7 +280,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "βοῦς",
@@ -327,7 +303,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "ἱππεύς",
@@ -336,7 +311,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "γραῦς",
@@ -345,7 +319,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "ναῦς",
@@ -354,7 +327,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "βοῦς",
@@ -378,7 +350,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "ἱππεύς",
@@ -387,7 +358,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "γραῦς",
@@ -396,7 +366,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "ναῦς",
@@ -405,7 +374,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "βοῦς",
@@ -429,7 +397,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "ἱππεύς",
@@ -438,7 +405,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "γραῦς",
@@ -447,7 +413,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "ναῦς",
@@ -456,7 +421,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "βοῦς",
@@ -480,7 +444,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "ἱππεύς",
@@ -489,7 +452,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "γραῦς",
@@ -498,7 +460,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "ναῦς",
@@ -507,7 +468,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "βοῦς",
@@ -531,7 +491,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "ἱππεύς",
@@ -540,7 +499,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "γραῦς",
@@ -549,7 +507,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "ναῦς",
@@ -558,7 +515,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "βοῦς",

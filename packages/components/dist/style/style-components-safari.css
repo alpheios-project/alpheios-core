@@ -947,10 +947,11 @@ p.alpheios-lemma__translations-value {
   position: relative !important;
   display: inline-block;
 }
-.alph_tooltip .tooltiptext {
+.alph_tooltip span.alpheios-tooltiptext.alpheios-tooltiptext-span {
   visibility: hidden !important;
   position: absolute !important;
   width: calc(var(--alpheios-base-ui-size) * 7.5) !important;
+  padding: calc(var(--alpheios-base-ui-size) * 0.3125) !important;
   background-color: var(--alpheios-text-bg-color) !important;
   color: var(--alpheios-text-color) !important;
   border: 1px solid var(--alpheios-border-color) !important;
@@ -959,13 +960,10 @@ p.alpheios-lemma__translations-value {
   opacity: 0 !important;
   transition: opacity 0.6s !important;
   display: none;
-}
-.alph_tooltip span.tooltiptext {
-  padding: calc(var(--alpheios-base-ui-size) * 0.375) 0 !important;
   font-size: calc(var(--alpheios-base-text-size) * 0.75) !important;
   text-align: center !important;
 }
-.alph_tooltip:hover .tooltiptext {
+.alph_tooltip:hover span.alpheios-tooltiptext.alpheios-tooltiptext-span {
   visibility: visible !important;
   opacity: 1 !important;
   display: inline;
@@ -3210,6 +3208,10 @@ p.alpheios-word-usage-filter-title {
   padding-top: 10px !important;
   font-size: calc(var(--alpheios-base-text-size) * 0.75) !important;
 }
+.alpheios-panel__tab-panel--options fieldset {
+  padding: calc(var(--alpheios-base-text-size) * 0.625) calc(var(--alpheios-base-text-size) * 1.25) calc(var(--alpheios-base-text-size) * 1.25) !important;
+  border: 2px groove threedface !important;
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3710,7 +3712,8 @@ p.alpheios-word-usage-filter-title {
  */
 .alpheios-lookup__form .alpheios-lookup__form-beta-codes-info {
   border-bottom: 1px solid var(--alpheios-color-placehoder) !important;
-  margin-bottom: calc(var(--alpheios-base-text-size) * 1.5) !important;
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625) !important;
+  padding-bottom: calc(var(--alpheios-base-text-size) * 1.25) !important;
   font-size: 94% !important;
 }
 .alpheios-lookup__form .alpheios-lookup__form-beta-codes-info div {
@@ -3956,7 +3959,7 @@ span.alpheios-lookup__lang-change:hover {
   display: inline-block;
 }
 .alpheios-toolbar__lookup.alpheios-toolbar__lookup-beta-codes {
-  height: calc(var(--alpheios-base-text-size) * 31.25) !important;
+  height: calc(var(--alpheios-base-text-size) * 28.125) !important;
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625) !important;
 }
 .alpheios-toolbar__buttons {

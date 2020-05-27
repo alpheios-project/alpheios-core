@@ -758,7 +758,6 @@ if you want to create a different configuration of a UI controller.
       showPanelTab: this.showPanelTab.bind(this),
       togglePanelTab: this.togglePanelTab.bind(this),
       registerAndActivateGetSelectedText: this.registerAndActivateGetSelectedText.bind(this),
-      registerAndActivateMouseMove: this.registerAndActivateMouseMove.bind(this),
 
       optionChange: this.uiOptionChange.bind(this) // Handle a change of UI options
     }
@@ -872,10 +871,6 @@ if you want to create a different configuration of a UI controller.
     this.featureOptions.items.lookupLanguage.setValue(defaultLangCode)
     this.updateLanguage(defaultLangID)
 
-    if (this.platform.isGoogleDocs) {
-      this.featureOptions.items.enableMouseMove.setValue(true)
-      this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
-    }
     // Create registered UI modules
     this.createUiModules()
 
@@ -983,7 +978,6 @@ if you want to create a different configuration of a UI controller.
 
     // Activate listeners
     if (this.evc) { this.evc.activateListeners() }
-    this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
 
     this.isActivated = true
     this.isDeactivated = false
@@ -1240,7 +1234,7 @@ if you want to create a different configuration of a UI controller.
     if (['treebank', 'inflections', 'inflectionsbrowser', 'wordUsage'].includes(tabName) && this.platform.isMobile && isPortrait) {
       const message = this.api.l10n.getMsg('HINT_LANDSCAPE_MODE')
       this.store.commit('ui/setHint', message, tabName)
-    } else if (this.platform.isDesktop && this.platform.isGoogleDocs) {
+    } else if (this.forceMouseMoveEvent()) {
       this.store.commit('ui/setHint', this.api.l10n.getMsg('TEXT_HINT_MOUSE_MOVE'))
     } else {
       this.store.commit('ui/resetHint')
@@ -1378,8 +1372,10 @@ If no URLS are provided, will reset grammar data.
   }
 
   /**
-    (re)initializes grammar data from settings
-  */
+   * (re)initializes grammar data from settings
+   *
+   * @param {string} langCode - A language of a grammar specified by the code.
+   */
   initGrammar (langCode) {
     this.api.app.grammarData[langCode] = null
     this.store.commit('app/setUpdatedGrammar')
@@ -1784,9 +1780,7 @@ If no URLS are provided, will reset grammar data.
     } else {
       // otherwise we can query for it as usual
       const textSelector = TextSelector.createObjectFromText(homonym.targetWord, homonym.languageID)
-      const wordUsageExamples = this.getWordUsageExamplesQueryParams(textSelector)
-      const verboseMode = false
-      this.api.lexis.getSelectedText(textSelector, this.resourceOptions, this.state.lemmaTranslationLang, wordUsageExamples, this.api.app.clientId, verboseMode)
+      this.api.lexis.lookupText(textSelector)
     }
   }
 
@@ -1876,7 +1870,16 @@ If no URLS are provided, will reset grammar data.
     // TODO this should really be handled within OptionsItem
     // the difference between value and textValues is a little confusing
     // see issue #73
-    const nonTextFeatures = ['fontSize', 'hideLoginPrompt', 'maxPopupWidth', 'mouseMoveDelay', 'mouseMoveAccuracy', 'enableMouseMoveLimitedByIdCheck', 'mouseMoveLimitedById']
+    const nonTextFeatures = [
+      'fontSize',
+      'hideLoginPrompt',
+      'maxPopupWidth',
+      'mouseMoveDelay',
+      'mouseMoveAccuracy',
+      'enableMouseMoveLimitedByIdCheck',
+      'mouseMoveLimitedById',
+      'forceMouseMoveGoogleDocs'
+    ]
     if (nonTextFeatures.includes(name)) {
       uiOptions.items[name].setValue(value)
     } else {
@@ -1915,6 +1918,9 @@ If no URLS are provided, will reset grammar data.
         this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
         break
       case 'enableMouseMoveLimitedByIdCheck':
+        this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+        break
+      case 'forceMouseMoveGoogleDocs':
         this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
         break
     }
@@ -2019,7 +2025,11 @@ If no URLS are provided, will reset grammar data.
   }
 
   enableMouseMoveEvent () {
-    return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || this.platform.isGoogleDocs)
+    return this.platform.isDesktop && (this.featureOptions.items.enableMouseMove.currentValue || this.options.enableMouseMoveOverride || this.forceMouseMoveEvent())
+  }
+
+  forceMouseMoveEvent () {
+    return Boolean(this.platform.isDesktop && this.platform.isGoogleDocs && this.uiOptions.items.forceMouseMoveGoogleDocs.currentValue)
   }
 }
 

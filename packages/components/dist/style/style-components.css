@@ -947,10 +947,11 @@ p.alpheios-lemma__translations-value {
   position: relative;
   display: inline-block;
 }
-.alph_tooltip .tooltiptext {
+.alph_tooltip span.alpheios-tooltiptext.alpheios-tooltiptext-span {
   visibility: hidden;
   position: absolute;
   width: calc(var(--alpheios-base-ui-size) * 7.5);
+  padding: calc(var(--alpheios-base-ui-size) * 0.3125);
   background-color: var(--alpheios-text-bg-color);
   color: var(--alpheios-text-color);
   border: 1px solid var(--alpheios-border-color);
@@ -959,13 +960,10 @@ p.alpheios-lemma__translations-value {
   opacity: 0;
   transition: opacity 0.6s;
   display: none;
-}
-.alph_tooltip span.tooltiptext {
-  padding: calc(var(--alpheios-base-ui-size) * 0.375) 0;
   font-size: calc(var(--alpheios-base-text-size) * 0.75);
   text-align: center;
 }
-.alph_tooltip:hover .tooltiptext {
+.alph_tooltip:hover span.alpheios-tooltiptext.alpheios-tooltiptext-span {
   visibility: visible;
   opacity: 1;
   display: inline;
@@ -3210,6 +3208,10 @@ p.alpheios-word-usage-filter-title {
   padding-top: 10px;
   font-size: calc(var(--alpheios-base-text-size) * 0.75);
 }
+.alpheios-panel__tab-panel--options fieldset {
+  padding: calc(var(--alpheios-base-text-size) * 0.625) calc(var(--alpheios-base-text-size) * 1.25) calc(var(--alpheios-base-text-size) * 1.25);
+  border: 2px groove threedface;
+}
 /*
  Calculates a size of text elements relative to the base size.
  Such elements can be scaled proportionally by changing the `--alpheios-base-text-size` custom prop.
@@ -3710,7 +3712,8 @@ p.alpheios-word-usage-filter-title {
  */
 .alpheios-lookup__form .alpheios-lookup__form-beta-codes-info {
   border-bottom: 1px solid var(--alpheios-color-placehoder);
-  margin-bottom: calc(var(--alpheios-base-text-size) * 1.5);
+  margin-bottom: calc(var(--alpheios-base-text-size) * 0.625);
+  padding-bottom: calc(var(--alpheios-base-text-size) * 1.25);
   font-size: 94%;
 }
 .alpheios-lookup__form .alpheios-lookup__form-beta-codes-info div {
@@ -3956,7 +3959,7 @@ span.alpheios-lookup__lang-change:hover {
   display: inline-block;
 }
 .alpheios-toolbar__lookup.alpheios-toolbar__lookup-beta-codes {
-  height: calc(var(--alpheios-base-text-size) * 31.25);
+  height: calc(var(--alpheios-base-text-size) * 28.125);
   border-radius: calc(var(--alpheios-base-ui-size) * 0.625) 0 calc(var(--alpheios-base-ui-size) * 0.625) calc(var(--alpheios-base-ui-size) * 0.625);
 }
 .alpheios-toolbar__buttons {

@@ -21,7 +21,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "νόος",
@@ -30,7 +29,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "περίπλους",
@@ -39,7 +37,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "eos_eou",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "κάνεον",
@@ -63,7 +60,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "νόος",
@@ -72,7 +68,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "περίπλους",
@@ -81,7 +76,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "eos_eou",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "κάνεον",
@@ -105,7 +99,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "νόος",
@@ -114,7 +107,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "περίπλους",
@@ -123,7 +115,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "eos_eou",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "κάνεον",
@@ -147,7 +138,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "νόος",
@@ -156,7 +146,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "περίπλους",
@@ -165,7 +154,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "eos_eou",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "κάνεον",
@@ -189,7 +177,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "νόος",
@@ -198,7 +185,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "περίπλους",
@@ -207,7 +193,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "eos_eou",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "κάνεον",
@@ -231,7 +216,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "νόος",
@@ -240,7 +224,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "περίπλους",
@@ -249,7 +232,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "eos_eou",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "κάνεον",
@@ -273,7 +255,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "νόος",
@@ -282,7 +263,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "περίπλους",
@@ -291,7 +271,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "eos_eou",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "κάνεον",
@@ -315,7 +294,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "νόος",
@@ -324,7 +302,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "περίπλους",
@@ -333,7 +310,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "eos_eou",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "κάνεον",
@@ -357,7 +333,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "νόος",
@@ -366,7 +341,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "περίπλους",
@@ -375,7 +349,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "eos_eou",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "κάνεον",
@@ -399,7 +372,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "νόος",
@@ -408,7 +380,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "περίπλους",
@@ -417,7 +388,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "eos_eou",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "κάνεον",
@@ -441,7 +411,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "νόος",
@@ -450,7 +419,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "oos_oou",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "περίπλους",
@@ -459,7 +427,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "eos_eou",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "κάνεον",

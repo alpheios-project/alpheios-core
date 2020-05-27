@@ -47,7 +47,7 @@ export default class HTMLSelector extends MediaSelector {
       //  let the browser select this word
       this.browserSelector = true
     } else {
-      HTMLSelector.createSelectionFromPoint(this.event, this.targetRect.left, this.targetRect.top)
+      HTMLSelector.createSelectionFromPoint(this.event, this.languageID, this.targetRect.left, this.targetRect.top)
     }
     this.setDataAttributes()
     this.wordSeparator = new Map()
@@ -86,14 +86,15 @@ export default class HTMLSelector extends MediaSelector {
    * Creates a selection from start and end coordinates. If no end coordinates given,
    * they will be set to the same position as start point and an empty selection will be created.
    *
-   * @param {number} startX
-   * @param {number} startY
-   * @param {number} endX
-   * @param event
-   * @param {number} endY
+   * @param {Event} event - An event object.
+   * @param {symbol} languageID - An assumed language ID of a selection.
+   * @param {number} startX - Start position of a selection on an x-axis.
+   * @param {number} startY - Start position of a selection on an y-axis.
+   * @param {number} endX - End position of a selection on an x-axis.
+   * @param {number} endY - End position of a selection on an y-axis.
    * @returns {Range | null} A range if one is successfully created or null in case of failure.
    */
-  static createSelectionFromPoint (event, startX, startY, endX = startX, endY = startY) {
+  static createSelectionFromPoint (event, languageID, startX, startY, endX = startX, endY = startY) {
     const doc = window.document
     let start
     let end
@@ -137,7 +138,22 @@ export default class HTMLSelector extends MediaSelector {
 
     if (range && typeof window.getSelection === 'function') {
       let sel = window.getSelection() // eslint-disable-line prefer-const
-      if (range.startOffset !== range.endOffset) {
+      if (!(languageID === Constants.LANG_CHINESE && range.startOffset === range.endOffset)) {
+        /*
+        If startOffset is the same as endOffset it usually means that nothing is selected.
+        However, there might be a few special cases.
+
+        For Chinese, it is often typical that a startOffset is the same as an endOffset. In such cases a selection
+        made by the browser is more precise that what we can achieve. So we will not force
+        our selection upon the browser's.
+
+        On Google Docs, startOffset and endOffset are the same too. In that case we, however,
+        would want to use our selection: the one made by Google docs will in most cases be incorrect.
+
+        So, in the current implementation, we will not use our selection if language is Chinese. This will
+        lead to selection with double click not working for Chinese texts on Google Docs, but we would
+        prefer to use mouse move selection for cases like that anyway.
+        */
         sel.removeAllRanges()
         sel.addRange(range)
       }
@@ -223,7 +239,7 @@ export default class HTMLSelector extends MediaSelector {
    *
    * @see #findSelection
    * @private
-   * @param textSelector
+   * @param {TextSelector} textSelector - An original text selector object.
    */
   doSpaceSeparatedWordSelection (textSelector) {
     const selection = HTMLSelector.getSelection(this.target)
@@ -247,13 +263,26 @@ export default class HTMLSelector extends MediaSelector {
     if (!anchor.isEqualNode(focus) && focus.data && focus.data.match(/^\s*$/)) {
       focusEmpty = true
       ro = selection.anchorOffset
-    } else if ((focus.data && !anchorText.match(this._escapeRegExp(focus.data))) ||
-      (focus.data && focus.data.match(/^\s*$/))) {
+    } else if (focus.data && focus.data.length < 1 &&
+      (!anchorText.match(this._escapeRegExp(focus.data)) || focus.data.match(/^\s*$/))) {
       /*
+      The purpose of this conditional branch is:
       firefox's implementation of getSelection is buggy and can result
       in incomplete data - sometimes the anchor text doesn't contain the focus data
       and sometimes the focus data and anchor text is just whitespaces
       in these cases we just use the target textContent
+
+      The afterthought:
+      Sometimes an empty selection can be a valid case. For example, if user selected
+      an element that contain space only, such as a gap between words. In that case
+      we probably should not "correct" the selection but leave it as is.
+      That's what the `focus.data.length < 1` check does.
+      Considering the length check,
+      `!anchorText.match(this._escapeRegExp(focus.data)) || focus.data.match(/^\s*$/))` condition
+      would probably never be triggered. It is left there for future reference mostly.
+
+      TODO: A better way to handle selection would definitely benefit the code quality, but it can be tricky,
+            considering the multitude of platforms, browsers, and their versions that we support.
        */
       anchorText = this.target.textContent
       ro = 0
@@ -269,7 +298,6 @@ export default class HTMLSelector extends MediaSelector {
     }
     // clean string:
     //   convert punctuation to spaces
-
     anchorText = anchorText.replace(new RegExp('[' + textSelector.model.getPunctuation() + ']', 'g'), ' ')
     // Determine word boundaries
     let wordStart = anchorText.lastIndexOf(' ', ro) + 1 // Try to find a space char before a beginning of a selection
@@ -372,7 +400,7 @@ export default class HTMLSelector extends MediaSelector {
    *
    * @see #findSelection
    * @private
-   * @param textSelector
+   * @param {TextSelector} textSelector - An original text selector object.
    */
   doCharacterBasedWordSelection (textSelector) {
     const selection = HTMLSelector.getSelection(this.target)

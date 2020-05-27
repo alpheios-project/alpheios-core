@@ -12,6 +12,7 @@ import RemoteDBAdapter from '@wordlist/storage/remote-db-adapter.js'
 import WordlistController from '@wordlist/controllers/wordlist-controller'
 import BaseTestHelp from '@wordlist-tests/helpclasses/base-test-help'
 
+import Utility from '@wordlist/common/utility.js'
 
 import axios from 'axios'
 
@@ -65,6 +66,7 @@ describe('user-data-manager.test.js', () => {
   
   async function getWordItemStep1 (targetWord, languageCode, contextData = {}) {
     let wordItem = new WordItem({ targetWord, languageCode })
+    wordItem.createdDT = Utility.currentDate
 
     let tqselector = TextQuoteSelector.readObject({
       languageCode: languageCode,
@@ -104,6 +106,7 @@ describe('user-data-manager.test.js', () => {
 
   it('1 UserDataManager - update method adds item both to local and remote with only context', async () => {
     let udm = new UserDataManager(auth)
+
     await remoteAdapter.deleteMany({ languageCode: 'lat' })
     await localAdapter.deleteMany({ languageCode: 'lat' })
 
@@ -117,6 +120,7 @@ describe('user-data-manager.test.js', () => {
     expect(res).toBeTruthy()
 
     let resultRemote = await remoteAdapter.query({ languageCode: 'lat' })
+
     expect(resultRemote.length).toEqual(1)
     expect(resultRemote[0].targetWord).toEqual('beautum')
     expect(resultRemote[0].context.length).toEqual(1)
@@ -138,6 +142,7 @@ describe('user-data-manager.test.js', () => {
     expect(console.error).not.toHaveBeenCalled()
 
     await udm.deleteMany({ dataType: 'WordItem', params: { languageCode: 'lat' }})
+
   }, 50000)
 
   it('2 UserDataManager - update method adds item both to local and remote - to remote short data about homonym and to local with full homonym data', async () => {

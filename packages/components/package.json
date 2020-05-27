@@ -148,6 +148,11 @@
       "ecmaVersion": 2019,
       "sourceType": "module",
       "allowImportExportEverywhere": true
+    },
+    "rules": {
+      "no-prototype-builtins": "warn",
+      "dot-notation": "warn",
+      "accessor-pairs": "warn"
     }
   },
   "eslintIgnore": [

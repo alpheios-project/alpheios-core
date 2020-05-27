@@ -21,7 +21,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "πατήρ",
@@ -30,7 +29,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "μήτηρ",
@@ -39,7 +37,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "θυγάτηρ",
@@ -48,7 +45,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "ἀνήρ",
@@ -72,7 +68,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "πατήρ",
@@ -81,7 +76,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "μήτηρ",
@@ -90,7 +84,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "θυγάτηρ",
@@ -99,7 +92,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "ἀνήρ",
@@ -123,7 +115,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "πατήρ",
@@ -132,7 +123,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "μήτηρ",
@@ -141,7 +131,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "θυγάτηρ",
@@ -150,7 +139,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "ἀνήρ",
@@ -174,7 +162,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "πατήρ",
@@ -183,7 +170,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "μήτηρ",
@@ -192,7 +178,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "θυγάτηρ",
@@ -201,7 +186,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "ἀνήρ",
@@ -225,7 +209,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "πατήρ",
@@ -234,7 +217,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "μήτηρ",
@@ -243,7 +225,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "θυγάτηρ",
@@ -252,7 +233,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "ἀνήρ",
@@ -276,7 +256,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "πατήρ",
@@ -285,7 +264,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "μήτηρ",
@@ -294,7 +272,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "θυγάτηρ",
@@ -303,7 +280,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "ἀνήρ",
@@ -327,7 +303,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "πατήρ",
@@ -336,7 +311,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "μήτηρ",
@@ -345,7 +319,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "θυγάτηρ",
@@ -354,7 +327,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "ἀνήρ",
@@ -378,7 +350,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "πατήρ",
@@ -387,7 +358,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "μήτηρ",
@@ -396,7 +366,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "θυγάτηρ",
@@ -405,7 +374,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "ἀνήρ",
@@ -429,7 +397,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "πατήρ",
@@ -438,7 +405,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "μήτηρ",
@@ -447,7 +413,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "θυγάτηρ",
@@ -456,7 +421,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "ἀνήρ",
@@ -480,7 +444,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "πατήρ",
@@ -489,7 +452,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "μήτηρ",
@@ -498,7 +460,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "θυγάτηρ",
@@ -507,7 +468,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "ἀνήρ",
@@ -531,7 +491,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "πατήρ",
@@ -540,7 +499,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "μήτηρ",
@@ -549,7 +507,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "hr_eros",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "θυγάτηρ",
@@ -558,7 +515,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "ἀνήρ",

@@ -11,7 +11,7 @@
     <div class="alpheios-action-menu__lookup-cont">
       <lookup
           class="alpheios-action-menu__lookup"
-          :name-base="`action-panel`"
+          :name-base="`action-menu`"
           :show-lang-selector="showLangSelector"
           @toggleLangSelector = "toggleLangSelector"
       />
