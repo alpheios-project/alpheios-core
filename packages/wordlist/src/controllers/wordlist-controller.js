@@ -253,7 +253,9 @@ export default class WordlistController {
   * Emits a WORDITEM_SELECTED event for the selected item
   */
   async selectWordItem (languageCode, targetWord) {
+    console.info('selectWordItem - started', languageCode, targetWord)
     let wordItem = this.getWordListItem(languageCode, targetWord, false)
+    console.info('selectWordItem - wordItem', wordItem)
     WordlistController.evt.WORDITEM_SELECTED.pub(wordItem)
   }
 

@@ -1780,9 +1780,7 @@ If no URLS are provided, will reset grammar data.
     } else {
       // otherwise we can query for it as usual
       const textSelector = TextSelector.createObjectFromText(homonym.targetWord, homonym.languageID)
-      const wordUsageExamples = this.getWordUsageExamplesQueryParams(textSelector)
-      const verboseMode = false
-      this.api.lexis.getSelectedText(textSelector, this.resourceOptions, this.state.lemmaTranslationLang, wordUsageExamples, this.api.app.clientId, verboseMode)
+      this.api.lexis.lookupText(textSelector)
     }
   }
 
