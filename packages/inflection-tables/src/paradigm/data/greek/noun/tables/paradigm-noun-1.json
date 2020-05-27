@@ -8,14 +8,12 @@
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "singular",
                 "value": "singular"
             },
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "singular",
                 "case": "nominative",
                 "value": "nominative"
@@ -23,7 +21,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "masculine",
                 "number": "singular",
                 "case": "nominative",
@@ -32,7 +29,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "neuter",
                 "number": "singular",
                 "case": "nominative",
@@ -43,14 +39,12 @@
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "singular",
                 "value": ""
             },
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "singular",
                 "case": "genitive",
                 "value": "genitive"
@@ -58,7 +52,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "masculine",
                 "number": "singular",
                 "case": "genitive",
@@ -67,7 +60,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "neuter",
                 "number": "singular",
                 "case": "genitive",
@@ -78,14 +70,12 @@
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "singular",
                 "value": ""
             },
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "singular",
                 "case": "dative",
                 "value": "dative"
@@ -93,7 +83,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "masculine",
                 "number": "singular",
                 "case": "dative",
@@ -102,7 +91,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "neuter",
                 "number": "singular",
                 "case": "dative",
@@ -113,14 +101,12 @@
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "singular",
                 "value": ""
             },
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "singular",
                 "case": "accusative",
                 "value": "accusative"
@@ -128,7 +114,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "masculine",
                 "number": "singular",
                 "case": "accusative",
@@ -137,7 +122,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "neuter",
                 "number": "singular",
                 "case": "accusative",
@@ -148,14 +132,12 @@
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "singular",
                 "value": ""
             },
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "singular",
                 "case": "vocative",
                 "value": "vocative"
@@ -163,7 +145,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "masculine",
                 "number": "singular",
                 "case": "vocative",
@@ -172,7 +153,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "neuter",
                 "number": "singular",
                 "case": "vocative",
@@ -183,14 +163,12 @@
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "dual",
                 "value": "dual"
             },
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "value": "nominative accusative vocative"
@@ -198,7 +176,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "masculine",
                 "number": "dual",
                 "case": "nominative accusative vocative",
@@ -207,7 +184,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "neuter",
                 "number": "dual",
                 "case": "nominative accusative vocative",
@@ -218,14 +194,12 @@
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "dual",
                 "value": "dual"
             },
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "dual",
                 "case": "genitive dative",
                 "value": "genitive dative"
@@ -233,7 +207,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "masculine",
                 "number": "dual",
                 "case": "genitive dative",
@@ -242,7 +215,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "neuter",
                 "number": "dual",
                 "case": "genitive dative",
@@ -253,14 +225,12 @@
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "plural",
                 "value": "plural"
             },
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "plural",
                 "case": "nominative vocative",
                 "value": "nominative vocative"
@@ -268,7 +238,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "masculine",
                 "number": "plural",
                 "case": "nominative vocative",
@@ -277,7 +246,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "neuter",
                 "number": "plural",
                 "case": "nominative vocative",
@@ -288,14 +256,12 @@
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "plural",
                 "value": "plural"
             },
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "plural",
                 "case": "genitive",
                 "value": "genitive"
@@ -303,7 +269,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "masculine",
                 "number": "plural",
                 "case": "genitive",
@@ -312,7 +277,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "neuter",
                 "number": "plural",
                 "case": "genitive",
@@ -323,14 +287,12 @@
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "plural",
                 "value": "plural"
             },
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "plural",
                 "case": "dative",
                 "value": "dative"
@@ -338,7 +300,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "masculine",
                 "number": "plural",
                 "case": "dative",
@@ -347,7 +308,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "neuter",
                 "number": "plural",
                 "case": "dative",
@@ -358,14 +318,12 @@
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "plural",
                 "value": "plural"
             },
             {
                 "role": "label",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "number": "plural",
                 "case": "accusative",
                 "value": "accusative"
@@ -373,7 +331,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "masculine",
                 "number": "plural",
                 "case": "accusative",
@@ -382,7 +339,6 @@
             {
                 "role": "data",
                 "declension": "2nd",
-                "stemtype": "os_ou",
                 "gender": "neuter",
                 "number": "plural",
                 "case": "accusative",

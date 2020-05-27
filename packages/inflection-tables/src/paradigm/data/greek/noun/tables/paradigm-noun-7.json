@@ -21,7 +21,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_ontos",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "γέρων",
@@ -30,7 +29,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_antos",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "γίγας",
@@ -39,7 +37,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ous_ontos",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "ὀδούς",
@@ -63,7 +60,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_ontos",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "γέρων",
@@ -72,7 +68,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_antos",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "γίγας",
@@ -81,7 +76,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ous_ontos",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "ὀδούς",
@@ -105,7 +99,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_ontos",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "γέρων",
@@ -114,7 +107,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_antos",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "γίγας",
@@ -123,7 +115,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ous_ontos",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "ὀδούς",
@@ -147,7 +138,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_ontos",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "γέρων",
@@ -156,7 +146,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_antos",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "γίγας",
@@ -165,7 +154,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ous_ontos",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "ὀδούς",
@@ -189,7 +177,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_ontos",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "γέρων",
@@ -198,7 +185,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_antos",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "γίγας",
@@ -207,7 +193,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ous_ontos",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "ὀδούς",
@@ -231,7 +216,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_ontos",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "γέρων",
@@ -240,7 +224,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_antos",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "γίγας",
@@ -249,7 +232,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ous_ontos",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "ὀδούς",
@@ -273,7 +255,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_ontos",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "γέρων",
@@ -282,7 +263,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_antos",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "γίγας",
@@ -291,7 +271,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ous_ontos",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "ὀδούς",
@@ -315,7 +294,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_ontos",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "γέρων",
@@ -324,7 +302,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_antos",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "γίγας",
@@ -333,7 +310,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ous_ontos",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "ὀδούς",
@@ -357,7 +333,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_ontos",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "γέρων",
@@ -366,7 +341,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_antos",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "γίγας",
@@ -375,7 +349,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ous_ontos",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "ὀδούς",
@@ -399,7 +372,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_ontos",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "γέρων",
@@ -408,7 +380,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_antos",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "γίγας",
@@ -417,7 +388,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ous_ontos",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "ὀδούς",
@@ -441,7 +411,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_ontos",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "γέρων",
@@ -450,7 +419,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "as_antos",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "γίγας",
@@ -459,7 +427,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "ous_ontos",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "ὀδούς",

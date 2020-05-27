@@ -21,7 +21,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_itos",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "χάρις",
@@ -30,7 +29,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_idos",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "ἀσπίς",
@@ -39,7 +37,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "s_dos",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "Ἑλλάς",
@@ -63,7 +60,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_itos",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "χάρις",
@@ -72,7 +68,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_idos",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "ἀσπίς",
@@ -81,7 +76,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "s_dos",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "Ἑλλάς",
@@ -105,7 +99,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_itos",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "χάρις",
@@ -114,7 +107,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_idos",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "ἀσπίς",
@@ -123,7 +115,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "s_dos",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "Ἑλλάς",
@@ -147,7 +138,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_itos",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "χάρις",
@@ -156,7 +146,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_idos",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "ἀσπίς",
@@ -165,7 +154,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "s_dos",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "Ἑλλάς",
@@ -189,7 +177,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_itos",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "χάρις",
@@ -198,7 +185,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_idos",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "ἀσπίς",
@@ -207,7 +193,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "s_dos",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "Ἑλλάς",
@@ -231,7 +216,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_itos",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "χάρις",
@@ -240,7 +224,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_idos",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "ἀσπίς",
@@ -249,7 +232,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "s_dos",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "Ἑλλάς",
@@ -273,7 +255,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_itos",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "χάρις",
@@ -282,7 +263,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_idos",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "ἀσπίς",
@@ -291,7 +271,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "s_dos",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "Ἑλλάς",
@@ -315,7 +294,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_itos",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "χάρις",
@@ -324,7 +302,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_idos",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "ἀσπίς",
@@ -333,7 +310,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "s_dos",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "Ἑλλάς",
@@ -357,7 +333,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_itos",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "χάρις",
@@ -366,7 +341,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_idos",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "ἀσπίς",
@@ -375,7 +349,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "s_dos",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "Ἑλλάς",
@@ -399,7 +372,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_itos",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "χάρις",
@@ -408,7 +380,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_idos",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "ἀσπίς",
@@ -417,7 +388,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "s_dos",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "Ἑλλάς",
@@ -441,7 +411,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_itos",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "χάρις",
@@ -450,7 +419,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "is_idos",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "ἀσπίς",
@@ -459,7 +427,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "s_dos",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "Ἑλλάς",

@@ -23,7 +23,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "y_pos",
                 "gender": "masculine",
                 "number": "singular",
                 "case": "nominative",
@@ -33,7 +32,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "c_kos",
                 "gender": "masculine",
                 "number": "singular",
                 "case": "nominative",
@@ -60,7 +58,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "y_pos",
                 "gender": "masculine",
                 "number": "singular",
                 "case": "genitive",
@@ -70,7 +67,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "c_kos",
                 "gender": "masculine",
                 "number": "singular",
                 "case": "genitive",
@@ -97,7 +93,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "y_pos",
                 "gender": "masculine",
                 "number": "singular",
                 "case": "dative",
@@ -107,7 +102,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "c_kos",
                 "gender": "masculine",
                 "number": "singular",
                 "case": "dative",
@@ -134,7 +128,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "y_pos",
                 "gender": "masculine",
                 "number": "singular",
                 "case": "accusative",
@@ -144,7 +137,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "c_kos",
                 "gender": "masculine",
                 "number": "singular",
                 "case": "accusative",
@@ -171,7 +163,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "y_pos",
                 "gender": "masculine",
                 "number": "singular",
                 "case": "vocative",
@@ -181,7 +172,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "c_kos",
                 "gender": "masculine",
                 "number": "singular",
                 "case": "vocative",
@@ -208,7 +198,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "y_pos",
                 "gender": "masculine",
                 "number": "dual",
                 "case": "nominative accusative vocative",
@@ -218,7 +207,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "c_kos",
                 "gender": "masculine",
                 "number": "dual",
                 "case": "nominative accusative vocative",
@@ -245,7 +233,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "y_pos",
                 "gender": "masculine",
                 "number": "dual",
                 "case": "genitive ",
@@ -255,7 +242,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "c_kos",
                 "gender": "masculine",
                 "number": "dual",
                 "case": "genitive dative",
@@ -282,7 +268,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "y_pos",
                 "gender": "masculine",
                 "number": "plural",
                 "case": "nominative vocative",
@@ -292,7 +277,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "c_kos",
                 "gender": "masculine",
                 "number": "plural",
                 "case": "nominative vocative",
@@ -319,7 +303,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "y_pos",
                 "gender": "masculine",
                 "number": "plural",
                 "case": "genitive",
@@ -329,7 +312,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "c_kos",
                 "gender": "masculine",
                 "number": "plural",
                 "case": "genitive",
@@ -356,7 +338,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "y_pos",
                 "gender": "masculine",
                 "number": "plural",
                 "case": "dative",
@@ -366,7 +347,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "c_kos",
                 "gender": "masculine",
                 "number": "plural",
                 "case": "dative",
@@ -393,7 +373,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "y_pos",
                 "gender": "masculine",
                 "number": "plural",
                 "case": "accusative",
@@ -403,7 +382,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "c_kos",
                 "gender": "masculine",
                 "number": "plural",
                 "case": "accusative",

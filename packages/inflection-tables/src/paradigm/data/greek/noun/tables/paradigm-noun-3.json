@@ -8,7 +8,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "value": "singular"
@@ -16,7 +15,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "case": "nominative",
@@ -25,7 +23,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "case": "nominative",
@@ -35,7 +32,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "case": "nominative",
@@ -47,7 +43,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "value": ""
@@ -55,7 +50,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "case": "genitive",
@@ -64,7 +58,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "case": "genitive",
@@ -74,7 +67,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "case": "genitive",
@@ -86,7 +78,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "value": ""
@@ -94,7 +85,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "case": "dative",
@@ -103,7 +93,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "case": "dative",
@@ -113,7 +102,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "case": "dative",
@@ -125,7 +113,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "value": ""
@@ -133,7 +120,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "case": "accusative",
@@ -142,7 +128,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "case": "accusative",
@@ -152,7 +137,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "case": "accusative",
@@ -164,7 +148,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "value": ""
@@ -172,7 +155,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "case": "vocative",
@@ -181,7 +163,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "case": "vocative",
@@ -191,7 +172,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "singular",
                 "case": "vocative",
@@ -203,7 +183,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "dual",
                 "value": "dual"
@@ -211,7 +190,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "dual",
                 "case": "nominative accusative vocative",
@@ -220,7 +198,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "dual",
                 "case": "nominative accusative vocative",
@@ -230,7 +207,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "dual",
                 "case": "nominative accusative vocative",
@@ -242,7 +218,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "dual",
                 "value": "dual"
@@ -250,7 +225,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "dual",
                 "case": "genitive dative",
@@ -259,7 +233,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "dual",
                 "case": "genitive dative",
@@ -269,7 +242,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "dual",
                 "case": "genitive dative",
@@ -281,7 +253,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "plural",
                 "value": "plural"
@@ -289,7 +260,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "plural",
                 "case": "nominative vocative",
@@ -298,7 +268,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "plural",
                 "case": "nominative vocative",
@@ -308,7 +277,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "plural",
                 "case": "nominative vocative",
@@ -320,7 +288,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "plural",
                 "value": "plural"
@@ -328,7 +295,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "plural",
                 "case": "genitive",
@@ -337,7 +303,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "plural",
                 "case": "genitive",
@@ -347,7 +312,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "plural",
                 "case": "genitive",
@@ -359,7 +323,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "plural",
                 "value": "plural"
@@ -367,7 +330,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "plural",
                 "case": "dative",
@@ -376,7 +338,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "plural",
                 "case": "dative",
@@ -386,7 +347,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "plural",
                 "case": "dative",
@@ -398,7 +358,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "plural",
                 "value": "plural"
@@ -406,7 +365,6 @@
             {
                 "role": "label",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "plural",
                 "case": "accusative",
@@ -415,7 +373,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "plural",
                 "case": "accusative",
@@ -425,7 +382,6 @@
             {
                 "role": "data",
                 "declension": "1st",
-                "stemtype": "a_hs",
                 "gender": "feminine",
                 "number": "plural",
                 "case": "accusative",
