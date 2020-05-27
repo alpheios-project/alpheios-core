@@ -276,7 +276,7 @@ export default class HTMLSelector extends MediaSelector {
       Sometimes an empty selection can be a valid case. For example, if user selected
       an element that contain space only, such as a gap between words. In that case
       we probably should not "correct" the selection but leave it as is.
-      That's what the `focus.data.length < 1` check do.
+      That's what the `focus.data.length < 1` check does.
       Considering the length check,
       `!anchorText.match(this._escapeRegExp(focus.data)) || focus.data.match(/^\s*$/))` condition
       would probably never be triggered. It is left there for future reference mostly.
