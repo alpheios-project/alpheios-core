@@ -1,7 +1,7 @@
 <template>
   <div class="alph_tooltip">
     <slot></slot>
-    <span class = "tooltiptext alpheios-text__smaller"
+    <span class = "alpheios-tooltiptext alpheios-tooltiptext-span alpheios-text__smaller"
           v-bind:class = "directionClass"
           v-bind:style = "additionalStyles"
           v-show = "tooltipText"
@@ -74,10 +74,11 @@ export default {
     position: relative;
     display: inline-block;
 
-    .tooltiptext {
+    span.alpheios-tooltiptext.alpheios-tooltiptext-span {
       visibility: hidden;
       position: absolute;
       width: uisize(120px);
+      padding: uisize(5px);
       background-color: var(--alpheios-text-bg-color);
       color: var(--alpheios-text-color);
       border: 1px solid var(--alpheios-border-color);
@@ -86,16 +87,12 @@ export default {
       opacity: 0;
       transition: opacity .6s;
       display: none;
+      font-size: textsize(12px);
+      text-align: center;
     }
   }
 
-  .alph_tooltip span.tooltiptext {
-    padding: uisize(6px) 0;
-    font-size: textsize(12px);
-    text-align: center;
-  }
-
-  .alph_tooltip:hover .tooltiptext {
+  .alph_tooltip:hover span.alpheios-tooltiptext.alpheios-tooltiptext-span {
     visibility: visible;
     opacity: 1;
     display: inline;
