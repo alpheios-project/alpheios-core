@@ -21,7 +21,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wr_oros",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "ῥήτωρ",
@@ -30,7 +29,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_onos",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "δαίμων",
@@ -39,7 +37,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "n_nos",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "ἀγών",
@@ -48,7 +45,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "ἅλς",
@@ -72,7 +68,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wr_oros",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "ῥήτωρ",
@@ -81,7 +76,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_onos",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "δαίμων",
@@ -90,7 +84,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "n_nos",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "ἀγών",
@@ -99,7 +92,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "ἅλς",
@@ -123,7 +115,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wr_oros",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "ῥήτωρ",
@@ -132,7 +123,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_onos",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "δαίμων",
@@ -141,7 +131,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "n_nos",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "ἀγών",
@@ -150,7 +139,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "ἅλς",
@@ -174,7 +162,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wr_oros",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "ῥήτωρ",
@@ -183,7 +170,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_onos",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "δαίμων",
@@ -192,7 +178,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "n_nos",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "ἀγών",
@@ -201,7 +186,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "ἅλς",
@@ -225,7 +209,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wr_oros",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "ῥήτωρ",
@@ -234,7 +217,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_onos",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "δαίμων",
@@ -243,7 +225,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "n_nos",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "ἀγών",
@@ -252,7 +233,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "ἅλς",
@@ -276,7 +256,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wr_oros",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "ῥήτωρ",
@@ -285,7 +264,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_onos",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "δαίμων",
@@ -294,7 +272,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "n_nos",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "ἀγών",
@@ -303,7 +280,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "ἅλς",
@@ -327,7 +303,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wr_oros",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "ῥήτωρ",
@@ -336,7 +311,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_onos",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "δαίμων",
@@ -345,7 +319,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "n_nos",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "ἀγών",
@@ -354,7 +327,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "ἅλς",
@@ -378,7 +350,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wr_oros",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "ῥήτωρ",
@@ -387,7 +358,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_onos",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "δαίμων",
@@ -396,7 +366,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "n_nos",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "ἀγών",
@@ -405,7 +374,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "ἅλς",
@@ -429,7 +397,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wr_oros",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "ῥήτωρ",
@@ -438,7 +405,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_onos",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "δαίμων",
@@ -447,7 +413,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "n_nos",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "ἀγών",
@@ -456,7 +421,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "ἅλς",
@@ -480,7 +444,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wr_oros",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "ῥήτωρ",
@@ -489,7 +452,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_onos",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "δαίμων",
@@ -498,7 +460,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "n_nos",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "ἀγών",
@@ -507,7 +468,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "ἅλς",
@@ -531,7 +491,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wr_oros",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "ῥήτωρ",
@@ -540,7 +499,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "wn_onos",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "δαίμων",
@@ -549,7 +507,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "n_nos",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "ἀγών",
@@ -558,7 +515,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "ἅλς",

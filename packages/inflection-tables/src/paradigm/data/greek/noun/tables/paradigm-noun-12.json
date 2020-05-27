@@ -21,7 +21,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "γυνή",
@@ -30,7 +29,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "χείρ",
@@ -39,7 +37,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "singular",
                 "case": "nominative",
                 "lemma": "υἱός",
@@ -63,7 +60,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "γυνή",
@@ -72,7 +68,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "χείρ",
@@ -81,7 +76,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "singular",
                 "case": "genitive",
                 "lemma": "υἱός",
@@ -105,7 +99,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "γυνή",
@@ -114,7 +107,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "χείρ",
@@ -123,7 +115,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "singular",
                 "case": "dative",
                 "lemma": "υἱός",
@@ -147,7 +138,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "γυνή",
@@ -156,7 +146,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "χείρ",
@@ -165,7 +154,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "singular",
                 "case": "accusative",
                 "lemma": "υἱός",
@@ -189,7 +177,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "γυνή",
@@ -198,7 +185,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "χείρ",
@@ -207,7 +193,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "singular",
                 "case": "vocative",
                 "lemma": "υἱός",
@@ -231,7 +216,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "γυνή",
@@ -240,7 +224,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "χείρ",
@@ -249,7 +232,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "dual",
                 "case": "nominative accusative vocative",
                 "lemma": "υἱός",
@@ -273,7 +255,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "γυνή",
@@ -282,7 +263,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "χείρ",
@@ -291,7 +271,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "dual",
                 "case": "genitive dative",
                 "lemma": "υἱός",
@@ -315,7 +294,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "γυνή",
@@ -324,7 +302,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "χείρ",
@@ -333,7 +310,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "plural",
                 "case": "nominative vocative",
                 "lemma": "υἱός",
@@ -357,7 +333,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "γυνή",
@@ -366,7 +341,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "χείρ",
@@ -375,7 +349,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "plural",
                 "case": "genitive",
                 "lemma": "υἱός",
@@ -399,7 +372,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "γυνή",
@@ -408,7 +380,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "χείρ",
@@ -417,7 +388,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "plural",
                 "case": "dative",
                 "lemma": "υἱός",
@@ -441,7 +411,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "γυνή",
@@ -450,7 +419,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "irreg_decl3",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "χείρ",
@@ -459,7 +427,6 @@
             {
                 "role": "data",
                 "declension": "3rd",
-                "stemtype": "eus_ews",
                 "number": "plural",
                 "case": "accusative",
                 "lemma": "υἱός",
