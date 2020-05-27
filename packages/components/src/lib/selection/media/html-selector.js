@@ -263,13 +263,26 @@ export default class HTMLSelector extends MediaSelector {
     if (!anchor.isEqualNode(focus) && focus.data && focus.data.match(/^\s*$/)) {
       focusEmpty = true
       ro = selection.anchorOffset
-    } else if ((focus.data && !anchorText.match(this._escapeRegExp(focus.data))) ||
-      (focus.data && focus.data.match(/^\s*$/))) {
+    } else if (focus.data && focus.data.length < 1 &&
+      (!anchorText.match(this._escapeRegExp(focus.data)) || focus.data.match(/^\s*$/))) {
       /*
+      The purpose of this conditional branch is:
       firefox's implementation of getSelection is buggy and can result
       in incomplete data - sometimes the anchor text doesn't contain the focus data
       and sometimes the focus data and anchor text is just whitespaces
       in these cases we just use the target textContent
+
+      The afterthought:
+      Sometimes an empty selection can be a valid case. For example, if user selected
+      an element that contain space only, such as a gap between words. In that case
+      we probably should not "correct" the selection but leave it as is.
+      That's what the `focus.data.length < 1` check do.
+      Considering the length check,
+      `!anchorText.match(this._escapeRegExp(focus.data)) || focus.data.match(/^\s*$/))` condition
+      would probably never be triggered. It is left there for future reference mostly.
+
+      TODO: A better way to handle selection would definitely benefit the code quality, but it can be tricky,
+            considering the multitude of platforms, browsers, and their versions that we support.
        */
       anchorText = this.target.textContent
       ro = 0

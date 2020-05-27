@@ -299,8 +299,7 @@ export default class Lexis extends Module {
         store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
       }
     } else if (this._treebankAvailable) {
-      store.commit('lexis/resetTreebankInfo')
-      this._treebankAvailable = false
+      store.commit('lexis/setTreebankInfo', { hasTreebankData: false })
       this._treebankDataItem = null
     }
     return annotatedHomonyms
