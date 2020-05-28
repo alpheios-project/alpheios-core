@@ -368,7 +368,8 @@ class ClientAdapters {
       clientId: options.clientId,
       limit: options.params.limit,
       lang: options.params.lang,
-      sourceData: options.params.sourceData
+      sourceData: options.params.sourceData,
+      fetchOptions: options.params.fetchOptions
     })
 
     if (localLogeionAdapter.available && options.method === 'getWords') {

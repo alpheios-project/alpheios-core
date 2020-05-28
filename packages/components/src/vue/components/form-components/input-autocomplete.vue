@@ -27,7 +27,7 @@ import { directive as onClickaway } from '@/vue/directives/clickaway.js'
 
 export default {
   name: 'InputAutocomplete',
-  inject: ['settings'],
+  inject: ['app', 'settings'],
   directives: {
     onClickaway: onClickaway
   },
@@ -110,7 +110,8 @@ export default {
             method: 'getWords',
             params: {
               text: this.valueText,
-              lang: this.lang
+              lang: this.lang,
+              fetchOptions: this.app.config.logeion
             }
           })
 
