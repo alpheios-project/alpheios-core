@@ -1,7 +1,7 @@
 import DefaultConfig from '@clAdapters/adapters/logeion/config.json'
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 
-import { LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { LanguageModelFactory as LMF, Constants } from 'alpheios-data-models'
 
 class AlpheiosLogeionAdapter extends BaseAdapter {
   /**
@@ -53,7 +53,15 @@ class AlpheiosLogeionAdapter extends BaseAdapter {
   */
   createFetchURL (text) {
     if (this.fetchOptions) {
-      return `${this.fetchOptions.baseurl}?key=${this.fetchOptions.apikey}&q=${text}&lang=${this.config.lang}`
+      return `${this.fetchOptions.baseurl}?key=${this.fetchOptions.apikey}&q=${text}&lang=${this.logeionLangCode}`
+    }
+  }
+
+  get logeionLangCode () {
+    if (this.config.lang === Constants.STR_LANG_CODE_GRC) {
+      return 'greek'
+    } else if ([Constants.STR_LANG_CODE_LAT, Constants.STR_LANG_CODE_LA].includes(this.config.lang)) {
+      return 'latin'
     }
   }
 

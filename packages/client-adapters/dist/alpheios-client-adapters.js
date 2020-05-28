@@ -16702,7 +16702,15 @@ class AlpheiosLogeionAdapter extends _clAdapters_adapters_base_adapter__WEBPACK_
   */
   createFetchURL (text) {
     if (this.fetchOptions) {
-      return `${this.fetchOptions.baseurl}?key=${this.fetchOptions.apikey}&q=${text}&lang=${this.config.lang}`
+      return `${this.fetchOptions.baseurl}?key=${this.fetchOptions.apikey}&q=${text}&lang=${this.logeionLangCode}`
+    }
+  }
+
+  get logeionLangCode () {
+    if (this.config.lang === alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Constants"].STR_LANG_CODE_GRC) {
+      return 'greek'
+    } else if ([alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Constants"].STR_LANG_CODE_LAT, alpheios_data_models__WEBPACK_IMPORTED_MODULE_2__["Constants"].STR_LANG_CODE_LA].includes(this.config.lang)) {
+      return 'latin'
     }
   }
 
