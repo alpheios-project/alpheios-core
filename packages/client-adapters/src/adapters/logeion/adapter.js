@@ -58,7 +58,6 @@ class AlpheiosLogeionAdapter extends BaseAdapter {
   }
 
   /**
-   * it is not used with new version of Logeion API
   * This method removes words from the other language - checks two variants - greek and the other
   * @param {[Array]} words - list of words that should be checked and filtered
   * @return {Array}
