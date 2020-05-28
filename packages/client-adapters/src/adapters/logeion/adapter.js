@@ -14,6 +14,7 @@ class AlpheiosLogeionAdapter extends BaseAdapter {
     this.limit = parseInt(this.config.limit)
     this.available = this.config.availableLangs.includes(this.config.lang)
     this.sourceData = config.sourceData
+    this.fetchOptions = config.fetchOptions
   }
 
   /**
@@ -24,6 +25,10 @@ class AlpheiosLogeionAdapter extends BaseAdapter {
   async getWords (text) {
     try {
       const url = this.createFetchURL(text)
+      if (!url) {
+        this.addError(this.l10n.messages.LOGEION_FETCH_OPTIONS_ERROR.get(error.message))
+        return
+      }
 
       if (this.sourceData) {
         return this.sourceData
@@ -31,7 +36,7 @@ class AlpheiosLogeionAdapter extends BaseAdapter {
         const wordsVariants = await this.fetch(url)
 
         if (wordsVariants.words && Array.isArray(wordsVariants.words)) {
-          return this.filterAndLimitWords(wordsVariants.words)
+          return wordsVariants.words.slice(0, this.limit)
         } else {
           return []
         }
@@ -47,10 +52,13 @@ class AlpheiosLogeionAdapter extends BaseAdapter {
   * @return {String}
   */
   createFetchURL (text) {
-    return `${this.config.url}${encodeURIComponent(text)}`
+    if (this.fetchOptions) {
+      return `${this.fetchOptions.baseurl}?key=${this.fetchOptions.apikey}&q=${text}&lang=${this.config.lang}`
+    }
   }
 
   /**
+   * it is not used with new version of Logeion API
   * This method removes words from the other language - checks two variants - greek and the other
   * @param {[Array]} words - list of words that should be checked and filtered
   * @return {Array}

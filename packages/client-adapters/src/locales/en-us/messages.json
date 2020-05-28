@@ -171,5 +171,10 @@
     "description": "Error message for autoCompleteWords.logeion adapter - problems with fetching words from logeion api",
     "component": "autoCompleteWords.logeion",
     "params": ["message"]
+  },
+  "LOGEION_FETCH_OPTIONS_ERROR": {
+    "message": "There are no fetch options for Logeion API request",
+    "description": "Error message for autoCompleteWords.logeion adapter - no apikey and baseurl for Logeion API",
+    "component": "autoCompleteWords.logeion"
   }
 }
