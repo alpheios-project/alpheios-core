@@ -421,7 +421,6 @@ if you want to create a different configuration of a UI controller.
 
     const [appConfig, ...options] = await Promise.all([appConfigLoadPromise, ...optionLoadPromises])
     this.appConfig = appConfig
-    console.info('appConfig - ', appConfig)
 
     // All options has been loaded after this point
 

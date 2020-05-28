@@ -26,7 +26,7 @@ class AlpheiosLogeionAdapter extends BaseAdapter {
     try {
       const url = this.createFetchURL(text)
       if (!url) {
-        this.addError(this.l10n.messages.LOGEION_FETCH_OPTIONS_ERROR.get(error.message))
+        this.addError(this.l10n.messages.LOGEION_FETCH_OPTIONS_ERROR.get())
         return
       }
 
@@ -36,7 +36,7 @@ class AlpheiosLogeionAdapter extends BaseAdapter {
         const wordsVariants = await this.fetch(url)
 
         if (wordsVariants.words && Array.isArray(wordsVariants.words)) {
-          return wordsVariants.words.slice(0, this.limit)
+          return this.filterAndLimitWords(wordsVariants.words)
         } else {
           return []
         }
