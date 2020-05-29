@@ -103,7 +103,7 @@
     },
     "mouseMoveDelay": {
       "defaultValue": 1000,
-      "labelText": "Mouse Move delay (ms)",
+      "labelText": "Mouse Movement delay (ms)",
       "number": true,
       "minValue": 1,
       "maxValue": 5000,
@@ -111,7 +111,7 @@
     },
     "mouseMoveAccuracy": {
       "defaultValue": 10,
-      "labelText": "Mouse Move accuracy (pixels)",
+      "labelText": "Mouse Movement accuracy (pixels)",
       "number": true,
       "minValue": 1,
       "maxValue": 5000,
@@ -119,7 +119,7 @@
     },
     "forceMouseMoveGoogleDocs": {
       "defaultValue": false,
-      "labelText": "Force Use of Mouse Move on Google Docs",
+      "labelText": "Force Use of Mouse Movement for word selection on Google Docs",
       "boolean": true,
       "values": [
         {
@@ -134,7 +134,7 @@
     },
     "enableMouseMoveLimitedByIdCheck": {
       "defaultValue": true,
-      "labelText": "Limit Mouse Move on Google Docs to top-level container",
+      "labelText": "Limit Mouse Movement on Google Docs to top-level container",
       "boolean": true,
       "values": [
         {
@@ -149,7 +149,7 @@
     },
     "mouseMoveLimitedById": {
       "defaultValue": "docs-editor-container",
-      "labelText": "Google Docs Container Id",
+      "labelText": "Google Docs Top-Level Container Id",
       "text": true
     }
   }
