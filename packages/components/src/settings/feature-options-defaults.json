@@ -169,7 +169,7 @@
     },
     "enableMouseMove": {
       "defaultValue": false,
-      "labelText": "Use Mouseover to Select Words (recommended for Chinese)",
+      "labelText": "Use Mouse Movement over a word for selection (Desktop only, recommended for Chinese)",
       "boolean": true,
       "values": [
         {
