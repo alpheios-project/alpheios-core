@@ -979,6 +979,18 @@ if you want to create a different configuration of a UI controller.
     // Activate listeners
     if (this.evc) { this.evc.activateListeners() }
 
+    // we have to register and activate the mouse move event separately
+    // because when it is active the regular GetSelectedText listener needs
+    // to be diabled and vice-versa. We don't currently have a way to express
+    // this dependency between registered event listeners in the EventListenerController
+    // EventListController.activateListeners activates ALL registered listeners
+    // so we can't register the mouse move event and the regular get selected text
+    // event together. At some point we should refactor to either make the mousemove
+    // event handled by the regular get selected text listener as a valid value for
+    // textQueryTriggerDesktop  or support this type of dependency in the
+    // EventListenerController
+    this.registerAndActivateMouseMove('GetSelectedText', this.options.textQuerySelector)
+
     this.isActivated = true
     this.isDeactivated = false
 
