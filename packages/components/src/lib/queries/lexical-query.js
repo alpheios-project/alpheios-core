@@ -110,7 +110,6 @@ export default class LexicalQuery extends Query {
           const resolvedValue = await result.value
           result = iterator.next(resolvedValue)
         } catch (error) {
-          console.error(error)
           iterator.return()
           this.finalize(error)
           break
