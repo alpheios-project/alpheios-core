@@ -165,7 +165,6 @@ export default class WordlistController {
    * Emits WORDITEM_UPDATED and WORDLIST_UPDATED events
    */
   onHomonymReadyForWordlistUpdate (data) {
-    console.info('onHomonymReadyForWordlistUpdate', data)
     let wordItem = this.getWordListItem(LanguageModelFactory.getLanguageCodeFromId(data.languageID), data.targetWord, true)
     wordItem.homonym = data
     WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
