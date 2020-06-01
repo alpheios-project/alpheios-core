@@ -110,6 +110,7 @@ export default class LexicalQuery extends Query {
           const resolvedValue = await result.value
           result = iterator.next(resolvedValue)
         } catch (error) {
+          console.error(error)
           iterator.return()
           this.finalize(error)
           break
@@ -218,7 +219,11 @@ export default class LexicalQuery extends Query {
     if (lexiconShortOpts.allow && lexiconShortOpts.allow.length > 0) {
       this.homonym.lexemes.forEach((l) => { l.meaning.clearShortDefs() })
 
-      LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
+      if (this._source !== LexicalQuery.sources.WORDLIST) {
+        LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
+      } else {
+        LexicalQuery.evt.WORDLIST_UPDATE_HOMONYM_READY.pub(this.homonym)
+      }
     } else {
       // we won't have any remaining valid short definition requests
       // so go ahead and publish the SHORT_DEFS_READY event so that the UI
@@ -226,9 +231,16 @@ export default class LexicalQuery extends Query {
       // but issue the HOMONYM_READY event first otherwise we get errors
       // from the wordlist which expects to see the homonym before definitions
 
-      LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
       if (this._source !== LexicalQuery.sources.WORDLIST) {
+        LexicalQuery.evt.HOMONYM_READY.pub(this.homonym)
         LexicalQuery.evt.SHORT_DEFS_READY.pub({
+          requestType: 'short',
+          homonym: this.homonym,
+          word: this.homonym.lexemes.length > 0 ? this.homonym.lexemes[0].lemma.word : ''
+        })
+      } else {
+        LexicalQuery.evt.WORDLIST_UPDATE_HOMONYM_READY.pub(this.homonym)
+        LexicalQuery.evt.WORDLIST_UPDATE_SHORT_DEFS_READY.pub({
           requestType: 'short',
           homonym: this.homonym,
           word: this.homonym.lexemes.length > 0 ? this.homonym.lexemes[0].lemma.word : ''
@@ -251,6 +263,8 @@ export default class LexicalQuery extends Query {
       // Suppress events that will trigger UI messages if source is wordlist
       if (this._source !== LexicalQuery.sources.WORDLIST) {
         LexicalQuery.evt.LEMMA_TRANSL_READY.pub(this.homonym)
+      } else {
+        LexicalQuery.evt.WORDLIST_UPDATE_LEMMA_TRANSL_READY.pub(this.homonym)
       }
     }
 
@@ -295,6 +309,7 @@ export default class LexicalQuery extends Query {
           callBackEvtFailed: LexicalQuery.evt.SHORT_DEFS_NOT_FOUND
         })
       }
+
       const adapterLexiconResShort = yield ClientAdapters.lexicon.alpheios({
         method: 'fetchShortDefs',
         clientId: this.clientId,
@@ -303,6 +318,12 @@ export default class LexicalQuery extends Query {
 
       if (adapterLexiconResShort.errors.length > 0) {
         adapterLexiconResShort.errors.forEach(error => this.logger.log(error.message))
+      } else if (this._source === LexicalQuery.sources.WORDLIST) {
+        LexicalQuery.evt.WORDLIST_UPDATE_SHORT_DEFS_READY.pub({
+          requestType: 'short',
+          homonym: this.homonym,
+          word: this.homonym.lexemes.length > 0 ? this.homonym.lexemes[0].lemma.word : ''
+        })
       }
 
       let adapterLexiconResFull = {}
@@ -431,16 +452,28 @@ LexicalQuery.evt = {
   MORPH_DATA_NOTAVAILABLE: new PsEvent('Morph Data Not Found', LexicalQuery),
 
   /**
-   * Published when no morphological data has been found.
+   * Published when morphological data has been found.
    * Data: {Homonym} homonym - A homonym object.
    */
   HOMONYM_READY: new PsEvent('Homonym Ready', LexicalQuery),
+
+  /**
+   * Published when we need only update existed worditem.
+   * Data: {Homonym} homonym - A homonym object.
+   */
+  WORDLIST_UPDATE_HOMONYM_READY: new PsEvent('Homonym Ready', LexicalQuery),
 
   /**
    * Published when lemma translations becomes available.
    * Data: {Homonym} homonym - A homonym object.
    */
   LEMMA_TRANSL_READY: new PsEvent('Lemma Translations Ready', LexicalQuery),
+
+  /**
+   * Published when lemma translations becomes available (only to update existed worditem).
+   * Data: {Homonym} homonym - A homonym object.
+   */
+  WORDLIST_UPDATE_LEMMA_TRANSL_READY: new PsEvent('Lemma Translations Ready', LexicalQuery),
 
   /**
    * Published when short definitions data becomes available.
@@ -451,6 +484,16 @@ LexicalQuery.evt = {
    * }
    */
   SHORT_DEFS_READY: new PsEvent('Short Definitions Data is Ready', LexicalQuery),
+
+  /**
+   * Published when short definitions data becomes available (only to update existed worditem).
+   * Data: {
+   *   requestType: definitionRequest.type,
+   *   word: definitionRequest.lexeme.lemma.word,
+   *   homonym: this.homonym
+   * }
+   */
+  WORDLIST_UPDATE_SHORT_DEFS_READY: new PsEvent('Short Definitions Data is Ready', LexicalQuery),
 
   /**
    * Published when full definitions data becomes available.
