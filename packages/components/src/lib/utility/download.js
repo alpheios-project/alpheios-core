@@ -1,7 +1,7 @@
 export default class Download {
-  static collectionToCSV (delimiter, keys = []) {
+  static collectionToCSV (delimiter, keys = [], withHeaders = true) {
     return (collection = []) => {
-      const headers = keys.map(key => `${key}`).join(delimiter)
+      const headers = withHeaders ? keys.map(key => `${key}`).join(delimiter) : []
       const extractKeyValues = record => keys.map(key => `${record[key]}`).join(delimiter)
 
       return collection.reduce((csv, record) => {

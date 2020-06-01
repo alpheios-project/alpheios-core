@@ -175,8 +175,8 @@
           dataForDownload = this.prepareDownloadListFull()
         }
 
-        const result = Download.collectionToCSV(dataForDownload.delimiter, dataForDownload.exportFields)(dataForDownload.wordlistData)
-        Download.downloadBlob(result, `wordlist-${this.languageCode}.csv`)
+        const result = Download.collectionToCSV(dataForDownload.delimiter, dataForDownload.exportFields, false)(dataForDownload.wordlistData)
+        Download.downloadBlob(result, `wordlist-${this.languageCode}.tsv`)
         this.$emit('changeShowDownloadBox', false)
       },
       cancelDownloadList () {
