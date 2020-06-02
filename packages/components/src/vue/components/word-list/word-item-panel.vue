@@ -32,12 +32,14 @@
           class="alpheios-worditem__data alpheios-worditem__targetWord"
           @dblclick="selectWordItem()"
           @click="selectWordItemMobile()"
+          :lang="worditem.languageCode"
         >{{ worditem.targetWord }}</div>
 
         <div class="alpheios-worditem__data alpheios-worditem__lemmasList">
           <span v-for="(lemma, lemmaIndex) in lemmasList" 
                 @click="setLemmaFilterByClick(lemma)"
                 class="alpheios-worditem__lemmasList-lemmaitem"
+                :lang="worditem.languageCode"
           >{{ lemma }}<span v-if="lemmaIndex < lemmasList.length-1">, </span></span>
         </div>
         
