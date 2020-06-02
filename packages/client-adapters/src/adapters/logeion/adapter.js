@@ -1,7 +1,7 @@
 import DefaultConfig from '@clAdapters/adapters/logeion/config.json'
 import BaseAdapter from '@clAdapters/adapters/base-adapter'
 
-import { LanguageModelFactory as LMF } from 'alpheios-data-models'
+import { LanguageModelFactory as LMF, Constants } from 'alpheios-data-models'
 
 class AlpheiosLogeionAdapter extends BaseAdapter {
   /**
@@ -14,6 +14,7 @@ class AlpheiosLogeionAdapter extends BaseAdapter {
     this.limit = parseInt(this.config.limit)
     this.available = this.config.availableLangs.includes(this.config.lang)
     this.sourceData = config.sourceData
+    this.fetchOptions = config.fetchOptions
   }
 
   /**
@@ -24,6 +25,10 @@ class AlpheiosLogeionAdapter extends BaseAdapter {
   async getWords (text) {
     try {
       const url = this.createFetchURL(text)
+      if (!url) {
+        this.addError(this.l10n.messages.LOGEION_FETCH_OPTIONS_ERROR.get())
+        return
+      }
 
       if (this.sourceData) {
         return this.sourceData
@@ -47,7 +52,17 @@ class AlpheiosLogeionAdapter extends BaseAdapter {
   * @return {String}
   */
   createFetchURL (text) {
-    return `${this.config.url}${encodeURIComponent(text)}`
+    if (this.fetchOptions) {
+      return `${this.fetchOptions.baseurl}?key=${this.fetchOptions.apikey}&q=${text}&lang=${this.logeionLangCode}`
+    }
+  }
+
+  get logeionLangCode () {
+    if (this.config.lang === Constants.STR_LANG_CODE_GRC) {
+      return 'greek'
+    } else if ([Constants.STR_LANG_CODE_LAT, Constants.STR_LANG_CODE_LA].includes(this.config.lang)) {
+      return 'latin'
+    }
   }
 
   /**

@@ -368,7 +368,11 @@ describe('client-adapters.test.js', () => {
         limit: 15, 
         sourceData: ['\u03bb\u03ad\u03be\u03bf', '\u03bb\u03ad\u03be\u03b5\u03bf', '\u03bb\u03ad\u03be\u03b9\u03c2', '\u03bb\u03b5\u03be\u03b9\u03ba\u03cc\u03c2', 
                      '\u03bb\u03b5\u03be\u03af\u03b4\u03b9\u03bf\u03bd', '\u03bb\u03b5\u03be\u03b9\u03b8\u03b7\u03c1\u03ad\u03c9', 
-                     '\u03bb\u03b5\u03be\u03af\u03b4\u03c1\u03b9\u03bf\u03bd', '\u039b\u03b5\u03be\u03b9\u03c6\u03ac\u03bd\u03b7\u03c2']
+                     '\u03bb\u03b5\u03be\u03af\u03b4\u03c1\u03b9\u03bf\u03bd', '\u039b\u03b5\u03be\u03b9\u03c6\u03ac\u03bd\u03b7\u03c2'],
+        fetchOptions: {
+          apikey: 'testkey',
+          baseurl: 'testurl'
+        }
       }
     })
 
@@ -389,7 +393,11 @@ describe('client-adapters.test.js', () => {
         text: 'mar',
         lang: 'lat',
         limit: 15, 
-        sourceData: ['mar', 'Mars', 'mara', 'mare', 'Maro', 'Marca', 'marsa', 'Marsa']
+        sourceData: ['mar', 'Mars', 'mara', 'mare', 'Maro', 'Marca', 'marsa', 'Marsa'],
+        fetchOptions: {
+          apikey: 'testkey',
+          baseurl: 'testurl'
+        }
       }
     })
 
@@ -400,4 +408,6 @@ describe('client-adapters.test.js', () => {
 
     expect(Array.isArray(res.result)).toBeTruthy()
   })
+
+
 })

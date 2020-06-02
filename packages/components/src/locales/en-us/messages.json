@@ -396,7 +396,7 @@
     "component": "UI"
   },
   "TEXT_HINT_MOUSE_MOVE": {
-    "message": "MouseMove Event is enabled for google.docs by default.",
+    "message": "Mouse movement selection has been automatically enabled for this page.",
     "description": "popup hint",
     "component": "UI"
   },
@@ -658,7 +658,7 @@
     "component": "Options Tab"
   },
   "LABEL_FIELDSET_MOUSEMOVE": {
-    "message": "Mouse Move Options",
+    "message": "Mouse Movement Selection Options",
     "description": "Legend for options fieldset",
     "component": "Options Tab"
   },

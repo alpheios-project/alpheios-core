@@ -33,7 +33,11 @@ describe('wordlist-controller.test.js', () => {
       HOMONYM_READY: {sub: jest.fn()},
       SHORT_DEFS_READY: {sub: jest.fn()},
       FULL_DEFS_READY: {sub: jest.fn()},
-      LEMMA_TRANSL_READY: { sub: jest.fn()}
+      LEMMA_TRANSL_READY: { sub: jest.fn()},
+
+      WORDLIST_UPDATE_HOMONYM_READY: {sub: jest.fn()},
+      WORDLIST_UPDATE_SHORT_DEFS_READY: {sub: jest.fn()},
+      WORDLIST_UPDATE_LEMMA_TRANSL_READY: { sub: jest.fn()}
     }
 
     mockDataManager = {

@@ -45,7 +45,11 @@ describe('logeion/adapter.test.js', () => {
       adapterName: 'autoCompleteWords',
       method: 'getWords',
       lang: 'lat',
-      limit: '15'
+      limit: '15',
+      fetchOptions: {
+        apikey: 'testkey',
+        baseurl: 'testurl'
+      }
     })
 
     expect(adapter.createFetchURL('male').length).toBeGreaterThan(5)
@@ -57,7 +61,11 @@ describe('logeion/adapter.test.js', () => {
       adapterName: 'autoCompleteWords',
       method: 'getWords',
       lang: 'lat',
-      limit: '2'
+      limit: '2',
+      fetchOptions: {
+        apikey: 'testkey',
+        baseurl: 'testurl'
+      }
     })
 
     const result = adapter.filterAndLimitWords(['male', 'Malea', 'Males', 'μαλέω', 'Μαλέα'])
@@ -70,7 +78,11 @@ describe('logeion/adapter.test.js', () => {
       adapterName: 'autoCompleteWords',
       method: 'getWords',
       lang: 'grc',
-      limit: '2'
+      limit: '2',
+      fetchOptions: {
+        apikey: 'testkey',
+        baseurl: 'testurl'
+      }
     })
 
     const result = adapter.filterAndLimitWords(['male', 'Malea', 'Males', 'μαλέω', 'Μαλέα'])
@@ -83,15 +95,20 @@ describe('logeion/adapter.test.js', () => {
       adapterName: 'autoCompleteWords',
       method: 'getWords',
       lang: 'lat',
-      limit: '10'
+      limit: '2',
+      fetchOptions: {
+        apikey: 'testkey',
+        baseurl: 'testurl'
+      }
     })
 
     adapter.fetch = jest.fn().mockResolvedValue({
-        words: ['male', 'Malea', 'Males', 'μαλέω', 'Μαλέα']
+        words: ['male', 'Malea', 'Males']
       })
 
     const res = await adapter.getWords('male')
-    expect(res).toEqual(['male', 'Malea', 'Males'])
+    expect(res).toEqual(['male', 'Malea'])
   })
+
 })
 

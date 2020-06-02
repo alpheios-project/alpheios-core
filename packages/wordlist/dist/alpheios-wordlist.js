@@ -2545,6 +2545,10 @@ class WordlistController {
     events.SHORT_DEFS_READY.sub(this.onDefinitionsReady.bind(this))
     events.FULL_DEFS_READY.sub(this.onDefinitionsReady.bind(this))
     events.LEMMA_TRANSL_READY.sub(this.onLemmaTranslationsReady.bind(this))
+
+    events.WORDLIST_UPDATE_HOMONYM_READY.sub(this.onHomonymReadyForWordlistUpdate.bind(this))
+    events.WORDLIST_UPDATE_LEMMA_TRANSL_READY.sub(this.onLemmaTranslationsReadyForWordlistUpdate.bind(this))
+    events.WORDLIST_UPDATE_SHORT_DEFS_READY.sub(this.onDefinitionsReadyForWordlistUpdate.bind(this))
   }
 
   /**
@@ -2686,6 +2690,20 @@ class WordlistController {
   }
 
   /**
+   * Responds to a WORDLIST_UPDATE_HOMONYM_READY event by updating a wordlist item for a retrieved Homonym
+   * @param {Homonym} data
+   * Emits WORDITEM_UPDATED and WORDLIST_UPDATED events
+   */
+  onHomonymReadyForWordlistUpdate (data) {
+    let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(data.languageID), data.targetWord, true)
+    wordItem.homonym = data
+    WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'common'}})
+    WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'shortHomonym'}})
+    // emit a wordlist updated event too in case the wordlist was updated
+    WordlistController.evt.WORDLIST_UPDATED.pub(this.wordLists)
+  }
+
+  /**
   * Responds to a DEFINITIONS_READY event by updating a wordlist item for retrieved Definitions
   * @param {Object} data {requestType: 'fullDefs',homonym: {Homonym}}
   * Emits a WORDITEM_UPDATED event
@@ -2695,6 +2713,22 @@ class WordlistController {
     if (wordItem) {
       wordItem.currentSession = true
       wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
+      wordItem.homonym = data.homonym
+      WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
+    } else {
+      // TODO error handling
+      console.error("Alpheios error: unexpected error updating user word list: request to add definitions to non-existent item.")
+    }
+  }
+
+  /**
+  * Responds to a WORDLIST_UPDATE_DEFINITIONS_READY event by updating a wordlist item for retrieved Definitions
+  * @param {Object} data {requestType: 'fullDefs',homonym: {Homonym}}
+  * Emits a WORDITEM_UPDATED event
+  */
+  onDefinitionsReadyForWordlistUpdate (data) {
+    let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(data.homonym.languageID),data.homonym.targetWord)
+    if (wordItem) {
       wordItem.homonym = data.homonym
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
     } else {
@@ -2714,6 +2748,22 @@ class WordlistController {
     if (wordItem) {
       wordItem.currentSession = true
       wordItem.updatedDT = _wordlist_common_utility_js__WEBPACK_IMPORTED_MODULE_1__["default"].currentDate
+      wordItem.homonym = data
+      WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
+    } else {
+      console.error("Alpheios error: unexpected error updating user word list: request to add translations to non-existent item")
+    }
+  }
+
+  /**
+  * Responds to a WORDLIST_UPDATE_LEMMA_TRANSL_READY event by updating a wordlist item for retrieved translations
+  * (because lemma translations could come much later we need to resave homonym with translations data to database)
+  * @param {Homonym} data
+  * Emits a WORDITEM_UPDATED event
+  */
+ onLemmaTranslationsReadyForWordlistUpdate (data) {
+    let wordItem = this.getWordListItem(alpheios_data_models__WEBPACK_IMPORTED_MODULE_0__["LanguageModelFactory"].getLanguageCodeFromId(data.languageID), data.targetWord)
+    if (wordItem) {
       wordItem.homonym = data
       WordlistController.evt.WORDITEM_UPDATED.pub({dataObj: wordItem, params: {segment: 'fullHomonym'}})
     } else {

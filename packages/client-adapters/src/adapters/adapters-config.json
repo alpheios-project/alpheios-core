@@ -73,7 +73,7 @@
       "adapter": "autoCompleteWords",
       "methods": "getWords",
       "params": {
-        "getWords": ["text", "lang"]
+        "getWords": ["text", "lang", "fetchOptions"]
       }
     }
   }
