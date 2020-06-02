@@ -122,7 +122,9 @@
         })
 
         return {
-            exportFields, wordlistData, delimiter: ';'
+            exportFields, wordlistData, delimiter: ';',
+            fileExtension: 'csv',
+            withHeaders: true
         }
       },
 
@@ -162,7 +164,10 @@
         })
 
         return {
-            exportFields, wordlistData, delimiter: '\t'
+            exportFields, wordlistData, 
+            delimiter: '\t',
+            fileExtension: 'tsv',
+            withHeaders: false
         }
       },
 
@@ -175,8 +180,8 @@
           dataForDownload = this.prepareDownloadListFull()
         }
 
-        const result = Download.collectionToCSV(dataForDownload.delimiter, dataForDownload.exportFields, false)(dataForDownload.wordlistData)
-        Download.downloadBlob(result, `wordlist-${this.languageCode}.tsv`)
+        const result = Download.collectionToCSV(dataForDownload.delimiter, dataForDownload.exportFields, dataForDownload.withHeaders)(dataForDownload.wordlistData)
+        Download.downloadBlob(result, `wordlist-${this.languageCode}.${dataForDownload.fileExtension}`)
         this.$emit('changeShowDownloadBox', false)
       },
       cancelDownloadList () {
