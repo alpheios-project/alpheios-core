@@ -629,7 +629,7 @@ describe('word-language-panel.test.js', () => {
 
     await downloadConfComponent.vm.downloadList()
 
-    expect(Download.collectionToCSV).toHaveBeenCalledWith(';', ['targetWord', 'languageCode', 'important', 'currentSession', 'lemmasList', 'context'], false)
+    expect(Download.collectionToCSV).toHaveBeenCalledWith(';', ['targetWord', 'languageCode', 'important', 'currentSession', 'lemmasList', 'context'], true)
     expect(Download.downloadBlob).toHaveBeenCalled()
     expect(cmp.vm.showDownloadBox).toBeFalsy()
   })
