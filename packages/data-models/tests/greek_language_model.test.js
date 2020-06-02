@@ -4,19 +4,15 @@ import * as Constants from '@/constants.js'
 import LMF from '@/language_model_factory.js'
 import Feature from '@/feature.js'
 import Inflection from '@/inflection.js'
+import Logger from '@/logging/logger.js'
 
 describe('greek_language_model.j', () => {
-  console.error = function () {}
-  console.log = function () {}
-  console.warn = function () {}
+  const logger = Logger.getInstance({ verbose: true })
+  logger.warn = jest.fn(() => {})
 
   let greekModel
 
   beforeEach(() => {
-    jest.spyOn(console, 'error')
-    jest.spyOn(console, 'log')
-    jest.spyOn(console, 'warn')
-
     greekModel = LMF.getLanguageModel(Constants.LANG_GREEK)
   })
   afterEach(() => {
@@ -67,7 +63,7 @@ describe('greek_language_model.j', () => {
     let inflection = new Inflection('foo', 'grc')
 
     greekModel.getInflectionConstraints(inflection)
-    expect(console.warn).toHaveBeenCalledWith('Unable to set grammar: part of speech data is missing or is incorrect', undefined)
+    expect(logger.warn).toHaveBeenCalledWith('Unable to set grammar: part of speech data is missing or is incorrect', undefined)
   })
 
   it('7 GreekLanguageModel - getInflectionConstraints - suffixBased part of speach', () => {

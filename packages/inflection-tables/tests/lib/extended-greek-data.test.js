@@ -1,18 +1,12 @@
 /* eslint-env jest */
 /* eslint-disable no-unused-vars */
-
+import { Logger } from 'alpheios-data-models'
 import ExtendedGreekData from '@lib/extended-greek-data.js'
 
 describe('extended-greek-data.test.js', () => {
-  console.error = function () {}
-  console.log = function () {}
-  console.warn = function () {}
+  const logger = Logger.getInstance({ verbose: true })
+  logger.log = jest.fn(() => {})
 
-  beforeEach(() => {
-    jest.spyOn(console, 'error')
-    jest.spyOn(console, 'log')
-    jest.spyOn(console, 'warn')
-  })
   afterEach(() => {
     jest.resetModules()
   })
@@ -43,7 +37,7 @@ describe('extended-greek-data.test.js', () => {
 
     expect(EGD1.merge(EGD2).primary).toBeFalsy()
     expect(EGD2.merge(EGD1).primary).toBeTruthy()
-    expect(console.log).toHaveBeenCalledWith('Mismatch', false, true)
-    expect(console.log).toHaveBeenCalledWith('Mismatch', true, false)
+    expect(logger.log).toHaveBeenCalledWith('Mismatch', false, true)
+    expect(logger.log).toHaveBeenCalledWith('Mismatch', true, false)
   })
 })
